@@ -34,6 +34,7 @@
 ##a[href^="http://adserver.adtech.de/?adlink|"]
 ##a[href^="http://booraq.org"]
 ##a[href^="http://deals.souq.com/"]
+##a[href^="http://drivercardusa.info/"]
 ##a[href^="http://share.payoneer-affiliates.com/"]
 ##a[href^="http://www.fusebux.com/index.php?r="] > img
 ##a[href^="http://www.probux.com/?rh="] > img
@@ -214,6 +215,7 @@
 ||islamiy.com^$subdocument,domain=wadilarab.com
 ||jazora.com/banner/
 ||jo-sharing.com^*/bnnr.
+||jscsportlive.com/bzf.php
 ||kalemaro.com/open*.js
 ||karizmo.net/vb/karix.gif
 ||ksa-ksa.com^$subdocument,domain=a7lahmsa.com
@@ -243,6 +245,7 @@
 ||mnq8.com/bnrs/
 ||mothhelah.com/bnr.jpg
 ||mothhelah.com/img/psF78481.gif
+||movizland.com/uploads/13978557311.gif
 ||mshaweer.net/vb//images/baner.swf
 ||mshaweer.net/vb/images/e3lan3.gif
 ||mshaweer.net/vb/images/mshaweer2.gif
@@ -304,6 +307,7 @@
 ||web4africa.net/banners/
 ||wirwaar.com/$subdocument,domain=s-ajfan.com
 ||xatech.com^
+||xuscacamusca.se/js/adsj.js
 ||yellowpages.com.ps/search_bricks/ps_search_bricks_300X130.php
 ||ymoviez.com/yallamoviez.js
 ||yourjavascript.com^*/pp-kora.js
@@ -952,6 +956,7 @@ mazika2day.com###topban
 alarab.net###topbanner
 a7lashare.com,iq-vb.net,sm3na.com,ultshare.com###topbar
 hawaaworld.com###vacuumcleaners
+firedrive.com###ve_box
 europages.ma###vipBox
 6ef.com,fr7.com,q8me.com###webColorsHeader2
 mshkla.com###weblks
@@ -1149,6 +1154,7 @@ alqabas.com.kw##div[id^="azk"]
 masrytube.com##div[id^="bannerfloat"]
 fatakat.com##div[onclick*="window.open('http://xads.zedo.com/')"]
 yalladrama.tv##div[style$="height: 250px; width: 300px;"]
+arabe-media.com##div[style="color:#ffffff; font-family:verdana; font-size:16px; padding-bottom:15px; height: 100%; width: 100%;"]
 g5y.com##div[style="height:150px;"]
 dardarkom.com,darseries.com##div[style="padding-top:5px; font-family:tahoma;float:right;width:100%;font-size:10pt;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:right"]
 el7l.co##div[style="padding-top:5px;float:right;width:100%;font-size:16px;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:right"]
@@ -1158,6 +1164,7 @@ jordanzad.com##div[style="width:306px;height:63px;"]
 jordanzad.com##div[style="width:600px;height:80px;"]
 5foq.com##div[style="width:680px;height:180px;float:left;margin-left:5px;margin-top:25px"]
 echoroukonline.com##div[style="width:728px;height:90px;margin: 10px auto;"]
+showsport-tv.com##div[style^="height: 250px; left: 50%; margin-left: -150px; margin-top: -45px; position: absolute; top: 20%;"]
 darseries.com##div[style^="width:325px;height:275px;"]
 arabnet5.com##div[style^="width:728px; height:90px;"]
 ##div[style^="z-index: 99999; position: fixed; width: 100%; background-color: rgb(251, 236, 173);"]

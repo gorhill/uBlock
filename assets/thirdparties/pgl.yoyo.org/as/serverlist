@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 16 May 2014 13:34:05 GMT
-# entries:        2490
+# entries:        2491
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -126,6 +126,7 @@
 127.0.0.1 ad.jamba.net
 127.0.0.1 ad.jamster.co.uk
 127.0.0.1 ad.jetsoftware.com
+127.0.0.1 ad.keenspace.com
 127.0.0.1 ad.leadbolt.net
 127.0.0.1 ad.liveinternet.ru
 127.0.0.1 ad.lupa.cz
@@ -652,7 +653,6 @@
 127.0.0.1 ads.switchboard.com
 127.0.0.1 ads.t-online.de
 127.0.0.1 ads.tahono.com
-127.0.0.1 ads.technoratimedia.com
 127.0.0.1 ads.techtv.com
 127.0.0.1 ads.techweb.com
 127.0.0.1 ads.telegraph.co.uk
@@ -1001,7 +1001,6 @@
 127.0.0.1 anahtars.com
 127.0.0.1 analytics.live.com
 127.0.0.1 analytics.yahoo.com
-127.0.0.1 anchorfreesearch.com
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 annonser.dagbladet.no
 127.0.0.1 apex-ad.com
@@ -1685,6 +1684,7 @@
 127.0.0.1 kliks.nl
 127.0.0.1 kompasads.com
 127.0.0.1 kontera.com
+127.0.0.1 kt-g.de
 127.0.0.1 ktu.sv2.biz
 127.0.0.1 lakequincy.com
 127.0.0.1 layer-ad.de
@@ -1930,6 +1930,7 @@
 127.0.0.1 passion-4.net
 127.0.0.1 passport.baidu.com
 127.0.0.1 pay-ads.com
+127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com
 127.0.0.1 paydayasap.com
 127.0.0.1 paypopup.com

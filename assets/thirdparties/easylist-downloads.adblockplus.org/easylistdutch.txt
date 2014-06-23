@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: vblhLrMsJDQoPJsNbprKrw
-! Version: 201406191701
+! Checksum: 7rxHHnY51LTrgW7a1UU98w
+! Version: 201406232331
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 19 Jun 2014 17:01 UTC
+! Last modified: 23 Jun 2014 23:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -139,6 +139,7 @@
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
 ||bol.com/nl/upload/banners/
+||brightcove.com/js/BrightcoveExperiences.js$domain=backpackgek.nl
 ||buzzlab.nl/input/*Banner
 ||cdn.media.zylom.com/images/site/zylom/promo/$third-party
 ||centraal.helpmij.nl/images/nieuwsbrief/nod32-colofon.jpg
@@ -1051,6 +1052,7 @@ indeed.nl##.sjl.sjas3
 gay.eu,gay.nl##.skyscraperParentBox
 hollandsheetste.nl##.skyscrpr
 westlanders.nu##.slides
+liveuitslagen.nl##.slive
 techzine.nl##.small_banner
 weeronline.nl##.specialBlockAboveActivities
 weeronline.nl##.specialBlockSmall
@@ -1182,7 +1184,7 @@ comedycentral.nl#@##bannerad
 archiefleeuwardercourant.nl#@##headerAdv
 losseveter.nl#@##mainAd
 schaatsen.nl#@#.HeaderAd
-innerlijk-besef.nl#@#.ad-block
+innerlijk-besef.nl,landleven.nl#@#.ad-block
 bokt.nl#@#.ad-body
 autodealers.nl#@#.ad-btn
 innerlijk-besef.nl#@#.ad-button
@@ -1208,6 +1210,7 @@ zuka.nl#@#.advtitle
 z24.nl#@#.category-ad
 telegraaf.nl#@#.imgad
 ad.nl#@#.nav_ad
+landleven.nl#@#.post-ad
 amonis.be#@#.text-ad
 kamernet.nl#@#.topAdd
 tweakers.net#@#a[href^="http://pubads.g.doubleclick.net/"]

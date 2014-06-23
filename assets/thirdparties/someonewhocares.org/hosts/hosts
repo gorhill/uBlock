@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jun 16th, 2014 at 15:59
+# Last updated: Jun 23rd, 2014 at 02:36
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1009,6 +1009,7 @@ fe80::1%lo0	localhost
 127.0.0.1 proxy.or4.marketscore.com
 127.0.0.1 proxy.sj3.marketscore.com
 127.0.0.1 proxy.sj4.marketscore.com
+127.0.0.1 p.twitter.com
 127.0.0.1 quantserve.com #: Ad Tracking, JavaScript, etc.
 127.0.0.1 quareclk.com
 127.0.0.1 raw.oggifinogi.com
@@ -1846,6 +1847,7 @@ fe80::1%lo0	localhost
 127.0.0.1 www.bankofamerica.com.ok.am
 127.0.0.1 www.be4life.ru
 127.0.0.1 www.blenz-me.net
+127.0.0.1 www.bumerang.cc
 127.0.0.1 www.cambonanza.com
 127.0.0.1 www.chelick.net			# Facebook trojan
 127.0.0.1 www.didata.bw
@@ -1945,6 +1947,7 @@ fe80::1%lo0	localhost
 127.0.0.1 ad.au.doubleclick.net
 127.0.0.1 ad.be.doubleclick.net
 127.0.0.1 ad.br.doubleclick.net
+127.0.0.1 adclick.g.doubleclick.net
 127.0.0.1 ad.de.doubleclick.net
 127.0.0.1 ad.dk.doubleclick.net
 127.0.0.1 ad-emea.doubleclick.net
@@ -2231,6 +2234,7 @@ fe80::1%lo0	localhost
 127.0.0.1 n4403ad.doubleclick.net
 127.0.0.1 n479ad.doubleclick.net
 127.0.0.1 optimize.doubleclick.net
+127.0.0.1 pagead.l.doubleclick.net
 127.0.0.1 pubads.g.doubleclick.net
 127.0.0.1 rd.intl.doubleclick.net
 127.0.0.1 securepubads.g.doubleclick.net
@@ -2982,6 +2986,7 @@ fe80::1%lo0	localhost
 127.0.0.1 2912a.v.fwmrm.net
 127.0.0.1 2.adbrite.com
 127.0.0.1 2-art-coliseum.com
+127.0.0.1 2leep.com
 127.0.0.1 2.marketbanker.com
 127.0.0.1 312.1d27c9b8fb.com
 127.0.0.1 321cba.com
@@ -4406,6 +4411,7 @@ fe80::1%lo0	localhost
 127.0.0.1 ads.osdn.com
 127.0.0.1 ad-souk.com
 127.0.0.1 adspaces.ero-advertising.com
+127.0.0.1 ads.panoramtech.net
 127.0.0.1 ads.parrysound.com
 127.0.0.1 ads.partner2profit.com
 127.0.0.1 ads.pastemagazine.com
@@ -5203,6 +5209,7 @@ fe80::1%lo0	localhost
 127.0.0.1 c.de.msn.com
 127.0.0.1 c.dk.msn.com
 127.0.0.1 cdn1.adexprt.com
+127.0.0.1 cdn1.ads.contentabc.com
 127.0.0.1 cdn1.ads.mofos.com
 127.0.0.1 cdn1.eyewonder.com
 127.0.0.1 cdn1.rmgserving.com
@@ -5330,7 +5337,9 @@ fe80::1%lo0	localhost
 127.0.0.1 clickthrutraffic.com
 127.0.0.1 clicktorrent.info
 127.0.0.1 clipserv.adclip.com
+127.0.0.1 clk.addmt.com
 127.0.0.1 clkads.com
+127.0.0.1 clk.atdmt.com
 127.0.0.1 clk.cloudyisland.com
 127.0.0.1 clk.tradedoubler.com
 127.0.0.1 clkuk.tradedoubler.com
@@ -5454,6 +5463,7 @@ fe80::1%lo0	localhost
 127.0.0.1 c.ru.msn.com
 127.0.0.1 crux.songline.com
 127.0.0.1 crwdcntrl.net
+127.0.0.1 cs.adxpansion.com
 127.0.0.1 c.se.msn.com
 127.0.0.1 cserver.mii.instacontent.net
 127.0.0.1 c.sg.msn.com
@@ -5620,12 +5630,14 @@ fe80::1%lo0	localhost
 127.0.0.1 escape.insites.eu
 127.0.0.1 espn.footprint.net
 127.0.0.1 etad.telegraph.co.uk
+127.0.0.1 etahub.com
 127.0.0.1 etrk.asus.com
 127.0.0.1 etype.adbureau.net
 127.0.0.1 eu2.madsone.com
 127.0.0.1 euniverseads.com
 127.0.0.1 eu-pn4.adserver.yahoo.com
 127.0.0.1 europe.adserver.yahoo.com
+127.0.0.1 eu-sonar.sociomantic.com
 127.0.0.1 eu.xtms.net
 127.0.0.1 eventtracker.videostrip.com
 127.0.0.1 exclusivegiftcards.com
@@ -5837,6 +5849,7 @@ fe80::1%lo0	localhost
 127.0.0.1 gifts-flowers-rewardpath.com
 127.0.0.1 gimmethatreward.com
 127.0.0.1 gingert.net
+127.0.0.1 global-promotions.internationalredirects.com
 127.0.0.1 globalwebads.com
 127.0.0.1 gmads.net
 127.0.0.1 gm.preferences.com
@@ -6058,6 +6071,7 @@ fe80::1%lo0	localhost
 127.0.0.1 incentive-scene.com
 127.0.0.1 indexhu.adocean.pl
 127.0.0.1 infinite-ads.com
+127.0.0.1 in.getclicky.com
 127.0.0.1 inklineglobal.com
 127.0.0.1 inl.adbureau.net
 127.0.0.1 input.insights.gravity.com
@@ -6556,6 +6570,7 @@ fe80::1%lo0	localhost
 127.0.0.1 pagead3.googlesyndication.com
 127.0.0.1 pagead.googlesyndication.com
 127.0.0.1 pages.etology.com
+127.0.0.1 paid.outbrain.com
 127.0.0.1 paime.com
 127.0.0.1 panel.adtify.pl
 127.0.0.1 paperg.com
@@ -6571,6 +6586,7 @@ fe80::1%lo0	localhost
 127.0.0.1 partners.webmasterplan.com
 127.0.0.1 partner.wapacz.pl
 127.0.0.1 partner.wapster.pl
+127.0.0.1 partnerwebsites.mistermedia.nl
 127.0.0.1 pathforpoints.com
 127.0.0.1 paulsnetwork.com
 127.0.0.1 pbid.pro-market.net
@@ -6685,6 +6701,7 @@ fe80::1%lo0	localhost
 127.0.0.1 proximityads.flipcorp.com
 127.0.0.1 proxy.blogads.com
 127.0.0.1 ptrads.mp3.com
+127.0.0.1 pt.trafficjunky.net
 127.0.0.1 pubdirecte.com
 127.0.0.1 pubimgs.sapo.pt
 127.0.0.1 publiads.com
@@ -6728,6 +6745,7 @@ fe80::1%lo0	localhost
 127.0.0.1 realgfsbucks.com
 127.0.0.1 realmedia-a800.d4p.net	# Scientific American
 127.0.0.1 realmedia.advance.net
+127.0.0.1 reboot.sitescout.com
 127.0.0.1 recreation-leisure-rewardpath.com
 127.0.0.1 red01.as-eu.falkag.net
 127.0.0.1 red01.as-us.falkag.net
@@ -6778,6 +6796,7 @@ fe80::1%lo0	localhost
 127.0.0.1 richmedia.yimg.com
 127.0.0.1 ridepush.com
 127.0.0.1 ringtonepartner.com
+127.0.0.1 r.ligatus.com
 127.0.0.1 rmbn.ru
 127.0.0.1 rmedia.boston.com
 127.0.0.1 rmm1u.checkm8.com
@@ -6793,6 +6812,7 @@ fe80::1%lo0	localhost
 127.0.0.1 rotator.juggler.inetinteractive.com
 127.0.0.1 rotobanner468.utro.ru
 127.0.0.1 rovion.com
+127.0.0.1 rpc-php.trafficfactory.biz
 127.0.0.1 rpc.trafficfactory.biz
 127.0.0.1 rp.hit.gemius.pl
 127.0.0.1 r.reklama.biz
@@ -6894,6 +6914,7 @@ fe80::1%lo0	localhost
 127.0.0.1 servedbyadbutler.com
 127.0.0.1 servedby.adcombination.com
 127.0.0.1 servedby.advertising.com
+127.0.0.1 servedby.dm3adserver.com
 127.0.0.1 servedby.flashtalking.com
 127.0.0.1 servedby.netshelter.net
 127.0.0.1 servedby.precisionclick.com
@@ -7033,6 +7054,7 @@ fe80::1%lo0	localhost
 127.0.0.1 srv.juiceadv.com
 127.0.0.1 ssads.osdn.com
 127.0.0.1 s.skimresources.com
+127.0.0.1 ssl.gstatic.com
 127.0.0.1 sso.canada.com
 127.0.0.1 staging.snip.answers.com
 127.0.0.1 stampen.adtlgc.com
@@ -7087,6 +7109,7 @@ fe80::1%lo0	localhost
 127.0.0.1 storage.softure.com
 127.0.0.1 storage.trafic.ro
 127.0.0.1 streamate.com
+127.0.0.1 streamate.doublepimp.com
 127.0.0.1 stts.rbc.ru
 127.0.0.1 st.valueclick.com
 127.0.0.1 su.addthis.com
@@ -7160,6 +7183,7 @@ fe80::1%lo0	localhost
 127.0.0.1 thinknyc.eu-adcenter.net
 127.0.0.1 thinktarget.com
 127.0.0.1 thinlaptoprewards.com
+127.0.0.1 this.content.served.by.addshuffle.com
 127.0.0.1 this.content.served.by.adshuffle.com
 127.0.0.1 thoughtfully-free.com
 127.0.0.1 thruport.com
@@ -7206,6 +7230,7 @@ fe80::1%lo0	localhost
 127.0.0.1 tradearabia.advertserve.com
 127.0.0.1 tradefx.advertserve.com
 127.0.0.1 trafficbee.com
+127.0.0.1 traffic.outbrain.com
 127.0.0.1 trafficrevenue.net
 127.0.0.1 traffictraders.com
 127.0.0.1 traffprofit.com
@@ -7423,6 +7448,7 @@ fe80::1%lo0	localhost
 127.0.0.1 web.adblade.com
 127.0.0.1 webads.bizservers.com
 127.0.0.1 webads.nl
+127.0.0.1 webcamsex.nl
 127.0.0.1 webcompteur.com
 127.0.0.1 webhosting-ads.home.pl
 127.0.0.1 webmdcom.tt.omtrdc.net
@@ -7882,6 +7908,7 @@ fe80::1%lo0	localhost
 127.0.0.1 www.go-free-gifts.com
 127.0.0.1 www.gofreegifts.com
 127.0.0.1 www.goody-garage.com
+127.0.0.1 www.googleadservices.com
 127.0.0.1 www.gopopup.com
 127.0.0.1 www.grabbit-rabbit.com
 127.0.0.1 www.greasypalm.com
@@ -8027,6 +8054,7 @@ fe80::1%lo0	localhost
 127.0.0.1 www.newssourceoftoday.com
 127.0.0.1 www.nospartenaires.com
 127.0.0.1 www.nothing-but-value.com
+127.0.0.1 www.nubijlage.nl
 127.0.0.1 www.nysubwayoffer.com
 127.0.0.1 www.offerx.co.uk
 127.0.0.1 www.oinadserve.com
@@ -8037,8 +8065,10 @@ fe80::1%lo0	localhost
 127.0.0.1 www.optiad.net
 127.0.0.1 www.paperg.com
 127.0.0.1 www.parsads.com
+127.0.0.1 www.partycasino.com
 127.0.0.1 www.pathforpoints.com
 127.0.0.1 www.paypopup.com
+127.0.0.1 www.peachy18.com
 127.0.0.1 www.people-choice-sites.com
 127.0.0.1 www.personalcare-offer.com
 127.0.0.1 www.personalcashbailout.com

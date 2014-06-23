@@ -1447,6 +1447,7 @@
 127.0.0.1	ad1.bannerbank.ru
 127.0.0.1	ad1.banners.ero-advertising.com
 127.0.0.1	ad1.bb.ru
+127.0.0.1	ad1.bonadza.com
 127.0.0.1	ad1.dada.it
 127.0.0.1	ad1.data.ero-advertising.com
 127.0.0.1	ad1.denverpost.com
@@ -1721,6 +1722,7 @@
 127.0.0.1	ad2.bbmedia.cz
 127.0.0.1	ad2.billboard.cz
 127.0.0.1	ad2.billboard.sk
+127.0.0.1	ad2.bonadza.com
 127.0.0.1	ad2.data.ero-advertising.com
 127.0.0.1	ad2.doubleclick.net
 127.0.0.1	ad2.doublepimp.com
@@ -1886,6 +1888,7 @@
 127.0.0.1	ad3.bannerbank.ru
 127.0.0.1	ad3.banners.ero-advertising.com
 127.0.0.1	ad3.bb.ru
+127.0.0.1	ad3.bonadza.com
 127.0.0.1	ad3.data.ero-advertising.com
 127.0.0.1	ad3.doublepimp.com
 127.0.0.1	ad3.fpa.ero-advertising.com
@@ -2667,6 +2670,7 @@
 127.0.0.1	ads.corky.net
 127.0.0.1	ads.cos.com
 127.0.0.1	ads.cpxadroit.com
+127.0.0.1	ads.cpxcenter.com
 127.0.0.1	ads.crakmedia.com
 127.0.0.1	ads.creafi-online-media.com
 127.0.0.1	ads.creative-serving.com
@@ -3944,6 +3948,7 @@
 127.0.0.1	adtoox.com
 127.0.0.1	adtotal.pl
 127.0.0.1	adtpix.com
+127.0.0.1	adtrack.adleadevent.com
 127.0.0.1	adtrack.cimedia.net
 127.0.0.1	adtrack.king.com
 127.0.0.1	adtrack.ministerial5.com
@@ -5848,6 +5853,7 @@
 127.0.0.1	binaryperform.go2cloud.org
 127.0.0.1	bingocabin.com
 127.0.0.1	birogud.info
+127.0.0.1	bist.ailsg.com
 127.0.0.1	bit.do
 127.0.0.1	bitburg.adtech.fr
 127.0.0.1	bitcast-a.bitgravity.com
@@ -6071,6 +6077,7 @@
 127.0.0.1	bsch.serving-sys.com
 127.0.0.1	bsitevisitor.com
 127.0.0.1	bsitm3.com
+127.0.0.1	btdirectnav.com
 127.0.0.1	btg.mtvnservices.com
 127.0.0.1	btsportandroid.2cnt.net
 127.0.0.1	btsportdotcom.2cnt.net
@@ -7126,6 +7133,7 @@
 127.0.0.1	contxmedia.go2cloud.org
 127.0.0.1	conv.adengage.com
 127.0.0.1	conversion-tracker.com
+127.0.0.1	conversion.7search.com
 127.0.0.1	conversionruler.com
 127.0.0.1	conversions.rts.doublepimp.com
 127.0.0.1	cookex.amp.yahoo.com
@@ -7141,6 +7149,7 @@
 127.0.0.1	core.asuum.com
 127.0.0.1	core.naturalmotion.com
 127.0.0.1	coreads.net
+127.0.0.1	coreg-feed.fr
 127.0.0.1	cori-borne.us
 127.0.0.1	cori-stogner.us
 127.0.0.1	corinne-gump.us
@@ -7155,6 +7164,7 @@
 127.0.0.1	coull.go2cloud.org
 127.0.0.1	count.51yes.com
 127.0.0.1	count.be
+127.0.0.1	count.carrierzone.com
 127.0.0.1	count.channeladvisor.com
 127.0.0.1	count.de
 127.0.0.1	count.exitexchange.com
@@ -13216,6 +13226,7 @@
 127.0.0.1	motradon.ivwbox.de
 127.0.0.1	mountainbike.digidip.net
 127.0.0.1	movieads.ero-advertising.com
+127.0.0.1	moviepulp.eu
 127.0.0.1	moz.ivwbox.de
 127.0.0.1	mp-success.com
 127.0.0.1	mp.apmebf.com
@@ -13516,6 +13527,8 @@
 127.0.0.1	newslettersponsor.com
 127.0.0.1	newspaperarchive.go2cloud.org
 127.0.0.1	newt1.adultadworld.com
+127.0.0.1	newt2.adultadworld.com
+127.0.0.1	newt3.adultadworld.com
 127.0.0.1	newtopsites.com
 127.0.0.1	newworldiq.com
 127.0.0.1	nextlevel.com
@@ -13574,6 +13587,7 @@
 127.0.0.1	nodejs01.con.local.vmsn.de
 127.0.0.1	nodes.ads-digitalkeys.com
 127.0.0.1	nodes.da95mr39.com
+127.0.0.1	nodes.dkjkfwr8ie.com
 127.0.0.1	nodes.double6affiliation.com
 127.0.0.1	noelle-alber.us
 127.0.0.1	noelle-traxler.us
@@ -14568,6 +14582,7 @@
 127.0.0.1	px.cdn.creative.medialytics.com
 127.0.0.1	px.ozonemedia.com
 127.0.0.1	px.wa.ui-portal.de
+127.0.0.1	pxses.smowtion.com
 127.0.0.1	p_en.popunder.net
 127.0.0.1	q.azcentral.com
 127.0.0.1	q.pni.com
@@ -15751,7 +15766,6 @@
 127.0.0.1	sosharpcorporation.go2cloud.org
 127.0.0.1	soundadgroup.go2cloud.org
 127.0.0.1	soundbeat.go2cloud.org
-127.0.0.1	soundcloud.hs.llnwd.net
 127.0.0.1	sovereign.sitetracker.com
 127.0.0.1	spacash.com
 127.0.0.1	spaces.ero-advertising.com
@@ -16037,6 +16051,8 @@
 127.0.0.1	static.zangocash.com
 127.0.0.1	static.zanox.com
 127.0.0.1	static.zedo.com
+127.0.0.1	static0.awempire.com
+127.0.0.1	static1.awempire.com
 127.0.0.1	static2.chartbeat.com
 127.0.0.1	static7.adrepublic.net
 127.0.0.1	staticads.btopenworld.com
@@ -16721,7 +16737,9 @@
 127.0.0.1	tr.diradvert.com
 127.0.0.1	tr.newsletter.capdecision.fr
 127.0.0.1	tr.x-tk.net
+127.0.0.1	tr1.myroitracking.com
 127.0.0.1	tr2.vttrack.com.br
+127.0.0.1	tr4.myroitracking.com
 127.0.0.1	traceadmanager.com
 127.0.0.1	tracelive.ru
 127.0.0.1	tracemyip.org
@@ -16996,6 +17014,7 @@
 127.0.0.1	trista-ostby.us
 127.0.0.1	trivia2mobile.com
 127.0.0.1	trix.net
+127.0.0.1	trk-conceptaffi.aprism.me
 127.0.0.1	trk.1cpa.ru
 127.0.0.1	trk.blamads.com
 127.0.0.1	trk.blickmarketing.com
@@ -17038,6 +17057,7 @@
 127.0.0.1	ts-oewa.2cnt.net
 127.0.0.1	ts-orf.2cnt.net
 127.0.0.1	ts.istrack.com
+127.0.0.1	ts.smowtion.com
 127.0.0.1	ts.videosz.com
 127.0.0.1	ts1.hitbox.com
 127.0.0.1	ts1.media-servers.net
@@ -18634,6 +18654,7 @@
 127.0.0.1	www.brook-rosen.us
 127.0.0.1	www.bsitevisitor.com
 127.0.0.1	www.bsitm3.com
+127.0.0.1	www.btdirectnav.com
 127.0.0.1	www.bullseye-network.com
 127.0.0.1	www.bullseye-network.net
 127.0.0.1	www.bumperich.ru
@@ -18797,6 +18818,7 @@
 127.0.0.1	www.controlodequalidade.com
 127.0.0.1	www.conversion-tracker.com
 127.0.0.1	www.conversionruler.com
+127.0.0.1	www.coreg-feed.fr
 127.0.0.1	www.coremetrics.com
 127.0.0.1	www.corinne-gump.us
 127.0.0.1	www.corrie-mchale.us
@@ -19791,6 +19813,7 @@
 127.0.0.1	www.moonmarketing.com
 127.0.0.1	www.motormarket.com
 127.0.0.1	www.movieads.ero-advertising.com
+127.0.0.1	www.moviepulp.eu
 127.0.0.1	www.mp-success.com
 127.0.0.1	www.mpression.net
 127.0.0.1	www.mprptrk.com
@@ -20520,6 +20543,7 @@
 127.0.0.1	www.webtrends.net
 127.0.0.1	www.webtrendslive.com
 127.0.0.1	www.wee.co.il
+127.0.0.1	www.weebecash.com
 127.0.0.1	www.weedoit.fr
 127.0.0.1	www.wendi-bell.us
 127.0.0.1	www.wendi-hulsey.us
@@ -20956,6 +20980,7 @@
 127.0.0.1	zbx02.ixn.vmsn.de
 127.0.0.1	zbxproxy01.bob.local.vmsn.de
 127.0.0.1	zbxproxy01.con.local.vmsn.de
+127.0.0.1	zc.zeroredirect2.com
 127.0.0.1	zdau-builder.122.2o7.net
 127.0.0.1	zdau-zdnetau.122.2o7.net
 127.0.0.1	zdf.de.edgesuite.net
@@ -20994,4 +21019,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 20989
+# Hosts: 21014

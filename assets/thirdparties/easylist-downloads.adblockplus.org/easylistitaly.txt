@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 6nw5946okAgtg/+hNsFsGQ
-! Version: 201406191701
+! Checksum: N7ZHXvgMfAcax4AuYn3gag
+! Version: 201406232331
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 19 Jun 2014 17:01 UTC
+! Ultima modifica: 23 Jun 2014 23:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -187,10 +187,12 @@ corrierecomo.it,corrieredicomo.it#@#.module-ad
 latinomagazine.it#@#.moduletable-advert
 camperonline.it,italiasw.com#@#.pubblicita
 beppegrillo.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
+! Anti-Adblock
+rai.it,rai.tv#@##sponsored-ad
 !---------------------Server pubblicitari di terze parti----------------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_adservers.txt ***
 ||178.32.140.64^$third-party,domain=~pirchio.ip
-||2mdn.net^$object-subrequest,third-party,domain=beppegrillo.it|calciomercato.com|corriereadriatico.it|corrieredellosport.it|forbiciate.com|ilgazzettino.it|ilmattino.it|ilmessaggero.it|ilmeteo.it|italiaoggi.it|lapresse.it|lastampa.it|leggo.it|mediapason.it|mffashion.com|milanofinanza.it|pianetadonna.it|quotidiano.net|quotidianodipuglia.it|tiscali.it|tripadvisor.it|tuttomercatoweb.com|violachannel.tv|youreporter.it|youreporternews.it
+||2mdn.net^$object-subrequest,third-party,domain=beppegrillo.it|calciomercato.com|corriereadriatico.it|corrieredellosport.it|forbiciate.com|ilgazzettino.it|ilmattino.it|ilmessaggero.it|ilmeteo.it|italiaoggi.it|lapresse.it|lastampa.it|leggo.it|mediapason.it|mffashion.com|milanofinanza.it|pianetadonna.it|quotidianodipuglia.it|tiscali.it|tripadvisor.it|tuttomercatoweb.com|violachannel.tv|youreporter.it|youreporternews.it
 ||ad4mat.it^$third-party
 ||adagionet.com^$third-party
 ||adbrawl.com^$third-party
@@ -419,6 +421,7 @@ beppegrillo.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||pronostitalia.com/banner/
 ||pronostitalia.com/images/giocaconwilliamhill.png
 ||puntostampa.altervista.org^$subdocument,third-party
+||r.kelkoo.com^$domain=quotidiano.net
 ||rdn.it/images/BANNER/
 ||regaliper.me^$subdocument,third-party
 ||resources.saldiprivati.com^$third-party
@@ -604,6 +607,7 @@ beppegrillo.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||badtaste.it/file/amazon/
 ||balarm.it/banner.asp?
 ||balarm.it/public/bannernewsletter/
+||banner.casino2k.com^
 ||banneradmin.rai.it^
 ||baseball.it/banner_
 ||bazar.it/backfiles/banners/
@@ -713,6 +717,7 @@ beppegrillo.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||corrieredellosport.it/res/swf/ova.swf$object-subrequest
 ||corrieredicomo.it/images/banners/
 ||corrieredigela.it/public/sponsor/
+||corrierediragusa.it^*/banner/
 ||corriereirpinia.it^*_back1.
 ||corriereirpinia.it^*_Banner_
 ||corriereirpinia.it^*_BannerPageBG.
@@ -1719,6 +1724,7 @@ spaziogames.it###banner_300
 cronachemaceratesi.it###banner_300x250
 ilsannioquotidiano.it###banner_468_60
 lastampa.it###banner_VideoBox
+corrierediragusa.it###banner_bg_flash
 primaonline.it###banner_bottom
 si24.it###banner_branciforte
 contosulconto.it###banner_content
@@ -1866,7 +1872,7 @@ metalitalia.com###middle-home
 mymovies.it###middle1_companion
 udinese.it###mod-udinese-sponsor-panel-fulllength
 ciao.it###mod_ph_merchoffer
-red-live.it###mpu
+105.net,red-live.it###mpu
 ebay.it###mpu-container
 vivicool.it###navpages
 kveeniland.com,poseidonbistro.com###nebanner
@@ -2026,7 +2032,7 @@ pinkdna.it##.adds300x250
 zapster.it##.addx
 caserta24ore.it,fantagazzetta.com,gamemag.it,phicatube.net,radiospeaker.it,teleborsa.it##.ads
 meteowebcam.it##.ads_menu
-ilmessaggero.it,ilsecoloxix.it,pcprofessionale.it,pubblicitaitalia.it##.adsense
+corriereadriatico.it,ilgazzettino.it,ilmattino.it,ilmessaggero.it,ilsecoloxix.it,leggo.it,pcprofessionale.it,pubblicitaitalia.it,quotidianodipuglia.it##.adsense
 meteowebcam.it##.adsense_menu
 a-realestate.it,adessoin.tv,animalidalmondo.it,ansa.it,beauty.it,dagospia.com,esseresani.it,faidatemania.it,gay.it,giornalettismo.com,guidecucina.it,ideeviaggi.it,ilsole24ore.com,iobloggo.com,iogames.it,iomobile.it,lavoroefinanza.it,mammaebambino.it,nonsolocultura.it,odiami.it,outcast.it,pianetagreen.it,pianetamotori.it,radiolina.it,radiomontecarlo.net,repubblica.it,romagnaoggi.it,sky.it,sportpower.it,tuttopercasa.it,verytech.it,virgilio.it,vivalascuola.it,vocenuova.tv##.adv
 famigliacristiana.it##.adv-box
@@ -2059,7 +2065,7 @@ nonsolocap.it##.ba
 gazzetta.it##.bacheca-mkt
 gazzetta.it##.bacheca-mkt-square
 piacenzanight.com##.back_style
-avmagazine.it,ilcrotonese.it,tomshw.it##.background-link
+avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
 advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
@@ -2262,6 +2268,7 @@ videohifi.com##.portlet-static-sponsor
 film.it##.ppn_h
 html.it##.premium-links-container-home-ms
 ciao.it##.priceComp2
+paginegialle.it##.prio
 neveitalia.it,stiledimoda.it,vanityfair.it##.promo
 dimensionesuonoroma.it##.promo-image
 dimensionesuonoroma.it##.promo-list
@@ -2372,6 +2379,7 @@ multiplayer.it##a[href^="http://adv.multiplayer.it/"]
 lifegate.it##a[href^="http://goo.gl/"]
 milanodabere.it##a[href^="http://ib.adnxs.com/clktrb?id="]
 film-mkv.net##a[href^="http://netload.in/index.php?refer_id="]
+quotidiano.net##a[href^="http://redirect.rainbowtgx.com/"]
 catania46.net##a[href^="http://www.clickpoint.it/db/goto.cp?"]
 musicoff.com##a[href^="http://www.musicoff.com/ad/redirect/"]
 zapster.it##a[href^="http://www.paperbox.it/"]
