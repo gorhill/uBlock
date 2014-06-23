@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — About</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<style>
+table th {
+    text-align: left;
+    }
+table td:first-child {
+    padding-right: 2em;
+    }
+#allLocalAssetsUpdated {
+    margin-left: 1em;
+    color: green;
+    }
+#assetList table tr.unchanged {
+    color: gray;
+    }
+#assetList table tr td:nth-of-type(2) {
+    font-weight: bold;
+    white-space: nowrap;
+    }
+#assetList table tr.unchanged td:nth-of-type(2) {
+    font-weight: normal;
+    }
+
+#assetList.ooo > table {
+    display: none;
+    }
+#assetList.oox > table,
+#assetList.oxx > table,
+#assetList.xxx > table {
+    display: block;
+    }
+#assetList > p {
+    display: none;
+    }
+#assetList.ooo > p.ooo {
+    display: block;
+    }
+#assetList.oxx > p.oxx {
+    display: block;
+    }
+#assetList.xxx > p.xxx {
+    display: block;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>µBlock <span id="aboutVersion"></span></h2>
+<div>
+    <span data-i18n="aboutChangelog"></span><br>
+    <span data-i18n="aboutCode"></span><br>
+</div>
+
+<h2 data-i18n="aboutExtensionDataHeader"></h2>
+<div>
+    <p class="para" data-i18n="aboutAssetsUpdatePrompt"></p>
+    <div id="assetList">
+        <!--
+            Let's define 'abc' as bit 0 to 2
+            Where bit can be '0' or '1'
+            Bit 0: list   => o=absent,    x=present
+            Bit 1: list   => o=clean,     x=dirty
+            Bit 2: update => o=idle,      x=updating
+            Therefore:
+                List visible: oox oxx xox
+                Etc.
+        -->
+        <table class="ooo">
+            <tr><th data-i18n="aboutAssetsUpdateColPath"><th data-i18n="aboutAssetsUpdateColStatus">
+            </table>
+        <p class="ooo" style="color:red" data-i18n="aboutAssetsUpdateGetListError"></p>
+        <p class="oxx"><button type="button" id="aboutAssetsUpdateButton" data-i18n="aboutAssetsUpdateButton"></button></p>
+        <p class="xxx"><button type="button" disabled data-i18n="aboutAssetsUpdatingButton"></button></p>
+    </div>
+</div>
+
+<script src="lib/jquery-2.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/dashboard-common.js"></script>
+<script src="js/messaging-client.js"></script>
+<script src="js/about.js"></script>
+
+</body>
+</html>

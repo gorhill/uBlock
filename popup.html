@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="css/common.css" type="text/css">
+<style>
+body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font: 13px sans-serif;
+    background-color: white;
+    }
+h1,h2,h3,h4 {
+    margin:  0;
+    padding: 4px;
+    border: 0;
+    color: white;
+    background-color: #444;
+    text-align: center;
+    }
+body > div {
+    padding: 4px 8px 0 8px;
+    }
+p {
+    margin: 16px 0;
+    white-space: nowrap;
+    text-align: center;
+    }
+#page-blocked {
+    margin-top: 4px;
+    font-size: 20px;
+    }
+#total-blocked {
+    margin-top: 4px;
+    font-size: 14px;
+    }
+#stats {
+    margin-bottom: 4px;
+    text-align: center;
+    }
+#switch .fa {
+    font-size: 48px;
+    color: green;
+    cursor: pointer;
+    }
+#switch .fa.off {
+    color: #ccc;
+    }
+#options {
+    margin-bottom: 0;
+    font-size: smaller;
+    }
+.dim {
+    color: #aaa;
+    text-decoration: none;
+    }
+</style>
+<title>µBlock</title>
+</head>
+
+<body>
+<h4>µBlock</h4>
+<div>
+<p id="switch"><span class="fa">&#xf011;</span></p>
+<p style="font-size: 16px;">requests blocked</p>
+<p id="stats">on this page</p>
+<p id="page-blocked">?</p>
+<p id="stats">since install</p>
+<p id="total-blocked">?</p>
+<p id="options"><a class="dim" href="dashboard.html" target="_blank">Options</a></p>
+</div>
+
+<script src="js/messaging-client.js"></script>
+<script src="js/popup.js"></script>
+</body>
+
+</html>

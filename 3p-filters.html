@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>HTTP Switchboard — Ubiquitous rules</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<style>
+div > p:first-child {
+    margin-top: 0;
+    }
+div > p:last-child {
+    margin-bottom: 0;
+    }
+ul {
+    padding: 0;
+    list-style-type: none;
+    }
+ul > li {
+    margin: 0 0 0 1em;
+    }
+.dim {
+    color: #444;
+    }
+.userUbiquitousHosts {
+    font-size: smaller;
+    width: 36em;
+    height: 16em;
+    white-space: nowrap;
+    }
+</style>
+</head>
+
+<body>
+
+<p id="3pListsOfBlockedHostsPrompt2"></p>
+<ul id="blacklistTemplate" style="display:none">
+    <li class="blacklistDetails"><input type="checkbox">&thinsp;<a href="" type="text/plain"></a>: 
+    <span class="dim" data-i18n="3pListsOfBlockedHostsPerListStats"></span>
+</ul>
+<ul id="blacklists" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
+    <li style="margin-top:0.75em"><input type="checkbox" id="parseAllABPHideFilters"><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span>
+    <span class="dim" id="3pParseAllABPHideFiltersPrompt2"></span>
+    <button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
+    <li style="margin-top:0.75em"><button id="blacklistsApply" disabled="true" data-i18n="3pApplyChanges"></button>
+</ul>
+
+<script src="lib/jquery-2.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/dashboard-common.js"></script>
+<script src="js/messaging-client.js"></script>
+<script src="js/3p-filters.js"></script>
+
+</body>
+</html>

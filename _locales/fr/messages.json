@@ -1,0 +1,130 @@
+{
+    "extName": {
+        "message": "µBlock",
+        "description": "extension name."
+    },
+    "extShortDesc": {
+        "message": "Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+        "description": "this will in chrome web store: must be 132 characters or less"
+    },
+    "3pPageName" : {
+        "message": "Listes de filtres",
+        "description": "appears as tab name in dashboard"
+    },
+    "1pPageName" : {
+        "message": "Vos règles",
+        "description": "appears as tab name in dashboard."
+    },
+    "aboutPageName": {
+        "message": "À propos",
+        "description": "appears as tab name in dashboard"
+    },
+
+
+    "3pListsOfBlockedHostsPrompt2" : {
+        "message": "{{ubiquitousBlacklistCount}} hôtes actuellement bloqués :",
+        "description": "English: {{ubiquitousBlacklistCount}} distinct blocked hostnames from:"
+    },
+    "3pListsOfBlockedHostsPerListStats" : {
+        "message": "{{used}} utilisés sur un total de {{total}}",
+        "description": "English: {{used}} used out of {{total}}"
+    },
+    "3pParseAllABPHideFiltersPrompt1" : {
+        "message": "Utiliser en plus les règles Adblock Plus esthétiques",
+        "description": "English: Parse and enforce Adblock+ element hiding filters."
+    },
+    "3pParseAllABPHideFiltersPrompt2" : {
+        "message": "{{abpHideFilterCount}} règles Adblock Plus esthétiques utilisées",
+        "description": "English: {{abpHideFilterCount}} element hiding filters used."
+    },
+    "3pParseAllABPHideFiltersInfo" : {
+        "message": "<p>Cette option permet de prendre en charge les filtres AdblockPlus de type <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo;</a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont blocables ni par la matrice, ni par le filtrage type Adblock Plus.</p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de <i>µBlock</i></p>",
+        "description": "English: see English messages.json"
+    },
+    "3pListsOfBlockedHostsHeader" : {
+        "message": "Listes d'hôtes à bloquer",
+        "description": "English: Lists of blocked hosts"
+    },
+    "3pApplyChanges" : {
+        "message": "Appliquer",
+        "description": "English: Apply changes"
+    },
+
+
+    "1pFormatHint" : {
+        "message": "Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
+        "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    },
+    "1pImport" : {
+        "message": "Importer",
+        "description": "English: Import and append"
+    },
+    "1pExport" : {
+        "message": "Exporter",
+        "description": "English: Export"
+    },
+    "1pApplyChanges" : {
+        "message": "Appliquer",
+        "description": "English: Apply changes"
+    },
+
+
+    "aboutChangelog" : {
+        "message": "<a href='https://github.com/gorhill/ublock/wiki/Change-log'>Journal des changements (en Anglais)</a>",
+        "description": "English: <a href='https://github.com/gorhill/ublock/wiki/Change-log'>Change log</a>"
+    },
+    "aboutCode" : {
+        "message": "<a href='https://github.com/gorhill/ublock'>Code Source (Licence GPLv3, en Anglais)</a>",
+        "description": "English: <a href='https://github.com/gorhill/ublock'>Source code (GPLv3)</a>"
+    },
+    "aboutExtensionDataHeader" : {
+        "message": "Données de l'extension",
+        "description": "English: Extension data"
+    },
+    "aboutAssetsUpdatePrompt" : {
+        "message": "Les éléments dynamiques, comprenant entre autres listes d'hôtes à bloquer et recettes prédéfinies, peuvent être mis à jour ici sans avoir à attendre la prochaine version de µBlock. Le processus s'effectue à partir de la <a href=\"https://github.com/gorhill/ublock\">page du projet sur Github</a>.",
+        "description": "Short descriptive text of the update feature"
+    },
+    "aboutAssetsUpdateColPath" : {
+        "message": "Élément dynamique",
+        "description": "Path column header"
+    },
+    "aboutAssetsUpdateColStatus" : {
+        "message": "État",
+        "description": "Status column header"
+    },
+    "aboutAssetsUpdateGetListError" : {
+        "message": "Une erreur est survenue. Veuillez vous assurer que les requêtes de type <b>XHR</b> ne soient pas bloquées pour <b>raw2.github.com</b>",
+        "description": "Successful outcome of clicking 'update' button"
+    },
+    "aboutAssetsUpdateStatusAdded" : {
+        "message": "À ajouter",
+        "description": "Displayed in the status column for each entry"
+    },
+    "aboutAssetsUpdateStatusChanged" : {
+        "message": "Nouvelle version disponible",
+        "description": "Displayed in the status column for each entry"
+    },
+    "aboutAssetsUpdateStatusUnchanged" : {
+        "message": "À jour",
+        "description": "Displayed in the status column for each entry"
+    },
+    "aboutAssetsUpdateStatusRemoved" : {
+        "message": "À supprimer",
+        "description": "Displayed in the status column for each entry"
+    },
+    "aboutAssetsUpdateButton" : {
+        "message": "Mettre à jour",
+        "description": "Update button"
+    },
+    "aboutAssetsUpdatingButton" : {
+        "message": "Mise à jour en cours...",
+        "description": "Updating..."
+    },
+
+
+    "dummy": {
+        "message": "This entry must be the last one",
+        "description": "so we dont need to deal with comma for last entry"
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "manifest_version": 2,
+    "name": "__MSG_extName__",
+    "short_name": "µBlock",
+    "version": "0.1.0.0",
+    "description": "__MSG_extShortDesc__",
+    "icons": {
+        "16": "img/icon_16.png",
+        "128": "img/icon_128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "img/browsericons/icon19-off.png",
+            "38": "img/browsericons/icon38-off.png"
+        },
+        "default_title": "__MSG_extName__",
+        "default_popup": "popup.html"
+    },
+    "author": "Raymond Hill",
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["js/contentscript-start.js"],
+        "run_at": "document_start",
+        "all_frames": true
+        },
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["js/contentscript-end.js"],
+        "run_at": "document_end",
+        "all_frames": true
+        }
+    ],
+    "default_locale": "en",
+    "homepage_url": "https://github.com/gorhill/ublock/wiki",
+    "minimum_chrome_version": "22.0",
+    "options_page": "dashboard.html",
+    "permissions": [
+        "downloads",
+        "storage",
+        "tabs",
+        "unlimitedStorage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ]
+}

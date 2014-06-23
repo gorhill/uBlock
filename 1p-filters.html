@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>HTTP Switchboard — Ubiquitous rules</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<style>
+div > p:first-child {
+    margin-top: 0;
+    }
+div > p:last-child {
+    margin-bottom: 0;
+    }
+.dim {
+    color: #444;
+    }
+.userFilters {
+    font-size: smaller;
+    width: 48em;
+    height: 40em;
+    white-space: nowrap;
+    }
+</style>
+</head>
+
+<body>
+
+<div>
+    <p data-i18n="1pFormatHint"></p>
+    <p><button id="importUserFiltersFromFile" data-i18n="1pImport"></button> &emsp; <button id="exportUserFiltersToFile" data-i18n="1pExport"></button></p>
+    <textarea class="userFilters" id="userFilters"></textarea>
+    <p><button id="userFiltersApply" disabled="true" data-i18n="1pApplyChanges"></button></p>
+</div>
+
+<script src="lib/jquery-2.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/dashboard-common.js"></script>
+<script src="js/messaging-client.js"></script>
+<script src="js/1p-filters.js"></script>
+
+</body>
+</html>
