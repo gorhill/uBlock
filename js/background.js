@@ -33,7 +33,7 @@ return {
     userSettings: {
         showIconBadge: true,
         parseAllABPHideFilters: true,
-        exceptionList: {}
+        netExceptionList: {}
     },
     localSettings: {
         blockedRequestCount: 0,

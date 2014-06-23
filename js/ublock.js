@@ -24,13 +24,13 @@
 /******************************************************************************/
 
 µBlock.getNetFilteringSwitch = function(hostname) {
-    var exceptionList = this.userSettings.exceptionList;
-    if ( exceptionList[hostname] !== undefined ) {
+    var netExceptionList = this.userSettings.netExceptionList;
+    if ( netExceptionList[hostname] !== undefined ) {
         return false;
     }
     var hostnames = this.URI.parentHostnamesFromHostname(hostname);
     while ( hostname = hostnames.shift() ) {
-        if ( exceptionList[hostname] !== undefined ) {
+        if ( netExceptionList[hostname] !== undefined ) {
             return false;
         }
     }
@@ -47,11 +47,11 @@
     if ( newState === currentState ) {
         return currentState;
     }
-    var exceptionList = this.userSettings.exceptionList;
+    var netExceptionList = this.userSettings.netExceptionList;
 
     // Add to exception list
     if ( !newState ) {
-        exceptionList[hostname] = true;
+        netExceptionList[hostname] = true;
         this.saveExceptionList();
         return true;
     }
@@ -60,8 +60,8 @@
     if ( newState ) {
         var hostnames = this.URI.allHostnamesFromHostname(hostname);
         while ( hostname = hostnames.shift() ) {
-            if ( exceptionList[hostname] !== undefined ) {
-                delete exceptionList[hostname];
+            if ( netExceptionList[hostname] !== undefined ) {
+                delete netExceptionList[hostname];
             }
         }
         this.saveExceptionList();
@@ -71,9 +71,27 @@
 
 /******************************************************************************/
 
+// For now we will use the net exception list
+
+µBlock.getCosmeticFilteringSwitch = function(hostname) {
+    var netExceptionList = this.userSettings.netExceptionList;
+    if ( netExceptionList[hostname] !== undefined ) {
+        return false;
+    }
+    var hostnames = this.URI.parentHostnamesFromHostname(hostname);
+    while ( hostname = hostnames.shift() ) {
+        if ( netExceptionList[hostname] !== undefined ) {
+            return false;
+        }
+    }
+    return true;
+};
+
+/******************************************************************************/
+
 µBlock.saveExceptionList = function() {
     chrome.storage.local.set({
-        'exceptionList':  this.userSettings.exceptionList
+        'netExceptionList':  this.userSettings.netExceptionList
     });
 };
 

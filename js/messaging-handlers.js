@@ -104,13 +104,19 @@ var onMessage = function(request, sender, callback) {
     // Sync
     var response;
 
+    var pageStore;
+    if ( sender && sender.tab ) {
+        pageStore = µBlock.pageStoreFromTabId(sender.tab.id);
+    }
+    var tabHostname = pageStore ? pageStore.pageHostname : '';
+
     switch ( request.what ) {
         case 'retrieveDomainCosmeticSelectors':
-            response = µBlock.abpHideFilters.retrieveDomainSelectors(request);
+            response = µBlock.abpHideFilters.retrieveDomainSelectors(tabHostname, request);
             break;
 
         case 'retrieveGenericCosmeticSelectors':
-            response = µBlock.abpHideFilters.retrieveGenericSelectors(request);
+            response = µBlock.abpHideFilters.retrieveGenericSelectors(tabHostname, request);
             break;
 
         default:

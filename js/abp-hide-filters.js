@@ -554,11 +554,13 @@ FilterContainer.prototype.addFilterEntry = function(hash, f) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveGenericSelectors = function(request) {
+FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, request) {
+    if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
+        return;
+    }
     if ( µb.userSettings.parseAllABPHideFilters !== true ) {
         return;
     }
-
     if ( !request.selectors ) {
         return;
     }
@@ -614,11 +616,13 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveDomainSelectors = function(request) {
+FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, request) {
+    if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
+        return;
+    }
     if ( µb.userSettings.parseAllABPHideFilters !== true ) {
         return;
     }
-
     if ( !request.locationURL ) {
         return;
     }
@@ -629,11 +633,13 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     //bucketTestCount = 0;
 
     var hostname = pageHostname = µb.URI.hostnameFromURI(request.locationURL);
+
     var r = {
         domain: µb.URI.domainFromHostname(hostname),
         hide: [],
         donthide: []
     };
+
     var bucket;
     var hash = makePrefixHash('#', r.domain);
     if ( bucket = this.filters[hash] ) {
