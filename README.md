@@ -18,7 +18,7 @@ blocker which support EasyList and the likes, and also support host files.
 Cosmetic filters ("element hiding") are supported.
 
 There is nothing more to it. But it does what popular blockers out there do, at a
-fraction of CPU and memory usage.
+fraction of CPU and memory usage for the same blocking power.
 
 Free. Open source. No donations sought. For users by users.
 
