@@ -19,6 +19,8 @@ blocker which support EasyList and the likes, and also support host files.
 There is nothing more to it. But it does what popular blockers out there do, at a
 fraction of CPU and memory usage.
 
+Free. Open source. No donations sought. For users by users.
+
 ## License
 
 <a href="https://github.com/gorhill/httpswitchboard/blob/master/LICENSE.txt">GPLv3</a>.
