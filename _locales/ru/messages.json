@@ -7,6 +7,10 @@
         "message": "Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
         "description": "this will in chrome web store: must be 132 characters or less"
     },
+    "settingsPageName": {
+        "message": "Настройки",
+        "description": "appears as tab name in dashboard."
+    },
     "3pPageName" : {
         "message": "Third-party filters",
         "description": "appears as tab name in dashboard"
@@ -32,6 +36,12 @@
     "popupBlockedSinceInstallPrompt": {
         "message": "since install",
         "description": "English: since install"
+    },
+
+
+    "settingsIconBadgePrompt" : {
+        "message": "Show the number of blocked requests on the icon",
+        "description": "English: Show the number of blocked requests on the icon"
     },
 
 

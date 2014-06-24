@@ -97,12 +97,18 @@
 
 /******************************************************************************/
 
+// Return all settings if none specified.
+
 µBlock.changeUserSettings = function(name, value) {
+    var µb = µBlock;
+
+    if ( name === undefined ) {
+        return µb.userSettings;
+    }
+
     if ( typeof name !== 'string' || name === '' ) {
         return;
     }
-
-    var µb = µBlock;
 
     // Do not allow an unknown user setting to be created
     if ( µb.userSettings[name] === undefined ) {

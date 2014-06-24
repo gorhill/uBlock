@@ -117,13 +117,13 @@ PageStore.prototype.recordRequest = function(type, url, block) {
 // notifying me, and this causes internal cached state to be out of sync.
 
 PageStore.prototype.updateBadge = function() {
-    var netFilteringSwitch = µBlock.getNetFilteringSwitch(this.pageHostname);
+    var netFilteringSwitch = µb.getNetFilteringSwitch(this.pageHostname);
     var iconPath = netFilteringSwitch ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
 
     chrome.browserAction.setIcon({ tabId: this.tabId, path: iconPath });
 
     var iconStr = '';
-    if ( netFilteringSwitch && this.perLoadBlockedRequestCount ) {
+    if ( µb.userSettings.showIconBadge && netFilteringSwitch && this.perLoadBlockedRequestCount ) {
         iconStr = µb.formatCount(this.perLoadBlockedRequestCount);
     }
     chrome.browserAction.setBadgeText({
