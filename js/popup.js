@@ -38,6 +38,33 @@ messaging.start('popup.js');
 
 /******************************************************************************/
 
+formatNumber = function(count) {
+    if ( typeof count !== 'number' ) {
+        return '';
+    }
+    var s = count.toFixed(0);
+    if ( count >= 1000 ) {
+        if ( count < 10000 ) {
+            s = s.slice(0,1) + '.' + s.slice(1,3) + 'K';
+        } else if ( count < 100000 ) {
+            s = s.slice(0,2) + '.' + s.slice(2,3) + 'K';
+        } else if ( count < 1000000 ) {
+            s = s.slice(0,3) + 'K';
+        } else if ( count < 10000000 ) {
+            s = s.slice(0,1) + '.' + s.slice(1,3) + 'M';
+        } else if ( count < 100000000 ) {
+            s = s.slice(0,2) + '.' + s.slice(2,3) + 'M';
+        } else if ( count < 1000000000 ) {
+            s = s.slice(0,3) + 'M';
+        } else {
+            s = s.slice(0,-9) + 'G';
+        }
+    }
+    return s;
+};
+
+/******************************************************************************/
+
 var hasClassName = function(elem, className) {
     var re = new RegExp('(^| )' + className + '( |$)', 'g');
     return re.test(elem.className);
@@ -71,12 +98,10 @@ var renderStats = function() {
         elem.innerHTML = '0';
     } else {
         elem.innerHTML = [
-            blocked,
-            '<span class="dim">&nbsp;/&nbsp;',
-            total,
-            '&nbsp;\u21D2&nbsp;</span>',
+            formatNumber(blocked),
+            '<span class="dim">&nbsp;or&nbsp;',
             (blocked * 100 / total).toFixed(0),
-            '%'
+            '%</span>'
         ].join('');
     }
 
@@ -87,12 +112,10 @@ var renderStats = function() {
         elem.innerHTML = '0';
     } else {
         elem.innerHTML = [
-            blocked,
-            '<span class="dim">&nbsp;/&nbsp;',
-            total,
-            '&nbsp;\u21D2&nbsp;</span>',
+            formatNumber(blocked),
+            '<span class="dim">&nbsp;or&nbsp;',
             (blocked * 100 / total).toFixed(0),
-            '%'
+            '%</span>'
         ].join('');
     }
 
@@ -143,8 +166,8 @@ var handleNetFilteringSwitch = function() {
 /******************************************************************************/
 
 var renderHeader = function() {
-    var hdr = document.querySelector('h1,h2,h3,h4');
-    hdr.innerHTML = hdr.innerHTML + '&ensp;v' + chrome.runtime.getManifest().version;
+    var hdr = document.getElementById('version');
+    hdr.innerHTML = hdr.innerHTML + 'v' + chrome.runtime.getManifest().version;
 };
 
 
