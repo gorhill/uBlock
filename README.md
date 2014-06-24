@@ -6,10 +6,19 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
 
 ![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
 
+Some articles about the origin of the source code behind µBlock:
+
+- [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
+- [Adblock Plus memory consumption](/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
+
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
 or [manually](/gorhill/uBlock/tree/master/dist).
+
+To benefit from the higher efficiency, it is of course not advised to use an 
+inefficient blocker at the same time. µBlock will do as well or better than the 
+popular blockers out there.
 
 ## About
 
