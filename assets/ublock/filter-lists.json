@@ -9,11 +9,9 @@
         "title": "Malware domains"
         },
     "pgl.yoyo.org/as/serverlist": {
-        "off": true,
         "title": "Peter Lowe’s Ad server list"
         },
     "www.malwaredomainlist.com/hostslist/hosts.txt": {
-        "off": true,
         "title": "Malware Domain List"
         },
     "hosts-file.net/ad-servers": {
