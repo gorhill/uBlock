@@ -11,7 +11,7 @@ The above screenshot was taken after running my
 plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshot was 
 taken, I left the browser idle for many minutes so as to let the browser's 
-garbage collector kick in.
+garbage collector kicks in.
 
 Some articles about the origin of the source code behind µBlock:
 
