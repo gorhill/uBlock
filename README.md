@@ -8,8 +8,8 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
 
 Some articles about the origin of the source code behind µBlock:
 
-- [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
-- [Adblock Plus memory consumption](/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
+- [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
+- [Adblock Plus memory consumption](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
 
 ## Installation
 
