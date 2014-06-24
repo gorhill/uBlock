@@ -63,9 +63,6 @@ File system structure:
 var fileSystem;
 var fileSystemQuota = 40 * 1024 * 1024;
 var remoteRoot = µBlock.projectServerRoot;
-
-/******************************************************************************/
-
 var nullFunc = function() { };
 
 /******************************************************************************/
