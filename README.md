@@ -8,7 +8,8 @@ Fast and lean. I mean it.
 
 ## Installation
 
-Coming soon.
+From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
+or [manually](/gorhill/uBlock/tree/master/dist).
 
 ## About
 
