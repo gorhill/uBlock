@@ -134,7 +134,7 @@ function renderBlacklists() {
         child.attr('href', encodeURI(blacklistHref));
         child.html(prettifyListName(blacklist.title, blacklistHref));
         child = $('span', li);
-        text = child.text()
+        text = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats')
             .replace('{{used}}', !blacklist.off && !isNaN(+blacklist.entryUsedCount) ? renderNumber(blacklist.entryUsedCount) : '0')
             .replace('{{total}}', !isNaN(+blacklist.entryCount) ? renderNumber(blacklist.entryCount) : '?')
             ;
@@ -220,7 +220,7 @@ function abpHideFiltersCheckboxChanged() {
 
 /******************************************************************************/
 
-$(function() {
+window.addEventListener('load', function() {
     // Handle user interaction
     $('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
     $('#blacklistsApply').on('click', blacklistsApplyHandler);
