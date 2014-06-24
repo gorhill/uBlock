@@ -11,6 +11,10 @@ Some articles about the origin of the source code behind µBlock:
 - [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
 - [Adblock Plus memory consumption](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
 
+Forums:
+
+- [On Reddit](http://www.reddit.com/r/chrome/comments/28xt2j/%C2%B5block_a_fast_and_lean_blocker_for_chromiumbased/) (benchmark results available there)
+
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
