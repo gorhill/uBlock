@@ -25,6 +25,16 @@ To benefit from the higher efficiency, it is of course not advised to use an
 inefficient blocker at the same time. µBlock will do as well or better than the 
 popular blockers out there.
 
+## Documentation
+
+I think it is pretty obvious, except for this:
+
+![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
+
+The big fat power button is to disable/enable µBlock **for the specific hostname
+can be extracted from the page URL**. It applies to the current page only, it is
+not a global power button.
+
 ## Benchmarks
 
 I ran my [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
