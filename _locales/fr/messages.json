@@ -21,9 +21,23 @@
     },
 
 
+    "popupBlockedRequestPrompt": {
+        "message": "requêtes bloquées",
+        "description": "English: requests blocked"
+    },
+    "popupBlockedOnThisPagePrompt": {
+        "message": "sur cette page",
+        "description": "English: on this page"
+    },
+    "popupBlockedSinceInstallPrompt": {
+        "message": "depuis toujours",
+        "description": "English: since install"
+    },
+
+
     "3pListsOfBlockedHostsPrompt2" : {
-        "message": "{{ubiquitousBlacklistCount}} hôtes actuellement bloqués :",
-        "description": "English: {{ubiquitousBlacklistCount}} distinct blocked hostnames from:"
+        "message": "{{ubiquitousBlacklistCount}} filtres actuellement en action :",
+        "description": "English: {{ubiquitousBlacklistCount}} network filters from:"
     },
     "3pListsOfBlockedHostsPerListStats" : {
         "message": "{{used}} utilisés sur un total de {{total}}",

@@ -49,8 +49,8 @@ p {
     color: #ccc;
     }
 #options {
-    margin-bottom: 0;
-    font-size: smaller;
+    margin: 16px 0 0 0;
+    font-size: 12px;
     }
 .dim {
     color: #aaa;
@@ -64,14 +64,15 @@ p {
 <h4>µBlock</h4>
 <div>
 <p id="switch"><span class="fa">&#xf011;</span></p>
-<p style="font-size: 16px;">requests blocked</p>
-<p id="stats">on this page</p>
+<p style="font-size: 16px;" data-i18n="popupBlockedRequestPrompt"></p>
+<p id="stats" data-i18n="popupBlockedOnThisPagePrompt"></p>
 <p id="page-blocked">?</p>
-<p id="stats">since install</p>
+<p id="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
 <p id="total-blocked">?</p>
 <p id="options"><a class="dim" href="dashboard.html" target="_blank">Options</a></p>
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/messaging-client.js"></script>
 <script src="js/popup.js"></script>
 </body>

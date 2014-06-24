@@ -284,6 +284,8 @@
         if ( reAdblockFilter.test(line) ) {
             if ( abpFilters !== null ) {
                 if ( abpFilters.add(line) ) {
+                    thisListCount++;
+                    thisListUsedCount++;
                     continue;
                 }
             }

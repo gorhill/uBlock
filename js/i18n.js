@@ -22,19 +22,16 @@
 // Helper to deal with the i18n'ing of HTML files.
 // jQuery must be present at this point.
 
-$(function() {
-    $('[data-i18n]').each(function() {
-        var me = $(this);
-        var key = me.data('i18n');
-        me.html(chrome.i18n.getMessage(key));
-    });
-    // copy text of <h1> if any to document title
-    document.title = $('h1').first().text();
+window.addEventListener('load', function() {
+    var i;
+    var fillin = function(elem) {
+            var key = elem.getAttribute("data-i18n");
+            elem.innerHTML = chrome.i18n.getMessage(key);
+        }
 
-    // Tool tips
-    $('[data-i18n-tip]').each(function() {
-        var me = $(this);
-        var key = me.data('i18nTip');
-        me.attr('data-tip', chrome.i18n.getMessage(key));
-    });
+    var elems = document.querySelectorAll('[data-i18n]');
+    i = elems.length;
+    while ( i-- ) {
+        fillin(elems[i]);
+    }
 });

@@ -21,6 +21,20 @@
     },
 
 
+    "popupBlockedRequestPrompt": {
+        "message": "requests blocked",
+        "description": "English: requests blocked"
+    },
+    "popupBlockedOnThisPagePrompt": {
+        "message": "on this page",
+        "description": "English: on this page"
+    },
+    "popupBlockedSinceInstallPrompt": {
+        "message": "since install",
+        "description": "English: since install"
+    },
+
+
     "3pListsOfBlockedHostsPrompt2" : {
         "message": "{{ubiquitousBlacklistCount}} eindeutig blockierte Hostnamen aus:",
         "description": "English: {{ubiquitousBlacklistCount}} distinct blocked hostnames from:"
