@@ -117,6 +117,7 @@ function renderBlacklists() {
         return html.join('');
     };
 
+    var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
     var blacklists = µb.remoteBlacklists;
     var ul = $('#blacklists');
     var keys = Object.keys(blacklists);
@@ -134,7 +135,7 @@ function renderBlacklists() {
         child.attr('href', encodeURI(blacklistHref));
         child.html(prettifyListName(blacklist.title, blacklistHref));
         child = $('span', li);
-        text = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats')
+        text = listStatsTemplate
             .replace('{{used}}', !blacklist.off && !isNaN(+blacklist.entryUsedCount) ? renderNumber(blacklist.entryUsedCount) : '0')
             .replace('{{total}}', !isNaN(+blacklist.entryCount) ? renderNumber(blacklist.entryCount) : '?')
             ;
