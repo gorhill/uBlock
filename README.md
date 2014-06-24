@@ -34,7 +34,7 @@ popular blockers out there.
 
 ## Documentation
 
-I think it is pretty obvious, except for this:
+I think it is pretty obvious, except for this I suppose:
 
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
 
