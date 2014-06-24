@@ -25,9 +25,10 @@ To benefit from the higher efficiency, it is of course not advised to use an
 inefficient blocker at the same time. µBlock will do as well or better than the 
 popular blockers out there.
 
-## Benchmark
+## Benchmarks
 
-I ran my [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) to compare against three popular blockers.
+I ran my [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
+to compare against other popular blockers.
 
 Results -- figures are *3rd party* / *all*:
 
