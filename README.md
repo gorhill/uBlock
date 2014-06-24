@@ -6,6 +6,13 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
 
 ![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
 
+The above screenshot was taken after running my 
+[reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
+plus a bit of random browsing. All blockers were active at the same time, 
+thus they had to deal with exactly the same workload. Before the screenshot was 
+taken, I left the browser idle for many minutes so as to let the browser's 
+garbage collector kick in.
+
 Some articles about the origin of the source code behind µBlock:
 
 - [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
