@@ -83,7 +83,7 @@ The figures show the number of requests **allowed**, thus lower numbers are bett
 
 The less hits on 3rd-party servers, the better. All blockers where configured in such a way as to compare apples-vs-apples.
 
-#### Details of the benchmark
+#### About the benchmarks
 
 - **µBlock:** out-of-the-box settings -- no change.
 - **Adblock Plus:** _"EasyList"_, _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
