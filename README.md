@@ -14,7 +14,7 @@ Some articles about the origin of the source code behind µBlock:
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
-or [manually](/gorhill/uBlock/tree/master/dist).
+or [manually](https://github.com/gorhill/uBlock/tree/master/dist).
 
 To benefit from the higher efficiency, it is of course not advised to use an 
 inefficient blocker at the same time. µBlock will do as well or better than the 
@@ -34,4 +34,4 @@ Free. Open source. No donations sought. For users by users.
 
 ## License
 
-<a href="https://github.com/gorhill/httpswitchboard/blob/master/LICENSE.txt">GPLv3</a>.
+[GPLv3](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt).
