@@ -2,9 +2,9 @@
 
 See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest changes.
 
-An efficient blocker for Chromium-based browsers.
+An efficient blocker for Chromium-based browsers. Fast and lean.
 
-Fast and lean. I mean it.
+![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
 
 ## Installation
 
