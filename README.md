@@ -14,6 +14,7 @@ Some articles about the origin of the source code behind µBlock:
 Forums:
 
 - [On Reddit](http://www.reddit.com/r/chrome/comments/28xt2j/%C2%B5block_a_fast_and_lean_blocker_for_chromiumbased/)
+- [On Hacker News](https://news.ycombinator.com/item?id=7936809)
 
 ## Installation
 
