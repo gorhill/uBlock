@@ -80,11 +80,12 @@ Results -- figures are *3rd party* / *all*:
 * Outbound cookies: 245 / 315
 * Net requests: 1,950 / 2,871
 
-The figures show the number of requests **allowed**, thus lower numbers are better. The point is to show how many 3rd-party servers are hit on average after running the reference benchmark (three repeats in the current instance).
+The figures show the number of requests **allowed**, thus lower numbers are better. 
+The point is to show how many 3rd-party servers are hit on average after running 
+the reference benchmark (three repeats in the current instance).
 
-The less hits on 3rd-party servers, the better. All blockers where configured in such a way as to compare apples-vs-apples.
-
-#### About the benchmarks
+The less hits on 3rd-party servers, the better. All blockers were configured 
+in such a way as to compare apples-vs-apples:
 
 - **µBlock:** out-of-the-box settings -- no change.
 - **Adblock Plus:** _"EasyList"_, _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
