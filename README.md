@@ -87,8 +87,8 @@ The less hits on 3rd-party servers, the better. All blockers where configured in
 
 - **µBlock:** out-of-the-box settings -- nochange.
 - **Adblock Plus:** _"EasyList"_, _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
-- **Ghostery:** _"Advertising"_, _"Analytics"_, _"Beacons"_, _"Privacy"_ checked. _"Widgets"_ unchecked. _"GhostRank"_ unchecked. 
-- **Adguard:** _"English"_, _"Spyware and tracking"_, _"Phishing and malware protection"_ checked. _"Acceptable ads"_ unchecked.
+- **Ghostery:** _"Advertising"_, _"Analytics"_, _"Beacons"_, _"Privacy"_ checked. _"Widgets"_ not checked. _"GhostRank"_ unchecked. 
+- **Adguard:** _"English"_, _"Spyware and tracking"_, _"Phishing and malware protection"_ checked. _"Social media"_ not checked. _"Acceptable ads"_ unchecked.
 - **Disconnect:** out-of-the-box settings -- nochange.
 
 ## About
