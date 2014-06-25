@@ -25,6 +25,10 @@
     },
 
 
+    "popupPowerSwitchInfo": {
+        "message": "click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+        "description": "English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+    },
     "popupBlockedRequestPrompt": {
         "message": "requêtes bloquées",
         "description": "English: requests blocked"
