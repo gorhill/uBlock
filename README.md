@@ -15,7 +15,7 @@ garbage collector kicks in.
 
 Regarding reviews in various web store:
 
-[My answer to Chrome store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate)
+- [My answer to Chrome store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate)
 
 Some articles about the origin of the source code behind µBlock:
 
