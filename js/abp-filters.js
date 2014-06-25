@@ -1376,7 +1376,7 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchString = function(pageStore, url, requestType, requestHostname) {
+FilterContainer.prototype.matchString = function(pageDetails, url, requestType, requestHostname) {
     // adbProfiler.countUrl();
 
     // https://github.com/gorhill/httpswitchboard/issues/239
@@ -1397,7 +1397,7 @@ FilterContainer.prototype.matchString = function(pageStore, url, requestType, re
     // This helps performance compared to testing against both classes of
     // filters in the same loop.
 
-    var pageDomain = pageStore.pageDomain || '';
+    var pageDomain = pageDetails.pageDomain || '';
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
         FirstParty :
         ThirdParty;
@@ -1405,15 +1405,15 @@ FilterContainer.prototype.matchString = function(pageStore, url, requestType, re
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
 
-    // This will be used by hostname-based filters
-    pageHostname = pageStore.pageHostname || '';
-
     // Test hostname-based block filters
     var bf = false;
     bf = this.matchAnyPartyHostname(requestHostname);
     if ( bf === false && party === ThirdParty ) {
         bf = this.match3rdPartyHostname(requestHostname);
     }
+
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
 
     // Test against block filters
     if ( bf === false ) {

@@ -42,6 +42,7 @@ return {
 
     updateAssetsEvery: 5 * 24 * 60 * 60 * 1000,
     projectServerRoot: 'https://raw2.github.com/gorhill/ublock/master/',
+    userFiltersPath: 'assets/user/filters.txt',
 
     // list of remote blacklist locations
     remoteBlacklists: {
@@ -58,8 +59,6 @@ return {
 
     // Power switch to disengage µBlock
     off: false,
-
-    userFiltersPath: 'assets/user/filters.txt',
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,
     storageUsed: 0,

@@ -30,31 +30,40 @@
 
 /******************************************************************************/
 
+var typeToRedirectPathMap = {
+    'stylesheet': chrome.runtime.getURL('css/noop.css'),
+    'image': chrome.runtime.getURL('img/noop.png'),
+    'script': chrome.runtime.getURL('js/noop.js'),
+    'sub_frame': 'about:blank'
+};
+
+/******************************************************************************/
+
 // Intercept and filter web requests according to white and black lists.
 
 var onBeforeRequestHandler = function(details) {
-    var requestType = details.type;
-
     // console.debug('onBeforeRequestHandler()> "%s": %o', details.url, details);
 
     // Do not block behind the scene requests.
-    if ( details.tabId < 0 ) {
-        return;
-    }
-
-    // Never block root main doc.
-    if ( requestType === 'main_frame' && details.parentFrameId < 0 ) {
+    var tabId = details.tabId;
+    if ( tabId < 0 ) {
         return;
     }
 
     var µb = µBlock;
+    var requestType = details.type;
+
+    // Never block root main doc.
+    if ( requestType === 'main_frame' && details.parentFrameId < 0 ) {
+        µb.bindTabToPageStats(tabId, details.url);
+        return;
+    }
+
     var µburi = µb.URI;
     var requestURL = µburi.set(details.url).normalizedURI();
-    var requestScheme = µburi.scheme;
-    var requestHostname = µburi.hostname;
-    var requestPath = µburi.path;
 
     // Ignore non-http schemes
+    var requestScheme = µburi.scheme;
     if ( requestScheme.indexOf('http') !== 0 ) {
         return;
     }
@@ -64,6 +73,9 @@ var onBeforeRequestHandler = function(details) {
         return;
     }
 
+    var requestHostname = µburi.hostname;
+    var requestPath = µburi.path;
+
     // rhill 2013-12-15:
     // Try to transpose generic `other` category into something more
     // meaningful.
@@ -72,27 +84,29 @@ var onBeforeRequestHandler = function(details) {
     }
 
     // Lookup the page store associated with this tab id.
-    var pageStore = µb.pageStoreFromTabId(details.tabId) || {};
+    var pageStore = µb.pageStoreFromTabId(tabId) || {};
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
         reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
     }
+    // Record what happened.
+    if ( pageStore ) {
+        pageStore.recordRequest(requestType, requestURL, reason);
+    }
 
-    // Block using ABP filters?
-    pageStore.recordRequest(requestType, requestURL, reason);
-
-    // whitelisted?
+    // Not blocked?
     if ( reason === false ) {
         return;
     }
 
-    // blacklisted
+    // Blocked
     // console.debug('onBeforeRequestHandler()> BLOCK "%s": %o', details.url, details);
 
-    // If it's a blacklisted frame, redirect to something harmless.
-    if ( requestType === 'sub_frame' ) {
-        return { 'redirectUrl': 'about:blank' };
+    // Redirect to noop versions whenever possible.
+    var redirectPath = typeToRedirectPathMap[requestType];
+    if ( redirectPath ) {
+        return { 'redirectUrl': redirectPath };
     }
 
     return { 'cancel': true };
