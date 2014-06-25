@@ -101,7 +101,7 @@ var onBeforeRequestHandler = function(details) {
     }
 
     // Blocked
-    // console.debug('onBeforeRequestHandler()> BLOCK "%s": %o', details.url, details);
+    //console.debug('µBlock> onBeforeRequestHandler()> BLOCK "%s" because "%s"', details.url, reason);
 
     // Redirect to noop versions whenever possible.
     var redirectPath = typeToRedirectPathMap[requestType];

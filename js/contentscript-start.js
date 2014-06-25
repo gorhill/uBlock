@@ -155,6 +155,16 @@ var domainCosmeticFilteringHandler = function(selectors) {
     if ( styleText.length > 0 ) {
         var style = document.createElement('style');
         style.appendChild(document.createTextNode(styleText.join('\n')));
+        if ( selectors.donthide.length > 0 ) {
+            style.setAttribute(
+                'id',
+                'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5'
+            );
+            style.setAttribute(
+                'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5',
+                encodeURIComponent(selectors.donthide.join('\n'))
+            );
+        }
         var parent = document.head || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);

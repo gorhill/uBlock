@@ -135,6 +135,20 @@ var CosmeticFiltering = function() {
 };
 
 CosmeticFiltering.prototype.onDOMContentLoaded = function() {
+    // https://github.com/gorhill/uBlock/issues/14
+    // Treat any existing domain-specific exception selectors as if they had
+    // been injected already.
+    var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
+    var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
+    if ( exceptions ) {
+        exceptions = decodeURIComponent(exceptions).split('\n');
+        var i = exceptions.length;
+        while ( i-- ) {
+            this.injectedSelectors[exceptions[i]] = true;
+        }
+    }
+
+    // TODO: evaluate merging into a single loop
     this.classesFromNodeList(document.querySelectorAll('*[class]'));
     this.idsFromNodeList(document.querySelectorAll('*[id]'));
     this.retrieveGenericSelectors();
@@ -218,11 +232,10 @@ CosmeticFiltering.prototype.filterUnfiltered = function(inSelectors, outSelector
 };
 
 CosmeticFiltering.prototype.reduce = function(selectors, dict) {
-    var first = dict.µb === undefined;
     var i = selectors.length, selector, end;
     while ( i-- ) {
         selector = selectors[i];
-        if ( first || !dict[selector] ) {
+        if ( !dict[selector] ) {
             if ( end !== undefined ) {
                 selectors.splice(i+1, end-i);
                 end = undefined;
@@ -235,7 +248,6 @@ CosmeticFiltering.prototype.reduce = function(selectors, dict) {
     if ( end !== undefined ) {
         selectors.splice(0, end+1);
     }
-    dict.µb = true;
 };
 
 CosmeticFiltering.prototype.classesFromNodeList = function(nodes) {
