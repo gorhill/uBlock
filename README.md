@@ -13,6 +13,10 @@ thus they had to deal with exactly the same workload. Before the screenshot was
 taken, I left the browser idle for many minutes so as to let the browser's 
 garbage collector kicks in.
 
+Regarding reviews in various web store:
+
+[My answer to Chrome store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate)
+
 Some articles about the origin of the source code behind µBlock:
 
 - [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
