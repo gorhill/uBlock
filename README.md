@@ -6,23 +6,35 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
 
 ![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
 
-The above screenshot was taken after running my 
+<sup>The above screenshot was taken after running my 
 [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
 plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshot was 
 taken, I left the browser idle for many minutes so as to let the browser's 
-garbage collector kicks in.
+garbage collector kicks in.</sup>
 
-Regarding reviews in various web store:
+#### New myths flying around
+
+- "µBlock does not support element hiding".
+
+Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
+_"Your filters"_ text area and see what happens when you visit twitter.com...
+
+- "The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
+
+Hum, µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
+And _Peter Lowes's Ad server_ list. Out of the box. Yet uses half the memory of ABP.
+
+#### Regarding reviews in various web store
 
 - [My answer to Chrome store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate)
 
-Some articles about the origin of the source code behind µBlock:
+#### Some articles about the origin of the source code behind µBlock
 
 - [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
 - [Adblock Plus memory consumption](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
 
-Forums:
+#### Forums
 
 - [On Reddit](http://www.reddit.com/r/chrome/comments/28xt2j/%C2%B5block_a_fast_and_lean_blocker_for_chromiumbased/)
 - [On Hacker News](https://news.ycombinator.com/item?id=7936809)
