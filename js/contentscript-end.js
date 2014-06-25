@@ -293,11 +293,7 @@ CosmeticFiltering.prototype.idsFromNodeList = function(nodes) {
     var i = nodes.length;
     while ( i-- ) {
         id = nodes[i].id;
-        if ( typeof id !== 'string' ) {
-            continue;
-        }
-        id = id.trim();
-        if ( id === '' ) {
+        if ( !id ) {
             continue;
         }
         id = '#' + id;
@@ -312,6 +308,15 @@ CosmeticFiltering.prototype.idsFromNodeList = function(nodes) {
 CosmeticFiltering.prototype.allFromNodeList = function(nodes) {
     this.classesFromNodeList(nodes);
     this.idsFromNodeList(nodes);
+    var i = nodes.length;
+    var node;
+    while ( i-- ) {
+        node = nodes[i];
+        if ( node.querySelectorAll ) {
+            this.classesFromNodeList(node.querySelectorAll('*[class]'));
+            this.idsFromNodeList(node.querySelectorAll('*[id]'));
+        }
+    }
 };
 
 var cosmeticFiltering = new CosmeticFiltering();
@@ -323,12 +328,9 @@ var mutationObservedHandler = function(mutations) {
     var mutation;
     while ( iMutation-- ) {
         mutation = mutations[iMutation];
-        if ( !mutation.addedNodes || !mutation.addedNodes.length ) {
-            // TODO: attr changes also must be dealth with, but then, how
-            // likely is it...
-            continue;
+        if ( mutation.addedNodes ) {
+            cosmeticFiltering.allFromNodeList(mutation.addedNodes);
         }
-        cosmeticFiltering.allFromNodeList(mutation.addedNodes);
     }
 
     cosmeticFiltering.retrieveGenericSelectors();
