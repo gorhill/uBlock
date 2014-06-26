@@ -13,7 +13,7 @@
         },
     "hosts-file.net/ad-servers": {
         "off": true,
-        "title": "hpHosts’s Ad and tracking servers (overzealous lately)"
+        "title": "hpHosts’s Ad and tracking servers"
         },
     "someonewhocares.org/hosts/hosts": {
         "off": true,
