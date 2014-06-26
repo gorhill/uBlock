@@ -13,7 +13,7 @@ thus they had to deal with exactly the same workload. Before the screenshot was
 taken, I left the browser idle for many minutes so as to let the browser's 
 garbage collector kicks in.</sup>
 
-#### New myths flying around
+#### Dispelling a few myths flying around
 
 - "µBlock does not support element hiding".
     - Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
