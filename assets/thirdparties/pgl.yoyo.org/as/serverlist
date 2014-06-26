@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Fri, 16 May 2014 13:34:05 GMT
-# entries:        2491
+# last updated:   Tue, 24 Jun 2014 08:46:59 GMT
+# entries:        2492
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -2102,6 +2102,7 @@
 127.0.0.1 rotabanner.com
 127.0.0.1 roxr.net
 127.0.0.1 rpxnow.com
+127.0.0.1 rtbpop.com
 127.0.0.1 rts.doublepimp.com
 127.0.0.1 ru-traffic.com
 127.0.0.1 ru4.com

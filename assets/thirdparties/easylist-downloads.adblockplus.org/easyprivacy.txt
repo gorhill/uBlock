@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: tqL8p5J9fYfG9tKeO8tAlQ
-! Version: 201406232331
+! Checksum: tAY+73Hhix5wLbb5CvJRRA
+! Version: 201406260041
 ! Title: EasyPrivacy
-! Last modified: 23 Jun 2014 23:31 UTC
+! Last modified: 26 Jun 2014 00:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2591,7 +2591,6 @@ http://utm.
 ||effectivemeasure.net^$third-party
 ||ekmpinpoint.co.uk^$third-party
 ||ekmpinpoint.com^$third-party
-||elasticbeanstalk.com^$third-party
 ||elitics.com^$third-party
 ||eloqua.com^$third-party
 ||emediatrack.com^$third-party
@@ -4734,6 +4733,7 @@ http://utm.
 ||delvenetworks.com/player/plugins/analytics/
 ||demandmedia.com/wm.js
 ||demandmedia.s3.amazonaws.com^$third-party
+||desert.ru/tracking/
 ||detect.ergebnis-dienst.de^
 ||dfdbz2tdq3k01.cloudfront.net^
 ||dialglobal.com^*/Log.aspx?
@@ -6298,6 +6298,7 @@ http://utm.
 ||bat.adforum.com^
 ||baxter.com/includes/wtss.js
 ||bayer.com^*/sp.gif?
+||bbc.co.uk/analytics?
 ||bbc.co.uk/cbbc/statstracker/
 ||bbc.co.uk/click/img/
 ||bbc.co.uk/zaguk.gif?
@@ -8266,7 +8267,6 @@ http://utm.
 ||zeit.de/js/rsa.js
 ||zeit.de/js/rsa2.js
 ! French
-/wp-content/plugins/wp-zeropub-compteur/
 ||allocine.fr/ws/geocoding.ashx
 ||arte.tv/includes/xiti/
 ||clubic.com/editorial/publier_count.php?
@@ -8783,7 +8783,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
+@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.com/js/gweb/analytics/$domain=google.com

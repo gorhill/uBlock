@@ -71,6 +71,7 @@
 ||edomz.com^$third-party
 ||emarketing.net.sa^$third-party
 ||gainmoneyfast.com^$third-party
+||gateads.co^$third-party
 ||geniusinstaller.com^$third-party
 ||hibamedia.com^$third-party
 ||hsoub.com^$third-party
@@ -663,6 +664,7 @@
 ||kazaroza.net^$popup,domain=arablionz.com
 ||khaleejcal.com^*/banners/
 ||kleeja.com/static/images/e3/
+||kora.me^$subdocument,domain=vb.zi-m.com
 ||korabia.com/Content/img/Cocacola.jpg
 ||ktaby.com/adv_ktaby/
 ||ktaby.com/vb/open/
@@ -855,11 +857,13 @@
 ||ta7a.com/open.htm
 ||tabeebk.com^$popup,domain=egynt.net
 ||tangersport.com/VillArt.gif
+||top-an.com^$subdocument,domain=vb.zi-m.com
 ||tourism-review.net/banners/
 ||tvegy.com/open17.js
 ||tvfun.ma/p.js
 ||uob-bh.com/uploadfiles/bahraindir.gif
 ||uskarmawi.com^$subdocument,domain=asalahpal.com
+||vb.zi-m.com/aerowindow/
 ||vbdar.com^$popup,domain=darseries.com
 ||vip4soft.com/draw.swf
 ||vip4soft.com/images/baneers/

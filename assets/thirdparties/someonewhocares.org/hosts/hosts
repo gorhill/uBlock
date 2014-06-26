@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jun 23rd, 2014 at 02:36
+# Last updated: Jun 24th, 2014 at 04:58
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -7054,7 +7054,6 @@ fe80::1%lo0	localhost
 127.0.0.1 srv.juiceadv.com
 127.0.0.1 ssads.osdn.com
 127.0.0.1 s.skimresources.com
-127.0.0.1 ssl.gstatic.com
 127.0.0.1 sso.canada.com
 127.0.0.1 staging.snip.answers.com
 127.0.0.1 stampen.adtlgc.com

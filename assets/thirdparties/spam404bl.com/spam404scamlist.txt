@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 3977
-! Last modified: 13 Jun 2014
+! Version: 4000
+! Last modified: 25 Jun 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -53,6 +53,7 @@
 ##[href^="http://playwatch.pl/"]
 ##[href^="http://ubfiles.com/"]
 ##[href^="http://riofiles.net/"]
+##[href^="http://zippydownloads.com/"]
 !
 !
 !
@@ -3979,6 +3980,21 @@ dream-file.com##[alt="Regular Download"]
 ||findout-here.pw^
 ||fullvideo-watch-here.org^
 ||watch-the-fullvideo.pw^
+||the-pirate-app.com^
+||rapidstockprofit.org^
+||celebrityzone.us^
+||news-today.pw^
+||riotpointsgratuit.net^
+||aeriapointsgenerator.net^
+||cubase7crack.net^
+||hearthstonehack.com^
+||mp3tomidiconverter.net^
+||nhbay.com^
+||reason7crack.com^
+||elitefilez.com^
+||titaniumhacks.com^
+||zippyshares.biz^
+||zippydownloads.com^
 !
 !
 !

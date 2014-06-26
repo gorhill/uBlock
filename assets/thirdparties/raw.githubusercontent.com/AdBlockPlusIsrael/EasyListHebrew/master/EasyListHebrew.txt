@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: atrrPDkYyBKB7ljBDBcHGg
+! Checksum: I/+Czw+xCLfa3k4uUI3QSw
 ! Title: EasyList Hebrew
-! Last modified: 19/06/14  15:05 Jerusalem Daylight Time
+! Last modified: 24/06/14  18:03 Jerusalem Daylight Time
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -113,7 +113,6 @@
 ||dwnmedia.a7.org/inntv/media/
 ||info.a7.org^$domain=inn.co.il
 ||inn.co.il/info_en/
-||media-ios.a7.org^$third-party
 !-Globes-!
 ||download.cast-tv.com/*_flv/prerole$object-subrequest
 ||globes.co.il/data/js/gtv_ads.js
@@ -143,6 +142,7 @@
 !
 !--------------------------1st party blocking rules---------------------------!
 !
+||212.129.12.90/zivlin/t4/*.swf
 ||2eat.co.il/banner/
 ||ads.one.co.il^
 ||ashdodnet.com/dyncontent/t_ad/
@@ -223,7 +223,6 @@
 @@||go.ynet.co.il/short/commerce/2012/weathernew/
 @@||i.total-media.net/yc/dc.$script,domain=winwin.co.il
 @@||info.a7.org/info/$script,domain=inn.co.il
-@@||info.a7.org/info/delivery/
 @@||internet-bee.com/Feats/
 @@||net-games.co.il/flvPlayer/dist/flowplayer-$script
 @@||themarker.com/css/advertisement_article.css
@@ -293,7 +292,6 @@ bipbip.co.il#@#.adlist
 bipbip.co.il#@#.adpic
 blms.co.il#@#.addtitle
 homeless.co.il#@#.postad
-inn.co.il#@##divTopAd
 junkyard.co.il#@#.ad-body
 kml.co.il#@#div[id^="div-gpt-ad-"]
 one.co.il#@#a[href^="http://xads.zedo.com/"]

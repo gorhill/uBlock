@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: pFv+02UBnB9SlH5T0kruZA
-! Version: 201406232330
+! Checksum: m6wwfOx3wzMW/W/+BRfSig
+! Version: 201406260040
 ! Title: EasyList without element hiding rules
-! Last modified: 23 Jun 2014 23:30 UTC
+! Last modified: 26 Jun 2014 00:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -511,6 +511,7 @@
 /125x125ad.
 /126_ad.
 /17/ads/*
+/1912/ads/*
 /1afr.php?
 /2010/ads/*
 /2010main/ad/*
@@ -1234,6 +1235,7 @@
 /adengine_
 /adentry.
 /adError/*
+/adevent.
 /adexample?
 /adexclude/*
 /adexternal.
@@ -1353,6 +1355,7 @@
 /adifyoverlay.
 /adim.html?ad
 /adimage.
+/adimage/*
 /adimage?
 /adimages.
 /adimages/*$~subdocument
@@ -1363,6 +1366,7 @@
 /adinclude/*
 /adindex/*
 /adindicatortext.
+/adinit.
 /adinject.
 /adinjector.
 /adinjector_
@@ -1443,6 +1447,7 @@
 /admatcherclient.
 /admatik.
 /admax.
+/admax/*
 /admaxads.
 /admeasure.
 /admedia.
@@ -2662,6 +2667,7 @@
 /app/ads.
 /Article-Ad-
 /article_ad.
+/articleSponsorDeriv_
 /artimediatargetads.
 /as3overstreamplatformadapter.
 /as_u/ads/*
@@ -3664,6 +3670,7 @@
 /iframedartad.
 /iframes/ad/*
 /ifrm_ads/*
+/ilivid-ad-
 /im-ad/im-rotator.
 /im-ad/im-rotator2.
 /im-popup/*
@@ -3969,7 +3976,6 @@
 /media_ads/*
 /megaad.
 /meme_ad.
-/menu_adv.
 /metaad.
 /metaadserver/*
 /metsbanner.
@@ -4731,6 +4737,7 @@
 /sponsoredlinks?
 /sponsoredlinksiframe.
 /sponsoredlisting.
+/sponsorHeaderDeriv_
 /sponsoringbanner/*
 /sponsorpaynetwork.
 /sponsors-ads/*
@@ -5171,6 +5178,7 @@
 =ad320x50-
 =ad_iframe&
 =ad_iframe_
+=adcenter&
 =adcode&
 =adexpert&
 =admeld&
@@ -6320,6 +6328,7 @@ _a468x60.
 /popunder_$popup
 /promoredirect?*&campaign=*&zone=$popup
 /punder.php$popup
+/realmedia/ads/*$popup
 /servlet/ajrotator/*$popup
 /spopunder^$popup
 ://ads.$popup
@@ -6570,6 +6579,7 @@ _popunder+$popup
 ||adloaded.com^$third-party
 ||adlooxtracking.com^$third-party
 ||adlure.biz^$third-party
+||adlux.com^$third-party
 ||adm.fwmrm.net/crossdomain.xml$domain=cc.com|mtv.com
 ||adm.fwmrm.net/p/msnbc_live/$object-subrequest,third-party,domain=~msnbc.msn.com,~www.nbcnews.com
 ||adm.fwmrm.net/p/mtvn_live/$object-subrequest,third-party
@@ -7197,6 +7207,7 @@ _popunder+$popup
 ||connexity.net^$third-party
 ||connexplace.com^$third-party
 ||connextra.com^$third-party
+||contadd.com^$third-party
 ||contaxe.com^$third-party
 ||content-cooperation.com^$third-party
 ||content.ad^$third-party
@@ -11296,6 +11307,7 @@ _popunder+$popup
 ||widget.kelkoo.com^
 ||widget.raaze.com^
 ||widget.scoutpa.com^$third-party
+||widget.shopstyle.com.au^
 ||widget.shopstyle.com/widget?pid=$subdocument,third-party
 ||widgets.itunes.apple.com^*&affiliate_id=$third-party
 ||widgets.mobilelocalnews.com^$third-party
@@ -11380,19 +11392,22 @@ _popunder+$popup
 ||fastclick.net^$popup
 ||firstload.com^$popup
 ||firstload.de^$popup
+||flashplayer-updates.com^$popup
 ||fleshlight.com/?link=$popup,third-party
 ||free-rewards.com-s.tv^$popup
 ||fulltiltpoker.com/?key=$popup,third-party
 ||fulltiltpoker.com/affiliates/$popup,third-party
 ||fwmrm.net/ad/$popup
 ||generic4all.com^*.dhtml?refid=$popup,third-party
+||hdvid-codec.com^$popup
+||hdvidcodecs.com^$popup
 ||hetu.in^$popup,third-party
 ||homemadecelebrityporn.com/track/$popup,third-party
 ||i2casting.com^$popup,third-party
 ||itunes.apple.com^$popup,domain=fillinn.com
 ||liutilities.com^*/affiliate/$popup
 ||lovefilm.com/partners/$popup,third-party
-||lp.ilivid.com/?$third-party
+||lp.ilivid.com/?$popup,third-party
 ||lp.imesh.com/?$popup,third-party
 ||lp.titanpoker.com^$popup,third-party
 ||lumosity.com/landing_pages/$popup
@@ -12840,6 +12855,8 @@ _popunder+$popup
 ||episodic.com^*/logos/player-
 ||eprop.co.za/images/banners/
 ||eq2flames.com/images/styles/eq2/images/banner
+||espn.co.uk/espnuk/williamhill/
+||espn.co.uk/espnuk/williamhill_
 ||espn.co.uk^*/viagogo_sports.html
 ||espn.go.com/ads/
 ||espn.vad.go.com^$domain=youtube.com
@@ -14664,6 +14681,7 @@ _popunder+$popup
 ||smartmoney.net^*-sponsor-
 ||smartname.com/scripts/google_afd_v2.js
 ||smashingapps.com/banner/
+||smh.com.au/compareandsave/
 ||smh.com.au/images/promo/
 ||smile904.fm/images/banners/
 ||smn-news.com/images/banners/
@@ -14671,7 +14689,6 @@ _popunder+$popup
 ||smotrisport.com/ads/
 ||smwcentral.net/html/$image
 ||snimg.com/image/sponsors/
-||snipmp3.com/images/ilivid-ad-
 ||snopes.com/common/include/$subdocument
 ||snopes.com^*/casalebanner.asp
 ||snopes.com^*/casalebox.asp
@@ -16597,6 +16614,7 @@ _popunder+$popup
 @@||advertiser.seek.co.nz^$~third-party
 @@||advertiser.seek.com.au^$~third-party
 @@||advertiser.trialpay.com^$~third-party
+@@||advertising.acne.se^$~third-party
 @@||advertising.racingpost.com^$image,script,stylesheet,~third-party,xmlhttprequest
 @@||advertising.scoop.co.nz^
 @@||advertising.theigroup.co.uk^$~third-party
@@ -17101,6 +17119,7 @@ _popunder+$popup
 @@||google.*/search?sclient=*&q=$xmlhttprequest
 @@||google.*/webpagethumbnail?*&query=$script
 @@||google.com/_/apps-static/*/socialads/$script,stylesheet
+@@||google.com/_static/images/*/ads.png
 @@||google.com/ads/search/module/ads/*/search.js$domain=about.com|armstrongmywire.com|atlanticbb.net|bestbuy.com|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|dish.net|ehow.com|forbbbs.org|forbes.com|hargray.net|hawaiiantel.net|hickorytech.net|homeaway.co.uk|knology.net|livestrong.com|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|query.nytimes.com|rentals.com|search.rr.com|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|trustedreviews.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net|zoover.co.uk|zoover.com
 @@||google.com/adsense/$subdocument,domain=sedo.co.uk|sedo.com|sedo.jp|sedo.kr|sedo.pl
 @@||google.com/adsense/search/ads.js$domain=armstrongmywire.com|atlanticbb.net|bestbuy.com|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|dish.net|forbbbs.org|forbes.com|hargray.net|hawaiiantel.net|hickorytech.net|homeaway.co.uk|knology.net|livestrong.com|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|query.nytimes.com|rentals.com|search.rr.com|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|trustedreviews.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net|www.google.com|zoover.co.uk|zoover.com
@@ -18070,6 +18089,7 @@ _popunder+$popup
 @@||appfull.net^$elemhide
 @@||arto.com/includes/js/adtech.de/script.axd/adframe.js?
 @@||atomicmpc.com.au/ads/chico.js$domain=atomicmpc.com.au
+@@||atresplayer.com/adsxml/$object-subrequest
 @@||atresplayer.com/static/js/advertisement.js
 @@||auditude.com/player/js/lib/aud.html5player.js
 @@||avaxhome.cc/assets/dtim*.js
@@ -18098,6 +18118,7 @@ _popunder+$popup
 @@||checkrom.com/stylesheets/blogads.css
 @@||chrissmoove.com^$elemhide
 @@||chrissmoove.com^*/advertisement.js
+@@||classic-retro-games.com/js/advertisement.js
 @@||clicksor.com/newServing/getkey.php?$domain=rapid8.com
 @@||clicksor.com/newServing/js/show_ad.js$domain=rapid8.com
 @@||clicksor.com/newServing/showAd.php?*adtype=2$script,domain=rapid8.com
@@ -18221,6 +18242,7 @@ _popunder+$popup
 @@||junksport.com/watch/advertisement.js
 @@||kissanime.com^$elemhide
 @@||lag10.net^$elemhide
+@@||lasexta.com/adsxml/$object-subrequest
 @@||leaguesecretary.com/advertisement.js
 @@||liberallogic101.com/show_ads.js
 @@||lilfile.com/js/advertise-2.js
@@ -18335,10 +18357,9 @@ _popunder+$popup
 @@||sheepskinproxy.com/js/advertisement.js
 @@||shimory.com/js/show_ads.js
 @@||sixpool.me^$image,domain=majorleaguegaming.com
+@@||smartadserver.com/call/pubx/*/blq%3D1;pos%3D*;null?$object-subrequest,domain=atresplayer.com
 @@||smartadserver.com/call/pubx/*/blq%3D1;pos%3D1;?$object-subrequest,domain=atresplayer.com
-@@||smartadserver.com/call/pubx/*/blq%3D1;pos%3D1;null?$object-subrequest,domain=atresplayer.com
 @@||smartadserver.com/call/pubx/*/blq%3D1;pos%3D2;?$object-subrequest,domain=atresplayer.com
-@@||smartadserver.com/call/pubx/*/blq%3D1;pos%3D2;null?$object-subrequest,domain=atresplayer.com
 @@||smartadserver.com/call/pubx/*/blq=1;pos=1;?$object-subrequest,domain=lasexta.com
 @@||sockshare.com/js/$script
 @@||sominaltvfilms.com/wp-content/*/adbanner/$image

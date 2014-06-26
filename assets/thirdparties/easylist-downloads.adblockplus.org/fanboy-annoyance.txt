@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 2RiaI6VFVs2YBNF30viOkw
-! Version: 201406232331
+! Checksum: 67fNx11KgAr6tUOFPr4mSw
+! Version: 201406260041
 ! Title: Fanboy's Annoyance List
-! Last modified: 23 Jun 2014 23:31 UTC
+! Last modified: 26 Jun 2014 00:41 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -771,6 +771,7 @@ _social_rss.
 /header/twitter-
 /header_fb.
 /header_social_
+/header_socials.
 /headerSocialIcons.
 /home/facebook.
 /home/twitter.
@@ -4828,6 +4829,7 @@ _youtube_small.
 ##.header-share-twitter
 ##.header-social
 ##.header-social-buttons
+##.header-socials
 ##.header-twitter
 ##.headerCookie
 ##.headerGPlusIcon
@@ -11785,6 +11787,8 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||wn-trauer.de^*/socialshareprivacy/$script
 @@||womansday.com/cm/shared/social/social_tools-LL.js
 @@||wsj.net^*/social_icons.png$domain=marketwatch.com
+@@||www.google.*/images/*google.png
+@@||www.google.*/images/*googleplus.png
 @@||www.google.*/tv/images/*youtube.png
 @@||www.google.*/tv/images/youtube.jpg
 @@||xda-developers.com^*/google-plus-login-small.png

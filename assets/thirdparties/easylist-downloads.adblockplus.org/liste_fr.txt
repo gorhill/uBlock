@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 6jlmxNHSGxYdNMDDIUcMsg
-! Version: 201406232331
+! Checksum: EDsB9nelO70Kl+0tPl+0bQ
+! Version: 201406260041
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -561,6 +561,7 @@ _regiepub/
 ||roxservers.com/images/banners/
 ||ruedeslibraires.com/livre-affiliation/
 ||rwabe.com/pub/
+||s-sfr.fr/stats/authMsg.js
 ||saintseiya.lesite.free.fr/images/bannieres/
 ||salopes.free.fr/ban/
 ||service-factures.fr/bannieres/
@@ -3377,11 +3378,13 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@|http://*.us.to/*.js|$script,third-party
 @@|http://*.vr.lt/*.js|$script,third-party
 @@||3dxtras.com/*.js|$script,third-party
+@@||905tech.com/*.js|$script,third-party
 @@||afust.ax.lt/*.js|$script,third-party
 @@||awiki.org/*.js|$script,third-party
 @@||azqmf.ro.lt/*.js|$script,third-party
 @@||bad.mn/*.js|$script,third-party
 @@||bkafw.us.to/*.js|$script,third-party
+@@||caledonianlab.com/*.js|$script,third-party
 @@||crabdance.com/*.js|$script,third-party
 @@||cteyd.na.tl/*.js|$script,third-party
 @@||cvhyx.vr.lt/*.js|$script,third-party
@@ -3423,9 +3426,11 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||wtf.im/*.js|$script,third-party
 @@||yblpg.ax.lt/*.js|$script,third-party
 @@||yspzd.na.tl/*.js|$script,third-party
+|http://*.905tech.com/$third-party,xmlhttprequest
 |http://*.awiki.org/$third-party,xmlhttprequest
 |http://*.ax.lt/$third-party,xmlhttprequest
 |http://*.bad.mn/$third-party,xmlhttprequest
+|http://*.caledonianlab.com/$third-party,xmlhttprequest
 |http://*.cr.rs/$third-party,xmlhttprequest
 |http://*.dyx.com/$third-party,xmlhttprequest
 |http://*.eaglepoint.us/$third-party,xmlhttprequest

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: IAG62u1MxGTMKtReoUbhNA
-! Version: 201406232330
-! Last modified: 23 Jun 2014 23:30 UTC
+! Checksum: +AWoFDJrFX+Mx1QymWXHxw
+! Version: 201406260040
+! Last modified: 26 Jun 2014 00:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1800,6 +1800,7 @@ _tizers.
 ||2e0.ru^
 ||2lycosu.com^
 ||2lycosy.com^
+||2mdn.net^*/adsapi_
 ||2tr45.net^
 ||2under.ru^
 ||34bogatirya.ru^
@@ -2932,6 +2933,7 @@ fototeens.lifeforums.ru###popup
 wmforum.2bb.ru###pun-announcement
 magtimes.info###s\(1\)
 2ip.ru##.ads + .nav
+acer-a500.ru##.advs
 auto.e1.ru##.au-main-container_e1 > noindex
 sinoptik.ua##.b-partners
 magtimes.info##.b1
@@ -2971,6 +2973,7 @@ wmforum.2bb.ru##.tclcon > noindex
 wmforum.2bb.ru##.tclcon > table[height="31"]
 comss.ru##.top + .av
 map.cn.ua##.topAdv
+dota2.ru##.vadv-block
 ngs.ru##.velum
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
@@ -4261,7 +4264,7 @@ seonews.ru###tpl_vertbanner_block
 europaplus.ru##.adwolf-holder
 brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
 redtram.com##.b-informers
-avatar.online.ua##.banner-top
+online.ua##.banner-top
 mmorpg.ua##.banner_left_col
 gismeteo.ru##.body > .top
 i.ua##.clear.logo_container
@@ -4282,6 +4285,7 @@ free-torrents.org##.topmenu ~ br
 comss.info,comss.ru##.toppage
 rusdtp.ru##.ya-direct
 demotivation.me##body > noindex
+selectornews.com##div[class$="-banner"]
 news.sportbox.ru##div[class^="adriver_"]
 newsvl.ru##div[id][style="height: 120px;"]
 newsvl.ru##div[id][style="height: 80px;"]
@@ -5765,6 +5769,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||7771000.ru/images/*/baners/$~third-party
 @@||900.md/ads/images/$~third-party
 @@||900.md/ads/js/$~third-party
+@@||ad4.liverail.com/?LR_PUBLISHER_ID=$domain=moevideo.net
 @@||adcast.ru/mtsweb?$domain=mts.ru
 @@||adman.com^$~third-party
 @@||admitad.com/public/advertising_campaign/images/$domain=getcoupons.ru
@@ -5859,6 +5864,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||sellua.info^*/ad/$domain=sellua.info
 @@||semrush.com/m/scripts/reports/backlinks.$~third-party
 @@||sims3club.ru/images/bn/$~third-party
+@@||sn00.net^$domain=selectornews.com
 @@||statcounter.com/counter/counter.js$~third-party
 @@||stopgame.ru/www/delivery/afr.php?*&target=_top&$subdocument,domain=stopgame.ru
 @@||stopgame.ru/www/delivery/ck.php?$subdocument,domain=stopgame.ru
@@ -5889,10 +5895,6 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||yandex.ru/page/$domain=bestpersons.ru
 @@||yandex.ru/resource/$domain=bestpersons.ru
 @@||yandex.ru/system/context.js$domain=bestpersons.ru
-roshlam.ru#@#.adverts
-sellua.info#@#.ad_img
-sellua.info#@#.ad_item
-sellua.info#@#.lastads
 !#unhiding.bookmark
 stepashka.com#@##ad_header
 devicesearch.ru#@##ad_top
@@ -5906,6 +5908,8 @@ filecheck.ru#@##contentAd
 irr.ru#@#.ad-block
 roshlam.ru#@#.ad-text
 oo.by#@#.ad_content
+sellua.info#@#.ad_img
+sellua.info#@#.ad_item
 photodoska.ru#@#.ad_large
 photodoska.ru#@#.ad_small
 my.mail.ru#@#.adds
@@ -5917,11 +5921,13 @@ fridger.com.ua,postiralka.com.ua#@#.adv_left
 fridger.com.ua,postiralka.com.ua#@#.adv_right
 metagames.ru#@#.adv_top
 jamesedition.ru#@#.advert2
-am.ru#@#.adverts
+selectornews.com#@#.advertising-content
+am.ru,roshlam.ru#@#.adverts
 irr.ru#@#.b-advert
 airmediacenter.com#@#.b-banner
 mygames.com.ua#@#.big-ads
 skodarapidclub.ru#@#.headerad
+sellua.info#@#.lastads
 mts.ru#@#.wide-ad
 bestpersons.ru#@#.ya-partner_ads-up
 !#detect.bookmark
