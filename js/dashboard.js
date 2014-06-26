@@ -45,7 +45,7 @@ $(function() {
     $(window).on('hashchange', onTabClickHandler);
     var hash = window.location.hash;
     if ( hash.length < 2 ) {
-        hash = '#settings';
+        hash = '#thirdparty-filters';
     }
     loadDashboardPanel(hash);
 });

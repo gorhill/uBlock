@@ -121,9 +121,8 @@
 
     // Pre-change
     switch ( name ) {
-    
-    default:        
-        break;
+        default:        
+            break;
     }
 
     // Change
@@ -131,9 +130,8 @@
 
     // Post-change
     switch ( name ) {
-    
-    default:        
-        break;
+        default:
+            break;
     }
 
     µb.saveUserSettings();
@@ -179,4 +177,3 @@
     }
     return s;
 };
-

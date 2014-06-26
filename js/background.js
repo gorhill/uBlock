@@ -52,13 +52,8 @@ return {
         // 3rd-party lists fetched dynamically
         },
 
-    // urls stats are kept on the back burner while waiting to be reactivated
-    // in a tab or another.
     pageStores: {},
     pageStoreDump: {},
-
-    // Power switch to disengage µBlock
-    off: false,
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,
     storageUsed: 0,
