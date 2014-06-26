@@ -32,7 +32,7 @@ extensions may also add their own memory footprint.)
 
 #### Regarding reviews in various web store
 
-- [My answer to Chrome store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate)
+- [My answer to web store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate)
 
 #### Some articles about the origin of the source code behind µBlock
 
