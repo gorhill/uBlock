@@ -1,0 +1,44 @@
+An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+
+Usage: The big fat power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
+
+Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+
+Out of the box, these lists of filters are loaded and enforced:
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+More lists are available for you to select if you wish:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Etc.
+
+Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, µBlock still has a lower memory footprint than other very popular blockers out there.
+
+***
+
+Since the review area does not allow the author to answer, with this project I decided to answer through the project's home site, so hopefully this will of some help to answer question, or correct inaccuracies (which may also occur in good reviews):
+
+https://github.com/gorhill/uBlock/wiki/My-answer-to-Chrome-store-reviews-where-appropriate
+
+***
+
+From the author of HTTP Switchboard. Some work from contributors of HTTP Switchboard was also imported (translations).
+
+Free.
+Open source (GPLv3)
+For users by users.
+
+It's quite an early version, keep this in mind when you review.
+
+Project change log:
+https://github.com/gorhill/uBlock/wiki/Change-log
