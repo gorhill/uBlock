@@ -16,14 +16,16 @@ garbage collector kicks in.</sup>
 #### New myths flying around
 
 - "µBlock does not support element hiding".
-
-Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
+    - Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
 _"Your filters"_ text area and see what happens when you visit twitter.com...
-
 - "The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
+    - Hum, µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
+And _Peter Lowes's Ad server_ list. Out of the box. Yet uses less than half the 
+memory of ABP.
 
-Hum, µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
-And _Peter Lowes's Ad server_ list. Out of the box. Yet uses half the memory of ABP.
+And for a fun memory test, you can try yourself the 
+[infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
+once with only ABP as the active extension, and once as only µBlock as the active extension.
 
 #### Regarding reviews in various web store
 
