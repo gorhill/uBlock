@@ -25,8 +25,7 @@ to extract filters out of it.
     - Hum, µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
 And _Peter Lowes's Ad server_ list. Out of the box. Yet uses less than half the 
 memory of ABP.
-
-And for a fun memory test, you can try yourself the 
+    - And for a fun memory test, you can try yourself the 
 [infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
 once with only ABP as the active extension, and once with only µBlock as the active extension.
 
