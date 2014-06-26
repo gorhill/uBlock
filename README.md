@@ -4,9 +4,13 @@ See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest c
 
 An efficient blocker for Chromium-based browsers. Fast and lean.
 
+Chromium on Linux 64-bit:
 ![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
 
-<sup>The above screenshot was taken after running my 
+Opera 22 on Windows 7 32-bit:
+![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png)
+
+<sup>The above screenshots were taken after running my 
 [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
 plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshot was 
