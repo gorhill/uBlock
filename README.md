@@ -16,9 +16,12 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
 
 <sup>The above screenshots were taken after visiting many [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
 links plus a bit of random browsing. All blockers were active at the same time, 
-thus they had to deal with exactly the same workload. Before the screenshot was 
+thus they had to deal with exactly the same workload. Before the screenshots were 
 taken, I left the browser idle for many minutes so as to let the browser's 
-garbage collector kicks in.</sup>
+garbage collector kicks in. Also, after a while idling, it's good to open the dev
+console for each extension and force a garbage collection cycle by clicking a couple of times 
+the trashcan icon in the _Timeline_ tab (this caused a ~20MB drop for µBlock and Adguard in Opera) 
+as garbage collectors sometimes works in a very lazy way, so I did this for each extension.</sup>
 
 #### Dispelling a few myths flying around
 
