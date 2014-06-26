@@ -27,7 +27,8 @@ And _Peter Lowes's Ad server_ list. Out of the box. Yet uses less than half the
 memory of ABP.
     - And for a fun memory test, you can try yourself the 
 [infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
-once with only ABP as the active extension, and once with only µBlock as the active extension.
+once with only ABP as the active extension, and once with only µBlock as the active extension. (Other 
+extensions may also add their own memory footprint.)
 
 #### Regarding reviews in various web store
 
