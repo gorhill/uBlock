@@ -156,9 +156,10 @@ fraction of CPU and memory usage for the same blocking power.
 
 Free. Open source. No donations sought. For users by users.
 
-Without the preset lists, this extension is nothing. So if ever you really do want 
-to contribute something, think about the people working non-stuff to maintain the 
-filter lists you are using which are available to all for free.
+Without the preset lists of filters, this extension is nothing. So if ever you 
+really do want to contribute something, think about the people working hard 
+to maintain the filter lists you are using, which were made available to you 
+for free.
 
 ## License
 
