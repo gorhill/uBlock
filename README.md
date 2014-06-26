@@ -20,7 +20,7 @@ thus they had to deal with exactly the same workload. Before the screenshots wer
 taken, I left the browser idle for many minutes so as to let the browser's 
 garbage collector kicks in. Also, after a while idling, it's good to open the dev
 console for each extension and force a garbage collection cycle by clicking a couple of times 
-the trashcan icon in the _Timeline_ tab (this caused a ~20MB drop for µBlock and Adguard in Opera) 
+the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes works in a very lazy way, so I did this for each extension.</sup>
 
 #### Dispelling a few myths flying around
