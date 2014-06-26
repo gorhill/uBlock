@@ -4,15 +4,19 @@ See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest c
 
 An efficient blocker for Chromium-based browsers. Fast and lean.
 
-Chromium on Linux 64-bit:
-![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png)
+<p align="center">
+    Chromium on Linux 64-bit<br>
+    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" />
+</p>
 
-Opera 22 on Windows 7 32-bit:
-![screenshot](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png)
+<p align="center">
+    Opera 22 on Windows 7 32-bit<br>
+    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" />
+</p>
 
-<sup>The above screenshots were taken after running my 
+<sup>The above screenshots were taken after visiting many  
 [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
-plus a bit of random browsing. All blockers were active at the same time, 
+links plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshot was 
 taken, I left the browser idle for many minutes so as to let the browser's 
 garbage collector kicks in.</sup>
@@ -33,6 +37,8 @@ memory of ABP.
 [infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
 once with only ABP as the active extension, and once with only µBlock as the active extension. (Other 
 extensions may also add their own memory footprint.)
+- "It consumes less memory because it doesn't block as well"
+    - Actually it blocks more efficiently. See [_benchmark_](#benchmarks) below.
 
 #### Regarding reviews in various web store
 
