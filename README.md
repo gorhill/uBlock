@@ -25,7 +25,7 @@ memory of ABP.
 
 And for a fun memory test, you can try yourself the 
 [infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
-once with only ABP as the active extension, and once as only µBlock as the active extension.
+once with only ABP as the active extension, and once with only µBlock as the active extension.
 
 #### Regarding reviews in various web store
 
