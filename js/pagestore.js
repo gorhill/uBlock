@@ -59,6 +59,7 @@ function PageStore(tabId, pageURL) {
     this.pageDomain = '';
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
+    this.blockedRequests = {};
     this.disposeTime = 0;
     this.init(tabId, pageURL);
 }
@@ -72,6 +73,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
+    this.blockedRequests = {};
     this.disposeTime = 0;
     return this;
 };
@@ -99,13 +101,18 @@ PageStore.prototype.recordRequest = function(type, url, block) {
     // the page is no longer visible in a browser tab.
     µb.updateBadge(this.tabId);
 
-    if ( block !== false ) {
-        this.perLoadBlockedRequestCount++;
-        µb.localSettings.blockedRequestCount++;
-    } else {
+    if ( block === false ) {
         this.perLoadAllowedRequestCount++;
         µb.localSettings.allowedRequestCount++;
+        return;
     }
+
+    this.perLoadBlockedRequestCount++;
+    µb.localSettings.blockedRequestCount++;
+
+    // https://github.com/gorhill/uBlock/issues/7
+    // https://github.com/gorhill/uBlock/issues/12
+    this.blockedRequests[url] = true;
 };
 
 /******************************************************************************/
@@ -117,6 +124,9 @@ PageStore.prototype.recordRequest = function(type, url, block) {
 // notifying me, and this causes internal cached state to be out of sync.
 
 PageStore.prototype.updateBadge = function() {
+    // https://github.com/gorhill/uBlock/issues/19
+    // TODO: need to check with µb object to see whether tab still exists.
+
     var netFilteringSwitch = µb.getNetFilteringSwitch(this.pageHostname);
     var iconPath = netFilteringSwitch ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
 

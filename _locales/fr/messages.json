@@ -43,6 +43,10 @@
     },
 
 
+    "settingsCollapseBlockedPrompt" : {
+        "message": "Cacher les espaces réservés des éléments bloqués",
+        "description": "English: Hide placeholders of blocked elements"
+    },
     "settingsIconBadgePrompt" : {
         "message": "Afficher le nombre de requêtes bloquées sur l'icône",
         "description": "English: Show the number of blocked requests on the icon"

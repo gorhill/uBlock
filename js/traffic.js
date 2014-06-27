@@ -19,7 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint multistr: true */
 /* global chrome, µBlock */
 
 /******************************************************************************/
@@ -50,8 +49,8 @@ var onBeforeRequestHandler = function(details) {
         return;
     }
 
-    var µburi = µb.URI;
-    var requestURL = µburi.set(details.url).normalizedURI();
+    var requestURL = details.url;
+    var µburi = µb.URI.set(details.url);
 
     // Ignore non-http schemes
     var requestScheme = µburi.scheme;
@@ -79,7 +78,9 @@ var onBeforeRequestHandler = function(details) {
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
+        //quickProfiler.start('abpFilters.matchString');
         reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
+        //quickProfiler.stop();
     }
     // Record what happened.
     if ( pageStore.recordRequest ) {

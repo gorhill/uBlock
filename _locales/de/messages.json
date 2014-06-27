@@ -43,6 +43,10 @@
     },
 
 
+    "settingsCollapseBlockedPrompt" : {
+        "message": "Hide placeholders of blocked elements",
+        "description": "English: Hide placeholders of blocked elements"
+    },
     "settingsIconBadgePrompt" : {
         "message": "Zeige die Zahl der blockierten Anforderungen auf dem Icon",
         "description": "English: Show the number of blocked requests on the icon"

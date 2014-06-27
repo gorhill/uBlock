@@ -31,9 +31,10 @@ return {
     manifest: chrome.runtime.getManifest(),
 
     userSettings: {
-        showIconBadge: true,
+        collapseBlocked: true,
         parseAllABPHideFilters: true,
-        netExceptionList: {}
+        netExceptionList: {},
+        showIconBadge: true
     },
     localSettings: {
         blockedRequestCount: 0,

@@ -335,6 +335,52 @@ var cosmeticFiltering = new CosmeticFiltering();
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/7
+
+var hideBlockedElements = function(elems, details) {
+    var blockedRequests = details.blockedRequests;
+    var collapse = details.collapse;
+    var i = elems.length;
+    var elem;
+    while ( i-- ) {
+        elem = elems[i];
+        if ( !elem.src ) {
+            continue;
+        }
+        if ( blockedRequests[elem.src] ) {
+            elem.style.visibility = 'hidden';
+            if ( collapse ) {
+                elem.style.width = '0';
+                elem.style.height = '0';
+            }
+        }
+    }
+};
+
+var hideBlockedElementAddedNodes = function(nodes) {
+    var onBlockedRequestsReceived = function(details) {
+        hideBlockedElements(nodes, details);
+        var i = nodes.length;
+        var elem;
+        while ( i-- ) {
+            elem = nodes[i];
+            if ( elem.querySelectorAll ) {
+                hideBlockedElements(elem.querySelectorAll('img,iframe'), details);
+            }
+        }
+    };
+    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
+};
+
+(function() {
+    var onBlockedRequestsReceived = function(details) {
+        hideBlockedElements(document.querySelectorAll('img,iframe'), details);
+    };
+    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
+})();
+
+/******************************************************************************/
+
 var mutationObservedHandler = function(mutations) {
     var iMutation = mutations.length;
     var mutation;
@@ -342,6 +388,7 @@ var mutationObservedHandler = function(mutations) {
         mutation = mutations[iMutation];
         if ( mutation.addedNodes ) {
             cosmeticFiltering.allFromNodeList(mutation.addedNodes);
+            hideBlockedElementAddedNodes(mutation.addedNodes);
         }
     }
 
@@ -364,7 +411,11 @@ if ( /^https?:\/\/./.test(window.location.href) === false ) {
     return;
 }
 
+/******************************************************************************/
+
 cosmeticFiltering.onDOMContentLoaded();
+
+/******************************************************************************/
 
 // Observe changes in the DOM
 

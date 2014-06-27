@@ -90,7 +90,7 @@ var onMessage = function(request, sender, callback) {
 
 /******************************************************************************/
 
-// content scripts
+// contentscript-start.js
 
 (function() {
 
@@ -115,8 +115,49 @@ var onMessage = function(request, sender, callback) {
             response = µBlock.abpHideFilters.retrieveDomainSelectors(tabHostname, request);
             break;
 
+        default:
+            return µBlock.messaging.defaultHandler(request, sender, callback);
+    }
+
+    callback(response);
+};
+
+µBlock.messaging.listen('contentscript-start.js', onMessage);
+
+})();
+
+/******************************************************************************/
+
+// contentscript-end.js
+
+(function() {
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    var pageStore;
+    if ( sender && sender.tab ) {
+        pageStore = µBlock.pageStoreFromTabId(sender.tab.id);
+    }
+    var tabHostname = pageStore ? pageStore.pageHostname : '';
+
+    switch ( request.what ) {
         case 'retrieveGenericCosmeticSelectors':
             response = µBlock.abpHideFilters.retrieveGenericSelectors(tabHostname, request);
+            break;
+
+        case 'blockedRequests':
+            response = {
+                collapse: µBlock.userSettings.collapseBlocked,
+                blockedRequests: pageStore ? pageStore.blockedRequests : {}
+            }
             break;
 
         default:
@@ -126,7 +167,6 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('contentscript-start.js', onMessage);
 µBlock.messaging.listen('contentscript-end.js', onMessage);
 
 })();

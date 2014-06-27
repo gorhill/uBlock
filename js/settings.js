@@ -41,7 +41,15 @@ var changeUserSettings = function(name, value) {
 
 /******************************************************************************/
 
+// TODO: use data-* to declare simple settings
+
 var onUserSettingsReceived = function(details) {
+    $('#collapse-blocked')
+        .attr('checked', details.collapseBlocked === true)
+        .on('change', function(){
+            changeUserSettings('collapseBlocked', $(this).is(':checked'));
+        });
+
     $('#icon-badge')
         .attr('checked', details.showIconBadge === true)
         .on('change', function(){
