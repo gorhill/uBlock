@@ -49,6 +49,11 @@ return {
         // User
         'assets/user/filters.txt': {},
 
+        // uBlock
+        'assets/ublock/filters.txt': {
+            title: "µBlock filters"
+        },
+
         // 3rd-party lists fetched dynamically
         },
 

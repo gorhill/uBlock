@@ -1,0 +1,4 @@
+# Needed to unbreak sites affected by out of the box lists
+
+# https://github.com/gorhill/uBlock/issues/20 => blocking counterpart in Peter Lowe's Ad Server
+@@||www.google-analytics.com/ga.js^$domain=xda-developers.com
