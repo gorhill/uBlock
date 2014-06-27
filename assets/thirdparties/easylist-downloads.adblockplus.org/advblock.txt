@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: +AWoFDJrFX+Mx1QymWXHxw
-! Version: 201406260040
-! Last modified: 26 Jun 2014 00:40 UTC
+! Checksum: PBo0/jIdc9iqFR+yrwXiOA
+! Version: 201406271440
+! Last modified: 27 Jun 2014 14:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -242,6 +242,9 @@ by,ru,ua##.banner_box
 ##.module-one-search
 ##.novinator
 ##.onona-block
+##.pb_left_banner
+##.pb_right_banner
+##.pb_top_img
 ##.pr-AVA
 ##.pr-AVA2
 ##.sp_search2_table
@@ -1582,7 +1585,6 @@ _tizers.
 ||ukrbuy.com/partner/
 ||ulitka.ru/logo$image
 ||umatno.ru/mm/
-||underclick.$third-party
 ||uniq-ip.com/via/np?
 ||unlockers.ru^$third-party
 ||uptracker.ru^$third-party
@@ -2383,7 +2385,6 @@ _tizers.
 ||mirskidok.net^
 ||mob2web.com^
 ||mobapeople.com^
-||mobatory.com^
 ||mobbober.com^
 ||mobbobr.com^
 ||mobicont.com^
@@ -2560,7 +2561,6 @@ _tizers.
 ||slivz.com^
 ||slopeac.com^
 ||smimarket.com^
-||sms-mmm.com^
 ||snakeac.com^
 ||sochetat.net^
 ||sof32dsso.ru^
@@ -2710,7 +2710,6 @@ _tizers.
 ||vietalle.com^
 ||viglir.ru^
 ||vilumirian.biz^
-||vimgs.ru^
 ||vinregle.com^
 ||visitscounter.ru^
 ||vitos.freezfiles.ru^
@@ -4369,7 +4368,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||a.velvet.by^
 ||aaa.piccash.net^
 ||actualcomment.ru^*/banner/
-||adultmult.tv/fon/
+||adultmult.tv/afon/
 ||adverman.*/banners/
 ||agronews.ru/images/$object
 ||agsat.com.ua/beuty/
@@ -5425,7 +5424,6 @@ odnoklassniki.ru##div[id$="Adv"]
 odnoklassniki.ru##.update-browser_container
 ! Блокировка ресурсов за пределами mail.ru
 //rs.mail.ru/b$third-party,domain=~km.ru
-||ad.mail.ru^$third-party
 ||banners.mail.ru^$third-party
 ||showbiz.mail.ru^$third-party
 ||torg.mail.ru/prtnr/$third-party
@@ -5760,6 +5758,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@/teasers.$domain=joindota.com
 @@/teasers/*$domain=hock5.ru|rw.by
 @@/tizer/*$domain=sibtravel42.ru|tutu.ru
+@@/tizer_$domain=led66.ru
 @@/upload/banners/*$domain=travelata.ru
 @@/upload/bx/*$domain=ffan.ru|transbank.ru
 @@/webadvert.$domain=webadvert.ru

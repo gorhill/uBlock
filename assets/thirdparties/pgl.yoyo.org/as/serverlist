@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Tue, 24 Jun 2014 08:46:59 GMT
-# entries:        2492
+# entries:        2489
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -656,7 +656,6 @@
 127.0.0.1 ads.techtv.com
 127.0.0.1 ads.techweb.com
 127.0.0.1 ads.telegraph.co.uk
-127.0.0.1 ads.tentonhammer.com
 127.0.0.1 ads.theglobeandmail.com
 127.0.0.1 ads.themovienation.com
 127.0.0.1 ads.thenewpaperclip.com
@@ -1364,7 +1363,6 @@
 127.0.0.1 datashreddergold.com
 127.0.0.1 dbbsrv.com
 127.0.0.1 dc-storm.com
-127.0.0.1 de.rottentomatoes.com
 127.0.0.1 de17a.com
 127.0.0.1 dealdotcom.com
 127.0.0.1 debtbusterloans.com
@@ -1611,7 +1609,6 @@
 127.0.0.1 ifa.tube8live.com
 127.0.0.1 ilbanner.com
 127.0.0.1 ilead.itrack.it
-127.0.0.1 iliillliO00OO0.321.cn
 127.0.0.1 ilovecheating.com
 127.0.0.1 image.ugo.com
 127.0.0.1 imageads.canoe.ca

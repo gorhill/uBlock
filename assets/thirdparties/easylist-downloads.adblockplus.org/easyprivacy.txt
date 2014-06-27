@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: tAY+73Hhix5wLbb5CvJRRA
-! Version: 201406260041
+! Checksum: bGiJ87yz+g8mS3oFUSvfpA
+! Version: 201406271441
 ! Title: EasyPrivacy
-! Last modified: 26 Jun 2014 00:41 UTC
+! Last modified: 27 Jun 2014 14:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2929,6 +2929,7 @@ http://utm.
 ||livehit.net^$third-party
 ||livestat.com^$third-party
 ||lloogg.com^$third-party
+||localytics.com^$third-party
 ||lockview.cn^$third-party
 ||logaholic.com^$third-party
 ||logcounter.com^$third-party
@@ -3089,6 +3090,7 @@ http://utm.
 ||ojrq.net^$third-party
 ||omeda.com^$third-party
 ||ometria.com^$third-party
+||omnitagjs.com^$third-party
 ||omtrdc.net^$third-party
 ||onefeed.co.uk^$third-party
 ||onestat.com^$third-party
@@ -5453,7 +5455,7 @@ http://utm.
 ||tracking.m6r.eu^
 ||tracking.maxcdn.com^$third-party
 ||tracking.musixmatch.com^
-||tracking.performgroup.com^$third-party
+||tracking.performgroup.com^
 ||tracking.plattformad.com^$third-party
 ||tracking.practicefusion.com^$third-party
 ||tracking.quillion.com^
@@ -8698,12 +8700,13 @@ http://utm.
 @@||canoe.ca/generix/omniture/TagOmnitureEngine.js
 @@||care2.com/assets/scripts/cookies/care2/NitroCookies.js
 @@||cbsimg.net/js/cbsi/dw.js$domain=cbssports.com
-@@||cbsistatic.com/fly/bundles/flyjs/js/managers/clicktale-1.0.js$domain=cbsnews.com
+@@||cbsistatic.com^*/clicktale-$script,domain=cbsnews.com|cnet.com
+@@||cbsistatic.com^*/google-analytics.js$domain=cnet.com
 @@||ccom-cdn.com/assets/img/clear.gif?ccom_md5=$domain=credit.com
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
-@@||cdn.optimizely.com/js/*.js$domain=freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch
+@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script
 @@||chartbeat.com/*/chartbeat/$~third-party
@@ -8895,6 +8898,7 @@ http://utm.
 @@||ooyala.com/3rdparty/comscore_*.swf$domain=bloomberg.com|businessweek.com|greentechmedia.com
 @@||ooyala.com/crossdomain.xml$object-subrequest
 @@||optimize.webtrends.com^$domain=peterboroughtoday.co.uk
+@@||optimizely.com/js/geo.js$domain=forbes.com
 @@||optimost.com/counter/*/event.js?$domain=bebo.com
 @@||optimost.com^*/content.js?$domain=bebo.com
 @@||optimost.com^*/FT_live.js$domain=ft.com

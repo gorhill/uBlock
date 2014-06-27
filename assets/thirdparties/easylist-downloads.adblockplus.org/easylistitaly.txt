@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: DGqaMHoahxHzr28SBWWhMg
-! Version: 201406260041
+! Checksum: xElgUP5TCWOpyJX05+w13Q
+! Version: 201406271441
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 26 Jun 2014 00:41 UTC
+! Ultima modifica: 27 Jun 2014 14:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -188,8 +188,6 @@ corrierecomo.it,corrieredicomo.it#@#.module-ad
 latinomagazine.it#@#.moduletable-advert
 camperonline.it,italiasw.com#@#.pubblicita
 beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
-! Anti-Adblock
-rai.it,rai.tv#@##sponsored-ad
 !---------------------Server pubblicitari di terze parti----------------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_adservers.txt ***
 ||178.32.140.64^$third-party,domain=~pirchio.ip
@@ -338,6 +336,7 @@ rai.it,rai.tv#@##sponsored-ad
 ||connect24.it/fot468.gif
 ||contactlab.it^*/Banner/
 ||d1n2y2eq1wbato.cloudfront.net^*/sponsor-$domain=atalanta.it
+||d1oaxhr280l1ho.cloudfront.net^
 ||datingfactory.com/promotools/
 ||delosstore.it/banner/
 ||digisesso.com/img/incesti.gif
@@ -709,6 +708,7 @@ rai.it,rai.tv#@##sponsored-ad
 ||corriere.it^*/adv/
 ||corriere.it^*/icon_csnai.gif
 ||corriere.it^*/icon_csnai_shared.gif
+||corriere.it^*_pringooals.png
 ||corriereadriatico.it/300x200Banner.php
 ||corriereadriatico.it/box_tuttomercato052011/
 ||corrierecomo.it/images/banners/

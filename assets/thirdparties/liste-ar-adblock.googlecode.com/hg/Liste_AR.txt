@@ -26,6 +26,7 @@
 ##.ban-728
 ##.inside_adv_section
 ##.pub-730x90
+##.sidbar-ad1
 ##[href*="ad2games.com/"]
 ##a[href*="/ads/ad_link.php?"]
 ##a[href*="adintop.com/outgoing/click.php?"]
@@ -50,6 +51,7 @@
 ||adrife.com^$third-party
 ||ads-x.com^$third-party
 ||adscoo.com^$third-party
+||adservingstd.com^$third-party
 ||adtoadd.com^$third-party
 ||adtracking.asia^$third-party
 ||adzzone.com^$third-party
@@ -406,6 +408,7 @@
 ||algremh.com/img/in-goore.gif
 ||algremh.com/open.js
 ||algremh.com/open/
+||aliahmedali.com/almohasben.js
 ||alkhabar.tv/pub/
 ||allofusoman.com^*/mybener/
 ||alm3refh.com/e3lan/
@@ -483,6 +486,7 @@
 ||as7apcool.com/pic/$image
 ||asalahpal.com/vb/open/
 ||ashefaa.com/i3lanat/
+||aswaqcity.com/swf/
 ||aswat-elchamal.com/ar/pub/
 ||azyya.com^$popup,domain=beautymaroc.com
 ||bahrain2day.com/adv/
@@ -596,6 +600,7 @@
 ||fatafeeet.com^$popup,domain=egyptladies.net
 ||fbrka.net/open*.js
 ||fbrka.net/style/banner72890.gif
+||felmedan.com/images/banners/
 ||fennec-dz.com/img/atlas.jpg
 ||fennec-dz.com/img/ayrade.jpg
 ||fennec-dz.com/img/bann_sweet.jpg
@@ -986,7 +991,7 @@ souq.com##.ad1
 souq.com##.ad2
 egy4up.net,gornalak.com##.ad_left
 egy4up.net,gornalak.com##.ad_right
-add-anime.net,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,onothty.net,q8yatnews.com,souqa3mal.com##.ads
+add-anime.net,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,souqa3mal.com##.ads
 rjeem.com##.ads1
 toptwitt.com##.ads2
 elraaed.com##.ads_1
@@ -1008,7 +1013,7 @@ aljazeerasport.tv##.banner-leaderboard
 alhayat.com##.banner2
 egyup.com,imanschool.com,mwadah.com##.bannerBox
 m5zn.com##.banner_120_black
-elmihwar.com##.banneritem
+elmihwar.com,felmedan.com##.banneritem
 arabsharing.com,mediamasr.tv,panorama-istanbul.org##.banners
 marocemploi.net##.bg_link
 bokra.net##.bigStrip
@@ -1113,6 +1118,7 @@ fivesat.net,k1g3.com##a[href="http://www.sharing-sat.com"]
 700bk.com##a[href="http://www.wasety.com/"]
 uiraqi.com##a[href^="/ads.php?"]
 nadorcity.com##a[href^="/ads/"]
+felmedan.com##a[href^="/banners/"]
 jordanzad.com##a[href^="ad.php?"]
 saidaonline.com##a[href^="advertising.php?"]
 ghnoh.com,l7en.com##a[href^="banner.php?id="]
@@ -1151,7 +1157,9 @@ sedty.com##a[href^="http://www.sedty.com/adv/"]
 mothhelah.com##a[href^="index.php?op=ad_click"]
 mtwer.com##a[onclick^="_gaq.push(['_trackEvent', 'Outgoing',"]
 elheddaf.com##a[style="width:100%; height:850px; display:block; background:#000 url(/data/pub/pub.jpg) no-repeat center top; position: relative;"]
+aliahmedali.com##a[target="_blank"] > img[width="235"][height="60"]
 alrealclub.com##a[title^="ينتهي في"]
+aswaqcity.com##div#vbseo_vhtml_0
 top555games.com##div[class^="adshp"]
 mexat.com##div[class^="banner"]
 alqabas.com.kw##div[id^="azk"]

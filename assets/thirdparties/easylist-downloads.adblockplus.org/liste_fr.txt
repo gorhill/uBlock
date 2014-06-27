@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: EDsB9nelO70Kl+0tPl+0bQ
-! Version: 201406260041
+! Checksum: ekhxYiDfE218NxgpaVKLzA
+! Version: 201406271441
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -158,6 +158,7 @@ _regiepub/
 ||hopdream.com^$third-party
 ||i-promotion.net^$third-party
 ||illyx.co^$third-party
+||illyx.com^$popup,third-party
 ||illyx.com^$third-party
 ||imgpromo.easyrencontre.com^$third-party
 ||insta-cash.net^$third-party
@@ -1047,6 +1048,7 @@ _regiepub/
 ||images1.soonnight.com/template/skins/*/skin.css
 ||img.clubic.com^*-photo-bg-
 ||impimg.free.fr/pubs/
+||informatruc.com/ejs_slidein.js
 ||infos-mobiles.com/pub-
 ||infotahiti.com/Pub/
 ||inpi.fr^*/klee_evenement/
@@ -1062,6 +1064,7 @@ _regiepub/
 ||itmag-dz.com/pub/
 ||itnewsinfo.com/pub/
 ||itnewsinfo.com^*/pub/
+||jackypc.com/bann*.swf
 ||jacquieetmicheltv.net^*/thumbpubressources/
 ||jacquieetmicheltv2.net^*/thumbpubressources/
 ||jamaisjouis.com^*/u.js
@@ -1225,9 +1228,8 @@ _regiepub/
 ||mappy.com/*/files/campaigns/
 ||mappy.com/services/annoncesjaunes/
 ||marianne.net/photo/background-
+||matchendirect.fr/*/mobile/header_cote.html
 ||matchendirect.fr/*/mobile/header_info.html
-||matchendirect.fr^*/image/pub/
-||matchendirect.mobi/image/commun/banniere-
 ||materiel.net/pub/
 ||matter-du-sexe.com/infopop/
 ||max-videos.com/tools/
@@ -1388,6 +1390,7 @@ _regiepub/
 ||pushtraffic.net^$popup,domain=ifile.ws
 ||pyrenees-team.com/graphics/baniere/logo.jpg
 ||rabbitfinder.com/bannieres/
+||radio-monaco.com/images/banners/
 ||rajacasablanca.com/site/images/flash_banners/
 ||raje.fr/images/banners/
 ||rea-dz.com/images/banners/FOND%20C2.jpg
@@ -1714,6 +1717,7 @@ _regiepub/
 ###cadre_pub_bas
 ###carre-pub
 ###carre_pub
+###colgauche_pub
 ###comment-ad
 ###conteneurPub
 ###conteneur_pub
@@ -1743,6 +1747,9 @@ _regiepub/
 ###headerpub
 ###home-pub
 ###idpublicitepave
+###iframe-pub-120x600
+###iframe-pub-300x250
+###iframe-pub-300x600
 ###iframepub
 ###iframesidebarpub
 ###imagePubPave
@@ -1762,8 +1769,11 @@ _regiepub/
 ###pub-ban
 ###pub-banner
 ###pub-center
+###pub-display-120x600
 ###pub-display-300x250
+###pub-display-300x600
 ###pub-display-468x60
+###pub-display-728x90
 ###pub-droite
 ###pub-footer
 ###pub-haut
@@ -1785,6 +1795,7 @@ _regiepub/
 ###pub300250
 ###pub300x250
 ###pub468x60_gauche
+###pub468x60_match
 ###pub728
 ###pub728x90
 ###pubBandeau
@@ -1863,6 +1874,7 @@ _regiepub/
 ###publicite_banniere
 ###publicite_banniere_haut
 ###publicite_header
+###publicite_liste_bookmaker
 ###publicite_right
 ###publicite_top
 ###publicite_txt
@@ -1952,6 +1964,7 @@ _regiepub/
 ##.pub-megabanner
 ##.pub-pave
 ##.pub160x600
+##.pub242x90
 ##.pub300
 ##.pub300250
 ##.pub300_contenu
@@ -2275,8 +2288,12 @@ viamichelin.be###idAdvertPubLeMonde
 viamichelin.fr###idHeaderGDH
 viamichelin.be###idTopAdvertCol2
 lesnumeriques.com###ifr_pub
+wawacity.su###img_1_300x250
+wawacity.su###img_1_468x60
+wawacity.su###img_2_300x250
 wawacity.su###img_300x250_fiche_Middle
 wawacity.su###img_300x250_fiche_Top
+wawacity.su###img_3_300x250
 wawacity.su###img_468_Fiche_Adorika
 wawacity.su###img_home_300x250_6
 audiofanzine.com###index-sonicprice
@@ -2375,7 +2392,6 @@ ecranlarge.com,lacanausurfinfo.com###promo
 extremepc.fr###promoHead + hr + .center
 streamnolimit.com###pscroller1
 allstreamz.com,annuaire-streaming.com,blogs.allocine.fr,centerblog.net,emule-island.ru,extremepc.fr,japan-expo.be,jeux-2-filles.com,jeuxonline.info,letudiant.fr,levraigabroy.com,nrj.be,nrj.fr,nuked-klan.org,olivierdauvers.fr,orange.fr,planet-casio.com,science-et-vie.com,solutions-logiciels.com,sortir47.fr,toutpratique.com,virtuoflash.com,wareziens.net###pub
-coupedafrique.com###pub-display-728x90
 francebleu.fr,franceinfo.fr###pub-ftv-top
 jeu.info###pub0
 ledemondujeu.com,matchendirect.mobi###pub1
@@ -2422,6 +2438,7 @@ flights-results.liligo.fr###pulledbanner-right-top
 zdnet.fr###pwcBox
 parolesmania.com###rectangle > .thinbox div[style="height: 250px;"]
 lexpress.mu###region-user-second
+radio-monaco.com###responsive-banner-slider
 google.fr###rhsline
 forumfr.com###rightCol_ad
 pooki.fr###rightPartners
@@ -2946,7 +2963,7 @@ marianne.net##a[href^="/blogsecretdefense/ads/"]
 unchartedatolls.com##a[href^="/file.php?"]
 mayottehebdo.com##a[href^="/index.php?option=com_banners"]
 trictrac.net##a[href^="/partenaire/"]
-estrepublicain.fr##a[href^="/pub/"]
+estrepublicain.fr,matchendirect.fr##a[href^="/pub/"]
 trictrac.net##a[href^="/publicite/"]
 confidentielles.com##a[href^="/rc_787_"]
 emule-island.ru##a[href^="/tutoriaux/usenext-dl.php?"]
@@ -2957,6 +2974,7 @@ aidemu.fr##a[href^="http://aidemu.fr/pub/"]
 torrent-avenue.com##a[href^="http://api.adlure.net/partner/click/"]
 nouvelobs.com##a[href^="http://assurance-auto.nouvelobs.com/assurance-auto.html?partnerlinkid="]
 brain-magazine.fr,omgtorrent.com##a[href^="http://bit.ly/"]
+usbfix.net##a[href^="http://clic.reussissonsensemble.fr/"]
 algeriephilatelie.net##a[href^="http://clic.reussissonsensemble.fr/click.asp?"]
 rue-hardware.com,rue-montgallet.com##a[href^="http://click.comparhaut.com/"]
 clubic.com##a[href^="http://clk.atdmt.com/"]
@@ -2978,6 +2996,7 @@ downparadise.ws##a[href^="http://www.affiliation-france.com/"]
 fullanimes.free.fr##a[href^="http://www.allopass.com/check/red.php"] > img
 alsacreations.com##a[href^="http://www.amazon.fr/gp/product/"]
 ouedkniss.com##a[href^="http://www.autobip.com/news/details/?id="]
+usbfix.net##a[href^="http://www.bitdefender.fr/media/"]
 centre-audition.com##a[href^="http://www.centre-audition.com/catalog/redirect.php?action=banner&"]
 gizmodo.fr##a[href^="http://www.ebuyclub.com/operations/gizmodo/entreeGizmodo.jsp?"]
 9rayti.com##a[href^="http://www.ilycee.com/?utm_source="]
@@ -3152,6 +3171,7 @@ people-looks.com##td[width="340"][height="265"][align="center"]
 mon-ordi.com##td[width="567"]
 people-looks.com##td[width="980"][height="40"][bgcolor="#FFFFFF"]
 drague.net##tr > td[height="95"][align="center"][colspan="2"]
+matchendirect.fr##tr[onclick^="pubComparateur"]
 lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([href^="javascript:show"]):not([href^="facebook"])
 !
 !----------------------- Exceptions -----------------------!
@@ -3385,6 +3405,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||bad.mn/*.js|$script,third-party
 @@||bkafw.us.to/*.js|$script,third-party
 @@||caledonianlab.com/*.js|$script,third-party
+@@||cloudwatch.net/*.js|$script,third-party
 @@||crabdance.com/*.js|$script,third-party
 @@||cteyd.na.tl/*.js|$script,third-party
 @@||cvhyx.vr.lt/*.js|$script,third-party
@@ -3431,6 +3452,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.ax.lt/$third-party,xmlhttprequest
 |http://*.bad.mn/$third-party,xmlhttprequest
 |http://*.caledonianlab.com/$third-party,xmlhttprequest
+|http://*.cloudwatch.net/$third-party,xmlhttprequest
 |http://*.cr.rs/$third-party,xmlhttprequest
 |http://*.dyx.com/$third-party,xmlhttprequest
 |http://*.eaglepoint.us/$third-party,xmlhttprequest
