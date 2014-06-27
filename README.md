@@ -51,11 +51,6 @@ extensions may also add their own memory footprint.)
 - [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
 - [Adblock Plus memory consumption](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
 
-#### Forums
-
-- [On Reddit](http://www.reddit.com/r/chrome/comments/28xt2j/%C2%B5block_a_fast_and_lean_blocker_for_chromiumbased/)
-- [On Hacker News](https://news.ycombinator.com/item?id=7936809)
-
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
@@ -139,9 +134,9 @@ The less hits on 3rd-party servers, the better. All blockers were configured
 in such a way as to compare apples-vs-apples:
 
 - **µBlock:** out-of-the-box settings -- no change.
-- **Adblock Plus:** _"EasyList"_, _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
+- **Adblock Plus:** _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
 - **Ghostery:** _"Advertising"_, _"Analytics"_, _"Beacons"_, _"Privacy"_ checked. _"Widgets"_ not checked. _"GhostRank"_ unchecked. 
-- **Adguard:** _"English"_, _"Spyware and tracking"_, _"Phishing and malware protection"_ checked. _"Social media"_ not checked. _"Acceptable ads"_ unchecked.
+- **Adguard:** _"Spyware and tracking"_, _"Phishing and malware protection"_ checked. _"Social media"_ not checked. _"Acceptable ads"_ unchecked.
 - **Disconnect:** out-of-the-box settings -- no change.
 
 ## About
