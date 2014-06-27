@@ -4,7 +4,7 @@
         "description": "extension name."
     },
     "extShortDesc": {
-        "message": "Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+        "message": "Endlich ein effizienter Blocker für Chromium-basierte Browser. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
         "description": "this will in chrome web store: must be 132 characters or less"
     },
     "settingsPageName": {
@@ -12,11 +12,11 @@
         "description": "appears as tab name in dashboard"
     },
     "3pPageName" : {
-        "message": "3rd-party filters",
+        "message": "Vorgegebene Filter",
         "description": "appears as tab name in dashboard"
     },
     "1pPageName" : {
-        "message": "Your filters",
+        "message": "Deine Filter",
         "description": "appears as tab name in dashboard."
     },
     "aboutPageName": {
@@ -26,25 +26,25 @@
 
 
     "popupPowerSwitchInfo": {
-        "message": "click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+        "message": "klicke das An-/Ausschalter-Symbol, um µBlock für diese Seite <br>permanent ein- oder auszuschalten<br>",
         "description": "English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
     },
     "popupBlockedRequestPrompt": {
-        "message": "requests blocked",
+        "message": "blockierte Anforderungen",
         "description": "English: requests blocked"
     },
     "popupBlockedOnThisPagePrompt": {
-        "message": "on this page",
+        "message": "auf dieser Seite",
         "description": "English: on this page"
     },
     "popupBlockedSinceInstallPrompt": {
-        "message": "since install",
+        "message": "seit Installation",
         "description": "English: since install"
     },
 
 
     "settingsIconBadgePrompt" : {
-        "message": "Show the number of blocked requests on the icon",
+        "message": "Zeige die Zahl der blockierten Anforderungen auf dem Icon",
         "description": "English: Show the number of blocked requests on the icon"
     },
 
