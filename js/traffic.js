@@ -82,7 +82,7 @@ var onBeforeRequestHandler = function(details) {
         reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
     }
     // Record what happened.
-    if ( pageStore ) {
+    if ( pageStore.recordRequest ) {
         pageStore.recordRequest(requestType, requestURL, reason);
     }
 
