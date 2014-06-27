@@ -30,15 +30,6 @@
 
 /******************************************************************************/
 
-var typeToRedirectPathMap = {
-    'stylesheet': chrome.runtime.getURL('css/noop.css'),
-    'image': chrome.runtime.getURL('img/noop.png'),
-    'script': chrome.runtime.getURL('js/noop.js'),
-    'sub_frame': 'about:blank'
-};
-
-/******************************************************************************/
-
 // Intercept and filter web requests according to white and black lists.
 
 var onBeforeRequestHandler = function(details) {
@@ -103,11 +94,9 @@ var onBeforeRequestHandler = function(details) {
     // Blocked
     //console.debug('µBlock> onBeforeRequestHandler()> BLOCK "%s" because "%s"', details.url, reason);
 
-    // Redirect to noop versions whenever possible.
-    var redirectPath = typeToRedirectPathMap[requestType];
-    if ( redirectPath ) {
-        return { 'redirectUrl': redirectPath };
-    }
+    // https://github.com/gorhill/uBlock/issues/18
+    // Do not use redirection, we need to block outright to be sure the request
+    // will not be made. There can be no such guarantee with redirection.
 
     return { 'cancel': true };
 };
