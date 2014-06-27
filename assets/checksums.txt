@@ -1,5 +1,5 @@
 665b304cc08b6473d568f39503b289ee assets/ublock/filters.txt
-7b0b12c2c747a1aeb445d5746b8b206c assets/ublock/filter-lists.json
+a0d95cc038361353f6e108ac024ade72 assets/ublock/filter-lists.json
 36d8978c647291a4415dc02fe176e54e assets/thirdparties/download.wiltteri.net/wiltteri.txt
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 3739b55487ff20f235c736601319f843 assets/thirdparties/adblock.gardar.net/is.abp.txt
@@ -28,6 +28,7 @@ f6bba27911e9b379bcb638e42f0bb740 assets/thirdparties/publicsuffix.org/list/effec
 7c0d09fbccd87b5252d3bab3e822f2e4 assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt
 a1b2beefe31c1f7e1304ae8409334b07 assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt
 a3e622e6c420429fa7b22eae4471cd1b assets/thirdparties/www.fanboy.co.nz/enhancedstats.txt
+ea29b2802faf1c9011d60ae117b4a954 assets/thirdparties/www.fanboy.co.nz/fanboy-antifacebook.txt
 042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
 fd240a2efa8e30c87691663c87f685e4 assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 fbb638ed6eb138fa9a8b0190edcde2ab assets/thirdparties/indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt
