@@ -1391,11 +1391,20 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     //   or equivalent
     // allow =  whitelisted || !blacklisted
 
-    // Since statistically a hit on a block filter is more likely than a hit
-    // on an allow filter, we test block filters first, and then if and only
-    // if there is a hit on a block filter do we test against allow filters.
-    // This helps performance compared to testing against both classes of
-    // filters in the same loop.
+    // Statistically, hits on a URL in order of likelihood:
+    // 1. No hit
+    // 2. Hit on a block filter
+    // 3. Hit on an allow filter
+    //
+    // High likelihood of "no hit" means to optimize we need to reduce as much
+    // as possible the number of filters to test.
+    //
+    // Then, because of the order of probabilities, we should test only
+    // block filters first, and test allow filters if and only if there is a 
+    // hit on a block filter. Since there is a high likelihood of no hit,
+    // testing allow filter by default is likely wasted work, hence allow
+    // filters are tested *only* if there is a hit on a (unlikely) hit on a
+    // block filter.
 
     var pageDomain = pageDetails.pageDomain || '';
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
