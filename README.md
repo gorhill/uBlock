@@ -35,13 +35,9 @@ is the UI counterpart to "element hiding", i.e. being able to click on an elemen
 to extract filters out of it.
 
 "The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
-- Hum, µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
+- µBlock also parse _EasyList_. And _EasyPrivacy_. And _Malware domains_ lists. 
 And _Peter Lowes's Ad server_ list. Out of the box. Yet uses less than half the 
 memory of ABP.
-- And for a fun memory test, you can try yourself the 
-[infamous vim test](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption), 
-once with only ABP as the active extension, and once with only µBlock as the active extension. (Other 
-extensions may also add their own memory footprint.)
 
 "It has all the features ABP has!"
 - No it doesn't. There are things ABP can do which µBlock can't at this time. I will 
