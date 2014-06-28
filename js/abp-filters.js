@@ -1403,8 +1403,8 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     // block filters first, and test allow filters if and only if there is a 
     // hit on a block filter. Since there is a high likelihood of no hit,
     // testing allow filter by default is likely wasted work, hence allow
-    // filters are tested *only* if there is a hit on a (unlikely) hit on a
-    // block filter.
+    // filters are tested *only* if there is a (unlikely) hit on a block
+    // filter.
 
     var pageDomain = pageDetails.pageDomain || '';
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
