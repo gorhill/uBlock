@@ -1,7 +1,9 @@
 # Needed to unbreak sites affected by out of the box lists
 
-# https://github.com/gorhill/uBlock/issues/20 => blocking counterpart in Peter Lowe's Ad Server
+# https://github.com/gorhill/uBlock/issues/20
+# => blocking counterpart in Peter Lowe's Ad Server
 @@||www.google-analytics.com/ga.js^$domain=xda-developers.com
 
 # https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate#barfin-bob-chrome-store-24-june-2014
+# => blocking counterpart in EasyPrivacy
 @@||media.star-telegram.com/mistats/sites/dfw/startelegram.js^$domain=star-telegram.com
