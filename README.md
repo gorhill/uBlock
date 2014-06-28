@@ -23,6 +23,8 @@ console for each extension and force a garbage collection cycle by clicking a co
 the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
 
+More: [µBlock vs. ABP: efficiency compared](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared)
+
 #### Dispelling a few myths flying around
 
 - "µBlock does not support element hiding".
