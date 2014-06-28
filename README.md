@@ -43,9 +43,6 @@ memory of ABP.
 once with only ABP as the active extension, and once with only µBlock as the active extension. (Other 
 extensions may also add their own memory footprint.)
 
-"It consumes less memory because it doesn't block as well"
-- Actually it blocks more efficiently. See [_benchmark_](#benchmarks) below.
-
 "It has all the features ABP has!"
 - No it doesn't. There are things ABP can do which µBlock can't at this time. I will 
 consider all feature requests, but I will implement only those which do not jeopardize µBlock's
