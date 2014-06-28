@@ -1,6 +1,6 @@
 An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
 
-Usage: The big fat power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
+Usage: The big power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
 
 Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
 
