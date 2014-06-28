@@ -27,20 +27,24 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 
 #### Dispelling a few myths flying around
 
-"µBlock does not support element hiding".
-- Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
+##### "µBlock does not support element hiding".
+
+Yes it does. If you don't believe it, try entering `twitter.com##body` in the 
 _"Your filters"_ text area and see what happens when you visit twitter.com.
-- What it doesn't support [yet](https://github.com/gorhill/uBlock/issues/4), 
+
+What it doesn't support [yet](https://github.com/gorhill/uBlock/issues/4), 
 is the UI counterpart to "element hiding", i.e. being able to click on an element 
 to extract filters out of it.
 
-"The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
-- µBlock also parse _EasyList_, _EasyPrivacy_, _Malware domains_ lists, 
+##### "The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
+
+µBlock also parse _EasyList_, _EasyPrivacy_, _Malware domains_ lists, 
 and _Peter Lowes's Ad server_ list out of the box and yet uses less than half the 
 memory of ABP.
 
-"It has all the features ABP has!"
-- No it doesn't. There are things ABP can do which µBlock can't at this time. I will 
+##### "It has all the features ABP has!"
+
+No it doesn't. There are things ABP can do which µBlock can't at this time. I will 
 consider all feature requests, but I will implement only those which do not jeopardize µBlock's
 defining traits: lean, efficient and minimalist.
 
