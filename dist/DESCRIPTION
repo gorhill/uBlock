@@ -1,6 +1,14 @@
 An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
 
+Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
 Usage: The big power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
+
+***
+
+Word of caution about the ratings: This extension is original work, completely free, open source with a public license, and I don't seek donations. So, I think it is bound to annoy people or companies who derive revenues, directly or indirectly, out of their blockers. Because of this I expect the extension is likely to receive unwarranted 1-star ratings, with no substantive review to support this. Try it for yourself. I listen to substantive criticsm, though I can't guarantee I will always agree.
+
+***
 
 Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
 
@@ -26,21 +34,25 @@ Of course, the more filters enabled, the higher the memory footprint. Yet, even 
 
 ***
 
+Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+
+***
+
 Since the review area does not allow the author to answer, with this project I decided to answer through the project's home site, so hopefully this will be of some help to answer question, or correct inaccuracies (which may also occur in good reviews):
 
 https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate
 
 ***
 
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
-
-***
-
-From the author of HTTP Switchboard. Some work from contributors of HTTP Switchboard was also imported (translations).
+From the author and contributors of HTTP Switchboard.
 
 Free.
-Open source (GPLv3)
+Open source with public license (GPLv3)
 For users by users.
+
+Contributors: https://github.com/gorhill/uBlock/graphs/contributors
+
+***
 
 It's quite an early version, keep this in mind when you review.
 
