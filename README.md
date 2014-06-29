@@ -1,6 +1,7 @@
 # µBlock for Chromium
 
-See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest changes.
+See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest changes. 
+See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
 An efficient blocker for Chromium-based browsers. Fast and lean.
 
@@ -42,8 +43,6 @@ The big power button is to disable/enable µBlock **for the specific hostname
 which can be extracted from the URL address of the current page**. (It applies to 
 the current web site only, it is **not** a global power button.) The state of the power 
 switch for a specific site will be remembered.
-
-[More information at the wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## About
 
