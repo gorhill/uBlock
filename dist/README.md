@@ -9,3 +9,5 @@
     - Click *Open*.
 
 The extension will now be available in your chromium/chrome browser.
+
+Remember that you have to update manually also.
