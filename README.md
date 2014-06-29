@@ -23,8 +23,6 @@ console for each extension and force a garbage collection cycle by clicking a co
 the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
 
-**More:** [µBlock vs. ABP: efficiency compared](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared)
-
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
@@ -45,7 +43,7 @@ which can be extracted from the URL address of the current page**. (It applies t
 the current web site only, it is **not** a global power button.) The state of the power 
 switch for a specific site will be remembered.
 
-[More at the wiki](https://github.com/gorhill/uBlock/wiki).
+[More information at the wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## About
 
