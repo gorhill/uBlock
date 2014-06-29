@@ -160,6 +160,14 @@ var onMessage = function(request, sender, callback) {
             }
             break;
 
+        // Check a single request
+        case 'blockedRequest':
+            response = {
+                collapse: µBlock.userSettings.collapseBlocked,
+                blocked: pageStore && pageStore.blockedRequests[request.url]
+            }
+            break;
+
         default:
             return µBlock.messaging.defaultHandler(request, sender, callback);
     }

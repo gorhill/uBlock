@@ -337,27 +337,49 @@ var cosmeticFiltering = new CosmeticFiltering();
 
 // https://github.com/gorhill/uBlock/issues/7
 
+var observeElement = function(elem) {
+    var onLoad = function() {
+        var elem = this;
+        var onAnswerReceived = function(details) {
+            if ( details.blocked ) {
+                hideBlockedElement(elem, details.collapse);
+            }
+        };
+        messaging.ask({ what: 'blockedRequest', url: this.src }, onAnswerReceived);
+        this.removeEventListener('load', onLoad);
+    };
+    elem.addEventListener('load', onLoad);
+};
+
+var hideBlockedElement = function(elem, collapse) {
+    // If `!important` is not there, going back using history will likely
+    // cause the hidden element to re-appear.
+    elem.style.visibility = 'hidden !important';
+    if ( collapse && elem.parentNode ) {
+        elem.parentNode.removeChild(elem);
+    }
+};
+
 var hideBlockedElements = function(elems, details) {
     var blockedRequests = details.blockedRequests;
     var collapse = details.collapse;
     var i = elems.length;
-    var elem;
+    var elem, src;
     while ( i-- ) {
         elem = elems[i];
-        if ( !elem.src ) {
+        src = elem.src;
+        if ( typeof src !== 'string' ) {
             continue;
         }
-        if ( blockedRequests[elem.src] ) {
-            elem.style.visibility = 'hidden';
-            if ( collapse ) {
-                elem.style.width = '0';
-                elem.style.height = '0';
-            }
+        if ( src === '' ) {
+            observeElement(elem);
+        } else if ( blockedRequests[src] ) {
+            hideBlockedElement(elem, collapse);
         }
     }
 };
 
-var hideBlockedElementAddedNodes = function(nodes) {
+var hideBlockedElementInAddedNodes = function(nodes) {
     var onBlockedRequestsReceived = function(details) {
         hideBlockedElements(nodes, details);
         var i = nodes.length;
@@ -388,7 +410,7 @@ var mutationObservedHandler = function(mutations) {
         mutation = mutations[iMutation];
         if ( mutation.addedNodes ) {
             cosmeticFiltering.allFromNodeList(mutation.addedNodes);
-            hideBlockedElementAddedNodes(mutation.addedNodes);
+            hideBlockedElementInAddedNodes(mutation.addedNodes);
         }
     }
 
