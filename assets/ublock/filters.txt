@@ -10,4 +10,4 @@
 
 # https://github.com/gorhill/uBlock/issues/17
 # => blocking counterpart in hpHosts Ad Server: `l.yimg.com`
-@@||l.yimg.com^$domain=yahoo.com
+@@||l.yimg.com^$stylesheet,domain=yahoo.com
