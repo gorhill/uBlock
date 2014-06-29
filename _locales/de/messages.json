@@ -44,7 +44,7 @@
 
 
     "settingsCollapseBlockedPrompt" : {
-        "message": "Hide placeholders of blocked elements",
+        "message": "Verstecke die Platzhalter für blockierte Elemente",
         "description": "English: Hide placeholders of blocked elements"
     },
     "settingsIconBadgePrompt" : {
