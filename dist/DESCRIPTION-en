@@ -6,10 +6,6 @@ Usage: The big power button in the popup is to permanently disable/enable µBloc
 
 ***
 
-Word of caution about the ratings: This extension is original work, completely free, open source with a public license, and I don't seek donations. So, I think it is bound to annoy people or companies who derive revenues, directly or indirectly, out of their blockers. Because of this I expect the extension is likely to receive unwarranted 1-star ratings, with no substantive review to support this. Try it for yourself. I listen to substantive criticsm (though I can't guarantee I will always agree -- but then I've also often changed my mind.)
-
-***
-
 Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
 
 Out of the box, these lists of filters are loaded and enforced:
