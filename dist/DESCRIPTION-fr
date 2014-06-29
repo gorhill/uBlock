@@ -6,7 +6,7 @@ Utilisation : Le gros bouton power dans la fenêtre pop-up permet de désactiver
 
 ***
 
-Flexible, µBlock ne prend pas que les filtres de type Adblock en charge, elle peut également lire et créer des filtres depuis des fichiers hosts.
+Flexible, µBlock ne prend pas en charge que les filtres de type Adblock, elle peut également lire et créer des filtres depuis des fichiers hosts.
 
 Par défaut, ces listes de filtrage sont chargées et traitées :
 
