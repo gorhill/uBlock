@@ -49,7 +49,7 @@ consider all feature requests, but I will implement only those which do not jeop
 defining traits: lean, efficient and minimalist.
 
 Filters with the `$popup` option are ignored. At time of writing, I see 558 such
-filters in _EasyList. Chromium comes with a built-in popup blocker, which can be enabled
+filters in _EasyList_. Chromium comes with a built-in popup blocker, which can be enabled
 in the settings.
 
 Filters with the `$elemhide` option are ignored. At time of writing, I see 50 such
