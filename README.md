@@ -25,46 +25,6 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 
 **More:** [µBlock vs. ABP: efficiency compared](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared)
 
-#### Dispelling a few myths flying around
-
-##### "µBlock does not support element hiding".
-
-Yes it does. Try entering `twitter.com##body` in the _"Your filters"_ text area 
-and visit twitter.com: the page will be blank.
-
-What it doesn't support [yet](https://github.com/gorhill/uBlock/issues/4), 
-is the UI counterpart to "element hiding", i.e. being able to click on an element 
-to extract filters out of it.
-
-##### "The memory usage isn't actually ABP's fault, _EasyList_ is like 40,000+ lines of rules that all have to be parsed by ABP".
-
-µBlock also parse _EasyList_, _EasyPrivacy_, _Malware domains_ lists, 
-and _Peter Lowes's Ad server_ list out of the box and yet uses less than half the 
-memory of ABP.
-
-##### "µBlock has all the features ABP has!"
-
-No it doesn't. There are things ABP can do which µBlock can't at this time. I will 
-consider all feature requests, but I will implement only those which do not jeopardize µBlock's
-defining traits: lean, efficient and minimalist.
-
-Filters with the `$popup` option are ignored. At time of writing, I see 558 such
-filters in _EasyList_. Chromium comes with a built-in popup blocker, which can be enabled
-in the settings.
-
-Filters with the `$elemhide` option are ignored. At time of writing, I see 50 such
-filters in _EasyList_. The purpose of these filters is to disable cosmetic filters on
-specific site.
-
-#### Regarding reviews in various web store
-
-- [My answer to web store reviews where appropriate](https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate)
-
-#### Some articles about the origin of the source code behind µBlock
-
-- [Net request filtering efficiency: HTTP Switchboard vs. Adblock Plus](https://github.com/gorhill/httpswitchboard/wiki/Net-request-filtering-efficiency:-HTTP-Switchboard-vs.-Adblock-Plus)
-- [Adblock Plus memory consumption](https://github.com/gorhill/httpswitchboard/wiki/Adblock-Plus-memory-consumption)
-
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
@@ -85,73 +45,7 @@ which can be extracted from the URL address of the current page**. (It applies t
 the current web site only, it is **not** a global power button.) The state of the power 
 switch for a specific site will be remembered.
 
-## Benchmarks
-
-I ran my [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
-to compare against other popular blockers.
-
-Results -- figures are *3rd party* / *all*:
-
-#### µBlock 0.1.0.4
-
-* Domains: **66** / 67
-* Hosts: 117 / 171
-* Scripts: 239 / 321
-* Outbound cookies: 8 / 42
-* Net requests: 1,035 / 1,877
-
-#### Adblock Plus 1.8.3
-
-* Domains: **72** / 73
-* Hosts: 124 / 177
-* Scripts: 243 / 328
-* Outbound cookies: 8 / 44
-* Net requests: 1,041 / 1,913
-
-#### Ghostery 5.3.0
-
-* Domains: **83** / 84
-* Hosts: 140 / 211
-* Scripts: 239 / 343
-* Outbound cookies: 17 / 57
-* Net requests: 1,046 / 1,930
-
-#### Adguard 1.0.2.9
-
-* Domains: **89** / 90
-* Hosts: 145 / 217
-* Scripts: 262 / 349
-* Outbound cookies: 18 / 68
-* Net requests: 1,064 / 1,904
-
-#### Disconnect 5.18.14
-
-* Domains: **95** / 96
-* Hosts: 163 / 239
-* Scripts: 283 / 381
-* Outbound cookies: 18 / 74
-* Net requests: 1,087 / 1,989
-
-#### No blocker
-
-* Domains: **380** / 381
-* Hosts: 566 / 644
-* Scripts: 490 / 592
-* Outbound cookies: 245 / 315
-* Net requests: 1,950 / 2,871
-
-The figures show the number of requests **allowed**, thus lower numbers are better. 
-The point is to show how many 3rd-party servers are hit on average after running 
-the reference benchmark (three repeats in the current instance).
-
-The less hits on 3rd-party servers, the better. All blockers were configured 
-in such a way as to compare apples-vs-apples:
-
-- **µBlock:** out-of-the-box settings -- no change.
-- **Adblock Plus:** _"EasyPrivacy"_, _"Malware Domains"_ checked. _"Acceptable ads"_ unchecked.
-- **Ghostery:** _"Advertising"_, _"Analytics"_, _"Beacons"_, _"Privacy"_ checked. _"Widgets"_ not checked. _"GhostRank"_ unchecked. 
-- **Adguard:** _"Spyware and tracking"_, _"Phishing and malware protection"_ checked. _"Social media"_ not checked. _"Acceptable ads"_ unchecked.
-- **Disconnect:** out-of-the-box settings -- no change.
+[More at the wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## About
 
