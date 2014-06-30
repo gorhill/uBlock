@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: bGiJ87yz+g8mS3oFUSvfpA
-! Version: 201406271441
+! Checksum: vupj9AnwEGtrj7U9PxTZkA
+! Version: 201406301511
 ! Title: EasyPrivacy
-! Last modified: 27 Jun 2014 14:41 UTC
+! Last modified: 30 Jun 2014 15:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -5345,6 +5345,7 @@ http://utm.
 ||sugarops.com/w?action=impression$third-party
 ||sulia.com/papi/sulia_partner.js/$third-party
 ||survey.g.doubleclick.net^
+||survey.interquest.com^
 ||survey.io/log?
 ||swiftypecdn.com/te.js$third-party
 ||sync.adap.tv^
@@ -9117,6 +9118,7 @@ http://utm.
 @@||analytics.ladmedia.fr/parismatch/xtcore_mod2.js$domain=parismatch.com
 @@||api.mixpanel.com/engage/?data=$xmlhttprequest,domain=deezer.com
 @@||api.mixpanel.com/track/?data=$xmlhttprequest,domain=deezer.com
+@@||boutiqueducourrier.laposte.fr/_ui/eboutique/scripts/xiti/part/xtcore.js
 @@||cache2.delvenetworks.com/crossdomain.xml$domain=lapresse.ca
 @@||cache2.delvenetworks.com/ps/c/v1/$object-subrequest,domain=lapresse.ca
 @@||easypari.fr^*/sitestat.js

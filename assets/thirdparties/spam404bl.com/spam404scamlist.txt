@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4024
-! Last modified: 27 Jun 2014
+! Version: 4028
+! Last modified: 28 Jun 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -57,6 +57,7 @@
 ##[href^="http://redirectlock.com/"]
 ##[href^="http://evodownload.com/"]
 ##[href^="http://zoomfiles.net/"]
+##[href^="http://shortz.so/"]
 !
 !
 !
@@ -4019,6 +4020,9 @@ dream-file.com##[alt="Regular Download"]
 ||benget.com^
 ||dl3dsemulator.com^
 ||freeflappybirdhacks.com^
+||cool-hacks.com^
+||graspoffers.com^
+||clashofclanshackonline.org^
 !
 !
 !

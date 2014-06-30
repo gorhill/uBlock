@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: T6oueprgq49dSRZKjijWfA
-! Version: 201406271440
+! Checksum: iPds80HGa8fUA9ivqDt8Rw
+! Version: 201406301510
 ! Title: EasyList without element hiding rules
-! Last modified: 27 Jun 2014 14:40 UTC
+! Last modified: 30 Jun 2014 15:10 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -492,6 +492,7 @@
 .tv/ads/
 .tz/ads/
 .uk/ads/
+.uk/adv/
 .us/ads/
 .vert.ad.
 .widgets.ad?
@@ -10553,7 +10554,9 @@ _popunder+$popup
 ||fileserve.com/images/banner_$third-party
 ||fileserver1.net/download
 ||filmehd.net/imagini/banner_$third-party
+||filmreel.tv^$domain=thepiratebay.si
 ||fimserve.myspace.com^$third-party
+||firecenter.pl/banners/
 ||firstclass-download.com^$subdocument,third-party
 ||flagship.asp-host.co.uk^$third-party
 ||flipchat.com/index.php?$third-party
@@ -13508,6 +13511,7 @@ _popunder+$popup
 ||israelvideonetwork.com^*-300x150.jpg
 ||israelvideonetwork.com^*-300x191.jpg
 ||israelvideonetwork.com^*-300x75-
+||isxdead.com/images/showbox.png
 ||itpro.co.uk/images/skins/
 ||itv.com/adexplore/*/config.xml
 ||itv.com/priority/$object-subrequest,domain=u.tv
@@ -15575,6 +15579,7 @@ _popunder+$popup
 ||servepics.com^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ||servequake.com^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ||sytes.net^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
+||vapingunderground.com/js/vapingunderground/fucking_adblock.js
 ||zapto.org^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ! Non-English (instead of whitelisting ads)
 ! Mobile
@@ -17876,7 +17881,6 @@ _popunder+$popup
 @@||v.fwmrm.net/*/AdManager.swf$domain=marthastewart.com
 @@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|cc.com|cmt.com|colbertnation.com|comedycentral.com|espn.go.com|gametrailers.com|ign.com|logotv.com|mlb.mlb.com|mtv.com|mtvnservices.com|nascar.com|nbc.com|nbcnews.com|nbcsports.com|nick.com|player.theplatform.com|sky.com|southpark.nl|southparkstudios.com|spike.com|teamcoco.com|teennick.com|thedailyshow.com|thingx.tv|tvland.com|uverseonline.att.net|vevo.com|vh1.com|video.cnbc.com|vod.fxnetworks.com
 @@||v.fwmrm.net/crossdomain.xml$object-subrequest
-@@||v.fwmrm.net/crossdomain.xml$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|colbertnation.com|comedycentral.com|espn.go.com|ign.com|mlb.mlb.com|nbc.com|player.theplatform.com|sky.com|spike.com|thedailyshow.com|thingx.tv|video.cnbc.com
 @@||v.fwmrm.net/p/espn_live/$object-subrequest
 @@||vacationstarter.com/hive/images/adv_
 @@||vad.go.com/dynamicvideoad?$object-subrequest
@@ -18155,7 +18159,7 @@ _popunder+$popup
 @@||cpmstar.com^$script,domain=kissanime.com
 @@||cpmtree.com^$script,domain=kissanime.com
 @@||cpxinteractive.com^$script,domain=kissanime.com
-@@||cwrite.com/main/js/ads.js$domain=writing.com
+@@||cwrite.com^$script,domain=writing.com
 @@||cyberdevilz.net^$elemhide
 @@||d2anfhdgjxf8s1.cloudfront.net/ajs.php?adserver=$script
 @@||dailymotion.com/embed/video/$subdocument,domain=team-vitality.fr
@@ -18280,6 +18284,7 @@ _popunder+$popup
 @@||majorleaguegaming.com^*.png?*=$image
 @@||makemehost.com/js/ads.js
 @@||media.eventhubs.com/images/*#$image
+@@||megadown.us/advertisement.js
 @@||megahd.me^*/advertisement.js
 @@||megavideodownloader.com/adframe.js
 @@||megawypas.pl/includes/adframe.js

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 06 June 2014
+! Last modified: 29 June 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -22,6 +22,8 @@
 .pl/files/bannery/
 .pl/news/banery/
 .pl/wp-content/banners/
+/300x750_
+/300x700_
 /adexon_
 /anty-adblock.js
 /banery/*110x90
@@ -44,6 +46,7 @@
 /media/banner/*.gif
 /miejsce-na-reklame
 /pagead/ads?
+/pasek-ceneo
 /partners/onet/*
 /pixad/img/*
 /photos/adv_
@@ -55,7 +58,9 @@
 /storiesflash/baner
 /upload/banery_pl/*
 /vardata/banery/*
+_1100x200.
 _750x200_
+_baner/980x200
 _banner.png
 _reklama.jpg
 _res/banner/glowna/
@@ -166,8 +171,8 @@ _res/banner/glowna/
 @@||ocdn.eu/files/pulscms/*.png
 @@||pah.org.pl
 @@||legnica.eu/uploads/pub/ads_files/
-@@||rek.www.wp.pl/pliki/$script,domain=wp.pl|wp.tv
-@@||rek.www.wp.pl/vad.xml?$domain=wp.pl|wp.tv
+@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|wp.pl|wp.tv
+@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|wp.pl|wp.tv
 @@||reklama.onet.pl*logo*png
 @@||smartadserver.com$domain=get.x-link.pl
 @@||tvn.adocean.pl/files/js/ado.js$domain=ekstraklasa.tv
@@ -190,6 +195,7 @@ _res/banner/glowna/
 ||bankier.pl/gfx/ad
 ||bochnianin.pl/foto/pasek/
 ||boksy.onet.pl
+||brodnica.net/banery/
 ||brwinow.com/images/banners
 ||cdn.sterta.pl
 ||comperialead.pl/widget/
@@ -219,6 +225,7 @@ _res/banner/glowna/
 ||portalprzemyski.pl/wp-content/re/
 ||rek.www.wp.pl
 ||reklama.osemka.pl
+||spidersweb.pl/wp-content/themes/new_sw_v2/images/*.swf
 ||static.clickonometrics.pl
 ||static-chomikuj.pl/serve/
 ||static-kinoman.tv/n*php
@@ -279,8 +286,10 @@ napisy24.pl##.header_210
 narodowcy.net##.custom
 naszamlawa.pl##[id^="fancybox-"]
 newsweek.pl##[class^="Block-Banner"]
+optyczne.pl###warning
 orneta.net##.lof-container
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
+profil.wp.pl##.bxAdv
 proline.pl###layer_top
 purepc.pl##[class$="reklama"]
 sadistic.pl/pics/c57d81558fed.jpg

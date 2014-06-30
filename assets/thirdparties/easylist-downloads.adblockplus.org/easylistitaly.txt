@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: xElgUP5TCWOpyJX05+w13Q
-! Version: 201406271441
+! Checksum: L4LVvFWOwRvhFJr0Y/Lp4w
+! Version: 201406301511
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 27 Jun 2014 14:41 UTC
+! Ultima modifica: 30 Jun 2014 15:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2340,7 +2340,7 @@ gazzettadasti.it##.top-right-ban
 lastampa.it##.top-right-banner
 radiosei.it,retesport.it##.top_banner
 mrstiff.it##.topad
-mesagne.me,neveitalia.it##.topbanner
+mesagne.me,neveitalia.it,terzobinario.it##.topbanner
 agichina24.it##.topbanner1
 vistointv.net##.topbanner2
 turistipercaso.it##.trovaviaggi

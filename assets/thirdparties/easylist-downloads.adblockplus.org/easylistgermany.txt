@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: c6Hu9+Ui+0jrH+bdPflvJA
-! Version: 201406271440
+! Checksum: cl+PNwFa6S3ObkD1np634g
+! Version: 201406301510
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 27 Jun 2014 14:40 UTC
+! Last modified: 30 Jun 2014 15:10 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3933,7 +3933,7 @@ dasbiber.at,kulturmarken.de,scdhfk-handball.de###banner2
 bos-fahrzeuge.info,xboxaktuell.de###banner3
 bos-fahrzeuge.info###banner5
 otr.datenkeller.at###bannerBlock
-aerzteblatt.de###bannerContainer
+aerzteblatt.de,koeln.de###bannerContainer
 bielertagblatt.ch###bannerLead
 airgamer.de###bannerOben
 bielertagblatt.ch###bannerRight
