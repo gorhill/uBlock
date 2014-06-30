@@ -1,0 +1,58 @@
+µBlock è un efficiente ad-blocker: occupa poca memoria e poca cpu, e può usare migliaia di filtri molto più di quelli che possono usare altri software simili.
+
+Consulta questa pagina (in Inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Uso: Il pulsante power nel popup serve per disabilitare/abilitare permanentemente µBlock nel sito che stai visitando, e non serve per disabilitare/abilitare l'estensione.
+
+***
+
+Molto più che un ad-blocker: può anche creare filtri dal file host.
+
+Per default sono attivate queste liste:
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+Puoi anche attivare moltre altre liste:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Ecc.
+
+Ovviamente, più liste attivi, maggiore sarà l'impatto sulla memoria. Anche se aggiungendo altre due liste di Fanboy e hpHosts’s Ad and tracking servers, µBlock userà meno memoria di moltri altri ad-blockers.
+
+Selezionando alcuni di questi filtri può portare ad una maggiore probabilità di problemi nel visualizzare alcuni siti web.
+
+***
+
+Senza queste liste di filtri, questa estensione non è niente. Così se vuoi contribuire, pensa alle persone che lavorando duramente per mantenere queste liste che stai usando, che sono disponibili gratuitamente.
+
+***
+
+Poichè le recensioni non consento all'autore di rispondere, ho deciso di rispondere attraverso il sito principale del progetto.
+
+https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate
+
+***
+
+Dall'autore di HTTP Switchboard.
+
+Gratuito.
+Open source with public license (GPLv3)
+Fatto dagli utenti per gli utenti.
+
+Contributori: https://github.com/gorhill/uBlock/graphs/contributors
+
+***
+
+Questa è una versione preliminare, ricordalo quando scriverai una recensione.
+
+Per leggere le novità di ogni versione consulta questa pagina (In Inlgese):
+https://github.com/gorhill/uBlock/wiki/Change-log
