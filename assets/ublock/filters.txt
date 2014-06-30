@@ -11,3 +11,7 @@
 # https://github.com/gorhill/uBlock/issues/17
 # => blocking counterpart in hpHosts Ad Server: `l.yimg.com`
 @@||l.yimg.com^$stylesheet,domain=yahoo.com
+
+# https://github.com/gorhill/uBlock/issues/17
+# => blocking counterpart in hpHosts Ad Server: `use.typekit.net`
+@@||use.typekit.net^
