@@ -15,8 +15,9 @@ An efficient blocker for Chromium-based browsers. Fast and lean.
     <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" />
 </p>
 
-<sup>The above screenshots were taken after visiting many [reference benchmark](https://github.com/gorhill/httpswitchboard/wiki/Comparative-benchmarks-against-widely-used-blockers:-Top-15-Most-Popular-News-Websites) 
-links plus a bit of random browsing. All blockers were active at the same time, 
+<sup>The screenshots above were taken after visiting links in 
+[reference benchmark](https://github.com/gorhill/uBlock/wiki/Reference-benchmark) 
+plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshots were 
 taken, I left the browser idle for many minutes so as to let the browser's 
 garbage collector kicks in. Also, after a while idling, it's good to open the dev
