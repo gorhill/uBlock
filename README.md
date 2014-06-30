@@ -27,7 +27,7 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
-or [manually](https://github.com/gorhill/uBlock/tree/master/dist).
+or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
 
 To benefit from the higher efficiency, it is of course not advised to use an 
 inefficient blocker at the same time. µBlock will do as well or better than the 
