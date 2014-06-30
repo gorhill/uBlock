@@ -73,6 +73,10 @@
         "off": true,
         "title": "EasyList China (中文)"
         },
+    "cjxlist1.googlecode.com/svn/cjxlist.txt": {
+        "off": true,
+        "title": "cjxlist (main focus on Chinese sites)"
+        },
     "adblock-chinalist.googlecode.com/svn/trunk/adblock.txt": {
         "off": true,
         "title": "EasyList China (obsolete: to be removed)"

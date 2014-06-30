@@ -1,10 +1,11 @@
 e52103b1c6dda92233f4a3ffe2933cb8 assets/ublock/filters.txt
-a0d95cc038361353f6e108ac024ade72 assets/ublock/filter-lists.json
+37783e7383c31702e213d41a5148276a assets/ublock/filter-lists.json
 36d8978c647291a4415dc02fe176e54e assets/thirdparties/download.wiltteri.net/wiltteri.txt
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 3739b55487ff20f235c736601319f843 assets/thirdparties/adblock.gardar.net/is.abp.txt
 3282ce613ab76d79507762425ec74d81 assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
 4fb0e3ce956a596192a2a6b076629f06 assets/thirdparties/raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
+b8aa460917e4dcde65369e10d72cd05f assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
 47e13063f57be252c00f5457d047b4e9 assets/thirdparties/spam404bl.com/spam404scamlist.txt
 71fbcc9d6e69aeeaacc10bc69242f6c5 assets/thirdparties/easylist-downloads.adblockplus.org/easylistchina.txt
 e6ac19b8a1f7de6469597488e538e317 assets/thirdparties/easylist-downloads.adblockplus.org/fanboy-annoyance.txt
