@@ -54,6 +54,55 @@ var toPrettyTypeNames = {
 
 /******************************************************************************/
 
+var renderURL = function(url, filter) {
+    var chunkSize = 50;
+    // make a regex out of the filter
+    var reText = filter;
+    var pos = reText.indexOf('$');
+    if ( pos > 0 ) {
+        reText = reText.slice(0, pos);
+    }
+    reText = reText
+        .replace(/\./g, '\\.')
+        .replace(/\?/g, '\\?')
+        .replace('||', '')
+        .replace(/\^/g, '.')
+        .replace(/\*/g, '.*')
+        ;
+    var re = new RegExp(reText, 'g');
+    var matches = re.exec(url);
+    if ( !matches || !matches[0].length ) {
+        return url;
+    }
+    var renderedURL = [];
+    while ( url.length ) {
+        renderedURL.push(url.slice(0, chunkSize));
+        url = url.slice(chunkSize);
+    }
+
+    var index = (re.lastIndex / chunkSize) | 0;
+    var offset = re.lastIndex % chunkSize;
+    if ( offset === 0 ) {
+        offset = 0;
+        index -= 1;
+    }
+    var segment = renderedURL[index];
+    renderedURL[index] = segment.slice(0, offset) + '</b>' + segment.slice(offset);
+
+    index = (matches.index / chunkSize) | 0;
+    offset = matches.index % chunkSize;
+    if ( offset === 0 ) {
+        offset = 0;
+        index -= 1;
+    }
+    segment = renderedURL[index];
+    renderedURL[index] = segment.slice(0, offset) + '<b>' + segment.slice(offset);
+
+    return renderedURL.join('\n');
+};
+
+/******************************************************************************/
+
 var renderPageDetails = function(tabId) {
     if ( !cachedPageSelectors[tabId] ) {
         return;
@@ -63,7 +112,7 @@ var renderPageDetails = function(tabId) {
         if ( details.hash === cachedPageHash ) {
             return;
         }
-        blockedRequests = details.requests || [];
+        var blockedRequests = details.requests || [];
         blockedRequests.sort(function(a, b) {
             var r = a.domain.localeCompare(b.domain);
             if ( r === 0 ) {
@@ -77,22 +126,16 @@ var renderPageDetails = function(tabId) {
 
         uDom('#tableHeader ~ tr').remove();
 
-        var blockedRequest, requestURL, renderedURL;
+        var blockedRequest, requestURL;
         var html = [];
 
         for ( var i = 0; i < blockedRequests.length; i++ ) {
             blockedRequest = blockedRequests[i];
-            requestURL = blockedRequest.url;
-            renderedURL = [];
-            while ( requestURL.length ) {
-                renderedURL.push(requestURL.slice(0, 60));
-                requestURL = requestURL.slice(60);
-            }
             html.push(
                 '<tr>',
                 '<td>', toPrettyTypeNames[blockedRequest.type] || blockedRequest.type,
                 '<td>', blockedRequest.domain,
-                '<td>', renderedURL.join('\n'),
+                '<td>', renderURL(blockedRequest.url, blockedRequest.reason),
                 '<td>', blockedRequest.reason
             );
         }

@@ -68,7 +68,10 @@ var renderStats = function() {
         return;
     }
 
-    uDom('#gotoLog').toggleClass('enabled', stats.logBlockedRequests);
+    uDom('#gotoLog').toggleClass(
+        'enabled',
+        stats.netFilteringSwitch && stats.logBlockedRequests
+    );
 
     var blocked = stats.pageBlockedRequestCount;
     var total = stats.pageAllowedRequestCount + blocked;
