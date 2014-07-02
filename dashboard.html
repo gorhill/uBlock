@@ -27,7 +27,7 @@ body {
 #dashboard-nav-widgets {
     margin: 0;
     border-bottom: 1px solid #ccc;
-    padding: 4px 0 4px 0;
+    padding: 4px 0 0 0;
     white-space: nowrap;
     background-color: white;
     }
@@ -40,7 +40,11 @@ body {
     border: 1px solid #ccc;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    border-bottom: 1px solid #ccc;
     padding: 4px;
+    display: inline-block;
+    position: relative;
+    top: 1px;
     color: black;
     background-color: #eee;
     font: inherit;
@@ -56,6 +60,7 @@ body {
 .tabButton.selected {
     border-bottom: 1px solid white;
     background-color: white;
+    border-bottom: 1px solid white;
     }
 iframe {
     margin: 0;
