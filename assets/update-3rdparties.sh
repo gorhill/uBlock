@@ -7,7 +7,6 @@ TEMPFILE=/tmp/httpsb-asset
 echo "*** uBlock: updating remote assets..."
 
 THIRDPARTY_REMOTEURLS=(
-    'https://raw.githubusercontent.com/gorhill/httpswitchboard/master/assets/httpsb/blacklist.txt'
     'http://mirror1.malwaredomains.com/files/immortal_domains.txt'
     'http://mirror1.malwaredomains.com/files/justdomains'
     'http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&startdate%5Bday%5D=&startdate%5Bmonth%5D=&startdate%5Byear%5D=&mimetype=plaintext'
@@ -45,7 +44,6 @@ THIRDPARTY_REMOTEURLS=(
     )
 
 THIRDPARTY_LOCALURLS=(
-    'thirdparties/raw.githubusercontent.com/gorhill/httpswitchboard/master/assets/httpsb/blacklist.txt'
     'thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt'
     'thirdparties/mirror1.malwaredomains.com/files/justdomains'
     'thirdparties/pgl.yoyo.org/as/serverlist'

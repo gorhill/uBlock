@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: sXsuc3WSq4bVMWcIgHZWgw
-! Version: 201406301511
+! Checksum: FgvwIvNtsdwxDTm+UjG+fA
+! Version: 201407021601
 ! Title: Fanboy's Annoyance List
-! Last modified: 30 Jun 2014 15:11 UTC
+! Last modified: 02 Jul 2014 16:01 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -1617,6 +1617,7 @@ _social_rss.
 /spriteiconshare.
 /sprites-social-
 /sprites-social.
+/sprites-social2.
 /sprites/share-
 /sprites/social-
 /sprites_social.
@@ -2189,6 +2190,7 @@ _youtube_small.
 ###fp_cookieMessageContainer
 ###free-signup-newsletter
 ###fsd_signup
+###g-outbrain
 ###global-cookie-message
 ###gmm-panel-promo
 ###have-a-cookie
@@ -2837,6 +2839,7 @@ _youtube_small.
 ###as_facebook_mem_likebox_widgets
 ###as_facebook_recommend
 ###at_social
+###author-socials
 ###authorshare_wrap
 ###b_Twitter
 ###badge-facebook-like
@@ -2912,6 +2915,7 @@ _youtube_small.
 ###ck_twitter_2
 ###classified-social
 ###cnnShare2
+###cntr_us_social
 ###communityshare
 ###component-sharethis
 ###component-sharethis-horiz-border
@@ -3639,6 +3643,7 @@ _youtube_small.
 ###social-buttons-margin-wrapper
 ###social-buttons-spacing
 ###social-connect
+###social-contact
 ###social-container
 ###social-context-container
 ###social-digest
@@ -4451,6 +4456,7 @@ _youtube_small.
 ##.expanded_story_socialmedia
 ##.extreme-share
 ##.eyebrow-share-widget
+##.f-social
 ##.f_social
 ##.fa-facebook
 ##.fa-facebook-square
@@ -5872,6 +5878,7 @@ _youtube_small.
 ##.social-link-top
 ##.social-link-twitter
 ##.social-links
+##.social-links-block
 ##.social-links-title
 ##.social-links-tooltip
 ##.social-links-wrap
@@ -9563,6 +9570,7 @@ techcrunch.com##.next-link
 filehippo.com##.next-story
 usatoday.com##.next-wrap
 gizbot.com##.nextArticle
+forbes.com##.next_article_button
 forbes.com##.next_control
 disclose.tv##.next_page
 hulkshare.com##.nhsTpBanner
@@ -9874,6 +9882,7 @@ engadget.com,indiatvnews.com##.sticky
 airspacemag.com,smithsonianmag.com##.sticky-block
 aeon.co##.sticky-wrapper
 pcadvisor.co.uk##.stickyNav
+forbes.com##.sticky_footer_tab
 broadway.com##.stickyfooter
 pinknews.co.uk##.sting
 cafemom.com##.stirFanBoxes
@@ -10698,6 +10707,7 @@ visual.ly##.headerCallToActionContainer
 healthyplace.com##.healthyplace-on-facebook
 healthyplace.com##.healthyplace-on-twitter
 imgism.com##.hoverlinks
+pastebin.com##.i_tf
 techtimes.com##.ic_g
 ted.com##.icon-center
 cookieandkate.com##.icon-font
@@ -11675,6 +11685,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||aol.com^*/sharrre.js
 @@||aolcdn.com/aboutme/*/icons/socialmedia/$domain=about.me
 @@||apple.com/kb/resources/images/i_facebook.png
+@@||avgthreatlabs.com^*/facebook-logo.png
 @@||bestof.s3.amazonaws.com/linkedin.png$domain=makeuseof.com
 @@||bestof.s3.amazonaws.com/stumbleupon.png$domain=makeuseof.com
 @@||bestof.s3.amazonaws.com/tumblr.png$domain=makeuseof.com

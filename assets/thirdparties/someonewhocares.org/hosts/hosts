@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jun 24th, 2014 at 04:58
+# Last updated: Jun 30th, 2014 at 10:25
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -4817,6 +4817,7 @@ fe80::1%lo0	localhost
 127.0.0.1 aff.ringtonepartner.com
 127.0.0.1 afi.adocean.pl
 127.0.0.1 afilo.pl
+127.0.0.1 afunnygames.com
 127.0.0.1 agkn.com
 127.0.0.1 aj.600z.com
 127.0.0.1 ajcclassifieds.com

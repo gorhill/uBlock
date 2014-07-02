@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4028
-! Last modified: 28 Jun 2014
+! Version: 4073
+! Last modified: 1 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -58,6 +58,8 @@
 ##[href^="http://evodownload.com/"]
 ##[href^="http://zoomfiles.net/"]
 ##[href^="http://shortz.so/"]
+##[href^="http://fileam.com/"]
+##[href^="http://filerack.net/"]
 !
 !
 !
@@ -4023,6 +4025,49 @@ dream-file.com##[alt="Regular Download"]
 ||cool-hacks.com^
 ||graspoffers.com^
 ||clashofclanshackonline.org^
+||hackzs.com^
+||idownloadplay.com^
+||lovelyfreindsvisit.com^
+||overvid.com^
+||celebrantsd.pw^
+||cazow.com^
+||gameofthronesseason4episode2.com^
+||streamunion.com^
+||basdong.com^
+||streamsaison.com^
+||newvipbox.com^
+||free-gc.com^
+||convectiontoasterovenreviews.biz^
+||2shocking4you.com^
+||thewalkingdeadseason4episode10.com^
+||illymithics.fr^
+||episodesaison.com^
+||mediafires.biz^
+||glassgrip.biz^
+||kolopopo.com^
+||saisonstream.com^
+||lifelinessd.pw^
+||newfbapps.com^
+||drudgetube.com^
+||combatarms-nx.com^
+||goomia.net^
+||freeminecraft.me^
+||freeminecraft.co.uk^
+||flmtelechargers.com^
+||minecraftserverforfree.com^
+||ebookdatabase.org^
+||spotifypremiumcodes.com^
+||hackwifipass.com^
+||gurucheats.com^
+||foundcheats.com^
+||passfbtrick.com^
+||s-telecharger.com^
+||crackandhack.info^
+||bestadder.com^
+||hackfacebookpassword.co.uk^
+||dlhaven.com^
+||psncodegeneratorhq.com^
+||masszip.com^
 !
 !
 !

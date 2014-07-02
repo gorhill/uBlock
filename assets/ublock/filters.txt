@@ -19,3 +19,6 @@
 # To fix tweetdeck
 # => blocking counterpart in EasyPrivacy & Fanboy Annoyance: `||twitter.com/i/jot`
 @@||twitter.com/i/jot^$domain=tweetdeck.twitter.com
+
+# Zerohedge: ref: http://forums.lanik.us/viewtopic.php?f=62&t=17307
+www.zerohedge.com##.similar-box

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: vupj9AnwEGtrj7U9PxTZkA
-! Version: 201406301511
+! Checksum: 2CHeimTo/tikc+ixmo7vCw
+! Version: 201407021601
 ! Title: EasyPrivacy
-! Last modified: 30 Jun 2014 15:11 UTC
+! Last modified: 02 Jul 2014 16:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2241,6 +2241,7 @@ http://utm.
 ||adoftheyear.com^$third-party
 ||adprotraffic.com^$third-party
 ||adsensedetective.com^$third-party
+||adtarget.me^$third-party
 ||adultblogtoplist.com^$third-party
 ||advanced-web-analytics.com^$third-party
 ||affilae.com^$third-party
@@ -2465,6 +2466,7 @@ http://utm.
 ||contactmonkey.com^$third-party
 ||contentspread.net^$third-party
 ||contextly.com^$third-party
+||continue.com^$third-party
 ||convergetrack.com^$third-party
 ||conversionly.com^$third-party
 ||conversionruler.com^$third-party
@@ -3120,7 +3122,6 @@ http://utm.
 ||ournet-analytics.com^$third-party
 ||outboundlink.me^$third-party
 ||overstat.com^$third-party
-||owneriq.net^$third-party
 ||oxidy.com^$third-party
 ||p-td.com^$third-party
 ||p.l1v.ly^$third-party
@@ -5185,6 +5186,7 @@ http://utm.
 ||pussy.org^*/track.php
 ||px.dynamicyield.com^$third-party
 ||px.excitedigitalmedia.com^
+||px.owneriq.net^
 ||px.steelhousemedia.com^
 ||px.topspin.net^
 ||qlog.adap.tv^$object-subrequest
@@ -6677,7 +6679,7 @@ http://utm.
 ||foodcouture.net/public_html/ra/script.php$script
 ||foodnavigator.com/tracker/
 ||forbes.com/fps/cookie_backup.php?
-||forbes.com/pepe/track.php?
+||forbes.com^*/track.php?
 ||ford.com/ngtemplates/ngassets/com/forddirect/ng/newMetrics.js
 ||ford.com/ngtemplates/ngassets/ford/general/scripts/js/galleryMetrics.js
 ||fostersbeer.com/js/tracking.js
@@ -7130,6 +7132,7 @@ http://utm.
 ||netmag.co.uk/matchbox/traffic/
 ||netzero.net/account/event.do?$image
 ||newegg.com/common/thirdparty/$subdocument
+||newegg.com/TrackingWeb/
 ||news-leader.com^*/analytics.js
 ||news.cn/webdig.js
 ||news.com.au/tracking/
@@ -8653,8 +8656,7 @@ http://utm.
 @@||about-australia.com/*/clickheat.js
 @@||ad.crwdcntrl.net^$object-subrequest,domain=ap.org|newsinc.com
 @@||adidas.com^*/adidasAnalytics.js?
-@@||adobetag.com/d1/ewscripps/live/SNIFoodCategory.js$domain=food.com
-@@||adobetag.com/d1/octagoncommerce/live/metrics.js$domain=1saleaday.com
+@@||adobetag.com/d2/$script,domain=thestar.com
 @@||adobetag.com^*/amc.js$script
 @@||adobetag.com^*/sitecatalyst.js$domain=hbf.com.au|seattlepi.com|tv.com
 @@||adobetag.com^*/sitecatalystnew.js$domain=playstation.com
@@ -8934,7 +8936,7 @@ http://utm.
 @@||revsci.net/*/pcx.js?csid=$script,domain=video.foxnews.com
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
-@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thinkatheist.com
+@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com
@@ -9177,6 +9179,7 @@ http://utm.
 @@||webcenter.tiscali.it/distribuzione/_script/audience_science.js$domain=mail.tiscali.it
 ! Latvian
 @@/webtracking/*$domain=pasts.lv
+@@||google-analytics.com/analytics.js$domain=tvplay.lv
 ! Polish
 @@||gemius.pl/gstream.js
 @@||kropka.onet.pl^*/onet.js$domain=tvnwarszawa.pl

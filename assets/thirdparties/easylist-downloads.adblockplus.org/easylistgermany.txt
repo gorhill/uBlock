@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: cl+PNwFa6S3ObkD1np634g
-! Version: 201406301510
+! Checksum: GtMRA+GZBbn+Aakt6wa/tg
+! Version: 201407021601
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 30 Jun 2014 15:10 UTC
+! Last modified: 02 Jul 2014 16:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -501,6 +501,7 @@ gamestar.de#@##AdTop
 gamestar.de#@##BF_BUZZBOX
 gamestar.de#@##WerbungObenRechts10_GesamtDIV
 gamestar.de#@##Werbung_Sky
+gamestar.de#@##Werbung_Wide
 gamestar.de#@##ad-bereich1-08
 gamestar.de#@##ad-fullbanner2
 vol.at#@##ad-medrec

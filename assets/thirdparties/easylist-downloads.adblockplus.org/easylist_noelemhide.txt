@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: iPds80HGa8fUA9ivqDt8Rw
-! Version: 201406301510
+! Checksum: AXi4r4RAgv39rqmEVQ344w
+! Version: 201407021600
 ! Title: EasyList without element hiding rules
-! Last modified: 30 Jun 2014 15:10 UTC
+! Last modified: 02 Jul 2014 16:00 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -581,6 +581,7 @@
 /ad-boxes-
 /ad-builder.
 /ad-button1.
+/ad-callback.
 /ad-cdn.
 /ad-channel-
 /ad-choices-
@@ -831,6 +832,7 @@
 /ad5.
 /ad6.
 /ad600x250.
+/ad600x330.
 /ad7.
 /ad728-
 /ad728.
@@ -12062,6 +12064,7 @@ _popunder+$popup
 ||ad.jamster.com^
 ||ad.lyricswire.com^
 ||ad.mangareader.net^
+||ad.newegg.com^
 ||ad.pandora.tv^
 ||ad.reachlocal.com^
 ||ad.search.ch^
@@ -14975,6 +14978,7 @@ _popunder+$popup
 ||thepreparednessreview.com/wp-content/uploads/*_185x185.jpg
 ||thesource.com/magicshave/
 ||thessdreview.com/wp-content/uploads/*/930x64_
+||thessdreview.com^*-bg.jpg
 ||thessdreview.com^*/owc-full-banner.jpg
 ||thessdreview.com^*/owc-new-gif1.gif
 ||thestandard.co.zw^*/banners/
@@ -16984,6 +16988,7 @@ _popunder+$popup
 @@||doubleclick.net/adj/imdb2.consumer.video/*;sz=320x240,$script
 @@||doubleclick.net/adj/kval/health;pos=gallerytop;sz=$script,domain=kval.com
 @@||doubleclick.net/adj/nbcu.nbc/videoplayer-$script
+@@||doubleclick.net/adj/oiq.man.$script,domain=manualsonline.com
 @@||doubleclick.net/adj/pch.candystand/video;pos=box;sz=300x250;a=$script,domain=candystand.com
 @@||doubleclick.net/adj/pong.all/*;dcopt=ist;$script
 @@||doubleclick.net/adj/profootballreference.fsv/$script,domain=pro-football-reference.com
@@ -17922,6 +17927,7 @@ _popunder+$popup
 @@||w.org/adsense-plugin/assets/banner-$image,domain=wordpress.org
 @@||w.org/plugins/adsense-plugin/screenshot-$image,domain=wordpress.org
 @@||wahoha.com^$~third-party
+@@||wahooads.com/Ads.nsf/$~third-party
 @@||wallpapersmania.com/ad/$image,~third-party
 @@||walmartmoneycard.com^*/shared/ad_rotater.swf
 @@||wappalyzer.com/sites/default/files/icons/$image
@@ -18195,6 +18201,7 @@ _popunder+$popup
 @@||fastcoexist.com/js/advertisement.js
 @@||fastcolabs.com/js/advertisement.js
 @@||fastcompany.com/js/advertisement.js
+@@||fasts.tv^$script,domain=ilive.to
 @@||ffiles.com/images/mmfiles_
 @@||fhscheck.zapto.org^$script,~third-party
 @@||fhsload.hopto.org^$script,~third-party
@@ -18258,6 +18265,7 @@ _popunder+$popup
 @@||info.tm^$script,domain=ilix.in|priva.us
 @@||inskinmedia.com/crossdomain.xml$object-subrequest
 @@||intellitxt.com/intellitxt/front.asp?ipid=$script,domain=forums.tweaktown.com
+@@||jjcast.com^$elemhide
 @@||jkanime.net/assets/js/advertisement.js
 @@||jkanime.net^*/advertisement2.js
 @@||jtvnw.net/*/advertisement.js$domain=justin.tv|twitch.tv
@@ -18535,10 +18543,10 @@ _popunder+$popup
 @@||ehow.com.br/frames/ad.html?$subdocument
 @@||ehowenespanol.com/frames/ad.html?$subdocument
 @@||emediate.eu/crossdomain.xml$object-subrequest
-@@||emediate.eu/eas?cu_key=*;ty=playlist;$object-subrequest,domain=bandit.se|lugnafavoriter.com|nrj.se|playradio.se|radio1.se|rixfm.com|tv3play.ee|tv3play.lv|tv3play.se|tv6play.se|tv8play.se
+@@||emediate.eu/eas?cu_key=*;ty=playlist;$object-subrequest,domain=bandit.se|lugnafavoriter.com|nrj.se|playradio.se|radio1.se|rixfm.com|tv3play.ee|tv3play.se|tv6play.se|tv8play.se
 @@||emediate.se/crossdomain.xml$object-subrequest
-@@||emediate.se/eas?$domain=novatv.bg|tv2.dk|tv3.se|tv3play.ee|tv3play.lt|tv3play.lv|tv3play.se|tv6play.se|tv8play.se
-@@||emediate.se/eas_tag.1.0.js$domain=tv2.dk|tv3play.ee|tv3play.lv|tv3play.se|tv6play.se|tv8play.se
+@@||emediate.se/eas?$domain=novatv.bg|tv2.dk|tv3.se|tv3play.ee|tv3play.lt|tv3play.se|tv6play.se|tv8play.se
+@@||emediate.se/eas_tag.1.0.js$domain=tv2.dk|tv3play.ee|tv3play.se|tv6play.se|tv8play.se
 @@||epaper.andhrajyothy.com/js/newads.js
 @@||ettevotja.ee/templates/*/images/advert.gif
 @@||expdash.adtlgc.com^$xmlhttprequest,domain=expressen.se

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: ju1XUdYs/dOHuAHI8ZKUnw
-! Version: 201406301510
-! Last modified: 30 Jun 2014 15:10 UTC
+! Checksum: gmJwuhksYP88z3u66w2Z6w
+! Version: 201407021600
+! Last modified: 02 Jul 2014 16:00 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2994,6 +2994,7 @@ drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
+tapochek.net##a[href^="https://joycasino.com/?partner="]
 goodgame.ru##a[id^="banner-"]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
@@ -3521,7 +3522,6 @@ fishki.net##.branding_top_link
 games-tv.ru##.brandingh
 cybergame.tv,nur.kz##.brandlink
 nur.kz##.brandtop
-mediametrics.ru##.brend-bottom
 klanwin.ru,pi-c.ru##.browse
 censor.net.ua##.buben
 riper.am##.button-download
@@ -4054,7 +4054,7 @@ tutu.ru##body > .freespace
 xakep.ru##body > a
 naruto-hokage.ru##body > a[href^="/go?"]
 kinatgames.ru,kinatvideo.ru##body > a[href^="http://lnk.do/"]
-gotps3.ru,mediametrics.ru,nnm.me,zhenskoe-mnenie.ru##body > a[target="_blank"]
+gotps3.ru,nnm.me,zhenskoe-mnenie.ru##body > a[target="_blank"]
 drevo.uaportal.com##body > center:first-of-type
 christianka.bratstvo.org##body > center:last-child
 nadavi.com.ua,nadavi.ru##body > div > table[width="92%"]:not([class="top-region"])
@@ -4267,6 +4267,7 @@ rutracker.org###bn-tio-1
 pornolab.net###body_container > div[id]:first-of-type:not(#page_container)
 rutracker.org###crn-1
 seonews.ru###main_tags_block + div[style^="width: 200px;"]
+pirat.ca###sidebar2
 rebill.me###space
 meteonovosti.ru###top_ban
 seonews.ru###tpl_topbanner_block
@@ -4277,6 +4278,7 @@ brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
 redtram.com##.b-informers
 online.ua##.banner-top
 mmorpg.ua##.banner_left_col
+na-svyazi.ru##.bg0[width]
 gismeteo.ru##.body > .top
 i.ua##.clear.logo_container
 goldroyal.net##.floating
@@ -4841,7 +4843,6 @@ _advideo/$object-subrequest,domain=megogo.net
 ||maxpark.com/static/img/branding/
 ||mebelminsk.by/assets/images/adw/
 ||mebelminsk.by/assets/images/swf/
-||mediametrics.ru/img/*-bg.$image
 ||mediaua.com.ua/bnr/
 ||medikforum.ru/news/banners/
 ||medkrug.ru/web/flash/reg.
@@ -4932,8 +4933,6 @@ _advideo/$object-subrequest,domain=megogo.net
 ||nn.by/photos/$object
 ||nn.by/photos/banners/
 ||nnm-club.me^*/ads/
-||nnm.me/a/$object
-||nnm.me/a/*.gif|
 ||nnover.ru/hints/show/
 ||nnportal.org/nntt/$object
 ||nnportal.org/portal/core/i/
@@ -5010,7 +5009,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||pikabu.ru/images/branding/
 ||pikabu.ru/images/test/
 ||pipec.ru/js/
-||pirat.ca/images/posters/$object
+||pirat.ca/images/posters/
 ||piratbit.net/misc/html/
 ||piratbit.net/rek/
 ||piratski.ru/*_banner.
@@ -5752,7 +5751,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@.com/ads?$domain=uzblog.com|uzlist.com
 @@.soundcloud.com/player.swf?url=
 @@//promo.$popup,domain=bactistatin.com|gamexp.ru|iguides.ru|yandex.ru
-@@/adfox.$script,domain=alfabank.ru|mts.ru|rutube.ru
+@@/adfox.$script,domain=alfabank.ru|mirtesen.ru|mts.ru|rutube.ru
 @@/adfox/*$image,object,domain=alfabank.ru|rutube.ru
 @@/adline.$domain=adline.by|adline.reformal.ru
 @@/adriver.core.$domain=delfi.ua
@@ -6042,8 +6041,10 @@ all-episodes.com##div[class^="bn_"]
 @@||content.relax.ru^$script,domain=smotri.com
 @@||kavanga.ru/exp?$script,domain=baskino.com|lokomotiv.info|verstov.info
 @@||medialand.ru/code?*&oin=0&$script,domain=qip.ru|rbc.ru|smotri.com|utro.ru
+@@||medialand.ru/inline_redirect.$script,domain=smotri.com
 @@||medialand.ru/t/$script,domain=qip.ru
 @@||medialand.ru/test?$script,domain=qip.ru
+@@||medialand.ru/webtoolkit.$script,domain=smotri.com
 @@||medialand.ru^*/magna.js$domain=glav.su
 @@||premium.mbn.com.ua^$script,domain=ura-inform.com
 @@||rbc.magna.ru/xml_out/?$domain=utro.ru
