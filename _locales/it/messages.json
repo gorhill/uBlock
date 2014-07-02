@@ -113,6 +113,22 @@
         "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
         "description": "English: see _locales/en/messages.log"
     },
+    "logBlockedRequestsHeaderType" : {
+        "message": "Type",
+        "description": "English: Type"
+    },
+    "logBlockedRequestsHeaderDomain" : {
+        "message": "Domain",
+        "description": "English: Domain"
+    },
+    "logBlockedRequestsHeaderURL" : {
+        "message": "Blocked URL",
+        "description": "English: Blocked URL"
+    },
+    "logBlockedRequestsHeaderFilter" : {
+        "message": "Filter",
+        "description": "English: Filter"
+    },
     "logBlockedRequestsEmpty" : {
         "message": "No blocked requests logged for this page",
         "description": "English: No blocked requests logged for this page"
