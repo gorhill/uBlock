@@ -69,34 +69,34 @@ var renderURL = function(url, filter) {
         .replace(/\^/g, '.')
         .replace(/\*/g, '.*')
         ;
-    var re = new RegExp(reText, 'g');
+    var re = new RegExp(reText, 'gi');
     var matches = re.exec(url);
-    if ( !matches || !matches[0].length ) {
-        return url;
-    }
+
     var renderedURL = [];
     while ( url.length ) {
         renderedURL.push(url.slice(0, chunkSize));
         url = url.slice(chunkSize);
     }
 
-    var index = (re.lastIndex / chunkSize) | 0;
-    var offset = re.lastIndex % chunkSize;
-    if ( offset === 0 ) {
-        offset = 0;
-        index -= 1;
-    }
-    var segment = renderedURL[index];
-    renderedURL[index] = segment.slice(0, offset) + '</b>' + segment.slice(offset);
+    if ( matches && matches[0].length ) {
+        var index = (re.lastIndex / chunkSize) | 0;
+        var offset = re.lastIndex % chunkSize;
+        if ( index > 0 && offset === 0 ) {
+            offset = 0;
+            index -= 1;
+        }
+        var segment = renderedURL[index];
+        renderedURL[index] = segment.slice(0, offset) + '</b>' + segment.slice(offset);
 
-    index = (matches.index / chunkSize) | 0;
-    offset = matches.index % chunkSize;
-    if ( offset === 0 ) {
-        offset = 0;
-        index -= 1;
+        index = (matches.index / chunkSize) | 0;
+        offset = matches.index % chunkSize;
+        if ( index > 0 && offset === 0 ) {
+            offset = chunkSize;
+            index -= 1;
+        }
+        segment = renderedURL[index];
+        renderedURL[index] = segment.slice(0, offset) + '<b>' + segment.slice(offset);
     }
-    segment = renderedURL[index];
-    renderedURL[index] = segment.slice(0, offset) + '<b>' + segment.slice(offset);
 
     return renderedURL.join('\n');
 };
