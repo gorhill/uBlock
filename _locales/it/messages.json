@@ -20,7 +20,7 @@
         "description": "appears as tab name in dashboard."
     },
     "statsPageName" : {
-        "message": "Statistics",
+        "message": "Statistiche",
         "description": "appears as tab name in dashboard."
     },
     "aboutPageName": {
@@ -106,31 +106,31 @@
 
 
     "logBlockedRequestsPrompt" : {
-        "message": "Enable the logging of blocked requests",
+        "message": "Attiva la registrazione delle richieste bloccate",
         "description": "English: Enable the logging of blocked requests"
     },
     "logBlockedRequestsHelp" : {
-        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "message": "Puoi controllare i dettagli delle richieste bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeaderType" : {
-        "message": "Type",
+        "message": "Tipo",
         "description": "English: Type"
     },
     "logBlockedRequestsHeaderDomain" : {
-        "message": "Domain",
+        "message": "Dominio",
         "description": "English: Domain"
     },
     "logBlockedRequestsHeaderURL" : {
-        "message": "Blocked URL",
+        "message": "Indirizzo bloccato",
         "description": "English: Blocked URL"
     },
     "logBlockedRequestsHeaderFilter" : {
-        "message": "Filter",
+        "message": "Filtro",
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
-        "message": "No blocked requests logged for this page",
+        "message": "Nel registro, non ci sono richieste bloccate per questa pagina.",
         "description": "English: No blocked requests logged for this page"
     },
 
@@ -164,7 +164,7 @@
         "description": "Successful outcome of clicking 'update' button"
     },
     "aboutAssetsUpdateStatusAdded" : {
-        "message": "da aggiungere",
+        "message": "Da aggiungere",
         "description": "Displayed in the status column for each entry"
     },
     "aboutAssetsUpdateStatusChanged" : {
