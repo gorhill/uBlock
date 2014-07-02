@@ -27,6 +27,10 @@
 /******************************************************************************/
 /******************************************************************************/
 
+(function() {
+
+/******************************************************************************/
+
 // https://github.com/gorhill/httpswitchboard/issues/345
 
 var messaging = (function(name){
@@ -121,301 +125,300 @@ var messaging = (function(name){
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
-
-/******************************************************************************/
-
 // ABP cosmetic filters
 
-var CosmeticFiltering = function() {
-    this.queriedSelectors = {};
-    this.injectedSelectors = {};
-    this.classSelectors = null;
-    this.idSelectors = null;
-};
+var cosmeticFiltering = (function() {
 
-CosmeticFiltering.prototype.onDOMContentLoaded = function() {
-    // https://github.com/gorhill/uBlock/issues/14
-    // Treat any existing domain-specific exception selectors as if they had
-    // been injected already.
-    var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
-    var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
-    if ( exceptions ) {
-        exceptions = decodeURIComponent(exceptions).split('\n');
-        var i = exceptions.length;
+    var queriedSelectors = {};
+    var injectedSelectors = {};
+    var classSelectors = null;
+    var idSelectors = null;
+
+    var domLoaded = function() {
+        // https://github.com/gorhill/uBlock/issues/14
+        // Treat any existing domain-specific exception selectors as if they had
+        // been injected already.
+        var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
+        var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
+        if ( exceptions ) {
+            exceptions = decodeURIComponent(exceptions).split('\n');
+            var i = exceptions.length;
+            while ( i-- ) {
+                injectedSelectors[exceptions[i]] = true;
+            }
+        }
+
+        // TODO: evaluate merging into a single loop
+        selectorsFromNodeList(document.querySelectorAll('*[class],*[id]'));
+        retrieveGenericSelectors();
+    };
+
+    var retrieveGenericSelectors = function() {
+        var selectors = classSelectors !== null ? Object.keys(classSelectors) : [];
+        if ( idSelectors !== null ) {
+            selectors = selectors.concat(idSelectors);
+        }
+        if ( selectors.length > 0 ) {
+            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
+            messaging.ask({
+                    what: 'retrieveGenericCosmeticSelectors',
+                    pageURL: window.location.href,
+                    selectors: selectors
+                },
+                retrieveHandler
+            );
+        }
+        idSelectors = null;
+        classSelectors = null;
+    };
+
+    var retrieveHandler = function(selectors) {
+        if ( !selectors ) {
+            return;
+        }
+        var styleText = [];
+        filterUnfiltered(selectors.hideUnfiltered, selectors.hide);
+        reduce(selectors.hide, injectedSelectors);
+        if ( selectors.hide.length ) {
+            var hideStyleText = '{{hideSelectors}} {display:none !important;}'
+                .replace('{{hideSelectors}}', selectors.hide.join(','));
+            styleText.push(hideStyleText);
+            applyCSS(selectors.hide, 'display', 'none');
+            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
+        }
+        filterUnfiltered(selectors.donthideUnfiltered, selectors.donthide);
+        reduce(selectors.donthide, injectedSelectors);
+        if ( selectors.donthide.length ) {
+            var dontHideStyleText = '{{donthideSelectors}} {display:initial !important;}'
+                .replace('{{donthideSelectors}}', selectors.donthide.join(','));
+            styleText.push(dontHideStyleText);
+            applyCSS(selectors.donthide, 'display', 'initial');
+            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.donthide.length, dontHideStyleText);
+        }
+        if ( styleText.length > 0 ) {
+            var style = document.createElement('style');
+            style.appendChild(document.createTextNode(styleText.join('\n')));
+            var parent = document.body || document.documentElement;
+            if ( parent ) {
+                parent.appendChild(style);
+            }
+        }
+    };
+
+    var applyCSS = function(selectors, prop, value) {
+        if ( document.body === null ) {
+            return;
+        }
+        var elems = document.querySelectorAll(selectors);
+        var i = elems.length;
         while ( i-- ) {
-            this.injectedSelectors[exceptions[i]] = true;
+            elems[i].style[prop] = value;
         }
-    }
+    };
 
-    // TODO: evaluate merging into a single loop
-    this.classesFromNodeList(document.querySelectorAll('*[class]'));
-    this.idsFromNodeList(document.querySelectorAll('*[id]'));
-    this.retrieveGenericSelectors();
-};
-
-CosmeticFiltering.prototype.retrieveGenericSelectors = function() {
-    var selectors = this.classSelectors !== null ? Object.keys(this.classSelectors) : [];
-    if ( this.idSelectors !== null ) {
-        selectors = selectors.concat(this.idSelectors);
-    }
-    if ( selectors.length > 0 ) {
-        //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
-        messaging.ask({
-                what: 'retrieveGenericCosmeticSelectors',
-                pageURL: window.location.href,
-                selectors: selectors
-            },
-            this.retrieveHandler.bind(this)
-        );
-    }
-    this.idSelectors = null;
-    this.classSelectors = null;
-};
-
-CosmeticFiltering.prototype.retrieveHandler = function(selectors) {
-    if ( !selectors ) {
-        return;
-    }
-    var styleText = [];
-    this.filterUnfiltered(selectors.hideUnfiltered, selectors.hide);
-    this.reduce(selectors.hide, this.injectedSelectors);
-    if ( selectors.hide.length ) {
-        var hideStyleText = '{{hideSelectors}} {display:none !important;}'
-            .replace('{{hideSelectors}}', selectors.hide.join(','));
-        styleText.push(hideStyleText);
-        this.applyCSS(selectors.hide, 'display', 'none');
-        //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
-    }
-    this.filterUnfiltered(selectors.donthideUnfiltered, selectors.donthide);
-    this.reduce(selectors.donthide, this.injectedSelectors);
-    if ( selectors.donthide.length ) {
-        var dontHideStyleText = '{{donthideSelectors}} {display:initial !important;}'
-            .replace('{{donthideSelectors}}', selectors.donthide.join(','));
-        styleText.push(dontHideStyleText);
-        this.applyCSS(selectors.donthide, 'display', 'initial');
-        //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.donthide.length, dontHideStyleText);
-    }
-    if ( styleText.length > 0 ) {
-        var style = document.createElement('style');
-        style.appendChild(document.createTextNode(styleText.join('\n')));
-        var parent = document.body || document.documentElement;
-        if ( parent ) {
-            parent.appendChild(style);
-        }
-    }
-};
-
-CosmeticFiltering.prototype.applyCSS = function(selectors, prop, value) {
-    if ( document.body === null ) {
-        return;
-    }
-    var elems = document.querySelectorAll(selectors);
-    var i = elems.length;
-    while ( i-- ) {
-        elems[i].style[prop] = value;
-    }
-};
-
-CosmeticFiltering.prototype.filterUnfiltered = function(inSelectors, outSelectors) {
-    var i = inSelectors.length;
-    var selector;
-    while ( i-- ) {
-        selector = inSelectors[i];
-        if ( this.injectedSelectors[selector] ) {
-            continue;
-        }
-        if ( document.querySelector(selector) !== null ) {
-            outSelectors.push(selector);
-        }
-    }
-};
-
-CosmeticFiltering.prototype.reduce = function(selectors, dict) {
-    var i = selectors.length, selector, end;
-    while ( i-- ) {
-        selector = selectors[i];
-        if ( !dict[selector] ) {
-            if ( end !== undefined ) {
-                selectors.splice(i+1, end-i);
-                end = undefined;
-            }
-            dict[selector] = true;
-        } else if ( end === undefined ) {
-            end = i;
-        }
-    }
-    if ( end !== undefined ) {
-        selectors.splice(0, end+1);
-    }
-};
-
-CosmeticFiltering.prototype.classesFromNodeList = function(nodes) {
-    if ( !nodes ) {
-        return;
-    }
-    if ( this.classSelectors === null ) {
-        this.classSelectors = {};
-    }
-    var classNames, className, j;
-    var i = nodes.length;
-    while ( i-- ) {
-        className = nodes[i].className;
-        if ( typeof className !== 'string' ) {
-            continue;
-        }
-        className = className.trim();
-        if ( className === '' ) {
-            continue;
-        }
-        if ( className.indexOf(' ') < 0 ) {
-            className = '.' + className;
-            if ( this.queriedSelectors[className] ) {
+    var filterUnfiltered = function(inSelectors, outSelectors) {
+        var i = inSelectors.length;
+        var selector;
+        while ( i-- ) {
+            selector = inSelectors[i];
+            if ( injectedSelectors[selector] ) {
                 continue;
             }
-            this.classSelectors[className] = true;
-            this.queriedSelectors[className] = true;
-            continue;
+            if ( document.querySelector(selector) !== null ) {
+                outSelectors.push(selector);
+            }
         }
-        classNames = className.trim().split(/\s+/);
-        j = classNames.length;
-        while ( j-- ) {
-            className = classNames[j];
-            if ( className === '' ) {
+    };
+
+    var reduce = function(selectors, dict) {
+        var i = selectors.length, selector, end;
+        while ( i-- ) {
+            selector = selectors[i];
+            if ( !dict[selector] ) {
+                if ( end !== undefined ) {
+                    selectors.splice(i+1, end-i);
+                    end = undefined;
+                }
+                dict[selector] = true;
+            } else if ( end === undefined ) {
+                end = i;
+            }
+        }
+        if ( end !== undefined ) {
+            selectors.splice(0, end+1);
+        }
+    };
+
+    var selectorsFromNodeList = function(nodes) {
+        if ( !nodes || !nodes.length ) {
+            return;
+        }
+        if ( idSelectors === null ) {
+            idSelectors = [];
+        }
+        if ( classSelectors === null ) {
+            classSelectors = {};
+        }
+        var qq = queriedSelectors;
+        var cc = classSelectors;
+        var ii = idSelectors;
+        var node, v, classNames, j;
+        var i = nodes.length;
+        while ( i-- ) {
+            node = nodes[i];
+            if ( node.nodeType !== 1 ) {
                 continue;
             }
-            className = '.' + className;
-            if ( this.queriedSelectors[className] ) {
+            // id
+            v = nodes[i].id.trim();
+            if ( v !== '' ) {
+                v = '#' + v;
+                if ( !qq[v] ) {
+                    ii.push(v);
+                    qq[v] = true;
+                }
+            }
+            // class
+            v = nodes[i].className;
+            // it could be an SVGAnimatedString...
+            if ( typeof v !== 'string' ) { continue; }
+            v = v.trim();
+            if ( v === '' ) { continue; }
+            // one class
+            if ( v.indexOf(' ') < 0 ) {
+                v = '.' + v;
+                if ( qq[v] ) { continue; }
+                cc[v] = true;
+                qq[v] = true;
                 continue;
             }
-            this.classSelectors[className] = true;
-            this.queriedSelectors[className] = true;
+            // many classes
+            classNames = v.trim().split(/\s+/);
+            j = classNames.length;
+            while ( j-- ) {
+                v = classNames[j];
+                if ( v === '' ) { continue; }
+                v = '.' + v;
+                if ( qq[v] ) { continue; }
+                cc[v] = true;
+                qq[v] = true;
+            }
         }
-    }
-};
+    };
 
-CosmeticFiltering.prototype.idsFromNodeList = function(nodes) {
-    if ( !nodes ) {
-        return;
-    }
-    if ( this.idSelectors === null ) {
-        this.idSelectors = [];
-    }
-    var id;
-    var i = nodes.length;
-    while ( i-- ) {
-        id = nodes[i].id;
-        if ( !id ) {
-            continue;
+    var processNodeLists = function(nodeLists) {
+        var i = nodeLists.length;
+        var nodeList, j, node;
+        while ( i-- ) {
+            nodeList = nodeLists[i];
+            selectorsFromNodeList(nodeList);
+            j = nodeList.length;
+            while ( j-- ) {
+                node = nodeList[j];
+                if ( node.querySelectorAll ) {
+                    selectorsFromNodeList(node.querySelectorAll('*[id],*[class]'));
+                }
+            }
         }
-        id = '#' + id;
-        if ( this.queriedSelectors[id] ) {
-            continue;
-        }
-        this.idSelectors.push(id);
-        this.queriedSelectors[id] = true;
-    }
-};
+        retrieveGenericSelectors();
+    };
 
-CosmeticFiltering.prototype.allFromNodeList = function(nodes) {
-    this.classesFromNodeList(nodes);
-    this.idsFromNodeList(nodes);
-    var i = nodes.length;
-    var node;
-    while ( i-- ) {
-        node = nodes[i];
-        if ( node.querySelectorAll ) {
-            this.classesFromNodeList(node.querySelectorAll('*[class]'));
-            this.idsFromNodeList(node.querySelectorAll('*[id]'));
-        }
-    }
-};
+    domLoaded();
 
-var cosmeticFiltering = new CosmeticFiltering();
+    return {
+        processNodeLists: processNodeLists
+    };
+})();
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/7
 
-var observeElement = function(elem) {
-    var onLoad = function() {
-        var elem = this;
-        var onAnswerReceived = function(details) {
-            if ( details.blocked ) {
-                hideBlockedElement(elem, details.collapse);
+var blockedElementHider = (function() {
+    var hideOne = function(elem, collapse) {
+        // If `!important` is not there, going back using history will likely
+        // cause the hidden element to re-appear.
+        elem.style.visibility = 'hidden !important';
+        if ( collapse && elem.parentNode ) {
+            elem.parentNode.removeChild(elem);
+        }
+    };
+
+    var observeOne = function(elem) {
+        var onComplete = function() {
+            var elem = this;
+            var onAnswerReceived = function(details) {
+                if ( details.blocked ) {
+                    hideOne(elem, details.collapse);
+                }
+            };
+            messaging.ask({ what: 'blockedRequest', url: this.src }, onAnswerReceived);
+            this.removeEventListener('load', onComplete);
+        };
+        elem.addEventListener('load', onComplete);
+    };
+
+    var hideMany = function(elems, details) {
+        var blockedRequests = details.blockedRequests;
+        var collapse = details.collapse;
+        var i = elems.length;
+        var elem, src;
+        while ( i-- ) {
+            elem = elems[i];
+            src = elem.src;
+            if ( typeof src !== 'string' ) {
+                continue;
+            }
+            if ( src === '' ) {
+                observeOne(elem);
+            } else if ( blockedRequests[src] ) {
+                hideOne(elem, collapse);
+            }
+        }
+    };
+
+    var processElements = function(elems) {
+        var blockedRequestsReceived = function(details) {
+            hideMany(elems, details);
+            var i = elems.length;
+            while ( i-- ) {
+                hideMany(elems[i].querySelectorAll('img,iframe'), details);
             }
         };
-        messaging.ask({ what: 'blockedRequest', url: this.src }, onAnswerReceived);
-        this.removeEventListener('load', onLoad);
+        messaging.ask({ what: 'blockedRequests' }, blockedRequestsReceived);
     };
-    elem.addEventListener('load', onLoad);
-};
 
-var hideBlockedElement = function(elem, collapse) {
-    // If `!important` is not there, going back using history will likely
-    // cause the hidden element to re-appear.
-    elem.style.visibility = 'hidden !important';
-    if ( collapse && elem.parentNode ) {
-        elem.parentNode.removeChild(elem);
-    }
-};
-
-var hideBlockedElements = function(elems, details) {
-    var blockedRequests = details.blockedRequests;
-    var collapse = details.collapse;
-    var i = elems.length;
-    var elem, src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem.src;
-        if ( typeof src !== 'string' ) {
-            continue;
-        }
-        if ( src === '' ) {
-            observeElement(elem);
-        } else if ( blockedRequests[src] ) {
-            hideBlockedElement(elem, collapse);
-        }
-    }
-};
-
-var hideBlockedElementInAddedNodes = function(nodes) {
-    var onBlockedRequestsReceived = function(details) {
-        hideBlockedElements(nodes, details);
-        var i = nodes.length;
-        var elem;
+    // rhill 2014-07-01: Avoid useless work: only nodes which are element are
+    // of interest at this point -- because it is common that a lot of plain
+    // text nodes get added.
+    var addNodeLists = function(nodeLists) {
+        var elems = [];
+        var i = nodeLists.length;
+        var nodeList, j, node;
         while ( i-- ) {
-            elem = nodes[i];
-            if ( elem.querySelectorAll ) {
-                hideBlockedElements(elem.querySelectorAll('img,iframe'), details);
+            nodeList = nodeLists[i];
+            j = nodeList.length;
+            while ( j-- ) {
+                node = nodeList[j];
+                if ( node.querySelectorAll ) {
+                    elems.push(node);
+                }
             }
         }
-    };
-    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
-};
-
-(function() {
-    var onBlockedRequestsReceived = function(details) {
-        hideBlockedElements(document.querySelectorAll('img,iframe'), details);
-    };
-    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
-})();
-
-/******************************************************************************/
-
-var mutationObservedHandler = function(mutations) {
-    var iMutation = mutations.length;
-    var mutation;
-    while ( iMutation-- ) {
-        mutation = mutations[iMutation];
-        if ( mutation.addedNodes ) {
-            cosmeticFiltering.allFromNodeList(mutation.addedNodes);
-            hideBlockedElementInAddedNodes(mutation.addedNodes);
+        if ( elems.length ) {
+            processElements(elems);
         }
-    }
+    };
 
-    cosmeticFiltering.retrieveGenericSelectors();
-};
+    var onBlockedRequestsReceived = function(details) {
+        hideMany(document.querySelectorAll('img,iframe'), details);
+    };
+    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
+
+    return {
+        addNodeLists: addNodeLists
+    };
+})();
 
 /******************************************************************************/
 
@@ -435,11 +438,22 @@ if ( /^https?:\/\/./.test(window.location.href) === false ) {
 
 /******************************************************************************/
 
-cosmeticFiltering.onDOMContentLoaded();
-
-/******************************************************************************/
-
 // Observe changes in the DOM
+
+var mutationObservedHandler = function(mutations) {
+    var iMutation = mutations.length;
+    var nodeLists = [], nodeList;
+    while ( iMutation-- ) {
+        nodeList = mutations[iMutation].addedNodes;
+        if ( nodeList && nodeList.length ) {
+            nodeLists.push(nodeList);
+        }
+    }
+    if ( nodeLists.length ) {
+        cosmeticFiltering.processNodeLists(nodeLists);
+        blockedElementHider.addNodeLists(nodeLists);
+    }
+};
 
 // This fixes http://acid3.acidtests.org/
 if ( document.body ) {

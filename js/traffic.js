@@ -58,11 +58,6 @@ var onBeforeRequestHandler = function(details) {
         return;
     }
 
-    // Do not block myself from updating assets
-    if ( requestType === 'xmlhttprequest' && requestURL.slice(0, µb.projectServerRoot.length) === µb.projectServerRoot ) {
-        return;
-    }
-
     var requestHostname = µburi.hostname;
     var requestPath = µburi.path;
 

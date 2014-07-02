@@ -19,11 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, $ */
+/* global chrome, messaging, uDom */
 
 /******************************************************************************/
 
-window.addEventListener('load', function() {
+uDom.onLoad(function() {
 
 /******************************************************************************/
 
@@ -35,7 +35,7 @@ var commitHistoryURLPrefix = 'https://github.com/gorhill/ublock/commits/master/'
 
 var setAssetListClassBit = function(bit, state) {
     assetListSwitches[assetListSwitches.length-1-bit] = !state ? 'o' : 'x';
-    $('#assetList')
+    uDom('#assetList')
         .removeClass()
         .addClass(assetListSwitches.join(''));
 };
@@ -46,24 +46,24 @@ var renderAssetList = function(details) {
     var dirty = false;
     var paths = Object.keys(details.list).sort();
     if ( paths.length > 0 ) {
-        $('#assetList .assetEntry').remove();
-        var assetTable = $('#assetList table');
+        uDom('#assetList .assetEntry').remove();
         var i = 0;
-        var path, status, html;
+        var path, status, html = [];
         while ( path = paths[i++] ) {
             status = details.list[path].status;
             dirty = dirty || status !== 'Unchanged';
-            html = [];
-            html.push('<tr class="assetEntry ' + status.toLowerCase().replace(/ +/g, '-') + '">');
-            html.push('<td>');
-            html.push('<a href="' + commitHistoryURLPrefix + path + '">');
-            html.push(path.replace(/^(assets\/[^/]+\/)(.+)$/, '$1<b>$2</b>'));
-            html.push('</a>');
-            html.push('<td>');
-            html.push(chrome.i18n.getMessage('aboutAssetsUpdateStatus' + status));
-            assetTable.append(html.join(''));
+            html.push(
+                '<tr class="assetEntry ' + status.toLowerCase().replace(/ +/g, '-') + '">',
+                '<td>',
+                '<a href="' + commitHistoryURLPrefix + path + '">',
+                path.replace(/^(assets\/[^/]+\/)(.+)$/, '$1<b>$2</b>'),
+                '</a>',
+                '<td>',
+                chrome.i18n.getMessage('aboutAssetsUpdateStatus' + status)
+            );
         }
-        $('#assetList a').attr('target', '_blank');
+        uDom('#assetList table tBody').append(html.join(''));
+        uDom('#assetList a').attr('target', '_blank');
         updateList = details.list;
     }
     setAssetListClassBit(0, paths.length !== 0);
@@ -110,8 +110,8 @@ messaging.listen(onAnnounce);
 
 /******************************************************************************/
 
-$('#aboutVersion').html(chrome.runtime.getManifest().version);
-$('#aboutAssetsUpdateButton').on('click', updateAssets);
+uDom('#aboutVersion').html(chrome.runtime.getManifest().version);
+uDom('#aboutAssetsUpdateButton').on('click', updateAssets);
 
 /******************************************************************************/
 

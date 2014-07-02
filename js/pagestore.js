@@ -95,13 +95,13 @@ PageStore.prototype.dispose = function() {
 
 /******************************************************************************/
 
-PageStore.prototype.recordRequest = function(type, url, block) {
+PageStore.prototype.recordRequest = function(type, url, reason) {
     // rhill 2013-10-26: This needs to be called even if the request is
     // already logged, since the request stats are cached for a while after
     // the page is no longer visible in a browser tab.
     µb.updateBadge(this.tabId);
 
-    if ( block === false ) {
+    if ( reason === false ) {
         this.perLoadAllowedRequestCount++;
         µb.localSettings.allowedRequestCount++;
         return;
@@ -112,7 +112,9 @@ PageStore.prototype.recordRequest = function(type, url, block) {
 
     // https://github.com/gorhill/uBlock/issues/7
     // https://github.com/gorhill/uBlock/issues/12
-    this.blockedRequests[url] = true;
+    this.blockedRequests[url] = µb.userSettings.logBlockedRequests ?
+        type + '\t' + reason :
+        true;
 };
 
 /******************************************************************************/
@@ -120,7 +122,7 @@ PageStore.prototype.recordRequest = function(type, url, block) {
 // Update badge, incrementally
 
 // rhill 2013-11-09: well this sucks, I can't update icon/badge
-// incrementally, as chromium overwrite the icon at some point without
+// incrementally, as chromium overwrites the icon at some point without
 // notifying me, and this causes internal cached state to be out of sync.
 
 PageStore.prototype.updateBadge = function() {

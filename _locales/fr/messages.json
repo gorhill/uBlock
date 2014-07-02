@@ -19,6 +19,10 @@
         "message": "Vos règles",
         "description": "appears as tab name in dashboard."
     },
+    "statsPageName" : {
+        "message": "Statistiques",
+        "description": "appears as tab name in dashboard."
+    },
     "aboutPageName": {
         "message": "À propos",
         "description": "appears as tab name in dashboard"
@@ -53,7 +57,7 @@
     },
 
 
-    "3pListsOfBlockedHostsPrompt2" : {
+    "3pListsOfBlockedHostsPrompt" : {
         "message": "{{ubiquitousBlacklistCount}} filtres actuellement en action :",
         "description": "English: {{ubiquitousBlacklistCount}} network filters from:"
     },
@@ -98,6 +102,20 @@
     "1pApplyChanges" : {
         "message": "Appliquer",
         "description": "English: Apply changes"
+    },
+
+
+    "logBlockedRequestsPrompt" : {
+        "message": "Activer le journal des requêtes bloquées",
+        "description": "English: Enable the logging of blocked requests"
+    },
+    "logBlockedRequestsHelp" : {
+        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "description": "English: see _locales/en/messages.log"
+    },
+    "logBlockedRequestsEmpty" : {
+        "message": "Il n'y a aucune requête bloquée dans le journal",
+        "description": "English: No blocked requests logged for this page"
     },
 
 

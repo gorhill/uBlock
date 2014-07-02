@@ -600,16 +600,11 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
 
     //quickProfiler.stop();
 
-/*
-     console.log(
-        'µBlock> abp-hide-filters.js: "%s"\n\t%d selectors in => %d/%d filters/buckets tested => %d selectors out',
-        url,
-        inSelectors.length,
-        //filterTestCount,
-        //bucketTestCount,
-        hideSelectors.length + donthideSelectors.length
-    );
-*/
+    //console.log(
+    //    'µBlock> abp-hide-filters.js: %d selectors in => %d selectors out',
+    //    request.selectors.length,
+    //    r.hide.length + r.donthide.length
+    //);
 
     return r;
 };
@@ -656,16 +651,11 @@ FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, reques
 
     //quickProfiler.stop();
 
-/*
-     console.log(
-        'µBlock> abp-hide-filters.js: "%s"\n\t%d selectors in => %d/%d filters/buckets tested => %d selectors out',
-        url,
-        inSelectors.length,
-        //filterTestCount,
-        //bucketTestCount,
-        hideSelectors.length + donthideSelectors.length
-    );
-*/
+    //console.log(
+    //    'µBlock> abp-hide-filters.js: "%s" => %d selectors out',
+    //    request.locationURL,
+    //    r.hide.length + r.donthide.length
+    //);
 
     return r;
 };

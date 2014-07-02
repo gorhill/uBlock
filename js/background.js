@@ -32,6 +32,7 @@ return {
 
     userSettings: {
         collapseBlocked: true,
+        logBlockedRequests: false,
         parseAllABPHideFilters: true,
         netExceptionList: {},
         showIconBadge: true
@@ -41,7 +42,7 @@ return {
         allowedRequestCount: 0
     },
 
-    updateAssetsEvery: 5 * 24 * 60 * 60 * 1000,
+    updateAssetsEvery: 4 * 24 * 60 * 60 * 1000,
     projectServerRoot: 'https://raw2.github.com/gorhill/ublock/master/',
     userFiltersPath: 'assets/user/filters.txt',
 

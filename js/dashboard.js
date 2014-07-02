@@ -23,31 +23,41 @@
 
 (function() {
 
-var loadDashboardPanel = function(hash) {
-    var button = $(hash);
-    var url = button.data('dashboardPanelUrl');
-    $('iframe')[0].src = url;
-    $('.tabButton').each(function(){
-        var button = $(this);
-        button.toggleClass('selected', button.data('dashboardPanelUrl') === url);
-    });
-}
+/******************************************************************************/
+
+var loadDashboardPanel = function(tab) {
+    var tabButton = uDom('[data-dashboard-panel-url="' + tab + '"]');
+    if ( !tabButton ) {
+        return;
+    }
+    uDom('iframe').attr('src', tab);
+    uDom('.tabButton').toggleClass('selected', false);
+    tabButton.toggleClass('selected', true);
+};
 
 /******************************************************************************/
 
 var onTabClickHandler = function() {
-    loadDashboardPanel(window.location.hash);
-}
+    loadDashboardPanel(uDom(this).attr('data-dashboard-panel-url'));
+};
 
 /******************************************************************************/
 
-$(function() {
-    $(window).on('hashchange', onTabClickHandler);
-    var hash = window.location.hash;
-    if ( hash.length < 2 ) {
-        hash = '#thirdparty-filters';
+uDom.onLoad(function() {
+    var matches = window.location.search.slice(1).match(/\??(tab=([^&]+))?(.*)$/);
+    var tab = '', q = '';
+    if ( matches && matches.length === 4 ) {
+        tab = matches[2];
+        q = matches[3];
+        if ( q !== '' && q.charAt(0) === '&' ) {
+            q = '?' + q.slice(1);
+        }
     }
-    loadDashboardPanel(hash);
+    if ( !tab ) {
+        tab = '3p-filters';
+    }
+    loadDashboardPanel(tab + '.html' + q);
+    uDom('.tabButton').on('click', onTabClickHandler);
 });
 
 /******************************************************************************/

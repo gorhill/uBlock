@@ -21,20 +21,14 @@
 
 /******************************************************************************/
 
-window.addEventListener('load', function() {
-
-/******************************************************************************/
-
-// Open links in the proper window
-$('a').attr('target', '_blank');
-$('a[href*="dashboard.html"]').attr('target', '_parent');
-
-$('.whatisthis').on('click', function() {
-    $(this).parent()
-    .find('.whatisthis-expandable')
-    .toggleClass('whatisthis-expanded');
-});
-
-/******************************************************************************/
-
+uDom.onLoad(function() {
+    // Open links in the proper window
+    uDom('a').attr('target', '_blank');
+    uDom('a[href*="dashboard.html"]').attr('target', '_parent');
+    uDom('.whatisthis').on('click', function() {
+        uDom(this)
+            .parent()
+            .find('.whatisthis-expandable')
+            .toggleClass('whatisthis-expanded');
+    });
 });

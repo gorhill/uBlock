@@ -20,18 +20,11 @@
 */
 
 // Helper to deal with the i18n'ing of HTML files.
-// jQuery must be present at this point.
 
-window.addEventListener('load', function() {
-    var i;
-    var fillin = function(elem) {
-            var key = elem.getAttribute("data-i18n");
-            elem.innerHTML = chrome.i18n.getMessage(key);
-        }
-
-    var elems = document.querySelectorAll('[data-i18n]');
-    i = elems.length;
-    while ( i-- ) {
-        fillin(elems[i]);
+uDom.onLoad(function() {
+    var fillin = function() {
+        this.innerHTML = chrome.i18n.getMessage(this.getAttribute('data-i18n'));
     }
+
+    uDom('[data-i18n]').forEach(fillin);
 });

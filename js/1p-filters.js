@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, $ */
+/* global chrome, messaging, uDom */
 
 /******************************************************************************/
 
@@ -37,12 +37,11 @@ messaging.start('1p-filters.js');
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-function userFiltersChanged() {
-    $('#userFiltersApply')
-        .attr(
-            'disabled',
-            $('#userFilters').val().trim() === cachedUserFilters
-        );
+function userFiltersChanged(ev) {
+    uDom('#userFiltersApply').prop(
+        'disabled',
+        uDom('#userFilters').val().trim() === cachedUserFilters
+    );
 }
 
 /******************************************************************************/
@@ -53,7 +52,7 @@ function renderUserFilters() {
             return;
         }
         cachedUserFilters = details.content.trim();
-        $('#userFilters').val(details.content);
+        uDom('#userFilters').val(details.content);
     };
     messaging.ask({ what: 'readUserFilters' }, onRead);
 }
@@ -62,23 +61,22 @@ function renderUserFilters() {
 
 function allFiltersApplyHandler() {
     messaging.tell({ what: 'reloadAllFilters' });
-    $('#userFiltersApply').attr('disabled', true );
+    uDom('#userFiltersApply').prop('disabled', true );
 }
 
 /******************************************************************************/
 
 function appendToUserFiltersFromFile() {
-    var input = $('<input />').attr({
+    var input = uDom('<input />').attr({
         type: 'file',
         accept: 'text/plain'
     });
     var fileReaderOnLoadHandler = function() {
-        var textarea = $('#userFilters');
-        textarea.val(textarea.val() + '\n' + this.result);
+        var textarea = uDom('#userFilters');
+        textarea.val([textarea.val(), this.result].join('\n').trim());
         userFiltersChanged();
     };
     var filePickerOnChangeHandler = function() {
-        $(this).off('change', filePickerOnChangeHandler);
         var file = this.files[0];
         if ( !file ) {
             return;
@@ -99,7 +97,7 @@ function appendToUserFiltersFromFile() {
 
 function exportUserFiltersToFile() {
     chrome.downloads.download({
-        'url': 'data:text/plain,' + encodeURIComponent($('#userFilters').val()),
+        'url': 'data:text/plain,' + encodeURIComponent(uDom('#userFilters').val()),
         'filename': 'my-ublock-filters.txt',
         'saveAs': true
     });
@@ -118,19 +116,19 @@ function userFiltersApplyHandler() {
     };
     var request = {
         what: 'writeUserFilters',
-        content: $('#userFilters').val()
+        content: uDom('#userFilters').val()
     };
     messaging.ask(request, onWritten);
 }
 
 /******************************************************************************/
 
-$(function() {
+uDom.onLoad(function() {
     // Handle user interaction
-    $('#importUserFiltersFromFile').on('click', appendToUserFiltersFromFile);
-    $('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
-    $('#userFilters').on('input propertychange', userFiltersChanged);
-    $('#userFiltersApply').on('click', userFiltersApplyHandler);
+    uDom('#importUserFiltersFromFile').on('click', appendToUserFiltersFromFile);
+    uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
+    uDom('#userFilters').on('input', userFiltersChanged);
+    uDom('#userFiltersApply').on('click', userFiltersApplyHandler);
 
     renderUserFilters();
 });

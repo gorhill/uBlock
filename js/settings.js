@@ -19,11 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, $ */
+/* global messaging, uDom */
 
 /******************************************************************************/
 
-$(function() {
+uDom.onLoad(function() {
 
 /******************************************************************************/
 
@@ -44,16 +44,16 @@ var changeUserSettings = function(name, value) {
 // TODO: use data-* to declare simple settings
 
 var onUserSettingsReceived = function(details) {
-    $('#collapse-blocked')
+    uDom('#collapse-blocked')
         .attr('checked', details.collapseBlocked === true)
         .on('change', function(){
-            changeUserSettings('collapseBlocked', $(this).is(':checked'));
+            changeUserSettings('collapseBlocked', this.checked);
         });
 
-    $('#icon-badge')
+    uDom('#icon-badge')
         .attr('checked', details.showIconBadge === true)
         .on('change', function(){
-            changeUserSettings('showIconBadge', $(this).is(':checked'));
+            changeUserSettings('showIconBadge', this.checked);
         });
 };
 

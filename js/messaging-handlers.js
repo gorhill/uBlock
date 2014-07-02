@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-var getStats = function(request, callback) {
+var getStats = function(request) {
     var µb = µBlock;
     var r = {
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
@@ -39,7 +39,8 @@ var getStats = function(request, callback) {
         pageBlockedRequestCount: 0,
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
-        cosmeticFilteringSwitch: false
+        cosmeticFilteringSwitch: false,
+        logBlockedRequests: µb.userSettings.logBlockedRequests
     };
     var pageStore = µb.pageStoreFromTabId(request.tabId);
     if ( pageStore ) {
@@ -157,7 +158,7 @@ var onMessage = function(request, sender, callback) {
             response = {
                 collapse: µBlock.userSettings.collapseBlocked,
                 blockedRequests: pageStore ? pageStore.blockedRequests : {}
-            }
+            };
             break;
 
         // Check a single request
@@ -165,7 +166,7 @@ var onMessage = function(request, sender, callback) {
             response = {
                 collapse: µBlock.userSettings.collapseBlocked,
                 blocked: pageStore && pageStore.blockedRequests[request.url]
-            }
+            };
             break;
 
         default:
@@ -248,6 +249,78 @@ var onMessage = function(request, sender, callback) {
 };
 
 µBlock.messaging.listen('1p-filters.js', onMessage);
+
+})();
+
+/******************************************************************************/
+
+// stats.js
+
+(function() {
+
+var getPageDetails = function(µb, tabId) {
+    var r = {
+        requests: [],
+        hash: ''
+    };
+    var pageStore = µb.pageStores[tabId];
+    if ( !pageStore ) {
+        return r;
+    }
+    var blockedRequests = pageStore.blockedRequests;
+    var details, pos;
+    var hasher = new YaMD5();
+    for ( var requestURL in blockedRequests ) {
+        if ( blockedRequests.hasOwnProperty(requestURL) === false ) {
+            continue;
+        }
+        details = blockedRequests[requestURL];
+        if ( typeof details !== 'string' ) {
+            continue;
+        }
+        hasher.appendStr(requestURL);
+        hasher.appendStr(details);
+        pos = details.indexOf('\t');
+        r.requests.push({
+            type: details.slice(0, pos),
+            domain: µb.URI.domainFromURI(requestURL),
+            url: requestURL,
+            reason: details.slice(pos + 1)
+        });
+    }
+    r.hash = hasher.end();
+    return r;
+};
+
+var onMessage = function(request, sender, callback) {
+    var µb = µBlock;
+
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'getPageSelectors':
+            response = Object.keys(µb.pageStores);
+            break;
+
+        case 'getPageDetails':
+            response = getPageDetails(µb, request.tabId);
+            break;
+
+        default:
+            return µb.messaging.defaultHandler(request, sender, callback);
+    }
+
+    callback(response);
+};
+
+µBlock.messaging.listen('stats.js', onMessage);
 
 })();
 

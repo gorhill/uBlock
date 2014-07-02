@@ -25,11 +25,9 @@
 (function() {
 
 /******************************************************************************/
-/******************************************************************************/
 
 var stats;
 
-/******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/gorhill/httpswitchboard/issues/345
@@ -65,62 +63,44 @@ formatNumber = function(count) {
 
 /******************************************************************************/
 
-var hasClassName = function(elem, className) {
-    var re = new RegExp('(^| )' + className + '( |$)', 'g');
-    return re.test(elem.className);
-};
-
-var toggleClassName = function(elem, className, newState) {
-    var re = new RegExp('(^| )' + className + '( |$)', 'g');
-    var currentState = re.test(elem.className);
-    if ( newState === undefined ) {
-        newState = !currentState;
-    }
-    if ( newState !== currentState ) {
-        if ( newState ) {
-            elem.className += ' ' + className;
-        } else {
-            elem.className = elem.className.replace(re, '').trim();
-        }
-    }
-};
-
-/******************************************************************************/
-
 var renderStats = function() {
-    if ( !stats || !document.getElementById('switch') ) {
+    if ( !stats ) {
         return;
     }
+
+    uDom('#gotoLog').toggleClass('enabled', stats.logBlockedRequests);
+
     var blocked = stats.pageBlockedRequestCount;
     var total = stats.pageAllowedRequestCount + blocked;
-    var elem = document.getElementById('page-blocked');
+    var html = [];
     if ( total === 0 ) {
-        elem.innerHTML = '0';
+        html.push('0');
     } else {
-        elem.innerHTML = [
+        html.push(
             formatNumber(blocked),
             '<span class="dim">&nbsp;or&nbsp;',
             (blocked * 100 / total).toFixed(0),
             '%</span>'
-        ].join('');
+        );
     }
+    uDom('#page-blocked').html(html.join(''));
 
     blocked = stats.globalBlockedRequestCount;
     total = stats.globalAllowedRequestCount + blocked;
-    elem = document.getElementById('total-blocked');
+    html = [];
     if ( total === 0 ) {
-        elem.innerHTML = '0';
+        html.push('0');
     } else {
-        elem.innerHTML = [
+        html.push(
             formatNumber(blocked),
             '<span class="dim">&nbsp;or&nbsp;',
             (blocked * 100 / total).toFixed(0),
             '%</span>'
-        ].join('');
+        );
     }
+    uDom('#total-blocked').html(html.join(''));
 
-    toggleClassName(
-        document.querySelector('#switch .fa'),
+    uDom('#switch .fa').toggleClass(
         'off',
         stats.pageURL === '' || !stats.netFilteringSwitch
     );
@@ -154,34 +134,53 @@ var handleNetFilteringSwitch = function() {
     if ( !stats || !stats.pageURL ) {
         return;
     }
-    toggleClassName(this, 'off');
+    var off = uDom(this).toggleClass('off').hasClassName('off');
     messaging.tell({
         what: 'toggleNetFiltering',
         hostname: stats.pageHostname,
-        state: !hasClassName(this, 'off'),
+        state: !off,
         tabId: stats.tabId
     });
 };
 
 /******************************************************************************/
 
-var renderHeader = function() {
-    var hdr = document.getElementById('version');
-    hdr.innerHTML = hdr.innerHTML + 'v' + chrome.runtime.getManifest().version;
+var gotoDashboard = function() {
+    messaging.tell({
+        what: 'gotoExtensionURL',
+        url: 'dashboard.html'
+    });
 };
 
+/******************************************************************************/
+
+var gotoStats = function() {
+    messaging.tell({
+        what: 'gotoExtensionURL',
+        url: 'dashboard.html?tab=stats&which=' + stats.tabId
+    });
+};
+
+/******************************************************************************/
+
+var renderHeader = function() {
+    var hdr = uDom('#version');
+    hdr.html(hdr.html() + 'v' + chrome.runtime.getManifest().version);
+};
 
 /******************************************************************************/
 
 var installEventHandlers = function() {
-    document.querySelector('#switch .fa').addEventListener('click', handleNetFilteringSwitch);
+    uDom('h1,h2,h3,h4').on('click', gotoDashboard);
+    uDom('#switch .fa').on('click', handleNetFilteringSwitch);
+    uDom('#gotoLog').on('click', gotoStats);
 };
 
 /******************************************************************************/
 
 // Make menu only when popup html is fully loaded
 
-window.addEventListener('load', function() {
+uDom.onLoad(function() {
     renderHeader();
     renderStats();
     installEventHandlers();

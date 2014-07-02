@@ -19,6 +19,10 @@
         "message": "Your filters",
         "description": "appears as tab name in dashboard."
     },
+    "statsPageName" : {
+        "message": "Statistics",
+        "description": "appears as tab name in dashboard."
+    },
     "aboutPageName": {
         "message": "关于",
         "description": "appears as tab name in dashboard."
@@ -53,7 +57,7 @@
     },
 
 
-    "3pListsOfBlockedHostsPrompt2" : {
+    "3pListsOfBlockedHostsPrompt" : {
         "message": "共{{ubiquitousBlacklistCount}}个不同的屏蔽站点名，来自：",
         "description": "English: {{ubiquitousBlacklistCount}} distinct blocked hostnames from:"
     },
@@ -98,6 +102,20 @@
     "1pApplyChanges" : {
         "message": "应用变更",
         "description": "English: Apply changes"
+    },
+
+
+    "logBlockedRequestsPrompt" : {
+        "message": "Enable the logging of blocked requests",
+        "description": "English: Enable the logging of blocked requests"
+    },
+    "logBlockedRequestsHelp" : {
+        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "description": "English: see _locales/en/messages.log"
+    },
+    "logBlockedRequestsEmpty" : {
+        "message": "No blocked requests logged for this page",
+        "description": "English: No blocked requests logged for this page"
     },
 
 

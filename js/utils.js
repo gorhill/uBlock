@@ -40,10 +40,18 @@ var gotoURL = function(details) {
 /******************************************************************************/
 
 var gotoExtensionURL = function(url) {
-    var hasFragment = function(url) {
-        return url.indexOf('#') >= 0;
+
+    var hasQuery = function(url) {
+        return url.indexOf('?') >= 0;
     };
 
+    var removeQuery = function(url) {
+        var pos = url.indexOf('?');
+        if ( pos < 0 ) {
+            return url;
+        }
+        return url.slice(0, pos);
+    };
     var removeFragment = function(url) {
         var pos = url.indexOf('#');
         if ( pos < 0 ) {
@@ -54,26 +62,19 @@ var gotoExtensionURL = function(url) {
 
     var tabIndex = 9999;
     var targetUrl = chrome.extension.getURL(url);
-    var urlToFind = removeFragment(targetUrl);
 
     var currentWindow = function(tabs) {
         var updateProperties = { active: true };
         var i = tabs.length;
         while ( i-- ) {
-            if ( removeFragment(tabs[i].url) !== urlToFind ) {
+            if ( removeQuery(tabs[i].url) !== removeQuery(targetUrl) ) {
                 continue;
             }
             // If current tab in dashboard is different, force the new one, if
             // there is one, to be activated.
             if ( tabs[i].url !== targetUrl ) {
-                if ( hasFragment(targetUrl) ) {
-                    updateProperties.url = targetUrl;
-                }
+                updateProperties.url = targetUrl;
             }
-            // Activate found matching tab
-            // Commented out as per:
-            // https://github.com/gorhill/httpswitchboard/issues/150#issuecomment-32683726
-            // chrome.tabs.move(tabs[0].id, { index: index + 1 });
             chrome.tabs.update(tabs[i].id, updateProperties);
             return;
         }

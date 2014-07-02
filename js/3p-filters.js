@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, $ */
+/* global chrome, messaging, uDom */
 
 /******************************************************************************/
 
@@ -28,8 +28,6 @@
 /******************************************************************************/
 
 var userListName = chrome.i18n.getMessage('1pPageName');
-var cachedUserUbiquitousBlacklistedHosts = '';
-var cachedUserUbiquitousWhitelistedHosts = '';
 var selectedBlacklistsHash = '';
 
 /******************************************************************************/
@@ -77,12 +75,12 @@ function renderNumber(value) {
 
 function renderBlacklists() {
     // empty list first
-    $('#blacklists .blacklistDetails').remove();
+    uDom('#blacklists .blacklistDetails').remove();
 
     var µb = getµb();
 
-    $('#3pListsOfBlockedHostsPrompt2').text(
-        chrome.i18n.getMessage('3pListsOfBlockedHostsPrompt2')
+    uDom('#listsOfBlockedHostsPrompt').text(
+        chrome.i18n.getMessage('3pListsOfBlockedHostsPrompt')
             .replace('{{ubiquitousBlacklistCount}}', renderNumber(µb.abpFilters.getFilterCount()))
     );
 
@@ -119,31 +117,29 @@ function renderBlacklists() {
 
     var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
     var blacklists = µb.remoteBlacklists;
-    var ul = $('#blacklists');
+    var ul = uDom('#blacklists');
     var keys = Object.keys(blacklists);
     var i = keys.length;
     var blacklist, blacklistHref;
-    var liTemplate = $('#blacklistTemplate .blacklistDetails').first();
-    var li, child, text;
+    var liTemplate = uDom('#blacklistTemplate .blacklistDetails').first();
+    var li, text;
     while ( i-- ) {
         blacklistHref = keys[i];
         blacklist = blacklists[blacklistHref];
         li = liTemplate.clone();
-        child = $('input', li);
-        child.prop('checked', !blacklist.off);
-        child = $('a', li);
-        child.attr('href', encodeURI(blacklistHref));
-        child.html(prettifyListName(blacklist.title, blacklistHref));
-        child = $('span', li);
+        li.find('input').prop('checked', !blacklist.off);
+        li.find('a')
+            .attr('href', encodeURI(blacklistHref))
+            .html(prettifyListName(blacklist.title, blacklistHref));
         text = listStatsTemplate
             .replace('{{used}}', !blacklist.off && !isNaN(+blacklist.entryUsedCount) ? renderNumber(blacklist.entryUsedCount) : '0')
             .replace('{{total}}', !isNaN(+blacklist.entryCount) ? renderNumber(blacklist.entryCount) : '?')
             ;
-        child.text(text);
+        li.find('span').text(text);
         ul.prepend(li);
     }
-    $('#parseAllABPHideFilters').attr('checked', µb.userSettings.parseAllABPHideFilters === true);
-    $('#ubiquitousParseAllABPHideFiltersPrompt2').text(
+    uDom('#parseAllABPHideFilters').attr('checked', µb.userSettings.parseAllABPHideFilters === true);
+    uDom('#ubiquitousParseAllABPHideFiltersPrompt2').text(
         chrome.i18n.getMessage("listsParseAllABPHideFiltersPrompt2")
             .replace('{{abpHideFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
     );
@@ -158,15 +154,13 @@ function renderBlacklists() {
 
 function getSelectedBlacklistsHash() {
     var hash = '';
-    var inputs = $('#blacklists .blacklistDetails > input');
-    var i = inputs.length;
-    var entryHash;
+    var inputs = uDom('#blacklists .blacklistDetails > input');
+    var i = inputs.length();
     while ( i-- ) {
-        entryHash = $(inputs[i]).prop('checked').toString();
-        hash += entryHash;
+        hash += inputs.subset(i).prop('checked').toString();
     }
-    // Factor in whether ABP filters are to be processed
-    hash += $('#parseAllABPHideFilters').prop('checked').toString();
+    // Factor in whether cosmetic filters are to be processed
+    hash += uDom('#parseAllABPHideFilters').prop('checked').toString();
 
     return hash;
 }
@@ -176,7 +170,7 @@ function getSelectedBlacklistsHash() {
 // This is to give a visual hint that the selection of blacklists has changed.
 
 function selectedBlacklistsChanged() {
-    $('#blacklistsApply').attr(
+    uDom('#blacklistsApply').prop(
         'disabled',
         getSelectedBlacklistsHash() === selectedBlacklistsHash
     );
@@ -191,21 +185,21 @@ function blacklistsApplyHandler() {
     }
     // Reload blacklists
     var switches = [];
-    var lis = $('#blacklists .blacklistDetails');
-    var i = lis.length;
+    var lis = uDom('#blacklists .blacklistDetails');
+    var i = lis.length();
     var path;
     while ( i-- ) {
-        path = $(lis[i]).children('a').attr('href');
+        path = lis.subset(i).find('a').attr('href');
         switches.push({
             location: path,
-            off: $(lis[i]).children('input').prop('checked') === false
+            off: lis.subset(i).find('input').prop('checked') === false
         });
     }
     messaging.tell({
         what: 'reloadAllFilters',
         switches: switches
     });
-    $('#blacklistsApply').attr('disabled', true );
+    uDom('#blacklistsApply').attr('disabled', true );
 }
 
 /******************************************************************************/
@@ -214,18 +208,18 @@ function abpHideFiltersCheckboxChanged() {
     messaging.tell({
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: $(this).is(':checked')
+        value: this.checked
     });
     selectedBlacklistsChanged();
 }
 
 /******************************************************************************/
 
-window.addEventListener('load', function() {
+uDom.onLoad(function() {
     // Handle user interaction
-    $('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
-    $('#blacklistsApply').on('click', blacklistsApplyHandler);
-    $('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
+    uDom('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
+    uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
+    uDom('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
 
     renderBlacklists();
 });
