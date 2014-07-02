@@ -25,12 +25,13 @@
 
 /******************************************************************************/
 
-var loadDashboardPanel = function(tab) {
+var loadDashboardPanel = function(tab, q) {
     var tabButton = uDom('[data-dashboard-panel-url="' + tab + '"]');
     if ( !tabButton ) {
         return;
     }
-    uDom('iframe').attr('src', tab);
+    q = q || '';
+    uDom('iframe').attr('src', tab + q);
     uDom('.tabButton').toggleClass('selected', false);
     tabButton.toggleClass('selected', true);
 };
@@ -56,7 +57,7 @@ uDom.onLoad(function() {
     if ( !tab ) {
         tab = '3p-filters';
     }
-    loadDashboardPanel(tab + '.html' + q);
+    loadDashboardPanel(tab + '.html', q);
     uDom('.tabButton').on('click', onTabClickHandler);
 });
 
