@@ -48,6 +48,7 @@ a {
     display: none;
     border: 1px dotted black;
     background-color: #F8F8F8;
+    font-size: 90%;
     }
 .whatisthis-expandable > p {
     margin-top: 1em;
