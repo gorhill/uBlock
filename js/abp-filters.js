@@ -1163,7 +1163,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             this.addFilterEntry(
                 filter,
                 parsed,
-                SpecificNotParty | this.toDomainBits(parsed.notDomains[i]),
+                SpecificNotParty,
                 tokenBeg,
                 tokenEnd
             );
@@ -1429,11 +1429,11 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
         this.bucket0 = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
         this.bucket1 = categories[this.makeCategoryKey(BlockAnyType | party)];
         this.bucket2 = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
-        this.bucket3 = categories[this.makeCategoryKey(BlockAnyTypeOtherParties | domainParty)];
+        this.bucket3 = categories[this.makeCategoryKey(BlockAnyTypeOtherParties)];
         this.bucket4 = categories[this.makeCategoryKey(BlockAnyParty | type)];
         this.bucket5 = categories[this.makeCategoryKey(BlockAction | type | party)];
         this.bucket6 = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
-        this.bucket7 = categories[this.makeCategoryKey(BlockOtherParties | type | domainParty)];
+        this.bucket7 = categories[this.makeCategoryKey(BlockOtherParties | type)];
 
         bf = this.matchTokens();
     }
