@@ -58,11 +58,11 @@
 
 
     "3pListsOfBlockedHostsPrompt" : {
-        "message": "{{ubiquitousBlacklistCount}} filtres actuellement en action :",
+        "message": "{{ubiquitousBlacklistCount}} filtre(s) actuellement en action :",
         "description": "English: {{ubiquitousBlacklistCount}} network filters from:"
     },
     "3pListsOfBlockedHostsPerListStats" : {
-        "message": "{{used}} utilisés sur un total de {{total}}",
+        "message": "{{used}} utilisé(s) sur un total de {{total}}",
         "description": "English: {{used}} used out of {{total}}"
     },
     "3pParseAllABPHideFiltersPrompt1" : {
@@ -70,7 +70,7 @@
         "description": "English: Parse and enforce Adblock+ element hiding filters."
     },
     "3pParseAllABPHideFiltersPrompt2" : {
-        "message": "{{abpHideFilterCount}} règles Adblock Plus esthétiques utilisées",
+        "message": "{{abpHideFilterCount}} règle(s) Adblock Plus esthétique(s) utilisée(s)",
         "description": "English: {{abpHideFilterCount}} element hiding filters used."
     },
     "3pParseAllABPHideFiltersInfo" : {
@@ -78,7 +78,7 @@
         "description": "English: see English messages.json"
     },
     "3pListsOfBlockedHostsHeader" : {
-        "message": "Listes d'hôtes à bloquer",
+        "message": "Listes prédéfinies d'hôtes à bloquer",
         "description": "English: Lists of blocked hosts"
     },
     "3pApplyChanges" : {
@@ -106,11 +106,11 @@
 
 
     "logBlockedRequestsPrompt" : {
-        "message": "Activer le journal des requêtes bloquées",
+        "message": "Activer la journalisation des requêtes bloquées",
         "description": "English: Enable the logging of blocked requests"
     },
     "logBlockedRequestsHelp" : {
-        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "message": "Vous pouvez inspecter les détails des requêtes bloquées en activant cette option. La journalisation des requêtes bloquées augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeaderType" : {
@@ -122,7 +122,7 @@
         "description": "English: Domaine"
     },
     "logBlockedRequestsHeaderURL" : {
-        "message": "URL bloqué",
+        "message": "URL bloquée",
         "description": "English: Blocked URL"
     },
     "logBlockedRequestsHeaderFilter" : {
