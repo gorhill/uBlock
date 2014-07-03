@@ -4,7 +4,7 @@
         "description": "extension name."
     },
     "extShortDesc": {
-        "message": "Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+        "message": "一款基于Chromium浏览器的高效广告拦截工具，超低的CPU与内存使用。",
         "description": "this will be in the chrome web store: must be 132 characters or less"
     },
     "settingsPageName": {
@@ -12,15 +12,15 @@
         "description": "appears as tab name in dashboard."
     },
     "3pPageName" : {
-        "message": "Third-party filters",
+        "message": "过滤清单",
         "description": "appears as tab name in dashboard."
     },
     "1pPageName" : {
-        "message": "Your filters",
+        "message": "自定义过滤",
         "description": "appears as tab name in dashboard."
     },
     "statsPageName" : {
-        "message": "Statistics",
+        "message": "统计",
         "description": "appears as tab name in dashboard."
     },
     "aboutPageName": {
@@ -30,29 +30,29 @@
 
 
     "popupPowerSwitchInfo": {
-        "message": "click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+        "message": "点击按钮<br>永久禁用或启用<br>µBlock 对于当前网站",
         "description": "English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
     },
     "popupBlockedRequestPrompt": {
-        "message": "requests blocked",
+        "message": "已拦截广告",
         "description": "English: requests blocked"
     },
     "popupBlockedOnThisPagePrompt": {
-        "message": "on this page",
+        "message": "本页",
         "description": "English: on this page"
     },
     "popupBlockedSinceInstallPrompt": {
-        "message": "since install",
+        "message": "总计",
         "description": "English: since install"
     },
 
 
     "settingsCollapseBlockedPrompt" : {
-        "message": "Hide placeholders of blocked elements",
+        "message": "隐藏已屏蔽元素的占位符",
         "description": "English: Hide placeholders of blocked elements"
     },
     "settingsIconBadgePrompt" : {
-        "message": "Show the number of blocked requests on the icon",
+        "message": "在图标上显示拦截广告数量",
         "description": "English: Show the number of blocked requests on the icon"
     },
 
@@ -106,31 +106,31 @@
 
 
     "logBlockedRequestsPrompt" : {
-        "message": "Enable the logging of blocked requests",
+        "message": "启用拦截记录",
         "description": "English: Enable the logging of blocked requests"
     },
     "logBlockedRequestsHelp" : {
-        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "message": "如果你想要开启此选项，你将可以查看拦截广告的详情。拦截记录会增加µBlock的内存占用。由于很多用户用不到这个功能，它默认是禁用的。",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeaderType" : {
-        "message": "Type",
+        "message": "类型",
         "description": "English: Type"
     },
     "logBlockedRequestsHeaderDomain" : {
-        "message": "Domain",
+        "message": "域名",
         "description": "English: Domain"
     },
     "logBlockedRequestsHeaderURL" : {
-        "message": "Blocked URL",
+        "message": "屏蔽网站",
         "description": "English: Blocked URL"
     },
     "logBlockedRequestsHeaderFilter" : {
-        "message": "Filter",
+        "message": "过滤",
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
-        "message": "No blocked requests logged for this page",
+        "message": "该页面没有拦截记录",
         "description": "English: No blocked requests logged for this page"
     },
 
@@ -190,7 +190,7 @@
 
 
     "dummy": {
-        "message": "This entry must be the last one",
+        "message": "此条目必须是最后一个",
         "description": "so we dont need to deal with comma for last entry"
     }
 }
