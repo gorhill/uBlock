@@ -112,9 +112,16 @@ PageStore.prototype.recordRequest = function(type, url, reason) {
 
     // https://github.com/gorhill/uBlock/issues/7
     // https://github.com/gorhill/uBlock/issues/12
-    this.blockedRequests[url] = µb.userSettings.logBlockedRequests ?
-        type + '\t' + reason :
-        true;
+
+    // No need to record blocked requests which are not image or frame, as
+    // these are the only ones we try to hide when they are blocked.
+    if ( µb.userSettings.logBlockedRequests === false ) {
+        if ( type === 'image' || type === 'sub_frame' ) {
+            this.blockedRequests[url] = true;
+        }
+        return;
+    }
+    this.blockedRequests[url] = type + '\t' + reason;
 };
 
 /******************************************************************************/
