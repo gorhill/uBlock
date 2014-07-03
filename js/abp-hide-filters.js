@@ -302,7 +302,7 @@ FilterContainer.prototype.add = function(s) {
     // what it needs from it. Filters in that category are mostly
     // `a[href^="..."]` kind of filters.
     // Content script side, the unsorted container of selectors could be used
-    // in a querySelectorAll() to figure which rules apply (if any), or they
+    // in a querySelector() to figure which rules apply (if any), or they
     // could just all be injected undiscriminately (not good).
     if ( parsed.filterType === '#' ) {
         this.hideUnfiltered.push(parsed.suffix);
@@ -317,9 +317,18 @@ FilterContainer.prototype.add = function(s) {
 /******************************************************************************/
 
 FilterContainer.prototype.chunkify = function(selectors) {
+    // Chunksize is a compromise between number of selectors per chunk (the
+    // number of selectors querySelector() will have to deal with), and the
+    // number of chunks (the number of times querySelector() will have to
+    // be called.)
+    // Benchmarking shows this is a hot spot performance-wise for "heavy"
+    // sites (like say, Sports Illustrated, good test case). Not clear what
+    // better can be done at this point, I doubt javascript-side code can beat
+    // querySelector().
+    var chunkSize = Math.max(selectors.length >>> 3, 8);
     var chunkified = [], chunk;
     for (;;) {
-        chunk = selectors.splice(0, 10);
+        chunk = selectors.splice(0, chunkSize);
         if ( chunk.length === 0 ) {
             break;
         }
@@ -573,8 +582,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
     var r = {
         hide: [],
         donthide: [],
-        hideUnfiltered: [],
-        donthideUnfiltered: []
+        hideUnfiltered: this.hideUnfiltered,
+        donthideUnfiltered: this.donthideUnfiltered
     };
 
     var hash, bucket;
@@ -594,9 +603,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
             bucket.retrieve(selector, hideSelectors);
         }
     }
-
-    r.hideUnfiltered = this.hideUnfiltered;
-    r.donthideUnfiltered = this.donthideUnfiltered;
 
     //quickProfiler.stop();
 
