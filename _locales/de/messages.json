@@ -106,15 +106,15 @@
 
 
     "logBlockedRequestsPrompt" : {
-        "message": "Enable the logging of blocked requests",
+        "message": "Logging von blockierten Elementen aktivieren",
         "description": "English: Enable the logging of blocked requests"
     },
     "logBlockedRequestsHelp" : {
-        "message": "You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "message": "Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Logging von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock</i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeaderType" : {
-        "message": "Type",
+        "message": "Typ",
         "description": "English: Type"
     },
     "logBlockedRequestsHeaderDomain" : {
@@ -122,7 +122,7 @@
         "description": "English: Domain"
     },
     "logBlockedRequestsHeaderURL" : {
-        "message": "Blocked URL",
+        "message": "Blockierte URL",
         "description": "English: Blocked URL"
     },
     "logBlockedRequestsHeaderFilter" : {
@@ -130,7 +130,7 @@
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
-        "message": "No blocked requests logged for this page",
+        "message": "Keine blockierten Anfragen für diese Seite",
         "description": "English: No blocked requests logged for this page"
     },
 
