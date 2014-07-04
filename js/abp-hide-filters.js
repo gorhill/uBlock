@@ -251,7 +251,11 @@ var FilterContainer = function() {
     this.processedCount = 0;
     this.filters = {};
     this.hideUnfiltered = [];
+    this.hideLowGenerics = {};
+    this.hideHighGenerics = [];
     this.donthideUnfiltered = [];
+    this.donthideLowGenerics = {};
+    this.donthideHighGenerics = [];
     this.rejected = [];
 };
 
@@ -265,7 +269,11 @@ FilterContainer.prototype.reset = function() {
     this.processedCount = 0;
     this.filters = {};
     this.hideUnfiltered = [];
+    this.hideLowGenerics = {};
+    this.hideHighGenerics = [];
     this.donthideUnfiltered = [];
+    this.donthideLowGenerics = {};
+    this.donthideHighGenerics = [];
     this.rejected = [];
 };
 
@@ -316,7 +324,29 @@ FilterContainer.prototype.add = function(s) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.chunkify = function(selectors) {
+FilterContainer.prototype.freezeGenerics = function(what) {
+    var selectors = this[what + 'Unfiltered'];
+    //console.log('%d highly generic selectors:\n', selectors.length, selectors.sort().join('\n'));
+
+    // ["title"] and ["alt"] will be sorted out manually, these are the most
+    // common generic selectors, aka "low generics". The rest will be put in
+    // the high genericity bin.
+    var lowGenerics = {};
+    var lowGenericCount = 0;
+    var re = /^(([a-z]*)\[(alt|title)="([^"]+)"\])$/;
+    var i = selectors.length;
+    var selector, matches;
+    while ( i-- ) {
+        selector = selectors[i];
+        matches = re.exec(selector);
+        if ( !matches ) {
+            continue;
+        }
+        lowGenerics[matches[1]] = true;
+        lowGenericCount++;
+        selectors.splice(i, 1);
+    }
+
     // Chunksize is a compromise between number of selectors per chunk (the
     // number of selectors querySelector() will have to deal with), and the
     // number of chunks (the number of times querySelector() will have to
@@ -334,14 +364,18 @@ FilterContainer.prototype.chunkify = function(selectors) {
         }
         chunkified.push(chunk.join(','));
     }
-    return chunkified;
+
+    this[what + 'LowGenerics'] = lowGenerics;
+    this[what + 'LowGenericCount'] = lowGenericCount;
+    this[what + 'HighGenerics'] = chunkified;
+    this[what + 'Unfiltered'] = [];
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    this.hideUnfiltered = this.chunkify(this.hideUnfiltered);
-    this.donthideUnfiltered = this.chunkify(this.donthideUnfiltered);
+    this.freezeGenerics('hide');
+    this.freezeGenerics('donthide');
 
     this.filterParser.reset();
 
@@ -582,8 +616,12 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
     var r = {
         hide: [],
         donthide: [],
-        hideUnfiltered: this.hideUnfiltered,
-        donthideUnfiltered: this.donthideUnfiltered
+        hideLowGenerics: this.hideLowGenerics,
+        hideLowGenericCount: this.hideLowGenericCount,
+        hideHighGenerics: this.hideHighGenerics,
+        donthideLowGenerics: this.donthideLowGenerics,
+        donthideLowGenericCount: this.donthideLowGenericCount,
+        donthideHighGenerics: this.donthideHighGenerics
     };
 
     var hash, bucket;

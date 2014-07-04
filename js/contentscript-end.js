@@ -177,7 +177,8 @@ var cosmeticFiltering = (function() {
             return;
         }
         var styleText = [];
-        filterUnfiltered(selectors.hideUnfiltered, selectors.hide);
+        filterLowGenerics(selectors, 'hide');
+        filterHighGenerics(selectors, 'hide');
         reduce(selectors.hide, injectedSelectors);
         if ( selectors.hide.length ) {
             var hideStyleText = '{{hideSelectors}} {display:none !important;}'
@@ -186,7 +187,8 @@ var cosmeticFiltering = (function() {
             applyCSS(selectors.hide, 'display', 'none');
             //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
         }
-        filterUnfiltered(selectors.donthideUnfiltered, selectors.donthide);
+        filterLowGenerics(selectors, 'donthide');
+        filterHighGenerics(selectors, 'donthide');
         reduce(selectors.donthide, injectedSelectors);
         if ( selectors.donthide.length ) {
             var dontHideStyleText = '{{donthideSelectors}} {display:initial !important;}'
@@ -216,16 +218,68 @@ var cosmeticFiltering = (function() {
         }
     };
 
-    var filterUnfiltered = function(inSelectors, outSelectors) {
-        var i = inSelectors.length;
+    var filterTitleGeneric = function(generics, root, out) {
+        if ( !root.title.length ) {
+            return;
+        }
+        var selector = '[title="' + root.title + '"]';
+        if ( generics[selector] && !injectedSelectors[selector] ) {
+            out.push(selector);
+        }
+        selector = root.tagName + selector;
+        if ( generics[selector] && !injectedSelectors[selector] ) {
+            out.push(selector);
+        }
+    };
+
+    var filterAltGeneric = function(generics, root, out) {
+        var alt = root.getAttribute('alt');
+        if ( !alt || !alt.length ) {
+            return;
+        }
+        var selector = '[alt="' + root.title + '"]';
+        if ( generics[selector] && !injectedSelectors[selector] ) {
+            out.push(selector);
+        }
+        selector = root.tagName + selector;
+        if ( generics[selector] && !injectedSelectors[selector] ) {
+            out.push(selector);
+        }
+    };
+
+    var filterLowGenerics = function(selectors, what) {
+        if ( selectors[what + 'LowGenericCount'] === 0 ) {
+            return;
+        }
+        var out = selectors[what];
+        var generics = selectors[what + 'LowGenerics'];
+        var nodeList, iNode;
+        // Low generics: ["title"]
+        nodeList = document.querySelectorAll('[title]');
+        iNode = nodeList.length;
+        while ( iNode-- ) {
+            filterTitleGeneric(generics, nodeList[iNode], out);
+        }
+        // Low generics: ["alt"]
+        nodeList = document.querySelectorAll('[alt]');
+        iNode = nodeList.length;
+        while ( iNode-- ) {
+            filterAltGeneric(generics, nodeList[iNode], out);
+        }
+    };
+
+    var filterHighGenerics = function(selectors, what) {
+        var out = selectors[what];
+        var generics = selectors[what + 'HighGenerics'];
+        var iGeneric = generics.length;
         var selector;
-        while ( i-- ) {
-            selector = inSelectors[i];
+        while ( iGeneric-- ) {
+            selector = generics[iGeneric];
             if ( injectedSelectors[selector] ) {
                 continue;
             }
             if ( document.querySelector(selector) !== null ) {
-                outSelectors.push(selector);
+                out.push(selector);
             }
         }
     };
