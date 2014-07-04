@@ -81,7 +81,6 @@
 /******************************************************************************/
 
 µBlock.loadUbiquitousBlacklists = function() {
-    var blacklists;
     var blacklistLoadCount;
     var obsoleteBlacklists = [];
 
@@ -124,21 +123,37 @@
 
     var loadBlacklistsStart = function(store) {
         var µb = µBlock;
+
         // rhill 2013-12-10: set all existing entries to `false`.
         µb.abpFilters.reset();
         µb.abpHideFilters.reset();
-        blacklists = store.remoteBlacklists;
-        var blacklistLocations = Object.keys(store.remoteBlacklists);
+        var storedLists = store.remoteBlacklists;
+        var storedListLocations = Object.keys(storedLists);
 
-        blacklistLoadCount = blacklistLocations.length;
+        blacklistLoadCount = storedListLocations.length;
         if ( blacklistLoadCount === 0 ) {
             loadBlacklistsEnd();
             return;
         }
 
+        // Backward compatibility for when a list changes location
+        var relocations = [
+            {
+                // https://github.com/gorhill/httpswitchboard/issues/361
+                 'bad': 'assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt',
+                'good': 'assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master'
+            }
+        ];
+        var relocation;
+        while ( relocation = relocations.pop() ) {
+            if ( µb.remoteBlacklists[relocation.good] && storedLists[relocation.bad] ) {
+                storedLists[relocation.good].off = storedLists[relocation.bad].off;
+            }
+        }
+
         // Load each preset blacklist which is not disabled.
         var location;
-        while ( location = blacklistLocations.pop() ) {
+        while ( location = storedListLocations.pop() ) {
             // If loaded list location is not part of default list locations,
             // remove its entry from local storage.
             if ( !µb.remoteBlacklists[location] ) {
@@ -148,15 +163,15 @@
             }
             // https://github.com/gorhill/httpswitchboard/issues/218
             // Transfer potentially existing list title into restored list data.
-            if ( store.remoteBlacklists[location].title !== µb.remoteBlacklists[location].title ) {
-                store.remoteBlacklists[location].title = µb.remoteBlacklists[location].title;
+            if ( storedLists[location].title !== µb.remoteBlacklists[location].title ) {
+                storedLists[location].title = µb.remoteBlacklists[location].title;
             }
             // Store details of this preset blacklist
-            µb.remoteBlacklists[location] = store.remoteBlacklists[location];
+            µb.remoteBlacklists[location] = storedLists[location];
             // rhill 2013-12-09:
             // Ignore list if disabled
             // https://github.com/gorhill/httpswitchboard/issues/78
-            if ( store.remoteBlacklists[location].off ) {
+            if ( storedLists[location].off ) {
                 blacklistLoadCount -= 1;
                 continue;
             }
