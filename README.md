@@ -6,15 +6,13 @@ See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 An efficient blocker for Chromium-based browsers. Fast and lean.
 
 <p align="center">
-    Chromium on Linux 64-bit<br>
-    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" />
 </p>
 
 <p align="center">
-    Opera 22 on Windows 7 32-bit<br>
-    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" />
-</p>
-
+Chromium on Linux 64-bit<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" /><br><br>
+Opera 22 on Windows 7 32-bit<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" /><br>
 <sup>The screenshots above were taken after visiting links in 
 [reference benchmark](https://github.com/gorhill/uBlock/wiki/Reference-benchmark) 
 plus a bit of random browsing. All blockers were active at the same time, 
@@ -24,11 +22,12 @@ garbage collector kicks in. Also, after a while idling, it's good to open the de
 console for each extension and force a garbage collection cycle by clicking a couple of times 
 the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
+</p>
 
 <p align="center">
-    µBlock: page loaded. ABP: page still loading<br>
-    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" />
-</p>
+µBlock: page loaded. ABP: page still loading.<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
+<sup>Image excerpted from [this video](https://www.youtube.com/watch?v=SzJr4hmPlgQ).</p>
 
 ## Installation
 
