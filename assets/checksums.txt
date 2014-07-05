@@ -1,12 +1,14 @@
 5e9b992fa682a8da4f04fc46ff6cb8fd assets/ublock/filters.txt
-94f15db27a3f9ff09074a429100fea96 assets/ublock/filter-lists.json
+909580295cadaad69e48424ab8134d76 assets/ublock/filter-lists.json
 36d8978c647291a4415dc02fe176e54e assets/thirdparties/download.wiltteri.net/wiltteri.txt
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
+cdb4041bb0a85d6da590067a406a56a4 assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 3739b55487ff20f235c736601319f843 assets/thirdparties/adblock.gardar.net/is.abp.txt
 35763f7aa255a9779a16f52fc432a3da assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
 ee4a3f9f20bc87038a1efaacea2752a4 assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 4fb0e3ce956a596192a2a6b076629f06 assets/thirdparties/raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
 17e61d03f4a1231aa7696fe723d55fef assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
+6b5d0ac4f12cda530df13c01a906612b assets/thirdparties/www.hufilter.hu/hufilter.txt
 d5e4e6785d22694805b9357a12779150 assets/thirdparties/spam404bl.com/spam404scamlist.txt
 cb4fbfd6982ac887b6ffb15e69ca36ef assets/thirdparties/easylist-downloads.adblockplus.org/easylistchina.txt
 0aad7cf2ef3d98496b1bec8d9008b10f assets/thirdparties/easylist-downloads.adblockplus.org/fanboy-annoyance.txt
@@ -19,6 +21,7 @@ de8c43d10189c49a84322ca07f4ae34d assets/thirdparties/easylist-downloads.adblockp
 cb243ff78f7149c3008a23ee3e144be5 assets/thirdparties/easylist-downloads.adblockplus.org/easylistgermany.txt
 fd47e5f952f86443cdc6c65a026ea28d assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
+f2790508d1bbe21c7abc21dfc098eb5e assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt
 3c0d0701decb2349d1a685671a9cf059 assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
 d5ba1b0a415973d63a99694e0737ae49 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
@@ -27,6 +30,7 @@ f6bba27911e9b379bcb638e42f0bb740 assets/thirdparties/publicsuffix.org/list/effec
 53c21f59aab683b9f4b9dfb842735932 assets/thirdparties/margevicius.lt/AdBlockPlusLithuania.txt
 d0892d1e1b6a3c70f43895bdc386e9fb assets/thirdparties/someonewhocares.org/hosts/hosts
 419084a035e8ebed3017575cae6233db assets/thirdparties/winhelp2002.mvps.org/hosts.txt
+4227796064d89cd537aecfe1dbe50aaf assets/thirdparties/adblock.schack.dk/block.txt
 7c0d09fbccd87b5252d3bab3e822f2e4 assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt
 a1b2beefe31c1f7e1304ae8409334b07 assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt
 7bab632fdfcb62854df09d9c44fa2979 assets/thirdparties/www.fanboy.co.nz/enhancedstats.txt
