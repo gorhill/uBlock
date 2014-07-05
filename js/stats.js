@@ -82,7 +82,7 @@ var renderURL = function(url, filter) {
         var index = (re.lastIndex / chunkSize) | 0;
         var offset = re.lastIndex % chunkSize;
         if ( index > 0 && offset === 0 ) {
-            offset = 0;
+            offset = chunkSize;
             index -= 1;
         }
         var segment = renderedURL[index];
