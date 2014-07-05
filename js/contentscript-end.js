@@ -19,7 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint multistr: true */
 /* global chrome */
 
 // Injected into content pages
