@@ -1,5 +1,5 @@
 [Adblock Plus 2.0]
-! Checksum: EVmuGzt+haGakxaO2RLpog
+! Checksum: EOOzE+MKwlHDvYTSjGI7bQ
 ! Title: Anti-Facebook
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
@@ -11,10 +11,11 @@
 ||api-read.facebook.com/restserver.php?api_key=$third-party
 ||api.facebook.com^$third-party
 ||badge.facebook.com^$third-party
-||connect.facebook.net^$third-party,domain=~facebook.com
+||connect.facebook.net^$third-party,domain=~facebook.com|~fb.com
 ||facebook.com/connect/$third-party
 ||facebook.com/dialog/oauth?display=popup$popup,domain=humorhub.org
 ||facebook.com/plugins/activity.php?$third-party
+||facebook.com/plugins/comments.php?$third-party
 ||facebook.com/plugins/facepile.php?$third-party
 ||facebook.com/plugins/fan.php?$third-party
 ||facebook.com/plugins/follow.php$third-party
@@ -33,7 +34,9 @@
 ||facebook.com/widgets/fan.php?$third-party
 ||facebook.com/widgets/like.php?$third-party
 ||facebook.com/widgets/recommendations.php?$third-party
-||graph.facebook.com/fql$third-party,domain=~deskhopapp.com
+||graph.facebook.com^$xmlhttprequest,third-party
+||profile.ak.fbcdn.net^$third-party,domain=~facebook.com
+||static.ak.fbcdn.net^$third-party,domain=~facebook.com
 !
 ! Whitelist Filters
 !
@@ -58,3 +61,7 @@
 @@||fbcdn-sphotos-*.akamaihd.net^$domain=facebook.com
 @@||fbexternal-*.akamaihd.net^$domain=facebook.com
 @@||scontent-*.fbcdn.net^$domain=facebook.com
+!
+! Problematic sites
+!
+@@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com

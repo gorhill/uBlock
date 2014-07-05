@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 2CHeimTo/tikc+ixmo7vCw
-! Version: 201407021601
+! Checksum: 8URSBErM4tkgmMhUU4Dv0w
+! Version: 201407051321
 ! Title: EasyPrivacy
-! Last modified: 02 Jul 2014 16:01 UTC
+! Last modified: 05 Jul 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2475,6 +2475,7 @@ http://utm.
 ||convertro.com^$third-party
 ||cooladata.com^$third-party
 ||copacast.net^$third-party
+||copperegg.com^$third-party
 ||coremetrics.com^$third-party
 ||coremotives.com^$third-party
 ||cormce.com^$third-party
@@ -4630,6 +4631,7 @@ http://utm.
 ||cloudfront.net/js/reach.js
 ||cloudfront.net/performable/
 ||cloudfront.net/pt1x1.gif
+||cloudfront.net/rum/bacon.min.js
 ||cloudfront.net/sso.js
 ||cloudfront.net/track.html
 ||cloudfront.net/trackb.html
@@ -4716,6 +4718,7 @@ http://utm.
 ||d396ihyrqc81w.cloudfront.net^
 ||d3a2okcloueqyx.cloudfront.net^
 ||d3cxv97fi8q177.cloudfront.net^
+||d3ezl4ajpp2zy8.cloudfront.net^
 ||d3hr5gm0wlxm5h.cloudfront.net^
 ||d3l3lkinz3f56t.cloudfront.net^
 ||d3ojzyhbolvoi5.cloudfront.net^
@@ -4723,6 +4726,7 @@ http://utm.
 ||d3s7ggfq1s6jlj.cloudfront.net^
 ||d81mfvml8p5ml.cloudfront.net^
 ||d9lq0o81skkdj.cloudfront.net^
+||dailymotion-ams.gravityrd-services.com^
 ||data.alexa.com^
 ||data.beyond.com^$third-party
 ||data.imakenews.com^$third-party
@@ -4763,7 +4767,7 @@ http://utm.
 ||dufue2m4sondk.cloudfront.net^
 ||dw.cbsi.com^
 ||dw.com.com^
-||e-activist.com/ea-campaign/broadcast.record.message.open.do?
+||e-activist.com^*/broadcast.record.message.open.do?
 ||e-merchant.com/^*/edr.js$third-party
 ||ebay.northernhost.com^
 ||ebayrtm.com/rtm?RtmCmd&a=img&$image
@@ -5055,6 +5059,7 @@ http://utm.
 ||mitel.marketbright.com^
 ||mkcms.com/stats.js
 ||ml.com/enterprisetagging/
+||mlweb.dmlab.hu^
 ||mmi.bemobile.ua^
 ||mmpstats.mirror-image.com^
 ||mochiads.com/clk/
@@ -6710,6 +6715,7 @@ http://utm.
 ||furk.net/counter.yadro.ru/
 ||fwmrm.net^*/AnalyticsExtension.
 ||g.msn.com^
+||g2a-com.newsletter.com.pl^$image,third-party
 ||ga.canoe.ca^
 ||gaiaonline.com/internal/mkt_t.php?
 ||gallup.wn.com/1x1.gif
@@ -6881,6 +6887,7 @@ http://utm.
 ||indeed.com/rpc/preccount?
 ||independentmail.com/metrics/
 ||indiatimes.com/trackjs10.
+||infogr.am/js/metrics.js
 ||infomine.com/imcounter.js
 ||infoq.com/scripts/tracker.js
 ||informer.com/statistic?
@@ -6919,6 +6926,7 @@ http://utm.
 ||javhd.com/click/
 ||jessops.com/js/JessopsTracking.
 ||jetsetter.com/tracker.php
+||jeuxjeux2.com/stats.php
 ||jezebel.com/at.js.php
 ||jezebel.com^*/trackers.html
 ||jobscentral.com.sg/cb_transfer.php
@@ -7156,6 +7164,7 @@ http://utm.
 ||nj.com/cgi-bin/stats/
 ||nj.com/dhtml/stats/
 ||nmtracking.netflix.com^
+||noip.com/images/em.php?$image
 ||nola.com/cgi-bin/stats/
 ||nola.com/content/*/tracklinks.js
 ||nola.com/dhtml/stats/
@@ -7318,6 +7327,7 @@ http://utm.
 ||real.com^*/track.htm?
 ||real.com^*/track.png?
 ||realitytvworld.com/images/pixel.gif
+||reco.hardsextube.com^
 ||recomendedsite.com/addon/upixel/
 ||recommendation.24.com^
 ||redding.com/metrics/
@@ -7663,6 +7673,7 @@ http://utm.
 ||tracer.perezhilton.com^
 ||track.catalogs.com^
 ||track.cbs.com^
+||track.codepen.io^
 ||track.collegehumor.com^
 ||track.engagesciences.com^
 ||track.ft.com^
@@ -8275,6 +8286,7 @@ http://utm.
 ! French
 ||allocine.fr/ws/geocoding.ashx
 ||arte.tv/includes/xiti/
+||azurewebsites.net^*/mnr-mediametrie-tracking-
 ||clubic.com/editorial/publier_count.php?
 ||ea.clubic.com^
 ||ea.jeuxvideopc.com^
@@ -8291,6 +8303,7 @@ http://utm.
 ||lavenircdn.net^*/analytics.js?
 ||lecho.be/fb/?
 ||lemouv.fr/jstats.php
+||metronews.fr/rolluptracker_fr.php
 ||microreporting.metrofrance.com^
 ||nouvelobs.com/scripts/stats.php?
 ||nouvelobs.com/tools/csrum.php
@@ -8789,7 +8802,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.com/js/gweb/analytics/$domain=google.com
@@ -8864,7 +8877,6 @@ http://utm.
 @@||mlb.com/shared/scripts/bam.tracking.js
 @@||monetate.net/js/$domain=nike.com
 @@||mongoosemetrics.com/jsfiles/js-correlation/mm-rules.min.js$domain=subaru.com
-@@||motherboard.vice.com^*/vmp_analytics.js
 @@||moulinex.com/js/xtroi.js
 @@||mpsnare.iesnare.com/snare.js$domain=citibank.com|enmasse.com|login.skype.com
 @@||msecnd.net^*/site-tracker.js$domain=momondo.co.uk
@@ -8992,6 +9004,7 @@ http://utm.
 @@||verizon.com/images/track/track.gif?track=load&$xmlhttprequest
 @@||viamichelin.*/jQuery/ntpagetag.js
 @@||viamichelin.*/ntpagetag_vm.js
+@@||vice.com^*/vmp_analytics.js
 @@||videos.nbcolympics.com/beacon?$object-subrequest,domain=nbcolympics.com
 @@||vidtech.cbsinteractive.com^*/AkamaiAnalytics.swf$domain=kuathletics.com|mutigers.com|okstate.com
 @@||virtualearth.net^*/LoggingService.svc/Log?$script,domain=bing.com

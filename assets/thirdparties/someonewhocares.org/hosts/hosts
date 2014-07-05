@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jun 30th, 2014 at 10:25
+# Last updated: Jul 2nd, 2014 at 15:15
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1624,6 +1624,7 @@ fe80::1%lo0	localhost
 127.0.0.1 dbios.org
 127.0.0.1 dhauzja511.co.cc
 127.0.0.1 dietpharmacyrx.net
+127.0.0.1 documents-signature.com
 127.0.0.1 download.abetterinternet.com
 127.0.0.1 drc-group.net
 127.0.0.1 dubstep.onedumb.com

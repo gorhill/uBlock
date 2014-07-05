@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: hIHy0+p6sjMaaTY4YkkOMw
-! Version: 201407021601
+! Checksum: wnuvinszFFKsZs6bNK99ng
+! Version: 201407051321
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 02 Jul 2014 16:01 UTC
+! Ultima modifica: 05 Jul 2014 13:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1132,6 +1132,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||maxleggeri.it^*/UNICUSANO_
 ||mbenz.it/banner.swf
 ||mbenz.it/lidaolbia.jpg
+||mbenz.it/tuttoautoricambi.gif
 ||mediagol.it/images/sponsor/
 ||mediavideo24.com/inc/ova.swf$object-subrequest
 ||megabass.it^*/banner_
@@ -2020,7 +2021,7 @@ dizionariosinonimi.com##.Sponsor300x250Dx
 ricettepercucinare.com##.UAP_3to1_Rectangle
 ricettepercucinare.com##.UAP_Medium_Rectangle
 ricettepercucinare.com##.UAP_Wide_Skyscraper
-4risate.com,7per24.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,tripadvisor.it##.ad
+4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,tripadvisor.it##.ad
 trustpilot.it##.adblock
 america24.com,gianlucadimarzio.com##.adbox
 loradellacalabria.it##.add768int

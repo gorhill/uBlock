@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: gmJwuhksYP88z3u66w2Z6w
-! Version: 201407021600
-! Last modified: 02 Jul 2014 16:00 UTC
+! Checksum: oKej9bvFS0VhZkSf+4Ho9Q
+! Version: 201407051320
+! Last modified: 05 Jul 2014 13:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -27,6 +27,7 @@
 ||assn.info^$popup,domain=nnm.me
 ||getitbit.net/ads/$popup
 ||letitbit-porno.com^$popup,domain=pic2profit.com
+||mp3albomov.net^$popup,domain=lossless-galaxy.ru
 ||namba.kg^$popup,domain=namba.kg
 ||namba.tj^$popup,domain=namba.tj
 ! - Общие правила -------------------------------------------------------------
@@ -360,7 +361,6 @@ by,ru,ua##.banner_box
 /begun.js
 /bfile.ashx?placeid=*&fileid=
 /bframe.ashx?place=*&ids=
-/bitrix/spread.php?
 /block_view.php?bid=$third-party
 /bn.php?s=
 /bodyclick.php
@@ -1257,7 +1257,6 @@ _tizers.
 ||owap.su^
 ||owebmoney.ru^$third-party
 ||oxysoft.ru^$third-party
-||oyy.ru^
 ||ozon.ru/graphics/img_ass/468/
 ||ozon.ru^$third-party,script
 ||palantir.in/showban*.php?
@@ -2024,7 +2023,6 @@ _tizers.
 ||commontools.net^
 ||compareiseries.in^
 ||connees.com^
-||contactsin.$third-party
 ||contactsin.com^
 ||contactsin.mobi^
 ||contactsin.ru^
@@ -2462,6 +2460,7 @@ _tizers.
 ||ovap.in^
 ||overridingnichts.in^
 ||oxn.gerkon.eu^
+||oyy.ru^$third-party
 ||p2m0001.com^
 ||palandan.com^
 ||paramedjo.com^
@@ -2917,6 +2916,7 @@ hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv001
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv002
 2ip.ru###advMenuSelector
 2ip.ru###advertNews
+unionpeer.org###bg-banner
 topgame.su###bg_img
 goha.ru###branding
 world-mmo.com###brend
@@ -2985,13 +2985,14 @@ wmforum.2bb.ru##.tclcon > table[height="31"]
 comss.ru##.top + .av
 map.cn.ua##.topAdv
 dota2.ru##.vadv-block
-ngs.ru##.velum
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
+unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
+cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
 tapochek.net##a[href^="https://joycasino.com/?partner="]
@@ -3006,6 +3007,7 @@ moviki.ru##div[id^="player_adv_"]
 fsell.biz##div[id^="slot-"]
 comss.ru##img[style="width:728px;height:90px;"]
 goldroyal.net##img[width="140"][height="30"]
+sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
 forum.antichat.ru##p[align="center"] > b > a
 comss.ru##td[style="width:19%; vertical-align:top;"]
@@ -3062,7 +3064,6 @@ hdtv.ru###bnr_1
 52.ru,nn.ru###body > table > tbody > tr > td[width="10"] + td[style^="width:20"]:last-child
 torrent-games.net###body1 > #footer > a[target="_blank"]
 tapochek.net###body_container > a
-unionpeer.org###body_container > noindex
 lineageternal.ru###bordTop
 fastpic.ru###bottom
 animeonline.su###bottomRe
@@ -3986,6 +3987,7 @@ kanobu.ru##a[href^="http://brandings.kanobu.ru/click/"]
 tapochek.net##a[href^="http://casino-x.com/?partner="]
 adultmult.tv##a[href^="http://cityadspix.com/click-"]
 topwar.ru##a[href^="http://cpm.worldoftanks.com?code="]
+unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 torrentino.com##a[href^="http://go.admulti.com/clicks/"]
 z-music.org##a[href^="http://i100.ru"]
 appleinsider.ru##a[href^="http://li.ru/go?"]:not([href*=".apple.com%2F"])
@@ -4059,8 +4061,6 @@ drevo.uaportal.com##body > center:first-of-type
 christianka.bratstvo.org##body > center:last-child
 nadavi.com.ua,nadavi.ru##body > div > table[width="92%"]:not([class="top-region"])
 emuzic.ru##body > div[onclick^="window.open"]
-gametech.ru##body > div[style$="155px;"]
-gametech.ru##body > div[style*="height:"]:first-child
 mobile-review.com##body > div[style*="height:111px;"]
 wowjp.net##body > div[style*="z-index: 10000"]
 programmersforum.ru##body > form + br + center
@@ -4136,7 +4136,6 @@ newcars.ua##div[style*="/images/topb_bg.gif"]:first-child
 rugame.mobi##div[style*="/reklama.gif"]
 x-console.com##div[style*="710px;"][style*="70px;"]
 forums.ngemu.com##div[style*="920px;"][style*="250px;"]
-gamer.ru##div[style*="absolute;"][style*="z-index:"]
 freezpic.ru##div[style*="z-index: 10000"]
 artinvestment.ru##div[style="border: 1px solid black"]
 forum.northnet.ru##div[style="clear: left"]
@@ -4297,6 +4296,7 @@ mmorpg.ua##.top_banner
 free-torrents.org##.topmenu ~ br
 comss.info,comss.ru##.toppage
 rusdtp.ru##.ya-direct
+i2r.ru##a[style*="/banner."]
 demotivation.me##body > noindex
 selectornews.com##div[class$="-banner"]
 news.sportbox.ru##div[class^="adriver_"]
@@ -4319,6 +4319,7 @@ $third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net
 .lostfilm.tv^*^yash=
 .ru/inc/$subdocument,domain=vz.ru
 .ru/rightdown/$domain=pic4you.ru|pic5you.ru
+//195.82.146.52^$object,domain=rutracker.org
 //joyreactor.cc/css/*
 //www.vsevam.ru^$object
 /ad*.tutu.ru^*_*.php|
@@ -5068,6 +5069,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||realcoding.net/foto/*.gif
 ||recetascomidas.com/base/banner_
 ||regnum.ru/i/bn/
+||reibert.info/images/
 ||relinka.net/banner
 ||restoclub.ru/pic/iblocks/
 ||restotv.ru/promo/$domain=restoclub.ru
@@ -5122,6 +5124,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||samru.ru/images/pic/gifs/
 ||sat-digest.com/bac/
 ||sc2tv.ru:8080/show/$subdocument
+||seasonvar.ru/images/brand/
 ||seedoff.net/br/
 ||seedoff.net/jscript/xbtit.js
 ||seedoff.net/partners/
@@ -5467,19 +5470,16 @@ ngs.ru###ads-fix
 gilcom.ru###botom-banner
 realty.ngs.ru###bottom-banner
 realty.ngs.ru###center-banners
-ngs.ru,ngs24.ru,ngs55.ru###forms-ngs-block ~ table[id]:not(#content):not(#footer)
-mail.ngs.ru,mail.ngs24.ru,mail.ngs55.ru###td_body_right
 realty.ngs.ru###top-banner
 ngs.ru##.banner
 gilcom.ru,ngs.ru##.banner-center
 gilcom.ru##.banner-r
 realty.ngs.ru##.banners
-ngs.ru,ngs24.ru,ngs55.ru##.ngs-forms-contain + table[id]:not(#content)
-rabota.ngs24.ru,rabota55.ru##.ra-top-banner
-relax.ngs.ru##.top_banner
-ngs.ru,ngs24.ru,ngs55.ru##a[onmousedown][target="_blank"]
-ngs.ru,ngs24.ru,ngs55.ru##div[id^="big-"][class^="big-"]
 gilcom.ru##td[id^="banner-top-"]
+!generic
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##.ngs-forms-contain + table[id]:not(#content)
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##.ngs-main-logo-bar__right
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##div[class][style*="height:"][style*="position:"][style*="overflow:"][style*="!important;"]
 !
 ! Rambler.RU и их проекты
 ag.ru###bottom_link
@@ -5751,8 +5751,8 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@.com/ads?$domain=uzblog.com|uzlist.com
 @@.soundcloud.com/player.swf?url=
 @@//promo.$popup,domain=bactistatin.com|gamexp.ru|iguides.ru|yandex.ru
-@@/adfox.$script,domain=alfabank.ru|mirtesen.ru|mts.ru|rutube.ru
-@@/adfox/*$image,object,domain=alfabank.ru|rutube.ru
+@@/adfox.$script,domain=alfabank.ru|megafon.ru|mirtesen.ru|mts.ru|rutube.ru
+@@/adfox/*$image,object,domain=alfabank.ru|megafon.ru|rutube.ru
 @@/adline.$domain=adline.by|adline.reformal.ru
 @@/adriver.core.$domain=delfi.ua
 @@/adsense/*$domain=winxclub.com

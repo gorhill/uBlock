@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: GtMRA+GZBbn+Aakt6wa/tg
-! Version: 201407021601
+! Checksum: cPebXCHs8nKnHULos1npnA
+! Version: 201407051321
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 02 Jul 2014 16:01 UTC
+! Last modified: 05 Jul 2014 13:20 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1049,6 +1049,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||china-gadgets.de^$subdocument,third-party
 ||clanmonster.de/clanmonster_gross.jpg$third-party
 ||clanplanet.de/cp-leaderboard.jpg
+||cloud.instore.net^$third-party
 ||co2online.de/banner/$third-party
 ||congstar.de/mgm/starseller/$third-party
 ||conserva.de^*/banner_$third-party
@@ -2001,6 +2002,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-scene.com/usenext.php
 ||ddl-search.biz/banner/
 ||ddl-search.biz^$image,popup,domain=w3-warez.cc
+||ddl-warez.in/.*.js..php
 ||ddl-warez.in/.*.js.php
 ||ddl-warez.in/_*.php$script
 ||ddl-warez.in/images/hoster/
@@ -2998,7 +3000,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||portalkunstgeschichte.de/getmedia.php/_media/banner/
 ||powerforen.de^*/lookatme.js
 ||ppc-welt.info^*/banner/
-||pr0gramm.com/media/wm/am-
+||pr0gramm.com/media/wm/
 ||pragerzeitung.cz/images/banners/
 ||preisbock.de/skin/*/mbskyscraper.gif
 ||preissuchmaschine.de/banner/
@@ -3660,6 +3662,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /g*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /h*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /i*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
+/j*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /t*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 ||gamona.de/assets/*.swf
 ||gamona.de/assets/*_1000x140.
@@ -3675,6 +3678,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mv-spion.de/ajax/lc?content=qwert
 ||mv-spion.de/ajax/lc|
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
+||videoplaza.tv^$domain=www.rtl.de|www.vox.de
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block_popup.txt ***
 &t202kw=$popup,domain=lustich.de|pcaction.de
 &utm_medium=$popup,domain=lustich.de|pcaction.de
@@ -5920,7 +5924,7 @@ mainpost.de##a[href^="http://ad.sol.de/"]
 queer.de##a[href^="http://ad.zanox.com"]
 seaofsin.info##a[href^="http://ad.zanox.com/ppc/?"]
 oe24.at##a[href^="http://ad1.adfarm1.adition.com/redi?sid="]
-ps3-talk.de##a[href^="http://ad3.adfarm1.adition.com/"]
+finanzen100.de,ps3-talk.de##a[href^="http://ad3.adfarm1.adition.com/"]
 deluxetools.net##a[href^="http://adf.ly/?id="]
 mobiflip.de,usp-forum.de##a[href^="http://adfarm.adyard.de/"]
 handy-hilfeforum.de##a[href^="http://adfarm.adyard.de/ad/"]
@@ -6018,7 +6022,7 @@ hoerbuch.in##a[href^="http://hoerbuch.in/wp/goto/Hier_klicken_"]
 1load.net##a[href^="http://hotfile.com/register.html?reff="]
 hd-world.org,movie-blog.org##a[href^="http://href.hu/"]
 movie-blog.org##a[href^="http://ilnk.me/"]
-fussball.de,knuddels.de,trax.de##a[href^="http://im.banner.t-online.de/?adlink|"]
+fussball.de,knuddels.de,t-online.de,trax.de##a[href^="http://im.banner.t-online.de/?adlink|"]
 sexuria.com##a[href^="http://in.mydirtyhobby.com/"]
 dokujunkies.org,movie-blog.org,serienjunkies.org##a[href^="http://is.gd/"]
 movie-blog.org##a[href^="http://j.mp/"]
@@ -6118,6 +6122,7 @@ beichthaus.com##a[href^="http://www.amazon.de/"][href*="&tag="] > img
 gamefront.de##a[href^="http://www.amazon.de/"][href*="&tag=gamefrontde-21"]
 gamestar.de##a[href^="http://www.amazon.de/"][href*="tag=gamestarq-21"]
 gamestar.de##a[href^="http://www.amazon.de/"][href*="tag=gscon-21"]
+unmoralische.de##a[href^="http://www.amazon.de/exec/obidos/redirect-home?tag=dieunmoralisc-21&"] > img
 deutscher-hip-hop.com##a[href^="http://www.amazon.de/gp/"][href$="&tag=deuhiphop0e-21"] > img
 gamepro.de##a[href^="http://www.amazon.de/gp/"][href*="&tag="]
 v-i-t-t-i.de##a[href^="http://www.amazon.de/gp/"][href*="&tag="] > img
@@ -7402,6 +7407,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@.org^$script,domain=ul-load.com|uploaded-premium.ru
 @@.png#$domain=aktuelles-handelsrecht.info|aussenwirtschaftslupe.de|energielupe.de|europalupe.eu|finanzmarkttransaktionssteuer.de|gerichtsboulevard.de|grundrechteschutz.de|hartzbote.de|jagdlupe.de|kirchensteuerinfo.de|mediationslupe.de|medienrechtsnews.de|mutterschutz-rechner.de|rappers.in|rechtslupe.de|rechtslupe.net|rechtsschutzversicherunginfo.de|rentenbote.de|schuetzenrecht.de|sozialrechtsnews.de|steuerschmiede-aktuell.de|teamspeak-ts.com|tobinsteuer.de|twixzo.de|ul-load.com|uploaded-premium.ru|vereinslupe.de|vorsorgebote.de|wintotal-forum.de|wirtschaft-recht-aktuell.de
 @@.png?$domain=mobilfunk-geschichte.de
+@@/http://[1-9]/$object-subrequest,third-party,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@|http://*.com^$image,third-party,domain=gamona.de
 @@|http://*.com^*_$image,third-party,domain=gamona.de
 @@|http://*.de^$image,third-party,domain=gamona.de|lustich.de
@@ -7428,6 +7434,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||ad.71i.de/global_js/globalV6.js$domain=kabeleins.de|sat1.de|sixx.de
 @@||ad.71i.de/global_js/Sites/$domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
 @@||ad.71i.de/global_js/Sites/gamestarde.js$domain=gamestar.de
+@@||ad.adnet.de/adj.php?$script,domain=schoener-fernsehen.com
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=homerj.de
 @@||ad4.liverail.com/?LR_PUBLISHER_ID=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ad4mat.de/ads/js/adtrust-min.php?*&w=468&h=60&$script,domain=mufa.de
@@ -7441,7 +7448,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||adfarm1.adition.com/js?wp_id=*&kid=*&ts=*&clickurl=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de
 @@||adform.net/crossdomain.xml$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||adform.net/serving/videoad/?$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||adnet.de/ad2.js?_=$script,domain=schoener-fernsehen.com
+@@||adnet.de/ad2.js$domain=schoener-fernsehen.com
 @@||ads.exoclick.com/ads.js$domain=board.world-of-hentai.to
 @@||ads.flirttown.net/www/delivery/afr.php?zoneid=1&age=*&gender=$subdocument
 @@||ads.yahoo.com/st?ad_type=iframe&ad_size=800x440^$subdocument,domain=uploaded-premium.ru
@@ -7571,6 +7578,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||ivwbox.de^*#$image,domain=lustich.de
 @@||jagdlupe.de^$elemhide
 @@||java-forum.org^$elemhide
+@@||jubbie.de^$script,domain=gamona.de|lustich.de
 @@||juristische-suche.de^$elemhide
 @@||kaufn.com/banner/ads/adserver/click/ad.js
 @@||kirchensteuerinfo.de^$elemhide
@@ -7707,4 +7715,5 @@ pcwelt.de##div[id^="google_ads_"]
 @@||partycasino.com^$popup,domain=online-casino.de
 @@||stargames.com^$popup,domain=online-casino.de
 @@||sunmaker.com^$popup,domain=online-casino.de
+@@||track.adform.net^$popup,domain=dealdoktor.de
 @@||williamhill.com^$popup,domain=online-casino.de

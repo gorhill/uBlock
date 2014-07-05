@@ -1,10 +1,10 @@
 [Adblock Plus 2.0]
-! Version: 20140630
+! If you have questions,please email 994722209@qq.com
+! List version 20140704
+! Version: 20140704
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
-! If you have questions,please email 994722209@qq.com
-! List version 140630
 &ad_type=
 &ad_url=
 &ad_zones=
@@ -14,6 +14,7 @@
 -ad1.
 -ad3.
 -ads-manager/
+.ace.advertising.
 .adsense.
 .adserver.
 .advert.$domain=~advert.ly
@@ -44,6 +45,7 @@
 .org/ads/
 .php/ad/
 .php?ad_
+.php?affid=
 .php?zoneid=
 .swf?clicktag=
 /aamsz=
@@ -67,10 +69,13 @@
 /ad15.
 /ad16.
 /ad2.
+/ad2_
 /ad3.
 /ad4.
+/ad468x60.
 /ad5.
 /ad6.
+/ad600x330.
 /ad7.
 /ad728.
 /ad8.
@@ -125,6 +130,7 @@
 /admedia/*
 /adnet.
 /adnews.
+/adnexus-
 /ados.js
 /adphoto.
 /adpic.
@@ -160,6 +166,8 @@
 /adsence.
 /adsense.
 /adsense/*
+/adserv.
+/adserve/*
 /adserver.
 /adsfile.
 /adshow.
@@ -227,6 +235,7 @@
 /floatadv.
 /footerad.
 /fullad.
+/gamead/*
 /get_ad_
 /getad.
 /getads.
@@ -256,6 +265,7 @@
 /images/adv/*
 /images/adv_
 /images_ad/*
+/img.ads.
 /img/ad.
 /img/ad_
 /imgad_
@@ -287,6 +297,7 @@
 /plus/ad_
 /pop.js|
 /pop2.js|
+/popunder.
 /pubads.$domain=~cbs.com
 /public/ad/*
 /public/ads/*
@@ -301,6 +312,7 @@
 /scripts/ad-
 /scripts/ad.
 /scripts/ad_
+/search.php?uid=*.*&src=
 /serv.ads.
 /show.cgi?adp
 /show_ad_
@@ -310,9 +322,11 @@
 /showads_
 /sidead/*
 /spc.php
+/static/ad/*
 /static/ads/*
 /svnad/*
 /synad2.
+/t.php?uid=*.*&src=
 /textad.
 /top_ad.
 /topad.
@@ -341,6 +355,7 @@ _ad01.
 _ad1.$~stylesheet
 _ad2.
 _ad3.
+_ad6.
 _ad_bottom.
 _ad_center.
 _ad_choices_
@@ -368,6 +383,7 @@ _right_ads_
 _rightad1.
 _top_ad_
 _topad.
+||com/banners/$image,object,subdocument
 /adblock_detector.
 -300-250.
 -468_60.
@@ -419,6 +435,7 @@ _960_90.
 /popout.$popup
 ://adv.$popup
 =popunder&$popup
+###AD300x250
 ###AD_google
 ###AdLayer1
 ###AdLayer2
@@ -462,6 +479,7 @@ _960_90.
 ###adChannel
 ###adFrame
 ###adHeaderTop
+###adIsland
 ###adLink1
 ###adPosition5
 ###adPosition7
@@ -503,11 +521,14 @@ _960_90.
 ###ad_left_2
 ###ad_link
 ###ad_middle
+###ad_overlay
 ###ad_panel
 ###ad_right
 ###ad_right_1
 ###ad_right_box
+###ad_sec_div
 ###ad_sidebar
+###ad_small
 ###ad_space
 ###ad_text:not(textarea)
 ###ad_top
@@ -544,11 +565,14 @@ _960_90.
 ###ads_topbanner
 ###adsdiv
 ###adsense
+###adsense-2
 ###adsensewidget-3
 ###adsiframe
 ###adtext
 ###adtop
+###adtxt
 ###adv_right
+###adverti
 ###advertise
 ###advertising2
 ###article-ad
@@ -570,6 +594,7 @@ _960_90.
 ###contentad
 ###dc-display-right-ad-1
 ###dict-adv
+###divAd
 ###divAdBox
 ###flashad
 ###footad
@@ -600,9 +625,11 @@ _960_90.
 ###leftad
 ###logo_ad
 ###mochila-column-right-ad-300x250-1
+###msad
 ###narrow-ad
 ###pagelet_side_ads
 ###pop_ad
+###post-ad
 ###remove_ads_button1
 ###remove_ads_button2
 ###right-ad
@@ -668,6 +695,7 @@ _960_90.
 ##.ad-d
 ##.ad-div
 ##.ad-e
+##.ad-footer
 ##.ad-header
 ##.ad-img
 ##.ad-left
@@ -773,6 +801,7 @@ _960_90.
 ##.ad_title
 ##.ad_top
 ##.ad_top_banner
+##.ad_under
 ##.ad_word
 ##.ad_wrap
 ##.ad_zone
@@ -850,6 +879,7 @@ _960_90.
 ##.banner-ad
 ##.banner300
 ##.banner350
+##.banner728
 ##.banner_300x250
 ##.banner_728x90
 ##.banner_ad
@@ -1041,12 +1071,15 @@ yahoo.com#@#.type_ads_default
 ||adadvisor.net^$third-party
 ||adcash.com^$third-party
 ||adexprt.com^$third-party
+||adform.net^$third-party
+||admngronline.com^$third-party
 ||adnxs.com^$third-party
 ||adorika.net^$third-party
 ||adsame.com^$third-party
 ||adsfactor.net^$third-party
 ||adshost2.com^$third-party
 ||adsrvr.org^$third-party
+||adsymptotic.com^$third-party
 ||adzerk.net^$third-party
 ||alimama.com^$third-party
 ||allyes.com^$third-party
@@ -1057,26 +1090,34 @@ yahoo.com#@#.type_ads_default
 ||atwola.com^$third-party
 ||awltovhc.com^$third-party
 ||bizographics.com^$third-party
+||burstnet.com^$third-party
+||casalemedia.com^$third-party
 ||chango.com^$third-party
 ||chitika.net^$third-party
 ||clixtrac.com^$third-party
 ||clkrev.com^
+||connexity.net^$third-party
+||contextweb.com^$third-party
 ||cpmstar.com^$third-party
 ||criteo.net^$third-party
 ||directrev.com^$third-party
+||dotomi.com^$third-party
 ||doubleclick.net/ad/$third-party
 ||doubleclick.net/adj/$~object-subrequest,third-party
+||doublepimp.com^$third-party
 ||ero-advertising.com^$third-party
 ||exoclick.com^$third-party
 ||exponential.com^$third-party
 ||ftjcfx.com^$third-party
 ||fxdepo.com^$third-party
 ||googletagservices.com/tag/js/gpt_$third-party
+||gwallet.com^$third-party
 ||innity.com^$third-party
 ||innity.net^$third-party
 ||inskinad.com^$third-party
 ||inskinmedia.com^$~stylesheet,third-party
 ||interclick.com^$third-party
+||jumptap.com^$third-party
 ||krxd.net^$third-party
 ||lduhtrp.net^$third-party
 ||liverail.com^$~object-subrequest,third-party
@@ -1084,6 +1125,7 @@ yahoo.com#@#.type_ads_default
 ||media6degrees.com^$third-party
 ||medleyads.com^$third-party
 ||microad.jp^$third-party
+||mookie1.com^$third-party
 ||moselats.com^$third-party
 ||networld.hk^$third-party
 ||nexac.com^$third-party
@@ -1111,10 +1153,14 @@ yahoo.com#@#.type_ads_default
 ||tubemogul.com^$third-party
 ||videoplaza.tv/proxy/distributor^$object-subrequest,third-party
 ||wigetmedia.com^$third-party
+||yeabble.com^$third-party
 ||yieldmanager.com^$third-party
 ||zedo.com^$third-party
+||zenoviaexchange.com^$third-party
 ||zipropyl.com^$third-party
 ||ad.doubleclick.net^$popup,third-party
+||adsmarket.com^$popup,third-party
+||directrev.com^$popup,third-party
 ||mmaaxx.com^$third-party
 ||plugrush.com^$third-party
 ||putags.com^$third-party
@@ -1124,6 +1170,7 @@ yahoo.com#@#.type_ads_default
 ||adf.ly/images/banners/
 ||alexa.com^*/promotebuttons/
 ||disqus.com/listPromoted?
+||domainnamesales.com/return_js.php?
 ||google.com/pagead/
 ||googlesyndication.com/pagead/$third-party
 ||kontera.com/javascript/lib/KonaLibInline.js$third-party
@@ -1178,7 +1225,6 @@ imdb.com###rhs_cornerstone_wrapper
 imdb.com###top_rhs_wrapper
 youtube.com###watch-channel-brand-div
 au.news.yahoo.com##.acc-moneyhound
-7billionworld.com,abajournal.com,aljazeerasport.asia,altavista.com,arcadeprehacks.com,birdforum.net,coinad.com,cuzoogle.com,cyclingweekly.co.uk,cyprus-mail.com,disconnect.me,domainnamenews.com,eco-business.com,energylivenews.com,facemoods.com,flashx.tv,foxbusiness.com,foxnews.com,freetvall.com,friendster.com,fstoppers.com,ftadviser.com,furaffinity.net,gentoo.org,gmanetwork.com,govtrack.us,gramfeed.com,gyazo.com,hispanicbusiness.com,html5test.com,hurricanevanessa.com,ilovetypography.com,isearch.whitesmoke.com,itar-tass.com,itproportal.com,kingdomrush.net,laptopmag.com,lfpress.com,livetvcafe.net,lovemyanime.net,malaysiakini.com,manga-download.org,maps.google.com,mb.com.ph,mmajunkie.com,movies-online-free.net,mugshots.com,myfitnesspal.com,mypaper.sg,nbcnews.com,nugget.ca,panorama.am,pastie.org,phpbb.com,playboy.com,pocket-lint.com,previously.tv,radiobroadcaster.org,reason.com,ryanseacrest.com,sddt.com,searchfunmoods.com,sourceforge.net,tcm.com,tech2.com,thecambodiaherald.com,thedailyobserver.ca,thejakartapost.com,thelakewoodscoop.com,themalaysianinsider.com,theobserver.ca,thepeterboroughexaminer.com,theyeshivaworld.com,tiberium-alliances.com,tjpnews.com,today.com,tubeserv.com,turner.com,twogag.com,ultimate-guitar.com,wallpaper.com,washingtonpost.com,wftlsports.com,womanandhome.com,wtvz.net,yahoo.com,youthedesigner.com,yuku.com##.ads
 bloomberg.com,borfast.com,howmanyleft.co.uk,instantpulp.com,over-blog.com,plurk.com,scitechdaily.com,sgentrepreneurs.com,techsupportalert.com,wikihoops.com##.adsense
 mail.google.com##.aeF > .nH > .nH[role="main"] > .aKB
 mail.google.com##.aeF > .nH > .nH[role="main"] > .mq:first-child
@@ -1195,6 +1241,7 @@ finance.yahoo.com,news.yahoo.com##.yom-ysmcm
 w3schools.com##a[rel="nofollow"]
 facebook.com##div[class="ego_column pagelet _5qrt _1snm"]
 facebook.com##div[class="ego_column pagelet"]
+footstream.tv,jjcast.com,leton.tv##div[id^="timer"]
 imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:4px 3px 4px 3px; margin-top:-5px; margin-bottom:-8px; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px;"]
 @@||adblockplus.org^$elemhide,domain=easylist.adblockplus.org|reports.adblockplus.org
 @@||adguard.com^$~third-party
@@ -1217,6 +1264,7 @@ imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:
 @@||tudouui.com/bin/player2/*&adsourceid=
 @@||upload.wikimedia.org/wikipedia/
 @@||yimg.com^*/combo?$script,domain=yahoo.com
+@@||jjcast.com^$elemhide
 @@||twitch.tv/ads/ads.js
 @@||video.appledaily.com.hk/admedia/$object-subrequest,domain=nextmedia.com
 @@||www.facebook.com/ajax/ads/$xmlhttprequest,domain=www.facebook.com
