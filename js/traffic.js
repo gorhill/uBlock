@@ -32,7 +32,7 @@
 // Intercept and filter web requests according to white and black lists.
 
 var onBeforeRequestHandler = function(details) {
-    // console.debug('onBeforeRequestHandler()> "%s": %o', details.url, details);
+    //console.debug('onBeforeRequestHandler()> "%s": %o', details.url, details);
 
     // Do not block behind the scene requests.
     var tabId = details.tabId;
@@ -69,7 +69,10 @@ var onBeforeRequestHandler = function(details) {
     }
 
     // Lookup the page store associated with this tab id.
-    var pageStore = µb.pageStoreFromTabId(tabId) || {};
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        return;
+    }
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
@@ -78,9 +81,7 @@ var onBeforeRequestHandler = function(details) {
         //quickProfiler.stop();
     }
     // Record what happened.
-    if ( pageStore.recordRequest ) {
-        pageStore.recordRequest(requestType, requestURL, reason);
-    }
+    pageStore.recordRequest(requestType, requestURL, reason);
 
     // Not blocked?
     if ( reason === false ) {
