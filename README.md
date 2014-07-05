@@ -27,7 +27,7 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 <p align="center">
 µBlock: page loaded. ABP: page still loading.<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
-<sup>Image excerpted from [this video](https://www.youtube.com/watch?v=SzJr4hmPlgQ).</p>
+<sup>Image excerpted from https://www.youtube.com/watch?v=SzJr4hmPlgQ.</p>
 
 ## Installation
 
