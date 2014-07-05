@@ -6,7 +6,9 @@ See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 An efficient blocker for Chromium-based browsers. Fast and lean.
 
 <p align="center">
-</p>
+µBlock: page loaded. ABP: page still loading.<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
+<sup>Image excerpted from https://www.youtube.com/watch?v=SzJr4hmPlgQ.</p>
 
 <p align="center">
 Chromium on Linux 64-bit<br>
@@ -23,11 +25,6 @@ console for each extension and force a garbage collection cycle by clicking a co
 the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
 </p>
-
-<p align="center">
-µBlock: page loaded. ABP: page still loading.<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
-<sup>Image excerpted from https://www.youtube.com/watch?v=SzJr4hmPlgQ.</p>
 
 ## Installation
 
