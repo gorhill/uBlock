@@ -62,6 +62,10 @@ really do want to contribute something, think about the people working hard
 to maintain the filter lists you are using, which were made available to use by 
 all for free.
 
+You may contribute by helping to translate this project. I created an 
+[entry on Crowdin](https://crowdin.net/project/ublock), where you may contribute 
+to the translation work.
+
 ## License
 
 [GPLv3](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt).
