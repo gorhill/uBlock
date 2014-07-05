@@ -25,6 +25,11 @@ console for each extension and force a garbage collection cycle by clicking a co
 the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
 
+<p align="center">
+    µBlock: page loaded. ABP: page still loading<br>
+    <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" />
+</p>
+
 ## Installation
 
 From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
