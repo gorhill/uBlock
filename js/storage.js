@@ -141,7 +141,7 @@
             {
                 // https://github.com/gorhill/httpswitchboard/issues/361
                  'bad': 'assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt',
-                'good': 'assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master'
+                'good': 'assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt'
             }
         ];
         var relocation;

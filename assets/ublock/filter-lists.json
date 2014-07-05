@@ -101,7 +101,7 @@
         "off": true,
         "title": "Liste AR"
         },
-    "raw.githubusercontent.com/tomasko126/easylistczechandslovak/master": {
+    "raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": {
         "off": true,
         "title": "EasyList Czech and Slovak"
         },
@@ -117,9 +117,17 @@
         "off": true,
         "title": "Wiltteri"
         },
+    "home.fredfiber.no/langsholt/adblock.txt": {
+        "off": true,
+        "title": "Norsk adblockliste (norsk)"
+        },
     "adblock.gardar.net/is.abp.txt": {
         "off": true,
-        "title": "Icelandic ABP List"
+        "title": "Icelandic ABP List (islenska)"
+        },
+    "adblock.schack.dk/block.txt": {
+        "off": true,
+        "title": "Schacks Adblock Plus liste (dansk)"
         },
     "www.void.gr/kargig/void-gr-filters.txt": {
         "off": true,
@@ -128,5 +136,13 @@
     "abp.mozilla-hispano.org/nauscopio/filtros.txt": {
         "off": true,
         "title": "Filtros Nauscopicos"
+        },
+    "www.hufilter.hu/hufilter.txt": {
+        "off": true,
+        "title": "hufilter (magyar)"
+        },
+    "dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": {
+        "off": true,
+        "title": "ABP X Files"
         }
 }
