@@ -1415,17 +1415,16 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     var categories = this.categories;
 
     // Test hostname-based block filters
-    var bf = false;
-    bf = this.matchAnyPartyHostname(requestHostname);
-    if ( bf === false && party === ThirdParty ) {
-        bf = this.match3rdPartyHostname(requestHostname);
+    var br = this.matchAnyPartyHostname(requestHostname);
+    if ( br === false && party === ThirdParty ) {
+        br = this.match3rdPartyHostname(requestHostname);
     }
 
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
     // Test against block filters
-    if ( bf === false ) {
+    if ( br === false ) {
         this.bucket0 = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
         this.bucket1 = categories[this.makeCategoryKey(BlockAnyType | party)];
         this.bucket2 = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
@@ -1435,11 +1434,11 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
         this.bucket6 = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
         this.bucket7 = categories[this.makeCategoryKey(BlockOtherParties | type)];
 
-        bf = this.matchTokens();
+        br = this.matchTokens();
     }
 
     // If there is no block filter, no need to test against allow filters
-    if ( bf === false ) {
+    if ( br === false ) {
         return false;
     }
 
@@ -1453,11 +1452,12 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     this.bucket6 = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
     this.bucket7 = categories[this.makeCategoryKey(AllowOtherParties | type | domainParty)];
 
-    if ( this.matchTokens() !== false ) {
-        return false;
+    var ar = this.matchTokens();
+    if ( ar !== false ) {
+        return '@@' + ar;
     }
 
-    return bf;
+    return br;
 };
 
 /******************************************************************************/

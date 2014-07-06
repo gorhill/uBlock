@@ -416,7 +416,7 @@ DOMList.prototype.toggleClass = function(className, targetState) {
     for ( var i = 0; i < n; i++ ) {
         node = this.nodes[i];
         currentState = re.test(node.className);
-        newState = targetState;
+        newState = !!targetState;
         if ( newState === undefined ) {
             newState = !currentState;
         }
@@ -427,7 +427,7 @@ DOMList.prototype.toggleClass = function(className, targetState) {
         if ( newState ) {
             newClassName += ' ' + className;
         } else {
-            newClassName = newClassName.replace(re, '');
+            newClassName = newClassName.replace(re, ' ');
         }
         node.className = newClassName.trim();
     }

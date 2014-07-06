@@ -33,6 +33,7 @@ return {
     userSettings: {
         collapseBlocked: true,
         logBlockedRequests: false,
+        logAllowedRequests: false,
         parseAllABPHideFilters: true,
         netExceptionList: {},
         showIconBadge: true

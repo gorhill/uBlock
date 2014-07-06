@@ -84,7 +84,7 @@ var onBeforeRequestHandler = function(details) {
     pageStore.recordRequest(requestType, requestURL, reason);
 
     // Not blocked?
-    if ( reason === false ) {
+    if ( reason === false || reason.slice(0, 2) === '@@' ) {
         return;
     }
 

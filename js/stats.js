@@ -31,13 +31,27 @@ messaging.start('stats.js');
 
 /******************************************************************************/
 
-var logSettingChanged = function() {
+var logBlockedSettingChanged = function() {
     messaging.tell({
         what: 'userSettings',
         name: 'logBlockedRequests',
         value: this.checked
     });
-    uDom('#blockedRequests').toggleClass('logEnabled', this.checked);
+    uDom('#requests table').toggleClass('hideBlocked', !this.checked);
+    uDom('#requests').toggleClass('logEnabled', this.checked || uDom('#logAllowedRequests').prop('checked'));
+    renderPageSelector();
+};
+
+/******************************************************************************/
+
+var logAllowedSettingChanged = function() {
+    messaging.tell({
+        what: 'userSettings',
+        name: 'logAllowedRequests',
+        value: this.checked
+    });
+    uDom('#requests table').toggleClass('hideAllowed', !this.checked);
+    uDom('#requests').toggleClass('logEnabled', this.checked || uDom('#logBlockedRequests').prop('checked'));
     renderPageSelector();
 };
 
@@ -47,9 +61,10 @@ var cachedPageSelectors = {};
 var cachedPageHash = '';
 
 var toPrettyTypeNames = {
-         'sub_frame': 'frame',
-            'object': 'plugin',
-    'xmlhttprequest': 'XHR'
+         'stylesheet': 'css',
+          'sub_frame': 'frame',
+             'object': 'plugin',
+     'xmlhttprequest': 'XHR'
 };
 
 /******************************************************************************/
@@ -61,6 +76,9 @@ var renderURL = function(url, filter) {
     var pos = reText.indexOf('$');
     if ( pos > 0 ) {
         reText = reText.slice(0, pos);
+    }
+    if ( reText.slice(0, 2) === '@@' ) {
+        reText = reText.slice(2);
     }
     reText = reText
         .replace(/\./g, '\\.')
@@ -112,41 +130,40 @@ var renderPageDetails = function(tabId) {
         if ( details.hash === cachedPageHash ) {
             return;
         }
-        var blockedRequests = details.requests || [];
-        blockedRequests.sort(function(a, b) {
-            var r = a.domain.localeCompare(b.domain);
-            if ( r === 0 ) {
-                r = a.reason.localeCompare(b.reason);
-                if ( r === 0 ) {
-                    r = a.type.localeCompare(b.type);
-                }
-            }
-            return r;
-        });
-
-        uDom('#tableHeader ~ tr').remove();
-
-        var blockedRequest, requestURL;
-        var html = [];
-
-        for ( var i = 0; i < blockedRequests.length; i++ ) {
-            blockedRequest = blockedRequests[i];
-            html.push(
-                '<tr>',
-                '<td>', toPrettyTypeNames[blockedRequest.type] || blockedRequest.type,
-                '<td>', blockedRequest.domain,
-                '<td>', renderURL(blockedRequest.url, blockedRequest.reason),
-                '<td>', blockedRequest.reason
-            );
-        }
-        if ( !html.length ) {
-            html.push(
-                '<tr><td colspan="4">',
-                chrome.i18n.getMessage('logBlockedRequestsEmpty')
-            );
-        }
-        uDom('#tableHeader').insertAfter(html.join(''));
         cachedPageHash = details.hash;
+        var renderRequests = function(requests, className) {
+            requests.sort(function(a, b) {
+                var r = a.domain.localeCompare(b.domain);
+                if ( r ) { return r; }
+                r = a.reason.localeCompare(b.reason);
+                if ( r ) { return r; }
+                r = a.type.localeCompare(b.type);
+                if ( r ) { return r; }
+                return a.url.localeCompare(b.url);
+            });
+            var html = [], request;
+            html.push(
+                '<tr class="header ', className, '">',
+                '<td colspan="4"><h3>',
+                chrome.i18n.getMessage(className + (requests.length ? 'RequestsHeader' : 'RequestsEmpty')),
+                '</h3>'
+            );
+            for ( var i = 0; i < requests.length; i++ ) {
+                request = requests[i];
+                html.push(
+                    '<tr class="', className, '">',
+                    '<td>', request.domain,
+                    '<td>', toPrettyTypeNames[request.type] || request.type,
+                    '<td>', renderURL(request.url, request.reason),
+                    '<td>', request.reason || ''
+                );
+            }
+            return html;
+        };
+        uDom('#requests .tableHeader ~ tr').remove();
+        var htmlBlocked = renderRequests(details.blockedRequests || [], 'logBlocked');
+        var htmlAllowed = renderRequests(details.allowedRequests || [], 'logAllowed');
+        uDom('#requests .tableHeader').insertAfter(htmlBlocked.concat(htmlAllowed).join(''));
     };
 
     messaging.ask({ what: 'getPageDetails', tabId: tabId }, onDataReceived);
@@ -161,11 +178,14 @@ var pageSelectorChanged = function() {
 /******************************************************************************/
 
 var renderPageSelector = function(targetTabId) {
-    if ( uDom('#logBlockedRequests').prop('checked') !== true ) {
+    if ( !uDom('#logBlockedRequests').prop('checked') && !uDom('#logAllowedRequests').prop('checked') ) {
         return;
     }
     var selectedTabId = targetTabId || parseInt(uDom('#pageSelector').val(), 10);
     var onTabReceived = function(tab) {
+        if ( !tab ) {
+            return;
+        }
         var html = [
             '<option value="',
             tab.id,
@@ -200,13 +220,17 @@ var renderPageSelector = function(targetTabId) {
 
 var onUserSettingsReceived = function(details) {
     uDom('#logBlockedRequests').prop('checked', details.logBlockedRequests);
-    uDom('#blockedRequests').toggleClass('logEnabled', details.logBlockedRequests);
+    uDom('#logAllowedRequests').prop('checked', details.logAllowedRequests);
+    uDom('#requests').toggleClass('logEnabled', details.logBlockedRequests || details.logAllowedRequests);
+    uDom('#requests table').toggleClass('hideBlocked', !details.logBlockedRequests);
+    uDom('#requests table').toggleClass('hideAllowed', !details.logAllowedRequests);
 
     var matches = window.location.search.slice(1).match(/(?:^|&)which=(\d+)/);
     var tabId = matches && matches.length === 2 ? parseInt(matches[1], 10) : 0;
     renderPageSelector(tabId);
 
-    uDom('#logBlockedRequests').on('change', logSettingChanged);
+    uDom('#logBlockedRequests').on('change', logBlockedSettingChanged);
+    uDom('#logAllowedRequests').on('change', logAllowedSettingChanged);
     uDom('#refresh').on('click', function() { renderPageSelector(); });
     uDom('#pageSelector').on('change', pageSelectorChanged);
 };

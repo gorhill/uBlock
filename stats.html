@@ -24,6 +24,13 @@ select {
     padding: 2px 0;
     font-size: 14px;
     }
+#requests {
+    margin: 2em 0 0 0;
+    display: none;
+    }
+#requests.logEnabled {
+    display: block;
+    }
 table {
     margin: 1em 0;
     border: 1px solid gray;
@@ -36,23 +43,36 @@ td, th {
     padding: 6px 6px;
     white-space: pre;
     }
-td:nth-of-type(2) {
+td:nth-of-type(1), td:nth-of-type(2) {
     text-align: right;
+    }
+tr.header td:nth-of-type(1) {
+    text-align: left;
     }
 td:nth-of-type(3) {
     color: #444;
     }
-td:nth-of-type(3) b {
-    padding: 2px 0;
-    color: #000;
-    background-color: #ff8;
-    }
-#blockedRequests {
-    margin: 2em 0 0 0;
+table.hideBlocked tr.logBlocked {
     display: none;
     }
-#blockedRequests.logEnabled {
-    display: block;
+table.hideAllowed tr.logAllowed {
+    display: none;
+    }
+tr.logBlocked {
+    background-color: #fff8f8;
+    }
+tr.logBlocked ~ tr td:nth-of-type(3) b {
+    padding: 2px 0;
+    color: #000;
+    background-color: rgba(255,0,0,0.1);
+    }
+tr.logAllowed {
+    background-color: #f8fff8 !important;
+    }
+tr.logAllowed ~ tr td:nth-of-type(3) b {
+    padding: 2px 0;
+    color: #000;
+    background-color: rgba(0,255,0,0.2);
     }
 </style>
 </head>
@@ -63,17 +83,20 @@ td:nth-of-type(3) b {
     <li><input id="logBlockedRequests" type="checkbox" data-range="bool" /><span data-i18n="logBlockedRequestsPrompt"></span>
     <button class="whatisthis"></button>
     <div class="whatisthis-expandable para" data-i18n="logBlockedRequestsHelp"></div>
+    <li><input id="logAllowedRequests" type="checkbox" data-range="bool" /><span data-i18n="logAllowedRequestsPrompt"></span>
+    <button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="logAllowedRequestsHelp"></div>
 </ul>
 
-<div id="blockedRequests">
+<div id="requests">
 <span id="refresh" class="fa">&#xf021;</span><select id="pageSelector"></select>
 
-<table id="pageDetails">
-<tr id="tableHeader">
-<th data-i18n="logBlockedRequestsHeaderType">
-<th data-i18n="logBlockedRequestsHeaderDomain">
-<th data-i18n="logBlockedRequestsHeaderURL">
-<th data-i18n="logBlockedRequestsHeaderFilter">
+<table>
+<tr class="tableHeader">
+<th data-i18n="logRequestsHeaderDomain">
+<th data-i18n="logRequestsHeaderType">
+<th data-i18n="logRequestsHeaderURL">
+<th data-i18n="logRequestsHeaderFilter">
 </table>
 
 </div>

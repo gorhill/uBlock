@@ -133,7 +133,7 @@ return asyncJobManager;
 // Update visual of extension icon.
 // A time out is used to coalesce adjacent requests to update badge.
 
-µBlock.updateBadge = function(tabId) {
+µBlock.updateBadgeAsync = function(tabId) {
     if ( tabId < 0 ) {
         return;
     }

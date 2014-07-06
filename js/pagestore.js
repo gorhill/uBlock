@@ -53,14 +53,6 @@ var pageStoreFactory = function(tabId, pageURL) {
 /******************************************************************************/
 
 function PageStore(tabId, pageURL) {
-    this.tabId = -1;
-    this.pageURL = '';
-    this.pageHostname = '';
-    this.pageDomain = '';
-    this.perLoadBlockedRequestCount = 0;
-    this.perLoadAllowedRequestCount = 0;
-    this.blockedRequests = {};
-    this.disposeTime = 0;
     this.init(tabId, pageURL);
 }
 
@@ -74,6 +66,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.blockedRequests = {};
+    this.allowedRequests = {};
     this.disposeTime = 0;
     return this;
 };
@@ -88,7 +81,7 @@ PageStore.prototype.dispose = function() {
     this.pageURL = '';
     this.pageHostname = '';
     this.pageDomain = '';
-    if ( pageStoreJunkyard.length < 32 ) {
+    if ( pageStoreJunkyard.length < 8 ) {
         pageStoreJunkyard.push(this);
     }
 };
@@ -96,16 +89,18 @@ PageStore.prototype.dispose = function() {
 /******************************************************************************/
 
 PageStore.prototype.recordRequest = function(type, url, reason) {
-    // rhill 2013-10-26: This needs to be called even if the request is
-    // already logged, since the request stats are cached for a while after
-    // the page is no longer visible in a browser tab.
-    µb.updateBadge(this.tabId);
+    var blocked = reason !== false && reason.slice(0, 2) !== '@@';
 
-    if ( reason === false ) {
+    if ( !blocked ) {
         this.perLoadAllowedRequestCount++;
         µb.localSettings.allowedRequestCount++;
+        if ( µb.userSettings.logAllowedRequests ) {
+            this.allowedRequests[url] = type + '\t' + (reason || '');
+        }
         return;
     }
+
+    µb.updateBadgeAsync(this.tabId);
 
     this.perLoadBlockedRequestCount++;
     µb.localSettings.blockedRequestCount++;

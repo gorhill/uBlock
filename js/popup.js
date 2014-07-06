@@ -70,7 +70,7 @@ var renderStats = function() {
 
     uDom('#gotoLog').toggleClass(
         'enabled',
-        stats.netFilteringSwitch && stats.logBlockedRequests
+        stats.logBlockedRequests || stats.logAllowedRequests
     );
 
     var blocked = stats.pageBlockedRequestCount;

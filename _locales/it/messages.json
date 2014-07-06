@@ -113,25 +113,45 @@
         "message": "Puoi controllare i dettagli delle richieste bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
         "description": "English: see _locales/en/messages.log"
     },
-    "logBlockedRequestsHeaderType" : {
+    "logAllowedRequestsPrompt" : {
+        "message": "Enable the logging of non-blocked requests",
+        "description": "English: Enable the logging of non-blocked requests"
+    },
+    "logAllowedRequestsHelp" : {
+        "message": "You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "description": "English: see _locales/en/messages.log"
+    },
+    "logBlockedRequestsHeader" : {
+        "message": "Richieste bloccate",
+        "description": "English: Blocked requests"
+    },
+    "logAllowedRequestsHeader" : {
+        "message": "Allowed requests",
+        "description": "English: Allowed requests"
+    },
+    "logRequestsHeaderType" : {
         "message": "Tipo",
         "description": "English: Type"
     },
-    "logBlockedRequestsHeaderDomain" : {
+    "logRequestsHeaderDomain" : {
         "message": "Dominio",
         "description": "English: Domain"
     },
-    "logBlockedRequestsHeaderURL" : {
-        "message": "Indirizzo bloccato",
-        "description": "English: Blocked URL"
+    "logRequestsHeaderURL" : {
+        "message": "Indirizzo",
+        "description": "English: URL"
     },
-    "logBlockedRequestsHeaderFilter" : {
+    "logRequestsHeaderFilter" : {
         "message": "Filtro",
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
-        "message": "Nel registro, non ci sono richieste bloccate per questa pagina.",
+        "message": "Nel registro, non ci sono richieste bloccate per questa pagina",
         "description": "English: No blocked requests logged for this page"
+    },
+    "logAllowedRequestsEmpty" : {
+        "message": "No non-blocked requests logged for this page",
+        "description": "English: No non-blocked requests logged for this page"
     },
 
 

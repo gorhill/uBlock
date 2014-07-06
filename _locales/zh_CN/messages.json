@@ -113,25 +113,45 @@
         "message": "如果你想要开启此选项，你将可以查看拦截广告的详情。拦截记录会增加µBlock的内存占用。由于很多用户用不到这个功能，它默认是禁用的。",
         "description": "English: see _locales/en/messages.log"
     },
-    "logBlockedRequestsHeaderType" : {
+    "logAllowedRequestsPrompt" : {
+        "message": "Enable the logging of non-blocked requests",
+        "description": "English: Enable the logging of non-blocked requests"
+    },
+    "logAllowedRequestsHelp" : {
+        "message": "You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "description": "English: see _locales/en/messages.log"
+    },
+    "logBlockedRequestsHeader" : {
+        "message": "Blocked requests",
+        "description": "English: Blocked requests"
+    },
+    "logAllowedRequestsHeader" : {
+        "message": "Allowed requests",
+        "description": "English: Allowed requests"
+    },
+    "logRequestsHeaderType" : {
         "message": "类型",
         "description": "English: Type"
     },
-    "logBlockedRequestsHeaderDomain" : {
+    "logRequestsHeaderDomain" : {
         "message": "域名",
         "description": "English: Domain"
     },
-    "logBlockedRequestsHeaderURL" : {
-        "message": "屏蔽网站",
-        "description": "English: Blocked URL"
+    "logRequestsHeaderURL" : {
+        "message": "网址",
+        "description": "English: URL"
     },
-    "logBlockedRequestsHeaderFilter" : {
+    "logRequestsHeaderFilter" : {
         "message": "过滤",
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
         "message": "该页面没有拦截记录",
         "description": "English: No blocked requests logged for this page"
+    },
+    "logAllowedRequestsEmpty" : {
+        "message": "No non-blocked requests logged for this page",
+        "description": "English: No non-blocked requests logged for this page"
     },
 
 

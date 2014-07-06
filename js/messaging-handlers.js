@@ -40,7 +40,8 @@ var getStats = function(request) {
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
-        logBlockedRequests: µb.userSettings.logBlockedRequests
+        logBlockedRequests: µb.userSettings.logBlockedRequests,
+        logAllowedRequests: µb.userSettings.logAllowedRequests
     };
     var pageStore = µb.pageStoreFromTabId(request.tabId);
     if ( pageStore ) {
@@ -75,7 +76,7 @@ var onMessage = function(request, sender, callback) {
                 request.hostname,
                 request.state
             );
-            µBlock.updateBadge(request.tabId);
+            µBlock.updateBadgeAsync(request.tabId);
             break;
 
         default:
@@ -260,33 +261,43 @@ var onMessage = function(request, sender, callback) {
 
 var getPageDetails = function(µb, tabId) {
     var r = {
-        requests: [],
+        blockedRequests: [],
+        allowedRequests: [],
         hash: ''
     };
     var pageStore = µb.pageStores[tabId];
     if ( !pageStore ) {
         return r;
     }
-    var blockedRequests = pageStore.blockedRequests;
-    var details, pos;
+    var prepareRequests = function(requests, hasher) {
+        var r = [];
+        var details, pos;
+        for ( var requestURL in requests ) {
+            if ( requests.hasOwnProperty(requestURL) === false ) {
+                continue;
+            }
+            details = requests[requestURL];
+            if ( typeof details !== 'string' ) {
+                continue;
+            }
+            hasher.appendStr(requestURL);
+            hasher.appendStr(details);
+            pos = details.indexOf('\t');
+            r.push({
+                type: details.slice(0, pos),
+                domain: µb.URI.domainFromURI(requestURL),
+                url: requestURL,
+                reason: details.slice(pos + 1)
+            });
+        }
+        return r;
+    }
     var hasher = new YaMD5();
-    for ( var requestURL in blockedRequests ) {
-        if ( blockedRequests.hasOwnProperty(requestURL) === false ) {
-            continue;
-        }
-        details = blockedRequests[requestURL];
-        if ( typeof details !== 'string' ) {
-            continue;
-        }
-        hasher.appendStr(requestURL);
-        hasher.appendStr(details);
-        pos = details.indexOf('\t');
-        r.requests.push({
-            type: details.slice(0, pos),
-            domain: µb.URI.domainFromURI(requestURL),
-            url: requestURL,
-            reason: details.slice(pos + 1)
-        });
+    if ( µb.userSettings.logBlockedRequests ) {
+        r.blockedRequests = prepareRequests(pageStore.blockedRequests, hasher);
+    }
+    if ( µb.userSettings.logAllowedRequests ) {
+        r.allowedRequests = prepareRequests(pageStore.allowedRequests, hasher);
     }
     r.hash = hasher.end();
     return r;

@@ -24,42 +24,28 @@
 /******************************************************************************/
 
 (function(){
-    function onTabCreated(tab) {
-        // Can this happen?
-        if ( tab.id < 0 || !tab.url || tab.url === '' ) {
+    // When the DOM content of root frame is loaded, this means the tab
+    // content has changed.
+    function onDOMContentLoaded(details) {
+        if ( details.frameId !== 0 ) {
             return;
         }
-        µBlock.bindTabToPageStats(tab.id, tab.url);
+        µBlock.updateBadgeAsync(details.tabId);
     }
-    chrome.tabs.onCreated.addListener(onTabCreated);
+    chrome.webNavigation.onDOMContentLoaded.addListener(onDOMContentLoaded);
 
+    // It may happen the URL in the tab changes, while the page's document
+    // stays the same (for instance, Google Maps). Without this listener,
+    // the extension icon won't be properly refreshed.
     function onTabUpdated(tabId, changeInfo, tab) {
-        // Can this happen?
         if ( !tab.url || tab.url === '' ) {
             return;
         }
-        if ( changeInfo.url ) {
-            µBlock.bindTabToPageStats(tabId, tab.url);
-            µBlock.updateBadge(tabId);
+        if ( changeInfo.url && µBlock.pageStores[tabId] ) {
+            µBlock.updateBadgeAsync(tabId);
         }
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
-
-    function onTabRemoved(tabId) {
-        if ( tabId < 0 ) {
-            return;
-        }
-        µBlock.unbindTabFromPageStats(tabId);
-    }
-    chrome.tabs.onRemoved.addListener(onTabRemoved);
-
-    function onBeforeNavigateCallback(details) {
-        if ( details.frameId > 0 ) {
-            return;
-        }
-        µBlock.bindTabToPageStats(details.tabId, details.url);
-    }
-    chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigateCallback);
 
     // Initialize internal state with maybe already existing tabs
     chrome.tabs.query({ url: '<all_urls>' }, function(tabs) {
@@ -96,6 +82,8 @@
 // Create an entry for the tab if it doesn't exist.
 
 µBlock.bindTabToPageStats = function(tabId, pageURL) {
+    this.updateBadgeAsync(tabId);
+
     // First unbind whatever page store is bound to the tab id.
     this.unbindTabFromPageStats(tabId);
 
@@ -124,6 +112,7 @@
         pageStore.perLoadBlockedRequestCount = 0;
     }
 
+    //console.log('µBlock> bindTabToPageStats(%d, "%s")', tabId, pageURL);
     this.pageStores[tabId] = pageStore;
 
     return pageStore;
@@ -134,6 +123,7 @@
     if ( pageStore ) {
         //pageStore.disposeTime = Date.now();
         //this.pageStoreDump[pageStore.pageURL + ' ' + tabId] = pageStore;
+        //console.log('µBlock> unbindTabFromPageStats(%d)', tabId);
     }
     delete this.pageStores[tabId];
 };

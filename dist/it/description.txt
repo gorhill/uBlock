@@ -36,14 +36,6 @@ Senza queste liste di filtri, questa estensione non è niente. Così se vuoi con
 
 ***
 
-Poichè le recensioni non consentono all'autore di rispondere, ho deciso di rispondere attraverso il sito principale del progetto.
-
-https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate
-
-***
-
-Dall'autore di HTTP Switchboard.
-
 Gratuito.
 Open source with public license (GPLv3)
 Fatto dagli utenti per gli utenti.

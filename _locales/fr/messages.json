@@ -113,25 +113,45 @@
         "message": "Vous pouvez inspecter les détails des requêtes bloquées en activant cette option. La journalisation des requêtes bloquées augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
         "description": "English: see _locales/en/messages.log"
     },
-    "logBlockedRequestsHeaderType" : {
+    "logAllowedRequestsPrompt" : {
+        "message": "Activer la journalisation des requêtes permises",
+        "description": "English: Enable the logging of non-blocked requests"
+    },
+    "logAllowedRequestsHelp" : {
+        "message": "Vous pouvez inspecter les détails des requêtes permises en activant cette option. La journalisation des requêtes permises augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+        "description": "English: see _locales/en/messages.log"
+    },
+    "logBlockedRequestsHeader" : {
+        "message": "Requêtes bloquées",
+        "description": "English: Blocked requests"
+    },
+    "logAllowedRequestsHeader" : {
+        "message": "Requêtes permises",
+        "description": "English: Allowed requests"
+    },
+    "logRequestsHeaderType" : {
         "message": "Type",
         "description": "English: Type"
     },
-    "logBlockedRequestsHeaderDomain" : {
+    "logRequestsHeaderDomain" : {
         "message": "Domaine",
-        "description": "English: Domaine"
+        "description": "English: Domain"
     },
-    "logBlockedRequestsHeaderURL" : {
-        "message": "URL bloquée",
-        "description": "English: Blocked URL"
+    "logRequestsHeaderURL" : {
+        "message": "URL",
+        "description": "English: URL"
     },
-    "logBlockedRequestsHeaderFilter" : {
+    "logRequestsHeaderFilter" : {
         "message": "Filtre",
         "description": "English: Filter"
     },
     "logBlockedRequestsEmpty" : {
         "message": "Il n'y a aucune requête bloquée dans le journal",
         "description": "English: No blocked requests logged for this page"
+    },
+    "logAllowedRequestsEmpty" : {
+        "message": "Il n'y a aucune requête non-bloquée dans le journal",
+        "description": "English: No non-blocked requests logged for this page"
     },
 
 
