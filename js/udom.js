@@ -388,20 +388,13 @@ DOMList.prototype.hasClassName = function(className) {
 };
 
 DOMList.prototype.addClass = function(className) {
-    var re = new RegExp('(^| )' + className + '( |$)');
-    var i = this.nodes.length;
-    var before, after;
-    while ( i-- ) {
-        before = this.nodes[i].className;
-        if ( !re.test(before) ) {
-            after = before + ' ' + className;
-            this.nodes[i].className = after.trim();
-        }
-    }
-    return this;
+    return this.toggleClass(className, true);
 };
 
-DOMList.prototype.removeClass = function() {
+DOMList.prototype.removeClass = function(className) {
+    if ( className !== undefined ) {
+        return this.toggleClass(className, false);
+    }
     var i = this.nodes.length;
     while ( i-- ) {
         this.nodes[i].className = '';

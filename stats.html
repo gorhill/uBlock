@@ -34,7 +34,7 @@ select {
     }
 #requests table {
     margin: 1em 0;
-    border: 1px solid gray;
+    border: 0;
     font: 12px mono;
     border-collapse: collapse;
     min-width: 600px;
@@ -42,19 +42,27 @@ select {
 #requests.empty table {
     display: none;
     }
-td, th {
+tr td, tr th {
     border: 1px solid #aaa;
-    padding: 6px 6px;
+    padding: 4px 6px;
     white-space: pre;
     }
-td:nth-of-type(1), td:nth-of-type(2) {
+tr.domainHeader td {
+    font: 16px sans-serif;
+    }
+tr.domainHeader td span {
+    margin-right: 0.5em;
+    font-size: 14px;
+    color: #aaa;
+    cursor: pointer;
+    }
+tr.requestEntry td:nth-of-type(1) {
+    border: 0;
+    background-color: white;
+    width: 3em;
+    }
+tr.requestEntry td:nth-of-type(2) {
     text-align: right;
-    }
-tr.header td:nth-of-type(1) {
-    text-align: left;
-    }
-td:nth-of-type(3) {
-    color: #444;
     }
 table.hideBlocked tr.logBlocked {
     display: none;
@@ -97,7 +105,7 @@ tr.logAllowed ~ tr td:nth-of-type(3) b {
 
 <table>
 <tr class="tableHeader">
-<th data-i18n="logRequestsHeaderDomain">
+<th>
 <th data-i18n="logRequestsHeaderType">
 <th data-i18n="logRequestsHeaderURL">
 <th data-i18n="logRequestsHeaderFilter">

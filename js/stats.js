@@ -148,11 +148,19 @@ var renderPageDetails = function(tabId) {
                 chrome.i18n.getMessage(className + (requests.length ? 'RequestsHeader' : 'RequestsEmpty')),
                 '</h3>'
             );
+            var currentDomain = '';
             for ( var i = 0; i < requests.length; i++ ) {
                 request = requests[i];
+                if ( request.domain !== currentDomain ) {
+                    currentDomain = request.domain;
+                    html.push(
+                        '<tr class="', className, ' domainHeader">',
+                        '<td colspan="4">', currentDomain
+                    );
+                }
                 html.push(
-                    '<tr class="', className, '">',
-                    '<td>', request.domain,
+                    '<tr class="', className, ' requestEntry">',
+                    '<td>',
                     '<td>', toPrettyTypeNames[request.type] || request.type,
                     '<td>', renderURL(request.url, request.reason),
                     '<td>', request.reason || ''
@@ -198,6 +206,7 @@ var renderPageSelector = function(targetTabId) {
         }
     };
     var onDataReceived = function(pageSelectors) {
+        uDom('#requests').toggleClass('empty', pageSelectors.length === 0);
         uDom('#pageSelector option').remove();
         cachedPageSelectors = {};
         pageSelectors.sort().map(function(tabId) {
@@ -209,7 +218,6 @@ var renderPageSelector = function(targetTabId) {
         for ( var i = 0; i < pageSelectors.length; i++ ) {
             chrome.tabs.get(parseInt(pageSelectors[i], 10), onTabReceived);
         }
-        uDom('#requests').toggleClass('empty', pageSelectors.length === 0);
         if ( pageSelectors.length > 0 ) {
             renderPageDetails(selectedTabId);
         }
