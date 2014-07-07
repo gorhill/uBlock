@@ -57,16 +57,14 @@
     }
 
     // Remove from exception list
-    if ( newState ) {
-        var hostnames = this.URI.allHostnamesFromHostname(hostname);
-        while ( hostname = hostnames.shift() ) {
-            if ( netExceptionList[hostname] !== undefined ) {
-                delete netExceptionList[hostname];
-            }
+    var hostnames = this.URI.allHostnamesFromHostname(hostname);
+    while ( hostname = hostnames.shift() ) {
+        if ( netExceptionList[hostname] !== undefined ) {
+            delete netExceptionList[hostname];
         }
-        this.saveExceptionList();
-        return false;
     }
+    this.saveExceptionList();
+    return false;
 };
 
 /******************************************************************************/
