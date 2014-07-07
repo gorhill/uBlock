@@ -24,6 +24,10 @@ select {
     padding: 2px 0;
     font-size: 14px;
     min-width: 20em;
+    max-width: 40em;
+    }
+select option {
+    max-width: 40em;
     }
 #requests {
     margin: 2em 0 0 0;
@@ -35,7 +39,6 @@ select {
 #requests table {
     margin: 1em 0;
     border: 0;
-    font: 12px mono;
     border-collapse: collapse;
     min-width: 600px;
     }
@@ -55,6 +58,9 @@ tr.domainHeader td span {
     font-size: 14px;
     color: #aaa;
     cursor: pointer;
+    }
+tr.requestEntry {
+    font: 12px monospace;
     }
 tr.requestEntry td:nth-of-type(1) {
     border: 0;

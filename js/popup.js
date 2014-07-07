@@ -42,25 +42,7 @@ var formatNumber = function(count) {
     if ( typeof count !== 'number' ) {
         return '';
     }
-    var s = count.toFixed(0);
-    if ( count >= 1000 ) {
-        if ( count < 10000 ) {
-            s = s.slice(0,1) + '.' + s.slice(1,3) + 'K';
-        } else if ( count < 100000 ) {
-            s = s.slice(0,2) + '.' + s.slice(2,3) + 'K';
-        } else if ( count < 1000000 ) {
-            s = s.slice(0,3) + 'K';
-        } else if ( count < 10000000 ) {
-            s = s.slice(0,1) + '.' + s.slice(1,3) + 'M';
-        } else if ( count < 100000000 ) {
-            s = s.slice(0,2) + '.' + s.slice(2,3) + 'M';
-        } else if ( count < 1000000000 ) {
-            s = s.slice(0,3) + 'M';
-        } else {
-            s = s.slice(0,-9) + 'G';
-        }
-    }
-    return s;
+    return count.toLocaleString();
 };
 
 /******************************************************************************/
