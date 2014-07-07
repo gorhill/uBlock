@@ -114,11 +114,11 @@
         "description": "English: see _locales/en/messages.log"
     },
     "logAllowedRequestsPrompt" : {
-        "message": "Activer la journalisation des requêtes permises",
+        "message": "Activer la journalisation des requêtes autorisées",
         "description": "English: Enable the logging of non-blocked requests"
     },
     "logAllowedRequestsHelp" : {
-        "message": "Vous pouvez inspecter les détails des requêtes permises en activant cette option. La journalisation des requêtes permises augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+        "message": "Vous pouvez inspecter les détails des requêtes autorisées en activant cette option. La journalisation des requêtes autorisées augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeader" : {
