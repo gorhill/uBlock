@@ -47,6 +47,14 @@
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
+    function onTabRemoved(tabId) {
+        if ( tabId < 0 ) {
+            return;
+        }
+        µBlock.unbindTabFromPageStats(tabId);
+    }
+    chrome.tabs.onRemoved.addListener(onTabRemoved);
+
     // Initialize internal state with maybe already existing tabs
     chrome.tabs.query({ url: '<all_urls>' }, function(tabs) {
         var i = tabs.length;
