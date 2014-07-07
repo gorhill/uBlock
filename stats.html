@@ -23,6 +23,7 @@ ul {
 select {
     padding: 2px 0;
     font-size: 14px;
+    min-width: 20em;
     }
 #requests {
     margin: 2em 0 0 0;
@@ -31,12 +32,15 @@ select {
 #requests.logEnabled {
     display: block;
     }
-table {
+#requests table {
     margin: 1em 0;
     border: 1px solid gray;
     font: 12px mono;
     border-collapse: collapse;
     min-width: 600px;
+    }
+#requests.empty table {
+    display: none;
     }
 td, th {
     border: 1px solid #aaa;

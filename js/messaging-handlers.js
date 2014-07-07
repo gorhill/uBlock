@@ -291,7 +291,7 @@ var getPageDetails = function(µb, tabId) {
             });
         }
         return r;
-    }
+    };
     var hasher = new YaMD5();
     if ( µb.userSettings.logBlockedRequests ) {
         r.blockedRequests = prepareRequests(pageStore.blockedRequests, hasher);

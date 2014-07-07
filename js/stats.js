@@ -209,7 +209,8 @@ var renderPageSelector = function(targetTabId) {
         for ( var i = 0; i < pageSelectors.length; i++ ) {
             chrome.tabs.get(parseInt(pageSelectors[i], 10), onTabReceived);
         }
-        if ( selectedTabId ) {
+        uDom('#requests').toggleClass('empty', pageSelectors.length === 0);
+        if ( pageSelectors.length > 0 ) {
             renderPageDetails(selectedTabId);
         }
     };

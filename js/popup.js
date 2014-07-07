@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global chrome, messaging, uDom */
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -36,7 +38,7 @@ messaging.start('popup.js');
 
 /******************************************************************************/
 
-formatNumber = function(count) {
+var formatNumber = function(count) {
     if ( typeof count !== 'number' ) {
         return '';
     }
@@ -70,7 +72,7 @@ var renderStats = function() {
 
     uDom('#gotoLog').toggleClass(
         'enabled',
-        stats.logBlockedRequests || stats.logAllowedRequests
+        stats.netFilteringSwitch && (stats.logBlockedRequests || stats.logAllowedRequests)
     );
 
     var blocked = stats.pageBlockedRequestCount;

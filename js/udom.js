@@ -145,7 +145,7 @@ DOMList.prototype.subset = function(i, l) {
     var n = l !== undefined ? l : 1;
     var j = Math.min(i + n, this.nodes.length);
     if ( i < j ) {
-        r.nodes = this.nodes.slice(i, j)
+        r.nodes = this.nodes.slice(i, j);
     }
     return r;
 };
@@ -167,7 +167,7 @@ DOMList.prototype.node = function(i) {
 DOMList.prototype.parent = function() {
     var r = new DOMList();
     if ( this.nodes.length ) {
-        addNodeToList(r, this.nodes[0].parentNode)
+        addNodeToList(r, this.nodes[0].parentNode);
     }
     return r;
 };
@@ -180,7 +180,7 @@ DOMList.prototype.find = function(selector) {
     var nl;
     for ( var i = 0; i < n; i++ ) {
         nl = this.nodes[i].querySelectorAll(selector);
-        addNodeListToList(r, nl)
+        addNodeListToList(r, nl);
     }
     return r;
 };
@@ -416,7 +416,7 @@ DOMList.prototype.toggleClass = function(className, targetState) {
     for ( var i = 0; i < n; i++ ) {
         node = this.nodes[i];
         currentState = re.test(node.className);
-        newState = !!targetState;
+        newState = targetState;
         if ( newState === undefined ) {
             newState = !currentState;
         }
