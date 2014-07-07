@@ -1,216 +1,202 @@
 {
-    "extName": {
-        "message": "µBlock",
-        "description": "extension name."
-    },
-    "extShortDesc": {
-        "message": "Finalmente, un efficiente e leggero ad-blocker per browser basati su Chromium.",
-        "description": "this will be in the chrome web store: must be 132 characters or less"
-    },
-    "settingsPageName": {
-        "message": "Opzioni",
-        "description": "appears as tab name in dashboard."
-    },
-    "3pPageName" : {
-        "message": "Lista dei filtri",
-        "description": "appears as tab name in dashboard."
-    },
-    "1pPageName" : {
-        "message": "I tuoi filtri",
-        "description": "appears as tab name in dashboard."
-    },
-    "statsPageName" : {
-        "message": "Statistiche",
-        "description": "appears as tab name in dashboard."
-    },
-    "aboutPageName": {
-        "message": "Info",
-        "description": "appears as tab name in dashboard."
-    },
-
-
-    "popupPowerSwitchInfo": {
-        "message": "clicca sul pulsante power per <br>disabilitare permanentemente o abilitare <br>µBlock per questo sito",
-        "description": "English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
-    },
-    "popupBlockedRequestPrompt": {
-        "message": "richieste bloccate",
-        "description": "English: requests blocked"
-    },
-    "popupBlockedOnThisPagePrompt": {
-        "message": "in questa pagina",
-        "description": "English: on this page"
-    },
-    "popupBlockedSinceInstallPrompt": {
-        "message": "dall'installazione",
-        "description": "English: since install"
-    },
-
-
-    "settingsCollapseBlockedPrompt" : {
-        "message": "Nascondi lo spazio riservato agli elementi bloccati",
-        "description": "English: Hide placeholders of blocked elements"
-    },
-    "settingsIconBadgePrompt" : {
-        "message": "Visualizza il numero degli elementi bloccati sull'icona",
-        "description": "English: Show the number of blocked requests on the icon"
-    },
-
-
-    "3pListsOfBlockedHostsPrompt" : {
-        "message": "{{ubiquitousBlacklistCount}} reti filtrate da:",
-        "description": "English: {{ubiquitousBlacklistCount}} network filters from:"
-    },
-    "3pListsOfBlockedHostsPerListStats" : {
-        "message": "{{used}} usati su {{total}}",
-        "description": "English: {{used}} used out of {{total}}"
-    },
-    "3pParseAllABPHideFiltersPrompt1" : {
-        "message": "Utilizza Adblock+ element hiding filters.",
-        "description": "English: Parse and enforce Adblock+ element hiding filters."
-    },
-    "3pParseAllABPHideFiltersPrompt2" : {
-        "message": "{{abpHideFilterCount}} element hiding filters usati.",
-        "description": "English: {{abpHideFilterCount}} element hiding filters used."
-    },
-    "3pParseAllABPHideFiltersInfo" : {
-        "message": "<p>Questa opzione abilita i filtri di <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters</a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.</p><p>Questa funziona aumenta l'uso della memoria da parte di <i>µBlock</i>.</p>",
-        "description": "English: see English messages.json"
-    },
-    "3pListsOfBlockedHostsHeader" : {
-        "message": "Lista degli hosts bloccati",
-        "description": "English: Lists of blocked hosts"
-    },
-    "3pApplyChanges" : {
-        "message": "Salva i cambiamenti",
-        "description": "English: Apply changes"
-    },
-
-
-    "1pFormatHint" : {
-        "message": "Un filtro per linea. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Le linee che cominciano con &lsquo;!&rsquo; verranno ingnorate.",
-        "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
-    },
-    "1pImport" : {
-        "message": "Importa e aggiungi",
-        "description": "English: Import and append"
-    },
-    "1pExport" : {
-        "message": "Esporta",
-        "description": "English: Export"
-    },
-    "1pApplyChanges" : {
-        "message": "Salva i cambiamenti",
-        "description": "English: Apply changes"
-    },
-
-
-    "logBlockedRequestsPrompt" : {
-        "message": "Attiva la registrazione delle richieste bloccate",
-        "description": "English: Enable the logging of blocked requests"
-    },
-    "logBlockedRequestsHelp" : {
-        "message": "Puoi controllare i dettagli delle richieste bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
-        "description": "English: see _locales/en/messages.log"
-    },
-    "logAllowedRequestsPrompt" : {
-        "message": "Enable the logging of non-blocked requests",
-        "description": "English: Enable the logging of non-blocked requests"
-    },
-    "logAllowedRequestsHelp" : {
-        "message": "You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
-        "description": "English: see _locales/en/messages.log"
-    },
-    "logBlockedRequestsHeader" : {
-        "message": "Richieste bloccate",
-        "description": "English: Blocked requests"
-    },
-    "logAllowedRequestsHeader" : {
-        "message": "Allowed requests",
-        "description": "English: Allowed requests"
-    },
-    "logRequestsHeaderType" : {
-        "message": "Tipo",
-        "description": "English: Type"
-    },
-    "logRequestsHeaderDomain" : {
-        "message": "Dominio",
-        "description": "English: Domain"
-    },
-    "logRequestsHeaderURL" : {
-        "message": "Indirizzo",
-        "description": "English: URL"
-    },
-    "logRequestsHeaderFilter" : {
-        "message": "Filtro",
-        "description": "English: Filter"
-    },
-    "logBlockedRequestsEmpty" : {
-        "message": "Nel registro, non ci sono richieste bloccate per questa pagina",
-        "description": "English: No blocked requests logged for this page"
-    },
-    "logAllowedRequestsEmpty" : {
-        "message": "No non-blocked requests logged for this page",
-        "description": "English: No non-blocked requests logged for this page"
-    },
-
-
-    "aboutChangelog" : {
-        "message": "<a href='https://github.com/gorhill/ublock/wiki/Change-log'>Change log</a>",
-        "description": "English: <a href='https://github.com/gorhill/ublock/wiki/Change-log'>Change log</a>"
-    },
-    "aboutCode" : {
-        "message": "<a href='https://github.com/gorhill/ublock'>Codice sorgente (GPLv3)</a>",
-        "description": "English: <a href='https://github.com/gorhill/ublock'>Source code (GPLv3)</a>"
-    },
-    "aboutExtensionDataHeader" : {
-        "message": "Dati dell'estensione",
-        "description": "English: Extension data"
-    },
-    "aboutAssetsUpdatePrompt" : {
-        "message": "I vari file che compongono <i>µBlock</i> possono essere aggiornati senza attendere il rilascio della prossima versione. I file vengono scaricati dalla pagina ufficiale del progetto su <a href=\"https://github.com/gorhill/ublock\">Github</a>.",
-        "description": "Short descriptive text of the update feature"
-    },
-    "aboutAssetsUpdateColPath" : {
-        "message": "Indirizzo",
-        "description": "Path column header"
-    },
-    "aboutAssetsUpdateColStatus" : {
-        "message": "Stato",
-        "description": "Status column header"
-    },
-    "aboutAssetsUpdateGetListError" : {
-        "message": "Si è verificato un errore. Assicurarsi che il dominio <b>raw2.github.com</b> non sia bloccato da software di terze parti",
-        "description": "Successful outcome of clicking 'update' button"
-    },
-    "aboutAssetsUpdateStatusAdded" : {
-        "message": "Da aggiungere",
-        "description": "Displayed in the status column for each entry"
-    },
-    "aboutAssetsUpdateStatusChanged" : {
-        "message": "Una nuova versione è disponibile",
-        "description": "Displayed in the status column for each entry"
-    },
-    "aboutAssetsUpdateStatusUnchanged" : {
-        "message": "Aggiornato",
-        "description": "Displayed in the status column for each entry"
-    },
-    "aboutAssetsUpdateStatusRemoved" : {
-        "message": "Da rimuovere",
-        "description": "Displayed in the status column for each entry"
-    },
-    "aboutAssetsUpdateButton" : {
-        "message": "Aggiorna",
-        "description": "Update button"
-    },
-    "aboutAssetsUpdatingButton" : {
-        "message": "Aggiornamento...",
-        "description": "Updating..."
-    },
-
-
-    "dummy": {
-        "message": "This entry must be the last one",
-        "description": "so we dont need to deal with comma for last entry"
-    }
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Finalmente, un efficiente e leggero ad-blocker per browser basati su Chromium.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":"Opzioni",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"Lista dei filtri",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"I tuoi filtri",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"Statistiche",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"Info",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"clicca sul pulsante power per <br>disabilitare permanentemente o abilitare <br>µBlock per questo sito",
+    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"richieste bloccate",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"in questa pagina",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"dall'installazione",
+    "description":"English: since install"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Nascondi lo spazio riservato agli elementi bloccati",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Visualizza il numero degli elementi bloccati sull'icona",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{ubiquitousBlacklistCount}} reti filtrate da:",
+    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} usati su {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Utilizza Adblock+ element hiding filters.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersPrompt2":{
+    "message":"{{abpHideFilterCount}} element hiding filters usati.",
+    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>Questa opzione abilita i filtri di <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.<\/p><p>Questa funziona aumenta l'uso della memoria da parte di <i>µBlock<\/i>.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Lista degli hosts bloccati",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"Salva i cambiamenti",
+    "description":"English: Apply changes"
+  },
+  "1pFormatHint":{
+    "message":"Un filtro per linea. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Le linee che cominciano con &lsquo;!&rsquo; verranno ingnorate.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Importa e aggiungi",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Esporta",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"Salva i cambiamenti",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Attiva la registrazione delle richieste bloccate",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"Puoi controllare i dettagli delle richieste bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Abilita la registrazione delle richieste non bloccate",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"Puoi controllare i dettagli delle richieste non bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Richieste bloccate",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Richieste permesse",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Tipo",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Dominio",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"Indirizzo",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Filtro",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"Nel registro, non ci sono richieste bloccate per questa pagina",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"Nel registro, non ci sono richieste non bloccate per questa pagina",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+  },
+  "aboutCode":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Codice sorgente (GPLv3)<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+  },
+  "aboutExtensionDataHeader":{
+    "message":"Dati dell'estensione",
+    "description":"English: Extension data"
+  },
+  "aboutAssetsUpdatePrompt":{
+    "message":"I vari file che compongono <i>µBlock<\/i> possono essere aggiornati senza attendere il rilascio della prossima versione. I file vengono scaricati dalla pagina ufficiale del progetto su <a href=\"https:\/\/github.com\/gorhill\/ublock\">Github<\/a>.",
+    "description":"Short descriptive text of the update feature"
+  },
+  "aboutAssetsUpdateColPath":{
+    "message":"Indirizzo",
+    "description":"Path column header"
+  },
+  "aboutAssetsUpdateColStatus":{
+    "message":"Stato",
+    "description":"Status column header"
+  },
+  "aboutAssetsUpdateGetListError":{
+    "message":"Si è verificato un errore. Assicurarsi che il dominio <b>raw2.github.com<\/b> non sia bloccato da software di terze parti",
+    "description":"Successful outcome of clicking 'update' button"
+  },
+  "aboutAssetsUpdateStatusAdded":{
+    "message":"Da aggiungere",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusChanged":{
+    "message":"Una nuova versione è disponibile",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusUnchanged":{
+    "message":"Aggiornato",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusRemoved":{
+    "message":"Da rimuovere",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateButton":{
+    "message":"Aggiorna",
+    "description":"Update button"
+  },
+  "aboutAssetsUpdatingButton":{
+    "message":"Aggiornamento...",
+    "description":"Updating..."
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
 }
