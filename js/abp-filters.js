@@ -733,7 +733,6 @@ var badTokens = {
     'js': true,
     'net': true,
     'news': true,
-    'social': true,
     'www': true
 };
 

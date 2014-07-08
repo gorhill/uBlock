@@ -45,7 +45,7 @@ var quickProfiler = (function() {
         count += 1;
         time += (now - tstart);
         if ( (now - lastlog) > 10000 ) {
-            console.log('µBlock() > %s: %s ms (%d samples)', prompt, avg().toFixed(3), count);
+            console.log('µBlock > %s: %s ms (%d samples)', prompt, avg().toFixed(3), count);
             lastlog = now;
         }
     };
