@@ -45,13 +45,13 @@ var changeUserSettings = function(name, value) {
 
 var onUserSettingsReceived = function(details) {
     uDom('#collapse-blocked')
-        .attr('checked', details.collapseBlocked === true)
+        .prop('checked', details.collapseBlocked === true)
         .on('change', function(){
             changeUserSettings('collapseBlocked', this.checked);
         });
 
     uDom('#icon-badge')
-        .attr('checked', details.showIconBadge === true)
+        .prop('checked', details.showIconBadge === true)
         .on('change', function(){
             changeUserSettings('showIconBadge', this.checked);
         });
