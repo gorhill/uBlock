@@ -731,7 +731,9 @@ var badTokens = {
     'images': true,
     'img': true,
     'js': true,
+    'net': true,
     'news': true,
+    'social': true,
     'www': true
 };
 
@@ -1011,15 +1013,7 @@ var FilterContainer = function() {
 
     // Used during URL matching
     this.reAnyToken = /[%0-9a-z]+/g;
-    this.matches = null;
-    this.bucket0 = undefined;
-    this.bucket1 = undefined;
-    this.bucket2 = undefined;
-    this.bucket3 = undefined;
-    this.bucket4 = undefined;
-    this.bucket5 = undefined;
-    this.bucket6 = undefined;
-    this.bucket7 = undefined;
+    this.buckets = new Array(8);
 };
 
 /******************************************************************************/
@@ -1188,9 +1182,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
 
 FilterContainer.prototype.addFilterEntry = function(filter, parsed, party, tokenBeg, tokenEnd) {
     var s = parsed.f;
-    var prefixKey = trimChar(s.substring(tokenBeg - 1, tokenBeg), '*');
-    var suffixKey = trimChar(s.substring(tokenEnd, tokenEnd + 1), '*');
-    var tokenKey = prefixKey + s.slice(tokenBeg, tokenEnd) + suffixKey;
+    var tokenKey = s.slice(tokenBeg, tokenEnd);
     if ( parsed.types.length === 0 ) {
         this.addToCategory(parsed.action | AnyType | party, tokenKey, filter);
         return;
@@ -1240,7 +1232,7 @@ FilterContainer.prototype.reset = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    // histogram('allFilters', this.categories);
+    //histogram('allFilters', this.categories);
     this.blockedAnyPartyHostnames.freeze();
     this.blocked3rdPartyHostnames.freeze();
     this.duplicates = {};
@@ -1249,76 +1241,72 @@ FilterContainer.prototype.freeze = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchToken = function(bucket) {
+FilterContainer.prototype.matchTokens = function() {
     var url = this.url;
-    var beg = this.matches.index;
-    var end = this.reAnyToken.lastIndex;
+    var re = this.reAnyToken;
+    var matches, beg, token;
+    var buckets = this.buckets;
+    var bucket0 = buckets[0];
+    var bucket1 = buckets[1];
+    var bucket2 = buckets[2];
+    var bucket3 = buckets[3];
+    var bucket4 = buckets[4];
+    var bucket5 = buckets[5];
+    var bucket6 = buckets[6];
+    var bucket7 = buckets[7];
     var f;
-    if ( end !== url.length ) {
-        if ( beg !== 0 ) {
-            f = bucket[url.slice(beg-1, end+1)];
+
+    re.lastIndex = 0;
+    while ( matches = re.exec(url) ) {
+        beg = matches.index;
+        token = url.slice(beg, re.lastIndex);
+        if ( bucket0 !== undefined ) {
+            f = bucket0[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
                 return f.s;
             }
         }
-        f = bucket[url.slice(beg, end+1)];
-        if ( f !== undefined && f.match(url, beg) !== false ) {
-            return f.s;
+        if ( bucket1 !== undefined ) {
+            f = bucket1[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-    }
-    if ( beg !== 0 ) {
-        f = bucket[url.slice(beg-1, end)];
-        if ( f !== undefined && f.match(url, beg) !== false ) {
-            return f.s;
+        if ( bucket2 !== undefined ) {
+            f = bucket2[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-    }
-    f = bucket[url.slice(beg, end)];
-    if ( f !== undefined && f.match(url, beg) !== false ) {
-        return f.s;
-    }
-    return false;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.matchTokens = function() {
-    var url = this.url;
-    var re = this.reAnyToken;
-    var r;
-
-    re.lastIndex = 0;
-    while ( this.matches = re.exec(url) ) {
-        if ( this.bucket0 ) {
-            r = this.matchToken(this.bucket0);
-            if ( r !== false ) { return r; }
+        if ( bucket3 !== undefined ) {
+            f = bucket3[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-        if ( this.bucket1 ) {
-            r = this.matchToken(this.bucket1);
-            if ( r !== false ) { return r; }
+        if ( bucket4 !== undefined ) {
+            f = bucket4[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-        if ( this.bucket2 ) {
-            r = this.matchToken(this.bucket2);
-            if ( r !== false ) { return r; }
+        if ( bucket5 !== undefined ) {
+            f = bucket5[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-        if ( this.bucket3 ) {
-            r = this.matchToken(this.bucket3);
-            if ( r !== false ) { return r; }
+        if ( bucket6 !== undefined ) {
+            f = bucket6[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
-        if ( this.bucket4 ) {
-            r = this.matchToken(this.bucket4);
-            if ( r !== false ) { return r; }
-        }
-        if ( this.bucket5 ) {
-            r = this.matchToken(this.bucket5);
-            if ( r !== false ) { return r; }
-        }
-        if ( this.bucket6 ) {
-            r = this.matchToken(this.bucket6);
-            if ( r !== false ) { return r; }
-        }
-        if ( this.bucket7 ) {
-            r = this.matchToken(this.bucket7);
-            if ( r !== false ) { return r; }
+        if ( bucket7 !== undefined ) {
+            f = bucket7[token];
+            if ( f !== undefined && f.match(url, beg) !== false ) {
+                return f.s;
+            }
         }
     }
     return false;
@@ -1410,9 +1398,6 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
         FirstParty :
         ThirdParty;
-    var domainParty = this.toDomainBits(pageDomain);
-    var type = typeNameToTypeValue[requestType];
-    var categories = this.categories;
 
     // Test hostname-based block filters
     var br = this.matchAnyPartyHostname(requestHostname);
@@ -1423,17 +1408,21 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
+    var domainParty = this.toDomainBits(pageDomain);
+    var type = typeNameToTypeValue[requestType];
+    var categories = this.categories;
+    var buckets = this.buckets;
+
     // Test against block filters
     if ( br === false ) {
-        this.bucket0 = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
-        this.bucket1 = categories[this.makeCategoryKey(BlockAnyType | party)];
-        this.bucket2 = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
-        this.bucket3 = categories[this.makeCategoryKey(BlockAnyTypeOtherParties)];
-        this.bucket4 = categories[this.makeCategoryKey(BlockAnyParty | type)];
-        this.bucket5 = categories[this.makeCategoryKey(BlockAction | type | party)];
-        this.bucket6 = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
-        this.bucket7 = categories[this.makeCategoryKey(BlockOtherParties | type)];
-
+        buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
+        buckets[1] = categories[this.makeCategoryKey(BlockAnyType | party)];
+        buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
+        buckets[3] = categories[this.makeCategoryKey(BlockAnyTypeOtherParties)];
+        buckets[4] = categories[this.makeCategoryKey(BlockAnyParty | type)];
+        buckets[5] = categories[this.makeCategoryKey(BlockAction | type | party)];
+        buckets[6] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
+        buckets[7] = categories[this.makeCategoryKey(BlockOtherParties | type)];
         br = this.matchTokens();
     }
 
@@ -1443,15 +1432,14 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     }
 
     // Test against allow filters
-    this.bucket0 = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)];
-    this.bucket1 = categories[this.makeCategoryKey(AllowAnyType | party)];
-    this.bucket2 = categories[this.makeCategoryKey(AllowAnyTypeOneParty | domainParty)];
-    this.bucket3 = categories[this.makeCategoryKey(AllowAnyTypeOtherParties | domainParty)];
-    this.bucket4 = categories[this.makeCategoryKey(AllowAnyParty | type)];
-    this.bucket5 = categories[this.makeCategoryKey(AllowAction | type | party)];
-    this.bucket6 = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
-    this.bucket7 = categories[this.makeCategoryKey(AllowOtherParties | type | domainParty)];
-
+    buckets[0] = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)];
+    buckets[1] = categories[this.makeCategoryKey(AllowAnyType | party)];
+    buckets[2] = categories[this.makeCategoryKey(AllowAnyTypeOneParty | domainParty)];
+    buckets[3] = categories[this.makeCategoryKey(AllowAnyTypeOtherParties | domainParty)];
+    buckets[4] = categories[this.makeCategoryKey(AllowAnyParty | type)];
+    buckets[5] = categories[this.makeCategoryKey(AllowAction | type | party)];
+    buckets[6] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
+    buckets[7] = categories[this.makeCategoryKey(AllowOtherParties | type | domainParty)];
     var ar = this.matchTokens();
     if ( ar !== false ) {
         return '@@' + ar;

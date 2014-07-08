@@ -22,61 +22,38 @@
 /******************************************************************************/
 
 var quickProfiler = (function() {
-
-/******************************************************************************/
-
-var timer = performance;
-var time = 0;
-var count = -3;
-var tstart = 0;
-var lastlog = timer.now();
-var prompt = '';
-
-/******************************************************************************/
-
-var reset = function() {
-    time = 0;
-    count = -3;
-    tstart = 0;
-};
-
-/******************************************************************************/
-
-var avg = function() {
-    return count > 0 ? time / count : 0;
-};
-
-/******************************************************************************/
-
-var start = function(s) {
-    prompt = s || '';
-    tstart = timer.now();
-};
-
-/******************************************************************************/
-
-var stop = function() {
-    count += 1;
-    if ( count > 0 ) {
+    var timer = performance;
+    var time = 0;
+    var count = 0;
+    var tstart = 0;
+    var lastlog = timer.now();
+    var prompt = '';
+    var reset = function() {
+        time = 0;
+        count = 0;
+        tstart = 0;
+    };
+    var avg = function() {
+        return count > 0 ? time / count : 0;
+    };
+    var start = function(s) {
+        prompt = s || '';
+        tstart = timer.now();
+    };
+    var stop = function() {
         var now = timer.now();
+        count += 1;
         time += (now - tstart);
         if ( (now - lastlog) > 10000 ) {
-            console.log('µBlock() > %s: %s ms', prompt, avg().toFixed(3));
+            console.log('µBlock() > %s: %s ms (%d samples)', prompt, avg().toFixed(3), count);
             lastlog = now;
         }
-    }
-};
-
-/******************************************************************************/
-
-return {
-    reset: reset,
-    start: start,
-    stop: stop
-};
-
-/******************************************************************************/
-
+    };
+    return {
+        reset: reset,
+        start: start,
+        stop: stop
+    };
 })();
 
 /******************************************************************************/
