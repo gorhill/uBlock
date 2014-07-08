@@ -96,19 +96,19 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Logging von blockierten Elementen aktivieren",
+    "message":"Protokollieren von blockierten Elementen aktivieren",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Logging von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Protokollieren von blockierten Elementen aktivieren",
+    "message":"Protokollieren von erlaubten Elementen aktivieren",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von erlaubten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von erlaubten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -116,7 +116,7 @@
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Zugelassene Anfragen",
+    "message":"Erlaubte Anfragen",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -140,7 +140,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite gefunden",
+    "message":"Keine erlaubten Anfragen für diese Seite",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
