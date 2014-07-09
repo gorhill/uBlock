@@ -1,0 +1,50 @@
+Een efficiënte blokkeerder: light geheugen- en CPU-verbruik. Toch kan het duizenden filters meer laden en gebruiken dan andere populaire blokkeerders.
+
+Geïllustreerd overzicht van de efficiëntie : https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Gebruik: De grote aan/uit-knop in de popup is om permanent µBlock in/uit te schakelen voor de huidige website. Het past enkel op de huidige website toe. Het is geen globale aan/uit-knop.
+
+***
+
+Flexibel, het is meer dan een "advertentieblokkeerder": het kan ook filters lezen en creëren van hostsbestanden.
+
+Standaard worden de volgende filterlijsten geladen en toegepast:
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+Meer lijsten zijn beschikbaar om te selecteren indien gewenst:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Etc.
+
+Natuurlijk wordt het geheugenverbruik groter naarmate er meer filters worden ingeschakeld. Zelfs na Fanboy's two extra lijsten, hpHosts’s Ad and tracking servers toe te voegen heeft µBlock een lagere geheugenverbruik dan andere populaire blokkeerders.
+
+Let op, sommige van deze extra lijsten verhoogt de kans dat websites breken -- zeker de lijsten die normaal als hosts-bestand worden gebruikt.
+
+***
+
+Zonder de standaard filterlijst doet deze extensie niets. Dus als je ooit echt een bijdrage wilt leveren, denk dan aan de mensen die hard werken om deze filterlijsten die je aan het gebruiken bent de onderhouden, die allemaal gratis beschikbaar en te gebruiken zijn.
+
+***
+
+Gratis.
+Open source met publieke licentie (GPLv3)
+Voor gebruikers, door gebruikers.
+
+Medewerkers: https://github.com/gorhill/uBlock/graphs/contributors
+
+***
+
+Het is een hele vroege verse, onthoud dit wanneer je een review maakt.
+
+Projectwijzigingenlogboek:
+https://github.com/gorhill/uBlock/wiki/Change-log
