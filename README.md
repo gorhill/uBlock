@@ -54,9 +54,10 @@ blocker which support EasyList and the likes, and also support host files.
 Cosmetic filters ("element hiding") are supported.
 
 There is nothing more to it. But it does what popular blockers out there do, at a
-fraction of CPU and memory usage for the same blocking power.
+fraction of CPU and memory usage for the same blocking power. Also, no unique user id 
+and no home means no phoning home (many popular blockers do this, just be careful).
 
-Free. Open source. No donations sought. For users by users.
+Free. Open source. No donations sought. For users by users. 
 
 Without the preset lists of filters, this extension is nothing. So if ever you 
 really do want to contribute something, think about the people working hard 
