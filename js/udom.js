@@ -441,7 +441,7 @@ var makeEventHandler = function(context, selector, callback) {
             i = candidates.length;
             while ( i-- ) {
                 if ( candidates[i] === node ) {
-                    return callback.bind(node).call(event);
+                    return callback.call(node, event);
                 }
             }
             node = node.parentNode;

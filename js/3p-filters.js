@@ -50,13 +50,13 @@ messaging.listen(onMessage);
 
 /******************************************************************************/
 
-function getµb() {
+var getµb = function() {
     return chrome.extension.getBackgroundPage().µBlock;
-}
+};
 
 /******************************************************************************/
 
-function renderNumber(value) {
+var renderNumber = function(value) {
     // TODO: localization
     if ( +value > 1000 ) {
         value = value.toString();
@@ -67,13 +67,13 @@ function renderNumber(value) {
         }
     }
     return value;
-}
+};
 
 /******************************************************************************/
 
 // TODO: get rid of background page dependencies
 
-function renderBlacklists() {
+var renderBlacklists = function() {
     // empty list first
     uDom('#blacklists .blacklistDetails').remove();
 
@@ -145,14 +145,14 @@ function renderBlacklists() {
     );
 
     selectedBlacklistsHash = getSelectedBlacklistsHash();
-}
+};
 
 /******************************************************************************/
 
 // Create a hash so that we know whether the selection of preset blacklists
 // has changed.
 
-function getSelectedBlacklistsHash() {
+var getSelectedBlacklistsHash = function() {
     var hash = '';
     var inputs = uDom('#blacklists .blacklistDetails > input');
     var i = inputs.length();
@@ -163,22 +163,32 @@ function getSelectedBlacklistsHash() {
     hash += uDom('#parseAllABPHideFilters').prop('checked').toString();
 
     return hash;
-}
+};
 
 /******************************************************************************/
 
 // This is to give a visual hint that the selection of blacklists has changed.
 
-function selectedBlacklistsChanged() {
+var selectedBlacklistsChanged = function() {
     uDom('#blacklistsApply').prop(
         'disabled',
         getSelectedBlacklistsHash() === selectedBlacklistsHash
     );
-}
+};
 
 /******************************************************************************/
 
-function blacklistsApplyHandler() {
+var onListLinkClicked = function(ev) {
+    messaging.tell({
+        what: 'gotoExtensionURL',
+        url: 'asset-viewer.html?url=' + uDom(this).attr('href')
+    });
+    ev.preventDefault();
+};
+
+/******************************************************************************/
+
+var blacklistsApplyHandler = function() {
     var newHash = getSelectedBlacklistsHash();
     if ( newHash === selectedBlacklistsHash ) {
         return;
@@ -200,24 +210,25 @@ function blacklistsApplyHandler() {
         switches: switches
     });
     uDom('#blacklistsApply').attr('disabled', true );
-}
+};
 
 /******************************************************************************/
 
-function abpHideFiltersCheckboxChanged() {
+var abpHideFiltersCheckboxChanged = function() {
     messaging.tell({
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
         value: this.checked
     });
     selectedBlacklistsChanged();
-}
+};
 
 /******************************************************************************/
 
 uDom.onLoad(function() {
     // Handle user interaction
     uDom('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
+    uDom('#blacklists').on('click', '.blacklistDetails a', onListLinkClicked);
     uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
     uDom('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
 
