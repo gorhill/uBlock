@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: wnuvinszFFKsZs6bNK99ng
-! Version: 201407051321
+! Checksum: bcvZGjtC9yJ3CVN3nTD6dA
+! Version: 201407091331
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 05 Jul 2014 13:21 UTC
+! Ultima modifica: 09 Jul 2014 13:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -738,6 +738,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||denaro.it^*/banner/
 ||di-roma.com/images/fabio/
 ||digisesso.com/images/transparent.gif
+||digisesso.com:81/images/transparent.gif
 ||digital-forum.it/bannerdtt/
 ||digital-sat.it/ds_mpppv/
 ||digital-sat.it/img/banner/
@@ -922,6 +923,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilcorsaronero.info/br_mc/
 ||ilcorsaronero.info/js/nopopup.js
 ||ilcrotonese.it^*/promo_
+||ilcrotonese.it^*_bg.jpg
 ||ilfattoalimentare.it/assets/banners/
 ||ilfattoquotidiano.it/external/assicurazioni_300x100/
 ||ilfattoquotidiano.it^*/banner_casait.jpg
@@ -993,6 +995,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||iltaccoditalia.info/banner/
 ||iltempo.it^*/unicusano.jpg
 ||ilvelino.it^*/banner/
+||ilvolo.it/images/banners/
+||ilvolo.it/images/stories/banner-
 ||ilwebmaster21.it/script1.js
 ||indie-roccia.it/itunesbox.php?
 ||indie-rock.it/itunesbox.php?
@@ -1269,6 +1273,10 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||puglialive.net/dfiles/banners/
 ||puntocellulare.it/banner/
 ||pupia.tv/banner-
+||qds.it/docs/bancopopolaresiciliano.gif
+||qds.it/docs/guidamonaci_
+||qds.it/docs/mariluranch-
+||qds.it/docs/SICEP.jpg
 ||quattroruote.it^*/logo_*_menu.png
 ||quattroruote.it^*/sponsoredby.gif
 ||quattroruote.it^*_280x75.gif
@@ -1529,6 +1537,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||torinotoday.it/images/skin/
 ||traderlink.it/images/skin/
 ||trasporti-italia.com^*/banner/
+||travelnostop.com/banner/
 ||treccani.it/Portale/resources/images/bg$image
 ||treccani.it^*_300x100_
 ||trentinotv.it/images/social/banner
@@ -1821,6 +1830,7 @@ fc-suedtirol.com###footersponsor
 xvideoscopate.com###footertop
 ilcap.it###gadsense
 rdf.it###gkBanner2
+paginegialle.it###glamoo-box
 telefonino.net###google300x250
 telefonino.net###googleHomeNews
 telefonino.net###googleNewsTop
@@ -2184,6 +2194,8 @@ ansa.it##.diretta-sponsor
 lavoratorio.it##.divBoxbanner300x250
 gossipetv.com##.ebuzzing_box
 gazzettadiparma.it##.elenco-textlink
+digisesso.com,gorillaporno.com,iltrombatore.com,koalaporno.com,pandasesso.com,ranaporno.com,sessosadomaso.com##.embed1
+digisesso.com,gorillaporno.com,iltrombatore.com,koalaporno.com,pandasesso.com,ranaporno.com,sessosadomaso.com##.embed2
 adnkronos.com##.evidenceBox
 comingsoon.it##.expanding-footer-container
 ilsole24ore.com##.fabbrica24
@@ -2402,6 +2414,7 @@ unita.it##div[style="border:1px solid #D1D1D1;padding:1px; position:absolute;rig
 androidiani.com##div[style="border:4px dashed orange;height:90px;width:728px;margin:0 auto"]
 radioromacapitale.it,retesport.it##div[style="border:solid 1px #000000; width: 298px; height: 78px;"]
 sanihelp.it##div[style="clear: both; width: 670px; padding:4px; height: 88px; margin-bottom: 15px; margin-top: 10px; line-height: 14px; border: 1px solid #DDEBF4;"]
+varesenews.it##div[style="display: block; height: 250px; margin-left: 0px; margin-bottom: 2px; position: relative;"]
 ildesk.it##div[style="display:block; float:left; margin-left:80px; margin-top:10px; width:120px; height:600px;"]
 ildesk.it##div[style="display:block; float:left; margin-top:13px; width:376px; height:95px;"]
 ildesk.it##div[style="display:block; float:left; width:300px; height:250px; margin-left:44px; margin-top:10px;"]
@@ -2541,6 +2554,7 @@ strettoweb.com##div[style="width:728px; height:90px; margin:9px auto; display:bl
 beppegrillo.it,mymovies.it##div[style="width:728px; height:90px;"]
 beppegrillo.it##div[style="width:728px; height:90px;float:left;\""]
 ilcrotonese.it##div[style="width:728px; height:90px;overflow: hidden;"]
+ilcrotonese.it##div[style="width:728px; height:90px;overflow: hidden;display:block;"]
 onstageweb.com##div[style="width:728px; margin:auto;height:90px; border:1px solid #ccc; margin-bottom:10px; margin-top:-10px;"]
 webpedia.altervista.org##div[style="width:728px;height:90px;margin:6px auto;background:#eee"]
 radio103.it,radiostereo103.it##div[style="width:750px; height:112px; margin:20px auto 20px auto; background: url(images/back_banner_home.png);"]
@@ -2640,7 +2654,7 @@ termometropolitico.it##[id^="bsa"]
 @@||dotandad.com^*.mp3$object-subrequest,domain=r101.it
 @@||doubleclick.net/adj/tuttosport.home/home;sz=336x600,300x250,300x600;=$script,domain=tuttosport.com
 @@||download.deejay.it/adv/podcast/$object-subrequest
-@@||edintorni.net/related/service/*/jscript/$script,domain=amicidimotociclismo.it|armietiro.it|articolotre.com|automobilismo.it|businessmagazine.it|ciclismo.it|cucinare.meglio.it|fantagazzetta.com|fotografidigitali.it|freeonline.org|gamemag.it|giallozafferano.it|girlpower.it|gpone.com|hwfiles.it|hwupgrade.it|ilfattoquotidiano.it|ilgiorno.it|ilquotidianodellacalabria.it|ilquotidianoweb.it|ilrestodelcarlino.it|ilsecoloxix.it|iltempo.it|informarexresistere.fr|internazionale.it|invidia.it|italia24ore.it|lagazzettadelmezzogiorno.it|lanazione.it|lastampa.it|macitynet.it|metropolisweb.it|modenaonline.info|motociclismo.it|parmaonline.info|pianetadonna.it|quotidiano.net|reggionline.com|runnersworld.it|studenti.it|tennisitaliano.it|torinofree.it|unita.it|velaemotore.it|violanews.com|voceditalia.it|wallstreetitalia.com|yourself.it
+@@||edintorni.net/related/service/*/jscript/$script,domain=amicidimotociclismo.it|armietiro.it|articolotre.com|automobilismo.it|businessmagazine.it|ciclismo.it|cucinare.meglio.it|fantagazzetta.com|fotografidigitali.it|freeonline.org|gamemag.it|giallozafferano.it|girlpower.it|gpone.com|hwfiles.it|hwupgrade.it|ilfattoquotidiano.it|ilgiorno.it|ilquotidianodellacalabria.it|ilquotidianoweb.it|ilrestodelcarlino.it|ilsecoloxix.it|iltempo.it|informarexresistere.fr|internazionale.it|invidia.it|italia24ore.it|lagazzettadelmezzogiorno.it|lanazione.it|lastampa.it|macitynet.it|metropolisweb.it|modenaonline.info|motociclismo.it|parmaonline.info|pianetadonna.it|quotidiano.net|reggionline.com|runnersworld.it|studenti.it|tennisitaliano.it|torinofree.it|unita.it|varesenews.it|velaemotore.it|violanews.com|voceditalia.it|wallstreetitalia.com|yourself.it
 @@||eyewonder.com^*/video/$object-subrequest,domain=serviziopubblico.it
 @@||files.adform.net/banners/stream/$object-subrequest,domain=la7.tv|liberoquotidiano.it|sky.it
 @@||foolbite.com/foolbite/*_pubblicita_$~third-party

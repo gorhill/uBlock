@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: uSVCTJ119t9ecziOsJ02Cw
-! Version: 201407051321
+! Checksum: PhpKJ0mtcYku2BWxqzY82A
+! Version: 201407091331
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 05 Jul 2014 13:21 UTC
+! Last modified: 09 Jul 2014 13:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -420,8 +420,6 @@ _advertentieleaderboardhome.
 ||ifanzy.nl/flash/banner-
 ||images.nickelodeon.nl/ad_
 ||informatique.nl^*/promos/*-takeover.
-||internetbode.nl/banner
-||internetbode.nl/images/*_banner.gif
 ||ishotmyself.nl/include/xhtml/promo/
 ||israeltoday.nl/_static/israeltoday.nl/img/banners/
 ||janvissersweer.nl/images/banners/
@@ -526,6 +524,7 @@ _advertentieleaderboardhome.
 ||rtv-arnhem.nl^*/fm/userfiles/banner/
 ||rtvutrecht.nl/data/img/reclame_
 ||ru.nl/web/upload/banner/bannerbanner
+||rubensdating.com/lay-out/gfx/banner.jpg
 ||satellitemagazine.com/revda.php?
 ||scholieren.com/assets/images/*.jpg
 ||scholieren.net/public/i/Wallpaper
@@ -1043,6 +1042,7 @@ woordenlijst.eu##.maincontents > center a[target="_blank"]
 allesamerika.com##.menu > p > a[target="_blank"]
 checkcams.com##.mfoot
 wiebetaaltwat.nl##.mr-miller-leaderboard-footer
+nu.nl##.nu-blendle-widget
 yasni.nl##.offerbox
 weer.nl##.one_mega_big_row_html_teaser
 zeilen.nl##.partnerBox
@@ -1106,7 +1106,6 @@ landenweb.net##a[href="_hPromotionADLW.htm"]
 historiek.net##a[href="http://historiek.net/1/click"]
 nuzakelijk.nl##a[href="http://www.spaarrente.nl/internetsparen.aspx"]
 partyflock.nl##a[href^="/jlnk/"]
-voetbalzone.nl##a[href^="http://adserving.unibet.com/redirect.aspx?"]
 nrc.nl##a[href^="http://altfarm.mediaplex.com/ad/"]
 netonline.be##a[href^="http://clk.tradedoubler.com/click?p="]
 synoniemen.net##a[href^="http://ds1.nl/c/?"]
@@ -1201,8 +1200,6 @@ innerlijk-besef.nl,landleven.nl#@#.ad-block
 bokt.nl#@#.ad-body
 autodealers.nl#@#.ad-btn
 innerlijk-besef.nl#@#.ad-button
-lekkerflesjewijn.nl,lektuinmaterialen.nl#@#.ad-container
-innerlijk-besef.nl#@#.ad-content
 innerlijk-besef.nl#@#.ad-footer
 innerlijk-besef.nl#@#.ad-header
 bd.nl,bndestem.nl,destentor.nl,ed.nl,gelderlander.nl,pzc.nl,radiozenders.fm,tctubantia.nl,tubantia.nl#@#.ad-spacer
@@ -1215,8 +1212,6 @@ telegraaf.nl#@#.addiv
 forum.fok.nl#@#.adfieldbg
 hotcontact.nl,xxxplaza.nl#@#.adlink
 zeelandnet.nl#@#.ads-header
-zeelandnet.nl#@#.ads-list
-digitekst.com#@#.adtitle
 autotekoop.nl#@#.advert-title
 schaatsen.nl#@#.advertisement-header
 zuka.nl#@#.advtitle

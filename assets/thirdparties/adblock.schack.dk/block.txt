@@ -4,7 +4,7 @@
 ! http://henrik.schack.dk/adblock/
 !
 ! Maintained by: henrik at schack.dk
-! Last Modified: 19-06-2014
+! Last Modified: 08-07-2014
 ! Expires: 1
 
 ! facebook.com
@@ -803,8 +803,7 @@ bornholmermarked.dk/nonsec/NPIX/Banner/
 ||serving-sys.com
 ||dotbanner.dk
 ||survey.webstatus.dk
-#||gemius.dk
-#||gemius.pl
+||dk.panel.gemius.dk
 ||adserver.karamco.dk
 ||bluestreak.com
 ||broadcastpartners.nl/openads/

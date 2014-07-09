@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4087
-! Last modified: 5 Jul 2014
+! Version: 4149
+! Last modified: 8 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -63,6 +63,10 @@
 ##[href^="http://megadown.us/"]
 ##[href^="http://quelldateien.de/"]
 ##[href^="http://fichierload.fr/"]
+##[href^="http://okfiles.net/"]
+##[href^="http://clixtk.com/"]
+##[href^="http://jofiles.com/"]
+##[href^="http://yourfreesoftonline.com/"]
 !
 !
 !
@@ -4082,6 +4086,64 @@ dream-file.com##[alt="Regular Download"]
 ||livejasminhack.net^
 ||ehacksncheats.com^
 ||face-woot.com^
+||pokemonomegarubyandalphasapphire.com^
+||gtamoneyhacks.com^
+||clanshacktool.com^
+||bmw-330d.com^
+||hackongame.com^
+||hacksaqw.com^
+||ourhackgames.com^
+||uhackgames.com^
+||cheatsongame.com^
+||ucfiles.com^
+||fbhackquick.com^
+||bestremediesacne.com^
+||competehack.com^
+||gameshackcheats.com^
+||hacks24h.com^
+||passhackfb.com^
+||gta5moneyadder.com^
+||fifa-14-coin-generator.com^
+||usa-hacks.com^
+||dragon-cityhack.com^
+||passionsofmyheart.com^
+||free-minecrafthosting.com^
+||free-riot-points-codes.org^
+||free-amazongift-cards.com^
+||yourtrustedhacks.com^
+||millionairesweetheart.com^
+||topfree.us^
+||hacks-world.com^
+||applicationshacks.eu^
+||yourfreesoftonline.com^
+||haydayhackers.com^
+||steam-cards.com^
+||freeipadgiveaway.net^
+||abscbnetoph.biz^
+||unnok.biz^
+||virtpal.net^
+||hacksguide.com^
+||mcraftgifts.com^
+||bypassremovesurveys.com^
+||itunescode-generator.com^
+||unlockiosnow.com^
+||onlinewatchmoviez.com^
+||surveyremovertool.com^
+||pointscodesfree.com^
+||xblpointcodes.com^
+||itunecodegenerator.com^
+||jailbreakbj.com^
+||riotcodesgenerator.com^
+||azcodegenerator.com^
+||mcraftgiftcodes.com^
+||serialandkeygen.com^
+||freeminecrafthosting.org^
+||minecrafthostingforfree.com^
+||freeminecraftserver.me^
+||bestvideoclips.net^
+||freeminecraftserverhostings.com^
+||minecrafthosting.biz^
+||freeserverhostingminecraft.com^
 !
 !
 !

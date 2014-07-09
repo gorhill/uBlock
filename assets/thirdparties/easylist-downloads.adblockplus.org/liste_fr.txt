@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: oijJUyV8uVJYcQRfAXpOtg
-! Version: 201407051321
+! Checksum: P1lnH8jo5oD1LF7LdTTzRg
+! Version: 201407091331
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -162,7 +162,6 @@ _regiepub/
 ||illyx.com^$popup,third-party
 ||illyx.com^$third-party
 ||imgpromo.easyrencontre.com^$third-party
-||insta-cash.net^$third-party
 ||kadserver.com^$third-party
 ||koocash.com$popup,third-party
 ||koodoo.net^$third-party
@@ -255,7 +254,6 @@ _regiepub/
 ||traficmax.com^$third-party
 ||videos-x.me^$third-party
 ||videostep.com^$third-party
-||vindicosuite.com^$third-party
 ||wbusiness.fr^$third-party
 ||webprod.cybertesteurs.com^$popup,third-party,domain=~iss.net
 ||wedoo.com^$third-party
@@ -493,7 +491,6 @@ _regiepub/
 ||mazika2lux.com/gary/
 ||mazika2Lux.com/ouma/
 ||medieval-war.com/banniere.jpg
-||medncom.com^$popup,third-party
 ||megatopsites.com/index.html?$third-party
 ||megauplinks.com/images/120x600mega.png
 ||meilleurduweb.com/images/pub/
@@ -1608,7 +1605,6 @@ _regiepub/
 ||visual-pagerank.fr/pub/
 ||vitaminedz.com/images/general/pub-vitaminedz
 ||vocable.fr/images/banners/bannieres/
-||vodlocker.com/images/acenter.png
 ||voidspace.org.uk/images/banners/
 ||voilesetvoiliers.customers.artful.net/bannieres/
 ||voirfilms.com/debrideur1.swf
@@ -2326,6 +2322,7 @@ marketing-professionnel.fr###leader-wrapper
 zdnet.fr###leaderBottom
 zdnet.fr###leaderTop
 bloggif.com,play3-live.com,topquizz.fr###leaderboard
+yahoo.com###leftGutter
 parolesmania.com###leftcolumn2 > .thinbox div[style="height: 600px;"]
 libertyland.tv###leleftbas + div[style="width:160px; margin-top:10px;"]
 grandecran.fr###les_pubs_locales
@@ -2454,6 +2451,7 @@ lexpress.mu###region-user-second
 radio-monaco.com###responsive-banner-slider
 google.fr###rhsline
 forumfr.com###rightCol_ad
+yahoo.com###rightGutter
 pooki.fr###rightPartners
 competition.dz###right_banner
 7sur7.be###rpVacature
@@ -3208,7 +3206,6 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||admedia.rtl.fr/online/sound/$object-subrequest,domain=rtl.fr
 @@||adphoto.fr^$~third-party
 @@||ads.audience2media.com/crossdomain.xml$domain=videos.nt1.tv
-@@||ads.fusac.fr^$~third-party
 @@||ads.webedia.fr/crossdomain.xml$domain=ozap.com|purepeople.com
 @@||ads.webedia.fr/p-dp-vast2/$object-subrequest,domain=ozap.com|purepeople.com
 @@||adserve.atedra.com/js/$script,domain=levraigabroy.com|radiox.com
@@ -3405,6 +3402,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@|http://*.ax.lt/*.js|$script,third-party
 @@|http://*.cr.rs/*.js|$script,third-party
 @@|http://*.ez.lv/*.js|$script,third-party
+@@|http://*.gw.lt/*.js|$script,third-party
 @@|http://*.mm.my/*.js|$script,third-party
 @@|http://*.na.tl/*.js|$script,third-party
 @@|http://*.qq.my/*.js|$script,third-party
@@ -3443,14 +3441,17 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||hrnob.ro.lt/*.js|$script,third-party
 @@||icello.in/*.js|$script,third-party
 @@||inc.gs/*.js|$script,third-party
+@@||info.gf/*.js|$script,third-party
 @@||joe.dj/*.js|$script,third-party
 @@||jpe.js/*.js|$script,third-party
 @@||jundy.org/*.js|$script,third-party
 @@||kbosf.ax.lt/*.js|$script,third-party
+@@||leet.la/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
 @@||negeriau.net/*.js|$script,third-party
 @@||omqdu.cr.rs/*.js|$script,third-party
 @@||opensrc.mx/*.js|$script,third-party
+@@||otzlu.gw.lt/*.js|$script,third-party
 @@||publi.ch/*.js|$script,third-party
 @@||qjbvc.ro.lt/*.js|$script,third-party
 @@||rcwmu.us.to/*.js|$script,third-party
@@ -3468,6 +3469,8 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||wtf.im/*.js|$script,third-party
 @@||yblpg.ax.lt/*.js|$script,third-party
 @@||yspzd.na.tl/*.js|$script,third-party
+http://*.info.gf/$third-party,xmlhttprequest
+http://*.leet.la/$third-party,xmlhttprequest
 |http://*.905tech.com/$third-party,xmlhttprequest
 |http://*.anonymous.lv/$third-party,xmlhttprequest
 |http://*.awiki.org/$third-party,xmlhttprequest
@@ -3488,6 +3491,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.ftp.sh/$third-party,xmlhttprequest
 |http://*.ghaman.com/$third-party,xmlhttprequest
 |http://*.ghostnation.org/$third-party,xmlhttprequest
+|http://*.gw.lt/$third-party,xmlhttprequest
 |http://*.home.kg/$third-party,xmlhttprequest
 |http://*.hpc.tw/$third-party,xmlhttprequest
 |http://*.icello.in/$third-party,xmlhttprequest
@@ -3535,6 +3539,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ||wedsf.us.to^$third-party
 ||wjvmp.us.to^$third-party
 ||xuwnh.us.to^$third-party
+||ycibh.gw.lt^$third-party
 ||ydfbg.us.to^$third-party
 ||ytrhu.us.to^$third-party
 !

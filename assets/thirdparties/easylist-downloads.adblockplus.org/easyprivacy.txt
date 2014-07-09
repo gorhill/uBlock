@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 8URSBErM4tkgmMhUU4Dv0w
-! Version: 201407051321
+! Checksum: QXyfGdDgNKAksdHwL/yidA
+! Version: 201407091331
 ! Title: EasyPrivacy
-! Last modified: 05 Jul 2014 13:21 UTC
+! Last modified: 09 Jul 2014 13:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1876,6 +1876,7 @@
 /utag.handler.js
 /utag.loader-
 /utag.loader.
+/utrack.js?
 /utrack?
 /uvstat.js
 /uxm_tracking.
@@ -3735,6 +3736,7 @@ http://utm.
 ||bonuscounter.de^$third-party
 ||checkeffect.at^$third-party
 ||clickmap.ch^$third-party
+||count.im^$third-party
 ||count24.de^$third-party
 ||countar.de^$third-party
 ||counted.at^$third-party
@@ -3970,6 +3972,7 @@ http://utm.
 ! French
 ||123compteur.com^$third-party
 ||abcompteur.com^$third-party
+||alkemics.com^$third-party
 ||atraxio.com^$third-party
 ||canalstat.com^$third-party
 ||compteur-gratuit.org^$third-party
@@ -4415,6 +4418,7 @@ http://utm.
 ||aiya.com.cn/stat.js
 ||akamai.com/crs/lgsitewise.js
 ||akamai.net/*.babylon.com/trans_box/
+||akamai.net/chartbeat.
 ||akamai.net^*/sitetracking/
 ||akatracking.esearchvision.com^
 ||aksb-a.akamaihd.net^
@@ -4553,6 +4557,7 @@ http://utm.
 ||blogblog.com/tracker/
 ||bmw.com^*/tracking_add_ons.js
 ||bobparsons.com/image.aspx?
+||boomtrain.com/event/track?
 ||bpath.com/count.dll?
 ||brandaffinity.net/icetrack/
 ||bravenet.com/counter/
@@ -4625,7 +4630,6 @@ http://utm.
 ||cloudfront.net/analyticsengine/
 ||cloudfront.net/atrk.gif?
 ||cloudfront.net/atrk.js
-||cloudfront.net/beacon.js
 ||cloudfront.net/code/keen-2.1.0-min.js
 ||cloudfront.net/dough/*/recipe.js
 ||cloudfront.net/js/reach.js
@@ -4697,7 +4701,6 @@ http://utm.
 ||d1ivexoxmp59q7.cloudfront.net^*/live.js
 ||d1lm7kd3bd3yo9.cloudfront.net^
 ||d1nh2vjpqpfnin.cloudfront.net^
-||d1nh2vjpqpfnin.cloudfront.net^$third-party
 ||d1qpxk1wfeh8v1.cloudfront.net^
 ||d1rgnfh960lz2b.cloudfront.net^
 ||d1ros97qkrwjf5.cloudfront.net^
@@ -5645,6 +5648,7 @@ http://utm.
 ||counter.1i.kz^
 ||counter.blogoscoop.net^
 ||counter.webmart.de^
+||ctr-opc.nmg.de^
 ||ctr.nmg.de^$third-party
 ||data.econa.com^
 ||datacomm.ch^*/count.cgi?
@@ -5978,6 +5982,7 @@ http://utm.
 ! Portuguese
 ||contadorgratis.web-kit.org^
 ||hitserver.ibope.com.br^
+||jsuol.com/rm/clicklogger_
 ||lomadee.com/loc/$third-party
 ||terra.com.br/metrics/
 ||track.e7r.com.br^
@@ -7463,7 +7468,7 @@ http://utm.
 ||skypeassets.com^*/track_channel.js
 ||skyrock.net/img/pix.gif
 ||skyrock.net/js/stats_blog.js
-||skyrock.net/stats/stats.js
+||skyrock.net/stats/
 ||slacker.com/beacon/page/$image
 ||slashgear.com/stats/
 ||slide.com/tracker/
@@ -8031,6 +8036,7 @@ http://utm.
 ||skypeassets.com/i/tracking/js/s_code_20121127.js$domain=skype.com
 ||skypeassets.com/static/skype.skypeloginstatic/js/s_code.js$domain=skype.com
 ||ssl-images-amazon.com^*/wcs-help-omniture-$script
+||timeinc.net/tii/omniture/h/config/timesi.js$domain=si.com
 ||vitacost.com/Javascripts/s_code.js
 ||vmware.com/files/templates/inc/s_code_my.js
 ||westernunion.*/_globalAssets/js/omniture/AppMeasurement.js
@@ -8317,7 +8323,6 @@ http://utm.
 ||rtl.be^*/trkfblk.js
 ||rtl.fr/stats/
 ||sfr.fr/js/pent-stats.jsp
-||skyrock.net/stats/
 ||stats1x1.kapaza.be^
 ||surace-jujitsu.fr/outils/compteur_php/
 ||tracker.cds-tracking.com^
@@ -8718,6 +8723,7 @@ http://utm.
 @@||cbsimg.net/js/cbsi/dw.js$domain=cbssports.com
 @@||cbsistatic.com^*/clicktale-$script,domain=cbsnews.com|cnet.com
 @@||cbsistatic.com^*/google-analytics.js$domain=cnet.com
+@@||cbsistatic.com^*/tealium.js$domain=cnet.com
 @@||ccom-cdn.com/assets/img/clear.gif?ccom_md5=$domain=credit.com
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
@@ -8789,6 +8795,7 @@ http://utm.
 @@||fccbrea.org^*/swfaddress.js
 @@||fifa.com^*/webanalytics.js?
 @@||firstdirect.com^*/logging-code.js
+@@||fitloop.co/packages/GAnalytics.js?
 @@||focus.ti.com^*/metrics-min.js
 @@||freehostedscripts.net/online/$script,~third-party
 @@||gameplayer.io^*/EventTracker.js
@@ -8798,11 +8805,12 @@ http://utm.
 @@||geoplugin.net/json.gp?jsoncallback=$script,domain=worldc.am
 @@||getclicky.com/ajax/marketshare?$script
 @@||ghstatic.com/images/site/zylom/scripts/google-analytics.js?$domain=zylom.com
+@@||glamour.com/aspen/components/cn-fe-stats/js/$script
 @@||go.com/stat/dolwebanalytics.js
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|tv3play.se|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.com/js/gweb/analytics/$domain=google.com
@@ -9086,6 +9094,7 @@ http://utm.
 @@||eltern.de/min.php?*/clickTracking.js
 @@||getgoods.de^*/emstrack.js
 @@||giga.de/wp-content/plugins/econa-stats/log/video-views/log.php?id=$object-subrequest
+@@||gls.de^*/emos2.js
 @@||google-analytics.com/siteopt.js?$domain=chip.de
 @@||hach.de^*/emstrack.js
 @@||hammonline.de/statistik/piwik.js
@@ -9117,6 +9126,7 @@ http://utm.
 @@||sitestat.com/europcar/europcar-de/*&ns_url=http://microsite.europcar.com/deutschebahn/$subdocument,domain=bahn.de
 @@||sitestat.com^*/s?*&ns_type=clickin&ns_action=view&ns__t=$image,domain=sueddeutsche.de
 @@||spiegel.de/layout/js/http/netmind-$script
+@@||static-fra.de^*/targeting.js$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||stats.g.doubleclick.net/dc.js$domain=diejugendherbergen.de
 @@||stylished.de/js/vendors/emos2.js$domain=stylished.de
 @@||swr3.de/static/swrplayer/web/plugins/ivw/ivw.js
@@ -9149,6 +9159,7 @@ http://utm.
 ! Chinese
 @@||amazonaws.com/angular-ui-router.min.js*-google-analytics.js$script,domain=dcard.tw
 @@||aolcdn.com/js/mg2.js$domain=engadget.com
+@@||aolcdn.com/omniunih_int.js$domain=engadget.com
 @@||google-analytics.com/analytics.js$domain=news.gamme.com.tw
 @@||hm.baidu.com/h.js?$domain=weaku.com
 @@||imrworldwide.com/novms/js/2/ggcmb353.js$domain=nexttv.com.tw

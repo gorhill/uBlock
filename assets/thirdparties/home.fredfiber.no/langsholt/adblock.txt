@@ -186,3 +186,4 @@ itavisen.no##div.DB_adBox
 @@||hardware.no/bruktmarked^$elemhide
 @@||*.emediate.se/crossdomain.xml$domain=tv3play.no
 @@||emediate.se/eas*$domain=tv3play.no
+

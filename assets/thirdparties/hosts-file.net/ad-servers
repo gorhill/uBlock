@@ -2213,7 +2213,6 @@
 127.0.0.1	adext.inkclub.com
 127.0.0.1	adextent.com
 127.0.0.1	adf.ero-advertising.com
-127.0.0.1	adf.ly
 127.0.0.1	adf.send.microad.jp
 127.0.0.1	adfactory88.com
 127.0.0.1	adfarm.mediaplex.com
@@ -2676,6 +2675,7 @@
 127.0.0.1	ads.creative-serving.com
 127.0.0.1	ads.criticalmass.nl
 127.0.0.1	ads.ctasnet.com
+127.0.0.1	ads.cwcity.de
 127.0.0.1	ads.cyberfight.ru
 127.0.0.1	ads.cyberprog.net
 127.0.0.1	ads.cybersales.cz
@@ -8792,7 +8792,6 @@
 127.0.0.1	delta223.homestead.com
 127.0.0.1	deltarad.ivwbox.de
 127.0.0.1	demandbase.com
-127.0.0.1	demandware.edgesuite.net
 127.0.0.1	demarketing.go2cloud.org
 127.0.0.1	demetria-bunch.us
 127.0.0.1	demetria-tickle.us
@@ -9369,6 +9368,7 @@
 127.0.0.1	elsa-curry.us
 127.0.0.1	eltern.ivwbox.de
 127.0.0.1	elyse-meserve.us
+127.0.0.1	em.offerx.co.uk
 127.0.0.1	email-newsletters.com
 127.0.0.1	email.advertising.com
 127.0.0.1	email.crittercism.com
@@ -11162,6 +11162,7 @@
 127.0.0.1	i.moreover.com
 127.0.0.1	i.mxplayer.j2inter.com
 127.0.0.1	i.n.jwpltx.com
+127.0.0.1	i.offerx.co.uk
 127.0.0.1	i.perfectnav.com
 127.0.0.1	i.plug.it
 127.0.0.1	i.psa-ads.openx.com
@@ -13801,6 +13802,7 @@
 127.0.0.1	offersquared.go2cloud.org
 127.0.0.1	offersquest.directtrack.com
 127.0.0.1	offervisionnetwork.go2cloud.org
+127.0.0.1	offerx.co.uk
 127.0.0.1	office.partnerearning.com
 127.0.0.1	offline.adsoftware.com
 127.0.0.1	ogilvy.ngadcenter.net
@@ -16343,6 +16345,7 @@
 127.0.0.1	t.mobilediva.com
 127.0.0.1	t.mookie1.com
 127.0.0.1	t.myfuncards.com
+127.0.0.1	t.offerx.co.uk
 127.0.0.1	t.p.mybuys.com
 127.0.0.1	t.paypal.com
 127.0.0.1	t.pointroll.com
@@ -18294,7 +18297,6 @@
 127.0.0.1	www.addthis.com
 127.0.0.1	www.adelina-ashman.us
 127.0.0.1	www.adexcite.com
-127.0.0.1	www.adf.ly
 127.0.0.1	www.adfluence.net
 127.0.0.1	www.adfoc.us
 127.0.0.1	www.adfusion.com
@@ -19866,6 +19868,7 @@
 127.0.0.1	www.oddcast.com
 127.0.0.1	www.offerdeliver.com
 127.0.0.1	www.offers-track.com
+127.0.0.1	www.offerx.co.uk
 127.0.0.1	www.ojolink.com
 127.0.0.1	www.ojrq.net
 127.0.0.1	www.olivia-dibenedetto.us
@@ -21003,4 +21006,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 20998
+# Hosts: 21001

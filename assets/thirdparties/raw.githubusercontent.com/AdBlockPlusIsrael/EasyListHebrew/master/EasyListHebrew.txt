@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: iCnygwW7j4YFoGzZ48j2jA
+! Checksum: Zf3NeJt2PEaqDZljshOi5g
 ! Title: EasyList Hebrew
-! Last modified: 02/07/14  08:44 Jerusalem Daylight Time
+! Last modified: 08/07/14  14:23 Jerusalem Daylight Time
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -168,8 +168,8 @@
 ||fcdn.co.il/*.swf$domain=fxp.co.il
 ||fcdn.co.il/*/*/*.php$domain=fxp.co.il
 ||gear.co.il/Content/MediaItems/Campaigns/
-||gozlan.co/st_j.js
-//gozlan.co/st_j.js|
+||gozlan.be/st_j.js
+//gozlan.be/st_j.js|
 ||haflla.com/download/banners/
 ||holesinthenet.co.il/uploads/*/res/*.swf
 ||hometheater.co.il/opx/
@@ -269,6 +269,7 @@
 @@||mako.checkm8.com/adam/inline?cat=mako.*=OVERLAY$object-subrequest
 @@||mako.checkm8.com/adam/inline?cat=mako.*=SAGIR_$object-subrequest
 @@||mako.checkm8.com/crossdomain.xml$object-subrequest
+@@||mediadownload.ynet.co.il/ads/*.flv$object-subrequest
 @@||mouse.co.il/images/ad_mouse_cafe.jpg
 @@||nrg.co.il/online/*_468.htm$~third-party,xmlhttprequest
 @@||one.co.il/ads/*.mp4$object-subrequest
@@ -599,6 +600,7 @@ nrg.co.il##IFRAME[style="height:250px;width:300px;"]
 one.co.il###Adv2
 one.co.il###adBomba
 one.co.il###divAdChance
+one.co.il###divFarzda
 one.co.il###divYnetNews
 one.co.il###tblAdBlock
 one.co.il##.adBg
@@ -648,6 +650,7 @@ sport5.co.il##.inner_adv
 sport5.co.il##.iphone
 sport5.co.il##.post.post-alt
 srugim.co.il###front_rcol_ad
+srugim.co.il###maavaron
 srugim.co.il##.margin_10
 srugim.co.il##.srugim_top_slider
 starmed.co.il##.banner_forums_160x600_right

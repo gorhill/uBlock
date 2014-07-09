@@ -49,6 +49,10 @@
         "off": true,
         "title": "Fanboy’s Anti-Facebook (see warning inside list)"
         },
+    "raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
+        "off": true,
+        "title": "Anti-Adblock Killer | Filters for Adblockers"
+        },
     "easylist-downloads.adblockplus.org/easylistgermany.txt": {
         "off": true,
         "title": "EasyList Germany"

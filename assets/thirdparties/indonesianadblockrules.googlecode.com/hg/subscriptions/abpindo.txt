@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: ie4zMbwDawgY882Q9imDYQ
+! Checksum: jf/WzV/Kkp5Mo0H4HCxaGg
 ! Title: ABPindo
-! Last modified: 15 Juni 2014, 13:14:24 WIB
+! Last modified: 08 Juli 2014, 21:21:23 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -365,6 +365,7 @@ blogspot.com##img[alt="ads"]
 |http://173.199.189.86/images/*.gif$domain=forumbokep.com|vocland.com
 ||alertpay.com/banners/
 ||angel.exabytes.com.my/banners/
+||animeindo.tv/ad/
 ||armylookfashion.com/728.swf
 ||asianbrain.com/banner/
 ||bacamanga.com/images/indofiles/$image
@@ -393,8 +394,10 @@ blogspot.com##img[alt="ads"]
 ||harianjogja.com/img/bnr/
 ||id.hao123.com/resource/id/banner/
 ||iklanbaris.detik.com/
+||image-tmart.com/cpc/affiliate/
 ||images.gameweb.co.id/gw/ads/
 ||images.indoforum.org/banners/
+||img.banggood.com/deals/affiliate_member_banner/
 ||imgur.com/*.gif$domain=animekompi.web.id|downloadfilmbaru.com|sodasusu.com|unduhfilm21.net
 ||indobokepz.com/images/banner/
 ||indochanger.com/banner/
@@ -781,6 +784,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||yellaface.com^
 ! *** abpindo_whitelist.txt ***
 @@.png#$domain=animeindo.tv|oploverz.net|wardhanime.net
+@@||ads.id^$~third-party
 @@||animeindo.tv^$elemhide
 @@||oploverz.net^$elemhide
 @@||wardhanime.net^$elemhide
