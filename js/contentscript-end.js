@@ -302,6 +302,8 @@ var cosmeticFiltering = (function() {
         }
     };
 
+    // TODO: split back into to specialized functions as it was before. Too
+    // many code paths creeped back, I thought I could get rid of most.
     var selectorsFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
             return;
@@ -323,7 +325,12 @@ var cosmeticFiltering = (function() {
                 continue;
             }
             // id
-            v = nodes[i].id.trim();
+            v = nodes[i].id;
+            // quite unlikely, so no need to be fancy
+            if ( typeof v !== 'string' ) {
+                v = '';
+            }
+            v = v.trim();
             if ( v !== '' ) {
                 v = '#' + v;
                 if ( !qq[v] ) {
