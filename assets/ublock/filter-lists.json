@@ -125,6 +125,10 @@
         "off": true,
         "title": "Norsk adblockliste (norsk)"
         },
+    "www.fanboy.co.nz/fanboy-swedish.txt": {
+        "off": true,
+        "title": "Fanboy's Swedish"
+        },
     "adblock.gardar.net/is.abp.txt": {
         "off": true,
         "title": "Icelandic ABP List (islenska)"
