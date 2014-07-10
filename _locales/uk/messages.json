@@ -1,0 +1,202 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Ефективний блокувальник реклами для браузерів на основі Chromium таки з’явився. Не навантажує процесор та пам'ять.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":"Налаштування",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"Сторонні фільтри",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"Власні фільтри",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"Статистика",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"Про програму",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"запитів заблоковано",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"на цій сторінці",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"від моменту встановлення",
+    "description":"English: since install"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Ховати заповнювачі заблокованих елементів",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Показувати кількість заблокованих запитів на піктограмі",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{ubiquitousBlacklistCount}} network filters from:",
+    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} used out of {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Parse and enforce Adblock+ element hiding filters.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersPrompt2":{
+    "message":"{{abpHideFilterCount}} element hiding filters used.",
+    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Перелік заблокованих хостів",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"Застосувати зміни",
+    "description":"English: Apply changes"
+  },
+  "1pFormatHint":{
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Імпортувати та додати",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Експортувати",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"Застосувати зміни",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Увімкнути журналювання заблокованих запитів",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Задіяти журналювання для незаблокованих запитів",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Заблоковані запити",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Дозволені запити",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Тип",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Домен",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"Адреса",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Фільтр",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"No blocked requests logged for this page",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"No non-blocked requests logged for this page",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+  },
+  "aboutCode":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+  },
+  "aboutExtensionDataHeader":{
+    "message":"Дані розширення",
+    "description":"English: Extension data"
+  },
+  "aboutAssetsUpdatePrompt":{
+    "message":"<i>µBlock<\/i> assets can be updated here without having to wait for the next release of the extension. These assets are pulled from the <a href=\"https:\/\/github.com\/gorhill\/ublock\">project's Github repository<\/a>.",
+    "description":"Short descriptive text of the update feature"
+  },
+  "aboutAssetsUpdateColPath":{
+    "message":"Шлях",
+    "description":"Path column header"
+  },
+  "aboutAssetsUpdateColStatus":{
+    "message":"Статус",
+    "description":"Status column header"
+  },
+  "aboutAssetsUpdateGetListError":{
+    "message":"Сталася помилка. Можливо блокується <b>XHR<\/b> до <b>raw2.github.com<\/b>?",
+    "description":"Successful outcome of clicking 'update' button"
+  },
+  "aboutAssetsUpdateStatusAdded":{
+    "message":"To add",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusChanged":{
+    "message":"Наявна нова версія",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusUnchanged":{
+    "message":"Остання версія",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusRemoved":{
+    "message":"To remove",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateButton":{
+    "message":"Оновити",
+    "description":"Update button"
+  },
+  "aboutAssetsUpdatingButton":{
+    "message":"Оновлення...",
+    "description":"Updating..."
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}

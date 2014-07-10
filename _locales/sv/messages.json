@@ -1,0 +1,202 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Äntligen, en effektiv blockerare för Chromium-baserade webbläsare. Lätt på minne och CPU.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":"Inställningar",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"Tredjepartsfilter",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"Dina filter",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"Statistik",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"Om",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"klicka på strömbrytaren för att <br>avaktivera eller aktivera <br>µBlock för den nuvarande webbplatsen",
+    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"blockerade förfrågningar",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"på denna sida",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"sedan installation",
+    "description":"English: since install"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Dölj platshållare för blockerade element",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Visa antalet blockerade förfrågningar på ikonen",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{ubiquitousBlacklistCount}} nätverksfilter från:",
+    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} använda utav {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Tolka och applicera Adblock Plus-elementdöljningsfilter.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersPrompt2":{
+    "message":"{{abpHideFilterCount}} använda elementdöljningsfilter.",
+    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;<\/a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.<\/p><p>Genom att aktivera denna funktion ökar <i>µBlocks<\/i> minnesanvändning.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Listor över blockerade värdar",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"Verkställ ändringar",
+    "description":"English: Apply changes"
+  },
+  "1pFormatHint":{
+    "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Importera och lägg till",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Exportera",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"Verkställ ändringar",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Aktivera loggning av blockerade förfrågningar",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"Om du vill inspektera detaljerna över blockerade förfrågningar kan du aktivera detta alternativ. Loggning av blockerade förfrågningar ökar µBlocks minnesanvändning. Eftersom många användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Aktivera loggning av icke-blockerade förfrågningar",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"Om du vill inspektera detaljerna över icke-blockerade förfrågningar kan du aktivera detta alternativ. Loggning av icke-blockerade förfrågningar ökar µBlocks minnesanvändning. Eftersom många användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Blockerade förfrågningar",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Tillåtna förfrågningar",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Typ",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Domän",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"URL",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Filter",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"Inga blockerade förfrågningar loggade för denna sida",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"Inga icke-blockerade förfrågningar loggade för denna sida",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Ändringslogg<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+  },
+  "aboutCode":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Källkod (GPLv3)<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+  },
+  "aboutExtensionDataHeader":{
+    "message":"Tilläggsdata",
+    "description":"English: Extension data"
+  },
+  "aboutAssetsUpdatePrompt":{
+    "message":"<i>µBlocks<\/i> tillgångar kan bli uppdaterade här utan att behöva vänta på nästa version av tillägget. Dessa tillgångar dras från <a href=\"https:\/\/github.com\/gorhill\/ublock\">projektets Github-databas<\/a>.",
+    "description":"Short descriptive text of the update feature"
+  },
+  "aboutAssetsUpdateColPath":{
+    "message":"Sökväg",
+    "description":"Path column header"
+  },
+  "aboutAssetsUpdateColStatus":{
+    "message":"Status",
+    "description":"Status column header"
+  },
+  "aboutAssetsUpdateGetListError":{
+    "message":"Ett fel uppstod. Är <b>XHR<\/b> blockerat för <b>raw2.github.com<\/b>?",
+    "description":"Successful outcome of clicking 'update' button"
+  },
+  "aboutAssetsUpdateStatusAdded":{
+    "message":"Att lägga till",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusChanged":{
+    "message":"Ny version tillgänglig",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusUnchanged":{
+    "message":"Aktuell",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusRemoved":{
+    "message":"Att ta bort",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateButton":{
+    "message":"Uppdatera",
+    "description":"Update button"
+  },
+  "aboutAssetsUpdatingButton":{
+    "message":"Uppdaterar...",
+    "description":"Updating..."
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}
