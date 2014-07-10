@@ -30,7 +30,7 @@
 
 
     "popupPowerSwitchInfo": {
-        "message": "点击按钮<br>永久禁用或启用<br>µBlock 对于当前网站",
+        "message": "点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
         "description": "English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
     },
     "popupBlockedRequestPrompt": {
@@ -110,23 +110,23 @@
         "description": "English: Enable the logging of blocked requests"
     },
     "logBlockedRequestsHelp" : {
-        "message": "如果你想要开启此选项，你将可以查看拦截广告的详情。拦截记录会增加µBlock的内存占用。由于很多用户用不到这个功能，它默认是禁用的。",
+        "message": "开启此选项，将可以查看已拦截请求的记录。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
         "description": "English: see _locales/en/messages.log"
     },
     "logAllowedRequestsPrompt" : {
-        "message": "Enable the logging of non-blocked requests",
+        "message": "启用未拦截记录",
         "description": "English: Enable the logging of non-blocked requests"
     },
     "logAllowedRequestsHelp" : {
-        "message": "You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+        "message": "开启此选项，将可以查看未拦截请求的记录。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
         "description": "English: see _locales/en/messages.log"
     },
     "logBlockedRequestsHeader" : {
-        "message": "Blocked requests",
+        "message": "拦截请求",
         "description": "English: Blocked requests"
     },
     "logAllowedRequestsHeader" : {
-        "message": "Allowed requests",
+        "message": "允许请求",
         "description": "English: Allowed requests"
     },
     "logRequestsHeaderType" : {
@@ -150,13 +150,13 @@
         "description": "English: No blocked requests logged for this page"
     },
     "logAllowedRequestsEmpty" : {
-        "message": "No non-blocked requests logged for this page",
+        "message": "该页面没有未拦截记录",
         "description": "English: No non-blocked requests logged for this page"
     },
 
 
     "aboutChangelog" : {
-        "message": "<a href='https://github.com/gorhill/ublock/wiki/Change-log'>变更日志</a>",
+        "message": "<a href='https://github.com/gorhill/ublock/wiki/Change-log'>更新日志</a>",
         "description": "English: <a href='https://github.com/gorhill/ublock/wiki/Change-log'>Change log</a>"
     },
     "aboutCode" : {
