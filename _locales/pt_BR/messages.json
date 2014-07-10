@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficiente para navegadores baseados no Chromium. Com baixo consumo de memória e CPU.",
+    "message":"Finalmente, um AdBlock eficiente para navegadores baseados no Chromium. Com baixo consumo de memória e CPU.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -12,7 +12,7 @@
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"filtros de terceiros",
+    "message":"Filtros de terceiros",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique o botão de power para <br>desabilitar permanentemente ou habilitar o <br>µBlock para o site atual",
+    "message":"Clique no botão power para <br>habilitar ou desabilitar permanentemente o <br>µBlock para o site atual",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
@@ -44,7 +44,7 @@
     "description":"English: since install"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar espaços reservados de elementos bloqueados",
+    "message":"Ocultar espaços de elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -96,7 +96,7 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Habilitar o log de solicitações não-bloqueadas",
+    "message":"Habilitar o log de solicitações bloqueadas",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
