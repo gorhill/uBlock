@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: KWdvQORRt+3PRpTFGgR3GQ
-! Version: 201407091330
+! Checksum: YparfUjNJdqLFN08UvcwZw
+! Version: 201407111710
 ! Title: EasyList without element hiding rules
-! Last modified: 09 Jul 2014 13:30 UTC
+! Last modified: 11 Jul 2014 17:10 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -69,7 +69,6 @@
 &video_ads_
 &videoadid=
 &view=ad&
-+Ads/$~stylesheet
 +advertorial.
 +adverts/
 -2/ads/
@@ -249,6 +248,7 @@
 -seasonal-ad.
 -show-ads.
 -side-ad-
+-Skyscraper-Ad.
 -skyscrapper160x600.
 -source/ads/
 -sponsor-ad.
@@ -258,6 +258,7 @@
 -text-ads.
 -theme/ads/
 -third-ad.
+-top-ad.
 -top-ads.
 -us/ads/
 -web-ad-
@@ -3544,6 +3545,7 @@
 /google/adv.
 /google160.
 /google728.
+/google_ad.
 /google_ad_
 /google_ads.
 /google_ads/*
@@ -4365,6 +4367,7 @@
 /processing/impressions.asp?
 /product-ad/*
 /product-ads/*
+/production/ads/*
 /projectwonderful_
 /promo/ad_
 /promo/ads/*
@@ -5674,6 +5677,7 @@ _partner_ad.
 _platform_ads.
 _platform_ads_
 _player_ads_
+_pop_ad.
 _pop_ad/
 _pop_under.
 _popunder.
@@ -8660,6 +8664,7 @@ _popunder+$popup
 ||streamdownloadonline.com^$third-party
 ||strikead.com^$third-party
 ||struq.com^$third-party
+||style-eyes.eu^$third-party
 ||sublimemedia.net^$third-party
 ||submitexpress.co.uk^$third-party
 ||suggesttool.com^$third-party
@@ -9053,6 +9058,7 @@ _popunder+$popup
 ||zedo.com^$third-party
 ||zenoviaexchange.com^$third-party
 ||zenoviagroup.com^$third-party
+||zercstas.com^$third-party
 ||zerezas.com^$third-party
 ||zferral.com^$third-party
 ||zidae.com^$third-party
@@ -12924,6 +12930,7 @@ _popunder+$popup
 ||espn1320.net/get_preroll.php?
 ||essayinfo.com/img/125x125_
 ||esus.com/images/regiochat_logo.png
+||eteknix.com/wp-content/uploads/*Takeover
 ||etidbits.com/300x250news.php
 ||euphonik.dj/img/sponsors-
 ||eurocupbasketball.com/eurocup/tools/footer-logos
@@ -13460,6 +13467,7 @@ _popunder+$popup
 ||imgchili.com/media/tube/
 ||imgchili.net/js/showa.js
 ||imgchili.net/lj.js
+||imgur.com/i2iBMaD.gif$domain=cpahero.com
 ||imgur.com/include/zedoinviewstub1621.html
 ||imod.co.za/banners/
 ||imod.co.za^*/250x250.gif
@@ -17236,6 +17244,8 @@ _popunder+$popup
 @@||google.com/uds/api/ads/*/search.$script,domain=italyinus2013.org|landandfarm.com|query.nytimes.com|trustedreviews.com|www.google.com
 @@||google.com/uds/modules/elements/newsshow/iframe.html?format=728x90^$document,subdocument
 @@||google.com^*/show_afs_ads.js$domain=whitepages.com
+@@||googleapis.com/flash/core/adsapi_*.swf$domain=viki.com
+@@||googleapis.com/flash/sdkloader/adsapi_*.swf$domain=viki.com
 @@||googletagservices.com/tag/static/google_services.js$domain=sportsillustrated.cnn.com
 @@||gopjn.com/b/$image,domain=deliverydeals.co.uk
 @@||gorillanation.com/storage/lightbox_code/static/companion_ads.js$domain=comingsoon.net|gamerevolution.com|sohh.com
@@ -17293,7 +17303,7 @@ _popunder+$popup
 @@||images.frys.com/art/ads/js/$script,stylesheet
 @@||images.nationalgeographic.com/wpf/media-live/graphic/
 @@||images.nickjr.com/ads/promo/
-@@||images.vantage-media.net^$domain=homes.yahoo.net
+@@||images.vantage-media.net^$domain=yahoo.net
 @@||imagesbn.com/resources?*/googlead.$stylesheet,domain=barnesandnoble.com
 @@||img.espngp.com/ads/$image,domain=espnf1.com
 @@||img.mediaplex.com^*_afl_bettingpage_$domain=afl.com.au
@@ -18536,6 +18546,7 @@ _popunder+$popup
 @@||videoplaza.tv/contrib/*/advertisement.js$domain=tv4play.se
 @@||vidup.me^*/adlayer.js
 @@||vietvbb.vn/up/clientscript/google_ads.js
+@@||viki.com/*.js$script
 @@||vodu.ch^$script
 @@||wallpapermania.eu/assets/js/advertisement.js
 @@||wanamlite.com/images/ad/$image

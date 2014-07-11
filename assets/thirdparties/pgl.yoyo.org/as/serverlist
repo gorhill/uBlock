@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Tue, 24 Jun 2014 08:46:59 GMT
-# entries:        2489
+# entries:        2483
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -115,7 +115,6 @@
 127.0.0.1 ad.harmony-central.com
 127.0.0.1 ad.hbv.de
 127.0.0.1 ad.hodomobile.com
-127.0.0.1 ad.howstuffworks.com
 127.0.0.1 ad.httpool.com
 127.0.0.1 ad.hyena.cz
 127.0.0.1 ad.iinfo.cz
@@ -414,7 +413,6 @@
 127.0.0.1 ads.clubtickets.com
 127.0.0.1 ads.cnn.com
 127.0.0.1 ads.co.com
-127.0.0.1 ads.collegclub.com
 127.0.0.1 ads.com.com
 127.0.0.1 ads.comicbookresources.com
 127.0.0.1 ads.contactmusic.com
@@ -527,7 +525,6 @@
 127.0.0.1 ads.internic.co.il
 127.0.0.1 ads.ipowerweb.com
 127.0.0.1 ads.isoftmarketing.com
-127.0.0.1 ads.itv.com
 127.0.0.1 ads.iwon.com
 127.0.0.1 ads.jewishfriendfinder.com
 127.0.0.1 ads.jiwire.com
@@ -726,7 +723,6 @@
 127.0.0.1 ads180.com
 127.0.0.1 ads2.brazzers.com
 127.0.0.1 ads2.clearchannel.com
-127.0.0.1 ads2.collegclub.com
 127.0.0.1 ads2.collegeclub.com
 127.0.0.1 ads2.exhedra.com
 127.0.0.1 ads2.gamecity.net
@@ -848,6 +844,7 @@
 127.0.0.1 adsfac.us
 127.0.0.1 adshost1.com
 127.0.0.1 adshuffle.com
+127.0.0.1 adside.com
 127.0.0.1 adskape.ru
 127.0.0.1 adsklick.de
 127.0.0.1 adsmarket.com
@@ -1136,6 +1133,7 @@
 127.0.0.1 bannertesting.com
 127.0.0.1 bannery.cz
 127.0.0.1 bannieres.acces-contenu.com
+127.0.0.1 bans.adserver.co.il
 127.0.0.1 bans.bride.ru
 127.0.0.1 barnesandnoble.bfast.com
 127.0.0.1 baypops.com
@@ -1385,7 +1383,6 @@
 127.0.0.1 displayadsmedia.com
 127.0.0.1 displaypagerank.com
 127.0.0.1 dist.belnk.com
-127.0.0.1 dm3adserver.com
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
@@ -1609,6 +1606,7 @@
 127.0.0.1 ifa.tube8live.com
 127.0.0.1 ilbanner.com
 127.0.0.1 ilead.itrack.it
+127.0.0.1 iliillliO00OO0.321.cn
 127.0.0.1 ilovecheating.com
 127.0.0.1 image.ugo.com
 127.0.0.1 imageads.canoe.ca
@@ -1877,7 +1875,6 @@
 127.0.0.1 olivebrandresponse.com
 127.0.0.1 omniture.com
 127.0.0.1 onclickads.com
-127.0.0.1 onclickads.net
 127.0.0.1 oneandonlynetwork.com
 127.0.0.1 onenetworkdirect.com
 127.0.0.1 onestat.com
@@ -1913,7 +1910,6 @@
 127.0.0.1 pagerank-submitter.de
 127.0.0.1 pagerank-suchmaschine.de
 127.0.0.1 pagerank-united.de
-127.0.0.1 pagerank4u.eu
 127.0.0.1 pagerank4you.com
 127.0.0.1 pageranktop.com
 127.0.0.1 partage-facile.com
@@ -2070,7 +2066,6 @@
 127.0.0.1 reklamcsere.hu
 127.0.0.1 reklame.unwired-i.net
 127.0.0.1 reklamer.com.ua
-127.0.0.1 relevanz10.de
 127.0.0.1 relmaxtop.com
 127.0.0.1 remotead.cnet.com
 127.0.0.1 republika.onet.pl
@@ -2310,7 +2305,6 @@
 127.0.0.1 trackalyzer.com
 127.0.0.1 tracker.icerocket.com
 127.0.0.1 tracking.gajmp.com
-127.0.0.1 tracking.koego.com
 127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
 127.0.0.1 trackingsoft.com

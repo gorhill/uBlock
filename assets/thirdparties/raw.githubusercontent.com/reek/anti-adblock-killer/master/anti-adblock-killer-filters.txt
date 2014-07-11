@@ -315,7 +315,8 @@ tvdesporto.com#@##ads1
 sporttvdireto.com#@##ads1
 ||sporttvdireto.com/ads/popunder.php*$popup
 ! notre-planete.info
-@@||notre-planete.info/scripts/ads.js
+@@||pagead2.googlesyndication.com/pagead/js/*$script,domain=notre-planete.info
+notre-planete.info#@##pub_meh
 ! elahmad.com
 elahmad.com#@##adblock
 ! z0r.de
@@ -384,9 +385,6 @@ uptobox.com#@##adblocktrap
 ! anime4fun.com
 anime4fun.com###hover
 ||anime4fun.com/js/newanime.js$script
-! notre-planete.info
-@@||googleads.g.doubleclick.net^$subdocument,document=notre-planete.info
-notre-planete.info#@##pub_meh
 ! eveskunk.com
 eveskunk.com#@#.adsbygoogle
 ! anisubsia.com
@@ -419,7 +417,7 @@ chrissmoove.com#@##adserver
 ddl-search.biz###mc35
 ! tvcatchup.com
 tvcatchup.com#@#.afs_ads
-@@||adverts.cdn.tvcatchup.com/ads/*$domain=tvcatchup.com,object-subrequest
+!@@||adverts.cdn.tvcatchup.com/ads/*$domain=tvcatchup.com,object-subrequest
 ! jeuxactu.com (just hide message)
 jeuxactu.com###infoBlock
 !----------------------------------------------------------------------------------------------------!

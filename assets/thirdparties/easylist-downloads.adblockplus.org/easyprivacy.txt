@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: QXyfGdDgNKAksdHwL/yidA
-! Version: 201407091331
+! Checksum: Tl+foKHBNe0+p2phaiVR/w
+! Version: 201407111711
 ! Title: EasyPrivacy
-! Last modified: 09 Jul 2014 13:31 UTC
+! Last modified: 11 Jul 2014 17:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -294,6 +294,7 @@
 /audience_science_
 /audienceScience.
 /audsci.js
+/autotag.
 /AutoTracker.js
 /avant_sfpc_
 /avantlink/*$third-party
@@ -1677,6 +1678,7 @@
 /timestrend_
 /tiwik.
 /tmv11.
+/tncms/tracking.js
 /tnsCounter.
 /tnsmetrix/*
 /tongji.js
@@ -3131,6 +3133,7 @@ http://utm.
 ||p0.raasnet.com^$third-party
 ||pa-oa.com^$third-party
 ||pagefair.com^$third-party
+||pagefair.net^$third-party
 ||pages05.net^$third-party
 ||paidstats.com^$third-party
 ||pardot.com^$third-party
@@ -4966,6 +4969,7 @@ http://utm.
 ||kbb.com/partner/$third-party
 ||kdpgroupe.com/ea.js
 ||key4web.com^*/set_cookie_by_referer/
+||keywee.co/analytics.js?
 ||keyword.daumdn.com^
 ||kiwari.com^*/impressions.asp?
 ||knorex.asia/static-tracking/
@@ -5460,6 +5464,7 @@ http://utm.
 ||tracking.godatafeed.com^
 ||tracking.i-click.com.hk^
 ||tracking.interweave.com^$third-party
+||tracking.keywee.co^
 ||tracking.lengow.com^
 ||tracking.listhub.net^
 ||tracking.livingsocial.com^

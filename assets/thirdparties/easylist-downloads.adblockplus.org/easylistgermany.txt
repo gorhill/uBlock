@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: GDh25cFgSV7Ag6GW2vwrAg
-! Version: 201407091330
+! Checksum: +Qp6Ti2NjNFfn2WFNNQuPQ
+! Version: 201407111711
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 09 Jul 2014 13:30 UTC
+! Last modified: 11 Jul 2014 17:10 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7607,9 +7607,9 @@ pcwelt.de##div[id^="google_ads_"]
 @@||mannfuermann.com/mfm/static/adcode.js
 @@||manughl.de^$script,domain=gamona.de|lustich.de
 @@||media.epochtimes.de/ad_$image
-@@||media.epochtimes.de/ad_data/img/$image
 @@||media.epochtimes.de^*/ad_$image
-@@||media.epochtimes.de^*/ad_data/$image
+@@||media.epochtimes.de^*/adbox/$image
+@@||media.epochtimes.de^*/addelivery/$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de

@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: P1lnH8jo5oD1LF7LdTTzRg
-! Version: 201407091331
+! Checksum: 5m0/S/kKRZtYnhI7NMeYLw
+! Version: 201407111711
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -1245,6 +1245,7 @@ _regiepub/
 ||mcetv.fr/img/*/Habillage-
 ||mcetv.fr^*/BAN-partenaires-
 ||med-it.com/ban/
+||media.rtl.fr/online/image/2014/0709/7773130306_rtl-ara.jpg
 ||medserv.carrefour.com^
 ||meetine.net/ban/
 ||meetine.net/bannieres300/
@@ -2876,7 +2877,7 @@ clicbienetre.com##.sidebar_block
 desmatures.com##.sidebarpub350250
 francemobiles.com##.simpleoFlashBanner
 meilleureecoledefrance.com##.skin-left
-lesinrocks.com##.skin-link
+lesinrocks.com,rtl.fr##.skin-link
 meilleureecoledefrance.com##.skin-right
 picmix.com##.sky
 alvinet.com##.skyscraper
@@ -3447,6 +3448,8 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||jundy.org/*.js|$script,third-party
 @@||kbosf.ax.lt/*.js|$script,third-party
 @@||leet.la/*.js|$script,third-party
+@@||linuxd.org/*.js|$script,third-party
+@@||mazdarx7.com/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
 @@||negeriau.net/*.js|$script,third-party
 @@||omqdu.cr.rs/*.js|$script,third-party
@@ -3471,6 +3474,8 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||yspzd.na.tl/*.js|$script,third-party
 http://*.info.gf/$third-party,xmlhttprequest
 http://*.leet.la/$third-party,xmlhttprequest
+http://*.linuxd.org/$third-party,xmlhttprequest
+http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.905tech.com/$third-party,xmlhttprequest
 |http://*.anonymous.lv/$third-party,xmlhttprequest
 |http://*.awiki.org/$third-party,xmlhttprequest

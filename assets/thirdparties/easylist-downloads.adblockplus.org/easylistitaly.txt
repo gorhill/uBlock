@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: bcvZGjtC9yJ3CVN3nTD6dA
-! Version: 201407091331
+! Checksum: 0KvAJSQO0Wyq6puQ3i/F4g
+! Version: 201407111711
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 09 Jul 2014 13:31 UTC
+! Ultima modifica: 11 Jul 2014 17:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -446,6 +446,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||spingitori.it/spnadv/
 ||static.plista.com^*/resized/$third-party
 ||staticroot.com/nl/affiliati/
+||stats.betradar.com^
 ||stbm.it/img/banner/300x100_
 ||stgy.it/images/banner-
 ||stgy.it/images/skin/
@@ -552,6 +553,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||algheroeco.com^*/banner_
 ||algheroeco.com^*300x250.gif
 ||algheroeco.com^*_skin_
+||allsongs.tv/banner/
 ||altoadigetv.it/images/social/banner
 ||alverde.net/banner/
 ||amadeusonline.net/banner/
@@ -1090,6 +1092,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||lecconotizie.com^*/PopUpLeopardi.jpg
 ||lecconotizie.com^*/sponsor_
 ||left.it/wp-content/uploads/banners/
+||lega-pro.com/banner/
+||lega-pro.com^*/sponsor
 ||leggilanotizia.it/images/bg-banner/
 ||leggilanotizia.it/userfiles/image/manchette/
 ||leggilanotizia.it/userfiles/image/testata/
@@ -1828,6 +1832,7 @@ ladige.it###footer-leaderboard
 red-live.it###footer_banner
 fc-suedtirol.com###footersponsor
 xvideoscopate.com###footertop
+lega-pro.com###fpssContainer381
 ilcap.it###gadsense
 rdf.it###gkBanner2
 paginegialle.it###glamoo-box
@@ -2289,6 +2294,7 @@ theinquirer.it##.pubind1
 agoravox.it##.publarge
 diariodelweb.it,lapoliticaitaliana.it##.publi
 camperonline.it##.publink
+prendiporno.tv##.publis-bottom
 termometropolitico.it##.publy
 gazzetta.it##.pushbar
 quotidianosanita.it##.qs_n_interno_basso
@@ -2347,7 +2353,7 @@ quattroruote.it##.telecamera-address
 ansa.it##.text-link
 ilfattoquotidiano.it##.textlink
 excite.it##.textlink_content
-dica33.it,radionbc.it##.top-banner
+allsongs.tv,dica33.it,radionbc.it##.top-banner
 gazzettadasti.it##.top-left-ban
 gazzettadasti.it##.top-right-ban
 lastampa.it##.top-right-banner
@@ -2635,7 +2641,6 @@ termometropolitico.it##[id^="bsa"]
 @@||adv.ilsole24ore.it^*@preroll|$object-subrequest,domain=la7.tv|sky.it
 @@||adv.rtl.it/crossdomain.xml$object-subrequest
 @@||adv.rtl.it/www/delivery/fc.php?*&zones=pre-roll$object-subrequest
-@@||adv.sportube.tv/adv/www/delivery/ajs.php?$script,domain=fc-suedtirol.com|sportube.tv
 @@||adv.tre.it/www/$image,script,$~third-party
 @@||ansa.it/web/video/videoad.swf$object-subrequest
 @@||ansa.it^*/ad-gallery/$image
@@ -2649,7 +2654,8 @@ termometropolitico.it##[id^="bsa"]
 @@||corrieredellosport.it/res/advertising/ad.js
 @@||dotandad.com/crossdomain.xml$object-subrequest,domain=r101.it|radioitalia.it
 @@||dotandad.com/mediamond.jsp?$object-subrequest,domain=r101.it|radioitalia.it
-@@||dotandad.com/mediamond?mpo=$script,domain=panorama.it|radioitalia.it
+@@||dotandad.com/mediamond?mpo=$script,domain=panorama.it|radioitalia.it|sportube.tv
+@@||dotandad.com/MediamondAds.js$script,domain=sportube.tv
 @@||dotandad.com^*.flv$object-subrequest,domain=donnamoderna.com|radioitalia.it
 @@||dotandad.com^*.mp3$object-subrequest,domain=r101.it
 @@||doubleclick.net/adj/tuttosport.home/home;sz=336x600,300x250,300x600;=$script,domain=tuttosport.com
@@ -2701,6 +2707,7 @@ termometropolitico.it##[id^="bsa"]
 @@||smartadserver.com/a/diff/*/show42.asp?$object-subrequest,domain=popcorntv.it
 @@||smartadserver.com/call/pubx/$object-subrequest,domain=popcorntv.it
 @@||smartadserver.com/crossdomain.xml$object-subrequest,domain=popcorntv.it
+@@||sportube.tv/*/www/delivery/ajs.php?$script,domain=fc-suedtirol.com|lega-pro.com|sportube.tv
 @@||srv-wx.rainbowtgx.com/rtgxsrv/css/def.css$domain=quotidiano.net
 @@||srv-wx.rainbowtgx.com/rtgxsrv/targettingServlet$script,domain=quotidiano.net
 @@||static.fanpage.it^*/adsense.swf?$object-subrequest

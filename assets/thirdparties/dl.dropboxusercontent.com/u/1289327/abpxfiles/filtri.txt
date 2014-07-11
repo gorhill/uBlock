@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201406181637
+! Version: 201407101529
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 18-06-2014
+! Last modified: 10-07-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -30,7 +30,7 @@ http://*.ondarock.it/skin/
 ||hqstream.tv/adl.
 ||google.com/jsapi?autoload=*%22ads%22$script,domain=youtube.com
 http://ads*.contentabc.com
-://oas.*@
+://oas.*@$domain=~youreporter.it
 ||adroll.com^$third-party
 ||intellitxt.com^$third-party
 http://*.citynews-napolitoday.stgy.it/*/skin/
@@ -1408,7 +1408,7 @@ http://*.tccstatic.com/*/calcionapoli24.it/banner.js
 http://*.kataweb.it/storage/contentsense/
 http://cdn.adnxs.com/
 http://ad.103092804.com/
-http://ib.adnxs.com/$domain=~zoomin.tv
+http://ib.adnxs.com/$domain=~zoomin.tv|~youreporter.it
 http://m.adnxs.com/
 http://*.trekaklik.com/$popup
 http://banners*.spacash.com/
@@ -1550,7 +1550,7 @@ http:/admonkey.cc/
 http://*.247realmedia.com/*/casa_fatto.jpg
 http://adfoc.us/*/
 http://*.moto.it/advbanner/
-http://flv.kataweb.it/misc/flv-pub/
+http://flv.kataweb.it/misc/flv-pub/$domain=~kataweb.it
 http://imageceu1.247realmedia.com/0/$third-party,domain=repubblica.it|ilfattoquotidiano.it
 http://akamai.smartadserver.com/diff/*/preroll*.flv
 http://*.alfemminile.com/clients/skin/
@@ -1696,6 +1696,12 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://onclickads.net/apu.php
 |http://oltreuomo.com/*/skin-*.png
 |http://*.mauxa.com/images/varie/bg-ground.png
+||williamhill.it^$popup
+||golandwin.it^$popup
+|https://*.serving-sys.com/BurstingPipe/adServer.bs
+|http://*.amazon.it/*/iframeproxy*.html
+|http://betaffs.com/images/
+||ducati.it^$popup,domain=gpone.com
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3065,6 +3071,28 @@ tmag.it##.adsbygoogle
 mauxa.com##.adv_top
 mauxa.com##[id^="div-gpt-ad-"]
 mauxa.com##.adv
+ilquotidianodellacalabria.it##.banner_300x250
+fcinternews.it##.sub.novis
+fcinternews.it##.tccbanner
+rai.tv###adagioSkinDx
+rai.tv###adagioSkinSx
+rai.tv###adagioSkinTop
+rai.tv###ediv2
+fantagazzetta.com##.bg-ads
+ispazio.net##.wes_div
+ispazio.net##[id^="div-gpt-ad-"]
+digital-sat.it###basso_topsx
+ispazio.net##.banner_right_sidebar_small
+amazon.it###DAr2
+bresciaoggi.it##.v3_horz-banner.v3_padding.skin-hide
+diretta.it###banner-top
+lolnexus.com##.ad-container
+neowin.net###billboard_placeholder
+tomsguide.com##[id^="google_ads_iframe"]
+extratorrent.cc##[id^="MarketGidComposite"]
+quickshop.shoppydoo.it###tp_728x90
+tecnoandroid.it##.background-cover[href]
+tecnoandroid.it##.adsbygoogle
 ! [Gruppo di filtri suggeriti dagli utenti]
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB

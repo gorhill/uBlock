@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: PNKy9dCuRCiCh5kG8T7q4A
-! Version: 201407091330
-! Last modified: 09 Jul 2014 13:30 UTC
+! Checksum: OLfq5S3KNZjXUKkOpJNtEw
+! Version: 201407111710
+! Last modified: 11 Jul 2014 17:10 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1253,7 +1253,6 @@ _tizers.
 ||openlinks.ru^$third-party
 ||or.ru/inner|
 ||oru.ru^$third-party
-||otclick-adv.ru^
 ||owap.su^
 ||owebmoney.ru^$third-party
 ||oxysoft.ru^$third-party
@@ -1605,6 +1604,7 @@ _tizers.
 ||video-link.ru^
 ||video-tutorial.ucoz.ru/Foto/
 ||videoclik.$third-party
+||videocore.tv^*/pladform_
 ||videofan.ru^$third-party
 ||videoklass.ru^$third-party
 ||videomay.ru^
@@ -1851,6 +1851,7 @@ _tizers.
 ||ad.ddestiny.ru^
 ||ad.gameagregator.com^
 ||ad.h-vip.ru^
+||ad.hutor.ru^
 ||ad.namba.net^
 ||ad.starlightmedia.ua^
 ||ad.videplayer.com^
@@ -2464,6 +2465,7 @@ _tizers.
 ||opendone.net^
 ||openmace.net^
 ||orbit.lun.ua^
+||otclick-adv.ru^$third-party
 ||ou2ie.ru^
 ||outwitch.com^
 ||ovap.in^
@@ -2977,6 +2979,7 @@ my-cinema.net##.left-a
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.left-branding
 onedivision.ru##.left-branding-container
 allmoldova.com##.left_banner > a[target="_blank"]
+winzoro.net##.left_block_e img:not([src^="/uploads/posts/"])
 tvnet.lv##.list.customer
 torrent-pirat.com##.logo + div
 glav.su##.ma_block
@@ -4355,7 +4358,7 @@ $third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net
 /galya.ru/clients/places/*
 /iframe-$domain=rutracker.org
 /images/*-banners.$domain=kino-live.org|riper.am|toptracker.ru
-/images/banners/*$domain=19rus.info|arendator.ru|biwork.ru|cars.ru|csmania.ru|fitsport.ru|fuzz-magazine.ru|gamegpu.ru|hd-systems.com.ua|karelia.ru|mebelminsk.by|newizv.ru|pretenziy.ru|rbc.ru|ridna.ua|rtr24.ru|ruslife.eu|sevastopol.su|starkosino.ru|vjazhi.ru|vsatke.ru|город-кингисепп.рф
+/images/banners/*$domain=19rus.info|arendator.ru|biwork.ru|cars.ru|csmania.ru|fitsport.ru|fuzz-magazine.ru|gamegpu.ru|hd-systems.com.ua|itexpert.org.ua|karelia.ru|mebelminsk.by|newizv.ru|pretenziy.ru|rbc.ru|ridna.ua|rtr24.ru|ruslife.eu|sevastopol.su|starkosino.ru|vjazhi.ru|vsatke.ru|город-кингисепп.рф
 /images/banners_$domain=agronews.ru|agrotv.ru
 /images/branding/*$domain=amovies.tv|cybergame.tv|dfiles.ru|filmz.ru|playground.ru
 /js/init.js$domain=kino-live.org|riper.am|toptracker.ru
@@ -5330,7 +5333,6 @@ _advideo/$object-subrequest,domain=megogo.net
 ||ykt.ru/yaknet/image.asp?id=
 ||ykt2.ru/inform/
 ||ymka.tv/images/$object
-||youtube.com/annotations_invideo?cta=
 ||youtube.com/embed/$domain=kakprosto.ru
 ||zadolba.li/img/ur.jpg
 ||zakonia.ru/imgs/adshtml/
@@ -5636,6 +5638,7 @@ yandex.kz,yandex.ru,yandex.ua##.b-adv
 yandex.kz,yandex.ru,yandex.ua##.b-direct
 rasp.yandex.kz,rasp.yandex.ru,rasp.yandex.ua##.b-yadirect
 yandex.kz,yandex.ru,yandex.ua##div[class^="b-spec-adv"]
+realty.yandex.kz,realty.yandex.ru,realty.yandex.ua##div[onclick][class*="_layout_vertical"][class*="_format_"]
 !
 ! Томские сайты
 sadiki.tomsk.ru###b1_place

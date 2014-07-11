@@ -4,7 +4,7 @@
 ! http://henrik.schack.dk/adblock/
 !
 ! Maintained by: henrik at schack.dk
-! Last Modified: 08-07-2014
+! Last Modified: 11-07-2014
 ! Expires: 1
 
 ! facebook.com
@@ -629,6 +629,9 @@ politiken.dk##IFRAME[src="http://www.office365-erhverv.dk/teaser/"]
 politiken.dk##.m-bottom10.oax-ad
 politiken.dk###inpageAdPlayer
 ||service.vp.videoplaza.se/creatives/
+politiken.dk###adPlayerTitle
+politiken.dk###vp_inpage_player
+
 
 ! ibyen.dk
 ibyen.dk##DIV#top-monster
