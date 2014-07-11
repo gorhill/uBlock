@@ -228,7 +228,7 @@ var abpHideFiltersCheckboxChanged = function() {
 uDom.onLoad(function() {
     // Handle user interaction
     uDom('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
-    uDom('#blacklists').on('click', '.blacklistDetails a', onListLinkClicked);
+    uDom('#blacklists').on('click', '.blacklistDetails > a:first-child', onListLinkClicked);
     uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
     uDom('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
 
