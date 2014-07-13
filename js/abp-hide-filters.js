@@ -30,7 +30,6 @@
 /******************************************************************************/
 
 var µb = µBlock;
-var pageHostname = '';
 //var filterTestCount = 0;
 //var bucketTestCount = 0;
 
@@ -124,8 +123,25 @@ var FilterHostname = function(s, hostname) {
     this.hostname = hostname;
 };
 
-FilterHostname.prototype.retrieve = function(s, out) {
-    if ( pageHostname.slice(-this.hostname.length) === this.hostname ) {
+FilterHostname.prototype.retrieve = function(hostname, out) {
+    if ( hostname.slice(-this.hostname.length) === this.hostname ) {
+        out.push(this.s);
+    }
+};
+
+/******************************************************************************/
+
+// Any selector specific to an entity
+// Examples:
+//   google.*###cnt #center_col > #res > #topstuff > .ts
+
+var FilterEntity = function(s, entity) {
+    this.s = s;
+    this.entity = entity;
+};
+
+FilterEntity.prototype.retrieve = function(entity, out) {
+    if ( entity.slice(-this.entity.length) === this.entity ) {
         out.push(this.s);
     }
 };
@@ -249,7 +265,9 @@ var FilterContainer = function() {
     this.filterParser = new FilterParser();
     this.acceptedCount = 0;
     this.processedCount = 0;
-    this.filters = {};
+    this.genericFilters = {};
+    this.hostnameFilters = {};
+    this.entityFilters = {};
     this.hideUnfiltered = [];
     this.hideLowGenerics = {};
     this.hideHighGenerics = [];
@@ -267,7 +285,9 @@ FilterContainer.prototype.reset = function() {
     this.filterParser.reset();
     this.acceptedCount = 0;
     this.processedCount = 0;
-    this.filters = {};
+    this.genericFilters = {};
+    this.hostnameFilters = {};
+    this.entityFilters = {};
     this.hideUnfiltered = [];
     this.hideLowGenerics = {};
     this.hideHighGenerics = [];
@@ -294,7 +314,7 @@ FilterContainer.prototype.add = function(s) {
     // hostname-based filters: with a hostname, narrowing is good enough, no
     // need to further narrow.
     if ( parsed.hostnames.length ) {
-        return this.addHostnameFilter(parsed);
+        return this.addPrefixedFilter(parsed);
     }
 
     // no specific hostname, narrow using class or id.
@@ -393,86 +413,54 @@ FilterContainer.prototype.freeze = function() {
 
 // Is
 // 3 unicode chars
-// |                 |                       |                       |
+// |                 |                       |
 // 
-//  00000000 TTTTTTTT PP PP PP PP PP PP PP PP SS SS SS SS SS SS SS SS
-//                  |                       |                       |
-//                  |                       |                       |
-//                  |                       |                       |
-//                  |                       |         ls 2-bit of 8 suffix chars
-//                  |                       |                       
-//                  |                       +-- ls 2-bit of 8 prefix chars
+//  00000000 TTTTTTTT PP PP PP PP PP PP PP PP 
+//                  |                       |
+//                  |                       |
+//                  |                       |
+//                  |                       |
+//                  |                       |
+//                  |                       +-- ls 2-bit of 8 token chars
 //                  |
 //                  |
 //                  +-- filter type ('#'=hide '@'=unhide)
 //
 
-var makePrefixHash = function(type, prefix) {
+var makeHash = function(type, token) {
     // Ref: Given a URL, returns a unique 4-character long hash string
     // Based on: FNV32a
     // http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-reference-source
     // The rest is custom, suited for µBlock.
-    var len = prefix.length;
+    var len = token.length;
     var i2 = len >> 1;
     var i4 = len >> 2;
     var i8 = len >> 3;
-    var hint = (0x811c9dc5 ^ prefix.charCodeAt(0)) >>> 0;
+    var hint = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i8);
+        hint ^= token.charCodeAt(i8);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i4);
+        hint ^= token.charCodeAt(i4);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i4+i8);
+        hint ^= token.charCodeAt(i4+i8);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i2);
+        hint ^= token.charCodeAt(i2);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i2+i8);
+        hint ^= token.charCodeAt(i2+i8);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(i2+i4);
+        hint ^= token.charCodeAt(i2+i4);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-        hint ^= prefix.charCodeAt(len-1);
+        hint ^= token.charCodeAt(len-1);
         hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
         hint >>>= 0;
-    return String.fromCharCode(type.charCodeAt(0), hint & 0xFFFF, 0);
-};
-
-var makeSuffixHash = function(type, suffix) {
-    var len = suffix.length;
-    var i2 = len >> 1;
-    var i4 = len >> 2;
-    var i8 = len >> 3;
-    var hint = (0x811c9dc5 ^ suffix.charCodeAt(0)) >>> 0;
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i4);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i4+i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i2);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i2+i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(i2+i4);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= suffix.charCodeAt(len-1);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-    return String.fromCharCode(type.charCodeAt(0), 0, hint & 0x0FFF);
+    return String.fromCharCode(type.charCodeAt(0), hint & 0xFFFF);
 };
 
 /**
@@ -543,8 +531,8 @@ FilterContainer.prototype.addPlainFilter = function(parsed) {
         return this.addPlainMoreFilter(parsed);
     }
     var f = new FilterPlain(parsed.suffix);
-    var hash = makeSuffixHash(parsed.filterType, parsed.suffix);
-    this.addFilterEntry(hash, f);
+    var hash = makeHash(parsed.filterType, parsed.suffix);
+    this.addFilterEntry(this.genericFilters, hash, f);
     this.acceptedCount += 1;
 };
 
@@ -556,8 +544,8 @@ FilterContainer.prototype.addPlainMoreFilter = function(parsed) {
         return;
     }
     var f = new FilterPlainMore(parsed.suffix);
-    var hash = makeSuffixHash(parsed.filterType, selectorSuffix);
-    this.addFilterEntry(hash, f);
+    var hash = makeHash(parsed.filterType, selectorSuffix);
+    this.addFilterEntry(this.genericFilters, hash, f);
     this.acceptedCount += 1;
 };
 
@@ -565,7 +553,30 @@ FilterContainer.prototype.addPlainMoreFilter = function(parsed) {
 
 // rhill 2014-05-20: When a domain exists, just specify a generic selector.
 
-FilterContainer.prototype.addHostnameFilter = function(parsed) {
+FilterContainer.prototype.addHostnameFilter = function(hostname, parsed) {
+    var f = new FilterHostname(parsed.suffix, hostname);
+    var hash = makeHash(parsed.filterType, µBlock.URI.domainFromHostname(hostname));
+    this.addFilterEntry(this.hostnameFilters, hash, f);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.addEntityFilter = function(hostname, parsed) {
+    var f = new FilterEntity(parsed.suffix, hostname.slice(0, -2));
+    var entity = hostname.slice(0, -2);
+    var pos = entity.lastIndexOf('.');
+    if ( pos !== -1 ) {
+        entity = entity.slice(pos + 1);
+    }
+    var hash = makeHash(parsed.filterType, entity);
+    this.addFilterEntry(this.entityFilters, hash, f);
+};
+
+/******************************************************************************/
+
+// rhill 2014-05-20: When a domain exists, just specify a generic selector.
+
+FilterContainer.prototype.addPrefixedFilter = function(parsed) {
     var µburi = µBlock.URI;
     var f, hash;
     var hostnames = parsed.hostnames;
@@ -575,23 +586,26 @@ FilterContainer.prototype.addHostnameFilter = function(parsed) {
         if ( !hostname ) {
             continue;
         }
-        f = new FilterHostname(parsed.suffix, hostname);
-        hash = makePrefixHash(parsed.filterType, µburi.domainFromHostname(hostname));
-        this.addFilterEntry(hash, f);
+        // rhill 2014-07-13: new filter class: entity.
+        if ( hostname.slice(-2) === '.*' ) {
+            this.addEntityFilter(hostname, parsed);
+        } else {
+            this.addHostnameFilter(hostname, parsed);
+        }
     }
     this.acceptedCount += 1;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.addFilterEntry = function(hash, f) {
-    var bucket = this.filters[hash];
+FilterContainer.prototype.addFilterEntry = function(filterDict, hash, f) {
+    var bucket = filterDict[hash];
     if ( bucket === undefined ) {
-        this.filters[hash] = f;
+        filterDict[hash] = f;
     } else if ( bucket instanceof FilterBucket ) {
         bucket.add(f);
     } else {
-        this.filters[hash] = new FilterBucket(bucket, f);
+        filterDict[hash] = new FilterBucket(bucket, f);
     }
 };
 
@@ -634,8 +648,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
         if ( !selector ) {
             continue;
         }
-        hash = makeSuffixHash('#', selector);
-        if ( bucket = this.filters[hash] ) {
+        hash = makeHash('#', selector);
+        if ( bucket = this.genericFilters[hash] ) {
             //bucketTestCount += 1;
             //filterTestCount += 1;
             bucket.retrieve(selector, hideSelectors);
@@ -671,26 +685,34 @@ FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, reques
     //filterTestCount = 0;
     //bucketTestCount = 0;
 
-    var hostname = pageHostname = µb.URI.hostnameFromURI(request.locationURL);
-
+    var hostname = µb.URI.hostnameFromURI(request.locationURL);
+    var domain = µb.URI.domainFromHostname(hostname);
+    var pos = domain.indexOf('.');
     var r = {
-        domain: µb.URI.domainFromHostname(hostname),
+        domain: domain,
+        entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
         hide: [],
         donthide: []
     };
 
     var bucket;
-    var hash = makePrefixHash('#', r.domain);
-    if ( bucket = this.filters[hash] ) {
+    var hash = makeHash('#', r.domain);
+    if ( bucket = this.hostnameFilters[hash] ) {
         //bucketTestCount += 1;
         //filterTestCount += 1;
-        bucket.retrieve(null, r.hide);
+        bucket.retrieve(hostname, r.hide);
     }
-    hash = makePrefixHash('@', r.domain);
-    if ( bucket = this.filters[hash] ) {
+    hash = makeHash('#', r.entity);
+    if ( bucket = this.entityFilters[hash] ) {
         //bucketTestCount += 1;
         //filterTestCount += 1;
-        bucket.retrieve(null, r.donthide);
+        bucket.retrieve(pos === -1 ? domain : hostname.slice(0, pos - domain.length), r.hide);
+    }
+    hash = makeHash('@', r.domain);
+    if ( bucket = this.hostnameFilters[hash] ) {
+        //bucketTestCount += 1;
+        //filterTestCount += 1;
+        bucket.retrieve(hostname, r.donthide);
     }
 
     //quickProfiler.stop();
