@@ -401,27 +401,7 @@ var cosmeticFilterFromElement = function(elem) {
         }
     }
 
-    if ( suffix.length === 0 ) {
-        return;
-    }
-
     return prefix + suffix.join('');
-};
-
-/******************************************************************************/
-
-var stopPicker = function() {
-    if ( pickerRoot !== null ) {
-        taCandidate.removeEventListener('change', onCandidateChanged);
-        taCandidate.removeEventListener('propertychange', onCandidateChanged);
-        divDialog.removeEventListener('click', onDialogClicked);
-        svgRoot.removeEventListener('mousemove', onSvgHovered);
-        svgRoot.removeEventListener('click', onSvgClicked);
-        document.body.removeChild(pickerRoot);
-        pickerRoot = divDialog = svgRoot = svgOcean = svgIslands = null;
-        messaging.stop();
-    }
-    targetElements = [];
 };
 
 /******************************************************************************/
@@ -476,7 +456,7 @@ var userFilterFromCandidate = function() {
 
 /******************************************************************************/
 
-var onCandidateChanged = function() {
+var onCandidateChanged = function(ev) {
     var selector = selectorFromCandidate();
     divDialog.querySelector('#create').disabled = selector === '';
     if ( selector === '' ) {
@@ -484,6 +464,36 @@ var onCandidateChanged = function() {
         return;
     }
     highlightElements(document.querySelectorAll(selector));
+};
+
+/******************************************************************************/
+
+var candidateFromClickEvent = function(ev) {
+    var target = ev.target;
+    if ( !target ) {
+        return '';
+    }
+
+    // Bare
+    if ( ev.ctrlKey || ev.metaKey ) {
+        return target.textContent;
+    }
+
+    // For net filters there no such thing as a path
+    if ( target.textContent.slice(0, 2) === '||' ) {
+        return target.textContent;
+    }
+
+    // Return path: the target element, then all siblings prepended
+    var selector = [];
+    while ( target ) {
+        if ( target.nodeType !== 1 || target.tagName.toLowerCase() !== 'li' ) {
+            continue;
+        }
+        selector.unshift(target.textContent.replace(/^##/, ''));
+        target = target.nextSibling;
+    }
+    return '##' + selector.join(' > ');
 };
 
 /******************************************************************************/
@@ -511,7 +521,7 @@ var onDialogClicked = function(ev) {
     }
 
     else if ( ev.target.tagName.toLowerCase() === 'li' && pickerRootDistance(ev.target) === 5 ) {
-        taCandidate.value = ev.target.textContent;
+        taCandidate.value = candidateFromClickEvent(ev);
         onCandidateChanged();
     }
 
@@ -591,7 +601,33 @@ var onSvgClicked = function() {
 
 /******************************************************************************/
 
-var startPicker = function(details) {
+var onKeyPressed = function(ev) {
+    if ( ev.key === 27 || ev.keyCode === 27 ) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        stopPicker();
+    }
+};
+
+/******************************************************************************/
+
+var stopPicker = function() {
+    if ( pickerRoot !== null ) {
+        document.removeEventListener('keydown', onKeyPressed);
+        taCandidate.removeEventListener('input', onCandidateChanged);
+        divDialog.removeEventListener('click', onDialogClicked);
+        svgRoot.removeEventListener('mousemove', onSvgHovered);
+        svgRoot.removeEventListener('click', onSvgClicked);
+        document.body.removeChild(pickerRoot);
+        pickerRoot = divDialog = svgRoot = svgOcean = svgIslands = taCandidate = null;
+        messaging.stop();
+    }
+    targetElements = [];
+};
+
+/******************************************************************************/
+
+var startPicker = function() {
     pickerRoot = document.querySelector('.' + µBlockClassName);
     if ( pickerRoot !== null ) {
         return;
@@ -672,7 +708,7 @@ var startPicker = function(details) {
             'padding: 0;',
             'box-sizing: border-box;',
             'width: 100%;',
-            'height: 6em;',
+            'height: 8em;',
             'position: relative;',
         '}',
         '.µBlock > div > div > textarea {',
@@ -727,12 +763,16 @@ var startPicker = function(details) {
 
     svgRoot = document.createElementNS(svgns, 'svg');
     svgRoot.innerHTML = '<path /><path />';
-    var rect = document.documentElement.getBoundingClientRect();
+    var nullRect = { left: 0, top: 0, width: 0, height: 0 };
+    var htmlRect = document.documentElement ? document.documentElement.getBoundingClientRect() : nullRect;
+    var bodyRect = document.body ? document.body.getBoundingClientRect() : nullRect;
+    var svgWidth = Math.max(htmlRect.width, bodyRect.width);
+    var svgHeight = Math.max(htmlRect.height, bodyRect.height);
     svgRoot.setAttribute('x', 0);
     svgRoot.setAttribute('y', 0);
-    svgRoot.setAttribute('width', rect.width);
-    svgRoot.setAttribute('height', rect.height);
-    svgRoot.setAttribute("viewBox", '0 0 ' + rect.width + ' ' + rect.height);
+    svgRoot.setAttribute('width', svgWidth);
+    svgRoot.setAttribute('height', svgHeight);
+    svgRoot.setAttribute("viewBox", '0 0 ' + svgWidth + ' ' + svgHeight);
     svgOcean = svgRoot.querySelector('path:first-child');
     svgIslands = svgRoot.querySelector('path + path');
     pickerRoot.appendChild(svgRoot);
@@ -765,7 +805,7 @@ var startPicker = function(details) {
     divDialog.addEventListener('click', onDialogClicked);
     taCandidate = divDialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
-    taCandidate.addEventListener('onpropertychange', onCandidateChanged);
+    document.addEventListener('keydown', onKeyPressed);
 };
 
 /******************************************************************************/
