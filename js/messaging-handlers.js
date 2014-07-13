@@ -79,6 +79,10 @@ var onMessage = function(request, sender, callback) {
             µBlock.updateBadgeAsync(request.tabId);
             break;
 
+        case 'gotoPick':
+            chrome.tabs.executeScript(request.tabId, { file: 'js/element-picker.js' });
+            break;
+
         default:
             return µBlock.messaging.defaultHandler(request, sender, callback);
     }
@@ -178,6 +182,48 @@ var onMessage = function(request, sender, callback) {
 };
 
 µBlock.messaging.listen('contentscript-end.js', onMessage);
+
+})();
+
+/******************************************************************************/
+
+// element-picker.js
+
+(function() {
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'i18n':
+            response = {
+                create: chrome.i18n.getMessage('pickerCreate'),
+                pick: chrome.i18n.getMessage('pickerPick'),
+                quit: chrome.i18n.getMessage('pickerQuit'),
+                netFilters: chrome.i18n.getMessage('pickerNetFilters'),
+                cosmeticFilters: chrome.i18n.getMessage('pickerCosmeticFilters')
+            };
+            break;
+
+        case 'createUserFilter':
+            µBlock.appendUserFilters(request.filters);
+            break;
+
+        default:
+            return µBlock.messaging.defaultHandler(request, sender, callback);
+    }
+
+    callback(response);
+};
+
+µBlock.messaging.listen('element-picker.js', onMessage);
 
 })();
 

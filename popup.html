@@ -68,17 +68,17 @@ p {
     margin-bottom: 4px;
     text-align: center;
     }
-#gotoLog {
-    display: none;
+.tool {
     font-size: 14px;
     color: #aaa;
     cursor: pointer;
+    display: none;
     }
-#gotoLog:hover {
-    color: #444;
-    }
-#gotoLog.enabled {
+.tool.enabled {
     display: inline;
+    }
+.tool:hover {
+    color: #444;
     }
 #options {
     margin: 16px 0 0 0;
@@ -98,7 +98,7 @@ p {
 <p id="switch"><span class="fa">&#xf011;</span></p>
 <p id="switch-hint" data-i18n="popupPowerSwitchInfo"></p>
 <p style="font-size: 16px;" data-i18n="popupBlockedRequestPrompt"></p>
-<p id="stats"><span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;<span id="gotoLog" class="fa">&#xf06e;</span></p>
+<p id="stats"><span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;<span id="gotoPick" class="fa tool">&#xf070;</span>&ensp;<span id="gotoLog" class="fa tool">&#xf06e;</span></p>
 <p id="page-blocked">?</p>
 <p id="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
 <p id="total-blocked">?</p>

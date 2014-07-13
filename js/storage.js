@@ -80,6 +80,41 @@
 
 /******************************************************************************/
 
+µBlock.saveUserFilters = function(content, callback) {
+    return this.assets.put(this.userFiltersPath, content, callback);
+};
+
+/******************************************************************************/
+
+µBlock.loadUserFilters = function(callback) {
+    return this.assets.get(this.userFiltersPath, callback);
+};
+
+/******************************************************************************/
+
+µBlock.appendUserFilters = function(content) {
+    var onSaved = function(details) {
+        if ( details.error ) {
+            return;
+        }
+        µBlock.loadUbiquitousBlacklists();
+    };
+    var onLoaded = function(details) {
+        if ( details.error ) {
+            return;
+        }
+        if ( details.content.indexOf(content.trim()) === -1 ) {
+            return;
+        }
+        µBlock.saveUserFilters(details.content + '\n' + content, onSaved);
+    };
+    if ( content.length > 0 ) {
+        this.loadUserFilters(onLoaded);
+    }
+};
+
+/******************************************************************************/
+
 µBlock.loadUbiquitousBlacklists = function() {
     var blacklistLoadCount;
     var obsoleteBlacklists = [];

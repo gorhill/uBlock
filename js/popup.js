@@ -56,6 +56,10 @@ var renderStats = function() {
         'enabled',
         stats.netFilteringSwitch && (stats.logBlockedRequests || stats.logAllowedRequests)
     );
+    uDom('#gotoPick').toggleClass(
+        'enabled',
+        stats.netFilteringSwitch
+    );
 
     var blocked = stats.pageBlockedRequestCount;
     var total = stats.pageAllowedRequestCount + blocked;
@@ -150,6 +154,16 @@ var gotoStats = function() {
 
 /******************************************************************************/
 
+var gotoPick = function() {
+    messaging.tell({
+        what: 'gotoPick',
+        tabId: stats.tabId
+    });
+    window.open('','_self').close();
+};
+
+/******************************************************************************/
+
 var renderHeader = function() {
     var hdr = uDom('#version');
     hdr.html(hdr.html() + 'v' + chrome.runtime.getManifest().version);
@@ -161,6 +175,7 @@ var installEventHandlers = function() {
     uDom('h1,h2,h3,h4').on('click', gotoDashboard);
     uDom('#switch .fa').on('click', handleNetFilteringSwitch);
     uDom('#gotoLog').on('click', gotoStats);
+    uDom('#gotoPick').on('click', gotoPick);
 };
 
 /******************************************************************************/
