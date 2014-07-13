@@ -26,6 +26,8 @@ www.zerohedge.com##.similar-box
 # https://github.com/gorhill/uBlock/issues/57
 # New filter class: entity filters, where
 # entity = domain minus public suffix
+# The following filters were taken out of EasyList and given an entity name,
+# which makes them candidates to be injected early in the page.
 google.*###cnt #center_col > #res > #topstuff > .ts
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
 google.*###tads.c
