@@ -43,6 +43,26 @@
     "message":"seit Installation",
     "description":"English: since install"
   },
+  "pickerCreate":{
+    "message":"Create",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Pick",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Quit",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Cosmetic filters",
+    "description":"English: Cosmetic filters"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Verstecke die Platzhalter für blockierte Elemente",
     "description":"English: Hide placeholders of blocked elements"
@@ -100,15 +120,15 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Logging von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Protokollieren von erlaubten Elementen aktivieren",
+    "message":"Protokollieren von nicht-blockierten Elementen aktivieren",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kannst dir die Details von erlaubten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von erlaubten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -116,7 +136,7 @@
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Erlaubte Anfragen",
+    "message":"Zugelassene Anfragen",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -140,7 +160,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine erlaubten Anfragen für diese Seite",
+    "message":"Keine blockierten Anfragen für diese Seite gefunden",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
@@ -196,7 +216,7 @@
     "description":"Updating..."
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Dieser Eintrag muss der letzte sein",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

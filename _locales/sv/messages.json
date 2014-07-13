@@ -43,6 +43,26 @@
     "message":"sedan installation",
     "description":"English: since install"
   },
+  "pickerCreate":{
+    "message":"Skapa",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Välj",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Avsluta",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Nätfilter",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Kosmetiska filter",
+    "description":"English: Cosmetic filters"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Dölj platshållare för blockerade element",
     "description":"English: Hide placeholders of blocked elements"

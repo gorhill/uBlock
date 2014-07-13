@@ -4,43 +4,43 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "message":"Endelig en effektiv blokker for Chromium-baserte nettlesere. Lett på CPU og minne.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Settings",
+    "message":"Innstillinger",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"Tredjeparts filtre",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Your filters",
+    "message":"Dine filter",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistics",
+    "message":"Statistikk",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"About",
+    "message":"Om",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+    "message":"klikk på strømknappen for å <br>permanent deaktivere eller aktivere <br>µBlock for den aktuelle siden",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"requests blocked",
+    "message":"forespørsler blokkert",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"on this page",
+    "message":"på denne siden",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"siden installering",
     "description":"English: since install"
   },
   "pickerCreate":{
@@ -64,19 +64,19 @@
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Skjul plassholdere av blokkerte elementer",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Vis antall blokkerte forespørsler på ikonet",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} network filters from:",
+    "message":"{{ubiquitousBlacklistCount}} nettverksfiltre fra:",
     "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} brukt av {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -108,7 +108,7 @@
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"Eksporter",
     "description":"English: Export"
   },
   "1pApplyChanges":{
@@ -132,11 +132,11 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"Blokkerte forespørsler",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"Tillatte forespørsler",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -144,7 +144,7 @@
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Domene",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -156,7 +156,7 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No blocked requests logged for this page",
+    "message":"Ingen blokkerte forespørsler har blitt logget for denne siden",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
@@ -180,7 +180,7 @@
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
-    "message":"Path",
+    "message":"Sti",
     "description":"Path column header"
   },
   "aboutAssetsUpdateColStatus":{
@@ -196,11 +196,11 @@
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusChanged":{
-    "message":"New version available",
+    "message":"Ny versjon tilgjengelig",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Up to date",
+    "message":"Oppdatert",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusRemoved":{
@@ -208,11 +208,11 @@
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateButton":{
-    "message":"Update",
+    "message":"Oppdater",
     "description":"Update button"
   },
   "aboutAssetsUpdatingButton":{
-    "message":"Updating...",
+    "message":"Oppdaterer...",
     "description":"Updating..."
   },
   "dummy":{

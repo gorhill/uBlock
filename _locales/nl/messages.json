@@ -43,6 +43,26 @@
     "message":"sinds installatie",
     "description":"English: since install"
   },
+  "pickerCreate":{
+    "message":"Create",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Pick",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Quit",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Cosmetic filters",
+    "description":"English: Cosmetic filters"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Verberg tijdelijke aanduidingen van geblokkeerde elementen",
     "description":"English: Hide placeholders of blocked elements"
