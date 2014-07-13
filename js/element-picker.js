@@ -112,7 +112,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-// Cut & pasted here from reference implementation in messagin-client.js
+// Cut & pasted here from reference implementation in messaging-client.js
 // because this is an injected script.
 
 var messaging = (function(name){
