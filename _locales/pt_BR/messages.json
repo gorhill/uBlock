@@ -120,7 +120,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueados, ativando esta opção. O registro de solicitações não-bloqueados aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
+    "message":"Você pode inspecionar os detalhes das solicitações bloqueadas, ativando esta opção. O registro de solicitações bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
@@ -128,7 +128,7 @@
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueados, ativando esta opção. O registro de solicitações não-bloqueados aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
+    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueadas, ativando esta opção. O registro de solicitações não-bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -156,11 +156,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Não há pedidos bloqueados registrados para esta página",
+    "message":"Não há solicitações bloqueadas registradas para essa página",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nenhuma solicitação de não-bloqueados registradas para esta página",
+    "message":"Não há solicitações de não-bloqueadas registrados para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
