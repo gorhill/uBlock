@@ -52,13 +52,21 @@ var renderStats = function() {
         return;
     }
 
+    var isHTTP = /^https?:\/\/[a-z]/.test(stats.pageURL);
+
+    // Conditions for request log:
+    //   - `http` or `https` scheme
+    //   - logging of requests enabled
     uDom('#gotoLog').toggleClass(
         'enabled',
-        stats.netFilteringSwitch && (stats.logBlockedRequests || stats.logAllowedRequests)
+        isHTTP && (stats.logBlockedRequests || stats.logAllowedRequests)
     );
+
+    // Conditions for element picker:
+    //   - `http` or `https` scheme
     uDom('#gotoPick').toggleClass(
         'enabled',
-        stats.netFilteringSwitch
+        isHTTP
     );
 
     var blocked = stats.pageBlockedRequestCount;
