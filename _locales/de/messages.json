@@ -44,23 +44,23 @@
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Erzeugen",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Auswählen",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Verlassen",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Normale (d.h. blockierende) Filter",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Kosmetische Filter",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
