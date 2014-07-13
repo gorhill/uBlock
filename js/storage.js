@@ -103,7 +103,7 @@
         if ( details.error ) {
             return;
         }
-        if ( details.content.indexOf(content.trim()) === -1 ) {
+        if ( details.content.indexOf(content.trim()) !== -1 ) {
             return;
         }
         µBlock.saveUserFilters(details.content + '\n' + content, onSaved);
