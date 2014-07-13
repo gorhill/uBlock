@@ -555,7 +555,7 @@ FilterContainer.prototype.addPlainMoreFilter = function(parsed) {
 
 FilterContainer.prototype.addHostnameFilter = function(hostname, parsed) {
     var f = new FilterHostname(parsed.suffix, hostname);
-    var hash = makeHash(parsed.filterType, µBlock.URI.domainFromHostname(hostname));
+    var hash = makeHash(parsed.filterType, µb.URI.domainFromHostname(hostname));
     this.addFilterEntry(this.hostnameFilters, hash, f);
 };
 
@@ -577,8 +577,6 @@ FilterContainer.prototype.addEntityFilter = function(hostname, parsed) {
 // rhill 2014-05-20: When a domain exists, just specify a generic selector.
 
 FilterContainer.prototype.addPrefixedFilter = function(parsed) {
-    var µburi = µBlock.URI;
-    var f, hash;
     var hostnames = parsed.hostnames;
     var i = hostnames.length, hostname;
     while ( i-- ) {
