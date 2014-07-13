@@ -52,7 +52,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Desistir",
+    "message":"Sair",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -100,7 +100,7 @@
     "description":"English: Apply changes"
   },
   "1pFormatHint":{
-    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro de Adblock Plus-compatível. Linhas prefixados com &lsquo;!&rsquo; será ignorado.",
+    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; será ignorado.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -176,7 +176,7 @@
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
-    "message":"As listas do<i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar para o próximo lançamento da extensão. Essas listas são baixadas do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
+    "message":"As listas do <i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar para o próximo lançamento da extensão. Essas listas são baixadas do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
