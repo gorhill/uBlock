@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Configurações",
+    "message":"Preferências",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique no botão power para <br>habilitar ou desabilitar permanentemente o <br>µBlock para o site atual",
+    "message":"Clique no botão de energia para <br>ativar ou desativar permanentemente o <br>µBlock para o site atual",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
@@ -100,7 +100,7 @@
     "description":"English: Apply changes"
   },
   "1pFormatHint":{
-    "message":"Um filtro por linha. Um filtro pode ser um simples nome de host ou um filtro compatível com o Adblock Plus. Linhas prefixado com '!' será ignorado.",
+    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro de Adblock Plus-compatível. Linhas prefixados com &lsquo;!&rsquo; será ignorado.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -156,15 +156,15 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Não há solicitações bloqueadas registradas para essa página",
+    "message":"Não há solicitações bloqueadas registrados para essa página",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Não há solicitações de não-bloqueadas registrados para esta página",
+    "message":"Não há solicitações não-bloqueadas registrados para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'> Log de alterações<\/a>",
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Log de alterações<\/a>",
     "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
   },
   "aboutCode":{
@@ -188,7 +188,7 @@
     "description":"Status column header"
   },
   "aboutAssetsUpdateGetListError":{
-    "message":"Ocorreu um erro. Está<b>XHR<\/b> bloqueado para <b>raw2.github.com<\/b>?",
+    "message":"Ocorreu um erro. O<b>XHR<\/b> está bloqueado para <b>raw2.github.com<\/b>?",
     "description":"Successful outcome of clicking 'update' button"
   },
   "aboutAssetsUpdateStatusAdded":{
