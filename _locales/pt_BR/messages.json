@@ -176,7 +176,7 @@
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
-    "message":"As listas do<i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar para o próximo lançamento da extensão. Essas listas são baixadas do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
+    "message":"As listas do <i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar para o próximo lançamento da extensão. Essas listas são baixadas do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
