@@ -539,6 +539,9 @@ var removeAllChildren = function(parent) {
 
 /******************************************************************************/
 
+// TODO: for convenience I could provide a small set of net filters instead
+// of just a single one. Truncating the right-most part of the path etc.
+
 var showDialog = function(filters) {
     var divNet = divDialog.querySelector('ul > li:nth-of-type(1) > ul');
     var divCosmetic = divDialog.querySelector('ul > li:nth-of-type(2) > ul');
