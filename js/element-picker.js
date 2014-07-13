@@ -766,11 +766,8 @@ var startPicker = function() {
 
     svgRoot = document.createElementNS(svgns, 'svg');
     svgRoot.innerHTML = '<path /><path />';
-    var nullRect = { left: 0, top: 0, width: 0, height: 0 };
-    var htmlRect = document.documentElement ? document.documentElement.getBoundingClientRect() : nullRect;
-    var bodyRect = document.body ? document.body.getBoundingClientRect() : nullRect;
-    var svgWidth = Math.max(htmlRect.width, bodyRect.width);
-    var svgHeight = Math.max(htmlRect.height, bodyRect.height);
+    var svgWidth = document.documentElement.scrollWidth;
+    var svgHeight = document.documentElement.scrollHeight;
     svgRoot.setAttribute('x', 0);
     svgRoot.setAttribute('y', 0);
     svgRoot.setAttribute('width', svgWidth);
