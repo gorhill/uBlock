@@ -112,7 +112,8 @@
 /******************************************************************************/
 /******************************************************************************/
 
-// Cut & pasted here because this is an injected script.
+// Cut & pasted here from reference implementation in messagin-client.js
+// because this is an injected script.
 
 var messaging = (function(name){
     var port = null;
@@ -735,6 +736,10 @@ var startPicker = function(details) {
     svgOcean = svgRoot.querySelector('path:first-child');
     svgIslands = svgRoot.querySelector('path + path');
     pickerRoot.appendChild(svgRoot);
+
+    // TODO: do not rely on element ids, they could collide with whatever
+    // is used in the page. Just use built-in hierarchy of elements as
+    // selectors.
 
     divDialog = document.createElement('div');
     divDialog.innerHTML = [
