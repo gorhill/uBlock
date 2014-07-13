@@ -52,7 +52,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Desistir",
+    "message":"Sair",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -100,7 +100,7 @@
     "description":"English: Apply changes"
   },
   "1pFormatHint":{
-    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro de Adblock Plus-compatível. Linhas prefixados com &lsquo;!&rsquo; será ignorado.",
+    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; será ignorado.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
