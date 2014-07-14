@@ -51,11 +51,18 @@ var onBeforeRootDocumentRequestHandler = function(tabId, details) {
 
     // Heuristic to determine whether we are dealing with a popup:
     // - the page store is new (it's not a reused one)
+    // - the referrer is not nil
 
     // Can't be a popup, the tab was in use previously.
     if ( pageStore.previousPageURL !== '' ) {
         return;
     }
+
+    var referrer = referrerFromHeaders(details.requestHeaders);
+    if ( referrer === '' ) {
+        return;
+    }
+    //console.debug('Referrer="%s"', referrer);
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
@@ -148,7 +155,19 @@ var onBeforeRequestHandler = function(details) {
 
 /******************************************************************************/
 
-chrome.webRequest.onBeforeRequest.addListener(
+var referrerFromHeaders = function(headers) {
+    var i = headers.length;
+    while ( i-- ) {
+        if ( headers[i].name.toLowerCase() === 'referer' ) {
+            return headers[i].value;
+        }
+    }
+    return '';
+};
+
+/******************************************************************************/
+
+chrome.webRequest.onBeforeSendHeaders.addListener(
     //function(details) {
     //    quickProfiler.start('onBeforeRequest');
     //    var r = onBeforeRequestHandler(details);
@@ -172,7 +191,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             "other"
         ]
     },
-    [ "blocking" ]
+    [ "blocking", "requestHeaders" ]
 );
 
 console.log('µBlock> Beginning to intercept net requests at %s', (new Date()).toISOString());
