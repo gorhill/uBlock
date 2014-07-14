@@ -258,7 +258,7 @@ var pickerRootDistance = function(elem) {
 /******************************************************************************/
 
 var highlightElements = function(elems, force) {
-    // To make mouse mouce handler more efficient
+    // To make mouse move handler more efficient
     if ( !force && elems.length === targetElements.length ) {
         if ( elems.length === 0 || elems[0] === targetElements[0] ) {
             return;
@@ -347,7 +347,7 @@ var cosmeticFilterFromElement = function(elem) {
         return;
     }
     var tagName = elem.tagName.toLowerCase();
-    var prefix = '##' + tagName;
+    var prefix = '';
     var suffix = [];
     var v;
 
@@ -366,6 +366,10 @@ var cosmeticFilterFromElement = function(elem) {
             v[i] = CSS.escape(v[i]);
         }
         suffix.push('.', v.join('.'));
+    }
+
+    if ( suffix.length === 0 ) {
+        prefix = tagName;
     }
 
     // Attributes (depends on tag name)
@@ -401,7 +405,7 @@ var cosmeticFilterFromElement = function(elem) {
         }
     }
 
-    return prefix + suffix.join('');
+    return '##' + prefix + suffix.join('');
 };
 
 /******************************************************************************/
