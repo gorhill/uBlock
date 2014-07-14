@@ -31,14 +31,14 @@
 
 // Intercept root frame requests. This is where we identify and block popups.
 
-var onBeforeRootDocumentRequestHandler = function(tabId, details) {
+var onBeforeRootDocument = function(tabId, details) {
     var µb = µBlock;
 
     // Ignore non-http schemes: I don't think this could ever happened
     // because of filters at addListener() time... Will see.
     var requestURL = details.url;
     if ( requestURL.slice(0, 4) !== 'http' ) {
-        console.error('onBeforeRootDocumentRequestHandler(): Unexpected scheme!');
+        console.error('onBeforeRootDocument(): Unexpected scheme!');
         µb.unbindTabFromPageStats(tabId);
         return;
     }
@@ -90,7 +90,7 @@ var onBeforeRootDocumentRequestHandler = function(tabId, details) {
 
 // Intercept and filter web requests according to white and black lists.
 
-var onBeforeRequestHandler = function(details) {
+var onBeforeSendHeaders = function(details) {
     //console.debug('onBeforeRequestHandler()> "%s": %o', details.url, details);
 
     // Do not block behind the scene requests.
@@ -102,14 +102,14 @@ var onBeforeRequestHandler = function(details) {
     // Special handling for root document.
     var requestType = details.type;
     if ( requestType === 'main_frame' && details.parentFrameId < 0 ) {
-        return onBeforeRootDocumentRequestHandler(tabId, details);
+        return onBeforeRootDocument(tabId, details);
     }
 
     // Ignore non-http schemes: I don't think this could ever happened
     // because of filters at addListener() time... Will see.
     var requestURL = details.url;
     if ( requestURL.slice(0, 4) !== 'http' ) {
-        console.error('onBeforeRequestHandler(): Unexpected scheme!');
+        console.error('onBeforeSendHeaders(): Unexpected scheme!');
         return;
     }
 
@@ -144,7 +144,7 @@ var onBeforeRequestHandler = function(details) {
     }
 
     // Blocked
-    //console.debug('µBlock> onBeforeRequestHandler()> BLOCK "%s" because "%s"', details.url, reason);
+    //console.debug('µBlock> onBeforeSendHeaders()> BLOCK "%s" because "%s"', details.url, reason);
 
     // https://github.com/gorhill/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
@@ -169,12 +169,12 @@ var referrerFromHeaders = function(headers) {
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     //function(details) {
-    //    quickProfiler.start('onBeforeRequest');
-    //    var r = onBeforeRequestHandler(details);
+    //    quickProfiler.start('onBeforeSendHeaders');
+    //    var r = onBeforeSendHeaders(details);
     //    quickProfiler.stop();
     //    return r;
     //},
-    onBeforeRequestHandler,
+    onBeforeSendHeaders,
     {
         "urls": [
             "http://*/*",
