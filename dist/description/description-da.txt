@@ -1,0 +1,50 @@
+En effektiv blocker: let på hukommelse og CPU fodaftryk, og endnu kan indlæse og håndhæve tusindvis flere filtre end andre populære blokkere derude.
+
+Illustreret oversigt over dens effektivitet: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
+
+Brug: Den Store power knap i pop-up-vinduet er til permanent deaktivere/aktivere µBlock for det aktuelle websted. Det gælder kun for det aktuelle websted , det er ikke en global afbryderknap.
+
+***
+
+Fleksibel, det er mere end en "ad blocker": det kan også læse og oprette filtre fra hosts-filer.
+
+Ud af boksen, er disse lister over filtre indlæses og håndhævet:
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+Flere lister er tilgængelige for dig at vælge når du ønsker det:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Osv.
+
+Selvfølgelig, jo flere aktive filtre mere jo højere hukommelse fodtryk. Endnu, selv efter at tilføje Fanboys to ekstra lister, Hphosts's annonce og tracking servere, µBlock stadig har en ringere hukommelse footprint end andre meget populære blokkere derude.
+
+Desuden være opmærksom på at vælge nogle af disse ekstra lister kan føre til højere sandsynlighed for webstedet brud - især de lister, der normalt anvendes som host-filel.
+
+***
+
+Uden de forudindstillede lister over filtre er denne udvidelse intet. Så hvis du nogensinde  virkelig ønsker at bidrage med noget, tænk på de mennesker, der arbejder hårdt for at vedligeholde filterlister, du bruger, som blev stillet til rådighed til brug af alle gratis.
+
+***
+
+Gratis.
+Open source med offentlige licens (GPLv3)
+For brugere af brugere.
+
+Bidragydere: https://github.com/gorhill/uBlock/graphs/contributors
+
+***
+
+Det er ganske en tidlig version, holde dette i tankerne, når du gennemser.
+
+Projekt Ændringslog:
+https://github.com/gorhill/uBlock/wiki/Change-log

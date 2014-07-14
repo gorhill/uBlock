@@ -33,7 +33,7 @@ Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det st�
 
 ***
 
-µBlock är ingenting utan filterlistorna. Så om du någonsin vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
+µBlock vore ingenting utan filterlistorna. Så om du verkligen vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
 
 ***
 

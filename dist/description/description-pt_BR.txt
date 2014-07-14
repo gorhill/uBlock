@@ -1,4 +1,4 @@
-Um bloqueador eficiente: Baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. mais do que outros bloqueadores populares lá fora.
+Um bloqueador eficiente: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. mais do que outros bloqueadores populares lá fora.
 
 Visão geral de sua eficiência: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
 
@@ -17,7 +17,7 @@ Fora da caixa, essas listas de filtros são carregadas e aplicadas:
 - Peter Lowe’s Ad server list
 - Malware Domains List
 
-Mais listas estão disponíveis para que você selecione se você deseja:
+Mais listas estão disponíveis para você escolher, se desejar:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
@@ -26,9 +26,9 @@ Mais listas estão disponíveis para que você selecione se você deseja:
 - Spam404
 - Etc.
 
-Claro, quanto mais filtros habilitado, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy duas listas extras, Ad do hpHosts e acompanhamento de servidores, µBlock ainda tem uma pegada de memória menor do que outros bloqueadores muito populares lá fora.
+Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, µBlock ainda tem uma pegada de memória menor do que outros bloqueadores muito populares lá fora.
 
-Também, estar ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do web site..--especialmente aquelas listas que são normalmente usadas como arquivo hosts.
+Também, estar ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do site..--especialmente aquelas listas que são normalmente usadas como arquivo hosts.
 
 ***
 
@@ -36,7 +36,7 @@ Sem as listas predefinidas de filtros, esta extensão não é nada. Então, se v
 
 ***
 
-Grátis.
+Gratuito
 Código aberto com licença pública (GPLv3)
 De usuários para usuários.
 
@@ -44,7 +44,7 @@ Contribuidores: https://github.com/gorhill/uBlock/graphs/contributors
 
 ***
 
-É uma versão inicial, tenha isso em mente quando você revisar.
+Essa é uma versão inicial, tenha isso em mente quando você revisar.
 
 Log de alterações de projeto:
 https://github.com/gorhill/uBlock/wiki/Change-log
