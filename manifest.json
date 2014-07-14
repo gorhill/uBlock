@@ -48,10 +48,5 @@
         "webRequestBlocking",
         "http://*/*",
         "https://*/*"
-    ],
-    "web_accessible_resources": [
-        "css/noop.css",
-        "img/noop.png",
-        "js/noop.js"
     ]
 }
