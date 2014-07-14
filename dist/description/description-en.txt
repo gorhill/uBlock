@@ -40,7 +40,8 @@ Free.
 Open source with public license (GPLv3)
 For users by users.
 
-Contributors: https://github.com/gorhill/uBlock/graphs/contributors
+Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contributors @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
