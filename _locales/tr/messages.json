@@ -4,147 +4,147 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endlich ein effizienter Blocker für Chromium-basierte Browser. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
+    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Einstellungen",
+    "message":"Ayarlar",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"Vorgegebene Filter",
+    "message":"3. şahıs süzgeçler",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Deine Filter",
+    "message":"Süzgeçlerin",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistiken",
+    "message":"İstatistikler",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Über",
+    "message":"Hakkında",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"klicke das An-\/Ausschalter-Symbol, um µBlock für diese Seite <br>permanent ein- oder auszuschalten<br>",
+    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockierte Anforderungen",
+    "message":"istek engellendi",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"auf dieser Seite",
+    "message":"on this page",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"seit Installation",
+    "message":"since install",
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Erzeugen",
+    "message":"Oluştur",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Auswählen",
+    "message":"Seç",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Beenden",
+    "message":"Çık",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netzwerk Filter",
+    "message":"Net filters",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetische Filter",
+    "message":"Cosmetic filters",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Verstecke die Platzhalter für blockierte Elemente",
+    "message":"Hide placeholders of blocked elements",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anforderungen auf dem Icon",
+    "message":"Show the number of blocked requests on the icon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} eindeutig blockierte Hostnamen aus:",
+    "message":"{{ubiquitousBlacklistCount}} network filters from:",
     "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} benutzt aus {{total}}",
+    "message":"{{used}} used out of {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Adblock+ Filter zum Verstecken von Elementen analysieren und anwenden.",
+    "message":"Parse and enforce Adblock+ element hiding filters.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} Filter zum Verstecken von Elementen genutzt.",
+    "message":"{{abpHideFilterCount}} element hiding filters used.",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listen blockierter Hostnamen",
+    "message":"Lists of blocked hosts",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Änderungen anwenden",
+    "message":"Değişiklikleri uygula",
     "description":"English: Apply changes"
   },
   "1pFormatHint":{
-    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importieren und anfügen",
+    "message":"Import and append",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportieren",
+    "message":"Çıkart",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Änderungen anwenden",
+    "message":"Apply changes",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Protokollieren von blockierten Elementen aktivieren",
+    "message":"Enable the logging of blocked requests",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Logging von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Protokollieren von nicht-blockierten Elementen aktivieren",
+    "message":"Enable the logging of non-blocked requests",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blockierte Anfragen",
+    "message":"Engellenen istekler",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Zugelassene Anfragen",
+    "message":"İzin verilen istekler",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Typ",
+    "message":"Tür",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Alan adı",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -152,71 +152,71 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Süzgeç",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite",
+    "message":"Bu sayfa için engelleme isteği yok",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite gefunden",
+    "message":"No non-blocked requests logged for this page",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Changelog<\/a>",
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>",
     "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
   },
   "aboutCode":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Quellcode (GPLv3)<\/a>",
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>",
     "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
   },
   "aboutExtensionDataHeader":{
-    "message":"Externe Ressourcen dieser Erweiterung",
+    "message":"Extension data",
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
-    "message":"Von <i>µBlock<\/i> benutzte externe Ressourcen können hier upgedatet werden, ohne auf eine neue Version dieser Erweiterung warten zu müssen. Diese Ressourcen werden bezogen vom <a href=\"https:\/\/github.com\/gorhill\/ublock\">Github Repository dieses Projekts<\/a>.",
+    "message":"<i>µBlock<\/i> assets can be updated here without having to wait for the next release of the extension. These assets are pulled from the <a href=\"https:\/\/github.com\/gorhill\/ublock\">project's Github repository<\/a>.",
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
-    "message":"Pfad",
+    "message":"Yol",
     "description":"Path column header"
   },
   "aboutAssetsUpdateColStatus":{
-    "message":"Status",
+    "message":"Durum",
     "description":"Status column header"
   },
   "aboutAssetsUpdateGetListError":{
-    "message":"Ein Fehler ist aufgetreten. Ist <b>XHR<\/b> blockiert für <b>raw2.github.com<\/b>?",
+    "message":"Bir hata oluştu. <b>XHR<\/b> , <b>raw2.github.com<\/b> için engellendi mi?",
     "description":"Successful outcome of clicking 'update' button"
   },
   "aboutAssetsUpdateStatusAdded":{
-    "message":"Hinzufügen",
+    "message":"Ekle",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusChanged":{
-    "message":"Neue Version verfügbar",
+    "message":"Yeni sürüm mevcut",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Aktuell",
+    "message":"Güncel",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusRemoved":{
-    "message":"Entfernen",
+    "message":"Kaldır",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateButton":{
-    "message":"Aktualisieren",
+    "message":"Güncelle",
     "description":"Update button"
   },
   "aboutAssetsUpdatingButton":{
-    "message":"Aktualisiert...",
+    "message":"Güncelleniyor...",
     "description":"Updating..."
   },
   "dummy":{
-    "message":"Dieser Eintrag muss der letzte sein",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

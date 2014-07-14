@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "message":"Наконец, эффективный блокировщик для браузеров на базе Chromium, не нагружающий ЦП и память.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -16,11 +16,11 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Your filters",
+    "message":"Ваши фильтры",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistics",
+    "message":"Статистика",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
@@ -28,47 +28,47 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+    "message":"Нажмите кнопку питания, чтобы <br>постоянно отключить или включить <br>µBlock для текущего сайта",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"requests blocked",
+    "message":"запросов заблокировано",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"on this page",
+    "message":"на этой странице",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"со времени установки",
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Создать",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Выбрать",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Выйти",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Сетевые фильтры",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Косметические фильтры",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Скрыть оставшееся от заблокированных элементов место",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Показать количество заблокированных запросов на иконке",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -84,7 +84,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element hiding filters used.",
+    "message":"{{abpHideFilterCount}} фильтров использовано.",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -116,35 +116,35 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"Включить ведение журнала для заблокированных запросов",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Вы можете проверить сведения о заблокированных запросах, включив эту опцию. Журнал заблокированных запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"Включить ведение журнала для незаблокированных запросов",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Вы можете проверить сведения о незаблокированных запросах, включив эту опцию. Журнал незаблокированных запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"Заблокированные запросы",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"Разрешённые запросы",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Тип",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Домен",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -152,15 +152,15 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Фильтр",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No blocked requests logged for this page",
+    "message":"Нет заблокированных запросов на этой странице",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"Нет незаблокированных запросов на этой странице",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{

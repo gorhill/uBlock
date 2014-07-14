@@ -44,23 +44,23 @@
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Crea",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Seleziona",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Esci",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Filtri di rete",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Filtri cosmetici",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
