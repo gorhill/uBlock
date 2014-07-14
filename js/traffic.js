@@ -29,6 +29,58 @@
 
 /******************************************************************************/
 
+// Intercept root frame requests. This is where we identify and block popups.
+
+var onBeforeRootDocumentRequestHandler = function(tabId, details) {
+    var µb = µBlock;
+
+    // Ignore non-http schemes: I don't think this could ever happened
+    // because of filters at addListener() time... Will see.
+    var requestURL = details.url;
+    if ( requestURL.slice(0, 4) !== 'http' ) {
+        console.error('onBeforeRootDocumentRequestHandler(): Unexpected scheme!');
+        µb.unbindTabFromPageStats(tabId);
+        return;
+    }
+
+    // Lookup the page store associated with this tab id.
+    var pageStore = µb.bindTabToPageStats(tabId, requestURL);
+    if ( !pageStore ) {
+        return;
+    }
+
+    // Heuristic to determine whether we are dealing with a popup:
+    // - the page store is new (it's not a reused one)
+
+    // Can't be a popup, the tab was in use previously.
+    if ( pageStore.previousPageURL !== '' ) {
+        return;
+    }
+
+    var reason = false;
+    if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
+        reason = µb.abpFilters.matchString(
+            pageStore,
+            requestURL,
+            'popup',
+            µb.URI.hostnameFromURI(requestURL)
+        );
+    }
+
+    // Not blocked?
+    if ( reason === false || reason.slice(0, 2) === '@@' ) {
+        return;
+    }
+
+    // It is a popup, block and remove the tab.
+    µb.unbindTabFromPageStats(tabId);
+    chrome.tabs.remove(tabId);
+
+    return { 'cancel': true };
+};
+
+/******************************************************************************/
+
 // Intercept and filter web requests according to white and black lists.
 
 var onBeforeRequestHandler = function(details) {
@@ -40,24 +92,22 @@ var onBeforeRequestHandler = function(details) {
         return;
     }
 
-    var µb = µBlock;
+    // Special handling for root document.
     var requestType = details.type;
-
-    // Never block root main doc.
     if ( requestType === 'main_frame' && details.parentFrameId < 0 ) {
-        µb.bindTabToPageStats(tabId, details.url);
-        return;
+        return onBeforeRootDocumentRequestHandler(tabId, details);
     }
 
+    // Ignore non-http schemes: I don't think this could ever happened
+    // because of filters at addListener() time... Will see.
     var requestURL = details.url;
-    var µburi = µb.URI.set(details.url);
-
-    // Ignore non-http schemes
-    var requestScheme = µburi.scheme;
-    if ( requestScheme.indexOf('http') !== 0 ) {
+    if ( requestURL.slice(0, 4) !== 'http' ) {
+        console.error('onBeforeRequestHandler(): Unexpected scheme!');
         return;
     }
 
+    var µb = µBlock;
+    var µburi = µb.URI.set(requestURL);
     var requestHostname = µburi.hostname;
     var requestPath = µburi.path;
 
@@ -76,9 +126,7 @@ var onBeforeRequestHandler = function(details) {
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
-        //quickProfiler.start('abpFilters.matchString');
         reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
-        //quickProfiler.stop();
     }
     // Record what happened.
     pageStore.recordRequest(requestType, requestURL, reason);

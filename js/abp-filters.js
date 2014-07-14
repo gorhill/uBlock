@@ -28,6 +28,17 @@
 
 /******************************************************************************/
 
+// fedcba9876543210
+// |   |  |
+// |   |  |
+// |   |  |
+// |   |  |
+// |   |  |
+// |   |  |
+// |   |  +---- party [0 - 7]
+// |   +---- type [0 - 15]
+// +---- [BlockAction | AllowAction]
+
 const BlockAction = 0 << 15;
 const AllowAction = 1 << 15;
 
@@ -74,7 +85,8 @@ var typeNameToTypeValue = {
             'script': 5 << 11,
     'xmlhttprequest': 6 << 11,
          'sub_frame': 7 << 11,
-             'other': 8 << 11
+             'other': 8 << 11,
+             'popup': 9 << 11
 };
 
 // ABP filters: https://adblockplus.org/en/filters
@@ -805,7 +817,8 @@ FilterParser.prototype.toNormalizedType = {
             'script': 'script',
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
-             'other': 'other'
+             'other': 'other',
+             'popup': 'popup'
 };
 
 /******************************************************************************/
@@ -955,7 +968,7 @@ FilterParser.prototype.parse = function(s) {
             continue;
         }
         if ( opt === 'popup' ) {
-            this.elemHiding = true;
+            this.parseOptType('popup', not);
             break;
         }
         this.unsupported = true;

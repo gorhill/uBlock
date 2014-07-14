@@ -61,7 +61,6 @@ return {
         },
 
     pageStores: {},
-    pageStoreDump: {},
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,
     storageUsed: 0,

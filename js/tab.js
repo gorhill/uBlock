@@ -41,9 +41,15 @@
         if ( !tab.url || tab.url === '' ) {
             return;
         }
-        if ( changeInfo.url && µBlock.pageStores[tabId] ) {
-            µBlock.updateBadgeAsync(tabId);
+        var µb = µBlock;
+        if ( !changeInfo.url || !µb.pageStores[tabId] ) {
+            return;
         }
+        // If URL is unsupported scheme, unbind tab
+        if ( changeInfo.url && changeInfo.url.slice(0, 4) !== 'http' ) {
+            µb.unbindTabFromPageStats(tabId);
+        }
+        µb.updateBadgeAsync(tabId);
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
@@ -92,32 +98,23 @@
 µBlock.bindTabToPageStats = function(tabId, pageURL) {
     this.updateBadgeAsync(tabId);
 
-    // First unbind whatever page store is bound to the tab id.
-    this.unbindTabFromPageStats(tabId);
-
     // https://github.com/gorhill/httpswitchboard/issues/303
-    // Normalize to a page-URL.
+    // Normalize page URL
     pageURL = this.normalizePageURL(pageURL);
 
-    // do not create stats store for urls which are of no interests
+    // Do not create a page store for URLs which are of no interests
     if ( pageURL === '' ) {
+        this.unbindTabFromPageStats(tabId);
         return null;
     }
 
-    // Bring back existing page store or create new one.
+    // Reuse page store if one exists: this allows to guess if a tab is
+    // a popup.
     var pageStore = this.pageStores[tabId];
-    if ( !pageStore ) {
-        var k = pageURL + ' ' + tabId;
-        pageStore = this.pageStoreDump[k];
-        if ( pageStore ) {
-            delete this.pageStoreDump[k];
-        }
-    }
-
-    if ( !pageStore ) {
+    if ( pageStore ) {
+        pageStore.reuse(pageURL);
+    } else {
         pageStore = this.PageStore.factory(tabId, pageURL);
-        pageStore.perLoadAllowedRequestCount =
-        pageStore.perLoadBlockedRequestCount = 0;
     }
 
     //console.log('µBlock> bindTabToPageStats(%d, "%s")', tabId, pageURL);
@@ -127,12 +124,6 @@
 };
 
 µBlock.unbindTabFromPageStats = function(tabId) {
-    var pageStore = this.pageStores[tabId];
-    if ( pageStore ) {
-        //pageStore.disposeTime = Date.now();
-        //this.pageStoreDump[pageStore.pageURL + ' ' + tabId] = pageStore;
-        //console.log('µBlock> unbindTabFromPageStats(%d)', tabId);
-    }
     delete this.pageStores[tabId];
 };
 

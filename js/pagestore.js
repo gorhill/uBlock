@@ -60,6 +60,22 @@ function PageStore(tabId, pageURL) {
 
 PageStore.prototype.init = function(tabId, pageURL) {
     this.tabId = tabId;
+    this.previousPageURL = '';
+    this.pageURL = pageURL;
+    this.pageHostname = µb.URI.hostnameFromURI(pageURL);
+    this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
+    this.perLoadBlockedRequestCount = 0;
+    this.perLoadAllowedRequestCount = 0;
+    this.blockedRequests = {};
+    this.allowedRequests = {};
+    this.disposeTime = 0;
+    return this;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.reuse = function(pageURL) {
+    this.previousPageURL = this.pageURL;
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
