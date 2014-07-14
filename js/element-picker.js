@@ -658,6 +658,7 @@ var startPicker = function() {
             'font: 12px sans-serif;',
             'text-transform: none;',
             'vertical-align: baseline;',
+            'color: #000;',
             'background: transparent;',
         '}',
         '.µBlock button {',
