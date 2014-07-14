@@ -71,7 +71,11 @@
         },
     "easylist-downloads.adblockplus.org/advblock.txt": {
         "off": true,
-        "title": "EasyList RU AdList (дополнение к EasyList)"
+        "title": "RU AdList (Дополнительная региональная подписка)"
+        },
+    "easylist-downloads.adblockplus.org/bitblock.txt": {
+        "off": true,
+        "title": "RU BitBlock List (Дополнительная подписка фильтров)"
         },
     "easylist-downloads.adblockplus.org/easylistchina.txt": {
         "off": true,
