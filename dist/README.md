@@ -1,6 +1,6 @@
 ## INSTALL
 
-- Download and unzip `ublock_{version}.zip` (latest version desirable).
+- Download and unzip `ublock_{version}.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
 - Go to chromium/chrome *Extensions*.
 - Click to check *Developer mode*.
 - Click *Load unpacked extension...*.
