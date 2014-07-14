@@ -573,13 +573,13 @@ var onSvgHovered = function(ev) {
         return;
     }
 
-    svgRoot.style.display = 'none';
+    svgRoot.style.pointerEvents = 'none';
     var elem = document.elementFromPoint(ev.clientX, ev.clientY);
     if ( elem == document.body || elem === document.documentElement ) {
         elem = null;
     }
     highlightElements(elem ? [elem] : []);
-    svgRoot.style.display = '';
+    svgRoot.style.pointerEvents = 'auto';
 };
 
 /******************************************************************************/
