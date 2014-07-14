@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4183
-! Last modified: 11 Jul 2014
+! Version: 4232
+! Last modified: 14 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -68,6 +68,12 @@
 ##[href^="http://jofiles.com/"]
 ##[href^="http://yourfreesoftonline.com/"]
 ##[href^="http://gotgamecheats.net/"]
+##[href^="http://fileups.net/"]
+##[href^="http://swiftdownload.net/"]
+##[href^="http://lockredirect.com/"]
+##[href^="http://reliabledownloads.org/"]
+##[href^="http://highfiles.net/"]
+##[href^="http://www.needforfile.net/"]
 !
 !
 !
@@ -4178,6 +4184,49 @@ dream-file.com##[alt="Regular Download"]
 ||playmovie.biz^
 ||annidha.net^
 ||eulfa.com^
+||sonyps3jailbreak.com^
+||evodownload.com^
+||psncodegeneratorfreeus.com^
+||free-stardollars.com^
+||nosurveyhack.net^
+||thesupercheats.com^
+||igfreefollowers.com^
+||freeaeriapoints.com^
+||hackextreme.com^
+||monsterwarlordhack.net^
+||vvassup.com^
+||weeworldvip.com^
+||freenetflixaccounts.co^
+||netflix-accounts.com^
+||generateurdekamas.org^
+||primecodes.net^
+||webkinz-codes.com^
+||crzycheats.com^
+||dragoncityhackstool.net^
+||generateurdecodes.net^
+||mspointgenerator.net^
+||youdownloadreadynow.com^
+||latestps3jailbreak.org^
+||playstationcards.net^
+||netflixaccountsforfree.com^
+||fbunblockit.com^
+||fbhackz.com^
+||downloadfullcracks.com^
+||theft4me.com^
+||hackgmx.com^
+||lockredirect.com^
+||androidappsgameshacks.com^
+||gratisvps.net^
+||hackinto.net^
+||3d-download.org^
+||anonyscrip.com^
+||arttoxfb.com^
+||originalhack.info^
+||gamekeyhack.com^
+||2014hacks.com^
+||cheatgame4u.com^
+||go4freehacks.com^
+||hot-hacks.com^
 !
 !
 !

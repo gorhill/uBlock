@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: Tl+foKHBNe0+p2phaiVR/w
-! Version: 201407111711
+! Checksum: 5ZubCJmlRvriXpUPmfyizw
+! Version: 201407141531
 ! Title: EasyPrivacy
-! Last modified: 11 Jul 2014 17:11 UTC
+! Last modified: 14 Jul 2014 15:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -934,6 +934,7 @@
 /imp.php?a
 /imp_cnt.gif?
 /imp_img.php?
+/impress.php?
 /impression.ashx
 /impression.gif?
 /impression.js?
@@ -1079,6 +1080,7 @@
 /logEvent?
 /logextrastats.
 /logger.ashx?
+/logger.dll/*
 /logger/p.gif?
 /logger?*ctxid=
 /logger?d=
@@ -1369,6 +1371,7 @@
 /popanalytics.
 /popupCookieWriter.
 /popuplog/*
+/postlog?
 /powercount.
 /pphlogger.
 /pr.php?
@@ -3066,7 +3069,6 @@ http://utm.
 ||netmng.com^$third-party
 ||netratings.com^$third-party
 ||newrelic.com^$third-party
-||newsanalytics.com.au^$third-party
 ||newscurve.com^$third-party
 ||newstatscounter.info^$third-party
 ||newtrackmedia.com^$third-party
@@ -4152,6 +4154,7 @@ http://utm.
 ||webtraffstats.net^$third-party
 ||whoseesyou.com^$third-party
 ||wstatslive.com^$third-party
+||zt-dst.com^$third-party
 ! Japanese
 ||a-cast.jp^$third-party
 ||beanscattering.jp^$third-party
@@ -4371,6 +4374,7 @@ http://utm.
 ||50.16.191.59^$third-party,domain=~tritondigital.net.ip
 ||51network.com^$third-party
 ||5251.net/stat.jsp?
+||54.246.124.188/analytics/$domain=~racinguk.ip
 ||58.68.146.44:8000^$third-party,domain=~peoplesdaily.cn.ip
 ||5min.com/flashcookie/StorageCookieSWF_
 ||61.129.118.83^$third-party,domain=~shanghaidaily.cn.ip
@@ -4725,6 +4729,7 @@ http://utm.
 ||d3a2okcloueqyx.cloudfront.net^
 ||d3cxv97fi8q177.cloudfront.net^
 ||d3ezl4ajpp2zy8.cloudfront.net^
+||d3h1v5cflrhzi4.cloudfront.net^
 ||d3hr5gm0wlxm5h.cloudfront.net^
 ||d3l3lkinz3f56t.cloudfront.net^
 ||d3ojzyhbolvoi5.cloudfront.net^
@@ -4767,6 +4772,7 @@ http://utm.
 ||domodomain.com^*/ddsense.aspx?
 ||doug1izaerwt3.cloudfront.net^
 ||dreamhost.com/*.cgi?$image,third-party
+||ds-aksb-a.akamaihd.net^
 ||dt.sellpoint.net^
 ||dtym7iokkjlif.cloudfront.net/dough/
 ||du8783wkf05yr.cloudfront.net^$third-party
@@ -4838,6 +4844,7 @@ http://utm.
 ||fliqz.com/metrics/$~object-subrequest
 ||flixster.com^*/analytics.
 ||flux.com/geo.html?
+||followistic.com/widget/stat/
 ||fonts.com/t/trackingCode.js
 ||footballmedia.com/tracking/
 ||forms.aweber.com^*/displays.htm?id=
@@ -4972,7 +4979,6 @@ http://utm.
 ||keywee.co/analytics.js?
 ||keyword.daumdn.com^
 ||kiwari.com^*/impressions.asp?
-||knorex.asia/static-tracking/
 ||l-host.net/etn/omnilog?
 ||l.coincident.tv^
 ||l.ooyala.com^
@@ -4998,6 +5004,7 @@ http://utm.
 ||live2support.com^*/js_lstrk.
 ||livechatinc.com^*/control.cgi?
 ||livefyre.com/tracking/
+||livefyre.com^*/tracker.js
 ||livefyre.com^*/tracking/
 ||livehelpnow.net/lhn/jsutil/getinvitationmessage.aspx?
 ||livejasmin.com/awe/$image
@@ -5022,6 +5029,7 @@ http://utm.
 ||longtailvideo.com^*/yourlytics-
 ||longurl.it/_t.gif?$third-party
 ||loomia.com^*/setcookie.html
+||loyalty.bigdoor.com^$third-party
 ||lsimg.net^*/vs.js
 ||ltassrv.com/track/
 ||luminate.com/track/
@@ -5157,6 +5165,7 @@ http://utm.
 ||pixel.solvemedia.com^
 ||pixel.tree.com^
 ||pixel.vmm-satellite2.com^
+||pixel.wp.com^
 ||pixel.xmladfeed.com^$third-party
 ||pixel.yola.com^
 ||pixels.youknowbest.com^$third-party
@@ -5325,6 +5334,7 @@ http://utm.
 ||stats.load.com^
 ||stats.magnify.net^
 ||stats.manticoretechnology.com^
+||stats.netbopdev.co.uk^
 ||stats.olark.com^
 ||stats.ozwebsites.biz^
 ||stats.polldaddy.com^
@@ -5345,6 +5355,7 @@ http://utm.
 ||stats.webs.com^
 ||stats.webstarts.com^$third-party
 ||stats.whicdn.com^$third-party
+||stats.wp.com^
 ||stats.yourminis.com^
 ||stats2.lightningcast.net^
 ||stats3.unrulymedia.com^
@@ -5464,6 +5475,7 @@ http://utm.
 ||tracking.godatafeed.com^
 ||tracking.i-click.com.hk^
 ||tracking.interweave.com^$third-party
+||tracking.jotform.com^
 ||tracking.keywee.co^
 ||tracking.lengow.com^
 ||tracking.listhub.net^
@@ -6463,6 +6475,7 @@ http://utm.
 ||clk.about.com^
 ||clkstat.china.cn^
 ||clog.go.com^
+||cloudfront.net/1x1.gif?
 ||cloudfront.net/amznUrchin.js
 ||cloudfront.net/bbc-filter.js
 ||cloudfront.net/m/princess/ae.js
@@ -7323,6 +7336,7 @@ http://utm.
 ||quintcareers.4jobs.com/Common/JavaScript/functions.tracking.js
 ||quotesonic.com/vendor/pixel.cfm
 ||r.bbci.co.uk^
+||racinguk.com/images/home_sponsors/
 ||radio-canada.ca/lib/TrueSight/markerFile.gif?
 ||radio.cz/assets/js/analytics.js
 ||radioplayer.co.uk/v3/analytics.html?
@@ -7559,6 +7573,7 @@ http://utm.
 ||stats.slideshare.net^
 ||stats.storify.com^
 ||stats.suite101.com^
+||stats.thejournal.co.uk^
 ||stats.townnews.com^
 ||stats.uswitch.com^
 ||stats.video.search.yahoo.com^

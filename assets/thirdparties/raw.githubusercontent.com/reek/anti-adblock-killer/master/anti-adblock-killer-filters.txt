@@ -80,12 +80,12 @@
 ! check
 ! No Adblock - http://www.noadblock.com/
 /plugins/no-adblock/*
-/blockBlock.jquery.js
+/blockBlock.jquery.js$script
 ! WordPress AdBlock Blocker - http://thisismyurl.com/
 @@/wp-content/plugins/wordpress-adblock-blocker/adframe.js
 ! Anti-Block - http://www.bukssaayman.co.za/anti-block/
 /plugins/anti-block/*
-/anti-block-modal.js
+/anti-block-modal.js$script
 ! AdBlock Alerter
 ! https://github.com/wp-plugins/adblock-alerter
 #@##div-gpt-ad-1-0

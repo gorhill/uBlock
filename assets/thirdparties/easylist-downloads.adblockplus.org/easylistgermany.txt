@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: +Qp6Ti2NjNFfn2WFNNQuPQ
-! Version: 201407111711
+! Checksum: uPJJarvCQ9Wg8tkPRnTQ1g
+! Version: 201407141540
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 11 Jul 2014 17:10 UTC
+! Last modified: 14 Jul 2014 15:40 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3614,7 +3614,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||xbox-newz.de/portal/images/brandings/
 ||xbox360freaks.de/images/baner.swf
 ||xdate.ch/banners/
-||xenec.stol.it^
 ||xhamster.info/banner/
 ||xhamster.info^*/slideimage.js
 ||xp-antispy.org^*/sponsor_
@@ -3669,6 +3668,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /m*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /t*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
 ||gamona.de/assets/*_1000x140.
 ||gamona.de/assets/*_160x800_
@@ -4350,7 +4350,6 @@ orf.at###monsterdiv
 berlin-nutten.com,deutsche-erotikfilme.com###more-sex
 radio-teddy.de###mpl
 gamigo.de###mrbox
-androidnext.de###mrec_sidebar
 visions.de###mrect
 morgenpost.de###mrect01
 morgenpost.de###mrect02
@@ -4531,6 +4530,7 @@ laola1.at###presenting_horizontal_container
 laola1.at###presenting_left
 laola1.at###presenting_right
 schoener-fernsehen.com###previewtxt + div[id][style="display: block;"]
+androidnext.de###productliste
 okitalk.com###promo_foot
 okitalk.com###promo_left
 okitalk.com###promo_page
@@ -7610,6 +7610,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||media.epochtimes.de^*/ad_$image
 @@||media.epochtimes.de^*/adbox/$image
 @@||media.epochtimes.de^*/addelivery/$image
+@@||media.epochtimes.de^*/adengine/$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de

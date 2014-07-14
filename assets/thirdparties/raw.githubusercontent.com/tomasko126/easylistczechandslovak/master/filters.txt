@@ -1,13 +1,13 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list for AdBlock and Adblock Plus
-! Last change: 09/07/2014
+! Last change: 13/07/2014
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! License: GNU GPL v3
 ! Email: tomastaro@adblock.sk
 ! Forum: http://adblock.sk/forum
 !
-! ---------- Czech Generic Blocking Rules ----------!
+! ---------- Czech & Slovak Generic Blocking Rules ----------!
 !
 .com/bannery/
 .cz/ads/$~object_subrequest,domain=~hcplzen.cz
@@ -20,30 +20,35 @@
 .cz/rs/get-iframe.php?
 .etargetnet.
 .lt/banner/
-.swf?clickthru$domain=~postovnisporitelna.cz|~restaurace.cz
+.sk/img/banner
 /a_adv.dat?
 /advantage.$domain=~dama.cz
+/ad_supermedia.php?
 /banner-system/banners/*
+/cron.php?rand=
+/crpoc.php?
 /emonitor.
 /getbanner.aspx?
+/get.fcgi?
 /ImgLib/bannery/*
+/inres/*
 /komercni-sdeleni/*
-/n4/r-head.gif
+/push-ads.
+/reklama.
 /reklama3.
 /reklama_
-/reklamy.
-/scripts/clickjs
-_clickthru.swf?
-##[id^="sklikReklama"]
-##[id^="sm-ad"]
-exashare.com###player_img
-!
-! ---------- Slovak Generic Blocking Rules ----------!
-!
-/reklama.
 /reklama/*
-.sk/img/banner
+/reklamne-
+/reklamy.
+/rennab_prefered/*
+/scripts/clickjs
+/stabilka_
+/stabilky/*
+/zlavovekupony.
+/zlavy.
+_clickthru.swf?
 ^rd.php^$domain=pcforum.sk
+exashare.com###player_img
 !
 ! ---------- Czech 1st party blocking rules ----------!
 !
@@ -65,6 +70,7 @@ exashare.com###player_img
 ||abecedaher.cz/index_banner_
 ||adx.fotoaparat.cz/www/images/
 ||alkoholik.cz/zavislost/images/banners/
+||alza.cz/Foto/ImgGalery/bannery/
 ||archiv.roumen.cz/roumingRLeader.html
 ||autoesa.cz/files/bannery/
 ||avony.cz/mp3splocha.php
@@ -119,6 +125,7 @@ exashare.com###player_img
 ||lamer.cz/images/bg*.jpg
 ||kurzy.sfinance.cz/img/front/sfinance/*banner*
 ||libise.eu/r/
+||liveagent.mobilbonus.cz
 ||logobox.cz/images/banners/
 ||lphard.cz/images/banners/
 ||lui-magazine.cz/images/banners/nove/brand/
@@ -175,6 +182,7 @@ exashare.com###player_img
 ||uschovna.cz/dt-dancer-234x60.swf
 ||videacesky.cz/img/*.swf
 ||videacesky.server.zcom.cz/redirector/redir.php
+||videoad.cz^
 ||war-city.eu/bannery/
 ||war-net.cz/300x200.gif
 ||war-net.cz/aukcent.gif
@@ -203,6 +211,7 @@ exashare.com###player_img
 ! ---------- Slovak 1st party blocking rules ----------!
 !
 ||81.89.48.147/if.html
+||adb.azet.sk
 ||akoviazatkravatu.sk/domain/akoviazatkravatu/files/sponzorovane-odkazy/
 ||autobazar.eu/__branding/
 ||banners.spoluziaci.sk
@@ -211,8 +220,11 @@ exashare.com###player_img
 ||best4you.sk/templates/subSilverPlus/images/Viaczdravialink.swf
 ||bmwklub.sk/images/banners/
 ||c.sme.sk/imgs/ext/napizzu/napizzu.jpg
+||centrum.sk/cpsk/
+||centrum.sk/tip.js
 ||cucaj.sk/images/bannery/
 ||cucaj.sk/Themes/cucaj3/images/bg/bg*.jpg
+||dobrenoviny.sk/*script.js
 ||dot.boss.sk
 ||fileframe.sector.sk/banners/
 ||filmy.kinotip.in/pup.js
@@ -237,12 +249,13 @@ exashare.com###player_img
 ||pcforum.sk/styles/white/imageset/topic_moved.gif
 ||player.joj.sk/age-chooser.swf
 ||poweruploaders.eu/bannery/
-||pricemania.sk/pictures/banners/static/
+||pricemania.sk/pictures/banners/
 ||pricemania.sk/pictures/campaigns/
 ||spartak.sk/pics-new2/reklamy/
 ||sport.aktuality.sk/css/skins/
 ||static.itnews.sk/branding/
 ||tailormysuit.sk/wp-content/uploads/banner*.jpg
+||techbox.sk/*colorbox
 ||totalpozicky.sk/images/banners/
 ||tu-ke.com/certovskezlavy.jpg
 ||tu-ke.com/jozko.png
@@ -285,6 +298,7 @@ exashare.com###player_img
 ||admatik.pl^$third-party
 ||ads.esports.cz^$third-party
 ||adverts.cz^$third-party
+||allewidget.aukro.cz^$third-party
 ||aukro.cz/ap/ap_show.php?$third-party
 ||autoesa.cz/dynbann/$third-party
 ||b.lookit.cz^$third-party,subdocument
@@ -313,6 +327,7 @@ exashare.com###player_img
 ||intext.lookit.cz^$third-party
 ||intext.wdt.cz^$third-party
 ||kamery.praha.eu^$third-party
+||kampane.smartmania.cz^$~third-party
 ||megadarky.cz^$third-party
 ||n.hyperinzerce.cz^$third-party
 ||net4ge.cz^$third-party
@@ -358,12 +373,15 @@ exashare.com###player_img
 @@||cz.adocean.pl/files/js/ado.js$domain=blesk.cz
 @@||fastshare.cz/banner/site_logo.jpg
 @@||g.idnes.cz/o/lidovky_ln3b/poutaky/sport/
+@@||heureka.*/crossdomain.xml
+@@||heureka.*/direct/vyvoj-cen/
 @@||hry.cz/ad/ad.aspx?
 @@||hry.sazka.cz/banners/new_banner*.*
 @@||iboys.cz/advert-list.php
 @@||i.imedia.cz/js/im2.js
 @@||moviezone.cz/js/
 @@||ocko.tv/content/adv/flash/
+@@||smartmania.cz/advertisment.js
 @@||sokolov.cz/images/reklama/
 @@||static.cz.prg.cmestatic.com/static/cz/shared/js/adtrack.nova.js
 @@||static.tn.nova.cz/static/cz/shared/js/banners.js
@@ -425,6 +443,7 @@ ulozisko.sk#@##reklama_big
 ##.bazar-box
 ##.etarget
 ##.hp-advert
+##.illustrated.illV.article.columns.col2
 ##.jobscz
 ##.popisreklama
 ##.promo-in-article
@@ -434,6 +453,7 @@ ulozisko.sk#@##reklama_big
 ##.reklama-box
 ##.reklama-left
 ##.reklama-lista
+##.reklama-megaboard
 ##.reklama-right
 ##.reklama-top
 ##.reklama_ahead
@@ -452,8 +472,11 @@ ulozisko.sk#@##reklama_big
 ##.sklik_right
 ##.spored-links
 ##.topreklama
+##.velke_zlavy
 ##.vreklama
 ##.zlavy-box
+##[id^="sklikReklama"]
+##[id^="sm-ad"]
 !
 !---------- Czech Site Specific Element Hiding Rules ----------!
 !
@@ -498,8 +521,19 @@ busportal.cz##DIV[id*="Banner"]
 bydlimekvalitne.cz###block-block-1
 cdr.cz##.not4bbtext
 centrum.cz###top-banner
+centrum.cz##[id^="widget_23"]
+centrum.cz###widget_195
+centrum.cz###widget_135
+centrum.cz###widget_223 > .widgetContent
+centrum.cz###widget_271
+centrum.cz###widget_264
+centrum.cz###widget_208
+centrum.cz###widget_209 > .widget-content
 centrum.cz##.container-adfox
 centrum.cz##.najisto
+centrum.cz##.widget.widgetType-amplionwidgets_advancedamplionwidget.widgetSlug-amplion
+centrum.cz##.widget.widgetType-rsswidgets_rsswidget.widgetSlug-dovolena-rss
+centrum.cz##.widget.widgetType-carswidgets_carswidget.widgetSlug-cars
 cervenykostelec.cz##.sliderbubble-right
 ceskatelevize.cz###commercialBox
 ceskatelevize.cz###etargetBox
@@ -819,6 +853,8 @@ amateri.sk###banner_left1
 amateri.sk###top_rekl
 androidportal.zoznam.sk###text-63
 atlas.sk##DIV[id*="reklamne"]
+atlas.sk##.icq
+atlas.sk##.competitions
 autobazar.eu##.bannero2
 automoto.cas.sk##.autobazar.autobazar-hp
 automoto.cas.sk##.box-autobazar
@@ -871,13 +907,17 @@ pretaktovanie.zoznam.sk##.post.bg5
 slovnik.azet.sk##.articlesBnr
 sme.sk###b-napizzu
 sme.sk###wg_megaboard
+sme.sk##DIV[style="height: 315px;"]
 spoluziaci.sk##[id^="rekl_google"]
 sport.aktuality.sk###skin_link_left
 sport.aktuality.sk###skin_link_right
+techbox.sk##.anotacia-sponsored
+techbox.sk##.inzercia
 topky.sk##.ad
 topky.sk##.addbox.avizo
 topky.sk##.box_advertisment.addbox.recycle
 topky.sk##.nastip
+topky.sk##.takeoverKlik
 topky.sk###top-offers-slider
 topnovinky.sk###rekl_left_banner
 warmacher.com###reklamne_bannery
@@ -895,10 +935,3 @@ zoznam.sk##[id*="BUTTON_ZOZNAM"]
 titulky.com#@##reklama
 @@||titulky.com/bannery/$image
 @@||bbelements.com/bb/bb_one2n.js$domain=titulky.com
-!Dobrenoviny.sk!
-@@||a1media.sk$domain=dobrenoviny.sk
-@@||adtech.de$domain=dobrenoviny.sk
-@@||atemda.com$domain=dobrenoviny.sk
-@@.etargetnet.$domain=dobrenoviny.sk
-dobrenoviny.sk#@#.adsbygoogle
-dobrenoviny.sk#@#a[href^="http://adserver.adtech.de/"]

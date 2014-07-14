@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: lL0V6bOBWuw7bskGJKuG/w
-! Version: 201407111711
+! Checksum: 8de705hCJlNTWKqx3c2HPQ
+! Version: 201407141531
 ! Title: Fanboy's Annoyance List
-! Last modified: 11 Jul 2014 17:11 UTC
+! Last modified: 14 Jul 2014 15:31 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -523,9 +523,11 @@ _social_rss.
 /facebook-share.
 /facebook-small.
 /facebook-space.
+/facebook-top.
 /facebook-v2.
 /facebook-vertical.
 /facebook.gif|$domain=~facebook.com
+/facebook.svg
 /facebook1.png|$domain=~facebook.com
 /facebook16x16.
 /facebook2.png|$domain=~facebook.com
@@ -1197,6 +1199,7 @@ _social_rss.
 /PinterestIcon.
 /pintrest-button.
 /pintrest-icon.
+/pintrest.
 /pintrest_
 /pix/Share-
 /plugins/2-click-socialmedia-buttons/*$~stylesheet
@@ -1571,6 +1574,7 @@ _social_rss.
 /social_print.
 /social_reddit_
 /social_small/*
+/social_sprite-
 /social_sprite.
 /social_sprite_
 /social_strip.
@@ -1655,6 +1659,7 @@ _social_rss.
 /sprites-social-
 /sprites-social.
 /sprites-social2.
+/sprites/follow-
 /sprites/share-
 /sprites/social-
 /sprites_social.
@@ -1856,6 +1861,7 @@ _social_rss.
 /uploads/*pinterest.jpg
 /uploads/*rss.png
 /uploads/*twitter.png
+/uploads/facebook-
 /uploads/facebook.
 /uploads/twitter-
 /uploads/youtube2.
@@ -1872,7 +1878,7 @@ _social_rss.
 /widgets/twitter/*
 /wordpress-popup/*$domain=ahchealthenews.com
 /wp-content/*/google.png
-/wp-content/*/social_
+/wp-content/*/social_$~stylesheet
 /wp-content/*facebook.png
 /wp-content/*Google+.png
 /wp-content/*googleplus.gif
@@ -2226,6 +2232,7 @@ _youtube_small.
 ###flyout_outer_wrapper
 ###foCookieNotice
 ###follow-rss
+###followistic-root
 ###footer_rss_image
 ###formNewsLetters
 ###formNewsLetters-block
@@ -2357,6 +2364,7 @@ _youtube_small.
 ###rss_widget
 ###rsslisting
 ###savicom_signup
+###scroll-top-link
 ###sdac_feedburner_widget-3
 ###sendtofriend
 ###share-newsletter
@@ -2479,6 +2487,7 @@ _youtube_small.
 ##.cookieBanner
 ##.cookieBar
 ##.cookieBox
+##.cookieDisclaimer
 ##.cookieLaw
 ##.cookieNotice
 ##.cookieOptIn
@@ -3220,6 +3229,7 @@ _youtube_small.
 ###footer-twttr
 ###footer-youtube
 ###footerFacebookLike
+###footerShare
 ###footerSocialBox
 ###footerSocialButtons
 ###footerSocialIcons
@@ -3256,6 +3266,7 @@ _youtube_small.
 ###h-social
 ###hdrSocialPromo
 ###hdr_social_row
+###header-bebo
 ###header-follow
 ###header-share
 ###header-social
@@ -4067,6 +4078,7 @@ _youtube_small.
 ###top-social-links
 ###top-social-share-buttons-container
 ###topSocial
+###top_nav_share_tools
 ###top_share
 ###top_share_widget
 ###top_social_networks_container
@@ -4207,6 +4219,7 @@ _youtube_small.
 ##.ShareTools
 ##.Share_Buttons
 ##.SidebarSocialLinks
+##.Sidebar_followus
 ##.SingleArticleSocialContainer
 ##.SocialAccordion
 ##.SocialArticleHeader
@@ -4528,6 +4541,10 @@ _youtube_small.
 ##.drop_facebook
 ##.dv-social-media
 ##.dzone-social-buttons
+##.e-pinterest-link
+##.e-shares_count
+##.e-social_links
+##.e-subpost_share
 ##.easylikeandshare
 ##.element-share
 ##.element-share-ftr
@@ -4845,6 +4862,7 @@ _youtube_small.
 ##.follow_us_heading
 ##.followandshare
 ##.followbox
+##.followscreen
 ##.followus
 ##.fondo_social
 ##.foot_Facebook
@@ -4988,6 +5006,7 @@ _youtube_small.
 ##.header-socials
 ##.header-twitter
 ##.headerCookie
+##.headerFacebook
 ##.headerGPlusIcon
 ##.headerSocialLinks
 ##.header_fb_icon
@@ -5085,6 +5104,7 @@ _youtube_small.
 ##.icon-circle-facebook
 ##.icon-circle-twitter
 ##.icon-circle-youtube
+##.icon-delicious
 ##.icon-digg
 ##.icon-facebook
 ##.icon-facebook-circle
@@ -5095,6 +5115,7 @@ _youtube_small.
 ##.icon-fark
 ##.icon-fb
 ##.icon-fb-footer
+##.icon-fb-small
 ##.icon-flickr
 ##.icon-google
 ##.icon-google-plus
@@ -5147,6 +5168,7 @@ _youtube_small.
 ##.icon-twitter-encircled
 ##.icon-twitter-sharing
 ##.icon-twitter-sign
+##.icon-twitter-small
 ##.icon-youtube
 ##.icon-youtube-sign
 ##.iconFacebook
@@ -5209,6 +5231,7 @@ _youtube_small.
 ##.ione-widget-facebook-activity
 ##.ishare
 ##.isocial
+##.it-social-tabs
 ##.item-share-tools
 ##.itemSocialLink
 ##.itemSocialLinks
@@ -6161,6 +6184,7 @@ _youtube_small.
 ##.socialLinkBar
 ##.socialLinks
 ##.socialLinks-alt
+##.socialLinksContainer
 ##.socialLinksNew
 ##.socialList
 ##.socialLogo
@@ -6222,6 +6246,7 @@ _youtube_small.
 ##.social_btn_single
 ##.social_btns
 ##.social_button
+##.social_buttons_bar
 ##.social_buttons_new
 ##.social_buttons_top
 ##.social_butts
@@ -6461,6 +6486,9 @@ _youtube_small.
 ##.text-m-join-us-on-facebook
 ##.text_list_inline
 ##.th-sharecounts
+##.theme-icon-facebook
+##.theme-icon-pinterest
+##.theme-icon-twitter
 ##.ticker-tweet
 ##.tipsy-social-icon-container
 ##.titleSocial
@@ -7248,6 +7276,7 @@ _youtube_small.
 ||fanconverter.wetpaint.me^$third-party
 ||filamentapp-assets.s3.amazonaws.com^$third-party
 ||flickr.com/badge_code_$third-party
+||followistic.com^$third-party
 ||getpocket.com/button?$third-party
 ||google.com/_/+1/$third-party
 ||google.com^*/fastbutton?$third-party
@@ -7459,6 +7488,9 @@ _youtube_small.
 ||blogspot.com^*/twitter.png
 ||burntorangereport.com/upload/scripts/popup.js
 ||chicagotribune.com/sn.php
+||cloudfront.net/facebook/
+||cloudfront.net/facebookpage/
+||cloudfront.net/googleplus/
 ||cloudfront.net/instagram/
 ||cloudfront.net/linkedin/
 ||cloudfront.net/twitter/
@@ -7489,6 +7521,9 @@ _youtube_small.
 ||phoronix.com/*/twitter.png
 ||seocentro.com/bookmark/
 ||sourceforge.net/social/
+||theecologist.org/siteimage/scale/0/0/132471.gif
+||theecologist.org/siteimage/scale/0/0/132472.gif
+||theecologist.org/siteimage/scale/0/0/132473.gif
 ||valuewalk.com^*/fb.png
 ||valuewalk.com^*/google.png
 ||vidyarthiplus.com/js/launch.js
@@ -9125,6 +9160,7 @@ stuff.co.nz##.assignment_icon
 runningshoesguru.com##.attention_grabber
 imgzzz.com##.auth
 avclub.com##.av-modal-backdrop
+inktank.fi##.avia-post-nav
 stickam.com##.awdSnsIcons
 sitepoint.com##.awesome-bar
 worldoftanks.com##.b-content-footer
@@ -9530,6 +9566,7 @@ newser.com##.headerPromos
 gizmag.com##.header_links
 informationweek.com##.header_right_red
 msmagazine.com##.headerright
+heavy.com##.heavy-mailing-widget-sidebar
 cnn.com##.hed_side
 nola.com##.helper
 mint.com##.hmenu
@@ -10685,6 +10722,7 @@ monster.com###jqaAnsDetailFacebook
 thehackernews.com###koddostu-face8
 khaleejtimes.com###kt_home_social
 nationalparkstraveler.com###large-feeds
+paperblog.com###left-block
 represent.us###like-box
 addictivetips.com###like-this
 alternet.org###like_alternet_on_fb
@@ -10862,6 +10900,7 @@ gillette.com##.fan
 conservativepost.com##.fancybox-overlay
 conservativepost.com##.fancybox-wrap
 alternativeto.net,cbs.com,clickindia.com,esquire.com,fashionmagazine.com,idigitaltimes.com,latintimes.com,medicaldaily.com,propublica.org,speedtest.net##.fb
+inktank.fi##.fb-box
 afterdawn.com##.fb_connect
 abajournal.com,allthingsd.com,buddytv.com,comingsoon.net,craveonline.com,dailydot.com,digitaljournal.com,elektronista.dk,geekzenith.com,gospelway.com,gpforums.co.nz,harvard.edu,khaleejtimes.com,macworld.co.uk,masslive.com,mentalfloss.com,mlive.com,modamee.com,nationalgeographic.com,onextrapixel.com,revision3.com,rfi.fr,searchengineland.com,shocktillyoudrop.com,smithsonianmag.com,tech2.in.com,theslingshot.com,tnr.com,topsecretwriters.com,zdnet.com##.fb_iframe_widget
 codegeekz.com##.fbwrapper
@@ -10912,7 +10951,8 @@ ted.com##.icon-center
 cookieandkate.com##.icon-font
 marketingpilgrim.com##.icon-li
 marketingpilgrim.com##.icon-tw
-businessinsider.com,imgur.com,thehackernews.com##.icons
+businessinsider.com,clearspring.co.uk,imgur.com,thehackernews.com##.icons
+clearspring.co.uk##.icons-top
 indianexpress.com##.ie2013-agencies
 alarabiya.net##.img-caption-facebook-container
 ebay.co.uk,ebay.com.au##.info > .share
@@ -11182,6 +11222,7 @@ usatoday.com##span[data-share-method="facebook"]
 liveleak.com##table[style="border: 1px solid; background-color: #eceff5; border-color: #94a3c4;"]
 empireonline.com##table[style="border:1px solid #cfcd95;"]
 science.nasa.gov##table[style="border:1px solid rgb(200,200,200);"]
+riverford.co.uk##table[style="width:10px !important; border: none !important; padding: 2px !important;"]
 professionalmuscle.com##table[width="1370"][border="0"]
 !------------------------Rules for international sites------------------------!
 ! *** easylist:fanboy-addon/fanboy_annoyance_international.txt ***
@@ -11637,7 +11678,7 @@ budstikka.no##.np-videoInfo
 !---------------------------------Whitelists----------------------------------!
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist_general_hide.txt ***
 libcom.org#@##main-share
-cookiechecker.nl#@##mc_embed_signup
+cookiechecker.nl,monkeegenes.co.uk#@##mc_embed_signup
 ~zippyshare.com###share_button
 ~facebook.com###share_feed
 mediafire.com,microcosmgames.com#@##sharebox

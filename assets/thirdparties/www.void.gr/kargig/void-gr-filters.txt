@@ -517,6 +517,7 @@ ad.gr.doubleclick.net
 ||contra.gr/genika/article2841960.ece/BINARY/original/contra-editors-skin.jpg
 ||contra.gr/*/BINARY/original/bc_background_alt.jpg
 ||contra.gr/*/BINARY/original/adidas*.js
+||koutipandoras.gr/sites/default/files/*banner*.swf
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
@@ -850,6 +851,7 @@ news247.gr##.seatimage
 thepressproject.gr###kalogritsas300
 news247.gr###link-deliveras
 contra.gr##A[href="http://goo.gl/3vrB4h"]
+koutipandoras.gr##.banner
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

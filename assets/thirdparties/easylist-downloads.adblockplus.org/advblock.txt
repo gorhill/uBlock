@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: OLfq5S3KNZjXUKkOpJNtEw
-! Version: 201407111710
-! Last modified: 11 Jul 2014 17:10 UTC
+! Checksum: gvQE/9nJYGbRMWbA8iET9w
+! Version: 201407141540
+! Last modified: 14 Jul 2014 15:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -139,7 +139,6 @@
 ||mobruner.com^$~popup,popup
 ||modnakasta.ua^$popup
 ||moi-goroskop.com^$popup
-||motorpage.ru^$popup
 ||my-eromir.net^$popup
 ||mycultures.ru^$popup
 ||panel.gemius.com.ua^$popup
@@ -683,9 +682,6 @@ _tizers.
 ||admulti.ru^
 ||adpix.ru^
 ||adpro.com.ua^
-||adrock.com.ua^
-||adrock.ru^
-||adrock.ua^
 ||adru.net^
 ||adsclick.ru^
 ||adsellers.net^
@@ -2966,8 +2962,10 @@ mmorpg.ua##.back1
 sonikelf.ru##.banner
 allmoldova.com##.banner_main
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
-101.ru,appleinsider.ru,tfilm.tv##.branding
+101.ru,tfilm.tv##.branding
 zaycev.net##.branding-link
+gorod.cn.ua##.branding_left
+gorod.cn.ua##.branding_right
 multmer.org##.brend
 knigi-chitaty.ru##.button[href^="/download.php?q="]
 sexytales.org##.contentBox > noindex
@@ -2983,6 +2981,7 @@ winzoro.net##.left_block_e img:not([src^="/uploads/posts/"])
 tvnet.lv##.list.customer
 torrent-pirat.com##.logo + div
 glav.su##.ma_block
+gorod.cn.ua##.main > div[class$="-block"]
 allmoldova.com##.middle_banner
 nur.kz##.mmc-holder-top
 forum.soft4dle.com##.navbar > center
@@ -3490,7 +3489,7 @@ camelot.multilocal.ru,camelot.userlan.ru##.banner_header
 inmoment.ru##.banner_left
 bazar.kp.by##.banner_list
 vedomosti.ru##.banner_position
-fileclub.biz,gorod.cn.ua,hi-fi.ru,nemezisworld.com##.banner_top
+fileclub.biz,hi-fi.ru,nemezisworld.com##.banner_top
 tvi.ua##.banner_white
 vkdiz.ru##.bannerbg
 keys-kas.ru##.bannerblock
@@ -3524,7 +3523,6 @@ zh24.com##.block.elite
 znaikak.ru##.blockLinks
 aktobeinfo.kz##.block[id*="-banners-"]
 chatadelic.net,cybergame.tv,forzajuve.ru,rap-text.ru##.block_links
-gorod.cn.ua##.block_social
 poltavaforum.com##.blocksubhead.righttb + a[style^="z-index:1000;"]
 topnews.ru##.bn_ir
 nnm.me,vedomosti.ru##.bnr
@@ -3666,7 +3664,6 @@ meteoprog.ua##.informer[id^="mp_banner_"]
 topgir.com.ua##.informers
 ekabu.ru##.insis
 ekabu.ru##.ipar
-kinoclub.org.ua#@#.item-ads
 vashgorod.ru##.job42
 ifreeapps.ru##.jvmod-pad.png > a[target="_blank"] > img
 auto43.ru,dom43.ru,gorodkirov.ru,job43.ru##.kaka_zone
@@ -3918,7 +3915,6 @@ hwp.ru##[class*="tbann"]
 neosmi.ru##[class="0"] > .firstnews
 slo.ru##[class^="adv_"]
 sr-week.ru##[class^="advt"]
-gorod.cn.ua##[class^="bann_"]
 championat.com##[class^="banner-"]
 season.ru##[class^="bnnr_bx_"]
 iguides.ru##[class^="branding"] > a[target="_blank"]
@@ -4014,7 +4010,6 @@ topwar.ru##a[href^="http://cpm.worldoftanks.com?code="]
 unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 torrentino.com##a[href^="http://go.admulti.com/clicks/"]
 z-music.org##a[href^="http://i100.ru"]
-appleinsider.ru##a[href^="http://li.ru/go?"]:not([href*=".apple.com%2F"])
 mainspy.ru##a[href^="http://mainspy.ru/banner/"]
 cwer.ws##a[href^="http://mediaget.com/torrent.php"]
 kaddr.com##a[href^="http://photo.stylus.com.ua/"]
@@ -4197,7 +4192,7 @@ sarafannoeradio.org##img[width="829"][height="90"]
 demiart.ru##img[width="900"][height="100"]
 vjazhi.ru##ins[style^="display:inline-table;"]
 charming-face.ru##marquee
-9sx.ru,gorod.cn.ua##marquee[scrollamount]
+9sx.ru##marquee[scrollamount]
 mob39.ru##meta + center > table[cellspacing="0"][cellpadding="0"][border="0"]
 citysmile.ru##nofollow > noindex > a[target="_blank"]
 consmed.ru##noindex > .normal_tahoma
@@ -4294,6 +4289,7 @@ rebill.me###space
 meteonovosti.ru###top_ban
 seonews.ru###tpl_topbanner_block
 seonews.ru###tpl_vertbanner_block
+appleinsider.ru##.a-position
 allinfo.kz##.adb
 9111.ru##.advzone
 europaplus.ru##.adwolf-holder
@@ -4301,9 +4297,10 @@ brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
 redtram.com##.b-informers
 online.ua##.banner-top
 mmorpg.ua##.banner_left_col
+gorod.cn.ua##.banner_top
+motorpage.ru##.bannerplace:not(#pos6)
 na-svyazi.ru##.bg0[width]
 gismeteo.ru##.body > .top
-appleinsider.ru##.branding-placeholder
 i.ua##.clear.logo_container
 goldroyal.net##.floating
 inosmi.ru##.floatright.rightbox br
@@ -4327,9 +4324,11 @@ i2r.ru##a[style*="/banner."]
 demotivation.me##body > noindex
 selectornews.com##div[class$="-banner"]
 news.sportbox.ru##div[class^="adriver_"]
+gorod.cn.ua##div[class^="bann_"]
 newsvl.ru##div[id][style="height: 120px;"]
 newsvl.ru##div[id][style="height: 80px;"]
 brb.to,cxz.to,fs.to##div[id^="admixer_async_"]
+forum.ixbt.com##div[id^="yandex_ad_"]
 multik-online.net##div[style*=".am15."]
 brb.to,cxz.to,fs.to##div[style*="min-height: 274px;"]
 forum.watch.ru##div[style="display:block; width:100%; min-width:800px; height:100px; overflow:hidden;"]
@@ -4562,10 +4561,8 @@ _advideo/$object-subrequest,domain=megogo.net
 ||depositfiles.com/images/zillya/
 ||dgrad-host.com/banner.$domain=rootden.ru
 ||diary.ru^*/diaryDefault728x90.
-||digitalaccess.ru/flv-*.flv?redirected=$object-subrequest,domain=ivi.ru
-||digitalaccess.ru/flv-*.flv|$object-subrequest,domain=ivi.ru
-||digitalaccess.ru/mp4-*.mp4?redirected=$object-subrequest,domain=ivi.ru
-||digitalaccess.ru/mp4-*.mp4|$object-subrequest,domain=ivi.ru
+||digitalaccess.ru/flv-*&rnd=0.$object-subrequest,domain=ivi.ru
+||digitalaccess.ru/mp4-*&rnd=0.$object-subrequest,domain=ivi.ru
 ||dirty.ru/i/nevoobrazimo/banner_
 ||divan-tut.ru/promo
 ||djrogoff.ru/img/r_
@@ -5761,11 +5758,13 @@ cheb.ru##.ru56080
 tvnet.lv###fancybox-overlay
 tvnet.lv###fancybox-wrap
 delfi.lv###nagger-wrap
+gorod.cn.ua###overlay-soc
 rbc.ru,rbcdaily.ru,utro.ru###popup_box
 muz-tv.ru###popup_overlay
 bvedomosti.ru###sbox-overlay
 bvedomosti.ru###sbox-window
 sport-express.ru###socgroup
+gorod.cn.ua###socials_popup
 esetnod32.ru##.b-fade
 esetnod32.ru##.b-mdl
 trashbox.ru##.div_modal_like
@@ -5978,6 +5977,7 @@ irr.ru#@#.b-advert
 airmediacenter.com#@#.b-banner
 mygames.com.ua#@#.big-ads
 skodarapidclub.ru#@#.headerad
+kinoclub.org.ua#@#.item-ads
 sellua.info#@#.lastads
 mts.ru#@#.wide-ad
 bestpersons.ru#@#.ya-partner_ads-up
