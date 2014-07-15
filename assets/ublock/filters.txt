@@ -39,5 +39,8 @@ google.*###rhs_block > #mbEnd
 google.*##.mw > #rcnt > #center_col > #taw > .c
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 
+# https://github.com/gorhill/uBlock/issues/63
+@@||adf.ly^$~third-party
+
 # https://github.com/gorhill/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
