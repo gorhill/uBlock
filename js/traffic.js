@@ -62,15 +62,25 @@ var onBeforeRootDocument = function(tabId, details) {
     if ( referrer === '' ) {
         return;
     }
+
+    // https://github.com/gorhill/uBlock/issues/67
+    // We need to pass the details of the page which opened this popup,
+    // so that the `third-party` option works.
+    var µburi = µb.URI;
+    var referrerHostname = µburi.hostnameFromURI(referrer);
+    var pageDetails = {
+        pageHostname: referrerHostname,
+        pageDomain: µburi.domainFromHostname(referrerHostname)
+    };
     //console.debug('Referrer="%s"', referrer);
 
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
         reason = µb.abpFilters.matchString(
-            pageStore,
+            pageDetails,
             requestURL,
             'popup',
-            µb.URI.hostnameFromURI(requestURL)
+            µburi.hostnameFromURI(requestURL)
         );
     }
 
