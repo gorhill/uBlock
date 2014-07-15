@@ -30,7 +30,7 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 <p align="center">
 Being lean doesn't mean blocking less.<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/privacy-benchmark.png" /><br>
-<sup>For details of benchmark, see [_"µBlock and others: Blocking ads, trackers, malwares"_](/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares).
+<sup>For details of benchmark, see [_"µBlock and others: Blocking ads, trackers, malwares"_](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares).
 </p>
 
 ## Installation
