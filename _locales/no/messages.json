@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Dine filter",
+    "message":"Dine filtre",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -44,15 +44,15 @@
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Opprett",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Velg",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Avslutt",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -60,7 +60,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Kosmetisk filtre",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
@@ -92,19 +92,19 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"Liste over blokkerte verter",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Bruk endringer",
     "description":"English: Apply changes"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"Importer og tilføy",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -112,11 +112,11 @@
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Bruk endringer",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"Aktiver logging av blokkerte forespørsler",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
@@ -124,7 +124,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"Aktiver logging av ikke-blokkerte forespørsler",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
@@ -160,15 +160,15 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"Ingen ikke-blokkerte forespørsler logget for denne siden",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Endringslogg<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
   },
   "aboutCode":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>",
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Kildekode (GPLv3)<\/a>",
     "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
   },
   "aboutExtensionDataHeader":{
@@ -192,7 +192,7 @@
     "description":"Successful outcome of clicking 'update' button"
   },
   "aboutAssetsUpdateStatusAdded":{
-    "message":"To add",
+    "message":"Legge til",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusChanged":{
@@ -204,7 +204,7 @@
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusRemoved":{
-    "message":"To remove",
+    "message":"Fjerne",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateButton":{

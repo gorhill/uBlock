@@ -88,7 +88,7 @@
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p> Ця опція вмикає розбір та задіяння <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів<\/a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -164,8 +164,8 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Журнал змін<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Журнал змін<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
   },
   "aboutCode":{
     "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Джерельний код (GPLv3)<\/a>",

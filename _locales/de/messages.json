@@ -164,8 +164,8 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Changelog<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock\/wiki\/Change-log'>Change log<\/a>"
+    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Changelog<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
   },
   "aboutCode":{
     "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Quellcode (GPLv3)<\/a>",
