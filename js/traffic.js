@@ -101,7 +101,7 @@ var onBeforeSendHeaders = function(details) {
 
     // Special handling for root document.
     var requestType = details.type;
-    if ( requestType === 'main_frame' && details.parentFrameId < 0 ) {
+    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
         return onBeforeRootDocument(tabId, details);
     }
 
