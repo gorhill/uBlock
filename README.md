@@ -17,7 +17,7 @@ Chromium on Linux 64-bit<br>
 Opera 22 on Windows 7 32-bit<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" /><br>
 <sup>The screenshots above were taken after visiting links in 
-[reference benchmark](https://github.com/gorhill/uBlock/wiki/Reference-benchmark) 
+<a href="https://github.com/gorhill/uBlock/wiki/Reference-benchmark">reference benchmark</a> 
 plus a bit of random browsing. All blockers were active at the same time, 
 thus they had to deal with exactly the same workload. Before the screenshots were 
 taken, I left the browser idle for many minutes so as to let the browser's 
@@ -30,7 +30,8 @@ as garbage collectors sometimes work in a very lazy way, so I did this for each 
 <p align="center">
 Being lean doesn't mean blocking less.<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/privacy-benchmark.png" /><br>
-<sup>For details of benchmark, see [_"µBlock and others: Blocking ads, trackers, malwares"_](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares).
+<sup>For details of benchmark, see 
+<a href="https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares"]µBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
 ## Installation
