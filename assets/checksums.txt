@@ -1,4 +1,4 @@
-5560074554a30a1803e268c347f96672 assets/ublock/filters.txt
+bf4fb817826171b0dd0bfc68be95c584 assets/ublock/filters.txt
 95d7b07502046e4a2251ec349fb0c685 assets/ublock/filter-lists.json
 36d8978c647291a4415dc02fe176e54e assets/thirdparties/download.wiltteri.net/wiltteri.txt
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
