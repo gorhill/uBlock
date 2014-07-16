@@ -44,3 +44,8 @@ google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 
 # https://github.com/gorhill/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
+
+# https://github.com/gorhill/uBlock/issues/70
+# Workaround for issue 70.
+deviantart.com##.dp-ad-target.atf-right-300x250
+
