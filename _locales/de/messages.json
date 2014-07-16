@@ -100,27 +100,27 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Werbung",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Privatsphäre",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Domains mit Schadsoftware",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Soziale Medien",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Verschiedenes",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Regionen, Sprachen",
     "description":"English: Regions, languages"
   },
   "1pFormatHint":{
@@ -236,7 +236,7 @@
     "description":"Update button"
   },
   "aboutAssetsUpdatingButton":{
-    "message":"Aktualisiert...",
+    "message":"Wird aktualisiert...",
     "description":"Updating..."
   },
   "dummy":{
