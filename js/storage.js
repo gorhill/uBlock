@@ -261,8 +261,8 @@
     //    https://adblockplus.org/en/filters
     var abpFilters = this.abpFilters;
     var abpHideFilters = this.userSettings.parseAllABPHideFilters ? this.abpHideFilters : null;
-    var thisListCount = 0;
-    var thisListUsedCount = 0;
+    var duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount;
+    var acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount;
     var reLocalhost = /(^|\s)(localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
     var reAdblockFilter = /^[^a-z0-9:]|[^a-z0-9]$|[^a-z0-9_:.-]/;
     var reAdblockHostFilter = /^\|\|([a-z0-9.-]+[a-z0-9])\^?$/;
@@ -334,8 +334,6 @@
         if ( reAdblockFilter.test(line) ) {
             if ( abpFilters !== null ) {
                 if ( abpFilters.add(line) ) {
-                    thisListCount++;
-                    thisListUsedCount++;
                     continue;
                 }
             }
@@ -352,16 +350,16 @@
             continue;
         }
 
-        thisListCount++;
-        if ( abpFilters.addAnyPartyHostname(line) ) {
-            thisListUsedCount++;
-        }
+        abpFilters.addAnyPartyHostname(line);
     }
 
     // For convenience, store the number of entries for this
     // blacklist, user might be happy to know this information.
-    this.remoteBlacklists[details.path].entryCount = thisListCount;
-    this.remoteBlacklists[details.path].entryUsedCount = thisListUsedCount;
+    duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount - duplicateCount;
+    acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount - acceptedCount;
+
+    this.remoteBlacklists[details.path].entryCount = acceptedCount + duplicateCount;
+    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount;
 };
 
 /******************************************************************************/

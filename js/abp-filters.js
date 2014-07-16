@@ -1015,9 +1015,10 @@ var FilterContainer = function() {
     this.tokenEnd = 0;
     this.filterParser = new FilterParser();
     this.processedFilterCount = 0;
-    this.supportedFilterCount = 0;
+    this.acceptedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
+    this.duplicateCount = 0;
 
     // This is for hostname-based-any-request filters
     this.blockedAnyPartyHostnames = new µBlock.LiquidDict();
@@ -1051,9 +1052,11 @@ FilterContainer.prototype.makeCategoryKey = function(category) {
 
 FilterContainer.prototype.addAnyPartyHostname = function(hostname) {
     if ( this.blockedAnyPartyHostnames.add(hostname) ) {
-        this.blockFilterCount += 1;
+        this.acceptedCount++;
+        this.blockFilterCount++;
         return true;
     }
+    this.duplicateCount++;
     return false;
 };
 
@@ -1061,9 +1064,11 @@ FilterContainer.prototype.addAnyPartyHostname = function(hostname) {
 
 FilterContainer.prototype.add3rdPartyHostname = function(hostname) {
     if ( this.blocked3rdPartyHostnames.add(hostname) ) {
-        this.blockFilterCount += 1;
+        this.acceptedCount++;
+        this.blockFilterCount++;
         return true;
     }
+    this.duplicateCount++;
     return false;
 };
 
@@ -1090,6 +1095,7 @@ FilterContainer.prototype.add = function(s) {
     }
 
     if ( this.duplicates[s] ) {
+        this.duplicateCount++;
         return false;
     }
     this.duplicates[s] = true;
@@ -1102,12 +1108,12 @@ FilterContainer.prototype.add = function(s) {
         return false;
     }
 
-    this.supportedFilterCount += 1;
-
     // Ignore optionless hostname rules, these will be taken care of by µBlock.
     if ( parsed.hostname && parsed.fopts === '' && parsed.action === BlockAction && reHostnameRule.test(parsed.f) ) {
         return false;
     }
+
+    this.acceptedCount += 1;
 
     // Pure third-party hostnames, use more efficient liquid dict
     if ( reHostnameRule.test(parsed.f) && parsed.hostname && parsed.action === BlockAction ) {
@@ -1231,9 +1237,10 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 FilterContainer.prototype.reset = function() {
     this.processedFilterCount = 0;
-    this.supportedFilterCount = 0;
+    this.acceptedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
+    this.duplicateCount = 0;
     this.categories = {};
     this.blockedAnyPartyHostnames.reset();
     this.blocked3rdPartyHostnames.reset();
