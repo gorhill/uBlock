@@ -397,7 +397,7 @@ FilterContainer.prototype.freeze = function() {
 
     this.filterParser.reset();
 
-    console.debug('Number of duplicate cosmetic filters skipped:', this.duplicateCount);
+    // console.debug('Number of duplicate cosmetic filters skipped:', this.duplicateCount);
     this.duplicates = {};
 
     //console.log('µBlock> adp-hide-filters.js: %d filters accepted', this.acceptedCount);
