@@ -44,23 +44,23 @@
     "description":"English: since install"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"创建",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"选择",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"放弃",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"网址过滤",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"元素过滤",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"共{{ubiquitousBlacklistCount}}个不同的屏蔽站点名，来自：",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"来自{{netFilterCount}} 网址过滤 ＋ {{cosmeticFilterCount}} 元素过滤:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{total}}中使用{{used}}",
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"应用变更",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"广告",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"隐私",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"恶意软件",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"社交",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Multipurpose",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"地区，语言",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"每行一条规则。一条规则可以是一个平凡的站点名或者是一条Adblock Plus的兼容过滤规则。以“!”开头的行将被忽略。",

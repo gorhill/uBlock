@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} reti filtrate da:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} filtri di rete + {{cosmeticFilterCount}} filtri cosmetici da:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} usati su {{total}}",
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"Salva i cambiamenti",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Pubblicità",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Privacy",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Domini con Malware",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Social",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Multiuso",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regioni, lingue",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"Un filtro per linea. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Le linee che cominciano con &lsquo;!&rsquo; verranno ingnorate.",

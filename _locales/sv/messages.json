@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} nätverksfilter från:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} använda utav {{total}}",
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"Verkställ ändringar",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Annonser",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Sekretess",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Malware",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Socialt",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Universalt",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regioner, språk",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",

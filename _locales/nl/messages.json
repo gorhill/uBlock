@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} netwerkfilters van:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} netwerkfilters ＋ {{cosmeticFilterCount}} cosmetische filters van:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} gebruik van {{total}}",
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"Pas veranderingen toe",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Advertenties",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Privacy",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Malware",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Sociaal",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Multifunctioneel",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Gebieden, talen",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",

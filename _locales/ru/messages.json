@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} блокируется хостов, помимо:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} сетевых фильтров ＋ {{cosmeticFilterCount}} косметических фильтров из:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} используется из {{total}}",
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"Применить изменения",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Реклама",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Конфиденциальность",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Вредоносные программы",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Социальные",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Многоцелевые",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Регионы, языки",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"Одно правило на строку. Правилом может быть обычное имя сайти, или Adblock Plus-совместимый фильтр. Линии начинающиеся с &lsquo;!&rsquo; будут пропущены.",

@@ -64,7 +64,7 @@
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar espaços de elementos bloqueados",
+    "message":"Ocultar os espaços de elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -72,23 +72,23 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} filtros de rede de:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} filtros de rede + {{cosmeticFilterCount}} filtros cosméticos de:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} usado(s) de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analisar e reforçar filtros de elemento escondidos com Adblock+.",
+    "message":"Analisar e reforçar filtros de elementos escondidos com Adblock+.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} esconder elemento de filtros usado.",
+    "message":"{{abpHideFilterCount}} filtros de elementos escondidos usado(s).",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"elemento escondido\" Adblock Plus-compatível<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"elemento escondido\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -98,6 +98,30 @@
   "3pApplyChanges":{
     "message":"Aplicar alterações",
     "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Anúncios",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Privacidade",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Domínios de malware",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Social",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Multiuso",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regiões, idiomas",
+    "description":"English: Regions, languages"
   },
   "1pFormatHint":{
     "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; será ignorado.",
@@ -120,7 +144,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações bloqueadas, ativando esta opção. O registro de solicitações bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
+    "message":"Você pode inspecionar os detalhes das solicitações bloqueadas ativando esta opção. O registro de solicitações bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários não usarem este recurso ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
@@ -128,7 +152,7 @@
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueadas, ativando esta opção. O registro de solicitações não-bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários nunca usar este recurso, ele será desativado por padrão.",
+    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueadas ativando esta opção. O registro de solicitações não-bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários não usarem este recurso ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -176,11 +200,11 @@
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
-    "message":"As listas do <i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar para o próximo lançamento da extensão. Essas listas são baixadas do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
+    "message":"As listas do <i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar a próxima versão da extensão. Essas listas são baixadas a partir do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
-    "message":"Caminho",
+    "message":"Local",
     "description":"Path column header"
   },
   "aboutAssetsUpdateColStatus":{
