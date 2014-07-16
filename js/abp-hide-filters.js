@@ -263,18 +263,7 @@ FilterParser.prototype.extractPlain = function() {
 
 var FilterContainer = function() {
     this.filterParser = new FilterParser();
-    this.acceptedCount = 0;
-    this.processedCount = 0;
-    this.genericFilters = {};
-    this.hostnameFilters = {};
-    this.entityFilters = {};
-    this.hideUnfiltered = [];
-    this.hideLowGenerics = {};
-    this.hideHighGenerics = [];
-    this.donthideUnfiltered = [];
-    this.donthideLowGenerics = {};
-    this.donthideHighGenerics = [];
-    this.rejected = [];
+    this.reset();
 };
 
 /******************************************************************************/
@@ -295,17 +284,26 @@ FilterContainer.prototype.reset = function() {
     this.donthideLowGenerics = {};
     this.donthideHighGenerics = [];
     this.rejected = [];
+    this.duplicates = {};
+    this.duplicateCount = 0;
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.add = function(s) {
+    s = s.trim();
     var parsed = this.filterParser.parse(s);
     if ( parsed.invalid ) {
         return false;
     }
 
     this.processedCount += 1;
+
+    if ( this.duplicates[s] ) {
+        this.duplicateCount++;
+        return false;
+    }
+    this.duplicates[s] = true;
 
     //if ( s === 'mail.google.com##.nH.adC > .nH > .nH > .u5 > .azN' ) {
     //    debugger;
@@ -398,6 +396,9 @@ FilterContainer.prototype.freeze = function() {
     this.freezeGenerics('donthide');
 
     this.filterParser.reset();
+
+    console.debug('Number of duplicate cosmetic filters skipped:', this.duplicateCount);
+    this.duplicates = {};
 
     //console.log('µBlock> adp-hide-filters.js: %d filters accepted', this.acceptedCount);
     //console.log('µBlock> adp-hide-filters.js: %d filters processed', this.processedCount);

@@ -17,10 +17,17 @@ ul {
     list-style-type: none;
     }
 ul > li {
+    margin: 0.5em 0 3px 0;
+    padding: 0;
+    font-size: 15px;
+    list-style-type: none;
+    }
+ul > li > ul > li {
+    font-size: 14px;
     margin: 0 0 0 1em;
     }
 .dim {
-    color: #444;
+    color: #888;
     }
 .userUbiquitousHosts {
     font-size: smaller;
@@ -33,17 +40,15 @@ ul > li {
 
 <body>
 
-<p id="listsOfBlockedHostsPrompt"></p>
-<ul id="blacklistTemplate" style="display:none">
-    <li class="blacklistDetails"><input type="checkbox">&thinsp;<a href="" type="text/plain"></a>: 
-    <span class="dim"></span>
-</ul>
-<ul id="blacklists" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
+<ul id="options" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
+    <li><button id="blacklistsApply" disabled="true" data-i18n="3pApplyChanges"></button>
     <li style="margin-top:0.75em"><input type="checkbox" id="parseAllABPHideFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1"></label>
     <span class="dim" id="3pParseAllABPHideFiltersPrompt2"></span>
     <button class="whatisthis"></button>
     <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
-    <li style="margin-top:0.75em"><button id="blacklistsApply" disabled="true" data-i18n="3pApplyChanges"></button>
+    <li style="margin-top:0.75em"><p id="listsOfBlockedHostsPrompt"></p>
+</ul>
+<ul id="lists" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
 </ul>
 
 <script src="js/udom.js"></script>

@@ -57,16 +57,7 @@ var getµb = function() {
 /******************************************************************************/
 
 var renderNumber = function(value) {
-    // TODO: localization
-    if ( +value > 1000 ) {
-        value = value.toString();
-        var i = value.length - 3;
-        while ( i > 0 ) {
-            value = value.slice(0, i) + ',' + value.slice(i);
-            i -= 3;
-        }
-    }
-    return value;
+    return value.toLocaleString();
 };
 
 /******************************************************************************/
@@ -75,17 +66,18 @@ var renderNumber = function(value) {
 
 var renderBlacklists = function() {
     // empty list first
-    uDom('#blacklists .blacklistDetails').remove();
+    uDom('#lists .listDetails').remove();
 
     var µb = getµb();
 
     uDom('#listsOfBlockedHostsPrompt').text(
         chrome.i18n.getMessage('3pListsOfBlockedHostsPrompt')
-            .replace('{{ubiquitousBlacklistCount}}', renderNumber(µb.abpFilters.getFilterCount()))
+            .replace('{{netFilterCount}}', renderNumber(µb.abpFilters.getFilterCount()))
+            .replace('{{cosmeticFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
     );
 
     // Assemble a pretty blacklist name if possible
-    var prettifyListName = function(blacklistTitle, blacklistHref) {
+    var htmlFromListName = function(blacklistTitle, blacklistHref) {
         if ( blacklistHref === µb.userFiltersPath ) {
             return userListName;
         }
@@ -116,29 +108,88 @@ var renderBlacklists = function() {
     };
 
     var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
-    var blacklists = µb.remoteBlacklists;
-    var ul = uDom('#blacklists');
-    var keys = Object.keys(blacklists);
-    var i = keys.length;
-    var blacklist, blacklistHref;
-    var liTemplate = uDom('#blacklistTemplate .blacklistDetails').first();
-    var li, text;
-    while ( i-- ) {
-        blacklistHref = keys[i];
-        blacklist = blacklists[blacklistHref];
-        li = liTemplate.clone();
-        li.find('input').prop('checked', !blacklist.off);
-        li.find('a')
-            .attr('href', encodeURI(blacklistHref))
-            .html(prettifyListName(blacklist.title, blacklistHref));
-        text = listStatsTemplate
-            .replace('{{used}}', !blacklist.off && !isNaN(+blacklist.entryUsedCount) ? renderNumber(blacklist.entryUsedCount) : '0')
-            .replace('{{total}}', !isNaN(+blacklist.entryCount) ? renderNumber(blacklist.entryCount) : '?')
-            ;
-        li.find('span').text(text);
-        ul.prepend(li);
+
+    var htmlFromBranch = function(groupKey, listKeys, lists) {
+        listKeys.sort(function(a, b) {
+            return lists[a].title.localeCompare(lists[b].title);
+        });
+        var html = [
+            '<li>',
+            chrome.i18n.getMessage('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1)),
+            '<ul>'
+        ];
+        var listEntryTemplate = [
+            '<li class="listDetails">',
+            '<input type="checkbox" {{checked}}>',
+            '&thinsp;',
+            '<a href="{{URL}}" type="text/plain">',
+            '{{name}}',
+            '</a>',
+            ': ',
+            '<span class="dim">',
+            listStatsTemplate,
+            '</span>'
+        ].join('');
+        var listKey, list, listEntry;
+        for ( var i = 0; i < listKeys.length; i++ ) {
+            listKey = listKeys[i];
+            list = lists[listKey];
+            listEntry = listEntryTemplate
+                .replace('{{checked}}', list.off ? '' : 'checked')
+                .replace('{{URL}}', encodeURI(listKey))
+                .replace('{{name}}', htmlFromListName(list.title, listKey))
+                .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
+                .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?')
+            html.push(listEntry);
+        }
+        html.push('</ul>');
+        return html.join('');
+    };
+
+    var groupsFromLists = function(lists) {
+        var groups = {};
+        var listKeys = Object.keys(lists);
+        var i = listKeys.length;
+        var listKey, list, groupKey;
+        while ( i-- ) {
+            listKey = listKeys[i];
+            list = lists[listKey];
+            groupKey = list.group || 'nogroup';
+            if ( groups[groupKey] === undefined ) {
+                groups[groupKey] = [];
+            }
+            groups[groupKey].push(listKey);
+        }
+        return groups;
+    };
+
+    var html = [];
+    var groups = groupsFromLists(µb.remoteBlacklists);
+    var groupKey;
+    var groupKeys = [
+        'default',
+        'ads',
+        'privacy',
+        'malware',
+        'social',
+        'multipurpose',
+        'regions'
+    ];
+    for ( var i = 0; i < groupKeys.length; i++ ) {
+        groupKey = groupKeys[i];
+        html.push(htmlFromBranch(groupKey, groups[groupKey], µb.remoteBlacklists));
+        delete groups[groupKey];
     }
-    uDom('#parseAllABPHideFilters').attr('checked', µb.userSettings.parseAllABPHideFilters === true);
+    // For all groups not covered above (if any left)
+    groupKeys = Object.keys(groups);
+    for ( var i = 0; i < groupKeys.length; i++ ) {
+        groupKey = groupKeys[i];
+        html.push(htmlFromBranch(groupKey, groups[groupKey], µb.remoteBlacklists));
+        delete groups[groupKey];
+    }
+
+    uDom('#lists').html(html.join(''));
+    uDom('#parseAllABPHideFilters').prop('checked', µb.userSettings.parseAllABPHideFilters === true);
     uDom('#ubiquitousParseAllABPHideFiltersPrompt2').text(
         chrome.i18n.getMessage("listsParseAllABPHideFiltersPrompt2")
             .replace('{{abpHideFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
@@ -154,7 +205,7 @@ var renderBlacklists = function() {
 
 var getSelectedBlacklistsHash = function() {
     var hash = '';
-    var inputs = uDom('#blacklists .blacklistDetails > input');
+    var inputs = uDom('#lists .listDetails > input');
     var i = inputs.length();
     while ( i-- ) {
         hash += inputs.subset(i).prop('checked').toString();
@@ -195,7 +246,7 @@ var blacklistsApplyHandler = function() {
     }
     // Reload blacklists
     var switches = [];
-    var lis = uDom('#blacklists .blacklistDetails');
+    var lis = uDom('#lists .listDetails');
     var i = lis.length();
     var path;
     while ( i-- ) {
@@ -209,7 +260,7 @@ var blacklistsApplyHandler = function() {
         what: 'reloadAllFilters',
         switches: switches
     });
-    uDom('#blacklistsApply').attr('disabled', true );
+    uDom('#blacklistsApply').prop('disabled', true );
 };
 
 /******************************************************************************/
@@ -227,8 +278,8 @@ var abpHideFiltersCheckboxChanged = function() {
 
 uDom.onLoad(function() {
     // Handle user interaction
-    uDom('#blacklists').on('change', '.blacklistDetails', selectedBlacklistsChanged);
-    uDom('#blacklists').on('click', '.blacklistDetails > a:first-child', onListLinkClicked);
+    uDom('#lists').on('change', '.listDetails', selectedBlacklistsChanged);
+    uDom('#lists').on('click', '.listDetails > a:first-child', onListLinkClicked);
     uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
     uDom('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
 

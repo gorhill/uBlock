@@ -50,11 +50,14 @@ return {
     // list of remote blacklist locations
     remoteBlacklists: {
         // User
-        'assets/user/filters.txt': {},
+        'assets/user/filters.txt': {
+            group: 'default'
+        },
 
         // uBlock
         'assets/ublock/filters.txt': {
-            title: "µBlock filters"
+            title: 'µBlock filters',
+            group: 'default'
         },
 
         // 3rd-party lists fetched dynamically
