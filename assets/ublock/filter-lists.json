@@ -58,6 +58,11 @@
         "title": "Anti-Adblock Killer | Filters for Adblockers",
         "group": "ads"
         },
+    "www.fanboy.co.nz/fanboy-ultimate.txt": {
+        "off": true,
+        "title": "Fanboy+Easylist-Merged Ultimate List",
+        "group": "multipurpose"
+        },
     "someonewhocares.org/hosts/hosts": {
         "off": true,
         "title": "Dan Pollock’s hosts file",
