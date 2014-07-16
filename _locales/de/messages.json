@@ -72,8 +72,8 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{ubiquitousBlacklistCount}} eindeutig blockierte Hostnamen aus:",
-    "description":"English: {{ubiquitousBlacklistCount}} network filters from:"
+    "message":"{{netFilterCount}} eindeutig blockierte Hostnamen aus:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
     "message":"{{used}} benutzt aus {{total}}",
