@@ -232,7 +232,7 @@
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateButton":{
-    "message":"Atualização",
+    "message":"Atualizar",
     "description":"Update button"
   },
   "aboutAssetsUpdatingButton":{
