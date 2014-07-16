@@ -72,7 +72,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} мережевих фільтрів ＋ {{cosmeticFilterCount}} косметичних фільтрів з:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -100,27 +100,27 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Реклама",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Конфіденційність",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Домени шкідливих програм",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Соціальні",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Універсальні",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Регіони, мови",
     "description":"English: Regions, languages"
   },
   "1pFormatHint":{
