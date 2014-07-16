@@ -99,6 +99,30 @@
     "message":"Änderungen anwenden",
     "description":"English: Apply changes"
   },
+  "3pGroupAds":{
+    "message":"Ads",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Privacy",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Malware domains",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Social",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Multipurpose",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regions, languages",
+    "description":"English: Regions, languages"
+  },
   "1pFormatHint":{
     "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
