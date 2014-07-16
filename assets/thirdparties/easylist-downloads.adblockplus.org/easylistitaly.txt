@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1CzOYQQlTqpLTEcdbVhaJw
-! Version: 201407141541
+! Checksum: ZFcrbCqoPp4U/X12kJshGA
+! Version: 201407161541
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 14 Jul 2014 15:41 UTC
+! Ultima modifica: 16 Jul 2014 15:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1331,6 +1331,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||radioradio.it^*/banner_
 ||radioroma.fm/images/banners/
 ||radioroma.fm/images/flash/zoomarine.swf
+||radioromacapitale.it/images/banner-
+||radioromacapitale.it/images/conf.jpg
 ||radiosport24.com/images/banner.png
 ||radiosport24.com/images/blunord.jpg
 ||radiosport24.com/images/lakers-fly-tech.jpg
@@ -1364,6 +1366,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||repubblica.it^*/sponsors.png
 ||repubblica.it^*_contentsense_
 ||resport.it/public/banner/
+||retesport.it/images/banner-
+||retesport.it/images/conf.jpg
 ||rietilife.it^*-banner.
 ||rietilife.it^*/banner-
 ||rietilife.it^*/banner_
@@ -1805,6 +1809,7 @@ treccani.it###campagnaBox
 camionsupermarket.it###center_banner
 virgilio.it###cht_banner
 libero.it###chunnel-affari-300x170
+amazon.it###click_withinLazyLoad_tower
 acquariofilia.biz###collapseobj_sidebar_google
 alessandrianews.it###colonnadx-bg
 alessandrianews.it###colonnasx-bg
@@ -1826,6 +1831,7 @@ key4biz.it###ebookNews
 unita.it###eimp[style="width:298px;float:left;margin-top:20px;height:248px;border:1px solid #cccccc; position:relative; z-index:0"]
 comingsoon.it###expSkin
 tipiace.it###externalbanner
+gqitalia.it###fogliaBanner
 avvisatore.ilsecoloxix.it,lavocedivenezia.it,shippingonline.ilsecoloxix.it,ttmweb.it###footer
 insegreto.it###footer-banners
 ladige.it###footer-leaderboard
@@ -2166,7 +2172,7 @@ ilcapoluogo.com##.block-view-bannerSlide
 risultati.it##.bookmarker-53
 beppegrillo.it##.bottom-banner
 ilquotidiano.it,parmasera.it,piacenzasera.it,rsvn.it##.box-attico
-notiziaoggi.it,settegiorni.it##.box-banner-menu
+europa-in.it,gazzettadelladda.it,notiziaoggi.it,settegiorni.it##.box-banner-menu
 sportnews.bz##.box-fullbanner
 ilgiornaledivicenza.it##.box-skyscrapers
 omniauto.it##.box.gradient[style="height:270px!important; min-height:270px"]
@@ -2183,6 +2189,8 @@ subito.it##.box_sponsor
 tgcom24.mediaset.it##.boxspeciale
 tiscali.it##.c1c6.f12
 quotidiano.net##.category-SPONSOR
+businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="background:#ffffff;border-bottom:1px #ffffff solid;border-top:1px #ffffff solid;margin-bottom:3px;margin-top:3px;"]
+businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="font-size:small;font-style:normal;font-weight:normal;margin-top:3px;margin-bottom:3px"]
 edilportale.com##.click-Skin
 tripadvisor.it##.commerce
 leccesette.it##.cont_banner
@@ -2223,6 +2231,7 @@ html.it##.google
 quotidiano.net##.google-728
 ilturista.info##.google-box
 dday.it##.google-dfp
+gqitalia.it##.gq-promotions
 fantagazzetta.com##.h-box
 ilgiornaledivicenza.it##.header-box
 bow.it,cronacamilano.it##.header_banner
@@ -2298,7 +2307,6 @@ prendiporno.tv##.publis-bottom
 termometropolitico.it##.publy
 gazzetta.it##.pushbar
 quotidianosanita.it##.qs_n_interno_basso
-radiosei.it,retesport.it##.rect_banner
 ticinolibero.ch##.redbar
 ladyradio.it##.right-table5[width="162"]
 film.it##.rightBoxAmazon
@@ -2357,7 +2365,6 @@ allsongs.tv,dica33.it,radionbc.it##.top-banner
 gazzettadasti.it##.top-left-ban
 gazzettadasti.it##.top-right-ban
 lastampa.it##.top-right-banner
-radiosei.it,retesport.it##.top_banner
 mrstiff.it##.topad
 mesagne.me,neveitalia.it,terzobinario.it##.topbanner
 agichina24.it##.topbanner1
@@ -2418,7 +2425,7 @@ unita.it##div[style="border:1px solid #D1D1D1;padding:1px; position:absolute;rig
 unita.it##div[style="border:1px solid #D1D1D1;padding:1px; position:absolute;right:0;top:551px;width:300px;"]
 unita.it##div[style="border:1px solid #D1D1D1;padding:1px; position:absolute;right:0;top:829px;width:300px;"]
 androidiani.com##div[style="border:4px dashed orange;height:90px;width:728px;margin:0 auto"]
-radioromacapitale.it,retesport.it##div[style="border:solid 1px #000000; width: 298px; height: 78px;"]
+radioromacapitale.it##div[style="border:solid 1px #000000; width: 298px; height: 78px;"]
 sanihelp.it##div[style="clear: both; width: 670px; padding:4px; height: 88px; margin-bottom: 15px; margin-top: 10px; line-height: 14px; border: 1px solid #DDEBF4;"]
 varesenews.it##div[style="display: block; height: 250px; margin-left: 0px; margin-bottom: 2px; position: relative;"]
 ildesk.it##div[style="display:block; float:left; margin-left:80px; margin-top:10px; width:120px; height:600px;"]
@@ -2433,7 +2440,6 @@ napolisport.net##div[style="float:left;margin:7px auto; width:1000px; margin-bot
 notizieindiretta.it##div[style="float:left;padding:5px 13px 13px 0px;width:336px;height:280px;"]
 adnkronos.com##div[style="float:left;width:200px;height:200px;margin:10px"]
 radiosei.it##div[style="float:none;margin-top:10px;text-align:center;width:492px;height:100px;"]
-retesport.it##div[style="float:none;margin-top:10px;text-align:center;width:493px;height:100px;"]
 piacenzanight.com##div[style="float:right; position:absolute; z-index:2; cursor:pointer; width:969px; height:306px;"]
 pronostici-scommesse.info##div[style="height:250px;width:300px;"]
 autobelle.it##div[style="height:255px;padding-top:15px;position:relative; left:-15px;"]

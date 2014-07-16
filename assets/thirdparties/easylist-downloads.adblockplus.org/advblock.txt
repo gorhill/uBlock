@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: gvQE/9nJYGbRMWbA8iET9w
-! Version: 201407141540
-! Last modified: 14 Jul 2014 15:40 UTC
+! Checksum: YITfp9oyDEtPp7ywbxicdg
+! Version: 201407161550
+! Last modified: 16 Jul 2014 15:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -80,6 +80,7 @@
 ||kan3.info^$~popup,popup
 ||lightcoffee.ru^$popup
 ||luckydir.ru^$~popup,popup
+||luxup.ru^$popup
 ||mesvip.com^$popup
 ||mi3u.info^$~popup,popup
 ||napravil.ru^$popup
@@ -1722,7 +1723,6 @@ _tizers.
 ||forbes.kz/informer/
 ||from-ua.com^$third-party,subdocument
 ||info-dvd.ru/bbm/informer/
-||informers.ukr.net^
 ||kinobzor.tv/_cron/js/informer
 ||kp.ru/_ajax/informer_
 ||lenta-novostei.com^$third-party
@@ -2918,6 +2918,7 @@ A//pic-money.ru
 ! *** advblock/specific_hide.txt ***
 smotri.com###BannerUnderBroPlayer
 prokazan.ru###BottomContent
+2ch.hk###TopNormalReply + hr + center
 sinoptik.ua###adsLeftZone3
 sinoptik.ua###adsZone3
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv001
@@ -2950,12 +2951,17 @@ mega-tracker.net###mb_top_space
 fototeens.lifeforums.ru###popup
 wmforum.2bb.ru###pun-announcement
 magtimes.info###s\(1\)
+evrl.to###smile_container ~ div[style*="z-index:"]
 rebill.me###space + a[target="_blank"]
 yarportal.ru###table1
+factroom.ru##.adcredit
 sexytales.org##.ads
 2ip.ru##.ads + .nav
+orakul.ua##.advBlock
+orakul.ua##.advBlock ~ div
 acer-a500.ru##.advs
 auto.e1.ru##.au-main-container_e1 > noindex
+orakul.ua##.b-cont
 sinoptik.ua##.b-partners
 magtimes.info##.b1
 mmorpg.ua##.back1
@@ -3010,6 +3016,7 @@ dota2.ru##.vadv-block
 nur.kz##.wallpaper
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
+kinoafisha.ua##a.brandup
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
@@ -3033,6 +3040,7 @@ goldroyal.net##img[width="140"][height="30"]
 sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
 forum.antichat.ru##p[align="center"] > b > a
+tvgid.ua##table[bgcolor="#00488d"][cellpadding="1"]
 comss.ru##td[style="width:19%; vertical-align:top;"]
 ! sweep
 rpod.ru###adv240x400
@@ -3919,7 +3927,6 @@ championat.com##[class^="banner-"]
 season.ru##[class^="bnnr_bx_"]
 iguides.ru##[class^="branding"] > a[target="_blank"]
 hwp.ru##[class^="promo"]
-2-ch.so,2ch.hk,2ch.pm##[class^="rek"]
 guitarplayer.ru##[class^="windowbg"] > noindex
 yarportal.ru##[href*="/goto.php?id="][target="_blank"] > img[src^="http://yarportal.ru/"]
 phpbbguru.net##[href^="go.php?to="]
@@ -4283,6 +4290,7 @@ zvukoff.ru###adv-list-top
 rutracker.org###bn-idx-2
 rutracker.org###bn-tio-1
 rutracker.org###crn-1
+novosti.dn.ua###infobar_2
 seonews.ru###main_tags_block + div[style^="width: 200px;"]
 pirat.ca###sidebar2
 rebill.me###space
@@ -4319,6 +4327,7 @@ adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.to
 mmorpg.ua##.top_banner
 free-torrents.org##.topmenu ~ br
 comss.info,comss.ru##.toppage
+factroom.ru##.widget-area div[class*="-banner"]
 rusdtp.ru##.ya-direct
 i2r.ru##a[style*="/banner."]
 demotivation.me##body > noindex
@@ -4715,6 +4724,8 @@ _advideo/$object-subrequest,domain=megogo.net
 ||guru.ua/white_menu/$object
 ||gzt.ru/upload/*.rklite/
 ||hacker-pro.net/banner/
+||hdclub.org/mg/
+||hdserials.tv^$object
 ||hdtrailer.ru/images/bg/
 ||hdtv.ru/resources/$object
 ||hentaichan.ru/r/
@@ -4802,6 +4813,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||kino-teatr.ru/img/*_bkg_
 ||kino-teatr.ru/media/
 ||kinoafisha.org/branding/
+||kinoafisha.ua/upload/*/bgadvs/
 ||kinobaza.net/babes/
 ||kinogo.net/bn.php?
 ||kinogo.net/br/
@@ -4976,6 +4988,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||notebook-center.ru^$object
 ||novayagazeta.ru/storage/banner
 ||novorus.info/banner/
+||novosti.dn.ua/ad/
 ||novostimira.*?v=$script
 ||novostiua.net/mang*.swf
 ||now.ru/branding/
@@ -5211,6 +5224,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||teksta.org/*.php|
 ||teksta.org/images/adv
 ||telekomza.ru/wp-content/uploads/$object
+||tfilm.tv/js/clck.js
 ||thg.ru/adv_img/
 ||thg.ru/images/spons/
 ||thg.ru^*_TOMS_HARDWARE_
@@ -5242,6 +5256,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||turbo.az/banners/
 ||turbobit.ru/pics/
 ||tushkan.net/vkm/
+||tvgid.ua/visit/
 ||tvi.ua/image/data/banners/
 ||tvi.ua/other/branding/
 ||tvigle.ru/resource/rf/rkm_disign/
@@ -5786,7 +5801,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@-teasers-$domain=rw.by
 @@.com/ads?$domain=uzblog.com|uzlist.com
 @@.soundcloud.com/player.swf?url=
-@@//promo.$popup,domain=bactistatin.com|gamexp.ru|iguides.ru|yandex.ru
+@@//promo.$popup,domain=bactistatin.com|gamexp.ru|iguides.ru|ingate.ru|yandex.ru
 @@/adfox.$script,domain=alfabank.ru|megafon.ru|mirtesen.ru|mts.ru|rutube.ru
 @@/adfox/*$image,object,domain=alfabank.ru|megafon.ru|rutube.ru
 @@/adline.$domain=adline.by|adline.reformal.ru
@@ -6018,7 +6033,7 @@ chatovod.ru#@#.withAds
 @@.jpg?ad_height=$domain=modfiles.ru|picforall.ru|pix-x.net|rustrek.ru|torrent-pirat.com
 @@.png#$image,domain=evonews.org|planetaua.net
 @@/advertise.js|$domain=raketa-tv.com
-@@/advertisement.js|$script,domain=kurs.com.ua|megogo.net|online.ua|piratbit.net|raketa-tv.com|теплорасчет.рф
+@@/advertisement.js|$script,domain=evrl.to|kurs.com.ua|megogo.net|online.ua|piratbit.net|raketa-tv.com|теплорасчет.рф
 @@/advertisment.js|$script,domain=allserial.tv
 @@/crossdomain.xml|$domain=megogo.net
 @@/getCode?$object-subrequest,domain=megogo.net
@@ -6029,6 +6044,7 @@ chatovod.ru#@#.withAds
 @@||forum.na-svyazi.ru^$elemhide
 @@||forum.zarulem.ws^$elemhide
 @@||gfhdkse.com^$script,domain=99px.ru
+@@||go.oclasrv.com^$script,subdocument,domain=moonwalk.cc
 @@||googlesyndication.com/pagead/$script,domain=blindage.org|evonews.org|free-send.ru
 @@||liverail.com/?LR_$object-subrequest,domain=moevideo.net
 @@||liverail.com^*/admanager.swf|$domain=own3d.tv

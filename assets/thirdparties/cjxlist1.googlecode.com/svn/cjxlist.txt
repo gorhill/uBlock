@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140708
-! Version: 20140708
+! List version 20140716
+! Version: 20140716
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
@@ -18,6 +18,7 @@
 .adsense.
 .adserver.
 .advert.$domain=~advert.ly
+.ashx?AdID=
 .biz/ad.
 .cc/ads/
 .com/ad.$domain=~ad-tuning.de
@@ -87,6 +88,7 @@
 /ad_iframe.
 /ad_img/*
 /ad_left_
+/ad_loader2.
 /ad_news.
 /ad_right.
 /ad_text_
@@ -94,6 +96,7 @@
 /ad_top_
 /ad_vertical.
 /ad_view_
+/adaffiliate_
 /adbanner.
 /adbanner/*
 /adbg.jpg
@@ -153,12 +156,14 @@
 /ads/ads_
 /ads/common/*
 /ads/home/*
+/ads/image/*
 /ads/images/*
 /ads/img/*
 /ads/js/*
 /ads/spacer.
 /ads/www/*
 /ads1.
+/ads2.
 /ads2/*
 /ads_bottom_
 /ads_images/*
@@ -173,6 +178,7 @@
 /adserver.
 /adsfile.
 /adshow.
+/adshow?
 /adslide.
 /adsrich.
 /adswrapperintl.
@@ -181,6 +187,7 @@
 /adtag.
 /adtop.
 /adtrack/*
+/adtxt.
 /adv.html
 /adv/adv_
 /adv1.
@@ -236,6 +243,7 @@
 /flashad.
 /float_ad.
 /floatadv.
+/footad.
 /footerad.
 /fullad.
 /gamead/*
@@ -260,6 +268,7 @@
 /iframe/ad/*
 /iframe/ads/*
 /iframe_ad_
+/image/ad/*
 /images/ad-
 /images/ad.$domain=~ngohq.com
 /images/ad/*
@@ -287,6 +296,7 @@
 /left_ad_
 /leftad.
 /logad?
+/media/ad/*
 /mobile_ad.
 /mod_ad/*
 /module/ads/*
@@ -363,6 +373,7 @@ _ad1.$~stylesheet
 _ad2.
 _ad3.
 _ad6.
+_ad_banner.
 _ad_bottom.
 _ad_center.
 _ad_choices_
@@ -395,6 +406,7 @@ _topad.
 -300-250.
 -468_60.
 -468x60.
+-728x90.
 /120_600/*
 /160x600-
 /160x600.
@@ -402,6 +414,7 @@ _topad.
 /270x90-
 /300-250.
 /300.html$subdocument
+/300x150_
 /300x250.
 /300x250_
 /468_60.
@@ -434,6 +447,7 @@ _468x60.
 _468x60_
 _600x80.
 _600x90.
+_728.htm
 _728_90.
 _728_90_
 _728x90.
@@ -465,6 +479,8 @@ _960_90.
 ###ad-300x250
 ###ad-4
 ###ad-banner
+###ad-box-first
+###ad-box-second
 ###ad-carousel
 ###ad-column
 ###ad-frame
@@ -483,8 +499,10 @@ _960_90.
 ###ad300x250
 ###ad336
 ###ad6
+###adAd
 ###adBanner
 ###adBanner2
+###adBox
 ###adChannel
 ###adFrame
 ###adHeaderTop
@@ -541,6 +559,7 @@ _960_90.
 ###ad_space
 ###ad_text:not(textarea)
 ###ad_top
+###ad_top_banner
 ###ad_txt
 ###adbanner
 ###adblock
@@ -635,6 +654,7 @@ _960_90.
 ###left_adv
 ###leftad
 ###logo_ad
+###middle_ad
 ###mochila-column-right-ad-300x250-1
 ###msad
 ###narrow-ad
@@ -683,6 +703,7 @@ _960_90.
 ###topad2
 ###topad728
 ###travel_ad
+###turnAD
 ###wide_ad_unit
 ###widget_ad
 ##.AdTop
@@ -691,6 +712,7 @@ _960_90.
 ##.TopAds
 ##.UIStandardFrame_SidebarAds
 ##.ad-1
+##.ad-160x600
 ##.ad-300
 ##.ad-300x100
 ##.ad-300x250
@@ -761,6 +783,7 @@ _960_90.
 ##.adCenter
 ##.adClose
 ##.adCont
+##.adContent
 ##.adLeft
 ##.adLink
 ##.adNone
@@ -793,8 +816,10 @@ _960_90.
 ##.ad_bottom
 ##.ad_box
 ##.ad_box1
+##.ad_box_2
 ##.ad_column
 ##.ad_contain
+##.ad_container
 ##.ad_content
 ##.ad_flash
 ##.ad_global_header
@@ -809,6 +834,7 @@ _960_90.
 ##.ad_pic
 ##.ad_placement
 ##.ad_side
+##.ad_sidebar
 ##.ad_small
 ##.ad_text
 ##.ad_title
@@ -843,6 +869,8 @@ _960_90.
 ##.adright
 ##.adrow
 ##.ads-300-250
+##.ads-300x250
+##.ads-728x90
 ##.ads-content
 ##.ads-footer
 ##.ads-header
@@ -877,6 +905,7 @@ _960_90.
 ##.adtop
 ##.adtxt
 ##.adv-300-250
+##.adv-block
 ##.adv300
 ##.advBox
 ##.adv_right
@@ -895,6 +924,8 @@ _960_90.
 ##.banner300
 ##.banner350
 ##.banner728
+##.bannerAd
+##.bannerAd3
 ##.banner_300x250
 ##.banner_728x90
 ##.banner_ad
@@ -918,6 +949,7 @@ _960_90.
 ##.cnnSearchSponsorBox
 ##.cnn_adbygbin
 ##.cnn_adcntr728x90
+##.cnn_adcntr728x90t
 ##.cnn_adspc336cntr
 ##.cnn_adtitle
 ##.cnn_fabcatad
@@ -1011,6 +1043,7 @@ _960_90.
 ##.rightAd
 ##.right_ad
 ##.right_ads
+##.right_adv
 ##.rightad
 ##.rightadv
 ##.rmx-ad
@@ -1094,6 +1127,7 @@ yahoo.com#@#.type_ads_default
 ||admngronline.com^$third-party
 ||adnxs.com^$third-party
 ||adorika.net^$third-party
+||adroll.com^$third-party
 ||adsame.com^$third-party
 ||adsfactor.net^$third-party
 ||adshost2.com^$third-party
@@ -1118,14 +1152,17 @@ yahoo.com#@#.type_ads_default
 ||chitika.net^$third-party
 ||clixtrac.com^$third-party
 ||clkrev.com^
+||comscore.com^$third-party
 ||connexity.net^$third-party
 ||contextweb.com^$third-party
 ||cpmstar.com^$third-party
+||criteo.com^$third-party
 ||criteo.net^$third-party
 ||directrev.com^$third-party
 ||dotomi.com^$third-party
 ||doubleclick.net/ad/$third-party
 ||doubleclick.net/adj/$~object-subrequest,third-party
+||doublemax.net^$third-party
 ||doublepimp.com^$third-party
 ||ero-advertising.com^$third-party
 ||exoclick.com^$third-party
@@ -1142,6 +1179,7 @@ yahoo.com#@#.type_ads_default
 ||jumptap.com^$third-party
 ||krxd.net^$third-party
 ||lduhtrp.net^$third-party
+||linkoffers.net^$third-party
 ||liverail.com^$~object-subrequest,third-party
 ||m2pub.com^$third-party
 ||media6degrees.com^$third-party
@@ -1150,6 +1188,7 @@ yahoo.com#@#.type_ads_default
 ||mookie1.com^$third-party
 ||moselats.com^$third-party
 ||nanigans.com^$third-party
+||netshelter.net^$third-party
 ||networld.hk^$third-party
 ||nexac.com^$third-party
 ||overture.com^$third-party
@@ -1161,6 +1200,7 @@ yahoo.com#@#.type_ads_default
 ||questionmarket.com^$third-party
 ||rev2pub.com^$third-party
 ||revsci.net^$third-party
+||rtbidder.net^$third-party
 ||ru4.com^$third-party
 ||rubiconproject.com^$third-party
 ||serving-sys.com^$third-party
@@ -1168,6 +1208,7 @@ yahoo.com#@#.type_ads_default
 ||skinected.com^$third-party
 ||supersitetime.com^$third-party
 ||supplyframe.com^$third-party
+||switchadhub.com^$third-party
 ||tapad.com^$third-party
 ||teads.tv^$third-party
 ||tidaltv.com^$third-party
@@ -1187,6 +1228,7 @@ yahoo.com#@#.type_ads_default
 ||mmaaxx.com^$third-party
 ||plugrush.com^$third-party
 ||putags.com^$third-party
+||sv2.biz^$third-party
 ||trw12.com^$third-party
 ||ero-advertising.com^$popup,third-party
 ||adap.tv/redir/client/static/as3adplayer.swf
@@ -1221,6 +1263,8 @@ yahoo.com#@#.type_ads_default
 ||imgchili.net/js/showa.js
 ||imgchili.net/lj.js
 ||l.yimg.com/mq/a/
+||marketingsolutions.yahoo.com^
+||media-mgmt.armorgames.com^
 ||mediafire.com/templates/linkto/
 ||mediafire.com^*/linkto/default-$subdocument
 ||pmm.people.com.cn^
@@ -1269,6 +1313,7 @@ facebook.com##div[class="ego_column pagelet _5qrt _1snm"]
 facebook.com##div[class="ego_column pagelet _5qrt _y92 _1snm"]
 facebook.com##div[class="ego_column pagelet _y92"]
 facebook.com##div[class="ego_column pagelet"]
+broadbandreports.com,dslreports.com##td[style="border-right: 1px #CCCCCC solid;"]
 imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:4px 3px 4px 3px; margin-top:-5px; margin-bottom:-8px; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px;"]
 @@||adap.tv/redir/javascript/vpaid.js
 @@||adblockplus.org^$elemhide,domain=easylist.adblockplus.org|reports.adblockplus.org
@@ -1286,6 +1331,7 @@ imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:
 @@||linkbucks.com/tmpl/mint/img/int_skip_ad_disabled.gif
 @@||mail.google.com^*&view=ad&$xmlhttprequest
 @@||msads.net/adbar/products/*/adbar.js$domain=mail.live.com
+@@||photobucket.com/albums/ad$image
 @@||s.ytimg.com/yts/swfbin/player-*/watch_as3.swf$object,domain=youtube.com
 @@||server.cpmstar.com/adviewas3.swf?contentspotid=$object-subrequest
 @@||translate.google.*/translate_*&q=$~third-party,xmlhttprequest

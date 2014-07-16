@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 8de705hCJlNTWKqx3c2HPQ
-! Version: 201407141531
+! Checksum: TV1lET5zFXUd7yTIvMxQMA
+! Version: 201407161541
 ! Title: Fanboy's Annoyance List
-! Last modified: 14 Jul 2014 15:31 UTC
+! Last modified: 16 Jul 2014 15:41 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums

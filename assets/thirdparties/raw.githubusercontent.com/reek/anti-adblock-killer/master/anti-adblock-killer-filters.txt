@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.3
+! Version: 7.4
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -59,8 +59,7 @@
 ! jQuery Adblock
 ! http://www.vivekv.com
 /jquery.adblock.js|$script
-! check
-! http://kjanime.net/aclaracion-sobre-el-anti-adblock/
+! jQuery AntiAdsBlock (Hendriono)
 /jquery.antiadsblock.js|$script
 ! FuckAdBlock
 ! http://www.sitexw.fr/fuckadblock/
@@ -77,7 +76,6 @@
 ||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3|
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
-! check
 ! No Adblock - http://www.noadblock.com/
 /plugins/no-adblock/*
 /blockBlock.jquery.js$script
@@ -400,6 +398,8 @@ breakmanga.com###notice
 chine-informations.com###entete + div[id][class="nomobile"]
 ! hellsmedia.com
 @@||hellsmedia.com/js/advert.js$script
+! writing.com
+@@||anywriters.com/main/js/advert.js$script
 ! teknogods.com
 @@||teknogods.com/advert.js$script
 ! chrissmoove.com

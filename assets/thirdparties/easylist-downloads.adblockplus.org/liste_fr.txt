@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: TH7SxNkwpGxqDGyE4B/qIA
-! Version: 201407141531
+! Checksum: Uj46fmbDTb0vyfzM1AJKQg
+! Version: 201407161541
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -100,7 +100,6 @@ _regiepub/
 ||appsfire.com^$third-party
 ||atedra.com^$third-party
 ||avenir-affiliation.fr^$third-party
-||aw3bdhwfl3.pw^$third-party
 ||b117f8da23446a91387efea0e428392a.pl^$third-party
 ||beead.fr^$third-party
 ||bizhentai.com^$third-party
@@ -109,7 +108,6 @@ _regiepub/
 ||box.shopoon.fr^$third-party
 ||camsympa.com^$third-party,domain=~camsympa.fr
 ||carpediem.fr^$third-party
-||cbjoc9a9xt.pw^$image,third-party
 ||cdn.nextperf.net^$third-party
 ||cercle-trafic.com$third-party
 ||clic-diffusion.com^$third-party
@@ -268,6 +266,7 @@ _regiepub/
 ||z-barre.com^$third-party
 ||zebestof.com^$third-party
 ||zeropub.net^$third-party
+||zgrrcbowke.pw^$third-party
 !
 !----------------------- Publicités tierces ----------------------!
 !
@@ -661,6 +660,7 @@ _regiepub/
 !----------------------- Sites spécifiques -----------------------!
 !
 /http://www\.sofoot\.com/IMG/i\d+\.jpg/$domain=sofoot.com
+|http://*.pw/$image,domain=lapopottedemanue.com|leblogtvnews.com|wikistrike.com
 ||01net.com/front_office/images/regie/
 ||100pour100sexe.com/pop.js
 ||1an2kdo.com/pics/pub/
@@ -982,6 +982,8 @@ _regiepub/
 ||free.fr^*/js/display_shopping_alice.js
 ||freenduro.com/images/banners/
 ||french-movies.net/btn_usenet.png
+||fullsharez.com/rotation3/
+||fullsharez.com/rotavert1/
 ||fullxmovies.com/catcheur-haut.php
 ||fullxmovies.com/fakeplayer/
 ||fullxmovies.com/payglad/
@@ -1102,6 +1104,8 @@ _regiepub/
 ||journalintime.com/static/pubs/
 ||juif.org/img/partners/
 ||kaamelott-streaming.tv/images/m6-wideo-france.jpg
+||kairn.com/*/pub.
+||kairn.com/files/pub/
 ||kelbillet.com/ws_smads_integration.php
 ||kits-graphiques-deluxe.com/images/pub1.jpg
 ||koaci.com/pub/
@@ -1395,6 +1399,7 @@ _regiepub/
 ||pyrenees-team.com/graphics/baniere/logo.jpg
 ||rabbitfinder.com/bannieres/
 ||radio-monaco.com/images/banners/
+||radiorcj.info^*/pub/
 ||rajacasablanca.com/site/images/flash_banners/
 ||raje.fr/images/banners/
 ||rea-dz.com/images/banners/FOND%20C2.jpg
@@ -1666,6 +1671,7 @@ _regiepub/
 ||zoom-algerie.com/images/amazigh-united-250.jpg
 ||zoomdici.fr/media/pub/
 ! MacGeneration
+igen.fr,macg.co###habil
 igen.fr,macg.co###habil11
 ~forums.macg.co,igen.fr,macg.co##a[href="http://goo.gl/kp5svN"]
 igen.fr,macg.co##img[onload^="_gaq.push(['_trackEvent', 'Habillage "]
@@ -2134,6 +2140,7 @@ egora.fr###ban-gp
 grandecran.fr###ban_big
 football365.fr,mercato365.com,rugby365.fr,sport365.fr###ban_bottom
 football365.fr,mercato365.com,rugby365.fr,sport365.fr###ban_top
+kairn.com###bandeauTheme > .video
 priceminister.com###bandeau_premium
 click-fr.com###baner
 blogger-au-bout-du-doigt.blogspot.com,boursier.com,cdmail.fr,danslescoulisses.com,htmlforums.com,lesaffaires.com,maliweb.net###banner
@@ -2890,6 +2897,7 @@ slappyto.net##.sonicprice
 nouvelobs.com##.spectacles
 spi0n.com##.spion_single_pub
 lagazettedescommunes.com##.spons
+yahoo.com##.sponsor-dd
 lokan.fr,moto85.com##.sponsors
 msn.com##.sponsorship
 espace.mu##.srcPubZone
@@ -2940,6 +2948,7 @@ tomsguide.fr##.zoneTriple
 tsa-algerie.com##.zone_annonceurs
 lepetiteconomiste.com##.zoom
 dpstream.net##[class$="_plugin_top"]
+leblogtvnews.com##a > img[width="300"][height="600"]
 touslesdrivers.com##a.seo
 free-reseau.fr##a[href*="&tag=freereseaufr-"]
 artdeseduire.com##a[href*="/?part=ads"]
@@ -3149,6 +3158,7 @@ supplychainmagazine.fr##img[width="468"]
 astuce-facebook.com,echangegagnant.com,genhit.com,israelmagazine.co.il##img[width="468"][height="60"]
 israelmagazine.co.il##img[width="600"][height="90"]
 forum.soirnet.fr##img[width="720"][height="100"]
+leblogtvnews.com##img[width="728"][height="90"]
 lien-torrent.com##li > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([href^="javascript:show"]):not([href^="facebook"])
 filmze.com##noindex
 sinfest.net##noscript a
@@ -3392,14 +3402,15 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=viedemerde.fr
 @@||viedemerde.fr^$script,~third-party
 viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
+||centquatre.viedemerde.fr^
 ||drums.buporez.com^
-||sousjacent.viedemerde.fr^
 ! notre-planete.info
 @@||cas.criteo.com/delivery/ajs.php?$script,domain=notre-planete.info
 @@||notre-planete.info^$elemhide
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=notre-planete.info
 @@||www6.smartadserver.com/call/pubdirj/$script,domain=notre-planete.info
 ! Adunblock
+@@|http://*.69.mu/*.js|$script,third-party
 @@|http://*.ax.lt/*.js|$script,third-party
 @@|http://*.cr.rs/*.js|$script,third-party
 @@|http://*.ez.lv/*.js|$script,third-party
@@ -3421,6 +3432,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||base-v.ch/*.js|$script,third-party
 @@||bkafw.us.to/*.js|$script,third-party
 @@||caledonianlab.com/*.js|$script,third-party
+@@||chqbp.69.mu/*.js|$script,third-party
 @@||cloudwatch.net/*.js|$script,third-party
 @@||crabdance.com/*.js|$script,third-party
 @@||cteyd.na.tl/*.js|$script,third-party
@@ -3452,6 +3464,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||mazdarx7.com/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
 @@||negeriau.net/*.js|$script,third-party
+@@||nnc.ro/*.js|$script,third-party
 @@||omqdu.cr.rs/*.js|$script,third-party
 @@||opensrc.mx/*.js|$script,third-party
 @@||otzlu.gw.lt/*.js|$script,third-party
@@ -3472,10 +3485,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||wtf.im/*.js|$script,third-party
 @@||yblpg.ax.lt/*.js|$script,third-party
 @@||yspzd.na.tl/*.js|$script,third-party
-http://*.info.gf/$third-party,xmlhttprequest
-http://*.leet.la/$third-party,xmlhttprequest
-http://*.linuxd.org/$third-party,xmlhttprequest
-http://*.mazdarx7.com/$third-party,xmlhttprequest
+|http://*.69.mu/$third-party,xmlhttprequest
 |http://*.905tech.com/$third-party,xmlhttprequest
 |http://*.anonymous.lv/$third-party,xmlhttprequest
 |http://*.awiki.org/$third-party,xmlhttprequest
@@ -3500,12 +3510,17 @@ http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.home.kg/$third-party,xmlhttprequest
 |http://*.hpc.tw/$third-party,xmlhttprequest
 |http://*.icello.in/$third-party,xmlhttprequest
+|http://*.info.gf/$third-party,xmlhttprequest
 |http://*.joe.dj/$third-party,xmlhttprequest
 |http://*.jpe.js/$third-party,xmlhttprequest
 |http://*.jundy.org/$third-party,xmlhttprequest
 |http://*.keep.se/$third-party,xmlhttprequest
+|http://*.leet.la/$third-party,xmlhttprequest
+|http://*.linuxd.org/$third-party,xmlhttprequest
+|http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.mm.my/$third-party,xmlhttprequest
 |http://*.negeriau.net/$third-party,xmlhttprequest
+|http://*.nnc.ro/$third-party,xmlhttprequest
 |http://*.opensrc.mx/$third-party,xmlhttprequest
 |http://*.publi.ch/$third-party,xmlhttprequest
 |http://*.qq.my/$third-party,xmlhttprequest
@@ -3520,6 +3535,7 @@ http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.vr.lt/$third-party,xmlhttprequest
 |http://*.wtf.im/$third-party,xmlhttprequest
 ||axlnp.us.to^$third-party
+||cifqr.69.mu^$third-party
 ||cvhyx.vr.lt^$third-party
 ||ebogh.mm.my^$third-party
 ||fcwsk.ro.lt^$third-party
@@ -3801,6 +3817,7 @@ http://*.mazdarx7.com/$third-party,xmlhttprequest
 @@||slip.madmoizelle.com/advertisement.js?
 @@||total-sport.tv^$elemhide
 @@||traductionjeux.com^$elemhide
+@@||turbodebrideur.com/banner/468/advertisement-AdBlock.js
 @@||unjourunerecette.fr/css/publicite-ads.css
 @@||venez.fr/js/advert.js
 @@||wakfu-world.com/tools/show_ads.js

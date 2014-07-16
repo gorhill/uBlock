@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Zf3NeJt2PEaqDZljshOi5g
+! Checksum: gRhQoUq4T2kvz2HZl6WKkg
 ! Title: EasyList Hebrew
-! Last modified: 08/07/14  14:23 Jerusalem Daylight Time
+! Last modified: 16/07/14  10:23 Arabic Standard Time
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -255,6 +255,7 @@
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
+@@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
 @@||gplanet.co.il/js/adx.js
 @@||ifat.com/VideoControl/makoinformation$object-subrequest,domain=mako.co.il,media
 @@||ilgde.adocean.pl/$object-subrequest,domain=mako.co.il
@@ -277,7 +278,7 @@
 @@||one.co.il/images/Ads/2013/10/20/2230/racer_51x20hp.png
 @@||one.co.il/images/ads/2014/06/02/1415/MNDL2.swf
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ads?sz=$object-subrequest,domain=globes.co.il
+@@||pubads.g.doubleclick.net/gampad/ads$domain=globes.co.il|m.ynet.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party

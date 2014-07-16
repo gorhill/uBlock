@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 5ZubCJmlRvriXpUPmfyizw
-! Version: 201407141531
+! Checksum: pjQkaxkcrcI11sqHl2R0kA
+! Version: 201407161541
 ! Title: EasyPrivacy
-! Last modified: 14 Jul 2014 15:31 UTC
+! Last modified: 16 Jul 2014 15:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -323,6 +323,7 @@
 /banner-tracker.
 /banners-stat.
 /basesdc.js
+/batch.gif?
 /baynote-$script
 /baynote.
 /baynote/*
@@ -3598,7 +3599,6 @@ http://utm.
 ||visualwebsiteoptimizer.com^$third-party
 ||vivocha.com^$third-party
 ||vizisense.net^$third-party
-||vizu.com^$third-party
 ||vizury.com^$third-party
 ||vmm-satellite1.com^$third-party
 ||vmm-satellite2.com^$third-party
@@ -4629,6 +4629,8 @@ http://utm.
 ||clientstat.castup.net^
 ||clipsyndicate.com/cs_api/cliplog?
 ||clnk.me/_t.gif?
+||cloudapp.net/l/Log?
+||cloudapp.net/l/LogMessage?
 ||cloudfront-labs.amazonaws.com^
 ||cloudfront.net*/sp.js
 ||cloudfront.net*/trk.js
@@ -5024,6 +5026,7 @@ http://utm.
 ||log000.goo.ne.jp^$third-party
 ||log1.survey.io^
 ||logger.sociablelabs.com^
+||loggingapi.spingo.com^
 ||logs.vmixcore.com^
 ||logssl.enquisite.com^
 ||longtailvideo.com^*/yourlytics-

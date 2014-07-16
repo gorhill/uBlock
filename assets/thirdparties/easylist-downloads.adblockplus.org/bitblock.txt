@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: oZhcfg1KyVmUK2YP/D27nw
-! Version: 201407141540
-! Last modified: 14 Jul 2014 15:40 UTC
+! Checksum: ARjKfYE3L2Qyu6BM1q6EyA
+! Version: 201407161550
+! Last modified: 16 Jul 2014 15:50 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
