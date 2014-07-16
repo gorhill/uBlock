@@ -108,6 +108,8 @@
         return null;
     }
 
+    //console.debug('µBlock> bindTabToPageStats(%d, "%s")', tabId, pageURL);
+
     // Reuse page store if one exists: this allows to guess if a tab is
     // a popup.
     var pageStore = this.pageStores[tabId];
@@ -117,13 +119,13 @@
         pageStore = this.PageStore.factory(tabId, pageURL);
     }
 
-    //console.log('µBlock> bindTabToPageStats(%d, "%s")', tabId, pageURL);
     this.pageStores[tabId] = pageStore;
 
     return pageStore;
 };
 
 µBlock.unbindTabFromPageStats = function(tabId) {
+    //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
     delete this.pageStores[tabId];
 };
 

@@ -125,7 +125,7 @@ var onTabsReceived = function(tabs) {
     messaging.ask( q, onStatsReceived );
 };
 
-chrome.tabs.query({ active: true }, onTabsReceived);
+chrome.tabs.query({ active: true, currentWindow: true }, onTabsReceived);
 
 /******************************************************************************/
 
