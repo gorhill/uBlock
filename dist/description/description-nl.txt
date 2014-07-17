@@ -26,7 +26,7 @@ Meer lijsten zijn beschikbaar om te selecteren indien gewenst:
 - Spam404
 - Etc.
 
-Natuurlijk wordt het geheugenverbruik groter naarmate er meer filters worden ingeschakeld. Zelfs na Fanboy's two extra lijsten, hpHosts’s Ad and tracking servers toe te voegen heeft µBlock een lagere geheugenverbruik dan andere populaire blokkeerders.
+Natuurlijk wordt het geheugenverbruik groter naarmate er meer filters worden ingeschakeld. Zelfs na Fanboy's two extra lijsten, hpHosts’s Ad and tracking servers toe te voegen heeft  µBlock een lagere geheugenverbruik dan andere populaire blokkeerders.
 
 Let op, sommige van deze extra lijsten verhoogt de kans dat websites breken -- zeker de lijsten die normaal als hosts-bestand worden gebruikt.
 
@@ -40,7 +40,8 @@ Gratis.
 Open source met publieke licentie (GPLv3)
 Voor gebruikers, door gebruikers.
 
-Medewerkers: https://github.com/gorhill/uBlock/graphs/contributors
+Medewerkers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Medewerkers @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 

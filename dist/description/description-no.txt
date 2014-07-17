@@ -1,12 +1,12 @@
-En effektiv blokker: lett på minnet og CPU, og likevel kan laste og bruke tusenvis av flere filtre enn andre populære reklameblokkere.
+En effektiv blokker: lett på minnet og CPU, men kan likevel laste og bruke tusenvis av flere filtre enn andre populære reklameblokkere.
 
 Illustrert oversikt over dens effektivitet: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Anvendelse: Den store strømknappen i popup-vinduet er for å permanent deaktivere/aktivere µBlock for den aktuelle nettsiden. Det gjelder bare for den aktuelle nettsiden, det er ikke en global strømknapp.
+Anvendelse: Den store strømknappen i popup-vinduet er for å permanent deaktivere/aktivere µBlock for den aktuelle nettsiden. Dette gjelder bare for den aktuelle nettsiden, det er ikke en global strømknapp.
 
 ***
 
-Fleksibel, µBlock er mer enn en "reklameblokker": den kan også lese og opprette filter fra vertsfiler.
+Fleksibel, µBlock er mer enn en "reklameblokker": den kan også lese og opprette filtre fra vertsfiler.
 
 Som standard er disse filterlistene lastet og i bruk:
 
@@ -32,15 +32,16 @@ Vær også oppmerksom på at noen av disse ekstra listene kan lede til høyere s
 
 ***
 
-Uten forhåndsinnstilte lister over filtre er denne utvidelsen ubrukelig. Så hvis du ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som ble tilgjengelig for alle - helt gratis.
+Uten forhåndsinnstilte lister over filtre er denne utvidelsen ubrukelig. Så hvis du ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som ble gjort tilgjengelig for alle - helt gratis.
 
 ***
 
 Gratis.
 Åpen kildekode med offentlig lisens (GPLv3)
-For brukere av brukere.
+For brukere, av brukere.
 
-Bidragsytere: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragsytere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 

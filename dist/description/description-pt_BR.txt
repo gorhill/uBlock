@@ -1,4 +1,4 @@
-Um bloqueador eficiente: Com baixo consumo de memória e CPU e ainda pode carregar e aplicar milhares de filtros. mais do que outros bloqueadores populares lá fora.
+Um bloqueador eficiente: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. mais do que outros bloqueadores populares lá fora.
 
 Visão geral de sua eficiência: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
 

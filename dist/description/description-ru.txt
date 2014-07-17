@@ -40,7 +40,8 @@
 Открытый исходный код, публичная лицензия (GPLv3)
 Для пользователей от пользователей.
 
-Участники: https://github.com/gorhill/uBlock/graphs/contributors
+Участники на Github: https://github.com/gorhill/uBlock/graphs/contributors
+Участники на Crowdin: https://crowdin.net/project/ublock
 
 ***
 
