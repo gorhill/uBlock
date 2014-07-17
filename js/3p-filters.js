@@ -195,6 +195,7 @@ var renderBlacklists = function() {
             .replace('{{abpHideFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
     );
 
+    uDom('a').attr('target', '_blank');
     selectedBlacklistsHash = getSelectedBlacklistsHash();
 };
 
