@@ -667,6 +667,7 @@ var startPicker = function() {
             'box-sizing: border-box;',
             'box-shadow: none;',
             'border-radius: 3px;',
+            'display: inline;',
             'line-height: 1;',
             'color: #444;',
             'background-color: #ccc;',
