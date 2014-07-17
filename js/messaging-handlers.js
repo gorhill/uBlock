@@ -301,6 +301,45 @@ var onMessage = function(request, sender, callback) {
 
 /******************************************************************************/
 
+// whitelist.js
+
+(function() {
+
+var onMessage = function(request, sender, callback) {
+    var µb = µBlock;
+
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'getWhitelist':
+            response = µb.userSettings.netExceptionList;
+            break;
+
+        case 'setWhitelist':
+            µb.userSettings.netExceptionList = request.whitelist;
+            µb.saveWhitelist();
+            break;
+
+        default:
+            return µb.messaging.defaultHandler(request, sender, callback);
+    }
+
+    callback(response);
+};
+
+µBlock.messaging.listen('whitelist.js', onMessage);
+
+})();
+
+/******************************************************************************/
+
 // stats.js
 
 (function() {

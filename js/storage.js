@@ -80,6 +80,15 @@
 
 /******************************************************************************/
 
+µBlock.saveWhitelist = function() {
+    var bin = { 'netExceptionList': this.userSettings.netExceptionList };
+    chrome.storage.local.set(bin, function() {
+        µBlock.getBytesInUse();
+    });
+};
+
+/******************************************************************************/
+
 µBlock.saveUserFilters = function(content, callback) {
     return this.assets.put(this.userFiltersPath, content, callback);
 };
