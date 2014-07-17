@@ -1,6 +1,6 @@
 # µBlock for Chromium
 
-See [Change log](https://github.com/gorhill/uBlock/wiki/Change-log) for latest changes. 
+See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes. 
 See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
 An efficient blocker for Chromium-based browsers. Fast and lean.
