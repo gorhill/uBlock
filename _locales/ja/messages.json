@@ -1,0 +1,266 @@
+{
+  "extName":{
+    "message":"ユーブロック",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"終に、とても使いやすいグーグルクローム専用のインターネット広告ぶろっかー。",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":" 設定",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"第三者製フィルター",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"貴方のフィルター",
+    "description":"appears as tab name in dashboard."
+  },
+  "whitelistPageName":{
+    "message":"Whitelist",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"統計",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"このプロジェクトについて",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"このボタンを押して<br>今のサイトだけに<br>エクステンションを完全にオンかオフにする",
+    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"リクエストはブロックされました",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"このページ",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"インストール以来",
+    "description":"English: since install"
+  },
+  "pickerCreate":{
+    "message":"作成",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"選択",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"終了",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"ネットフィルター",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"コスメチックフィルタ",
+    "description":"English: Cosmetic filters"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"ブロックされた広告の非表示",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"ブロックされたリクエスト数をアイコンに表示",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{netFilterCount}}ネットワークフィルタ＋{{cosmeticFilterCount}}コスメチックフィルタ：",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{total}}個中{{used}}使用",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"アドブロックプラスの要素隠蔽フィルタを使用する。",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersPrompt2":{
+    "message":"{{abpHideFilterCount}}要素隠蔽フィルタ使用数",
+    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"ブロックされたホストの一覧表示",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"適用",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"広告",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"プライバシー",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"ウイルス",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"ソーシャル",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"多目的",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"地域、言語",
+    "description":"English: Regions, languages"
+  },
+  "1pFormatHint":{
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"インポートと追加",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"エクスポート",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"変更を適用",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"インポートと追加",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"エクスポート",
+    "description":"English: Export"
+  },
+  "whitelistApply":{
+    "message":"変更を適用",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Enable the logging of blocked requests",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Enable the logging of non-blocked requests",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"ブロックされたリルエスト",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"許可されたリクエスト",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"タイプ",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"ドメイン",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"インターネットアドレス",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"フィルター",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"このページでブロックされたリクエストは在りません",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"No non-blocked requests logged for this page",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>の変更履歴<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
+  },
+  "aboutCode":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>根源コード（GPLバージョン３）<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+  },
+  "aboutExtensionDataHeader":{
+    "message":"エクステンションデータ",
+    "description":"English: Extension data"
+  },
+  "aboutAssetsUpdatePrompt":{
+    "message":"<i>ユウブロック<\/i>のリストはエクステンションが更新しなくてもアップデートされます。リストの項目は自動的に<a href=\"https:\/\/github.com\/gorhill\/ublock\">のプロジェクト<\/a>から更新されます。",
+    "description":"Short descriptive text of the update feature"
+  },
+  "aboutAssetsUpdateColPath":{
+    "message":"径路",
+    "description":"Path column header"
+  },
+  "aboutAssetsUpdateColStatus":{
+    "message":"ステータス",
+    "description":"Status column header"
+  },
+  "aboutAssetsUpdateGetListError":{
+    "message":"エラーが発生しました。<b>raw2.github.com<\/b>の<b>XHR<\/b>はブロックされていますか？",
+    "description":"Successful outcome of clicking 'update' button"
+  },
+  "aboutAssetsUpdateStatusAdded":{
+    "message":"追加する",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusChanged":{
+    "message":"新しいバージョンが在ります",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusUnchanged":{
+    "message":"既に最新のバージョンです",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusRemoved":{
+    "message":"取り除く",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateButton":{
+    "message":"アップデート",
+    "description":"Update button"
+  },
+  "aboutAssetsUpdatingButton":{
+    "message":"アップデート中。。。",
+    "description":"Updating..."
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}

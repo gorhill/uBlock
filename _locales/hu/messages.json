@@ -1,0 +1,266 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Végül egy hatékony réklam es tracer blokkoló a Webkit alapu böngészőkhöz. Ami, Könnyű a CPU és a memórian.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":"Beallitasok",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"külső filterek",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"Ön filterey",
+    "description":"appears as tab name in dashboard."
+  },
+  "whitelistPageName":{
+    "message":"engedélyezett lista",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"Statisztikak",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"µBlock-rol",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"kattintson a bekapcsoló gombon, hogy <br>véglegesen letiltja vagy engedélyezé<br> μBlockot a jelenlegi websiteon",
+    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"Blockolt request-ek",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"Ezen a lapon",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"mióta telepített",
+    "description":"English: since install"
+  },
+  "pickerCreate":{
+    "message":"létrehozni",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"válasszon",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Kilépés",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Net filterek",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Cosmetikus filterek",
+    "description":"English: Cosmetic filters"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Elrejteni a blockolt elemeknek helyőrzőit",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Mutasa a számat a blokkolt requestek-nek az ikonon",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{netFilterCount}} net filterek + {{cosmeticFilterCount}} cosmetikus filterek:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} hasnalt a {{total}}-bol",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"kötelező Adblock + elemek elrejtése.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersPrompt2":{
+    "message":"{{abpHideFilterCount}} elem elrejtésere használt filterek.",
+    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Letiltott hostok listája",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"módosítások mentésé",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"hirdetések",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Adatvédelem",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Malware domainek",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Socialis",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"többcélú",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Nemzetiségek, nyelvek",
+    "description":"English: Regions, languages"
+  },
+  "1pFormatHint":{
+    "message":"Egy lista soronként. A filter lehet egy hostname, vagy Adblock-Plus compatibilis filter.\nSorok amik egy &lsquo;!&rsquo;-val kezdenek, nem lesznek tudomásul véve.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Importalni és hozzadni",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Exportalni",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"alkalmazni módosításokat",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"A lista a host nevekel, amelyikeken μBlock le-lesz tiltva. Egy bejegyzés soronként. Incorrect host nevek nem lesznek hasznalva.",
+    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"Importalni es Hozzadni",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"Exportalni",
+    "description":"English: Export"
+  },
+  "whitelistApply":{
+    "message":"módosítások alkalmazása",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Blokkolt request-ek naplózásá",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Nem-blokkolt request-ek naplózásá",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Blokkolt request-ek",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Engedélyezett request-ek",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Typus",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"domain",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"URL",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Filter",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"Nincs blockolt request ezen a lapon",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"Nincs nem-blockolt request ezen a lapon",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'> változás napló<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
+  },
+  "aboutCode":{
+    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'> forráskód (GPLv3)<\/a>",
+    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+  },
+  "aboutExtensionDataHeader":{
+    "message":"µBlock adatok",
+    "description":"English: Extension data"
+  },
+  "aboutAssetsUpdatePrompt":{
+    "message":"<i>µBlock<\/i> file-ok nélkül birtoklás-hoz vár részére a következő kiadás a µBlock itt frissíthető. Ezek az file-ok a <a href=\"https:\/\/github.com\/gorhill\/ublock\"> projekt Github adattárban<\/a> kihúzták.",
+    "description":"Short descriptive text of the update feature"
+  },
+  "aboutAssetsUpdateColPath":{
+    "message":"Elérési út",
+    "description":"Path column header"
+  },
+  "aboutAssetsUpdateColStatus":{
+    "message":"állapot",
+    "description":"Status column header"
+  },
+  "aboutAssetsUpdateGetListError":{
+    "message":"Hiba történt. <b>XHR<\/b> blockolta a <b>raw2.github.com<\/b>?",
+    "description":"Successful outcome of clicking 'update' button"
+  },
+  "aboutAssetsUpdateStatusAdded":{
+    "message":"hozzáad",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusChanged":{
+    "message":"Új verzió elérhető",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusUnchanged":{
+    "message":"Utolso verzio",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateStatusRemoved":{
+    "message":"eltávolítás",
+    "description":"Displayed in the status column for each entry"
+  },
+  "aboutAssetsUpdateButton":{
+    "message":"frissítés",
+    "description":"Update button"
+  },
+  "aboutAssetsUpdatingButton":{
+    "message":"frissul...",
+    "description":"Updating..."
+  },
+  "dummy":{
+    "message":"Ez a bejegyzés utolsó kell hogy legyen",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}
