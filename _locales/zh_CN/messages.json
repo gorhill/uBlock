@@ -19,6 +19,10 @@
     "message":"自定义过滤",
     "description":"appears as tab name in dashboard."
   },
+  "whitelistPageName":{
+    "message":"Whitelist",
+    "description":"appears as tab name in dashboard."
+  },
   "statsPageName":{
     "message":"统计",
     "description":"appears as tab name in dashboard."
@@ -28,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"点击按钮<br>永久禁用或启用<br>µBlock 对于当前网站",
+    "message":"点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
@@ -72,7 +76,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"来自{{netFilterCount}} 网址过滤 ＋ {{cosmeticFilterCount}} 元素过滤:",
+    "message":"当前使用{{netFilterCount}} 网址过滤和{{cosmeticFilterCount}} 元素过滤规则:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -116,11 +120,11 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"多用途",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"地区，语言",
+    "message":"地区语言",
     "description":"English: Regions, languages"
   },
   "1pFormatHint":{
@@ -136,6 +140,22 @@
     "description":"English: Export"
   },
   "1pApplyChanges":{
+    "message":"应用变更",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"导入并附加规则",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"导出规则",
+    "description":"English: Export"
+  },
+  "whitelistApply":{
     "message":"应用变更",
     "description":"English: Apply changes"
   },
