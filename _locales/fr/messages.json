@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Liste blanche",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -76,7 +76,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtre(s) réseau + {{cosmeticFilterCount}} filtres esthétiques actuellement en action :",
+    "message":"{{netFilterCount}} filtre(s) réseau et {{cosmeticFilterCount}} filtre(s) esthétique(s) sont actuellement en action :",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -120,7 +120,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multiple blocage",
+    "message":"Blocage multiple",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -144,19 +144,19 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Ici se trouve votre liste d'hôtes à autoriser. Un nom d'hôte par ligne. Les noms d'hôte invalides seront ignorés et vous n'en serez pas averti(e).",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"Importer",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"Exporter",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Appliquer",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
