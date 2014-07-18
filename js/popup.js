@@ -69,6 +69,7 @@ var renderStats = function() {
         isHTTP
     );
 
+    var or = chrome.i18n.getMessage('popupOr');
     var blocked = stats.pageBlockedRequestCount;
     var total = stats.pageAllowedRequestCount + blocked;
     var html = [];
@@ -77,7 +78,9 @@ var renderStats = function() {
     } else {
         html.push(
             formatNumber(blocked),
-            '<span class="dim">&nbsp;or&nbsp;',
+            '<span class="dim">&nbsp;',
+            or,
+            '&nbsp;',
             (blocked * 100 / total).toFixed(0),
             '%</span>'
         );
@@ -92,7 +95,9 @@ var renderStats = function() {
     } else {
         html.push(
             formatNumber(blocked),
-            '<span class="dim">&nbsp;or&nbsp;',
+            '<span class="dim">&nbsp;',
+            or,
+            '&nbsp;',
             (blocked * 100 / total).toFixed(0),
             '%</span>'
         );
