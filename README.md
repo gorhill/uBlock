@@ -46,9 +46,10 @@ popular blockers out there.
 If you install µBlock along another blocker, µBlock will likely show less requests 
 blocked than the other blocker. You might want to [read this](https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block) 
 for the explanation.
-TL;DR: when used along with another blocker, µBlock typically will show you what the other 
-blocker **did not** block. If µBlock is used as the lone blocker, it will block 
-everything the other blocker would have blocked, [and more](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares).
+TL;DR: when used along with another blocker, µBlock typically will block and show 
+you what the other blocker **did not** block. If µBlock is used as the lone blocker, 
+it will block everything the other blocker would have blocked, 
+[and more](https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares).
 
 ## Documentation
 
