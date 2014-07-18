@@ -144,19 +144,19 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Deine Liste an Host-Namen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Host-Namen werden stillschweigend ignoriert.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"Importieren und hinzufügen",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"Exportieren",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Änderungen anwenden",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
