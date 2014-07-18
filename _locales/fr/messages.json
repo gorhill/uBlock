@@ -47,6 +47,10 @@
     "message":"depuis toujours :",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"ou",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Créer",
     "description":"English: Create"
