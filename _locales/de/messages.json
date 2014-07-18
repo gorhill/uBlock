@@ -76,7 +76,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} eindeutig blockierte Hostnamen aus:",
+    "message":"{{netFilterCount}} eindeutig blockierte Host-Namen aus:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -96,7 +96,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listen blockierter Hostnamen",
+    "message":"Listen blockierter Host-Namen",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -128,7 +128,7 @@
     "description":"English: Regions, languages"
   },
   "1pFormatHint":{
-    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
+    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Host-Name sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
