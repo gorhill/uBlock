@@ -1,11 +1,11 @@
-acbf3e508bae1a81020d42db416b0868 assets/ublock/filters.txt
-5c6399ec38f1b2052539c77458cb4334 assets/ublock/filter-lists.json
-36d8978c647291a4415dc02fe176e54e assets/thirdparties/download.wiltteri.net/wiltteri.txt
+c137cc06b4ffe4af465a04a14d951d10 assets/ublock/filters.txt
+3a1a4984aed3fe588c3b9c28f5e70f6f assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 3739b55487ff20f235c736601319f843 assets/thirdparties/adblock.gardar.net/is.abp.txt
 95c3ea68a37221730b5d6283ce8caa76 assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
 14ac2062c6a74c43cfa17103d4a5830a assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt
+54f7032c0e7ef73feb32d3c5437b8694 assets/thirdparties/raw.githubusercontent.com/wiltteri/master/wiltteri.txt
 c04a27bfd7eed1f5fb08e5dd47f7703b assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 4fb0e3ce956a596192a2a6b076629f06 assets/thirdparties/raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
 4f5b2e6b7aa7c71f834fdad08c026d42 assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt

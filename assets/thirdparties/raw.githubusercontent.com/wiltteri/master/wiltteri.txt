@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: jCDlWPKEtmxbf7KmoifUmw
-! Version: 201405261320
+! Checksum: cjjvBtcTWxJMQN048ut3ng
+! Version: 201406181900
 ! Title: Wiltteri
 ! Description: Finnish supplement list for EasyList
-! Last modified: 26 May 2014 13:20 UTC
+! Last modified: 18 Jun 2014 19:00 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://wiltteri.net/
 ! License: http://unlicense.org/
@@ -305,6 +305,8 @@ _mainosnappi.
 ||eat.fi/vartti/
 ||ecross.fi/*files/imagemanagermodule/@random
 ||educations.com^*/partners/$domain=koulutus.fi|utbildning.se
+||eivmp.com/images/*banneri
+||eivmp.com/images/mainos
 ||ekoenergia.fi/bannerit/
 ||ekokompassi.fi/kuvat/ala_logot.gif
 ||elamalapselle.fi/banner/
@@ -718,6 +720,7 @@ _mainosnappi.
 ||kivijarvi.fi/images/vkivi.jpg
 ||klassinen.fi/tiedostot/banneri/
 ||klassinen.fi^*/img/rondolehti.jpg
+||klikkaaja.net/promo/
 ||klikki.com^$third-party
 ||kmvlehti.fi^*/alma_init_cjs.js
 ||kmvlehti.fi^*/meedio_kmv_lehti.js
@@ -1069,6 +1072,7 @@ _mainosnappi.
 ||otavafiles.fi^*/ilmoitus_bg.
 ||otavafiles.fi^*/matkalaukku/nostot/
 ||oty.fi/images/banners/
+||oululehti.fi/edoris?
 ||oulunkarpat.fi/20*/bannerit/
 ||ouluthisweek.net/banners/
 ||overdrive.fi/bannerit/
@@ -1443,6 +1447,7 @@ _mainosnappi.
 ||static.vertaa.fi/data/*/banner/
 ||stayhome.fi^*/webawards-suurtaulu.
 ||stll.fi/@Bin/*banner
+||storage.googleapis.com/suomensanomat/img/savikauppa/$domain=suomensanomat.fi
 ||studiofeelit.fi/shop/logos/logot
 ||sue.fi/images/*.swf
 ||sue.fi/images/*banner
@@ -1890,7 +1895,7 @@ radiosuomipop.fi,suomenviihderavintolat.fi,suomiareena.fi###banner2
 suomiareena.fi###banner5
 vyy.fi###banner6
 kotikarjala.fi###bannerAreaSidebar
-kotikarjala.fi###bannerAreaTop
+kotikarjala.fi,oululehti.fi###bannerAreaTop
 tuningstudio.fi###bannerHeader
 yrittajat.fi###bannerRight
 helvetin16.com###bannerSix
@@ -2004,6 +2009,7 @@ myyitseasuntosi.com###columnC_3columns
 koti-kajaani.fi###column_middle > .flexslider
 koti-kajaani.fi###column_right > .basic_box
 vuokatti.fi###column_right > .nosto_narrow:last-child
+iltalehti.fi###com-autotalli-multibanner
 autot.oikotie.fi###commercial
 autot.oikotie.fi###commercial-2
 aukusti.fi###container > p[style="text-align: center;"]
@@ -2450,6 +2456,7 @@ sirkusfinlandia.fi###sponssi
 turkusoundcheck.com###sponssit-row
 ellos.fi###spotBottom
 gentleman.fi###staatBanneri
+suomensanomat.fi###static-info
 qruiser.com###stripe
 tourdehelsinki.fi###sub_sponsors
 urps.fi###supplementary
@@ -2665,7 +2672,7 @@ tennis.fi##.banneripaikka_top
 ilves.com,kyronniemi.fi,tune.fi##.bannerit
 imps.fi,netticasino.com,radiofinlandia.net,radiorex.fi,ruokamenot.fi,urheiluveikkaus.com##.banneritem
 kilipailut.fi,sips.fi,terveysinfo.fi##.bannerlink
-com,fi,net##.bannerlist
+fi##.bannerlist
 ilkka.fi##.bannernostot_right
 ammattiautot.fi,basket.fi,helsinki-vantaa.fi,judoliitto.fi,kehy.fi,koneporssi.com,lyy.fi,nkl.fi,reservilaisliitto.fi,riemurasia.net,suomenpolkupyoratukku.fi,tuningstudio.fi,visulahti.fi##.banners
 skv.fi##.banners2_skv
@@ -3225,7 +3232,7 @@ suisto.fi##div > table[border="0"]
 savonkinot.fi##div a > img
 lumiparkki.fi##div ul.xoxo > li.widget.widget_sp_image
 alypaa.com##div:first-child:last-child > div:first-child + div:last-child > a
-aarre.fi,devilskuopio.fi,edukouvola.fi,fin5.fi,kalottjazzblues.net,lakiwiki.fi,lehtiapaja.fi,luontotupa.net,metsavetoomus.fi,orivedenponnistus.fi,outokummunkaupunki.fi,pelaa.org,ramasa.net,vantaalla.info,vapaatohjelmat.fi##div[align="center"]
+devilskuopio.fi,edukouvola.fi,fin5.fi,kalottjazzblues.net,lakiwiki.fi,lehtiapaja.fi,luontotupa.net,metsavetoomus.fi,orivedenponnistus.fi,outokummunkaupunki.fi,pelaa.org,ramasa.net,vantaalla.info,vapaatohjelmat.fi##div[align="center"]
 teatterihelsinki.fi##div[align="center"] + * + * + * + * + * + p
 goldenring.fi##div[align="center"] + * > p
 helsinginkisaveikot.fi##div[align="center"] + * img
@@ -3935,6 +3942,7 @@ seksitreffit.fi##table[width="1024"][bgcolor="#d31517"]
 ||aller.fi/banner/$third-party
 ||almamedia.fi/mp/$subdocument
 ||autotalli.com/externalquicksearch?$subdocument
+||autotalli.com^*/html_multibanner/$third-party
 ||autotalli.com^*/htmlbanners/$subdocument
 ||bmm.fi^$third-party
 ||cromet.fi/commercials/$third-party
@@ -4012,4 +4020,5 @@ ylilauta.org#@##hideads
 hervannansanomat.fi#@#.ads-left
 tilannehuone.fi#@#.mainos
 elisaviihde.fi#@#.outside_ad
+lamminveto.com#@#.sponsorit
 valonpolku.com#@#a[href*="/adrotate/adrotate-out.php?"]
