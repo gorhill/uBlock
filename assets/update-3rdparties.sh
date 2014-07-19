@@ -51,6 +51,7 @@ THIRDPARTY_REMOTEURLS=(
     'http://adblock.gardar.net/is.abp.txt'
     'https://www.void.gr/kargig/void-gr-filters.txt'
     'http://abp.mozilla-hispano.org/nauscopio/filtros.txt'
+    'https://gitorious.org/adblock-latvian/adblock-latvian/raw/master%3Alists/latvian-list.txt'
     )
 
 THIRDPARTY_LOCALURLS=(
@@ -98,6 +99,7 @@ THIRDPARTY_LOCALURLS=(
     'thirdparties/adblock.gardar.net/is.abp.txt'
     'thirdparties/www.void.gr/kargig/void-gr-filters.txt'
     'thirdparties/abp.mozilla-hispano.org/nauscopio/filtros.txt'
+    'thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt'
     )
 
 ENTRY_INDEX=0
