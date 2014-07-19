@@ -47,6 +47,10 @@
     "message":"siden installering",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Opprett",
     "description":"English: Create"

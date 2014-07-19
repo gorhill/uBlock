@@ -47,6 +47,10 @@
     "message":"sinds installatie",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Maak",
     "description":"English: Create"
@@ -144,7 +148,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Één per lijn ingeven. Ongeldige hostnamen worden genegeerd zonder melding.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

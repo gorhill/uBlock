@@ -47,6 +47,10 @@
     "message":"インストール以来",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"作成",
     "description":"English: Create"

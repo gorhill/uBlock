@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"白名单",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -46,6 +46,10 @@
   "popupBlockedSinceInstallPrompt":{
     "message":"总计",
     "description":"English: since install"
+  },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
   },
   "pickerCreate":{
     "message":"创建",
@@ -144,7 +148,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"你的列表里的主机名将被 µBlock 禁用。每行一条规则。无效的主机名将被忽略掉。",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

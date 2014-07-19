@@ -47,6 +47,10 @@
     "message":"sedan installation",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"eller",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Skapa",
     "description":"English: Create"

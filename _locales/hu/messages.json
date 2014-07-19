@@ -47,6 +47,10 @@
     "message":"mióta telepített",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"létrehozni",
     "description":"English: Create"

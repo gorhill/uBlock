@@ -47,6 +47,10 @@
     "message":"со времени установки",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"или",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Создать",
     "description":"English: Create"

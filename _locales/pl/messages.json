@@ -47,6 +47,10 @@
     "message":"od instalacji",
     "description":"English: since install"
   },
+  "popupOr":{
+    "message":"or",
+    "description":"English: or"
+  },
   "pickerCreate":{
     "message":"Create",
     "description":"English: Create"
