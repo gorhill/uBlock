@@ -51,3 +51,6 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 
 # Seen on mediafire.com
 ||torconpro.com^
+
+# https://github.com/gorhill/uBlock/issues/85
+||playhd.eu^$popup
