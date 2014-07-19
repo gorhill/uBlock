@@ -269,7 +269,8 @@
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     var abpFilters = this.abpFilters;
-    var abpHideFilters = this.userSettings.parseAllABPHideFilters ? this.abpHideFilters : null;
+    var abpHideFilters = this.abpHideFilters;
+    var parseAllABPHideFilters = this.userSettings.parseAllABPHideFilters;
     var duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount;
     var acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount;
     var reLocalhost = /(^|\s)(localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
@@ -304,7 +305,7 @@
 
         // 2014-05-18: ABP element hide filters are allowed to contain space
         // characters
-        if ( abpHideFilters !== null ) {
+        if ( parseAllABPHideFilters ) {
             if ( abpHideFilters.add(line) ) {
                 continue;
             }
@@ -341,10 +342,8 @@
 
         // Likely an ABP net filter?
         if ( reAdblockFilter.test(line) ) {
-            if ( abpFilters !== null ) {
-                if ( abpFilters.add(line) ) {
-                    continue;
-                }
+            if ( abpFilters.add(line) ) {
+                continue;
             }
             // rhill 2014-01-22: Transpose possible Adblock Plus-filter syntax
             // into a plain hostname if possible.
