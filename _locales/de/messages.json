@@ -48,7 +48,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"oder",
     "description":"English: or"
   },
   "pickerCreate":{
@@ -148,7 +148,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Deine Liste an Host-Namen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Host-Namen werden stillschweigend ignoriert.",
+    "message":"Deine Liste von Host-Namen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Host-Namen werden stillschweigend ignoriert.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -168,7 +168,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Logging von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Du kannst dir die Details von nicht-blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von nicht-blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -184,7 +184,7 @@
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Zugelassene Anfragen",
+    "message":"Erlaubte Anfragen",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -208,7 +208,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite gefunden",
+    "message":"Keine erlaubten Anfragen für diese Seite",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
