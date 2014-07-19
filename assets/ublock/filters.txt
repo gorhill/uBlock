@@ -49,3 +49,5 @@ google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 # Workaround for issue 70.
 deviantart.com##.dp-ad-target.atf-right-300x250
 
+# Seen on mediafire.com
+||torconpro.com^$popup
