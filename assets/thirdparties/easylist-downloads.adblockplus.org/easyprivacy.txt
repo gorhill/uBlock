@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: pjQkaxkcrcI11sqHl2R0kA
-! Version: 201407161541
+! Checksum: 6Fz8rgwGcwYEU8U1h0eAEA
+! Version: 201407190441
 ! Title: EasyPrivacy
-! Last modified: 16 Jul 2014 15:41 UTC
+! Last modified: 19 Jul 2014 04:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3032,6 +3032,7 @@ http://utm.
 ||mtrics.cdc.gov^$third-party
 ||mvilivestats.com^$third-party
 ||mvtracker.com^$third-party
+||mxcdn.net^$third-party
 ||mxpnl.com^$third-party
 ||mxptint.net^$third-party
 ||myaffiliateprogram.com^$third-party
@@ -4260,6 +4261,7 @@ http://utm.
 ||logz.ru^$third-party
 ||lookmy.info^$third-party
 ||lugansk-info.ru^$third-party
+||mediametrics.ru^$third-party
 ||mediaplan.ru^$third-party
 ||mokuz.ru^$third-party
 ||musiccounter.ru^$third-party
@@ -6085,6 +6087,7 @@ http://utm.
 ||stainlesssteel.ru/counter.php?
 ||stat-22.medialand.ru^
 ||stat-counter.tass-online.ru^
+||stat.rum.cdnvideo.ru^
 ||stat.tvigle.ru^
 ||stats.internet-yadro.com^
 ||t.pusk.ru^
@@ -7475,6 +7478,7 @@ http://utm.
 ||shutterfly.com^*/pageloadtime.gif?
 ||shutterstock.com/b.png?
 ||shvoong.com/images/spacer.gif
+||siberiantimes.com/counter/
 ||sidebar.issuu.com^
 ||similarsites.com/sbbgate.aspx/
 ||simplyhired.com^*/hit?
@@ -8979,7 +8983,7 @@ http://utm.
 @@||revsci.net/*/pcx.js?csid=$script,domain=video.foxnews.com
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
-@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
+@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|newsday.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com

@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: Uj46fmbDTb0vyfzM1AJKQg
-! Version: 201407161541
+! Checksum: 2dvyNwX28+rFMl3QLWT3nw
+! Version: 201407190441
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -266,7 +266,10 @@ _regiepub/
 ||z-barre.com^$third-party
 ||zebestof.com^$third-party
 ||zeropub.net^$third-party
-||zgrrcbowke.pw^$third-party
+!
+|http://*.info/$image,third-party,domain=lapopottedemanue.com|leblogtvnews.com|wikistrike.com
+|http://*.pw/$image,third-party,domain=lapopottedemanue.com|leblogtvnews.com|wikistrike.com
+||congruityheterocephalus.info^$third-party
 !
 !----------------------- Publicités tierces ----------------------!
 !
@@ -660,7 +663,6 @@ _regiepub/
 !----------------------- Sites spécifiques -----------------------!
 !
 /http://www\.sofoot\.com/IMG/i\d+\.jpg/$domain=sofoot.com
-|http://*.pw/$image,domain=lapopottedemanue.com|leblogtvnews.com|wikistrike.com
 ||01net.com/front_office/images/regie/
 ||100pour100sexe.com/pop.js
 ||1an2kdo.com/pics/pub/
@@ -3437,6 +3439,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||crabdance.com/*.js|$script,third-party
 @@||cteyd.na.tl/*.js|$script,third-party
 @@||cvhyx.vr.lt/*.js|$script,third-party
+@@||dalnet.ca/*.js|$script,third-party
 @@||darknigger.com/*.js|$script,third-party
 @@||dlgbh.ax.lt/*.js|$script,third-party
 @@||dyx.com/*.js|$script,third-party
@@ -3496,6 +3499,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.caledonianlab.com/$third-party,xmlhttprequest
 |http://*.cloudwatch.net/$third-party,xmlhttprequest
 |http://*.cr.rs/$third-party,xmlhttprequest
+|http://*.dalnet.ca/$third-party,xmlhttprequest
 |http://*.darknigger.com/$third-party,xmlhttprequest
 |http://*.dyx.com/$third-party,xmlhttprequest
 |http://*.eaglepoint.us/$third-party,xmlhttprequest

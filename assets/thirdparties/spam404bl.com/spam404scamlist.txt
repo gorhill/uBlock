@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4232
-! Last modified: 14 Jul 2014
+! Version: 4265
+! Last modified: 18 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -74,12 +74,31 @@
 ##[href^="http://reliabledownloads.org/"]
 ##[href^="http://highfiles.net/"]
 ##[href^="http://www.needforfile.net/"]
+##[href^="http://fileme.us/"]
+##[href^="http://gripfile.net/"]
+##[href^="http://www.onlyfiles.net/"]
+##[href^="http://astucetriche.fr/"]
+##[href^="http://onlinegamesfiles.com/"]
+##[href^="http://bestgamesfiles.com/"]
+##[href^="http://mysoftwareplace.com/"]
+##[href^="http://worldsoftwaredownloads.com/"]
+##[href^="http://youronlinesoft.com/"]
+##[href^="http://digitalsoftwareonlinenow.com/"]
+##[href^="http://yourfreegamesnow.com/"]
+##[href^="http://yourgamesdownloads.com/"]
+##[href^="http://starmediasearch.com/"]
+##[href^="http://mediasearchdirect.com/"]
+##[href^="http://morenewmedia.com/"]
+##[href^="http://promediasearch.com/"]
+##[href^="http://upshare.org/"]
+##[href^="http://skippyfile.com/"]
 !
 !
 !
 !-_-_-_-_-_-_-_-Internal Widget Survey Scams-_-_-_-_-_-_-_-!
 ##[onclick="fileice();"]
 dream-file.com##[alt="Regular Download"]
+##[onclick="$(this).hide(); $('#offerlst').show('slow');"]
 !
 !
 !
@@ -1229,7 +1248,6 @@ dream-file.com##[alt="Regular Download"]
 ||softwaretohack.com^
 ||facebook-hack-password.com^
 ||freebrazzersaccounts.us^
-||zone-telechargement.com^
 ||piraterunfacebook.com^
 ||dragoncityhacksandcheats.com^
 ||gratuitonic.fr^
@@ -3178,7 +3196,6 @@ dream-file.com##[alt="Regular Download"]
 ||storm-hacks.com^
 ||megahackfrancaise.com^
 ||extofiles.com^
-||asda.voucher.ga^
 ||candycrushcheatsapp.com^
 ||forcehacks.com^
 ||clashofclanscheatshack.com^
@@ -3473,9 +3490,6 @@ dream-file.com##[alt="Regular Download"]
 ||freesoftware4all.com^
 ||ghostshack.net^
 ||flappy-bird-cheats.com^
-||artista-scandals.ml^
-||abs-cbn-news.cf^
-||facebookgamereview.cf^
 ||leakagevideo.com^
 ||leakagevideo.net^
 ||leak-video.org^
@@ -3497,7 +3511,6 @@ dream-file.com##[alt="Regular Download"]
 ||shareukfile.com^
 ||letsupload.net^
 ||blingfiles.com^
-||newsandcurrentaffairs.cf^
 ||cooldownloadz.com^
 ||newagerocksinc.com^
 ||cheatsflappybird.com^
@@ -3938,12 +3951,9 @@ dream-file.com##[alt="Regular Download"]
 ||freewebcamlove.com^
 ||hverdagskriger.dk^
 ||stnitro.com^
-||clashofclanstriche.cf^
 ||inhacks.com^
 ||cleandownload.net^
 ||minecraft-premiums.com^
-||clash-of-clans-triche.cf^
-||clash-of-clans-gemmes.ga^
 ||clashgenerator.com^
 ||ehacktool.com^
 ||breakgame.org^
@@ -4227,6 +4237,29 @@ dream-file.com##[alt="Regular Download"]
 ||cheatgame4u.com^
 ||go4freehacks.com^
 ||hot-hacks.com^
+||gripfile.net^
+||tools4hack.com^
+||perfect-hacks.com^
+||downloadfreelab.com^
+||astucetriche.fr^
+||fox-hd.com^
+||jeuxcheats.com^
+||android-ios-hack.com^
+||heroesofthestorm-betakey.com^
+||castleclashhacktool.com^
+||asphalt8airbornehack.net^
+||hackcandycrushsaga.com^
+||meezhacks.net^
+||dragoncitycheats-fr.com^
+||hackshot.info^
+||onlinegamesfiles.com^
+||youronlinesoft.com^
+||starmediasearch.com^
+||mediasearchdirect.com^
+||morenewmedia.com^
+||promediasearch.com^
+||usefulforgames.com^
+||heroesofthestormkeys.net^
 !
 !
 !

@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: QB2h/p1DnMCBqXtYFOirDw
-! Version: 201407161541
+! Checksum: 7G0xp8wxsb6wJoSVLkj9zQ
+! Version: 201407190441
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 16 Jul 2014 15:41 UTC
+! Last modified: 19 Jul 2014 04:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -103,6 +103,7 @@ _advertentieleaderboardhome.
 ||promotions.teasemedia.nl^$third-party
 ||radiocoupon.nl^$third-party
 ||sallandacties.nl^$third-party
+||samenresultaat.nl^$third-party
 ||schoorsteen.geenstijl.nl^$third-party
 ||semilo.com^$third-party
 ||site-id.nl^$third-party
@@ -144,6 +145,7 @@ _advertentieleaderboardhome.
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
 ||bol.com/nl/upload/banners/
+||booking.com/?aid=$domain=puuropreis.nl
 ||brightcove.com/js/BrightcoveExperiences.js$domain=backpackgek.nl
 ||buzzlab.nl/input/*Banner
 ||cdn.media.zylom.com/images/site/zylom/promo/$third-party
@@ -514,6 +516,7 @@ _advertentieleaderboardhome.
 ||promootjesite.nl/popups/
 ||psv.nl/web/banner/
 ||pu.nl/skins/
+||puuropreis.nl/images/banners/booking249x70_
 ||quotenet.nl/images/banners/
 ||racesport.nl^*/flash/shoptk.swf
 ||racesport.nl^*/ibanner/

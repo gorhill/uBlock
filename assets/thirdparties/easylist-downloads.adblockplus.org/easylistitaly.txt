@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ZFcrbCqoPp4U/X12kJshGA
-! Version: 201407161541
+! Checksum: IUNXoz50W0TwvCQNSEQWGw
+! Version: 201407190441
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 16 Jul 2014 15:41 UTC
+! Ultima modifica: 19 Jul 2014 04:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1064,6 +1064,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||laroma24.it/banner/
 ||laroma24.it^*/skin-
 ||lascommessasportiva.it^*/banners/
+||lasiciliastore.it/banner/
 ||lasignoraingiallorosso.it^*/banners/
 ||lastampa.it/common/_banner/
 ||lastampa.it/files/imagecache/partner/
@@ -1527,6 +1528,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||therockblog.net^*/banner-
 ||ticinofinanza.ch/banner/
 ||ticinolive.ch/files/banners/
+||ticketcrociere.lasicilia.it^
 ||tio.ch/img/2013/iframe/postfinance.jpg
 ||tio.ch^*/banner/
 ||tipresentoilcane.com/banner/
@@ -2086,7 +2088,7 @@ piacenzanight.com##.back_style
 avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
-advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
@@ -2596,7 +2598,7 @@ frosinoneweb.net##img[style="width: 930px; height: 115px;"]
 melamorsicata.it##img[width="160"][height="300"]
 automobili.it##img[width="256"][height="170"]
 parmaquotidiano.info##img[width="290"][height="90"]
-radiolombardia.it##img[width="300"][height="250"]
+radiolombardia.it,siciliainrosa.it##img[width="300"][height="250"]
 mmorpgitalia.it##img[width="500"][height="122"]
 tuttoshoppingmotori.com##img[width="610px;"]
 corrieredelgiorno.com##ins[style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"]
@@ -2620,7 +2622,7 @@ tgmonline.it##td[align="right"][width="305"][valign="top"]
 fuorissimo.com##td[height="100"][bgcolor="#000000"][width="752"]
 alverde.net##td[height="125"]
 mymovies.it##td[style="height:45px; background-color:#FFFFFF; ;"]
-hwupgrade.it##td[style="padding-left:10px; width:300px;"]
+finanzaonline.com,hwupgrade.it##td[style="padding-left:10px; width:300px;"]
 gommeblog.it##td[style="width: 305px; height: 251px; text-align: center;"]
 gommeblog.it##td[style="width: 335px; height: 251px; text-align: center;"]
 ! Anti-Adblock

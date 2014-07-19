@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Tue, 24 Jun 2014 08:46:59 GMT
-# entries:        2483
+# entries:        2481
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -525,6 +525,7 @@
 127.0.0.1 ads.internic.co.il
 127.0.0.1 ads.ipowerweb.com
 127.0.0.1 ads.isoftmarketing.com
+127.0.0.1 ads.itv.com
 127.0.0.1 ads.iwon.com
 127.0.0.1 ads.jewishfriendfinder.com
 127.0.0.1 ads.jiwire.com
@@ -760,7 +761,6 @@
 127.0.0.1 adserv.iafrica.com
 127.0.0.1 adserv.qconline.com
 127.0.0.1 adserv.quality-channel.de
-127.0.0.1 adserv.tacticalgamer.com
 127.0.0.1 adserver-live.yoc.mobi
 127.0.0.1 adserver.00web.com
 127.0.0.1 adserver.3digit.de
@@ -1916,7 +1916,6 @@
 127.0.0.1 partner-ads.com
 127.0.0.1 partner.gonamic.de
 127.0.0.1 partner.pelikan.cz
-127.0.0.1 partner.topcities.com
 127.0.0.1 partnerad.l.google.com
 127.0.0.1 partnercash.de
 127.0.0.1 partners.priceline.com
@@ -2138,7 +2137,6 @@
 127.0.0.1 shinystat.com
 127.0.0.1 shinystat.it
 127.0.0.1 shoppingads.com
-127.0.0.1 shorttail.net
 127.0.0.1 siccash.com
 127.0.0.1 sidebar.angelfire.com
 127.0.0.1 sinoa.com

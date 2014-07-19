@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: YITfp9oyDEtPp7ywbxicdg
-! Version: 201407161550
-! Last modified: 16 Jul 2014 15:50 UTC
+! Checksum: mQjBYAlVTSYxib484vdJHw
+! Version: 201407190440
+! Last modified: 19 Jul 2014 04:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2923,6 +2923,7 @@ sinoptik.ua###adsLeftZone3
 sinoptik.ua###adsZone3
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv001
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv002
+opennet.ru###adv3
 2ip.ru###advMenuSelector
 2ip.ru###advertNews
 newsbalt.ru###aside > a[target="_blank"][href]
@@ -2974,6 +2975,7 @@ gorod.cn.ua##.branding_left
 gorod.cn.ua##.branding_right
 multmer.org##.brend
 knigi-chitaty.ru##.button[href^="/download.php?q="]
+lostpic.net##.content > a[target="_blank"]
 sexytales.org##.contentBox > noindex
 sivator.com##.edina > a[href="http://monstro-beats.com/"]
 bountyporn.com,pornoneverdie.com##.fly_player
@@ -3968,7 +3970,6 @@ zoneofgames.ru##a.branding
 poker-wiki.ru##a.external[rel="nofollow"][href*="/go/?site="] > img[src$=".gif"]
 korzik.net##a.menu[target="_blank"] > font[color="red"]
 kinobaza.net##a.red
-webapteka.ru##a.sa[target="_blank"]
 nnm.ru##a:not([href="http://nnm.ru/"]) > img[src^="/a/"]
 mama.kharkov.ua##a:not([href^="http://www.mama.kharkov.ua/"]) > img[src*=".ua/uploads/"]
 good73.net##a[\;] > img
@@ -4106,7 +4107,6 @@ good73.net##center > a > img
 imageban.ru##center > a > img[src^="/img/"]
 molchun.ru##center > a[rel="nofollow"][target="_blank"] > img
 inmoment.ru##center > a[target="_blank"]
-lostpic.net,webapteka.ru##center > a[target="_blank"] > img
 narodclub.net##center > a[target="_blank"][rel="nofollow"]
 nnm-club.me##center > div[id$="_div"]
 sibmail.com##center > div[style*="200px;"]
@@ -4303,6 +4303,7 @@ allinfo.kz##.adb
 europaplus.ru##.adwolf-holder
 brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
 redtram.com##.b-informers
+news.pn##.banner
 online.ua##.banner-top
 mmorpg.ua##.banner_left_col
 gorod.cn.ua##.banner_top
@@ -5311,6 +5312,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||vz.ru/import/
 ||warezlab.ru^*rotator
 ||weacom.ru/uploads/commercial/
+||webapteka.ru/image/
 ||webavangard.com.ua/torg/
 ||webkrug.ru/images/bann
 ||weblancer.net/adver/
@@ -5639,6 +5641,7 @@ yandex.kz,yandex.ru,yandex.ua##.b-adv
 ##.b-spec-adv
 ##.serp-adv
 ##.spec-adv
+##.stat_pixel_yes[onclick][class*="_layout_"][class*="_format_"]
 ||an.yandex.$third-party
 ||an.yandex.*/system/context.js|
 ||awaps.yandex.
@@ -5650,7 +5653,6 @@ yandex.kz,yandex.ru,yandex.ua##.b-adv
 yandex.kz,yandex.ru,yandex.ua##.b-direct
 rasp.yandex.kz,rasp.yandex.ru,rasp.yandex.ua##.b-yadirect
 yandex.kz,yandex.ru,yandex.ua##div[class^="b-spec-adv"]
-realty.yandex.kz,realty.yandex.ru,realty.yandex.ua##div[onclick][class*="_layout_vertical"][class*="_format_"]
 !
 ! Томские сайты
 sadiki.tomsk.ru###b1_place
@@ -5990,6 +5992,7 @@ selectornews.com#@#.advertising-content
 am.ru,roshlam.ru#@#.adverts
 irr.ru#@#.b-advert
 airmediacenter.com#@#.b-banner
+kaluga-bestiphone.ru#@#.banner-adv
 mygames.com.ua#@#.big-ads
 skodarapidclub.ru#@#.headerad
 kinoclub.org.ua#@#.item-ads

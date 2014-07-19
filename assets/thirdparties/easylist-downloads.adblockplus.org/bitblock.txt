@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: ARjKfYE3L2Qyu6BM1q6EyA
-! Version: 201407161550
-! Last modified: 16 Jul 2014 15:50 UTC
+! Checksum: br/draw/oDq2ZjW/5myjYg
+! Version: 201407190440
+! Last modified: 19 Jul 2014 04:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -166,6 +166,7 @@ _vkontakte.png
 /45x45xfacebook-ico.
 /45x45xtwitter-ico.
 /_sharrre.php?
+/a2a_share_
 /addthis-stumble.
 /addthis.png$domain=~addthis.com
 /addthis_widget.
@@ -415,6 +416,7 @@ _vkontakte.png
 /feedSprite_
 /fh_social.
 /files/facebook-
+/files/social-
 /files/social/*
 /files/twitter-
 /flickr-32x32.
@@ -480,11 +482,15 @@ _vkontakte.png
 /footer/twitter.
 /footer/youtube.
 /footer_facebook.
+/footer_fb-
 /footer_fb.
 /footer_fb_
+/footer_linkedin-
 /footer_myspace.
+/footer_pinterest-
 /footer_social_
 /footer_sociale.
+/footer_twitter-
 /footer_twitter.
 /footer_twitter2.
 /footer_twitter_
@@ -911,6 +917,7 @@ _vkontakte.png
 /logo_tw.
 /logo_twitter.
 /logo_yt.
+/logoLinkedin.
 /logos/facebook-
 /logos/facebook_
 /logos/fb.
@@ -918,6 +925,7 @@ _vkontakte.png
 /logos/twitter-
 /logos/twitter.
 /logos/twitter_
+/logoTwitter.
 /masthead/social-
 /media/*fb20.png
 /media/*linkedin20.png
@@ -1239,6 +1247,7 @@ _vkontakte.png
 /social-icons/*
 /social-icons_
 /social-instagram-
+/social-instagram.
 /social-like-
 /social-links-
 /social-locker/*$script
@@ -1597,6 +1606,7 @@ _vkontakte.png
 /twitter_64.
 /twitter_64x
 /twitter_add.
+/twitter_alt.
 /twitter_badge.
 /twitter_bird.
 /twitter_bird_
@@ -2779,6 +2789,7 @@ _youtube_small.
 ###social-float
 ###social-float-block
 ###social-floater
+###social-floating
 ###social-foot
 ###social-gplus
 ###social-grid-container
@@ -2838,6 +2849,7 @@ _youtube_small.
 ###social-share-video
 ###social-sharing
 ###social-sharing-buttons
+###social-sharing-buttons-footer
 ###social-side
 ###social-side2
 ###social-sidebar
@@ -2878,6 +2890,7 @@ _youtube_small.
 ###socialBookmarks
 ###socialBottom
 ###socialBoxOuter
+###socialBtn
 ###socialButtons
 ###socialConnect
 ###socialContainer
@@ -3224,6 +3237,7 @@ _youtube_small.
 ##.FacebookShare
 ##.FacebookTwitter
 ##.Facebook_like
+##.FollowByEmail
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
@@ -3906,6 +3920,7 @@ _youtube_small.
 ##.footer-fb
 ##.footer-follow-text
 ##.footer-gplus
+##.footer-share
 ##.footer-sharers
 ##.footer-sharing
 ##.footer-social
@@ -4543,6 +4558,7 @@ _youtube_small.
 ##.right_socials_wrap
 ##.rmd-Share
 ##.rpuRepostUsButtonWrap
+##.rrssb-buttons-container
 ##.rs-twitter-widget
 ##.rss-social
 ##.rt-social-buttons
@@ -5112,8 +5128,10 @@ _youtube_small.
 ##.social-module
 ##.social-nav
 ##.social-network-sharing
+##.social-network-wrapper
 ##.social-networks
 ##.social-networks-2
+##.social-networks-bayside
 ##.social-number-large
 ##.social-onscroll
 ##.social-options
@@ -6165,6 +6183,7 @@ _youtube_small.
 ||fanconverter.wetpaint.me^$third-party
 ||filamentapp-assets.s3.amazonaws.com^$third-party
 ||flickr.com/badge_code_$third-party
+||flipboard.com/web/buttons/$third-party
 ||followistic.com^$third-party
 ||getpocket.com/button?$third-party
 ||google.com/_/+1/$third-party
@@ -6227,6 +6246,7 @@ _youtube_small.
 ||socialmediabuttons.com^$third-party
 ||socialmediatabs.com^$third-party
 ||socialproof.it^$third-party
+||spotify.com/follow/$third-party
 ||static*.linkedin.com/scds/common/$image,third-party
 ||static.delicious.com^$third-party
 ||statigr.am/widget.php$third-party
@@ -6405,6 +6425,7 @@ salon24.pl##.fsocBody
 !
 !---------- Dutch Site Specific Hiding Rules ----------
 !
+@@||pollland.nl^*/share/js/jquery
 @@||s7.addthis.com^*/addthis_widget.js$domain=carsom.nl|ticketmaster.nl
 @@||static.autojunk.nl/javascript/SocialMedia.js
 nu.nl#@#.socialshare
@@ -7017,6 +7038,7 @@ _social_rss.
 ###bing-module-container
 ###bing_header_container
 ###block-cookie_policy-0
+###block-dfp-subscriptions-block
 ###blog-stats
 ###blog-subscribe-block
 ###blog_subscription-3
@@ -7056,6 +7078,7 @@ _social_rss.
 ###cookie-control
 ###cookie-div
 ###cookie-info
+###cookie-law
 ###cookie-law-info-bar
 ###cookie-message
 ###cookie-message-container
@@ -7117,6 +7140,7 @@ _social_rss.
 ###cookie_privacy_holder
 ###cookie_privacy_popup
 ###cookie_warning
+###cookie_widget
 ###cookiebar
 ###cookiebnr
 ###cookielaw
@@ -7452,6 +7476,7 @@ _social_rss.
 ##.cookie-warning
 ##.cookieAccepterSlider
 ##.cookieBanner
+##.cookieBannerContainer
 ##.cookieBar
 ##.cookieBox
 ##.cookieDisclaimer
@@ -7661,6 +7686,8 @@ _social_rss.
 ##.soc-fixed
 ##.soc-rss
 ##.social-rss
+##.social-sharing-buttons-button
+##.social-sharing-buttons-inline
 ##.social_email
 ##.social_newsletter_box
 ##.social_rss
@@ -7709,6 +7736,7 @@ _social_rss.
 ##.widget_mailchimpsf_widget
 ##.widget_mc4wp_widget
 ##.widget_mybloglog
+##.widget_mymail_signup
 ##.widget_newsletter
 ##.widget_newsletter_sidebar
 ##.widget_newsletter_signup
@@ -7718,6 +7746,7 @@ _social_rss.
 ##.widget_rss_links
 ##.widget_rssiconwidget
 ##.widget_sdac_feedburner_widget
+##.widget_social_icons
 ##.widget_subscribe_box
 ##.widget_woo_customsubscribewidget
 ##.widget_woo_subscribe
@@ -8043,6 +8072,7 @@ _social_rss.
 ||finderfox.smarterfox.com^*/finderfox.js$third-party
 ||flashgroup.com^$third-party
 ||fluidsurveys.com^$third-party
+||followistic.com^$third-party
 ||folloyu.com^$third-party
 ||freetellafriend.com^$third-party
 ||frxrydv.com^$third-party
@@ -8310,6 +8340,7 @@ rtl.nl###rtl_cookie_small
 techzine.nl###scrollbuddy[style="top: -20px; position: fixed;"]
 t-mobile.nl##.overlay
 @@||studentenwoningweb.nl/KRN/Scripts/jquery.cookiecuttr.js
+||cookiesv2.publiekeomroep.nl^
 !
 !---------- Norway Site Specific Hiding Rules ----------
 !
@@ -8684,6 +8715,7 @@ memopal.com#@##share_link
 tweedekamer.nl#@##share_links
 last.fm,smbc-comics.com#@##sharebar
 bufferapp.com#@##sharer
+amongtech.com#@##social-sidebar
 coverscreen.com#@##social_bar
 base.de#@##social_footer
 lenta.ru#@##socials
@@ -8931,7 +8963,8 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||passets-cdn.pinterest.com^
 @@||pcinpact.com/js/socialbar.js
 @@||pinterest.com/images/about/buttons/$domain=pinterest.com
-@@||pinterest.com/js/pinit.js$domain=glamour.com
+@@||pinterest.com/js/pinit.js$domain=glamour.com|shape.com
+@@||pinterest.com/js/pinit_main.js
 @@||pinterest.com^*/desktop/images/social$~third-party
 @@||platform.linkedin.com/in.js$domain=businessinsider.com|globalpost.com
 @@||platform.twitter.com/anywhere.js?$domain=ge.tt|mtv.com|pennsundayschool.com|projects.wsj.com|soychile.cl

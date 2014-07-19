@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: 7j2O2TNOUvmjyRDxfkDBgA
-! Version: 201407161541
+! Checksum: +Ps1davpAo1ToYGBpiZaJw
+! Version: 201407190441
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 16 Jul 2014 15:41 UTC
+! Last Modified: 19 Jul 2014 04:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -732,6 +732,7 @@ hk.yahoo.com###ysm-ad
 /adf/js/*
 /AdPreview/*
 /ajds/*
+/jsadv/*
 /caches/poster_js/*
 /content/plugins/em_ad/*
 /data/cache/myad-
@@ -772,6 +773,7 @@ hk.yahoo.com###ysm-ad
 ###duilian_left
 ###duilian_right
 ###kfivtwin
+###kfpopupDiv
 ###left_top_ad
 ###lovexin1
 ###lovexin11
@@ -850,6 +852,8 @@ hk.yahoo.com###ysm-ad
 :81/page/?s=$third-party
 :99/page/?s=$third-party
 dnserror*.wo.com.cn^
+||d8360.com^$third-party
+||lnr1.com^$third-party
 ||007y.net^$third-party
 ||0591101.com^$third-party
 ||0756j.com^$third-party
@@ -1557,9 +1561,10 @@ weather.com.cn##div[class^="adpos"]
 ||abtq.com/7282.gif
 ||ac.tc.qq.com/store_file_download?*&dir_path=/admin/swf/
 ||ac168.info/bt/ts.js
-||acfun.com/dotnet/artemis/u/cms/www/201406/070836276tzm.jpg
+||acfun.tv/dotnet/artemis/u/cms/www/201407/17095013anwb.jpg
 ||acfun.com/dotnet/artemis/u/cms/www/201406/12093713ux9h.png
-||acfun.com/dotnet/artemis/u/cms/www/201406/12093747lri8.png
+||acfun.tv/dotnet/artemis/u/cms/www/201406/12093713ux9h.png
+||acfun.tv/dotnet/artemis/u/cms/www/201407/16150026roag.jpg
 ||acg.178.com^*/t_$subdocument,domain=~dmzj.com
 ||acode.b2b.cn/JS/
 ||acsystem.wasu.cn^
@@ -2930,7 +2935,6 @@ weather.com.cn##div[class^="adpos"]
 ||pic.yupoo.com/showflash/
 ||pic.zol-img.com.cn^$object
 ||pics.wanlibo.com/js/pagemodulestat.js
-||pili.net.cn/js/loading.html
 ||pinggu.org/static/pinggu/float.js
 ||pinglun.sohu.com/sogouad.html
 ||pingpang.info/banner/
@@ -3239,7 +3243,6 @@ weather.com.cn##div[class^="adpos"]
 ||spn.com.cn/media/jackmm.js
 ||srzc.com/images/*.swf
 ||srzc.com/js/Adsjs/
-||ssp.juhuisuan.com^
 ||ssshot.com/dddaaa/
 ||st.vq.ku6.cn^
 ||starnnews.com/banner/
@@ -3736,12 +3739,34 @@ weather.com.cn##div[class^="adpos"]
 ||zxxk.com/js/articleinfo/JS_
 ||zymao.net/img/taolink.jpg
 ||zyzczs.com/js/tj.txt
+||gg.xunying.com^
+||77pan.cc/ggad/
+||sinaimg.cn/mw690/a6a976a2tw1eiadz10l9bj20h801ywf4.jpg
+||sinaimg.cn/mw690/a6a976a2gw1ei5rjha77lj20h801ygm7.jpg
+||acg.tv^$object,domain=bilibili.com
+||789pan.com/templates/default/images/kuping.gif
+||colafile.com/cola3/newdown/join.png
+||baidu.com/tb/cms/game/*_banner.
+||sinaimg.cn/large/7044f931gw1eienitivi0g20qy028wmr.gif
+||duowan.com/|$object-subrequest
+||dealmoon.com/hotdeals/
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
 yaolan.com###AD
+bug.cn##TABLE[width="346"][height="295"]
+51job.com##.weifantang-wrap
+jump.bdimg.com,tieba.baidu.com##.game_banner
 21yq.com###AD1
+jump.bdimg.com,tieba.baidu.com###game_forum
+fuliba.asia,fuliba.net,fuliba.mobi###content > A
+rexuedongman.com##.uzmh-vv.w980.uzmh-0
+colafile.com##.tui
+7k7k.com###player-tools-ad
+weather.com.cn###ab
+weather.com.cn###ccs
+weather.com.cn###js_ads_banner_top_slide
 gdtv.cn###ADVbuttom
 gdtv.cn###ADVbuttom1
 sina.com.cn###AD_Background_Wall_BG
@@ -3767,7 +3792,6 @@ chinatp.com.cn###FloatL_2
 chinatp.com.cn###FloatLa
 chinatp.com.cn###FloatRb
 aipai.com###GmAppBanner
-pili.net.cn###Gxbuffer
 hupu.com###HCFull
 azofreeware.com###HTML1
 azofreeware.com,hornydragon.blogspot.com###HTML3
@@ -3812,16 +3836,15 @@ xiaot.com###\5f sc_overlay
 hao123.com###__elm_0_4
 bbs.07430743.com###a2
 admin5.com###a22
-tianya.cn###a_qiu
 183.81.166.100###abuBox
 cnedu.cn,jqgcw.com,js404.com,rj.baidu.com,wenkudaquan.com,xinhuanet.com,xj163.cn,ylnet.com.cn###ad
 ruten.com.tw###ad-467
 y80s.com###ad-bigbanner
-acfun.com###ad-bottom-globe
-acfun.com###ad-comment
+acfun.com,acfun.tv###ad-bottom-globe
+acfun.com,acfun.tv###ad-comment
 ithome.com.tw###ad-on-top
-acfun.com###ad-player-view
-acfun.com###ad-top-index
+acfun.com,acfun.tv###ad-player-view
+acfun.com,acfun.tv###ad-top-index
 dbw.cn###ad-word
 yeyou.com###ad-yeyou-nitifiction
 price.com.hk###ad0
@@ -4976,7 +4999,7 @@ gamebase.com.tw##.forum_ad_sidebar
 gamebase.com.tw##.forum_ad_text_top
 gamebase.com.tw##.forum_ad_top
 chineseinla.com##.forum_banner_ads
-bbs.pcbeta.com##.forum_top + :last-child
+pcbeta.com##.forum_top + :last-child
 imanhua.com##.fr[style^="width: 250px;"]
 gmttchat.over-blog.com##.freeModule
 luo.bo##.friendlink
@@ -5188,7 +5211,7 @@ iciba.com##.kk01
 1kkk.com##.kk2.cc
 0597kk.com##.kk_ad
 fznews.com.cn##.kuang100_right
-acfun.com##.l > .ad
+acfun.com,acfun.tv##.l > .ad
 baidu.com##.l-header-ad
 ahtv.cn##.l1
 jump.bdimg.com,tieba.baidu.com##.l_banner
@@ -6125,7 +6148,7 @@ house.shangdu.com#@#.top_ad
 @@||cb.baidu.com/ecom?di=231790&
 @@||cb.baidu.com/ecom?di=373107&
 @@||cb.baidu.com/ecom?di=654997&
-@@||cb.baidu.com/ecom?di=866524,$domain=colafile.com
+@@||cb.baidu.com/ecom?$domain=colafile.com
 @@||cb.baidu.com/ecom?di=891878&
 @@||cb.baidu.com/ecom?di=892769&
 @@||cb.baidu.com/ecom?di=893557&
