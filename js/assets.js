@@ -361,25 +361,25 @@ var updateFromRemote = function(details, callback) {
         });
     };
 
-    var onRemoteFileLoaded = function() {
+    var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
         if ( typeof this.responseText !== 'string' ) {
-            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): no response', repositoryURL);
+            console.error('µBlock> updateFromRemote("%s") / onRepoFileLoaded(): no response', repositoryURL);
             reportBackError();
             return;
         }
         if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
-            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): bad md5 checksum', repositoryURL);
+            console.error('µBlock> updateFromRemote("%s") / onRepoFileLoaded(): bad md5 checksum', repositoryURL);
             reportBackError();
             return;
         }
-        // console.debug('µBlock> updateFromRemote("%s") / onRemoteFileLoaded()', repositoryURL);
+        // console.debug('µBlock> updateFromRemote("%s") / onRepoFileLoaded()', repositoryURL);
         writeLocalFile(targetPath, this.responseText, callback);
     };
 
-    var onRemoteFileError = function(ev) {
+    var onRepoFileError = function(ev) {
         this.onload = this.onerror = null;
-        console.error('µBlock> updateFromRemote() / onRemoteFileError("%s"):', repositoryURL, this.statusText);
+        console.error('µBlock> updateFromRemote() / onRepoFileError("%s"):', repositoryURL, this.statusText);
         reportBackError();
     };
 
@@ -387,12 +387,12 @@ var updateFromRemote = function(details, callback) {
         this.onload = this.onerror = null;
         if ( typeof this.responseText !== 'string' ) {
             console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): no response', homeURL);
-            getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
             return;
         }
         if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
             console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): bad md5 checksum', homeURL);
-            getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
             return;
         }
         // console.debug('µBlock> updateFromRemote("%s") / onHomeFileLoaded()', homeURL);
@@ -402,7 +402,7 @@ var updateFromRemote = function(details, callback) {
     var onHomeFileError = function(ev) {
         this.onload = this.onerror = null;
         console.error('µBlock> updateFromRemote() / onHomeFileError("%s"):', homeURL, this.statusText);
-        getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+        getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
     };
 
     // https://github.com/gorhill/uBlock/issues/84
@@ -428,7 +428,7 @@ var updateFromRemote = function(details, callback) {
         }
         // The resource will be pulled from Github repo. It's reserved for
         // more important assets, so we keep and use the checksum.
-        getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+        getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
     };
 
     // https://github.com/gorhill/uBlock/issues/84
