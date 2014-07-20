@@ -411,12 +411,10 @@ var updateFromRemote = function(details, callback) {
     // - a github repo URL
     var getThirdpartyHomeURL = function() {
         // If it is a 3rd-party, look-up home server URL, if any.
-        if ( targetPath.indexOf('assets/thirdparties/') === 0 ) {
-            homeURL = targetPath.replace('assets/thirdparties/', '');
-            if ( thirdpartyHomeURLs && thirdpartyHomeURLs[homeURL] ) {
-                homeURL = thirdpartyHomeURLs[homeURL];
-            } else {
-                homeURL = 'http://' + homeURL;
+        if ( thirdpartyHomeURLs && targetPath.indexOf('assets/thirdparties/') === 0 ) {
+            var k = targetPath.replace('assets/thirdparties/', '');
+            if ( thirdpartyHomeURLs[k] ) {
+                homeURL = thirdpartyHomeURLs[k];
             }
         }
         // If there is a home server, disregard checksum: the file is assumed
