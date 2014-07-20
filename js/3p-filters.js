@@ -29,6 +29,7 @@
 
 var userListName = chrome.i18n.getMessage('1pPageName');
 var selectedBlacklistsHash = '';
+var listURLPrefix = 'asset-viewer.html?url=';
 
 /******************************************************************************/
 
@@ -122,7 +123,7 @@ var renderBlacklists = function() {
             '<li class="listDetails">',
             '<input type="checkbox" {{checked}}>',
             '&thinsp;',
-            '<a href="asset-viewer.html?url={{URL}}" type="text/plain">',
+            '<a href="', listURLPrefix, '{{URL}}" type="text/plain">',
             '{{name}}',
             '</a>',
             ': ',
@@ -251,7 +252,11 @@ var blacklistsApplyHandler = function() {
     var i = lis.length();
     var path;
     while ( i-- ) {
-        path = lis.subset(i).find('a').attr('href');
+        path = lis
+            .subset(i)
+            .find('a')
+            .attr('href')
+            .replace(listURLPrefix, '');
         switches.push({
             location: path,
             off: lis.subset(i).find('input').prop('checked') === false
