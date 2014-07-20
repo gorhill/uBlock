@@ -47,7 +47,7 @@ google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 
 # https://github.com/gorhill/uBlock/issues/70
 # Workaround for issue 70.
-deviantart.com##.dp-ad-target.atf-right-300x250
+#deviantart.com##.dp-ad-target.atf-right-300x250
 
 # Seen on mediafire.com
 ||torconpro.com^

@@ -146,9 +146,8 @@ var cosmeticFiltering = (function() {
                 injectedSelectors[exceptions[i]] = true;
             }
         }
-
-        // TODO: evaluate merging into a single loop
-        selectorsFromNodeList(document.querySelectorAll('*[class],*[id]'));
+        idsFromNodeList(document.querySelectorAll('[id]'));
+        classesFromNodeList(document.querySelectorAll('[class]'));
         retrieveGenericSelectors();
     };
 
@@ -302,42 +301,47 @@ var cosmeticFiltering = (function() {
         }
     };
 
-    // TODO: split back into to specialized functions as it was before. Too
-    // many code paths creeped back, I thought I could get rid of most.
-    var selectorsFromNodeList = function(nodes) {
+    var idsFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
             return;
         }
         if ( idSelectors === null ) {
             idSelectors = [];
         }
+        var qq = queriedSelectors;
+        var ii = idSelectors;
+        var node, v;
+        var i = nodes.length;
+        while ( i-- ) {
+            node = nodes[i];
+            if ( node.nodeType !== 1 ) { continue; }
+            // id
+            v = nodes[i].id;
+            // quite unlikely, so no need to be fancy
+            if ( typeof v !== 'string' ) { continue; }
+            v = v.trim();
+            if ( v === '' ) { continue; }
+            v = '#' + v;
+            if ( qq[v] ) { continue; }
+            ii.push(v);
+            qq[v] = true;
+        }
+    };
+
+    var classesFromNodeList = function(nodes) {
+        if ( !nodes || !nodes.length ) {
+            return;
+        }
         if ( classSelectors === null ) {
             classSelectors = {};
         }
         var qq = queriedSelectors;
         var cc = classSelectors;
-        var ii = idSelectors;
-        var node, v, classNames, j;
+        var node, v, vv, j;
         var i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
-            if ( node.nodeType !== 1 ) {
-                continue;
-            }
-            // id
-            v = nodes[i].id;
-            // quite unlikely, so no need to be fancy
-            if ( typeof v !== 'string' ) {
-                v = '';
-            }
-            v = v.trim();
-            if ( v !== '' ) {
-                v = '#' + v;
-                if ( !qq[v] ) {
-                    ii.push(v);
-                    qq[v] = true;
-                }
-            }
+            if ( node.nodeType !== 1 ) { continue; }
             // class
             v = nodes[i].className;
             // it could be an SVGAnimatedString...
@@ -353,10 +357,10 @@ var cosmeticFiltering = (function() {
                 continue;
             }
             // many classes
-            classNames = v.trim().split(/\s+/);
-            j = classNames.length;
+            vv = v.trim().split(' ');
+            j = vv.length;
             while ( j-- ) {
-                v = classNames[j];
+                v = vv[j].trim();
                 if ( v === '' ) { continue; }
                 v = '.' + v;
                 if ( qq[v] ) { continue; }
@@ -371,12 +375,14 @@ var cosmeticFiltering = (function() {
         var nodeList, j, node;
         while ( i-- ) {
             nodeList = nodeLists[i];
-            selectorsFromNodeList(nodeList);
+            idsFromNodeList(nodeList);
+            classesFromNodeList(nodeList);
             j = nodeList.length;
             while ( j-- ) {
                 node = nodeList[j];
-                if ( node.querySelectorAll ) {
-                    selectorsFromNodeList(node.querySelectorAll('*[id],*[class]'));
+                if ( typeof node.querySelectorAll === 'function' ) {
+                    idsFromNodeList(node.querySelectorAll('[id]'));
+                    classesFromNodeList(node.querySelectorAll('[class]'));
                 }
             }
         }
@@ -394,7 +400,7 @@ var cosmeticFiltering = (function() {
 
 // https://github.com/gorhill/uBlock/issues/7
 
-var blockedElementHider = (function() {
+(function() {
     var hideOne = function(elem, collapse) {
         // If `!important` is not there, going back using history will likely
         // cause the hidden element to re-appear.
@@ -404,21 +410,9 @@ var blockedElementHider = (function() {
         }
     };
 
-    var observeOne = function(elem) {
-        var onComplete = function() {
-            var elem = this;
-            var onAnswerReceived = function(details) {
-                if ( details.blocked ) {
-                    hideOne(elem, details.collapse);
-                }
-            };
-            messaging.ask({ what: 'blockedRequest', url: this.src }, onAnswerReceived);
-            this.removeEventListener('load', onComplete);
-        };
-        elem.addEventListener('load', onComplete);
-    };
-
-    var hideMany = function(elems, details) {
+    // First pass
+    messaging.ask({ what: 'blockedRequests' }, function(details) {
+        var elems = document.querySelectorAll('img,iframe');
         var blockedRequests = details.blockedRequests;
         var collapse = details.collapse;
         var i = elems.length;
@@ -426,75 +420,38 @@ var blockedElementHider = (function() {
         while ( i-- ) {
             elem = elems[i];
             src = elem.src;
-            if ( typeof src !== 'string' ) {
+            if ( typeof src !== 'string' || src === '' ) {
                 continue;
             }
-            if ( src === '' ) {
-                observeOne(elem);
-            } else if ( blockedRequests[src] ) {
+            if ( blockedRequests[src] ) {
                 hideOne(elem, collapse);
             }
         }
-    };
+    });
 
-    var processElements = function(elems) {
-        var blockedRequestsReceived = function(details) {
-            hideMany(elems, details);
-            var i = elems.length;
-            while ( i-- ) {
-                hideMany(elems[i].querySelectorAll('img,iframe'), details);
+    // Listeners to mop up whatever is otherwise missed:
+    // - Future requests not blocked yet
+    // - Elements dynamically added to the page
+    // - Elements which resource URL changes
+    var onResourceLoaded = function(ev) {
+        var target = ev.target;
+        if ( !target || !target.src ) {
+            return;
+        }
+        var tag = target.tagName.toLowerCase();
+        if ( tag !== 'img' && tag !== 'iframe' ) {
+            return;
+        }
+        var onAnswerReceived = function(details) {
+            if ( details.blocked ) {
+                hideOne(target, details.collapse);
             }
         };
-        messaging.ask({ what: 'blockedRequests' }, blockedRequestsReceived);
+        messaging.ask({ what: 'blockedRequest', url: target.src }, onAnswerReceived);
     };
-
-    // rhill 2014-07-01: Avoid useless work: only nodes which are element are
-    // of interest at this point -- because it is common that a lot of plain
-    // text nodes get added.
-    var addNodeLists = function(nodeLists) {
-        var elems = [];
-        var i = nodeLists.length;
-        var nodeList, j, node;
-        while ( i-- ) {
-            nodeList = nodeLists[i];
-            j = nodeList.length;
-            while ( j-- ) {
-                node = nodeList[j];
-                if ( node.querySelectorAll ) {
-                    elems.push(node);
-                }
-            }
-        }
-        if ( elems.length ) {
-            processElements(elems);
-        }
-    };
-
-    var onBlockedRequestsReceived = function(details) {
-        hideMany(document.querySelectorAll('img,iframe'), details);
-    };
-    messaging.ask({ what: 'blockedRequests' }, onBlockedRequestsReceived);
-
-    return {
-        addNodeLists: addNodeLists
-    };
+    document.addEventListener('load', onResourceLoaded, true);
+    document.addEventListener('error', onResourceLoaded, true);
 })();
-
-/******************************************************************************/
-
-// rhill 2013-11-09: Weird... This code is executed from µBlock
-// context first time extension is launched. Avoid this.
-// TODO: Investigate if this was a fluke or if it can really happen.
-// I suspect this could only happen when I was using chrome.tabs.executeScript(),
-// because now a delarative content script is used, along with "http{s}" URL
-// pattern matching.
-
-// console.debug('µBlock> window.location.href = "%s"', window.location.href);
-
-if ( /^https?:\/\/./.test(window.location.href) === false ) {
-    console.debug("Huh?");
-    return;
-}
 
 /******************************************************************************/
 
@@ -511,7 +468,6 @@ var mutationObservedHandler = function(mutations) {
     }
     if ( nodeLists.length ) {
         cosmeticFiltering.processNodeLists(nodeLists);
-        blockedElementHider.addNodeLists(nodeLists);
     }
 };
 

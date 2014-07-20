@@ -62,8 +62,9 @@ File system structure:
 
 var fileSystem;
 var fileSystemQuota = 40 * 1024 * 1024;
-var remoteRoot = µBlock.projectServerRoot;
+var repositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() { };
+var thirdpartyHomeURLs = null;
 
 /******************************************************************************/
 
@@ -71,6 +72,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     // console.log('µBlock> getTextFileFromURL("%s"):', url);
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'text';
+    xhr.timeout = 15000;
     xhr.onload = onLoad;
     xhr.onerror = onError;
     xhr.ontimeout = onError;
@@ -268,7 +270,7 @@ var readRemoteFile = function(path, callback) {
 
     // 'ublock=...' is to skip browser cache
     getTextFileFromURL(
-        remoteRoot + path + '?ublock=' + Date.now(),
+        repositoryRoot + path + '?ublock=' + Date.now(),
         onRemoteFileLoaded,
         onRemoteFileError
         );
@@ -346,8 +348,10 @@ var writeLocalFile = function(path, content, callback) {
 
 var updateFromRemote = function(details, callback) {
     // 'ublock=...' is to skip browser cache
-    var remoteURL = remoteRoot + details.path + '?ublock=' + Date.now();
     var targetPath = details.path;
+    // https://github.com/gorhill/uBlock/issues/84
+    var homeURL = '';
+    var repositoryURL = repositoryRoot + targetPath + '?ublock=' + Date.now();
     var targetMd5 = details.md5 || '';
 
     var reportBackError = function() {
@@ -360,30 +364,106 @@ var updateFromRemote = function(details, callback) {
     var onRemoteFileLoaded = function() {
         this.onload = this.onerror = null;
         if ( typeof this.responseText !== 'string' ) {
-            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): no response', remoteURL);
+            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): no response', repositoryURL);
             reportBackError();
             return;
         }
-        if ( YaMD5.hashStr(this.responseText) !== targetMd5 ) {
-            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): bad md5 checksum', remoteURL);
+        if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
+            console.error('µBlock> updateFromRemote("%s") / onRemoteFileLoaded(): bad md5 checksum', repositoryURL);
             reportBackError();
             return;
         }
-        // console.debug('µBlock> updateFromRemote("%s") / onRemoteFileLoaded()', remoteURL);
+        // console.debug('µBlock> updateFromRemote("%s") / onRemoteFileLoaded()', repositoryURL);
         writeLocalFile(targetPath, this.responseText, callback);
     };
 
     var onRemoteFileError = function(ev) {
         this.onload = this.onerror = null;
-        console.error('µBlock> updateFromRemote() / onRemoteFileError("%s"):', remoteURL, this.statusText);
+        console.error('µBlock> updateFromRemote() / onRemoteFileError("%s"):', repositoryURL, this.statusText);
         reportBackError();
     };
 
-    getTextFileFromURL(
-        remoteURL,
-        onRemoteFileLoaded,
-        onRemoteFileError
-    );
+    var onHomeFileLoaded = function() {
+        this.onload = this.onerror = null;
+        if ( typeof this.responseText !== 'string' ) {
+            console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): no response', homeURL);
+            getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+            return;
+        }
+        if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
+            console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): bad md5 checksum', homeURL);
+            getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+            return;
+        }
+        // console.debug('µBlock> updateFromRemote("%s") / onHomeFileLoaded()', homeURL);
+        writeLocalFile(targetPath, this.responseText, callback);
+    };
+
+    var onHomeFileError = function(ev) {
+        this.onload = this.onerror = null;
+        console.error('µBlock> updateFromRemote() / onHomeFileError("%s"):', homeURL, this.statusText);
+        getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+    };
+
+    // https://github.com/gorhill/uBlock/issues/84
+    // Create a URL from where the asset needs to be downloaded. It can be:
+    // - a home server URL
+    // - a github repo URL
+    var getThirdpartyHomeURL = function() {
+        // If it is a 3rd-party, look-up home server URL, if any.
+        if ( targetPath.indexOf('assets/thirdparties/') === 0 ) {
+            homeURL = targetPath.replace('assets/thirdparties/', '');
+            if ( thirdpartyHomeURLs && thirdpartyHomeURLs[homeURL] ) {
+                homeURL = thirdpartyHomeURLs[homeURL];
+            } else {
+                homeURL = 'http://' + homeURL;
+            }
+        }
+        // If there is a home server, disregard checksum: the file is assumed
+        // most up to date at the home server.
+        if ( homeURL !== '' ) {
+            targetMd5 = '';
+            getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
+            return;
+        }
+        // The resource will be pulled from Github repo. It's reserved for
+        // more important assets, so we keep and use the checksum.
+        getTextFileFromURL(repositoryURL, onRemoteFileLoaded, onRemoteFileError);
+    };
+
+    // https://github.com/gorhill/uBlock/issues/84
+    // First try to load from the actual home server of a third-party.
+    var onThirdpartyHomeURLsLoaded = function(details) {
+        thirdpartyHomeURLs = {};
+        if ( details.error ) {
+            getThirdpartyHomeURL();
+            return;
+        }
+        var urlPairs = details.content.split(/\n\n+/);
+        var i = urlPairs.length;
+        var pair, pos, k, v;
+        while ( i-- ) {
+            pair = urlPairs[i];
+            pos = pair.indexOf('\n');
+            if ( pos === -1 ) {
+                continue;
+            }
+            k = pair.slice(0, pos).trim();
+            v = pair.slice(pos).trim();
+            if ( k === '' || v === '' ) {
+                continue;
+            }
+            thirdpartyHomeURLs[k] = v;
+        }
+        getThirdpartyHomeURL();
+    };
+
+    // Get home servers if not done yet.
+    if ( thirdpartyHomeURLs === null ) {
+        readLocalFile('assets/ublock/thirdparty-lists.txt', onThirdpartyHomeURLsLoaded);
+    } else {
+        getThirdpartyHomeURL();
+    }
 };
 
 /******************************************************************************/

@@ -1008,25 +1008,41 @@ FilterBucket.prototype.match = function(url, tokenBeg) {
 /******************************************************************************/
 
 var FilterContainer = function() {
-    this.categories = {};
-    this.duplicates = {};
-    this.url = '';
-    this.tokenBeg = 0;
-    this.tokenEnd = 0;
+    this.reAnyToken = /[%0-9a-z]+/g;
+    this.buckets = new Array(8);
+    this.blockedAnyPartyHostnames = new µBlock.LiquidDict();
+    this.blocked3rdPartyHostnames = new µBlock.LiquidDict();
     this.filterParser = new FilterParser();
+    this.reset();
+};
+
+/******************************************************************************/
+
+// Reset all, thus reducing to a minimum memory footprint of the context.
+
+FilterContainer.prototype.reset = function() {
+    this.frozen = false;
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.duplicateCount = 0;
+    this.categories = {};
+    this.duplicates = {};
+    this.blockedAnyPartyHostnames.reset();
+    this.blocked3rdPartyHostnames.reset();
+    this.filterParser.reset();
+};
 
-    // This is for hostname-based-any-request filters
-    this.blockedAnyPartyHostnames = new µBlock.LiquidDict();
-    this.blocked3rdPartyHostnames = new µBlock.LiquidDict();
+/******************************************************************************/
 
-    // Used during URL matching
-    this.reAnyToken = /[%0-9a-z]+/g;
-    this.buckets = new Array(8);
+FilterContainer.prototype.freeze = function() {
+    //histogram('allFilters', this.categories);
+    this.blockedAnyPartyHostnames.freeze();
+    this.blocked3rdPartyHostnames.freeze();
+    this.duplicates = {};
+    this.filterParser.reset();
+    this.frozen = true;
 };
 
 /******************************************************************************/
@@ -1233,35 +1249,7 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 /******************************************************************************/
 
-// Reset all, thus reducing to a minimum memory footprint of the context.
-
-FilterContainer.prototype.reset = function() {
-    this.processedFilterCount = 0;
-    this.acceptedCount = 0;
-    this.allowFilterCount = 0;
-    this.blockFilterCount = 0;
-    this.duplicateCount = 0;
-    this.categories = {};
-    this.blockedAnyPartyHostnames.reset();
-    this.blocked3rdPartyHostnames.reset();
-    this.duplicates = {};
-    this.filterParser.reset();
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.freeze = function() {
-    //histogram('allFilters', this.categories);
-    this.blockedAnyPartyHostnames.freeze();
-    this.blocked3rdPartyHostnames.freeze();
-    this.duplicates = {};
-    this.filterParser.reset();
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.matchTokens = function() {
-    var url = this.url;
+FilterContainer.prototype.matchTokens = function(url) {
     var re = this.reAnyToken;
     var matches, beg, token;
     var buckets = this.buckets;
@@ -1383,14 +1371,17 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchString = function(pageDetails, url, requestType, requestHostname) {
+FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
     // adbProfiler.countUrl();
+    if ( this.frozen !== true ) {
+        return false;
+    }
 
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
     //     `match-case` option not supported, but then, I saw only one
     //     occurrence of it in all the supported lists (bulgaria list).
-    this.url = url.toLowerCase();
+    var url = requestURL.toLowerCase();
 
     // The logic here is simple:
     //
@@ -1442,7 +1433,7 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
         buckets[5] = categories[this.makeCategoryKey(BlockAction | type | party)];
         buckets[6] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
         buckets[7] = categories[this.makeCategoryKey(BlockOtherParties | type)];
-        br = this.matchTokens();
+        br = this.matchTokens(url);
     }
 
     // If there is no block filter, no need to test against allow filters
@@ -1459,7 +1450,7 @@ FilterContainer.prototype.matchString = function(pageDetails, url, requestType, 
     buckets[5] = categories[this.makeCategoryKey(AllowAction | type | party)];
     buckets[6] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
     buckets[7] = categories[this.makeCategoryKey(AllowOtherParties | type | domainParty)];
-    var ar = this.matchTokens();
+    var ar = this.matchTokens(url);
     if ( ar !== false ) {
         return '@@' + ar;
     }

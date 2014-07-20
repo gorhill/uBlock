@@ -272,6 +272,7 @@ var FilterContainer = function() {
 
 FilterContainer.prototype.reset = function() {
     this.filterParser.reset();
+    this.frozen = false;
     this.acceptedCount = 0;
     this.processedCount = 0;
     this.genericFilters = {};
@@ -399,6 +400,7 @@ FilterContainer.prototype.freeze = function() {
 
     // console.debug('Number of duplicate cosmetic filters skipped:', this.duplicateCount);
     this.duplicates = {};
+    this.frozen = true;
 
     //console.log('µBlock> adp-hide-filters.js: %d filters accepted', this.acceptedCount);
     //console.log('µBlock> adp-hide-filters.js: %d filters processed', this.processedCount);
@@ -611,6 +613,9 @@ FilterContainer.prototype.addFilterEntry = function(filterDict, hash, f) {
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, request) {
+    if ( this.frozen !== true ) {
+        return;
+    }
     if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
         return;
     }
@@ -669,6 +674,9 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, request) {
+    if ( this.frozen !== true ) {
+        return;
+    }
     if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
         return;
     }

@@ -122,7 +122,7 @@ var renderBlacklists = function() {
             '<li class="listDetails">',
             '<input type="checkbox" {{checked}}>',
             '&thinsp;',
-            '<a href="{{URL}}" type="text/plain">',
+            '<a href="asset-viewer.html?url={{URL}}" type="text/plain">',
             '{{name}}',
             '</a>',
             ': ',
