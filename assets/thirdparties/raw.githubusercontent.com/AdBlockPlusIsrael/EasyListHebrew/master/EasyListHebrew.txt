@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: gRhQoUq4T2kvz2HZl6WKkg
+! Checksum: PXY6bSg8iVbfyV74hrfu6A
 ! Title: EasyList Hebrew
-! Last modified: 16/07/14  10:23 Arabic Standard Time
+! Last modified: 20/07/14  17:42 Jerusalem Daylight Time
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -23,22 +23,26 @@
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
+||213.8.137.51^$popup
 ||213.8.137.51^
 ||3dots.co.il^$third-party,domain=~maple-team.com
 ||ad-sys.com^$third-party
 ||adland.co.il^$third-party
 ||adtv.me^$popup
+||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||amazing-offers.co.il^$popup
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||best-offers.co.il^$popup
+||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||clickcenter.net^$third-party
 ||clickon.co.il^$third-party
 ||descreti.co.il^$popup
 ||expert-offers.com^$popup
-||akamaihd.net^$image,third-party,domain=fxp.co.il
+||forifiha.com/null^$popup
 ||great-offers.co.il^$popup
 ||greenlead.co.il^$popup
 ||ha-deal.co.il^$popup
+||ilikethis.info/il^$popup
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
 ||jdate.co.il^$third-party

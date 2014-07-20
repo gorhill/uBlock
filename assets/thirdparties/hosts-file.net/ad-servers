@@ -15753,7 +15753,6 @@
 127.0.0.1	router01.ixn.local.vmsn.de
 127.0.0.1	router02.ixn.local.vmsn.de
 127.0.0.1	router03.ixn.local.vmsn.de
-127.0.0.1	rover.ebay.com
 127.0.0.1	rovio.appads.com
 127.0.0.1	rovio2.appads.com
 127.0.0.1	rovio3.appads.com
@@ -17439,6 +17438,7 @@
 127.0.0.1	tcr.tynt.com
 127.0.0.1	tcr111.tynt.com
 127.0.0.1	tcy.smartadserver.com
+127.0.0.1	td.demdex.net
 127.0.0.1	tdkads.ads.dk
 127.0.0.1	tdkads1.ads.dk
 127.0.0.1	tds.xlivevideo.ru

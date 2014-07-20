@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: J1h4GosBxjkyZ9il4Y0SWA
-! Version: 201407190440
+! Checksum: 0AGYX35fvaHWzxRa/8sXNQ
+! Version: 201407202140
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 19 Jul 2014 04:40 UTC
+! Last modified: 20 Jul 2014 21:40 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2326,6 +2326,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamersplus.de/images/branding/
 ||gamersplus.de/uploads/tx_consolmedia/bg_*.jpg
 ||games.ch^*/banner/
+||gamestar.de/images^*/600x.
 ||gamestar.de/img/gamestar/_misc/gcEventBtnPrmBg.png
 ||gamestar.de/img/gamestar/_misc/prm_logoheader_gs_
 ||gamestar.de/img/gamestar/_misc/promotion/*/amazon_button*.png
@@ -2780,6 +2781,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||movie-stream.to/do.php
 ||movie-stream.to^*/pop*.js
 ||movie-stream.to^*/system.js
+||movie4k.to/layer.js
 ||moviebb.to/img/banner/
 ||moviebox.to/do.php
 ||moviebox.to^*/*pop*.js
@@ -7611,6 +7613,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||media.epochtimes.de^*/adbox/$image
 @@||media.epochtimes.de^*/addelivery/$image
 @@||media.epochtimes.de^*/adengine/$image
+@@||media.epochtimes.de^*/adfactor/$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de

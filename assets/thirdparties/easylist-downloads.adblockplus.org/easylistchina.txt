@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: +Ps1davpAo1ToYGBpiZaJw
-! Version: 201407190441
+! Checksum: APo2SL84Paw6sBlRuLqvTw
+! Version: 201407202141
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 19 Jul 2014 04:41 UTC
+! Last Modified: 20 Jul 2014 21:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -2871,7 +2871,7 @@ weather.com.cn##div[class^="adpos"]
 ||p9.qhimg.com/t012651f68fd26d135e.gif
 ||padhz.com/webimg/slide/nokillad
 ||paipai.fm/images/gtj*.jpg
-||paipai.fm/images/paipai/ktpd*.jpg
+||paipai.fm/images/paipai/tgm*.jpg
 ||paipaitxt.com/bans/
 ||paipaitxt.com/images/paipai/gtj2.jpg
 ||paipaitxt.com/images/paipai/qjll.jpg
@@ -3013,7 +3013,6 @@ weather.com.cn##div[class^="adpos"]
 ||qjis.com/js/qjis_nr.js
 ||qm120.com/images/adZhayou.jpg
 ||qpic.cn/manhua_detail/$object-subrequest
-||qpic.cn/mblogpic/34dd0e2e2edfa60680f8/2000
 ||qpic.cn^$domain=7958.com
 ||qq.com/bbs/bbs_topgg.htm
 ||qq.com/game/footerbar$subdocument
@@ -3177,7 +3176,7 @@ weather.com.cn##div[class^="adpos"]
 ||sina.com/assets/js/dart/
 ||sina.com/rm/
 ||sinaimg.cn/cj/dfz_ad/
-||sinaimg.cn/large/$domain=360-bo.com|btshare.net|kiees.cn|kqiuba.com|lueqiu.com|pptiyu.com|qqzhibo.com
+||sinaimg.cn/large/$domain=360-bo.com|btshare.net|kiees.cn|kqiuba.com|lueqiu.com|pptiyu.com|qqzhibo.com|qqzhibo.net
 ||sinaimg.cn/large/*?$domain=zhaofuli.net
 ||sinaimg.cn/large/4c929964tw1ehl05gs6m0g20jg00uq2s.gif
 ||sinaimg.cn/large/7044f931gw1eftzzokbs4j20d70230ua.jpg
@@ -3749,12 +3748,32 @@ weather.com.cn##div[class^="adpos"]
 ||baidu.com/tb/cms/game/*_banner.
 ||sinaimg.cn/large/7044f931gw1eienitivi0g20qy028wmr.gif
 ||duowan.com/|$object-subrequest
+||qidian.com/javascript/xpg.js
+||qpic.cn/mblogpic/*/2000$domain=ithome.com
 ||dealmoon.com/hotdeals/
+||people.com.cn/img/gjt/
+||tianmu.com/js/qq.js
+||tianmu.com/abbsd/
+||javlibrary.com/js/ban_
+||yehaolu.com/js/jjss
+||jtyskq.com/!/20140327/js/_a.js      
+||i.fgi.tw/images/survey_of_woman9.gif
+||2345.com/dianyingimg/ads/
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
 yaolan.com###AD
+javlibrary.com##.bannerqq
+2345.com##.vipTopBanner
+duba.com###searchRight
+duba.com###leftHot
+duba.com###top_joke
+fifm.cn###favorite_table_box
+fashionguide.com.tw##.logo_ad
+baidu.com##.sam_iebrowser_banner
+ithome.com###hlindex
+ithome.com##.con-recom
 bug.cn##TABLE[width="346"][height="295"]
 51job.com##.weifantang-wrap
 jump.bdimg.com,tieba.baidu.com##.game_banner
@@ -6046,10 +6065,13 @@ sohu.com#@#.label-ad
 36.cn#@#.mainAd
 tiancity.com#@#.main_ad
 mobile01.com#@#.navad
+dianmi.net#@#.top-ads
 house.shangdu.com#@#.top_ad
 17ppt.com#@#.topads
 !---------------------------------URL Whitelist-------------------------------!
 @@,modules/adMedia.
+@@||minisite.letv.com/tuiguang/
+@@||partner.googleadservices.com/gpt/pubads_impl_$domain=pcdvd.com.tw
 @@.beautifulphoto.net/ads/music
 @@.cntv.cn/adplayer/
 @@.jstv.com/c/gg/

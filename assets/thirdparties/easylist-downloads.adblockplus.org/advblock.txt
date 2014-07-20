@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: mQjBYAlVTSYxib484vdJHw
-! Version: 201407190440
-! Last modified: 19 Jul 2014 04:40 UTC
+! Checksum: Y21h7iienwdANQG73L90sQ
+! Version: 201407202140
+! Last modified: 20 Jul 2014 21:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1347,6 +1347,7 @@ _tizers.
 ||radeant.com^$third-party
 ||radikal.ru/bh.ashx?
 ||radio-tech.ru/pic/pages/
+||rambler.ru/xpromo_
 ||raptop.ru/images/img*.gif
 ||rarenok.biz^
 ||rate.7surf.ru/img.php?
@@ -3266,7 +3267,6 @@ crazys.info,ucrazy.ru###online_games
 hl-inside.ru###orphus
 wikireality.ru###p-sidebar-extlinks
 nnm.me###page > div[style*="height: 300px;"]
-free-torrents.org###page_header + center
 rf-cheats.ru###pagenav_menu + center ~ center
 ekabu.ru###paradslider
 i-pic.ru,joomlatown.net,klanwin.ru###parent_popup
@@ -4292,6 +4292,7 @@ rutracker.org###bn-tio-1
 rutracker.org###crn-1
 novosti.dn.ua###infobar_2
 seonews.ru###main_tags_block + div[style^="width: 200px;"]
+free-torrents.org###page_header + center
 pirat.ca###sidebar2
 rebill.me###space
 meteonovosti.ru###top_ban
@@ -4314,7 +4315,6 @@ i.ua##.clear.logo_container
 goldroyal.net##.floating
 inosmi.ru##.floatright.rightbox br
 tvnet.lv##.fp_horiz_ads_150x150
-free-torrents.org##.hlow ~ br
 101.ru##.ind-adv-carousel
 comss.ru##.links ~ .box
 3mv.ru##.logo
@@ -4326,7 +4326,6 @@ delfi.lv##.top-banner
 foto.ua##.top-banner-container
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.top_ba
 mmorpg.ua##.top_banner
-free-torrents.org##.topmenu ~ br
 comss.info,comss.ru##.toppage
 factroom.ru##.widget-area div[class*="-banner"]
 rusdtp.ru##.ya-direct
@@ -5908,6 +5907,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||pgpru.com^$elemhide
 @@||pgpru.com^*/files?get=$domain=pgpru.com
 @@||photodoska.ru/content/dynamic/ads/$domain=photodoska.ru
+@@||plan.ru/adserver/adframe.php?$subdocument,domain=plan.ru
 @@||plektan.com/ad/$image
 @@||porsche.com^*/teaser.js$domain=porsche.com
 @@||praca.by/files/adv/index-logos/$domain=praca.by

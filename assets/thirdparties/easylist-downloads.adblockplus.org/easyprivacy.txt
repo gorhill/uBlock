@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 6Fz8rgwGcwYEU8U1h0eAEA
-! Version: 201407190441
+! Checksum: fZ9nX7f9pVpK/KXWtKlW+A
+! Version: 201407202141
 ! Title: EasyPrivacy
-! Last modified: 19 Jul 2014 04:41 UTC
+! Last modified: 20 Jul 2014 21:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -266,6 +266,7 @@
 /anametrix.js
 /anametrix/*
 /ancAdTrack.js
+/angularlytics.
 /anycent_tracker_
 /api/0/stats
 /apitracking.
@@ -1394,6 +1395,7 @@
 /pv.gif?url
 /pvcount.
 /pview?event
+/pvserver/pv.js
 /PvServlet?
 /px_trans.gif
 /pxl.cgi?
@@ -2960,6 +2962,7 @@ http://utm.
 ||lxtrack.com^$third-party
 ||lypn.com^$third-party
 ||lypn.net^$third-party
+||lytics.io^$third-party
 ||lytiks.com^$third-party
 ||magiq.com^$third-party
 ||magnetmail1.net^$third-party
@@ -3016,6 +3019,7 @@ http://utm.
 ||mochibot.com^$third-party
 ||monetate.net^$third-party
 ||mongoosemetrics.com^$third-party
+||monitis.com^$third-party
 ||monitus.net^$third-party
 ||moreusers.info^$third-party
 ||morevisits.info^$third-party
@@ -3314,6 +3318,7 @@ http://utm.
 ||searchignite.com^$third-party
 ||searchplow.com^$third-party
 ||secure-pixel.com^$third-party
+||securepaths.com^$third-party
 ||sedotracker.com^$third-party
 ||seehits.com^$third-party
 ||seewhy.com^$third-party
@@ -3448,6 +3453,7 @@ http://utm.
 ||synergy-e.com^$third-party
 ||synthasite.net^$third-party
 ||sysomos.com^$third-party
+||t-analytics.com^$third-party
 ||tagcommander.com^$third-party
 ||taps.io^$third-party
 ||tapstream.com^$third-party
@@ -4524,6 +4530,8 @@ http://utm.
 ||atgsvcs.com/js/atgsvcs.js
 ||attributiontrackingga.googlecode.com^
 ||auctiva.com/Default.aspx?query
+||audienceapi.newsdiscover.com.au^$third-party
+||audienceinsights.net^$third-party
 ||audit.303br.net^
 ||audit.median.hu^
 ||autoline-top.com/counter.php?
@@ -5034,6 +5042,7 @@ http://utm.
 ||longtailvideo.com^*/yourlytics-
 ||longurl.it/_t.gif?$third-party
 ||loomia.com^*/setcookie.html
+||loop11.com^$third-party
 ||loyalty.bigdoor.com^$third-party
 ||lsimg.net^*/vs.js
 ||ltassrv.com/track/
@@ -5108,6 +5117,7 @@ http://utm.
 ||netne.net/stats/
 ||netscape.com/c.cgi?
 ||neulion.vo.llnwd.net^*/track.js
+||newsanalytics.com.au^$third-party
 ||newsletters.infoworld.com/db/$image,third-party
 ||newsletters.nationalgeographic.com^$image,third-party
 ||nol.yahoo.com^
@@ -5362,6 +5372,7 @@ http://utm.
 ||stats.whicdn.com^$third-party
 ||stats.wp.com^
 ||stats.yourminis.com^
+||stats1.tune.pk^
 ||stats2.lightningcast.net^
 ||stats3.unrulymedia.com^
 ||statsadv.dadapro.com^$third-party
@@ -5431,7 +5442,6 @@ http://utm.
 ||track.g-bot.net^
 ||track.gridlockparadise.com^
 ||track.juno.com^
-||track.monitis.com^
 ||track.mybloglog.com^
 ||track.omg2.com^
 ||track.parse.ly^
@@ -6059,6 +6069,7 @@ http://utm.
 ||kvartirant.ru/counter.php?
 ||linestudio.ru/counter/
 ||mc.yandex.ru^
+||mediaplus.fm/cntr.php?
 ||medorgs.ru/js/counterlog_img.js
 ||metka.ru/counter/
 ||mobtop.ru/c/$third-party
@@ -6225,6 +6236,7 @@ http://utm.
 ||amazon.com/clog/
 ||amazon.com/gp/forum/email/tracking?
 ||amazon.com/gp/yourstore/recs/
+||amazon.com^*/vap-metrics/
 ||amazonaws.com/beacon/vtpixpc.gif?
 ||amazonaws.com/tracking.relead.js
 ||amazonaws.com^*/pzyche.js
@@ -7078,6 +7090,7 @@ http://utm.
 ||metacafe.com^*/statsrecorder.php?
 ||metacrawler.com/__kl.gif
 ||meter-svc.nytimes.com^
+||metric*.rediff.com^
 ||metric.gstatic.com^
 ||metric.inetcore.com^
 ||metrics.aws.sitepoint.com^
@@ -7531,7 +7544,6 @@ http://utm.
 ||spotlight.accuweather.com^
 ||sprint.com/assets/scripts/analytics/
 ||squidoo.com/track/
-||ssl-images-amazon.com/images/*/traffic/$image
 ||ssl-stats.wordpress.com^
 ||st.fanatics.com^
 ||st.mirror.co.uk^
@@ -8878,6 +8890,7 @@ http://utm.
 @@||latimes.com/hive/javascripts/loggingService.js
 @@||lenovo.com^*/GoogleAnalytics.js
 @@||lesacasino.com^*/EMERPEventCollector.$script,subdocument
+@@||lininteractive.com/chartbeat/$~third-party
 @@||link.theplatform.com/*/tracker.log?
 @@||link.theplatform.com/*?affiliate=
 @@||live.indiatimes.com/trackjs.cms

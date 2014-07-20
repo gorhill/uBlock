@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: IUNXoz50W0TwvCQNSEQWGw
-! Version: 201407190441
+! Checksum: 9Fsmo2uVXxEee7qBR6BJAA
+! Version: 201407202141
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 19 Jul 2014 04:41 UTC
+! Ultima modifica: 20 Jul 2014 21:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -92,6 +92,7 @@ _sito/adv/
 ###altervista_googleadsense-2
 ###annunciGoogle
 ###annunci_google
+###annuncio-virgilio
 ###blocco_servizi_sponsor1
 ###box_adv_sponsor_categorico
 ###corpo_video_sponsor
@@ -166,6 +167,7 @@ _sito/adv/
 ##a[href^="http://crazylead.com/video/"]
 ##a[href^="http://edintorni.net/related/service/sponsor/redirect/?"]
 ##a[href^="http://tracking.crazylead.com/"]
+##a[href^="http://www.linkwelove.it/urls/"]
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_general_hide.txt ***
 bancavalle.it,bancodibrescia.it,bpa.it,bpb.it,bpci.it,brebanca.it,carime.it,quiubi.it,ubibancapi.it#@##ad_box
 techinfos.it#@##adblock
@@ -337,7 +339,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||contactlab.it^*/Banner/
 ||d1n2y2eq1wbato.cloudfront.net^*/sponsor-$domain=atalanta.it
 ||d1oaxhr280l1ho.cloudfront.net^
-||datingfactory.com/promotools/
 ||delosstore.it/banner/
 ||digisesso.com/img/incesti.gif
 ||dipalermo.it/iii.html
@@ -363,8 +364,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||favolefantasia.com/banner/
 ||feed.yoodeal.net^
 ||fideliux.com/fideliux/banners/
-||filepremier.com/banners.php?
-||filepremier.com/iframe/box2.js
 ||free.netsons.com^
 ||gaggioso.it^$subdocument,third-party
 ||generik.nanopress.it/highlight_300x280.php
@@ -2394,6 +2393,7 @@ allandroidnews.it##.wp_skyscraper_c2
 bergamosera.com##.wpbrbanner
 petizionionline.it##.yahoo
 cittaceleste.it##.zodiak
+windowsblogitalia.com##[id^="bsa"]
 tgcom24.mediaset.it##a[href*=".ad.dotandad.com/clicktracker.jsp?"]
 mmorpgitalia.it##a[href^="http://ad2games.com/slave.php?"]
 ipadevice.com,ispazio.net##a[href^="http://adserver.ispazio.net/"]
@@ -2543,6 +2543,7 @@ outune.net##div[style="width:300px;height:180px; background:#fff;"]
 affaritaliani.it##div[style="width:300px;height:200px;border:solid 5px #afb2b4 ; background-image:url('http://www.affaritaliani.it/includes/files/affari/fondo.png');font-family:Verdana; color:white"]
 dday.it##div[style="width:300px;height:250px"]
 ticinolibero.ch##div[style="width:300px;height:250px;margin-bottom:10px"]
+amazon.it##div[style="width:300px;height:280px;"]
 strettoweb.com##div[style="width:307px; height:250px; text-align:left; margin:0 0 5px 5px; float:right;"]
 film-review.it,fullhd.it##div[style="width:308px; margin-left: 4px; height:260px;text-align: center;display:block;margin-top:10px;margin-bottom:10px;"]
 film-review.it##div[style="width:308px;height:260px;text-align: center;display:block;margin-top:10px;margin-bottom:10px;margin-left:3px;"]
@@ -2699,6 +2700,7 @@ termometropolitico.it##[id^="bsa"]
 @@||pad.mymovies.it/v9/adv/media/preroll/*.flv$object-subrequest
 @@||paesesera.it/design/paesesera/stylesheets/advertising.css
 @@||pagead2.googlesyndication.com/pagead/googlevideoadslibrary.swf$object-subrequest,domain=giochidicalcio.com
+@@||pagead2.googlesyndication.com/pagead/js/*/show_ads_impl.js$domain=windowsblogitalia.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=windowsblogitalia.com
 @@||pagead2.googlesyndication.com/pagead/scache/googlevideoads.swf$object-subrequest,domain=giochidicalcio.com
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=ipaditalia.com|iphoneitalia.com
@@ -2742,7 +2744,6 @@ termometropolitico.it##[id^="bsa"]
 @@||tvgratis.altervista.org^$elemhide
 @@||tvgratis.altervista.org^*#$image
 @@||tvgratis.altervista.org^*/advertisement.js
-@@||windowsblogitalia.com^$elemhide,image
 @@||zeb89.altervista.org^$elemhide
 @@||zeb89.altervista.org^*#$image
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_dimensions.txt ***

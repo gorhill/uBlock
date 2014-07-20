@@ -55,6 +55,9 @@ scdn.gr/images/helmet/promo_material/*
 ||thepressproject.gr/ad/*
 ||dealin.gr/iframes/5/*
 ||sport24.gr/genika/article1951216.ece/BINARY/original/mc_tab.png
+||cheapis.gr/widget/*
+||widgets.nova.gr/nownext_compact/el/*
+||airfasttickets.gr/affiliate/*
 ant1online.gr/SiteCollectionImages/SiteImages/betonet.gif
 zougla.gr/news/data/upimages/image.php?image=ororotot9018231.jpg
 cosmopolitan.gr/images/vod_logo_100x70.jpg
@@ -518,6 +521,7 @@ ad.gr.doubleclick.net
 ||contra.gr/*/BINARY/original/bc_background_alt.jpg
 ||contra.gr/*/BINARY/original/adidas*.js
 ||koutipandoras.gr/sites/default/files/*banner*.swf
+||enikos.gr/data/photos/e28a0cdc2d54f49d2a697d9fe83066d7.gif
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1

@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: 9GDiqKLbzhwHamQAM6+pEg
+! Checksum: lditl4wyDLNmQHW8wiaUOQ
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 18 Jul 2014
+! Updated: 21 Jul 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -392,7 +392,7 @@ wolframalpha.com###sidebar
 ||bjs.com^*_landing.js
 ||bosch.com/WTg/WTg.js
 ||bt.com/media/js/SiteCatalyst-
-||cf2.rackcdn.com^$script,domain=comingsoon.net|cnet.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com
+||cf2.rackcdn.com^$script,domain=comingsoon.net|cnet.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com|wikia.com|memory-alpha.org
 ||burberry.com^*/webtrendsMC.js
 ||callawaygolf.com/Scripts/s_remote_code_
 ||carpartswholesale.com/includes/cpw_s_code*.js

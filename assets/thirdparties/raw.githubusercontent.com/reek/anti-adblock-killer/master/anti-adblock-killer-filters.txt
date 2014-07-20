@@ -388,7 +388,7 @@ eveskunk.com#@#.adsbygoogle
 ! anisubsia.com
 anisubsia.com#@#.adsantilok
 ! play44.net / videobug.net
-play44.net,videobug.net,videofun.me,byzoo.org##.jhasvdjhas
+video44.net,play44.net,videobug.net,videofun.me,byzoo.org###flowplayer_api + .jhasvdjhas
 ! prod.static.cardinals.clubs.nfl.com
 azcardinals.com###adblock-notice
 @@/js/detect-blocked-ads.js$script,domain=prod.static.cardinals.clubs.nfl.com
@@ -420,6 +420,14 @@ tvcatchup.com#@#.afs_ads
 !@@||adverts.cdn.tvcatchup.com/ads/*$domain=tvcatchup.com,object-subrequest
 ! jeuxactu.com (just hide message)
 jeuxactu.com###infoBlock
+! gamergen.com
+! ||static.gamergen.com/js/app.packed.js?* (contains fuction antiadblock)
+@@||static.gamergen.com/img/pubs/ads.html
+@@||static.gamergen.com/img/pubs/ads.gif
+! aloneteam.net (fake download)
+@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=aloneteam.net
+@@||dammu.tk^$domain=aloneteam.net
+@@||bdv.bidvertiser.com/BidVertiser.dbm?*$domain=vanhut.tk
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -612,7 +620,7 @@ planet-series.tv##IMG[src="http://www.planet-series.tv/images/250-1.png"]
 planet-series.tv##IMG[src="http://www.planet-series.tv/images/728-2.png"]
 ! Streaming --------------------------------------------------------------------------------------
 ! floatLayer
-tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,futhd1.blogspot.com,tugastream.com##*[id^="floatLayer"]
+tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com##*[id^="floatLayer"]
 ! str3amtv
 /^http://str3amtvads[\d].blogspot.com/$subdocument 
 ! livesoccerhq
@@ -622,6 +630,14 @@ tvportugalhd.org,tvportugalhd.eu##.xbidv468
 tvportugalhd.org,tvportugalhd.eu##.bidv468
 ! purevid.com
 purevid.com###ad
+! tv.tugastvs.com
+tv.tugastvs.com###adtugas1
+tv.tugastvs.com###adtugas2
+tv.tugastvs.com###adtugas3
+! megafilmeshd.net
+megafilmeshd.net###ad1
+megafilmeshd.net###ad2
+megafilmeshd.net##[href^="http://click.afiliados.uol.com.br/Clique"]
 ! youwatch.org
 !@@||youwatch.org^$elemhide
 ||youwatch.org^$popup
@@ -740,6 +756,19 @@ hdcast.org##[id^="html"]
 dinozap.com###total
 dinozap.com###total_banner
 dinozap.com##[target="_blank"][href="http://drakulastream.eu"]
+! u-stream.me##.videoSF
+u-stream.me##.videoSF
+u-stream.me##.video
+! u-peak.me##.videoSF
+u-peak.me##.videoSF
+u-peak.me##.video
+! dcast.tv
+dcast.tv###hideall
+! jjcast.com
+jjcast.com###timer1
+jjcast.com###timer2
+jjcast.com###timer3
+jjcast.com##IMG[src="close_button.png"]
 ! Others ---------------------------------------------------------------------------------------
 ! tvi
 tvi24.iol.pt##iframe[id=barraIOL]
