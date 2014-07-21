@@ -1,4 +1,4 @@
-Um bloqueador eficiente: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. mais do que outros bloqueadores populares lá fora.
+Um bloqueador eficiente: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. Mais do que outros bloqueadores populares lá fora.
 
 Visão geral de sua eficiência: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
 
@@ -6,9 +6,19 @@ Uso: O botão grande no popup é para ativar/desativar permanentemente µBlock p
 
 ***
 
+IMPORTANTE!
+
+Se você instalar μBlock junto a outro bloqueador, o μBlock provavelmente vai mostrar menos solicitações bloqueadas do que o outro bloqueador. É por causa que quando usado junto com outro bloqueador, o μBlock irá bloquear e mostrar-lhe o que o outro bloqueador não bloqueou, não o que já foi bloqueado pelo outro bloqueador.
+
+Se o μBlock for usado como único bloqueador, ele irá bloquear tudo o que o outro bloqueador teria bloqueado, e muito mais.
+
+Mais informações: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
+
+***
+
 Flexível, é mais do que um "ad blocker": também pode ler e criar filtros de arquivos de hosts.
 
-Fora da caixa, essas listas de filtros são carregadas e aplicadas:
+Fora da caixa, essas são as listas de filtros que são carregadas e aplicadas:
 
 - EasyList
 - EasyPrivacy
@@ -28,7 +38,7 @@ Mais listas estão disponíveis para você escolher, se desejar:
 
 Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, µBlock ainda tem uma pegada de memória menor do que outros bloqueadores muito populares lá fora.
 
-Também, estar ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do site..--especialmente aquelas listas que são normalmente usadas como arquivo hosts.
+Também, estar ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do site, especialmente aquelas listas que são normalmente usadas como arquivo hosts.
 
 ***
 

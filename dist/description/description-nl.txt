@@ -6,6 +6,16 @@ Gebruik: De grote aan/uit-knop in de popup is om permanent µBlock in/uit te sch
 
 ***
 
+BELANGRIJK!
+
+Indien je µBlock samen met een andere blokkeerder installeert laat µBlock waarschijnlijk minder geblokkeerde verzoeken zien dan de andere blokkeerder. Dit is omdat µBlock enkel blokkeert wat de andere blokeerder NIET heeft geblokkeerd, niet wat al geblokkeerd was.
+
+Indien µBlock als enige blokkeerder wordt gebruikt zal het alles blokkeren wat een andere blokkeerder zou doen en meer.
+
+Meer hierover: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
+
+***
+
 Flexibel, het is meer dan een "advertentieblokkeerder": het kan ook filters lezen en creëren van hostsbestanden.
 
 Standaard worden de volgende filterlijsten geladen en toegepast:

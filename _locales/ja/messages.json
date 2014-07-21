@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"ホワイトリスト",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -48,7 +48,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"又は",
     "description":"English: or"
   },
   "pickerCreate":{
@@ -148,7 +148,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"このエクステンションホスト名のリストは無効になります。１ 行につき １ つのエントリ。無効なホスト名はサイレント モードで無視されます。",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -164,19 +164,19 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"ブロックされたリクエストをログする",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"このオプションを有効にしたい場合非ブロック要求の詳細を調べることができます。非ブロック要求のログはこのエクステンションのメモリ フット プリントが増加します。以来、多くのユーザーは決してこの機能を使用するのは示唆されていません。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"非ブロック要求のログを有効にします。",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"このオプションを有効にしたい場合非ブロック要求の詳細を調べることができます。非ブロック要求のログはこのエクステンションのメモリ フット プリントが増加します。以来、多くのユーザーは決してこの機能を使用するのは示唆されていません。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -208,7 +208,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"このページでブロックされたリクエストは在りません",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
