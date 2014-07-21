@@ -1373,9 +1373,6 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
     // adbProfiler.countUrl();
-    if ( this.frozen !== true ) {
-        return false;
-    }
 
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:

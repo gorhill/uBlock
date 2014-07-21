@@ -613,9 +613,6 @@ FilterContainer.prototype.addFilterEntry = function(filterDict, hash, f) {
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, request) {
-    if ( this.frozen !== true ) {
-        return;
-    }
     if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
         return;
     }
@@ -674,9 +671,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, request) {
-    if ( this.frozen !== true ) {
-        return;
-    }
     if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
         return;
     }
