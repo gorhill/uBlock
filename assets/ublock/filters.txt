@@ -30,12 +30,11 @@ www.zerohedge.com##.similar-box
 # which makes them candidates to be injected early in the page.
 google.*###cnt #center_col > #res > #topstuff > .ts
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
-google.*###tads.c
-google.*###tads + div + .c
-google.*###topstuff > #tads
+google.*###tads
 google.*###bottomads
-google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
-google.*###rhs_block > #mbEnd
+google.*###rhs_block
+# google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
+# google.*###rhs_block > #mbEnd
 google.*##.mw > #rcnt > #center_col > #taw > .c
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 
