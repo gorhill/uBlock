@@ -52,5 +52,3 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 
 # https://github.com/gorhill/uBlock/issues/85
 ||playhd.eu^$popup
-
-# dummy entry just for the purpose of testing issue #89
