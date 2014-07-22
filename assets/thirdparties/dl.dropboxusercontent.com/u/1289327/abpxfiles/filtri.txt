@@ -1,14 +1,15 @@
 [Adblock Plus 2.0]
-! Version: 201407101529
+! Version: 201407211117
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 10-07-2014
+! Last modified: 21-07-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
 ! Blog: http://gioxx.org/tag/x-files
 !
 ! [Gruppo di filtri per permettere elementi]/whitelist
+@@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv
 @@||mozillaitalia.net^$document
 @@||mozillaitalia.it^$document
 @@||mozillaitalia.org^$document
@@ -19,6 +20,7 @@
 @@||gioxx.org^$document
 @@||noads.it^$document
 ! [Gruppo di filtri per bloccare elementi]/blocking
+||neodatagroup.com^$third-party
 firedrive.com##DIV[id="fdpc_cont"]
 http://thepiratetrader.com$popup
 http://*.piratestreaming.net/*/*bar.js
@@ -374,7 +376,7 @@ http://ad*.adfarm*.adition.com
 http://ad*.banners.phoneaccess.com
 http://ad*.emediate.dk/
 http://ad*.liverail.com/
-http://ad*.neodatagroup.com$domain=~rai.tv
+http://ad*.neodatagroup.com$domain=~rai.tv|~rai.it
 http://ad-catgeo.paginegialle.it
 http://ad-catgeo.virgilio.it
 http://ad.100.tbn.ru
@@ -1457,7 +1459,7 @@ http://*.clickpoint.com/*/load_page.c
 http://banners.italianfriendfinder.com/
 http://*.gigacenter.it/*/banner/
 http://*.griddix.com/*/banners/
-http://*.neodatagroup.com/ad/$domain=~rai.tv
+http://*.neodatagroup.com/ad/$domain=~rai.tv|~rai.it
 http://*.griddix.com/banner/
 http://ad.reklamstore.com/
 http://aff.indirdik.com/view?
@@ -1702,6 +1704,7 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://*.amazon.it/*/iframeproxy*.html
 |http://betaffs.com/images/
 ||ducati.it^$popup,domain=gpone.com
+||ad.vuiads.net^
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3093,6 +3096,16 @@ extratorrent.cc##[id^="MarketGidComposite"]
 quickshop.shoppydoo.it###tp_728x90
 tecnoandroid.it##.background-cover[href]
 tecnoandroid.it##.adsbygoogle
+raisport.rai.it##.barraSipra
+infojobs.it##.promo.no-print.clearfix
+j.gs###rf
+kickass.to##.advertDownload
+howtogeek.com###side78
+howtogeek.com##.adSystem_ads
+ilfattoquotidiano.it##.adv-intext
+ilfattoquotidiano.it##[id^="div-gpt-ad-"]
+nowvideo.at##.ad2
+nowvideo.at##.ad
 ! [Gruppo di filtri suggeriti dagli utenti]
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB

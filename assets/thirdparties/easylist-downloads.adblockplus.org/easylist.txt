@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: nloa71MNouzO7bmD7NKzIg
-! Version: 201407202140
+! Checksum: gJx/CnhNAKco1IkAiXA8pg
+! Version: 201407221440
 ! Title: EasyList
-! Last modified: 20 Jul 2014 21:40 UTC
+! Last modified: 22 Jul 2014 14:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2483,7 +2483,7 @@
 /advertisewithus_
 /advertising-$domain=~outbrain.com
 /advertising.
-/advertising/*
+/advertising/*$domain=~temple.edu
 /advertising02.
 /advertising2.
 /advertising300x250.
@@ -2852,6 +2852,7 @@
 /banners/googlebanner
 /banners/promo/*
 /banners_rotation.
+/bannersAds_
 /bannerscript/*
 /bannerserve/*
 /bannerserver/*
@@ -7420,6 +7421,7 @@ _popunder+$popup
 ###ad728Wrapper
 ###ad728X90
 ###ad728foot
+###ad728h
 ###ad728top
 ###ad728x90
 ###ad728x90_1
@@ -8297,6 +8299,8 @@ _popunder+$popup
 ###adcatfish
 ###adcell
 ###adcenter
+###adcenter2
+###adcenter4
 ###adchoices-icon
 ###adchoices_container
 ###adclear
@@ -17241,6 +17245,7 @@ _popunder+$popup
 ##.geeky_ad
 ##.gels-inlinead
 ##.gen_side_ad
+##.generic-ad-module
 ##.generic-ad-title
 ##.generic_300x250_ad
 ##.geoAd
@@ -17652,6 +17657,8 @@ _popunder+$popup
 ##.icon_ad_choices
 ##.idGoogleAdsense
 ##.idMultiAd
+##.idc-adContainer
+##.idc-adWrapper
 ##.idgGoogleAdTag
 ##.iframe-ad
 ##.iframe-ads
@@ -19586,6 +19593,9 @@ _popunder+$popup
 ##.title_adbig
 ##.tj_ad_box
 ##.tj_ad_box_top
+##.tm_ad200_widget
+##.tm_topads_468
+##.tm_widget_ad200px
 ##.tmg-ad
 ##.tmg-ad-300x250
 ##.tmg-ad-mpu
@@ -20837,7 +20847,7 @@ topzone.lt#@#.forumAd
 ||2d4c3872.info^$third-party
 ||2dpt.com^$third-party
 ||2mdn.net/dot.gif$object-subrequest,third-party
-||2mdn.net^$object-subrequest,third-party,domain=101cargames.com|1025thebull.com|1031iheartaustin.com|1037theq.com|1041beat.com|1057ezrock.com|1067litefm.com|10news.com|247comedy.com|3news.co.nz|49ers.com|610cktb.com|700wlw.com|850koa.com|940winz.com|94hjy.com|970espn.com|99kisscountry.com|abc15.com|abc2news.com|abcactionnews.com|am1300thezone.com|am570radio.com|am760.net|atlantafalcons.com|automobilemag.com|automotive.com|azcardinals.com|baltimoreravens.com|baynews9.com|bbc.co.uk|bbc.com|belfasttelegraph.co.uk|bengals.com|bet.com|big1059.com|bigdog1009.ca|bloomberg.com|bnn.ca|boom973.com|boom997.com|box10.com|brisbanetimes.com.au|buccaneers.com|buffalobills.com|bullz-eye.com|businessweek.com|calgaryherald.com|caller.com|canada.com|capitalfm.ca|cbsnews.com|cbssports.com|channel955.com|chargers.com|chicagobears.com|chicagotribune.com|cj104.com|cjad.com|cjbk.com|clevelandbrowns.com|cnettv.cnet.com|coast933.com|colts.com|commercialappeal.com|courierpress.com|cp24.com|cricketcountry.com|csmonitor.com|ctvnews.ca|dallascowboys.com|denverbroncos.com|detroitlions.com|drive.com.au|earthcam.com|edmontonjournal.com|egirlgames.net|elvisduran.com|enjoydressup.com|entrepreneur.com|eonline.com|escapegames.com|euronews.com|evolution935.com|fansportslive.com|fm98wjlb.com|foodnetwork.ca|four.co.nz|foxsportsradio.com|fresh100.com|gamingbolt.com|ghananation.com|giantbomb.com|giants.com|globalpost.com|globaltoronto.com|globaltv.com|globaltvbc.com|globaltvcalgary.com|go.com|gorillanation.com|gosanangelo.com|hallelujah1051.com|heraldsun.com.au|hgtv.ca|houstontexans.com|iheart.com|independent.ie|independentmail.com|jaguars.com|kase101.com|kcchiefs.com|kdvr.com|kfiam640.com|kgbx.com|khow.com|kiisfm.com|kitsapsun.com|kitv.com|kjrh.com|kmov.com|knoxnews.com|kogo.com|komonews.com|kshb.com|kwgn.com|kwnr.com|kxan.com|latinchat.com|leaderpost.com|livestream.com|local8now.com|magic96.com|metacafe.com|miamidolphins.com|mix923fm.com|mojointhemorning.com|moneycontrol.com|montrealgazette.com|motorcyclistonline.com|mtv.ca|mydamnchannel.com|myezrock.com|mymagic97.com|naplesnews.com|nationalpost.com|nba.com|nba.tv|ndtv.com|neworleanssaints.com|newsinc.com|newsmax.com|newsmaxhealth.com|newsnet5.com|newstalk1010.com|newstalk1130.com|newyorkjets.com|nydailynews.com|nymag.com|oktvusa.com|ottawacitizen.com|packers.com|panthers.com|patriots.com|pcworld.com|philadelphiaeagles.com|player.screenwavemedia.com|prowrestling.com|raaga.com|raiders.com|rapbasement.com|redding.com|redskins.com|reporternews.com|reuters.com|rollingstone.com|rootsports.com|rottentomatoes.com|seahawks.com|sherdog.com|skynews.com.au|slice.ca|smh.com.au|sploder.com|steelers.com|stlouisrams.com|streetfire.net|stuff.co.nz|tcpalm.com|telegraph.co.uk|theage.com.au|theaustralian.com.au|thedenverchannel.com|thedrocks.com|theindychannel.com|theprovince.com|thestarphoenix.com|theteam1260.com|tide.com|timescolonist.com|timeslive.co.za|timesrecordnews.com|titansonline.com|totaljerkface.com|tripadvisor.ca|tripadvisor.co.id|tripadvisor.co.uk|tripadvisor.com|tripadvisor.com.au|tripadvisor.com.my|tripadvisor.com.sg|tripadvisor.ie|tripadvisor.in|turnto23.com|tvone.tv|tvoneonline.com|usmagazine.com|vancouversun.com|vcstar.com|veetle.com|vice.com|videojug.com|vikings.com|virginradio.ca|washingtonpost.com|washingtontimes.com|wcpo.com|wdfn.com|weather.com|wescfm.com|wgci.com|wibw.com|wikihow.com|windsorstar.com|wiod.com|wjdx.com|wkyt.com|wmyi.com|wor710.com|wptv.com|wsj.com|wxyz.com|yahoo.com|youtube.com|z100.com
+||2mdn.net^$object-subrequest,third-party,domain=101cargames.com|1025thebull.com|1031iheartaustin.com|1037theq.com|1041beat.com|1057ezrock.com|1067litefm.com|10news.com|247comedy.com|3news.co.nz|49ers.com|610cktb.com|700wlw.com|850koa.com|940winz.com|94hjy.com|970espn.com|99kisscountry.com|abc15.com|abc2news.com|abcactionnews.com|am1300thezone.com|am570radio.com|am760.net|ap.org|atlantafalcons.com|automobilemag.com|automotive.com|azcardinals.com|baltimoreravens.com|baynews9.com|bbc.co.uk|bbc.com|belfasttelegraph.co.uk|bengals.com|bet.com|big1059.com|bigdog1009.ca|bloomberg.com|bnn.ca|boom973.com|boom997.com|box10.com|brisbanetimes.com.au|buccaneers.com|buffalobills.com|bullz-eye.com|businessweek.com|calgaryherald.com|caller.com|canada.com|capitalfm.ca|cbsnews.com|cbssports.com|channel955.com|chargers.com|chicagobears.com|chicagotribune.com|cj104.com|cjad.com|cjbk.com|clevelandbrowns.com|cnettv.cnet.com|coast933.com|colts.com|commercialappeal.com|courierpress.com|cp24.com|cricketcountry.com|csmonitor.com|ctvnews.ca|dallascowboys.com|denverbroncos.com|detroitlions.com|drive.com.au|earthcam.com|edmontonjournal.com|egirlgames.net|elvisduran.com|enjoydressup.com|entrepreneur.com|eonline.com|escapegames.com|euronews.com|evolution935.com|fansportslive.com|fm98wjlb.com|foodnetwork.ca|four.co.nz|foxsportsradio.com|fresh100.com|gamingbolt.com|ghananation.com|giantbomb.com|giants.com|globalpost.com|globaltoronto.com|globaltv.com|globaltvbc.com|globaltvcalgary.com|go.com|gorillanation.com|gosanangelo.com|hallelujah1051.com|heraldsun.com.au|hgtv.ca|houstontexans.com|iheart.com|independent.ie|independentmail.com|jaguars.com|kase101.com|kcchiefs.com|kdvr.com|kfiam640.com|kgbx.com|khow.com|kiisfm.com|kitsapsun.com|kitv.com|kjrh.com|kmov.com|knoxnews.com|kogo.com|komonews.com|kshb.com|kwgn.com|kwnr.com|kxan.com|latinchat.com|leaderpost.com|livestream.com|local8now.com|magic96.com|metacafe.com|miamidolphins.com|mix923fm.com|mojointhemorning.com|moneycontrol.com|montrealgazette.com|motorcyclistonline.com|mtv.ca|mydamnchannel.com|myezrock.com|mymagic97.com|naplesnews.com|nationalpost.com|nba.com|nba.tv|ndtv.com|neworleanssaints.com|newsinc.com|newsmax.com|newsmaxhealth.com|newsnet5.com|newstalk1010.com|newstalk1130.com|newyorkjets.com|nydailynews.com|nymag.com|oktvusa.com|ottawacitizen.com|packers.com|panthers.com|patriots.com|pcworld.com|philadelphiaeagles.com|player.screenwavemedia.com|prowrestling.com|raaga.com|raiders.com|rapbasement.com|redding.com|redskins.com|reporternews.com|reuters.com|rollingstone.com|rootsports.com|rottentomatoes.com|seahawks.com|sherdog.com|skynews.com.au|slice.ca|smh.com.au|sploder.com|steelers.com|stlouisrams.com|streetfire.net|stuff.co.nz|tcpalm.com|telegraph.co.uk|theage.com.au|theaustralian.com.au|thedenverchannel.com|thedrocks.com|theindychannel.com|theprovince.com|thestarphoenix.com|theteam1260.com|tide.com|timescolonist.com|timeslive.co.za|timesrecordnews.com|titansonline.com|totaljerkface.com|tripadvisor.ca|tripadvisor.co.id|tripadvisor.co.uk|tripadvisor.com|tripadvisor.com.au|tripadvisor.com.my|tripadvisor.com.sg|tripadvisor.ie|tripadvisor.in|turnto23.com|tvone.tv|tvoneonline.com|usmagazine.com|vancouversun.com|vcstar.com|veetle.com|vice.com|videojug.com|vikings.com|virginradio.ca|washingtonpost.com|washingtontimes.com|wcpo.com|wdfn.com|weather.com|wescfm.com|wgci.com|wibw.com|wikihow.com|windsorstar.com|wiod.com|wjdx.com|wkyt.com|wmyi.com|wor710.com|wptv.com|wsj.com|wxyz.com|yahoo.com|youtube.com|z100.com
 ||2mdn.net^$~object-subrequest,third-party
 ||32b4oilo.com^$third-party
 ||3393.com^$third-party
@@ -23186,6 +23196,7 @@ topzone.lt#@#.forumAd
 ||tokenads.com^$third-party
 ||tomekas.com^$third-party
 ||tonefuse.com^$third-party
+||tool-site.com^$third-party
 ||top26.net^$third-party
 ||topauto10.com^$third-party
 ||topcasino10.com^$third-party
@@ -25881,6 +25892,7 @@ topzone.lt#@#.forumAd
 ||adrotator.se^$popup
 ||adserving.unibet.com^$popup,third-party
 ||affportal-lb.bevomedia.com^$popup,third-party
+||amazing-offers.co.il^$popup,third-party
 ||babylon.com/redirects/$popup,third-party
 ||babylon.com/welcome/index.html?affID=$popup,third-party
 ||bet365.com/home/?affiliate=$popup
@@ -28759,7 +28771,7 @@ topzone.lt#@#.forumAd
 ||pagesinventory.com/_data/img/*_125x400_
 ||paisalive.com/include/popup.js
 ||pakistantoday.com.pk^*/karachi_houston_PakistanToday.jpg
-||paktribune.com^*/banner/
+||paktribune.com^*/banner
 ||pan2.ephotozine.com^$image
 ||pandora.com^*/mediaserverPublicRedirect.jsp
 ||parade.com/images/skins/
@@ -33128,7 +33140,7 @@ totallycrap.com###oursponsors
 cbsnews.com,chron.com,independent.co.uk,jpost.com,mysanantonio.com,nydailynews.com,seattlepi.com,sfgate.com,standard.co.uk###outbrain_widget_0
 jpost.com,nydailynews.com###outbrain_widget_1
 cbslocal.com,chron.com,jpost.com,mysanantonio.com,seattlepi.com,sfgate.com,standard.co.uk###outbrain_widget_2
-bbc.com,jpost.com,si.com###outbrain_widget_3
+bbc.com,cnbc.com,jpost.com,si.com###outbrain_widget_3
 independent.co.uk,si.com###outbrain_widget_5
 hiphopwired.com###outbrain_wrapper
 engadget.com###outerslice
@@ -33718,7 +33730,7 @@ n4g.com###skinlink
 metalinjection.net###skinoverlay
 kovideo.net###skip
 dafont.com,dealchecker.co.uk,play.tm,torrent-finder.info,yellowpages.com.my###sky
-skysports.com###sky-bet-accordian
+aol.co.uk,skysports.com###sky-bet-accordian
 homeportfolio.com###sky-bottom
 moneysupermarket.com###sky-container
 capitalfm.com,heart.co.uk###sky1
@@ -35622,6 +35634,7 @@ ddlvalley.net##.ext-link
 torrents.net##.external
 torrentreactor.net##.external-links
 torrentreactor.net##.external-search-results
+thefinancialexpress-bd.com##.extraLink
 tucows.com##.f11
 india.com##.fBannerAside
 computerworld.co.nz##.fairfax_nav
@@ -36125,7 +36138,7 @@ bleedingcool.com##.leaderboard-below-header
 stltoday.com##.leaderboard-bottom
 investorwords.com##.leaderboard-box
 app.com,argusleader.com,battlecreekenquirer.com,baxterbulletin.com,bucyrustelegraphforum.com,burlingtonfreepress.com,centralohio.com,chillicothegazette.com,cincinnati.com,citizen-times.com,clarionledger.com,coloradoan.com,coshoctontribune.com,courier-journal.com,courierpostonline.com,dailyrecord.com,dailyworld.com,defensenews.com,delawareonline.com,delmarvanow.com,democratandchronicle.com,desmoinesregister.com,detroitnews.com,dnj.com,fdlreporter.com,federaltimes.com,freep.com,greatfallstribune.com,greenbaypressgazette.com,greenvilleonline.com,guampdn.com,hattiesburgamerican.com,hometownlife.com,honoluluadvertiser.com,htrnews.com,indystar.com,jacksonsun.com,jconline.com,lancastereaglegazette.com,lansingstatejournal.com,livingstondaily.com,lohud.com,mansfieldnewsjournal.com,marionstar.com,marshfieldnewsherald.com,montgomeryadvertiser.com,mousebreaker.com,mycentraljersey.com,mydesert.com,newarkadvocate.com,news-leader.com,news-press.com,newsleader.com,pal-item.com,pnj.com,portclintonnewsherald.com,postcrescent.com,poughkeepsiejournal.com,press-citizen.com,pressconnects.com,rgj.com,sctimes.com,sheboyganpress.com,shreveporttimes.com,stargazette.com,statesmanjournal.com,stevenspointjournal.com,tallahassee.com,tennessean.com,theadvertiser.com,thecalifornian.com,thedailyjournal.com,theithacajournal.com,theleafchronicle.com,thenews-messenger.com,thenewsstar.com,thenorthwestern.com,thespectrum.com,thestarpress.com,thetimesherald.com,thetowntalk.com,visaliatimesdelta.com,wausaudailyherald.com,wisconsinrapidstribune.com,zanesvilletimesrecorder.com##.leaderboard-container
-app.com,argusleader.com,battlecreekenquirer.com,baxterbulletin.com,bucyrustelegraphforum.com,burlingtonfreepress.com,centralohio.com,chillicothegazette.com,cincinnati.com,citizen-times.com,clarionledger.com,coloradoan.com,coshoctontribune.com,courier-journal.com,courierpostonline.com,dailyrecord.com,dailyworld.com,defensenews.com,delawareonline.com,delmarvanow.com,democratandchronicle.com,desmoinesregister.com,detroitnews.com,dnj.com,fdlreporter.com,federaltimes.com,floridatoday.com,freep.com,greatfallstribune.com,greenbaypressgazette.com,greenvilleonline.com,guampdn.com,hattiesburgamerican.com,hometownlife.com,honoluluadvertiser.com,htrnews.com,indystar.com,jacksonsun.com,jconline.com,lancastereaglegazette.com,lansingstatejournal.com,livingstondaily.com,lohud.com,mansfieldnewsjournal.com,marionstar.com,marshfieldnewsherald.com,montgomeryadvertiser.com,mycentraljersey.com,mydesert.com,newarkadvocate.com,news-leader.com,news-press.com,newsleader.com,pal-item.com,pnj.com,portclintonnewsherald.com,postcrescent.com,poughkeepsiejournal.com,press-citizen.com,pressconnects.com,rgj.com,sctimes.com,sheboyganpress.com,shreveporttimes.com,stargazette.com,statesmanjournal.com,stevenspointjournal.com,tallahassee.com,tennessean.com,theadvertiser.com,thecalifornian.com,thedailyjournal.com,theithacajournal.com,theleafchronicle.com,thenews-messenger.com,thenewsstar.com,thenorthwestern.com,thespectrum.com,thestarpress.com,thetimesherald.com,thetowntalk.com,visaliatimesdelta.com,wausaudailyherald.com,wisconsinrapidstribune.com,zanesvilletimesrecorder.com##.leaderboard-container-top
+ap.org,app.com,argusleader.com,battlecreekenquirer.com,baxterbulletin.com,bucyrustelegraphforum.com,burlingtonfreepress.com,centralohio.com,chillicothegazette.com,cincinnati.com,citizen-times.com,clarionledger.com,coloradoan.com,coshoctontribune.com,courier-journal.com,courierpostonline.com,dailyrecord.com,dailyworld.com,defensenews.com,delawareonline.com,delmarvanow.com,democratandchronicle.com,desmoinesregister.com,detroitnews.com,dnj.com,fdlreporter.com,federaltimes.com,floridatoday.com,freep.com,greatfallstribune.com,greenbaypressgazette.com,greenvilleonline.com,guampdn.com,hattiesburgamerican.com,hometownlife.com,honoluluadvertiser.com,htrnews.com,indystar.com,jacksonsun.com,jconline.com,lancastereaglegazette.com,lansingstatejournal.com,livingstondaily.com,lohud.com,mansfieldnewsjournal.com,marionstar.com,marshfieldnewsherald.com,montgomeryadvertiser.com,mycentraljersey.com,mydesert.com,newarkadvocate.com,news-leader.com,news-press.com,newsleader.com,pal-item.com,pnj.com,portclintonnewsherald.com,postcrescent.com,poughkeepsiejournal.com,press-citizen.com,pressconnects.com,rgj.com,sctimes.com,sheboyganpress.com,shreveporttimes.com,stargazette.com,statesmanjournal.com,stevenspointjournal.com,tallahassee.com,tennessean.com,theadvertiser.com,thecalifornian.com,thedailyjournal.com,theithacajournal.com,theleafchronicle.com,thenews-messenger.com,thenewsstar.com,thenorthwestern.com,thespectrum.com,thestarpress.com,thetimesherald.com,thetowntalk.com,visaliatimesdelta.com,wausaudailyherald.com,wisconsinrapidstribune.com,zanesvilletimesrecorder.com##.leaderboard-container-top
 cntraveller.com##.leaderboard-new
 businessdictionary.com##.leaderboard-placement
 slideshare.net##.leaderboard-profile
@@ -39817,6 +39830,7 @@ utahstories.com##img[width="120"][height="120"]
 scnsrc.net,traxarmstrong.com##img[width="120"][height="600"]
 americanisraelite.com,dailyblogtips.com,macintouch.com,utahstories.com,your-pagerank.com##img[width="125"][height="125"]
 reflector.com##img[width="130px"][height="52px"]
+thefinancialexpress-bd.com##img[width="145"]
 aerobaticsweb.org##img[width="150"][height="150"]
 zonalmarking.net##img[width="150"][height="750"]
 klfm967.co.uk##img[width="155"][height="167"]
@@ -41308,15 +41322,15 @@ literotica.com##tr[style="background: #fff; text-align: center; font-size: 80%; 
 @@||ad4.liverail.com/?compressed|$domain=pbs.org|wikihow.com
 @@||ad4.liverail.com/?LR_ORDER_ID=$object-subrequest,domain=volarvideo.com
 @@||ad4.liverail.com/crossdomain.xml$object-subrequest
-@@||ad4.liverail.com/|$object-subrequest,domain=foxsports.com.au|pbs.org|wikihow.com
+@@||ad4.liverail.com/|$object-subrequest,domain=bizu.tv|foxsports.com.au|pbs.org|wikihow.com
+@@||ad4.liverail.com^*LR_VIDEO_ID=$object-subrequest,domain=bizu.tv
 @@||adameve.com/images/adspace/
 @@||adameve.com/images/sitespect/*-ad3.jpg
 @@||adap.tv/control?$object-subrequest
 @@||adap.tv/crossdomain.xml$object-subrequest
 @@||adap.tv/redir/client/adplayer.swf$object-subrequest
 @@||adap.tv/redir/client/static/as3adplayer.swf$object-subrequest,domain=blogtalkradio.com|collegehumor.com|freeonlinegames.com|openfilmpod.com|stickam.com|talkingpointsmemo.com|thesource.com|wildearth.tv|wunderground.com
-@@||adap.tv/redir/client/swfloader.swf?$domain=box10.com
-@@||adap.tv/redir/client/swfloader.swf?id=swfloader$object,domain=freeonlinegames.com|kizi.com|merriam-webster.com
+@@||adap.tv/redir/client/swfloader.swf?$domain=box10.com|freeonlinegames.com|kizi.com|merriam-webster.com
 @@||adap.tv/redir/javascript/adaptvAdPlayer.js$domain=yepi.com
 @@||adap.tv/redir/javascript/vpaid.js
 @@||adap.tv/redir/plugins/*/adotubeplugin.swf?$domain=stickam.com
@@ -41886,6 +41900,8 @@ literotica.com##tr[style="background: #fff; text-align: center; font-size: 80%; 
 @@||epicgameads.com/crossdomain.xml$object-subrequest
 @@||epicgameads.com/games/getSwfPath.php?$object-subrequest,domain=freewebarcade.com
 @@||epicgameads.com/games/mec_release_*.swf?$object-subrequest,domain=freewebarcade.com
+@@||equippers.com/abm.aspx?$script
+@@||equippers.com/absolutebm.aspx?$script
 @@||espn.co.uk/ads/gamemodule_v0.2.swf$object
 @@||espn.go.com^*/espn360/banner?$subdocument
 @@||espncdn.com/combiner/*/admgr.$script,domain=espn.go.com

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 0AGYX35fvaHWzxRa/8sXNQ
-! Version: 201407202140
+! Checksum: 70flm9/1wwMkin+eLOXcSw
+! Version: 201407221441
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 20 Jul 2014 21:40 UTC
+! Last modified: 22 Jul 2014 14:40 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -494,7 +494,7 @@ blesius.de#@#.text_werbung
 christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
-berlin.de#@#a[href^="http://adfarm.mediaplex.com/"]
+berlin.de,watchever.de#@#a[href^="http://adfarm.mediaplex.com/"]
 schnittberichte.com#@#a[href^="http://bs.serving-sys.com/"]
 hbf-info.de,rakuten.at,rakuten.de#@#div[id^="div-gpt-ad-"]
 ! Anti-Adblock
@@ -2326,7 +2326,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamersplus.de/images/branding/
 ||gamersplus.de/uploads/tx_consolmedia/bg_*.jpg
 ||games.ch^*/banner/
-||gamestar.de/images^*/600x.
 ||gamestar.de/img/gamestar/_misc/gcEventBtnPrmBg.png
 ||gamestar.de/img/gamestar/_misc/prm_logoheader_gs_
 ||gamestar.de/img/gamestar/_misc/promotion/*/amazon_button*.png
@@ -7439,14 +7438,10 @@ pcwelt.de##div[id^="google_ads_"]
 @@||5.135.58.25^$script,domain=uploaded-premium.ru
 @@||ad-emea.doubleclick.net/crossdomain.xml$object-subrequest,domain=clipfish.de|homerj.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|spiegel.tv|sueddeutsche.de|superrtlnow.de|voxnow.de
 @@||ad-emea.doubleclick.net/pfadx/spiegel.tv.smartclip/;sz=*;dcmt=*;ord=$object-subrequest,domain=spiegel.tv
-@@||ad.360yield.com^*?p=*&w=160&h=600&tz=$script,domain=gamestar.de
-@@||ad.360yield.com^*?p=*&w=300&h=250&tz=$script,domain=gamestar.de
-@@||ad.360yield.com^*?p=*&w=728&h=90&tz=$script,domain=gamestar.de
 @@||ad.71i.de/global_js/*/adplayer.min.js$domain=gamestar.de
 @@||ad.71i.de/global_js/AdScripts/standard.js$domain=gamestar.de
 @@||ad.71i.de/global_js/globalV6.js$domain=kabeleins.de|sat1.de|sixx.de
 @@||ad.71i.de/global_js/Sites/$domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
-@@||ad.71i.de/global_js/Sites/gamestarde.js$domain=gamestar.de
 @@||ad.adnet.de/adj.php?$script,domain=schoener-fernsehen.com
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=homerj.de
 @@||ad4.liverail.com/?LR_PUBLISHER_ID=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
@@ -7473,7 +7468,6 @@ pcwelt.de##div[id^="google_ads_"]
 @@||adserv.quality-channel.de/RealMedia/ads/adstream_sx.ads/www.spiegel.tv/*@VMiddle$object-subrequest,domain=spiegel.tv
 @@||adserv3.deutschland-spion.de/www/delivery/spc.php?$script,domain=mv-spion.de
 @@||adserv3.deutschland-spion.de/www/delivery/spcjs.php?$script,domain=mv-spion.de
-@@||adserver.71i.de/cgi-bin/functions/rogator-kkl2ads.pl?$script,domain=gamestar.de
 @@||adserver.idg.de/gptjs/techmedia/tm_dogpt_async.js$domain=pcwelt.de
 @@||adspaces.ero-advertising.com/adspace/214418.js$domain=berlin-nutten.com
 @@||ae.amgdgt.com/ads?t=$object-subrequest,domain=homerj.de
@@ -7527,9 +7521,6 @@ pcwelt.de##div[id^="google_ads_"]
 @@||doubleclick.net/pfadx/iqd_sueddeutsche;sz=$object-subrequest
 @@||doubleclick.net/pfadx/iqdsde/video;sz=$object-subrequest
 @@||doubleclick.net^*/ad/homerj.de.smartclip/*;sz=*;dcmt=*;ord=$object-subrequest,domain=homerj.de
-@@||doubleclick.net^*/adj/*;sz=160x600;pos=1;$script,domain=gamestar.de
-@@||doubleclick.net^*/adj/*;sz=1x1;pos=1;$script,domain=gamestar.de
-@@||doubleclick.net^*/adj/*;sz=300x250;pos=1;$script,domain=gamestar.de
 @@||doubleclick.net^*/adj/focus_*;sz=160x600;$script,domain=focus.de
 @@||doubleclick.net^*/adj/focus_*;sz=300x251;$script,domain=focus.de
 @@||doubleclick.net^*/nntv.de/*^sz=120x600^$script,domain=n-tv.de
@@ -7608,12 +7599,14 @@ pcwelt.de##div[id^="google_ads_"]
 @@||magnus.de/public/scripts/afc/$script,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 @@||mannfuermann.com/mfm/static/adcode.js
 @@||manughl.de^$script,domain=gamona.de|lustich.de
+@@||media.epochtimes.de/1/img/$image
 @@||media.epochtimes.de/ad_$image
 @@||media.epochtimes.de^*/ad_$image
 @@||media.epochtimes.de^*/adbox/$image
 @@||media.epochtimes.de^*/addelivery/$image
 @@||media.epochtimes.de^*/adengine/$image
 @@||media.epochtimes.de^*/adfactor/$image
+@@||media.epochtimes.de^*/adfeedback/$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de
@@ -7633,7 +7626,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||nuggad.net/bk?*&nuggtg=de_putpattv_music&$object-subrequest,domain=putpat.tv
 @@||nuggad.net/bk?nuggn=$object-subrequest,domain=homerj.de
 @@||nuggad.net/crossdomain.xml$object-subrequest,domain=putpat.tv|tape.tv
-@@||nuggad.net/rc?nuggn=$script,domain=4players.de|gamestar.de
+@@||nuggad.net/rc?nuggn=$script,domain=4players.de
 @@||onlinetvrecorder.com/adcodes/?$subdocument
 @@||onlinetvrecorder.com/buyclicks/*.php?r=$subdocument
 @@||onlinetvrecorder.com/buyclicks/weasel.php$document

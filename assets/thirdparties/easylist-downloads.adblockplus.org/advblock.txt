@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Y21h7iienwdANQG73L90sQ
-! Version: 201407202140
-! Last modified: 20 Jul 2014 21:40 UTC
+! Checksum: cAWFBIQhMz2iXYOeC27o+Q
+! Version: 201407221440
+! Last modified: 22 Jul 2014 14:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -3028,7 +3028,7 @@ game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
-tapochek.net##a[href^="https://joycasino.com/?partner="]
+riper.am,tapochek.net##a[href^="https://joycasino.com/?partner="]
 goodgame.ru##a[id^="banner-"]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
@@ -5475,19 +5475,10 @@ mail.ru##.shMenu2 > span > a[target="_blank"][href^="http://r.mail.ru/"]
 ||mradx.net/img/$object,subdocument
 ||tv.mail.ru/popup_banner/
 ! Одноклассники
-odnoklassniki.ru###bannerLoaderId
-odnoklassniki.ru###hook_Block_ForthColumnTopBanner
-odnoklassniki.ru###hook_Block_LeftColumnAdCustom
-odnoklassniki.ru###hook_Block_StickyBannerContainer
-odnoklassniki.ru###hook_SideBottomBaner_SideBottomBaner
-odnoklassniki.ru###hook_ViewportHeightAwareBanner_ViewportHeightAwareBannerInner
-odnoklassniki.ru##.sideadv
-odnoklassniki.ru##.topadv
-odnoklassniki.ru##div[id$="Adv"]
-||odnoklassniki.ru/res/*/promo/*/
-! Скрытие на сайте самих одноклассников предложения обновить браузер
+odnoklassniki.ru,ok.ru###hook_Block_ForthColumnTopBanner
+odnoklassniki.ru,ok.ru###hook_Block_StickyBannerContainer
 ! Очень однобокая реклама Хрома + очень часто просят удалить
-odnoklassniki.ru##.update-browser_container
+odnoklassniki.ru,ok.ru##.update-browser_container
 ! Блокировка ресурсов за пределами mail.ru
 //rs.mail.ru/b$third-party,domain=~km.ru
 ||banners.mail.ru^$third-party
@@ -5495,8 +5486,8 @@ odnoklassniki.ru##.update-browser_container
 ||torg.mail.ru/prtnr/$third-party
 ! Исключения
 ! Потенциальное решение проблемы с играми в Одноклассниках
-@@||mail.ru/adi/2174?$domain=odnoklassniki.ru
-@@||mail.ru/adi/2247?$domain=odnoklassniki.ru
+@@||mail.ru/adi/2174?$domain=odnoklassniki.ru|ok.ru
+@@||mail.ru/adi/2247?$domain=odnoklassniki.ru|ok.ru
 !
 ! ru.MSN.com
 ru.msn.com###bdp_ad_bgr

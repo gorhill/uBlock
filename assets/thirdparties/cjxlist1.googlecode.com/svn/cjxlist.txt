@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140716
-! Version: 20140716
+! List version 20140722
+! Version: 20140722
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
@@ -42,6 +42,7 @@
 .net/ad_
 .net/ads/
 .net/adv/
+.openx.
 .org/ad/
 .org/ads/
 .php/ad/
@@ -50,6 +51,7 @@
 .php?zoneid=
 .swf?clicktag=
 /aamsz=
+/ad-home-
 /ad-source/*
 /ad-specs.
 /ad.css?
@@ -99,6 +101,7 @@
 /adaffiliate_
 /adbanner.
 /adbanner/*
+/adbanner2.
 /adbg.jpg
 /adblock.js
 /adbox/*
@@ -296,6 +299,7 @@
 /left_ad_
 /leftad.
 /logad?
+/mbads?
 /media/ad/*
 /mobile_ad.
 /mod_ad/*
@@ -344,12 +348,14 @@
 /svnad/*
 /synad2.
 /t.php?uid=*.*&src=
+/text_ad_
 /textad.
 /top_ad.
 /topad.
 /txtad.
 /uploads/ads/*
 /videoad.
+/view/banner/*
 /viewad.
 /widget/ad/*
 /www/ad/*
@@ -403,6 +409,7 @@ _top_ad_
 _topad.
 ||com/banners/$image,object,subdocument
 /adblock_detector.
+-160-600.
 -300-250.
 -468_60.
 -468x60.
@@ -466,6 +473,7 @@ _960_90.
 ###Ads_google_02
 ###Ads_google_03
 ###ContentAd1
+###GoogleAd
 ###LeftAd
 ###PREFOOTER_LEFT_BOXAD
 ###PREFOOTER_RIGHT_BOXAD
@@ -531,8 +539,13 @@ _960_90.
 ###ad_C
 ###ad_D
 ###ad_E
+###ad_F
 ###ad_G
 ###ad_H
+###ad_I
+###ad_J
+###ad_K
+###ad_L
 ###ad_M
 ###ad_N
 ###ad_O
@@ -619,6 +632,7 @@ _960_90.
 ###bottomad
 ###bottomad300
 ###bottomads
+###bottomadsense
 ###commentTopAd
 ###contentad
 ###dc-display-right-ad-1
@@ -654,11 +668,13 @@ _960_90.
 ###left_adv
 ###leftad
 ###logo_ad
+###mainAd
 ###middle_ad
 ###mochila-column-right-ad-300x250-1
 ###msad
 ###narrow-ad
 ###pagelet_side_ads
+###player_ad
 ###pop_ad
 ###post-ad
 ###remove_ads_button1
@@ -677,6 +693,7 @@ _960_90.
 ###rightads
 ###searchAdSenseBox
 ###side-ad
+###sideAd
 ###sideAd1
 ###side_ad
 ###sidebarad
@@ -689,9 +706,11 @@ _960_90.
 ###text-ad
 ###textAd
 ###textad
+###theAd
 ###top-ad
 ###topAD
 ###topAd
+###topAdShow
 ###topImgAd
 ###top_ad
 ###top_ad_container
@@ -702,6 +721,7 @@ _960_90.
 ###topad1
 ###topad2
 ###topad728
+###topadsense
 ###travel_ad
 ###turnAD
 ###wide_ad_unit
@@ -716,6 +736,8 @@ _960_90.
 ##.ad-300
 ##.ad-300x100
 ##.ad-300x250
+##.ad-5
+##.ad-6
 ##.ad-area
 ##.ad-b
 ##.ad-banner
@@ -739,6 +761,7 @@ _960_90.
 ##.ad-right
 ##.ad-row
 ##.ad-side
+##.ad-squares
 ##.ad-text
 ##.ad-tl1
 ##.ad-top
@@ -762,6 +785,7 @@ _960_90.
 ##.ad250x250
 ##.ad300
 ##.ad300250
+##.ad300_250
 ##.ad300x250
 ##.ad315
 ##.ad336
@@ -810,6 +834,7 @@ _960_90.
 ##.ad_468
 ##.ad_728
 ##.ad_72890_box
+##.ad_960
 ##.ad_banner
 ##.ad_bg
 ##.ad_block
@@ -822,6 +847,7 @@ _960_90.
 ##.ad_container
 ##.ad_content
 ##.ad_flash
+##.ad_footer
 ##.ad_global_header
 ##.ad_header
 ##.ad_img
@@ -833,6 +859,7 @@ _960_90.
 ##.ad_news
 ##.ad_pic
 ##.ad_placement
+##.ad_promo
 ##.ad_side
 ##.ad_sidebar
 ##.ad_small
@@ -887,6 +914,8 @@ _960_90.
 ##.ads123
 ##.ads160
 ##.ads3
+##.ads300x250
+##.ads336x280
 ##.ads728
 ##.adsCell
 ##.ads_area
@@ -959,6 +988,7 @@ _960_90.
 ##.content-ad
 ##.content_ad
 ##.contentad
+##.cp_ad
 ##.ct_ad
 ##.downloadad
 ##.featured_ad
@@ -977,6 +1007,8 @@ _960_90.
 ##.googleAd
 ##.google_ad
 ##.google_ads
+##.google_adsense
+##.googlead
 ##.group_ad
 ##.hd-adv
 ##.headAd
@@ -1005,6 +1037,7 @@ _960_90.
 ##.left_ad
 ##.left_ads
 ##.leftad
+##.list-ad
 ##.logo-ad
 ##.logoad
 ##.longAd
@@ -1013,6 +1046,7 @@ _960_90.
 ##.main_ad
 ##.main_ads
 ##.masthead-ad-control
+##.mb-list-ad
 ##.menu-ad
 ##.middle-ad
 ##.miniad
@@ -1141,7 +1175,6 @@ yahoo.com#@#.type_ads_default
 ||asooda.com^$third-party
 ||atdmt.com^$third-party
 ||atwola.com^$third-party
-||awempire.com^$third-party
 ||awltovhc.com^$third-party
 ||bidsystem.com^$third-party
 ||bizographics.com^$third-party
@@ -1196,7 +1229,9 @@ yahoo.com#@#.type_ads_default
 ||pixfuture.net^$third-party
 ||popads.net^$third-party
 ||popcash.net^$third-party
+||popmyads.com^$third-party
 ||prf.hn^$third-party
+||pubmatic.com^$third-party
 ||questionmarket.com^$third-party
 ||rev2pub.com^$third-party
 ||revsci.net^$third-party
@@ -1249,6 +1284,9 @@ yahoo.com#@#.type_ads_default
 ||media.eurolive.com^$third-party
 ||naked.com/promos/$third-party
 ||pop6.com/banners/$third-party
+!----------------------Specific advert blocking filters-----------------------!
+! *** easylist:easylist/easylist_specific_block.txt ***
+.com/jquery/static.js?*Math.floor$script,third-party
 |http:$subdocument,third-party,domain=2ad.in|adf.ly|adfoc.us|adv.li|allmyvideos.net|j.gs|linkbucksmedia.com|q.gs|shr77.com|tigerleech.com|u.bb|vidspot.net
 ||acs86.com/a.htm?
 ||ads-*.hulu.com^
@@ -1271,6 +1309,7 @@ yahoo.com#@#.type_ads_default
 ||rad.msn.com^
 ||wikia.com/__varnish_
 ||yahoo.com/__darla/
+||yahoo.com/neo/darla/
 ||yimg.com/*300x250$image,object
 ||yimg.com/rq/darla/$domain=yahoo.com
 ||linkbucks.com^*?ref=$popup
@@ -1294,7 +1333,6 @@ imdb.com###rhs_cornerstone_wrapper
 imdb.com###top_rhs_wrapper
 youtube.com###watch-channel-brand-div
 au.news.yahoo.com##.acc-moneyhound
-1sale.com,7billionworld.com,abajournal.com,aljazeerasport.asia,altavista.com,arcadeprehacks.com,birdforum.net,coinad.com,cuzoogle.com,cyclingweekly.co.uk,cyprus-mail.com,disconnect.me,domainnamenews.com,eco-business.com,energylivenews.com,facemoods.com,flashx.tv,foxbusiness.com,foxnews.com,freetvall.com,friendster.com,fstoppers.com,ftadviser.com,furaffinity.net,gentoo.org,gmanetwork.com,govtrack.us,gramfeed.com,gyazo.com,hispanicbusiness.com,html5test.com,hurricanevanessa.com,ilovetypography.com,isearch.whitesmoke.com,itar-tass.com,itproportal.com,kingdomrush.net,laptopmag.com,lfpress.com,livetvcafe.net,lovemyanime.net,malaysiakini.com,manga-download.org,maps.google.com,mb.com.ph,mmajunkie.com,movies-online-free.net,mugshots.com,myfitnesspal.com,mypaper.sg,nbcnews.com,nugget.ca,panorama.am,pastie.org,phpbb.com,playboy.com,pocket-lint.com,previously.tv,radiobroadcaster.org,reason.com,ryanseacrest.com,sddt.com,searchfunmoods.com,sourceforge.net,tcm.com,tech2.com,thecambodiaherald.com,thedailyobserver.ca,thejakartapost.com,thelakewoodscoop.com,themalaysianinsider.com,theobserver.ca,thepeterboroughexaminer.com,theyeshivaworld.com,tiberium-alliances.com,tjpnews.com,today.com,tubeserv.com,turner.com,twogag.com,ultimate-guitar.com,wallpaper.com,washingtonpost.com,wftlsports.com,womanandhome.com,wtvz.net,yahoo.com,youthedesigner.com,yuku.com##.ads
 bloomberg.com,borfast.com,howmanyleft.co.uk,instantpulp.com,over-blog.com,plurk.com,scitechdaily.com,sgentrepreneurs.com,techsupportalert.com,wikihoops.com##.adsense
 mail.google.com##.aeF > .nH > .nH[role="main"] > .aKB
 mail.google.com##.aeF > .nH > .nH[role="main"] > .mq:first-child
@@ -1322,6 +1360,7 @@ imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:
 @@||bing.com/images/async?q=$xmlhttprequest
 @@||deviantart.net/fs*/20*_by_$image,domain=deviantart.com
 @@||exoclick.com/ads.php?*login$script,domain=imgtiger.com
+@@||fbexternal-a.akamaihd.net/safe_image.php?$image,domain=facebook.com
 @@||g.doubleclick.net/crossdomain.xml$object-subrequest,domain=~newgrounds.com
 @@||google.*/s?*&q=$xmlhttprequest
 @@||google.com/search?q=$xmlhttprequest
@@ -1343,4 +1382,5 @@ imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:
 @@||video.appledaily.com.hk/admedia/$object-subrequest,domain=nextmedia.com
 @@||www.facebook.com/ajax/ads/$xmlhttprequest,domain=www.facebook.com
 @@||www.google.com/analytics/web/$xmlhttprequest,domain=www.google.com
+@@||ad.thisav.com/player/jw.swf
 !----------------------------------The End------------------------------------!

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 9Fsmo2uVXxEee7qBR6BJAA
-! Version: 201407202141
+! Checksum: ouqmQdlpgh8fdkWR0EEagw
+! Version: 201407221441
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 20 Jul 2014 21:41 UTC
+! Ultima modifica: 22 Jul 2014 14:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -884,6 +884,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||h24notizie.com^*_220x90.
 ||h24notizie.com^*_250x200_
 ||h24notizie.com^*_700x90_
+||hbritalia.it/images/*_300x300.jpg
 ||hdblog.it^*/300_it.swf
 ||hdblog.it^*/coolerm.swf
 ||hdblog.it^*/skin/
@@ -1058,6 +1059,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||lanotiziagiornale.it^*/viviconsulting_
 ||lapiazzagrande.it/pubb/
 ||lapiazzaweb.it/banner/
+||laprovinciadibiella.it/upload/webpublic/
 ||laprovinciadilecco.it^*/banner/
 ||laregione.ch/ban.asp?
 ||laroma24.it/banner/
@@ -2597,11 +2599,13 @@ elaborare.info##img[style="height: 960px;\a             margin-left: 970px;\a   
 rietilife.it##img[style="width: 205px; height: 82px;"]
 frosinoneweb.net##img[style="width: 930px; height: 115px;"]
 melamorsicata.it##img[width="160"][height="300"]
+hbritalia.it##img[width="180"][height="90"]
 automobili.it##img[width="256"][height="170"]
 parmaquotidiano.info##img[width="290"][height="90"]
 radiolombardia.it,siciliainrosa.it##img[width="300"][height="250"]
 mmorpgitalia.it##img[width="500"][height="122"]
 tuttoshoppingmotori.com##img[width="610px;"]
+hbritalia.it##img[width="728"][height="90"]
 corrieredelgiorno.com##ins[style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"]
 algheroeco.com##object[width="960"][height="30"]
 azpoint.net##table[cellspacing="2"][cellpadding="1"][border="0"][align="center"][width="90%"]
@@ -2688,6 +2692,11 @@ termometropolitico.it##[id^="bsa"]
 @@||js49.adagionet.com/uploads/js/sipra.js$domain=rai.it|rai.tv
 @@||labs.ebuzzing.it/blogs/top/getrank?$image
 @@||labs.ebuzzing.it/shared/images/wikiothis/buttons/
+@@||laprovinciadibiella.it/upload/webpublic/facebook.jpg
+@@||laprovinciadibiella.it/upload/webpublic/nuova-provincia-biella-
+@@||laprovinciadibiella.it/upload/webpublic/rss.jpg
+@@||laprovinciadibiella.it/upload/webpublic/twitter.jpg
+@@||laprovinciadibiella.it/upload/webpublic/youtube.jpg
 @@||mail.tiscali.it/cp/extras/it/dashboard/300x250.html?
 @@||mail.virgilio.it/common/tech_includes/mail/$subdocument,domain=webmail.virgilio.it
 @@||mail.virgilio.it/google/$subdocument,domain=webmail.virgilio.it

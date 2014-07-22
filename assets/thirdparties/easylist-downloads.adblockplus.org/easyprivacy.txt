@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: fZ9nX7f9pVpK/KXWtKlW+A
-! Version: 201407202141
+! Checksum: G/MNoRgs8eu41x07UmMCkA
+! Version: 201407221431
 ! Title: EasyPrivacy
-! Last modified: 20 Jul 2014 21:41 UTC
+! Last modified: 22 Jul 2014 14:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2681,9 +2681,11 @@ http://utm.
 ||flashadengine.com^$third-party
 ||flashgamestats.com^$third-party
 ||flcounter.com^$third-party
+||flix360.com^$third-party
 ||flixcar.com^$third-party
 ||flixfacts.co.uk^$third-party
 ||flixfacts.com^$third-party
+||flixsyndication.net^$third-party
 ||fluctuo.com^$third-party
 ||fluencymedia.com^$third-party
 ||flurry.com^$third-party
@@ -4216,6 +4218,7 @@ http://utm.
 ||webgozar.ir^$third-party
 ! Polish
 ||adstat.4u.pl^$third-party
+||clickonometrics.pl^$third-party
 ||gemius.pl^$third-party
 ||gostats.pl^$third-party
 ||legenhit.com^$third-party

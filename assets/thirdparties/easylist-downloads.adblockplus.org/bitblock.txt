@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: qj6NuWV+PkjSpixTkUN23g
-! Version: 201407202140
-! Last modified: 20 Jul 2014 21:40 UTC
+! Checksum: IdGRbpuk2N4MTltCPQw1kw
+! Version: 201407221440
+! Last modified: 22 Jul 2014 14:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -1074,6 +1074,7 @@ _vkontakte.png
 /ScoailMedia_
 /scocial-
 /seomoz_35.
+/share-addtoany.
 /share-and-follow/*$~stylesheet
 /share-bebo.
 /share-btn-
@@ -1204,6 +1205,7 @@ _vkontakte.png
 /side-social/*
 /side-twitter.
 /sidebar-facebook-
+/sidebar-follow.
 /sidebar-pinterest-
 /sidebar-social.
 /sidebar-twitter.
@@ -3675,6 +3677,7 @@ _youtube_small.
 ##.fa-linkedin
 ##.fa-linkedin-square
 ##.fa-pinterest
+##.fa-share-square-o
 ##.fa-twitter
 ##.fa-twitter-square
 ##.fa-youtube
@@ -3699,6 +3702,7 @@ _youtube_small.
 ##.facebook-hover-horizontal
 ##.facebook-icon
 ##.facebook-icon-small
+##.facebook-inner
 ##.facebook-like
 ##.facebook-like-bottom
 ##.facebook-like-box
@@ -3978,6 +3982,8 @@ _youtube_small.
 ##.footer-gplus
 ##.footer-instagram
 ##.footer-share
+##.footer-share-bar-social
+##.footer-share-bar-social-link
 ##.footer-sharers
 ##.footer-sharing
 ##.footer-social
@@ -4538,6 +4544,7 @@ _youtube_small.
 ##.pinit-overlay
 ##.pinterest-button
 ##.pinterest-link
+##.pinterest-share
 ##.pinterest-top-button
 ##.pinterest1
 ##.pinterestButton
@@ -5324,6 +5331,7 @@ _youtube_small.
 ##.socialMediaMod
 ##.socialMediaModule
 ##.socialMediaOnHeader
+##.socialMediaRefer
 ##.socialMediaToolbar
 ##.socialMediaWraper
 ##.socialMedias
@@ -5382,6 +5390,7 @@ _youtube_small.
 ##.social_facebook
 ##.social_fb
 ##.social_fb_like
+##.social_fix
 ##.social_follow
 ##.social_follow_icons_bottom
 ##.social_footer
@@ -5698,6 +5707,7 @@ _youtube_small.
 ##.twitter-hover-horizontal
 ##.twitter-icon
 ##.twitter-icon-small
+##.twitter-inner
 ##.twitter-link
 ##.twitter-module
 ##.twitter-promo
@@ -6054,6 +6064,10 @@ _youtube_small.
 ##a[title="Share this to Technorati"]
 ##a[title="Share via facebook"]
 ##a[title="Tweet this"]
+##a[title="follow us on Facebok"]
+##a[title="follow us on G+"]
+##a[title="follow us on Pinterest"]
+##a[title="follow us on Twitter"]
 ##a[title="share on Facebook"]
 ##a[title="share on Twitter"]
 ##div[data-jsonurl^="/nfl-assets/data/twitter/"]
@@ -6080,6 +6094,7 @@ _youtube_small.
 ##img[alt="Facebook_32"]
 ##img[alt="Fan us on facebook"]
 ##img[alt="Find us on Facebook"]
+##img[alt="Follow Me On Twitter!"]
 ##img[alt="Follow Me on Pinterest"]
 ##img[alt="Follow Us On FaceBook"]
 ##img[alt="Follow Us On Twitter"]
@@ -6402,213 +6417,6 @@ _youtube_small.
 ||xing.com/img/buttons/$third-party
 ||youtube.com/subscribe_widget$third-party
 ||zextit.com/partners/$third-party
-! *** easylist:fanboy-addon/fanboy_social_international.txt ***
-!
-!---------- Non-English Social Media Elements ----------
-!
-||seitzeichen.de^$third-party
-||social-bookmarking-tools.de^$third-party
-||static.pe.studivz.net^*/library.js$third-party
-||trrsf.com/transversais/trr_bar/$script
-||werkenntwen.de/images/buttons/$third-party
-!
-!---------- Latvian Specific Social Media Elements ----------
-!
-tvnet.lv###fancybox-overlay
-tvnet.lv###fancybox-wrap
-||draugiem.lv/business/ext/fans/$third-party
-||draugiem.lv/business/ext/follow/$third-party
-||draugiem.lv/lapas/widgets/$third-party
-||draugiem.lv/say/ext/like.php$third-party
-||draugiem.lv/say/ext/recommend.php$third-party
-||draugiem.lv^*/js/fans/$third-party
-||sekomums.lv^$third-party
-!
-!---------- Chinese Generic Media Elements ----------
-!
-/jiathis_share.
-!
-!---------- Chinese Specific Media Elements ----------
-!
-||share.baidu.com^
-!
-!---------- Chinese Site Specific Hiding Rules ----------
-!
-newhua.com##.share
-vapee.com##a[href^="http://e.weibo.com/"]
-vapee.com##a[href^="http://t.qq.com/"]
-!
-!---------- Non-English Generic Hiding Rules ----------
-!
-!
-!---------- Non-enlish Site Specific Hiding Rules ----------
-!
-!
-!---------- German Site Specific Hiding Rules ----------
-!
-willhaben.at###bookmarks
-finanznachrichten.de###bookmarks_container
-clipfish.de###cf-player-googleplus
-clipfish.de###cf-player-twitter
-clipfish.de###cf-player-wkw-widget
-mtv.de###content_block_sidebar_social_media_teaser
-anjo.to###facebook
-kress.de###facebookbox-open
-sprachnudel.de###facebox
-sprachnudel.de###facebox_overlay
-golem.de###followrss
-presseportal.de###iLike
-derstandard.at###infoslide
-bild.de###smbChannelBlock
-dwdl.de###socialbox > br + h3 + .content + h3
-androidpit.de###swBar_1
-amazon.de###tafContainerDiv
-presseportal.de###toolbox_sm
-teltarif.de###ttSBM
-t-online.de##.Tfb_aktion
-driver.de##.Tlbvipr + .Tlbfkt
-t-online.de##.Tliveconnect
-t-online.de##.Ttwitter
-gulli.com##._bookmark
-onlinewelten.com##.action-initiator
-chip.de##.bookmark
-fnp.de,sport1.de,winfuture.de##.bookmarks
-chip.de##.col340-ri > .ad-ri + div[style="overflow:hidden; margin:0 0 22px 0;"]
-swr.de##.communityLinks
-gamestar.de##.content > .columnContent > .bottomservice
-heise.de,swr3.de,t3n.de##.facebook
-tape.tv##.facebook-prompt
-gutscheinsammler.de##.fancybox-overlay
-zentrum-der-gesundheit.de##.fbbox_overlay
-falk.de##.fbstatic
-blaetter.de##.fl-share
-myvideo.de##.globallike--fb-navi
-heise.de,t3n.de##.google
-handelsblatt.com##.hcf-social-bookmark
-handelsblatt.com##.hcf-tbar-socials
-gmx.net##.head > #intro-aux
-rbb-online.de##.include_bookmarks
-swr3.de##.like-settings
-ardmediathek.de##.mt-player_bookmarks
-willhaben.at##.posttofacebook
-ndr.de##.recommendations
-t3n.de##.sbCombined
-welt.de##.share
-zeit.de##.show_smk
-amazon.de##.smTabCDiv
-playmassive.de,playnation.de##.sn
-heise.de##.soc-pos
-focus.de##.socBm
-focus.de##.socInfo
-n24.de,peugeot.de##.social
-futurezone.at##.social > li > a > img
-schwaebische.de##.social_communities
-finanzen.net##.social_network
-playnation.de##.sos
-spiegel.de##.spHeaderFollow
-androidpit.de##.tile_Follow
-heise.de,ifun.de,iphone-ticker.de,swr3.de,t3n.de##.twitter
-neusprech.org##.wptwitter
-t3n.de##.youtube
-futurezone.at##a[class*="follow sm_"]
-presseportal.de##div[id^="facebook_fanbox_"]
-stadt-bremerhaven.de##div[style="background: #f8f8f8; padding:20px;margin:0 0 10px -20px;width: 593px;"]
-gmx.net,web.de##iframe[src^="https://www.facebook.com/plugins/like.php"]
-||apfel-faq.de/name.js
-||chip.de^*/google_plus_statisch_$image
-||dict.cc/img/fbplus1.png
-||die-kopie.info/bilder/facebook.png
-||nibelungenkurier.de/t-ticker/
-||rtl.de/fb/
-!
-!---------- Polish Site Specific Hiding Rules ----------
-!
-gadzetomania.pl###floatingbar
-salon24.pl##.fsocBody
-!
-!---------- Dutch Site Specific Hiding Rules ----------
-!
-@@||pollland.nl^*/share/js/jquery
-@@||s7.addthis.com^*/addthis_widget.js$domain=carsom.nl|ticketmaster.nl
-@@||static.autojunk.nl/javascript/SocialMedia.js
-nu.nl#@#.socialshare
-||sanoma.nl/media/static/images/icon_zienl.png
-!
-!---------- Swedish Site Specific Hiding Rules ----------
-!
-!
-!---------- Russian Site Specific Hiding Rules ----------
-!
-habrahabr.ru##.twitter
-exzerry.com##body > #links > div[align="center"]
-!
-!---------- French Site Specific Hiding Rules ----------
-!
-nouvelobs.com###facebook_aime
-gamekult.com###follow
-jeuxvideo.com###partager_v2
-lepoint.fr###reseauxsociaux
-cowcotland.com###rezo
-leforem.be###suivi
-##.blocSociaux
-rtl.be##.bulle_nombre
-clubic.com,lci.tf1.fr,lesoir.be,pebkac.fr,silicon.fr##.facebook
-radins.com##.fbMin
-lefigaro.fr##.fig-micronav-share-figures
-nouvelobs.com##.follobs
-francetvinfo.fr##.follow
-lci.tf1.fr,silicon.fr##.google
-viedemerde.fr##.likebox
-marmiton.org##.m_content_recette_share
-marmiton.org##.m_suivez_nous_btn
-tempsreel.nouvelobs.com##.obs-galerie-bp-share
-lemonde.fr##.partage
-jeuxvideo.fr,jeuxvideopc.com##.pictos
-gamekult.com,nieuwsblad.be##.share
-buyindz.com,korben.info,sudouest.fr##.social
-lemonde.fr##.sociaux
-fr.msn.com##.stbp-tbl
-telerama.fr##.t12-user-resoc
-viedemerde.fr##.t_twitter
-radins.com##.twiMin
-clubic.com,lci.tf1.fr,lesoir.be,pebkac.fr,silicon.fr##.twitter
-@@||nextinpact.com/js/socialbar.js
-blogs.dhnet.be##a[target="_blank"][href^="https://www.facebook.com/pages/"] > img
-||nioutaik.fr/themes/freshy/images/facedebouc.gif
-||nioutaik.fr/themes/freshy/images/googlepeuluss.gif
-||nioutaik.fr/themes/freshy/images/zoiseau.gif
-||nouvelobs.com/social/
-!
-!---------- Spanish/Portuguese Site Specific Hiding Rules ----------
-!
-soychile.cl###facebook
-starmedia.com##.fbk
-starmedia.com##.twt
-!
-!---------- Italian Site Specific Hiding Rules ----------
-!
-gds.it###data[style="overflow:hidden; height: 246px; margin:10px 0px;"]
-meltybuzz.it###reactionsBox
-casertanews.it###script-bannOverLayer
-barfuss.it##.barfuss-fblikebox
-ilsecoloxix.it##.share
-||gds.it/abbonamenti/img/diventa-fan.gif
-!
-!---------- Korean Site Specific Hiding Rules ----------
-!
-!
-!---------- Israeli Site Specific Hiding Rules ----------
-!
-!---------- Arabic Site Specific Hiding Rules ----------
-||tn-sport.net/like/
-!
-!---------- Malay Site Specific Hiding Rules ----------
-!
-goal.com##table[style="background-color: #081f2c; border-color: #00ac77; border-width: 3px; border-style: solid; width: 100%;"]
-!
-!---------- Norway Site Specific Hiding Rules ----------
-!
-budstikka.no##.np-videoInfo
 !
 ! - Частные правила -----------------------------------------------------------
 ! *** bitblock/social_specific_block.txt ***
@@ -6728,7 +6536,6 @@ vesti.ru##.live_container
 championat.ru##.livejournal
 echo.msk.ru##.netWorkBlock
 novafilm.tv##.news-entry > div:last-child
-odnoklassniki.ru##.online-fr_block
 ntv.ru##.podprint > ul[style*="370"]
 kurufin.ru##.polotno + .add1
 radojuva.com.ua##.post-bodycopy > .bottomcontainerBox
@@ -6755,6 +6562,7 @@ ru.msn.com##.stbp-tbl
 forum.f1news.ru,homenet.beeline.ru##.topic_share
 videomore.ru##.track-shared
 my-cinema.net##.ttfav
+habrahabr.ru##.twitter
 fishki.net##.undertopic > .imgmiddle
 korrespondent.net##.unipopup
 rambler.ru##.v-favsites
@@ -6762,6 +6570,7 @@ vesti.ru##.video_top_inner
 rbcdaily.ru##.widget-fb-slave__inner
 ain.ua##.widget_like
 qiq.ws##a[onclick^="return addSoc"]
+exzerry.com##body > #links > div[align="center"]
 izvestia.ru##div[id^="fancybox-"]
 novafilm.tv##div[style*="40px;"]:last-child
 ura.ru##div[style="margin:24px 10px -10px;"]
@@ -7122,6 +6931,7 @@ _social_rss.
 ###MNNSurvey_adpB
 ###Newsletter-Signup
 ###NewsletterSignup
+###ScrollToTopContainer
 ###SharingComponentId
 ###SideNewsletterBox
 ###SidebarFooterRotator1_NewsletterSignupRotator1
@@ -7507,6 +7317,7 @@ _social_rss.
 ###subscribe-popsugar
 ###subscribe-widget-bottom
 ###subscribe-widget-top
+###sumotest-badge
 ###sun-cookieMessage
 ###taboola-below-article
 ###taboola-belowarticle
@@ -7905,6 +7716,7 @@ _social_rss.
 ##a[href^="http://www.kampyle.com/feedback_form/"]
 ##a[title="Daily Email Newsletter"]
 ##a[title="Get Feed RSS"]
+##a[title="Scroll to Top"]
 ##a[title="Subscribe by Email"]
 ##a[title="Subscribe by RSS"]
 ##a[title="Subscribe on FriendFeed"]
@@ -7928,6 +7740,7 @@ _social_rss.
 ##img[alt="Subscribe to our RSS Feeds"]
 ##img[alt="Subscribe via E-mail Newsletter"]
 ##img[alt="Subscribe via RSS Feed"]
+##img[alt="Subscribe via RSS!"]
 ##img[alt="Subscribe via RSS"]
 ##img[alt="Valid XHTML 1.0 Transitional Document"]
 ##img[alt="Watch Us on You Tube"]
@@ -8289,7 +8102,9 @@ _social_rss.
 ||sodahead.com^$third-party
 ||spot.im^$third-party
 ||statictapcdn-a.akamaihd.net^$third-party
+||storystack.com^$third-party
 ||styld-by.com^$third-party
+||sumome.com^$third-party
 ||surfingbird.ru^$third-party
 ||survey.constantcontact.com^$third-party
 ||survey.io^$third-party
@@ -8334,252 +8149,6 @@ _social_rss.
 ||zergnet.com/zerg.js$third-party
 ||zfacts.com^$third-party
 ||zimbio.com/images/badges/$third-party
-! *** easylist:fanboy-addon/fanboy_annoyance_international.txt ***
-!
-!---------- Non-english Annoyances ----------
-!
-||img.mixi.net^$third-party,domain=~mixi.jp
-||odnoklassniki.ru^$~stylesheet,third-party
-||pusha.se^$third-party
-||share.gree.jp^$third-party
-||tweetbuzz.jp^$third-party
-||vk.com/images/$third-party
-!
-!---------- Latvian Specific Annoyances ----------
-!
-!
-!---------- Latvian Site Specific Hiding Rules ----------
-!
-miljons.com##div[style^="position:fixed; z-index:99999;"]
-!
-!---------- Non-english Generic Hiding Rules ----------
-!
-##.odkl-klass-stat
-!
-!---------- Non-enlish Site Specific Hiding Rules ----------
-!
-weltwoche.ch###alteAusgabenCovers
-abril.com.br###barra-mini-home
-marktplaats.nl###cookie-opt-in-footer
-nbnews.com.ua###iosauth
-nooz.gr###right_popout
-delfi.lv###sbookmarks_left
-blogdeputaria.net###sub
-delfi.lv##.after_body
-zaycev.net##.bookmarks
-weltwoche.ch##.navInner.fixed
-delfi.lv##.sbookmarks
-kp.ru##.seti
-uralpress.ru##.sticker
-naruto-grand.ru##div[id^="scbmr_"]
-!
-!---------- German Site Specific Hiding Rules ----------
-!
-nzz.ch###articleMore
-androidnext.de###c4a_box
-agynamix.de###cookie
-google.de###epbar
-focus.de###flying_mbox
-androidnext.de###scrollbarbox
-computerwissen.de###simpleCatfish
-gmx.net###slideBox
-helpster.de###videoFlyin
-ifun.de,iphone-ticker.de##.mail
-spiegel.de##.sticky-home-link
-||focus.de/fol/pics/special/informiert.gif
-||plista.com^$third-party
-!
-!---------- Polish Site Generic Hiding Rules ----------
-!
-###ciasteczka
-###ciasteczkaInfoContainer
-###ciasteczka_alert
-###ciastka
-###div-cookie-komunikat
-###pasek_ciasteczka
-###poityka-ciastek
-!
-!---------- Polish Site Specific Hiding Rules ----------
-!
-panasonic.pl###CP_Layer
-wtk.com.pl###TB_window
-home.pl###box_policies
-kolejeslaskie.com###c_m
-lot.com###cc
-newseria.pl###cokPyt
-bstorun.pl###comm_info
-gov.pl,osnews.pl,xfutbol.pl###cookie
-dobreprogramy.pl,newsweek.pl,play.pl,tripolo.pl###cookies
-drony.net,gadzetomania.pl,komorkomania.pl###cop
-regenersis.pl###ctl00_cpanel
-pap.pl###divcook
-benchmark.pl###document_modal
-google.pl###epbar
-di.com.pl###floating-box
-komorkomania.pl###floatingbar
-atman.pl###gbpl_oba
-speedtest.pl###info_container
-webelite.pl###infobar
-gsmonline.pl###jGrowl
-wydawca.com.pl###kuki
-tripolo.pl###miastoszkolen
-mondeoklubpolska.pl###navbar_notice_12
-lovekrakow.pl###new-policy
-radiomerkury.pl###privacyPolicyBox
-totalmoney.pl###right_widget
-di.com.pl###slidebox
-gornikzabrze.pl###sliding-popup
-filmweb.pl###topBar
-goldenline.pl###topReminder
-skapiec.pl###uclaInfo
-votepush.com##.alert
-poznan.pl##.content-head-information
-telepolis.pl##.cookies
-mpolska24.pl##.infoBox
-policja.pl##.informationBar
-interia.pl##.inplCCA
-vectra.pl##.jqmAlertWindow
-gda.pl##.shotimoo
-naszamlawa.pl##.slide_button
-virginmobile.pl##.topPanelBlock
-pl.yahoo.com##.yom-wave3-generic
-gazetapolska.pl##div[style="border: 2px solid #900; clear: left; margin-left: auto; margin-right: auto; padding: 3px; width: 984px"]
-portel.pl##div[style="font-size:10px;text-align:left;background-color: #EAF6B4;padding: 2px 7px;width:906px;margin: 0 auto;"]
-korwin-mikke.pl##div[style="padding: 5px 3px; width: 500px; margin: 0px; background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.85); box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2); position: absolute; top: 0px; left: 701.5px; font-family: Arial,Helvetica,Garuda,sans-serif; text-align: center; color: rgb(255, 255, 255); z-index: 9999; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;"]
-targeo.pl##div[style="position: absolute; z-index: 32000; font-size: 11px; font-family: Arial,sans-serif; left: 50%; top: 3px; width: 600px; height: 130px; margin-left: -300px; margin-top: 0px; border: 1px solid rgb(219, 219, 219); color: rgb(85, 85, 85);"]
-atakklonow.pl,wszechpolska.pl##div[style="position: fixed; left:0; right:0; bottom:0; height:120px; background-color:#eee; border-top: 1px solid black; z-index:1000; overflow: auto"]
-mamnewsa.pl##div[style="z-index: 100000; font-family:Arial; position: fixed; bottom: 0px; left: 0; background-color: #F4EFB4; color: #000000; text-align: center; font-weight: bold; padding: 20px 0px; width:100%;"]
-!
-!---------- Polish Site Specific Blocking Rules ----------
-!
-||4hifi.pl/scripts/jquery.cookie.js
-||animesub.info/skrypty/pierdolecookie.js
-||cookie.gazeta.pl^
-||cookies.fakt.pl^
-||cookies.forbes.pl^
-||gry-online.pl/js/cookie2.js
-||muzeumwp.pl/cookies/cookies.js
-||nowehoryzonty.pl/js/cookies.js
-||orange.pl/ocp-http/map/js/cookies.js
-||prideandglory.pl/polityka_cookies.js
-||skryptcookies.pl^$third-party
-||sycow.pl/a/cookie.js
-||wkd.com.pl/cookies/cookies.js
-!
-!---------- Dutch Site Specific Hiding Rules ----------
-!
-google.nl###epbar
-t-mobile.nl###exposeMask
-rtl.nl###rtl_cookie_small
-techzine.nl###scrollbuddy[style="top: -20px; position: fixed;"]
-t-mobile.nl##.overlay
-@@||studentenwoningweb.nl/KRN/Scripts/jquery.cookiecuttr.js
-||cookiesv2.publiekeomroep.nl^
-!
-!---------- Norway Site Specific Hiding Rules ----------
-!
-dagbladet.no###db-inger
-bt.no##.flyout
-!
-!---------- Swedish Site Specific Hiding Rules ----------
-!
-sfv.se###cookies
-emol.com###slidebox
-aftonbladet.se##.abArticleToolbar
-aftonbladet.se##.abPremiumTeaserSalesPitch
-emol.com##.social-tools-emol-g1
-!
-!---------- Russian Site Specific Hiding Rules ----------
-!
-rbc.ru###popup_box
-rbc.ru###popup_inner
-lenta.ru###up
-banki.ua##.b-fb-overlay
-banki.ua##.b-fb-popup
-ubr.ua##.job-block
-ntv.ru##.popup_overlay
-ubr.ua##.story-nav
-itc.ua##.verticalPageNav
-!
-!---------- French Site Specific Hiding Rules ----------
-!
-lemonde.fr###bandeau_bas
-canalplus.fr###bandeau_fb
-closermag.fr###fancybox-overlay
-closermag.fr###fancybox-wrap
-actu-environnement.com###footer_newsletter_content
-paperblog.fr###left-block
-nutrilifeshop.com###nlp_popup
-lequipe.fr###rebonds
-###sf-minisite-toolbar
-lequipe.fr###toasterQuoti
-lequipe.fr###toolbar
-jeuxvideo.fr###ubc
-clubic.com###user_barre
-jeuxvideo.fr##.fb-box
-jeuxvideo.fr##.fb-overlay
-lecho.be##.linkWithinBlock
-nouvelobs.com##.obs-article-boutils
-nouvelobs.com##.obs-follow-nl
-lemonde.fr##.sociaux
-le-dictionnaire.com##.topdisclaimer
-video-buzz.eu##div[style="position:fixed;top:220px;left:0px;width:110px;-moz-border-radius:0px 5px 5px 0px;-webkit-border-radius:0px 5px 5px 0px;background-color:#ffffff;z-index:50;padding:10px;padding-left:0px;padding-top:50px;border:1px solid #000000;border-left:0px solid #000000;box-shadow: 1px 1px 4px #aaa;"]
-video-buzz.eu##div[style="position:relative;height:335px;background-color:#ebebeb;overflow:hidden;border:2px solid #222222;"]
-video-buzz.eu##div[style="position:relative;height:38px;background-color:#ebebeb;overflow:hidden;border:2px solid #222222;padding-top:15px;padding-left:56px;"]
-!
-!---------- Spanish/Portuguese Site Specific Hiding Rules ----------
-!
-record.xl.pt###MenuDinamico
-record.xl.pt###apDiv2
-diariolibre.com###bannerRight4
-eleconomista.es###barra-nav
-aristeguinoticias.com###comparte
-canaltech.com.br###floatBar
-uol.com.br###follow
-sapo.pt###redesSociais
-terra.es###trr-root
-soychile.cl##.overli
-eleconomista.es##.tbot
-lanacion.com.ar##.twitter
-!
-!---------- Italian Site Specific Hiding Rules ----------
-!
-virgilio.it###bottom_chat
-ilgiornale.it,virgilio.it###bottombar
-gazzetta.it###multifunctionBar-container
-repubblica.it###related
-virgilio.it###shr_box
-meltybuzz.it###toastsWrapper
-!
-!---------- Korean Site Specific Hiding Rules ----------
-!
-etnews.com###wingBanner
-etnews.com##.sns_btn
-nnews.mk.co.kr##div[style="width: 525px; border:1px solid #ddd; border-radius: 3px; background: #fafafa; padding: 10px; margin-bottom: 20px; height: 62px;"]
-!
-!---------- Israeli Site Specific Hiding Rules ----------
-!
-calcalist.co.il###CornerPromotionDiv
-globes.co.il###GTV_VideoDetails
-tapuz.co.il###LikeTapuzImage
-ynet.co.il###activity_box
-mako.co.il###artipopup
-themarker.com###bottom_navigator
-holesinthenet.co.il###bottombar
-walla.co.il###inwise
-ynet.co.il###leftspacertable
-morfix.co.il###morfixInstallTB_main
-auto.co.il###openButton
-gadgety.co.il###subscribefield
-gadgety.co.il##.facelike
-mouse.co.il##.fbox_main
-globes.co.il##.footerN_box
-mouse.co.il##.hp_banners
-mouse.co.il##.mouseExtraContent
-auto.co.il##.searchbtn
-tapuz.co.il##.tapuzShareBar
-onlife.co.il##div[style="height:264px; background-color:white;width: 300px; float: left;margin-bottom:0px;"]
-walla.co.il##div[style="margin-top:10px;margin-bottom:10px;"]
 !
 ! - Частные правила -----------------------------------------------------------
 ! *** bitblock/annoyance_specific_block.txt ***
@@ -8653,7 +8222,7 @@ biglion.ru###form_popup_id
 autovisio.com.ua###globallasttd > div[class$="-block"] + div[style^="padding:250px"]
 master-css.com###header1 > h2 > span
 hidemyass.com###hma-survey-button
-odnoklassniki.ru###hook_Block_TopContent
+odnoklassniki.ru,ok.ru###hook_Block_TopContent
 agronews.ru,agrotv.ru,vpsite.ru###informer
 rus-torrents.ru###la_wrapper
 styanulo.net###lenta
@@ -8666,6 +8235,8 @@ rambler.ru###notification.r__distribution-fixed-banner
 autoclub-cerato.ru###outer_forum
 lockerz.com###overlay
 allforpeople.net###pichead
+rbc.ru###popup_box
+rbc.ru###popup_inner
 demotivators.to###rtc
 russianpost.ru###service_column a > img[src^="/?action=getimage&attachmentid="]
 good73.net###shoutbox
@@ -8677,8 +8248,11 @@ gismeteo.ru,gismeteo.ua###soft-promo
 rutor.org###toolbar
 aliexpress.com###top-banner-container
 russian-fiancee.com###top_logo
+lenta.ru###up
 experts-exchange.com##.answerOverlayContainer
 anidub.com##.art-header
+banki.ua##.b-fb-overlay
+banki.ua##.b-fb-popup
 yandex.kz,yandex.ru,yandex.ua##.b-head-stripe
 livejournal.com##.b-journalpromo-container
 gagadget.com##.b-magicblock
@@ -8695,6 +8269,7 @@ dota2.ru##.hadv
 lkforum.ru##.head
 superhimik.com##.headerbar
 europaplus.ru##.heading
+ubr.ua##.job-block
 lib.rus.ec##.lb-pay__overlay
 vsekino.su##.lenta
 21region.org##.logo
@@ -8705,14 +8280,17 @@ nag.ru##.openxtop
 sports.ru##.overlay[data-control="Common.Overlay"]
 sports.ru##.popup.team-popup
 sports.ru##.popup[data-control="Common.Compulsion"]
+ntv.ru##.popup_overlay
 rustrek.ru,tapochek.net##.poster
 domru.ru##.promslider
 freakenergy.ru##.sidebar > div > noindex
 topgir.com.ua##.singing
+ubr.ua##.story-nav
 dfiles.ru##.subscribe_offer_banner
 efxi.ru##.titleblock
 izvestia.ru##.topline
 dota2.ru##.vadv-main-text
+itc.ua##.verticalPageNav
 experts-exchange.com##.viewQuestionBuffer
 sxnarod.com##[href$="?act=acquaintance"] > img[src^="/image/"]
 1tv.ru##[id^="m_banner"]

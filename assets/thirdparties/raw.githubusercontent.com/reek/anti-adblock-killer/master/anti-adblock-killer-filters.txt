@@ -43,16 +43,17 @@
 ! Anti Ad Buster (Anti-Ad Blocker / Defender)
 ! http://anti-ad-blocker.blogspot.com/
 /anti-ad-buster.js|$script
-! Detect Ad-blocking Software
+! ClemensConrads AntiAdblock
 ! http://detect-ad-blocking-software.webconrad.com/
 @@/adframe.js|$script
-! AdBlock Plus Detection
+! ErikSwan AntiAdblock
 ! http://erikswan.net/abp/ (<div id="tester">)
-! Anti-Adblock V2
+! D3xt3r AntiAdblock
 ! http://d3xt3r.com/anti-adblock?test (blockblockA )
 @@/\/advertisement[\d]?\.js$/$script
 @@/advertisement-AdBlock.js|$script
 @@/advertisement.js?*|$script
+! @@/advert.js?*|$script
 ! jQuery Adblock Detector
 ! https://github.com/broom9/jquery-adblock-detector
 /jquery.adblock-detector.js|$script
@@ -402,6 +403,8 @@ chine-informations.com###entete + div[id][class="nomobile"]
 @@||anywriters.com/main/js/advert.js$script
 ! teknogods.com
 @@||teknogods.com/advert.js$script
+! siamfishing.com
+@@||siamfishing.com/_js/advert.js$script
 ! chrissmoove.com
 chrissmoove.com#@##adserver
 @@||ads.google.com/adserver/adlogger_tracker.php$domain=chrissmoove.com

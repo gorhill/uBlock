@@ -58,6 +58,9 @@ scdn.gr/images/helmet/promo_material/*
 ||cheapis.gr/widget/*
 ||widgets.nova.gr/nownext_compact/el/*
 ||airfasttickets.gr/affiliate/*
+||newsbeast.gr/files/1/top100europe/airfasttickets.png
+||megatv.com/webtv/newsbeast.asp?*
+||insurer.gr/widgets/calc/insuCalc.html?*
 ant1online.gr/SiteCollectionImages/SiteImages/betonet.gif
 zougla.gr/news/data/upimages/image.php?image=ororotot9018231.jpg
 cosmopolitan.gr/images/vod_logo_100x70.jpg

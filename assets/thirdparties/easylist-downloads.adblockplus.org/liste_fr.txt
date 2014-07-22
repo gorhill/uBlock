@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: fYYdyPDa0B7+tN+aZDbmvA
-! Version: 201407202141
+! Checksum: Us6Z+QjJIZRDdtPZXxI4JQ
+! Version: 201407221421
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3461,11 +3461,14 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||mazdarx7.com/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
 @@||mine.bz/*.js|$script,third-party
+@@||minecraftnoob.com/*.js|$script,third-party
 @@||negeriau.net/*.js|$script,third-party
+@@||nhachot.info/*.js|$script,third-party
 @@||nnc.ro/*.js|$script,third-party
 @@||omqdu.cr.rs/*.js|$script,third-party
 @@||opensrc.mx/*.js|$script,third-party
 @@||otzlu.gw.lt/*.js|$script,third-party
+@@||pirat3.com/*.js|$script,third-party
 @@||publi.ch/*.js|$script,third-party
 @@||qjbvc.ro.lt/*.js|$script,third-party
 @@||rcwmu.us.to/*.js|$script,third-party
@@ -3518,10 +3521,13 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.linuxd.org/$third-party,xmlhttprequest
 |http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.mine.bz/$third-party,xmlhttprequest
+|http://*.minecraftnoob.com/$third-party,xmlhttprequest
 |http://*.mm.my/$third-party,xmlhttprequest
 |http://*.negeriau.net/$third-party,xmlhttprequest
+|http://*.nhachot.info/$third-party,xmlhttprequest
 |http://*.nnc.ro/$third-party,xmlhttprequest
 |http://*.opensrc.mx/$third-party,xmlhttprequest
+|http://*.pirat3.com/$third-party,xmlhttprequest
 |http://*.publi.ch/$third-party,xmlhttprequest
 |http://*.qq.my/$third-party,xmlhttprequest
 |http://*.remote.mx/$third-party,xmlhttprequest
@@ -3777,6 +3783,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://www.*/*.*?*=3&*=_blank$script,third-party
 |http://www.*/*.*?_=$script,third-party
 ||faintheartedsharkoil.info^$third-party
+||hectometertriple.info^$third-party
 !
 /fadb.min.js?
 @@.gif#$domain=automobile-sportive.com

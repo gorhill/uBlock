@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4265
-! Last modified: 18 Jul 2014
+! Version: 4273
+! Last modified: 21 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -2190,7 +2190,6 @@ dream-file.com##[alt="Regular Download"]
 ||topfbcheats.com^
 ||freewarezstuff.com^
 ||game-software.net^
-||dixvi.com^
 ||codghostseasonpass.com^
 ||mhacks.net^
 ||codghostprestigehack.com^
@@ -4260,6 +4259,15 @@ dream-file.com##[alt="Regular Download"]
 ||promediasearch.com^
 ||usefulforgames.com^
 ||heroesofthestormkeys.net^
+||fantasyhack.com^
+||free-steam-cards.com^
+||steamwalletgiftcards.com^
+||gamestools.info^
+||cheatload.com^
+||getgiftcardcodes.com^
+||gamescracksandhacks.com^
+||slickcheats.com^
+||goodcheats.net^
 !
 !
 !
