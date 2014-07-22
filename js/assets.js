@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global chrome, µBlock, YaMD5 */
 
 /*******************************************************************************
 
@@ -63,8 +63,119 @@ File system structure:
 var fileSystem;
 var fileSystemQuota = 40 * 1024 * 1024;
 var repositoryRoot = µBlock.projectServerRoot;
-var nullFunc = function() { };
+var nullFunc = function() {};
 var thirdpartyHomeURLs = null;
+
+/******************************************************************************/
+
+var cachedAssetsManager = (function() {
+    var exports = {};
+    var entries = null;
+    var cachedAssetPathPrefix = 'cached_asset_content://';
+
+    var getEntries = function(callback) {
+        if ( entries !== null ) {
+            callback(entries);
+            return;
+        }
+        var onLoaded = function(bin) {
+            if ( chrome.runtime.lastError ) {
+                console.error(
+                    'µBlock> cachedAssetsManager> getEntries():',
+                    chrome.runtime.lastError.message
+                );
+            }
+            entries = bin.cached_asset_entries || {};
+            callback(entries);
+        };
+        chrome.storage.local.get('cached_asset_entries', onLoaded);
+    };
+
+    exports.load = function(path, cbSuccess, cbError) {
+        cbSuccess = cbSuccess || nullFunc;
+        cbError = cbError || cbSuccess;
+        var details = {
+            'path': path,
+            'content': ''
+        };
+        var cachedContentPath = cachedAssetPathPrefix + path;
+        var onLoaded = function(bin) {
+            if ( chrome.runtime.lastError ) {
+                details.error = 'Error: ' + chrome.runtime.lastError.message;
+                console.error('µBlock> cachedAssetsManager.load():', details.error);
+                cbError(details);
+            } else {
+                details.content = bin[cachedContentPath];
+                cbSuccess(details);
+            }
+        };
+        var onEntries = function(entries) {
+            if ( entries[path] === undefined ) {
+                details.error = 'Error: not found';
+                cbError(details);
+                return;
+            }
+            chrome.storage.local.get(cachedContentPath, onLoaded);
+        };
+        getEntries(onEntries);
+    };
+
+    exports.save = function(path, content, cbSuccess, cbError) {
+        cbSuccess = cbSuccess || nullFunc;
+        cbError = cbError || cbSuccess;
+        var details = {
+            path: path,
+            content: content
+        };
+        var cachedContentPath = cachedAssetPathPrefix + path;
+        var bin = {};
+        bin[cachedContentPath] = content;
+        var onSaved = function() {
+            if ( chrome.runtime.lastError ) {
+                details.error = 'Error: ' + chrome.runtime.lastError.message;
+                console.error('µBlock> cachedAssetsManager.save():', details.error);
+                cbError(details);
+            } else {
+                cbSuccess(details);
+            }
+        };
+        var onEntries = function(entries) {
+            if ( entries[path] === undefined ) {
+                entries[path] = true;
+                bin.cached_asset_entries = entries;
+            }
+            chrome.storage.local.set(bin, onSaved);
+        };
+        getEntries(onEntries);
+    };
+
+    exports.remove = function(pattern) {
+        var onEntries = function(entries) {
+            var keystoRemove = [];
+            var paths = Object.keys(entries);
+            var i = paths.length;
+            var path;
+            while ( i-- ) {
+                path = paths[i];
+                if ( typeof pattern === 'string' && path !== pattern ) {
+                    continue;
+                }
+                if ( pattern instanceof RegExp && !pattern.test(path) ) {
+                    continue;
+                }
+                keystoRemove.push(cachedAssetPathPrefix + path);
+                delete entries[path];
+            }
+            if ( keystoRemove.length ) {
+                chrome.storage.local.remove(keystoRemove);
+                chrome.storage.local.set({ 'cached_asset_entries': entries });
+            }
+        };
+        getEntries(onEntries);
+    };
+
+    return exports;
+})();
 
 /******************************************************************************/
 
@@ -82,17 +193,19 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/89
+// Remove when I am confident everybody moved to the new storage
+
 // Useful to avoid having to manage a directory tree
 
 var cachePathFromPath = function(path) {
     return path.replace(/\//g, '___');
 };
 
-var pathFromCachePath = function(path) {
-    return path.replace(/___/g, '/');
-};
-
 /******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/89
+// Remove when I am confident everybody moved to the new storage
 
 var requestFileSystem = function(onSuccess, onError) {
     if ( fileSystem ) {
@@ -114,6 +227,61 @@ var requestFileSystem = function(onSuccess, onError) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/89
+// Remove when I am confident everybody moved to the new storage
+
+var oldReadCachedFile = function(path, callback) {
+    var reportBack = function(content, err) {
+        var details = {
+            'path': path,
+            'content': content,
+            'error': err
+        };
+        callback(details);
+    };
+
+    var onCacheFileLoaded = function() {
+        // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
+        reportBack(this.responseText);
+        this.onload = this.onerror = null;
+    };
+
+    var onCacheFileError = function(ev) {
+        // This handler may be called under normal circumstances: it appears
+        // the entry may still be present even after the file was removed.
+        // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
+        reportBack('', 'Error');
+        this.onload = this.onerror = null;
+    };
+
+    var onCacheEntryFound = function(entry) {
+        // console.log('µBlock> readLocalFile() / onCacheEntryFound():', entry.toURL());
+        // rhill 2014-04-18: `ublock` query parameter is added to ensure
+        // the browser cache is bypassed.
+        getTextFileFromURL(entry.toURL() + '?ublock=' + Date.now(), onCacheFileLoaded, onCacheFileError);
+    };
+
+    var onCacheEntryError = function(err) {
+        if ( err.name !== 'NotFoundError' ) {
+            console.error('µBlock> readLocalFile() / onCacheEntryError("%s"):', path, err.name);
+        }
+        reportBack('', 'Error');
+    };
+
+    var onRequestFileSystemSuccess = function(fs) {
+        fs.root.getFile(cachePathFromPath(path), null, onCacheEntryFound, onCacheEntryError);
+    };
+
+    var onRequestFileSystemError = function(err) {
+        console.error('µBlock> readLocalFile() / onRequestFileSystemError():', err.name);
+        reportBack('', 'Error');
+    };
+
+    requestFileSystem(onRequestFileSystemSuccess, onRequestFileSystemError);
+};
+
+/******************************************************************************/
+
 // Flush cached non-user assets if these are from a prior version.
 // https://github.com/gorhill/httpswitchboard/issues/212
 
@@ -124,6 +292,9 @@ var synchronizeCache = function() {
         return;
     }
     cacheSynchronized = true;
+
+    // https://github.com/gorhill/uBlock/issues/89
+    // Remove when I am confident everybody moved to the new storage
 
     var directoryReader;
     var done = function() {
@@ -138,12 +309,9 @@ var synchronizeCache = function() {
         var entry;
         for ( var i = 0; i < n; i++ ) {
             entry = entries[i];
-            // Ignore whatever is in 'user' folder: these are NOT cached entries.
-            if ( pathFromCachePath(entry.fullPath).indexOf('/assets/user/') >= 0 ) {
-                continue;
-            }
             entry.remove(nullFunc);
         }
+        // Read entries until none returned.
         directoryReader.readEntries(onReadEntries, onReadEntriesError);
     };
 
@@ -169,10 +337,27 @@ var synchronizeCache = function() {
             return done();
         }
         chrome.storage.local.set({ 'extensionLastVersion': currentVersion });
+        cachedAssetsManager.remove(/^assets\/(ublock|thirdparties)\//);
+        cachedAssetsManager.remove('assets/checksums.txt');
         requestFileSystem(onRequestFileSystemSuccess, onRequestFileSystemError);
     };
 
-    chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
+    // https://github.com/gorhill/uBlock/issues/89
+    // Backward compatiblity.
+
+    var onUserFiltersSaved = function() {
+        chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
+    };
+
+    var onUserFiltersLoaded = function(details) {
+        if ( details.content !== '' ) {
+            cachedAssetsManager.save(details.path, details.content, onUserFiltersSaved);
+        } else {
+            chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
+        }
+    };
+
+    oldReadCachedFile('assets/user/filters.txt', onUserFiltersLoaded);
 };
 
 /******************************************************************************/
@@ -181,9 +366,11 @@ var readLocalFile = function(path, callback) {
     var reportBack = function(content, err) {
         var details = {
             'path': path,
-            'content': content,
-            'error': err
+            'content': content
         };
+        if ( err ) {
+            details.error = err;
+        }
         callback(details);
     };
 
@@ -199,44 +386,17 @@ var readLocalFile = function(path, callback) {
         this.onload = this.onerror = null;
     };
 
-    var onCacheFileLoaded = function() {
+    var onCachedContentLoaded = function(details) {
         // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
-        reportBack(this.responseText);
-        this.onload = this.onerror = null;
+        reportBack(details.content);
     };
 
-    var onCacheFileError = function(ev) {
-        // This handler may be called under normal circumstances: it appears
-        // the entry may still be present even after the file was removed.
+    var onCachedContentError = function(details) {
         // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
-        getTextFileFromURL(chrome.runtime.getURL(path), onLocalFileLoaded, onLocalFileError);
-        this.onload = this.onerror = null;
+        getTextFileFromURL(chrome.runtime.getURL(details.path), onLocalFileLoaded, onLocalFileError);
     };
 
-    var onCacheEntryFound = function(entry) {
-        // console.log('µBlock> readLocalFile() / onCacheEntryFound():', entry.toURL());
-        // rhill 2014-04-18: `ublock` query parameter is added to ensure
-        // the browser cache is bypassed.
-        getTextFileFromURL(entry.toURL() + '?ublock=' + Date.now(), onCacheFileLoaded, onCacheFileError);
-    };
-
-    var onCacheEntryError = function(err) {
-        if ( err.name !== 'NotFoundError' ) {
-            console.error('µBlock> readLocalFile() / onCacheEntryError("%s"):', path, err.name);
-        }
-        getTextFileFromURL(chrome.runtime.getURL(path), onLocalFileLoaded, onLocalFileError);
-    };
-
-    var onRequestFileSystemSuccess = function(fs) {
-        fs.root.getFile(cachePathFromPath(path), null, onCacheEntryFound, onCacheEntryError);
-    };
-
-    var onRequestFileSystemError = function(err) {
-        console.error('µBlock> readLocalFile() / onRequestFileSystemError():', err.name);
-        getTextFileFromURL(chrome.runtime.getURL(path), onLocalFileLoaded, onLocalFileError);
-    };
-
-    requestFileSystem(onRequestFileSystemSuccess, onRequestFileSystemError);
+    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
 };
 
 /******************************************************************************/
@@ -273,75 +433,13 @@ var readRemoteFile = function(path, callback) {
         repositoryRoot + path + '?ublock=' + Date.now(),
         onRemoteFileLoaded,
         onRemoteFileError
-        );
+    );
 };
 
 /******************************************************************************/
 
 var writeLocalFile = function(path, content, callback) {
-    var reportBack = function(err) {
-        var details = {
-            'path': path,
-            'content': content,
-            'error': err
-        };
-        callback(details);
-    };
-
-    var onFileWriteSuccess = function() {
-        // console.log('µBlock> writeLocalFile() / onFileWriteSuccess("%s")', path);
-        reportBack();
-    };
-
-    var onFileWriteError = function(err) {
-        console.error('µBlock> writeLocalFile() / onFileWriteError("%s"):', path, err.name);
-        reportBack(err.name);
-    };
-
-    var onFileTruncateSuccess = function() {
-        // console.log('µBlock> writeLocalFile() / onFileTruncateSuccess("%s")', path);
-        this.onwriteend = onFileWriteSuccess;
-        this.onerror = onFileWriteError;
-        var blob = new Blob([content], { type: 'text/plain' });
-        this.write(blob);
-    };
-
-    var onFileTruncateError = function(err) {
-        console.error('µBlock> writeLocalFile() / onFileTruncateError("%s"):', path, err.name);
-        reportBack(err.name);
-    };
-
-    var onCreateFileWriterSuccess = function(fwriter) {
-        fwriter.onwriteend = onFileTruncateSuccess;
-        fwriter.onerror = onFileTruncateError;
-        fwriter.truncate(0);
-    };
-
-    var onCreateFileWriterError = function(err) {
-        console.error('µBlock> writeLocalFile() / onCreateFileWriterError("%s"):', path, err.name);
-        reportBack(err.name);
-    };
-
-    var onCacheEntryFound = function(file) {
-        // console.log('µBlock> writeLocalFile() / onCacheEntryFound():', file.toURL());
-        file.createWriter(onCreateFileWriterSuccess, onCreateFileWriterError);
-    };
-
-    var onCacheEntryError = function(err) {
-        console.error('µBlock> writeLocalFile() / onCacheEntryError("%s"):', path, err.name);
-        reportBack(err.name);
-    };
-
-    var onRequestFileSystemError = function(err) {
-        console.error('µBlock> writeLocalFile() / onRequestFileSystemError():', err.name);
-        reportBack(err.name);
-    };
-
-    var onRequestFileSystem = function(fs) {
-        fs.root.getFile(cachePathFromPath(path), { create: true }, onCacheEntryFound, onCacheEntryError);
-    };
-
-    requestFileSystem(onRequestFileSystem, onRequestFileSystemError);
+    cachedAssetsManager.save(path, content, callback);
 };
 
 /******************************************************************************/
@@ -487,4 +585,3 @@ return {
 })();
 
 /******************************************************************************/
-
