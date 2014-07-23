@@ -1,11 +1,22 @@
- # µBlock experimental
- # Experimental list: use only if you don't mind potential breakage, I just
- # don't have the resource to deal with lists, I do it because blocking these
- # are in the interest of users.
- #
- # I will use data from benchmarks to decide what to add here.
- # https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
+# µBlock experimental
+# Experimental list: use only if you don't mind potential breakage, I just
+# don't have the resource to deal with lists, I do it because blocking these
+# are in the interest of users.
+#
+# I will use data from benchmarks to decide what to add here.
+# https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
  
- # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
- ||addthis.com^$third-party
+# CAVEAT: There is so many exception filters in EasyList, EasyPrivacy and 
+# Fanboy's lists that it's just impossible to guarantee that whatever I put in 
+# "µBlock filters - Privacy" will actually be enforced with a 100% certainty.
+#
+# The only way for sure you can block something is to install and use 
+# HTTP Switchboard. If you don't like to break sites, I suggest you start in 
+# allow-all/block-exceptionally mode and blacklist whatever you wish as you go.
+# 
+# You may want to read more also about the latest release of HTTP Switchboard 
+# if you plan to install it alongside µBlock (suggested).
+
+# https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
+||addthis.com^$third-party
  
