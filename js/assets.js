@@ -79,13 +79,18 @@ var cachedAssetsManager = (function() {
             return;
         }
         var onLoaded = function(bin) {
-            if ( chrome.runtime.lastError ) {
-                console.error(
-                    'µBlock> cachedAssetsManager> getEntries():',
-                    chrome.runtime.lastError.message
-                );
+            // https://github.com/gorhill/httpswitchboard/issues/381
+            // Maybe the index was requested multiple times and already 
+            // fetched by one of the occurrences.
+            if ( entries === null ) {
+                if ( chrome.runtime.lastError ) {
+                    console.error(
+                        'µBlock> cachedAssetsManager> getEntries():',
+                        chrome.runtime.lastError.message
+                    );
+                }
+                entries = bin.cached_asset_entries || {};
             }
-            entries = bin.cached_asset_entries || {};
             callback(entries);
         };
         chrome.storage.local.get('cached_asset_entries', onLoaded);
