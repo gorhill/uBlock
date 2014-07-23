@@ -59,9 +59,13 @@ return {
             title: 'µBlock filters',
             group: 'default'
         },
-
-        // 3rd-party lists fetched dynamically
-        },
+        'assets/ublock/privacy.txt': {
+            off: true,
+            title: 'µBlock filters - Privacy',
+            group: 'default'
+        }
+       // 3rd-party lists fetched dynamically
+    },
 
     pageStores: {},
 
