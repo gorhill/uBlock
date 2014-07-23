@@ -6,6 +6,16 @@ Uso: Il pulsante power nel popup serve per disabilitare/abilitare permanentement
 
 ***
 
+IMPORTANTE!
+
+Se installi µBlock mentre hai installato un altro ad-blocker, µBlock ti mostrerà meno richieste bloccate dell'altro. Perché µBlock blocca ti mostra quello che l'altro ad-blocker NON HA bloccato e non quello che è stato già bloccato dall'altro ad-blocker.
+
+Se usi solo µBlock, bloccherà tutto quello che avrebbe bloccato l'altro ad-blocker e molto altro.
+
+Maggiori informazioni: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
+
+***
+
 Molto più che un ad-blocker: può anche creare filtri dal file host.
 
 Per default sono attivate queste liste:
