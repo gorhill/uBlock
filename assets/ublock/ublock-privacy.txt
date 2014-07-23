@@ -1,0 +1,11 @@
+ # µBlock experimental
+ # Experimental list: use only if you don't mind potential breakage, I just
+ # don't have the resource to deal with lists, I do it because blocking these
+ # are in the interest of users.
+ #
+ # I will use data from benchmarks to decide what to add here.
+ # https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
+ 
+ # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
+ ||addthis.com^$third-party
+ 
