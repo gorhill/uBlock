@@ -5,8 +5,8 @@
 #
 # I will use data from benchmarks to decide what to add here.
 # https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
- 
-# CAVEAT: There is so many exception filters in EasyList, EasyPrivacy and 
+
+# CAVEAT: There are so many exception filters in EasyList, EasyPrivacy and 
 # Fanboy's lists that it's just impossible to guarantee that whatever I put in 
 # "µBlock filters - Privacy" will actually be enforced with a 100% certainty.
 #
@@ -19,4 +19,6 @@
 
 # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
 ||addthis.com^$third-party
- 
+
+# I think web sites can live without this
+||linkedin.com^$third-party
