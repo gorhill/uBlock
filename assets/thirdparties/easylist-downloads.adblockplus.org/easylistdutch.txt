@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: 8NQIiRU3Mk18xCfyY7L/+g
-! Version: 201407221433
+! Checksum: JVILoWp7Hc8dcoV1DNeK9A
+! Version: 201407241631
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 22 Jul 2014 14:33 UTC
+! Last modified: 24 Jul 2014 16:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -701,10 +701,10 @@ _advertentieleaderboardhome.
 @@||track.adform.net/adfserve/?$script,domain=spel.nl
 @@||vtm.be/vmmaplayer/embed?videoUrl=*&adZone=$subdocument,domain=knack.be|zita.be
 ! Anti-Adblock
-@@||imasdk.googleapis.com/flash/core/adsapi_3_0_148.swf$object-subrequest,domain=vtm.be
-@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=vtm.be
+@@||imasdk.googleapis.com/flash/core/adsapi_3_0_148.swf$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
+@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=alfaforum.nl
-@@||pubads.g.doubleclick.net/gampad/ads?ad_rule=1&$object-subrequest,domain=vtm.be
+@@||pubads.g.doubleclick.net/gampad/ads?ad_rule=1&$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
 !--------Uitzonderingen--------!
 ! *** easylistdutch/block_first_party_whitelist.txt ***
 @@||2cv.nl/markt/advertenties/$image,subdocument

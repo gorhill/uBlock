@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ouqmQdlpgh8fdkWR0EEagw
-! Version: 201407221441
+! Checksum: kONlriqdC8/b+BTudAplZg
+! Version: 201407241631
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 22 Jul 2014 14:41 UTC
+! Ultima modifica: 24 Jul 2014 16:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1148,6 +1148,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||megabass.it^*/banner_
 ||merateonline.it/public/banner/
 ||metalgermania.it/images/itunes.jpg
+||metalgermania.it/images/rammstein-shop-italia.jpg
 ||metalgermania.it/images/seatwave.jpg
 ||metallized.it/banner/
 ||meteo.it/images/banner/
@@ -1517,6 +1518,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||telmi.it/images/btb_pittogramma.png
 ||temi-wordpress.net/wp-content/plugins/maxblogpress-unblockable-popup/
 ||tempoitalia.it/banner/
+||tenews.it/banner/
 ||tennis.it/files/banner_blufreccia3c.gif
 ||tennis.it/files/olio-san-clemente.jpg
 ||tennisworlditalia.com/banners/
@@ -2089,7 +2091,7 @@ piacenzanight.com##.back_style
 avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
-advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
@@ -2574,6 +2576,7 @@ ilcrotonese.it##div[style="width:728px; height:90px;overflow: hidden;"]
 ilcrotonese.it##div[style="width:728px; height:90px;overflow: hidden;display:block;"]
 onstageweb.com##div[style="width:728px; margin:auto;height:90px; border:1px solid #ccc; margin-bottom:10px; margin-top:-10px;"]
 webpedia.altervista.org##div[style="width:728px;height:90px;margin:6px auto;background:#eee"]
+gta-expert.it##div[style="width:732px; height:105px"]
 radio103.it,radiostereo103.it##div[style="width:750px; height:112px; margin:20px auto 20px auto; background: url(images/back_banner_home.png);"]
 radiotime.it##div[style="width:940px; height: 105px; margin-top:10px; margin-bottom:0px;"]
 ravennaedintorni.it##div[style="width:940px; height:60px; margin:5px auto;"]

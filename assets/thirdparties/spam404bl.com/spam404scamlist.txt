@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4273
-! Last modified: 21 Jul 2014
+! Version: 4299
+! Last modified: 23 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -92,6 +92,9 @@
 ##[href^="http://promediasearch.com/"]
 ##[href^="http://upshare.org/"]
 ##[href^="http://skippyfile.com/"]
+##[href^="http://xtremgenerators.com/"]
+##[href^="http://topgamehax.com/"]
+##[href^="http://verallohacks.com/"]
 !
 !
 !
@@ -4268,6 +4271,29 @@ dream-file.com##[alt="Regular Download"]
 ||gamescracksandhacks.com^
 ||slickcheats.com^
 ||goodcheats.net^
+||officialgiveaway.net^
+||gamesarea24.com^
+||xravengames.com^
+||clashofclansastuce.fr^
+||adobephotoshopcccrack.com^
+||boombeachhacks.com^
+||alivehacks.com^
+||boombeachhack.info^
+||boombeachhack.org^
+||comohackearunacuentadefacebook.com^
+||hacksworld24.com^
+||topgamehax.com^
+||comment-pirater-un-compte.fr^
+||hackearfacebook.tv^
+||espiawhatsapp.net^
+||hackeartwitter.com^
+||hackearwhatsapp.org^
+||robartwitter.com^
+||robarfacebook.com^
+||fbwand.com^
+||steamconmunicty.com^
+||toontownbeta.com^
+||ofclans.com^
 !
 !
 !

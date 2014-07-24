@@ -1,15 +1,14 @@
 [Adblock Plus 2.0]
-! Version: 201407211117
+! Version: 201407240946
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 21-07-2014
+! Last modified: 24-07-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
 ! Blog: http://gioxx.org/tag/x-files
 !
 ! [Gruppo di filtri per permettere elementi]/whitelist
-@@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv
 @@||mozillaitalia.net^$document
 @@||mozillaitalia.it^$document
 @@||mozillaitalia.org^$document
@@ -20,7 +19,8 @@
 @@||gioxx.org^$document
 @@||noads.it^$document
 ! [Gruppo di filtri per bloccare elementi]/blocking
-||neodatagroup.com^$third-party
+||nexac.com^$third-party
+||adnxs.com^$third-party
 firedrive.com##DIV[id="fdpc_cont"]
 http://thepiratetrader.com$popup
 http://*.piratestreaming.net/*/*bar.js
@@ -1705,6 +1705,7 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://betaffs.com/images/
 ||ducati.it^$popup,domain=gpone.com
 ||ad.vuiads.net^
+||adv.ilsole24ore.it^$domain=sky.it
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]

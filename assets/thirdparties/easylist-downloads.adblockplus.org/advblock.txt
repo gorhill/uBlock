@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: cAWFBIQhMz2iXYOeC27o+Q
-! Version: 201407221440
-! Last modified: 22 Jul 2014 14:40 UTC
+! Checksum: EMr/4ZobUzkEmRWLlM54vw
+! Version: 201407241630
+! Last modified: 24 Jul 2014 16:30 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1840,6 +1840,7 @@ _tizers.
 ||abteaser.com^
 ||abusieux.com^
 ||academand.com^
+||aceadsys.net^
 ||achievementeheight.biz^
 ||acronixshop.ru^
 ||actionpay.ru^$third-party
@@ -2967,7 +2968,8 @@ orakul.ua##.b-cont
 sinoptik.ua##.b-partners
 magtimes.info##.b1
 mmorpg.ua##.back1
-sonikelf.ru##.banner
+sonikelf.ru,tvernews.ru##.banner
+popmech.ru##.banner-label
 allmoldova.com##.banner_main
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
 101.ru,tfilm.tv##.branding
@@ -3020,6 +3022,7 @@ nur.kz##.wallpaper
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
 kinoafisha.ua##a.brandup
+ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
@@ -3028,7 +3031,7 @@ game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
-riper.am,tapochek.net##a[href^="https://joycasino.com/?partner="]
+ikinokz.net,riper.am,tapochek.net##a[href^="https://joycasino.com/?partner="]
 goodgame.ru##a[id^="banner-"]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
@@ -4300,6 +4303,7 @@ seonews.ru###tpl_topbanner_block
 seonews.ru###tpl_vertbanner_block
 appleinsider.ru##.a-position
 allinfo.kz##.adb
+forbes.ua##.adver_top
 9111.ru##.advzone
 europaplus.ru##.adwolf-holder
 brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
@@ -4315,6 +4319,9 @@ i.ua##.clear.logo_container
 goldroyal.net##.floating
 inosmi.ru##.floatright.rightbox br
 tvnet.lv##.fp_horiz_ads_150x150
+popmech.ru##.grid-cell[class*="article-banner-"]
+popmech.ru##.grid-cell__4.grid-cell__no-hover
+popmech.ru##.grid-cell__tgb
 101.ru##.ind-adv-carousel
 comss.ru##.links ~ .box
 3mv.ru##.logo
@@ -4758,6 +4765,8 @@ _advideo/$object-subrequest,domain=megogo.net
 ||iguides.ru/upload/iblock/
 ||iguides.ru^*-banner.indexed.
 ||ihead.ru/offers/
+||ikinokz.net/bannr.js
+||ikinokz.net/ikino.js
 ||im.tagilcity.ru^*?mt=
 ||imageban.ru/cas.js
 ||img.bankoboev.ru^
@@ -5256,6 +5265,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||turbo.az/banners/
 ||turbobit.ru/pics/
 ||tushkan.net/vkm/
+||tvernews.ru/upload/information_system_$object
 ||tvgid.ua/visit/
 ||tvi.ua/image/data/banners/
 ||tvi.ua/other/branding/
@@ -5511,15 +5521,19 @@ gilcom.ru###botom-banner
 realty.ngs.ru###bottom-banner
 realty.ngs.ru###center-banners
 realty.ngs.ru###top-banner
-ngs.ru##.banner
+ngs.ru,samara24.ru##.banner
 gilcom.ru,ngs.ru##.banner-center
 gilcom.ru##.banner-r
 realty.ngs.ru##.banners
+samara24.ru##.top-banner
 gilcom.ru##td[id^="banner-top-"]
 !generic
 ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##.ngs-forms-contain + table[id]:not(#content)
 ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##.ngs-main-logo-bar__right
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##a[class][style*="height:"][style*="display:"]
 ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##div[class][style*="height:"][style*="position:"][style*="overflow:"][style*="!important;"]
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##div[class][style*="text-align:"] > a[class]
+ngs.ru,ngs22.ru,ngs24.ru,ngs38.ru,ngs42.ru,ngs55.ru,ngs70.ru##img[width="350"][height="80"]
 !
 ! Rambler.RU и их проекты
 ag.ru###bottom_link
@@ -6021,6 +6035,7 @@ planetaua.net#@##rightinfoad
 free-send.ru#@##sideABlock
 free-send.ru#@##top_adv_728
 debilizator.tv#@#.adsbygoogle
+popmech.ru#@#.afs_ads
 chatovod.ru#@#.withAds
 @@#-page-peel/-text-ads.$image,domain=free-send.ru
 @@.jpg#$domain=modfiles.ru

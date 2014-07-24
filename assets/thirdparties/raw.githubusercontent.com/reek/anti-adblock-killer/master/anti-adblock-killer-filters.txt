@@ -9,6 +9,7 @@
 ! Report: https://github.com/reek/anti-adblock-killer/wiki/Report-Guide
 ! WritingRules: https://adblockplus.org/fr/filters
 ! RedundantRules: https://arestwo.org/famlam/redundantRuleChecker.html
+! RegExpVisualizer http://www.regexper.com/
 !----------------------------------------------------------------------------------------------------!
 ! Used to detect this list
 !----------------------------------------------------------------------------------------------------!
@@ -37,23 +38,35 @@
 !@@||adscendmedia.com/gwframe.php?*$domain=bee4.biz|filesdld.com
 ! cpagrip.com
 @@||cpagrip.com/script_include.php?id=*$script
-! RTKAntiAdblock
+! RTK AntiAdblock
 ! http://ryanteck.github.io/RTK-Anti-Adblock/
-/blockcake.js|$script
+/blockcake.js$script
 ! Anti Ad Buster (Anti-Ad Blocker / Defender)
 ! http://anti-ad-blocker.blogspot.com/
-/anti-ad-buster.js|$script
-! ClemensConrads AntiAdblock
+/anti-ad-buster.js$script
+! AntiAdblock (ClemensConrads)
 ! http://detect-ad-blocking-software.webconrad.com/
-@@/adframe.js|$script
-! ErikSwan AntiAdblock
+@@/adframe.js$script
+! AntiAdblock (ErikSwan)
 ! http://erikswan.net/abp/ (<div id="tester">)
-! D3xt3r AntiAdblock
+! AntiAdblock (D3xt3r)
 ! http://d3xt3r.com/anti-adblock?test (blockblockA )
-@@/\/advertisement[\d]?\.js$/$script
-@@/advertisement-AdBlock.js|$script
-@@/advertisement.js?*|$script
-! @@/advert.js?*|$script
+! Default
+@@/advertisement.js$script,domain=~example.com
+! Suffix
+@@/\/advertisement([0-9]+|[\-._][a-z0-9]+)\.js/$script,domain=~example.com
+! Min
+@@/advert.js$script,domain=~example.com
+! hellsmedia.com
+@@||hellsmedia.com/js/advert.js$script
+! writing.com
+@@||anywriters.com/main/js/advert.js$script
+! teknogods.com
+@@||teknogods.com/advert.js$script
+! siamfishing.com
+@@||siamfishing.com/_js/advert.js$script
+! FFBS Ad Blocker (to see)
+! http://static.graddit.com/js/advertisement.js
 ! jQuery Adblock Detector
 ! https://github.com/broom9/jquery-adblock-detector
 /jquery.adblock-detector.js|$script
@@ -73,22 +86,36 @@
 ! http://esd.io/blog/detecting-adblock-javascript.html
 ! https://github.com/elidickinson/ad-block-test
 #@##sponsored-ad
+! Anti ADs Blocker
+! http://codecanyon.net/item/anti-adblock-aadb-anti-ads-blocker-script/5367731
+/aadb/script.js|$script
 ! Better Stop Adblock
 ||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3|
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
-! No Adblock - http://www.noadblock.com/
+! Plugins Wordpress ------------------------------------------------------------------------
+! No Adblock
+! http://www.noadblock.com/
 /plugins/no-adblock/*
 /blockBlock.jquery.js$script
-! WordPress AdBlock Blocker - http://thisismyurl.com/
-@@/wp-content/plugins/wordpress-adblock-blocker/adframe.js
-! Anti-Block - http://www.bukssaayman.co.za/anti-block/
+! WordPress AdBlock Blocker
+! http://thisismyurl.com/
+@@/plugins/wordpress-adblock-blocker/adframe.js$script
+! AntiBlock (BukssaAyman)
+! http://www.bukssaayman.co.za/anti-block/
 /plugins/anti-block/*
 /anti-block-modal.js$script
 ! AdBlock Alerter
 ! https://github.com/wp-plugins/adblock-alerter
 #@##div-gpt-ad-1-0
-! Anti-Adblock (from easylist)
+! BlockAlyzer - Adblock counter
+! https://wordpress.org/plugins/blockalyzer-adblock-counter/
+@@/plugins/blockalyzer-adblock-counter/img/ads/*$image
+@@/plugins/blockalyzer-adblock-counter/js/advert.js$script
+! Ad Blocking Detector
+! http://adblockingdetector.jtmorris.net/demo/
+@@/plugins/ad-blocking-detector/assets/js/advertisement.js$script
+! Anti-Adblock (from easylist) -------------------------------------------------------------
 /adb_detector.
 /adblock-blocker/*
 /adblock_detector.
@@ -110,9 +137,6 @@
 /adb.js|$script,domain=btcflow.net|bitcointree.net
 ! adblock.js
 /adblock.js|$script,domain=mgcash.com
-! Anti ADs Blocker script
-! http://codecanyon.net/item/anti-adblock-aadb-anti-ads-blocker-script/5367731
-/aadb/script.js|$script,domain=demo.kekh.net
 ! Google Syndication
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=360haven.com|afreesms.com|agame.com|bbc.com|bitcoiner.net|carsfromitaly.info|codeasily.com|drivearabia.com|dsero.com|everythingon.tv|ffiles.com|file4go.com|freewaregenius.com|ftlauderdalewebcam.com|full-ngage-games.blogspot.com|gamespowerita.com|gifmagic.com|ilix.in|kingofgames.net|korean-candy.com|megaallday.com|misheel.net|moviemistakes.com|ninjaraider.com|numberempire.com|nyharborwebcam.com|oldversion.com|omegadrivers.net|photos.essence.com|portcanaveralwebcam.com|portevergladeswebcam.com|priva.us|readersdigest.com.au|rotoinfo.com|seeingwithsound.com|tech-blog.net|techydoor.com|tipstank.com|trutower.com|tv-kino.net|upfordown.com|urlink.at|warp2search.net|preemlinks.com|risiko-gesundheit.de|skincodesgiveaway.com|ffa-hosting.com
 ! gamespowerita.com
@@ -126,8 +150,6 @@ tvdez.com,casadossegredos.tv,estadiofutebol.com,televisaofutebol.com#@##pub2
 tvdez.com,casadossegredos.tv,estadiofutebol.com,televisaofutebol.com##DIV[style="padding-top:5px;float:left;width:100%;font-size:13px;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:left"]
 ! pro-zik.ws domains
 /js/check.js$domain=pro-zik.ws|pro-tect.ws|pro-ddl.ws|pro-sport.ws
-! 360haven.com
-@@||360haven.com/adframe.js
 ! file4go.com
 ! afreesms.com
 @@||afreesms.com/js/adblock.js
@@ -234,9 +256,6 @@ go4up.com##IMG[src="http://go4up.com/assets/img/downloadfr.gif"]
 ! dbzog.de
 @@||dbzog.de/Bilder/$image
 @@||dbzog.de^$elemhide
-! needrom.com
-@@||needrom.com/wp-content/plugins/blockalyzer-adblock-counter/img/ads/*$image
-@@||needrom.com/wp-content/plugins/blockalyzer-adblock-counter/js/advertisement.js
 ! dizi-mag.com
 @@||adhood.com^$third-party,domain=dizi-mag.com
 ! hentaistream.com
@@ -322,8 +341,6 @@ elahmad.com#@##adblock
 z0r.de##.adb
 ! filmon.com
 @@||static.filmon.com/ad/affiliateimages/banner-250x350.png
-! 720pmkv.com
-@@||720pmkv.com/wp-content/plugins/anti-block/js/advertisement.js?*
 ! forum.pac-rom.com
 forum.pac-rom.com#@#.banner_ads
 ! runningmanengsub.com
@@ -397,14 +414,6 @@ azcardinals.com###adblock-notice
 breakmanga.com###notice
 ! chine-informations.com
 chine-informations.com###entete + div[id][class="nomobile"]
-! hellsmedia.com
-@@||hellsmedia.com/js/advert.js$script
-! writing.com
-@@||anywriters.com/main/js/advert.js$script
-! teknogods.com
-@@||teknogods.com/advert.js$script
-! siamfishing.com
-@@||siamfishing.com/_js/advert.js$script
 ! chrissmoove.com
 chrissmoove.com#@##adserver
 @@||ads.google.com/adserver/adlogger_tracker.php$domain=chrissmoove.com
@@ -431,6 +440,8 @@ jeuxactu.com###infoBlock
 @@||filmyfundaz.googlecode.com/files/google_ads.js$domain=aloneteam.net
 @@||dammu.tk^$domain=aloneteam.net
 @@||bdv.bidvertiser.com/BidVertiser.dbm?*$domain=vanhut.tk
+! maxcheaters.com
+@@||maxcheaters.com/public/js/jsLoader.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

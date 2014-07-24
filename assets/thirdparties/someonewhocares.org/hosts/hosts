@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jul 18th, 2014 at 00:00
+# Last updated: Jul 23rd, 2014 at 19:53
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -8324,6 +8324,28 @@ fe80::1%lo0	localhost
 127.0.0.1 zevents.com
 127.0.0.1 zuzzer5.com
 #</ad-sites>
+
+# https://securehomes.esat.kuleuven.be/~gacar/persistent/index.html
+#<canvass-fingerprinting-sites>
+127.0.0.1 admicro1.vcmedia.vn
+127.0.0.1 ct1.addthis.com
+127.0.0.1 cya2.net
+127.0.0.1 i.ligatus.com
+127.0.0.1 images.revtrax.com
+127.0.0.1 pof.com
+127.0.0.1 shorte.st
+127.0.0.1 src.kitcode.net
+127.0.0.1 stat.ringier.cz
+#</canvass-fingerprinting-sites>
+
+#<evercookies-sites>
+127.0.0.1 ar.hao123.com
+127.0.0.1 irs01.net
+127.0.0.1 kiks.yandex.ru
+127.0.0.1 simg.sinajs.cn
+127.0.0.1 tv.sohu.com
+127.0.0.1 y3.ifengimg.com
+#</evercookies-sites>
 
 #<yahoo-ad-sites>
 

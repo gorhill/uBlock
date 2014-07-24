@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: G/MNoRgs8eu41x07UmMCkA
-! Version: 201407221431
+! Checksum: RZk9QznSvX1Gkx94KNNVoQ
+! Version: 201407241631
 ! Title: EasyPrivacy
-! Last modified: 22 Jul 2014 14:31 UTC
+! Last modified: 24 Jul 2014 16:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -33,6 +33,7 @@
 -xtcore.js
 .asis?Log=
 .au/1x1.gif?
+.au/c.gif?
 .beacon.min.js
 .cn/1.gif?
 .cn/a.gif?
@@ -40,7 +41,6 @@
 .cn/r.gif?
 .cn/s.gif?
 .cn/z.gif?
-.com.au/c.gif
 .com.au/HG?hc=
 .com.com/redir?timestamp
 .com/1.gif?
@@ -127,6 +127,7 @@
 .uk/o.gif?
 .uk/traffic/?
 .usertracking_script.js
+.vn/0.gif?
 .vsTracking.
 .webmetrics.js
 .webstats.
@@ -185,6 +186,7 @@
 /adlogger.
 /adlogger_
 /adloggertracker.
+/adm_tracking.js
 /admonitoring.js
 /AdobeCustomVideoMeasurement.swf
 /adpixel.
@@ -367,6 +369,7 @@
 /boomerang.js
 /boost_stats.
 /botd.gif?
+/bower_components/fp/fp.js
 /br-trk-
 /br-trk.
 /br_imps/add_item?
@@ -699,6 +702,8 @@
 /federated-analytics.
 /files/ga.js
 /finalizestats.
+/fingerprint.js
+/fingerprint.min.js
 /firestats/*
 /fkounter/*
 /fkounter5/*
@@ -1049,6 +1054,7 @@
 /livezilla/server.php?request=track&
 /loadcounter.
 /loader-counter.
+/loadJsFingerprint.js
 /log-view.
 /Log.ashx?
 /log.bi?
@@ -1161,6 +1167,7 @@
 /mobify_ga.gif
 /modoweb-tracking/*
 /moduleTracker.
+/mongoose.fp.js
 /monitus.js
 /morega.js
 /mouseover-tracker.
@@ -1328,7 +1335,8 @@
 /piwik-$domain=~piwik.org
 /piwik.js
 /piwik.php
-/piwik/*$domain=~piwik.org
+/piwik/js/*$domain=~piwik.org
+/piwikapi.js
 /piwikTracker.
 /pix.fcg?
 /pix.gif?
@@ -1764,6 +1772,7 @@
 /tracking-init.
 /tracking-pixel.
 /tracking-pixel/*
+/tracking.ashx?
 /tracking.cgi?
 /tracking.fcgi?
 /tracking.gif?
@@ -2253,6 +2262,7 @@ http://utm.
 ||adtarget.me^$third-party
 ||adultblogtoplist.com^$third-party
 ||advanced-web-analytics.com^$third-party
+||advconversion.com^$third-party
 ||affilae.com^$third-party
 ||affiliateedge.eu^$third-party
 ||affiliates-pro.com^$third-party
@@ -2527,6 +2537,7 @@ http://utm.
 ||customerdiscoverytrack.com^$third-party
 ||cxense.com^$third-party
 ||cxt.ms^$third-party
+||cya2.net^$third-party
 ||cybermonitor.com^$third-party
 ||cytoclause.com^$third-party
 ||dacounter.com^$third-party
@@ -2912,6 +2923,7 @@ http://utm.
 ||killerwebstats.com^$third-party
 ||kissmetrics.com^$third-party
 ||kisstesting.com^$third-party
+||kitcode.net^$third-party
 ||klert.com^$third-party
 ||klldabck.com^$third-party
 ||komtrack.com^$third-party
@@ -3839,7 +3851,6 @@ http://utm.
 ||ivwbox.de^$third-party
 ||iyi.net^$third-party
 ||keytrack.de^$third-party
-||kka.agitos.de^
 ||klamm-counter.de^$third-party
 ||kono-research.de^$third-party
 ||kostenlose-counter.com^$third-party
@@ -4965,6 +4976,7 @@ http://utm.
 ||inq.com^*/onEvent?_
 ||insight.mintel.com^$third-party
 ||insights.gravity.com^
+||insnw.net/assets/dsc/dsc.fingerprint-
 ||insnw.net/instart/js/instart.js
 ||installiq.com/Pixels/
 ||intelligence.dgmsearchlab.com^
@@ -5571,6 +5583,8 @@ http://utm.
 ||videoplaza.com/proxy/distributor/$object-subrequest
 ||videoplaza.tv/proxy/tracker^$object-subrequest
 ||videopress.com/plugins/stats/
+||viglink.com/api/ping$third-party
+||viglink.com/images/pixel.gif?
 ||vindicosuite.com/track/
 ||vindicosuite.com/tracking/
 ||vindicosuite.com/xumo/swf/$third-party
@@ -5884,6 +5898,7 @@ http://utm.
 ||counter.cnw.cz^
 ||h.imedia.cz^
 ||log.idnes.cz^
+||stat.ringier.cz^$third-party
 ||stats.mf.cz^
 ! Danish
 ||blogtoppen.dk^*/bt_tracker.js
@@ -7521,6 +7536,7 @@ http://utm.
 ||snakesworld.com/cgi-bin/hitometer/
 ||snippets.mozilla.com^
 ||snorgtees.com/js/digitalbasement/conversion.js
+||snowplow-collector.sugarops.com^
 ||socialcodedev.com/pixel/
 ||socialstreamingplayer.crystalmedianetworks.com/tracker/
 ||soe.com/js/web-platform/web-data-tracker.js

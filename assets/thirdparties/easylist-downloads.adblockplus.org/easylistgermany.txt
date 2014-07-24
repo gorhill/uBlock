@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 70flm9/1wwMkin+eLOXcSw
-! Version: 201407221441
+! Checksum: GSBZBoqhf1sLksJH+5q2AQ
+! Version: 201407241631
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 22 Jul 2014 14:40 UTC
+! Last modified: 24 Jul 2014 16:31 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -525,6 +525,7 @@ gamestar.de#@##adskyleftdiv
 vol.at#@##bigadspot
 gamestar.de#@##topadcontainer
 gamestar.de#@##werbetrenner
+t-online.de#@#.ad_mitte
 magistrix.de#@#.ads-content
 mufa.de#@#.adsbygoogle
 netzkino.de#@#.advertising-top
@@ -1209,6 +1210,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||kein-dsl.de/banner/$third-party
 ||kfz-gutachter-service.de/kfz.jpg
 ||kgmx.de/layer/
+||kka.agitos.de^
 ||kka.idg.de^
 ||klamm.de/banner/$third-party
 ||klammgeil.de/vms/$third-party
@@ -1644,6 +1646,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||87.237.123.50/jcorner.php$domain=mydia.de
 ||90elf.de^*/buderus_banner_
 ||a.nyx.at^
+||aachener-zeitung.de/zva/container/kalaydo/
 ||abakus-internet-marketing.de/img/forum-800_120_
 ||abc-sms.de/frame1.php
 ||abg-net.de/uploads/tx_macinabanners/
@@ -2780,7 +2783,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||movie-stream.to/do.php
 ||movie-stream.to^*/pop*.js
 ||movie-stream.to^*/system.js
-||movie4k.to/layer.js
 ||moviebb.to/img/banner/
 ||moviebox.to/do.php
 ||moviebox.to^*/*pop*.js
@@ -4248,6 +4250,7 @@ sein.de###ja-col1 a[target="_blank"] > img[alt=""]
 redhocks.de###jsn-promo
 general-anzeiger-bonn.de###kala
 express.de,fr-online.de,general-anzeiger-bonn.de,ksta.de,mz-web.de,rhein-zeitung.de,wz-newsline.de###kalaydo
+aachener-zeitung.de###kalaydo-container-related-lokales-aachen
 aachener-nachrichten.de,aachener-zeitung.de,az-web.de###kalaydoklein
 1fcm.de,fc-magdeburg.de###kopf_banner
 internetcologne.de###kopfbanner
@@ -4337,7 +4340,6 @@ handball-neuhausen.de###middleWrapper > #cols3Right[style="height: 1062px;"]
 1load.net###middlecolumn > .box > p[style="text-align: center;"]
 immonet.de###mietkautionslink
 20min.ch###min_billboard
-lessentiel.lu###min_rectangle
 bunte.de###mini-panel-home_header_shopping_teaser
 20min.ch###minrectangle
 totalbash.org###mitte > .menueoben + .beitrag_oben2
@@ -7421,6 +7423,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@.png#$domain=aktuelles-handelsrecht.info|aussenwirtschaftslupe.de|energielupe.de|europalupe.eu|finanzmarkttransaktionssteuer.de|gerichtsboulevard.de|grundrechteschutz.de|hartzbote.de|jagdlupe.de|kirchensteuerinfo.de|mediationslupe.de|medienrechtsnews.de|mutterschutz-rechner.de|rappers.in|rechtslupe.de|rechtslupe.net|rechtsschutzversicherunginfo.de|rentenbote.de|schuetzenrecht.de|sozialrechtsnews.de|steuerschmiede-aktuell.de|teamspeak-ts.com|tobinsteuer.de|twixzo.de|ul-load.com|uploaded-premium.ru|vereinslupe.de|vorsorgebote.de|wintotal-forum.de|wirtschaft-recht-aktuell.de
 @@.png?$domain=mobilfunk-geschichte.de
 @@/http://[1-9]/$object-subrequest,third-party,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
+@@/qos.phtml?$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@|http://*.com^$image,third-party,domain=gamona.de
 @@|http://*.de^$image,third-party,domain=gamona.de|lustich.de
 @@|http://*.net^$image,third-party,domain=gamona.de
@@ -7435,6 +7438,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||2mdn.net/viewad/*.jpg$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||2mdn.net^*.swf?clicktag=$object,domain=n-tv.de|teleboerse.de
 @@||37.59.248.204^$script,domain=ul-load.com|uploaded-premium.ru
+@@||4players.de/javascript/4players/adtag_check.js
 @@||5.135.58.25^$script,domain=uploaded-premium.ru
 @@||ad-emea.doubleclick.net/crossdomain.xml$object-subrequest,domain=clipfish.de|homerj.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|spiegel.tv|sueddeutsche.de|superrtlnow.de|voxnow.de
 @@||ad-emea.doubleclick.net/pfadx/spiegel.tv.smartclip/;sz=*;dcmt=*;ord=$object-subrequest,domain=spiegel.tv
@@ -7521,8 +7525,6 @@ pcwelt.de##div[id^="google_ads_"]
 @@||doubleclick.net/pfadx/iqd_sueddeutsche;sz=$object-subrequest
 @@||doubleclick.net/pfadx/iqdsde/video;sz=$object-subrequest
 @@||doubleclick.net^*/ad/homerj.de.smartclip/*;sz=*;dcmt=*;ord=$object-subrequest,domain=homerj.de
-@@||doubleclick.net^*/adj/focus_*;sz=160x600;$script,domain=focus.de
-@@||doubleclick.net^*/adj/focus_*;sz=300x251;$script,domain=focus.de
 @@||doubleclick.net^*/nntv.de/*^sz=120x600^$script,domain=n-tv.de
 @@||doubleclick.net^*/nntv.de/*^sz=468x61^$script,domain=n-tv.de
 @@||doubleclick.net^*/nntv.de/*^sz=600x500^$script,domain=n-tv.de
@@ -7565,7 +7567,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||game-advertising-online.com/images/s-l.gif$domain=anime-loads.org
 @@||game-advertising-online.com/index.php?section=serve&id=$subdocument,domain=anime-loads.org
 @@||gamesaktuell.de^$image
-@@||gamona.de^$elemhide,script
+@@||gamona.de^$script
 @@||gamona.de^*/up/*.png
 @@||gassi-tv.de^*/adframe.js
 @@||gearwom.de^$script,domain=gamona.de|lustich.de
@@ -7578,6 +7580,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||grundrechteschutz.de^$elemhide
 @@||hartzbote.de^$elemhide
 @@||hubbahotel.cc^*/advertisement.js
+@@||idlity.de^$script,domain=gamona.de|lustich.de
 @@||imagesrv.adition.com/js/adition.js$domain=n-tv.de
 @@||innovid.com^*;cb=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ivwbox.de^*#$image,domain=lustich.de
@@ -7593,20 +7596,14 @@ pcwelt.de##div[id^="google_ads_"]
 @@||letiva.de^$script,domain=gamona.de|lustich.de
 @@||liferd.de^$script,domain=gamona.de|lustich.de
 @@||loads7.com^$elemhide
+@@||lustich.de^$elemhide
 @@||lustich.de^$image
 @@||magistrix.de/ads/iframe.html?*#content$subdocument
 @@||magistrix.de^*/advertisement-$script
 @@||magnus.de/public/scripts/afc/$script,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 @@||mannfuermann.com/mfm/static/adcode.js
 @@||manughl.de^$script,domain=gamona.de|lustich.de
-@@||media.epochtimes.de/1/img/$image
-@@||media.epochtimes.de/ad_$image
-@@||media.epochtimes.de^*/ad_$image
-@@||media.epochtimes.de^*/adbox/$image
-@@||media.epochtimes.de^*/addelivery/$image
-@@||media.epochtimes.de^*/adengine/$image
-@@||media.epochtimes.de^*/adfactor/$image
-@@||media.epochtimes.de^*/adfeedback/$image
+@@||media.epochtimes.de^$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de

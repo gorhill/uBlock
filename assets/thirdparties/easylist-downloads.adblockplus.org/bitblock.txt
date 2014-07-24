@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: IdGRbpuk2N4MTltCPQw1kw
-! Version: 201407221440
-! Last modified: 22 Jul 2014 14:40 UTC
+! Checksum: 7xIY2HHLYwHLuDbPc996eQ
+! Version: 201407241630
+! Last modified: 24 Jul 2014 16:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -1813,6 +1813,7 @@ _socialmedia_
 _socialmediabox_
 _socialmedias2.
 _SocialSprite.
+_socialtoggle.
 _sprite_social.
 _sprite_social_
 _stumble_btn.
@@ -2869,6 +2870,7 @@ _youtube_small.
 ###social-networking-icons-round
 ###social-networking-images
 ###social-networks
+###social-networks-footer-block
 ###social-new-widget
 ###social-photo
 ###social-pinterest
@@ -6542,6 +6544,7 @@ radojuva.com.ua##.post-bodycopy > .bottomcontainerBox
 lifehacker.ru##.post-fake-social
 winreview.ru##.postmeta + noindex
 nya.sh##.q > .bottom
+appstudio.org##.repost td:not(.atropos)
 safetygate.ru##.round-bs[class*="icon-"]
 afisha.mail.ru##.s-sharelist
 delfi.ua##.sbookmarks
@@ -6937,6 +6940,7 @@ _social_rss.
 ###SidebarFooterRotator1_NewsletterSignupRotator1
 ###SiteMasterPage_updCookieDisclaimer
 ###SubscribeBox
+###TNTpageContentPlaceHolder_pnlCookieMessage
 ###ViperBar_main
 ###WP-cookie-info
 ###alrp-slidebox
@@ -7063,6 +7067,7 @@ _social_rss.
 ###cookie_warning
 ###cookie_widget
 ###cookiebar
+###cookiebar-container
 ###cookiebnr
 ###cookielaw
 ###cookielaw2
@@ -7408,6 +7413,8 @@ _social_rss.
 ##.cookie-monster
 ##.cookie-notice
 ##.cookie-opt-in
+##.cookie-panel-content
+##.cookie-panel-overlay
 ##.cookie-policy
 ##.cookie-policy-box
 ##.cookie-policy-statement
@@ -8636,6 +8643,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||git-scm.com/images/company-project-logos/$image
 @@||golem.de/_img/btn-follow-
 @@||golem.de/staticrl/images/icons-social.png
+@@||golem.de/staticrl/images/social_flattr_
 @@||google.*-youtube.jpg
 @@||google.*/retailer_google.png
 @@||googlecode.com/hg/icons/$image,domain=enjoyfreeware.org

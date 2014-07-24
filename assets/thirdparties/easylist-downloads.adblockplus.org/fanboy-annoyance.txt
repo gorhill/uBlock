@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 5rZeBVat/T1YbPZ15xdI0g
-! Version: 201407221431
+! Checksum: yFypi1kAgNNzv0UnBGF/hw
+! Version: 201407241631
 ! Title: Fanboy's Annoyance List
-! Last modified: 22 Jul 2014 14:31 UTC
+! Last modified: 24 Jul 2014 16:31 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -2032,6 +2032,7 @@ _socialmedia_
 _socialmediabox_
 _socialmedias2.
 _SocialSprite.
+_socialtoggle.
 _sprite_social.
 _sprite_social_
 _stumble_btn.
@@ -2071,6 +2072,7 @@ _youtube_small.
 ###SidebarFooterRotator1_NewsletterSignupRotator1
 ###SiteMasterPage_updCookieDisclaimer
 ###SubscribeBox
+###TNTpageContentPlaceHolder_pnlCookieMessage
 ###ViperBar_main
 ###WP-cookie-info
 ###alrp-slidebox
@@ -2197,6 +2199,7 @@ _youtube_small.
 ###cookie_warning
 ###cookie_widget
 ###cookiebar
+###cookiebar-container
 ###cookiebnr
 ###cookielaw
 ###cookielaw2
@@ -2542,6 +2545,8 @@ _youtube_small.
 ##.cookie-monster
 ##.cookie-notice
 ##.cookie-opt-in
+##.cookie-panel-content
+##.cookie-panel-overlay
 ##.cookie-policy
 ##.cookie-policy-box
 ##.cookie-policy-statement
@@ -3875,6 +3880,7 @@ _youtube_small.
 ###social-networking-icons-round
 ###social-networking-images
 ###social-networks
+###social-networks-footer-block
 ###social-new-widget
 ###social-photo
 ###social-pinterest
@@ -12177,6 +12183,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||git-scm.com/images/company-project-logos/$image
 @@||golem.de/_img/btn-follow-
 @@||golem.de/staticrl/images/icons-social.png
+@@||golem.de/staticrl/images/social_flattr_
 @@||google.*-youtube.jpg
 @@||google.*/retailer_google.png
 @@||googlecode.com/hg/icons/$image,domain=enjoyfreeware.org

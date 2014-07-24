@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list for AdBlock and Adblock Plus
-! Last change: 13/07/2014
+! Last change: 24/07/2014
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! License: GNU GPL v3
 ! Email: tomastaro@adblock.sk
@@ -42,10 +42,11 @@
 /reklamy.
 /rennab_prefered/*
 /scripts/clickjs
+/slevy/*
+/sponzor.fcgi?
 /stabilka_
 /stabilky/*
-/zlavovekupony.
-/zlavy.
+-reklama.
 _clickthru.swf?
 ^rd.php^$domain=pcforum.sk
 exashare.com###player_img
@@ -70,7 +71,6 @@ exashare.com###player_img
 ||abecedaher.cz/index_banner_
 ||adx.fotoaparat.cz/www/images/
 ||alkoholik.cz/zavislost/images/banners/
-||alza.cz/Foto/ImgGalery/bannery/
 ||archiv.roumen.cz/roumingRLeader.html
 ||autoesa.cz/files/bannery/
 ||avony.cz/mp3splocha.php
@@ -115,6 +115,7 @@ exashare.com###player_img
 ||idnes.cz/r.asp?
 ||idnes.cz^*/body-$image
 ||idnes.cz^*/main-$image
+||im9.cz/*aukro
 ||img.mimiaukce.cz/h/ac/b/
 ||img14.imageshack.us/img14/7953/lineage2a.gif$domain=warforum.cz
 ||itnetwork.cz/images/banners/
@@ -230,9 +231,12 @@ exashare.com###player_img
 ||filmy.kinotip.in/pup.js
 ||fony.sk/content/banners/
 ||gamesite.sk/templates/gamesite_sk/images/background/
+||hnonline.sk/*hn_lekaren_extra_blok.png
 ||hojko.com/images/banner*.gif
 ||img.karaoketexty.cz/img/ad/
 ||img5.uloz.to/ul3/images/hp_brand_tsbohemia.jpg
+||kamzakrasou.sk/actions/
+||mediacentrum.sk/google/
 ||mhdba.eu/banerova-reklama-animacia.gif
 ||michalovskespravy.sk/files/a57xq6rhr5uuzzyf.gif
 ||mojevideo.sk/ff.jpg
@@ -276,7 +280,6 @@ exashare.com###player_img
 !
 ! ---------- General blocking rules ----------!
 !
-||static.mymobucks.com/client_
 ||takeit.idnes.cz^$subdocument
 ||video.vid4u.org/vid4ul.js
 !
@@ -340,7 +343,9 @@ exashare.com###player_img
 ||playamo.cz^$third-party
 ||porno-tv.spustit.cz^$third-party
 ||potenza.cz$third-party
+||promoaim.cz/$third-party
 ||proklik.cz^$third-party
+||rival.cz^$third-party
 ||script.zebricek.cz^$third-party
 ||stat.novinky.cz^$third-party
 ||stat.sport.cz^$third-party
@@ -351,6 +356,7 @@ exashare.com###player_img
 !
 ! ---------- Slovak 3rd party blocking rules ----------!
 !
+||be1.sk^$third-party
 ||heureka.sk^$third-party
 ||imr.sk^$third-party
 ||ls.hit.gemius.pl/^$third-party
@@ -443,6 +449,7 @@ ulozisko.sk#@##reklama_big
 ##.bazar-box
 ##.etarget
 ##.hp-advert
+##.ic0.vendor-list
 ##.illustrated.illV.article.columns.col2
 ##.jobscz
 ##.popisreklama
@@ -533,6 +540,7 @@ centrum.cz##.container-adfox
 centrum.cz##.najisto
 centrum.cz##.widget.widgetType-amplionwidgets_advancedamplionwidget.widgetSlug-amplion
 centrum.cz##.widget.widgetType-rsswidgets_rsswidget.widgetSlug-dovolena-rss
+centrum.cz###widget_240
 centrum.cz##.widget.widgetType-carswidgets_carswidget.widgetSlug-cars
 cervenykostelec.cz##.sliderbubble-right
 ceskatelevize.cz###commercialBox
@@ -608,7 +616,9 @@ games.tiscali.cz##.wide
 google.cz,google.com###mbEnd
 google.cz,google.com###tads
 hcplzen.cz###ads_top_box
+heureka.cz###banner-leaderboard
 heureka.cz###bottom
+heureka.cz##.filtr.category-partner
 hokej.cz##.ban1
 hokej.cz##.dolni_reklama
 hokej.cz##.top_banner
@@ -870,12 +880,17 @@ bmwklub.sk##DIV[id^="ad"]
 centrum.sk##.h2.grad2.kupons_games
 centrum.sk##.banner
 dsl.sk##.header_info_text
+etrend.sk###trendtip
+etrend.sk##.reality
+etrend.sk##.sponsors
 europa2.sk###bgr-anchor
 f1.sk##.banner_300x300
 filmy.kinotip.in##DIV[id^="ad"]
 fony.sk##.divArticleBannerTop
 forum.mobilmania.azet.sk###rwrap
 forum.zive.sk###rwrap
+heureka.sk###banner-leaderboard
+heureka.sk##.filtr.category-partner
 hladaj.referaty.atlas.sk###specbox
 itnews.sk###backgroundbanner
 itnews.sk##.menu_logo
@@ -904,6 +919,7 @@ pcforum.sk##td[width="110px"]
 pocasie.pozri.sk/nba2.gif
 pokec.azet.sk##.c_banner300x300
 pretaktovanie.zoznam.sk##.post.bg5
+recepty.sk##.box
 slovnik.azet.sk##.articlesBnr
 sme.sk###b-napizzu
 sme.sk###wg_megaboard

@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: tK+XaUtChm950JHWBZFHBQ
-! Version: 201407221433
+! Checksum: QQnHQasVZ5VJ8CGZVdvyDQ
+! Version: 201407241631
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 22 Jul 2014 14:33 UTC
+! Last Modified: 24 Jul 2014 16:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -859,6 +859,8 @@ hk.yahoo.com###ysm-ad
 :81/page/?s=$third-party
 :99/page/?s=$third-party
 dnserror*.wo.com.cn^
+||caob5.info^
+||211.167.105.131^
 ||007y.net^$third-party
 ||0591101.com^$third-party
 ||0756j.com^$third-party
@@ -1100,8 +1102,6 @@ dnserror*.wo.com.cn^
 /images/ta.js$domain=174.123.15.33|70.86.24.117|mayaix.com|mimiwe.com
 /images/vipc.jpg$domain=32666.com|lepan.cc
 /img/*$image,domain=txzqw.com
-/img/br300.gif$domain=qzntv.com|qzwb.com
-/img/br650.gif$domain=qzntv.com|qzwb.com
 /img/disc.jpg$domain=jpfans.com|jpseek.com
 /img/kana.jpg$domain=jpfans.com|jpseek.com
 /index.php/intel/*$domain=it168.com|pchome.net|pcpop.com|yesky.com|zol.com.cn
@@ -1641,7 +1641,7 @@ weather.com.cn##div[class^="adpos"]
 ||apas.aipai.com/www/images/
 ||apihousefun.yam.com/news.php
 ||app.acm.dzwww.com^
-||app.qzss.cn/ssad
+||qzss.cn/ssad
 ||appinn.com/images/*-300250.
 ||appinn.com/images/201406/licaifan.jpg
 ||ark.letv.com/s?vid=
@@ -1813,7 +1813,7 @@ weather.com.cn##div[class^="adpos"]
 ||chinaz.com/newshome/
 ||chinaz.com/temp_upfile/ads/
 ||chiphell.com/activity/
-||chuangshi.qq.com/Public/mainsite/Uploads/Cms/Banner/
+||chuangshi.qq.com/upload/cmsv2/Banner/
 ||cishuge.com/static/js/xiaoshuo.js
 ||citysbs.com^*/forum/App.ad.js
 ||citysbs.com^*swf
@@ -2754,7 +2754,6 @@ weather.com.cn##div[class^="adpos"]
 ||mat1.gtimg.com/news/news2013/imgs/201311011458.jpg
 ||mat1.gtimg.com/www/fbgg/
 ||media.cheshi-img.com^
-||meet-love.cc/module/index/templates/default/images/vip_
 ||meilele.com/mll_api/api/recad?
 ||meimb.com^$domain=94as.com
 ||meinv.com/templates/meinv/js/*_banner.js
@@ -3068,7 +3067,6 @@ weather.com.cn##div[class^="adpos"]
 ||qz828.com/css/2010/script/*ad
 ||qz828.com/pic/0/10/49/26/10492689_429618.gif
 ||qzntv.com^*.swf
-||qzwb.com/gb/img/9264.files/1yuanpaima.jpg
 ||qzwb.com^$object
 ||r.uzaicdn.com/content/common/unionpay.jpg
 ||rakuten-static.com^$domain=cwyuni.tw
@@ -3776,13 +3774,59 @@ weather.com.cn##div[class^="adpos"]
 ||zxxk.com/js/articleinfo/JS_
 ||zymao.net/img/taolink.jpg
 ||zyzczs.com/js/tj.txt
+||qqyy.com/js/commAdv
+||qqyy.com/js/public_end_add.js
 ||xhub.cn/cache/d125.260.gif
+||qq.com/js/2013js/ad_float_
+||mifengtd.u.qiniudn.com/ad-
+||hxland.com/static/image/TOP1.png
+||ccoo.cn/image/banner/960.jpg
+||bdimg.com/newmap/static/common/images/nav-ad_
+||qzwb.com/gb/img/9465.files/xmyk.gif
+||ccoo.cn/js/dlv*.js
+||ccoo.cn/webdiy/$subdocument
+/guancha/ad/*$domain=guancha.cn
+||pctowap.com/img/bs.jpg
+||pctowap.com/img/bs2.jpg
+||newsmth.net/nForum/baiduunion/
+||muyuge.com/js/bb/
+||muyuge.com/js/KillABP.js
+||klgwdh.com/pp.php
+||weixin.qqday.com/js/rb.js
+||weixin.qqday.com/js/tj.js
+||qidian.com/javascript/fkk.js
+||qidian.com/ploy/july01/sygg
+||178.com/s/js/ngafloatwindow.js
+||emarketing.bot.com.tw/output/vi.aspx?
+||qikzj.u.qiniudn.com/wp-content/uploads/*/ad-
+||qikzj.u.qiniudn.com/wp-content/uploads/*/280X280_
+||leiting001.com/bg/$subdocument,script
+||m8w9n.duowan.com^
+||t52c7.duowan.com^
+||bz98c.duowan.com^
+||nu71h.duowan.com^
+||js63s.duowan.com^
+||hh010.com/37vi.gif
+||hh010.com/openlab.gif
+||adwordsing.com/img/1.jpg
+||adwordsing.com/img/2.jpg
+||duowan.com/s/yuanbao-entrance.js
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
 yaolan.com###AD
+hh010.com###diy1
+xinmin.cn##.index_nhsh_effect
+qidian.com##DIV[style="margin:0 auto;width:375px;height:63px;padding-top:5px"]
+ccoo.cn##.hy_bk
+ccoo.cn##.adn
+qiannao.com###main_top_right
+baidu.com##.nav_ads
+qzss.cn###diy_chart
+qqyy.com##.right_dcotor_tab
 btup.net##.duilian_ad
+9ku.com##DIV[style="height:150px; overflow:hidden;zoom:1; width:960px; margin:12px auto 15px;"]
 21yq.com###AD1
 gdtv.cn###ADVbuttom
 gdtv.cn###ADVbuttom1
@@ -5285,7 +5329,6 @@ mail.126.com,mail.163.com##.lotteryPopup2
 ltesting.net##.ltad_1170
 ltesting.net##.ltad_580
 eastmoney.com##.lyad
-jump.bdimg.com,tieba.baidu.com##.lzl_panel_wrapper > tbody > tr > td[style="width: 75%;"]
 myexception.cn##.m_a
 house365.com##.m_coup-big
 0439.com##.m_ggad
@@ -6339,6 +6382,7 @@ house.shangdu.com#@#.top_ad
 @@||xinhuanet.com/static/rmedia/pv.swf
 @@||xunleihao.com/a-d-j-s/a-d-7.js
 @@||yimg.jp/combo?*/ad/
+@@||hh010.com/static/js/adsbygoogle_ad_adview_pic_cpc_cpm_cpa_guanggao_gg.js
 @@||yiqifa.com/ad_images/$~third-party
 @@||yktj.yzz.cn/htmldata/mds/yzz_single_gg.js$domain=bbs.yzz.cn
 @@||zhaozi.cn/d/js/acmsd/ggao5$script
