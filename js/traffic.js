@@ -29,23 +29,89 @@
 
 /******************************************************************************/
 
-// Intercept root frame requests. This is where we identify and block popups.
+// Intercept and filter web requests according to white and black lists.
 
-var onBeforeRootDocument = function(tabId, details) {
-    var µb = µBlock;
+var onBeforeRequest = function(details) {
+    //console.debug('onBeforeRequest()> "%s": %o', details.url, details);
 
-    // Ignore non-http schemes: I don't think this could ever happened
-    // because of filters at addListener() time... Will see.
-    var requestURL = details.url;
-    if ( requestURL.slice(0, 4) !== 'http' ) {
-        console.error('onBeforeRootDocument(): Unexpected scheme!');
-        µb.unbindTabFromPageStats(tabId);
+    // Do not block behind the scene requests.
+    var tabId = details.tabId;
+    if ( tabId < 0 ) {
         return;
     }
 
+    var µb = µBlock;
+    var requestURL = details.url;
+    var requestType = details.type;
+
+    // Special handling for root document.
+    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
+        µb.bindTabToPageStats(tabId, requestURL);
+        return;
+    }
+
+    var µburi = µb.URI.set(requestURL);
+    var requestHostname = µburi.hostname;
+    var requestPath = µburi.path;
+
+    // rhill 2013-12-15:
+    // Try to transpose generic `other` category into something more
+    // meaningful.
+    if ( requestType === 'other' ) {
+        requestType = µb.transposeType(requestType, requestPath);
+    }
+
     // Lookup the page store associated with this tab id.
-    var pageStore = µb.bindTabToPageStats(tabId, requestURL);
+    var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
+        return;
+    }
+
+    var reason = false;
+    if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
+        reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
+    }
+    // Record what happened.
+    pageStore.recordRequest(requestType, requestURL, reason);
+
+    // Not blocked?
+    if ( reason === false || reason.slice(0, 2) === '@@' ) {
+        return;
+    }
+
+    // Blocked
+    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" because "%s"', details.url, reason);
+
+    // https://github.com/gorhill/uBlock/issues/18
+    // Do not use redirection, we need to block outright to be sure the request
+    // will not be made. There can be no such guarantee with redirection.
+
+    return { 'cancel': true };
+};
+
+/******************************************************************************/
+
+// Intercept root frame requests. This is where we identify and block popups.
+
+var onBeforeSendHeaders = function(details) {
+    // Do not block behind the scene requests.
+    var tabId = details.tabId;
+    if ( tabId < 0 ) {
+        return;
+    }
+
+    // Only root document.
+    if ( details.parentFrameId !== -1 ) {
+        return;
+    }
+
+    var µb = µBlock;
+    var requestURL = details.url;
+
+    // Lookup the page store associated with this tab id.
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        console.error('µBlock> onBeforeSendHeaders(): no page store for "%s"', requestURL);
         return;
     }
 
@@ -98,73 +164,6 @@ var onBeforeRootDocument = function(tabId, details) {
 
 /******************************************************************************/
 
-// Intercept and filter web requests according to white and black lists.
-
-var onBeforeSendHeaders = function(details) {
-    //console.debug('onBeforeRequestHandler()> "%s": %o', details.url, details);
-
-    // Do not block behind the scene requests.
-    var tabId = details.tabId;
-    if ( tabId < 0 ) {
-        return;
-    }
-
-    // Special handling for root document.
-    var requestType = details.type;
-    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
-        return onBeforeRootDocument(tabId, details);
-    }
-
-    // Ignore non-http schemes: I don't think this could ever happened
-    // because of filters at addListener() time... Will see.
-    var requestURL = details.url;
-    if ( requestURL.slice(0, 4) !== 'http' ) {
-        console.error('onBeforeSendHeaders(): Unexpected scheme!');
-        return;
-    }
-
-    var µb = µBlock;
-    var µburi = µb.URI.set(requestURL);
-    var requestHostname = µburi.hostname;
-    var requestPath = µburi.path;
-
-    // rhill 2013-12-15:
-    // Try to transpose generic `other` category into something more
-    // meaningful.
-    if ( requestType === 'other' ) {
-        requestType = µb.transposeType(requestType, requestPath);
-    }
-
-    // Lookup the page store associated with this tab id.
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if ( !pageStore ) {
-        return;
-    }
-
-    var reason = false;
-    if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
-        reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
-    }
-    // Record what happened.
-    pageStore.recordRequest(requestType, requestURL, reason);
-
-    // Not blocked?
-    if ( reason === false || reason.slice(0, 2) === '@@' ) {
-        return;
-    }
-
-    // Blocked
-    //console.debug('µBlock> onBeforeSendHeaders()> BLOCK "%s" because "%s"', details.url, reason);
-
-    // https://github.com/gorhill/uBlock/issues/18
-    // Do not use redirection, we need to block outright to be sure the request
-    // will not be made. There can be no such guarantee with redirection.
-
-    return { 'cancel': true };
-};
-
-/******************************************************************************/
-
 var referrerFromHeaders = function(headers) {
     var i = headers.length;
     while ( i-- ) {
@@ -176,6 +175,33 @@ var referrerFromHeaders = function(headers) {
 };
 
 /******************************************************************************/
+
+chrome.webRequest.onBeforeRequest.addListener(
+    //function(details) {
+    //    quickProfiler.start('onBeforeRequest');
+    //    var r = onBeforeRequest(details);
+    //    quickProfiler.stop();
+    //    return r;
+    //},
+    onBeforeRequest,
+    {
+        "urls": [
+            "http://*/*",
+            "https://*/*",
+        ],
+        "types": [
+            "main_frame",
+            "sub_frame",
+            'stylesheet',
+            "script",
+            "image",
+            "object",
+            "xmlhttprequest",
+            "other"
+        ]
+    },
+    [ "blocking" ]
+);
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     //function(details) {
@@ -191,14 +217,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             "https://*/*",
         ],
         "types": [
-            "main_frame",
-            "sub_frame",
-            'stylesheet',
-            "script",
-            "image",
-            "object",
-            "xmlhttprequest",
-            "other"
+            "main_frame"
         ]
     },
     [ "blocking", "requestHeaders" ]
