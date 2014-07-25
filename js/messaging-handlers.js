@@ -233,11 +233,28 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
+var getLists = function(callback) {
+    var µb = µBlock;
+    var onReceived = function(lists) {
+        callback({
+            available: lists,
+            current: µb.remoteBlacklists,
+            cosmetic: µb.userSettings.parseAllABPHideFilters
+        });
+    };
+    µb.getAvailableLists(onReceived);
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     var µb = µBlock;
 
     // Async
     switch ( request.what ) {
+        case 'getLists':
+            return getLists(callback);
+
         case 'readUserUbiquitousBlockRules':
             return µb.assets.get(µb.userFiltersPath, callback);
 

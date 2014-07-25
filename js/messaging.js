@@ -138,6 +138,9 @@ function defaultHandler(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
+            if ( /^https?:\/\//.test(request.url) ) {
+                return µBlock.assets.getExternal(request.url, callback);
+            }
             return µBlock.assets.get(request.url, callback);
 
         case 'loadUbiquitousAllowRules':

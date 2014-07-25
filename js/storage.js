@@ -124,33 +124,100 @@
 
 /******************************************************************************/
 
-µBlock.loadUbiquitousBlacklists = function() {
-    var blacklistLoadCount;
-    var obsoleteBlacklists = [];
+µBlock.getAvailableLists = function(callback) {
+    var availableLists = {};
 
-    var removeObsoleteBlacklistsHandler = function(store) {
-        if ( !store.remoteBlacklists ) {
-            return;
-        }
+    // selected lists
+    var onSelectedListsLoaded = function(store) {
+        var lists = store.remoteBlacklists;
+        var locations = Object.keys(lists);
         var location;
-        while ( location = obsoleteBlacklists.pop() ) {
-            delete store.remoteBlacklists[location];
+
+        while ( location = locations.pop() ) {
+            if ( !availableLists[location] ) {
+                continue;
+            }
+            // https://github.com/gorhill/httpswitchboard/issues/218
+            // Transfer potentially existing list title into restored list data.
+            if ( lists[location].title !== availableLists[location].title ) {
+                lists[location].title = availableLists[location].title;
+            }
+            availableLists[location] = lists[location];
         }
-        chrome.storage.local.set(store);
+
+        callback(availableLists);
     };
 
-    var removeObsoleteBlacklists = function() {
-        if ( obsoleteBlacklists.length === 0 ) {
-            return;
+    // built-in lists
+    var onBuiltinListsLoaded = function(details) {
+        var location, locations;
+        try {
+            locations = JSON.parse(details.content);
+        } catch (e) {
+            locations = {};
         }
+        for ( location in locations ) {
+            if ( locations.hasOwnProperty(location) === false ) {
+                continue;
+            }
+            availableLists['assets/thirdparties/' + location] = locations[location];
+        }
+
+        // Now get user's selection of lists
         chrome.storage.local.get(
-            { 'remoteBlacklists': µBlock.remoteBlacklists },
-            removeObsoleteBlacklistsHandler
+            { 'remoteBlacklists': availableLists },
+            onSelectedListsLoaded   
         );
     };
 
+    // permanent lists
+    var location;
+    var lists = this.permanentLists;
+    for ( location in lists ) {
+        if ( lists.hasOwnProperty(location) === false ) {
+            continue;
+        }
+        availableLists[location] = lists[location];
+    }
+
+    // custom lists
+    var c;
+    var locations = this.userSettings.externalLists.split('\n');
+    for ( var i = 0; i < locations.length; i++ ) {
+        location = locations[i].trim();
+        c = location.charAt(0);
+        if ( location === '' || c === '!' || c === '#' ) {
+            continue;
+        }
+        // Coarse validation
+        if ( /[^0-9A-Za-z!*'();:@&=+$,\/?%#\[\]_.~-]/.test(location) ) {
+            continue;
+        }
+        availableLists[location] = {
+            title: '',
+            group: 'custom',
+            external: true
+        };
+    }
+
+    // get built-in block lists.
+    this.assets.get('assets/ublock/filter-lists.json', onBuiltinListsLoaded);
+};
+
+/******************************************************************************/
+
+µBlock.loadUbiquitousBlacklists = function() {
+    var µb = this;
+    var blacklistLoadCount;
+
+    var loadBlacklistsEnd = function() {
+        µb.abpFilters.freeze();
+        µb.abpHideFilters.freeze();
+        µb.messaging.announce({ what: 'loadUbiquitousBlacklistCompleted' });
+        chrome.storage.local.set({ 'remoteBlacklists': µb.remoteBlacklists });
+    };
+
     var mergeBlacklist = function(details) {
-        var µb = µBlock;
         µb.mergeUbiquitousBlacklist(details);
         blacklistLoadCount -= 1;
         if ( blacklistLoadCount === 0 ) {
@@ -158,97 +225,38 @@
         }
     };
 
-    var loadBlacklistsEnd = function() {
-        µBlock.abpFilters.freeze();
-        µBlock.abpHideFilters.freeze();
-        removeObsoleteBlacklists();
-        µBlock.messaging.announce({ what: 'loadUbiquitousBlacklistCompleted' });
-    };
-
-    var loadBlacklistsStart = function(store) {
-        var µb = µBlock;
+    var loadBlacklistsStart = function(lists) {
+        µb.remoteBlacklists = lists;
 
         // rhill 2013-12-10: set all existing entries to `false`.
         µb.abpFilters.reset();
         µb.abpHideFilters.reset();
-        var storedLists = store.remoteBlacklists;
-        var storedListLocations = Object.keys(storedLists);
-
-        blacklistLoadCount = storedListLocations.length;
+        var locations = Object.keys(lists);
+        blacklistLoadCount = locations.length;
         if ( blacklistLoadCount === 0 ) {
             loadBlacklistsEnd();
             return;
         }
 
-        // Backward compatibility for when a list changes location
-        var relocations = [
-            {
-                // https://github.com/gorhill/httpswitchboard/issues/361
-                 'bad': 'assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt',
-                'good': 'assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt'
-            }
-        ];
-        var relocation;
-        while ( relocation = relocations.pop() ) {
-            if ( µb.remoteBlacklists[relocation.good] && storedLists[relocation.bad] ) {
-                storedLists[relocation.good].off = storedLists[relocation.bad].off;
-            }
-        }
-
         // Load each preset blacklist which is not disabled.
         var location;
-        while ( location = storedListLocations.pop() ) {
-            // If loaded list location is not part of default list locations,
-            // remove its entry from local storage.
-            if ( !µb.remoteBlacklists[location] ) {
-                obsoleteBlacklists.push(location);
-                blacklistLoadCount -= 1;
-                continue;
-            }
-            // https://github.com/gorhill/httpswitchboard/issues/218
-            // Transfer potentially existing list title into restored list data.
-            if ( storedLists[location].title !== µb.remoteBlacklists[location].title ) {
-                storedLists[location].title = µb.remoteBlacklists[location].title;
-            }
-            // Store details of this preset blacklist
-            µb.remoteBlacklists[location] = storedLists[location];
+        while ( location = locations.pop() ) {
             // rhill 2013-12-09:
             // Ignore list if disabled
             // https://github.com/gorhill/httpswitchboard/issues/78
-            if ( storedLists[location].off ) {
+            if ( lists[location].off ) {
                 blacklistLoadCount -= 1;
                 continue;
             }
-            µb.assets.get(location, mergeBlacklist);
-        }
-    };
-
-    var onListOfBlockListsLoaded = function(details) {
-        var µb = µBlock;
-        // Initialize built-in list of 3rd-party block lists.
-        var lists = JSON.parse(details.content);
-        for ( var location in lists ) {
-            if ( lists.hasOwnProperty(location) === false ) {
-                continue;
+            if ( /^https?:\/\/.+$/.test(location) ) {
+                µb.assets.getExternal(location, mergeBlacklist);
+            } else {
+                µb.assets.get(location, mergeBlacklist);
             }
-            µb.remoteBlacklists['assets/thirdparties/' + location] = lists[location];
         }
-        // Now get user's selection of list of block lists.
-        chrome.storage.local.get(
-            { 'remoteBlacklists': µb.remoteBlacklists },
-            loadBlacklistsStart
-        );
     };
 
-    // Reset list of 3rd-party block lists.
-    for ( var location in this.remoteBlacklists ) {
-        if ( location.indexOf('assets/thirdparties/') === 0 ) {
-            delete this.remoteBlacklists[location];
-        }
-    }
-
-    // Get new list of 3rd-party block lists.
-    this.assets.get('assets/ublock/filter-lists.json', onListOfBlockListsLoaded);
+    this.getAvailableLists(loadBlacklistsStart);
 };
 
 /******************************************************************************/

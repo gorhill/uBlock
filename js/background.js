@@ -32,6 +32,7 @@ return {
 
     userSettings: {
         collapseBlocked: true,
+        externalLists: '',
         logBlockedRequests: false,
         logAllowedRequests: false,
         parseAllABPHideFilters: true,
@@ -47,13 +48,12 @@ return {
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
 
-    // list of remote blacklist locations
-    remoteBlacklists: {
+    // permanent lists
+    permanentLists: {
         // User
         'assets/user/filters.txt': {
             group: 'default'
         },
-
         // uBlock
         'assets/ublock/filters.txt': {
             title: 'µBlock filters',
@@ -64,7 +64,10 @@ return {
             title: 'µBlock filters - Privacy',
             group: 'default'
         }
-       // 3rd-party lists fetched dynamically
+    },
+
+    // current lists
+    remoteBlacklists: {
     },
 
     pageStores: {},

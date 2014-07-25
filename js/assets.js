@@ -146,7 +146,7 @@ var cachedAssetsManager = (function() {
         };
         var onEntries = function(entries) {
             if ( entries[path] === undefined ) {
-                entries[path] = true;
+                entries[path] = Date.now();
                 bin.cached_asset_entries = entries;
             }
             chrome.storage.local.set(bin, onSaved);
@@ -154,7 +154,7 @@ var cachedAssetsManager = (function() {
         getEntries(onEntries);
     };
 
-    exports.remove = function(pattern) {
+    exports.remove = function(pattern, before) {
         var onEntries = function(entries) {
             var keystoRemove = [];
             var paths = Object.keys(entries);
@@ -166,6 +166,9 @@ var cachedAssetsManager = (function() {
                     continue;
                 }
                 if ( pattern instanceof RegExp && !pattern.test(path) ) {
+                    continue;
+                }
+                if ( typeof before === 'number' && entries[path] >= before ) {
                     continue;
                 }
                 keystoRemove.push(cachedAssetPathPrefix + path);
@@ -406,7 +409,9 @@ var readLocalFile = function(path, callback) {
 
 /******************************************************************************/
 
-var readRemoteFile = function(path, callback) {
+// Get the repository copy of a built-in asset.
+
+var readRepoFile = function(path, callback) {
     var reportBack = function(content, err) {
         var details = {
             'path': path,
@@ -416,8 +421,8 @@ var readRemoteFile = function(path, callback) {
         callback(details);
     };
 
-    var onRemoteFileLoaded = function() {
-        // console.log('µBlock> readRemoteFile() / onRemoteFileLoaded()');
+    var onRepoFileLoaded = function() {
+        // console.log('µBlock> readRepoFile() / onRepoFileLoaded()');
         // https://github.com/gorhill/httpswitchboard/issues/263
         if ( this.status === 200 ) {
             reportBack(this.responseText);
@@ -427,8 +432,8 @@ var readRemoteFile = function(path, callback) {
         this.onload = this.onerror = null;
     };
 
-    var onRemoteFileError = function(ev) {
-        console.error('µBlock> readRemoteFile() / onRemoteFileError("%s")', path);
+    var onRepoFileError = function(ev) {
+        console.error('µBlock> readRepoFile() / onRepoFileError("%s")', path);
         reportBack('', 'Error');
         this.onload = this.onerror = null;
     };
@@ -436,9 +441,60 @@ var readRemoteFile = function(path, callback) {
     // 'ublock=...' is to skip browser cache
     getTextFileFromURL(
         repositoryRoot + path + '?ublock=' + Date.now(),
-        onRemoteFileLoaded,
-        onRemoteFileError
+        onRepoFileLoaded,
+        onRepoFileError
     );
+};
+
+/******************************************************************************/
+
+var readExternalFile = function(path, callback) {
+    var reportBack = function(content, err) {
+        var details = {
+            'path': path,
+            'content': content
+        };
+        if ( err ) {
+            details.error = err;
+        }
+        callback(details);
+    };
+
+    var onExternalFileCached = function(details) {
+        this.onload = this.onerror = null;
+        // console.log('µBlock> onExternalFileCached()');
+        reportBack(details.content);
+    };
+
+    var onExternalFileLoaded = function() {
+        this.onload = this.onerror = null;
+        // console.log('µBlock> onExternalFileLoaded()');
+        cachedAssetsManager.save(path, this.responseText, onExternalFileCached);
+    };
+
+    var onExternalFileError = function(ev) {
+        console.error('µBlock> onExternalFileError() / onLocalFileError("%s")', path);
+        reportBack('', 'Error');
+        this.onload = this.onerror = null;
+    };
+
+    var onCachedContentLoaded = function(details) {
+        // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
+        reportBack(details.content);
+    };
+
+    var onCachedContentError = function(details) {
+        // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
+        getTextFileFromURL(details.path, onExternalFileLoaded, onExternalFileError);
+    };
+
+    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+};
+
+/******************************************************************************/
+
+var purgeCache = function(pattern, before) {
+    cachedAssetsManager.remove(pattern, before);
 };
 
 /******************************************************************************/
@@ -580,7 +636,9 @@ synchronizeCache();
 
 return {
     'get': readLocalFile,
-    'getRemote': readRemoteFile,
+    'getExternal': readExternalFile,
+    'getRepo': readRepoFile,
+    'purge': purgeCache,
     'put': writeLocalFile,
     'update': updateFromRemote
 };

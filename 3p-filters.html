@@ -12,15 +12,22 @@ div > p:first-child {
 div > p:last-child {
     margin-bottom: 0;
     }
+body > ul {
+    margin: 0.5em 0 0 0;
+    padding-left: 1em;
+    }
 ul {
     padding: 0;
     list-style-type: none;
     }
 ul > li {
-    margin: 0.5em 0 3px 0;
+    margin: 0.5em 0 0 0;
     padding: 0;
     font-size: 15px;
     list-style-type: none;
+    }
+ul > li > ul {
+    margin: 0.25em 0 0 0;
     }
 ul > li > ul > li {
     font-size: 14px;
@@ -35,12 +42,18 @@ ul > li > ul > li {
     height: 16em;
     white-space: nowrap;
     }
+#externalLists {
+    font-size: smaller;
+    width: 48em;
+    height: 8em;
+    white-space: nowrap;
+    }
 </style>
 </head>
 
 <body>
 
-<ul id="options" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
+<ul id="options">
     <li><button id="blacklistsApply" disabled="true" data-i18n="3pApplyChanges"></button>
     <li style="margin-top:0.75em"><input type="checkbox" id="parseAllABPHideFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1"></label>
     <span class="dim" id="3pParseAllABPHideFiltersPrompt2"></span>
@@ -48,8 +61,14 @@ ul > li > ul > li {
     <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
     <li style="margin-top:0.75em"><p id="listsOfBlockedHostsPrompt"></p>
 </ul>
-<ul id="lists" style="margin:0.5em 0 0 0;padding-left:1em;list-style-type:none">
+<ul id="lists">
 </ul>
+
+<div style="margin: 2em 0 0 2em">
+<p data-i18n="3pExternalListsHint" style="margin: 0 0 0.25em 0; font-size: 13px;"></p>
+<textarea id="externalLists"></textarea>
+<p style="margin: 0.25em 0 0 0"><button id="externalListsApply" disabled="true" data-i18n="3pExternalListsApply"></button></p>
+</div>
 
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>

@@ -122,7 +122,7 @@ var getUpdateList = function(callback) {
         }
     };
 
-    µBlock.assets.getRemote('assets/checksums.txt', onRemoteChecksumsLoaded);
+    µBlock.assets.getRepo('assets/checksums.txt', onRemoteChecksumsLoaded);
     µBlock.assets.get('assets/checksums.txt', onLocalChecksumsLoaded);
 };
 
@@ -199,6 +199,9 @@ var update = function(list, callback) {
         list = details.list;
         processList();
     };
+
+    // Purge obsolete external assets
+    µBlock.assets.purge(/^https?:\/\/.+$/, Date.now() - µBlock.updateAssetsEvery);
 
     if ( list ) {
         processList();

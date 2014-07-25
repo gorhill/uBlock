@@ -24,6 +24,7 @@
 www.zerohedge.com##.similar-box
 
 # https://github.com/gorhill/uBlock/issues/57
+# https://github.com/gorhill/uBlock/issues/98
 # New filter class: entity filters, where
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,

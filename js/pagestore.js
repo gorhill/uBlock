@@ -154,7 +154,7 @@ PageStore.prototype.updateBadge = function() {
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFilteringSwitch && this.perLoadBlockedRequestCount ) {
-        iconStr = µb.formatCount(this.perLoadBlockedRequestCount);
+        iconStr = this.perLoadBlockedRequestCount.toLocaleString();
     }
     chrome.browserAction.setBadgeText({
         tabId: this.tabId,

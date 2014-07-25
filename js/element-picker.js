@@ -36,7 +36,7 @@
 	var InvalidCharacterError = function(message) {
 		this.message = message;
 	};
-	InvalidCharacterError.prototype = new Error;
+	InvalidCharacterError.prototype = new Error();
 	InvalidCharacterError.prototype.name = 'InvalidCharacterError';
 
 	if (!CSS.escape) {
