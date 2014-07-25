@@ -52,7 +52,7 @@ var renderStats = function() {
         return;
     }
 
-    var isHTTP = /^https?:\/\/[a-z]/.test(stats.pageURL);
+    var isHTTP = /^https?:\/\/[0-9a-z]/.test(stats.pageURL);
 
     // Conditions for request log:
     //   - `http` or `https` scheme
