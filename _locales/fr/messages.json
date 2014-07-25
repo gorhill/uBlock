@@ -131,6 +131,18 @@
     "message":"Régions/Langues",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Vos propres listes",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Une adresse URL par ligne. Les lignes débutant par un &lsquo;!&rsquo; seront ignorées. Les adresses URLs invalides seront ignorées sans avertissement.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Appliquer",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
