@@ -131,6 +131,18 @@
     "message":"Регионы, языки",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Пользовательские",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Один URL-адрес на строку. Строки с префиксом &lsquo;!&rsquo; будут игнорироваться. Недопустимые адреса также будут игнорироваться молча.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Применить",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Одно правило на строку. Правилом может быть обычное имя сайти, или Adblock Plus-совместимый фильтр. Линии начинающиеся с &lsquo;!&rsquo; будут пропущены.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

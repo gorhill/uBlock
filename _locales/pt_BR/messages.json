@@ -88,15 +88,15 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analisar e reforçar filtros de elementos escondidos com Adblock+.",
+    "message":"Analisar e aplicar filtros de esconder elementos com Adblock Plus.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} filtros de elementos escondidos usado(s).",
+    "message":"{{abpHideFilterCount}} filtros de esconder elementos usado(s).",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"elemento escondido\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"esconder elementos\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -131,8 +131,20 @@
     "message":"Regiões, idiomas",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Personalizar",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Uma URL por linha. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas. URLs inválidas serão silenciosamente ignoradas.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Aplicar",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
-    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; será ignorado.",
+    "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -148,7 +160,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Sua lista de exceções de nomes de host para qual o μBlock será desativado. Uma entrada por linha. nomes de host inválidos será ignorado.",
+    "message":"Sua lista de exceções de nomes de host para qual o μBlock será desativado. Uma entrada por linha. nomes de host inválidos serão silenciosamente ignorados.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

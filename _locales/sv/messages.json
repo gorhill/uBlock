@@ -131,6 +131,18 @@
     "message":"Regioner, språk",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Anpassad",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"En adress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga adresser kommer också ignoreras.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Verkställ",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
