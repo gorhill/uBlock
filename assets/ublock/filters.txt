@@ -28,14 +28,40 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-google.*###cnt #center_col > #res > #topstuff > .ts
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
-google.*###tads
-google.*###bottomads
+google.*###cnt #center_col > #res > #topstuff > .ts
+google.*###main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"]
+google.*###mbEnd[cellspacing="0"][cellpadding="0"]
+google.*###mclip_container:last-child
+google.*###mn #center_col > div > h2.spon:first-child
+google.*###mn #center_col > div > h2.spon:first-child + ol:last-child
+google.*###resultspanel > #topads
 google.*###rhs_block > #mbEnd
 google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
-google.*##.mw > #rcnt > #center_col > #taw > .c
+google.*###rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"]
+google.*###ssmiwdiv[jsdisplay]
+google.*###tads + div + .c
+google.*###tads.c
+google.*###tadsb.c
+google.*###tadsto.c
+google.*###topstuff > #tads
+google.*##.GB3L-QEDGY .GB3L-QEDF- > .GB3L-QEDE-
+google.*##.GHOFUQ5BG2 > .GHOFUQ5BF2 > .GHOFUQ5BG5
+google.*##.GJJKPX2N1 > .GJJKPX2M1 > .GJJKPX2P4
+google.*##.GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB
+google.*##.ch[onclick="ga(this,event)"]
+google.*##.commercial-unit-desktop-rhs
+google.*##.commercial-unit-desktop-top
+google.*##.lads[width="100%"][style="background:#FFF8DD"]
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
+google.*##.mw > #rcnt > #center_col > #taw > .c
+google.*##.ra[align="left"][width="30%"]
+google.*##.ra[align="right"][width="30%"]
+google.*##.ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"]
+google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"]
+
+google.*###tads
+google.*###bottomads
 
 # https://github.com/gorhill/uBlock/issues/63
 @@||adf.ly^$~third-party
