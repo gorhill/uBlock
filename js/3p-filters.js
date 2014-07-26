@@ -30,6 +30,7 @@
 var userListName = chrome.i18n.getMessage('1pPageName');
 var listDetails = {};
 var externalLists = '';
+var cacheWasPurged = false;
 
 /******************************************************************************/
 
@@ -107,6 +108,7 @@ var renderBlacklists = function() {
     };
 
     var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
+    var purgeButtontext = chrome.i18n.getMessage('3pExternalListPurge');
 
     var htmlFromBranch = function(groupKey, listKeys, lists) {
         var html = [
@@ -143,6 +145,15 @@ var renderBlacklists = function() {
                 .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
                 .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
             html.push(listEntry);
+            // https://github.com/gorhill/uBlock/issues/104
+            if ( /^https?:\/\/.+/.test(listKey) && listDetails.cache[listKey] ) {
+                html.push(
+                    '&ensp;',
+                    '<button type="button" class="purge">',
+                    purgeButtontext,
+                    '</button>'
+                );
+            }
         }
         html.push('</ul>');
         return html.join('');
@@ -217,6 +228,9 @@ var needToReload = function() {
     if ( listDetails.cosmetic !== getµb().userSettings.parseAllABPHideFilters ) {
         return true;
     }
+    if ( cacheWasPurged ) {
+        return true;
+    }
     var availableLists = listDetails.available;
     var currentLists = listDetails.current;
     var location, availableOff, currentOff;
@@ -279,6 +293,20 @@ var onListLinkClicked = function(ev) {
 
 /******************************************************************************/
 
+var onPurgeClicked = function(ev) {
+    var button = uDom(this);
+    var href = button.parent().find('a').first().attr('href');
+    if ( !href ) {
+        return;
+    }
+    messaging.tell({ what: 'purgeCache', path: href });
+    button.remove();
+    cacheWasPurged = true;
+    selectedBlacklistsChanged();
+};
+
+/******************************************************************************/
+
 var blacklistsApplyHandler = function() {
     if ( !needToReload() ) {
         return;
@@ -308,6 +336,7 @@ var blacklistsApplyHandler = function() {
         what: 'reloadAllFilters',
         switches: switches
     });
+    cacheWasPurged = false;
     uDom('#blacklistsApply').prop('disabled', true);
 };
 
@@ -358,6 +387,7 @@ uDom.onLoad(function() {
     uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
     uDom('#lists').on('change', '.listDetails > input', onListCheckboxChanged);
     uDom('#lists').on('click', '.listDetails > a:nth-of-type(1)', onListLinkClicked);
+    uDom('#lists').on('click', 'button.purge', onPurgeClicked);
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);
 

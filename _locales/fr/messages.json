@@ -143,6 +143,10 @@
     "message":"Appliquer",
     "description":"English: Apply"
   },
+  "3pExternalListPurge":{
+    "message":"purge cache",
+    "description":"English: purge cache"
+  },
   "1pFormatHint":{
     "message":"Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

@@ -235,14 +235,26 @@ var onMessage = function(request, sender, callback) {
 
 var getLists = function(callback) {
     var µb = µBlock;
-    var onReceived = function(lists) {
-        callback({
-            available: lists,
-            current: µb.remoteBlacklists,
-            cosmetic: µb.userSettings.parseAllABPHideFilters
-        });
+    var r = {
+        available: null,
+        current: µb.remoteBlacklists,
+        cosmetic: µb.userSettings.parseAllABPHideFilters,
+        cache: null
     };
-    µb.getAvailableLists(onReceived);
+    var onEntries = function(entries) {
+        r.cache = entries;
+        if ( r.available ) {
+            callback(r);
+        }
+    };
+    var onLists = function(lists) {
+        r.available = lists;
+        if ( r.cache ) {
+            callback(r);
+        }
+    };
+    µb.getAvailableLists(onLists);
+    µb.assets.entries(onEntries);
 };
 
 /******************************************************************************/
@@ -269,6 +281,10 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+        case 'purgeCache':
+            µb.assets.purge(request.path);
+            break;
+
         default:
             return µb.messaging.defaultHandler(request, sender, callback);
     }

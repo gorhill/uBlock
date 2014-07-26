@@ -95,6 +95,7 @@ var cachedAssetsManager = (function() {
         };
         chrome.storage.local.get('cached_asset_entries', onLoaded);
     };
+    exports.entries = getEntries;
 
     exports.load = function(path, cbSuccess, cbError) {
         cbSuccess = cbSuccess || nullFunc;
@@ -625,6 +626,12 @@ var updateFromRemote = function(details, callback) {
 
 /******************************************************************************/
 
+var cacheEntries = function(callback) {
+    return cachedAssetsManager.entries(callback);
+};
+
+/******************************************************************************/
+
 // Flush cached assets if cache content is from an older version: the extension
 // always ships with the most up-to-date assets.
 
@@ -640,7 +647,8 @@ return {
     'getRepo': readRepoFile,
     'purge': purgeCache,
     'put': writeLocalFile,
-    'update': updateFromRemote
+    'update': updateFromRemote,
+    'entries': cacheEntries
 };
 
 /******************************************************************************/
