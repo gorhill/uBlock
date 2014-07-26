@@ -131,6 +131,18 @@
     "message":"Регіони, мови",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Custom",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Apply",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

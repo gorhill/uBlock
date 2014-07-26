@@ -131,6 +131,18 @@
     "message":"地区语言",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Custom",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Apply",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"每行一条规则。一条规则可以是一个平凡的站点名或者是一条Adblock Plus的兼容过滤规则。以“!”开头的行将被忽略。",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

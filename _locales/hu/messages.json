@@ -131,6 +131,18 @@
     "message":"Nemzetiségek, nyelvek",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Custom",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Apply",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Egy lista soronként. A filter lehet egy hostname, vagy Adblock-Plus compatibilis filter.\nSorok amik egy &lsquo;!&rsquo;-val kezdenek, nem lesznek tudomásul véve.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
