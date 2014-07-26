@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-// Intercept and filter web requests according to white and black lists.
+// Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
     //console.debug('onBeforeRequest()> "%s": %o', details.url, details);
@@ -94,6 +94,11 @@ var onBeforeRequest = function(details) {
 // Intercept root frame requests. This is where we identify and block popups.
 
 var onBeforeSendHeaders = function(details) {
+    // TODO: I vaguely remember reading that when pre-fetch is enabled,
+    // the tab id could be -1, despite the request not really being a
+    // behind-the-scene request. If true, the test below would prevent 
+    // the popup blocker from working. Need to check this.
+
     // Do not block behind the scene requests.
     var tabId = details.tabId;
     if ( tabId < 0 ) {
@@ -140,6 +145,10 @@ var onBeforeSendHeaders = function(details) {
     };
     //console.debug('Referrer="%s"', referrer);
 
+    // TODO: I think I should test the switch of the referrer instead, not the
+    // switch of the popup. If so, that would require being able to lookup
+    // a page store from a URL. Have to keep in mind the same URL can appear
+    // in multiple tabs.
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
         reason = µb.abpFilters.matchString(
