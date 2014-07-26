@@ -3,7 +3,8 @@
 See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes. 
 See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
-An efficient blocker for Chromium-based browsers. Fast and lean.
+An efficient blocker for Chromium-based browsers. Fast and lean. Development 
+through benchmarking.
 
 <p align="center">
 µBlock: page loaded. ABP: page still loading.<br>

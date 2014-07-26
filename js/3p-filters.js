@@ -29,7 +29,6 @@
 
 var userListName = chrome.i18n.getMessage('1pPageName');
 var listDetails = {};
-var parseCosmeticFilters = true;
 var externalLists = '';
 
 /******************************************************************************/
@@ -288,7 +287,7 @@ var blacklistsApplyHandler = function() {
     messaging.tell({
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: parseCosmeticFilters
+        value: listDetails.cosmetic
     });
     // Reload blacklists
     var switches = [];
