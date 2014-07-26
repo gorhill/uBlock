@@ -20,16 +20,13 @@
 ! AdWorkMedia
 ! if (!awm) { window.location = 'http://adworkmedia.com/help/removeAB.php'; }
 ! if (!awm) { window.location = 'http://loxtk.com/help/removeAB.php'; }
-! ||loxtk.com/gLoader.php?* --> script
-! http://www.loxtk.com/gLoader.php?GID=18783&go=&sid=
-! http://www.adworkmedia.com/gLoader.php?GID=10184&go=&sid=
-! ||loxtk.com/gTemplate.php?* --> subdocument
-! http://loxtk.com/gTemplate.php?GID=18783&sid=&ST=
-! http://www.adworkmedia.com/gTemplate.php?GID=10184&sid=&ST=
-@@||loxtk.com/gLoader.php?GID=*$script,third-party
-@@||loxtk.com/gTemplate.php?GID=*$subdocument,third-party
+! if (!awm) { window.location = 'http://contentlockingnetworks.com/help/removeAB.php'; }
 @@||adworkmedia.com/gLoader.php?GID=*$script,third-party
 @@||adworkmedia.com/gTemplate.php?GID=*$subdocument,third-party
+@@||loxtk.com/gLoader.php?GID=*$script,third-party
+@@||loxtk.com/gTemplate.php?GID=*$subdocument,third-party
+@@||contentlockingnetworks.com/gLoader.php?GID=*$script,third-party
+@@||contentlockingnetworks.com/gTemplate.php?GID=*$subdocument,third-party
 ! AdScendMedia
 ! if (gwloaded==false){window.location = "http://adscendmedia.com/gateway_adblock.php?p=4316";}
 ! https://adscendmedia.com/widget_adblock.php?p=12377 --> redirect
@@ -151,6 +148,7 @@ tvdez.com,casadossegredos.tv,estadiofutebol.com,televisaofutebol.com##DIV[style=
 ! pro-zik.ws domains
 /js/check.js$domain=pro-zik.ws|pro-tect.ws|pro-ddl.ws|pro-sport.ws
 ! file4go.com
+file4go.com#@#.afs_ads
 ! afreesms.com
 @@||afreesms.com/js/adblock.js
 ! receive-sms.com

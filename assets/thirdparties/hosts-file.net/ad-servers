@@ -4227,6 +4227,7 @@
 127.0.0.1	afe.specificclick.net
 127.0.0.1	aff-jp.dxlive.com
 127.0.0.1	aff-jp.exshot.com
+127.0.0.1	aff.attractiontracker.com
 127.0.0.1	aff.clickon.co.il
 127.0.0.1	aff.cupidplc.com
 127.0.0.1	aff.eteachergroup.com
@@ -7104,6 +7105,7 @@
 127.0.0.1	clickserv.sitescout.com
 127.0.0.1	clickserv2.sitescout.com
 127.0.0.1	clickserve.cc-dt.com
+127.0.0.1	clickserve.dartsearch.net
 127.0.0.1	clickshare.com
 127.0.0.1	clickshield.net
 127.0.0.1	clicksite.com
@@ -11217,6 +11219,7 @@
 127.0.0.1	go.pardot.com
 127.0.0.1	go.promojet.ru
 127.0.0.1	go.pub2srv.com
+127.0.0.1	go.qb.by
 127.0.0.1	go.shareaholic.com
 127.0.0.1	go.tendatta.com
 127.0.0.1	go.theregister.com
@@ -12859,6 +12862,7 @@
 127.0.0.1	lindsay-cournoyer.us
 127.0.0.1	lindy-verdi.us
 127.0.0.1	linicom.co.il
+127.0.0.1	link.ac
 127.0.0.1	link.americastestkitchencorp.com
 127.0.0.1	link.belati.net
 127.0.0.1	link.email.dynect.net
@@ -16984,6 +16988,7 @@
 127.0.0.1	static.bannerbank.ru
 127.0.0.1	static.beintoo.com
 127.0.0.1	static.cdn.gtsmobi.com
+127.0.0.1	static.cdn.puatraffic.com
 127.0.0.1	static.chartbeat.com
 127.0.0.1	static.chartboost.com
 127.0.0.1	static.clixsense.com
@@ -17332,6 +17337,7 @@
 127.0.0.1	support.kissmetrics.com
 127.0.0.1	support.leadbolt.com
 127.0.0.1	support.mobpartner.com
+127.0.0.1	support.publicrand.org
 127.0.0.1	support.skyhookwireless.com
 127.0.0.1	surebaby.us.intellitxt.com
 127.0.0.1	surehits.com
@@ -18221,6 +18227,7 @@
 127.0.0.1	trafficwave.net
 127.0.0.1	trafficz.com
 127.0.0.1	trafficzap.com
+127.0.0.1	traffspot.com
 127.0.0.1	trafic-fr.com
 127.0.0.1	trafic.ro
 127.0.0.1	traficdom.com
@@ -18885,6 +18892,7 @@
 127.0.0.1	videocodezone.us.intellitxt.com
 127.0.0.1	videofun.me
 127.0.0.1	videoplus.vo.llnwd.net
+127.0.0.1	videos.cdn.puatraffic.com
 127.0.0.1	videos.oms.eu
 127.0.0.1	videos.video-loader.com
 127.0.0.1	videostat-new.index.hu
@@ -20964,6 +20972,7 @@
 127.0.0.1	www.linda-bretz.us
 127.0.0.1	www.linda-jose.us
 127.0.0.1	www.lindsay-faulks.us
+127.0.0.1	www.link.ac
 127.0.0.1	www.link4link.com
 127.0.0.1	www.linkads.de
 127.0.0.1	www.linkconnector.com
@@ -21815,6 +21824,7 @@
 127.0.0.1	www.trafficswarm.com
 127.0.0.1	www.traffictrader.net
 127.0.0.1	www.traffictraders.com
+127.0.0.1	www.traffspot.com
 127.0.0.1	www.trafic.ro
 127.0.0.1	www.tribalfusion.com
 127.0.0.1	www.trisha-meikle.us
@@ -22419,4 +22429,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22414
+# Hosts: 22424

@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Tue, 24 Jun 2014 08:46:59 GMT
-# entries:        2481
+# entries:        2477
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -138,7 +138,6 @@
 127.0.0.1 ad.nachtagenten.de
 127.0.0.1 ad.netdialogs.de
 127.0.0.1 ad.nozonedata.com
-127.0.0.1 ad.nttnavi.co.jp
 127.0.0.1 ad.nwt.cz
 127.0.0.1 ad.onad.eu
 127.0.0.1 ad.pandora.tv
@@ -1134,7 +1133,6 @@
 127.0.0.1 bannery.cz
 127.0.0.1 bannieres.acces-contenu.com
 127.0.0.1 bans.adserver.co.il
-127.0.0.1 bans.bride.ru
 127.0.0.1 barnesandnoble.bfast.com
 127.0.0.1 baypops.com
 127.0.0.1 bbelements.com
@@ -1307,7 +1305,6 @@
 127.0.0.1 cookies.cmpnet.com
 127.0.0.1 coremetrics.com
 127.0.0.1 count.rbc.ru
-127.0.0.1 count.rin.ru
 127.0.0.1 count.west263.com
 127.0.0.1 count6.rbc.ru
 127.0.0.1 counted.com
@@ -1440,7 +1437,6 @@
 127.0.0.1 euroclick.com
 127.0.0.1 european-toplist.de
 127.0.0.1 europeanbanners.com
-127.0.0.1 europebanner.net
 127.0.0.1 euroranking.de
 127.0.0.1 euros4click.de
 127.0.0.1 eusta.de
@@ -1875,6 +1871,7 @@
 127.0.0.1 olivebrandresponse.com
 127.0.0.1 omniture.com
 127.0.0.1 onclickads.com
+127.0.0.1 onclickads.net
 127.0.0.1 oneandonlynetwork.com
 127.0.0.1 onenetworkdirect.com
 127.0.0.1 onestat.com
@@ -2025,7 +2022,6 @@
 127.0.0.1 radarurl.com
 127.0.0.1 radiate.com
 127.0.0.1 rampidads.com
-127.0.0.1 rank-master.com
 127.0.0.1 rank-master.de
 127.0.0.1 rank8.de
 127.0.0.1 rankchamp.de
@@ -2280,7 +2276,6 @@
 127.0.0.1 toplist.pornhost.com
 127.0.0.1 toplista.mw.hu
 127.0.0.1 toplistcity.com
-127.0.0.1 topmango.com
 127.0.0.1 topmmorpgsites.com
 127.0.0.1 topping.com.ua
 127.0.0.1 toprebates.com
@@ -2303,6 +2298,7 @@
 127.0.0.1 trackalyzer.com
 127.0.0.1 tracker.icerocket.com
 127.0.0.1 tracking.gajmp.com
+127.0.0.1 tracking.koego.com
 127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
 127.0.0.1 trackingsoft.com

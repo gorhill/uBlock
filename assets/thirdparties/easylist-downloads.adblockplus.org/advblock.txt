@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: EMr/4ZobUzkEmRWLlM54vw
-! Version: 201407241630
-! Last modified: 24 Jul 2014 16:30 UTC
+! Checksum: 1smQceQ3DLYLxyy7QiK4RA
+! Version: 201407261440
+! Last modified: 26 Jul 2014 14:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2623,6 +2623,7 @@ _tizers.
 ||terapou.com^
 ||teromil.com^
 ||textun.ru^$third-party
+||tgearheads.com^
 ||thegrap.ru^
 ||thumpac.com^
 ||ticlon.ru^
@@ -2887,7 +2888,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -4307,7 +4308,10 @@ forbes.ua##.adver_top
 9111.ru##.advzone
 europaplus.ru##.adwolf-holder
 brb.to,cxz.to,fs.to##.b-adsuniversal-wrap
+siliconrus.com##.b-adv
+siliconrus.com##.b-adv-micro
 redtram.com##.b-informers
+siliconrus.com##.b-top-adv
 news.pn##.banner
 online.ua##.banner-top
 mmorpg.ua##.banner_left_col
@@ -5288,6 +5292,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||upweek.ru/wp-content/banners/
 ||uzum.tv/120/
 ||uzumaki.kz/go?$script
+||v-chulkahh.ru/js/06ea7c.js
 ||v-info.ru/i_bann/
 ||v-info.ru^*.swf?data=
 ||vashgorod.ru/images/banner/

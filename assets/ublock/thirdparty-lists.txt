@@ -37,7 +37,7 @@ https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt
 easylist-downloads.adblockplus.org/fanboy-social.txt
 https://easylist-downloads.adblockplus.org/fanboy-social.txt
 
-www.fanboy.co.nz/r/fanboy-ultimate.txt
+www.fanboy.co.nz/fanboy-ultimate.txt
 https://www.fanboy.co.nz/r/fanboy-ultimate.txt
 
 www.fanboy.co.nz/enhancedstats.txt

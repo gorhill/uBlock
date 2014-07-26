@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: RZk9QznSvX1Gkx94KNNVoQ
-! Version: 201407241631
+! Checksum: y2hrvLNyTZpjedzew9Km+w
+! Version: 201407261441
 ! Title: EasyPrivacy
-! Last modified: 24 Jul 2014 16:31 UTC
+! Last modified: 26 Jul 2014 14:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -34,6 +34,8 @@
 .asis?Log=
 .au/1x1.gif?
 .au/c.gif?
+.au/t.ashx?
+.au/t.gif?
 .beacon.min.js
 .cn/1.gif?
 .cn/a.gif?
@@ -43,6 +45,7 @@
 .cn/z.gif?
 .com.au/HG?hc=
 .com.com/redir?timestamp
+.com/0.gif?
 .com/1.gif?
 .com/2.gif?
 .com/3.gif?
@@ -114,6 +117,7 @@
 .php?logRefer=
 .php?refcode=
 .PixelNedstatStatistic/
+.sg/t.gif?
 .sharecounter.$third-party
 .sitecatalyst.js
 .siteclarity.
@@ -277,6 +281,7 @@
 /argtk.min.
 /article_counter.php?
 /article_hit.php?
+/ArticleLog.aspx?
 /ArticleViewTracking/*
 /asknet_tracking.
 /aslog.php?
@@ -1597,6 +1602,7 @@
 /stat.tiff?
 /stat/count
 /stat/track.php?mode=js
+/stat2.aspx?
 /stat2.js
 /stat36/stat/track.php
 /stat_js.asp?
@@ -1828,6 +1834,7 @@
 /trackjs_
 /trackmerchant.js
 /tracknat.
+/trackopen.cgi?
 /trackpageview.
 /trackPageView/*
 /trackpidv3.
@@ -2483,6 +2490,7 @@ http://utm.
 ||confirmational.com^$third-party
 ||confirmit.com^$third-party
 ||contactmonkey.com^$third-party
+||contemporaryceremonies.ca^$third-party
 ||contentspread.net^$third-party
 ||contextly.com^$third-party
 ||continue.com^$third-party
@@ -2594,6 +2602,7 @@ http://utm.
 ||dsply.com^$third-party
 ||dstrack2.info^$third-party
 ||dti-ranker.com^$third-party
+||dummy-domain-do-not-change.com^$third-party
 ||dv0.info^$third-party
 ||dwin1.com^$third-party
 ||dwin2.com^$third-party
@@ -3154,8 +3163,6 @@ http://utm.
 ||p.raasnet.com^$third-party
 ||p0.raasnet.com^$third-party
 ||pa-oa.com^$third-party
-||pagefair.com^$third-party
-||pagefair.net^$third-party
 ||pages05.net^$third-party
 ||paidstats.com^$third-party
 ||pardot.com^$third-party
@@ -3841,6 +3848,7 @@ http://utm.
 ||iivt.com^$third-party
 ||imcht.net^$third-party
 ||inet-tracker.de^$third-party
+||ingenioustech.biz^$third-party
 ||intelliad-tracking.com^$third-party
 ||intelliad.de^$third-party
 ||interaktiv-net.de^$third-party
@@ -4685,6 +4693,7 @@ http://utm.
 ||comet.ibsrv.net^
 ||comic-rocket.com/metrics.js
 ||communicatorcorp.com^*/conversiontracking.js
+||compendiumblog.com/js/stats.js
 ||concur.com/open.aspx?
 ||content.cpcache.com^*/js/ga.js
 ||control.adap.tv^$object-subrequest
@@ -4904,7 +4913,6 @@ http://utm.
 ||glam.com/cece/agof/
 ||glam.com/ctagsimgcmd.act?
 ||glbdns.microsoft.com^
-||gmyze.com^*/fingerprint.js
 ||go-stats.dlinkddns.com^$third-party
 ||go.toutapp.com^$third-party
 ||goadv.com^*/track.js
@@ -6330,7 +6338,6 @@ http://utm.
 ||atlantafalcons.com/wp-content/*/metrics.js
 ||atlantis.com/_scripts/tsedge/pagemarker.gif?
 ||atlas.astrology.com^
-||atomicmpc.com.au/t.ashx?
 ||atrack.allposters.com^
 ||atrack.art.com^
 ||atracktive.collegehumor.com^
@@ -6565,7 +6572,6 @@ http://utm.
 ||creativecommons.org^*/triples?
 ||creditcards.com/actions/page_view.php?
 ||creditcards.com/sb.php?
-||crn.com.au/t.ashx?
 ||crowdignite.com/img/l.gif
 ||crunchsports.com/tracking_fetchinfo.aspx?
 ||crunchyroll.com/tracker
@@ -6585,8 +6591,6 @@ http://utm.
 ||dailymotion.com/logger/$object-subrequest
 ||dailymotion.com/track/$object-subrequest
 ||dailymotion.com^*/tag.gif?
-||dailyom.com^*/trackopen.cgi?
-||dailystar.com.lb/ArticleLog.aspx?
 ||data.ninemsn.com.au/*GetAdCalls
 ||datacollector.coin.scribol.com^
 ||datehookup.com/strk/dateadvertreg?
@@ -6601,7 +6605,6 @@ http://utm.
 ||dell.com/metrics/
 ||depositfiles.com/view.gif?
 ||derkeiler.com/gam/tag.js
-||di-ve.com^*/stat2.aspx?
 ||diag.doba.com^
 ||dictionary.com/track/
 ||digg.com/api/analytics/
@@ -6621,7 +6624,6 @@ http://utm.
 ||domaintools.com/buffer.pgif?
 ||domaintools.com/tracker.php
 ||dominos.co.uk^*/universal.html?
-||doublegames.com/0.gif?
 ||dropbox.com/el/?b=open:
 ||dropbox.com/web_timing_log
 ||drpeterjones.com/stats/
@@ -6677,8 +6679,6 @@ http://utm.
 ||etui.fs.ml.com^
 ||eulerian.splendia.com/ea.js
 ||euroleague.tv^*/tracking.js
-||eventfinda.sg/t.gif?
-||eventfinder.com.au/t.gif?
 ||eventlogger.soundcloud.com^
 ||everythinggirl.com/assets/tracker/
 ||evisit.exeter.ac.uk^
@@ -6738,7 +6738,6 @@ http://utm.
 ||flixster.com^*/pixels?
 ||flybmi.com/livetrack/
 ||flyjazz.ca/ow_ga.js
-||fm.co.za/statistics/
 ||fncstatic.com/static/all/js/geo.js
 ||foodcouture.net/public_html/ra/script.php$script
 ||foodnavigator.com/tracker/
@@ -6854,7 +6853,6 @@ http://utm.
 ||groupon.com/analytic/
 ||groupon.com/tracking
 ||groupon.com/tracky
-||guardian.co.uk/px.gif?
 ||h.cliphunter.com^
 ||harrisbank.com^*/zig.js
 ||harvester.eu.square-enix.com^
@@ -6970,10 +6968,8 @@ http://utm.
 ||ip-adress.com/gl?r=
 ||ipetitions.com/img.php?
 ||irs.gov/js/irs_reporting_cookie.js
-||ishare.metric.rediff.com^
 ||issn.org/isens_marker.php?
 ||issuu.com/pixel.gif?
-||itnews.com.au/t.ashx?
 ||itp.net/ga.js
 ||itv.com/_app/cmn/js/bcm.js
 ||ixs1.net/s/
@@ -7033,7 +7029,6 @@ http://utm.
 ||lifehacker.com^*/trackers.html
 ||lightreading.com/client_pathlog.asp
 ||likes.com/api/track_pv
-||limelightmagazine.com.au/t.ashx?
 ||linguee.com*/white_pixel.gif?
 ||link.codeyear.com/img/
 ||link.ex.fm/img/*.gif
@@ -7287,7 +7282,6 @@ http://utm.
 ||partners.mysavings.com^
 ||paypal.com/webapps/beaconweb/
 ||paypalobjects.com/*/m/mid.swf$domain=paypal.com
-||pcauthority.com.au/t.ashx?
 ||pch.com^*/scripts/Analytics/
 ||pch.com^*/SpectrumAnalytics.js?
 ||pclick.europe.yahoo.com^
@@ -7484,7 +7478,6 @@ http://utm.
 ||seatgeek.com/sixpack/participate?
 ||seatgeek.com/tracker.gif?
 ||secondspace.com^*/blank.gif
-||securecomputing.net.au/t.ashx?
 ||securepaynet.net/image.aspx?
 ||seeclickfix.com^*/text_widgets_analytics.html
 ||selfip.org/counter/
@@ -8077,7 +8070,6 @@ http://utm.
 ||hayneedle.com/js/s_code.min.*.js
 ||images-amazon.com/images/*/wcs-help-omniture/wcs-help-omniture-$script
 ||img-bahn.de/v/*/js/s_code.js$domain=bahn.de
-||kohls.com/media/omniture/s_code.js
 ||lexus.com/lexus-share/js/tracking_omn/s_code.js
 ||mercedes-benz.ca/js/omniture.js
 ||mercola.com/Assets/js/omniture/sitecatalyst/mercola_s_code.js
@@ -8381,6 +8373,7 @@ http://utm.
 ||rtl.be^*/trkfblk.js
 ||rtl.fr/stats/
 ||sfr.fr/js/pent-stats.jsp
+||sport365.fr/ea.js
 ||stats1x1.kapaza.be^
 ||surace-jujitsu.fr/outils/compteur_php/
 ||tracker.cds-tracking.com^
@@ -9121,6 +9114,7 @@ http://utm.
 @@||fandango.com/b/ss/$image
 @@||globalnews.ca/b/ss/
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
+@@||kohls.com/b/ss/$image
 @@||metrics.brooksbrothers.com/b/ss/$image
 @@||metrics.nationwide.co.uk/b/ss/$image
 @@||metrics.target.com/b/ss/$image
@@ -9144,6 +9138,7 @@ http://utm.
 @@||adclear.teufel.de^*/acv?*&ms=http$image,domain=gewinnspiele.freenet.de
 @@||addicted-sports.com/piwik/piwik.js
 @@||alternate.de/js/emos2.js
+@@||analytics.edgesuite.net/html5/akamaihtml5-min.js?$domain=ardmediathek.de
 @@||billiger.de/js/emos2.js
 @@||btstatic.com/tag.js$domain=oralb.de
 @@||classistatic.de^*/hitcounter.js$domain=mobile.de

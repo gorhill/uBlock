@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: AL1YFj/LTLrEzhoobmfK1A
-! Version: 201407241631
+! Checksum: 9OxL/SLy11Jt/cTjyeI58g
+! Version: 201407261441
 ! Title: Fanboy's Social Blocking List
-! Last modified: 24 Jul 2014 16:31 UTC
+! Last modified: 26 Jul 2014 14:41 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -1241,6 +1241,7 @@
 /social-network.
 /social-networking/*
 /social-overlay-
+/social-pinterest-
 /social-profiles-widget/*$~stylesheet
 /social-proof-
 /social-sharing.
@@ -1673,6 +1674,7 @@
 /yahoo_16.
 /yahoobuzz.
 /you-tube-1.
+/you-tube-icon.
 /Youicon.
 /youtube-32x32.
 /youtube-button.
@@ -1822,6 +1824,7 @@ _youtube_small.
 ###Followers1
 ###GooglePlusTab
 ###HomeSocial
+###IconSocialMediaContainer
 ###Module-Follow_Us
 ###PopularMediaShareModule
 ###PostSocialShare
@@ -2578,6 +2581,7 @@ _youtube_small.
 ###shareTop
 ###shareV
 ###shareV_w
+###shareVertical
 ###share_and_rate
 ###share_bar
 ###share_block
@@ -2681,6 +2685,7 @@ _youtube_small.
 ###sharing-icons
 ###sharing-palette
 ###sharing-plugins
+###sharing-widget
 ###sharing_bar
 ###sharing_container
 ###sharing_tools
@@ -2832,6 +2837,7 @@ _youtube_small.
 ###social-tumblr
 ###social-twitter
 ###social-twitter32x32
+###social-vert
 ###social-vertical
 ###social-votes
 ###social-widget
@@ -3203,6 +3209,7 @@ _youtube_small.
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
+##.IconSocialMedia
 ##.LR-connect-share-links
 ##.LayoutSocialTools
 ##.LikeBox
@@ -3408,6 +3415,7 @@ _youtube_small.
 ##.block-altsocial
 ##.block-ap-twitter
 ##.block-ec_facebook
+##.block-fb_like
 ##.block-follow-social
 ##.block-follow-tni
 ##.block-ibtmedia-social
@@ -3702,6 +3710,7 @@ _youtube_small.
 ##.facebook_tease
 ##.facebook_top
 ##.facebook_widget
+##.facebookbox
 ##.facebookcommon
 ##.facebookjo
 ##.facebooklike
@@ -4329,6 +4338,7 @@ _youtube_small.
 ##.linkedinlink
 ##.linkendinIcon
 ##.list_share
+##.listing-share2
 ##.lit-guides-social
 ##.lnkFacebook
 ##.loggedout-follow-normal
@@ -4543,6 +4553,7 @@ _youtube_small.
 ##.related-tweets
 ##.report-process-share
 ##.reporter-social-buttons
+##.review-social-icons2
 ##.review_sharebar_vertical
 ##.rfd-sharetools
 ##.right-share-module
@@ -4781,6 +4792,7 @@ _youtube_small.
 ##.share_cont
 ##.share_container
 ##.share_content
+##.share_digg
 ##.share_entry
 ##.share_fb
 ##.share_group
@@ -4801,6 +4813,7 @@ _youtube_small.
 ##.share_rdr
 ##.share_small
 ##.share_story
+##.share_stumbleupon
 ##.share_this
 ##.share_this_content
 ##.share_this_icons
@@ -4854,6 +4867,8 @@ _youtube_small.
 ##.sharepost
 ##.sharepostwide
 ##.sharer-btn
+##.sharer-delicious
+##.sharer-digg
 ##.sharer-facebook
 ##.sharer-googleplus
 ##.sharer-icon
@@ -5157,6 +5172,7 @@ _youtube_small.
 ##.social-single
 ##.social-site-links
 ##.social-sliver
+##.social-small
 ##.social-stack
 ##.social-sticky
 ##.social-story-bar
@@ -5345,6 +5361,7 @@ _youtube_small.
 ##.social_networks
 ##.social_ntw
 ##.social_options
+##.social_pages
 ##.social_pinterest
 ##.social_row
 ##.social_sec
@@ -5965,6 +5982,8 @@ _youtube_small.
 ##a[title="Fan us on Facebook"]
 ##a[title="Follow Me on Pinterest"]
 ##a[title="Follow Us on Facebook"]
+##a[title="Follow Us on Pinterest"]
+##a[title="Follow Us on Youtube"]
 ##a[title="Follow me on  Facebook"]
 ##a[title="Follow our Boards on Pinterest"]
 ##a[title="Follow us on Google+"]
@@ -6003,6 +6022,9 @@ _youtube_small.
 ##img[alt="Become a Fan on Facebook"]
 ##img[alt="Bookmark and Share"]
 ##img[alt="Clip to Evernote"]
+##img[alt="Connect to us with facebook"]
+##img[alt="Connect to us with houzz"]
+##img[alt="Connect to us with twitter"]
 ##img[alt="Connect with us on Facebook"]
 ##img[alt="Connect with us on LinkedIn"]
 ##img[alt="Connect with us on Twitter"]
@@ -6077,6 +6099,7 @@ _youtube_small.
 ##img[title="Follow on Facebook"]
 ##img[title="Follow us on Google Plus"]
 ##img[title="Follow us on Instagram"]
+##img[title="Join us on Twitter!"]
 ##img[title="Share at Blogger"]
 ##img[title="Share at Delicious"]
 ##img[title="Share at Digg"]
@@ -6090,6 +6113,7 @@ _youtube_small.
 ##img[title="Share on Digg"]
 ##img[title="Share this page on Twitter"]
 ##img[title="View videos on YouTube"]
+##img[title="follow us on Pinterest"]
 ##span[title="Share this article"]
 !-------------------------Third-party blocking rules--------------------------!
 ! *** easylist:fanboy-addon/fanboy_social_thirdparty.txt ***
@@ -6778,7 +6802,7 @@ sdsu.edu##.sdsuuniverse_above_header_right
 lycos.co.uk##.sfoot
 celebrations.com##.sform
 toothpastefordinner.com##.shadow[style="margin-top: 0px; width: 500px; height: 25px; background-color:#cccccc; padding-top: 1px;"]
-3net.com,9gag.com,acculturated.com,al.com,alibaba.com,askmen.com,autoblog.com,autoguide.com,bbc.co.uk,beemp3.com,bit-tech.net,bloomberg.com,bossip.com,businessinsider.com,care2.com,cbsnews.com,cheezburger.com,cnet.com,couriermail.com.au,dailycaller.com,dailystar.co.uk,dancestarparty.com,democracynow.org,dogandponyshowwebsite.com,drama.net,espnmediazone.com,everybodydancegame.com,famouslyfit.com,flowingdata.com,foodnetwork.com,forzaitalianfootball.com,foxnews.com,freshtechweb.com,g4tv.com,galoremag.com,gamepro.com,gizmodo.com.au,google.com,gossiponthis.com,guyism.com,healthguru.com,heavytshirt.com,howstuffworks.com,html5rocks.com,hulu.com,ifc.com,ijreview.com,independent.co.uk,infamousthegame.com,intomobile.com,jumbosky.com,kotaku.com.au,leadingcompany.com.au,lifehacker.com,maindevice.com,makeagif.com,mandatory.com,mediauk.com,milesplit.com,mobilespect.com,mozilla.org,mtv.com,myrecipes.com,naughtydog.com,newegg.com,newrepublic.com,nickmom.com,nj.com,nola.com,novirusthanks.org,nzherald.co.nz,onextrapixel.com,openforum.com,paidcontent.org,pcmag.com,pcworld.com,people.com,playstation.com,pleaseshutup.com,psfk.com,qz.com,rackspace.com,reddit.com,rent-a-home.com.au,sacbee.com,salon.com,shacknews.com,similarweb.com,singstar.com,ski.com.au,skype.com,slantmagazine.com,soulwire.co.uk,sourcefednews.com,springer.com,sprintfeed.com,steampowered.com,suntimes.com,take40.com,ted.com,theglobaldispatch.com,thenational.ae,thewindowsclub.com,timeslive.co.za,tor.com,torontosun.com,tvnz.co.nz,twitchy.com,uanews.org,unhearit.com,usatoday.com,vh1.com,videoweed.es,washingtonpost.com,wired.co.uk,wmagazine.com,wsj.com,xda-developers.com,yipit.com##.share
+3net.com,9gag.com,acculturated.com,al.com,alibaba.com,askmen.com,autoblog.com,autoguide.com,bbc.co.uk,beemp3.com,bit-tech.net,bloomberg.com,bossip.com,businessinsider.com,care2.com,cbsnews.com,cheezburger.com,cnet.com,couriermail.com.au,dailycaller.com,dailystar.co.uk,dancestarparty.com,democracynow.org,dogandponyshowwebsite.com,drama.net,espnmediazone.com,everybodydancegame.com,famouslyfit.com,flowingdata.com,foodnetwork.com,forzaitalianfootball.com,foxnews.com,freshtechweb.com,g4tv.com,galoremag.com,gamepro.com,gizmodo.com.au,google.com,gossiponthis.com,guyism.com,healthguru.com,heavytshirt.com,howstuffworks.com,html5rocks.com,hulu.com,ibtimes.co.uk,ifc.com,ijreview.com,independent.co.uk,infamousthegame.com,intomobile.com,jumbosky.com,kotaku.com.au,leadingcompany.com.au,lifehacker.com,maindevice.com,makeagif.com,mandatory.com,mediauk.com,milesplit.com,mobilespect.com,mozilla.org,mtv.com,myrecipes.com,naughtydog.com,newegg.com,newrepublic.com,nickmom.com,nj.com,nola.com,novirusthanks.org,nzherald.co.nz,onextrapixel.com,openforum.com,paidcontent.org,pcmag.com,pcworld.com,people.com,playstation.com,pleaseshutup.com,psfk.com,qz.com,rackspace.com,reddit.com,rent-a-home.com.au,sacbee.com,salon.com,shacknews.com,similarweb.com,singstar.com,ski.com.au,skype.com,slantmagazine.com,soulwire.co.uk,sourcefednews.com,springer.com,sprintfeed.com,steampowered.com,suntimes.com,take40.com,ted.com,theglobaldispatch.com,thenational.ae,thewindowsclub.com,timeslive.co.za,tor.com,torontosun.com,tvnz.co.nz,twitchy.com,uanews.org,unhearit.com,usatoday.com,vh1.com,videoweed.es,washingtonpost.com,wired.co.uk,wmagazine.com,wsj.com,xda-developers.com,yipit.com##.share
 ausdroid.net##.share-ausdroid
 tvline.com##.share-comment
 rebelmouse.com##.share-link
@@ -6827,6 +6851,7 @@ uniladmag.com##.stb-bottom-right
 msn.com##.stb-processed
 msn.com##.stbp-topWidget
 urbanghostsmedia.com,wegotserved.com##.stf
+droid-life.com##.sticky
 allafrica.com##.sticky-panel-container
 brobible.com##.storyLike
 gizmag.com##.su_footer
@@ -7308,6 +7333,7 @@ golem.de#@#.social-sidebar
 tv-kino.net#@#.social-tab
 4players.de#@#.social-twitter
 coub.com#@#.socialBlock
+runescape.com#@#.socialBox
 answers.microsoft.com#@#.socialIcon
 welt.de#@#.socialMedia
 leica-camera.com#@#.social_toolbar

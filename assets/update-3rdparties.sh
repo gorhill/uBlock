@@ -69,7 +69,7 @@ THIRDPARTY_LOCALURLS=(
     'thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt'
     'thirdparties/easylist-downloads.adblockplus.org/fanboy-annoyance.txt'
     'thirdparties/easylist-downloads.adblockplus.org/fanboy-social.txt'
-    'thirdparties/www.fanboy.co.nz/r/fanboy-ultimate.txt'
+    'thirdparties/www.fanboy.co.nz/fanboy-ultimate.txt'
     'thirdparties/www.fanboy.co.nz/enhancedstats.txt'
     'thirdparties/www.fanboy.co.nz/fanboy-antifacebook.txt'
     'thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt'

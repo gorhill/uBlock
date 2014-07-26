@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 7xIY2HHLYwHLuDbPc996eQ
-! Version: 201407241630
-! Last modified: 24 Jul 2014 16:30 UTC
+! Checksum: hDXdqpzp2uBlmT7MpPnnbA
+! Version: 201407261440
+! Last modified: 26 Jul 2014 14:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -1279,6 +1279,7 @@ _vkontakte.png
 /social-network.
 /social-networking/*
 /social-overlay-
+/social-pinterest-
 /social-profiles-widget/*$~stylesheet
 /social-proof-
 /social-sharing.
@@ -1711,6 +1712,7 @@ _vkontakte.png
 /yahoo_16.
 /yahoobuzz.
 /you-tube-1.
+/you-tube-icon.
 /Youicon.
 /youtube-32x32.
 /youtube-button.
@@ -1845,6 +1847,7 @@ _youtube_small.
 ###vk_groups
 ###vk_groups2
 ###vk_groups_q
+###vk_like
 ###vk_recommended
 ###vkshare0
 ###ya_share
@@ -1904,6 +1907,7 @@ _youtube_small.
 ###Followers1
 ###GooglePlusTab
 ###HomeSocial
+###IconSocialMediaContainer
 ###Module-Follow_Us
 ###PopularMediaShareModule
 ###PostSocialShare
@@ -2660,6 +2664,7 @@ _youtube_small.
 ###shareTop
 ###shareV
 ###shareV_w
+###shareVertical
 ###share_and_rate
 ###share_bar
 ###share_block
@@ -2763,6 +2768,7 @@ _youtube_small.
 ###sharing-icons
 ###sharing-palette
 ###sharing-plugins
+###sharing-widget
 ###sharing_bar
 ###sharing_container
 ###sharing_tools
@@ -2914,6 +2920,7 @@ _youtube_small.
 ###social-tumblr
 ###social-twitter
 ###social-twitter32x32
+###social-vert
 ###social-vertical
 ###social-votes
 ###social-widget
@@ -3285,6 +3292,7 @@ _youtube_small.
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
+##.IconSocialMedia
 ##.LR-connect-share-links
 ##.LayoutSocialTools
 ##.LikeBox
@@ -3490,6 +3498,7 @@ _youtube_small.
 ##.block-altsocial
 ##.block-ap-twitter
 ##.block-ec_facebook
+##.block-fb_like
 ##.block-follow-social
 ##.block-follow-tni
 ##.block-ibtmedia-social
@@ -3784,6 +3793,7 @@ _youtube_small.
 ##.facebook_tease
 ##.facebook_top
 ##.facebook_widget
+##.facebookbox
 ##.facebookcommon
 ##.facebookjo
 ##.facebooklike
@@ -4411,6 +4421,7 @@ _youtube_small.
 ##.linkedinlink
 ##.linkendinIcon
 ##.list_share
+##.listing-share2
 ##.lit-guides-social
 ##.lnkFacebook
 ##.loggedout-follow-normal
@@ -4625,6 +4636,7 @@ _youtube_small.
 ##.related-tweets
 ##.report-process-share
 ##.reporter-social-buttons
+##.review-social-icons2
 ##.review_sharebar_vertical
 ##.rfd-sharetools
 ##.right-share-module
@@ -4863,6 +4875,7 @@ _youtube_small.
 ##.share_cont
 ##.share_container
 ##.share_content
+##.share_digg
 ##.share_entry
 ##.share_fb
 ##.share_group
@@ -4883,6 +4896,7 @@ _youtube_small.
 ##.share_rdr
 ##.share_small
 ##.share_story
+##.share_stumbleupon
 ##.share_this
 ##.share_this_content
 ##.share_this_icons
@@ -4936,6 +4950,8 @@ _youtube_small.
 ##.sharepost
 ##.sharepostwide
 ##.sharer-btn
+##.sharer-delicious
+##.sharer-digg
 ##.sharer-facebook
 ##.sharer-googleplus
 ##.sharer-icon
@@ -5239,6 +5255,7 @@ _youtube_small.
 ##.social-single
 ##.social-site-links
 ##.social-sliver
+##.social-small
 ##.social-stack
 ##.social-sticky
 ##.social-story-bar
@@ -5427,6 +5444,7 @@ _youtube_small.
 ##.social_networks
 ##.social_ntw
 ##.social_options
+##.social_pages
 ##.social_pinterest
 ##.social_row
 ##.social_sec
@@ -6047,6 +6065,8 @@ _youtube_small.
 ##a[title="Fan us on Facebook"]
 ##a[title="Follow Me on Pinterest"]
 ##a[title="Follow Us on Facebook"]
+##a[title="Follow Us on Pinterest"]
+##a[title="Follow Us on Youtube"]
 ##a[title="Follow me on  Facebook"]
 ##a[title="Follow our Boards on Pinterest"]
 ##a[title="Follow us on Google+"]
@@ -6085,6 +6105,9 @@ _youtube_small.
 ##img[alt="Become a Fan on Facebook"]
 ##img[alt="Bookmark and Share"]
 ##img[alt="Clip to Evernote"]
+##img[alt="Connect to us with facebook"]
+##img[alt="Connect to us with houzz"]
+##img[alt="Connect to us with twitter"]
 ##img[alt="Connect with us on Facebook"]
 ##img[alt="Connect with us on LinkedIn"]
 ##img[alt="Connect with us on Twitter"]
@@ -6159,6 +6182,7 @@ _youtube_small.
 ##img[title="Follow on Facebook"]
 ##img[title="Follow us on Google Plus"]
 ##img[title="Follow us on Instagram"]
+##img[title="Join us on Twitter!"]
 ##img[title="Share at Blogger"]
 ##img[title="Share at Delicious"]
 ##img[title="Share at Digg"]
@@ -6172,6 +6196,7 @@ _youtube_small.
 ##img[title="Share on Digg"]
 ##img[title="Share this page on Twitter"]
 ##img[title="View videos on YouTube"]
+##img[title="follow us on Pinterest"]
 ##span[title="Share this article"]
 !
 ! - Скрипты и фремы с посторонних сайтов --------------------------------------
@@ -6501,6 +6526,7 @@ tvnet.lv##.articleTools
 korrespondent.net##.artpop_shad
 247auto.ru,caredge.ru##.auth_vkontakte
 news.tut.by##.b-article-share
+siliconrus.com##.b-article__social
 news.tut.by##.b-articleshare
 sports.ru##.b-forced-registration
 podrobnosti.ua##.b-news-share
@@ -6820,6 +6846,7 @@ _userbar_$image
 /plugins/CookieInfo/*
 /plugins/flattr/*
 /plugins/let-it-snow/*
+/plugins/optin-monster/*$script
 /plugins/scroll-to-top/*
 /plugins/wp-emailfeedburnerpop/*
 /plugins/wp-greet-box/*$~stylesheet
@@ -6956,6 +6983,7 @@ _social_rss.
 ###backToTop
 ###back_to_top
 ###back_to_top_now
+###backtotop
 ###barNewsletter
 ###bauerCookiePolicy
 ###bbccookies
@@ -7366,6 +7394,7 @@ _social_rss.
 ##.OUTBRAIN
 ##.Sailthru_Subscribe
 ##.SocialRSS
+##.TopGoTop
 ##.accept-cookies
 ##.adSize_LLMedia
 ##.addthis_button_email
@@ -7383,6 +7412,7 @@ _social_rss.
 ##.bing-unit
 ##.bing_tabContent
 ##.bl_newsletter
+##.block-newsletter
 ##.block-newsletter-signup
 ##.bookmark_services
 ##.box-cookies
@@ -7522,6 +7552,7 @@ _social_rss.
 ##.jetpack_subscription_widget
 ##.js-cookie-compliance
 ##.js-cookie-policy
+##.js-scroll-to-top
 ##.lf_comment_notifier
 ##.m-global-header__rss
 ##.mbt-bookmark
@@ -7541,6 +7572,7 @@ _social_rss.
 ##.newsletter-flyout-wrap
 ##.newsletter-icon-footer
 ##.newsletter-mod
+##.newsletter-overlay-footer
 ##.newsletter-promo
 ##.newsletter-sign-up
 ##.newsletter-signup
@@ -7662,6 +7694,7 @@ _social_rss.
 ##.taboola-wrapper
 ##.targetAd
 ##.td-scroll-up
+##.to-top
 ##.toast-type-newCookie
 ##.toasterAd
 ##.track-action-RSS
@@ -8534,6 +8567,7 @@ golem.de#@#.social-sidebar
 tv-kino.net#@#.social-tab
 4players.de#@#.social-twitter
 coub.com#@#.socialBlock
+runescape.com#@#.socialBox
 answers.microsoft.com#@#.socialIcon
 welt.de#@#.socialMedia
 leica-camera.com#@#.social_toolbar
