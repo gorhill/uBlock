@@ -131,6 +131,18 @@
     "message":"Gebieden, talen",
     "description":"English: Regions, languages"
   },
+  "3pGroupCustom":{
+    "message":"Custom",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Één URL per lijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stil genegeerd.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Toepassen",
+    "description":"English: Apply"
+  },
   "1pFormatHint":{
     "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Biała lista",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -48,27 +48,27 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"lub",
     "description":"English: or"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Utwórz",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Wybierz",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Zamknij",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Filtry sieciowe",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Filtry kosmetyczne",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
@@ -80,7 +80,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} filtry sieciowe ＋ {{cosmeticFilterCount}} filtry kosmetyczne z:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -108,28 +108,40 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Reklamy",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Prywatność",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Szkodliwe domeny",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Media społecznościowe",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Wielofunkcyjne",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Regiony, języki",
     "description":"English: Regions, languages"
+  },
+  "3pGroupCustom":{
+    "message":"Niestandardowe",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Zastosuj",
+    "description":"English: Apply"
   },
   "1pFormatHint":{
     "message":"Jeden filtr na linię. Filtrem może być nazwa hosta, albo filtr kompatybilny z Adblock Plus. Linie poprzedzone znakiem &lsquo;!&rsquo; będą ignorowane.",
