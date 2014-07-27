@@ -143,6 +143,10 @@
     "message":"Toepassen",
     "description":"English: Apply"
   },
+  "3pExternalListPurge":{
+    "message":"purge cache",
+    "description":"English: purge cache"
+  },
   "1pFormatHint":{
     "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

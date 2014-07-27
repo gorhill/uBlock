@@ -143,6 +143,10 @@
     "message":"Applica",
     "description":"English: Apply"
   },
+  "3pExternalListPurge":{
+    "message":"purge cache",
+    "description":"English: purge cache"
+  },
   "1pFormatHint":{
     "message":"Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."

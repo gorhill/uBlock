@@ -124,7 +124,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Universalt",
+    "message":"Universalfilter",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -132,7 +132,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Anpassad",
+    "message":"Egna filter",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -142,6 +142,10 @@
   "3pExternalListsApply":{
     "message":"Verkställ",
     "description":"English: Apply"
+  },
+  "3pExternalListPurge":{
+    "message":"rensa cache",
+    "description":"English: purge cache"
   },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",

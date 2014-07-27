@@ -143,6 +143,10 @@
     "message":"Применить",
     "description":"English: Apply"
   },
+  "3pExternalListPurge":{
+    "message":"purge cache",
+    "description":"English: purge cache"
+  },
   "1pFormatHint":{
     "message":"Одно правило на строку. Правилом может быть обычное имя сайти, или Adblock Plus-совместимый фильтр. Линии начинающиеся с &lsquo;!&rsquo; будут пропущены.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
