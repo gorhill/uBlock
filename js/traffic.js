@@ -76,11 +76,12 @@ var onBeforeRequest = function(details) {
 
     // Not blocked?
     if ( reason === false || reason.slice(0, 2) === '@@' ) {
+        //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
         return;
     }
 
     // Blocked
-    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" because "%s"', details.url, reason);
+    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, reason);
 
     // https://github.com/gorhill/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
