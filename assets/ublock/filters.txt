@@ -84,4 +84,5 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 ||adm.fwmrm.net/crossdomain.xml$domain=recode.net|9to5mac.com
 
 # https://github.com/gorhill/uBlock/issues/109#issuecomment-50298618
+# To counter `opf.ooyala.com` in hpHosts
 @@||opf.ooyala.com^$third-party
