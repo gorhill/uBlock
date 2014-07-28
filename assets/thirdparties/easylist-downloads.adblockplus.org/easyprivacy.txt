@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: y2hrvLNyTZpjedzew9Km+w
-! Version: 201407261441
+! Checksum: nPd7zhQFpAy6nOrg3fhY1Q
+! Version: 201407281241
 ! Title: EasyPrivacy
-! Last modified: 26 Jul 2014 14:41 UTC
+! Last modified: 28 Jul 2014 12:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -14,6 +14,7 @@
 !-----------------General tracking systems-----------------!
 ! *** easylist:easyprivacy/easyprivacy_general.txt ***
 &pageReferrer=
+&trackingserver=
 -AdTracking.
 -baynote.
 -bluekai.
@@ -2996,7 +2997,6 @@ http://utm.
 ||marinsm.com^$third-party
 ||market015.com^$third-party
 ||market2lead.com^$third-party
-||marketo.com^$third-party
 ||marketo.net^$third-party
 ||martianstats.com^$third-party
 ||masterstats.com^$third-party
@@ -4907,6 +4907,7 @@ http://utm.
 ||geo.q5media.net^
 ||geoip.taskforce.is^
 ||getglue.com^*/count?
+||getkudos.me/a?$image
 ||getpos.de/ext/
 ||getsidecar.s3.amazonaws.com^
 ||gigya.com^*/cimp.gif?
@@ -5120,6 +5121,7 @@ http://utm.
 ||msecnd.net/jscripts/HA-$script
 ||mts.mansion.com^$third-party
 ||mtv.com^*spacer.gif?
+||mtvnservices.com/aria/uuid.html
 ||mtvnservices.com/metrics/
 ||musesradioplayer.com/tracker/
 ||museter.com/track.php?
@@ -5673,6 +5675,7 @@ http://utm.
 ||yellowbrix.com/images/content/cimage.gif?
 ||yellowpages.com^*.gif?tid$third-party
 ||yext.com/plpixel?
+||yimg.com/uq/syndication/yad.js
 ||yimg.com^*/l?ig=$image
 ||ypcdn.com/*/webyp?
 ||zoover.co.uk/tracking/
@@ -6280,7 +6283,6 @@ http://utm.
 ||analytics.gorillanation.com^
 ||analytics.localytics.com^
 ||analytics.mindjolt.com^
-||analytics.moneycontrol.com^
 ||analytics.msnbc.msn.com^
 ||analytics.newsinc.com^
 ||analytics.omgpop.com/log
@@ -7072,7 +7074,6 @@ http://utm.
 ||madthumbs.com/tlog.php
 ||mail.advantagebusinessmedia.com/open.aspx
 ||mail.yahoo.com/dc/rs?log=
-||mail.yahoo.com/neo/logger
 ||mailer.atlassian.com/open.aspx?
 ||mailings.gmx.net/action/view/$image
 ||malibubright.com/krtrk/
@@ -7490,6 +7491,7 @@ http://utm.
 ||sevenload.com/blank.gif?
 ||sevenload.com/som_
 ||shareaholic.com^*/bake.gif?
+||sharecast.com/counter.php
 ||shoes.com/WebServices/ClientLogging.
 ||shopautoweek.com/js/modules/tracker.js
 ||shopify.com/track.js
@@ -7907,6 +7909,7 @@ http://utm.
 ||vstat.vidigy.com^
 ||vty.dailymotion.com^
 ||vulture.com/eiilmu/pixel.gif?
+||wa.metro.co.uk^
 ||wa.ui-portal.de^
 ||wachovia.com^*/stats.js
 ||wallcannrewards.com^*/index.php?
@@ -8420,6 +8423,7 @@ http://utm.
 ||docin.com/app/playerLoadLog/
 ||dui.lu/index.php/stat/
 ||dui.lu/staticts.html
+||duowan.com/duowan.js
 ||duowan.com/public/s/market_count.js
 ||dwtracking.sdo.com^
 ||eastmoney.com/counter.js?
@@ -8864,6 +8868,7 @@ http://utm.
 @@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|tv3play.se|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
+@@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
 @@||google.com/js/gweb/analytics/$domain=google.com
 @@||google.com/js/gweb/analytics/doubletrack.js$domain=android.com
 @@||googletagmanager.com/gtm.js?$domain=drumstick.com|ebuyer.com|google.com|toto.co.jp
@@ -8933,7 +8938,7 @@ http://utm.
 @@||mightyspring.com/static/js/beacon.js?$~third-party
 @@||milb.com/shared/scripts/bam.tracking.js
 @@||mixpanel.com/site_media/js/api/mixpanel.js$domain=blog.cloudflare.com
-@@||mixpanel.com/track/?data=$xmlhttprequest,domain=change.org|kickstarter.com|thefrisky.com
+@@||mixpanel.com/track/?data=$xmlhttprequest,domain=change.org|kickstarter.com|thefrisky.com|vid.me
 @@||mlb.com/shared/scripts/bam.tracking.js
 @@||monetate.net/js/$domain=nike.com
 @@||mongoosemetrics.com/jsfiles/js-correlation/mm-rules.min.js$domain=subaru.com
@@ -9008,7 +9013,7 @@ http://utm.
 @@||revsci.net/*/pcx.js?csid=$script,domain=video.foxnews.com
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
-@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|newsday.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
+@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|discovery.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|newsday.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com
@@ -9216,6 +9221,7 @@ http://utm.
 @@||aolcdn.com/omniunih_int.js$domain=engadget.com
 @@||google-analytics.com/analytics.js$domain=news.gamme.com.tw
 @@||hm.baidu.com/h.js?$domain=weaku.com
+@@||ijinshan.com/static/js/analyse.js
 @@||imrworldwide.com/novms/js/2/ggcmb353.js$domain=nexttv.com.tw
 @@||itc.cn/v2/asset/*/pageView.js
 @@||pingjs.qq.com/ping_tcss_ied.js$domain=dnf.qq.com

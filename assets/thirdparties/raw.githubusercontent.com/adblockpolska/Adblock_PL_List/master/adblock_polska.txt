@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 29 June 2014
+! Last modified: 27 July 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -60,6 +60,7 @@
 /vardata/banery/*
 _1100x200.
 _750x200_
+_750x700.swf
 _baner/980x200
 _banner.png
 _reklama.jpg
@@ -85,6 +86,7 @@ _res/banner/glowna/
 ###page_top_reklama
 ###prv-billboard
 ###rekGora
+###reklamygoogle
 ###slideshow_minibanner
 ###sponsoring
 ###top_banners
@@ -92,6 +94,7 @@ _res/banner/glowna/
 ##.abwarn
 ##.adSrodek
 ##.advert
+##.ad_block
 ##.adv_info
 ##.BanerHPBig
 ##.baner_reklama
@@ -101,6 +104,7 @@ _res/banner/glowna/
 ##.bxTBaner
 ##.billboardWrapper
 ##.bnMiddle
+##.drutexban
 ##.flexbanneritem
 ##.google_468x60
 ##.index_banner
@@ -163,7 +167,7 @@ _res/banner/glowna/
 ! * - Whitelist - * !
 @@/player/vidAS=pre_roll
 @@/vod/reklamy/WIZERUNEK.mp4
-@@||adv.wp.pl/RM/Box/$domain=wp.pl|wp.tv
+@@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
 @@||ipla.$domain=ipla.tv
@@ -171,14 +175,15 @@ _res/banner/glowna/
 @@||ocdn.eu/files/pulscms/*.png
 @@||pah.org.pl
 @@||legnica.eu/uploads/pub/ads_files/
-@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|wp.pl|wp.tv
-@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|wp.pl|wp.tv
+@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
+@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
 @@||reklama.onet.pl*logo*png
 @@||smartadserver.com$domain=get.x-link.pl
 @@||tvn.adocean.pl/files/js/ado.js$domain=ekstraklasa.tv
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
 
 ! * - 1st Party Blocking Rules & Ad-servers - * !
+||a.techmaniak.pl/www/images/
 ||ad.filmweb.pl
 ||ad.gazeta.pl
 ||ad.prv.pl
@@ -204,6 +209,7 @@ _res/banner/glowna/
 ||dot.wp.pl
 ||ec.bankier.pl/file/
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
+||extra-plonsk.pl/images/banners/
 ||fwcdn.pl/adv/*
 ||filmweb.pl/welcomeScreenJS?*
 ||gry-online.pl/im/zmieniarka/
@@ -259,6 +265,7 @@ _res/banner/glowna/
 4lomza.pl##.bxbanner
 7dni.pila.pl###content-left
 alemiasto.pl##[class^="ad"]
+appmaniak.pl###bannerTop
 autocentrum.pl##[style="float: right; width: 300px; height: 250px; margin-left: 5px; display: block;"]
 autocentrum.pl##[style="float:right;width:300px;height:250px;margin-left:5px;"]
 benchmark.pl###adblock-info
@@ -289,6 +296,7 @@ newsweek.pl##[class^="Block-Banner"]
 optyczne.pl###warning
 orneta.net##.lof-container
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
+press.pl###topBanner
 profil.wp.pl##.bxAdv
 proline.pl###layer_top
 purepc.pl##[class$="reklama"]

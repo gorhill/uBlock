@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: C2jXqqEoJckIaoXy6Lv5ng
-! Version: 201407261441
+! Checksum: 3mC1e4a8D79DUEQuWYt7iw
+! Version: 201407281241
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 26 Jul 2014 14:41 UTC
+! Last modified: 28 Jul 2014 12:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -94,7 +94,6 @@ _advertentieleaderboardhome.
 ||neukjezuster.com^$third-party
 ||nonstoppartner.net^$third-party
 ||online-banners.nl^$third-party
-||partner.keuze.nl^$third-party
 ||partnerclicks.nl^$third-party
 ||partnerprogramma.bol.com^$third-party
 ||partnerwebsites.financereview.nl^$third-party
@@ -605,6 +604,7 @@ _advertentieleaderboardhome.
 ||vi.nl/files/commercie/takeover/
 ||viastart.nl^*/sponsors.js
 ||vid.nl/images/de_filmpje.swf
+||vijfzintuigen.nl/banner/
 ||virusalert.nl/img/banners/
 ||vliegtickets.nl/includes/flash/banner.swf
 ||volkskrant.nl/static/nmc/prm/box/images/201
@@ -701,8 +701,8 @@ _advertentieleaderboardhome.
 @@||track.adform.net/adfserve/?$script,domain=spel.nl
 @@||vtm.be/vmmaplayer/embed?videoUrl=*&adZone=$subdocument,domain=knack.be|zita.be
 ! Anti-Adblock
-@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
-@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
+@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=2be.be|q-music.be|syndication.vmma.be|vtm.be
+@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=2be.be|q-music.be|syndication.vmma.be|vtm.be
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=alfaforum.nl
 @@||pubads.g.doubleclick.net/gampad/ads?ad_rule=1&$object-subrequest,domain=2be.be|syndication.vmma.be|vtm.be
 !--------Uitzonderingen--------!
@@ -866,6 +866,7 @@ f1today.nl###fanfashion
 tvgids.nl###flashTeaser a[rel="external"]
 infotalia.com,netonline.be###flashcontain
 copyrightvrijeplaatjes.nl,plattegronden.nl###footer
+vijverenkoiparadijs.eu###footer td[style="width: 218px;"]
 debergsebode.nl,debevelandsebode.nl,deetten-leursebode.nl,dehalderbergsebode.nl,deroosendaalsebode.nl,derucphensebode.nl###footer_banner
 spele.nl###game_ban_2
 nl.msn.com###gesponsorde

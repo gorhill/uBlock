@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 1smQceQ3DLYLxyy7QiK4RA
-! Version: 201407261440
-! Last modified: 26 Jul 2014 14:40 UTC
+! Checksum: qliUwh0hew4IifZfA/4DlQ
+! Version: 201407281240
+! Last modified: 28 Jul 2014 12:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -4323,6 +4323,7 @@ i.ua##.clear.logo_container
 goldroyal.net##.floating
 inosmi.ru##.floatright.rightbox br
 tvnet.lv##.fp_horiz_ads_150x150
+softobase.com##.gc-question-ads-2
 popmech.ru##.grid-cell[class*="article-banner-"]
 popmech.ru##.grid-cell__4.grid-cell__no-hover
 popmech.ru##.grid-cell__tgb
@@ -4333,6 +4334,7 @@ comss.ru##.links ~ .box
 forum.soft4dle.com##.navbar > br
 rentv-smolensk.ru##.promo
 medikforum.ru##.r_banner
+softobase.com##.rkl-horizontal
 delfi.lv##.top-banner
 foto.ua##.top-banner-container
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.top_ba
@@ -4353,6 +4355,7 @@ multik-online.net##div[style*=".am15."]
 brb.to,cxz.to,fs.to##div[style*="min-height: 274px;"]
 forum.watch.ru##div[style="display:block; width:100%; min-width:800px; height:100px; overflow:hidden;"]
 tfilm.tv##div[style="height: 300px;"]
+softobase.com##div[style="width:336px; height:280px;"]
 pise4ka.com##iframe[src="/site/in"]
 auto.e1.ru##noindex > .au-content-section
 comss.ru##td[style="width:180px"]

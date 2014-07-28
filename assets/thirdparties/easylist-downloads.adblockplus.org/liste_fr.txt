@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 5w2hBFUxaPDVUi5hmiJbTQ
-! Version: 201407261441
+! Checksum: sZK+McqCVxJU+ZTxWp4VqA
+! Version: 201407281241
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -2655,6 +2655,7 @@ israel7.com##.box2[style="padding:5px;height:600px;"]
 days-media.fr##.boxed[style^="width:300px; height:250px"]
 jeuxvideo24.com##.bp_zone
 gamergen.com##.bup
+football365.fr,mercato365.com,rugby365.fr,sport365.fr##.bwin
 orange.fr##.campagnePUBcoldroite
 psychologies.com##.carrousel_partenaires
 a18ans.com,jamaisjouis.com,liste2cul.com,vidule.com##.catcher
@@ -3419,8 +3420,10 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://www.*/*.*?*=3&*=_blank$script,third-party
 |http://www.*/*.*?_=$script,third-party
 ||faintheartedsharkoil.info^$third-party
+||formicafuscasyringavillosa.info^$third-party
 ||hectometertriple.info^$third-party
 ||jewryhear.info^$third-party
+||jobinterviewadjustment.info^$third-party
 ||mariannecraigmooregenussinornis.info$third-party
 ||sweetelderdermoidcyst.info^$third-party
 ||tailorschalklycosatarentula.info^$third-party
@@ -3497,6 +3500,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||remote.mx/*.js|$script,third-party
 @@||sefpq.us.to/*.js|$script,third-party
 @@||shen.cl/*.js|$script,third-party
+@@||soon.it/*.js|$script,third-party
 @@||spiegs.com/*.js|$script,third-party
 @@||stemline.com/*.js|$script,third-party
 @@||tjxpq.ro.lt/*.js|$script,third-party
@@ -3558,6 +3562,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.remote.mx/$third-party,xmlhttprequest
 |http://*.ro.lt/$third-party,xmlhttprequest
 |http://*.shen.cl/$third-party,xmlhttprequest
+|http://*.soon.it/$third-party,xmlhttprequest
 |http://*.spiegs.com/$third-party,xmlhttprequest
 |http://*.stemline.com/$third-party,xmlhttprequest
 |http://*.suka.se/$third-party,xmlhttprequest

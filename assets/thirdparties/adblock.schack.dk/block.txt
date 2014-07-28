@@ -4,7 +4,7 @@
 ! http://henrik.schack.dk/adblock/
 !
 ! Maintained by: henrik at schack.dk
-! Last Modified: 11-07-2014
+! Last Modified: 28-07-2014
 ! Expires: 1
 
 ! facebook.com

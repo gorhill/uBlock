@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: JuWmiNISJ1jaAemf7VUUkw
-! Version: 201407261441
+! Checksum: V3jYVIQdJrOVkwNZny5Iig
+! Version: 201407281241
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 26 Jul 2014 14:40 UTC
+! Last modified: 28 Jul 2014 12:40 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -228,7 +228,7 @@ _woz_banner_vote.
 ###werbekasten
 ###werbeleiste
 ###werbetrenner
-###werbung
+! ###werbung
 ###werbung-banner
 ###werbung-left
 ###werbung-map-top
@@ -273,7 +273,7 @@ _woz_banner_vote.
 ##.ads-artikel-contentAd-medium
 ##.ads-artikel-contentAd-top
 ##.ads_bueroklammer
-##.ads_rechts
+! ##.ads_rechts
 ##.adsense-ArtikelOben
 ##.adzeiger
 ##.anzeigenwerbung
@@ -333,7 +333,7 @@ _woz_banner_vote.
 ##.werbepause
 ##.werblinks
 ##.werbrechts
-##.werbung
+! ##.werbung
 ##.werbung-1
 ##.werbung-2
 ##.werbung-250x250
@@ -487,11 +487,13 @@ delamar.de#@#.custom_ads
 autoscout24.de#@#.detail-ads
 frankenlist.de#@#.item-ad
 frankenlist.de#@#.list-ad
+styleranking.de#@#.medrect-ad
 der-postillon.com#@#.middleads
 netbooknews.de#@#.post-ad
 tsv-thedinghausen.de#@#.postad
 blesius.de#@#.text_werbung
 christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
+epochtimes.de#@#.wnIframeAd
 epochtimes.de#@#.wnad
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
@@ -2009,6 +2011,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-search.biz^$image,popup,domain=w3-warez.cc
 ||ddl-warez.in/.*.js..php
 ||ddl-warez.in/.*.js.php
+||ddl-warez.in/.affiliate_
 ||ddl-warez.in/_*.php$script
 ||ddl-warez.in/images/hoster/
 ||ddl-warez.in/images/och_logos/
@@ -3673,6 +3676,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /l*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /m*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /n*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
+/o*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 /t*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 ||epochtimes.de/js/chkba.js
@@ -3690,7 +3694,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mv-spion.de/ajax/lc?content=qwert
 ||mv-spion.de/ajax/lc|
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
-||videoplaza.tv/creatives/assets/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 ||videoplaza.tv^$domain=www.rtl.de|www.vox.de
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block_popup.txt ***
 &t202kw=$popup,domain=lustich.de|pcaction.de
@@ -3751,6 +3755,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||hd-load.org/out.php$popup
 ||hd-load.org^$popup,domain=ddl-porn.us
 ||hd-movies.cx^$popup,domain=drop-games.org
+||hide.me/v3/index4-$popup,domain=boerse.bz
 ||hifi-forum.de/forum/banner/$popup
 ||hoerbuch.in/enterpopup.php$popup
 ||jokermovie.org/out.php$popup
@@ -4518,6 +4523,7 @@ lesen.to###post-62885
 lesen.to###post-73957
 xxx-blog.to###post-75123
 xxx-blog.to###post-75283
+boerse.bz###post10093686
 bodybuilding-forum.at###post99999999999
 mobilfunk-talk.de###postXXXXX
 supernature-forum.de###post_
@@ -5331,6 +5337,7 @@ wa.de##.idMediaParagraph > .idMediaRight > .idTextBox
 pcwelt.de##.idgAmazonTeaserV2
 pcwelt.de##.idg_amazon_teaser
 pcwelt.de##.idg_amazon_text
+immobilienscout24.de##.ikea-link
 finanzen.ch##.image_logo_ubs4
 derwesten.de##.img[href^="http://www.albelli.de/angebote/"]
 augsburger-allgemeine.de##.img_inline[style="width:310px; margin:0px 10px 0px 0px; padding: 0px;"]
@@ -5423,6 +5430,7 @@ pcaction.de##.metaboli
 franken-tv.de,kanal8.de,radio-trausnitz.de##.metrieanzeigen
 radio7.de##.microbanner
 fettspielen.de##.middle-leaderboard
+wetterspiegel.de##.mir-wallpaper-background[height="90"][align="right"]
 downloadstube.net##.mirror
 aol.de##.mnid-daily-buzz5
 aol.de##.mnid-marketplace3-2line-ad_evergreen
@@ -7267,7 +7275,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||merkur-werbebanner.de^$~third-party
 @@||metzgerei-giering.de^*/advertising/$~third-party
 @@||milesandmore-aktionen.de^*://promo.$subdocument,domain=promo.milesandmore.com
-@@||mirapodo.de/a?rt=$script,domain=ambellis.de|mytoys.de
+@@||mirapodo.de/a?rt=$script,domain=ambellis.de|lapurisa.de|mytoys.de
 @@||mirapodo.de/ads?$script
 @@||mmcomputer.de^*&BannerID=$subdocument
 @@||monetenlos.com/components/com_marketplace/images/ads/$image
@@ -7589,6 +7597,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||idlity.de^$script,domain=gamona.de|lustich.de
 @@||imagesrv.adition.com/js/adition.js$domain=n-tv.de
 @@||inciteb.de^$script,domain=gamona.de|lustich.de
+@@||indalam.de^$script,domain=gamona.de|lustich.de
 @@||innovid.com^*;cb=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ivwbox.de^*#$image,domain=lustich.de
 @@||jagdlupe.de^$elemhide
@@ -7708,7 +7717,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||vereinslupe.de^$elemhide
 @@||videogameszone.de^$image
 @@||videoplaza.tv/proxy/distributor/v2?tt=p&rt=vast_2.0&s=validation&t=standard$object-subrequest,domain=gmx.net|web.de
-@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||vorsorgebote.de^$elemhide
 @@||werbeblocker-erkennen.webconrad.com/adframe.js
 @@||wintotal-forum.de^$elemhide

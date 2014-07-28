@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: hDXdqpzp2uBlmT7MpPnnbA
-! Version: 201407261440
-! Last modified: 26 Jul 2014 14:40 UTC
+! Checksum: Y7n1yswUbnf1fq9O1it+4g
+! Version: 201407281240
+! Last modified: 28 Jul 2014 12:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -152,6 +152,7 @@ _vkontakte.png
 -youtube-flat-
 -youtube-icon-24.
 .fbshare.js
+.pluckCount.
 .shareaholic-
 .sharebar.js
 /16x16-delicious.
@@ -1006,6 +1007,8 @@ _vkontakte.png
 /pintrest.
 /pintrest_
 /pix/Share-
+/pluck.js
+/pluckApps.js
 /plugins/2-click-socialmedia-buttons/*$~stylesheet
 /plugins/add-to-any/*$~stylesheet
 /plugins/anmiated-twitter-bird/*
@@ -3177,8 +3180,11 @@ _youtube_small.
 ###top_nav_share_tools
 ###top_share
 ###top_share_widget
+###top_sharebuttons
+###top_sharebuttons_placeholder
 ###top_social_networks_container
 ###topsharearea
+###topsharebar
 ###topsocial
 ###total_shares_horizontal
 ###tout-followUs
@@ -3560,9 +3566,12 @@ _youtube_small.
 ##.btnTwt
 ##.btn_delicious
 ##.btn_digg
+##.btn_fb
 ##.btn_furl
+##.btn_share
 ##.btn_social
 ##.btn_technorati
+##.btn_twitter
 ##.button-share
 ##.button-share-facebook
 ##.button-share-twitter
@@ -3910,6 +3919,7 @@ _youtube_small.
 ##.fi-social-twitter
 ##.fixed-bar-social-icons
 ##.fixed-share-bar
+##.fixed-sharebar
 ##.fixed-side-social-container
 ##.fixtweet
 ##.flag-like
@@ -3920,6 +3930,7 @@ _youtube_small.
 ##.flexi-social-connect
 ##.float-share
 ##.floatShare
+##.floatee-social-buttons
 ##.floating-share-bar
 ##.floatingShare
 ##.floatingSocial
@@ -4033,6 +4044,7 @@ _youtube_small.
 ##.fs-facebook-iframe
 ##.fs-retweet-block
 ##.fs-sitesocials
+##.fsocial
 ##.ft-facebook
 ##.ft-flickr
 ##.ft-gplus
@@ -4657,6 +4669,7 @@ _youtube_small.
 ##.sbn-entry-social
 ##.scShareBoxRow
 ##.scShareText
+##.scrbbl-tb-share-actions
 ##.sd-social
 ##.search-social-icons
 ##.secondarySahre
@@ -4723,6 +4736,7 @@ _youtube_small.
 ##.share-linkedin
 ##.share-links
 ##.share-links-footer
+##.share-links-label
 ##.share-list
 ##.share-menu
 ##.share-opera
@@ -5061,9 +5075,13 @@ _youtube_small.
 ##.slider-social
 ##.sm-page-widget-sociallinks
 ##.sm-social-links-horizontal
+##.sm4-article-share
+##.sm4WidgetArticleShare
 ##.sm_share_badge
 ##.small-facebook
 ##.small-twitter
+##.smallsocial
+##.smallsocialbutton
 ##.smshare
 ##.sny-footer-social-links
 ##.soc-facebook
@@ -5108,6 +5126,7 @@ _youtube_small.
 ##.social-blocks
 ##.social-bookmark
 ##.social-bookmark-links
+##.social-bookmarks
 ##.social-bottom
 ##.social-box
 ##.social-box-tab
@@ -5176,6 +5195,7 @@ _youtube_small.
 ##.social-large
 ##.social-layzing
 ##.social-left
+##.social-like-module
 ##.social-likes
 ##.social-line-button
 ##.social-link
@@ -7272,6 +7292,7 @@ _social_rss.
 ###newsletter_signup_side
 ###newsletter_sub_form
 ###newsletter_subscribe
+###newsletter_subscription
 ###newsletter_subscription_box
 ###newsletter_wrapper
 ###newsletterblock
@@ -7465,10 +7486,12 @@ _social_rss.
 ##.cookieWarningBox
 ##.cookie_accept
 ##.cookie_bar
+##.cookie_content
 ##.cookie_info
 ##.cookie_notice
 ##.cookie_notification
 ##.cookie_policy_message
+##.cookie_popup
 ##.cookie_privacy_info_bar
 ##.cookieconsent
 ##.cookieconsent-popup
@@ -7559,6 +7582,7 @@ _social_rss.
 ##.meebo-1
 ##.mod-sharing-margin
 ##.mod-simplyhired
+##.module-zerg
 ##.module_newsletter
 ##.moduletable_icons
 ##.moduletable_newsletterform
@@ -7573,6 +7597,7 @@ _social_rss.
 ##.newsletter-icon-footer
 ##.newsletter-mod
 ##.newsletter-overlay-footer
+##.newsletter-popup
 ##.newsletter-promo
 ##.newsletter-sign-up
 ##.newsletter-signup
@@ -7607,6 +7632,7 @@ _social_rss.
 ##.nrelate_flyout
 ##.ody-ob-taboola-wrapper
 ##.om-cookie-agreement
+##.om-has-email
 ##.omniWidget-article-signup-large
 ##.oo_tab_right
 ##.outbrain
@@ -7650,11 +7676,14 @@ _social_rss.
 ##.rsslink
 ##.sailthruRecommendation
 ##.scribol
+##.scroll-top
+##.scrollTo_top
 ##.sd_cookiespolicy
 ##.share-button-email
 ##.share-viamail
 ##.sharing-printing
 ##.sharrre
+##.shortcode-inline-newsletter
 ##.side-subscribe
 ##.sideBoxSubscribe
 ##.sidebar-newsletter
@@ -8063,6 +8092,7 @@ _social_rss.
 ||fwix.com^$third-party
 ||getdrip.com^$third-party
 ||getglue.com^$third-party
+||getkudos.me^$third-party
 ||getmailcounter.com^$third-party
 ||githubbadge.appspot.com^$third-party
 ||globalsign.com^$third-party
