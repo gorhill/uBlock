@@ -44,6 +44,8 @@ To benefit from the higher efficiency, it is of course not advised to use an
 inefficient blocker at the same time. µBlock will do as well or better than the 
 popular blockers out there.
 
+Also of interest: [About the required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
+
 ## Documentation
 
 I think it is pretty obvious, except for this I suppose:
