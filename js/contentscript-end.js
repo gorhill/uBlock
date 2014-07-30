@@ -126,8 +126,7 @@ var messaging = (function(name){
 
 // ABP cosmetic filters
 
-var cosmeticFiltering = (function() {
-
+(function() {
     var queriedSelectors = {};
     var injectedSelectors = {};
     var classSelectors = null;
@@ -391,9 +390,34 @@ var cosmeticFiltering = (function() {
 
     domLoaded();
 
-    return {
-        processNodeLists: processNodeLists
+    // Observe changes in the DOM only if...
+    // - there is a document.body
+    // - there is at least one `script` tag
+    if ( !document.body || !document.querySelector('script') ) {
+        return;
+    }
+
+    var mutationObservedHandler = function(mutations) {
+        var iMutation = mutations.length;
+        var nodeLists = [], nodeList;
+        while ( iMutation-- ) {
+            nodeList = mutations[iMutation].addedNodes;
+            if ( nodeList && nodeList.length ) {
+                nodeLists.push(nodeList);
+            }
+        }
+        if ( nodeLists.length ) {
+            processNodeLists(nodeLists);
+        }
     };
+    // https://github.com/gorhill/httpswitchboard/issues/176
+    var observer = new MutationObserver(mutationObservedHandler);
+    observer.observe(document.body, {
+        attributes: false,
+        childList: true,
+        characterData: false,
+        subtree: true
+    });
 })();
 
 /******************************************************************************/
@@ -452,36 +476,6 @@ var cosmeticFiltering = (function() {
     document.addEventListener('load', onResourceLoaded, true);
     document.addEventListener('error', onResourceLoaded, true);
 })();
-
-/******************************************************************************/
-
-// Observe changes in the DOM
-
-var mutationObservedHandler = function(mutations) {
-    var iMutation = mutations.length;
-    var nodeLists = [], nodeList;
-    while ( iMutation-- ) {
-        nodeList = mutations[iMutation].addedNodes;
-        if ( nodeList && nodeList.length ) {
-            nodeLists.push(nodeList);
-        }
-    }
-    if ( nodeLists.length ) {
-        cosmeticFiltering.processNodeLists(nodeLists);
-    }
-};
-
-// This fixes http://acid3.acidtests.org/
-if ( document.body ) {
-    // https://github.com/gorhill/httpswitchboard/issues/176
-    var observer = new MutationObserver(mutationObservedHandler);
-    observer.observe(document.body, {
-        attributes: false,
-        childList: true,
-        characterData: false,
-        subtree: true
-    });
-}
 
 /******************************************************************************/
 
