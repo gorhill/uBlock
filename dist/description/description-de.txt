@@ -4,19 +4,7 @@ Ein illustrierter Überblick über seine Effizienz: https://github.com/gorhill/u
 
 Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum An-/Ausschalten von µBlock auf der aktuellen Webseite. Dies wirkt sich also nur auf die aktuelle Webseite aus und nicht global.
 
-***
-
-WICHTIG!
-
-Wenn du µBlock gemeinsam mit einem anderen Blocker installierst, wird µBlock wahrscheinlich weniger blockierte Anfragen anzeigen als der andere Blocker. Das liegt daran, dass µBlock - wenn es zusammen mit einem anderen Blocker benutzt wird - normalerweise nur blockiert (und dir entsprechend anzeigt), was der andere Blocker NICHT bereits blockiert hat.
-
-Wenn µBlock dagegen als alleiniger Blocker benutzt wird, wird es alles blockieren, was auch andere Werbeblocker blockieren würden - und sogar mehr.
-
-Mehr dazu: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
-
-***
-
-Block ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+µBlock ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
 
 Standardmäßig werden folgende Filterlisten geladen und angewandt:
 
