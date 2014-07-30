@@ -86,3 +86,6 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 # https://github.com/gorhill/uBlock/issues/109#issuecomment-50298618
 # To counter `opf.ooyala.com` in hpHosts
 @@||opf.ooyala.com^
+
+# https://github.com/gorhill/uBlock/issues/119
+@@||google-analytics.com^$domain=avianca.com
