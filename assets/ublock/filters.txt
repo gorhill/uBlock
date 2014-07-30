@@ -90,3 +90,7 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 # https://github.com/gorhill/uBlock/issues/119
 # To counter `google-analytics.com` in Peter Lowe's list
 @@||google-analytics.com^$domain=avianca.com
+
+# https://github.com/gorhill/uBlock/issues/120
+# `.widget_ad` is in EasyList, but because generic, it's not applied early enough
+theglobeandmail.com##.widget_ad
