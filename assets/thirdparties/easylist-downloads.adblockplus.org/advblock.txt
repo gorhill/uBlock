@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: qliUwh0hew4IifZfA/4DlQ
-! Version: 201407281240
-! Last modified: 28 Jul 2014 12:40 UTC
+! Checksum: 2P2qeVSekrGNvvsEf7M/eQ
+! Version: 201407300440
+! Last modified: 30 Jul 2014 04:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2729,6 +2729,7 @@ _tizers.
 ||vinregle.com^
 ||visitscounter.ru^
 ||vitos.freezfiles.ru^
+||viva-vanna.ru^
 ||vkmoll.ru^
 ||vkmonster.com^
 ||vmblock.net^
@@ -3049,6 +3050,7 @@ kino-teatr.ru##noindex > a[href^="/go/"]
 forum.antichat.ru##p[align="center"] > b > a
 tvgid.ua##table[bgcolor="#00488d"][cellpadding="1"]
 comss.ru##td[style="width:19%; vertical-align:top;"]
+0day.kiev.ua##td[width="100%"] > center + table[style="margin-bottom: 20px"]
 ! sweep
 rpod.ru###adv240x400
 gmbox.ru###adv_click_area
@@ -3279,7 +3281,6 @@ hostingkartinok.com###partner-aside
 rian.ru###partners_block
 picforall.ru###pay_thumb_header
 dofiga.net###pbie_25
-pornolab.cc,pornolab.net###pl-speedbar
 pressa-online.com###po-vips
 3rm.info###poptrafWin
 muz.ru###popupBanner
@@ -4361,7 +4362,7 @@ auto.e1.ru##noindex > .au-content-section
 comss.ru##td[style="width:180px"]
 ! -----------------------------------------------------------------------------
 ! *** advblock/specific_block.txt ***
-$third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net
+$third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net|pornolab.net
 .adriver.$object-subrequest,domain=cybergame.tv|smotri.com
 .autorambler.ru/*/promo/
 .js?rt=$domain=antistarforce.com|rustorka.com|rustorka.net
@@ -4388,7 +4389,6 @@ $third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net
 /rklm/*$domain=kirovnet.ru|ui.ua
 /rotator.js|$domain=antistarforce.com|rustorka.com|rustorka.net
 /static/banners/*$domain=gagadget.com|maxpark.com|vse-sto.com.ua
-/store/*$domain=pornolab.net
 /swf/*$domain=kino-live.org|riper.am|toptracker.ru
 /u_vod/1/*$object-subrequest,domain=megogo.net
 /www/base/*&cb=$domain=namba.kg|namba.tj

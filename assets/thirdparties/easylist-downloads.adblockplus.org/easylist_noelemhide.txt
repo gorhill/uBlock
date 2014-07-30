@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: VQwXmUGFZJvTRwca/XLciw
-! Version: 201407281240
+! Checksum: nynsBO0zuaeBDvaDqeiT2w
+! Version: 201407300440
 ! Title: EasyList without element hiding rules
-! Last modified: 28 Jul 2014 12:40 UTC
+! Last modified: 30 Jul 2014 04:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3978,6 +3978,7 @@
 /loadadsmainparam.
 /loadadsparam.
 /loadadwiz.
+/loading_ads.
 /local_ads_
 /LocalAdNet/*
 /localads.
@@ -9643,6 +9644,7 @@ _popunder+$popup
 ||hot-socials.com^$third-party
 ||hotsocials.com^$third-party
 ||hsmclick.com^$third-party
+||hubtraffic.com^$third-party
 ||icetraffic.com^$third-party
 ||icqadvert.org^$third-party
 ||ideal-sexe.com^$third-party
@@ -13012,7 +13014,7 @@ _popunder+$popup
 ||emsservice.de/videos/$domain=zattoo.com
 ||emule-top50.com/extras/$subdocument
 ||emuleday.com/cpxt_$subdocument
-||encyclopediadramatica.es/edf/
+||encyclopediadramatica.es/edf/$domain=~forum.encyclopediadramatica.es
 ||encyclopediadramatica.es/lanhell.js
 ||encyclopediadramatica.es/spon/
 ||energytribune.com/res/banner/
@@ -13690,7 +13692,7 @@ _popunder+$popup
 ||itweb.co.za/banners/
 ||itweb.co.za/logos/
 ||itweb.co.za/sidelogos/
-||itweb.co.za^*/sponsoredby*.jpg
+||itweb.co.za^*sponsoredby
 ||itwebafrica.com/images/logos/
 ||itwire.com/images/skins/
 ||itworld.com/slideshow/iframe/topimu/
@@ -14297,6 +14299,7 @@ _popunder+$popup
 ||northjersey.com^*_Sponsor.
 ||northjersey.com^/sponsored_by_
 ||norwaypost.no/images/banners/
+||noscript.net/images/purevpn.png
 ||notalwaysromantic.com/images/banner-
 ||notdoppler.com^*-promo-homepageskin.png
 ||notdoppler.com^*-promo-siteskin.
@@ -14937,6 +14940,7 @@ _popunder+$popup
 ||speedtv.com.edgesuite.net/img/monthly/takeovers/
 ||speedtv.com/js/interstitial.js
 ||speedtv.com^*/tissot-logo.png
+||speedvideo.net/img/playerFk.gif
 ||speroforum.com/images/sponsor_
 ||spicegrenada.com/images/banners/
 ||sponsors.s2ki.com^
@@ -15025,6 +15029,7 @@ _popunder+$popup
 ||sxc.hu/img/banner
 ||sydneyolympicfc.com/admin/media_manager/media/mm_magic_display/$image
 ||systemexplorer.net/sessg.php
+||sythe.org/bnrs/
 ||sythe.org/clientscript/agold.png
 ||tabla.com.sg/SIA.jpg
 ||tabloidmedia.co.za/images/signs2.swf
@@ -15782,6 +15787,7 @@ _popunder+$popup
 /FuckAdBlock-$script
 /fuckadblock.js
 ||ailde.com^$domain=cbs.com
+||alidw.net^$domain=cbs.com
 ||amazonaws.com^$script,domain=dsero.com|ginormousbargains.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com|unfair.co
 ||histats.com/js15.js$domain=televisaofutebol.com
 ||no-ip.biz^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
@@ -16025,9 +16031,8 @@ _popunder+$popup
 ||empireamateurs.com/images/*banner
 ||entensity.net/crap/
 ||epicwank.com/social/jquery.stp.min.js
-||eporner.com/foot.php
-||eporner.com/home.php
 ||eporner.com/pjsall-*.js
+||eporner.com^*.php$subdocument
 ||eroprofile.com/js/pu*.js
 ||eskimotube.com/kellyban.gif
 ||exhentai.net/img/aaf1.gif
@@ -16343,6 +16348,7 @@ _popunder+$popup
 ||pornerbros.com/rec/$subdocument
 ||pornfanplace.com/js/pops.
 ||pornfanplace.com/rec/
+||pornhub.com/front/alternative/
 ||pornhub.com/iframe.php?
 ||pornhub.phncdn.com/images/campaign-backgrounds/
 ||pornhub.phncdn.com/misc/xml/preroll.xml
@@ -16509,6 +16515,7 @@ _popunder+$popup
 ||tnaflix.com/flixPlayerImages/
 ||tnaflix.com^*_promo.jpg
 ||trovaporno.com/image/incontri$image
+||tube8.com/candycrush/
 ||tubedupe.com/footer_four.html
 ||tubedupe.com/side_two.html
 ||turboimagehost.com/p1.js
@@ -17834,6 +17841,7 @@ _popunder+$popup
 @@||promo2.tubemogul.com/lib/tubemoguldisplaylib.js$domain=comedy.com
 @@||promophot.com/photo/ad/$image
 @@||proxyserver.asia/themes/advertising-$image,stylesheet
+@@||pshared.5min.com/Scripts/ThumbSeed2.js?*&adUnit=$script
 @@||ptgrey.com/_PGR_Content/Advertising/$image,~third-party
 @@||pubmatic.com/AdServer/js/universalpixel.js$domain=politico.com
 @@||pubmatic.com/AdServer/UPug?$script,domain=politico.com
@@ -18016,6 +18024,7 @@ _popunder+$popup
 @@||svcs.ebay.com/services/search/FindingService/*affiliate.tracking$domain=bkshopper.com|geo-ship.com|testfreaks.co.uk|watchmydeals.com
 @@||switch.atdmt.com/iaction/$subdocument,domain=bestbuy.com
 @@||syn-api.com^*&adsafe=$script,domain=armstrongmywire.com|atlanticbb.net|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|forbbbs.org|hargray.net|hawaiiantel.net|hickorytech.net|knology.net|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net
+@@||syn.5min.com/handlers/SenseHandler.ashx?*&adUnit=$script
 @@||syracuse.com/static/common/js/ads/ads.js
 @@||tacdn.com^*_popunder_$script,stylesheet
 @@||tags.bkrtx.com/js/bk-coretag.js$domain=zillow.com
@@ -18279,13 +18288,14 @@ _popunder+$popup
 @@.jpg#$domain=desionlinetheater.com|lag10.net|mac2sell.net|myiplayer.eu|uploadlw.com
 @@.jpg|$object-subrequest,domain=cbs.com
 @@.min.js$domain=ftlauderdalewebcam.com|nyharborwebcam.com|portcanaveralwebcam.com|portevergladeswebcam.com|portmiamiwebcam.com
-@@.png#$domain=android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|lordpyrak.net|myiplayer.eu|myksn.net|stream2watch.me
+@@.png#$domain=android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|lordpyrak.net|minecraft-forum.net|myiplayer.eu|myksn.net|stream2watch.me
 @@.png?*#$domain=mypapercraft.net|xlocker.net
 @@.png?ad_banner=$domain=majorleaguegaming.com
 @@.png?advertisement_$domain=majorleaguegaming.com
 @@.streamads.js$third-party,domain=cbs.com
 @@/adFunctionsD-cbs.js$domain=cbs.com
 @@/advertisement.js$domain=ilive.to
+@@/advertisement2.js$domain=ilive.to
 @@/afr.php?$script,domain=sankakucomplex.com
 @@/banman/*$script,domain=atlanticcitywebcam.com|ftlauderdalebeachcam.com|ftlauderdalewebcam.com|keywestharborwebcam.com|morganhillwebcam.com|nyharborwebcam.com|portarubawebcam.com|portbermudawebcam.com|portcanaveralwebcam.com|portevergladeswebcam.com|portmiamiwebcam.com|portnywebcam.com
 @@/banner.jpg?$image,domain=filmux.net
@@ -18565,6 +18575,7 @@ _popunder+$popup
 @@||metcentral.com/www/delivery/avw.php?zoneid=*&n=$subdocument,domain=magicseaweed.com
 @@||mgcash.com/common/adblock.js
 @@||mgcashgate.com/cpalocker/$script,domain=movieleaks.co|videodepot.org
+@@||minecraft-forum.net^$elemhide
 @@||mix.dj/jscripts/jquery/mdj_adverts.js
 @@||mix.dj^*/advertisement.js
 @@||mma-core.com/Scripts/adscript.js
@@ -18820,7 +18831,7 @@ _popunder+$popup
 @@||emediate.eu/crossdomain.xml$object-subrequest
 @@||emediate.eu/eas?cu_key=*;ty=playlist;$object-subrequest,domain=bandit.se|lugnafavoriter.com|nrj.se|playradio.se|radio1.se|rixfm.com|tv3play.ee|tv3play.se|tv6play.se|tv8play.se
 @@||emediate.se/crossdomain.xml$object-subrequest
-@@||emediate.se/eas?$domain=novatv.bg|tv2.dk|tv3.se|tv3play.ee|tv3play.lt|tv3play.se|tv6play.se|tv8play.se
+@@||emediate.se/eas?$domain=novatv.bg|tv2.dk|tv3.se|tv3play.ee|tv3play.se|tv6play.se|tv8play.se
 @@||emediate.se/eas_tag.1.0.js$domain=tv2.dk|tv3play.ee|tv3play.se|tv6play.se|tv8play.se
 @@||epaper.andhrajyothy.com/js/newads.js
 @@||ettevotja.ee/templates/*/images/advert.gif
@@ -18905,7 +18916,7 @@ _popunder+$popup
 @@||smart.allocine.fr/def/def/xshowdef.asp$object-subrequest,domain=beyazperde.com
 @@||smartadserver.com/call/pubj/$object-subrequest,domain=antena3.com|europafm.com|vertele.com
 @@||smartadserver.com/call/pubx/*/M/$object-subrequest,domain=get.x-link.pl
-@@||smartadserver.com/crossdomain.xml$object-subrequest
+@@||smartadserver.com/crossdomain.xml$object-subrequest,domain=~antena3.com|~atresplayer.com|~lasexta.com
 @@||sms.cz/bannery/$object-subrequest,~third-party
 @@||soov.ee/js/newad.js
 @@||start.no/advertpro/servlet/view/text/html/zone?zid=$script

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: nPd7zhQFpAy6nOrg3fhY1Q
-! Version: 201407281241
+! Checksum: j/3YhidW9iJmwhzHFiUJ8Q
+! Version: 201407300441
 ! Title: EasyPrivacy
-! Last modified: 28 Jul 2014 12:41 UTC
+! Last modified: 30 Jul 2014 04:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -195,6 +195,8 @@
 /admonitoring.js
 /AdobeCustomVideoMeasurement.swf
 /adpixel.
+/adrum-
+/adrum.
 /ads_tracker.
 /adstat.
 /adstats.
@@ -4666,7 +4668,6 @@ http://utm.
 ||cloudfront-labs.amazonaws.com^
 ||cloudfront.net*/sp.js
 ||cloudfront.net*/trk.js
-||cloudfront.net/adrum-
 ||cloudfront.net/analytics.js
 ||cloudfront.net/analyticsengine/
 ||cloudfront.net/atrk.gif?
@@ -7880,6 +7881,7 @@ http://utm.
 ||video.nbc.com^*/metrics_viral.xml
 ||video.syfy.com/lg.php
 ||videoplaza.com/proxy/tracker?
+||videopremium.tv/dev/tr.js
 ||videotracker.washingtonpost.com^
 ||vidspot.net/ajaxlog.txt?
 ||vidx.to/php/count.php?

@@ -2253,6 +2253,7 @@
 127.0.0.1	adext.inkclub.com
 127.0.0.1	adextent.com
 127.0.0.1	adf.ero-advertising.com
+127.0.0.1	adf.ly
 127.0.0.1	adf.send.microad.jp
 127.0.0.1	adfactory88.com
 127.0.0.1	adfarm.mediaplex.com
@@ -9509,7 +9510,6 @@
 127.0.0.1	dv1970.freestats.com
 127.0.0.1	dv4uxy777adjt.cloudfront.net
 127.0.0.1	dw-eu.com.com
-127.0.0.1	dw.cbsi.com
 127.0.0.1	dw.cbsi.com.cn
 127.0.0.1	dw.cnet.com
 127.0.0.1	dw.com.com
@@ -11690,7 +11690,6 @@
 127.0.0.1	i.euniverse.com
 127.0.0.1	i.exclusivegiftcards.com
 127.0.0.1	i.flowgo.com
-127.0.0.1	i.i.cbsi.com
 127.0.0.1	i.jumptap.com
 127.0.0.1	i.kissmetrics.com
 127.0.0.1	i.ligatus.com
@@ -22429,4 +22428,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22424
+# Hosts: 22423

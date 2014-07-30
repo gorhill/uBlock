@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4328
-! Last modified: 28 Jul 2014
+! Version: 4338
+! Last modified: 29 Jul 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -105,6 +105,8 @@
 ##[href^="http://gripdownload.com/"]
 ##[href^="http://speedyfiles.net/"]
 ##[href^="https://www.lockredirect.com/"]
+##[href^="http://www.mannesoth.com/"]
+##[href^="http://www.downloadthesefiles.com/"]
 !
 !
 !
@@ -4323,6 +4325,14 @@ dream-file.com##[alt="Regular Download"]
 ||ex-sites.net^
 ||dark-area.net^
 ||apple-globe.com^
+||gtaonlinemoneyhacks.com^
+||film-25.ru^
+||casgolounge.com^
+||downloadthesefiles.com^
+||mannesoth.com^
+||freexboxlivemicrosoftpoints.com^
+||free-minecraftaccount.org^
+||hackblackops2.com^
 !
 !
 !

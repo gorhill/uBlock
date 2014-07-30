@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: EdlA64+GezL5OvJp97ckrA
-! Version: 201407281241
+! Checksum: SNTxY2MuoW1WI1CmHY2suA
+! Version: 201407300441
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 28 Jul 2014 12:41 UTC
+! Ultima modifica: 30 Jul 2014 04:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2212,6 +2212,7 @@ giornaledibrescia.it##.dealboxTop
 immobiliare.it##.det_pub_box_content
 nokioteca.net##.dex_box
 supermoney.eu##.dfp-leaderbord
+blastingnews.com##.dfp-mobile-leadeboard
 ansa.it##.diretta-sponsor
 lavoratorio.it##.divBoxbanner300x250
 gossipetv.com##.ebuzzing_box
@@ -2261,6 +2262,7 @@ corrieredellosport.it##.label_sponsor_sp
 alessandrianews.it##.leader-board-225x90
 alessandrianews.it##.leader-board-728x90
 close-up.it,foxtv.it,guidasicilia.it,la7.it,radiospeaker.it,today.it##.leaderboard
+blastingnews.com##.leaderboard-article
 erbanotizie.com,lecconotizie.com##.leaderboard-bottom
 ilsole24ore.com##.link_expand
 mymovies.it##.linkblu[style="width:290px; cursor:pointer; margin-top:5px;"]
@@ -2606,6 +2608,7 @@ elaborare.info##img[style="height: 960px;\a             margin-left: -165px;\a  
 elaborare.info##img[style="height: 960px;\a             margin-left: 970px;\a             margin-top: 0px;\a             position: fixed;\a             top: 0;\a             width: 145px;"]
 rietilife.it##img[style="width: 205px; height: 82px;"]
 frosinoneweb.net##img[style="width: 930px; height: 115px;"]
+ilsalvagente.it##img[width="120"][height="60"]
 melamorsicata.it##img[width="160"][height="300"]
 romanews.eu##img[width="180"][height="240"]
 romanews.eu##img[width="180"][height="280"]
@@ -2652,8 +2655,8 @@ termometropolitico.it##[id^="bsa"]
 @@||151.1.68.170/index.php?zoneid=$object-subrequest,domain=la7.it
 @@||ad.smartclip.net/crossdomain.xml$object-subrequest,domain=serviziopubblico.it
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=serviziopubblico.it
-@@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv
-@@||ad49.neodatagroup.com/ad/sipra.jsp?*&player=html5$script,domain=rai.it|rai.tv
+@@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv|rainews.it
+@@||ad49.neodatagroup.com/ad/sipra.jsp?$script,domain=rai.it|rai.tv|rainews.it
 @@||adimg.matrixspa.it/cookie_script/read_crt.html$domain=webmail.virgilio.it
 @@||adimg.matrixspa.it/jsc/advManage.js$domain=webmail.virgilio.it
 @@||adnkronos.com/ign/mediacenter/fotogallery/data_01/img/ad_
@@ -2703,7 +2706,7 @@ termometropolitico.it##[id^="bsa"]
 @@||ilfattoquotidiano.it/wp-content/themes/ilfatto/thumb/*_pubblicita_*.jpg
 @@||impit.tradedoubler.com/imp?$subdocument,domain=iphoneitalia.com
 @@||js.neodatagroup.com/uploads/js/rds.js$domain=rds.it
-@@||js49.adagionet.com/uploads/js/sipra.js$domain=rai.it|rai.tv
+@@||js49.adagionet.com/uploads/js/sipra.js$domain=rai.it|rai.tv|rainews.it
 @@||labs.ebuzzing.it/blogs/top/getrank?$image
 @@||labs.ebuzzing.it/shared/images/wikiothis/buttons/
 @@||laprovinciadibiella.it/upload/webpublic/facebook.jpg

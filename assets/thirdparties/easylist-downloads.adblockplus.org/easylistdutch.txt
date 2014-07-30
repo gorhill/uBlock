@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: 3mC1e4a8D79DUEQuWYt7iw
-! Version: 201407281241
+! Checksum: 8JObjwUC/xZb3r1G0Ghoww
+! Version: 201407300441
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 28 Jul 2014 12:41 UTC
+! Last modified: 30 Jul 2014 04:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -251,6 +251,7 @@ _advertentieleaderboardhome.
 ||tools.islive.nl^*/promo_
 ||totaalwijzer.nl/widget/$third-party
 ||triple-it.nl/itbizzer/
+||trivago.nl/nl/srv/destination/js/$domain=popinstituut.nl
 ||tvgidsassets.nl/graphics/ad*.gif
 ||tvgidsassets.nl/graphics/bg_teaserlnk.gif
 ||tvgidsassets.nl^*/img/ad*_gray.gif
@@ -512,6 +513,7 @@ _advertentieleaderboardhome.
 ||pietsweer.nl/wp-content/uploads/*/sponsors-pietsweer_carousel_
 ||pinkribbon.nl/_files-cms/image/slideshows/actiebanners/
 ||plattegronden.nl/siteadmin/banners/
+||popinstituut.nl/wp-content/uploads/2014/02/Huren.nl
 ||promootjesite.nl/popups/
 ||psv.nl/web/banner/
 ||pu.nl/skins/
@@ -1091,6 +1093,7 @@ wetenschapsforum.nl##.top_banner
 limburger.nl##.top_story_banner
 chatmetvreemden.be,chatmetvreemden.nl##.trackerclick
 nutech.nl##.trackevent[href^="/advertorial-"]
+popinstituut.nl##.trivago_widget_text
 uitburo.nl##.uitmail_banner_block
 voetbalzone.nl##.uniClick
 incestsexverhaaltjes.nl##.viagra

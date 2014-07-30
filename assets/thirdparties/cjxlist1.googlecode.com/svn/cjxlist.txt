@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140722
-! Version: 20140722
+! List version 20140729
+! Version: 20140729
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
@@ -84,15 +84,18 @@
 /ad728.
 /ad8.
 /ad_banner.
+/ad_banner/*
 /ad_count.
 /ad_files/*
 /ad_header.
 /ad_iframe.
+/ad_images/*
 /ad_img/*
 /ad_left_
 /ad_loader2.
 /ad_news.
 /ad_right.
+/ad_side.
 /ad_text_
 /ad_top.
 /ad_top_
@@ -149,11 +152,13 @@
 /adpopup.
 /adproxy.
 /adright.
+/adrotate.
 /ads-arc.
 /ads.gif
 /ads.js?
 /ads.php
 /ads.png
+/ads/ad-
 /ads/ad_
 /ads/ads/*
 /ads/ads_
@@ -179,9 +184,11 @@
 /adserv.
 /adserve/*
 /adserver.
+/adservice/*
 /adsfile.
 /adshow.
 /adshow?
+/adsimages/*
 /adslide.
 /adsrich.
 /adswrapperintl.
@@ -207,9 +214,9 @@
 /advertisement/*
 /advertisement_
 /advertisements/*
+/advertiser.
 /advertiser/*$domain=~mobileapptracking.com|~trialpay.com
 /advertising.
-/advertising/*
 /advertising?
 /advertorial/*
 /advs/*
@@ -241,6 +248,7 @@
 /delivery/avw.
 /delivery/lg.
 /eroex.
+/event.ng/*
 /exoclick.
 /flash/ad/*
 /flashad.
@@ -280,6 +288,7 @@
 /images/adv.
 /images/adv/*
 /images/adv_
+/images/sponsored/*
 /images_ad/*
 /img.ads.
 /img/ad.
@@ -299,6 +308,7 @@
 /left_ad_
 /leftad.
 /logad?
+/main/ad_
 /mbads?
 /media/ad/*
 /mobile_ad.
@@ -352,6 +362,7 @@
 /textad.
 /top_ad.
 /topad.
+/topads.
 /txtad.
 /uploads/ads/*
 /videoad.
@@ -394,10 +405,12 @@ _ads_top.
 _adscript.
 _adsense.
 _adshow.
+_adstat.
 _adv.js
 _advert.
 _advert/
 _advertise.
+_adview_
 _afs_ads.
 _bannerad.
 _content_ad.
@@ -411,6 +424,8 @@ _topad.
 /adblock_detector.
 -160-600.
 -300-250.
+-468-60-
+-468-60.
 -468_60.
 -468x60.
 -728x90.
@@ -446,6 +461,7 @@ _300x250.
 _300x250_
 _300x250v2.
 _300x600.
+_420x80.
 _468.gif
 _468_60.
 _468_60_
@@ -506,6 +522,7 @@ _960_90.
 ###ad300
 ###ad300x250
 ###ad336
+###ad468
 ###ad6
 ###adAd
 ###adBanner
@@ -553,6 +570,7 @@ _960_90.
 ###ad_body
 ###ad_bottom
 ###ad_box
+###ad_content
 ###ad_footer
 ###ad_head
 ###ad_header
@@ -581,6 +599,7 @@ _960_90.
 ###adboard
 ###adbottom
 ###adbox
+###adbrite
 ###adclose
 ###adcontainer1
 ###adcontainer2
@@ -617,6 +636,7 @@ _960_90.
 ###adverti
 ###advertise
 ###advertising2
+###advt
 ###article-ad
 ###articleAd
 ###articlead1
@@ -625,6 +645,7 @@ _960_90.
 ###banner728x90
 ###bannerAd
 ###bigad
+###blog-ad
 ###blogads
 ###bottom-ad
 ###bottom_ad
@@ -661,6 +682,7 @@ _960_90.
 ###header_ad
 ###headerad
 ###homead
+###homepage_ad
 ###index_ad
 ###indexad
 ###insidearticleBodyAd
@@ -727,15 +749,18 @@ _960_90.
 ###wide_ad_unit
 ###widget_ad
 ##.AdTop
+##.AdUnit
 ##.GoogleAd
 ##.LazyLoadAd
 ##.TopAds
 ##.UIStandardFrame_SidebarAds
 ##.ad-1
 ##.ad-160x600
+##.ad-2
 ##.ad-300
 ##.ad-300x100
 ##.ad-300x250
+##.ad-4
 ##.ad-5
 ##.ad-6
 ##.ad-area
@@ -763,6 +788,7 @@ _960_90.
 ##.ad-side
 ##.ad-squares
 ##.ad-text
+##.ad-tile
 ##.ad-tl1
 ##.ad-top
 ##.ad-txt
@@ -795,6 +821,7 @@ _960_90.
 ##.ad590
 ##.ad600
 ##.ad728
+##.ad72890
 ##.ad90
 ##.ad960
 ##.ad980
@@ -842,6 +869,7 @@ _960_90.
 ##.ad_box
 ##.ad_box1
 ##.ad_box_2
+##.ad_col
 ##.ad_column
 ##.ad_contain
 ##.ad_container
@@ -851,15 +879,18 @@ _960_90.
 ##.ad_global_header
 ##.ad_header
 ##.ad_img
+##.ad_item
 ##.ad_leader
 ##.ad_link
 ##.ad_main
 ##.ad_mod
 ##.ad_module
 ##.ad_news
+##.ad_panel
 ##.ad_pic
 ##.ad_placement
 ##.ad_promo
+##.ad_row
 ##.ad_side
 ##.ad_sidebar
 ##.ad_small
@@ -914,6 +945,7 @@ _960_90.
 ##.ads123
 ##.ads160
 ##.ads3
+##.ads300
 ##.ads300x250
 ##.ads336x280
 ##.ads728
@@ -955,6 +987,7 @@ _960_90.
 ##.banner728
 ##.bannerAd
 ##.bannerAd3
+##.banner_250x250
 ##.banner_300x250
 ##.banner_728x90
 ##.banner_ad
@@ -1002,6 +1035,7 @@ _960_90.
 ##.footer-ad
 ##.footerAds
 ##.footer_adv
+##.footerad
 ##.g_ad
 ##.google-ad
 ##.googleAd
@@ -1029,6 +1063,7 @@ _960_90.
 ##.iframead
 ##.imgad
 ##.index_ad
+##.indexad
 ##.innerad
 ##.isAd
 ##.item-container-ad
@@ -1041,6 +1076,7 @@ _960_90.
 ##.logo-ad
 ##.logoad
 ##.longAd
+##.long_ad
 ##.main-ad
 ##.mainAd
 ##.main_ad
@@ -1097,11 +1133,13 @@ _960_90.
 ##.single-ad
 ##.slide_ad
 ##.sponsor-bottom
+##.sponsor_logo
 ##.syAd
 ##.text-ad
 ##.textAd
 ##.text_ad
 ##.textad
+##.title-ad
 ##.top-ad
 ##.top-ads
 ##.top-content-adplace
@@ -1116,6 +1154,7 @@ _960_90.
 ##.topadbar
 ##.topadbox
 ##.topads
+##.trc-content-sponsored
 ##.txt_ad
 ##.ui-ad
 ##.view_ad
@@ -1175,7 +1214,9 @@ yahoo.com#@#.type_ads_default
 ||asooda.com^$third-party
 ||atdmt.com^$third-party
 ||atwola.com^$third-party
+||awempire.com^$third-party
 ||awltovhc.com^$third-party
+||betrad.com^$third-party
 ||bidsystem.com^$third-party
 ||bizographics.com^$third-party
 ||btnibbler.com^$third-party
@@ -1187,6 +1228,7 @@ yahoo.com#@#.type_ads_default
 ||clkrev.com^
 ||comscore.com^$third-party
 ||connexity.net^$third-party
+||connextra.com^$third-party
 ||contextweb.com^$third-party
 ||cpmstar.com^$third-party
 ||criteo.com^$third-party
@@ -1241,6 +1283,7 @@ yahoo.com#@#.type_ads_default
 ||serving-sys.com^$third-party
 ||skimresources.com^$third-party
 ||skinected.com^$third-party
+||specificclick.net^$third-party
 ||supersitetime.com^$third-party
 ||supplyframe.com^$third-party
 ||switchadhub.com^$third-party
@@ -1251,6 +1294,7 @@ yahoo.com#@#.type_ads_default
 ||tribalfusion.com^$third-party
 ||tubemogul.com^$third-party
 ||videoplaza.tv/proxy/distributor^$object-subrequest,third-party
+||vindicosuite.com^$third-party
 ||wigetmedia.com^$third-party
 ||yeabble.com^$third-party
 ||yieldmanager.com^$third-party
@@ -1260,6 +1304,7 @@ yahoo.com#@#.type_ads_default
 ||ad.doubleclick.net^$popup,third-party
 ||adsmarket.com^$popup,third-party
 ||directrev.com^$popup,third-party
+||juicyads.com^$third-party
 ||mmaaxx.com^$third-party
 ||plugrush.com^$third-party
 ||putags.com^$third-party
@@ -1312,6 +1357,8 @@ yahoo.com#@#.type_ads_default
 ||yahoo.com/neo/darla/
 ||yimg.com/*300x250$image,object
 ||yimg.com/rq/darla/$domain=yahoo.com
+! Firefox freezes if not blocked on reuters.com (http://forums.lanik.us/viewtopic.php?f=64&t=16854)
+||static.crowdscience.com/max-*.js?callback=crowdScienceCallback$domain=reuters.com
 ||linkbucks.com^*?ref=$popup
 ||imgbabes.com/element.js
 ||imgbabes.com/ja.html
@@ -1351,8 +1398,8 @@ facebook.com##div[class="ego_column pagelet _5qrt _1snm"]
 facebook.com##div[class="ego_column pagelet _5qrt _y92 _1snm"]
 facebook.com##div[class="ego_column pagelet _y92"]
 facebook.com##div[class="ego_column pagelet"]
+ehow.com##div[data-module="radlinks"]
 broadbandreports.com,dslreports.com##td[style="border-right: 1px #CCCCCC solid;"]
-imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:4px 3px 4px 3px; margin-top:-5px; margin-bottom:-8px; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px;"]
 @@||adap.tv/redir/javascript/vpaid.js
 @@||adblockplus.org^$elemhide,domain=easylist.adblockplus.org|reports.adblockplus.org
 @@||adguard.com^$~third-party
@@ -1382,5 +1429,6 @@ imgbabes.com##div[style="width:604px; height:250px; background:#241521; padding:
 @@||video.appledaily.com.hk/admedia/$object-subrequest,domain=nextmedia.com
 @@||www.facebook.com/ajax/ads/$xmlhttprequest,domain=www.facebook.com
 @@||www.google.com/analytics/web/$xmlhttprequest,domain=www.google.com
+! *** easylist:easylist_adult/adult_whitelist.txt ***
 @@||ad.thisav.com/player/jw.swf
 !----------------------------------The End------------------------------------!

@@ -241,14 +241,14 @@ go4up.com##IMG[src="http://go4up.com/assets/img/downloadfr.gif"]
 @@||myspass.de/myspass/includes/apps/video/getvideometadataxml.php?$object-subrequest
 @@||myspass.de/myspass/includes/apps/player/standard/avt_config.php?$object-subrequest
 @@||serving-sys.com^$third-party,domain=myspass.de
-! playtv.fr
-@@||playtv.fr^$elemhide
-@@||ad4.liverail.com^$domain=m.playtv.fr
-@@||addirector.vindicosuite.com/crossdomain.xml$domain=playtv.fr
-@@||ads.stickyadstv.com/crossdomain.xml$domain=playtv.fr
-@@||ads.stickyadstv.com/www/delivery/*$domain=playtv.fr
-@@||adserver.playtv.fr/crossdomain.xml$domain=playtv.fr
-@@||ima3vpaid.appspot.com^$domain=playtv.fr
+! play.tv
+@@||play.tv^$elemhide
+@@||ad4.liverail.com^$domain=m.play.tv
+@@||addirector.vindicosuite.com/crossdomain.xml$domain=play.tv
+@@||ads.stickyadstv.com/crossdomain.xml$domain=play.tv
+@@||ads.stickyadstv.com/www/delivery/*$domain=play.tv
+@@||adserver.play.tv/crossdomain.xml$domain=play.tv
+@@||ima3vpaid.appspot.com^$domain=play.tv
 ! eclypsia.com
 !@@||adverts.eclypsia.com/www/delivery/spcjs.php?*$domain=eclypsia.com
 ! dbzog.de
@@ -870,8 +870,18 @@ mrtzcmp3.net###hstp_interstitial
 ! ddl-search.biz##.wpbanner_superlenny
 ddl-search.biz##.wpbanner_superlenny
 ! pronpic.org
-!||*$domain=pronpic.org,subdocument,third-partyscript
-@@||googleapis.com^$script,domain=pronpic.org
-$domain=pronpic.org,script,third-party,subdocument
+||pronpic.org/52mp/index.php/adhandler/
+||advertclicks.ru^$domain=pronpic.org
+||limon.biz^$domain=pronpic.org
+||tizru.com^$domain=pronpic.org
+||piroji.com^$domain=pronpic.org
+||crpoy.com^$domain=pronpic.org
+||xaogi.com^$domain=pronpic.org
+||6likosy.com^$domain=pronpic.org
+||midlemee.ru^$domain=pronpic.org
+||tafyeta.ru^$domain=pronpic.org
+||tmserver-1.com^$domain=pronpic.org
+||zinzimo.info^$domain=pronpic.org
+||avitya.ru^$domain=pronpic.org
 ! pregen.net
 pregen.net###olayer

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Y7n1yswUbnf1fq9O1it+4g
-! Version: 201407281240
-! Last modified: 28 Jul 2014 12:40 UTC
+! Checksum: 1QjW7wsJWXuAM63hG+qjwg
+! Version: 201407300440
+! Last modified: 30 Jul 2014 04:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -25,6 +25,7 @@
 /+1/fastbutton?url=
 /addthis.try.js
 /copy_to_blog_*.gif
+/dk?st.cmd=WidgetShare&st.shareUrl=
 /icon-vkontakte.
 /icons/vkontakte_
 /img/*vkontakte.png
@@ -606,6 +607,7 @@ _vkontakte.png
 /icn-tumblr.
 /icn-twitter-
 /icn-twitter.
+/icn-youtube.
 /icn_googe_
 /ico-delicious.
 /ico-digg.
@@ -1369,6 +1371,7 @@ _vkontakte.png
 /social_hovers.
 /social_hub/*
 /social_icon_
+/social_icons-
 /social_icons.
 /social_icons/*
 /social_icons_
@@ -1451,6 +1454,7 @@ _vkontakte.png
 /socialshare-
 /socialShare.
 /socialshare2.
+/socialshare_
 /socialshareprivacy/*
 /socialshares.
 /SocialShareSprite.
@@ -2556,6 +2560,7 @@ _youtube_small.
 ###rr-social-widget-facebook
 ###rr-social-widget-twitter
 ###rrSocialNetworks
+###rr_facebook
 ###rr_social_tout
 ###sSocial
 ###saveshare-bottom
@@ -4025,6 +4030,7 @@ _youtube_small.
 ##.footerButtonFacebook
 ##.footerButtonGoogle
 ##.footerButtonTwitter
+##.footerFollowUs
 ##.footerNavSocials
 ##.footerShare
 ##.footerSocial
@@ -4213,6 +4219,7 @@ _youtube_small.
 ##.icn-tumblr
 ##.icn-twit
 ##.icn-twitter
+##.icn-youtube
 ##.icn_fcbk
 ##.icn_twtr
 ##.ico-facebook
@@ -4788,6 +4795,8 @@ _youtube_small.
 ##.share-wrapper
 ##.share.stumble
 ##.share2-vert
+##.share24
+##.share24_tool
 ##.shareArticle
 ##.shareBar
 ##.shareBarPostBottom
@@ -5152,6 +5161,7 @@ _youtube_small.
 ##.social-counter-wrapper
 ##.social-counts-single
 ##.social-deferred
+##.social-expanded
 ##.social-facebook
 ##.social-facebook-friendpile
 ##.social-facebook-link
@@ -6153,6 +6163,7 @@ _youtube_small.
 ##img[alt="Follow us on LinkedIn"]
 ##img[alt="Follow us on Twitter!"]
 ##img[alt="Follow us on Twitter"]
+##img[alt="Follow us on YouTube"]
 ##img[alt="Follow us to FacBook.com"]
 ##img[alt="Follow us to StumbleUpon.com"]
 ##img[alt="Follow us to Twitter.com"]
@@ -6582,6 +6593,7 @@ tjournal.ru##.likes
 aif.ru##.links + table[align="center"]
 vesti.ru##.live_container
 championat.ru##.livejournal
+livejournal.com##.lj-like-item:not(.lj-like-item-repost)
 echo.msk.ru##.netWorkBlock
 novafilm.tv##.news-entry > div:last-child
 ntv.ru##.podprint > ul[style*="370"]
@@ -7382,8 +7394,6 @@ _social_rss.
 ###taboola-text-2-columns-mix
 ###taboola-vid-container
 ###taboola_wrapper
-###targetWeeklyAd
-###targetWeeklyAdLogo
 ###tesco_cookie_widget
 ###toTop
 ###toolboxDiv1
@@ -7550,7 +7560,6 @@ _social_rss.
 ##.fyre-notifier-container
 ##.globalcookiepolicycontainer
 ##.gn-cookie-alert
-##.google-ads-group
 ##.i-rss
 ##.ibbsub
 ##.ic_rss
@@ -7724,6 +7733,7 @@ _social_rss.
 ##.targetAd
 ##.td-scroll-up
 ##.to-top
+##.toTopButton
 ##.toast-type-newCookie
 ##.toasterAd
 ##.track-action-RSS
@@ -8793,7 +8803,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||t3n.de/news/wp-content/uploads/*/social_media_
 @@||telia.se/tse/js/socialmedia/
 @@||timecatcher.github.io/img/facebook.png
-@@||tripit.com/js/tripit/social/facebook.js?
+@@||tripit.com/js/tripit/social/
 @@||tv-kino.net/wp-content/plugins/fb-traffic-pop/
 @@||twimg.com/profile_images/$image,domain=twitter.com
 @@||twimg.com/tweets.json?*callback$script
