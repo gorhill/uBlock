@@ -6,16 +6,6 @@ Usage: The big power button in the popup is to permanently disable/enable µBloc
 
 ***
 
-IMPORTANT!
-
-If you install µBlock along another blocker, µBlock will likely show less requests blocked than the other blocker. It is because when used along with another blocker, µBlock typically will block and show you what the other blocker DID NOT block, not what was already blocked by the other blocker.
-
-If µBlock is used as the lone blocker, it will block everything the other blocker would have blocked, and more.
-
-More: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
-
-***
-
 Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
 
 Out of the box, these lists of filters are loaded and enforced:

@@ -7,16 +7,6 @@ Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktiv
 
 ***
 
-VIKTIGT!
-
-Om du installerar µBlock tillsammans med en annan blockerare kommer µBlock sannolikt visa färre blockerade förfrågningar än den andra blockeraren. Detta för att när µBlock används tillsammans med en annan blockerare, blockerar µBlock i vanliga fall det som den andra blockeraren INTE blockerat, inte vad som redan blivit blockerat av den andra blockeraren.
-
-Om µBlock används som den enda blockeraren kommer den blockera allt den andra blockeraren skulle ha blockerat, och mer.
-
-Läs mer: https://github.com/gorhill/uBlock/wiki/Tricks-and-tips#easy-way-to-find-out-what-other-blockers-do-not-block-what-they-should-block
-
-***
-
 µBlock är inte enbart en "reklamblockerare": den kan också läsa och skapa filter från hosts-filer.
 
 Som standard är följande filterlistor laddade och applicerade:
