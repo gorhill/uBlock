@@ -1373,6 +1373,10 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 // Specialized handlers
 
+// https://github.com/gorhill/uBlock/issues/116
+// Some type of requests are exceptional, they need custom handling,
+// not the generic handling.
+
 FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType, requestHostname) {
     var url = requestURL.toLowerCase();
     var pageDomain = pageDetails.pageDomain || '';
@@ -1418,13 +1422,6 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
 
 FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
     // adbProfiler.countUrl();
-
-    // https://github.com/gorhill/uBlock/issues/116
-    // Some type of requests are exceptional, they need custom handling,
-    // not the generic handling.
-    if ( requestType === 'popup' ) {
-        return this.matchStringExactType(pageDetails, requestURL, requestType, requestHostname);
-    }
 
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:

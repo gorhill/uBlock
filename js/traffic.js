@@ -152,7 +152,7 @@ var onBeforeSendHeaders = function(details) {
     // in multiple tabs.
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
-        reason = µb.abpFilters.matchString(
+        reason = µb.abpFilters.matchStringExactType(
             pageDetails,
             requestURL,
             'popup',
