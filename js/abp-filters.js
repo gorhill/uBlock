@@ -1371,8 +1371,60 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 /******************************************************************************/
 
+// Specialized handlers
+
+FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType, requestHostname) {
+    var url = requestURL.toLowerCase();
+    var pageDomain = pageDetails.pageDomain || '';
+    var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
+        FirstParty :
+        ThirdParty;
+    var domainParty = this.toDomainBits(pageDomain);
+    var type = typeNameToTypeValue[requestType];
+    var categories = this.categories;
+    var buckets = this.buckets;
+
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
+
+    buckets[0] = buckets[1] = buckets[2] = buckets[3] = undefined;
+
+    // Test against block filters
+    buckets[4] = categories[this.makeCategoryKey(BlockAnyParty | type)];
+    buckets[5] = categories[this.makeCategoryKey(BlockAction | type | party)];
+    buckets[6] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
+    buckets[7] = categories[this.makeCategoryKey(BlockOtherParties | type)];
+    var br = this.matchTokens(url);
+
+    // If there is no block filter, no need to test against allow filters
+    if ( br === false ) {
+        return false;
+    }
+
+    // Test against allow filters
+    buckets[4] = categories[this.makeCategoryKey(AllowAnyParty | type)];
+    buckets[5] = categories[this.makeCategoryKey(AllowAction | type | party)];
+    buckets[6] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
+    buckets[7] = categories[this.makeCategoryKey(AllowOtherParties | type | domainParty)];
+    var ar = this.matchTokens(url);
+    if ( ar !== false ) {
+        return '@@' + ar;
+    }
+
+    return br;
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
     // adbProfiler.countUrl();
+
+    // https://github.com/gorhill/uBlock/issues/116
+    // Some type of requests are exceptional, they need custom handling,
+    // not the generic handling.
+    if ( requestType === 'popup' ) {
+        return this.matchStringExactType(pageDetails, requestURL, requestType, requestHostname);
+    }
 
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
