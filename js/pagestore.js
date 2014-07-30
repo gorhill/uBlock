@@ -38,7 +38,53 @@ To create a log of net requests
 /******************************************************************************/
 
 var µb = µBlock;
+var frameStoreJunkyard = [];
 var pageStoreJunkyard = [];
+
+/******************************************************************************/
+
+var frameStoreFactory = function(frameURL) {
+    var entry = frameStoreJunkyard.pop();
+    if ( entry ) {
+        return entry.init(frameURL);
+    }
+    return new FrameStore(frameURL);
+};
+
+var disposeFrameStores = function(map) {
+    for ( var k in map ) {
+        if ( map.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        if ( frameStoreJunkyard.length > 50 ) {
+            break;
+        }
+        frameStoreJunkyard.push(map[k].dispose());
+    }
+    return {};
+};
+
+/******************************************************************************/
+
+var FrameStore = function(frameURL) {
+    this.init(frameURL);
+};
+
+/******************************************************************************/
+
+FrameStore.prototype.init = function(frameURL) {
+    var µburi = µb.URI;
+    this.pageHostname = µburi.hostnameFromURI(frameURL);
+    this.pageDomain = µburi.domainFromHostname(this.pageHostname);
+    return this;
+};
+
+/******************************************************************************/
+
+FrameStore.prototype.dispose = function() {
+    this.pageHostname = this.pageDomain = '';
+    return this;
+};
 
 /******************************************************************************/
 
@@ -52,9 +98,9 @@ var pageStoreFactory = function(tabId, pageURL) {
 
 /******************************************************************************/
 
-function PageStore(tabId, pageURL) {
+var PageStore = function(tabId, pageURL) {
     this.init(tabId, pageURL);
-}
+};
 
 /******************************************************************************/
 
@@ -64,6 +110,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
+    this.frames = disposeFrameStores(this.frames);
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.blockedRequests = {};
@@ -79,6 +126,7 @@ PageStore.prototype.reuse = function(pageURL) {
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
+    this.frames = disposeFrameStores(this.frames);
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.blockedRequests = {};
@@ -100,6 +148,23 @@ PageStore.prototype.dispose = function() {
     if ( pageStoreJunkyard.length < 8 ) {
         pageStoreJunkyard.push(this);
     }
+};
+
+/******************************************************************************/
+
+PageStore.prototype.addFrame = function(frameId, frameURL) {
+    var frameStore = this.frames[frameId];
+    if ( frameStore === undefined ) {
+        this.frames[frameId] = frameStore = frameStoreFactory(frameURL);
+        //console.debug('µBlock> PageStore.addFrame(%d, "%s")', frameId, frameURL);
+    }
+    return frameStore;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.getFrame = function(frameId) {
+    return this.frames[frameId];
 };
 
 /******************************************************************************/

@@ -67,9 +67,20 @@ var onBeforeRequest = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/114
+    var requestContext = pageStore;
+
+    //var frameStore;
+    //var frameId = details.frameId;
+    //if ( frameId > 0 ) {
+    //    if ( frameStore = pageStore.getFrame(frameId) ) {
+    //        requestContext = frameStore;
+    //    }
+    //}
+
     var reason = false;
     if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
-        reason = µb.abpFilters.matchString(pageStore, requestURL, requestType, requestHostname);
+        reason = µb.abpFilters.matchString(requestContext, requestURL, requestType, requestHostname);
     }
     // Record what happened.
     pageStore.recordRequest(requestType, requestURL, reason);
@@ -77,6 +88,11 @@ var onBeforeRequest = function(details) {
     // Not blocked?
     if ( reason === false || reason.slice(0, 2) === '@@' ) {
         //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
+
+        // https://github.com/gorhill/uBlock/issues/114
+        //if ( frameId > 0 && frameStore === undefined ) {
+        //    pageStore.addFrame(frameId, requestURL);
+        //}
         return;
     }
 
