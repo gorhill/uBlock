@@ -88,4 +88,5 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 @@||opf.ooyala.com^
 
 # https://github.com/gorhill/uBlock/issues/119
+# To counter `google-analytics.com` in Peter Lowe's list
 @@||google-analytics.com^$domain=avianca.com
