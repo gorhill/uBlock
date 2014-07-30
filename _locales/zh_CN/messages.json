@@ -132,19 +132,19 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"自定义",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"每行一条 URL。以“!”开头的行将被忽略。无效的 URL 将被忽略。",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"应用",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"清除缓存",
     "description":"English: purge cache"
   },
   "1pFormatHint":{
@@ -164,7 +164,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"你的列表里的主机名将被 µBlock 禁用。每行一条规则。无效的主机名将被忽略掉。",
+    "message":"列表里的主机名将被 µBlock 禁用。每行一条规则。无效的主机名将被忽略掉。",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -184,7 +184,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"如果你想要开启此选项，你将可以查看拦截广告的详情。拦截记录会增加µBlock的内存占用。由于很多用户用不到这个功能，它默认是禁用的。",
+    "message":"开启此选项，将可以查看已拦截请求的记录。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
