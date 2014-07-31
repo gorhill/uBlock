@@ -36,7 +36,7 @@
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockierte Anforderungen",
+    "message":"blockierte Anfragen",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -52,15 +52,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Klicke um das Bedienfeld zu öffnen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Öffne den Element Picker - Modus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Gehe zu den protokollierten Anfragen",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -88,7 +88,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anforderungen auf dem Icon",
+    "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
