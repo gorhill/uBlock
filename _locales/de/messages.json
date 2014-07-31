@@ -56,7 +56,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Go to element picker",
+    "message":"Enter element picker mode",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
