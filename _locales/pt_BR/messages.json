@@ -51,6 +51,18 @@
     "message":"ou",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Clique para abrir o painel de controle",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Entrar no modo de selecionar elemento",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Ir para o log de solicitações",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Criar",
     "description":"English: Create"
@@ -144,7 +156,7 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"limpar cache",
+    "message":"Limpar cache",
     "description":"English: purge cache"
   },
   "1pFormatHint":{
