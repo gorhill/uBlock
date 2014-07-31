@@ -94,3 +94,7 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 # https://github.com/gorhill/uBlock/issues/120
 # `.widget_ad` is in EasyList, but because generic, it's not applied early enough
 theglobeandmail.com##.widget_ad
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-50770224
+# To counter `c.brightcove.com` in hpHosts
+@@||c.brightcove.com^
