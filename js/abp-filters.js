@@ -847,9 +847,11 @@ FilterParser.prototype.parseOptType = function(raw, not) {
     var type = this.toNormalizedType[raw];
     if ( not ) {
         for ( var k in typeNameToTypeValue ) {
-            if ( k === type ) {
-                continue;
-            }
+            if ( k === type ) { continue; }
+            // https://github.com/gorhill/uBlock/issues/121
+            // `popup` is a special type, it cannot be set for filter intended
+            // for real net request types
+            if ( k === 'popup' ) { continue; }
             this.types.push(typeNameToTypeValue[k]);
         }
     } else {
