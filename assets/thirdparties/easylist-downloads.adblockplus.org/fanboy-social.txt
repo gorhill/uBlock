@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 2F3aiFXEaMTtpDf9MLtjzg
-! Version: 201407300441
+! Checksum: uv6d0r8n0cOsv3izmLr6Xg
+! Version: 201407312301
 ! Title: Fanboy's Social Blocking List
-! Last modified: 30 Jul 2014 04:41 UTC
+! Last modified: 31 Jul 2014 23:01 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -570,6 +570,9 @@
 /icn-twitter.
 /icn-youtube.
 /icn_googe_
+/icn_google_
+/icn_pinterest_
+/icn_youtube_
 /ico-delicious.
 /ico-digg.
 /ico-facebook-
@@ -1328,6 +1331,7 @@
 /social_google.
 /social_google_
 /social_googleplus.
+/social_header.
 /social_headers.
 /social_hovers.
 /social_hub/*
@@ -1336,6 +1340,7 @@
 /social_icons.
 /social_icons/*
 /social_icons_
+/social_images/*
 /social_instagram-
 /social_instagram.
 /social_instagram2.
@@ -2022,6 +2027,7 @@ _youtube_small.
 ###dmsocial
 ###donate-social
 ###drop-btn-share
+###dsp_ftr_social
 ###epoch-floating-social
 ###et-social-icons
 ###eventSocialMedia
@@ -2440,7 +2446,10 @@ _youtube_small.
 ###plug-facebook
 ###plug-twitter
 ###pmFacebook
+###popShare1
+###popShare2
 ###popsugar-social-bar
+###popup_social
 ###post-share
 ###post-share-float
 ###post-share-icons
@@ -3518,6 +3527,7 @@ _youtube_small.
 ##.cdc_social_icons
 ##.clean-share-box
 ##.cmuShareWidget
+##.cne-share
 ##.cnn-social-icons
 ##.cnnShareRow
 ##.cnss-social-icon
@@ -4694,6 +4704,7 @@ _youtube_small.
 ##.share-this-static
 ##.share-this-tip
 ##.share-title
+##.share-toggle
 ##.share-toolbar-box
 ##.share-toolbar-container
 ##.share-tools
@@ -5099,6 +5110,7 @@ _youtube_small.
 ##.social-height
 ##.social-helpers
 ##.social-horizontal
+##.social-houzz
 ##.social-icon
 ##.social-icon-buttons
 ##.social-icon-container
@@ -5176,6 +5188,7 @@ _youtube_small.
 ##.social-onscroll
 ##.social-options
 ##.social-panel
+##.social-pinterest
 ##.social-plugin-twitter
 ##.social-plugins
 ##.social-pod
@@ -5527,6 +5540,7 @@ _youtube_small.
 ##.st_digg_custom
 ##.st_facebook_custom
 ##.st_facebook_large
+##.st_googleplus_custom
 ##.st_googleplus_large
 ##.st_sharethis
 ##.st_sharethis_custom
@@ -5545,6 +5559,7 @@ _youtube_small.
 ##.story-share-buttons
 ##.story-social-bar
 ##.story-tools-social
+##.storySocial_short
 ##.story_allsocial
 ##.story_share
 ##.story_tools_social_buttons_top
@@ -6018,6 +6033,7 @@ _youtube_small.
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Instagram"]
 ##a[title="Follow us on Tumblr"]
+##a[title="Join us Facebook"]
 ##a[title="Join us on Facebook"]
 ##a[title="Join us on LinkedIn"]
 ##a[title="Post this story to Facebook"]
@@ -6032,6 +6048,7 @@ _youtube_small.
 ##a[title="Share this to Technorati"]
 ##a[title="Share via facebook"]
 ##a[title="Tweet this"]
+##a[title="Watch our videos on Youtube"]
 ##a[title="follow us on Facebok"]
 ##a[title="follow us on G+"]
 ##a[title="follow us on Pinterest"]
@@ -6125,10 +6142,12 @@ _youtube_small.
 ##img[alt="join us on Twitter"]
 ##img[alt="share on Reddit"]
 ##img[alt="submit to reddit"]
+##img[title="Connect with us on Google+"]
 ##img[title="Find us on Google+"]
 ##img[title="Follow on Facebook"]
 ##img[title="Follow us on Google Plus"]
 ##img[title="Follow us on Instagram"]
+##img[title="Follow us on Pinterest"]
 ##img[title="Join us on Twitter!"]
 ##img[title="Share at Blogger"]
 ##img[title="Share at Delicious"]
@@ -6555,6 +6574,7 @@ maps.google.com###plusone
 washingtonpost.com###popup-facebook
 collective-evolution.com###popup_container
 collective-evolution.com###popup_overlay
+ilyke.net###post_share
 andriodzone.com###rb-mashable-bar
 ranker.com###reRankBtns
 battlefield.com###region-bf4-social-links
@@ -6696,6 +6716,7 @@ billionuploads.com##.dtsha
 designyoutrust.com##.dyt-social
 el33tonline.com##.el33t_social_container
 bloomberg.com##.entry_sharing
+imamuseum.org##.ext
 9gag.tv,absoluteradio.co.uk,al-shorfa.com,chacha.com,computingunleashed.com,deathandtaxesmag.com,digitimes.com,discountsstory.com,enom.com,eurogamer.net,fightthesmears.com,fixya.com,flippinawesome.org,forvo.com,gizmodo.com,healthymagination.com,huffingtonpost.com,independent.ie,iveybusinessreview.ca,kickstarter.com,lifehacker.com,macrumors.com,mademan.com,messynessychic.com,mzhiphop.com,npr.org,pcworld.in,pinknews.co.uk,recode.net,reuters.com,scion.com,slate.com,smashingmagazine.com,sourcefednews.com,stepstone.be,t3.com,take.fm,techradar.com,techspot.com,thedailyshow.com,thedigitalfix.com,thesun.co.uk,tineye.com,tvland.com,tvnz.co.nz,tweaktown.com,usvsth3m.com,vine.co,washingtonpost.com,yoink.com,yourdailymedia.com##.facebook
 lovefilm.com##.facebook-title
 cracked.com##.facebookLogo

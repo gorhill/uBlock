@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 2P2qeVSekrGNvvsEf7M/eQ
-! Version: 201407300440
-! Last modified: 30 Jul 2014 04:40 UTC
+! Checksum: +QVO16pN3D+e2mSQpY2h0w
+! Version: 201407312300
+! Last modified: 31 Jul 2014 23:00 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -4351,7 +4351,7 @@ gorod.cn.ua##div[class^="bann_"]
 newsvl.ru##div[id][style="height: 120px;"]
 newsvl.ru##div[id][style="height: 80px;"]
 brb.to,cxz.to,fs.to##div[id^="admixer_async_"]
-forum.ixbt.com##div[id^="yandex_ad_"]
+ixbt.com##div[id^="yandex_ad_"]
 multik-online.net##div[style*=".am15."]
 brb.to,cxz.to,fs.to##div[style*="min-height: 274px;"]
 forum.watch.ru##div[style="display:block; width:100%; min-width:800px; height:100px; overflow:hidden;"]

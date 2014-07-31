@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: SNTxY2MuoW1WI1CmHY2suA
-! Version: 201407300441
+! Checksum: eicG1G2HqTVjCSYDoJzdwA
+! Version: 201407312301
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 30 Jul 2014 04:41 UTC
+! Ultima modifica: 31 Jul 2014 23:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -373,6 +373,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||hrs.de/wizard.aspx?
 ||html.it/banner/
 ||iads.iltrovatore.it^
+||ilpelonelluovo.net/banner/
 ||iltelaiodipenelope.it/banner_exchange/
 ||immobiliagest.it^$subdocument,third-party
 ||immobiliare.it/widget/js/populateexternalform.js$third-party
@@ -477,6 +478,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||virginpoker.it/pub/
 ||webalice.it/blackberry_09/trovadeal/
 ||webalice.it/ivo.gervasoni/$third-party
+||webself.it/banners/
 ||wecoclub.it^*_banner_
 ||widget.promoqui.it^
 ||ws.shoppydoo.com^$third-party
@@ -1856,7 +1858,7 @@ telefonino.net###googleNewsTop
 telefonino.net###googleProveTop
 ebay.it###halfboxes-container
 latitudeslife.com###head_banner
-ilsecoloxix.it###head_banners
+fxempire.it,ilsecoloxix.it###head_banners
 cronachemaceratesi.it###head_sponsor
 modenaonline.info,parmaonline.info,reggionline.com,sportreggio.it###header-banner-pane
 rinnovabili.it###header-bottom
@@ -2331,6 +2333,7 @@ areanapoli.it##.sdoo_cnt
 apollodoro.it,ecoo.it,gaywave.it,haisentito.it,nanopress.it,tantasalute.it##.sectCntGoogle3
 guidamonaci.it##.separatorFooter
 tio.ch##.sfondoPubListaNews
+bloopers.it##.shop
 softonic.it##.show_banner_down_leaderboard
 radiomontecarlo.net##.side-ban
 style.it##.side-gallery
@@ -2392,13 +2395,20 @@ bresciaoggi.it,larena.it##.v2_banner-wrapper
 larena.it##.v3_horz-banner
 ilsalvagente.it##.video
 giallozafferano.it##.vini-sp
+filmtv.it##.visione
 vivastreet.it##.vs-summary-300x250
 tiscali.it##.w304.mB20
 tiscali.it##.w312.mB25
 algheroeco.com##.wallpaper-link
 fc-suedtirol.com##.werbung
 insegreto.it##.widget-banner
+fxempire.it##.widget_banner
+fxempire.it##.widget_brokers
 ilfattoquotidiano.it##.widget_ifqbooks
+fxempire.it##.widget_latest_promotions
+fxempire.it##.widget_latest_promotions_right
+fxempire.it##.widget_recommended_brokers
+fxempire.it##.widget_top_brokers
 gazzettagiallorossa.it,orvietosi.it##.wp_bannerize
 allandroidnews.it##.wp_skyscraper_c2
 bergamosera.com##.wpbrbanner
@@ -2629,6 +2639,7 @@ azpoint.net##table[cellspacing="2"][cellpadding="1"][border="0"][align="center"]
 cronacaqui.it##table[height="112"][width="998"]
 bikeracing.it##table[height="180"][width="100%"]
 informatisubito.myblog.it##table[height="600"][width="120"]
+bloopers.it##table[name="banner.tbl"]
 stadionews.it##table[style="margin-top:3px; width:680px; height:60px;"]
 puntosicuro.it##table[style="width: 468px; height: 60px; border: 1px solid #77BBFF; margin-left: auto; margin-right: auto;"]
 stadionews.it##table[width="1000px"][height="90px"]

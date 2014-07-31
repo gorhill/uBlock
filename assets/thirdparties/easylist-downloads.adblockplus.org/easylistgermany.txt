@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Nm+KT9UW9Mxl+MSNrfZ7Sg
-! Version: 201407300441
+! Checksum: tljOzlRAa7rjVRtJXOBxrw
+! Version: 201407312301
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 30 Jul 2014 04:41 UTC
+! Last modified: 31 Jul 2014 23:00 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -331,11 +331,11 @@ _woz_banner_vote.
 ##.werbehinweis
 ##.werbekennzeichnerrectangle
 ##.werbepause
-##.werblinks
+! ##.werblinks
 ! ##.werbrechts
 ! ##.werbung
-##.werbung-1
-##.werbung-2
+! ##.werbung-1
+! ##.werbung-2
 ##.werbung-250x250
 ##.werbung-3
 ##.werbung-bigbox
@@ -493,9 +493,6 @@ netbooknews.de#@#.post-ad
 tsv-thedinghausen.de#@#.postad
 blesius.de#@#.text_werbung
 christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
-epochtimes.de#@#.wnIframeAd
-epochtimes.de#@#.wnad
-epochtimes.de#@#.wp125ad
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
 berlin.de,watchever.de#@#a[href^="http://adfarm.mediaplex.com/"]
@@ -503,7 +500,6 @@ schnittberichte.com#@#a[href^="http://bs.serving-sys.com/"]
 hbf-info.de,rakuten.at,rakuten.de#@#div[id^="div-gpt-ad-"]
 ! Anti-Adblock
 gamestar.de#@##AdTop
-epochtimes.de#@##Ads_BA_SKY
 gamestar.de#@##BF_BUZZBOX
 gamestar.de#@##WerbungObenRechts10_GesamtDIV
 gamestar.de#@##Werbung_Sky
@@ -539,8 +535,6 @@ gamestar.de#@#.headeradhome
 gamestar.de#@#.mxl_ad_inText_250
 tape.tv#@#.text_ads
 gamestar.de#@#.topAdvBox
-epochtimes.de#@#.wingadblock
-epochtimes.de#@#.wnMultiAd
 mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 !---------------------------Third-party Werbeserver---------------------------!
 ! *** easylistgermany:easylistgermany/easylistgermany_adservers.txt ***
@@ -3692,8 +3686,12 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
+||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||mv-spion.de/ajax/lc?content=qwert
 ||mv-spion.de/ajax/lc|
+||prosieben.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
+||sat1.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
+||sixx.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
 ||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 ||videoplaza.tv^$domain=www.rtl.de|www.vox.de
@@ -4218,6 +4216,7 @@ maerkischeallgemeine.de###head
 ruhrbarone.de###headContainer
 scdhfk-handball.de###headRightCommercials
 wunschliste.de###head_banner
+fxempire.de###head_banners
 gamestar.de###header + style + div + div[id]
 gamestar.de###header + style + div[id]
 gamersplus.de###header > a:first-child:last-child
@@ -4889,7 +4888,7 @@ diaware.de##.abcde_text
 tutorials.de##.above_body > #header + #navbar + table:last-child
 rc-network.de##.above_body:first-child + table[cellspacing="0"][cellpadding="0"][border="0"][align="center"]
 die-schnelle-kuh.de##.abp
-abendblatt.de,alle-immobilien.ch,azonline.de,bazonline.ch,bernerzeitung.ch,billig-flieger-vergleich.de,bos-fahrzeuge.info,crn.de,derbund.ch,derlacher.de,epochtimes.de,fail.to,fettspielen.de,funnypizza.de,glamour.de,gmx.net,hamburg.de,hardwareclips.com,inside-handy.de,ircgalerie.net,kalenderwoche.net,kino24.to,kronehit.at,macwelt.de,netzpolitik.org,newscomm.de,phonostar.de,playporn.to,podcast.de,prisma.de,radiokoeln.de,raidrush.org,rhein-neckar-loewen.de,sachsen-fernsehen.de,shopbetreiber-blog.de,sueddeutsche.de,suite101.de,tagesanzeiger.ch,wallstreet-online.de,web.de,welt.de,wn.de,zeit.de##.ad
+abendblatt.de,alle-immobilien.ch,azonline.de,bazonline.ch,bernerzeitung.ch,billig-flieger-vergleich.de,bos-fahrzeuge.info,crn.de,derbund.ch,derlacher.de,fail.to,fettspielen.de,funnypizza.de,glamour.de,gmx.net,hamburg.de,hardwareclips.com,inside-handy.de,ircgalerie.net,kalenderwoche.net,kino24.to,kronehit.at,macwelt.de,netzpolitik.org,newscomm.de,phonostar.de,playporn.to,podcast.de,prisma.de,radiokoeln.de,raidrush.org,rhein-neckar-loewen.de,sachsen-fernsehen.de,shopbetreiber-blog.de,sueddeutsche.de,suite101.de,tagesanzeiger.ch,wallstreet-online.de,web.de,welt.de,wn.de,zeit.de##.ad
 pcwelt.de##.ad + * + .teaser.information:last-child
 med1.de,stayfriends.de##.adContainer
 wz-newsline.de##.adDisclaimerLight
@@ -5781,8 +5780,13 @@ rp-online.de##.wideheader
 ihk-berlin.de##.widesky
 orschlurch.net##.widget_57179
 orschlurch.net##.widget_amazon
+fxempire.de##.widget_banner
+fxempire.de##.widget_brokers
 orschlurch.net##.widget_facebook + div
+fxempire.de##.widget_latest_promotions_right
+fxempire.de##.widget_recommended_brokers
 mobiflip.de##.widget_sponsor
+fxempire.de##.widget_top_brokers
 ftd.de##.wimeContentAd
 zitate-online.de##.witz > .bewertung + .detaillink + p:last-child
 zitate-online.de##.witz > .bewertung + p:last-child
@@ -7561,6 +7565,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||eclipso.*/plugins/js/adframe.js
 @@||einrichtungsbeispiele.de^*/click.js
 @@||energielupe.de^$elemhide
+@@||epochtimes.de^$elemhide
 @@||ethnarc.de^$image,domain=gamona.de
 @@||ethnarc.de^$script,domain=gamona.de|lustich.de
 @@||europalupe.eu^$elemhide
@@ -7593,6 +7598,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||gesehen.es^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||gmads.net/crossdomain.xml$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||gmads.net/r?$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+@@||golem.de^*.html$elemhide
 @@||goolive.de^*.js|
 @@||green-24.de^$elemhide
 @@||grundrechteschutz.de^$elemhide
@@ -7699,6 +7705,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||steuerschmiede-aktuell.de^$elemhide
 @@||streamit.ws^$elemhide
 @@||sudoku-space.de^$script
+@@||t-online.de/tv$elemhide
 @@||tape.tv/js/adblockdetection.js
 @@||teamspeak-ts.com^$elemhide
 @@||telemetryverification.net/?*;cb=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de

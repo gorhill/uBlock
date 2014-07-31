@@ -4,7 +4,7 @@
 !Homepage: http://www.hufilter.hu/hufilter.html
 !Title: hufilter
 !Expires: 6 days
-!Version: 0035
+!Version: 0036
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Magyar Adblock Plus szurolista
 ! 
@@ -1603,6 +1603,7 @@ the1st.be##TABLE[id="banners"]
 ||ads.monster.com^
 ||juicyads.com^
 ||net-solutions.hu/banner/
+||olx.hu/hirdetes/
 ||ad*.mediaweb.hu/adimage.php?*
 ||ad*.mellesleg.hu^
 ||ad.econet.hu^

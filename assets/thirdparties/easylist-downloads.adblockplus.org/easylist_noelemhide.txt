@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: nynsBO0zuaeBDvaDqeiT2w
-! Version: 201407300440
+! Checksum: 0MOYVqbgJe79Py+6BL6Owg
+! Version: 201407312300
 ! Title: EasyList without element hiding rules
-! Last modified: 30 Jul 2014 04:40 UTC
+! Last modified: 31 Jul 2014 23:00 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -704,6 +704,7 @@
 /ad/audsci.
 /ad/banner.
 /ad/banner/*
+/ad/banner?
 /ad/banner_
 /ad/bannerdetails/*
 /ad/bannerimg/*
@@ -2096,6 +2097,7 @@
 /adserver8strip.
 /adserver?
 /adserver_
+/adserverdata.
 /adserverpub?
 /adservers-
 /adserversolutions/*
@@ -6395,6 +6397,7 @@ _a468x60.
 /ad.php|$popup
 /ad/window.php?$popup
 /ad_pop.php?$popup
+/AdHandler.aspx?$popup
 /ads.htm$popup
 /adserver.$popup
 /advlink.$popup
@@ -6413,6 +6416,7 @@ _a468x60.
 ://adv.$popup
 =popunder&$popup
 =popunders&$popup
+?AdUrl=$popup
 ?bannerid=*&punder=$popup
 _popunder+$popup
 !---------------------------Third-party advertisers---------------------------!
@@ -8328,7 +8332,6 @@ _popunder+$popup
 ||p2ads.com^$third-party
 ||paads.dk^$third-party
 ||padstm.com^$third-party
-||pagefair.com^$third-party
 ||pagefair.net^$third-party
 ||pagesinxt.com^$third-party
 ||paid4ad.de^$third-party
@@ -10476,6 +10479,7 @@ _popunder+$popup
 ||d1pdpbxj733bb1.cloudfront.net^
 ||d1spb7fplenrp4.cloudfront.net^
 ||d1vbm0eveofcle.cloudfront.net^
+||d1zgderxoe1a.cloudfront.net^
 ||d23guct4biwna6.cloudfront.net^
 ||d23nyyb6dc29z6.cloudfront.net^
 ||d25ruj6ht8bs1.cloudfront.net^
@@ -10931,6 +10935,7 @@ _popunder+$popup
 ||longtailvideo.com^*/ova-$object-subrequest
 ||longtailvideo.com^*/yume-h.swf
 ||longtailvideo.com^*/yume.swf
+||loopnet.com^*/searchwidget.htm$third-party
 ||loot.co.za/shop/product.jsp?$third-party
 ||lottoelite.com/banners/$third-party
 ||lowbird.com/random/$third-party
@@ -11162,6 +11167,7 @@ _popunder+$popup
 ||quickflix*.gridserver.com^$third-party
 ||quirk.biz/webtracking/
 ||rack.bauermedia.co.uk^
+||rackcdn.com/brokers/$third-party,domain=fxempire.com|fxempire.de|fxempire.it|fxempire.nl
 ||rackspacecloud.com/Broker%20Buttons/$domain=investing.com
 ||radiocentre.ca/randomimages/$third-party
 ||radioreference.com/sm/300x75_v3.jpg
@@ -11552,6 +11558,8 @@ _popunder+$popup
 ||hdvidcodecs.com^$popup
 ||hetu.in^$popup,third-party
 ||homemadecelebrityporn.com/track/$popup,third-party
+||hyperlinksecure.com/back?token=$popup
+||hyperlinksecure.com/go/$popup
 ||i2casting.com^$popup,third-party
 ||itunes.apple.com^$popup,domain=fillinn.com
 ||liutilities.com^*/affiliate/$popup
@@ -12014,6 +12022,7 @@ _popunder+$popup
 ||chaturbate.com/sitestats/openwindow/$popup
 ||cpm.amateurcommunity.*?cp=$popup,third-party
 ||epornerlive.com/index.php?*=punder$popup
+||exposedwebcams.com/?token=$popup,third-party
 ||ext.affaire.com^$popup
 ||extremefuse.com/out.php?$popup
 ||fantasti.cc/ajax/gw.php?$popup
@@ -13747,6 +13756,7 @@ _popunder+$popup
 ||jpupdates.com^*/Mesamche-lev-Auction.gif
 ||jpupdates.com^*/PAL-DANS-
 ||jumptags.com/joozit/presentation/images/banners/
+||junocloud.me/promos/
 ||just-download.com/banner/
 ||justsomething.co/wp-content/uploads/*-250x250.
 ||kaieteurnewsonline.com/revenue/
@@ -15104,6 +15114,7 @@ _popunder+$popup
 ||thecorrsmisc.com/10feet_banner.gif
 ||thecorrsmisc.com/brokenthread.jpg
 ||thecorrsmisc.com/msb_banner.jpg
+||thecsuite.co.uk^*/banners/
 ||thedailyherald.com/images/banners/
 ||thedailymash.co.uk/templates/mashtastic/gutters/
 ||thedailymeal.com^*_sponsoredby.png
@@ -15578,6 +15589,13 @@ _popunder+$popup
 ||wheninmanila.com/wp-content/uploads/2014/04/zion-wifi-social-hotspot-system.png
 ||whispersinthecorridors.com/banner
 ||whistleout.com.au/imagelibrary/ads/wo_skin_
+||whitepages.ae/images/UI/FC/
+||whitepages.ae/images/UI/LB/
+||whitepages.ae/images/UI/MR/
+||whitepages.ae/images/UI/SR/
+||whitepages.ae/images/UI/SRA/
+||whitepages.ae/images/UI/SRB/
+||whitepages.ae/images/UI/WS/
 ||who.is/images/domain-transfer2.jpg
 ||whoer.net/images/pb/
 ||whoer.net/images/vpnlab20_
@@ -15686,6 +15704,13 @@ _popunder+$popup
 ||yellow.co.ke/img/top_banner/
 ||yellowbook.com/thirdpartyframedad/
 ||yellowpage-jp.com/images/banners/
+||yellowpages.ae/UI/FC/
+||yellowpages.ae/UI/LB/
+||yellowpages.ae/UI/MR/
+||yellowpages.ae/UI/SR/
+||yellowpages.ae/UI/ST/
+||yellowpages.ae/UI/WA/
+||yellowpages.ae/UI/WM/
 ||yellowpages.co.za/sidebanner.jsp
 ||yellowpages.co.za/sideSponsor.jsp?
 ||yellowpages.co.za/tdsrunofsitebottbanner.jsp
@@ -15694,6 +15719,7 @@ _popunder+$popup
 ||yellowpages.co.za/wppopupBanner.jsp?
 ||yellowpages.co.za/yppopupresultsbanner.jsp
 ||yellowpages.com.jo/banners/
+||yellowpages.com.lb/uploaded/banners/
 ||yellowpages.ly/user_media/banner/
 ||yellowpages.ly^*/sponsors/
 ||yellowpageskenya.com/sponsored/
@@ -16032,7 +16058,7 @@ _popunder+$popup
 ||entensity.net/crap/
 ||epicwank.com/social/jquery.stp.min.js
 ||eporner.com/pjsall-*.js
-||eporner.com^*.php$subdocument
+||eporner.com^$subdocument
 ||eroprofile.com/js/pu*.js
 ||eskimotube.com/kellyban.gif
 ||exhentai.net/img/aaf1.gif
@@ -17547,6 +17573,7 @@ _popunder+$popup
 @@||linkshare.iregdev.com/images/$image,domain=catalogfavoritesvip.com|freeshipping.com|freeshippingrewards.com|habandvipplus.com|inthecompanyofdogsvip.com|naturesjewelryvip.com|northstylevip.com|pyramidcollectionvip.com|serengeticatalogvip.com|travelplus.com
 @@||linksynergy.com/fs-bin/show?id=$image,domain=catalogfavoritesvip.com|freeshipping.com|freeshippingbymastercard.com|freeshippingrewards.com|habandvipplus.com|inthecompanyofdogsvip.com|naturesjewelryvip.com|northstylevip.com|pyramidcollectionvip.com|serengeticatalogvip.com|travelplus.com
 @@||linksynergy.com/fs/banners/$image,domain=catalogfavoritesvip.com|freeshipping.com|freeshippingbymastercard.com|freeshippingrewards.com|habandvipplus.com|inthecompanyofdogsvip.com|naturesjewelryvip.com|northstylevip.com|pyramidcollectionvip.com|serengeticatalogvip.com|travelplus.com
+@@||lipsum.com/images/banners/
 @@||listings.brokersweb.com/JsonSearchSb.aspx?*&maxAds=$script
 @@||live.seenreport.com:82/media/js/ads_controller.js?$domain=live.geo.tv
 @@||live365.com/mini/blank300x250.html
@@ -18285,10 +18312,10 @@ _popunder+$popup
 @@.gif?ad_banner=$domain=majorleaguegaming.com
 @@.gif|$object-subrequest,domain=cbs.com
 @@.jpeg|$object-subrequest,domain=cbs.com
-@@.jpg#$domain=desionlinetheater.com|lag10.net|mac2sell.net|myiplayer.eu|uploadlw.com
+@@.jpg#$domain=desionlinetheater.com|lag10.net|mac2sell.net|movie1k.net|uploadlw.com
 @@.jpg|$object-subrequest,domain=cbs.com
 @@.min.js$domain=ftlauderdalewebcam.com|nyharborwebcam.com|portcanaveralwebcam.com|portevergladeswebcam.com|portmiamiwebcam.com
-@@.png#$domain=android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|lordpyrak.net|minecraft-forum.net|myiplayer.eu|myksn.net|stream2watch.me
+@@.png#$domain=android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|lordpyrak.net|minecraft-forum.net|myksn.net|stream2watch.me
 @@.png?*#$domain=mypapercraft.net|xlocker.net
 @@.png?ad_banner=$domain=majorleaguegaming.com
 @@.png?advertisement_$domain=majorleaguegaming.com
@@ -18524,6 +18551,7 @@ _popunder+$popup
 @@||hexawebhosting.com/adcode.js
 @@||hpfanficarchive.com^*/advertisement.js
 @@||hqpdb.com/ads/banner.jpg?
+@@||hqq.tv^$elemhide
 @@||i-stream.pl^*/advertisement.js
 @@||i.imgur.com^*#.$image,domain=newmusicforpeople.org
 @@||ilive.to/js/advert*.js
@@ -18587,6 +18615,7 @@ _popunder+$popup
 @@||monsoonads.com:8080/monsoon1/monsoonservice?$object-subrequest,domain=bollywoodhungama.com|videos.mid-day.com
 @@||monsoonads.com:8080/monsoon1/preparead?$object-subrequest,domain=bollywoodhungama.com
 @@||moon-faucet.tk/advertisement.js
+@@||movie1k.net^$elemhide
 @@||mrtzcmp3.net/advertisement.js
 @@||msecnd.net/scripts/compressed.pop.lib.v2.5.js$domain=filmovizija.com
 @@||multiup.org/img/theme/*?$image
@@ -18595,8 +18624,8 @@ _popunder+$popup
 @@||mybannermaker.com/banner.php$~third-party
 @@||myfineforum.org/advertisement.js
 @@||myfreeforum.org/advertisement.js
-@@||myiplayer.eu/adframe.js
-@@||myiplayer.eu^$elemhide
+@@||myiplayer.com/ad*.js
+@@||myiplayer.com^$elemhide
 @@||myksn.net^$elemhide
 @@||mypapercraft.net^$elemhide
 @@||mzstatic.com^*.jpg#$image,domain=newmusicforpeople.org

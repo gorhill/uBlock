@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 6+Lt7jm5BqCkFgbSBZrTMQ
-! Version: 201407300441
+! Checksum: 8eyKcE/LiNFvWC3XKeDgwg
+! Version: 201407312301
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3418,7 +3418,6 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://j.*.info/*.*?bid=*&cid=*&zid=*&cb=$image,third-party
 |http://www.*/*.*?*=1&*=3$script,third-party
 |http://www.*/*.*?*=3&*=_blank$script,third-party
-|http://www.*/*.*?_=$script,third-party
 ||eschrichtiidaepiety.info^$third-party
 ||faintheartedsharkoil.info^$third-party
 ||formicafuscasyringavillosa.info^$third-party
@@ -3512,6 +3511,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||uxkmr.us.to/*.js|$script,third-party
 @@||uycpd.ax.lt/*.js|$script,third-party
 @@||vundm.us.to/*.js|$script,third-party
+@@||whynotad.com/*.js|$script,third-party
 @@||wpmqu.na.tl/*.js|$script,third-party
 @@||wtf.im/*.js|$script,third-party
 @@||yblpg.ax.lt/*.js|$script,third-party
@@ -3576,6 +3576,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.ukstokes.com/$third-party,xmlhttprequest
 |http://*.us.to/$third-party,xmlhttprequest
 |http://*.vr.lt/$third-party,xmlhttprequest
+|http://*.whynotad.com/$third-party,xmlhttprequest
 |http://*.wtf.im/$third-party,xmlhttprequest
 ||axlnp.us.to^$third-party
 ||cifqr.69.mu^$third-party

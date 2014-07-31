@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 1QjW7wsJWXuAM63hG+qjwg
-! Version: 201407300440
-! Last modified: 30 Jul 2014 04:40 UTC
+! Checksum: dTdMUyJkHyiocXrHoSow7w
+! Version: 201407312300
+! Last modified: 31 Jul 2014 23:00 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -609,6 +609,9 @@ _vkontakte.png
 /icn-twitter.
 /icn-youtube.
 /icn_googe_
+/icn_google_
+/icn_pinterest_
+/icn_youtube_
 /ico-delicious.
 /ico-digg.
 /ico-facebook-
@@ -1367,6 +1370,7 @@ _vkontakte.png
 /social_google.
 /social_google_
 /social_googleplus.
+/social_header.
 /social_headers.
 /social_hovers.
 /social_hub/*
@@ -1375,6 +1379,7 @@ _vkontakte.png
 /social_icons.
 /social_icons/*
 /social_icons_
+/social_images/*
 /social_instagram-
 /social_instagram.
 /social_instagram2.
@@ -2106,6 +2111,7 @@ _youtube_small.
 ###dmsocial
 ###donate-social
 ###drop-btn-share
+###dsp_ftr_social
 ###epoch-floating-social
 ###et-social-icons
 ###eventSocialMedia
@@ -2524,7 +2530,10 @@ _youtube_small.
 ###plug-facebook
 ###plug-twitter
 ###pmFacebook
+###popShare1
+###popShare2
 ###popsugar-social-bar
+###popup_social
 ###post-share
 ###post-share-float
 ###post-share-icons
@@ -3602,6 +3611,7 @@ _youtube_small.
 ##.cdc_social_icons
 ##.clean-share-box
 ##.cmuShareWidget
+##.cne-share
 ##.cnn-social-icons
 ##.cnnShareRow
 ##.cnss-social-icon
@@ -4778,6 +4788,7 @@ _youtube_small.
 ##.share-this-static
 ##.share-this-tip
 ##.share-title
+##.share-toggle
 ##.share-toolbar-box
 ##.share-toolbar-container
 ##.share-tools
@@ -5183,6 +5194,7 @@ _youtube_small.
 ##.social-height
 ##.social-helpers
 ##.social-horizontal
+##.social-houzz
 ##.social-icon
 ##.social-icon-buttons
 ##.social-icon-container
@@ -5260,6 +5272,7 @@ _youtube_small.
 ##.social-onscroll
 ##.social-options
 ##.social-panel
+##.social-pinterest
 ##.social-plugin-twitter
 ##.social-plugins
 ##.social-pod
@@ -5611,6 +5624,7 @@ _youtube_small.
 ##.st_digg_custom
 ##.st_facebook_custom
 ##.st_facebook_large
+##.st_googleplus_custom
 ##.st_googleplus_large
 ##.st_sharethis
 ##.st_sharethis_custom
@@ -5629,6 +5643,7 @@ _youtube_small.
 ##.story-share-buttons
 ##.story-social-bar
 ##.story-tools-social
+##.storySocial_short
 ##.story_allsocial
 ##.story_share
 ##.story_tools_social_buttons_top
@@ -6102,6 +6117,7 @@ _youtube_small.
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Instagram"]
 ##a[title="Follow us on Tumblr"]
+##a[title="Join us Facebook"]
 ##a[title="Join us on Facebook"]
 ##a[title="Join us on LinkedIn"]
 ##a[title="Post this story to Facebook"]
@@ -6116,6 +6132,7 @@ _youtube_small.
 ##a[title="Share this to Technorati"]
 ##a[title="Share via facebook"]
 ##a[title="Tweet this"]
+##a[title="Watch our videos on Youtube"]
 ##a[title="follow us on Facebok"]
 ##a[title="follow us on G+"]
 ##a[title="follow us on Pinterest"]
@@ -6209,10 +6226,12 @@ _youtube_small.
 ##img[alt="join us on Twitter"]
 ##img[alt="share on Reddit"]
 ##img[alt="submit to reddit"]
+##img[title="Connect with us on Google+"]
 ##img[title="Find us on Google+"]
 ##img[title="Follow on Facebook"]
 ##img[title="Follow us on Google Plus"]
 ##img[title="Follow us on Instagram"]
+##img[title="Follow us on Pinterest"]
 ##img[title="Join us on Twitter!"]
 ##img[title="Share at Blogger"]
 ##img[title="Share at Delicious"]
@@ -7385,6 +7404,7 @@ _social_rss.
 ###subscribe-widget-top
 ###sumotest-badge
 ###sun-cookieMessage
+###taboola-autosized-1r
 ###taboola-below-article
 ###taboola-belowarticle
 ###taboola-bottom-main-column
@@ -7396,6 +7416,7 @@ _social_rss.
 ###taboola_wrapper
 ###tesco_cookie_widget
 ###toTop
+###to_top
 ###toolboxDiv1
 ###topjobssidebar
 ###tto-cookieMessage
@@ -7738,6 +7759,7 @@ _social_rss.
 ##.toasterAd
 ##.track-action-RSS
 ##.tsq_sailthru_newsletter_widget
+##.ui-go-top
 ##.uk-cookie-banner
 ##.uk-cookies
 ##.uk-icon-rss
@@ -7796,6 +7818,7 @@ _social_rss.
 ##a[title="Daily Email Newsletter"]
 ##a[title="Get Feed RSS"]
 ##a[title="Scroll to Top"]
+##a[title="Scroll to top"]
 ##a[title="Subscribe by Email"]
 ##a[title="Subscribe by RSS"]
 ##a[title="Subscribe on FriendFeed"]

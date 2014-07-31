@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: FaWlKAyAtthiSowC48zB7A
-! Version: 201407300441
+! Checksum: 4mm06A8Oj/6jdky0MiwHPw
+! Version: 201407312301
 ! Title: Fanboy's Annoyance List
-! Last modified: 30 Jul 2014 04:41 UTC
+! Last modified: 31 Jul 2014 23:01 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -828,6 +828,9 @@ _social_rss.
 /icn-twitter.
 /icn-youtube.
 /icn_googe_
+/icn_google_
+/icn_pinterest_
+/icn_youtube_
 /ico-delicious.
 /ico-digg.
 /ico-facebook-
@@ -1586,6 +1589,7 @@ _social_rss.
 /social_google.
 /social_google_
 /social_googleplus.
+/social_header.
 /social_headers.
 /social_hovers.
 /social_hub/*
@@ -1594,6 +1598,7 @@ _social_rss.
 /social_icons.
 /social_icons/*
 /social_icons_
+/social_images/*
 /social_instagram-
 /social_instagram.
 /social_instagram2.
@@ -2467,6 +2472,7 @@ _youtube_small.
 ###subscribe-widget-top
 ###sumotest-badge
 ###sun-cookieMessage
+###taboola-autosized-1r
 ###taboola-below-article
 ###taboola-belowarticle
 ###taboola-bottom-main-column
@@ -2478,6 +2484,7 @@ _youtube_small.
 ###taboola_wrapper
 ###tesco_cookie_widget
 ###toTop
+###to_top
 ###toolboxDiv1
 ###topjobssidebar
 ###tto-cookieMessage
@@ -2820,6 +2827,7 @@ _youtube_small.
 ##.toasterAd
 ##.track-action-RSS
 ##.tsq_sailthru_newsletter_widget
+##.ui-go-top
 ##.uk-cookie-banner
 ##.uk-cookies
 ##.uk-icon-rss
@@ -2878,6 +2886,7 @@ _youtube_small.
 ##a[title="Daily Email Newsletter"]
 ##a[title="Get Feed RSS"]
 ##a[title="Scroll to Top"]
+##a[title="Scroll to top"]
 ##a[title="Subscribe by Email"]
 ##a[title="Subscribe by RSS"]
 ##a[title="Subscribe on FriendFeed"]
@@ -3128,6 +3137,7 @@ _youtube_small.
 ###dmsocial
 ###donate-social
 ###drop-btn-share
+###dsp_ftr_social
 ###epoch-floating-social
 ###et-social-icons
 ###eventSocialMedia
@@ -3546,7 +3556,10 @@ _youtube_small.
 ###plug-facebook
 ###plug-twitter
 ###pmFacebook
+###popShare1
+###popShare2
 ###popsugar-social-bar
+###popup_social
 ###post-share
 ###post-share-float
 ###post-share-icons
@@ -4624,6 +4637,7 @@ _youtube_small.
 ##.cdc_social_icons
 ##.clean-share-box
 ##.cmuShareWidget
+##.cne-share
 ##.cnn-social-icons
 ##.cnnShareRow
 ##.cnss-social-icon
@@ -5800,6 +5814,7 @@ _youtube_small.
 ##.share-this-static
 ##.share-this-tip
 ##.share-title
+##.share-toggle
 ##.share-toolbar-box
 ##.share-toolbar-container
 ##.share-tools
@@ -6205,6 +6220,7 @@ _youtube_small.
 ##.social-height
 ##.social-helpers
 ##.social-horizontal
+##.social-houzz
 ##.social-icon
 ##.social-icon-buttons
 ##.social-icon-container
@@ -6282,6 +6298,7 @@ _youtube_small.
 ##.social-onscroll
 ##.social-options
 ##.social-panel
+##.social-pinterest
 ##.social-plugin-twitter
 ##.social-plugins
 ##.social-pod
@@ -6633,6 +6650,7 @@ _youtube_small.
 ##.st_digg_custom
 ##.st_facebook_custom
 ##.st_facebook_large
+##.st_googleplus_custom
 ##.st_googleplus_large
 ##.st_sharethis
 ##.st_sharethis_custom
@@ -6651,6 +6669,7 @@ _youtube_small.
 ##.story-share-buttons
 ##.story-social-bar
 ##.story-tools-social
+##.storySocial_short
 ##.story_allsocial
 ##.story_share
 ##.story_tools_social_buttons_top
@@ -7124,6 +7143,7 @@ _youtube_small.
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Instagram"]
 ##a[title="Follow us on Tumblr"]
+##a[title="Join us Facebook"]
 ##a[title="Join us on Facebook"]
 ##a[title="Join us on LinkedIn"]
 ##a[title="Post this story to Facebook"]
@@ -7138,6 +7158,7 @@ _youtube_small.
 ##a[title="Share this to Technorati"]
 ##a[title="Share via facebook"]
 ##a[title="Tweet this"]
+##a[title="Watch our videos on Youtube"]
 ##a[title="follow us on Facebok"]
 ##a[title="follow us on G+"]
 ##a[title="follow us on Pinterest"]
@@ -7231,10 +7252,12 @@ _youtube_small.
 ##img[alt="join us on Twitter"]
 ##img[alt="share on Reddit"]
 ##img[alt="submit to reddit"]
+##img[title="Connect with us on Google+"]
 ##img[title="Find us on Google+"]
 ##img[title="Follow on Facebook"]
 ##img[title="Follow us on Google Plus"]
 ##img[title="Follow us on Instagram"]
+##img[title="Follow us on Pinterest"]
 ##img[title="Join us on Twitter!"]
 ##img[title="Share at Blogger"]
 ##img[title="Share at Delicious"]
@@ -8069,6 +8092,7 @@ venturebeat.com###branding-footer
 venturebeat.com###branding-toolbar
 tbo.com###breadcrumb
 ballerstatus.com###bscom_adblock
+thegamingsource.co###bttop
 bufferapp.com###buffer-banner
 technologyreview.com###business-report-issue-nav
 lfpress.com,torontosun.com###buttonRow
@@ -9288,6 +9312,7 @@ jokes.com###vid_ad
 mrfood.com###viewportGreyout
 scientificamerican.com###viralLinks
 milkfordeadhamsters.com###viralike
+radiolive.co.nz,theedge.co.nz,therock.net.nz###vodSmall
 filmannex.com###votes
 digitaljournal.com###vtart
 tvnz.co.nz###want-news
@@ -9698,6 +9723,7 @@ youbeauty.com##.feedback-link
 uk.msn.com##.feedbackImageContainer
 iheart.com##.feedbackTab
 nymag.com##.feedbackWrap
+ilyke.net##.feedback_button
 zap2it.com##.feedpromo
 computingunleashed.com,nytimes.com,technologyreview.com##.feeds
 geek.com##.feedsBox
@@ -9771,7 +9797,6 @@ maxim.com##.g_subs_Container
 ndtv.com##.gadget_popupbox
 bgr.com,bgr.in##.gal-post-bottom
 cbsnews.com##.galleryShareBox
-google.co.uk##.gb_hb
 gdgt.com##.gdgtRecd
 lifeslittlemysteries.com##.ge_book
 foodnetwork.com##.geoAdvisoryPopup
@@ -10681,6 +10706,7 @@ stv.tv##div[style="background: none repeat scroll 0% 0% rgb(217, 237, 248); colo
 madtomatoe.com##div[style="background:#eeeeee;border:0px solid #ccc;padding:5px 0px 10px 0px; text-align:center;display:block;margin: -18px 0px 20px 0px;width: 580px;"]
 cbslocal.com##div[style="background:#eef8fd;border:solid 1px #c7dbe3;padding:10px;"]
 filmschoolrejects.com##div[style="background:black;padding:0;float:left;margin-bottom:12px;"]
+google.co.uk##div[style="behavior:url(#default#userData);background-color:#5a5a5a"]
 intomobile.com##div[style="border-left: 5px solid #3f9fe3; height: 55px; padding-top: 10px; margin-bottom: 20px"]
 ctv.ca##div[style="border-top:#CCCCCC solid thin; border-bottom:#CCCCCC solid thin; background-color:#fafafa"]
 latimes.com##div[style="border-top:1px #cccccc solid;  border-bottom:1px #cccccc solid; padding:5px 0; margin-bottom: 34px;"]
@@ -11018,6 +11044,7 @@ maps.google.com###plusone
 washingtonpost.com###popup-facebook
 collective-evolution.com###popup_container
 collective-evolution.com###popup_overlay
+ilyke.net###post_share
 andriodzone.com###rb-mashable-bar
 ranker.com###reRankBtns
 battlefield.com###region-bf4-social-links
@@ -11159,6 +11186,7 @@ billionuploads.com##.dtsha
 designyoutrust.com##.dyt-social
 el33tonline.com##.el33t_social_container
 bloomberg.com##.entry_sharing
+imamuseum.org##.ext
 9gag.tv,absoluteradio.co.uk,al-shorfa.com,chacha.com,computingunleashed.com,deathandtaxesmag.com,digitimes.com,discountsstory.com,enom.com,eurogamer.net,fightthesmears.com,fixya.com,flippinawesome.org,forvo.com,gizmodo.com,healthymagination.com,huffingtonpost.com,independent.ie,iveybusinessreview.ca,kickstarter.com,lifehacker.com,macrumors.com,mademan.com,messynessychic.com,mzhiphop.com,npr.org,pcworld.in,pinknews.co.uk,recode.net,reuters.com,scion.com,slate.com,smashingmagazine.com,sourcefednews.com,stepstone.be,t3.com,take.fm,techradar.com,techspot.com,thedailyshow.com,thedigitalfix.com,thesun.co.uk,tineye.com,tvland.com,tvnz.co.nz,tweaktown.com,usvsth3m.com,vine.co,washingtonpost.com,yoink.com,yourdailymedia.com##.facebook
 lovefilm.com##.facebook-title
 cracked.com##.facebookLogo

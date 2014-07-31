@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: PXY6bSg8iVbfyV74hrfu6A
+! Checksum: VsZsxR3Tfx/N1Nd5+ReJXA
 ! Title: EasyList Hebrew
-! Last modified: 20/07/14  17:42 Jerusalem Daylight Time
+! Last modified: 31/07/14  23:50
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -46,6 +46,7 @@
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
 ||jdate.co.il^$third-party
+||layer.co.il^$popup
 ||mako.buy2.co.il^$third-party
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
@@ -59,6 +60,7 @@
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup
 ||streamin.to^$popup
+||syngrestic.com/null^$popup
 ||talkahead.com^$third-party
 ||tbuy.co.il^$popup
 ||unbouncepages.com^$popup
@@ -229,6 +231,7 @@
 @@||info.a7.org/info/$script
 @@||internet-bee.com/Feats/
 @@||net-games.co.il/flvPlayer/dist/flowplayer-$script
+@@||pas-rahav.com/creativitys
 @@||themarker.com/css/advertisement_article.css
 @@||themarker.com/dclk/dclk_ads.js
 @@||themarker.com/dclk/dclk_ads_init_tm_pol.js
@@ -628,6 +631,8 @@ ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
 popcorate.co.il###hoverConnect
 popcorate.co.il###videoImage1_login
+rateonclick.com###connect
+rateonclick.com##A[href*="campaigns.layer.co.il/"]
 reshet.tv###DivContent[rel="5498"]
 reshet.tv###prArea
 rest.co.il###divLeftBanner
@@ -710,6 +715,10 @@ view-movies.co.il###connect
 view-movies.co.il##A[href="http://www.view-movies.co.il/minisite.php"]
 view-movies.co.il##DIV[itemtype="http://data-vocabulary.org/Breadcrumb"]
 vodmovies.co.il###wrapper6
+vodmovies.co.il##.classtop_img
+vodmovies.co.il##.ulp-content
+vodmovies.co.il##.ulp-overlay
+vodmovies.co.il##.ulp-window
 vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 vodx.co.il##.top-banner
 walla.co.il###ARKIA_CONTAINER

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: j/3YhidW9iJmwhzHFiUJ8Q
-! Version: 201407300441
+! Checksum: HtXK3sj7Sb3IjrunSVwM9Q
+! Version: 201407312301
 ! Title: EasyPrivacy
-! Last modified: 30 Jul 2014 04:41 UTC
+! Last modified: 31 Jul 2014 23:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1597,6 +1597,7 @@
 /spacer.gif?q=l3mkwgak
 /spannerworks-tracking-
 /SpeedTrapInsert.
+/spip.php?page=stats.js
 /springmetrics.
 /spylog_
 /stat.gif?
@@ -3165,6 +3166,7 @@ http://utm.
 ||p.raasnet.com^$third-party
 ||p0.raasnet.com^$third-party
 ||pa-oa.com^$third-party
+||pagefair.com^$third-party
 ||pages05.net^$third-party
 ||paidstats.com^$third-party
 ||pardot.com^$third-party
@@ -4753,7 +4755,6 @@ http://utm.
 ||d21o24qxwf7uku.cloudfront.net^
 ||d23p9gffjvre9v.cloudfront.net^
 ||d27s92d8z1yatv.cloudfront.net/js/jquery.jw.analitycs.js
-||d2dq2ahtl5zl1z.cloudfront.net^
 ||d2gfi8ctn6kki7.cloudfront.net^
 ||d2oh4tlt9mrke9.cloudfront.net^
 ||d2ry9vue95px0b.cloudfront.net^
@@ -6930,6 +6931,7 @@ http://utm.
 ||id.allegisgroup.com^
 ||id.google.*/verify/*.gif
 ||ign.com/global/analytics/drones.js
+||iheart.com/tracking/
 ||image.providesupport.com/cmd/
 ||images-amazon.com^*/beacon-$domain=imdb.com
 ||images-amazon.com^*/clog/clog-platform*.js$script
@@ -7134,7 +7136,6 @@ http://utm.
 ||mod.uk/js/tracker.js
 ||modernsalon.com/includes/sc_video_tracking.js
 ||momtastic.com/libraries/pebblebed/js/pb.track.js
-||mondediplo.com/spip.php
 ||moneysupermarket.com^*/ProphetInsert.js
 ||monitor.co.ug/analytics/
 ||monkeyquest.com/monkeyquest/static/js/ga.js
