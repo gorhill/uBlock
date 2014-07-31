@@ -98,3 +98,7 @@ theglobeandmail.com##.widget_ad
 # https://github.com/gorhill/uBlock/issues/17#issuecomment-50770224
 # To counter `c.brightcove.com` in hpHosts
 @@||c.brightcove.com^
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-50818163
+# To counter `s.imwx.com` in hpHosts
+@@||s.imwx.com^
