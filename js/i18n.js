@@ -22,9 +22,13 @@
 // Helper to deal with the i18n'ing of HTML files.
 
 uDom.onLoad(function() {
-    var fillin = function() {
+    uDom('[data-i18n]').forEach(function() {
         this.innerHTML = chrome.i18n.getMessage(this.getAttribute('data-i18n'));
-    }
-
-    uDom('[data-i18n]').forEach(fillin);
+    });
+    uDom('[title]').forEach(function() {
+        var title = chrome.i18n.getMessage(this.getAttribute('title'));
+        if ( title ) {
+            this.setAttribute('title', title);
+        }
+    });
 });
