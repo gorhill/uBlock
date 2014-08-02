@@ -3,7 +3,7 @@
 See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes. 
 See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
-An efficient blocker for Chromium-based browsers. Fast and lean. Development 
+An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development 
 through benchmarking.
 
 <p align="center">
