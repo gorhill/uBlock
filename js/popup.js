@@ -134,14 +134,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, onTabsReceived);
 
 /******************************************************************************/
 
-var handleNetFilteringSwitch = function() {
+var toggleNetFilteringSwitch = function(ev) {
     if ( !stats || !stats.pageURL ) {
         return;
     }
     var off = uDom(this).toggleClass('off').hasClassName('off');
     messaging.tell({
         what: 'toggleNetFiltering',
-        hostname: stats.pageHostname,
+        url: stats.pageURL,
+        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
         state: !off,
         tabId: stats.tabId
     });
@@ -186,7 +187,7 @@ var renderHeader = function() {
 
 var installEventHandlers = function() {
     uDom('h1,h2,h3,h4').on('click', gotoDashboard);
-    uDom('#switch .fa').on('click', handleNetFilteringSwitch);
+    uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
     uDom('#gotoLog').on('click', gotoStats);
     uDom('#gotoPick').on('click', gotoPick);
 };

@@ -36,7 +36,8 @@ return {
         logBlockedRequests: false,
         logAllowedRequests: false,
         parseAllABPHideFilters: true,
-        netExceptionList: {},
+        netExceptionList: {}, // TODO: remove once all users are up to date
+        netWhitelist: '',
         showIconBadge: true
     },
     localSettings: {
@@ -70,6 +71,8 @@ return {
     remoteBlacklists: {
     },
 
+    netWhitelist: {},
+    netWhitelistModifyTime: 0,
     pageStores: {},
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,

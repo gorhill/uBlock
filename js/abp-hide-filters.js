@@ -612,10 +612,7 @@ FilterContainer.prototype.addFilterEntry = function(filterDict, hash, f) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, request) {
-    if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
-        return;
-    }
+FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     if ( µb.userSettings.parseAllABPHideFilters !== true ) {
         return;
     }
@@ -670,10 +667,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(tabHostname, reque
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveDomainSelectors = function(tabHostname, request) {
-    if ( !tabHostname || µb.getCosmeticFilteringSwitch(tabHostname) !== true ) {
-        return;
-    }
+FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     if ( µb.userSettings.parseAllABPHideFilters !== true ) {
         return;
     }

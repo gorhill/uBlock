@@ -19,18 +19,43 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global µBlock */
 
 /******************************************************************************/
 
-µBlock.getNetFilteringSwitch = function(hostname) {
-    var netExceptionList = this.userSettings.netExceptionList;
-    if ( netExceptionList[hostname] !== undefined ) {
+µBlock.getNetFilteringSwitch = function(url, domain) {
+    var keyHostname = this.URI.hostnameFromURI(url);
+    var pos = url.indexOf('#');
+    var keyURL = pos !== -1 ? url.slice(0, pos) : url;
+
+    // The caller may provide an already known domain -- convenient to reduce
+    // overhead of extracting a domain from the url
+    if ( domain === undefined ) {
+        domain = this.URI.domainFromHostname(keyHostname);
+    }
+    if ( !domain ) {
         return false;
     }
-    var hostnames = this.URI.parentHostnamesFromHostname(hostname);
-    while ( hostname = hostnames.shift() ) {
-        if ( netExceptionList[hostname] !== undefined ) {
+
+    var exceptions = this.netWhitelist[domain];
+    if ( !exceptions ) {
+        return true;
+    }
+
+    var i = exceptions.length;
+    var exception;
+    while ( i-- ) {
+        exception = exceptions[i];
+        if ( exception.indexOf('/') !== -1 ) {
+            if ( exception.slice(-1) === '*' ) {
+                exception = exception.slice(0, -1);
+                if ( keyURL.slice(0, exception.length) === exception ) {
+                    return false;
+                }
+            } else if ( keyURL === exception ) {
+                return false;
+            }
+        } else if ( keyHostname.slice(-exception.length) === exception ) {
             return false;
         }
     }
@@ -39,58 +64,112 @@
 
 /******************************************************************************/
 
-µBlock.toggleNetFilteringSwitch = function(hostname, newState) {
-    var currentState = this.getNetFilteringSwitch(hostname);
+µBlock.toggleNetFilteringSwitch = function(url, scope, newState) {
+    var keyHostname = this.URI.hostnameFromURI(url);
+    var pos = url.indexOf('#');
+    var keyURL = pos !== -1 ? url.slice(0, pos) : url;
+    var key = scope === 'page' ? keyURL : keyHostname;
+
+    // The caller may provide an already known domain -- convenient to reduce
+    // overhead of extracting a domain from `key`
+    var domain = this.URI.domainFromHostname(keyHostname);
+    if ( !domain ) {
+        return false;
+    }
+
+    var currentState = this.getNetFilteringSwitch(url, domain);
     if ( newState === undefined ) {
         newState = !currentState;
     }
     if ( newState === currentState ) {
         return currentState;
     }
-    var netExceptionList = this.userSettings.netExceptionList;
+
+    var netWhitelist = this.netWhitelist;
+    var exceptions = netWhitelist[domain];
+    if ( !exceptions ) {
+        exceptions = netWhitelist[domain] = [];
+    }
 
     // Add to exception list
     if ( !newState ) {
-        netExceptionList[hostname] = true;
-        this.saveExceptionList();
+        exceptions.push(key);
+        this.saveWhitelist();
         return true;
     }
 
     // Remove from exception list
-    var hostnames = this.URI.allHostnamesFromHostname(hostname);
-    while ( hostname = hostnames.shift() ) {
-        if ( netExceptionList[hostname] !== undefined ) {
-            delete netExceptionList[hostname];
+    var i = exceptions.length;
+    var exception;
+    while ( i-- ) {
+        exception = exceptions[i];
+        if ( exception.indexOf('/') !== -1 ) {
+            if ( exception.slice(-1) === '*' ) {
+                exception = exception.slice(0, -1);
+                if ( keyURL.slice(0, exception.length) === exception ) {
+                    exceptions.splice(i, 1);
+                }
+            } else if ( keyURL === exception ) {
+                exceptions.splice(i, 1);
+            }
+        } else if ( keyHostname.slice(-exception.length) === exception ) {
+            exceptions.splice(i, 1);
         }
     }
-    this.saveExceptionList();
-    return false;
+    if ( exceptions.length === 0 ) {
+        delete netWhitelist[domain];
+    }
+    this.saveWhitelist();
+    return true;
 };
 
 /******************************************************************************/
 
 // For now we will use the net exception list
 
-µBlock.getCosmeticFilteringSwitch = function(hostname) {
-    var netExceptionList = this.userSettings.netExceptionList;
-    if ( netExceptionList[hostname] !== undefined ) {
-        return false;
-    }
-    var hostnames = this.URI.parentHostnamesFromHostname(hostname);
-    while ( hostname = hostnames.shift() ) {
-        if ( netExceptionList[hostname] !== undefined ) {
-            return false;
-        }
-    }
-    return true;
+µBlock.getCosmeticFilteringSwitch = function(url, domain) {
+    return this.getNetFilteringSwitch(url, domain);
 };
 
 /******************************************************************************/
 
-µBlock.saveExceptionList = function() {
-    chrome.storage.local.set({
-        'netExceptionList':  this.userSettings.netExceptionList
-    });
+µBlock.stringFromWhitelist = function(exceptions) {
+    var r = {};
+    var i, bucket;
+    for ( var domain in exceptions ) {
+        if ( exceptions.hasOwnProperty(domain) === false ) {
+            continue;
+        }
+        bucket = exceptions[domain];
+        for ( i = 0; i < bucket.length; i++ ) {
+            r[bucket[i]] = true;
+        }
+    }
+    return Object.keys(r).sort(function(a,b){return a.localeCompare(b);}).join('\n');
+};
+
+/******************************************************************************/
+
+µBlock.whitelistFromString = function(s) {
+    var exceptions = {};
+    var lines = s.split(/[\n\r]+/);
+    var line, domain, bucket;
+    for ( var i = 0; i < lines.length; i++ ) {
+        line = lines[i].trim();
+        domain = line.indexOf('/') !== -1 ?
+            this.URI.domainFromURI(line) :
+            this.URI.domainFromHostname(line);
+        if ( !domain ) {
+            continue;
+        }
+        bucket = exceptions[domain];
+        if ( bucket === undefined ) {
+            exceptions[domain] = [line];
+        } else {
+            bucket.push(line);
+        }
+    }
+    return exceptions;
 };
 
 /******************************************************************************/

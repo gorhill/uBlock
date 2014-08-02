@@ -111,6 +111,8 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
     this.frames = disposeFrameStores(this.frames);
+    this.netFiltering = true;
+    this.netFilteringReadTime = 0;
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.blockedRequests = {};
@@ -122,16 +124,9 @@ PageStore.prototype.init = function(tabId, pageURL) {
 /******************************************************************************/
 
 PageStore.prototype.reuse = function(pageURL) {
-    this.previousPageURL = this.pageURL;
-    this.pageURL = pageURL;
-    this.pageHostname = µb.URI.hostnameFromURI(pageURL);
-    this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
-    this.frames = disposeFrameStores(this.frames);
-    this.perLoadBlockedRequestCount = 0;
-    this.perLoadAllowedRequestCount = 0;
-    this.blockedRequests = {};
-    this.allowedRequests = {};
-    this.disposeTime = 0;
+    var previousPageURL = this.pageURL;
+    this.init(this.tabId, pageURL);
+    this.previousPageURL = previousPageURL;
     return this;
 };
 
@@ -165,6 +160,16 @@ PageStore.prototype.addFrame = function(frameId, frameURL) {
 
 PageStore.prototype.getFrame = function(frameId) {
     return this.frames[frameId];
+};
+
+/******************************************************************************/
+
+PageStore.prototype.getNetFilteringSwitch = function() {
+    if ( this.netFilteringReadTime < µb.netWhitelistModifyTime ) {
+        this.netFiltering = µb.getNetFilteringSwitch(this.pageURL, this.pageDomain);
+        this.netFilteringReadTime = Date.now();
+    }
+    return this.netFiltering;
 };
 
 /******************************************************************************/
@@ -212,13 +217,13 @@ PageStore.prototype.updateBadge = function() {
     // https://github.com/gorhill/uBlock/issues/19
     // TODO: need to check with µb object to see whether tab still exists.
 
-    var netFilteringSwitch = µb.getNetFilteringSwitch(this.pageHostname);
-    var iconPath = netFilteringSwitch ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
+    var netFiltering = this.getNetFilteringSwitch();
+    var iconPath = netFiltering ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
 
     chrome.browserAction.setIcon({ tabId: this.tabId, path: iconPath });
 
     var iconStr = '';
-    if ( µb.userSettings.showIconBadge && netFilteringSwitch && this.perLoadBlockedRequestCount ) {
+    if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
         iconStr = this.perLoadBlockedRequestCount.toLocaleString();
     }
     chrome.browserAction.setBadgeText({

@@ -26,13 +26,13 @@
 (function(){
     // When the DOM content of root frame is loaded, this means the tab
     // content has changed.
-    function onDOMContentLoaded(details) {
+    function onNavigationCommitted(details) {
         if ( details.frameId !== 0 ) {
             return;
         }
-        µBlock.updateBadgeAsync(details.tabId);
+        µBlock.bindTabToPageStats(details.tabId, details.url);
     }
-    chrome.webNavigation.onDOMContentLoaded.addListener(onDOMContentLoaded);
+    chrome.webNavigation.onCommitted.addListener(onNavigationCommitted);
 
     // It may happen the URL in the tab changes, while the page's document
     // stays the same (for instance, Google Maps). Without this listener,
@@ -41,15 +41,10 @@
         if ( !tab.url || tab.url === '' ) {
             return;
         }
-        var µb = µBlock;
-        if ( !changeInfo.url || !µb.pageStores[tabId] ) {
+        if ( !changeInfo.url ) {
             return;
         }
-        // If URL is unsupported scheme, unbind tab
-        if ( changeInfo.url && changeInfo.url.slice(0, 4) !== 'http' ) {
-            µb.unbindTabFromPageStats(tabId);
-        }
-        µb.updateBadgeAsync(tabId);
+        µBlock.bindTabToPageStats(tabId, changeInfo.url);
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
@@ -95,7 +90,7 @@
 
 // Create an entry for the tab if it doesn't exist.
 
-µBlock.bindTabToPageStats = function(tabId, pageURL) {
+µBlock.bindTabToPageStats = function(tabId, pageURL, context) {
     this.updateBadgeAsync(tabId);
 
     // https://github.com/gorhill/httpswitchboard/issues/303
@@ -108,18 +103,17 @@
         return null;
     }
 
-    //console.debug('µBlock> bindTabToPageStats(%d, "%s")', tabId, pageURL);
-
     // Reuse page store if one exists: this allows to guess if a tab is
     // a popup.
     var pageStore = this.pageStores[tabId];
-    if ( pageStore ) {
-        pageStore.reuse(pageURL);
-    } else {
-        pageStore = this.PageStore.factory(tabId, pageURL);
-    }
 
-    this.pageStores[tabId] = pageStore;
+    if ( pageStore ) {
+        if ( pageURL !== pageStore.pageURL || context === 'beforeRequest' ) {
+            pageStore.reuse(pageURL);
+        }
+    } else {
+        pageStore = this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL);
+    }
 
     return pageStore;
 };

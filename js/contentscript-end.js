@@ -421,6 +421,7 @@ var messaging = (function(name){
 })();
 
 /******************************************************************************/
+/******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/7
 
@@ -459,13 +460,19 @@ var messaging = (function(name){
     // - Elements which resource URL changes
     var onResourceLoaded = function(ev) {
         var target = ev.target;
-        if ( !target || !target.src ) {
-            return;
-        }
-        var tag = target.tagName.toLowerCase();
-        if ( tag !== 'img' && tag !== 'iframe' ) {
-            return;
-        }
+        if ( !target || !target.src ) { return; }
+        if ( target.tagName.toLowerCase() !== 'iframe' ) { return; }
+        var onAnswerReceived = function(details) {
+            if ( details.blocked ) {
+                hideOne(target, details.collapse);
+            }
+        };
+        messaging.ask({ what: 'blockedRequest', url: target.src }, onAnswerReceived);
+    };
+    var onResourceFailed = function(ev) {
+        var target = ev.target;
+        if ( !target || !target.src ) { return; }
+        if ( target.tagName.toLowerCase() !== 'img' ) { return; }
         var onAnswerReceived = function(details) {
             if ( details.blocked ) {
                 hideOne(target, details.collapse);
@@ -474,7 +481,7 @@ var messaging = (function(name){
         messaging.ask({ what: 'blockedRequest', url: target.src }, onAnswerReceived);
     };
     document.addEventListener('load', onResourceLoaded, true);
-    document.addEventListener('error', onResourceLoaded, true);
+    document.addEventListener('error', onResourceFailed, true);
 })();
 
 /******************************************************************************/

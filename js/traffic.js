@@ -46,7 +46,7 @@ var onBeforeRequest = function(details) {
 
     // Special handling for root document.
     if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
-        µb.bindTabToPageStats(tabId, requestURL);
+        µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
         return;
     }
 
@@ -79,7 +79,7 @@ var onBeforeRequest = function(details) {
     //}
 
     var reason = false;
-    if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
+    if ( pageStore.getNetFilteringSwitch() ) {
         reason = µb.abpFilters.matchString(requestContext, requestURL, requestType, requestHostname);
     }
     // Record what happened.
@@ -167,7 +167,7 @@ var onBeforeSendHeaders = function(details) {
     // a page store from a URL. Have to keep in mind the same URL can appear
     // in multiple tabs.
     var reason = false;
-    if ( µb.getNetFilteringSwitch(pageStore.pageHostname) ) {
+    if ( pageStore.getNetFilteringSwitch() ) {
         reason = µb.abpFilters.matchStringExactType(
             pageDetails,
             requestURL,

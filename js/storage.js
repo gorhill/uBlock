@@ -72,7 +72,22 @@
 
 µBlock.loadUserSettings = function() {
     var settingsLoaded = function(store) {
-        µBlock.userSettings = store;
+        var µb = µBlock;
+        // Backward compatibility after fix to #5
+        // TODO: remove once all users are up to date with latest version.
+        if ( store.netExceptionList ) {
+            if ( store.netWhitelist === '' ) {
+                store.netWhitelist = Object.keys(store.netExceptionList).join('\n');
+                if ( store.netWhitelist !== '' ) {
+                    chrome.storage.local.set({ 'netWhitelist': store.netWhitelist });
+                }
+            }
+            delete store.netExceptionList;
+            chrome.storage.local.remove('netExceptionList');
+        }
+        µb.userSettings = store;
+        µb.netWhitelist = µb.whitelistFromString(store.netWhitelist);
+        µb.netWhitelistModifyTime = Date.now();
     };
 
     chrome.storage.local.get(this.userSettings, settingsLoaded);
@@ -81,10 +96,12 @@
 /******************************************************************************/
 
 µBlock.saveWhitelist = function() {
-    var bin = { 'netExceptionList': this.userSettings.netExceptionList };
+    this.userSettings.netWhitelist = this.stringFromWhitelist(this.netWhitelist);
+    var bin = { 'netWhitelist': this.userSettings.netWhitelist };
     chrome.storage.local.set(bin, function() {
         µBlock.getBytesInUse();
     });
+    this.netWhitelistModifyTime = Date.now();
 };
 
 /******************************************************************************/

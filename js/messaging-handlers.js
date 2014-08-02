@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global chrome, µBlock, YaMD5 */
 
 /******************************************************************************/
 
@@ -49,7 +49,7 @@ var getStats = function(request) {
         r.pageHostname = pageStore.pageHostname;
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
-        r.netFilteringSwitch = µb.getNetFilteringSwitch(pageStore.pageHostname);
+        r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
     }
     return r;
 };
@@ -73,7 +73,8 @@ var onMessage = function(request, sender, callback) {
 
         case 'toggleNetFiltering':
             µBlock.toggleNetFilteringSwitch(
-                request.hostname,
+                request.url,
+                request.scope,
                 request.state
             );
             µBlock.updateBadgeAsync(request.tabId);
@@ -100,6 +101,8 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
+var µb = µBlock;
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -112,23 +115,24 @@ var onMessage = function(request, sender, callback) {
 
     var pageStore;
     if ( sender && sender.tab ) {
-        pageStore = µBlock.pageStoreFromTabId(sender.tab.id);
+        pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
-    var tabHostname = pageStore ? pageStore.pageHostname : '';
 
     switch ( request.what ) {
         case 'retrieveDomainCosmeticSelectors':
-            response = µBlock.abpHideFilters.retrieveDomainSelectors(tabHostname, request);
+            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+                response = µb.abpHideFilters.retrieveDomainSelectors(request);
+            }
             break;
 
         default:
-            return µBlock.messaging.defaultHandler(request, sender, callback);
+            return µb.messaging.defaultHandler(request, sender, callback);
     }
 
     callback(response);
 };
 
-µBlock.messaging.listen('contentscript-start.js', onMessage);
+µb.messaging.listen('contentscript-start.js', onMessage);
 
 })();
 
@@ -138,6 +142,8 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
+var µb = µBlock;
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -150,18 +156,19 @@ var onMessage = function(request, sender, callback) {
 
     var pageStore;
     if ( sender && sender.tab ) {
-        pageStore = µBlock.pageStoreFromTabId(sender.tab.id);
+        pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
-    var tabHostname = pageStore ? pageStore.pageHostname : '';
 
     switch ( request.what ) {
         case 'retrieveGenericCosmeticSelectors':
-            response = µBlock.abpHideFilters.retrieveGenericSelectors(tabHostname, request);
+            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+                response = µb.abpHideFilters.retrieveGenericSelectors(request);
+            }
             break;
 
         case 'blockedRequests':
             response = {
-                collapse: µBlock.userSettings.collapseBlocked,
+                collapse: µb.userSettings.collapseBlocked,
                 blockedRequests: pageStore ? pageStore.blockedRequests : {}
             };
             break;
@@ -169,19 +176,19 @@ var onMessage = function(request, sender, callback) {
         // Check a single request
         case 'blockedRequest':
             response = {
-                collapse: µBlock.userSettings.collapseBlocked,
+                collapse: µb.userSettings.collapseBlocked,
                 blocked: pageStore && pageStore.blockedRequests[request.url]
             };
             break;
 
         default:
-            return µBlock.messaging.defaultHandler(request, sender, callback);
+            return µb.messaging.defaultHandler(request, sender, callback);
     }
 
     callback(response);
 };
 
-µBlock.messaging.listen('contentscript-end.js', onMessage);
+µb.messaging.listen('contentscript-end.js', onMessage);
 
 })();
 
@@ -352,11 +359,11 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'getWhitelist':
-            response = µb.userSettings.netExceptionList;
+            response = µb.stringFromWhitelist(µb.netWhitelist);
             break;
 
         case 'setWhitelist':
-            µb.userSettings.netExceptionList = request.whitelist;
+            µb.netWhitelist = µb.whitelistFromString(request.whitelist);
             µb.saveWhitelist();
             break;
 

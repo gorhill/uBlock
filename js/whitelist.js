@@ -34,62 +34,25 @@ messaging.start('whitelist.js');
 var cachedWhitelist = '';
 
 // Could make it more fancy if needed. But speed... It's a compromise. 
-var reBadHostname = /[\x00-\x08\x0b\x0c\x0e-\x1f\x21-\x2c\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/;
-
-/******************************************************************************/
-
-var validateHostname = function(s) {
-    var hn = punycode.toASCII(s).toLowerCase();
-    if ( reBadHostname.test(hn) ) {
-        return '';
-    }
-    return hn;
-};
-
-var whitelistFromString = function(s) {
-    var whitelist = {};
-    var items = s.split(/\s+/);
-    var item;
-    for ( var i = 0; i < items.length; i++ ) {
-        item = validateHostname(items[i]);
-        if ( item !== '' ) {
-            whitelist[item] = true;
-        }
-    }
-    return whitelist;
-};
-
-var stringFromWhitelist = function(whitelist) {
-    var s = [];
-    var items = Object.keys(whitelist);
-    for ( var i = 0; i < items.length; i++ ) {
-        s.push(punycode.toUnicode(items[i]));
-    }
-    return s.sort(function(a, b) { return a.localeCompare(b); }).join('\n');
-};
-
-/******************************************************************************/
-
-var badWhitelist = function(s) {
-    return reBadHostname.test(s);
-};
+var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"#$'()<>{}|\\^\[\]`~]/;
 
 /******************************************************************************/
 
 var whitelistChanged = function() {
     var s = uDom('#whitelist').val().trim();
+    var bad = reUnwantedChars.test(s);
     uDom('#whitelistApply').prop(
         'disabled',
-        s === cachedWhitelist
+        s === cachedWhitelist || bad
     );
-    uDom('#whitelist').toggleClass('bad', badWhitelist(s));
+    uDom('#whitelist').toggleClass('bad', bad);
 };
 
 /******************************************************************************/
 
-function renderWhitelist() {
+var renderWhitelist = function() {
     var onRead = function(whitelist) {
-        cachedWhitelist = stringFromWhitelist(whitelist);
+        cachedWhitelist = whitelist;
         uDom('#whitelist').val(cachedWhitelist);
     };
     messaging.ask({ what: 'getWhitelist' }, onRead);
@@ -140,7 +103,7 @@ var whitelistApplyHandler = function() {
     cachedWhitelist = uDom('#whitelist').val().trim();
     var request = {
         what: 'setWhitelist',
-        whitelist: whitelistFromString(cachedWhitelist)
+        whitelist: cachedWhitelist
     };
     messaging.tell(request);
     whitelistChanged();
