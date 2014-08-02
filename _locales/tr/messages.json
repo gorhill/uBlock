@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -44,11 +44,11 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"yüklendiğinden beri",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"ya da",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -120,11 +120,11 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Reklamlar",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Gizlilik",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
@@ -152,7 +152,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"Uygula",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
