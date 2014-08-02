@@ -51,6 +51,18 @@
     "message":"lub",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Click to open the dashboard",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Enter element picker mode",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Go to request log",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Utwórz",
     "description":"English: Create"
@@ -104,7 +116,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"zastosuj zmiany",
+    "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{

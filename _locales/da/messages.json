@@ -51,6 +51,18 @@
     "message":"or",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Click to open the dashboard",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Enter element picker mode",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Go to request log",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Create",
     "description":"English: Create"

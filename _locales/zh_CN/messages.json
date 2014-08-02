@@ -51,6 +51,18 @@
     "message":"或",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"单击打开控制面板",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"进入元素选择器模式",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"查看请求日志",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"创建",
     "description":"English: Create"

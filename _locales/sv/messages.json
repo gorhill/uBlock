@@ -51,6 +51,18 @@
     "message":"eller",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Klicka för att öppna dashboard",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Gå till elementväljarläge",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Gå till logg",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Skapa",
     "description":"English: Create"
@@ -144,7 +156,7 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"rensa cache",
+    "message":"Rensa cache",
     "description":"English: purge cache"
   },
   "1pFormatHint":{

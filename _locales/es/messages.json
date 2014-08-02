@@ -51,6 +51,18 @@
     "message":"o",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Haga clic para abrir el panel de configuración",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Entrar al modo de selección de elementos",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Ir al registro de peticiones",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Crear",
     "description":"English: Create"

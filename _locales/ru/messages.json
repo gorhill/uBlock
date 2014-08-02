@@ -51,6 +51,18 @@
     "message":"или",
     "description":"English: or"
   },
+  "popupTipDashboard":{
+    "message":"Нажмите, чтобы открыть панель",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Войти в режим выбора элемента",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Перейти к списку запросов",
+    "description":"English: Go to request log"
+  },
   "pickerCreate":{
     "message":"Создать",
     "description":"English: Create"
