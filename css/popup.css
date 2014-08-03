@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font: 13px sans-serif;
+    background-color: white;
+    direction: __MSG_@@bidi_dir__;
+    }
+h1,h2,h3,h4 {
+    margin:  0;
+    padding: 4px;
+    border: 0;
+    color: white;
+    background-color: #444;
+    text-align: center;
+    cursor: pointer;
+    }
+a {
+    color: inherit;
+    text-decoration: none;
+    }
+*:focus {
+    outline: 0;
+    }
+#version {
+    margin-left: 1em;
+    font-weight: normal;
+    font-size: 11px;
+    }    
+body > div {
+    padding: 4px 12px 0 12px;
+    }
+p {
+    margin: 16px 0;
+    white-space: nowrap;
+    text-align: center;
+    }
+#switch .fa {
+    font-size: 64px;
+    color: green;
+    cursor: pointer;
+    }
+#switch .fa:hover {
+    opacity: 0.9;
+    }
+#switch .fa.off {
+    color: #ccc;
+    }
+#switch-hint {
+    font-size: 11px;
+    color: #888;
+    }
+#page-blocked {
+    margin-top: 4px;
+    font-size: 20px;
+    }
+#total-blocked {
+    margin-top: 4px;
+    font-size: 14px;
+    }
+#stats {
+    margin-bottom: 4px;
+    text-align: center;
+    }
+.tool {
+    font-size: 14px;
+    color: #aaa;
+    cursor: pointer;
+    display: none;
+    }
+.tool.enabled {
+    display: inline;
+    }
+.tool:hover {
+    color: #444;
+    }
+#options {
+    margin: 16px 0 0 0;
+    font-size: 12px;
+    }
+.dim {
+    color: #888;
+    text-decoration: none;
+    }
