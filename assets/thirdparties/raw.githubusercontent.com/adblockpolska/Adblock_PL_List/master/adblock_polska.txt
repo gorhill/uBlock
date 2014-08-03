@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 27 July 2014
+! Last modified: 02 August 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -31,6 +31,7 @@
 /banery/*750x200
 /banery/*980x90
 /banery/*980x100
+/banery/sklep_banner
 /banery-reklamowe/
 /boxReklama
 /emisje*.swf
@@ -53,13 +54,14 @@
 /player/VASTLoader.swf
 /popupredir/*$popup
 /rek/ifr/*
+/reklama_banery/
 /reklamy/*
 /storiesflash*.swf
 /storiesflash/baner
 /upload/banery_pl/*
 /vardata/banery/*
 _1100x200.
-_750x200_
+_750x200
 _750x700.swf
 _baner/980x200
 _banner.png
@@ -175,8 +177,9 @@ _res/banner/glowna/
 @@||ocdn.eu/files/pulscms/*.png
 @@||pah.org.pl
 @@||legnica.eu/uploads/pub/ads_files/
-@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
-@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
+@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
 @@||smartadserver.com$domain=get.x-link.pl
 @@||tvn.adocean.pl/files/js/ado.js$domain=ekstraklasa.tv
@@ -216,6 +219,7 @@ _res/banner/glowna/
 ||hub.com.pl
 ||img.wiocha.pl/img/gry
 ||j.o2.pl
+||koscian.net/js/scripts.js?
 ||kryptokursy.pl/bnrs/
 ||lokalna24.pl/banery/
 ||lubartow24.pl/f*_bok.
@@ -283,7 +287,6 @@ gry-online.poszkole.pl##FOOTER
 informacjelokalne.pl##[src^="http://www.informacjelokalne.pl/images/reklama"]
 kartuzy.info##[id^="baner"]
 koscian.net##[class^="banery"]
-koscian.net##[style="background: rgba(35,88,142,.9); position: fixed; z-index: 1000; top:0; left:0; width: 100%; height: 100%;"]
 kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; display: block;"]
 lubin.pl###banner
 miedzyrzec.info##[id^="baner"]
@@ -299,7 +302,9 @@ pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
 press.pl###topBanner
 profil.wp.pl##.bxAdv
 proline.pl###layer_top
+pudelek.tv###floorBG
 purepc.pl##[class$="reklama"]
+repostuj.pl##[class^="warstwa"]
 sadistic.pl/pics/c57d81558fed.jpg
 serwislokalny.com##.banner
 telepolis.pl##.b_750

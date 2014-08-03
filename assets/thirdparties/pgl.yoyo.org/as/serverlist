@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Tue, 24 Jun 2014 08:46:59 GMT
-# entries:        2477
+# last updated:   Fri, 01 Aug 2014 11:38:37 GMT
+# entries:        2483
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -138,6 +138,7 @@
 127.0.0.1 ad.nachtagenten.de
 127.0.0.1 ad.netdialogs.de
 127.0.0.1 ad.nozonedata.com
+127.0.0.1 ad.nttnavi.co.jp
 127.0.0.1 ad.nwt.cz
 127.0.0.1 ad.onad.eu
 127.0.0.1 ad.pandora.tv
@@ -1133,6 +1134,7 @@
 127.0.0.1 bannery.cz
 127.0.0.1 bannieres.acces-contenu.com
 127.0.0.1 bans.adserver.co.il
+127.0.0.1 bans.bride.ru
 127.0.0.1 barnesandnoble.bfast.com
 127.0.0.1 baypops.com
 127.0.0.1 bbelements.com
@@ -1197,6 +1199,7 @@
 127.0.0.1 canadatop.com
 127.0.0.1 caniamedia.com
 127.0.0.1 carbonads.com
+127.0.0.1 carbonads.net
 127.0.0.1 casalemedia.com
 127.0.0.1 casalmedia.com
 127.0.0.1 cash4banner.de
@@ -1305,6 +1308,7 @@
 127.0.0.1 cookies.cmpnet.com
 127.0.0.1 coremetrics.com
 127.0.0.1 count.rbc.ru
+127.0.0.1 count.rin.ru
 127.0.0.1 count.west263.com
 127.0.0.1 count6.rbc.ru
 127.0.0.1 counted.com
@@ -1871,7 +1875,6 @@
 127.0.0.1 olivebrandresponse.com
 127.0.0.1 omniture.com
 127.0.0.1 onclickads.com
-127.0.0.1 onclickads.net
 127.0.0.1 oneandonlynetwork.com
 127.0.0.1 onenetworkdirect.com
 127.0.0.1 onestat.com
@@ -1913,6 +1916,7 @@
 127.0.0.1 partner-ads.com
 127.0.0.1 partner.gonamic.de
 127.0.0.1 partner.pelikan.cz
+127.0.0.1 partner.topcities.com
 127.0.0.1 partnerad.l.google.com
 127.0.0.1 partnercash.de
 127.0.0.1 partners.priceline.com
@@ -2061,6 +2065,7 @@
 127.0.0.1 reklamcsere.hu
 127.0.0.1 reklame.unwired-i.net
 127.0.0.1 reklamer.com.ua
+127.0.0.1 relevanz10.de
 127.0.0.1 relmaxtop.com
 127.0.0.1 remotead.cnet.com
 127.0.0.1 republika.onet.pl
@@ -2276,6 +2281,7 @@
 127.0.0.1 toplist.pornhost.com
 127.0.0.1 toplista.mw.hu
 127.0.0.1 toplistcity.com
+127.0.0.1 topmango.com
 127.0.0.1 topmmorpgsites.com
 127.0.0.1 topping.com.ua
 127.0.0.1 toprebates.com

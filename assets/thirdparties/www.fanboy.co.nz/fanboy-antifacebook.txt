@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: EOOzE+MKwlHDvYTSjGI7bQ
-! Title: Anti-Facebook
+! Checksum: hM7Vn45nzL1jUD4RP8GAhg
+! Title: Anti-ThirdpartySocial
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
 !

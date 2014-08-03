@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: eicG1G2HqTVjCSYDoJzdwA
-! Version: 201407312301
+! Checksum: tCEkGuFv1/wmPwpHCLJaaw
+! Version: 201408030431
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 31 Jul 2014 23:01 UTC
+! Ultima modifica: 03 Aug 2014 04:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -233,7 +233,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||eadv.it^$third-party
 ||easymarketcrs.it^$third-party
 ||ebuzzing.it^$third-party
-||edintorni.net^$third-party
 ||erosadv.com^$third-party
 ||firebanner.com^$third-party
 ||gambling-italia.com^$third-party
@@ -997,6 +996,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilsalvagente.it/immagini/banner120x60-
 ||ilsannioquotidiano.it/images/banners/
 ||ilsecoloxix.it^*skin.jpg
+||ilsole24ore.com^*-sponsor-
 ||ilsole24ore.com^*/spot_include.shtml
 ||ilsole24ore.com^*_pubb.jpg
 ||iltaccoditalia.info/banner/
@@ -1053,6 +1053,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ladige.it/internal/immobiliare/
 ||ladigetto.it/files/banners/
 ||lagazzettadelmezzogiorno.it/banner_pk/
+||lagazzettadelmezzogiorno.it/images/fc_bari_1908.swf
 ||lagazzettadilucca.it^*/inserzioni/
 ||lametino.it/images/banners/
 ||lamiaaria.it/oas/mjx.js
@@ -1833,6 +1834,7 @@ firstonline.info###ctl00_cph_main_banner1_p1
 ticinonews.ch###ctl00_rectangleleaderhome1_FormView1_ctl00_Banmanpro3Label
 pianetatech.it###div-banner-300
 amando.it###div-dx_300x250
+metropolisweb.it###divBanner300x250
 internapoli.it###divHeader
 ecodicaserta.it###down
 hdblog.it###dx
@@ -1911,6 +1913,7 @@ pcworld.it###pangora-chunnel
 amicidimotociclismo.it###partnerfooter
 fantascienza.com###partners
 pianetatech.it###partnerw
+lagazzettadelmezzogiorno.it###petizione
 cattoliciromani.com###posts > div:nth-child(2) .tborder[id^="post"]:first-child:last-child
 delleconomia.it###powered
 livesicilia.it###pp[style="position:absolute; z-index:1000000000; width:400px; height:350px; left:295px; top:126px; border:3px #fff solid;"]
@@ -2115,6 +2118,7 @@ outcast.it##.banner250250
 ilcapoluogo.com##.banner3
 firstonline.info,mediapason.it##.banner300
 outcast.it##.banner300250
+hwupgrade.it##.banner300x250
 ildesk.it##.banner385x198
 ilcapoluogo.com##.banner4
 ildesk.it##.banner468x60
@@ -2247,6 +2251,7 @@ dday.it##.google-dfp
 gqitalia.it##.gq-promotions
 fantagazzetta.com##.h-box
 ilgiornaledivicenza.it##.header-box
+newyork-tales.ilsole24ore.com##.header-right
 bow.it,cronacamilano.it##.header_banner
 bora.la##.headerbtm
 gazzettadasti.it##.homepage-central-ban
@@ -2701,7 +2706,6 @@ termometropolitico.it##[id^="bsa"]
 @@||dotandad.com^*.mp3$object-subrequest,domain=r101.it
 @@||doubleclick.net/adj/tuttosport.home/home;sz=336x600,300x250,300x600;=$script,domain=tuttosport.com
 @@||download.deejay.it/adv/podcast/$object-subrequest
-@@||edintorni.net/related/service/*/jscript/$script,domain=amicidimotociclismo.it|armietiro.it|articolotre.com|automobilismo.it|businessmagazine.it|ciclismo.it|cucinare.meglio.it|fantagazzetta.com|fotografidigitali.it|freeonline.org|gamemag.it|giallozafferano.it|girlpower.it|gpone.com|hwfiles.it|hwupgrade.it|ilfattoquotidiano.it|ilgiorno.it|ilquotidianodellacalabria.it|ilquotidianoweb.it|ilrestodelcarlino.it|ilsecoloxix.it|iltempo.it|informarexresistere.fr|internazionale.it|invidia.it|italia24ore.it|lagazzettadelmezzogiorno.it|lanazione.it|lastampa.it|macitynet.it|metropolisweb.it|modenaonline.info|motociclismo.it|parmaonline.info|pianetadonna.it|quotidiano.net|reggionline.com|runnersworld.it|studenti.it|tennisitaliano.it|torinofree.it|unita.it|varesenews.it|velaemotore.it|violanews.com|voceditalia.it|wallstreetitalia.com|yourself.it
 @@||eyewonder.com^*/video/$object-subrequest,domain=serviziopubblico.it
 @@||files.adform.net/banners/stream/$object-subrequest,domain=la7.tv|liberoquotidiano.it|sky.it
 @@||foolbite.com/foolbite/*_pubblicita_$~third-party

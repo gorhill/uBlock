@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4342
-! Last modified: 30 Jul 2014
+! Version: 4364
+! Last modified: 2 Aug 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -108,6 +108,12 @@
 ##[href^="http://www.mannesoth.com/"]
 ##[href^="http://www.downloadthesefiles.com/"]
 ##[href^="http://downloadsfreesoftwares.com/"]
+##[href^="http://www.gripdownload.com/"]
+##[href^="http://fileskeep.com/"]
+##[href^="http://www.boltfiles.com/"]
+##[href^="http://filespeedy.org/"]
+##[href^="http://verified-download.com/"]
+##[href^="http://www.highcash.org/"]
 !
 !
 !
@@ -4337,6 +4343,22 @@ dream-file.com##[alt="Regular Download"]
 ||a1hacks.com^
 ||steamfreestore.ru^
 ||hackfbaccountlive.com^
+||mightyhacks.com^
+||forzahackers.com^
+||onlyrealhacks.com^
+||cypher-lab.com^
+||apps-hacks.com^
+||cheatsrelease.com^
+||superfreehacks.com^
+||gethacksfree.com^
+||unohack.com^
+||applicationgrabb.net^
+||zlippyshare.com^
+||waxhack.com^
+||downloadcounterstrikehack.com^
+||filespeedy.org^
+||givemecheats.com^
+||hack-crack.net^
 !
 !
 !

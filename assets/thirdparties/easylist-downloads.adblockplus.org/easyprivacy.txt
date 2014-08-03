@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: HtXK3sj7Sb3IjrunSVwM9Q
-! Version: 201407312301
+! Checksum: 614/VsODOSvTNsfgFum6hQ
+! Version: 201408030431
 ! Title: EasyPrivacy
-! Last modified: 31 Jul 2014 23:01 UTC
+! Last modified: 03 Aug 2014 04:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -270,6 +270,7 @@
 /analyticstick.
 /analyticstrack.
 /analyticstracking_
+/analyticstrain-
 /analyzer.gif?
 /analyzer2.
 /anametrix.js
@@ -813,6 +814,7 @@
 /gen_204?$image,script
 /generictracking.
 /geo.php?
+/geoAnalysis.js
 /geocompteur.
 /geocounter.
 /geoip.html
@@ -1092,6 +1094,7 @@
 /logclick.
 /logcollect.
 /logcollect_
+/logcounter.
 /logevent.action?
 /logEvent?
 /logextrastats.
@@ -1356,6 +1359,7 @@
 /pixel.php?
 /pixel.swf?
 /pixel.track?
+/pixel/impression/*
 /pixel_iframe.
 /pixel_track.
 /pixel_tracking.
@@ -1591,6 +1595,7 @@
 /sophus3/*
 /sophus3_logging.js
 /sophusThree-
+/sp-2.0.0.min.js
 /sp_logging.
 /sp_tracker.
 /spacer.gif?hscbrnd
@@ -2404,6 +2409,7 @@ http://utm.
 ||bstk.co^$third-party
 ||btbuckets.com^$third-party
 ||btstatic.com^$third-party
+||bttrack.com^$third-party
 ||bubblestat.com^$third-party
 ||burstbeacon.com^$third-party
 ||burt.io^$third-party
@@ -4780,9 +4786,7 @@ http://utm.
 ||data.imakenews.com^$third-party
 ||data.marketgid.com^$third-party
 ||daylogs.com/counter/
-||dc4d4996bc86498d8959-7dc0216bc6cc2f4ed239035dfc17235b.r83.cf3.rackcdn.com^
 ||dc8na2hxrj29i.cloudfront.net^
-||dcdd29eaa743c493e732-7dc0216bc6cc2f4ed239035dfc17235b.ssl.cf3.rackcdn.com^
 ||delivra.com/tracking/$third-party
 ||dell.com/TAG/tag.aspx?$third-party
 ||delvenetworks.com/player/plugins/analytics/
@@ -5041,6 +5045,7 @@ http://utm.
 ||list-manage.com/track/
 ||live2support.com^*/js_lstrk.
 ||livechatinc.com^*/control.cgi?
+||livefyre.com/libs/tracker/
 ||livefyre.com/tracking/
 ||livefyre.com^*/tracker.js
 ||livefyre.com^*/tracking/
@@ -5888,6 +5893,7 @@ http://utm.
 ||cnzz.com/c.php?
 ||counter.csdn.net^$script
 ||cri.cn/js/a1.js
+||csbew.com^$third-party
 ||csdn.net^*/counter.js
 ||css.aliyun.com^$third-party
 ||dw.cbsi.com.cn^$third-party
@@ -5898,6 +5904,8 @@ http://utm.
 ||log.hiiir.com^
 ||log.v.iask.com^
 ||look.urs.tw^$third-party
+||mlt01.com/cmp.htm$third-party
+||p.tanx.com^
 ||sitemaji.com/nownews.php?
 ||t.hypers.com.cn^
 ||tns.simba.taobao.com^
@@ -5905,6 +5913,7 @@ http://utm.
 ||track.ra.icast.cn^
 ||tracking.cat898.com^
 ||traffic.bokecc.com^
+||v.emedia.cn^
 ||webterren.com/webdig.js?
 ||yigouw.com/c.js
 ! Czech
@@ -6288,6 +6297,7 @@ http://utm.
 ||analytics.msnbc.msn.com^
 ||analytics.newsinc.com^
 ||analytics.omgpop.com/log
+||analytics.teespring.com^
 ||analytics.thenest.com^
 ||analytics.upworthy.com^
 ||analytics.us.archive.org^
@@ -7703,6 +7713,7 @@ http://utm.
 ||theweek.com/decor/track/
 ||thinkgeek.com/js/rts.js
 ||thiswebsiterules.com^*/log/log.php?
+||thrillist.com/track
 ||tiaa-cref.org^*/js_tiaacref_analytics.
 ||tickco.com/track.js
 ||tidaltv.com/Ping.aspx
@@ -7812,6 +7823,7 @@ http://utm.
 ||tscapeplay.com/msvp.php?
 ||tscapeplay.com/pvim?
 ||ttxm.co.uk^*/log.js
+||tubeplus.me/imp.php?
 ||tumblr.com/analytics.html
 ||tumblr.com/impixu?
 ||turnsocial.com/track/
@@ -8145,7 +8157,6 @@ http://utm.
 ||chip.de^*/hook-tracking.js
 ||chip.de^*/pic.gif?
 ||chip.de^*/tracking.js
-||chip.de^*/tracking/
 ||chip.de^*_tracking/
 ||citybeat.de/include/cbtracker.
 ||comdirect.de/ccf/img/ecrm2.gif?
@@ -8407,6 +8418,7 @@ http://utm.
 ||baidu.com/tb/pms/img/st.gif?
 ||beacon.sina.com.cn^
 ||btrace.qq.com^
+||cast.ra.icast.cn^
 ||cdn.baidupcs.com/monitor.jpg?
 ||clkstat.qihoo.com^
 ||cnzz.com/stat.
@@ -8444,6 +8456,7 @@ http://utm.
 ||jscss.kdslife.com/club/html/count/PChome_Count.js
 ||log*.ku6.com^
 ||log.kuwo.cn^
+||log.ynet.com^
 ||loginlog.sdo.com^
 ||logs.live.tudou.com^
 ||logstat.caixin.com^
@@ -8460,6 +8473,7 @@ http://utm.
 ||pingjs.qq.com^
 ||pv.sogou.com^
 ||qq.com/p?
+||ranking.ynet.com^
 ||rcgi.video.qq.com^
 ||report.qq.com^
 ||rgd.com.cn/counter/
@@ -9177,6 +9191,7 @@ http://utm.
 @@||o2.de/resource/js/tracking/ntpagetag.js
 @@||piwik.windit.de/piwik.js$domain=livespotting.tv
 @@||pix04.revsci.net^*.js?$domain=t-online.de
+@@||pizza.de^*/ptrack.$script
 @@||planet-sports.de^*?f=*/emos2.js
 @@||real.de/fileadmin/template/javascript/emos2.js
 @@||renault.de/js/sitestat.js
@@ -9228,9 +9243,10 @@ http://utm.
 @@||imrworldwide.com/novms/js/2/ggcmb353.js$domain=nexttv.com.tw
 @@||itc.cn/v2/asset/*/pageView.js
 @@||pingjs.qq.com/ping_tcss_ied.js$domain=dnf.qq.com
+@@||s-msn.com^*/udctrack*.js$domain=ynet.com
 @@||uwants.com/include/*/swfaddress.js
 @@||vanclimg.com/js.ashx?*/google-analytics.js$domain=vancl.com
-@@||wrating.com/a1.js$domain=tudou.com
+@@||wrating.com/a1.js$domain=tudou.com|ynet.com
 ! Czech
 @@||adobetag.com/d2/vodafonecz/live/VodafoneCZ.js
 ! Danish

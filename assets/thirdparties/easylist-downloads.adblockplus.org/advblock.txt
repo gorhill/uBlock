@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: +QVO16pN3D+e2mSQpY2h0w
-! Version: 201407312300
-! Last modified: 31 Jul 2014 23:00 UTC
+! Checksum: iJGVvmJcsLvqC0ev8ddTzw
+! Version: 201408030430
+! Last modified: 03 Aug 2014 04:30 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2045,6 +2045,7 @@ _tizers.
 ||crateac.com^
 ||crpoy.com^
 ||cwh7tdf.com^
+||cxmolk.com^
 ||d27jk9dqha8met.cloudfront.net^
 ||d3pb9zw46rm6zr.cloudfront.net^
 ||daccroi.com^
@@ -2126,6 +2127,7 @@ _tizers.
 ||fixzila.com^
 ||fkhkjhj.biz^
 ||flascom.com^
+||flashteaser.com^
 ||flushmviolent.org^
 ||four8city.in^
 ||freddyman.com^
@@ -2373,6 +2375,7 @@ _tizers.
 ||mediateas.com^
 ||mediaunder.org^
 ||mediaunder.us^$~popup,popup
+||medigaly.com^
 ||medpiar.ru^
 ||megactds6.net^
 ||megaindex.ru*/banner/
@@ -2505,6 +2508,7 @@ _tizers.
 ||prozapas.dn.ua^
 ||psnets.com^
 ||ptredir.com^
+||publicitysmart.com^
 ||puttyac.com^
 ||qcvdwtpnit.ru^
 ||qmebelist.ru^
@@ -2889,7 +2893,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -3002,6 +3006,7 @@ magtimes.info##.owl-carousel
 allmoldova.com##.promo
 mmogamez.info##.publicity-line
 eg.ru##.rbanner
+2ch.hk##.rekl
 my-cinema.net##.right-a
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.right-branding
 onedivision.ru##.right-branding-container
@@ -3031,6 +3036,7 @@ drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
 unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
+pornolab.net##a[href^="http://vsexshop.ru/store/"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
 ikinokz.net,riper.am,tapochek.net##a[href^="https://joycasino.com/?partner="]
@@ -5433,7 +5439,7 @@ lady.mail.ru##.buy
 mail.ru##.direct
 e.mail.ru##.direct_top
 health.mail.ru##.fromPartners3
-tv.mail.ru##.js-banner
+mail.ru##.js-banner
 mail.ru##.js-pbanner_cntr
 e.mail.ru##.leftcol__banner__direct
 e.mail.ru##.leftcol__banners__promobox-list

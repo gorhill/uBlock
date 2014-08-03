@@ -32,6 +32,7 @@
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||amazing-offers.co.il^$popup
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
+||ashleymadison.com/app/public/$popup
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||clickcenter.net^$third-party
@@ -292,6 +293,7 @@
 @@||seximo.co.il/ads/$image,~third-party
 @@||sfx-images.mozilla.org^$image
 @@||streambb.one.co.il/ads/$media
+@@||upf.co.il/advertisment.js
 @@||xads.zedo.com^$popup,domain=one.co.il
 @@||yad2.co.il/ajax/click_stat.php?BannerID=$xmlhttprequest
 @@||zvz.co.il/AdImages/$~third-party,image
