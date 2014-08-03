@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Güvenli adresler listesi",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -40,7 +40,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"on this page",
+    "message":"bu sayfada",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
