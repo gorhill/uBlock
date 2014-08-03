@@ -240,12 +240,12 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Ändringslogg<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
+    "message":"Ändringslogg",
+    "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Källkod (GPLv3)<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+    "message":"Källkod (GPLv3)",
+    "description":"English: Source code (GPLv3)"
   },
   "aboutExtensionDataHeader":{
     "message":"Tilläggsdata",

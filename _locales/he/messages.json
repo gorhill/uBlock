@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "message":"סוף סוף, חוסם יעיל לדפדפנים מבוססי Chromium. קל על המעבד והזיכרון.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -12,7 +12,7 @@
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"מסננים צד שלישי",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"רשימה לבנה",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+    "message":"לחץ על לחצן ההפעלה על מנת<br>לכבות או לאפשר לצמיתות<br>את µBlock עבור האתר הנוכחי",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
@@ -52,15 +52,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"לחץ כדי לפתוח את פאנל הקונפיגורציות",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"היכנס למצב בחירת אלמנט",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"עבור למתעד הבקשות",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -96,7 +96,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} בשימוש מתוך {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -112,7 +112,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"רשימה של מארחים חסומים",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -128,7 +128,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"דומיינים של פרטיות",
+    "message":"דומיינים של תוכנות זדוניות",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -148,7 +148,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו בשקט.",
+    "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ללא התראה.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -160,7 +160,7 @@
     "description":"English: purge cache"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"מסנן אחד לכל שורה. מסנן יכול להכיל שמות מארחים, או מסננים המותאמים ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -176,11 +176,11 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"רשימת שמות המארחים (host names) שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מארחים לא חוקיים לא יפורשו ללא התראה.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"ייבא וצרף",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -192,27 +192,27 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"אפשר תיעוד של של בקשות שנחסמות",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"באפשרותך לבדוק את הפרטים של בקשות חסומות אם תרצה על-ידי איפשור אפשרות זו. התיעוד של בקשות חסומות מעלה את השימוש בזיכרון של µBlock. מכיוון שמשתמשים רבים לעולם לא ישתמשו באפשרות זו, היא מכובה בברירת מחדל.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"אפשר תיעוד של של בקשות שלא חסומות",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"באפשרותך לבדוק את הפרטים של בקשות לא חסומות אם תרצה על-ידי איפשור אפשרות זו. התיעוד של בקשות לא חסומות מעלה את השימוש בזיכרון של µBlock. מכיוון שמשתמשים רבים לעולם לא ישתמשו באפשרות זו, היא מכובה בברירת מחדל.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"בקשות חסומות",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"בקשות מאופשרות",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -236,43 +236,43 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"אין בקשות לא חסומות שתועדו עבור דף זה",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/uBlock\/releases'>Change log<\/a>"
+    "message":"רשימת שינויים",
+    "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"<a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>",
-    "description":"English: <a href='https:\/\/github.com\/gorhill\/ublock'>Source code (GPLv3)<\/a>"
+    "message":"קוד מקור (GPLv3)",
+    "description":"English: Source code (GPLv3)"
   },
   "aboutExtensionDataHeader":{
-    "message":"Extension data",
+    "message":"נתוני התוסף",
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlock<\/i> assets can be updated here without having to wait for the next release of the extension. These assets are pulled from the <a href=\"https:\/\/github.com\/gorhill\/ublock\">project's Github repository<\/a>.",
+    "message":"הנכסים של <i>µBlock<\/i> יכולים להתעדכן מדף זה מבלי לחכות לגרסה הבאה של התוסף. נכסים אלו נלקחים מהמאגר של פרויקט Github.",
     "description":"Short descriptive text of the update feature"
   },
   "aboutAssetsUpdateColPath":{
-    "message":"Path",
+    "message":"נתיב",
     "description":"Path column header"
   },
   "aboutAssetsUpdateColStatus":{
-    "message":"Status",
+    "message":"מצב",
     "description":"Status column header"
   },
   "aboutAssetsUpdateGetListError":{
-    "message":"An error occurred. Is <b>XHR<\/b> blocked for <b>raw2.github.com<\/b>?",
+    "message":"אירעה שגיאה. האם<b>XHR<\/b> חסום עבור <b>raw2.github.com<\/b>?",
     "description":"Successful outcome of clicking 'update' button"
   },
   "aboutAssetsUpdateStatusAdded":{
-    "message":"To add",
+    "message":"להוספה",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusChanged":{
-    "message":"New version available",
+    "message":"גרסה חדשה זמינה",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusUnchanged":{
@@ -280,7 +280,7 @@
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateStatusRemoved":{
-    "message":"To remove",
+    "message":"להסרה",
     "description":"Displayed in the status column for each entry"
   },
   "aboutAssetsUpdateButton":{
