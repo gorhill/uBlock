@@ -102,3 +102,6 @@ theglobeandmail.com##.widget_ad
 # https://github.com/gorhill/uBlock/issues/17#issuecomment-50818163
 # To counter `s.imwx.com` in hpHosts
 @@||s.imwx.com^
+
+# To counter `/s_code.` in Fanboy's Enhanced Stats
+@@/s_code.$domain=nintendo.com
