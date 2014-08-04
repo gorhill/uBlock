@@ -145,5 +145,5 @@ return asyncJobManager;
             chrome.browserAction.setIcon({ tabId: tabId, path: 'img/browsericons/icon19-off.png' });
         }
     };
-    this.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadgeCallback, 200);
+    this.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadgeCallback, 250);
 };

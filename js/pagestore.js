@@ -207,36 +207,31 @@ PageStore.prototype.recordRequest = function(type, url, reason) {
 
 /******************************************************************************/
 
-// Update badge, incrementally
-
-// rhill 2013-11-09: well this sucks, I can't update icon/badge
-// incrementally, as chromium overwrites the icon at some point without
-// notifying me, and this causes internal cached state to be out of sync.
-
-PageStore.prototype.updateBadge = function() {
-    // https://github.com/gorhill/uBlock/issues/19
-    // TODO: need to check with µb object to see whether tab still exists.
-
+PageStore.prototype.updateBadgeFromTab = function(tab) {
+    if ( !tab ) {
+        return;
+    }
     var netFiltering = this.getNetFilteringSwitch();
     var iconPath = netFiltering ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
 
-    chrome.browserAction.setIcon({ tabId: this.tabId, path: iconPath });
+    chrome.browserAction.setIcon({ tabId: tab.id, path: iconPath });
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
         iconStr = this.perLoadBlockedRequestCount.toLocaleString();
     }
-    chrome.browserAction.setBadgeText({
-        tabId: this.tabId,
-        text: iconStr
-    });
+    chrome.browserAction.setBadgeText({ tabId: tab.id, text: iconStr });
 
     if ( iconStr !== '' ) {
-        chrome.browserAction.setBadgeBackgroundColor({
-            tabId: this.tabId,
-            color: '#666'
-        });
+        chrome.browserAction.setBadgeBackgroundColor({ tabId: tab.id, color: '#666' });
     }
+};
+
+PageStore.prototype.updateBadge = function() {
+    // https://github.com/gorhill/uBlock/issues/19
+    // Since we may be called asynchronously, the tab id may not exist
+    // anymore, so this ensures it does still exist.
+    chrome.tabs.get(this.tabId, this.updateBadgeFromTab.bind(this));
 };
 
 /******************************************************************************/
