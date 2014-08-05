@@ -70,13 +70,13 @@ var onBeforeRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/114
     var requestContext = pageStore;
 
-    //var frameStore;
-    //var frameId = details.frameId;
-    //if ( frameId > 0 ) {
-    //    if ( frameStore = pageStore.getFrame(frameId) ) {
-    //        requestContext = frameStore;
-    //    }
-    //}
+    var frameStore;
+    var frameId = details.frameId;
+    if ( frameId > 0 ) {
+        if ( frameStore = pageStore.getFrame(frameId) ) {
+            requestContext = frameStore;
+        }
+    }
 
     var reason = false;
     if ( pageStore.getNetFilteringSwitch() ) {
@@ -90,9 +90,9 @@ var onBeforeRequest = function(details) {
         //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
 
         // https://github.com/gorhill/uBlock/issues/114
-        //if ( frameId > 0 && frameStore === undefined ) {
-        //    pageStore.addFrame(frameId, requestURL);
-        //}
+        if ( frameId > 0 && frameStore === undefined ) {
+            pageStore.addFrame(frameId, requestURL);
+        }
         return;
     }
 
