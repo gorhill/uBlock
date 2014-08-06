@@ -1,5 +1,5 @@
 [Adblock Plus 2.0]
-! Checksum: hM7Vn45nzL1jUD4RP8GAhg
+! Checksum: y21AV5iluuA26vbuO4ANSA
 ! Title: Anti-ThirdpartySocial
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
@@ -11,6 +11,7 @@
 ||api-read.facebook.com/restserver.php?api_key=$third-party
 ||api.facebook.com^$third-party
 ||badge.facebook.com^$third-party
+||connect.facebook.com^$third-party,domain=~facebook.net|~fb.com
 ||connect.facebook.net^$third-party,domain=~facebook.com|~fb.com
 ||facebook.com/connect/$third-party
 ||facebook.com/dialog/oauth?display=popup$popup,domain=humorhub.org
@@ -64,4 +65,4 @@
 !
 ! Problematic sites
 !
-@@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com
+@@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com|southpark.cc.com

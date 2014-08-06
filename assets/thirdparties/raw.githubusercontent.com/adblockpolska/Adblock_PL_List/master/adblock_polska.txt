@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 02 August 2014
+! Last modified: 04 August 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -62,7 +62,7 @@
 /vardata/banery/*
 _1100x200.
 _750x200
-_750x700.swf
+_750x700.
 _baner/980x200
 _banner.png
 _reklama.jpg
@@ -122,6 +122,7 @@ _res/banner/glowna/
 ##.rrestbaner
 ##.sky_layer
 ##.teaser_cnt
+##.tvn-advertisement
 ##[id^="ad_gora"]
 ##[id^="ad-rectangle"]
 ##[id^="aswift_"]
@@ -169,6 +170,7 @@ _res/banner/glowna/
 ! * - Whitelist - * !
 @@/player/vidAS=pre_roll
 @@/vod/reklamy/WIZERUNEK.mp4
+@@||admin.brightcove.com^$object-subrequest,domain=ekstraklasa.tv|tvn24.pl|tvn24bis.pl
 @@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
@@ -182,7 +184,7 @@ _res/banner/glowna/
 @@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
 @@||smartadserver.com$domain=get.x-link.pl
-@@||tvn.adocean.pl/files/js/ado.js$domain=ekstraklasa.tv
+@@||tvn.adocean.pl/files/js/ado.js
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
 
 ! * - 1st Party Blocking Rules & Ad-servers - * !
@@ -213,6 +215,7 @@ _res/banner/glowna/
 ||ec.bankier.pl/file/
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
 ||extra-plonsk.pl/images/banners/
+||fm.tuba.pl*prosba.jpg
 ||fwcdn.pl/adv/*
 ||filmweb.pl/welcomeScreenJS?*
 ||gry-online.pl/im/zmieniarka/
@@ -312,4 +315,5 @@ telepolis.pl##.wiadomosci_lista_div
 telepolis.pl##[style="text-align:center; width:369px; height:285px;"]
 wp.pl##[id^="adv"]
 wp.tv##.infoAB
+wp.tv##[src^="http://adv.wp.pl/"]
 xn--portalmawa-g0b.pl##[id^="xc-98-primary"]

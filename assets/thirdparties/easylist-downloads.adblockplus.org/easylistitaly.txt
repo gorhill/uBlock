@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: tCEkGuFv1/wmPwpHCLJaaw
-! Version: 201408030431
+! Checksum: vZL2Ie0nqNcQ+LpzgHBi6Q
+! Version: 201408060521
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 03 Aug 2014 04:31 UTC
+! Ultima modifica: 06 Aug 2014 05:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -95,6 +95,7 @@ _sito/adv/
 ###annuncio-virgilio
 ###blocco_servizi_sponsor1
 ###box_adv_sponsor_categorico
+###contPubb
 ###corpo_video_sponsor
 ###divPubblicita
 ###fullAdv-dx
@@ -1397,6 +1398,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||romanews.eu/upload/assets/files/*.swf?linkto=/php/redirect.php?
 ||romatoday.it/images/skin/
 ||rosalio.it^*/adv/
+||rovigooggi.it/files/miele/
 ||rtl.it^*/ico_iTunes-Download-
 ||rtl.it^*/itunes_btn_
 ||rtl.it^*_ban_
@@ -1760,6 +1762,8 @@ tuttosport.com###banner_leaderboard
 lastampa.it###banner_maxticker
 html.it###banner_piede_articolo
 paginegialle.it###banner_pushbar
+rovigooggi.it###banner_righttop
+rovigooggi.it###banner_righttop_inner
 firenzespettacolo.it###banner_side
 livesicilia.it###banner_skin
 tuttosport.com###banner_square
@@ -1772,6 +1776,7 @@ liberoquotidiano.it###bannerbox1
 freemodding.it###bannerini
 quattroruote.it###bannerrcl
 cwi.it###banners
+siracusanews.it###banners-top
 si24.it###banners_middle
 telefonino.net###bannerstrip
 senigallianotizie.it###bbitalia_banner
@@ -2292,6 +2297,7 @@ melamorsicata.it##.mela_ban_1
 melamorsicata.it##.mela_ban_2
 melamorsicata.it##.mela_ban_3
 sportivissimo.com##.menu4
+rovigooggi.it##.miele
 bastardidentro.it##.minibox
 ilturista.info##.more-holder
 secondamano.it##.moreblock
@@ -2397,7 +2403,7 @@ mrwebmaster.it##.txt
 ilsoftware.it##.txtboxleft[style="width:280px; height:200px;"]
 turistipercaso.it##.utilink
 bresciaoggi.it,larena.it##.v2_banner-wrapper
-larena.it##.v3_horz-banner
+ilgiornaledivicenza.it,larena.it##.v3_horz-banner
 ilsalvagente.it##.video
 giallozafferano.it##.vini-sp
 filmtv.it##.visione
@@ -2668,7 +2674,6 @@ tomshw.it###notifica_adcont
 termometropolitico.it##[id^="bsa"]
 !----------------Regole di esclusione per risolvere i problemi----------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist.txt ***
-@@||151.1.68.170/index.php?zoneid=$object-subrequest,domain=la7.it
 @@||ad.smartclip.net/crossdomain.xml$object-subrequest,domain=serviziopubblico.it
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=serviziopubblico.it
 @@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv|rainews.it
@@ -2682,9 +2687,9 @@ termometropolitico.it##[id^="bsa"]
 @@||adserver.adtech.de/addyn/3.0/1183/3769607/0/170/ADTECH;$script,domain=gioco.it
 @@||adv.alice.it/crossdomain.xml$object-subrequest,domain=webtv.cubovision.it
 @@||adv.alice.it/html.ng/site=cubow$object-subrequest,domain=webtv.cubovision.it
-@@||adv.ilsole24ore.it/crossdomain.xml$object-subrequest,domain=la7.it|la7.tv|sky.it
+@@||adv.ilsole24ore.it/crossdomain.xml$object-subrequest,domain=sky.it
 @@||adv.ilsole24ore.it^*/empty.flv$object-subrequest,domain=sky.it
-@@||adv.ilsole24ore.it^*@preroll|$object-subrequest,domain=la7.tv|sky.it
+@@||adv.ilsole24ore.it^*@preroll|$object-subrequest,domain=sky.it
 @@||adv.rtl.it/crossdomain.xml$object-subrequest
 @@||adv.rtl.it/www/delivery/fc.php?*&zones=pre-roll$object-subrequest
 @@||adv.tre.it/www/$image,script,$~third-party
@@ -2707,7 +2712,7 @@ termometropolitico.it##[id^="bsa"]
 @@||doubleclick.net/adj/tuttosport.home/home;sz=336x600,300x250,300x600;=$script,domain=tuttosport.com
 @@||download.deejay.it/adv/podcast/$object-subrequest
 @@||eyewonder.com^*/video/$object-subrequest,domain=serviziopubblico.it
-@@||files.adform.net/banners/stream/$object-subrequest,domain=la7.tv|liberoquotidiano.it|sky.it
+@@||files.adform.net/banners/stream/$object-subrequest,domain=liberoquotidiano.it|sky.it
 @@||foolbite.com/foolbite/*_pubblicita_$~third-party
 @@||forebase.com/plugin/*/images/ads/$image
 @@||forebase.com/plugin/ads.htm?$subdocument
@@ -2715,9 +2720,6 @@ termometropolitico.it##[id^="bsa"]
 @@||google.com/ads/search/module/ads/*/search.js$domain=zoover.ch|zoover.it
 @@||google.com/adsense/$subdocument,domain=sedo.ch|sedo.it
 @@||google.com/adsense/search/ads.js$domain=zoover.ch|zoover.it
-@@||iads.iltrovatore.it/clientaccesspolicy.xml$object-subrequest,domain=la7.it
-@@||iads.iltrovatore.it/crossdomain.xml$object-subrequest,domain=la7.it
-@@||iads.iltrovatore.it/www/delivery/xmladv.php?$object-subrequest,domain=la7.it
 @@||ilfattoquotidiano.it/wp-content/themes/ilfatto/thumb/*_pubblicita_*.jpg
 @@||impit.tradedoubler.com/imp?$subdocument,domain=iphoneitalia.com
 @@||js.neodatagroup.com/uploads/js/rds.js$domain=rds.it

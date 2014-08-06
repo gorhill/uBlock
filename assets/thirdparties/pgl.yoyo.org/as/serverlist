@@ -2,7 +2,7 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Fri, 01 Aug 2014 11:38:37 GMT
+# last updated:   Mon, 04 Aug 2014 14:24:58 GMT
 # entries:        2483
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
@@ -999,6 +999,7 @@
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 annonser.dagbladet.no
+127.0.0.1 apdsrv.com
 127.0.0.1 apex-ad.com
 127.0.0.1 api.intensifier.de
 127.0.0.1 apture.com
@@ -1189,7 +1190,6 @@
 127.0.0.1 bullseye.backbeatmedia.com
 127.0.0.1 buyhitscheap.com
 127.0.0.1 buysellads.com
-127.0.0.1 buysub.com
 127.0.0.1 bvalphaserver.com
 127.0.0.1 bwp.download.com
 127.0.0.1 c.bigmir.net

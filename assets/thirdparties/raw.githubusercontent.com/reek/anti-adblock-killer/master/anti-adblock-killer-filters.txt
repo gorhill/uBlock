@@ -4,9 +4,10 @@
 ! License: Creative Commons BY-NC-SA
 ! Version: 7.4
 ! Expires: 1 days
-! Homepage: https://github.com/reek/anti-adblock-killer
+! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
 ! Report: https://github.com/reek/anti-adblock-killer/wiki/Report-Guide
+! Twitter: https://twitter.com/antiadbkiller
 ! WritingRules: https://adblockplus.org/fr/filters
 ! RedundantRules: https://arestwo.org/famlam/redundantRuleChecker.html
 ! RegExpVisualizer http://www.regexper.com/
@@ -436,6 +437,8 @@ jeuxactu.com###infoBlock
 @@||maxcheaters.com/public/js/jsLoader.js$script
 ! straight-world.de
 @@||straight-world.de/js/ads.js$script
+! clubedohardware.com.br
+@@||ads.clubedohardware.com.br/www/delivery/spcjs.php$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

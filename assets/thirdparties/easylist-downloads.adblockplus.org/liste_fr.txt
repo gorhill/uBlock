@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: UYa6TswPEL0u4OiiJEnEuQ
-! Version: 201408030421
+! Checksum: Y3UGCwM5yWn/CFs17lxm9w
+! Version: 201408060521
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3409,7 +3409,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=viedemerde.fr
 @@||viedemerde.fr^$script,~third-party
 viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
-||centquatre.viedemerde.fr^
+||centhuit.viedemerde.fr^
 ||drums.buporez.com^
 ! notre-planete.info
 @@||cas.criteo.com/delivery/ajs.php?$script,domain=notre-planete.info
@@ -3461,6 +3461,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||chqbp.69.mu/*.js|$script,third-party
 @@||cloudwatch.net/*.js|$script,third-party
 @@||crabdance.com/*.js|$script,third-party
+@@||crackedsidewalks.com/*.js|$script,third-party
 @@||cteyd.na.tl/*.js|$script,third-party
 @@||cvhyx.vr.lt/*.js|$script,third-party
 @@||dalnet.ca/*.js|$script,third-party
@@ -3539,6 +3540,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.cc.st/$third-party,xmlhttprequest
 |http://*.cloudwatch.net/$third-party,xmlhttprequest
 |http://*.cr.rs/$third-party,xmlhttprequest
+|http://*.crackedsidewalks.com/$third-party,xmlhttprequest
 |http://*.dalnet.ca/$third-party,xmlhttprequest
 |http://*.darknigger.com/$third-party,xmlhttprequest
 |http://*.dyx.com/$third-party,xmlhttprequest
@@ -3857,6 +3859,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||fansubresistance.biz^$script,domain=fansubresistance.in
 @@||funeralforamanga.fr/js/advertisement.js
 @@||gamersconnexion.com/js/advertisement.js
+@@||gamingroom.tv/static/img/advert.png?
 @@||gowonda.com^$image,~third-party
 @@||gratuitcul.com/ad.php?ad=$script
 @@||iscoolcdn.com/versioned/prod/bundles/iscoolkitchen/adblock/advertisement.
@@ -3943,7 +3946,6 @@ scan-manga.com#@##pub_head
 debrideurstream.fr#@##pubdirecte
 fairytailmx.com#@##sponsored-ad
 forum.virtualdjing.com#@#.adFrame
-vide-greniers.org#@#.adsbygoogle
-gamingroom.tv#@#.afs_ads
+gamingroom.tv,vide-greniers.org#@#.adsbygoogle
 freedom-ip.com#@#.pub_vertical
 fr.audiofanzine.com#@#div[id^="div-gpt-ad-"]

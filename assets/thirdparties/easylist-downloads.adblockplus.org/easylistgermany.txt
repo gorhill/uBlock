@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: akOf2XIXv0S+wd72fKUwYA
-! Version: 201408030431
+! Checksum: ThS0PEGPYRAluUK+NzkArg
+! Version: 201408060521
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 03 Aug 2014 04:30 UTC
+! Last modified: 06 Aug 2014 05:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -144,6 +144,7 @@ _woz_banner_vote.
 !--------Allgemeine Regeln zum Verstecken von Werbung(süberbleibseln)---------!
 ! *** easylistgermany:easylistgermany/easylistgermany_general_hide.txt ***
 ###Ad_Win2day
+###LxWerbeteaser
 ###SSpotIMPopSlider
 ###SlimSpot_imPop_Container
 ###Werb_Postbit_Bottom
@@ -232,7 +233,7 @@ _woz_banner_vote.
 ###werbung-banner
 ###werbung-left
 ###werbung-map-top
-###werbung-skyscraper
+! ###werbung-skyscraper
 ###werbung125_links
 ###werbung125_rechts
 ###werbung2
@@ -345,11 +346,11 @@ _woz_banner_vote.
 ##.werbung-contentad
 ! ##.werbung-fullbanner
 ! ##.werbung-halfbanner
-##.werbung-inline
-##.werbung-label
-##.werbung-leiste
-##.werbung-rectangle
-##.werbung-skyscraper
+! ##.werbung-inline
+! ##.werbung-label
+! ##.werbung-leiste
+! ##.werbung-rectangle
+! ##.werbung-skyscraper
 ##.werbung-skyscraper2
 ##.werbung-unten
 ##.werbung1
@@ -538,7 +539,7 @@ gamestar.de#@#.topAdvBox
 mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 !---------------------------Third-party Werbeserver---------------------------!
 ! *** easylistgermany:easylistgermany/easylistgermany_adservers.txt ***
-||2mdn.net^$object-subrequest,third-party,domain=anleger-fernsehen.de|blick.ch|clipfish.de|fitforfun.de|focus.de|giga.de|golem.de|helpster.de|myspass.de|netzwelt.de|sueddeutsche.de|tvtoday.de
+||2mdn.net^$object-subrequest,third-party,domain=anleger-fernsehen.de|blick.ch|clipfish.de|fitforfun.de|focus.de|giga.de|golem.de|helpster.de|myspass.de|netzwelt.de|stol.it|sueddeutsche.de|tvtoday.de
 ||4rm.de^$third-party
 ||85.114.133.62^$third-party
 ||a3h.de^$third-party
@@ -2143,6 +2144,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||eierkraulen.net/js/ztigdsfgsdf.js
 ||eierkraulen.net/nmban.gif
 ||eierkraulen.net^*.php|$subdocument
+||einkaufaktuell.de/data/page/NIVEASoftHauptbuehne954x240.jpg
 ||einrichtungsbeispiele.de/images_site/footer.jpg
 ||eintracht-hildesheim.de/Banner_Neu/Zufallsbanner.html
 ||eintracht.com/fileadmin/templates/html/images/seat-logo.png
@@ -5722,6 +5724,8 @@ adhs-zentrum.de##.text[align="center"][colspan="6"]:first-child:last-child > p[a
 oberberg-aktuell.de##.text_anzeige
 saz-aktuell.com##.textadul
 et-tutorials.de##.textwidget > div[style="background-color: #FFFFFF; color:#000000; "]
+teltarif.de##.tgtLink[style="color:#CCCCCC;margin:10px 0 2px 0"]
+teltarif.de##.tgtLink[style="width:100%;text-align:left;border-spacing:0;margin-bottom:5px"]
 t-online.de##.tl_anz-pos1
 sunshine-live.de##.top
 kleiderkreisel.de##.top-banner
@@ -5747,6 +5751,8 @@ macnews.de##.transaction_box
 www.google.de##.ts[style="margin:0 0 12px;height:92px;width:100%"]
 t-online.de##.tsc_www_p4p
 t-online.de##.tsc_www_p4p_bottom
+teltarif.de##.ttcen1[style="height: 59px; margin: 0; padding-bottom: 21px;"]
+teltarif.de##.ttsidecol > aside > div[style="text-align:right;color:#CCCCCC"]:first-child
 wetter24.de##.two_big_rows > .two_big_rows_second > .one_big_row_html
 wetter24.de##.two_big_rows_second > .two_small_rows + .one_big_row_html
 china.ahk.de##.tx-bannermanagement-pi1
@@ -7450,7 +7456,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@.png?$domain=mobilfunk-geschichte.de
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net)\/)/$object-subrequest,third-party,domain=golem.de
 @@/^https?\:\/\/(?!(ad\.doubleclick\.net|www\.google-analytics\.com)\/)/$object-subrequest,third-party,domain=pcgames.de
-@@/^https?\:\/\/(?!(cdn\.krxd\.net|ad\.yieldlab\.net|ad\.de\.doubleclick\.net|de\.ioam\.de|dis\.eu\.criteo\.com|ip\.nuggad\.net|pagead2\.googlesyndication\.com|pq-direct\.revsci\.net|qs\.ioam\.de|static\.plista\.com|tracking\.netzathleten-media\.de|www\.google-analytics\.com|www\.googleadservices\.com|apis\.google\.com|connect\.facebook\.net|script\.ioam\.de)\/)/$script,third-party,domain=lustich.de
+@@/^https?\:\/\/(?!(cdn\.krxd\.net|ad\.yieldlab\.net|ad\.de\.doubleclick\.net|de\.ioam\.de|dis\.eu\.criteo\.com|ip\.nuggad\.net|pagead2\.googlesyndication\.com|pq-direct\.revsci\.net|qs\.ioam\.de|static\.plista\.com|tracking\.netzathleten-media\.de|www\.google-analytics\.com|www\.googleadservices\.com|apis\.google\.com|connect\.facebook\.net|script\.ioam\.de)\/)/$image,script,third-party,domain=lustich.de
 @@/^https?\:\/\/(?!(de-uim\.videoplaza\.tv)\/)/$object-subrequest,third-party,domain=gmx.net|web.de
 @@/^https?\:\/\/(?!(im\.banner\.t-online\.de)\/)/$object-subrequest,third-party,domain=t-online.de
 @@/^https?\:\/\/(?!(qs\.ivwbox\.de|qs\.ioam.de|platform\.twitter\.com|connect\.facebook\.net|de\.ioam\.de|pubads\.g\.doubleclick\.net|stats\.wordpress\.com|www\.google-analytics\.com|www\.googletagservices\.com|apis\.google\.com|script\.ioam\.de)\/)/$script,third-party,domain=gamona.de
@@ -7506,7 +7512,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||adserv3.deutschland-spion.de/www/delivery/spcjs.php?$script,domain=mv-spion.de
 @@||adserver.idg.de/gptjs/techmedia/tm_dogpt_async.js$domain=pcwelt.de
 @@||adspaces.ero-advertising.com/adspace/214418.js$domain=berlin-nutten.com
-@@||ae.amgdgt.com/ads?t=$object-subrequest,domain=homerj.de
+@@||ae.amgdgt.com/ads?t=$object-subrequest,domain=dctp.tv|homerj.de
 @@||aktuelles-handelsrecht.info^$elemhide
 @@||alle-news.com^$image,script,domain=news.feed-reader.net
 @@||altfarm.mediaplex.com/ad/js/*?mpt=*&mpvc=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de
@@ -7533,7 +7539,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||cloudfront.net^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||combatarms-game.de/adframe.js
 @@||crackajack.de^*/advertising.js
-@@||cuiron.de^$image,domain=gamona.de|lustich.de
+@@||cuiron.de^$image,domain=epochtimes.de|gamona.de|lustich.de
 @@||cuiron.de^$script,domain=gamona.de|lustich.de
 @@||data-ero-advertising.com/impopup/layer.js$domain=berlin-nutten.com
 @@||david-forum.de/advertisement.css

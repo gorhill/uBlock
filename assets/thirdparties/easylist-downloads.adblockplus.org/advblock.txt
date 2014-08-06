@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: iJGVvmJcsLvqC0ev8ddTzw
-! Version: 201408030430
-! Last modified: 03 Aug 2014 04:30 UTC
+! Checksum: vgksWNZWwJ8qj32WgpPgCw
+! Version: 201408060520
+! Last modified: 06 Aug 2014 05:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -57,6 +57,7 @@
 ||10host.ru/go.php?id=$popup
 ||actionpay.ru^$popup
 ||adserv01.ru^$popup
+||adspynet.com/reference?pid=$popup
 ||advclx.net^$~popup,popup
 ||aftevap.ru^$popup
 ||am15.net^$popup
@@ -255,9 +256,11 @@ by,ru,ua##.banner_box
 ##.sp_search_table
 ##.surbis_banner
 ##.topbaner
+##.ya-direct
 ##.ya-partner
 ##DIV[id^="DIV_NNN_"]
 ##a[href^="http://luckiestclick.com/goto."]
+##a[href^="https://joycasino.com/?partner="]
 ##body > #flydiv
 ~vk.com##div[class*="notifier_baloon_"]
 ~vk.com##div[id$="notifiers_wrap"]
@@ -3033,13 +3036,14 @@ ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
+tapochek.net##a[href^="http://firstvds.ru/products/"]
 unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
+epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
 pornolab.net##a[href^="http://vsexshop.ru/store/"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
-ikinokz.net,riper.am,tapochek.net##a[href^="https://joycasino.com/?partner="]
 goodgame.ru##a[id^="banner-"]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
@@ -4348,7 +4352,6 @@ adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.to
 mmorpg.ua##.top_banner
 comss.info,comss.ru##.toppage
 factroom.ru##.widget-area div[class*="-banner"]
-rusdtp.ru##.ya-direct
 i2r.ru##a[style*="/banner."]
 demotivation.me##body > noindex
 selectornews.com##div[class$="-banner"]
@@ -6110,6 +6113,8 @@ all-episodes.com##div[class^="bn_"]
 @@||adriver.ru/cgi-bin/erle.cgi?*&target=blank&tail$script,domain=eg.ru
 @@||adriver.ru/extender.js|$script,domain=vz.ru
 @@||adriver.ru/images/*/0/script.js?$script,domain=afisha.ru|aif.ru|cnews.ru|eg.ru|ex.ua|forum.tatfish.com|meta.ua|mobile-review.com|ozon.ru|ria.ru|rian.ru|thg.ru|vz.ru
+@@||adspynet.com/code?*&oin=0&$script,domain=fishki.net
+@@||adspynet.com/test?*&oin=0$script,domain=fishki.net
 @@||adv.magna.ru/?id=$script,domain=glav.su
 @@||adv.magna.ru/?id=*&rid=$script,domain=newstube.ru|soccer.ru
 @@||advertpay.net/code?$script,domain=dic.academic.ru

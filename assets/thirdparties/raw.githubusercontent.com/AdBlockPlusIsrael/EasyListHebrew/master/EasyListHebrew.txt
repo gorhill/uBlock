@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: VsZsxR3Tfx/N1Nd5+ReJXA
+! Checksum: riPoFkIAW9AUEhiIxi/WbQ
 ! Title: EasyList Hebrew
-! Last modified: 31/07/14  23:50
+! Last modified: 05/08/14  12:56
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -286,7 +286,7 @@
 @@||one.co.il/images/Ads/2013/10/20/2230/racer_51x20hp.png
 @@||one.co.il/images/ads/2014/06/02/1415/MNDL2.swf
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ads$domain=globes.co.il|m.ynet.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il|mako.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -326,13 +326,16 @@ getit.co.il,nana10.co.il,tapuz.co.il###TopBanner
 ilimudim.co.il,rest.co.il###ads\.strip\.1
 calcalist.co.il,frogi.co.il,mynet.co.il,ynet.co.il###ads\.top
 feeder.co.il,rest.co.il###banner
+rateonclick.com,view-movies.co.il###connect
 bhol-forums.co.il,bhol.co.il###divBanner_Plazma
 ladaat.info,tapuz.co.il###divTopBanner
 sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws###extra
+ori-diamonds.co.il,popcorate.co.il###hoverConnect
 bhol-forums.co.il,bhol.co.il###sdera.width100pc
 nana10.co.il,nrg.co.il,wallashops.co.il###topBanner
 bizportal.co.il,bursagraph.co.il,saloona.co.il###top_banner
 bhol-forums.co.il,bhol.co.il###top_banner_ph
+fun-city.co.il,popcorate.co.il###videoImage1_login
 beok.co.il,winwin.co.il##.TopBanners
 mako.co.il,rest.co.il##.ad
 globes.co.il,onlife.co.il,sport5.co.il##.banner
@@ -343,6 +346,7 @@ sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##.side
 haaretz.co.il,themarker.com##.topBanners
 haaretz.co.il,themarker.com##.topSectionBanners
 sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
+ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
 sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
 sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
@@ -423,7 +427,6 @@ flix.tapuz.co.il##DIV[style="background-color: #FFFFFF; margin-left: auto; margi
 forbes.co.il##EMBED[src^="/download/banners/"]
 forbes.co.il##TABLE[style="background-color:#e8e8e8"]
 frogi.co.il##.adbox
-fun-city.co.il###videoImage1_login
 fxp.co.il###adfxp
 fxp.co.il###vc_widget
 fxp.co.il###web_3_tool
@@ -627,13 +630,8 @@ onlife.co.il###block-freelancer-0
 onlife.co.il###block-freelancer-1
 onlife.co.il###top_article_ads_wrapper
 onlife.co.il##.commercial
-ori-diamonds.co.il###hoverConnect
-ori-diamonds.co.il##A[href^="http://www.view-movies.co.il/"]
 ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
-popcorate.co.il###hoverConnect
-popcorate.co.il###videoImage1_login
-rateonclick.com###connect
 rateonclick.com##A[href*="campaigns.layer.co.il/"]
 reshet.tv###DivContent[rel="5498"]
 reshet.tv###prArea
@@ -713,7 +711,6 @@ themarker.com##.slideShowBannerGroup
 themarker.com##IFRAME[id^="google"]
 themarker.com##[name="txtlnk"] + .border-box
 upf.co.il##.bgbanner
-view-movies.co.il###connect
 view-movies.co.il##A[href="http://www.view-movies.co.il/minisite.php"]
 view-movies.co.il##DIV[itemtype="http://data-vocabulary.org/Breadcrumb"]
 vodmovies.co.il###wrapper6
@@ -721,7 +718,6 @@ vodmovies.co.il##.classtop_img
 vodmovies.co.il##.ulp-content
 vodmovies.co.il##.ulp-overlay
 vodmovies.co.il##.ulp-window
-vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 vodx.co.il##.top-banner
 walla.co.il###ARKIA_CONTAINER
 walla.co.il###navbar

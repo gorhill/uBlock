@@ -1,7 +1,7 @@
 [Adblock Plus 1.2]
-! Checksum: FIGPRqkVA4/lWsWdg7pB3w
+! Checksum: YME2A+IJRdP0ukEMhfiYuA
 ! Title: Latvian List
-! Last modified: 2014-07-02 15:10 UTC
+! Last modified: 2014-08-05 13:32 UTC
 ! Expires: 2 days (update frequency)
 ! Homepage: http://latvian-list.site11.com/
 ! Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
@@ -237,6 +237,8 @@ forums.delfi.lv##div[style="width:250px;"]:last-child
 gay.lv##div[style="width:568px;height:60px;background-color:#000000;"]
 google.lv###rhscol
 google.lv###taw
+gramata.ucoz.lv##[style="text-align:center;border:1px dashed #000000;width:468px;height:60px;position:absolute;overflow:hidden;margin-top:-20px;margin-right:160px;"]
+gramata.ucoz.lv##[style^="background-image:none !important"]
 inbox.lv###inboxshops_div
 inbox.lv###inx-main-roof
 inbox.lv###inx-textAds

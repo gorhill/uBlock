@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 614/VsODOSvTNsfgFum6hQ
-! Version: 201408030431
+! Checksum: 1ET0MG0I5sX/KBoUZ/r6Qg
+! Version: 201408060521
 ! Title: EasyPrivacy
-! Last modified: 03 Aug 2014 04:31 UTC
+! Last modified: 06 Aug 2014 05:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -229,6 +229,7 @@
 /AkamaiTrackingPixel.
 /alllinksclicktracker.js
 /alvenda_remarketing_
+/amazon-affiliate-
 /amdhfp/a.do?param$image
 /amdhfp/t.do?id$image
 /analiz.php3?
@@ -1911,6 +1912,7 @@
 /utag.loader.
 /utrack.js?
 /utrack?
+/utracker.js
 /uvstat.js
 /uxm_tracking.
 /v5.3nse.
@@ -2031,6 +2033,7 @@
 /woopra.js
 /wp-click-track/*
 /wp-clickmap/*
+/wp-content/plugins/amazon-affiliate-link-localizer/*
 /wp-content/plugins/stats/count.php?
 /wp-counter.php
 /wp-js/analytics.js?
@@ -3151,6 +3154,7 @@ http://utm.
 ||opentracker.net^$third-party
 ||openvenue.com^$third-party
 ||openxtracker.com^$third-party
+||oproi.com^$third-party
 ||optify.net^$third-party
 ||optimix.asia^$third-party
 ||optimizely.com^$third-party
@@ -3375,6 +3379,7 @@ http://utm.
 ||shrinktheweb.com^$third-party
 ||siftscience.com^$third-party
 ||signup-way.com^$third-party
+||silverpop.com^$third-party
 ||simplehitcounter.com^$third-party
 ||simplereach.com^$third-party
 ||simpli.fi^$third-party
@@ -5115,6 +5120,7 @@ http://utm.
 ||metrics.sonymusicd2c.com^
 ||metrics.wikinvest.com^
 ||metrixlablw.customers.luna.net^
+||metro-trending-*.amazonaws.com^$third-party
 ||mint.good.is^
 ||mitel.marketbright.com^
 ||mkcms.com/stats.js
@@ -7010,7 +7016,6 @@ http://utm.
 ||juno.com/start/javascript.do?message=$image
 ||justanswer.com/browsercheck/
 ||justanswer.com/ja_services/processes/log.asmx/
-||justin.tv/track/?
 ||kalahari.net/includes/swatag.js
 ||kelkoo.co.uk/kk_track?
 ||kelkoo.co.uk^*/tracker/
@@ -7601,7 +7606,6 @@ http://utm.
 ||stats.harpercollins.com^
 ||stats.irishmirror.ie^
 ||stats.jtvnw.net^
-||stats.justin.tv^
 ||stats.macmillanusa.com^
 ||stats.mehrnews.com^
 ||stats.mirror.co.uk^
@@ -7682,6 +7686,7 @@ http://utm.
 ||tdwaterhouse.ca/includes/javascript/rtesurvey.js
 ||tdwaterhouse.co.uk^*/track.js
 ||ted.dailymail.co.uk^
+||ted1.metro.co.uk^
 ||telegraph.co.uk^*/tmglmultitrackselector.js
 ||tesco.com/cgi-bin3/buyrate?type=
 ||texaco.co.uk/trackingcode.js
@@ -8755,6 +8760,8 @@ http://utm.
 @@||akamai.net^*/omniture.jsp$script,domain=walmart.com
 @@||aliunicorn.com^*/click_stat/
 @@||analytics.atomiconline.com/services/jquery.js
+@@||analytics.rogersmedia.com/js/rdm_dil_code.full.js$domain=rogersradio.ca
+@@||analytics.rogersmedia.com/js/rdm_s_code.min.js$domain=rogersradio.ca
 @@||anthem.com/includes/foresee/foresee-trigger.js
 @@||aol.com/mm_track/slideshow/$subdocument
 @@||aolcdn.com/js/mg2.js$domain=autoblog.com|autos.aol.com|dailyfinance.com
@@ -8937,10 +8944,11 @@ http://utm.
 @@||mail-www.baynote.net^$domain=mail.com
 @@||mail.biz.rr.com/images/portal/blank.gif$domain=mail.biz.rr.com
 @@||mail.yahoo.com/neo/ymstat$xmlhttprequest
+@@||makerstudios.com/js/mixpanel.js?$script
 @@||maps.google.*/gen_204?$xmlhttprequest
 @@||maxmind.com/app/country.js$domain=lenovo.com|nationalgeographic.com|paypal.fr
 @@||maxmind.com/app/geoip.js$domain=fab.com
-@@||maxmind.com^*/geoip.js$domain=aljazeera.com|ballerstatus.com|bikemap.net|carltonjordan.com|coolsport.tv|dereon.com|dr.dk|everydaysource.com|girlgames4u.com|incgamers.com|ip-address.cc|justin.tv|maaduu.com|qatarairways.com|sat-direction.com|sotctours.com|stoli.com|vibe.com
+@@||maxmind.com^*/geoip.js$domain=aljazeera.com|ballerstatus.com|bikemap.net|carltonjordan.com|coolsport.tv|dereon.com|dr.dk|everydaysource.com|girlgames4u.com|incgamers.com|ip-address.cc|maaduu.com|qatarairways.com|sat-direction.com|sotctours.com|stoli.com|vibe.com
 @@||mec.ca/media/javascript/resxclsx.js
 @@||media-imdb.com^*/clickstream.js
 @@||media.ft.com/j/optimost-$domain=ft.com

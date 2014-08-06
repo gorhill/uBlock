@@ -7028,6 +7028,7 @@
 127.0.0.1	click2net.nl
 127.0.0.1	click2paid.com
 127.0.0.1	click2site.co
+127.0.0.1	click2trusttracker.com
 127.0.0.1	click4assistance.co.uk
 127.0.0.1	click4cash.de
 127.0.0.1	click4click.com
@@ -14439,6 +14440,7 @@
 127.0.0.1	o2onbusiness.de
 127.0.0.1	oa.techcrunch.com
 127.0.0.1	oad.realmedia.com
+127.0.0.1	oamtrk.com
 127.0.0.1	oas-central.realmedia.com
 127.0.0.1	oas.benchmark.fr
 127.0.0.1	oas.dn.se
@@ -20134,6 +20136,7 @@
 127.0.0.1	www.click2bank.net
 127.0.0.1	www.click2clicktracker.com
 127.0.0.1	www.click2site.co
+127.0.0.1	www.click2trusttracker.com
 127.0.0.1	www.clickansave.net
 127.0.0.1	www.clickauditor.net
 127.0.0.1	www.clickdensity.com
@@ -21267,6 +21270,7 @@
 127.0.0.1	www.ntwktrax.com
 127.0.0.1	www.nvtrak.com
 127.0.0.1	www.o2onbusiness.de
+127.0.0.1	www.oamtrk.com
 127.0.0.1	www.obfm40.com
 127.0.0.1	www.oddcast.com
 127.0.0.1	www.offerdeliver.com
@@ -22427,4 +22431,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22422
+# Hosts: 22426

@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4364
-! Last modified: 2 Aug 2014
+! Version: 4415
+! Last modified: 6 Aug 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -114,6 +114,16 @@
 ##[href^="http://filespeedy.org/"]
 ##[href^="http://verified-download.com/"]
 ##[href^="http://www.highcash.org/"]
+##[href^="http://booshare.net/"]
+##[href^="http://pushcloud.org/"]
+##[href^="http://fileurl.me/"]
+##[href^="http://qwiklnk.com/"]
+##[href^="http://reliablefiles.com/"]
+##[href^="http://www.generaldownload.com/"]
+##[href^="http://j.mp/"]
+##[href^="http://files.cat/"]
+##[href^="http://yourdigitalsearcher.com/"]
+##[href^="http://smartmediasearcher.com/"]
 !
 !
 !
@@ -1469,7 +1479,6 @@ dream-file.com##[alt="Regular Download"]
 ||streamingfilmhd.com^
 ||vederefilm.net^
 ||quantumfiles.com^
-||nfshacksreborn.co.vu^
 ||facebookcreditsgenerator.com^
 ||free3dsemulator.com^
 ||fbcreditshack.com^
@@ -4193,7 +4202,6 @@ dream-file.com##[alt="Regular Download"]
 ||latestgamehacks.com^
 ||download.cm^
 ||game-cards.org^
-||rp.game-cards.org^
 ||epicgamehacks.com^
 ||hack-planet.com^
 ||freewowgametime.org^
@@ -4359,6 +4367,49 @@ dream-file.com##[alt="Regular Download"]
 ||filespeedy.org^
 ||givemecheats.com^
 ||hack-crack.net^
+||hackdownloadworld.com^
+||musicleaked.com^
+||alldaycheats.com^
+||topmobilehack.com^
+||booshare.net^
+||pushcloud.org^
+||newdirectionforyou.eu^
+||android-form.eu^
+||sharegoodfiles.com^
+||wowfanblog.info^
+||generaldownload.com^
+||freeprimefiles.com^
+||corehacks.com^
+||richboysblog.com^
+||steamgift.org^
+||azongift.com^
+||itunesgiftcardcodes.org^
+||freeplaycards.com^
+||freefbcredits.org^
+||freeplaystationpluscode.net^
+||xboxlivegoldcode.net^
+||goggle.com^
+||new-cracked-softwares.info^
+||phone-hack.com^
+||epic-gamesoftware.com^
+||cheatscodesdownload.net^
+||legitcheats.com^
+||files.cat^
+||nfshacksreborn.com^
+||gameappcheat.com^
+||topcheatsgames.com^
+||cheatscastle.com^
+||gripdownloads.com^
+||yourdigitalsearcher.com^
+||smartmediasearcher.com^
+||litle.me^
+||privefiles.com^
+||freelolriotcodes.info^
+||freegies.com^
+||mucapps.com^
+||wellmediaonline.com^
+||premiumkeygenerators.com^
+||ulcknow.biz^
 !
 !
 !
