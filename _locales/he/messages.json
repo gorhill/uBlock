@@ -84,15 +84,15 @@
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"הסתר את המקום שנשאר מהחסימה של האלמנטים",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"הראה את מספר הבקשות החסומות על האייקון",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} מסנני רשת + {{cosmeticFilterCount}} מסננים קוסמטיים מתוך:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -100,15 +100,15 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce Adblock+ element hiding filters.",
+    "message":"פרסר ואפשר את מסנני הסתרת האלמנטים של Adblock+.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element hiding filters used.",
+    "message":"בוצע שימוש ב {{abpHideFilterCount}} מסנני הסתרת אלמנטים.",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus<\/a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.<\/p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>µBlock<\/i><\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -292,7 +292,7 @@
     "description":"Updating..."
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"ערך זה חייב להיות האחרון",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

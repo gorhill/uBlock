@@ -52,15 +52,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Kliknij, aby otworzyć panel",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Przejdź do trybu zaznaczania elementów",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Przejdź do dziennika żądań",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
