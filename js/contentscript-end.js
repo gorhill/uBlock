@@ -139,7 +139,7 @@ var messaging = (function(name){
         var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
         var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
         if ( exceptions ) {
-            exceptions = decodeURIComponent(exceptions).split('\n');
+            exceptions = decodeURIComponent(exceptions).split(',');
             var i = exceptions.length;
             while ( i-- ) {
                 injectedSelectors[exceptions[i]] = true;
@@ -460,8 +460,8 @@ var messaging = (function(name){
     // - Elements which resource URL changes
     var onResourceLoaded = function(ev) {
         var target = ev.target;
-        if ( !target || !target.src ) { return; }
         if ( target.tagName.toLowerCase() !== 'iframe' ) { return; }
+        if ( !target || !target.src ) { return; }
         var onAnswerReceived = function(details) {
             if ( details.blocked ) {
                 hideOne(target, details.collapse);
@@ -471,8 +471,8 @@ var messaging = (function(name){
     };
     var onResourceFailed = function(ev) {
         var target = ev.target;
-        if ( !target || !target.src ) { return; }
         if ( target.tagName.toLowerCase() !== 'img' ) { return; }
+        if ( !target || !target.src ) { return; }
         var onAnswerReceived = function(details) {
             if ( details.blocked ) {
                 hideOne(target, details.collapse);

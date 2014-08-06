@@ -30,8 +30,6 @@
 /******************************************************************************/
 
 var µb = µBlock;
-//var filterTestCount = 0;
-//var bucketTestCount = 0;
 
 /******************************************************************************/
 /*
@@ -165,7 +163,6 @@ FilterBucket.prototype.add = function(a) {
 
 FilterBucket.prototype.retrieve = function(s, out) {
     var i = this.filters.length;
-    //filterTestCount += i - 1;
     while ( i-- ) {
         this.filters[i].retrieve(s, out);
     }
@@ -275,8 +272,14 @@ FilterContainer.prototype.reset = function() {
     this.frozen = false;
     this.acceptedCount = 0;
     this.processedCount = 0;
+    this.domainHashMask = (1 << 10) - 1;
+    this.genericHashMask = (1 << 15) - 1;
     this.genericFilters = {};
+    this.hostnameHide = {};
+    this.hostnameDonthide = {};
     this.hostnameFilters = {};
+    this.entityHide = {};
+    this.entityDonthide = {};
     this.entityFilters = {};
     this.hideUnfiltered = [];
     this.hideLowGenerics = {};
@@ -300,12 +303,6 @@ FilterContainer.prototype.add = function(s) {
 
     this.processedCount += 1;
 
-    if ( this.duplicates[s] ) {
-        this.duplicateCount++;
-        return false;
-    }
-    this.duplicates[s] = true;
-
     //if ( s === 'mail.google.com##.nH.adC > .nH > .nH > .u5 > .azN' ) {
     //    debugger;
     //}
@@ -313,8 +310,14 @@ FilterContainer.prototype.add = function(s) {
     // hostname-based filters: with a hostname, narrowing is good enough, no
     // need to further narrow.
     if ( parsed.hostnames.length ) {
-        return this.addPrefixedFilter(parsed);
+        return this.addSpecificFilter(parsed);
     }
+
+    if ( this.duplicates[s] ) {
+        this.duplicateCount++;
+        return false;
+    }
+    this.duplicates[s] = true;
 
     // no specific hostname, narrow using class or id.
     var selectorType = parsed.suffix.charAt(0);
@@ -323,14 +326,6 @@ FilterContainer.prototype.add = function(s) {
     }
 
     // no specific hostname, no class, no id.
-    // TO IMPLEMENT
-    // My idea of implementation so far is to return a pre-built container
-    // of these very generic filter, and let the content script sort out
-    // what it needs from it. Filters in that category are mostly
-    // `a[href^="..."]` kind of filters.
-    // Content script side, the unsorted container of selectors could be used
-    // in a querySelector() to figure which rules apply (if any), or they
-    // could just all be injected undiscriminately (not good).
     if ( parsed.filterType === '#' ) {
         this.hideUnfiltered.push(parsed.suffix);
     } else {
@@ -339,6 +334,55 @@ FilterContainer.prototype.add = function(s) {
     this.acceptedCount += 1;
 
     return true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.freezeHostnameSpecifics = function(what, type) {
+    var µburi = µb.URI;
+    var entries = this[what];
+    var filters = this.hostnameFilters;
+    var f, hash, bucket;
+    for ( var hostname in entries ) {
+        if ( entries.hasOwnProperty(hostname) === false ) {
+            continue;
+        }
+        f = new FilterHostname(Object.keys(entries[hostname]).join(','), hostname);
+        hash = makeHash(type, µburi.domainFromHostname(hostname), this.domainHashMask);
+        bucket = filters[hash];
+        if ( bucket === undefined ) {
+            filters[hash] = f;
+        } else if ( bucket instanceof FilterBucket ) {
+            bucket.add(f);
+        } else {
+            filters[hash] = new FilterBucket(bucket, f);
+        }
+    }
+    this[what] = {};
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.freezeEntitySpecifics = function(what, type) {
+    var entries = this[what];
+    var filters = this.entityFilters;
+    var f, hash, bucket;
+    for ( var entity in entries ) {
+        if ( entries.hasOwnProperty(entity) === false ) {
+            continue;
+        }
+        f = new FilterEntity(Object.keys(entries[entity]).join(','), entity);
+        hash = makeHash(type, entity, this.domainHashMask);
+        bucket = filters[hash];
+        if ( bucket === undefined ) {
+            filters[hash] = f;
+        } else if ( bucket instanceof FilterBucket ) {
+            bucket.add(f);
+        } else {
+            filters[hash] = new FilterBucket(bucket, f);
+        }
+    }
+    this[what] = {};
 };
 
 /******************************************************************************/
@@ -393,6 +437,10 @@ FilterContainer.prototype.freezeGenerics = function(what) {
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
+    this.freezeHostnameSpecifics('hostnameHide', '#');
+    this.freezeHostnameSpecifics('hostnameDonthide', '@');
+    this.freezeEntitySpecifics('entityHide', '#');
+    this.freezeEntitySpecifics('entityDonthide', '@');
     this.freezeGenerics('hide');
     this.freezeGenerics('donthide');
 
@@ -402,129 +450,63 @@ FilterContainer.prototype.freeze = function() {
     this.duplicates = {};
     this.frozen = true;
 
-    //console.log('µBlock> adp-hide-filters.js: %d filters accepted', this.acceptedCount);
-    //console.log('µBlock> adp-hide-filters.js: %d filters processed', this.processedCount);
-    //console.log('µBlock> adp-hide-filters.js: coverage is %s%', (this.acceptedCount * 100 / this.processedCount).toFixed(1));
-    //console.log('µBlock> adp-hide-filters.js: unfiltered hide selectors:', this.hideUnfiltered);
-    //console.log('µBlock> adp-hide-filters.js: unfiltered dont hide selectors:', this.donthideUnfiltered);
-    //console.log('µBlock> adp-hide-filters.js: rejected selectors:', this.rejected);
-
-    // histogram('allFilters', this.filters);
+    //histogram('genericFilters', this.genericFilters);
+    //histogram('hostnameFilters', this.hostnameFilters);
 };
 
 /******************************************************************************/
 
-// Is
-// 3 unicode chars
-// |                 |                       |
-// 
-//  00000000 TTTTTTTT PP PP PP PP PP PP PP PP 
-//                  |                       |
-//                  |                       |
-//                  |                       |
-//                  |                       |
-//                  |                       |
-//                  |                       +-- ls 2-bit of 8 token chars
-//                  |
-//                  |
-//                  +-- filter type ('#'=hide '@'=unhide)
+// Two Unicode characters:
+// T0HHHHHHH HHHHHHHHH
+// |       |         | 
+// |       |         | 
+// |       |         | 
+// |       |         +-- bit 8-0 of FNV
+// |       |
+// |       +-- bit 15-9 of FNV
+// |
+// +-- filter type (0=hide 1=unhide)
 //
 
-var makeHash = function(type, token) {
+var makeHash = function(type, token, mask) {
     // Ref: Given a URL, returns a unique 4-character long hash string
     // Based on: FNV32a
     // http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-reference-source
     // The rest is custom, suited for µBlock.
-    var len = token.length;
-    var i2 = len >> 1;
-    var i4 = len >> 2;
-    var i8 = len >> 3;
-    var hint = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i4);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i4+i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i2);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i2+i8);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(i2+i4);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-        hint ^= token.charCodeAt(len-1);
-        hint += (hint<<1) + (hint<<4) + (hint<<7) + (hint<<8) + (hint<<24);
-        hint >>>= 0;
-    return String.fromCharCode(type.charCodeAt(0), hint & 0xFFFF);
+    var i1 = token.length;
+    var i2 = i1 >> 1;
+    var i4 = i1 >> 2;
+    var i8 = i1 >> 3;
+    var hval = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i1-1);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval &= mask;
+        if ( type === '@' ) {
+            hval |= 0x20000;
+        }
+    return String.fromCharCode(hval >>> 9, hval & 0x1FF);
 };
-
-/**
-Histogram for above hash generator:
-
-Histogram allFilters
-    Entries with only 3 filter(s) start at index 2706 (key = "#ꍵ")
-	Entries with only 2 filter(s) start at index 4349 (key = "#냶")
-	Entries with only 1 filter(s) start at index 6896 (key = "#퀛")
-	key="#싣" count=141
-	key="#隁" count=57
-	key="#Ꚇ" count=48
-	key="#" count=45
-	key="#캃" count=36
-	key="#력" count=33
-	key="#끻" count=30
-	key="#ｕ" count=26
-	key="#" count=25
-	key="#Ꮳ" count=24
-	key="#鵲" count=23
-	key="#䙇" count=20
-	key="#ḇ" count=19
-	key="#睅" count=19
-	key="#㔽" count=19
-	key="#뻧" count=18
-	key="#䕀" count=18
-	key="#퉫" count=17
-	key="#筙" count=17
-	key="#㮰" count=17
-	key="#鯛" count=16
-	key="#꛿" count=16
-	key="#꣱" count=16
-	key="#ü" count=16
-	key="#告" count=16
-	key="#╡" count=16
-	key="#㰁" count=16
-	key="#৹" count=16
-	key="#镳" count=15
-	key="#碇" count=15
-	key="#৾" count=15
-	key="#貿" count=15
-	key="#š" count=15
-	key="#" count=15
-	key="#" count=14
-	key="#ຏ" count=14
-	key="#낶" count=14
-	key="#瑻" count=14
-	key="#ৡ" count=14
-	key="#" count=13
-	key="#ᯋ" count=13
-	key="#⼒" count=13
-	key="#腫" count=13
-	key="#겚" count=13
-	key="#耏" count=13
-	key="#匋" count=13
-	key="#튦" count=13
-	key="#ﰹ" count=13
-	key="#㭴" count=13
-	key="#" count=13
-	Total buckets count: 12098
-*/
 
 /******************************************************************************/
 
@@ -534,7 +516,7 @@ FilterContainer.prototype.addPlainFilter = function(parsed) {
         return this.addPlainMoreFilter(parsed);
     }
     var f = new FilterPlain(parsed.suffix);
-    var hash = makeHash(parsed.filterType, parsed.suffix);
+    var hash = makeHash(parsed.filterType, parsed.suffix, this.genericHashMask);
     this.addFilterEntry(this.genericFilters, hash, f);
     this.acceptedCount += 1;
 };
@@ -547,39 +529,41 @@ FilterContainer.prototype.addPlainMoreFilter = function(parsed) {
         return;
     }
     var f = new FilterPlainMore(parsed.suffix);
-    var hash = makeHash(parsed.filterType, selectorSuffix);
+    var hash = makeHash(parsed.filterType, selectorSuffix, this.genericHashMask);
     this.addFilterEntry(this.genericFilters, hash, f);
     this.acceptedCount += 1;
 };
 
 /******************************************************************************/
 
-// rhill 2014-05-20: When a domain exists, just specify a generic selector.
-
 FilterContainer.prototype.addHostnameFilter = function(hostname, parsed) {
-    var f = new FilterHostname(parsed.suffix, hostname);
-    var hash = makeHash(parsed.filterType, µb.URI.domainFromHostname(hostname));
-    this.addFilterEntry(this.hostnameFilters, hash, f);
+    var entries = parsed.filterType === '#' ?
+        this.hostnameHide :
+        this.hostnameDonthide;
+    var entry = entries[hostname];
+    if ( entry === undefined ) {
+        entry = entries[hostname] = {};
+    }
+    entry[parsed.suffix] = true;
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.addEntityFilter = function(hostname, parsed) {
-    var f = new FilterEntity(parsed.suffix, hostname.slice(0, -2));
+    var entries = parsed.filterType === '#' ?
+        this.entityHide :
+        this.entityDonthide;
     var entity = hostname.slice(0, -2);
-    var pos = entity.lastIndexOf('.');
-    if ( pos !== -1 ) {
-        entity = entity.slice(pos + 1);
+    var entry = entries[entity];
+    if ( entry === undefined ) {
+        entry = entries[entity] = {};
     }
-    var hash = makeHash(parsed.filterType, entity);
-    this.addFilterEntry(this.entityFilters, hash, f);
+    entry[parsed.suffix] = true;
 };
 
 /******************************************************************************/
 
-// rhill 2014-05-20: When a domain exists, just specify a generic selector.
-
-FilterContainer.prototype.addPrefixedFilter = function(parsed) {
+FilterContainer.prototype.addSpecificFilter = function(parsed) {
     var hostnames = parsed.hostnames;
     var i = hostnames.length, hostname;
     while ( i-- ) {
@@ -622,9 +606,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     //quickProfiler.start('FilterContainer.retrieve()');
 
-    //filterTestCount = 0;
-    //bucketTestCount = 0;
-
     var r = {
         hide: [],
         donthide: [],
@@ -637,6 +618,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     };
 
     var hash, bucket;
+    var hashMask = this.genericHashMask;
     var hideSelectors = r.hide;
     var selectors = request.selectors;
     var i = selectors.length;
@@ -646,10 +628,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         if ( !selector ) {
             continue;
         }
-        hash = makeHash('#', selector);
+        hash = makeHash('#', selector, hashMask);
         if ( bucket = this.genericFilters[hash] ) {
-            //bucketTestCount += 1;
-            //filterTestCount += 1;
             bucket.retrieve(selector, hideSelectors);
         }
     }
@@ -677,9 +657,6 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
 
     //quickProfiler.start('FilterContainer.retrieve()');
 
-    //filterTestCount = 0;
-    //bucketTestCount = 0;
-
     var hostname = µb.URI.hostnameFromURI(request.locationURL);
     var domain = µb.URI.domainFromHostname(hostname);
     var pos = domain.indexOf('.');
@@ -691,22 +668,16 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     };
 
     var bucket;
-    var hash = makeHash('#', r.domain);
+    var hash = makeHash('#', r.domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
-        //bucketTestCount += 1;
-        //filterTestCount += 1;
         bucket.retrieve(hostname, r.hide);
     }
-    hash = makeHash('#', r.entity);
+    hash = makeHash('#', r.entity, this.domainHashMask);
     if ( bucket = this.entityFilters[hash] ) {
-        //bucketTestCount += 1;
-        //filterTestCount += 1;
         bucket.retrieve(pos === -1 ? domain : hostname.slice(0, pos - domain.length), r.hide);
     }
-    hash = makeHash('@', r.domain);
+    hash = makeHash('@', r.domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
-        //bucketTestCount += 1;
-        //filterTestCount += 1;
         bucket.retrieve(hostname, r.donthide);
     }
 

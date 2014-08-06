@@ -162,7 +162,7 @@ var domainCosmeticFilteringHandler = function(selectors) {
             );
             style.setAttribute(
                 'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5',
-                encodeURIComponent(selectors.donthide.join('\n'))
+                encodeURIComponent(selectors.donthide.join(','))
             );
         }
         var parent = document.head || document.documentElement;
