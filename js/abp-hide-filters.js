@@ -667,8 +667,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
         donthide: []
     };
 
-    var bucket;
-    var hash = makeHash('#', r.domain, this.domainHashMask);
+    var hash, bucket;
+    hash = makeHash('#', r.domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
         bucket.retrieve(hostname, r.hide);
     }

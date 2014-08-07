@@ -139,7 +139,7 @@ var messaging = (function(name){
         var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
         var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
         if ( exceptions ) {
-            exceptions = decodeURIComponent(exceptions).split(',');
+            exceptions = JSON.parse(exceptions);
             var i = exceptions.length;
             while ( i-- ) {
                 injectedSelectors[exceptions[i]] = true;
@@ -173,34 +173,27 @@ var messaging = (function(name){
         if ( !selectors ) {
             return;
         }
-        var styleText = [];
+        filterLowGenerics(selectors, 'donthide');
+        filterHighGenerics(selectors, 'donthide');
+        if ( selectors.donthide.length ) {
+            var i = selectors.donthide.length;
+            while ( i-- ) {
+                injectedSelectors[selectors.donthide[i]] = true;
+            }
+        }
         filterLowGenerics(selectors, 'hide');
         filterHighGenerics(selectors, 'hide');
         reduce(selectors.hide, injectedSelectors);
         if ( selectors.hide.length ) {
-            var hideStyleText = '{{hideSelectors}} {display:none !important;}'
-                .replace('{{hideSelectors}}', selectors.hide.join(','));
-            styleText.push(hideStyleText);
             applyCSS(selectors.hide, 'display', 'none');
-            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
-        }
-        filterLowGenerics(selectors, 'donthide');
-        filterHighGenerics(selectors, 'donthide');
-        reduce(selectors.donthide, injectedSelectors);
-        if ( selectors.donthide.length ) {
-            var dontHideStyleText = '{{donthideSelectors}} {display:initial !important;}'
-                .replace('{{donthideSelectors}}', selectors.donthide.join(','));
-            styleText.push(dontHideStyleText);
-            applyCSS(selectors.donthide, 'display', 'initial');
-            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.donthide.length, dontHideStyleText);
-        }
-        if ( styleText.length > 0 ) {
             var style = document.createElement('style');
-            style.appendChild(document.createTextNode(styleText.join('\n')));
+            var text = selectors.hide.join(',\n') + ' {display:none !important;}';
+            style.appendChild(document.createTextNode(text));
             var parent = document.body || document.documentElement;
             if ( parent ) {
                 parent.appendChild(style);
             }
+            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
         }
     };
 

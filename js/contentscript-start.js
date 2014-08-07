@@ -137,38 +137,43 @@ var domainCosmeticFilteringHandler = function(selectors) {
     if ( !selectors ) {
         return;
     }
-    var styleText = [];
-    if ( selectors.hide.length ) {
-        var hideStyleText = '{{hideSelectors}} {display:none !important;}'
-            .replace('{{hideSelectors}}', selectors.hide.join(','));
-        styleText.push(hideStyleText);
-        domainCosmeticFilteringApplyCSS(selectors.hide, 'display', 'none');
+    if ( selectors.hide.length === 0 && selectors.donthide.length === 0 ) {
+        return;
+    }
+    var style = document.createElement('style');
+    var donthide = selectors.donthide;
+    var hide = selectors.hide;
+    if ( donthide.length !== 0 ) {
+        donthide = donthide.length !== 1 ? donthide.join(',') : donthide[0];
+        donthide = donthide.split(',');
+        style.setAttribute('id', 'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
+        style.setAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5', JSON.stringify(donthide));
+        // https://github.com/gorhill/uBlock/issues/143
+        if ( hide.length !== 0 ) {
+            // I chose to use Array.indexOf() instead of converting the array to
+            // a map, then deleting whitelisted selectors, and then converting
+            // back the map into an array, because there are typically very few
+            // exception filters, if any.
+            hide = hide.length !== 1 ? hide.join(',') : hide[0];
+            hide = hide.split(',');
+            var i = donthide.length, j;
+            while ( i-- ) {
+                j = hide.indexOf(donthide[i]);
+                if ( j !== -1 ) {
+                    hide.splice(j, 1);
+                }
+            }
+        }
+    }
+    if ( hide.length !== 0 ) {
+        var text = hide.join(',');
+        domainCosmeticFilteringApplyCSS(text, 'display', 'none');
+        style.appendChild(document.createTextNode(text + ' {display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', selectors.domain, selectors.hide.length, hideStyleText);
     }
-    if ( selectors.donthide.length ) {
-        var dontHideStyleText = '{{donthideSelectors}} {display:initial !important;}'
-            .replace('{{donthideSelectors}}', selectors.donthide.join(','));
-        styleText.push(dontHideStyleText);
-        domainCosmeticFilteringApplyCSS(selectors.donthide, 'display', 'initial');
-        //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', selectors.domain, selectors.donthide.length, dontHideStyleText);
-    }
-    if ( styleText.length > 0 ) {
-        var style = document.createElement('style');
-        style.appendChild(document.createTextNode(styleText.join('\n')));
-        if ( selectors.donthide.length > 0 ) {
-            style.setAttribute(
-                'id',
-                'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5'
-            );
-            style.setAttribute(
-                'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5',
-                encodeURIComponent(selectors.donthide.join(','))
-            );
-        }
-        var parent = document.head || document.documentElement;
-        if ( parent ) {
-            parent.appendChild(style);
-        }
+    var parent = document.head || document.documentElement;
+    if ( parent ) {
+        parent.appendChild(style);
     }
 };
 
