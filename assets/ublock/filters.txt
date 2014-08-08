@@ -109,3 +109,7 @@ theglobeandmail.com##.widget_ad
 # https://github.com/gorhill/uBlock/issues/141
 # To counter `tags.tiqcdn.com` in  MVPS HOSTS
 @@||tags.tiqcdn.com^$domain=cnet.com
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-51625306
+# To counter `extras.mnginteractive.com` in hpHosts
+@@||extras.mnginteractive.com^$domain=mercurynews.com,denverpost.com
