@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Mon, 04 Aug 2014 14:24:58 GMT
-# entries:        2483
+# entries:        2481
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -1673,7 +1673,6 @@
 127.0.0.1 justwebads.com
 127.0.0.1 k.iinfo.cz
 127.0.0.1 kanoodle.com
-127.0.0.1 keewurd.com
 127.0.0.1 keymedia.hu
 127.0.0.1 kissmetrics.com
 127.0.0.1 kliks.nl
@@ -1875,6 +1874,7 @@
 127.0.0.1 olivebrandresponse.com
 127.0.0.1 omniture.com
 127.0.0.1 onclickads.com
+127.0.0.1 onclickads.net
 127.0.0.1 oneandonlynetwork.com
 127.0.0.1 onenetworkdirect.com
 127.0.0.1 onestat.com
@@ -2142,7 +2142,6 @@
 127.0.0.1 sidebar.angelfire.com
 127.0.0.1 sinoa.com
 127.0.0.1 sitebrand.geeks.com
-127.0.0.1 sitemerkezi.net
 127.0.0.1 sitemeter.com
 127.0.0.1 sitestat.com
 127.0.0.1 sixsigmatraffic.com
@@ -2391,7 +2390,6 @@
 127.0.0.1 vs.tucows.com
 127.0.0.1 wads.webteh.com
 127.0.0.1 warlog.info
-127.0.0.1 warlog.ru
 127.0.0.1 wdads.sx.atl.publicus.com
 127.0.0.1 web-stat.com
 127.0.0.1 web.informer.com

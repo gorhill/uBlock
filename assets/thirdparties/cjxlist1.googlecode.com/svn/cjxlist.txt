@@ -1,14 +1,16 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140805
-! Version: 20140805
+! List version 20140809
+! Version: 20140809
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
 &ad_type=
 &ad_url=
 &ad_zones=
+&adnum=
 &adsourceid=
+&adstype=
 &adurl=
 &showad=
 -ad1.
@@ -85,9 +87,12 @@
 /ad7.
 /ad728.
 /ad8.
+/ad_300.
+/ad_728.
 /ad_banner.
 /ad_banner/*
 /ad_count.
+/ad_display.
 /ad_files/*
 /ad_header.
 /ad_iframe.
@@ -117,6 +122,7 @@
 /adclick.
 /adclient/*
 /adcode.
+/adcode/*
 /adcount.
 /adfile/*
 /adfiles/*
@@ -173,6 +179,7 @@
 /ads/js/*
 /ads/spacer.
 /ads/www/*
+/ads01.
 /ads1.
 /ads2.
 /ads2/*
@@ -428,6 +435,7 @@ _ad_choices_
 _ad_close.
 _ad_iframe.
 _ad_images/
+_ad_right.
 _ad_vertical.
 _adbanner.
 _ads.js?
@@ -574,6 +582,7 @@ _960_90.
 ###adPosition5
 ###adPosition7
 ###adPosition9
+###adSense
 ###adSpace
 ###adTextLink
 ###adTop
@@ -678,6 +687,7 @@ _960_90.
 ###adverti
 ###advertise
 ###advertising2
+###advframe
 ###advt
 ###article-ad
 ###articleAd
@@ -703,6 +713,7 @@ _960_90.
 ###dict-adv
 ###divAd
 ###divAdBox
+###divAds
 ###flashad
 ###footad
 ###footer-ads
@@ -710,10 +721,6 @@ _960_90.
 ###footer_ads
 ###fpad2
 ###google_ads
-###google_ads_frame1
-###google_ads_frame2
-###google_ads_frame3
-###google_ads_frame4
 ###googlead
 ###hd_ad
 ###head-ad
@@ -802,6 +809,7 @@ _960_90.
 ##.ad-1
 ##.ad-160x600
 ##.ad-2
+##.ad-200
 ##.ad-300
 ##.ad-300x100
 ##.ad-300x250
@@ -815,6 +823,7 @@ _960_90.
 ##.ad-bar
 ##.ad-block
 ##.ad-bottom
+##.ad-box2
 ##.ad-btn
 ##.ad-cell
 ##.ad-center
@@ -852,6 +861,8 @@ _960_90.
 ##.ad100
 ##.ad1000
 ##.ad140
+##.ad18
+##.ad19
 ##.ad200
 ##.ad230
 ##.ad240
@@ -887,6 +898,7 @@ _960_90.
 ##.adLink
 ##.adNone
 ##.adRight
+##.adServer
 ##.adSpace
 ##.adTab
 ##.adText
@@ -1023,8 +1035,10 @@ _960_90.
 ##.adv_right
 ##.adver
 ##.advert_txt
+##.advertiser
 ##.advertisingTable
 ##.advtext
+##.advtop
 ##.afs_ads
 ##.after_ad
 ##.aol-twist-flyout-ad
@@ -1045,6 +1059,7 @@ _960_90.
 ##.banner_300x250
 ##.banner_728x90
 ##.banner_ad
+##.banner_ads
 ##.bannerad
 ##.bigAd
 ##.big_ad
@@ -1063,6 +1078,7 @@ _960_90.
 ##.bt_ad
 ##.centerAd
 ##.center_ad
+##.center_ads
 ##.centerad
 ##.cnnSearchSponsorBox
 ##.cnn_adbygbin
@@ -1079,6 +1095,7 @@ _960_90.
 ##.contentad
 ##.cp_ad
 ##.ct_ad
+##.divAd
 ##.downloadad
 ##.featured_ad
 ##.first_ad
@@ -1249,6 +1266,7 @@ tgfcer.com#@##content_adv
 discuss.com.hk,uwants.com#@##featuread
 theberrics.com,w3schools.com,x17online.com#@#.rightad
 yahoo.com#@#.type_ads_default
+||101m3.com^$third-party
 ||2mdn.net^$~object-subrequest,third-party
 ||3393.com^$third-party
 ||365sbaffiliates.com^$third-party
@@ -1468,9 +1486,11 @@ facebook.com##div[class="ego_column pagelet _y92"]
 facebook.com##div[class="ego_column pagelet"]
 ehow.com##div[data-module="radlinks"]
 broadbandreports.com,dslreports.com##td[style="border-right: 1px #CCCCCC solid;"]
+@@||ad4.liverail.com/crossdomain.xml$object-subrequest
 @@||adap.tv/redir/javascript/vpaid.js
 @@||adblockplus.org^$elemhide,domain=easylist.adblockplus.org|reports.adblockplus.org
 @@||adguard.com^$~third-party
+@@||adtech.de/crossdomain.xml$object-subrequest,domain=~zattoo.com
 @@||banners.wunderground.com^$image
 @@||bing.com/images/async?q=$xmlhttprequest
 @@||deviantart.net/fs*/20*_by_$image,domain=deviantart.com

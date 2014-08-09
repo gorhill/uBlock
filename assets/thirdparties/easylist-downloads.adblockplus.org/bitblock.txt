@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: B8SbREQBba8n0TtRdltXXg
-! Version: 201408060520
-! Last modified: 06 Aug 2014 05:20 UTC
+! Checksum: NZMxkwUX+RB1o5ftY5OSkg
+! Version: 201408091430
+! Last modified: 09 Aug 2014 14:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -152,6 +152,7 @@ _vkontakte.png
 -twitter-white-
 -twitter.js
 -twitter1.
+-twitter2.
 -twitterbirdsprite.
 -youtube-24x24.
 -youtube-btn.
@@ -236,6 +237,7 @@ _vkontakte.png
 /button-twitter.
 /Button-YouTube.
 /button/follow-
+/button1-share.
 /button_custom_twitter.
 /button_facebook.
 /button_pinterest.
@@ -380,6 +382,7 @@ _vkontakte.png
 /facebookicon.$~object-subrequest
 /facebookIcon32.
 /facebookicon_
+/FacebookiconSMALL_
 /FacebookLike?
 /facebooklike_
 /facebookmall.
@@ -553,6 +556,7 @@ _vkontakte.png
 /google_32x
 /google_64.
 /google_icon.
+/google_plus-
 /google_plus.png
 /google_plus_icon.
 /google_plus_icon_
@@ -568,6 +572,7 @@ _vkontakte.png
 /googleplus_14.
 /googleplus_32.
 /googleplus_42.
+/googleplus_footer.
 /googleplus_icon.
 /googlePlusBtn.
 /googleplusicon.
@@ -997,6 +1002,7 @@ _vkontakte.png
 /outsidesocialsprite.
 /pics/*facebook.png
 /pics/*twitter.png
+/pin-it.gif
 /pin_it_button.
 /pinit-btn.
 /pinit-button.
@@ -1285,7 +1291,7 @@ _vkontakte.png
 /social-g+-
 /social-google.
 /social-header.
-/social-icon-
+/social-icon-$~font
 /social-icon/*
 /social-icons-
 /social-icons.
@@ -1578,6 +1584,7 @@ _vkontakte.png
 /tw_follow.
 /tw_share_
 /tw_small.
+/tweet-blender/*$~stylesheet
 /tweet-button.
 /tweet.png
 /tweet_button.
@@ -1670,6 +1677,7 @@ _vkontakte.png
 /twitter_bubble_
 /Twitter_button
 /twitter_follow.
+/twitter_footer.
 /twitter_ico2.
 /twitter_icon.
 /twitter_icon2.
@@ -1990,6 +1998,7 @@ _youtube_small.
 ###aFbLikeBottom
 ###aa_header_shares
 ###about-edition-social
+###acx-social-icons-widget-2
 ###addThis
 ###addshare
 ###addsharetop
@@ -2301,6 +2310,7 @@ _youtube_small.
 ###follow-icons
 ###follow-links
 ###follow-me
+###follow-social-items
 ###follow-tools
 ###follow-twitter
 ###follow-us
@@ -2452,6 +2462,7 @@ _youtube_small.
 ###jsEditor_share
 ###large_share_wrapper
 ###layout-social
+###leftShare
 ###leftShareTools
 ###leftSideSocialBox
 ###leftSocialBlock
@@ -2461,6 +2472,7 @@ _youtube_small.
 ###like-bar-google
 ###like-bar-save
 ###like-bar-twitter
+###like-box
 ###likeThisPost
 ###likeThisPostProminent
 ###likeTweetPlus
@@ -2935,6 +2947,7 @@ _youtube_small.
 ###social-networking-images
 ###social-networks
 ###social-networks-footer-block
+###social-networks-widget
 ###social-new-widget
 ###social-photo
 ###social-pinterest
@@ -3161,6 +3174,7 @@ _youtube_small.
 ###socialmediabar
 ###socialmediabuttons
 ###socialmediacrap
+###socialmediasidebar
 ###socialmobile
 ###socialnav
 ###socialnet2
@@ -3258,6 +3272,7 @@ _youtube_small.
 ###tweet_it_bro
 ###tweet_share
 ###tweetmemeAndFacebook
+###tweetroll
 ###twit-feed
 ###twitSocial
 ###twitt-button
@@ -3515,6 +3530,7 @@ _youtube_small.
 ##.article-social-bookmark
 ##.article-social-buttons
 ##.article-social-tools
+##.article-socials
 ##.article-twitter-experiment
 ##.articleShare
 ##.articleSocialBar
@@ -4071,6 +4087,9 @@ _youtube_small.
 ##.followus-footer
 ##.followus-links
 ##.fondo_social
+##.fontawesome-facebook
+##.fontawesome-google-plus
+##.fontawesome-twitter
 ##.foot-social
 ##.foot_Facebook
 ##.foot_GooglePlus
@@ -4110,6 +4129,7 @@ _youtube_small.
 ##.footer_share
 ##.footer_social
 ##.footer_social_bar
+##.footer_social_button
 ##.footer_social_facebook
 ##.footer_social_gplus
 ##.footer_social_icons
@@ -4300,8 +4320,11 @@ _youtube_small.
 ##.icn-twit
 ##.icn-twitter
 ##.icn-youtube
+##.icn_facebook
 ##.icn_fcbk
+##.icn_twitter
 ##.icn_twtr
+##.icn_youtube
 ##.ico-facebook
 ##.ico-facebook-1
 ##.ico-facebook-circle
@@ -4486,6 +4509,8 @@ _youtube_small.
 ##.js-twitter-share
 ##.jwdock[style^="display: block;"]
 ##.jwsharethis
+##.ksm-post-facebook
+##.ksm-post-twitter
 ##.landing-share-right-widget
 ##.large-share-bar
 ##.large-share-bar-container
@@ -4541,11 +4566,16 @@ _youtube_small.
 ##.m-gplus
 ##.m-header__social
 ##.m-header__social-button
+##.m-navbar--menu-facebook
+##.m-navbar--menu-google-plus
+##.m-navbar--menu-linkedin
+##.m-navbar--menu-twitter
 ##.m-share
 ##.m-share-buttons__inner-wrapper
 ##.m-share_selection_contextual
 ##.m-share_site
 ##.m-site-social-networks
+##.m-social--no-count
 ##.m-twit
 ##.m3Share
 ##.mag_social
@@ -4607,7 +4637,10 @@ _youtube_small.
 ##.multiplesocialwidget-wrapper
 ##.mytweet
 ##.myyahooHeadButton
+##.n-facebook
+##.n-pinterest
 ##.n-shares
+##.n-twitter
 ##.nSF_recentShares
 ##.native-share-wrapper
 ##.nav--stay-connected
@@ -4936,6 +4969,7 @@ _youtube_small.
 ##.shareMoreBtn
 ##.shareNarrow
 ##.shareNav
+##.sharePad
 ##.sharePage
 ##.sharePanel
 ##.sharePinterest
@@ -5194,6 +5228,7 @@ _youtube_small.
 ##.soc-fb
 ##.soc-gplus
 ##.soc-icons-bar
+##.soc-share-cont
 ##.soc-tw
 ##.soc-twitter
 ##.soc-widget
@@ -5860,6 +5895,7 @@ _youtube_small.
 ##.twitter-box
 ##.twitter-btn
 ##.twitter-bubble
+##.twitter-button
 ##.twitter-button-link
 ##.twitter-circle
 ##.twitter-count-single
@@ -6483,8 +6519,20 @@ _youtube_small.
 ||facebook.com/widgets/fan.php?$third-party
 ||facebook.com/widgets/like.php?$third-party
 ||facebook.com/widgets/recommendations.php?$third-party
+||facebook.com^*/plugins/activity.php?$third-party
+||facebook.com^*/plugins/facepile.php?$third-party
+||facebook.com^*/plugins/fan.php?$third-party
+||facebook.com^*/plugins/follow.php?$third-party
+||facebook.com^*/plugins/follow?$third-party
 ||facebook.com^*/plugins/like.php?$third-party
 ||facebook.com^*/plugins/like_box.php?$third-party
+||facebook.com^*/plugins/likebox.php?$third-party
+||facebook.com^*/plugins/likebox/$third-party
+||facebook.com^*/plugins/recommendations.php?$third-party
+||facebook.com^*/plugins/recommendations_bar.php?$third-party
+||facebook.com^*/plugins/send.php?$third-party
+||facebook.com^*/plugins/subscribe.php$third-party
+||facebook.com^*/plugins/subscribe?$third-party
 ||fanconverter.wetpaint.me^$third-party
 ||feedly.com/img/follows/$third-party
 ||filamentapp-assets.s3.amazonaws.com^$third-party
@@ -6625,6 +6673,7 @@ _youtube_small.
 ||glavcom.ua/fbtest.html
 ||goha.ru/social/
 ||inkoutbreak.com/bumper/
+||km.ru^*/km_shares/
 ||megaweb.su/softblok/
 ||msdn.com/CustomWidgets/SocialMediaSharingUC/
 ||nifiga-sebe.ru/znachki/
@@ -6720,6 +6769,7 @@ macradar.ru##.essb_links
 navitel.su##.extra_append:last-child
 evtifeev.com##.fones
 mobiledevice.ru##.icons_bar_placeholder
+km.ru##.km-shares
 echomsk.spb.ru##.like_wrp
 tjournal.ru##.likes
 aif.ru##.links + table[align="center"]
@@ -7006,6 +7056,7 @@ _userbar_$image
 /navicon_feeds.
 /newsgator.gif
 /newsletter-icon_
+/newslettericon2.
 /no-right-click-images-plugin/*$script
 /norightclick.
 /nrelate-flyout/*$script
@@ -7160,6 +7211,7 @@ _social_rss.
 ###bbccookies
 ###bing-module-container
 ###bing_header_container
+###bktotopbtn
 ###block-cookie_policy-0
 ###block-dfp-subscriptions-block
 ###block-simple-subscription-subscribe
@@ -7331,6 +7383,7 @@ _social_rss.
 ###email-marketing-widget
 ###email-news-subscribe
 ###emailSignupOverlay
+###email_sub_popover
 ###email_to_a_friend_button
 ###emailsubscribe
 ###embtv-static-ribbon-bottom
@@ -7363,6 +7416,7 @@ _social_rss.
 ###g-outbrain
 ###global-cookie-message
 ###gmm-panel-promo
+###go-to-top
 ###go-top
 ###have-a-cookie
 ###hi-cookie-box
@@ -7378,6 +7432,7 @@ _social_rss.
 ###janrain-botcap
 ###jbb_widget_customizable
 ###jquery-cookie-law-script
+###jump-to-top
 ###kf_toolbar
 ###lean_overlay
 ###live-intent-module
@@ -7386,12 +7441,14 @@ _social_rss.
 ###mbt_bar
 ###mc_embed_signup
 ###meebo-iframe
+###ml-newsletterform
 ###mmmmm-cookies
 ###modal-email_loyal_overlay_hopup
 ###moduleArticleTools
 ###moduleArticleToolsContainer
 ###moduleNewsletter
 ###more_sharing
+###move-to-top
 ###network_floaty_icons
 ###newsLetterSignup
 ###newsletter-ad
@@ -7471,6 +7528,7 @@ _social_rss.
 ###persistNotif
 ###pl_cookies
 ###pmocntr2
+###pnlFooterNewsletterSignup
 ###polityka-cookies
 ###politykacooki
 ###popup-cookies
@@ -7699,11 +7757,13 @@ _social_rss.
 ##.follow-subscribe
 ##.followEmail
 ##.followRSS
+##.fontawesome-rss
 ##.footer-cookies-policy
 ##.footer-follow
 ##.footerButtonRSS
 ##.footerRSS
 ##.footerTwitter
+##.footer_form_newsletter
 ##.future-cookie-bar
 ##.fyre-notifier-container
 ##.globalcookiepolicycontainer
@@ -7770,6 +7830,7 @@ _social_rss.
 ##.newsletter-widget
 ##.newsletterBox
 ##.newsletterSignup
+##.newsletterSignupBox
 ##.newsletter_bar
 ##.newsletter_box
 ##.newsletter_callout_box
@@ -7779,6 +7840,7 @@ _social_rss.
 ##.newsletter_signupbox
 ##.newsletter_social
 ##.newsletter_widget
+##.newsletterbg
 ##.newsletterbox
 ##.newslettersignup
 ##.newslettersrssbox
@@ -7812,6 +7874,7 @@ _social_rss.
 ##.pin-it-btn-wrapper
 ##.polityka-cookie
 ##.popup-cookie
+##.prevNextPost
 ##.print-page
 ##.publishToStatus
 ##.qanda-button-launch
@@ -7885,6 +7948,7 @@ _social_rss.
 ##.taboola-sidebar-container
 ##.taboola-vertical
 ##.taboola-wrapper
+##.taboolaDiv
 ##.targetAd
 ##.td-scroll-up
 ##.to-top
@@ -7971,6 +8035,7 @@ _social_rss.
 ##img[alt="RSS 2.0"]
 ##img[alt="RSS Feed Readers"]
 ##img[alt="RSS Feeds"]
+##img[alt="Scroll to top"]
 ##img[alt="Site Feed"]
 ##img[alt="Subscribe by email"]
 ##img[alt="Subscribe to RSS Feed"]
@@ -7983,6 +8048,8 @@ _social_rss.
 ##img[alt="Watch Us on You Tube"]
 ##img[alt="Watch us on YouTube"]
 ##img[title="Subscribe to Email Updates"]
+! AOL top Bar
+##div[id$="-top-message-bar"][style="top: 0px; display: block;"]
 !
 ! - Скрипты и фремы с посторонних сайтов --------------------------------------
 ! *** bitblock/annoyance_thirdparty.txt ***
@@ -8305,6 +8372,7 @@ _social_rss.
 ||nrelate.com^$third-party
 ||odb.outbrain.com^$third-party
 ||parse.ly^$third-party
+||parsely.com^$third-party
 ||pinddeals.com^$third-party
 ||plaxo.com^$third-party
 ||plugin.me2day.net^$third-party
@@ -8332,6 +8400,7 @@ _social_rss.
 ||senzari.com^$third-party
 ||services.webklipper.com/geoip/$third-party
 ||sharenice.org^$third-party
+||sheknows.com/widget/$third-party
 ||skysa.com^$third-party
 ||slashdot.org^$third-party
 ||snapwidget.com^$third-party
@@ -8426,6 +8495,7 @@ _social_rss.
 ||levonevski.net^$object
 ||mailinator.com^*/clouds-
 ||metabar.ru^$third-party
+||mozilla-russia.org/images/$object
 ||muz.ru/content/banners/
 ||mygold.pp.ua^$third-party
 ||myradio.ua/img/button/
@@ -8510,6 +8580,7 @@ lkforum.ru##.head
 superhimik.com##.headerbar
 europaplus.ru##.heading
 ubr.ua##.job-block
+km.ru##.km_ref_adv_popup
 lib.rus.ec##.lb-pay__overlay
 vsekino.su##.lenta
 21region.org##.logo
@@ -8530,6 +8601,7 @@ dfiles.ru##.subscribe_offer_banner
 efxi.ru##.titleblock
 izvestia.ru##.topline
 dota2.ru##.vadv-main-text
+dota2.ru##.vadv-wrap
 itc.ua##.verticalPageNav
 experts-exchange.com##.viewQuestionBuffer
 xboxland.net##.ya-partner__list
@@ -8687,7 +8759,7 @@ magine.com#@#.fa-facebook
 bandsintown.com#@#.fa-facebook-square
 magine.com#@#.fa-google-plus
 magine.com#@#.fa-twitter
-ebuddy.com,geekli.st,plug.dj#@#.facebook-button
+bitbucket.org,ebuddy.com,geekli.st,plug.dj#@#.facebook-button
 ~facebook.com##.facebook-widget
 ~mozillamessaging.com,~pinterest.com##.facebook.icon
 watchever.de#@#.facebookBtn
@@ -8728,6 +8800,7 @@ llbean.com#@#.pinit-overlay
 hemmings.com,hollywoodreporter.com#@#.pinterest-button
 ~pinterest.com##.pinterest-share-button
 google.com#@#.plusone
+privatecore.com#@#.post-fb
 ~facebook.com##.post-fb-like
 vk.com#@#.post_share
 ~reddit.com##.reddit_button
@@ -8779,7 +8852,7 @@ wuala.com#@#.socialboxp
 heise.de#@#.socialmedia
 chaturbate.com#@#.socials
 stumbleupon.com#@#.stumble-button
-~geekli.st,~plug.dj##.twitter-button
+bitbucket.org,geekli.st,plug.dj#@#.twitter-button
 twitter.com#@#.twitter-hashtag
 ~electnext.com##.twitter-share
 boingboing.net#@#.twitter-share-button
@@ -8847,6 +8920,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||cloudfront.net/images/social/$domain=crowdin.net
 @@||cloudfront.net/js/FB.Share*.js$domain=9gag.com
 @@||cloudfront.net/share/js/$domain=pokemon-gl.com
+@@||cloudfront.net^*/facebook.svg$domain=bitbucket.org
 @@||cloudfront.net^*/social-buttons.png$domain=socialreader.com
 @@||clubs.nfl.com/nfl-assets/js/social-buttons.js
 @@||comcastnets.net/thyme/img/button-login-facebook.png$domain=eonline.com
@@ -8957,6 +9031,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||slacker.com^*/twitter-top-sprite.png
 @@||slidesharecdn.com/images/share_icon_transparent.png$domain=slideshare.net
 @@||slkimg.com^*/facebook-login-icon.png$domain=slacker.com
+@@||socialmedia.by^$~third-party
 @@||softicons.com/download/$image
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it

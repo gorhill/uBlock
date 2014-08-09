@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ThS0PEGPYRAluUK+NzkArg
-! Version: 201408060521
+! Checksum: UAravCbfuGj+lJC8iCiRGg
+! Version: 201408091431
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 06 Aug 2014 05:21 UTC
+! Last modified: 09 Aug 2014 14:31 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3696,7 +3696,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||sat1.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||sixx.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
-||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de
 ||videoplaza.tv^$domain=www.rtl.de|www.vox.de
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block_popup.txt ***
 &t202kw=$popup,domain=lustich.de|pcaction.de
@@ -7457,7 +7457,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net)\/)/$object-subrequest,third-party,domain=golem.de
 @@/^https?\:\/\/(?!(ad\.doubleclick\.net|www\.google-analytics\.com)\/)/$object-subrequest,third-party,domain=pcgames.de
 @@/^https?\:\/\/(?!(cdn\.krxd\.net|ad\.yieldlab\.net|ad\.de\.doubleclick\.net|de\.ioam\.de|dis\.eu\.criteo\.com|ip\.nuggad\.net|pagead2\.googlesyndication\.com|pq-direct\.revsci\.net|qs\.ioam\.de|static\.plista\.com|tracking\.netzathleten-media\.de|www\.google-analytics\.com|www\.googleadservices\.com|apis\.google\.com|connect\.facebook\.net|script\.ioam\.de)\/)/$image,script,third-party,domain=lustich.de
-@@/^https?\:\/\/(?!(de-uim\.videoplaza\.tv)\/)/$object-subrequest,third-party,domain=gmx.net|web.de
+@@/^https?\:\/\/(?!(de-uim\.videoplaza\.tv|adclient\.uimserv\.net)\/)/$object-subrequest,third-party,domain=gmx.net|web.de
 @@/^https?\:\/\/(?!(im\.banner\.t-online\.de)\/)/$object-subrequest,third-party,domain=t-online.de
 @@/^https?\:\/\/(?!(qs\.ivwbox\.de|qs\.ioam.de|platform\.twitter\.com|connect\.facebook\.net|de\.ioam\.de|pubads\.g\.doubleclick\.net|stats\.wordpress\.com|www\.google-analytics\.com|www\.googletagservices\.com|apis\.google\.com|script\.ioam\.de)\/)/$script,third-party,domain=gamona.de
 @@/^https?\:\/\/(?!(spiegel\.ivwbox\.de|c\.spiegel\.de|adserv\.quality-channel\.de|video\.spiegel\.de)\/)/$object-subrequest,third-party,domain=spiegel.tv
@@ -7489,6 +7489,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||ad4.liverail.com/?LR_PUBLISHER_ID=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ad4mat.de/ads/js/adtrust-min.php?*&w=468&h=60&$script,domain=mufa.de
 @@||adclient.uimserv.net/crossdomain.xml$object-subrequest,domain=gmx.net|web.de
+@@||adclient.uimserv.net/js.ng/|$object-subrequest,domain=gmx.net|web.de
 @@||adclient.uimserv.net/|$object-subrequest,domain=gmx.net|web.de
 @@||adfarm1.adition.com/banner?co=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||adfarm1.adition.com/banner?sid=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
@@ -7751,8 +7752,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||vereinslupe.de^$elemhide
 @@||video.spiegel.de/flash/*_iphone.mp4$domain=spiegel.tv
 @@||videogameszone.de^$image
-@@||videoplaza.tv/proxy/distributor/v2?tt=p&rt=vast_2.0&s=validation&t=standard$object-subrequest,domain=gmx.net|web.de
-@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de
 @@||vorsorgebote.de^$elemhide
 @@||web.de^*.html$elemhide
 @@||werbeblocker-erkennen.webconrad.com/adframe.js

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 1ET0MG0I5sX/KBoUZ/r6Qg
-! Version: 201408060521
+! Checksum: CLog2CLQ0oP0+A3VbBvXUg
+! Version: 201408091431
 ! Title: EasyPrivacy
-! Last modified: 06 Aug 2014 05:21 UTC
+! Last modified: 09 Aug 2014 14:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2166,6 +2166,7 @@ _imp_logging?
 _impressions.gif?
 _landingLog/
 _logimpressions.
+_metricsTagging.
 _nedstat.js
 _nielsen.js
 _NielsenNetRatings.
@@ -5121,6 +5122,7 @@ http://utm.
 ||metrics.wikinvest.com^
 ||metrixlablw.customers.luna.net^
 ||metro-trending-*.amazonaws.com^$third-party
+||mezzobit.com/tag-log?$third-party
 ||mint.good.is^
 ||mitel.marketbright.com^
 ||mkcms.com/stats.js
@@ -6518,6 +6520,7 @@ http://utm.
 ||chkpt.zdnet.com^
 ||christianpost.com/count.php?
 ||christianpost.com/counter/
+||christiantoday.com/counter/
 ||chron.com/javascript/cider/
 ||chud.com/community/p/
 ||ciao.co.uk/flextag/
@@ -7742,7 +7745,6 @@ http://utm.
 ||total.shanghaidaily.com^
 ||totalporn.com/videos/tracking/?url=
 ||tottenhamhotspur.com/media/javascript/google/
-||townnews.com/*/tracker.js
 ||toyota.com/analytics/
 ||tqn.com/px/?
 ||tracelog.www.alibaba.com^
@@ -8327,6 +8329,7 @@ http://utm.
 ||trackerstatistik.init-ag.de^
 ||tracking.autoscout24.com^
 ||tracking.hrs.de^
+||tracking.kurier.at^
 ||tracking.mobile.de^
 ||tracking.netbank.de^
 ||tracking.oe24.at^
@@ -8889,7 +8892,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|tv3play.se|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|tv3play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
@@ -8930,6 +8933,7 @@ http://utm.
 @@||l.yimg.com/g/combo/*/comscore.$script
 @@||latimes.com/hive/javascripts/loggingService.js
 @@||lenovo.com^*/GoogleAnalytics.js
+@@||leretourdelautruche.com/map/nuke/heatmap.js
 @@||lesacasino.com^*/EMERPEventCollector.$script,subdocument
 @@||lininteractive.com/chartbeat/$~third-party
 @@||link.theplatform.com/*/tracker.log?

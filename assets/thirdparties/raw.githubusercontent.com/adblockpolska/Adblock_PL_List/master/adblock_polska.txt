@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 04 August 2014
+! Last modified: 07 August 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -168,10 +168,12 @@ _res/banner/glowna/
 ##[src^="reklama"]
 
 ! * - Whitelist - * !
+@@/advertisingmodule.$domain=tvn.pl
 @@/player/vidAS=pre_roll
 @@/vod/reklamy/WIZERUNEK.mp4
 @@||admin.brightcove.com^$object-subrequest,domain=ekstraklasa.tv|tvn24.pl|tvn24bis.pl
 @@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
+@@||atmcdn.pl/*Adserver/$domain=tvn.pl
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
 @@||ipla.$domain=ipla.tv
@@ -183,8 +185,10 @@ _res/banner/glowna/
 @@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
+@@||rtax.criteo.com$domain=tvn.pl
 @@||smartadserver.com$domain=get.x-link.pl
 @@||tvn.adocean.pl/files/js/ado.js
+@@||tvn.adocean.pl$domain=tvn.pl
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
 
 ! * - 1st Party Blocking Rules & Ad-servers - * !

@@ -439,6 +439,8 @@ jeuxactu.com###infoBlock
 @@||straight-world.de/js/ads.js$script
 ! clubedohardware.com.br
 @@||ads.clubedohardware.com.br/www/delivery/spcjs.php$script
+! hqq.tv
+!||c.hqq.tv/js/adb/adb.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

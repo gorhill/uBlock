@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: vZjl1Jr5DKEmSS3SBzeZvA
-! Version: 201408060520
+! Checksum: Vn/tBgRHfCJe74hkKRK/ug
+! Version: 201408091430
 ! Title: EasyList without element hiding rules
-! Last modified: 06 Aug 2014 05:20 UTC
+! Last modified: 09 Aug 2014 14:30 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -319,6 +319,7 @@
 .asp?coad
 .aspx?ad=
 .aspx?adid=
+.at/ads/
 .au/ads/
 .banner%20ad.
 .bbn.by/
@@ -571,6 +572,7 @@
 /about-these-ads.
 /absolutebm.aspx?
 /acc_random=
+/ad%20banners/*
 /ad%20images/*
 /ad-125.
 /ad-300topleft.
@@ -4230,6 +4232,7 @@
 /page/ad/*
 /pagead/ads?
 /pagead/gen_
+/pagead46.
 /pagead?
 /pageadimg/*
 /pageads/*
@@ -4251,6 +4254,7 @@
 /park_html_functions_general.js
 /partner_ads/*
 /partner_ads_
+/partnerad.
 /partnerads/*
 /partnerads_
 /partneradwidget.
@@ -5812,12 +5816,15 @@ takeover_banner_
 /adb_detector.
 /adblock-blocker/*
 /adblock_detector.
+/adblock_detector2.
 /adblockdetect.
 /adblockdetection.
 /anti-adblock/*$~stylesheet
 /anti_ab.
 /antiadblock.
 /blockblock/blockblock.jquery.js
+/FuckAdBlock-$script
+/fuckadblock.
 /no-adblock/*
 /wp-content/plugins/anti-block/*
 /wp-content/plugins/anti_ad_blocker/*
@@ -7063,6 +7070,7 @@ _popunder+$popup
 ||bannercde.com^$third-party
 ||bannerconnect.com^$third-party
 ||bannerconnect.net^$third-party
+||bannerdealer.com^$third-party
 ||bannerexchange.com.au^$third-party
 ||bannerflow.com^$third-party
 ||bannerflux.com^$third-party
@@ -7910,6 +7918,7 @@ _popunder+$popup
 ||inttrax.com^$third-party
 ||intuneads.com^$third-party
 ||inuvo.com^$third-party
+||inuxu.co.in^$third-party
 ||investingchannel.com^$third-party
 ||inviziads.com^$third-party
 ||ipredictive.com^$third-party
@@ -9154,12 +9163,14 @@ _popunder+$popup
 ||zxxds.net^$third-party
 ||zypenetwork.com^$third-party
 ! Mobile
+||adbuddiz.com^$third-party
 ||adiquity.com^$third-party
 ||admarvel.com^$third-party
 ||admob.com^$third-party
 ||adwhirl.com^$third-party
 ||adwired.mobi^$third-party
 ||adzmob.com^$third-party
+||airpush.com^$third-party
 ||amobee.com^$third-party
 ||appads.com^$third-party
 ||buxx.mobi^$third-party
@@ -9178,6 +9189,7 @@ _popunder+$popup
 ||mojiva.com^$third-party
 ||sascdn.com^$third-party
 ||smaato.net^$third-party
+||startappexchange.com^$third-party
 ||tapjoyads.com^$third-party
 ||wapdollar.in^$third-party
 ||waptrick.com^$third-party
@@ -10415,6 +10427,7 @@ _popunder+$popup
 ||cgmlab.com/tools/geotarget/custombanner.js
 ||chacsystems.com/gk_add.html$third-party
 ||challies.com^*/wtsbooks5.png$third-party
+||charlestondealstoday.com/aux/ux/_component/ss_dealrail/$subdocument,third-party
 ||choices.truste.com^$third-party
 ||chriscasconi.com/nostalgia_ad.
 ||cimg.in/images/banners/
@@ -12093,9 +12106,10 @@ _popunder+$popup
 .info^$script,domain=allmyvideos.net|mediafire.com|mooshare.biz|muchshare.net|tvmuse.com|tvmuse.eu|vidspot.net
 /*;sz=*;ord=$domain=webhostingtalk.com
 /3market.php?$domain=adf.ly|j.gs|q.gs|u.bb
-/?placement=$script,domain=firedrive.com|sockshare.com
-/^https?\:\/\/(?!(connect\.facebook\.net|ajax\.cloudflare\.com|www\.google-analytics\.com|ajax\.googleapis\.com|fbstatic-a\.akamaihd\.net)\/)/$script,third-party,domain=firedrive.com
-/^https?\:\/\/(?!(connect\.facebook\.net|ajax\.cloudflare\.com|www\.google-analytics\.com|ajax\.googleapis\.com|fbstatic-a\.akamaihd\.net|stats\.g\.doubleclick\.net|api-secure\.solvemedia\.com|api\.solvemedia\.com|sb\.scorecardresearch\.com|www\.google\.com)\/)/$script,third-party,domain=mediafire.com
+/?placement=$script,domain=sockshare.com
+/^https?\:\/\/(?!(connect\.facebook\.net|ajax\.cloudflare\.com|www\.google-analytics\.com|ajax\.googleapis\.com|fbstatic-a\.akamaihd\.net)\/)/$script,third-party,xmlhttprequest,domain=firedrive.com
+/^https?\:\/\/(?!(connect\.facebook\.net|ajax\.cloudflare\.com|www\.google-analytics\.com|ajax\.googleapis\.com|fbstatic-a\.akamaihd\.net|stats\.g\.doubleclick\.net|api-secure\.solvemedia\.com|api\.solvemedia\.com|sb\.scorecardresearch\.com|www\.google\.com)\/)/$script,third-party,xmlhttprequest,domain=mediafire.com
+/^https?\:\/\/(?!(connect\.facebook\.net|www\.google-analytics\.com|ajax\.googleapis\.com|netdna\.bootstrapcdn\.com|[\w\-]+\.addthis\.com|bp\.yahooapis\.com|b\.scorecardresearch\.com|platform\.twitter\.com)\/)/$script,third-party,xmlhttprequest,domain=promptfile.com
 /assets/_takeover/*$domain=deadspin.com|gawker.com|gizmodo.com|io9.com|jalopnik.com|jezebel.com|kotaku.com|lifehacker.com
 /clickpop.js$domain=miliblog.co.uk
 /com.js$domain=kinox.to
@@ -13490,7 +13504,6 @@ _popunder+$popup
 ||howwemadeitinafrica.com^*/dhl-hdr.gif
 ||hpfanficarchive.com/freecoins2.jpg
 ||hqfooty.tv/ad
-||hqq.tv/js/pads.js
 ||htmldog.com/r10/flowers/
 ||htmlgoodies.com/sl/assetlisting/
 ||hulkfile.eu/images/africa.gif
@@ -13701,6 +13714,7 @@ _popunder+$popup
 ||israelvideonetwork.com^*-300x150.jpg
 ||israelvideonetwork.com^*-300x191.jpg
 ||israelvideonetwork.com^*-300x75-
+||isup.me/images/dotbiz_banner.jpg
 ||isxdead.com/images/showbox.png
 ||itpro.co.uk/images/skins/
 ||itv.com/adexplore/*/config.xml
@@ -15826,8 +15840,6 @@ _popunder+$popup
 ! Firefox freezes if not blocked on reuters.com (http://forums.lanik.us/viewtopic.php?f=64&t=16854)
 ||static.crowdscience.com/max-*.js?callback=crowdScienceCallback$domain=reuters.com
 ! Anti-Adblock
-/FuckAdBlock-$script
-/fuckadblock.js
 ||ailde.com^$domain=cbs.com
 ||alidw.net^$domain=cbs.com
 ||amazonaws.com^$script,domain=dsero.com|ginormousbargains.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com|unfair.co
@@ -16459,6 +16471,7 @@ _popunder+$popup
 ||redtube.com/dib/
 ||redtube.com/iframe/
 ||redtube.com/show.php
+||redtube.com/wierd/$subdocument
 ||redtube.com^*&asid=$subdocument
 ||redtube.com^*&query=$subdocument
 ||redtube.com^*/banner/
@@ -16831,6 +16844,7 @@ _popunder+$popup
 @@||ads.scott-sports.com^$image,domain=scott-sports.com
 @@||ads.scottusa.com/www/delivery/ajs.php?zoneid=$script,domain=scott-sports.com
 @@||ads.seriouswheels.com^$~third-party
+@@||ads.smartfeedads.com^$~third-party
 @@||ads.socialtheater.com^$~third-party
 @@||ads.songs.pk/openx/www/delivery/
 @@||ads.spilgames.com/ad/$script,domain=agame.com|games.co.uk
@@ -17365,6 +17379,7 @@ _popunder+$popup
 @@||filestage.to/design/player/player.swf?*&popunder=$object,third-party
 @@||fixtracking.com/images/ad-$image,~third-party
 @@||flashgames247.com/advertising/ima-vast-preroll.swf$object,domain=flashgames247.com
+@@||flossmanuals.net/site_static/xinha/plugins/DoubleClick/$~third-party
 @@||flyerservices.com/cached_banner_pages/*bannerid=
 @@||flysaa.com^*/jquery.adserver.js
 @@||fncstatic.com^*/fox411/fox-411-head-728x90.png$domain=foxnews.com
@@ -18386,8 +18401,10 @@ _popunder+$popup
 @@||admeld.com/ad/iframe/1122/pixfuture/300x250/$subdocument,domain=fileover.net
 @@||admeld.com/meld128.js$domain=fileover.net
 @@||admin.brightcove.com/viewer/*/AdvertisingModule.swf$object-subrequest,domain=player.stv.tv
+@@||admin.brightcove.com^$object-subrequest,domain=tvn.pl|tvn24.pl
 @@||adnxs.com^$script,domain=kissanime.com
 @@||ads.avazu.net^$subdocument,domain=casadossegredos.tv|xuuby.com
+@@||ads.clubedohardware.com.br/www/delivery/spcjs.php$script
 @@||ads.lzjl.com/newserving/showad.php$domain=everythingon.tv
 @@||ads.milliyet.cubecdn.net/winwords/adhood/winwords2.client.js$domain=dizi-mag.com
 @@||ads.smowtion.com/ad.js$domain=exrapidleech.info
@@ -18510,6 +18527,7 @@ _popunder+$popup
 @@||eskago.pl/html/js/adv.bbelements.js
 @@||eventhubs.com^*.$script
 @@||exponential.com^*/tags.js$domain=yellowbridge.com
+@@||exrapidleech.info/templates/$image
 @@||exrapidleech.info^$elemhide,script
 @@||ezcast.tv/static/scripts/adscript.js
 @@||fastclick.net/w/get.media?sid=58322&tp=5&$script,domain=flv2mp3.com
@@ -18679,7 +18697,7 @@ _popunder+$popup
 @@||pipocas.tv/js/advertisement.js
 @@||pirlotv.tv^$elemhide
 @@||playhd.eu/advertisement.js
-@@||popads.net/pop.js$domain=filmovizija.com
+@@||popads.net/pop.js$domain=filmovizija.com|hqq.tv
 @@||popsads.com/adhandler/$script,domain=filmovizija.com
 @@||prad.de^$elemhide
 @@||premiumleecher.com/inc/adframe.js
@@ -18725,6 +18743,7 @@ _popunder+$popup
 @@||smartadserver.com/call/pubj/*/S/*/?$domain=antena3.com|atresplayer.com|lasexta.com
 @@||smartadserver.com/call/pubx/*/blq$object-subrequest,domain=antena3.com|atresplayer.com|lasexta.com
 @@||smartadserver.com/diff/*/show*.asp?*;target=blq$object-subrequest,domain=antena3.com|lasexta.com
+@@||sms-mmm.com/pads.js$domain=hqq.tv
 @@||sms-mmm.com/script.php|$script,domain=hqq.tv
 @@||sockshare.com/js/$script
 @@||sominaltvfilms.com/wp-content/*/adbanner/$image
@@ -18756,6 +18775,9 @@ _popunder+$popup
 @@||tradedoubler.com/anet?type(iframe)loc($subdocument,domain=topzone.lt
 @@||tv3.co.nz/Portals/*/advertisement.js
 @@||tvdez.com/ads/ads_$subdocument
+@@||tvn.adocean.pl/files/js/ado.js$domain=tvn.pl|tvn24.pl
+@@||tvn.pl^$elemhide
+@@||tvn24.pl^$elemhide
 @@||tvpelis.net^*/advertisement2.js
 @@||tvportugalhd.org^$elemhide
 @@||twitch.tv/ads/ads.js

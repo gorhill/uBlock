@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4415
-! Last modified: 6 Aug 2014
+! Version: 4452
+! Last modified: 9 Aug 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -124,6 +124,8 @@
 ##[href^="http://files.cat/"]
 ##[href^="http://yourdigitalsearcher.com/"]
 ##[href^="http://smartmediasearcher.com/"]
+##[href^="http://gripfiles.com/"]
+##[href^="http://fdownload52.com/"]
 !
 !
 !
@@ -2066,7 +2068,6 @@ dream-file.com##[alt="Regular Download"]
 ||piratercomptefacebooke.com^
 ||hacktopelevenmanager.com^
 ||twthack.com^
-||revenyou.com^
 ||novahacks.com^
 ||hackmeout.net^
 ||minecraftfreeacc.com^
@@ -4410,6 +4411,42 @@ dream-file.com##[alt="Regular Download"]
 ||wellmediaonline.com^
 ||premiumkeygenerators.com^
 ||ulcknow.biz^
+||gripfiles.com^
+||secure-runescape.co^
+||clashofclanshackrz.com^
+||oldschool-runescape.co^
+||hacksturbo.com^
+||jounlock.com^
+||ihackgames.biz^
+||dragonhacktool.com^
+||haydayhackdownload.com^
+||hackemulator.net^
+||actiongameshack.com^
+||hackstopeleven.com^
+||nbanba.lt^
+||gemshackclash.com^
+||outdonuthack.com^
+||socialwebhacks.com^
+||fcheats.com^
+||cheatsnova.com^
+||gamezfree.net^
+||facegamecheat.com^
+||gamestopbetakey.com^
+||hacks4.com^
+||fdownload52.com^
+||dragoncitycheat.biz^
+||binweevilsdoshcodes.com^
+||onlinehackzforyou.com^
+||cheatswithoutjailbreak.com^
+||steamwalletgratuit.com^
+||psngratuit.com^
+||makeios.com^
+||psncode4u.com^
+||viphackscracked.org^
+||elitehacksor.com^
+||dizyhackz.com^
+||telechargergta5pcgratuit.com^
+||cudaminer.com^
 !
 !
 !
