@@ -26,13 +26,9 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
-
-/******************************************************************************/
-
 // https://github.com/gorhill/httpswitchboard/issues/345
 
-var messaging = (function(name){
+var uBlockMessaging = (function(name){
     var port = null;
     var dangling = false;
     var requestId = 1;
@@ -127,10 +123,13 @@ var messaging = (function(name){
 // ABP cosmetic filters
 
 (function() {
+    var messaging = uBlockMessaging;
     var queriedSelectors = {};
     var injectedSelectors = {};
     var classSelectors = null;
     var idSelectors = null;
+    var highGenerics = null;
+    var contextNodes = [document];
 
     var domLoaded = function() {
         // https://github.com/gorhill/uBlock/issues/14
@@ -155,46 +154,70 @@ var messaging = (function(name){
         if ( idSelectors !== null ) {
             selectors = selectors.concat(idSelectors);
         }
-        if ( selectors.length > 0 ) {
+        if ( selectors.length > 0 || highGenerics === null ) {
             //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
             messaging.ask({
                     what: 'retrieveGenericCosmeticSelectors',
                     pageURL: window.location.href,
-                    selectors: selectors
+                    selectors: selectors,
+                    highGenerics: highGenerics === null
                 },
                 retrieveHandler
             );
+        } else {
+            retrieveHandler(null);
         }
         idSelectors = null;
         classSelectors = null;
     };
 
     var retrieveHandler = function(selectors) {
-        if ( !selectors ) {
-            return;
+        //console.debug('µBlock> contextNodes = %o', contextNodes);
+        if ( selectors && selectors.highGenerics ) {
+            highGenerics = selectors.highGenerics;
         }
-        filterLowGenerics(selectors, 'donthide');
-        filterHighGenerics(selectors, 'donthide');
-        if ( selectors.donthide.length ) {
-            var i = selectors.donthide.length;
-            while ( i-- ) {
-                injectedSelectors[selectors.donthide[i]] = true;
+        if ( selectors && selectors.donthide.length ) {
+            processLowGenerics(selectors.donthide);
+        }
+        if ( highGenerics ) {
+            if ( highGenerics.donthideLowCount ) {
+                processHighLowGenerics(highGenerics.donthideLow);
+            }
+            if ( highGenerics.donthideMediumCount ) {
+                processHighMediumGenerics(highGenerics.donthideMedium);
             }
         }
-        filterLowGenerics(selectors, 'hide');
-        filterHighGenerics(selectors, 'hide');
-        reduce(selectors.hide, injectedSelectors);
-        if ( selectors.hide.length ) {
-            applyCSS(selectors.hide, 'display', 'none');
+        // No such thing as high-high generic exceptions
+        //if ( highGenerics.donthideHighCount ) {
+        //    processHighHighGenerics(document, highGenerics.donthideHigh);
+        //}
+        var hideSelectors = [];
+        if ( selectors && selectors.hide.length ) {
+            processLowGenerics(selectors.hide, hideSelectors);
+        }
+        if ( highGenerics ) {
+            if ( highGenerics.hideLowCount ) {
+                processHighLowGenerics(highGenerics.hideLow, hideSelectors);
+            }
+            if ( highGenerics.hideMediumCount ) {
+                processHighMediumGenerics(highGenerics.hideMedium, hideSelectors);
+            }
+            if ( highGenerics.hideHighCount ) {
+                processHighHighGenerics(highGenerics.hideHigh, hideSelectors);
+            }
+        }
+        if ( hideSelectors.length ) {
+            applyCSS(hideSelectors, 'display', 'none');
             var style = document.createElement('style');
-            var text = selectors.hide.join(',\n') + ' {display:none !important;}';
+            var text = hideSelectors.join(',\n') + ' {display:none !important;}';
             style.appendChild(document.createTextNode(text));
             var parent = document.body || document.documentElement;
             if ( parent ) {
                 parent.appendChild(style);
             }
-            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.hide.length, hideStyleText);
+            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', hideSelectors.length, text);
         }
+        contextNodes.length = 0;
     };
 
     var applyCSS = function(selectors, prop, value) {
@@ -208,88 +231,103 @@ var messaging = (function(name){
         }
     };
 
-    var filterTitleGeneric = function(generics, root, out) {
-        if ( !root.title.length ) {
-            return;
+    var selectNodes = function(selector) {
+        var targetNodes = [];
+        var i = contextNodes.length;
+        var node, nodeList, j;
+        var doc = document;
+        while ( i-- ) {
+            node = contextNodes[i];
+            if ( node === doc ) {
+                return doc.querySelectorAll(selector);
+            }
+            targetNodes.push(node);
+            nodeList = node.querySelectorAll(selector);
+            j = nodeList.length;
+            while ( j-- ) {
+                targetNodes.push(nodeList[j]);
+            }
         }
-        var selector = '[title="' + root.title + '"]';
-        if ( generics[selector] && !injectedSelectors[selector] ) {
-            out.push(selector);
-        }
-        selector = root.tagName + selector;
-        if ( generics[selector] && !injectedSelectors[selector] ) {
-            out.push(selector);
-        }
+        return targetNodes;
     };
 
-    var filterAltGeneric = function(generics, root, out) {
-        var alt = root.getAttribute('alt');
-        if ( !alt || !alt.length ) {
-            return;
-        }
-        var selector = '[alt="' + root.title + '"]';
-        if ( generics[selector] && !injectedSelectors[selector] ) {
-            out.push(selector);
-        }
-        selector = root.tagName + selector;
-        if ( generics[selector] && !injectedSelectors[selector] ) {
-            out.push(selector);
-        }
-    };
-
-    var filterLowGenerics = function(selectors, what) {
-        if ( selectors[what + 'LowGenericCount'] === 0 ) {
-            return;
-        }
-        var out = selectors[what];
-        var generics = selectors[what + 'LowGenerics'];
-        var nodeList, iNode;
-        // Low generics: ["title"]
-        nodeList = document.querySelectorAll('[title]');
-        iNode = nodeList.length;
-        while ( iNode-- ) {
-            filterTitleGeneric(generics, nodeList[iNode], out);
-        }
-        // Low generics: ["alt"]
-        nodeList = document.querySelectorAll('[alt]');
-        iNode = nodeList.length;
-        while ( iNode-- ) {
-            filterAltGeneric(generics, nodeList[iNode], out);
-        }
-    };
-
-    var filterHighGenerics = function(selectors, what) {
-        var out = selectors[what];
-        var generics = selectors[what + 'HighGenerics'];
-        var iGeneric = generics.length;
+    var processLowGenerics = function(generics, out) {
+        var i = generics.length;
         var selector;
-        while ( iGeneric-- ) {
-            selector = generics[iGeneric];
-            if ( injectedSelectors[selector] ) {
+        while ( i-- ) {
+            selector = generics[i];
+            if ( injectedSelectors[selector] !== undefined ) {
                 continue;
             }
-            if ( document.querySelector(selector) !== null ) {
+            injectedSelectors[selector] = true;
+            if ( out !== undefined ) {
                 out.push(selector);
             }
         }
     };
 
-    var reduce = function(selectors, dict) {
-        var i = selectors.length, selector, end;
-        while ( i-- ) {
-            selector = selectors[i];
-            if ( !dict[selector] ) {
-                if ( end !== undefined ) {
-                    selectors.splice(i+1, end-i);
-                    end = undefined;
+    var processHighLowGenerics = function(generics, out) {
+        var attrs = ['title', 'alt'];
+        var attr, attrValue, nodeList, iNode, node, selector;
+        while ( attr = attrs.pop() ) {
+            nodeList = selectNodes('[' + attr + ']');
+            iNode = nodeList.length;
+            while ( iNode-- ) {
+                node = nodeList[iNode];
+                attrValue = node.getAttribute(attr);
+                if ( !attrValue ) { continue; }
+                selector = '[' + attr + '="' + attrValue + '"]';
+                if ( injectedSelectors[selector] === undefined && generics[selector] ) {
+                    injectedSelectors[selector] = true;
+                    if ( out !== undefined ) {
+                        out.push(selector);
+                    }
                 }
-                dict[selector] = true;
-            } else if ( end === undefined ) {
-                end = i;
+                selector = node.tagName.toLowerCase() + selector;
+                if ( injectedSelectors[selector] === undefined && generics[selector] ) {
+                    injectedSelectors[selector] = true;
+                    if ( out !== undefined ) {
+                        out.push(selector);
+                    }
+                }
             }
         }
-        if ( end !== undefined ) {
-            selectors.splice(0, end+1);
+    };
+
+    var processHighMediumGenerics = function(generics, out) {
+        var nodeList = selectNodes('a[href^="http"]');
+        var iNode = nodeList.length;
+        var node, href, pos, hash, selector;
+        while ( iNode-- ) {
+            node = nodeList[iNode];
+            href = node.getAttribute('href');
+            if ( !href ) { continue; }
+            pos = href.indexOf('://');
+            if ( pos === -1 ) { continue; }
+            hash = href.slice(pos + 3, pos + 11);
+            selector = generics[hash];
+            if ( selector === undefined ) { continue; }
+            if ( injectedSelectors[selector] !== undefined ) { continue; }
+            injectedSelectors[selector] = true;
+            if ( out !== undefined ) {
+                out.push(selector);
+            }
+        }
+    };
+
+    var processHighHighGenerics = function(generics, out) {
+        if ( injectedSelectors[generics] !== undefined ) { return; }
+        if ( document.querySelectorAll(generics) === null ) { return; }
+        injectedSelectors[generics] = true;
+        if ( out !== undefined ) {
+            var selectors = generics.split(',\n');
+            var i = selectors.length;
+            while ( i-- ) {
+                if ( injectedSelectors[selectors[i]] !== undefined ) {
+                    selectors.splice(i, 1);
+                }
+            }
+            out.push(selectors.join(',\n'));
         }
     };
 
@@ -362,25 +400,6 @@ var messaging = (function(name){
         }
     };
 
-    var processNodeLists = function(nodeLists) {
-        var i = nodeLists.length;
-        var nodeList, j, node;
-        while ( i-- ) {
-            nodeList = nodeLists[i];
-            idsFromNodeList(nodeList);
-            classesFromNodeList(nodeList);
-            j = nodeList.length;
-            while ( j-- ) {
-                node = nodeList[j];
-                if ( typeof node.querySelectorAll === 'function' ) {
-                    idsFromNodeList(node.querySelectorAll('[id]'));
-                    classesFromNodeList(node.querySelectorAll('[class]'));
-                }
-            }
-        }
-        retrieveGenericSelectors();
-    };
-
     domLoaded();
 
     // Observe changes in the DOM only if...
@@ -390,19 +409,41 @@ var messaging = (function(name){
         return;
     }
 
+    var ignoreTags = {
+        'style': true,
+        'STYLE': true,
+        'script': true,
+        'SCRIPT': true
+    };
+
     var mutationObservedHandler = function(mutations) {
         var iMutation = mutations.length;
-        var nodeLists = [], nodeList;
+        var nodes = [];
+        var nodeList, iNode, node;
         while ( iMutation-- ) {
             nodeList = mutations[iMutation].addedNodes;
-            if ( nodeList && nodeList.length ) {
-                nodeLists.push(nodeList);
+            if ( !nodeList ) {
+                continue;
+            }
+            iNode = nodeList.length;
+            while ( iNode-- ) {
+                node = nodeList[iNode];
+                if ( typeof node.querySelectorAll !== 'function' ) {
+                    continue;
+                }
+                if ( ignoreTags[node.tagName] ) {
+                    continue;
+                }
+                contextNodes.push(node);
             }
         }
-        if ( nodeLists.length ) {
-            processNodeLists(nodeLists);
+        if ( contextNodes.length !== 0 ) {
+            idsFromNodeList(selectNodes('[id]'));
+            classesFromNodeList(selectNodes('[class]'));
+            retrieveGenericSelectors();
         }
     };
+
     // https://github.com/gorhill/httpswitchboard/issues/176
     var observer = new MutationObserver(mutationObservedHandler);
     observer.observe(document.body, {
@@ -419,6 +460,8 @@ var messaging = (function(name){
 // https://github.com/gorhill/uBlock/issues/7
 
 (function() {
+    var messaging = uBlockMessaging;
+
     var hideOne = function(elem, collapse) {
         // If `!important` is not there, going back using history will likely
         // cause the hidden element to re-appear.
@@ -430,7 +473,7 @@ var messaging = (function(name){
 
     // First pass
     messaging.ask({ what: 'blockedRequests' }, function(details) {
-        var elems = document.querySelectorAll('img,iframe');
+        var elems = document.querySelectorAll('img,iframe,embed');
         var blockedRequests = details.blockedRequests;
         var collapse = details.collapse;
         var i = elems.length;
@@ -453,8 +496,9 @@ var messaging = (function(name){
     // - Elements which resource URL changes
     var onResourceLoaded = function(ev) {
         var target = ev.target;
-        if ( target.tagName.toLowerCase() !== 'iframe' ) { return; }
+        //console.debug('Loaded %s[src="%s"]', target.tagName, target.src);
         if ( !target || !target.src ) { return; }
+        if ( target.tagName.toLowerCase() !== 'iframe' ) { return; }
         var onAnswerReceived = function(details) {
             if ( details.blocked ) {
                 hideOne(target, details.collapse);
@@ -464,8 +508,9 @@ var messaging = (function(name){
     };
     var onResourceFailed = function(ev) {
         var target = ev.target;
-        if ( target.tagName.toLowerCase() !== 'img' ) { return; }
+        //console.debug('Failed to load %s[src="%s"]', target.tagName, target.src);
         if ( !target || !target.src ) { return; }
+        if ( target.tagName.toLowerCase() !== 'img' ) { return; }
         var onAnswerReceived = function(details) {
             if ( details.blocked ) {
                 hideOne(target, details.collapse);
@@ -478,5 +523,3 @@ var messaging = (function(name){
 })();
 
 /******************************************************************************/
-
-})();
