@@ -1,0 +1,51 @@
+Tehokas mainosten blokkaaja: kevyt keskusmuistille ja prosessorille, silti voi ladata ja pakottaa tuhansia jopa enemmän kuin muut suositut mainosten blokkaajat.
+
+Kuvitettu yleiskatsaus tehokkuudesta: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Käyttö: Iso virta nappi ponnahdusikkunassa on tarkoitettu pysyvästi estämään/sallimaan uBlock kyseisellä sivulla. Se koskee vain nykyistä sivua, ei kaikkia sivuja.
+
+***
+
+Joustava, se on enemmän kuin "mainosten blokkaaja": se voi lukea ja luoda filttereitä hosts tiedostoista.
+
+Automaattisesti, nämä filtterien listat on ladattu ja pakotettu:
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+Voit valita lisää listoja käyttöösi jos haluat:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Etc.
+
+Jos sinulla on useita listoja käytössä, keskusmuistia kuluu enemmän. Silti, vaikka lisäämällä Fanboyn kaksi lisä listaa, hpHosts Ad and tracking servers listan, µBlock:ssa on silti pienempi keskusmuistin käyttö kuin muissa suosituissa mainosten blokkaajissa.
+
+Muista myös, että lisäämällä useita listoja voi aiheuttaa sivun kaatumisen tai rikkoutumisen, eteenkin listat joita yleensä käytetään hosts tiedostona.
+
+***
+
+Ilman valmiiksi asetettuja filttereitä, tämä lisäosa ei tee mitään. Jos joskus todella haluat edistää jotakin, ajattele niitä ihmisiä jotka työskentelee ylläpitääkseen filtterien listoja mitä sinä käytät, jotka annetaan meille kaikki ilmaiseksi.
+
+***
+
+Ilmainen.
+Avoimen lähdekoodin julkinen lisenssi (GPLv3)
+Käyttäjiltä käyttäjille.
+
+Kehittäjät @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Kehittäjät @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Se on varsin varhainen versio, pidä tämä mielessä, kun testaat.
+
+Projektin muutosloki:
+https://github.com/gorhill/uBlock/wiki/Change-log
