@@ -882,3 +882,5 @@ ddl-search.biz##.wpbanner_superlenny
 ||avitya.ru^$domain=pronpic.org
 ! pregen.net
 pregen.net###olayer
+! s3-sa-east-1.amazonaws.com
+||s3-sa-east-1.amazonaws.com^$third-party

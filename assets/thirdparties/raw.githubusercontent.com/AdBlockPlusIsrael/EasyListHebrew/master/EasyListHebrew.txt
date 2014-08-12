@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: a54En4MGN4/tArZrlGVb3Q
+! Checksum: ZqygssHJxH8NdED+28lpYQ
 ! Title: EasyList Hebrew
-! Last modified: 07/08/14  10:45
+! Last modified: 10/08/14  10:59
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -647,6 +647,7 @@ s-maof.com###popupContact
 s-maof.com##DIV[style="position: absolute; left: 40px; top: 200px; z-index: 0;"]
 s-maof.com##DIV[style="position: absolute; right: 40px; top: 200px; z-index: 0; width:154px;"]
 saloona.co.il###footer_banner
+seret.co.il###divMaavaronBanner
 seret.co.il##.RightColWhiteBox312x262
 seret.co.il##.cbthfds
 seret.co.il##DIV[style="width:100%;text-align:center;"]
@@ -770,6 +771,7 @@ ynet.co.il###art_bottom_adsense-1
 ynet.co.il###art_right_sponsored_links-1
 ynet.co.il###googleAdsenseMivzakim
 ynet.co.il###google_ads_iframe_\/ynt\.top\.central
+ynet.co.il###startPlaying
 ynet.co.il###ww6s_Main
 ynet.co.il###ynet_lightbox_content_top
 ynet.co.il##.CAATVcompAdvertiseTv

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Qex0Hlnsh7QBBubM6u7i0w
-! Version: 201408091431
+! Checksum: L2q5D493f2thBOj4qZ08yg
+! Version: 201408121221
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 09 Aug 2014 14:31 UTC
+! Ultima modifica: 12 Aug 2014 12:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1120,6 +1120,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||libero.it/static/generated_external/shopping/
 ||libero.it/static/upll/234x/
 ||liberoinformato.it/banner-
+||liberoquotidiano.it/upload/1405595303061.swf
 ||liberoreporter.it/public/upload/banner*.gif
 ||libertas.sm^*/banner/
 ||libertiamo.it^*468x60.
@@ -1402,12 +1403,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||rtl.it^*/ico_iTunes-Download-
 ||rtl.it^*/itunes_btn_
 ||rtl.it^*_ban_
-||salernonotizie.it/images/bannerinternetfree.gif
-||salernonotizie.it/images/ikea_
-||salernonotizie.it^*/banner-
-||salernonotizie.it^*/banner_
-||salernonotizie.it^*_banner_
-||salernonotizie.it^*_bnr120x180.
+||salernonotizie.it/wp-content/banner/
+||salernonotizie.it/wp-content/skin/
 ||salernonotizie.net^*_banner_
 ||sampdoria.it/images/banners/
 ||samspot.softairmania.it^
@@ -1962,7 +1959,7 @@ iovivoaroma.it###skin_link_dx
 iovivoaroma.it###skin_link_sx
 cronachemaceratesi.it###skinabove
 rockit.it###skinbanner
-catanzaroinforma.it,filmtv.it,ilcorrieredabruzzo.it,lazionews24.com###skinlink
+catanzaroinforma.it,filmtv.it,ilcorrieredabruzzo.it,lazionews24.com,salernonotizie.it###skinlink
 ebay.it###skyscrape
 eurogamer.it###skyscraper
 casateonline.it,merateonline.it###sottotestata
@@ -2140,6 +2137,7 @@ ilquotidianodellacalabria.it##.banner_186x290
 ilquotidianodellacalabria.it##.banner_234x90
 spaziofilm.it##.banner_300
 ilmattinodifoggia.it##.banner_300x250_3
+liberoquotidiano.it##.banner_300x250_colonna_6
 everyeye.it##.banner_600_new
 ottopagine.net##.banner_990_90
 ottopagine.net##.banner_990_90_mid
@@ -2595,8 +2593,11 @@ beppegrillo.it##div[style="width:475px; height:60px; display:none;"]
 asroma24.com,ilmilanista.it,interistaweb.it##div[style="width:480px; height:72px; padding: 6px; margin-left:auto; margin-right:auto;"]
 igossip.it##div[style="width:600px; height:360px;float:left;"]
 asca.it##div[style="width:659px; height:60px; float:left; margin-top:10px;margin-bottom:5px;"]
+salernonotizie.it##div[style="width:660px; height:90px; display:block;"]
 fantagazzetta.com##div[style="width:663px;height:275px;float:left;margin:5px 0"]
 beppegrillo.it##div[style="width:728px; height:45px;"]
+salernonotizie.it##div[style="width:728px; height:90px; display:block; margin-top:2px; margin-bottom:2px;"]
+salernonotizie.it##div[style="width:728px; height:90px; display:block; margin-top:4px; margin-bottom:4px;"]
 strettoweb.com##div[style="width:728px; height:90px; margin:9px auto; display:block; float:right !important;"]
 beppegrillo.it,mymovies.it##div[style="width:728px; height:90px;"]
 beppegrillo.it##div[style="width:728px; height:90px;float:left;\""]

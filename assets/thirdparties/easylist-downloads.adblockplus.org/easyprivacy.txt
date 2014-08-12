@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: CLog2CLQ0oP0+A3VbBvXUg
-! Version: 201408091431
+! Checksum: onXT7Clr71gYCYqnBoSLtg
+! Version: 201408121221
 ! Title: EasyPrivacy
-! Last modified: 09 Aug 2014 14:31 UTC
+! Last modified: 12 Aug 2014 12:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2214,6 +2214,7 @@ http://utm.
 ||149.13.65.144^$third-party
 ||195.10.245.55^$third-party
 ||1freecounter.com^$third-party
+||1pel.com^$third-party
 ||200summit.com^$third-party
 ||204st.us^$third-party
 ||206solutions.com^$third-party
@@ -2260,6 +2261,7 @@ http://utm.
 ||acestats.net^$third-party
 ||acetrk.com^$third-party
 ||acint.net^$third-party
+||active-trk7.com^$third-party
 ||activeconversion.com^$third-party
 ||activemeter.com^$third-party
 ||activeprospects.com^$third-party
@@ -3578,7 +3580,6 @@ http://utm.
 ||tstlabs.co.uk^$third-party
 ||tsw0.com^$third-party
 ||tubetrafficcash.com^$third-party
-||turn.com^$third-party
 ||twcount.com^$third-party
 ||tylere.net^$third-party
 ||tynt.com^$third-party
@@ -3619,6 +3620,7 @@ http://utm.
 ||videostat.com^$third-party
 ||vinlens.com^$third-party
 ||viralninjas.com^$third-party
+||virool.com^$third-party
 ||virtualnet.co.uk^$third-party
 ||visibility-stats.com^$third-party
 ||visiblemeasures.com/log?$object-subrequest,third-party
@@ -4633,6 +4635,7 @@ http://utm.
 ||c.homestore.com^
 ||c.ypcdn.com^*&ptid
 ||c.ypcdn.com^*?ptid
+||c2s-openrtb.liverail.com^
 ||c3metrics.medifast1.com^
 ||cache2.delvenetworks.com^
 ||cadreon.s3.amazonaws.com^
@@ -7760,6 +7763,7 @@ http://utm.
 ||track.hubspot.com^
 ||track.netzero.net^
 ||track.ning.com^
+||track.slideshare.net^
 ||track.websiteceo.com^
 ||track.wildblue.com^
 ||track.zomato.com^
@@ -7887,7 +7891,6 @@ http://utm.
 ||vcstar.com/metrics/
 ||velaro.com/lf/monitor2.aspx?
 ||venere.com/common/js/track.js
-||verizon.com/includes/javascript/omnicode.js
 ||vertical-stats.huffingtonpost.com^
 ||vevo.com/audit.ashx?
 ||viamichelin.co.uk^*/stats.js
@@ -7908,6 +7911,7 @@ http://utm.
 ||vidxden.com^*/tracker.js
 ||vietnamnet.vn^*/tracking.js
 ||villarenters.com/inttrack.aspx
+||vimeo.com/log/
 ||viralogy.com/javascript/viralogy_tracker.js
 ||virginholidays.co.uk/_assets/js/dc_storm/track.js
 ||virtualearth.net/mapcontrol/*/veapiAnalytics.js
@@ -9013,6 +9017,7 @@ http://utm.
 @@||optimost.com^*/FT_live.js$domain=ft.com
 @@||pastebin.com/etc/geo.php?
 @@||patrick-wied.at/static/heatmapjs/src/heatmap.js
+@@||paypalobjects.com^*/opinionLab.js$domain=paypal.com
 @@||pillsbury.com/Shared/StarterKit/Javascript/ntpagetag.js
 @@||pillsbury.com/Shared/StarterKit/Javascript/UnicaTag.js
 @@||ping.hellobar.com/?*&_e=click&$image

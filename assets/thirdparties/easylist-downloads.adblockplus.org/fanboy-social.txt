@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: gC71T0iFbOz98T+lFl26ng
-! Version: 201408091431
+! Checksum: 4a7Om37fmP1qmagorQR7iw
+! Version: 201408121221
 ! Title: Fanboy's Social Blocking List
-! Last modified: 09 Aug 2014 14:31 UTC
+! Last modified: 12 Aug 2014 12:21 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -972,6 +972,7 @@
 /pinit_footer.
 /pinmask2.
 /pinShare.
+/pinterest-32.
 /pinterest-32px.
 /pinterest-big.
 /pinterest-button-
@@ -1075,6 +1076,7 @@
 /share-btn-
 /share-btns.
 /share-button-$domain=~facebook.com
+/share-button.
 /share-buttons-
 /share-buttons.$~stylesheet
 /share-buttons/*
@@ -2068,6 +2070,7 @@ _youtube_small.
 ###donate-social
 ###drop-btn-share
 ###dsp_ftr_social
+###e_mailit_custom_position
 ###epoch-floating-social
 ###et-social-icons
 ###eventSocialMedia
@@ -3656,10 +3659,12 @@ _youtube_small.
 ##.digg_icon
 ##.diggthis
 ##.divFacebookShareButton
+##.divFooterSocial
 ##.dmg-social-icon
 ##.drop_facebook
 ##.dv-social-media
 ##.dzone-social-buttons
+##.e-mailit_toolbox
 ##.e-pinterest-link
 ##.e-shares_count
 ##.e-social_links
@@ -3683,6 +3688,8 @@ _youtube_small.
 ##.entryShare
 ##.entry_social
 ##.esocial
+##.essb_link_pinterest
+##.essb_link_twitter
 ##.event-social-box
 ##.eventShare
 ##.expanded_story_socialmedia
@@ -4014,6 +4021,10 @@ _youtube_small.
 ##.footer-fb
 ##.footer-follow-text
 ##.footer-gplus
+##.footer-icon-facebook
+##.footer-icon-googleplus
+##.footer-icon-twitter
+##.footer-icon-youtube
 ##.footer-instagram
 ##.footer-share
 ##.footer-share-bar-social
@@ -4281,6 +4292,7 @@ _youtube_small.
 ##.icon-facebook-encircled
 ##.icon-facebook-sharing
 ##.icon-facebook-sign
+##.icon-facebook-square
 ##.icon-facebook2
 ##.icon-fark
 ##.icon-fb
@@ -4312,6 +4324,7 @@ _youtube_small.
 ##.icon-logo-twitter-bird
 ##.icon-logo-youtube
 ##.icon-medium-encircled
+##.icon-mixcloud
 ##.icon-pinterest
 ##.icon-pinterest-alt
 ##.icon-pinterest-circle
@@ -4333,9 +4346,11 @@ _youtube_small.
 ##.icon-social-twitter
 ##.icon-social_facebook_bl
 ##.icon-social_twitter_bl
+##.icon-soundcloud
 ##.icon-stumbleupon
 ##.icon-tumblr
 ##.icon-tumblr-circle
+##.icon-tumblr-square
 ##.icon-tw-footer
 ##.icon-twitter
 ##.icon-twitter-encircled
@@ -4588,6 +4603,7 @@ _youtube_small.
 ##.ont-social-networks
 ##.open_share_box
 ##.page-share-button
+##.pageFbLike
 ##.pane-custom-social-networking-links
 ##.pane-exponent-social-fb-like-box
 ##.pane-follow-site
@@ -4745,6 +4761,7 @@ _youtube_small.
 ##.share-btn-container
 ##.share-btn-lnks
 ##.share-btns
+##.share-bttn
 ##.share-button
 ##.share-buttons
 ##.share-buttons-fixed
@@ -4794,6 +4811,7 @@ _youtube_small.
 ##.share-pinterest-dialog
 ##.share-plus
 ##.share-plusone
+##.share-position
 ##.share-post
 ##.share-prefix
 ##.share-rail
@@ -5132,6 +5150,7 @@ _youtube_small.
 ##.sm-page-widget-sociallinks
 ##.sm-social-links-horizontal
 ##.sm4-article-share
+##.sm4FollowWidget
 ##.sm4WidgetArticleShare
 ##.sm_share_badge
 ##.small-facebook
@@ -5200,6 +5219,7 @@ _youtube_small.
 ##.social-buttons-v2
 ##.social-circle-icon
 ##.social-circles
+##.social-col
 ##.social-connect-widget
 ##.social-contain
 ##.social-container-bottom
@@ -5458,6 +5478,7 @@ _youtube_small.
 ##.socialShareLinks
 ##.socialSharing
 ##.socialSharingFtr
+##.socialSharingLargeButtons
 ##.socialStickyBanner
 ##.socialStrip
 ##.socialSub
@@ -5631,6 +5652,7 @@ _youtube_small.
 ##.socialtoolstext
 ##.socialwidget
 ##.socialwrap
+##.socicon
 ##.socila-icons
 ##.sociotags
 ##.socmark_container
@@ -5762,6 +5784,7 @@ _youtube_small.
 ##.topSliceShare
 ##.top_follow_us
 ##.top_sharedlinks
+##.top_socail
 ##.top_social
 ##.top_social_networks
 ##.topic_socials
@@ -5908,9 +5931,11 @@ _youtube_small.
 ##.uiButtonTwitter
 ##.uk-icon-facebook
 ##.uk-icon-twitter
+##.ulFooterSocial
 ##.ulSocial
 ##.undocked-share
 ##.uni-social
+##.unspoken-getconnected
 ##.user-share-settings
 ##.util-bar-btn-facebook
 ##.util-bar-btn-twitter
@@ -5960,6 +5985,7 @@ _youtube_small.
 ##.widget_facebook_like_box
 ##.widget_facebook_likebox
 ##.widget_facebookactivityfeed
+##.widget_follow_button_widget
 ##.widget_follow_cb_sidebar_widget
 ##.widget_follow_us
 ##.widget_getconnected
@@ -6058,6 +6084,7 @@ _youtube_small.
 ##.youtube-subs
 ##.youtube_btn
 ##.youtube_footer
+##.yt-social-sharing
 ##.yui3-socialbutton-content
 ##.z-share-belt
 ##[class^="social_button_"]
@@ -6175,6 +6202,7 @@ _youtube_small.
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Houzz"]
 ##a[title="Follow us on Instagram"]
+##a[title="Follow us on LinkedIn"]
 ##a[title="Follow us on Tumblr"]
 ##a[title="Join our Twitter army"]
 ##a[title="Join us Facebook"]
@@ -6334,6 +6362,7 @@ _youtube_small.
 ||apis.google.com/js/platform.js$third-party
 ||apis.google.com^*/widget/render/follow?$third-party
 ||apis.google.com^*/widget/render/page?$third-party
+||apis.google.com^*/widget/render/person?$third-party
 ||assets.pinterest.com/js/pinit.js$third-party
 ||assets.pinterest.com/js/pinit_main.js$third-party
 ||assets.pinterest.com/pidget.html$third-party
@@ -6519,6 +6548,7 @@ _youtube_small.
 ||wykop.pl/dataprovider/diggerwidget/$third-party
 ||xing-share.com^$third-party
 ||xing.com/img/buttons/$third-party
+||youtube.com/subscribe_embed?$third-party
 ||youtube.com/subscribe_widget$third-party
 ||zextit.com/partners/$third-party
 !--------------------------Specific blocking filters--------------------------!
@@ -6920,7 +6950,7 @@ inquisitr.com##.frButton
 goibibo.com##.fr_folus > .hd_fllus
 ageofwushu.com##.friendlink
 fundable.com##.fundable-social-box
-dailyzone.com,newseveryday.com##.g-b
+dailyzone.com,mstarz.com,newseveryday.com##.g-b
 gamersbook.com##.gb-follow-tools
 gamepressure.com##.go-face
 gamepressure.com##.go-plus
@@ -7054,7 +7084,7 @@ trust.org##.slide-out-div
 oneindia.in##.sliderightItem
 any.tv##.sm-icons
 washingtonpost.com##.small-block-grid-2
-parentherald.com,realtytoday.com##.sns
+mstarz.com,parentherald.com,realtytoday.com##.sns
 aliexpress.com##.sns-btns
 enstarz.com,hngn.com##.sns_box
 designntrend.com##.soc_box
@@ -7143,6 +7173,7 @@ laughingsquid.com##.wpsr-floatbar-float_left
 yahoo.com##.yom-follow-property
 tweaktown.com##.you_tube
 askvg.com,healthymagination.com,sap.com,techspot.com##.youtube
+mstarz.com##.yt-b
 zillow.com##.zss-follow-us
 flamefusion.net##[alt="Facebook icon"]
 nokia.co.in##[alt="Facebook logo"]
@@ -7192,6 +7223,7 @@ explosm.net##div[align="center"] > div[style="position: relative; text-align: le
 spiegel.de##div[id^="iframeTwitter"]
 goal.com##div[id^="shareicon-"]
 pcb.cc##div[skinpart="imageItem"]
+runthetrap.com##div[style="-moz-border-radius: 10px; border-radius: 10px; border:1px solid #999999; position: fixed; z-index:99999; width: 70px; background-color:#424242; display:block; margin: 50%; right: 500px; margin-top: 50px;"]
 tradeopus.com##div[style="-moz-border-radius: 10px; border-radius: 10px; border:1px solid #999999; position: fixed; z-index:99999; width: 70px; background-color:#FFFFFF; display:block; margin: 50%; right: 500px; margin-top: 150px;"]
 dottech.org##div[style="-moz-border-radius: 10px; border-radius: 10px; border:1px solid #999999; position: fixed; z-index:99999; width: 70px; background-color:#FFFFFF; display:block; margin: 50%; right: 500px; margin-top: 200px;"]
 thejakartaglobe.com##div[style="-moz-border-radius: 10px; border-radius: 10px; border:1px solid #999999; position: fixed; z-index:99999; width: 70px; background-color:#FFFFFF; display:block; margin: 50%; right: 500px; margin-top: 50px;"]
@@ -7224,7 +7256,7 @@ spiegel.de##iframe[src^="http://www.facebook.com/connect/"]
 suberapps.com##img[title="Follow @SUBERAPPS on Twitter!"]
 theguardian.com##li[data-link-name="icon-share"]
 universityherald.com##p[style="float:left; margin-right:20px; font-weight: bold;font-size: 11pt;"]
-designntrend.com,kpopstarz.com,newseveryday.com,parentherald.com##p[style="float:left; width:250px; margin-right:15px; font-weight: bold;font-size: 11pt;height: 21px;"]
+designntrend.com,kpopstarz.com,mstarz.com,newseveryday.com,parentherald.com##p[style="float:left; width:250px; margin-right:15px; font-weight: bold;font-size: 11pt;height: 21px;"]
 latinospost.com##p[style="float:left; width:250px; margin-right:15px; font-weight: bold;font-size: 11pt;height: 21px;float:left; width:250px; margin-right:15px; "]
 natureworldnews.com##p[style^="float:left; width:250px; margin-right:15px;"]
 usatoday.com##span[data-share-method="facebook"]

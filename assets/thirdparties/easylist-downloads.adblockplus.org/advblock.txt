@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: KrV3d6r1uOLwh3TCioi0FA
-! Version: 201408091430
-! Last modified: 09 Aug 2014 14:30 UTC
+! Checksum: nVRL7mHtHhLnGzlHsGYRvg
+! Version: 201408121220
+! Last modified: 12 Aug 2014 12:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2135,6 +2135,7 @@ _tizers.
 ||four8city.in^
 ||freddyman.com^
 ||fulldl.net^
+||fxhoog.com^
 ||gagnifie.com^
 ||gainclick.biz^
 ||gainclick.co^
@@ -2359,6 +2360,7 @@ _tizers.
 ||media-rich.ru^
 ||media-rotation.net^
 ||media-rotator.net^
+||media.adrcdn.com^
 ||mediacot.com^
 ||mediadar.ru^
 ||mediaip.ru^
@@ -2715,6 +2717,7 @@ _tizers.
 ||utilieur.com^
 ||utrehter.com^
 ||v2mljs.org^
+||v2mlyellow.com^
 ||vakafaro.com^
 ||vakataro.com^
 ||various1down.biz^
@@ -2896,7 +2899,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -3013,6 +3016,7 @@ nur.kz##.mmc-holder-top
 forum.soft4dle.com##.navbar > center
 magtimes.info##.owl-carousel
 allmoldova.com##.promo
+stopgame.ru##.promo-wg-league
 mmogamez.info##.publicity-line
 eg.ru##.rbanner
 2ch.hk##.rekl
@@ -4603,8 +4607,6 @@ _advideo/$object-subrequest,domain=megogo.net
 ||depositfiles.com/images/zillya/
 ||dgrad-host.com/banner.$domain=rootden.ru
 ||diary.ru^*/diaryDefault728x90.
-||digitalaccess.ru/flv-*&rnd=0.$object-subrequest,domain=ivi.ru
-||digitalaccess.ru/mp4-*&rnd=0.$object-subrequest,domain=ivi.ru
 ||dirty.ru/i/nevoobrazimo/banner_
 ||divan-tut.ru/promo
 ||djrogoff.ru/img/r_
@@ -4842,6 +4844,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||kinatvideo.ru^*/cityads/
 ||kinatvideo.ru^*/default_images/
 ||kino-cccp.net/images/banner/
+||kino-dom.tv/branding_$~stylesheet
 ||kino-govno.com/sides/
 ||kino-govno.com^*/bg.jpg|
 ||kino-portal.net/go/
@@ -5206,6 +5209,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||sat-digest.com/bac/
 ||sc2tv.ru:8080/show/$subdocument
 ||sc2tv.ru^*/bg-global-
+||screenlist.ru/ads.js
 ||seasonvar.ru/images/brand/
 ||seedoff.net/br/
 ||seedoff.net/jscript/xbtit.js
@@ -5373,6 +5377,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||xenforo.info/728.swf
 ||xf.xyu.tv^
 ||xmages.net/*/banner/
+||xxx-russian.ru/js/38fbf0.js
 ||xxx-tracker.com/pics/
 ||xxxmir.info/play.js
 ||xyya.net/banner/
@@ -5919,6 +5924,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||imgsmail.ru^*/btn/adv/$domain=mail.ru
 @@||imhonet.ru/js/templates/views/tiles/m-tiles.advert.$domain=imhonet.ru
 @@||irr.ru/ajax/*/submission/get_cat$domain=irr.ru
+@@||kino-dom.tv/branding_vulkan/css/branding.css|$domain=kino-dom.tv
 @@||krutilka.net^$domain=24smile.net
 @@||legionhardware.com/images/teasers/$~third-party
 @@||liveangarsk.ru/files/k/k-nikita.gif
