@@ -12,11 +12,11 @@
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3-osapuolen filtterit",
+    "message":"3-osapuolen suodattimet",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Sinun filtterit",
+    "message":"Sinun suodattimet",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
@@ -40,15 +40,15 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"on this page",
+    "message":"Tällä sivulla",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"Sitten asennuksen",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"tai",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -60,35 +60,35 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Mene pyynnöt lokiin",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Luo",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Valitse",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Lopeta",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"NET suodattimet",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Kosmeettiset suodattimet",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Piilota estettyjen elementtien paikkamerkit",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Näytä estetyt pyynnöt työkalupalkin kuvakkeessa",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -112,19 +112,19 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"Lista blokatuista isännistä",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Vahvista muutokset",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Mainokset",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Tietosuoja",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
@@ -132,15 +132,15 @@
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Sosiaalinen",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Monikäyttöinen",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Alueet, kielet",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -152,11 +152,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"Vahvista",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"tyhjennä välimuisti",
     "description":"English: purge cache"
   },
   "1pFormatHint":{
@@ -168,11 +168,11 @@
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"Vie",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Vahvista muutokset",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
@@ -180,7 +180,7 @@
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"Tuo ja lisää",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -188,7 +188,7 @@
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Vahvista muutokset",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
@@ -208,15 +208,15 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"Estetyt pyynnöt",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"Sallitut pyynnöt",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Tyyppi",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
@@ -228,7 +228,7 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Suodatin",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
