@@ -377,10 +377,22 @@ FilterContainer.prototype.add = function(s) {
     var i = hostnames.length;
     if ( i === 0 ) {
         this.addGenericSelector(parsed);
-    } else {
-        while ( i-- ) {
-            this.addSpecificSelector(hostnames[i], parsed);
+        return true;
+    }
+    // https://github.com/gorhill/uBlock/issues/151
+    // Negated hostname means the filter applies to all non-negated hostnames
+    // of same filter OR globally if there is no non-negated hostnames.
+    var applyGlobally = true;
+    var hostname;
+    while ( i-- ) {
+        hostname = hostnames[i];
+        if ( hostname.charAt(0) !== '~' ) {
+            applyGlobally = false;
         }
+        this.addSpecificSelector(hostname, parsed);
+    }
+    if ( applyGlobally ) {
+        this.addGenericSelector(parsed);
     }
     return true;
 };
@@ -425,7 +437,6 @@ FilterContainer.prototype.addHostnameSelector = function(hostname, parsed) {
     // https://github.com/gorhill/uBlock/issues/145
     var unhide = parsed.unhide;
     if ( hostname.charAt(0) === '~' ) {
-        this.addGenericSelector(parsed);
         hostname = hostname.slice(1);
         unhide ^= 1;
     }

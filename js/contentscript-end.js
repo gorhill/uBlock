@@ -317,7 +317,7 @@ var uBlockMessaging = (function(name){
 
     var processHighHighGenerics = function(generics, out) {
         if ( injectedSelectors[generics] !== undefined ) { return; }
-        if ( document.querySelectorAll(generics) === null ) { return; }
+        if ( document.querySelector(generics) === null ) { return; }
         injectedSelectors[generics] = true;
         if ( out !== undefined ) {
             var selectors = generics.split(',\n');
