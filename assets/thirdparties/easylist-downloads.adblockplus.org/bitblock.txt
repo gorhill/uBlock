@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: KBjT8RFh+Bfp2XvdwJA38A
-! Version: 201408121220
-! Last modified: 12 Aug 2014 12:20 UTC
+! Checksum: +5YlW67RANIhZUxVfPiSnA
+! Version: 201408141810
+! Last modified: 14 Aug 2014 18:10 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -262,6 +262,7 @@ _vkontakte.png
 /connect-facebook.
 /connect-google-
 /connect-google.
+/connect-icons-
 /connect-icons_
 /connect-instagram.
 /connect-twitter-
@@ -1224,6 +1225,7 @@ _vkontakte.png
 /sharePost/*
 /sharethis.js
 /sharethis_
+/sharetools/*$image
 /Sharetw.
 /shareTwitter.
 /shareWidgetBackgrounds.
@@ -1929,6 +1931,7 @@ _youtube_small.
 ##.vkontakte
 ##.yashare-auto-init
 ##button[class="gbil esw eswd"]
+##div[style*="url(\"http://vk.com/images/upload.gif\")"]
 ! *** easylist:fanboy-addon/fanboy_social_general_hide.txt ***
 ###AKDSocialBottom
 ###BF_BUZZBOX
@@ -2294,6 +2297,11 @@ _youtube_small.
 ###fbtwitter
 ###fcbk
 ###fdbk_tab
+###feeds-facebook
+###feeds-flickr
+###feeds-google
+###feeds-twitter
+###feeds-youtube
 ###film_social_nav
 ###fixed-bar-social-icons
 ###fl_social_share_widget-2
@@ -3490,6 +3498,7 @@ _youtube_small.
 ##.addthis_custom_button
 ##.addthis_digg
 ##.addthis_horizontal
+##.addthis_jumbo_share
 ##.addthis_separator
 ##.addthis_toolbox
 ##.addthis_toolbox_alt2
@@ -3606,6 +3615,7 @@ _youtube_small.
 ##.blog-post-share
 ##.blog-social
 ##.blog-social-item
+##.blog-social-left
 ##.blogIndexFollowOn
 ##.bloque-social
 ##.blox-social-tools-horizontal
@@ -4003,6 +4013,7 @@ _youtube_small.
 ##.fbpopup
 ##.fbpromo
 ##.fbshare
+##.fbtop
 ##.fbtweet
 ##.fbwidth
 ##.featureSocial
@@ -4226,6 +4237,7 @@ _youtube_small.
 ##.googleplus_button
 ##.googleplus_follower
 ##.googlepluscommon
+##.googleplustop
 ##.gp-share
 ##.gplus-banner
 ##.gplus-icon
@@ -4939,6 +4951,7 @@ _youtube_small.
 ##.share2-vert
 ##.share24
 ##.share24_tool
+##.share42init
 ##.shareArticle
 ##.shareBar
 ##.shareBarPostBottom
@@ -5538,6 +5551,7 @@ _youtube_small.
 ##.socialMediaFollowLinks
 ##.socialMediaIcon
 ##.socialMediaIconsSection
+##.socialMediaLinks
 ##.socialMediaList
 ##.socialMediaMod
 ##.socialMediaModule
@@ -5864,6 +5878,10 @@ _youtube_small.
 ##.top-social-icon
 ##.top-social-item
 ##.top-social-links
+##.top-subscribe-facebook
+##.top-subscribe-instagram
+##.top-subscribe-pinterest
+##.top-subscribe-twitter
 ##.topShareBtns
 ##.topSliceShare
 ##.top_follow_us
@@ -5996,6 +6014,7 @@ _youtube_small.
 ##.twitterfollowme
 ##.twitterjo
 ##.twitterlink
+##.twittertop
 ##.twitterupdates
 ##.twitterwidth
 ##.twitterwrappes
@@ -6096,6 +6115,7 @@ _youtube_small.
 ##.widget_socialcountplus
 ##.widget_socialmenu
 ##.widget_socialnetworklinks_widget
+##.widget_socials
 ##.widget_strx-simple-sharing-sidebar-widget
 ##.widget_subscribeHere
 ##.widget_synved_social_follow
@@ -6254,7 +6274,6 @@ _youtube_small.
 ##a[href^="http://www.digg.com/submit?"]
 ##a[href^="http://www.facebook.com/sharer.php?"]
 ##a[href^="http://www.facebook.com/sharer/sharer.php?u="]
-##a[href^="http://www.feedburner.com/fb/a/emailverifySubmit?"]
 ##a[href^="http://www.linkedin.com/shareArticle?"]
 ##a[href^="http://www.sharethis.com/share/?publisher="]
 ##a[href^="http://www.tumblr.com/share/"]
@@ -6914,6 +6933,7 @@ _userbar_$image
 ||ru/lines/$image
 ||ua/lines/$image
 ! *** easylist:fanboy-addon/fanboy_annoyance_general_block.txt ***
+-blog-rss.
 -buttons-rssfeed.
 -cookie-message.js
 -feed-icon.
@@ -7038,6 +7058,7 @@ _userbar_$image
 /ico_meneame.
 /ico_share_
 /icocookies.
+/icon-blog-
 /icon-bm-32-
 /icon-flavors-me-
 /icon-newsletter.
@@ -7430,6 +7451,7 @@ _social_rss.
 ###floaty-rss
 ###flwUsMod
 ###flyout-recirc
+###flyoutPromo
 ###flyoutWidget
 ###flyout_outer_wrapper
 ###foCookieNotice
@@ -7674,6 +7696,7 @@ _social_rss.
 ##.adweek_article_newsletters_block_mod
 ##.aol-newsletter
 ##.aptureTMMBar
+##.article-tile-newsletter
 ##.article_newsletter_signup
 ##.back-to-top
 ##.back_to_top
@@ -7820,6 +7843,7 @@ _social_rss.
 ##.icon-social-rss
 ##.iconeRss
 ##.icons-rss-feed
+##.incRss
 ##.infoCookies
 ##.inlineNewsletterSubscription
 ##.ione-widget-bp_newsletter_signup
@@ -7930,6 +7954,7 @@ _social_rss.
 ##.rss_icon
 ##.rss_image
 ##.rsslink
+##.rsstop
 ##.sailthruRecommendation
 ##.scribol
 ##.scroll-back-to-top-wrapper
@@ -7986,6 +8011,7 @@ _social_rss.
 ##.taboolaDiv
 ##.targetAd
 ##.td-scroll-up
+##.term-rss
 ##.to-top
 ##.toTopButton
 ##.toast-type-newCookie
@@ -8680,6 +8706,7 @@ mail.ru##a[id^="internet-offer"]
 !
 ! = Исключения ================================================================
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist_general_hide.txt ***
+dayz.com#@##go-top
 libcom.org#@##main-share
 cookiechecker.nl,monkeegenes.co.uk#@##mc_embed_signup
 ~zippyshare.com###share_button
@@ -8719,7 +8746,7 @@ babblr.me#@#mc_embed_signup
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist.txt ***
 @@/rutorrent/plugins/rss/*$image
 @@||adfoc.us/*/interstitial.js$~third-party
-@@||aliunicorn.com/js/*/cookie-info.js$domain=aliexpress.com
+@@||aliunicorn.com/js/*/cookie-info.js
 @@||barclays.co.uk/js/cookiepolicy.js
 @@||bestof.s3.amazonaws.com/twitter.png$domain=makeuseof.com
 @@||bing.net/videos/thumbnail.aspx?$domain=bing.com
@@ -8867,12 +8894,14 @@ nytimes.com#@#.sharetools
 golem.de#@#.social-bar
 golem.de#@#.social-bottom
 bitbucket.org,paypal.com,tvspielfilm.de#@#.social-box
+udemy.com#@#.social-btn
 golem.de#@#.social-button
 cheezburger.com#@#.social-buttons
 github.com#@#.social-count
 golem.de#@#.social-counter
 4players.de#@#.social-facebook
 4players.de#@#.social-gplus
+udemy.com#@#.social-icon
 deathfromabove1979.com,time.com#@#.social-links
 technorati.com#@#.social-media
 last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se#@#.social-sharing
@@ -8916,6 +8945,7 @@ digg.com#@#a[href^="http://www.digg.com/submit?"]
 tumblr.com#@#a[href^="http://www.tumblr.com/share/"]
 facebook.com#@#a[href^="https://facebook.com/sharer.php?"]
 twitter.com#@#a[href^="https://twitter.com/intent/follow?"]
+yellosoft.us#@#a[href^="https://twitter.com/intent/tweet?"]
 facebook.com#@#a[href^="https://www.facebook.com/sharer.php?"]
 ~digg.com##div[id^="digg-widget-"]
 acceptableads.org,easyicon.net#@#img[alt="Reddit"]

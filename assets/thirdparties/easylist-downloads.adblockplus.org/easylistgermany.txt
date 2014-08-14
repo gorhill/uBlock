@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: vNbj9vGRrJgZELWnQn6Bqw
-! Version: 201408121221
+! Checksum: mQXPQzG8cLKTu3Mp4d26lA
+! Version: 201408141811
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 12 Aug 2014 12:21 UTC
+! Last modified: 14 Aug 2014 18:10 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3659,23 +3659,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||zweinullig.de/wp-content/uploads/125.png
 ||zweinullig.de/wp-content/uploads/chaershop.jpg
 ! Anti-Adblock
-/^[^\/]+\/\/[^\/]+\/[^\/]+\/abc\//$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/a*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/b*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/c*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/d*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/e*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/f*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/g*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/h*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/i*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/j*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/k*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/l*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/m*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/n*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/o*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
-/t*/img/*$image,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 ||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
@@ -5667,7 +5650,7 @@ stern.de##.spitzanzeige
 delamar.de,lhc-cottbus.de##.spon
 fuldaerzeitung.de##.spon_318_2_2
 ehv-aue.org##.spons_div
-20min.ch,heise.de,lehrerfreund.de,lounge.fm,sueddeutsche.de##.sponsor
+20min.ch,europages.de,heise.de,lehrerfreund.de,lounge.fm,sueddeutsche.de##.sponsor
 svwehen-wiesbaden.de##.sponsorLeiste
 bz-berlin.de##.sponsorTop
 ehrensenf.com##.sponsorcenter
@@ -7450,10 +7433,13 @@ pcwelt.de##div[id^="google_ads_"]
 @@.com^*.js$script,domain=ul-load.com|uploaded-premium.ru
 @@.gif#$domain=java-forum.org|loads7.com|schweizer-abgeltungssteuer.ch|startup-connection.de
 @@.jpg#$domain=brasilienfreunde.net|green-24.de|juristische-suche.de|peugeot-metropolis.de|proverbia-iuris.de|rene-neuweiler.ch|streamit.ws|umweltlupe.de
+@@.jpg^$domain=epochtimes.de
 @@.net^*.js$script,domain=ul-load.com|uploaded-premium.ru
 @@.org^$script,domain=ul-load.com|uploaded-premium.ru
 @@.png#$domain=aktuelles-handelsrecht.info|aussenwirtschaftslupe.de|energielupe.de|europalupe.eu|finanzmarkttransaktionssteuer.de|gerichtsboulevard.de|grundrechteschutz.de|hartzbote.de|jagdlupe.de|kirchensteuerinfo.de|live-stream.tv|mediationslupe.de|medienrechtsnews.de|mutterschutz-rechner.de|rappers.in|rechtslupe.de|rechtslupe.net|rechtsschutzversicherunginfo.de|rentenbote.de|schuetzenrecht.de|sozialrechtsnews.de|steuerschmiede-aktuell.de|teamspeak-ts.com|tobinsteuer.de|twixzo.de|ul-load.com|uploaded-premium.ru|vereinslupe.de|vorsorgebote.de|wintotal-forum.de|wirtschaft-recht-aktuell.de
 @@.png?$domain=mobilfunk-geschichte.de
+@@.png^$domain=epochtimes.de
+@@/^https?\:\/\/(?!(ad\.adnet\.de|de\.ioam\.de|partner\.googleadservices\.com|static\.plista\.com|www\.google-analytics\.com|www\.google\.com|epochtim\.ivwbox\.de|www\.googleapis\.com|tracking\.rce\.veeseo\.com|adfarm\.nativeads\.de|d\.ligatus\.com|epochtimes\.de\.intellitxt\.com)\/)/$image,script,third-party,domain=epochtimes.de
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net)\/)/$object-subrequest,third-party,domain=golem.de
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net|ad\.yieldlab\.net|c\.t4ft\.de|cdn\.krxd\.net|audio\.de\.intellitxt\.com|audio\.digidip\.net|gwp\.nuggad\.net|juggler\.services\.disqus\.com|pagead2\.googlesyndication\.com|partner\.googleadservices\.com|de\.ioam\.de|pix04\.revsci\.net|platform\.twitter\.com|qs\.ioam\.de|referrer\.disqus\.com|static\.chartbeat\.com|wms\.assoc-amazon\.com|www\.google-analytics\.com|www\.xing-share\.com|audiode\.ivwbox\.de|weka\.met\.vgwort\.de|cdn\.syndication\.twimg\.com)\/)/$image,script,third-party,domain=audio.de
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net|ad\.yieldlab\.net|c\.t4ft\.de|cdn\.krxd\.net|colorfoto\.de\.intellitxt\.com|colorfoto\.digidip\.net|gwp\.nuggad\.net|juggler\.services\.disqus\.com|pagead2\.googlesyndication\.com|partner\.googleadservices\.com|de\.ioam\.de|pix04\.revsci\.net|platform\.twitter\.com|qs\.ioam\.de|referrer\.disqus\.com|static\.chartbeat\.com|wms\.assoc-amazon\.com|www\.google-analytics\.com|www\.xing-share\.com|colorfot\.ivwbox\.de|weka\.met\.vgwort\.de|cdn\.syndication\.twimg\.com)\/)/$image,script,third-party,domain=colorfoto.de
@@ -7636,6 +7622,7 @@ pcwelt.de##div[id^="google_ads_"]
 @@||idlity.de^$script,domain=gamona.de|lustich.de
 @@||imagesrv.adition.com/js/adition.js$domain=n-tv.de
 @@||inciteb.de^$script,domain=gamona.de|lustich.de
+@@||indalam.de^$document,subdocument,domain=lustich.de
 @@||indalam.de^$script,domain=gamona.de|lustich.de
 @@||innovid.com^*;cb=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ivwbox.de^*#$image,domain=lustich.de
@@ -7659,7 +7646,6 @@ pcwelt.de##div[id^="google_ads_"]
 @@||magnus.de/public/scripts/afc/$script,domain=audio.de|colorfoto.de|connect.de|connected-home.de|pc-magazin.de|video-magazin.de
 @@||mannfuermann.com/mfm/static/adcode.js
 @@||manughl.de^$script,domain=gamona.de|lustich.de
-@@||media.epochtimes.de^$image
 @@||mediationslupe.de^$elemhide
 @@||medienrechtsnews.de^$elemhide
 @@||mename.de^$script,domain=gamona.de|lustich.de
@@ -7671,9 +7657,6 @@ pcwelt.de##div[id^="google_ads_"]
 @@||myvideo.*/ad.js
 @@||n-roms.de/adframe.js
 @@||n-tv.de/ads/bmw/bmw_tv.js$domain=teleboerse.de
-@@||nativeads.de/loading.php?$script,domain=epochtimes.de
-@@||nativeads.de/publishing.php?aid=$script,domain=epochtimes.de
-@@||nativeads.de/selecting.php?$script,domain=epochtimes.de
 @@||news-reader.info^$image,script,domain=news.feed-reader.net
 @@||news.feed-reader.net/adimages/$subdocument
 @@||nuggad.net/bk?*&nuggtg=de_putpattv_music&$object-subrequest,domain=putpat.tv

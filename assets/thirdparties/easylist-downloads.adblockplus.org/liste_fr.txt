@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: +dcFbNZPRMYpAVHsk9ukvQ
-! Version: 201408121221
+! Checksum: EJ8Wc9pmzDAJawaCchobnQ
+! Version: 201408141811
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3488,11 +3488,13 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||icello.in/*.js|$script,third-party
 @@||inc.gs/*.js|$script,third-party
 @@||info.gf/*.js|$script,third-party
+@@||javafaq.nu/*.js|$script,third-party
 @@||joe.dj/*.js|$script,third-party
 @@||jpe.js/*.js|$script,third-party
 @@||jundy.org/*.js|$script,third-party
 @@||kbosf.ax.lt/*.js|$script,third-party
 @@||leet.la/*.js|$script,third-party
+@@||linuxd.net/*.js|$script,third-party
 @@||linuxd.org/*.js|$script,third-party
 @@||mazdarx7.com/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
@@ -3566,11 +3568,13 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.hpc.tw/$third-party,xmlhttprequest
 |http://*.icello.in/$third-party,xmlhttprequest
 |http://*.info.gf/$third-party,xmlhttprequest
+|http://*.javafaq.nu/$third-party,xmlhttprequest
 |http://*.joe.dj/$third-party,xmlhttprequest
 |http://*.jpe.js/$third-party,xmlhttprequest
 |http://*.jundy.org/$third-party,xmlhttprequest
 |http://*.keep.se/$third-party,xmlhttprequest
 |http://*.leet.la/$third-party,xmlhttprequest
+|http://*.linuxd.net/$third-party,xmlhttprequest
 |http://*.linuxd.org/$third-party,xmlhttprequest
 |http://*.mazdarx7.com/$third-party,xmlhttprequest
 |http://*.mine.bz/$third-party,xmlhttprequest

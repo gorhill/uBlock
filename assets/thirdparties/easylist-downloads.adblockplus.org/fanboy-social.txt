@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 4a7Om37fmP1qmagorQR7iw
-! Version: 201408121221
+! Checksum: PaBpkfH5EZWy/aP1LI8L2A
+! Version: 201408141811
 ! Title: Fanboy's Social Blocking List
-! Last modified: 12 Aug 2014 12:21 UTC
+! Last modified: 14 Aug 2014 18:11 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -223,6 +223,7 @@
 /connect-facebook.
 /connect-google-
 /connect-google.
+/connect-icons-
 /connect-icons_
 /connect-instagram.
 /connect-twitter-
@@ -1185,6 +1186,7 @@
 /sharePost/*
 /sharethis.js
 /sharethis_
+/sharetools/*$image
 /Sharetw.
 /shareTwitter.
 /shareWidgetBackgrounds.
@@ -2210,6 +2212,11 @@ _youtube_small.
 ###fbtwitter
 ###fcbk
 ###fdbk_tab
+###feeds-facebook
+###feeds-flickr
+###feeds-google
+###feeds-twitter
+###feeds-youtube
 ###film_social_nav
 ###fixed-bar-social-icons
 ###fl_social_share_widget-2
@@ -3406,6 +3413,7 @@ _youtube_small.
 ##.addthis_custom_button
 ##.addthis_digg
 ##.addthis_horizontal
+##.addthis_jumbo_share
 ##.addthis_separator
 ##.addthis_toolbox
 ##.addthis_toolbox_alt2
@@ -3522,6 +3530,7 @@ _youtube_small.
 ##.blog-post-share
 ##.blog-social
 ##.blog-social-item
+##.blog-social-left
 ##.blogIndexFollowOn
 ##.bloque-social
 ##.blox-social-tools-horizontal
@@ -3919,6 +3928,7 @@ _youtube_small.
 ##.fbpopup
 ##.fbpromo
 ##.fbshare
+##.fbtop
 ##.fbtweet
 ##.fbwidth
 ##.featureSocial
@@ -4142,6 +4152,7 @@ _youtube_small.
 ##.googleplus_button
 ##.googleplus_follower
 ##.googlepluscommon
+##.googleplustop
 ##.gp-share
 ##.gplus-banner
 ##.gplus-icon
@@ -4855,6 +4866,7 @@ _youtube_small.
 ##.share2-vert
 ##.share24
 ##.share24_tool
+##.share42init
 ##.shareArticle
 ##.shareBar
 ##.shareBarPostBottom
@@ -5454,6 +5466,7 @@ _youtube_small.
 ##.socialMediaFollowLinks
 ##.socialMediaIcon
 ##.socialMediaIconsSection
+##.socialMediaLinks
 ##.socialMediaList
 ##.socialMediaMod
 ##.socialMediaModule
@@ -5780,6 +5793,10 @@ _youtube_small.
 ##.top-social-icon
 ##.top-social-item
 ##.top-social-links
+##.top-subscribe-facebook
+##.top-subscribe-instagram
+##.top-subscribe-pinterest
+##.top-subscribe-twitter
 ##.topShareBtns
 ##.topSliceShare
 ##.top_follow_us
@@ -5912,6 +5929,7 @@ _youtube_small.
 ##.twitterfollowme
 ##.twitterjo
 ##.twitterlink
+##.twittertop
 ##.twitterupdates
 ##.twitterwidth
 ##.twitterwrappes
@@ -6012,6 +6030,7 @@ _youtube_small.
 ##.widget_socialcountplus
 ##.widget_socialmenu
 ##.widget_socialnetworklinks_widget
+##.widget_socials
 ##.widget_strx-simple-sharing-sidebar-widget
 ##.widget_subscribeHere
 ##.widget_synved_social_follow
@@ -6170,7 +6189,6 @@ _youtube_small.
 ##a[href^="http://www.digg.com/submit?"]
 ##a[href^="http://www.facebook.com/sharer.php?"]
 ##a[href^="http://www.facebook.com/sharer/sharer.php?u="]
-##a[href^="http://www.feedburner.com/fb/a/emailverifySubmit?"]
 ##a[href^="http://www.linkedin.com/shareArticle?"]
 ##a[href^="http://www.sharethis.com/share/?publisher="]
 ##a[href^="http://www.tumblr.com/share/"]
@@ -6806,7 +6824,7 @@ smackjuice.com###smj-sharebar-vertical
 prlog.org###smx
 prlog.org###smx2
 chromefans.org###sns_btns
-amazinglytimedphotos.com,androidzoom.com,appchronicles.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,haydenplanetarium.org,hollywire.com,hostcabi.net,humorhub.org,imgur.com,inkscape.org,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,thepiratebay.se,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
+amazinglytimedphotos.com,androidzoom.com,appchronicles.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,haydenplanetarium.org,hollywire.com,hostcabi.net,humorhub.org,imgur.com,inkscape.org,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,theparisreview.org,thepiratebay.se,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
 christianpost.com###social-apps
 omgchrome.com###social-listing
 seibertron.com###social-networking
@@ -6818,6 +6836,7 @@ beyondblindfold.com###ssba
 dailyhiit.com###stay-motivated
 statefarm.com###stayConnected
 decoist.com###sticky
+numberfire.com###story-share
 file-24.com###stp-bg
 file-24.com###stp-main
 makeuseof.com###subnav-container[style$=" position: fixed; top: 0px;"]
@@ -7242,6 +7261,7 @@ hwcompare.com##div[style="float:right; padding: 10px;"]
 tipstrickshack.blogspot.co.uk##div[style="float:right;width:250px;"]
 seriouslyforreal.com##div[style="height: 90px;"]
 fansshare.com##div[style="height:100px;"]
+vl-news.com##div[style="padding-top:5px;height:290px"]
 timesofindia.indiatimes.com##div[style="position:absolute;top:0px;right:0px;padding:4px 5px 0px 25px;background-image:url(/photo/17572538.cms);background-repeat:no-repeat; background-position: 0 1px"]
 skinnytaste.com##div[style="text-align:left; margin-left:auto; margin-right:auto;"]
 jimdoforum.com##div[style="width: 19.95%;"]
@@ -7610,12 +7630,14 @@ nytimes.com#@#.sharetools
 golem.de#@#.social-bar
 golem.de#@#.social-bottom
 bitbucket.org,paypal.com,tvspielfilm.de#@#.social-box
+udemy.com#@#.social-btn
 golem.de#@#.social-button
 cheezburger.com#@#.social-buttons
 github.com#@#.social-count
 golem.de#@#.social-counter
 4players.de#@#.social-facebook
 4players.de#@#.social-gplus
+udemy.com#@#.social-icon
 deathfromabove1979.com,time.com#@#.social-links
 technorati.com#@#.social-media
 last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se#@#.social-sharing
@@ -7659,6 +7681,7 @@ digg.com#@#a[href^="http://www.digg.com/submit?"]
 tumblr.com#@#a[href^="http://www.tumblr.com/share/"]
 facebook.com#@#a[href^="https://facebook.com/sharer.php?"]
 twitter.com#@#a[href^="https://twitter.com/intent/follow?"]
+yellosoft.us#@#a[href^="https://twitter.com/intent/tweet?"]
 facebook.com#@#a[href^="https://www.facebook.com/sharer.php?"]
 ~digg.com##div[id^="digg-widget-"]
 acceptableads.org,easyicon.net#@#img[alt="Reddit"]

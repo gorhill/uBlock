@@ -404,7 +404,7 @@ mil.bo
 tv.bo
 
 // br : http://registro.br/dominio/categoria.html
-// Submitted by registry <fneves@registro.br> 2014-03-04
+// Submitted by registry <fneves@registro.br> 2014-08-11
 br
 adm.br
 adv.br
@@ -452,7 +452,7 @@ mil.br
 mp.br
 mus.br
 net.br
-nom.br
+*.nom.br
 not.br
 ntr.br
 odo.br
@@ -818,7 +818,14 @@ gob.es
 edu.es
 
 // et : http://en.wikipedia.org/wiki/.et
-*.et
+et
+com.et
+gov.et
+org.et
+edu.et
+biz.et
+name.et
+info.et
 
 // eu : http://en.wikipedia.org/wiki/.eu
 eu
@@ -6005,11 +6012,35 @@ mil.to
 // Submitted by Ryan Sleevi <ryan.sleevi@gmail.com> 2014-01-03
 tp
 
-// tr : http://en.wikipedia.org/wiki/.tr
-*.tr
-!nic.tr
-// Used by government in the TRNC
-// http://en.wikipedia.org/wiki/.nc.tr
+// subTLDs: https://www.nic.tr/forms/eng/policies.pdf
+//     and: https://www.nic.tr/forms/politikalar.pdf
+// Submitted by <mehmetgurevin@gmail.com> 2014-07-19
+tr
+com.tr
+info.tr
+biz.tr
+net.tr
+org.tr
+web.tr
+gen.tr
+tv.tr
+av.tr
+dr.tr
+bbs.tr
+name.tr
+tel.tr
+gov.tr
+bel.tr
+pol.tr
+mil.tr
+k12.tr
+edu.tr
+kep.tr
+
+// Used by Northern Cyprus
+nc.tr
+
+// Used by government agencies of Northern Cyprus
 gov.nc.tr
 
 // travel : http://en.wikipedia.org/wiki/.travel
@@ -6284,7 +6315,7 @@ k12.mo.us
 k12.ms.us
 k12.mt.us
 k12.nc.us
-k12.nd.us
+// k12.nd.us  Bug 1028347 - Removed at request of Travis Rosso <trossow@nd.gov>
 k12.ne.us
 k12.nh.us
 k12.nj.us
@@ -6309,7 +6340,6 @@ k12.wa.us
 k12.wi.us
 // k12.wv.us  Bug 947705 - Removed at request of Verne Britton <verne@wvnet.edu>
 k12.wy.us
-
 cc.ak.us
 cc.al.us
 cc.ar.us
@@ -6365,7 +6395,6 @@ cc.wa.us
 cc.wi.us
 cc.wv.us
 cc.wy.us
-
 lib.ak.us
 lib.al.us
 lib.ar.us
@@ -6421,7 +6450,6 @@ lib.wa.us
 lib.wi.us
 // lib.wv.us  Bug 941670 - Removed at request of Larry W Arnold <arnold@wvlc.lib.wv.us>
 lib.wy.us
-
 // k12.ma.us contains school districts in Massachusetts. The 4LDs are
 //  managed indepedently except for private (PVT), charter (CHTR) and
 //  parochial (PAROCH) schools.  Those are delegated dorectly to the
@@ -7673,8 +7701,8 @@ pictures
 // gripe : 2014-03-07 Corn Sunset, LLC
 gripe
 
-// engineering : 2014-03-07 United TLD Holdco Ltd.
-engineering
+// engineer : 2014-03-07 United TLD Holdco Ltd.
+engineer
 
 // associates : 2014-03-07 Baxter Hill, LLC
 associates
@@ -7992,13 +8020,13 @@ cern
 healthcare
 
 // xn--30rr7y : 2014-06-13 Excellent First Limited
-xn--30rr7y
+慈善
 
 // band : 2014-06-13 Auburn Hollow, LLC
 band
 
 // xn--9et52u : 2014-06-13 RISE VICTORY LIMITED
-xn--9et52u
+时尚
 
 // world : 2014-06-13 Bitter Fields, LLC
 world
@@ -8025,10 +8053,10 @@ pharmacy
 dvag
 
 // xn--vermgensberater-ctb : 2014-06-23 Deutsche Vermögensberatung Aktiengesellschaft DVAG
-xn--vermgensberater-ctb
+vermögensberater
 
 // xn--vermgensberatung-pwb : 2014-06-23 Deutsche Vermögensberatung Aktiengesellschaft DVAG
-xn--vermgensberatung-pwb
+vermögensberatung
 
 // montblanc : 2014-06-23 Richemont DNS Inc.
 montblanc
@@ -8579,6 +8607,10 @@ global.prod.fastly.net
 // Submitted by Chris Raynor <chris@firebase.com> 2014-01-21
 firebaseapp.com
 
+// Flynn : https://flynn.io
+// Submitted by Jonathan Rudenberg <jonathan@flynn.io> 2014-07-12
+flynnhub.com
+
 // GitHub, Inc.
 // Submitted by Ben Toews <btoews@github.com> 2014-02-06
 github.io
@@ -8685,6 +8717,10 @@ rhcloud.com
 // priv.at : http://www.nic.priv.at/
 // Submitted by registry <lendl@nic.at> 2008-06-09
 priv.at
+
+// Yola : https://www.yola.com/
+// Submitted by Stefano Rivera <stefano@yola.com> 2014-07-09
+yolasite.com
 
 // ZaNiC : http://www.za.net/
 // Submitted by registry <hostmaster@nic.za.net> 2009-10-03

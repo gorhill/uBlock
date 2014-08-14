@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: L2q5D493f2thBOj4qZ08yg
-! Version: 201408121221
+! Checksum: g7nkCWA3M2B2dONgd63XVw
+! Version: 201408141811
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 12 Aug 2014 12:21 UTC
+! Ultima modifica: 14 Aug 2014 18:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2356,7 +2356,7 @@ agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,
 soldionline.it##.sm_widget_contenitore
 tgcom24.mediaset.it##.spaceBanner
 ciao.it##.specialOfferMod
-gazzetta.it,ilgiornale.it,pubblicitaitalia.it,repubblica.it,stickmangames.altervista.org,violanews.com##.sponsor
+europages.it,gazzetta.it,ilgiornale.it,pubblicitaitalia.it,repubblica.it,stickmangames.altervista.org,violanews.com##.sponsor
 fcparma.com##.sponsor-group
 erbanotizie.com,lecconotizie.com##.sponsor-rubrica
 treccani.it##.sponsorLogo

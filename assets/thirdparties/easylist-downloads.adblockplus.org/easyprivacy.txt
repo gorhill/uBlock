@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: onXT7Clr71gYCYqnBoSLtg
-! Version: 201408121221
+! Checksum: GfW+EJt/S8kRaiVzgmKqJA
+! Version: 201408141811
 ! Title: EasyPrivacy
-! Last modified: 12 Aug 2014 12:21 UTC
+! Last modified: 14 Aug 2014 18:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2319,6 +2319,7 @@ http://utm.
 ||analytics-engine.net^$third-party
 ||analyticswizard.com^$third-party
 ||analytk.com^$third-party
+||anametrix.com^$third-party
 ||anametrix.net^$third-party
 ||anatid3.com^$third-party
 ||angelfishstats.com^$third-party
@@ -3371,7 +3372,6 @@ http://utm.
 ||seoparts.net^$third-party
 ||seoradar.ro^$third-party
 ||serious-partners.com^$third-party
-||servedbyopenx.com^$third-party
 ||servestats.com^$third-party
 ||servustats.com^$third-party
 ||sessioncam.com^$third-party
@@ -4523,6 +4523,7 @@ http://utm.
 ||analytics.optilead.co.uk^
 ||analytics.performable.com^
 ||analytics.prod.aws.ecnext.net^
+||analytics.r17.com^
 ||analytics.radiatemedia.com^
 ||analytics.reyrey.net^
 ||analytics.rogersmedia.com^
@@ -4587,6 +4588,7 @@ http://utm.
 ||bazaarvoice.com^*/magpie.js
 ||bc.geocities.
 ||beacon.errorception.com^
+||beacon.guim.co.uk^
 ||beacon.heliumnetwork.com^
 ||beacon.indieclick.com^
 ||beacon.richrelevance.com^
@@ -8971,7 +8973,7 @@ http://utm.
 @@||mightyspring.com/static/js/beacon.js?$~third-party
 @@||milb.com/shared/scripts/bam.tracking.js
 @@||mixpanel.com/site_media/js/api/mixpanel.js$domain=blog.cloudflare.com
-@@||mixpanel.com/track/?data=$xmlhttprequest,domain=change.org|kickstarter.com|thefrisky.com|vid.me
+@@||mixpanel.com/track/?data=$xmlhttprequest,domain=change.org|kickstarter.com|mint.com|thefrisky.com|vid.me
 @@||mlb.com/shared/scripts/bam.tracking.js
 @@||monetate.net/js/$domain=nike.com
 @@||mongoosemetrics.com/jsfiles/js-correlation/mm-rules.min.js$domain=subaru.com
@@ -8987,7 +8989,6 @@ http://utm.
 @@||mybuys.com/webrec/wr.do?
 @@||mycokerewards.com^*/webtrends/mcr3-webtrends_POST_$script
 @@||mycommunitynow.com/includes/JI_trafficTracking.js$domain=mycommunitynow.com
-@@||myfamilycominc.tt.omtrdc.net^$script,domain=ancestry.com.au
 @@||narf-archive.com^*/clickstream.js
 @@||nationwide.co.uk/_/js/webAnalytics.js
 @@||ncbi.nlm.nih.gov/stat?
@@ -9006,7 +9007,7 @@ http://utm.
 @@||nytimes.com^*/wtinit.js
 @@||odcdn.com^*/cm.js
 @@||officeworks.com.au^*/site-tracker.js
-@@||omtrdc.net^*/mbox/standard?$script,domain=blogtalkradio.com
+@@||omtrdc.net^*/mbox/standard?$script,domain=ancestry.com|ancestry.com.au|blogtalkradio.com
 @@||ooyala.com/3rdparty/comscore_$object-subrequest,domain=livetvcafe.net
 @@||ooyala.com/3rdparty/comscore_*.swf$domain=bloomberg.com|businessweek.com|greentechmedia.com
 @@||ooyala.com/crossdomain.xml$object-subrequest
@@ -9154,13 +9155,14 @@ http://utm.
 @@||globalnews.ca/b/ss/
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
 @@||kohls.com/b/ss/$image
+@@||metrics.ancestry.com/b/ss/$image
 @@||metrics.brooksbrothers.com/b/ss/$image
 @@||metrics.nationwide.co.uk/b/ss/$image
 @@||metrics.target.com/b/ss/$image
 @@||metrics.ticketmaster.com/b/ss/$image
 @@||oms.dowjoneson.com/b/ss/$image,domain=wsj.com
-@@||scorecardresearch.com/r2?$image,domain=billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
-@@||scorecardresearch.com/r?$image,domain=billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
+@@||scorecardresearch.com/r2?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
+@@||scorecardresearch.com/r?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
 @@||simyo.de/b/ss/$image
 @@||smetrics.target.com/b/ss/$image
 @@||smetrics.ticketmaster.com/b/ss/$image

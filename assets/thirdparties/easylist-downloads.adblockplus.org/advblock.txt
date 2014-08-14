@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: nVRL7mHtHhLnGzlHsGYRvg
-! Version: 201408121220
-! Last modified: 12 Aug 2014 12:20 UTC
+! Checksum: /dhokgHz3s6nk3eLCbU5/w
+! Version: 201408141810
+! Last modified: 14 Aug 2014 18:10 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2434,6 +2434,7 @@ _tizers.
 ||mxtads.com^
 ||myads.ru^
 ||myarusel.gpor.ru^$third-party
+||mynagor.com^
 ||mytizer.com^
 ||mytraff.net^$~popup,popup
 ||nav-links.com^
@@ -3013,6 +3014,7 @@ glav.su##.ma_block
 gorod.cn.ua##.main > div[class$="-block"]
 allmoldova.com##.middle_banner
 nur.kz##.mmc-holder-top
+macosworld.ru##.morefoot_back
 forum.soft4dle.com##.navbar > center
 magtimes.info##.owl-carousel
 allmoldova.com##.promo
@@ -3043,6 +3045,7 @@ nur.kz##.wallpaper
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
 kinoafisha.ua##a.brandup
+pornolab.net##a[href*="/store/"][style*="color"]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
@@ -3052,7 +3055,6 @@ unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
-pornolab.net##a[href^="http://vsexshop.ru/store/"]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
 goodgame.ru##a[id^="banner-"]
@@ -3886,7 +3888,7 @@ bigcaucasus.com,pravda.ru##.staticFragment
 kinopoisk.ru##.superb
 sovsport.ru##.t-live
 theplace.ru##.t10
-pornolab.cc,pornolab.net##.tCenter.nowrap.mrg_12
+pornolab.net##.tCenter.nowrap.mrg_12
 image2you.ru##.t_tips2 ~ .t_tips2
 taba.ru##.taba_rss_wr.rel.fl
 theplace.ru##.td_main > noindex
@@ -4359,6 +4361,7 @@ forum.soft4dle.com##.navbar > br
 rentv-smolensk.ru##.promo
 medikforum.ru##.r_banner
 softobase.com##.rkl-horizontal
+cheboksary.ws##.ru200200
 delfi.lv##.top-banner
 foto.ua##.top-banner-container
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.top_ba
@@ -5992,6 +5995,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||video.begun.ru/flowplayer_begun_lib.swf|
 @@||video.gamer-info.com^*.mp4$domain=gamer-info.com
 @@||video.videonow.ru/crossdomain.xml
+@@||videocore.tv^*/pladform_pitertv.swf|$object-subrequest,domain=piter.tv
 @@||videonow.ru^*/ad_holder.$domain=~cybergame.tv
 @@||virpl.ru^*_advert.php$xmlhttprequest,domain=virpl.ru
 @@||vodyanoy.com.ua^*700_200.jpg|$domain=vodyanoy.com.ua

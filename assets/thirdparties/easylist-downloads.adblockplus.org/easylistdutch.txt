@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: ZZ5Z2SyHGmgjcJ+K9Jjktg
-! Version: 201408121221
+! Checksum: svsiqxVWnyTO1U8+dlh/zA
+! Version: 201408141811
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 12 Aug 2014 12:21 UTC
+! Last modified: 14 Aug 2014 18:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1094,7 +1094,7 @@ studenten.net##.snet-auto-banner
 weeronline.nl##.specialBlockAboveActivities
 weeronline.nl##.specialBlockSmall
 engineeringnet.be##.sponslinks
-utopiatv.nl,vcmw-sigma.nl##.sponsor
+europages.nl,utopiatv.nl,vcmw-sigma.nl##.sponsor
 afspraakjes.be,boekmeter.nl,gamesmeter.nl,moviemeter.nl,musicmeter.nl,tvgids.nl##.sponsored
 voetbalkrant.com##.take-banner
 z24.nl##.teaser

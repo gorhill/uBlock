@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: g4t9mwRlpZXAO9NcVVRhAg
-! Version: 201408121221
+! Checksum: RA3VkSCg+eURccMPOocusw
+! Version: 201408141811
 ! Title: Fanboy's Annoyance List
-! Last modified: 12 Aug 2014 12:21 UTC
+! Last modified: 14 Aug 2014 18:11 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -12,6 +12,7 @@
 !
 !--------------------------General blocking rules-----------------------------!
 ! *** easylist:fanboy-addon/fanboy_annoyance_general_block.txt ***
+-blog-rss.
 -buttons-rssfeed.
 -cookie-message.js
 -feed-icon.
@@ -136,6 +137,7 @@
 /ico_meneame.
 /ico_share_
 /icocookies.
+/icon-blog-
 /icon-bm-32-
 /icon-flavors-me-
 /icon-newsletter.
@@ -486,6 +488,7 @@ _social_rss.
 /connect-facebook.
 /connect-google-
 /connect-google.
+/connect-icons-
 /connect-icons_
 /connect-instagram.
 /connect-twitter-
@@ -1448,6 +1451,7 @@ _social_rss.
 /sharePost/*
 /sharethis.js
 /sharethis_
+/sharetools/*$image
 /Sharetw.
 /shareTwitter.
 /shareWidgetBackgrounds.
@@ -2344,6 +2348,7 @@ _youtube_small.
 ###floaty-rss
 ###flwUsMod
 ###flyout-recirc
+###flyoutPromo
 ###flyoutWidget
 ###flyout_outer_wrapper
 ###foCookieNotice
@@ -2588,6 +2593,7 @@ _youtube_small.
 ##.adweek_article_newsletters_block_mod
 ##.aol-newsletter
 ##.aptureTMMBar
+##.article-tile-newsletter
 ##.article_newsletter_signup
 ##.back-to-top
 ##.back_to_top
@@ -2734,6 +2740,7 @@ _youtube_small.
 ##.icon-social-rss
 ##.iconeRss
 ##.icons-rss-feed
+##.incRss
 ##.infoCookies
 ##.inlineNewsletterSubscription
 ##.ione-widget-bp_newsletter_signup
@@ -2844,6 +2851,7 @@ _youtube_small.
 ##.rss_icon
 ##.rss_image
 ##.rsslink
+##.rsstop
 ##.sailthruRecommendation
 ##.scribol
 ##.scroll-back-to-top-wrapper
@@ -2900,6 +2908,7 @@ _youtube_small.
 ##.taboolaDiv
 ##.targetAd
 ##.td-scroll-up
+##.term-rss
 ##.to-top
 ##.toTopButton
 ##.toast-type-newCookie
@@ -3365,6 +3374,11 @@ _youtube_small.
 ###fbtwitter
 ###fcbk
 ###fdbk_tab
+###feeds-facebook
+###feeds-flickr
+###feeds-google
+###feeds-twitter
+###feeds-youtube
 ###film_social_nav
 ###fixed-bar-social-icons
 ###fl_social_share_widget-2
@@ -4561,6 +4575,7 @@ _youtube_small.
 ##.addthis_custom_button
 ##.addthis_digg
 ##.addthis_horizontal
+##.addthis_jumbo_share
 ##.addthis_separator
 ##.addthis_toolbox
 ##.addthis_toolbox_alt2
@@ -4677,6 +4692,7 @@ _youtube_small.
 ##.blog-post-share
 ##.blog-social
 ##.blog-social-item
+##.blog-social-left
 ##.blogIndexFollowOn
 ##.bloque-social
 ##.blox-social-tools-horizontal
@@ -5074,6 +5090,7 @@ _youtube_small.
 ##.fbpopup
 ##.fbpromo
 ##.fbshare
+##.fbtop
 ##.fbtweet
 ##.fbwidth
 ##.featureSocial
@@ -5297,6 +5314,7 @@ _youtube_small.
 ##.googleplus_button
 ##.googleplus_follower
 ##.googlepluscommon
+##.googleplustop
 ##.gp-share
 ##.gplus-banner
 ##.gplus-icon
@@ -6010,6 +6028,7 @@ _youtube_small.
 ##.share2-vert
 ##.share24
 ##.share24_tool
+##.share42init
 ##.shareArticle
 ##.shareBar
 ##.shareBarPostBottom
@@ -6609,6 +6628,7 @@ _youtube_small.
 ##.socialMediaFollowLinks
 ##.socialMediaIcon
 ##.socialMediaIconsSection
+##.socialMediaLinks
 ##.socialMediaList
 ##.socialMediaMod
 ##.socialMediaModule
@@ -6935,6 +6955,10 @@ _youtube_small.
 ##.top-social-icon
 ##.top-social-item
 ##.top-social-links
+##.top-subscribe-facebook
+##.top-subscribe-instagram
+##.top-subscribe-pinterest
+##.top-subscribe-twitter
 ##.topShareBtns
 ##.topSliceShare
 ##.top_follow_us
@@ -7067,6 +7091,7 @@ _youtube_small.
 ##.twitterfollowme
 ##.twitterjo
 ##.twitterlink
+##.twittertop
 ##.twitterupdates
 ##.twitterwidth
 ##.twitterwrappes
@@ -7167,6 +7192,7 @@ _youtube_small.
 ##.widget_socialcountplus
 ##.widget_socialmenu
 ##.widget_socialnetworklinks_widget
+##.widget_socials
 ##.widget_strx-simple-sharing-sidebar-widget
 ##.widget_subscribeHere
 ##.widget_synved_social_follow
@@ -7325,7 +7351,6 @@ _youtube_small.
 ##a[href^="http://www.digg.com/submit?"]
 ##a[href^="http://www.facebook.com/sharer.php?"]
 ##a[href^="http://www.facebook.com/sharer/sharer.php?u="]
-##a[href^="http://www.feedburner.com/fb/a/emailverifySubmit?"]
 ##a[href^="http://www.linkedin.com/shareArticle?"]
 ##a[href^="http://www.sharethis.com/share/?publisher="]
 ##a[href^="http://www.tumblr.com/share/"]
@@ -8207,6 +8232,7 @@ redstate.com###articlesignup
 itworld.com###ask-tab
 whenonearth.net###at-noti-screen-bottom-container
 allthingsd.com###atd-conference-content-promo
+guestofaguest.com###atlwdg-trigger
 furiousfanboys.com###attentionGrabber
 regretfulmorning.com,runningshoesguru.com,techinasia.com,webotes.com###attentionGrabberWrap
 empowher.com###authDivModal
@@ -8357,7 +8383,7 @@ computerandvideogames.com###carousel__internal-ads
 aol.com,traileraddict.com,zdnet.com###catfish
 kansas.com###cb
 iacknowledge.net###cb-to-top
-askkissy.com,cagle.com,clove.co.uk,designm.ag,eclectablog.com,extremetech.com,globalvoicesonline.org,grantland.com,guide4bankexams.blogspot.co.nz,guide4bankexams.blogspot.com,heavy.com,ibtimes.com,insideclimatenews.org,lostateminor.com,mollelpixels.blogspot.in,nationalmemo.com,ndtv.com,pcmag.com,politicususa.com,radaronline.com,rasmussenreports.com,shareable.net,techglobex.blogspot.in,the-hobbitmovie.com,thewrap.com,thisislocallondon.co.uk,visual.ly,xboxgamercard.org###cboxOverlay
+askkissy.com,cagle.com,clove.co.uk,designm.ag,eclectablog.com,extremetech.com,globalvoicesonline.org,grantland.com,guide4bankexams.blogspot.co.nz,guide4bankexams.blogspot.com,heavy.com,ibtimes.com,insideclimatenews.org,lostateminor.com,mollelpixels.blogspot.in,nationalmemo.com,ndtv.com,numberfire.com,pcmag.com,politicususa.com,radaronline.com,rasmussenreports.com,shareable.net,techglobex.blogspot.in,the-hobbitmovie.com,thewrap.com,thisislocallondon.co.uk,visual.ly,xboxgamercard.org###cboxOverlay
 espn.go.com###cboxOverlay[style="display: block; opacity: 0.7; cursor: pointer;"]
 cbslocal.com###cbs-site-ribbon
 cbsnews.com###cbsSMPB
@@ -8385,7 +8411,7 @@ blogs.cnn.com###cnn_text-3
 automotive.com###cnt-floating-ftr
 yourbittorrent.com###cnv
 ndtv.com###collapseSocial
-askkissy.com,cagle.com,clove.co.uk,designm.ag,eclectablog.com,extremetech.com,globalvoicesonline.org,grantland.com,guide4bankexams.blogspot.co.nz,guide4bankexams.blogspot.com,heavy.com,ibtimes.com,lostateminor.com,medicaldaily.com,mollelpixels.blogspot.in,nationalmemo.com,ndtv.com,pcmag.com,politicususa.com,radaronline.com,rasmussenreports.com,shareable.net,techglobex.blogspot.in,the-hobbitmovie.com,thewrap.com,thisislocallondon.co.uk,visual.ly,xboxgamercard.org###colorbox
+askkissy.com,cagle.com,clove.co.uk,designm.ag,eclectablog.com,extremetech.com,globalvoicesonline.org,grantland.com,guide4bankexams.blogspot.co.nz,guide4bankexams.blogspot.com,heavy.com,ibtimes.com,lostateminor.com,medicaldaily.com,mollelpixels.blogspot.in,nationalmemo.com,ndtv.com,numberfire.com,pcmag.com,politicususa.com,radaronline.com,rasmussenreports.com,shareable.net,techglobex.blogspot.in,the-hobbitmovie.com,thewrap.com,thisislocallondon.co.uk,visual.ly,xboxgamercard.org###colorbox
 inhabitat.com###column3-follow-inhabitat
 inhabitat.com###column3_newsletter_signup
 about.com###com
@@ -8735,7 +8761,6 @@ computing.co.uk,v3.co.uk###headerStrip
 pcgamer.com###headerWidgetBackup
 citeworld.com###header[style="position: fixed; top: 0px; height: 48px;"]
 moviefone.com###header[style="top: 0px; position: fixed;"]
-variety.com###header[style^="position: fixed;"]
 technologytell.com###header_bar
 techworld.com.au###header_bottom
 fastcompany.com###header_region
@@ -10848,6 +10873,7 @@ belfasttelegraph.co.uk,independent.ie##.w80
 catonmat.net##.welcome
 gawker.com,gizmodo.com,jalopnik.com,jezebel.com,kotaku.com##.welcome_form
 citeworld.com##.welcome_mod
+tvfanatic.com##.well-small
 mylifetime.com##.wfmo-sn-block
 kdramastars.com,kpopstarz.com##.wh_transf
 pcworld.com##.whitepapers
@@ -11358,7 +11384,7 @@ smackjuice.com###smj-sharebar-vertical
 prlog.org###smx
 prlog.org###smx2
 chromefans.org###sns_btns
-amazinglytimedphotos.com,androidzoom.com,appchronicles.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,haydenplanetarium.org,hollywire.com,hostcabi.net,humorhub.org,imgur.com,inkscape.org,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,thepiratebay.se,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
+amazinglytimedphotos.com,androidzoom.com,appchronicles.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,haydenplanetarium.org,hollywire.com,hostcabi.net,humorhub.org,imgur.com,inkscape.org,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,theparisreview.org,thepiratebay.se,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
 christianpost.com###social-apps
 omgchrome.com###social-listing
 seibertron.com###social-networking
@@ -11370,6 +11396,7 @@ beyondblindfold.com###ssba
 dailyhiit.com###stay-motivated
 statefarm.com###stayConnected
 decoist.com###sticky
+numberfire.com###story-share
 file-24.com###stp-bg
 file-24.com###stp-main
 makeuseof.com###subnav-container[style$=" position: fixed; top: 0px;"]
@@ -11794,6 +11821,7 @@ hwcompare.com##div[style="float:right; padding: 10px;"]
 tipstrickshack.blogspot.co.uk##div[style="float:right;width:250px;"]
 seriouslyforreal.com##div[style="height: 90px;"]
 fansshare.com##div[style="height:100px;"]
+vl-news.com##div[style="padding-top:5px;height:290px"]
 timesofindia.indiatimes.com##div[style="position:absolute;top:0px;right:0px;padding:4px 5px 0px 25px;background-image:url(/photo/17572538.cms);background-repeat:no-repeat; background-position: 0 1px"]
 skinnytaste.com##div[style="text-align:left; margin-left:auto; margin-right:auto;"]
 jimdoforum.com##div[style="width: 19.95%;"]
@@ -12297,6 +12325,7 @@ budstikka.no##.np-videoInfo
 beeld.com,dieburger.com,volksblad.com##.social
 !---------------------------------Whitelists----------------------------------!
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist_general_hide.txt ***
+dayz.com#@##go-top
 libcom.org#@##main-share
 cookiechecker.nl,monkeegenes.co.uk#@##mc_embed_signup
 ~zippyshare.com###share_button
@@ -12445,12 +12474,14 @@ nytimes.com#@#.sharetools
 golem.de#@#.social-bar
 golem.de#@#.social-bottom
 bitbucket.org,paypal.com,tvspielfilm.de#@#.social-box
+udemy.com#@#.social-btn
 golem.de#@#.social-button
 cheezburger.com#@#.social-buttons
 github.com#@#.social-count
 golem.de#@#.social-counter
 4players.de#@#.social-facebook
 4players.de#@#.social-gplus
+udemy.com#@#.social-icon
 deathfromabove1979.com,time.com#@#.social-links
 technorati.com#@#.social-media
 last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se#@#.social-sharing
@@ -12494,13 +12525,14 @@ digg.com#@#a[href^="http://www.digg.com/submit?"]
 tumblr.com#@#a[href^="http://www.tumblr.com/share/"]
 facebook.com#@#a[href^="https://facebook.com/sharer.php?"]
 twitter.com#@#a[href^="https://twitter.com/intent/follow?"]
+yellosoft.us#@#a[href^="https://twitter.com/intent/tweet?"]
 facebook.com#@#a[href^="https://www.facebook.com/sharer.php?"]
 ~digg.com##div[id^="digg-widget-"]
 acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist.txt ***
 @@/rutorrent/plugins/rss/*$image
 @@||adfoc.us/*/interstitial.js$~third-party
-@@||aliunicorn.com/js/*/cookie-info.js$domain=aliexpress.com
+@@||aliunicorn.com/js/*/cookie-info.js
 @@||barclays.co.uk/js/cookiepolicy.js
 @@||bestof.s3.amazonaws.com/twitter.png$domain=makeuseof.com
 @@||bing.net/videos/thumbnail.aspx?$domain=bing.com
