@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Наконец, эффективный блокировщик для браузеров на базе Chromium, не нагружающий ЦП и память.",
+    "message":"Эффективный блокировщик для браузеров на базе Chromium, не нагружающий ЦП и память.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -12,7 +12,7 @@
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"Third-party filters",
+    "message":"Сторонние фильтры",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Нажмите кнопку питания, чтобы <br>постоянно отключить или включить <br>µBlock для текущего сайта",
+    "message":"Нажмите кнопку питания, чтобы <br>навсегда отключить\\включить <br>µBlock для текущего сайта",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
@@ -160,7 +160,7 @@
     "description":"English: purge cache"
   },
   "1pFormatHint":{
-    "message":"Одно правило на строку. Правилом может быть обычное имя сайти, или Adblock Plus-совместимый фильтр. Линии начинающиеся с &lsquo;!&rsquo; будут пропущены.",
+    "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Линии, начинающиеся с &lsquo;!&rsquo;, будут пропущены.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
