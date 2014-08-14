@@ -29,6 +29,8 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
+google.*###center_col > #resultStats + #tads
+google.*###center_col > #resultStats + #tads + #res + #tads
 google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
 google.*###cnt #center_col > #res > #topstuff > .ts
 google.*###main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"]
@@ -61,18 +63,11 @@ google.*##.ra[align="right"][width="30%"]
 google.*##.ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"]
 google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"]
 
-google.*###tads
-google.*###bottomads
-
 # https://github.com/gorhill/uBlock/issues/63
 @@||adf.ly^$~third-party
 
 # https://github.com/gorhill/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
-
-# https://github.com/gorhill/uBlock/issues/70
-# Workaround for issue 70.
-deviantart.com##.dp-ad-target.atf-right-300x250
 
 # Seen on mediafire.com
 ||torconpro.com^
@@ -90,10 +85,6 @@ deviantart.com##.dp-ad-target.atf-right-300x250
 # https://github.com/gorhill/uBlock/issues/119
 # To counter `google-analytics.com` in Peter Lowe's list
 @@||google-analytics.com^$domain=avianca.com
-
-# https://github.com/gorhill/uBlock/issues/120
-# `.widget_ad` is in EasyList, but because generic, it's not applied early enough
-theglobeandmail.com##.widget_ad
 
 # https://github.com/gorhill/uBlock/issues/17#issuecomment-50770224
 # To counter `c.brightcove.com` in hpHosts
