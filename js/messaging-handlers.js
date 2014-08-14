@@ -166,6 +166,13 @@ var onMessage = function(request, sender, callback) {
             }
             break;
 
+        case 'injectedGenericCosmeticSelectors':
+            µb.abpHideFilters.addToSelectorCache(
+                request.hostname,
+                request.selectors
+            );
+            break;
+
         case 'blockedRequests':
             response = {
                 collapse: µb.userSettings.collapseBlocked,

@@ -141,21 +141,21 @@ var domainCosmeticFilteringHandler = function(selectors) {
         return;
     }
     var style = document.createElement('style');
+    style.setAttribute('id', 'uBlockPreload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = selectors.donthide;
     var hide = selectors.hide;
     if ( donthide.length !== 0 ) {
-        donthide = donthide.length !== 1 ? donthide.join(',') : donthide[0];
-        donthide = donthide.split(',');
-        style.setAttribute('id', 'uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
-        style.setAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5', JSON.stringify(donthide));
+        donthide = donthide.length !== 1 ? donthide.join(',\n') : donthide[0];
+        donthide = donthide.split(',\n');
+        style.setAttribute('uBlockExceptions', JSON.stringify(donthide));
         // https://github.com/gorhill/uBlock/issues/143
         if ( hide.length !== 0 ) {
             // I chose to use Array.indexOf() instead of converting the array to
             // a map, then deleting whitelisted selectors, and then converting
             // back the map into an array, because there are typically very few
             // exception filters, if any.
-            hide = hide.length !== 1 ? hide.join(',') : hide[0];
-            hide = hide.split(',');
+            hide = hide.length !== 1 ? hide.join(',\n') : hide[0];
+            hide = hide.split(',\n');
             var i = donthide.length, j;
             while ( i-- ) {
                 j = hide.indexOf(donthide[i]);
@@ -166,9 +166,10 @@ var domainCosmeticFilteringHandler = function(selectors) {
         }
     }
     if ( hide.length !== 0 ) {
-        var text = hide.join(',');
+        var text = hide.join(',\n');
         domainCosmeticFilteringApplyCSS(text, 'display', 'none');
-        style.appendChild(document.createTextNode(text + ' {display:none !important;}'));
+        // The linefeed before the style block is very important: do no remove!
+        style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', selectors.domain, selectors.hide.length, hideStyleText);
     }
     var parent = document.head || document.documentElement;

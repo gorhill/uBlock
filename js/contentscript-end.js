@@ -132,21 +132,52 @@ var uBlockMessaging = (function(name){
     var contextNodes = [document];
 
     var domLoaded = function() {
-        // https://github.com/gorhill/uBlock/issues/14
-        // Treat any existing domain-specific exception selectors as if they had
-        // been injected already.
-        var style = document.getElementById('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
-        var exceptions = style && style.getAttribute('uBlock1ae7a5f130fc79b4fdb8a4272d9426b5');
-        if ( exceptions ) {
-            exceptions = JSON.parse(exceptions);
-            var i = exceptions.length;
+        var style = document.getElementById('uBlockPreload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+        if ( style ) {
+            // https://github.com/gorhill/uBlock/issues/14
+            // Treat any existing domain-specific exception selectors as if
+            // they had been injected already.
+            var selectors, i;
+            var exceptions = style.getAttribute('uBlockExceptions');
+            if ( exceptions ) {
+                selectors = JSON.parse(exceptions);
+                i = selectors.length;
+                while ( i-- ) {
+                    injectedSelectors[selectors[i]] = true;
+                }
+            }
+            // Avoid re-injecting already injected CSS rules.
+            selectors = selectorsFromStyles(style);
+            i = selectors.length;
             while ( i-- ) {
-                injectedSelectors[exceptions[i]] = true;
+                injectedSelectors[selectors[i]] = true;
             }
         }
         idsFromNodeList(document.querySelectorAll('[id]'));
         classesFromNodeList(document.querySelectorAll('[class]'));
         retrieveGenericSelectors();
+    };
+
+    var selectorsFromStyles = function(styleRef) {
+        var selectors = [];
+        var styles = typeof styleRef === 'string' ?
+            document.querySelectorAll(styleRef):
+            [styleRef];
+        var i = styles.length;
+        var style, subset, lastSelector, pos;
+        while ( i-- ) {
+            style = styles[i];
+            subset = style.textContent.split(',\n');
+            lastSelector = subset.pop();
+            if ( lastSelector ) {
+                pos = lastSelector.indexOf('\n');
+                if ( pos !== -1 ) {
+                    subset.push(lastSelector.slice(0, pos));
+                }
+            }
+            selectors = selectors.concat(subset);
+        }
+        return selectors;
     };
 
     var retrieveGenericSelectors = function() {
@@ -209,12 +240,19 @@ var uBlockMessaging = (function(name){
         if ( hideSelectors.length ) {
             applyCSS(hideSelectors, 'display', 'none');
             var style = document.createElement('style');
-            var text = hideSelectors.join(',\n') + ' {display:none !important;}';
-            style.appendChild(document.createTextNode(text));
+            style.setAttribute('class', 'uBlockPostload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+            // The linefeed before the style block is very important: do no remove!
+            var text = hideSelectors.join(',\n');
+            style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
             var parent = document.body || document.documentElement;
             if ( parent ) {
                 parent.appendChild(style);
             }
+            messaging.tell({
+                    what: 'injectedGenericCosmeticSelectors',
+                    hostname: window.location.hostname,
+                    selectors: text
+            });
             //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', hideSelectors.length, text);
         }
         contextNodes.length = 0;
@@ -268,7 +306,8 @@ var uBlockMessaging = (function(name){
 
     var processHighLowGenerics = function(generics, out) {
         var attrs = ['title', 'alt'];
-        var attr, attrValue, nodeList, iNode, node, selector;
+        var attr, attrValue, nodeList, iNode, node;
+        var selector;
         while ( attr = attrs.pop() ) {
             nodeList = selectNodes('[' + attr + ']');
             iNode = nodeList.length;
@@ -277,17 +316,21 @@ var uBlockMessaging = (function(name){
                 attrValue = node.getAttribute(attr);
                 if ( !attrValue ) { continue; }
                 selector = '[' + attr + '="' + attrValue + '"]';
-                if ( injectedSelectors[selector] === undefined && generics[selector] ) {
-                    injectedSelectors[selector] = true;
-                    if ( out !== undefined ) {
-                        out.push(selector);
+                if ( generics[selector] ) {
+                    if ( injectedSelectors[selector] === undefined ) {
+                        injectedSelectors[selector] = true;
+                        if ( out !== undefined ) {
+                            out.push(selector);
+                        }
                     }
                 }
                 selector = node.tagName.toLowerCase() + selector;
-                if ( injectedSelectors[selector] === undefined && generics[selector] ) {
-                    injectedSelectors[selector] = true;
-                    if ( out !== undefined ) {
-                        out.push(selector);
+                if ( generics[selector] ) {
+                    if ( injectedSelectors[selector] === undefined ) {
+                        injectedSelectors[selector] = true;
+                        if ( out !== undefined ) {
+                            out.push(selector);
+                        }
                     }
                 }
             }
@@ -297,7 +340,7 @@ var uBlockMessaging = (function(name){
     var processHighMediumGenerics = function(generics, out) {
         var nodeList = selectNodes('a[href^="http"]');
         var iNode = nodeList.length;
-        var node, href, pos, hash, selector;
+        var node, href, pos, hash, selectors, selector, iSelector;
         while ( iNode-- ) {
             node = nodeList[iNode];
             href = node.getAttribute('href');
@@ -305,29 +348,37 @@ var uBlockMessaging = (function(name){
             pos = href.indexOf('://');
             if ( pos === -1 ) { continue; }
             hash = href.slice(pos + 3, pos + 11);
-            selector = generics[hash];
-            if ( selector === undefined ) { continue; }
-            if ( injectedSelectors[selector] !== undefined ) { continue; }
-            injectedSelectors[selector] = true;
-            if ( out !== undefined ) {
-                out.push(selector);
+            selectors = generics[hash];
+            if ( selectors === undefined ) { continue; }
+            selectors = selectors.split(',\n');
+            iSelector = selectors.length;
+            while ( iSelector-- ) {
+                selector = selectors[iSelector];
+                if ( injectedSelectors[selector] === undefined ) {
+                    injectedSelectors[selector] = true;
+                    if ( out !== undefined ) {
+                        out.push(selector);
+                    }
+                }
             }
         }
     };
 
     var processHighHighGenerics = function(generics, out) {
-        if ( injectedSelectors[generics] !== undefined ) { return; }
+        if ( injectedSelectors['{{highHighGenerics}}'] !== undefined ) { return; }
         if ( document.querySelector(generics) === null ) { return; }
-        injectedSelectors[generics] = true;
-        if ( out !== undefined ) {
-            var selectors = generics.split(',\n');
-            var i = selectors.length;
-            while ( i-- ) {
-                if ( injectedSelectors[selectors[i]] !== undefined ) {
-                    selectors.splice(i, 1);
+        injectedSelectors['{{highHighGenerics}}'] = true;
+        var selectors = generics.split(',\n');
+        var iSelector = selectors.length;
+        var selector;
+        while ( iSelector-- ) {
+            selector = selectors[iSelector];
+            if ( injectedSelectors[selector] === undefined ) {
+                injectedSelectors[selector] = true;
+                if ( out !== undefined ) {
+                    out.push(selector);
                 }
             }
-            out.push(selectors.join(',\n'));
         }
     };
 
@@ -347,7 +398,6 @@ var uBlockMessaging = (function(name){
             if ( node.nodeType !== 1 ) { continue; }
             // id
             v = nodes[i].id;
-            // quite unlikely, so no need to be fancy
             if ( typeof v !== 'string' ) { continue; }
             v = v.trim();
             if ( v === '' ) { continue; }
@@ -418,7 +468,6 @@ var uBlockMessaging = (function(name){
 
     var mutationObservedHandler = function(mutations) {
         var iMutation = mutations.length;
-        var nodes = [];
         var nodeList, iNode, node;
         while ( iMutation-- ) {
             nodeList = mutations[iMutation].addedNodes;
