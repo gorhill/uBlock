@@ -133,21 +133,15 @@ var messaging = (function(name){
 // Domain-based ABP cosmetic filters.
 // These can be inserted before the DOM is loaded.
 
-var domainCosmeticFilteringHandler = function(selectors) {
-    if ( !selectors ) {
-        return;
-    }
-    if ( selectors.hide.length === 0 && selectors.donthide.length === 0 ) {
-        return;
-    }
+var cosmeticFilters = function(details) {
     var style = document.createElement('style');
-    style.setAttribute('id', 'uBlockPreload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-    var donthide = selectors.donthide;
-    var hide = selectors.hide;
+    style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+    var donthide = details.cosmeticDonthide;
+    var hide = details.cosmeticHide;
     if ( donthide.length !== 0 ) {
         donthide = donthide.length !== 1 ? donthide.join(',\n') : donthide[0];
         donthide = donthide.split(',\n');
-        style.setAttribute('uBlockExceptions', JSON.stringify(donthide));
+        style.setAttribute('data-ublock-exceptions', JSON.stringify(donthide));
         // https://github.com/gorhill/uBlock/issues/143
         if ( hide.length !== 0 ) {
             // I chose to use Array.indexOf() instead of converting the array to
@@ -167,10 +161,10 @@ var domainCosmeticFilteringHandler = function(selectors) {
     }
     if ( hide.length !== 0 ) {
         var text = hide.join(',\n');
-        domainCosmeticFilteringApplyCSS(text, 'display', 'none');
+        applyCSS(text, 'display', 'none');
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
-        //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', selectors.domain, selectors.hide.length, hideStyleText);
+        //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
     }
     var parent = document.head || document.documentElement;
     if ( parent ) {
@@ -178,7 +172,34 @@ var domainCosmeticFilteringHandler = function(selectors) {
     }
 };
 
-var domainCosmeticFilteringApplyCSS = function(selectors, prop, value) {
+var netFilters = function(details) {
+    var parent = document.head || document.documentElement;
+    if ( !parent ) {
+        return;
+    }
+    var style = document.createElement('style');
+    style.setAttribute('class', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+    var text = details.netHide.join(',\n');
+    var css = details.netCollapse ?
+        '\n{display:none !important;}' :
+        '\n{visibility:hidden !important;}';
+    style.appendChild(document.createTextNode(text + css));
+    parent.appendChild(style);
+};
+
+var filteringHandler = function(details) {
+    if ( !details ) {
+        return;
+    }
+    if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
+        cosmeticFilters(details);
+    }
+    if ( details.netHide.length !== 0 ) {
+        netFilters(details);
+    }
+};
+
+var applyCSS = function(selectors, prop, value) {
     if ( document.body === null ) {
         return;
     }
@@ -195,7 +216,7 @@ messaging.ask(
         pageURL: window.location.href,
         locationURL: window.location.href
     },
-    domainCosmeticFilteringHandler
+    filteringHandler
 );
 
 /******************************************************************************/
