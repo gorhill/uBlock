@@ -537,7 +537,11 @@ var uBlockMessaging = (function(name){
             // likely cause the hidden element to re-appear.
             elem.style.visibility = 'hidden !important';
             if ( collapse ) {
-                elem.parentNode.removeChild(elem);
+                if ( elem.parentNode ) {
+                    elem.parentNode.removeChild(elem);
+                } else {
+                    elem.style.display = 'none !important';
+                }
             }
             selectors.push(tagName + '[' + prop + '="' + src + '"]');
         }
@@ -589,8 +593,12 @@ var uBlockMessaging = (function(name){
             // If `!important` is not there, going back using history will
             // likely cause the hidden element to re-appear.
             target.style.visibility = 'hidden !important';
-            if ( details.collapse && target.parentNode ) {
-                target.parentNode.removeChild(target);
+            if ( details.collapse ) {
+                if ( target.parentNode ) {
+                    target.parentNode.removeChild(target);
+                } else {
+                    target.style.display = 'none !important';
+                }
             }
             messaging.tell({
                 what: 'injectedSelectors',
