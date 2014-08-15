@@ -457,7 +457,11 @@ FilterContainer.prototype.add = function(s) {
         if ( hostname.charAt(0) !== '~' ) {
             applyGlobally = false;
         }
-        this.addSpecificSelector(hostname, parsed);
+        if ( hostname.slice(-2) === '.*' ) {
+            this.addEntitySelector(hostname, parsed);
+        } else {
+            this.addHostnameSelector(hostname, parsed);
+        }
     }
     if ( applyGlobally ) {
         this.addGenericSelector(parsed);
@@ -486,17 +490,6 @@ FilterContainer.prototype.addGenericSelector = function(parsed) {
         this.duplicateCount += 1;
     }
     return true;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.addSpecificSelector = function(hostname, parsed) {
-    // rhill 2014-07-13: new filter class: entity.
-    if ( hostname.slice(-2) === '.*' ) {
-        this.addEntitySelector(hostname, parsed);
-    } else {
-        this.addHostnameSelector(hostname, parsed);
-    }
 };
 
 /******************************************************************************/
