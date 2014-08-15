@@ -258,29 +258,47 @@ SelectorCacheEntry.prototype.addCosmetic = function(selectors) {
     }
 };
 
-SelectorCacheEntry.prototype.addNet = function(selector) {
-    if ( typeof selector !== 'string' || selector === '' ) {
-        return;
+SelectorCacheEntry.prototype.addNet = function(selectors) {
+    if ( typeof selectors === 'string' ) {
+        this.addNetOne(selectors, Date.now());
+    } else {
+        this.addNetMany(selectors, Date.now());
     }
     // Net request-derived selectors: I limit the number of cached selectors,
     // as I expect cases where the blocked net-requests are never the
     // exact same URL.
-    var dict = this.net;
-    if ( dict[selector] !== undefined ) {
-        dict[selector] = Date.now();
+    if ( this.netCount < this.netHighWaterMark ) {
         return;
     }
-    if ( this.netCount >= this.netHighWaterMark ) {
-        var keys = Object.keys(dict).sort(function(a, b) {
-            return dict[b] - dict[a];
-        }).slice(this.netLowWaterMark);
-        var i = keys.length;
-        while ( i-- ) {
-            delete dict[keys[i]];
-        }
+    var dict = this.net;
+    var keys = Object.keys(dict).sort(function(a, b) {
+        return dict[b] - dict[a];
+    }).slice(this.netLowWaterMark);
+    var i = keys.length;
+    while ( i-- ) {
+        delete dict[keys[i]];
     }
-    dict[selector] = Date.now();
-    this.netCount += 1;
+};
+
+SelectorCacheEntry.prototype.addNetOne = function(selector, now) {
+    var dict = this.net;
+    if ( dict[selector] === undefined ) {
+        this.netCount += 1;
+    }
+    dict[selector] = now;
+};
+
+SelectorCacheEntry.prototype.addNetMany = function(selectors, now) {
+    var dict = this.net;
+    var i = selectors.length || 0;
+    var selector;
+    while ( i-- ) {
+        selector = selectors[i];
+        if ( dict[selector] === undefined ) {
+            this.netCount += 1;
+        }
+        dict[selector] = now;
+    }
 };
 
 SelectorCacheEntry.prototype.add = function(selectors, type) {

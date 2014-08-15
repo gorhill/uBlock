@@ -170,6 +170,13 @@ var onMessage = function(request, sender, callback) {
             µb.abpHideFilters.addToSelectorCache(request);
             break;
 
+        case 'blockedRequests':
+            response = {
+                collapse: µb.userSettings.collapseBlocked,
+                blockedRequests: pageStore ? pageStore.blockedRequests : {}
+            };
+            break;
+
         // Check a single request
         case 'blockedRequest':
             response = {

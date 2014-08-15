@@ -504,6 +504,53 @@ var uBlockMessaging = (function(name){
 (function() {
     var messaging = uBlockMessaging;
 
+    var blockableElements = {
+        'embed': 'src',
+        'iframe': 'src',
+        'img': 'src',
+        'object': 'data'
+    };
+
+    // First pass
+    messaging.ask({ what: 'blockedRequests' }, function(details) {
+        var elems = document.querySelectorAll('embed,iframe,img,object');
+        var blockedRequests = details.blockedRequests;
+        var collapse = details.collapse;
+        var i = elems.length;
+        var elem, tagName, prop, src;
+        var selectors = [];
+        while ( i-- ) {
+            elem = elems[i];
+            tagName = elem.tagName.toLowerCase();
+            prop = blockableElements[tagName];
+            if ( prop === undefined ) {
+                continue;
+            }
+            src = elem[prop];
+            if ( typeof src !== 'string' || src === '' ) {
+                continue;
+            }
+            if ( blockedRequests[src] === undefined ) {
+                continue;
+            }
+            // If `!important` is not there, going back using history will
+            // likely cause the hidden element to re-appear.
+            elem.style.visibility = 'hidden !important';
+            if ( collapse ) {
+                elem.parentNode.removeChild(elem);
+            }
+            selectors.push(tagName + '[' + prop + '="' + src + '"]');
+        }
+        if ( selectors.length !== 0 ) {
+            messaging.tell({
+                what: 'injectedSelectors',
+                type: 'net',
+                hostname: window.location.hostname,
+                selectors: selectors
+            });
+        }
+    });
+
     // Listeners to mop up whatever is otherwise missed:
     // - Future requests not blocked yet
     // - Elements dynamically added to the page
@@ -542,7 +589,7 @@ var uBlockMessaging = (function(name){
             // If `!important` is not there, going back using history will
             // likely cause the hidden element to re-appear.
             target.style.visibility = 'hidden !important';
-            if ( details.collapse ) {
+            if ( details.collapse && target.parentNode ) {
                 target.parentNode.removeChild(target);
             }
             messaging.tell({
@@ -556,12 +603,12 @@ var uBlockMessaging = (function(name){
     };
 
     var onResourceLoaded = function(ev) {
-        //console.debug('Loaded %s[src="%s"]', target.tagName, target.src);
+        //console.debug('Loaded %s[src="%s"]', ev.target.tagName, ev.target.src);
         onResource(ev.target, loadedElements);
     };
 
     var onResourceFailed = function(ev) {
-        //console.debug('Failed to load %o[src="%s"]', target, target.src);
+        //console.debug('Failed to load %o[src="%s"]', eev.target.tagName, ev.target.src);
         onResource(ev.target, failedElements);
     };
 
