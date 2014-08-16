@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: g7nkCWA3M2B2dONgd63XVw
-! Version: 201408141811
+! Checksum: mkD/RuInigfkSduewhzjRA
+! Version: 201408161311
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 14 Aug 2014 18:11 UTC
+! Ultima modifica: 16 Aug 2014 13:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2073,6 +2073,7 @@ motori.it##.adv-items
 oktennis.it##.adv1
 delleconomia.it##.adv200
 virgilio.it##.advTuning
+webnews.it##.adv_01
 addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it##.advert
 loradellacalabria.it##.advertise
 loradellacalabria.it##.advertise2

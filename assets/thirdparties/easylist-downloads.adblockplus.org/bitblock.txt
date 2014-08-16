@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: +5YlW67RANIhZUxVfPiSnA
-! Version: 201408141810
-! Last modified: 14 Aug 2014 18:10 UTC
+! Checksum: t/8SDuidCcKby4JEew9EVg
+! Version: 201408161320
+! Last modified: 16 Aug 2014 13:20 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -914,6 +914,7 @@ _vkontakte.png
 /instagram_icon.
 /instagram_title_
 /instagramLogo.
+/jquery-pin-it-
 /jquery.stp.min.js
 /js/FB.Share|$third-party
 /layoutsharedelicious.
@@ -986,6 +987,7 @@ _vkontakte.png
 /myspace.png|$domain=~myspace.com
 /myspace_16.
 /myspace_add.
+/myspace_share.
 /myspacesmall.
 /nav-facebook-
 /nav-google-
@@ -2379,6 +2381,7 @@ _youtube_small.
 ###footerSocialButtons
 ###footerSocialIcons
 ###footerSocialMenu
+###footer_block_social
 ###footer_follow_us
 ###footer_social
 ###footer_social_icons
@@ -2684,6 +2687,7 @@ _youtube_small.
 ###share-page
 ###share-panel
 ###share-panel-vert
+###share-pinterest
 ###share-retweet
 ###share-services-container
 ###share-stumble
@@ -2860,6 +2864,7 @@ _youtube_small.
 ###side-follow-us
 ###side-social
 ###side_social
+###sidebar-facebook
 ###sidebar-facebook-activity
 ###sidebar-fb-social-reader
 ###sidebar-image-facebook
@@ -2867,6 +2872,7 @@ _youtube_small.
 ###sidebar-socials
 ###sidebar-twitter
 ###sidebar-twtr-feed
+###sidebar-youtube
 ###sidebarSocial
 ###sidebarSocialMenu
 ###sidebar_share
@@ -3784,6 +3790,7 @@ _youtube_small.
 ##.esocial
 ##.essb_link_pinterest
 ##.essb_link_twitter
+##.essb_links_list
 ##.event-social-box
 ##.eventShare
 ##.expanded_story_socialmedia
@@ -4159,6 +4166,8 @@ _youtube_small.
 ##.footer_socialblock
 ##.footer_socialtab
 ##.footer_sosial
+##.footer_sprite_facebook
+##.footer_sprite_twitter
 ##.format-social-buttons
 ##.fourSq-widget
 ##.fpbiz_share
@@ -4538,6 +4547,7 @@ _youtube_small.
 ##.jwsharethis
 ##.ksm-post-facebook
 ##.ksm-post-twitter
+##.landing-feed--story-shares
 ##.landing-share-right-widget
 ##.large-share-bar
 ##.large-share-bar-container
@@ -4720,6 +4730,8 @@ _youtube_small.
 ##.pds-share
 ##.pg-caption-share
 ##.photo-share
+##.pin-it-btn
+##.pin-it-btn-shortcode-wrapper
 ##.pin-share
 ##.pin-social
 ##.pin_custom_button
@@ -4920,6 +4932,7 @@ _youtube_small.
 ##.share-signup
 ##.share-sm-icons
 ##.share-social
+##.share-sticky--count
 ##.share-story-container
 ##.share-stuff
 ##.share-stumbleupon
@@ -5211,6 +5224,7 @@ _youtube_small.
 ##.sidebar-social
 ##.sidebar-social-buttons
 ##.sidebar-social-nw
+##.sidebar-social-top
 ##.sidebar-twitter
 ##.sidebarSocial
 ##.sidebar_facebook
@@ -6076,7 +6090,9 @@ _youtube_small.
 ##.widget-facebook-box
 ##.widget-fb-recommendations
 ##.widget-followus
+##.widget-social-facebook
 ##.widget-social-icons
+##.widget-social-twitter
 ##.widget_FacebookActivity
 ##.widget_FacebookLikeBox
 ##.widget_Twidget
@@ -6302,6 +6318,7 @@ _youtube_small.
 ##a[title="Follow me on  Facebook"]
 ##a[title="Follow our Boards on Pinterest"]
 ##a[title="Follow us on Google Plus"]
+##a[title="Follow us on Google"]
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Houzz"]
 ##a[title="Follow us on Instagram"]
@@ -6698,6 +6715,7 @@ _youtube_small.
 ||widgets.getpocket.com^$third-party
 ||widgets.itaringa.net^$third-party
 ||widgets.twimg.com^$third-party
+||widgets.wp.com/likes/$third-party
 ||wykop.pl/dataprovider/diggerwidget/$third-party
 ||xing-share.com^$third-party
 ||xing.com/img/buttons/$third-party
@@ -7459,6 +7477,7 @@ _social_rss.
 ###followRSS
 ###followistic-root
 ###footer-back-to-top
+###footer_block_newsletter
 ###footer_rss_image
 ###formNewsLetters
 ###formNewsLetters-block
@@ -7470,6 +7489,8 @@ _social_rss.
 ###gmm-panel-promo
 ###go-to-top
 ###go-top
+###goDownFooter
+###goTopFooter
 ###have-a-cookie
 ###hi-cookie-box
 ###icoCookiesBanner
@@ -7613,6 +7634,7 @@ _social_rss.
 ###sharebox
 ###sidebar-block-newsletters
 ###sidebar-newsletter
+###sidebar-rss
 ###sidebar-subscribe-box
 ###sidebar_connect_tw
 ###sidebar_newsletter

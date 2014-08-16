@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Mon, 04 Aug 2014 14:24:58 GMT
-# entries:        2481
+# entries:        2466
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -57,7 +57,6 @@
 127.0.0.1 abz.com
 127.0.0.1 ac.rnm.ca
 127.0.0.1 accounts.pkr.com
-127.0.0.1 acsseo.com
 127.0.0.1 actionsplash.com
 127.0.0.1 actualdeals.com
 127.0.0.1 ad-flow.com
@@ -105,7 +104,6 @@
 127.0.0.1 ad.domainfactory.de
 127.0.0.1 ad.e-kolay.net
 127.0.0.1 ad.eurosport.com
-127.0.0.1 ad.f1cd.ru
 127.0.0.1 ad.foxnetworks.com
 127.0.0.1 ad.freecity.de
 127.0.0.1 ad.gate24.ch
@@ -129,7 +127,6 @@
 127.0.0.1 ad.leadbolt.net
 127.0.0.1 ad.liveinternet.ru
 127.0.0.1 ad.lupa.cz
-127.0.0.1 ad.m5prod.net
 127.0.0.1 ad.media-servers.net
 127.0.0.1 ad.mediastorm.hu
 127.0.0.1 ad.mgd.de
@@ -241,7 +238,6 @@
 127.0.0.1 adf.ly
 127.0.0.1 adfair.se
 127.0.0.1 adfarm.mediaplex.com
-127.0.0.1 adflight.com
 127.0.0.1 adfly.com
 127.0.0.1 adforce.com
 127.0.0.1 adform.com
@@ -255,7 +251,6 @@
 127.0.0.1 adimage.asiaone.com.sg
 127.0.0.1 adimage.guardian.co.uk
 127.0.0.1 adimages.been.com
-127.0.0.1 adimages.carsoup.com
 127.0.0.1 adimages.go.com
 127.0.0.1 adimages.homestore.com
 127.0.0.1 adimages.sanomawsoy.fi
@@ -307,7 +302,6 @@
 127.0.0.1 admonitor.com
 127.0.0.1 admotion.com.ar
 127.0.0.1 adnet-media.net
-127.0.0.1 adnet.asahi.com
 127.0.0.1 adnet.biz
 127.0.0.1 adnet.de
 127.0.0.1 adnet.ru
@@ -464,7 +458,6 @@
 127.0.0.1 ads.flooble.com
 127.0.0.1 ads.foodbuzz.com
 127.0.0.1 ads.fool.com
-127.0.0.1 ads.footymad.net
 127.0.0.1 ads.forbes.com
 127.0.0.1 ads.forbes.net
 127.0.0.1 ads.forium.de
@@ -555,7 +548,6 @@
 127.0.0.1 ads.mediaturf.net
 127.0.0.1 ads.medienhaus.de
 127.0.0.1 ads.mgnetwork.com
-127.0.0.1 ads.mmania.com
 127.0.0.1 ads.moceanads.com
 127.0.0.1 ads.motor-forum.nl
 127.0.0.1 ads.motormedia.nl
@@ -599,7 +591,6 @@
 127.0.0.1 ads.pennet.com
 127.0.0.1 ads.penny-arcade.com
 127.0.0.1 ads.pheedo.com
-127.0.0.1 ads.phpclasses.org
 127.0.0.1 ads.pickmeup-ltd.com
 127.0.0.1 ads.pkr.com
 127.0.0.1 ads.planet.nl
@@ -643,7 +634,6 @@
 127.0.0.1 ads.sprotiv.org
 127.0.0.1 ads.sptimes.com
 127.0.0.1 ads.stackoverflow.com
-127.0.0.1 ads.stationplay.com
 127.0.0.1 ads.stratics.com
 127.0.0.1 ads.struq.com
 127.0.0.1 ads.sun.com
@@ -669,7 +659,6 @@
 127.0.0.1 ads.tripod.com
 127.0.0.1 ads.tripod.lycos.co.uk
 127.0.0.1 ads.tripod.lycos.de
-127.0.0.1 ads.tripod.lycos.es
 127.0.0.1 ads.tripod.lycos.it
 127.0.0.1 ads.tripod.lycos.nl
 127.0.0.1 ads.tripod.spray.se
@@ -703,7 +692,6 @@
 127.0.0.1 ads.wineenthusiast.com
 127.0.0.1 ads.wunderground.com
 127.0.0.1 ads.wwe.biz
-127.0.0.1 ads.xeezy.com
 127.0.0.1 ads.xhamster.com
 127.0.0.1 ads.xtra.co.nz
 127.0.0.1 ads.y-0.net
@@ -777,7 +765,6 @@
 127.0.0.1 adserver.bluewin.ch
 127.0.0.1 adserver.break-even.it
 127.0.0.1 adserver.cams.com
-127.0.0.1 adserver.clashmusic.com
 127.0.0.1 adserver.com
 127.0.0.1 adserver.designertoday.com
 127.0.0.1 adserver.digitoday.com
@@ -818,7 +805,6 @@
 127.0.0.1 adserver.sharewareonline.com
 127.0.0.1 adserver.snowball.com
 127.0.0.1 adserver.spankaway.com
-127.0.0.1 adserver.startnow.com
 127.0.0.1 adserver.theonering.net
 127.0.0.1 adserver.twitpic.com
 127.0.0.1 adserver.viagogo.com
@@ -837,9 +823,7 @@
 127.0.0.1 adserverplus.com
 127.0.0.1 adserversolutions.com
 127.0.0.1 adserveuk.com
-127.0.0.1 adserving.eleven-agency.com
 127.0.0.1 adservinginternational.com
-127.0.0.1 adsfac.eu
 127.0.0.1 adsfac.net
 127.0.0.1 adsfac.us
 127.0.0.1 adshost1.com
@@ -1155,7 +1139,6 @@
 127.0.0.1 bigbangmedia.com
 127.0.0.1 bigclicks.com
 127.0.0.1 billboard.cz
-127.0.0.1 bitads.net
 127.0.0.1 bizad.nikkeibp.co.jp
 127.0.0.1 bizban.net
 127.0.0.1 bizrate.com
@@ -2142,6 +2125,7 @@
 127.0.0.1 sidebar.angelfire.com
 127.0.0.1 sinoa.com
 127.0.0.1 sitebrand.geeks.com
+127.0.0.1 sitemerkezi.net
 127.0.0.1 sitemeter.com
 127.0.0.1 sitestat.com
 127.0.0.1 sixsigmatraffic.com
@@ -2390,6 +2374,7 @@
 127.0.0.1 vs.tucows.com
 127.0.0.1 wads.webteh.com
 127.0.0.1 warlog.info
+127.0.0.1 warlog.ru
 127.0.0.1 wdads.sx.atl.publicus.com
 127.0.0.1 web-stat.com
 127.0.0.1 web.informer.com

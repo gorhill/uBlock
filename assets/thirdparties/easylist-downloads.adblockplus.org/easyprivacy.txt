@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: GfW+EJt/S8kRaiVzgmKqJA
-! Version: 201408141811
+! Checksum: pvGDrVXkvEVb3aB/0DasGg
+! Version: 201408161311
 ! Title: EasyPrivacy
-! Last modified: 14 Aug 2014 18:11 UTC
+! Last modified: 16 Aug 2014 13:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7913,7 +7913,7 @@ http://utm.
 ||vidxden.com^*/tracker.js
 ||vietnamnet.vn^*/tracking.js
 ||villarenters.com/inttrack.aspx
-||vimeo.com/log/
+||vimeo.com/log/outro_displayed
 ||viralogy.com/javascript/viralogy_tracker.js
 ||virginholidays.co.uk/_assets/js/dc_storm/track.js
 ||virtualearth.net/mapcontrol/*/veapiAnalytics.js
@@ -8852,6 +8852,7 @@ http://utm.
 @@||dailymail.co.uk/brightcove/tracking/ted3.js
 @@||deals.nextag.com^*/ClickTracker.jsp
 @@||debenhams.com/foresee/foresee-trigger.js
+@@||demandbase.com^*/ip.json?$xmlhttprequest,domain=vmware.com
 @@||demdex.net/dest4.html?d_nsid=$subdocument,domain=multipack.com.mx
 @@||descopera.ro/js/addLinkerEvents-ga.js
 @@||diablo3.com/assets/js/jquery.google-analytics.js

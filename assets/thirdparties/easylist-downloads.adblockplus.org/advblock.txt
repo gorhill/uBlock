@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: /dhokgHz3s6nk3eLCbU5/w
-! Version: 201408141810
-! Last modified: 14 Aug 2014 18:10 UTC
+! Checksum: uAPKjFFTd3sv0gv1y8a8Yg
+! Version: 201408161320
+! Last modified: 16 Aug 2014 13:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2495,6 +2495,7 @@ _tizers.
 ||plomihy.com^
 ||plus-2launch.biz^
 ||pokitom.com^
+||polimadv.com^
 ||pomtiy.com^
 ||poollast.com^
 ||pop-under.ru^
@@ -2900,7 +2901,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|politland.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -4740,6 +4741,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||goha.ru/b21/
 ||goha.ru/imageshare/sites/rands/*/b
 ||goha.ru^*/trumedia_$script
+||goldenfront.ru/static/banners/
 ||goldenshara.com/misc/js/golde_link.js
 ||golosua.com/img/banners/
 ||good73.net^$object
@@ -5112,6 +5114,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||playground.ru/img/wowp-
 ||pn.com.ua^*/pnimages/banners/
 ||pogoda.by/promo
+||politland.ru/jss/12fef6.js
 ||politobzor.net/bg/
 ||poltavaforum.com/01/
 ||poltavaforum.com/banner/

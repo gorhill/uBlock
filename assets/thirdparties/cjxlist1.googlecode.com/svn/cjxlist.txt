@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140812
-! Version: 20140812
+! List version 20140815
+! Version: 20140815
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
@@ -50,6 +50,7 @@
 .openx.
 .org/ad/
 .org/ads/
+.org/adv/
 .php/ad/
 .php?ad_
 .php?affid=
@@ -123,7 +124,6 @@
 /adcde.js
 /adcenter.$script
 /adclick.
-/adclient/*
 /adcode.
 /adcode/*
 /adcount.
@@ -155,6 +155,7 @@
 /adnews.
 /adnexus-
 /ados.js
+/adpage/*
 /adphoto.
 /adpic.
 /adpic/*
@@ -200,6 +201,7 @@
 /adserv.
 /adserve/*
 /adserver.
+/adserver/*
 /adservice/*
 /adsfile.
 /adshow.
@@ -245,13 +247,12 @@
 /advertorial/*
 /adview_
 /advs/*
-/adwords.
+/adweb.
 /adx.
 /afr.php?
 /ajax/ads/*
 /ajrotator/*
 /ajs.php?
-/amazon/iframeproxy-
 /api/ads/*
 /assets/ads/*
 /banner.gif?
@@ -282,6 +283,7 @@
 /flash/ad/*
 /flashad.
 /float_ad.
+/floatad_
 /floatadv.
 /floatingad.
 /footad.
@@ -375,6 +377,7 @@
 /right_ad.
 /right_ad_
 /rightad.
+/rightad/*
 /rotationad.
 /script/ad.
 /script/ads.
@@ -470,6 +473,7 @@ _rightad1.
 _top_ad_
 _topad.
 ||com/banners/$image,object,subdocument
+||ox-d.*^auid=
 /adblock_detector.
 -160-600.
 -160x600-
@@ -600,6 +604,7 @@ _960_90.
 ###adSpace
 ###adTextLink
 ###adTop
+###adTop2
 ###ad_0
 ###ad_02
 ###ad_03
@@ -771,6 +776,7 @@ _960_90.
 ###remove_ads_button1
 ###remove_ads_button2
 ###right-ad
+###right-ads
 ###rightAd
 ###rightAdDiv1
 ###rightAdDiv2
@@ -791,6 +797,7 @@ _960_90.
 ###sky-right
 ###slide_ad
 ###slider_ad
+###smallAd
 ###sponsorAd
 ###sponsorAdDiv
 ###sponsored_links
@@ -1074,6 +1081,7 @@ _960_90.
 ##.banner-300
 ##.banner-300x250
 ##.banner-ad
+##.banner250_250
 ##.banner300
 ##.banner350
 ##.banner468
@@ -1176,6 +1184,7 @@ _960_90.
 ##.left_ads
 ##.leftad
 ##.list-ad
+##.localad
 ##.logo-ad
 ##.logoad
 ##.longAd
@@ -1203,6 +1212,7 @@ _960_90.
 ##.newad
 ##.ob_ads_header
 ##.ob_dual_right > .ob_ads_header ~ .odb_div
+##.page-ad
 ##.page_ad
 ##.post-ad
 ##.post_ads
@@ -1248,6 +1258,7 @@ _960_90.
 ##.syAd
 ##.text-ad
 ##.textAd
+##.textAds
 ##.text_ad
 ##.textad
 ##.title-ad
@@ -1287,6 +1298,7 @@ _960_90.
 ##a[href^="http://ad.doubleclick.net/"]
 ##a[href^="http://adfarm.mediaplex.com/"]
 ##a[href^="http://affiliate.godaddy.com/"]
+##a[href^="http://cdn3.adexprts.com/"]
 ##a[href^="http://pubads.g.doubleclick.net/"]
 ##a[href^="http://www.sex.com/?utm_source="]
 ##div[id^="MarketGid"]
@@ -1294,6 +1306,7 @@ _960_90.
 ##iframe[src^="http://ad.yieldmanager.com/"]
 ###rhs_block > #mbEnd
 ###tads.c
+###header + #content > #left > #rlblock_left
 ! uCoz
 ! https://adblockplus.org/forum/viewtopic.php?f=2&t=13414
 ##div[id^="mainads"]
@@ -1317,10 +1330,13 @@ yahoo.com#@#.type_ads_default
 ||adnxs.com^$third-party
 ||adorika.net^$third-party
 ||adsame.com^$third-party
+||adscale.de^$third-party
 ||adsfactor.net^$third-party
 ||adshost2.com^$third-party
+||adsonar.com^$third-party
 ||adsrvr.org^$third-party
 ||adsymptotic.com^$third-party
+||adtechus.com^$third-party
 ||adzerk.net^$third-party
 ||alimama.com^$third-party
 ||allyes.com^$third-party
@@ -1335,6 +1351,7 @@ yahoo.com#@#.type_ads_default
 ||bidsystem.com^$third-party
 ||bizographics.com^$third-party
 ||btnibbler.com^$third-party
+||btrll.com^$third-party
 ||burstnet.com^$third-party
 ||casalemedia.com^$third-party
 ||cdn-image.com^$third-party
@@ -1347,6 +1364,7 @@ yahoo.com#@#.type_ads_default
 ||connextra.com^$third-party
 ||contextweb.com^$third-party
 ||cpmstar.com^$third-party
+||cpxinteractive.com^$third-party
 ||criteo.com^$third-party
 ||criteo.net^$third-party
 ||directrev.com^$third-party
@@ -1364,6 +1382,8 @@ yahoo.com#@#.type_ads_default
 ||fxdepo.com^$third-party
 ||googletagservices.com/tag/js/gpt_$third-party
 ||gwallet.com^$third-party
+||imasdk.googleapis.com^$third-party
+||impact-ad.jp^$third-party
 ||innity.com^$third-party
 ||innity.net^$third-party
 ||inskinad.com^$third-party
@@ -1401,10 +1421,15 @@ yahoo.com#@#.type_ads_default
 ||rtbidder.net^$third-party
 ||ru4.com^$third-party
 ||rubiconproject.com^$third-party
+||sedoparking.com^$third-party
 ||serving-sys.com^$third-party
 ||skimresources.com^$third-party
 ||skinected.com^$third-party
+||smartadserver.com^$third-party
+||sonobi.com^$third-party
+||specificclick.net^$third-party
 ||sponsorpay.com^$third-party
+||spotxchange.com^$third-party
 ||supersitetime.com^$third-party
 ||supplyframe.com^$third-party
 ||switchadhub.com^$third-party
@@ -1440,12 +1465,13 @@ yahoo.com#@#.type_ads_default
 ||adplus.goo.mx^
 ||alexa.com^*/promotebuttons/
 ||analytics.disneyinternational.com^
+||cdn.cdncomputer.com/js/main.js
 ||disqus.com/listPromoted?
 ||domainnamesales.com/return_js.php?
+||glam.com/gad/
 ||google.com/pagead/
 ||googlesyndication.com/pagead/$third-party
 ||kontera.com/javascript/lib/KonaLibInline.js$third-party
-||mcc.godaddy.com/park/$subdocument,third-party
 ||odin.goo.mx^
 ||pagead2.googlesyndication.com^$~object-subrequest
 ||rcm*.amazon.$third-party
@@ -1470,7 +1496,6 @@ yahoo.com#@#.type_ads_default
 ||feeds.feedburner.com/*.gif
 ||google.com/jsapi?autoload=*%22ads%22$script,domain=youtube.com
 ||hulu.com/v3/revenue/
-||images-amazon.com/images/*/browser-scripts/da-
 ||imgchili.net/js/showa.js
 ||imgchili.net/lj.js
 ||l.yimg.com/mq/a/
@@ -1531,6 +1556,7 @@ facebook.com##div[class="ego_column pagelet _5qrt _y92"]
 facebook.com##div[class="ego_column pagelet _y92"]
 facebook.com##div[class="ego_column pagelet"]
 ehow.com##div[data-module="radlinks"]
+amazon.ca,amazon.co.uk,amazon.com##div[style="width:300px;height:280px;"]
 broadbandreports.com,dslreports.com##td[style="border-right: 1px #CCCCCC solid;"]
 @@||ad4.liverail.com/crossdomain.xml$object-subrequest
 @@||adap.tv/redir/javascript/vpaid.js
