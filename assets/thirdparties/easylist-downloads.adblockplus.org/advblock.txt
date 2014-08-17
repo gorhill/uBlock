@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: uAPKjFFTd3sv0gv1y8a8Yg
-! Version: 201408161320
-! Last modified: 16 Aug 2014 13:20 UTC
+! Checksum: twzOFHQP/mrdtRK+nfCFHg
+! Version: 201408171340
+! Last modified: 17 Aug 2014 13:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -5396,6 +5396,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||ykt.ru/yaknet/image.asp?id=
 ||ykt2.ru/inform/
 ||ymka.tv/images/$object
+||youhack.ru/others/
 ||youtube.com/embed/$domain=kakprosto.ru
 ||zadolba.li/img/ur.jpg
 ||zakonia.ru/imgs/adshtml/

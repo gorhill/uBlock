@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: pvGDrVXkvEVb3aB/0DasGg
-! Version: 201408161311
+! Checksum: zpxyJykDlVyzU0SwW1+LUw
+! Version: 201408171341
 ! Title: EasyPrivacy
-! Last modified: 16 Aug 2014 13:11 UTC
+! Last modified: 17 Aug 2014 13:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3470,6 +3470,7 @@ http://utm.
 ||statuscake.com^$third-party
 ||stcllctrs.com^$third-party
 ||stcounter.com^$third-party
+||steelhousemedia.com^$third-party
 ||stippleit.com^$third-party
 ||stormcontainertag.com^$third-party
 ||stormiq.com^$third-party
@@ -8769,6 +8770,7 @@ http://utm.
 @@||akamai.net^*/omniture.jsp$script,domain=walmart.com
 @@||aliunicorn.com^*/click_stat/
 @@||analytics.atomiconline.com/services/jquery.js
+@@||analytics.edgesuite.net/html5/akamai*.js$domain=resignationbrewery.com
 @@||analytics.rogersmedia.com/js/rdm_dil_code.full.js$domain=rogersradio.ca
 @@||analytics.rogersmedia.com/js/rdm_s_code.min.js$domain=rogersradio.ca
 @@||anthem.com/includes/foresee/foresee-trigger.js
@@ -8816,6 +8818,7 @@ http://utm.
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
+@@||cdn.clicktale.net^$script,domain=cbc.ca
 @@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script

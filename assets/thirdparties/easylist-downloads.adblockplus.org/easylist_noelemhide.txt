@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: Pwi1bVy/wbJSGLAGISS75A
-! Version: 201408161310
+! Checksum: bbRHvFBNkZAdSDNW06yXkQ
+! Version: 201408171340
 ! Title: EasyList without element hiding rules
-! Last modified: 16 Aug 2014 13:10 UTC
+! Last modified: 17 Aug 2014 13:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -4289,6 +4289,7 @@
 /peeltr.
 /pencilad.
 /perfads.
+/performance_ads/*
 /performancingads/*
 /permanent/ads/*
 /pfpadv.
@@ -8262,6 +8263,7 @@ _popunder+$popup
 ||ngecity.com^$third-party
 ||nicheadgenerator.com^$third-party
 ||nicheads.com^$third-party
+||nmcdn.us^$third-party
 ||nmwrdr.net^$third-party
 ||nobleppc.com^$third-party
 ||nobsetfinvestor.com^$third-party
@@ -9717,6 +9719,7 @@ _popunder+$popup
 ||joyourself.com^$third-party
 ||juicyads.com^$third-party
 ||juicycash.net^$third-party
+||justresa.com^$third-party
 ||k9x.net^$third-party
 ||kaplay.com^$third-party
 ||kingpinmedia.net^$third-party
@@ -10429,9 +10432,6 @@ _popunder+$popup
 ||cdn.assets.gorillanation.com^$third-party
 ||cdn.cdncomputer.com/js/main.js
 ||cdn.ndparking.com/js/init.min.js
-||cdn.nmcdn.us/js/connect.js
-||cdn.nmcdn.us/js/connectV2.js
-||cdn.nmcdn.us/js/newsmax.jquery.min.js
 ||cdn.sweeva.com/images/$third-party
 ||cdn.tremormedia.com/ca/us/nbclocal/tpacudeoplugin46.swf
 ||cdnpark.com/scripts/js3.js
@@ -11115,6 +11115,7 @@ _popunder+$popup
 ||osobnosti.cz/images/casharena_
 ||overseasradio.com/affbanner.php?
 ||ovpn.to/ovpn.to/banner/
+||ox-i.cordillera.tv^
 ||oxygenboutique.com/Linkshare/
 ||p.pw/banners/$third-party
 ||padsdel.com^$third-party
@@ -12718,6 +12719,7 @@ _popunder+$popup
 ||citybeat.co.uk^*/ads/
 ||citywire.co.uk/wealth-manager/marketingcampaign?
 ||citywirecontent.co.uk^*/cw.oas.dx.js
+||clarksvilleonline.com/cols/
 ||classic-tv.com/burst$subdocument
 ||classic-tv.com/pubaccess.html
 ||classic97.net^*/banner/
@@ -18736,7 +18738,7 @@ _popunder+$popup
 @@||playhd.eu/advertisement.js
 @@||popads.net/pop.js$domain=filmovizija.com|hqq.tv
 @@||popsads.com/adhandler/$script,domain=filmovizija.com
-@@||prad.de^$elemhide
+@@||prad.de/en/$elemhide
 @@||premiumleecher.com/inc/adframe.js
 @@||premiumleecher.com/inc/adsense.js
 @@||primeshare.tv^*/adframe.js
@@ -19191,6 +19193,7 @@ accounts.google.com#@#.adwords
 @@||google.com/uds/modules/elements/newsshow/iframe.html?*=300x250&
 @@||hortifor.com/images/*120x60$~third-party
 @@||images.itreviews.com/*300x250_$domain=itreviews.com
+@@||images.outbrain.com/imageserver/*-120x60.$image
 @@||imawow.weather.com/web/wow/160x600/$image
 @@||imawow.weather.com/web/wow/180x150/$image
 @@||imawow.weather.com/web/wow/300x250/$image
