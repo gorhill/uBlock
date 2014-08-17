@@ -161,7 +161,7 @@ var cosmeticFilters = function(details) {
     }
     if ( hide.length !== 0 ) {
         var text = hide.join(',\n');
-        applyCSS(text, 'display', 'none');
+        hideElements(text);
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
@@ -185,6 +185,7 @@ var netFilters = function(details) {
         '\n{visibility:hidden !important;}';
     style.appendChild(document.createTextNode(text + css));
     parent.appendChild(style);
+    //console.debug('document.querySelectorAll("%s") = %o', text, document.querySelectorAll(text));
 };
 
 var filteringHandler = function(details) {
@@ -199,14 +200,16 @@ var filteringHandler = function(details) {
     }
 };
 
-var applyCSS = function(selectors, prop, value) {
+var hideElements = function(selectors) {
     if ( document.body === null ) {
         return;
     }
+    // https://github.com/gorhill/uBlock/issues/158
+    // Using CSSStyleDeclaration.setProperty is more reliable
     var elems = document.querySelectorAll(selectors);
     var i = elems.length;
     while ( i-- ) {
-        elems[i].style[prop] = value;
+        elems[i].style.setProperty('display', 'none', 'important');
     }
 };
 

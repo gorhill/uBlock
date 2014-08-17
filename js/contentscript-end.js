@@ -153,6 +153,9 @@ var uBlockMessaging = (function(name){
             while ( i-- ) {
                 injectedSelectors[selectors[i]] = true;
             }
+            // https://github.com/gorhill/uBlock/issues/158
+            // Ensure injected styles are enforced
+            hideElements(selectors.join(','));
         }
         idsFromNodeList(document.querySelectorAll('[id]'));
         classesFromNodeList(document.querySelectorAll('[class]'));
@@ -239,7 +242,7 @@ var uBlockMessaging = (function(name){
             }
         }
         if ( hideSelectors.length ) {
-            applyCSS(hideSelectors, 'display', 'none');
+            hideElements(hideSelectors);
             var style = document.createElement('style');
             style.setAttribute('class', 'ublock-postload-1ae7a5f130fc79b4fdb8a4272d9426b5');
             // The linefeed before the style block is very important: do no remove!
@@ -259,14 +262,16 @@ var uBlockMessaging = (function(name){
         contextNodes.length = 0;
     };
 
-    var applyCSS = function(selectors, prop, value) {
+    var hideElements = function(selectors) {
         if ( document.body === null ) {
             return;
         }
+        // https://github.com/gorhill/uBlock/issues/158
+        // Using CSSStyleDeclaration.setProperty is more reliable
         var elems = document.querySelectorAll(selectors);
         var i = elems.length;
         while ( i-- ) {
-            elems[i].style[prop] = value;
+            elems[i].style.setProperty('display', 'none', 'important');
         }
     };
 
