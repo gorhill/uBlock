@@ -69,14 +69,8 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 # https://github.com/gorhill/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
 
-# Seen on mediafire.com
-||torconpro.com^
-
 # https://github.com/gorhill/uBlock/issues/85
 ||playhd.eu^$popup
-
-# https://github.com/gorhill/uBlock/issues/109
-||adm.fwmrm.net/crossdomain.xml$domain=recode.net|9to5mac.com
 
 # https://github.com/gorhill/uBlock/issues/109#issuecomment-50298618
 # To counter `opf.ooyala.com` in hpHosts
@@ -93,9 +87,6 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 # https://github.com/gorhill/uBlock/issues/17#issuecomment-50818163
 # To counter `s.imwx.com` in hpHosts
 @@||s.imwx.com^
-
-# To counter `/s_code.` in Fanboy's Enhanced Stats
-@@/s_code.$domain=nintendo.com
 
 # https://github.com/gorhill/uBlock/issues/141
 # To counter `tags.tiqcdn.com` in  MVPS HOSTS
