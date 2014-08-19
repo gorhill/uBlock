@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: zpxyJykDlVyzU0SwW1+LUw
-! Version: 201408171341
+! Checksum: N/E2rXNJlcV+1btyFaN2DQ
+! Version: 201408191241
 ! Title: EasyPrivacy
-! Last modified: 17 Aug 2014 13:41 UTC
+! Last modified: 19 Aug 2014 12:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -5269,7 +5269,6 @@ http://utm.
 ||px.dynamicyield.com^$third-party
 ||px.excitedigitalmedia.com^
 ||px.owneriq.net^
-||px.steelhousemedia.com^
 ||px.topspin.net^
 ||qlog.adap.tv^$object-subrequest
 ||qos.video.yimg.com^

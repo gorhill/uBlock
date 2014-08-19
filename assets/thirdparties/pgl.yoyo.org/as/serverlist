@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Mon, 04 Aug 2014 14:24:58 GMT
-# entries:        2466
+# last updated:   Mon, 18 Aug 2014 12:33:48 GMT
+# entries:        2468
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -1736,6 +1736,7 @@
 127.0.0.1 media-servers.net
 127.0.0.1 media.ftv-publicite.fr
 127.0.0.1 media.funpic.de
+127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
 127.0.0.1 mediacharger.com
@@ -1797,6 +1798,7 @@
 127.0.0.1 naj.sk
 127.0.0.1 namimedia.com
 127.0.0.1 nastydollars.com
+127.0.0.1 navigator.io
 127.0.0.1 navrcholu.cz
 127.0.0.1 nbjmp.com
 127.0.0.1 ndparking.com

@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4499
-! Last modified: 17 Aug 2014
+! Version: 4504
+! Last modified: 19 Aug 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4494,6 +4494,11 @@ dream-file.com##[alt="Regular Download"]
 ||sega-rom.com^
 ||eprograms.eu^
 ||msihacks.com^
+||gameraidz.org^
+||freeskypecreditvoucher.com^
+||cpadoom.com^
+||hacksandcheatsandroid.com^
+||deezerpremiumplusfree.com^
 !
 !
 !

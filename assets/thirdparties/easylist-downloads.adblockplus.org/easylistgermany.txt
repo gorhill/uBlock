@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: +8NbBCc/lOKOhbBCJWD6wg
-! Version: 201408171341
+! Checksum: c5ca859vcP87PfeG8B4HrQ
+! Version: 201408191241
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 17 Aug 2014 13:40 UTC
+! Last modified: 19 Aug 2014 12:41 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3813,6 +3813,7 @@ quoka.de###ColumnOuterRight > .yui3-u-1:first-child:last-child > .box:last-child
 1kh.de###Container > #head:first-child + #content + br + .spacer + center
 fr-online.de###ContainerContent > .Redaktionsmodul.Teaser
 torrent.to###Content + div > div + div + div + a > img
+amazon.de###DAcrs1
 amazon.de###DAi
 amazon.de###DAr2
 hausgemacht.tv###FB2

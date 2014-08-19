@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201407240946
+! Version: 201408191032
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 24-07-2014
+! Last modified: 19-08-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -19,10 +19,16 @@
 @@||gioxx.org^$document
 @@||noads.it^$document
 ! [Gruppo di filtri per bloccare elementi]/blocking
+||ashleymadison.com^$popup
+||syndication.exoclick.com^$popup
+||lp.ilivid.com^$popup,image,~image
+||nuggad.net^$third-party,domain=~serviziopubblico.it
+http://adbanner.advertstream.com/banners/
+|http:$subdocument,third-party,domain=2ad.in|adf.ly|adfoc.us|adv.li|allmyvideos.net|j.gs|linkbucksmedia.com|q.gs|shr77.com|tigerleech.com|u.bb|vidspot.net
 ||nexac.com^$third-party
 ||adnxs.com^$third-party
-firedrive.com##DIV[id="fdpc_cont"]
 http://thepiratetrader.com$popup
+http://*.radiocompany.com/back_full/
 http://*.piratestreaming.net/*/*bar.js
 /show_ads_
 http://*.guidaacquisti.net/_skin/
@@ -37,7 +43,6 @@ http://ads*.contentabc.com
 ||intellitxt.com^$third-party
 http://*.citynews-napolitoday.stgy.it/*/skin/
 /adtech/*
-howtogeek.com##IFRAME[id^="google_ads_iframe"]
 http://*.linearadio.it/bnrs/
 http://*.sassuolo2000.it/bnrs/
 http://*.mangaforever.net/*/mercatino-sfondo-*.*
@@ -76,7 +81,6 @@ http://*.nonstoppartner.net/a/
 http://*.adcash.com/script/
 ||b.am11.ru/47/*
 http://*.spiceworks.com/www/delivery/ajs.php
-*flashadv*
 banners.ero-advertising.com/banads/
 cam4.com/images/468x60*
 cam4.com/images/banners/*
@@ -334,31 +338,7 @@ http://*banner*.bet-at-home.com/
 http://*greensmoke.com/*/banners/
 http://*lycos.it/ats/*
 http://.adult-adv.com/banners
-http://147.202.39.247/banners/ircspy/125x90.gif
-http://194.145.249.84/tsx/ads
-http://194.244.103.21/GetBannerById.asp
-http://195.225.176.34/ad/
-http://212.112.234.137/en/free-sky.gif
-http://213.91.8.214/bandeaux
-http://216.105.166.67/
-http://216.32.77.138/openads
-http://217.22.246.121/loadwizardremote.cgi
-http://38.101.43.4/ads.php
-http://38.101.43.6/ads.php?*
 http://4daily.com/banners/
-http://62.26.121.2/dat/bgf/200504/11/fin05_quiz_milionarioa(3).swf?url=http%3A//as1.falkag.de/server/link.asp%3Fcmd%3Durl%26auc%3D1%26kid%3D155386%26bid%3D604153%26iid%3D321576%26uid%3D1%26bls3%3D111111A%26dlv%3D665%2C18473%2C321576%2C155386%2C604153%26dmn%3Dhost108-208.pool8249.interbusiness.it%26sta%3D%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C0%2C6%2C0%2C1879%2C1851%2C1791%2C724%2C0%26flg%3D1%26dat%3Dhttp%253A%252F%252Fwww.fineco.it%252F
-http://63.115.6.15/
-http://63.215.202.6/w/get.media
-http://64.34.169.7/banners/
-http://66.228.116.152/*afr*
-http://67.15.52.60/adjs.php
-http://69.31.84.220/pay/
-http://69.64.69.174
-http://8.10.179.164/ads
-http://80.241.172.68/forums/images/misc_mns/mns7_logo.gif
-http://80.88.83.171/adserver/
-http://81.121.145.59/phpads/
-http://87.106.9.147/betathome/
 http://a.abnad.net/iframe
 http://a.as-eu.falkag.net
 http://a.as-us.falkag.net
@@ -495,7 +475,6 @@ http://adsview.ath.cx/adlog.php
 http://adsvr.deviantart.com/
 http://adsweb.tiscali.it/$domain=~ilmeteo.it
 http://adtech.m7z.net/
-http://adtology*.com
 http://adtrak.net/adview.php
 http://adultfriendfinder.com/go/page/gallery_landing_page&filter_erotic=1&override=1&pid=p197241c&ip=auto
 http://adv*.edintorni.net
@@ -1319,7 +1298,6 @@ http://*.pubdirecte.com/*/campagne.php
 ||4xcellent.com^$popup,image,~image
 ||roulettebotplus.com^$popup,image,~image
 ||888.com^$popup,image,~image
-ilquotidianodellazio.it###popup-facebook
 /googleads.
 /ad3.
 *.mailbeta.libero.it/wind/linkadv.jsp
@@ -1706,10 +1684,25 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 ||ducati.it^$popup,domain=gpone.com
 ||ad.vuiads.net^
 ||adv.ilsole24ore.it^$domain=sky.it
+||adevents.neodatagroup.com^$domain=radiorai.rai.it
+|http://*.sardiniapost.it/wp-content/plugins/facebook-page-promoter-lightbox/
+|http://*.spaziogames.it/*/skin_
+||a.ligatus.com^$domain=tvblog.it
+|http://verytech.pianetatech.it/adv/adv_slider.html
+||ertosatie.com^$popup
+||edreams.it/?*$popup
+|http://*.general-files.org/img/gfo/download_sponsored.png
+||giornalegiornaliero.com^$popup
+||adxcore.com^$popup
+|http://plavid.com/adv_
+|http://adv*.bgnews.it/images/
+|http://*.downforeveryoneorjustme.com/*/dotbiz_banner.jpg
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
+firedrive.com##DIV[id="fdpc_cont"]
 colorburned.com##DIV[class^="singleAd"]
+howtogeek.com##IFRAME[id^="google_ads_iframe"]
 colorburned.com##DIV[class="topBarAd"]
 s.yimg.com##.ad-tl2b.small
 ###footer_ad
@@ -1717,6 +1710,7 @@ videogiochi.com##A[class="adv_link"]
 youtube.com###header
 assodigitale.it##DIV[class="banner"]
 zoomtv.me##DIV[id="memberad"]
+ilquotidianodellazio.it###popup-facebook
 vipboxeu##DIV[id="memberad"]
 vipboxeu.co##IFRAME[id^="ox_"]
 ###advertisement2
@@ -1734,7 +1728,6 @@ fantagazzetta.com##DIV[class="ads"]
 youtube.com###watch-channel-brand-div
 ilmeteo.it##IFRAME[id="box-seat"]
 ilmeteo.it##IFRAME[id="box-casait"]
-http://*.radiocompany.com/back_full/
 radiocompany.com##DIV[id="colonna_dx"]
 radiocompany.com##DIV[id="banner_bottom_dx"]
 radiocompany.com##DIV[id="banner_middle_dx"]
@@ -1797,7 +1790,6 @@ iphoneitalia.com##DIV[class="wes_main wes_tabRight"]
 iphoneitalia.com##DIV[id="BS_selector"]
 iphoneitalia.com##DIV[id="ad_215_top"]
 ~eagleboys.com.au##.marketing-ad
-||nuggad.net^$third-party,domain=~serviziopubblico.it
 gamesradar.com##DIV[class^="page_content_right_ad"]
 gamesradar.com##DIV[id="page_content_top_ad"]
 gazzetta.it##DIV[class="container-pubb"]
@@ -1866,7 +1858,6 @@ notebookitalia.it##A[id="bglink"]
 brighthub.com##DIV[class="adBox"]
 linkiesta.it##DIV[id="adl_300x250"]
 crackberry.com##DIV[class="top-banner wrapper"]
-||lp.ilivid.com^$popup,image,~image
 appstorm.net##DIV[id="banner_wrap"]
 ebay.it##DIV[class="ads_leaderboard row"]
 bitcity.it##DIV[id="banner"]
@@ -3107,6 +3098,40 @@ ilfattoquotidiano.it##.adv-intext
 ilfattoquotidiano.it##[id^="div-gpt-ad-"]
 nowvideo.at##.ad2
 nowvideo.at##.ad
+sardiniapost.it##.wallpaper-link
+sardiniapost.it###wallpaper
+sardiniapost.it##.sam-block-line
+sardiniapost.it###machette-dx
+sardiniapost.it##[id*="machette-sx"]
+sardiniapost.it##.sam-container
+shouldiremoveit.com##.adsbygoogle
+playstationbit.com##[id^="div-gpt-ad"]
+forensicfocus.com###top_ad-sense
+calcolarelapercentuale.it##.adsbygoogle
+general-files.org##.download-button
+general-files.org##.sponsored_download
+ign.com##.ad-placement.ad-leaderboard
+gamestop.it###CustomSkin
+macworld.com##[id^="google_ads_iframe"]
+foxtv.it##.HiddenTablet.colLeft.MPU336
+blog.screenweek.it##[id^="google_ads_iframe"]
+blog.screenweek.it##.takeover
+androidpit.it##[id^="google_ads_iframe"]
+androidpit.it###ad_leadfull
+androidpit.it###ad_mpu
+dphoneworld.net##.adsbygoogle
+dphoneworld.net###wes_main
+dphoneworld.net###p_frame[src^="//player.plavid.com/player.php"]
+o365info.com##.googlepublisherpluginad
+o365info.com##.widget.widget-container.adsns_widget
+msexchange.org###div-gpt-ros
+msexchange.org###bmp-skyscraper-script
+msexchange.org##.body-after
+forum.xda-developers.com##[id^="google_ads_iframe"]
+bergamonews.it##.adv-background
+bergamonews.it###block-openx-11
+gilsmethod.com##[id^="ad_container"]
+gilsmethod.com###adsense_header
 ! [Gruppo di filtri suggeriti dagli utenti]
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB

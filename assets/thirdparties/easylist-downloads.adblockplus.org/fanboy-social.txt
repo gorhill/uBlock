@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 0kg6VCOMGY5gy6QmQrZzOA
-! Version: 201408171341
+! Checksum: LPKXHgpRbuMDHBA0hSf1zA
+! Version: 201408191241
 ! Title: Fanboy's Social Blocking List
-! Last modified: 17 Aug 2014 13:41 UTC
+! Last modified: 19 Aug 2014 12:41 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -500,7 +500,7 @@
 /gadgets/Social/*
 /gallery/social/*$image
 /gfx/socials/*
-/gigya-socialize-for-wordpress/*$~stylesheet
+/gigya-socialize-for-wordpress/*$~script,~stylesheet
 /givememydigg.
 /goog_follow.
 /Google+-Buttons-
@@ -2118,6 +2118,7 @@ _youtube_small.
 ###facebookLikeButton
 ###facebookPromo
 ###facebookRecommend
+###facebookRodape
 ###facebookTabset
 ###facebookWidget
 ###facebookWrapper
@@ -3091,7 +3092,6 @@ _youtube_small.
 ###socialicons
 ###socialiconsContainer
 ###socialise-most-rec
-###socialize
 ###socialize-this
 ###socialize_top_right
 ###socializethis
@@ -6957,7 +6957,7 @@ singularityhub.com##.facebook_connect
 gillette.com##.fan
 conservativepost.com##.fancybox-overlay
 conservativepost.com##.fancybox-wrap
-alternativeto.net,cbs.com,clickindia.com,cloudmark.com,esquire.com,fashionmagazine.com,idigitaltimes.com,latintimes.com,medicaldaily.com,propublica.org,speedtest.net##.fb
+alternativeto.net,cbs.com,clickindia.com,cloudmark.com,esquire.com,fashionmagazine.com,idigitaltimes.com,latintimes.com,medicaldaily.com,mp3juices.com,propublica.org,speedtest.net##.fb
 inktank.fi##.fb-box
 afterdawn.com##.fb_connect
 abajournal.com,allthingsd.com,buddytv.com,comingsoon.net,craveonline.com,dailydot.com,digitaljournal.com,elektronista.dk,geekzenith.com,gospelway.com,gpforums.co.nz,harvard.edu,khaleejtimes.com,macworld.co.uk,masslive.com,mentalfloss.com,mlive.com,modamee.com,nationalgeographic.com,onextrapixel.com,revision3.com,rfi.fr,searchengineland.com,shocktillyoudrop.com,smithsonianmag.com,tech2.in.com,theslingshot.com,tnr.com,topsecretwriters.com,zdnet.com##.fb_iframe_widget
@@ -6996,7 +6996,7 @@ fixya.com,flippinawesome.org,geeksandbeats.com,independent.ie,latintimes.com##.g
 scion.com##.googlePlus
 gcn.com##.google_top
 cbs.com##.gp
-bossip.com,esquire.com,opensiteexplorer.org##.gplus
+bossip.com,esquire.com,mp3juices.com,opensiteexplorer.org##.gplus
 hollywood.com##.gsfn-widget-tab
 geektyrant.com##.gtFace
 wonderhowto.com##.guide-flyout-container
@@ -7566,6 +7566,7 @@ base.de#@##social_footer
 lenta.ru#@##socials
 asian-u.com#@##twitter_button
 nrc.gov,rapgenius.com,tmz.com#@#.addthis_toolbox
+kino-vorschau.com#@#.arqam-widget-counter
 opposingviews.com#@#.block-socialmedia
 crowdin.net,deezer.com,magine.com#@#.btn-facebook
 crowdin.net#@#.btn-social

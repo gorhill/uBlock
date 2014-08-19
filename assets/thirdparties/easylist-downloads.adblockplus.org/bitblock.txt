@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 6oDCQGtrM9WPB3FCu6Qklg
-! Version: 201408171340
-! Last modified: 17 Aug 2014 13:40 UTC
+! Checksum: SRnrsLgKZ+RiqUSOG2K+Hg
+! Version: 201408191240
+! Last modified: 19 Aug 2014 12:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -539,7 +539,7 @@ _vkontakte.png
 /gadgets/Social/*
 /gallery/social/*$image
 /gfx/socials/*
-/gigya-socialize-for-wordpress/*$~stylesheet
+/gigya-socialize-for-wordpress/*$~script,~stylesheet
 /givememydigg.
 /goog_follow.
 /Google+-Buttons-
@@ -2203,6 +2203,7 @@ _youtube_small.
 ###facebookLikeButton
 ###facebookPromo
 ###facebookRecommend
+###facebookRodape
 ###facebookTabset
 ###facebookWidget
 ###facebookWrapper
@@ -3176,7 +3177,6 @@ _youtube_small.
 ###socialicons
 ###socialiconsContainer
 ###socialise-most-rec
-###socialize
 ###socialize-this
 ###socialize_top_right
 ###socializethis
@@ -8394,6 +8394,7 @@ _social_rss.
 ||download.skype.com/share/$third-party
 ||dukecms.com/deals2/$third-party
 ||eff.org/bloggers/badges/$third-party
+||ergers.net^$third-party
 ||evernote.com^$third-party
 ||facebookicon.net^$third-party
 ||fark.com/js/$third-party
@@ -8495,7 +8496,6 @@ _social_rss.
 ||socialtwist.com^$third-party
 ||socialvibe.com^$third-party
 ||sodahead.com^$third-party
-||spot.im^$third-party
 ||statictapcdn-a.akamaihd.net^$third-party
 ||storystack.com^$third-party
 ||styld-by.com^$third-party
@@ -8835,6 +8835,7 @@ base.de#@##social_footer
 lenta.ru#@##socials
 asian-u.com#@##twitter_button
 nrc.gov,rapgenius.com,tmz.com#@#.addthis_toolbox
+kino-vorschau.com#@#.arqam-widget-counter
 opposingviews.com#@#.block-socialmedia
 crowdin.net,deezer.com,magine.com#@#.btn-facebook
 crowdin.net#@#.btn-social

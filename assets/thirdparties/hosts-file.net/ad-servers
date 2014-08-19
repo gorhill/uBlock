@@ -3698,6 +3698,7 @@
 127.0.0.1	adserver.infotiger.com
 127.0.0.1	adserver.interfree.it
 127.0.0.1	adserver.inwind.it
+127.0.0.1	adserver.ip-phone-forum.de
 127.0.0.1	adserver.ision.de
 127.0.0.1	adserver.itsfogo.com
 127.0.0.1	adserver.janes.com
@@ -4677,6 +4678,7 @@
 127.0.0.1	api.airpush.com
 127.0.0.1	api.analytics.omgpop.com
 127.0.0.1	api.applifier.com
+127.0.0.1	api.appsflyer.com
 127.0.0.1	api.atdmt.com
 127.0.0.1	api.autocompleteplus.com
 127.0.0.1	api.bitp.it
@@ -4705,12 +4707,14 @@
 127.0.0.1	api.mobpartner.mobi
 127.0.0.1	api.optimizely.com
 127.0.0.1	api.otherlevels.com
+127.0.0.1	api.parse.com
 127.0.0.1	api.revmob.com
 127.0.0.1	api.ringtonematcher.com
 127.0.0.1	api.seomsg.com
 127.0.0.1	api.sharedcount.com
 127.0.0.1	api.skyhookwireless.com
 127.0.0.1	api.sponsorpay.com
+127.0.0.1	api.statdns.com
 127.0.0.1	api.superfish.com
 127.0.0.1	api.tapfortap.com
 127.0.0.1	api.thesearchagency.net
@@ -4754,6 +4758,7 @@
 127.0.0.1	apo.ero-advertising.com
 127.0.0.1	app-authority.com
 127.0.0.1	app-storage.elicitapp.com
+127.0.0.1	app.adjust.io
 127.0.0.1	app.app-authority.com
 127.0.0.1	app.appsflyer.com
 127.0.0.1	app.bronto.com
@@ -6569,6 +6574,7 @@
 127.0.0.1	campaignmonitor.com
 127.0.0.1	campaigns.f2.com.au
 127.0.0.1	campaigns.interclick.com
+127.0.0.1	campaigns.services.mozilla.com
 127.0.0.1	campaigntracking01.com
 127.0.0.1	camsiteonline.wiredcircular.com
 127.0.0.1	camz.tintel.nl
@@ -6688,6 +6694,7 @@
 127.0.0.1	cdn.adk2.com
 127.0.0.1	cdn.adkreator.com
 127.0.0.1	cdn.adnxs.com
+127.0.0.1	cdn.adorikacontentportal.com
 127.0.0.1	cdn.adrolays.de
 127.0.0.1	cdn.adsrvmedia.com
 127.0.0.1	cdn.adworkmedia.com
@@ -8972,6 +8979,7 @@
 127.0.0.1	d3anogn3pbtk4v.cloudfront.net
 127.0.0.1	d3aq14vri881or.cloudfront.net
 127.0.0.1	d3cxv97fi8q177.cloudfront.net
+127.0.0.1	d3dc2aopftfkeo.cloudfront.net
 127.0.0.1	d3dphmosjk9rot.cloudfront.net
 127.0.0.1	d3emsmln8xfj03.cloudfront.net
 127.0.0.1	d3f9mcik999dte.cloudfront.net
@@ -10143,6 +10151,7 @@
 127.0.0.1	feeds.logicbuy.com
 127.0.0.1	feeds.mofos.com
 127.0.0.1	feeds.webtrekk.com
+127.0.0.1	feedshare.flipora.com
 127.0.0.1	felisha-utter.us
 127.0.0.1	ferdy.org
 127.0.0.1	ferrago.uk.intellitxt.com
@@ -11365,6 +11374,7 @@
 127.0.0.1	grey.admaximize.com
 127.0.0.1	grieftalk.com
 127.0.0.1	grin.ivwbox.de
+127.0.0.1	gripfile.net
 127.0.0.1	groopz.com
 127.0.0.1	groupe.go2cloud.org
 127.0.0.1	groupware.adition.com
@@ -12227,6 +12237,12 @@
 127.0.0.1	intuitinc.122.2o7.net
 127.0.0.1	inventory.overture.com
 127.0.0.1	invideo.ero-advertising.com
+127.0.0.1	invites.flipmailer.com
+127.0.0.1	invites.fliporamail.com
+127.0.0.1	invites.fliporamailer.com
+127.0.0.1	invites.info-emailer.com
+127.0.0.1	invites.infoaxe.com
+127.0.0.1	invites.infoaxe.net
 127.0.0.1	ioads.ero-advertising.com
 127.0.0.1	ione.netmng.com
 127.0.0.1	iopodx.de
@@ -12298,6 +12314,7 @@
 127.0.0.1	ivw.discover-outdoor.de
 127.0.0.1	ivw.dumontreise.de
 127.0.0.1	ivw.fem.com
+127.0.0.1	ivw.rtl.de
 127.0.0.1	iweb.go2cloud.org
 127.0.0.1	iwebimg.net
 127.0.0.1	ixn001.ixn.local.vmsn.de
@@ -12693,6 +12710,7 @@
 127.0.0.1	kpicentral.com
 127.0.0.1	kr-adimage.lycos.co.kr
 127.0.0.1	krafteurope.112.2o7.net
+127.0.0.1	kraken-measurements.s3.amazonaws.com
 127.0.0.1	kraken.giantrealm.com
 127.0.0.1	kreapixel.go2cloud.org
 127.0.0.1	kress.ivwbox.de
@@ -13004,6 +13022,7 @@
 127.0.0.1	localfindstuff.com
 127.0.0.1	localsearchfinds.com
 127.0.0.1	locatetargets.com
+127.0.0.1	locations.webinm.de
 127.0.0.1	log.applifier.com
 127.0.0.1	log.btopenworld.com
 127.0.0.1	log.cc.cometsystems.com
@@ -13028,6 +13047,7 @@
 127.0.0.1	log.suchen.de
 127.0.0.1	log.superweb.ws
 127.0.0.1	log.sz-online.de
+127.0.0.1	log.tapatalk.com
 127.0.0.1	log.trafic.ro
 127.0.0.1	log.v.iask.com
 127.0.0.1	log.vdn.apps.cntv.cn
@@ -13523,6 +13543,7 @@
 127.0.0.1	md.yn.cometsystems.com
 127.0.0.1	mdamarillo.112.2o7.net
 127.0.0.1	mdjacksonville.112.2o7.net
+127.0.0.1	mdmserver.mobidia.com
 127.0.0.1	mdn1.phluantmobile.net
 127.0.0.1	mdn2.phluantmobile.net
 127.0.0.1	mdn3.phluantmobile.net
@@ -13824,6 +13845,7 @@
 127.0.0.1	mobi.mobijo.tv
 127.0.0.1	mobi.pornhubpremium.com
 127.0.0.1	mobi.yanosik.pl
+127.0.0.1	mobidia.com
 127.0.0.1	mobilcom.ivwbox.de
 127.0.0.1	mobile-abc.com
 127.0.0.1	mobile.adfarm1.adition.com
@@ -15723,6 +15745,7 @@
 127.0.0.1	refinedads.com
 127.0.0.1	reformal.ru
 127.0.0.1	reg.cc.cometsystems.com
+127.0.0.1	reg20.ubermedia.com
 127.0.0.1	regalcigs.go2cloud.org
 127.0.0.1	regenbog.ivwbox.de
 127.0.0.1	regina-balog.us
@@ -16464,6 +16487,7 @@
 127.0.0.1	setihome.com
 127.0.0.1	seto.createsend.com
 127.0.0.1	sett.i12.de
+127.0.0.1	settings.crashlytics.com
 127.0.0.1	setup01.ixn.local.vmsn.de
 127.0.0.1	seu.cleverreach.com
 127.0.0.1	seumundomobile.com.pt
@@ -16693,6 +16717,7 @@
 127.0.0.1	soav1.adition.com
 127.0.0.1	social.msgplus.net
 127.0.0.1	socialize-it.com
+127.0.0.1	socialskive.com
 127.0.0.1	sociomantic.com
 127.0.0.1	soclock.com
 127.0.0.1	socratos.forrestersurveys.com
@@ -17178,6 +17203,7 @@
 127.0.0.1	stats.propublica.org
 127.0.0.1	stats.radiostreamlive.com
 127.0.0.1	stats.rcsobjects.it
+127.0.0.1	stats.remoteserver.pw
 127.0.0.1	stats.sawlive.tv
 127.0.0.1	stats.searchsight.com
 127.0.0.1	stats.sextracker.com
@@ -17835,6 +17861,7 @@
 127.0.0.1	top20.com
 127.0.0.1	top50.co.uk
 127.0.0.1	topads.ero-advertising.com
+127.0.0.1	topadvancedsearch.com
 127.0.0.1	topbarh.box.sk
 127.0.0.1	topbinaryaffiliates.ck-cdn.com
 127.0.0.1	topfox.co.uk
@@ -20678,6 +20705,7 @@
 127.0.0.1	www.greatest-store.com
 127.0.0.1	www.green-tracker.com
 127.0.0.1	www.gretchen-domino.us
+127.0.0.1	www.gripfile.net
 127.0.0.1	www.group-mail.com
 127.0.0.1	www.guestbook.superstats.com
 127.0.0.1	www.guid.org
@@ -21195,6 +21223,7 @@
 127.0.0.1	www.mobile-abc.com
 127.0.0.1	www.mobile.adnxs.com
 127.0.0.1	www.mobileandinternetadvertising.com
+127.0.0.1	www.mobisystems.com
 127.0.0.1	www.mobitracker.info
 127.0.0.1	www.mobitraffictracker.net
 127.0.0.1	www.mobpartner.com
@@ -21651,6 +21680,7 @@
 127.0.0.1	www.snapengage.com
 127.0.0.1	www.snklink.us
 127.0.0.1	www.socialize-it.com
+127.0.0.1	www.socialskive.com
 127.0.0.1	www.sociomantic.com
 127.0.0.1	www.soclock.com
 127.0.0.1	www.sofia-lathem.us
@@ -21791,6 +21821,7 @@
 127.0.0.1	www.toolbarcounter.com
 127.0.0.1	www.top-ro.ro
 127.0.0.1	www.top100search.com
+127.0.0.1	www.topadvancedsearch.com
 127.0.0.1	www.toplisthyip.com
 127.0.0.1	www.toppagefinder.com
 127.0.0.1	www.toptrafficsource.com
@@ -22449,4 +22480,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22444
+# Hosts: 22475

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: twzOFHQP/mrdtRK+nfCFHg
-! Version: 201408171340
-! Last modified: 17 Aug 2014 13:40 UTC
+! Checksum: QTXSInuo0ssz+bbEcIYVjg
+! Version: 201408191240
+! Last modified: 19 Aug 2014 12:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2564,6 +2564,7 @@ _tizers.
 ||samiana.com^
 ||searchfun.in^
 ||seed.by^
+||seligers.ru^
 ||senkevich-vk.net^
 ||sergh34ds.com^
 ||serv7553.ru^$third-party

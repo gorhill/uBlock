@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: uB1xmbt9F2OUAYYvnDZavA
-! Version: 201408171341
+! Checksum: VO1QNmv5GsbJo2aZWj/S3w
+! Version: 201408191241
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3003,7 +3003,6 @@ nouvelobs.com##a[href^="http://assurance-auto.nouvelobs.com/assurance-auto.html?
 brain-magazine.fr,omgtorrent.com##a[href^="http://bit.ly/"]
 usbfix.net##a[href^="http://clic.reussissonsensemble.fr/"]
 algeriephilatelie.net##a[href^="http://clic.reussissonsensemble.fr/click.asp?"]
-rue-hardware.com,rue-montgallet.com##a[href^="http://click.comparhaut.com/"]
 clubic.com##a[href^="http://clk.atdmt.com/"]
 tomtomax.fr##a[href^="http://clk.tradedoubler.com/"]
 laptopspirit.fr,sosiphone.com##a[href^="http://clk.tradedoubler.com/click?"]
@@ -3410,8 +3409,8 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=viedemerde.fr
 @@||viedemerde.fr^$script,~third-party
 viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
-||canarretepas.viedemerde.fr^
 ||drums.buporez.com^
+||italia.viedemerde.fr^
 ! notre-planete.info
 @@||cas.criteo.com/delivery/ajs.php?$script,domain=notre-planete.info
 @@||notre-planete.info^$elemhide
@@ -3498,6 +3497,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||linuxd.org/*.js|$script,third-party
 @@||mazdarx7.com/*.js|$script,third-party
 @@||mfkbe.cr.rs/*.js|$script,third-party
+@@||mil.nf/*.js|$script,third-party
 @@||mine.bz/*.js|$script,third-party
 @@||minecraftnoob.com/*.js|$script,third-party
 @@||negeriau.net/*.js|$script,third-party
@@ -3577,6 +3577,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.linuxd.net/$third-party,xmlhttprequest
 |http://*.linuxd.org/$third-party,xmlhttprequest
 |http://*.mazdarx7.com/$third-party,xmlhttprequest
+|http://*.mil.nf/$third-party,xmlhttprequest
 |http://*.mine.bz/$third-party,xmlhttprequest
 |http://*.minecraftnoob.com/$third-party,xmlhttprequest
 |http://*.mm.my/$third-party,xmlhttprequest

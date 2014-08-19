@@ -1,7 +1,7 @@
 [Adblock Plus 1.2]
-! Checksum: YME2A+IJRdP0ukEMhfiYuA
+! Checksum: f84WbdittKR+mGIn1M1nyw
 ! Title: Latvian List
-! Last modified: 2014-08-05 13:32 UTC
+! Last modified: 2014-08-18 15:23 UTC
 ! Expires: 2 days (update frequency)
 ! Homepage: http://latvian-list.site11.com/
 ! Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
@@ -102,72 +102,72 @@
 !
 ||1shop.lv/i/ban/
 ||a.draugiem.lv^
-||adbox.lv^
-||adnet.lt^
-||ads.image.lv^
-||adsplius.lt^
-||adsxchange.lv^
+||adbox.lv^$third-party
+||adnet.lt^$third-party
+||ads.image.lv^$third-party
+||adsplius.lt^$third-party
+||adsxchange.lv^$third-party
 ||agk.lv^$third-party
 ||alida.lv/upload/banner/
-||anymedia.lv^
+||anymedia.lv^$third-party
 ||apollo.lv/article/feed/iframe/$third-party
 ||apollo.lv/upload/city24
 ||apps.lv/timthumb.php?*/uploads/shop_images/
 ||ass.lv/iframe/$third-party
 ||auto24.lv^$third-party
 ||b.itvnet.lv^
-||banneri.lv^
-||bbes.lv^
+||banneri.lv^$third-party
+||bbes.lv^$third-party
 ||beta.lt^*/banners
 ||cetrassezonas.lv/tvnet.php
 ||chaula.tv/lv/output/$third-party
-||city24.lv/ibox/
-||clo.lv^
+||city24.lv/ibox/$third-party
+||clo.lv^$third-party
 ||cv.lv^*?type=banner
-||deal24.lv^
+||deal24.lv^$third-party
 ||delphi.lv^*/ads/
 ||diena.lv/boxnews.html$third-party
-||doaffiliate.net^
-||emediate.se/eas?cu=
-||emediate.se/EAS_tag.
+||doaffiliate.net^$third-party
+||emediate.se/eas?cu=$third-party
+||emediate.se/EAS_tag.$third-party
 ||evolution.lv^$third-party
 ||garmtech.lv^$third-party
-||getgamers.ru^
 ||getgamers.ru^$popup
-||goaff.com^
+||getgamers.ru^$third-party
+||goaff.com^$third-party
 ||ifrype.com/ad_v/
 ||ifrype.com/adv/
 ||ifrype.com^*/ads.
 ||imd.petit.lv^
 ||img.petit.lv^
-||inectar.lv^
+||inectar.lv^$third-party
 ||itvnet.lv/partner/
-||knc.lv^
+||knc.lv^$third-party
 ||latloto.lv/banner/
 ||leta.lv/bm/www/images/$third-party
 ||mtgonline.lv/counter-smscredit/
-||nagi.ee^
-||nerealitate.lv^
+||nagi.ee^$third-party
+||nerealitate.lv^$third-party
 ||next.lv^$third-party
 ||novonews.lv/ticker/flash/$third-party
 ||openx.diena.lv^$popup
 ||otrapuse.lv^$third-party
 ||partneriem.smscredit.lv^$third-party
-||pay4results.ee^
+||pay4results.ee^$third-party
 ||perkamkopa.lv^$third-party
 ||prieks.lv^*/banner/
 ||promo.boomtime.lv^
 ||reklama.lv/promotion/
-||saites.eon.lv^
+||saites.eon.lv^$third-party
 ||salidzini.lv/affiliate/
 ||salidzini.lv/images/120x40.php
 ||salidzini.lv/images/88x31.php
 ||salidzini.lv/images/banner/
 ||serveris.lv/images/affiliate/
 ||sludini.lv^$third-party
-||smartad.lv^
+||smartad.lv^$third-party
 ||tvnet.lv/export_news/$third-party
-||videoavatars.com^
+||videoavatars.com^$third-party
 ||w.ifrype.com^
 ||zizu.lv/bpublic/
 ||zizu.lv/campaigns/$third-party
