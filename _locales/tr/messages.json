@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
+    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla kullanmaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -32,11 +32,11 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click the power button to <br>permanently disable or enable <br>µBlock for the current site",
+    "message":"Bu sitede µBlock'u tamamen <br>kapatmak ve açmak için <br>güç düğmesine tıklatın",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"istek engellendi",
+    "message":"reklam engellendi",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -52,15 +52,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Panoyu açmak için tıklayın",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Eleman seçme moduna girin",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"İstek günlüğüne git",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -76,23 +76,23 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Net filtreleri",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Kozmetik filtreler",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Engellenen reklamların yerlerini gizle",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Engellenmiş reklam sayısını ikon üstünde göster",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} ağ filtreleri ＋ {{cosmeticFilterCount}} kozmetik filtreler :",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -100,11 +100,11 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce Adblock+ element hiding filters.",
+    "message":"Ayrıştır ve AdblockPlus element gizleme filtreleri uygula",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element hiding filters used.",
+    "message":"{{abpHideFilterCount}} element gizleme filtreleri kullanıldı.",
     "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -112,7 +112,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"Engellenmiş Host listesi",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -128,23 +128,23 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Zararlı alan adları",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Sosyal",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Çok-amaçlı",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Bölgeler, diller",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Özel",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -164,7 +164,7 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"İçe aktar ve ekle",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -180,11 +180,11 @@
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"İçe aktar ve ekle",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"Dışa aktar",
     "description":"English: Export"
   },
   "whitelistApply":{
@@ -192,23 +192,23 @@
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"Engellenmiş reklamların kaydını tutmayı etkinleştir",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Bu seçeneği etkinleştirerek isterseniz engellenmiş reklamların detaylarını inceleyebiliriz. Engellenmiş reklamların günlüğü μBlock bellek izini artırır. Birçok kullanıcı bu özelliği kullanmaz, varsayılan olarak devre dışıdır.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"Engellenmemiş reklamların kaydını tutmayı etkinleştirin",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Bu seçeneği etkinleştirerek isterseniz engellenmemiş reklamların detaylarını inceleyebiliriz. Engellenmemiş reklamların günlüğü μBlock bellek izini artırır. Birçok kullanıcı bu özelliği kullanmaz, varsayılan olarak devre dışıdır.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Engellenen istekler",
+    "message":"Engellenen reklamlar",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
@@ -236,19 +236,19 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"Bu sayfa için engelleme isteği yok",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Change log",
+    "message":"Değişiklikler",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Source code (GPLv3)",
+    "message":"Kaynka kodu (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutExtensionDataHeader":{
-    "message":"Extension data",
+    "message":"Eklenti bilgisi",
     "description":"English: Extension data"
   },
   "aboutAssetsUpdatePrompt":{
@@ -292,7 +292,7 @@
     "description":"Updating..."
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Bu giriş sonuncusu olmalı",
     "description":"so we dont need to deal with comma for last entry"
   }
 }
