@@ -376,7 +376,9 @@ var buttonApplyHandler = function() {
 /******************************************************************************/
 
 var buttonUpdateHandler = function() {
-    reloadAll(true);
+    if ( needUpdate ) {
+        reloadAll(true);
+    }
 };
 
 /******************************************************************************/

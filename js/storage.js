@@ -453,6 +453,7 @@
 // Load all
 
 µBlock.load = function() {
+    this.loadLocalSettings();
     // User settings need to be available for this because we need
     // µBlock.userSettings.externalLists
     this.loadUserSettings(this.loadUpdatableAssets.bind(this, this.userSettings.autoUpdate));
