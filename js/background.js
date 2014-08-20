@@ -46,7 +46,7 @@ return {
         allowedRequestCount: 0
     },
 
-    updateAssetsEvery: 2 * 24 * 60 * 60 * 1000,
+    updateAssetsEvery: 47 * 60 * 60 * 1000,
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
 

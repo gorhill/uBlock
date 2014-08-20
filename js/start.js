@@ -32,20 +32,42 @@
 // Automatic update of non-user assets
 // https://github.com/gorhill/httpswitchboard/issues/334
 
-(function() {
-    var µb = µBlock;
+µBlock.updater = (function() {
 
-    var jobCallback = function() {
-        if ( µb.userSettings.autoUpdate !== true ) {
-            return;
-        }
-        // TODO: need smarter update, currently blindly reloading all.
-        µb.loadUpdatableAssets(true);
-    };
+/******************************************************************************/
 
-    µb.asyncJobs.add('autoUpdateAssets', null, jobCallback, µb.updateAssetsEvery, true);
-})();
+var µb = µBlock;
+var bufferTime = 0 * 60 * 1000;
+var exports = {};
+
+var jobCallback = function() {
+    if ( µb.userSettings.autoUpdate !== true ) {
+        return;
+    }
+    // TODO: need smarter update, currently blindly reloading all.
+    µb.loadUpdatableAssets(true);
+};
 
 // https://www.youtube.com/watch?v=cIrGQD84F1g
+
+/******************************************************************************/
+
+exports.restart = function() {
+    µb.asyncJobs.add(
+        'autoUpdateAssets',
+        null,
+        jobCallback,
+        µb.updateAssetsEvery - bufferTime,
+        true
+    );
+};
+
+exports.restart();
+
+/******************************************************************************/
+
+return exports;
+
+})();
 
 /******************************************************************************/

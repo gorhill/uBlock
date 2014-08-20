@@ -430,8 +430,6 @@ var readLocalFile = function(path, callback) {
     cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
 };
 
-exports.getLocal = readLocalFile;
-
 // https://www.youtube.com/watch?v=r9KVpuFPtHc
 
 /******************************************************************************/
@@ -450,18 +448,18 @@ var readRepoFile = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
-        // console.log('µBlock> readRepoFile() / onRepoFileLoaded()');
+        console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
         // https://github.com/gorhill/httpswitchboard/issues/263
         if ( this.status === 200 ) {
             reportBack(this.responseText);
         } else {
-            reportBack('', 'Error ' + this.statusText);
+            reportBack('', 'Error: ' + this.statusText);
         }
     };
 
     var onRepoFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readRepoFile() / onRepoFileError("%s")', path);
+        console.error('µBlock> readRepoFile("%s") / onRepoFileError()', path);
         reportBack('', 'Error');
     };
 
@@ -471,51 +469,6 @@ var readRepoFile = function(path, callback) {
         onRepoFileLoaded,
         onRepoFileError
     );
-};
-
-/******************************************************************************/
-
-var readExternalFile = function(path, callback) {
-    var reportBack = function(content, err) {
-        var details = {
-            'path': path,
-            'content': content
-        };
-        if ( err ) {
-            details.error = err;
-        }
-        callback(details);
-    };
-
-    var onExternalFileCached = function(details) {
-        this.onload = this.onerror = null;
-        // console.log('µBlock> onExternalFileCached()');
-        reportBack(details.content);
-    };
-
-    var onExternalFileLoaded = function() {
-        this.onload = this.onerror = null;
-        // console.log('µBlock> onExternalFileLoaded()');
-        cachedAssetsManager.save(path, this.responseText, onExternalFileCached);
-    };
-
-    var onExternalFileError = function() {
-        console.error('µBlock> onExternalFileError() / onLocalFileError("%s")', path);
-        reportBack('', 'Error');
-        this.onload = this.onerror = null;
-    };
-
-    var onCachedContentLoaded = function(details) {
-        // console.log('µBlock> readExternalFile() / onCacheFileLoaded()');
-        reportBack(details.content);
-    };
-
-    var onCachedContentError = function(details) {
-        // console.error('µBlock> readExternalFile() / onCacheFileError("%s")', path);
-        getTextFileFromURL(details.path, onExternalFileLoaded, onExternalFileError);
-    };
-
-    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
 };
 
 /******************************************************************************/
@@ -542,11 +495,9 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var updateChecksum = function() {
-        if ( assetEntry !== undefined ) {
-            if ( assetEntry.repoChecksum !== assetEntry.localChecksum ) {
-                assetEntry.localChecksum = assetEntry.repoChecksum;
-                updateLocalChecksums();
-            }
+        if ( assetEntry !== undefined && assetEntry.repoChecksum !== assetEntry.localChecksum ) {
+            assetEntry.localChecksum = assetEntry.repoChecksum;
+            updateLocalChecksums();
         }
     };
 
@@ -577,7 +528,7 @@ var readRepoCopyAsset = function(path, callback) {
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
         if ( typeof this.responseText !== 'string' || this.responseText === '' ) {
-            console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
+            console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
@@ -621,22 +572,22 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onCacheMetaReady = function(entries) {
+        // Fetch from remote if:
+        // - Auto-update enabled AND (not in cache OR in cache but obsolete)
         var timestamp = entries[path];
+        var obsolete = Date.now() - exports.autoUpdateDelay;
+        if ( exports.autoUpdate && (typeof timestamp !== 'number' || timestamp <= obsolete) ) {
+            console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
+            getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+            return;
+        }
+
         // In cache
         if ( typeof timestamp === 'number' ) {
-            // Verify obsolescence
-            if ( exports.autoUpdate ) {
-                var obsolete = Date.now() - exports.autoUpdateDelay;
-                if ( timestamp <= obsolete ) {
-                    console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): cache is obsolete', path);
-                    getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
-                    return;
-                }
-            }
-            // Not obsolete
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
+
         // Not in cache
         getTextFileFromURL(chrome.runtime.getURL(path), onInstallFileLoaded, onInstallFileError);
     };
@@ -646,20 +597,18 @@ var readRepoCopyAsset = function(path, callback) {
 
         // Asset doesn't exist
         if ( assetEntry === undefined ) {
-            reportBack('', 'Error: Asset not found');
+            reportBack('', 'Error: asset not found');
             return;
         }
 
         // Repo copy changed: fetch from home URL
-        if ( exports.autoUpdate ) {
-            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-                console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
-                getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
-                return;
-            }
+        if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+            console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+            getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+            return;
         }
 
-        // No change, we will inspect the cached version for obsolescence
+        // Load from cache
         cachedAssetsManager.entries(onCacheMetaReady);
     };
 
@@ -745,20 +694,18 @@ var readRepoOnlyAsset = function(path, callback) {
 
         // Asset doesn't exist
         if ( assetEntry === undefined ) {
-            reportBack('', 'Error: Asset not found');
+            reportBack('', 'Error: asset not found');
             return;
         }
 
         // Asset added or changed: load from repo URL and then cache result
-        if ( exports.autoUpdate ) {
-            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-                console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
-                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
-                return;
-            }
+        if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+            console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+            return;
         }
 
-        // Asset unchanged: load from cache
+        // Load from cache
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
@@ -813,39 +760,29 @@ var readExternalAsset = function(path, callback) {
         reportBack(this.responseText);
     };
 
-    var onExternalFileError2 = function() {
+    var onExternalFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readExternalAsset("%s") / onExternalFileError2()', path);
-        reportBack('', 'Error');
-    };
-
-    var onExternalFileError1 = function() {
-        this.onload = this.onerror = null;
-        console.error('µBlock> readExternalAsset("%s") / onExternalFileError1()', path);
+        console.error('µBlock> readExternalAsset("%s") / onExternalFileError()', path);
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
-    var entriesReady = function(entries) {
+    var onCacheMetaReady = function(entries) {
+        // Fetch from remote if:
+        // - Not in cache OR
+        // 
+        // - Auto-update enabled AND in cache but obsolete
         var timestamp = entries[path];
-        // In cache
-        if ( typeof timestamp === 'number' ) {
-            // Obsolete?
-            if ( exports.autoUpdate ) {
-                var obsolete = Date.now() - exports.autoUpdateDelay;
-                if ( timestamp <= obsolete ) {
-                    getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError1);
-                    return;
-                }
-            }
-            // Not obsolete
-            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+        var obsolete = Date.now() - exports.autoUpdateDelay;
+        if ( typeof timestamp !== 'number' || (exports.autoUpdate && timestamp <= obsolete) ) {
+            getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError);
             return;
         }
-        // Not in cache
-        getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError2);
+
+        // In cache
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
-    cachedAssetsManager.entries(entriesReady);
+    cachedAssetsManager.entries(onCacheMetaReady);
 };
 
 /******************************************************************************/
@@ -940,6 +877,10 @@ exports.get = function(path, callback) {
 };
 
 // https://www.youtube.com/watch?v=98y0Q7nLGWk
+
+/******************************************************************************/
+
+exports.getLocal = readLocalFile;
 
 /******************************************************************************/
 

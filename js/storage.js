@@ -446,6 +446,11 @@
     this.assets.autoUpdateDelay = this.updateAssetsEvery;
     this.loadPublicSuffixList();
     this.loadUbiquitousBlacklists();
+
+    // It could be a manual update, so we reset the auto-updater
+    if ( update ) {
+        this.updater.restart();
+    }
 };
 
 /******************************************************************************/
