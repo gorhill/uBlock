@@ -1000,7 +1000,8 @@ exports.metadata = function(callback) {
                 entryOut.homeURL = path;
             }
         }
-        getRepoMetadata(onRepoMetaReady);
+        // Always ask for most up-to-date version
+        getRepoMetadata(onRepoMetaReady, true);
     };
 
     cachedAssetsManager.entries(onCacheMetaReady);

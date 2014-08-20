@@ -29,6 +29,7 @@
 
 var userListName = chrome.i18n.getMessage('1pPageName');
 var listDetails = {};
+var cosmeticSwitch = true;
 var externalLists = '';
 var cacheWasPurged = false;
 var needUpdate = false;
@@ -67,18 +68,11 @@ var renderNumber = function(value) {
 // TODO: get rid of background page dependencies
 
 var renderBlacklists = function() {
-    // empty list first
     var µb = getµb();
-
-    uDom('#listsOfBlockedHostsPrompt').text(
-        chrome.i18n.getMessage('3pListsOfBlockedHostsPrompt')
-            .replace('{{netFilterCount}}', renderNumber(µb.abpFilters.getFilterCount()))
-            .replace('{{cosmeticFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
-    );
 
     // Assemble a pretty blacklist name if possible
     var htmlFromListName = function(blacklistTitle, blacklistHref) {
-        if ( blacklistHref === µb.userFiltersPath ) {
+        if ( blacklistHref === listDetails.userFiltersPath ) {
             return userListName;
         }
         if ( !blacklistTitle ) {
@@ -197,6 +191,7 @@ var renderBlacklists = function() {
 
     var onListsReceived = function(details) {
         listDetails = details;
+        cosmeticSwitch = details.cosmetic;
         needUpdate = false;
 
         var lists = details.available;
@@ -226,6 +221,11 @@ var renderBlacklists = function() {
             delete groups[groupKey];
         }
 
+        uDom('#listsOfBlockedHostsPrompt').text(
+            chrome.i18n.getMessage('3pListsOfBlockedHostsPrompt')
+                .replace('{{netFilterCount}}', renderNumber(details.netFilterCount))
+                .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
+        );
         uDom('#lists .listDetails').remove();
         uDom('#lists').html(html.join(''));
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
@@ -242,7 +242,7 @@ var renderBlacklists = function() {
 // Return whether selection of lists changed.
 
 var listsSelectionChanged = function() {
-    if ( listDetails.cosmetic !== getµb().userSettings.parseAllABPHideFilters ) {
+    if ( listDetails.cosmetic !== cosmeticSwitch ) {
         return true;
     }
     if ( cacheWasPurged ) {
@@ -393,7 +393,7 @@ var autoUpdateCheckboxChanged = function() {
 
 /******************************************************************************/
 
-var abpHideFiltersCheckboxChanged = function() {
+var cosmeticSwitchChanged = function() {
     listDetails.cosmetic = this.checked;
     updateApplyButtons();
 };
@@ -435,7 +435,7 @@ var externalListsApplyHandler = function() {
 uDom.onLoad(function() {
     // Handle user interaction
     uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
-    uDom('#parseCosmeticFilters').on('change', abpHideFiltersCheckboxChanged);
+    uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
     uDom('#buttonApply').on('click', buttonApplyHandler);
     uDom('#buttonUpdate').on('click', buttonUpdateHandler);
     uDom('#lists').on('change', '.listDetails > input', onListCheckboxChanged);

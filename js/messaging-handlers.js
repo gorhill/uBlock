@@ -250,7 +250,10 @@ var getLists = function(callback) {
         available: null,
         current: µb.remoteBlacklists,
         cosmetic: µb.userSettings.parseAllABPHideFilters,
+        netFilterCount: µb.abpFilters.getFilterCount(),
+        cosmeticFilterCount: µb.abpHideFilters.getFilterCount(),
         autoUpdate: µb.userSettings.autoUpdate,
+        userFiltersPath: µb.userFiltersPath,
         cache: null
     };
     var onMetadataReady = function(entries) {
