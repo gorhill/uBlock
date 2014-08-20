@@ -67,7 +67,7 @@ var RepoMetadata = function() {
     this.waiting = [];
 };
 
-var repoMeta = null;
+var repoMetadata = null;
 
 /******************************************************************************/
 
@@ -217,7 +217,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 
 var updateLocalChecksums = function() {
     var localChecksums = [];
-    var entries = repoMeta.entries;
+    var entries = repoMetadata.entries;
     var entry;
     for ( var path in entries ) {
         if ( entries.hasOwnProperty(path) === false ) {
@@ -235,17 +235,17 @@ var updateLocalChecksums = function() {
 
 // Gather meta data of all assets.
 
-var getRepoMeta = function(callback, update) {
+var getRepoMetadata = function(callback, update) {
     callback = callback || nullFunc;
 
     if ( update ) {
-        repoMeta = null;
+        repoMetadata = null;
     }
-    if ( repoMeta !== null ) {
-        if ( repoMeta.waiting.length !== 0 ) {
-            repoMeta.waiting.push(callback);
+    if ( repoMetadata !== null ) {
+        if ( repoMetadata.waiting.length !== 0 ) {
+            repoMetadata.waiting.push(callback);
         } else {
-            callback(repoMeta);
+            callback(repoMetadata);
         }
         return;
     }
@@ -253,7 +253,7 @@ var getRepoMeta = function(callback, update) {
     // https://github.com/gorhill/uBlock/issues/84
     // First try to load from the actual home server of a third-party.
     var parseHomeURLs = function(text) {
-        var entries = repoMeta.entries;
+        var entries = repoMetadata.entries;
         var urlPairs = text.split(/\n\n+/);
         var i = urlPairs.length;
         var pair, pos, k, v;
@@ -273,8 +273,8 @@ var getRepoMeta = function(callback, update) {
             }
             entries[k].homeURL = v;
         }
-        while ( callback = repoMeta.waiting.pop() ) {
-            callback(repoMeta);
+        while ( callback = repoMetadata.waiting.pop() ) {
+            callback(repoMetadata);
         }
     };
 
@@ -285,7 +285,7 @@ var getRepoMeta = function(callback, update) {
     };
 
     var onRepoHomeURLsLoaded = function(details) {
-        var entries = repoMeta.entries;
+        var entries = repoMetadata.entries;
         var entry = entries[pathToHomeURLs];
         if ( YaMD5.hashStr(details.content) !== entry.repoChecksum ) {
             entry.repoChecksum = entry.localChecksum;
@@ -295,17 +295,15 @@ var getRepoMeta = function(callback, update) {
         cachedAssetsManager.save(pathToHomeURLs, details.content, onLocalHomeURLsLoaded);
     };
 
-    var checksumCountdown = 2;
-    var localChecksums = '';
-    var repoChecksums = '';
+    var localChecksums;
+    var repoChecksums;
 
     var checksumsReceived = function() {
-        checksumCountdown -= 1;
-        if ( checksumCountdown !== 0 ) {
+        if ( localChecksums === undefined || repoChecksums === undefined ) {
             return;
         }
-        // Remove from cache assets which no longer exist
-        var entries = repoMeta.entries;
+        // Remove from cache assets which no longer exist in the repo
+        var entries = repoMetadata.entries;
         var checksumsChanged = false;
         var entry;
         for ( var path in entries ) {
@@ -347,7 +345,7 @@ var getRepoMeta = function(callback, update) {
     };
 
     var parseChecksums = function(text, which) {
-        var entries = repoMeta.entries;
+        var entries = repoMetadata.entries;
         var lines = text.split(/\n+/);
         var i = lines.length;
         var fields, assetPath;
@@ -378,8 +376,8 @@ var getRepoMeta = function(callback, update) {
         checksumsReceived();
     };
 
-    repoMeta = new RepoMetadata();
-    repoMeta.waiting.push(callback);
+    repoMetadata = new RepoMetadata();
+    repoMetadata.waiting.push(callback);
     readRepoFile('assets/checksums.txt', onRepoChecksumsLoaded);
     readLocalFile('assets/checksums.txt', onLocalChecksumsLoaded);
 };
@@ -387,6 +385,9 @@ var getRepoMeta = function(callback, update) {
 // https://www.youtube.com/watch?v=-t3WYfgM4x8
 
 /******************************************************************************/
+
+// Get a local asset, do not look-up repo or remote location if local asset
+// is not found.
 
 var readLocalFile = function(path, callback) {
     var reportBack = function(content, err) {
@@ -400,30 +401,38 @@ var readLocalFile = function(path, callback) {
         callback(details);
     };
 
-    var onLocalFileLoaded = function() {
-        // console.log('µBlock> onLocalFileLoaded()');
+    var onInstallFileLoaded = function() {
+        // console.log('µBlock> readLocalFile("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
         this.onload = this.onerror = null;
     };
 
-    var onLocalFileError = function() {
-        console.error('µBlock> readLocalFile() / onLocalFileError("%s")', path);
+    var onInstallFileError = function() {
+        console.error('µBlock> readLocalFile("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
         this.onload = this.onerror = null;
     };
 
     var onCachedContentLoaded = function(details) {
-        // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
+        // console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
         reportBack(details.content);
     };
 
     var onCachedContentError = function(details) {
-        // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
-        getTextFileFromURL(chrome.runtime.getURL(details.path), onLocalFileLoaded, onLocalFileError);
+        // console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
+        if ( reIsExternalPath.test(path) ) {
+            reportBack('', 'Error: asset not found');
+            return;
+        }
+        getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
     cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
 };
+
+exports.getLocal = readLocalFile;
+
+// https://www.youtube.com/watch?v=r9KVpuFPtHc
 
 /******************************************************************************/
 
@@ -654,7 +663,7 @@ var readRepoCopyAsset = function(path, callback) {
         cachedAssetsManager.entries(onCacheMetaReady);
     };
 
-    getRepoMeta(onRepoMetaReady);
+    getRepoMetadata(onRepoMetaReady);
 };
 
 // https://www.youtube.com/watch?v=uvUW4ozs7pY
@@ -753,7 +762,7 @@ var readRepoOnlyAsset = function(path, callback) {
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
-    getRepoMeta(onRepoMetaReady);
+    getRepoMetadata(onRepoMetaReady);
 };
 
 /******************************************************************************/
@@ -927,7 +936,7 @@ exports.get = function(path, callback) {
         readRepoOnlyAsset(path, callback);
     };
 
-    getRepoMeta(onRepoMetaReady);
+    getRepoMetadata(onRepoMetaReady);
 };
 
 // https://www.youtube.com/watch?v=98y0Q7nLGWk
@@ -991,7 +1000,7 @@ exports.metadata = function(callback) {
                 entryOut.homeURL = path;
             }
         }
-        getRepoMeta(onRepoMetaReady);
+        getRepoMetadata(onRepoMetaReady);
     };
 
     cachedAssetsManager.entries(onCacheMetaReady);

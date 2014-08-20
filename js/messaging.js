@@ -140,7 +140,7 @@ function defaultHandler(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
-            return µBlock.assets.get(request.url, callback);
+            return µBlock.assets.getLocal(request.url, callback);
 
         case 'loadUbiquitousAllowRules':
             return µBlock.loadUbiquitousWhitelists();
