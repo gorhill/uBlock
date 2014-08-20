@@ -23,20 +23,6 @@
 
 /*******************************************************************************
 
-Assets
-    Read:
-        If in cache
-            Use cache
-        If not in cache
-            Use local
-    Update:
-        Use remote
-        Save in cache
-
-    Import:
-        Use textarea
-        Save in cache [user directory]
-
 File system structure:
     assets
         ublock
@@ -44,13 +30,10 @@ File system structure:
         thirdparties
             ...
         user
-            blacklisted-hosts.txt
-                ...
+            filters.txt
+            ...
 
 */
-
-// Ref: http://www.w3.org/TR/2012/WD-file-system-api-20120417/
-// Ref: http://www.html5rocks.com/en/tutorials/file/filesystem/
 
 /******************************************************************************/
 
@@ -60,11 +43,31 @@ File system structure:
 
 /******************************************************************************/
 
-var fileSystem;
-var fileSystemQuota = 40 * 1024 * 1024;
 var repositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() {};
-var thirdpartyHomeURLs = null;
+var reIsExternalPath = /^https?:\/\/[a-z0-9]/;
+var reIsUserPath = /^assets\/user\//;
+
+var exports = {
+    autoUpdate: true,
+    autoUpdateDelay: 2 * 24 * 60 * 60 * 1000
+};
+
+/******************************************************************************/
+
+var AssetEntry = function() {
+    this.localChecksum = '';
+    this.repoChecksum = '';
+    this.expireTimestamp = 0;
+    this.homeURL = '';
+};
+
+var RepoMetadata = function() {
+    this.entries = {};
+    this.waiting = [];
+};
+
+var repoMeta = null;
 
 /******************************************************************************/
 
@@ -78,6 +81,18 @@ var cachedAssetsManager = (function() {
             callback(entries);
             return;
         }
+        // Flush cached non-user assets if these are from a prior version.
+        // https://github.com/gorhill/httpswitchboard/issues/212
+        var onLastVersionRead = function(store) {
+            var currentVersion = chrome.runtime.getManifest().version;
+            var lastVersion = store.extensionLastVersion || '0.0.0.0';
+            if ( currentVersion !== lastVersion ) {
+                chrome.storage.local.set({ 'extensionLastVersion': currentVersion });
+                exports.remove(/^assets\/(ublock|thirdparties)\//);
+                exports.remove('assets/checksums.txt');
+            }
+            callback(entries);
+        };
         var onLoaded = function(bin) {
             // https://github.com/gorhill/httpswitchboard/issues/381
             // Maybe the index was requested multiple times and already 
@@ -91,7 +106,7 @@ var cachedAssetsManager = (function() {
                 }
                 entries = bin.cached_asset_entries || {};
             }
-            callback(entries);
+            chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
         };
         chrome.storage.local.get('cached_asset_entries', onLoaded);
     };
@@ -146,10 +161,8 @@ var cachedAssetsManager = (function() {
             }
         };
         var onEntries = function(entries) {
-            if ( entries[path] === undefined ) {
-                entries[path] = Date.now();
-                bin.cached_asset_entries = entries;
-            }
+            entries[path] = Date.now();
+            bin.cached_asset_entries = entries;
             chrome.storage.local.set(bin, onSaved);
         };
         getEntries(onEntries);
@@ -202,172 +215,176 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/89
-// Remove when I am confident everybody moved to the new storage
-
-// Useful to avoid having to manage a directory tree
-
-var cachePathFromPath = function(path) {
-    return path.replace(/\//g, '___');
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/89
-// Remove when I am confident everybody moved to the new storage
-
-var requestFileSystem = function(onSuccess, onError) {
-    if ( fileSystem ) {
-        onSuccess(fileSystem);
-        return;
+var updateLocalChecksums = function() {
+    var localChecksums = [];
+    var entries = repoMeta.entries;
+    var entry;
+    for ( var path in entries ) {
+        if ( entries.hasOwnProperty(path) === false ) {
+            continue;
+        }
+        entry = entries[path];
+        if ( entry.localChecksum !== '' ) {
+            localChecksums.push(entry.localChecksum + ' ' + path);
+        }
     }
-
-    var onRequestFileSystem = function(fs) {
-        fileSystem = fs;
-        onSuccess(fs);
-    };
-
-    var onRequestQuota = function(grantedBytes) {
-        window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, onRequestFileSystem, onError);
-    };
-
-    navigator.webkitPersistentStorage.requestQuota(fileSystemQuota, onRequestQuota, onError);
+    cachedAssetsManager.save('assets/checksums.txt', localChecksums.join('\n'));
 };
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/89
-// Remove when I am confident everybody moved to the new storage
+// Gather meta data of all assets.
 
-var oldReadCachedFile = function(path, callback) {
-    var reportBack = function(content, err) {
-        var details = {
-            'path': path,
-            'content': content,
-            'error': err
-        };
-        callback(details);
-    };
+var getRepoMeta = function(callback, update) {
+    callback = callback || nullFunc;
 
-    var onCacheFileLoaded = function() {
-        // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
-        reportBack(this.responseText);
-        this.onload = this.onerror = null;
-    };
-
-    var onCacheFileError = function(ev) {
-        // This handler may be called under normal circumstances: it appears
-        // the entry may still be present even after the file was removed.
-        // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
-        reportBack('', 'Error');
-        this.onload = this.onerror = null;
-    };
-
-    var onCacheEntryFound = function(entry) {
-        // console.log('µBlock> readLocalFile() / onCacheEntryFound():', entry.toURL());
-        // rhill 2014-04-18: `ublock` query parameter is added to ensure
-        // the browser cache is bypassed.
-        getTextFileFromURL(entry.toURL() + '?ublock=' + Date.now(), onCacheFileLoaded, onCacheFileError);
-    };
-
-    var onCacheEntryError = function(err) {
-        if ( err.name !== 'NotFoundError' ) {
-            console.error('µBlock> readLocalFile() / onCacheEntryError("%s"):', path, err.name);
-        }
-        reportBack('', 'Error');
-    };
-
-    var onRequestFileSystemSuccess = function(fs) {
-        fs.root.getFile(cachePathFromPath(path), null, onCacheEntryFound, onCacheEntryError);
-    };
-
-    var onRequestFileSystemError = function(err) {
-        console.error('µBlock> readLocalFile() / onRequestFileSystemError():', err.name);
-        reportBack('', 'Error');
-    };
-
-    requestFileSystem(onRequestFileSystemSuccess, onRequestFileSystemError);
-};
-
-/******************************************************************************/
-
-// Flush cached non-user assets if these are from a prior version.
-// https://github.com/gorhill/httpswitchboard/issues/212
-
-var cacheSynchronized = false;
-
-var synchronizeCache = function() {
-    if ( cacheSynchronized ) {
-        return;
+    if ( update ) {
+        repoMeta = null;
     }
-    cacheSynchronized = true;
-
-    // https://github.com/gorhill/uBlock/issues/89
-    // Remove when I am confident everybody moved to the new storage
-
-    var directoryReader;
-    var done = function() {
-        directoryReader = null;
-    };
-
-    var onReadEntries = function(entries) {
-        var n = entries.length;
-        if ( !n ) {
-            return done();
-        }
-        var entry;
-        for ( var i = 0; i < n; i++ ) {
-            entry = entries[i];
-            entry.remove(nullFunc);
-        }
-        // Read entries until none returned.
-        directoryReader.readEntries(onReadEntries, onReadEntriesError);
-    };
-
-    var onReadEntriesError = function(err) {
-        console.error('µBlock> synchronizeCache() / onReadEntriesError("%s"):', err.name);
-        done();
-    };
-
-    var onRequestFileSystemSuccess = function(fs) {
-        directoryReader = fs.root.createReader();
-        directoryReader.readEntries(onReadEntries, onReadEntriesError);
-    };
-
-    var onRequestFileSystemError = function(err) {
-        console.error('µBlock> synchronizeCache() / onRequestFileSystemError():', err.name);
-        done();
-    };
-
-    var onLastVersionRead = function(store) {
-        var currentVersion = chrome.runtime.getManifest().version;
-        var lastVersion = store.extensionLastVersion || '0.0.0.0';
-        if ( currentVersion === lastVersion ) {
-            return done();
-        }
-        chrome.storage.local.set({ 'extensionLastVersion': currentVersion });
-        cachedAssetsManager.remove(/^assets\/(ublock|thirdparties)\//);
-        cachedAssetsManager.remove('assets/checksums.txt');
-        requestFileSystem(onRequestFileSystemSuccess, onRequestFileSystemError);
-    };
-
-    // https://github.com/gorhill/uBlock/issues/89
-    // Backward compatiblity.
-
-    var onUserFiltersSaved = function() {
-        chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
-    };
-
-    var onUserFiltersLoaded = function(details) {
-        if ( details.content !== '' ) {
-            cachedAssetsManager.save(details.path, details.content, onUserFiltersSaved);
+    if ( repoMeta !== null ) {
+        if ( repoMeta.waiting.length !== 0 ) {
+            repoMeta.waiting.push(callback);
         } else {
-            chrome.storage.local.get('extensionLastVersion', onLastVersionRead);
+            callback(repoMeta);
+        }
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/84
+    // First try to load from the actual home server of a third-party.
+    var parseHomeURLs = function(text) {
+        var entries = repoMeta.entries;
+        var urlPairs = text.split(/\n\n+/);
+        var i = urlPairs.length;
+        var pair, pos, k, v;
+        while ( i-- ) {
+            pair = urlPairs[i];
+            pos = pair.indexOf('\n');
+            if ( pos === -1 ) {
+                continue;
+            }
+            k = 'assets/thirdparties/' + pair.slice(0, pos).trim();
+            v = pair.slice(pos).trim();
+            if ( k === '' || v === '' ) {
+                continue;
+            }
+            if ( entries[k] === undefined ) {
+                entries[k] = new AssetEntry();
+            }
+            entries[k].homeURL = v;
+        }
+        while ( callback = repoMeta.waiting.pop() ) {
+            callback(repoMeta);
         }
     };
 
-    oldReadCachedFile('assets/user/filters.txt', onUserFiltersLoaded);
+    var pathToHomeURLs = 'assets/ublock/thirdparty-lists.txt';
+
+    var onLocalHomeURLsLoaded = function(details) {
+        parseHomeURLs(details.content);
+    };
+
+    var onRepoHomeURLsLoaded = function(details) {
+        var entries = repoMeta.entries;
+        var entry = entries[pathToHomeURLs];
+        if ( YaMD5.hashStr(details.content) !== entry.repoChecksum ) {
+            entry.repoChecksum = entry.localChecksum;
+            readLocalFile(pathToHomeURLs, onLocalHomeURLsLoaded);
+            return;
+        }
+        cachedAssetsManager.save(pathToHomeURLs, details.content, onLocalHomeURLsLoaded);
+    };
+
+    var checksumCountdown = 2;
+    var localChecksums = '';
+    var repoChecksums = '';
+
+    var checksumsReceived = function() {
+        checksumCountdown -= 1;
+        if ( checksumCountdown !== 0 ) {
+            return;
+        }
+        // Remove from cache assets which no longer exist
+        var entries = repoMeta.entries;
+        var checksumsChanged = false;
+        var entry;
+        for ( var path in entries ) {
+            if ( entries.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            entry = entries[path];
+            // If repo checksums could not be fetched, assume no change
+            if ( repoChecksums === '' ) {
+                entry.repoChecksum = entry.localChecksum;
+            }
+            if ( entry.repoChecksum !== '' || entry.localChecksum === '' ) {
+                continue;
+            }
+            checksumsChanged = true;
+            cachedAssetsManager.remove(path);
+            entry.localChecksum = '';
+        }
+        if ( checksumsChanged ) {
+            updateLocalChecksums();
+        }
+        // Fetch and store homeURL associations
+        entry = entries[pathToHomeURLs];
+        if ( entry.localChecksum !== entry.repoChecksum ) {
+            readRepoFile(pathToHomeURLs, onRepoHomeURLsLoaded);
+        } else {
+            readLocalFile(pathToHomeURLs, onLocalHomeURLsLoaded);
+        }
+    };
+
+    var validateChecksums = function(details) {
+        if ( details.error || details.content === '' ) {
+            return '';
+        }
+        if ( /^(?:[0-9a-f]{32}\s+\S+(?:\s+|$))+/.test(details.content) === false ) {
+            return '';
+        }
+        return details.content;
+    };
+
+    var parseChecksums = function(text, which) {
+        var entries = repoMeta.entries;
+        var lines = text.split(/\n+/);
+        var i = lines.length;
+        var fields, assetPath;
+        while ( i-- ) {
+            fields = lines[i].trim().split(/\s+/);
+            if ( fields.length !== 2 ) {
+                continue;
+            }
+            assetPath = fields[1];
+            if ( entries[assetPath] === undefined ) {
+                entries[assetPath] = new AssetEntry();
+            }
+            entries[assetPath][which + 'Checksum'] = fields[0];
+        }
+    };
+
+    var onLocalChecksumsLoaded = function(details) {
+        if ( localChecksums = validateChecksums(details) ) {
+            parseChecksums(localChecksums, 'local');
+        }
+        checksumsReceived();
+    };
+
+    var onRepoChecksumsLoaded = function(details) {
+        if ( repoChecksums = validateChecksums(details) ) {
+            parseChecksums(repoChecksums, 'repo');
+        }
+        checksumsReceived();
+    };
+
+    repoMeta = new RepoMetadata();
+    repoMeta.waiting.push(callback);
+    readRepoFile('assets/checksums.txt', onRepoChecksumsLoaded);
+    readLocalFile('assets/checksums.txt', onLocalChecksumsLoaded);
 };
+
+// https://www.youtube.com/watch?v=-t3WYfgM4x8
 
 /******************************************************************************/
 
@@ -389,7 +406,7 @@ var readLocalFile = function(path, callback) {
         this.onload = this.onerror = null;
     };
 
-    var onLocalFileError = function(ev) {
+    var onLocalFileError = function() {
         console.error('µBlock> readLocalFile() / onLocalFileError("%s")', path);
         reportBack('', 'Error');
         this.onload = this.onerror = null;
@@ -423,6 +440,7 @@ var readRepoFile = function(path, callback) {
     };
 
     var onRepoFileLoaded = function() {
+        this.onload = this.onerror = null;
         // console.log('µBlock> readRepoFile() / onRepoFileLoaded()');
         // https://github.com/gorhill/httpswitchboard/issues/263
         if ( this.status === 200 ) {
@@ -430,13 +448,12 @@ var readRepoFile = function(path, callback) {
         } else {
             reportBack('', 'Error ' + this.statusText);
         }
-        this.onload = this.onerror = null;
     };
 
-    var onRepoFileError = function(ev) {
+    var onRepoFileError = function() {
+        this.onload = this.onerror = null;
         console.error('µBlock> readRepoFile() / onRepoFileError("%s")', path);
         reportBack('', 'Error');
-        this.onload = this.onerror = null;
     };
 
     // 'ublock=...' is to skip browser cache
@@ -473,19 +490,19 @@ var readExternalFile = function(path, callback) {
         cachedAssetsManager.save(path, this.responseText, onExternalFileCached);
     };
 
-    var onExternalFileError = function(ev) {
+    var onExternalFileError = function() {
         console.error('µBlock> onExternalFileError() / onLocalFileError("%s")', path);
         reportBack('', 'Error');
         this.onload = this.onerror = null;
     };
 
     var onCachedContentLoaded = function(details) {
-        // console.log('µBlock> readLocalFile() / onCacheFileLoaded()');
+        // console.log('µBlock> readExternalFile() / onCacheFileLoaded()');
         reportBack(details.content);
     };
 
     var onCachedContentError = function(details) {
-        // console.error('µBlock> readLocalFile() / onCacheFileError("%s")', path);
+        // console.error('µBlock> readExternalFile() / onCacheFileError("%s")', path);
         getTextFileFromURL(details.path, onExternalFileLoaded, onExternalFileError);
     };
 
@@ -494,162 +511,518 @@ var readExternalFile = function(path, callback) {
 
 /******************************************************************************/
 
-var purgeCache = function(pattern, before) {
-    cachedAssetsManager.remove(pattern, before);
+// An asset from an external source with a copy shipped with the extension:
+//       Path --> starts with 'assets/(thirdparties|ublock)/', with a home URL
+//   External --> 
+// Repository --> has checksum (to detect need for update only)
+//      Cache --> has expiration timestamp (in cache)
+//      Local --> install time version
+
+var readRepoCopyAsset = function(path, callback) {
+    var assetEntry;
+
+    var reportBack = function(content, err) {
+        var details = {
+            'path': path,
+            'content': content
+        };
+        if ( err ) {
+            details.error = err;
+        }
+        callback(details);
+    };
+
+    var updateChecksum = function() {
+        if ( assetEntry !== undefined ) {
+            if ( assetEntry.repoChecksum !== assetEntry.localChecksum ) {
+                assetEntry.localChecksum = assetEntry.repoChecksum;
+                updateLocalChecksums();
+            }
+        }
+    };
+
+    var onInstallFileLoaded = function() {
+        this.onload = this.onerror = null;
+        console.log('µBlock> readRepoCopyAsset("%s") / onInstallFileLoaded()', path);
+        reportBack(this.responseText);
+    };
+
+    var onInstallFileError = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readRepoCopyAsset("%s") / onInstallFileError():', path, this.statusText);
+        reportBack('', 'Error');
+    };
+
+    var onCachedContentLoaded = function(details) {
+        console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileLoaded()', path);
+        reportBack(details.content);
+    };
+
+    var onCachedContentError = function(details) {
+        console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileError()', path);
+        getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
+    };
+
+    var repositoryURL = repositoryRoot + path + '?ublock=' + Date.now();
+
+    var onRepoFileLoaded = function() {
+        this.onload = this.onerror = null;
+        if ( typeof this.responseText !== 'string' || this.responseText === '' ) {
+            console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            return;
+        }
+        console.debug('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
+        updateChecksum();
+        cachedAssetsManager.save(path, this.responseText, callback);
+    };
+
+    var onRepoFileError = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileError("%s"):', path, repositoryURL, this.statusText);
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    };
+
+    var onHomeFileLoaded = function() {
+        this.onload = this.onerror = null;
+        if ( typeof this.responseText !== 'string' || this.responseText === '' ) {
+            console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, assetEntry.homeURL);
+            // Fetch from repo only if obsolescence was due to repo checksum
+            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+            } else {
+                cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            }
+            return;
+        }
+        console.debug('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s")', path, assetEntry.homeURL);
+        updateChecksum();
+        cachedAssetsManager.save(path, this.responseText, callback);
+    };
+
+    var onHomeFileError = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileError("%s"):', path, assetEntry.homeURL, this.statusText);
+        // Fetch from repo only if obsolescence was due to repo checksum
+        if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+        } else {
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+        }
+    };
+
+    var onCacheMetaReady = function(entries) {
+        var timestamp = entries[path];
+        // In cache
+        if ( typeof timestamp === 'number' ) {
+            // Verify obsolescence
+            if ( exports.autoUpdate ) {
+                var obsolete = Date.now() - exports.autoUpdateDelay;
+                if ( timestamp <= obsolete ) {
+                    console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): cache is obsolete', path);
+                    getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+                    return;
+                }
+            }
+            // Not obsolete
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            return;
+        }
+        // Not in cache
+        getTextFileFromURL(chrome.runtime.getURL(path), onInstallFileLoaded, onInstallFileError);
+    };
+
+    var onRepoMetaReady = function(meta) {
+        assetEntry = meta.entries[path];
+
+        // Asset doesn't exist
+        if ( assetEntry === undefined ) {
+            reportBack('', 'Error: Asset not found');
+            return;
+        }
+
+        // Repo copy changed: fetch from home URL
+        if ( exports.autoUpdate ) {
+            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+                console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+                getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+                return;
+            }
+        }
+
+        // No change, we will inspect the cached version for obsolescence
+        cachedAssetsManager.entries(onCacheMetaReady);
+    };
+
+    getRepoMeta(onRepoMetaReady);
+};
+
+// https://www.youtube.com/watch?v=uvUW4ozs7pY
+
+/******************************************************************************/
+
+// An important asset shipped with the extension -- typically small, or 
+// doesn't change often:
+//       Path --> starts with 'assets/(thirdparties|ublock)/', without a home URL
+// Repository --> has checksum (to detect need for update and corruption)
+//      Cache --> whatever from above
+//      Local --> install time version
+
+var readRepoOnlyAsset = function(path, callback) {
+
+    var assetEntry;
+
+    var reportBack = function(content, err) {
+        var details = {
+            'path': path,
+            'content': content
+        };
+        if ( err ) {
+            details.error = err;
+        }
+        callback(details);
+    };
+
+    var onInstallFileLoaded = function() {
+        this.onload = this.onerror = null;
+        console.log('µBlock> readRepoOnlyAsset("%s") / onInstallFileLoaded()', path);
+        reportBack(this.responseText);
+    };
+
+    var onInstallFileError = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readRepoOnlyAsset("%s") / onInstallFileError()', path);
+        reportBack('', 'Error');
+    };
+
+    var onCachedContentLoaded = function(details) {
+        console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentLoaded()', path);
+        reportBack(details.content);
+    };
+
+    var onCachedContentError = function() {
+        console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentError()', path);
+        getTextFileFromURL(chrome.runtime.getURL(path), onInstallFileLoaded, onInstallFileError);
+    };
+
+    var repositoryURL = repositoryRoot + path + '?ublock=' + Date.now();
+
+    var onRepoFileLoaded = function() {
+        this.onload = this.onerror = null;
+        if ( typeof this.responseText !== 'string' ) {
+            console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            return;
+        }
+        if ( YaMD5.hashStr(this.responseText) !== assetEntry.repoChecksum ) {
+            console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): bad md5 checksum', path, repositoryURL);
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            return;
+        }
+        console.debug('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
+        assetEntry.localChecksum = assetEntry.repoChecksum;
+        updateLocalChecksums();
+        cachedAssetsManager.save(path, this.responseText, callback);
+    };
+
+    var onRepoFileError = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileError("%s"):', path, repositoryURL, this.statusText);
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    };
+
+    var onRepoMetaReady = function(meta) {
+        assetEntry = meta.entries[path];
+
+        // Asset doesn't exist
+        if ( assetEntry === undefined ) {
+            reportBack('', 'Error: Asset not found');
+            return;
+        }
+
+        // Asset added or changed: load from repo URL and then cache result
+        if ( exports.autoUpdate ) {
+            if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+                console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+                return;
+            }
+        }
+
+        // Asset unchanged: load from cache
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    };
+
+    getRepoMeta(onRepoMetaReady);
 };
 
 /******************************************************************************/
 
-var writeLocalFile = function(path, content, callback) {
+// Asset doesn't exist. Just for symmetry purpose.
+
+var readNilAsset = function(path, callback) {
+    callback({
+        'path': path,
+        'content': '',
+        'error': 'Error: asset not found'
+    });
+};
+
+/******************************************************************************/
+
+// An external asset:
+//       Path --> starts with 'http'
+//   External --> https://..., http://...
+//      Cache --> has expiration timestamp (in cache)
+
+var readExternalAsset = function(path, callback) {
+    var reportBack = function(content, err) {
+        var details = {
+            'path': path,
+            'content': content
+        };
+        if ( err ) {
+            details.error = err;
+        }
+        callback(details);
+    };
+
+    var onCachedContentLoaded = function(details) {
+        console.log('µBlock> readExternalAsset("%s") / onCachedContentLoaded()', path);
+        reportBack(details.content);
+    };
+
+    var onCachedContentError = function() {
+        console.error('µBlock> readExternalAsset("%s") / onCachedContentError()', path);
+        reportBack('', 'Error');
+    };
+
+    var onExternalFileLoaded = function() {
+        this.onload = this.onerror = null;
+        console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
+        cachedAssetsManager.save(path, this.responseText);
+        reportBack(this.responseText);
+    };
+
+    var onExternalFileError2 = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readExternalAsset("%s") / onExternalFileError2()', path);
+        reportBack('', 'Error');
+    };
+
+    var onExternalFileError1 = function() {
+        this.onload = this.onerror = null;
+        console.error('µBlock> readExternalAsset("%s") / onExternalFileError1()', path);
+        cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    };
+
+    var entriesReady = function(entries) {
+        var timestamp = entries[path];
+        // In cache
+        if ( typeof timestamp === 'number' ) {
+            // Obsolete?
+            if ( exports.autoUpdate ) {
+                var obsolete = Date.now() - exports.autoUpdateDelay;
+                if ( timestamp <= obsolete ) {
+                    getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError1);
+                    return;
+                }
+            }
+            // Not obsolete
+            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+            return;
+        }
+        // Not in cache
+        getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError2);
+    };
+
+    cachedAssetsManager.entries(entriesReady);
+};
+
+/******************************************************************************/
+
+// User data:
+//       Path --> starts with 'assets/user/'
+//      Cache --> whatever user saved
+
+var readUserAsset = function(path, callback) {
+    var onCachedContentLoaded = function(details) {
+        console.log('µBlock> readUserAsset("%s") / onCachedContentLoaded()', path);
+        callback({ 'path': path, 'content': details.content });
+    };
+
+    var onCachedContentError = function() {
+        console.log('µBlock> readUserAsset("%s") / onCachedContentError()', path);
+        callback({ 'path': path, 'content': '' });
+    };
+
+    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+};
+
+/******************************************************************************/
+
+// Assets
+//
+// A copy of an asset from an external source shipped with the extension:
+//       Path --> starts with 'assets/(thirdparties|ublock)/', with a home URL
+//   External --> 
+// Repository --> has checksum (to detect obsolescence)
+//      Cache --> has expiration timestamp (to detect obsolescence)
+//      Local --> install time version
+//
+// An important asset shipped with the extension (usually small, or doesn't
+// change often):
+//       Path --> starts with 'assets/(thirdparties|ublock)/', without a home URL
+// Repository --> has checksum (to detect obsolescence or data corruption)
+//      Cache --> whatever from above
+//      Local --> install time version
+//
+// An external filter list:
+//       Path --> starts with 'http'
+//   External --> 
+//      Cache --> has expiration timestamp (to detect obsolescence)
+//
+// User data:
+//       Path --> starts with 'assets/user/'
+//      Cache --> whatever user saved
+//
+// When a checksum is present, it is used to determine whether the asset
+// needs to be updated.
+// When an expiration timestamp is present, it is used to determine whether
+// the asset needs to be updated.
+//
+// If no update required, an asset if first fetched from the cache. If the
+// asset is not cached it is fetched from the closest location: local for 
+// an asset shipped with the extension, external for an asset not shipped
+// with the extension.
+
+exports.get = function(path, callback) {
+
+    if ( reIsUserPath.test(path) ) {
+        readUserAsset(path, callback);
+        return;
+    }
+
+    if ( reIsExternalPath.test(path) ) {
+        readExternalAsset(path, callback);
+        return;
+    }
+
+    var onRepoMetaReady = function(meta) {
+        var assetEntry = meta.entries[path];
+
+        // Asset doesn't exist
+        if ( assetEntry === undefined ) {
+            readNilAsset(path, callback);
+            return;
+        }
+
+        // Asset is repo copy of external content
+        if ( assetEntry.homeURL !== '' ) {
+            readRepoCopyAsset(path, callback);
+            return;
+        }
+
+        // Asset is repo only
+        readRepoOnlyAsset(path, callback);
+    };
+
+    getRepoMeta(onRepoMetaReady);
+};
+
+// https://www.youtube.com/watch?v=98y0Q7nLGWk
+
+/******************************************************************************/
+
+exports.put = function(path, content, callback) {
     cachedAssetsManager.save(path, content, callback);
 };
 
 /******************************************************************************/
 
-var updateFromRemote = function(details, callback) {
-    // 'ublock=...' is to skip browser cache
-    var targetPath = details.path;
-    // https://github.com/gorhill/uBlock/issues/84
-    var homeURL = '';
-    var repositoryURL = repositoryRoot + targetPath + '?ublock=' + Date.now();
-    var targetMd5 = details.md5 || '';
+exports.purge = function(pattern, before) {
+    cachedAssetsManager.remove(pattern, before);
+};
 
-    var reportBackError = function() {
-        callback({
-            'path': targetPath,
-            'error': 'Error'
-        });
-    };
+/******************************************************************************/
 
-    var onRepoFileLoaded = function() {
-        this.onload = this.onerror = null;
-        if ( typeof this.responseText !== 'string' ) {
-            console.error('µBlock> updateFromRemote("%s") / onRepoFileLoaded(): no response', repositoryURL);
-            reportBackError();
-            return;
-        }
-        if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
-            console.error('µBlock> updateFromRemote("%s") / onRepoFileLoaded(): bad md5 checksum', repositoryURL);
-            reportBackError();
-            return;
-        }
-        // console.debug('µBlock> updateFromRemote("%s") / onRepoFileLoaded()', repositoryURL);
-        writeLocalFile(targetPath, this.responseText, callback);
-    };
+exports.metadata = function(callback) {
+    var out = {};
 
-    var onRepoFileError = function(ev) {
-        this.onload = this.onerror = null;
-        console.error('µBlock> updateFromRemote() / onRepoFileError("%s"):', repositoryURL, this.statusText);
-        reportBackError();
-    };
-
-    var onHomeFileLoaded = function() {
-        this.onload = this.onerror = null;
-        if ( typeof this.responseText !== 'string' ) {
-            console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): no response', homeURL);
-            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
-            return;
-        }
-        if ( targetMd5 !== '' && YaMD5.hashStr(this.responseText) !== targetMd5 ) {
-            console.error('µBlock> updateFromRemote("%s") / onHomeFileLoaded(): bad md5 checksum', homeURL);
-            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
-            return;
-        }
-        // console.debug('µBlock> updateFromRemote("%s") / onHomeFileLoaded()', homeURL);
-        writeLocalFile(targetPath, this.responseText, callback);
-    };
-
-    var onHomeFileError = function(ev) {
-        this.onload = this.onerror = null;
-        console.error('µBlock> updateFromRemote() / onHomeFileError("%s"):', homeURL, this.statusText);
-        getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
-    };
-
-    // https://github.com/gorhill/uBlock/issues/84
-    // Create a URL from where the asset needs to be downloaded. It can be:
-    // - a home server URL
-    // - a github repo URL
-    var getThirdpartyHomeURL = function() {
-        // If it is a 3rd-party, look-up home server URL, if any.
-        if ( thirdpartyHomeURLs && targetPath.indexOf('assets/thirdparties/') === 0 ) {
-            var k = targetPath.replace('assets/thirdparties/', '');
-            if ( thirdpartyHomeURLs[k] ) {
-                homeURL = thirdpartyHomeURLs[k];
-            }
-        }
-        // If there is a home server, disregard checksum: the file is assumed
-        // most up to date at the home server.
-        if ( homeURL !== '' ) {
-            targetMd5 = '';
-            getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
-            return;
-        }
-        // The resource will be pulled from Github repo. It's reserved for
-        // more important assets, so we keep and use the checksum.
-        getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
-    };
-
-    // https://github.com/gorhill/uBlock/issues/84
-    // First try to load from the actual home server of a third-party.
-    var onThirdpartyHomeURLsLoaded = function(details) {
-        thirdpartyHomeURLs = {};
-        if ( details.error ) {
-            getThirdpartyHomeURL();
-            return;
-        }
-        var urlPairs = details.content.split(/\n\n+/);
-        var i = urlPairs.length;
-        var pair, pos, k, v;
-        while ( i-- ) {
-            pair = urlPairs[i];
-            pos = pair.indexOf('\n');
-            if ( pos === -1 ) {
+    var onRepoMetaReady = function(meta) {
+        var entries = meta.entries;
+        var entryRepo, entryOut;
+        for ( var path in entries ) {
+            if ( entries.hasOwnProperty(path) === false ) {
                 continue;
             }
-            k = pair.slice(0, pos).trim();
-            v = pair.slice(pos).trim();
-            if ( k === '' || v === '' ) {
-                continue;
+            entryRepo = entries[path];
+            entryOut = out[path];
+            if ( entryOut === undefined ) {
+                entryOut = out[path] = {};
             }
-            thirdpartyHomeURLs[k] = v;
+            entryOut.localChecksum = entryRepo.localChecksum;
+            entryOut.repoChecksum = entryRepo.repoChecksum;
+            entryOut.homeURL = entryRepo.homeURL;
+            entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
         }
-        getThirdpartyHomeURL();
+        callback(out);
     };
 
-    // Get home servers if not done yet.
-    if ( thirdpartyHomeURLs === null ) {
-        readLocalFile('assets/ublock/thirdparty-lists.txt', onThirdpartyHomeURLsLoaded);
-    } else {
-        getThirdpartyHomeURL();
-    }
+    var onCacheMetaReady = function(entries) {
+        var obsolete = Date.now() - exports.autoUpdateDelay;
+        var entryOut;
+        for ( var path in entries ) {
+            if ( entries.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            entryOut = out[path];
+            if ( entryOut === undefined ) {
+                entryOut = out[path] = {};
+            }
+            entryOut.lastModified = entries[path];
+            // User data is not literally cache data
+            if ( reIsUserPath.test(path) ) {
+                continue;
+            }
+            entryOut.cached = true;
+            entryOut.cacheObsolete = entryOut.lastModified <= obsolete;
+            if ( reIsExternalPath.test(path) ) {
+                entryOut.homeURL = path;
+            }
+        }
+        getRepoMeta(onRepoMetaReady);
+    };
+
+    cachedAssetsManager.entries(onCacheMetaReady);
 };
 
 /******************************************************************************/
 
-var cacheEntries = function(callback) {
-    return cachedAssetsManager.entries(callback);
+exports.purgeAll = function(callback) {
+    var onMetaDataReady = function(entries) {
+        var out = {};
+        var entry;
+        for ( var path in entries ) {
+            if ( entries.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            entry = entries[path];
+            if ( !entry.cacheObsolete && !entry.repoObsolete ) {
+                continue;
+            }
+            cachedAssetsManager.remove(path);
+            out[path] = true;
+        }
+        callback(out);
+    };
+
+    exports.metadata(onMetaDataReady);
 };
 
 /******************************************************************************/
 
-// Flush cached assets if cache content is from an older version: the extension
-// always ships with the most up-to-date assets.
-
-synchronizeCache();
-
-/******************************************************************************/
-
-// Export API
-
-return {
-    'get': readLocalFile,
-    'getExternal': readExternalFile,
-    'getRepo': readRepoFile,
-    'purge': purgeCache,
-    'put': writeLocalFile,
-    'update': updateFromRemote,
-    'entries': cacheEntries
-};
+return exports;
 
 /******************************************************************************/
 

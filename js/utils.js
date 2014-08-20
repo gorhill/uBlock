@@ -29,7 +29,11 @@
 
 /******************************************************************************/
 
-var gotoURL = function(details) {
+var exports = {};
+
+/******************************************************************************/
+
+exports.gotoURL = function(details) {
     if ( details.tabId ) {
         chrome.tabs.update(details.tabId, { url: details.url });
     } else {
@@ -39,7 +43,7 @@ var gotoURL = function(details) {
 
 /******************************************************************************/
 
-var gotoExtensionURL = function(url) {
+exports.gotoExtensionURL = function(url) {
 
     var hasQuery = function(url) {
         return url.indexOf('?') >= 0;
@@ -98,10 +102,32 @@ var gotoExtensionURL = function(url) {
 
 /******************************************************************************/
 
-return {
-    gotoURL: gotoURL,
-    gotoExtensionURL: gotoExtensionURL
+exports.formatCount = function(count) {
+    if ( typeof count !== 'number' ) {
+        return '';
+    }
+    var s = count.toFixed(0);
+    if ( count >= 1000 ) {
+        if ( count < 10000 ) {
+            s = '>' + s.slice(0,1) + 'K';
+        } else if ( count < 100000 ) {
+            s = s.slice(0,2) + 'K';
+        } else if ( count < 1000000 ) {
+            s = s.slice(0,3) + 'K';
+        } else if ( count < 10000000 ) {
+            s = s.slice(0,1) + 'M';
+        } else {
+            s = s.slice(0,-6) + 'M';
+        }
+    }
+    return s;
 };
+
+// https://www.youtube.com/watch?v=uvUW4ozs7pY
+
+/******************************************************************************/
+
+return exports;
 
 /******************************************************************************/
 

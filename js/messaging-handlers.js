@@ -250,9 +250,10 @@ var getLists = function(callback) {
         available: null,
         current: µb.remoteBlacklists,
         cosmetic: µb.userSettings.parseAllABPHideFilters,
+        autoUpdate: µb.userSettings.autoUpdate,
         cache: null
     };
-    var onEntries = function(entries) {
+    var onMetadataReady = function(entries) {
         r.cache = entries;
         if ( r.available ) {
             callback(r);
@@ -265,7 +266,7 @@ var getLists = function(callback) {
         }
     };
     µb.getAvailableLists(onLists);
-    µb.assets.entries(onEntries);
+    µb.assets.metadata(onMetadataReady);
 };
 
 /******************************************************************************/
@@ -475,20 +476,6 @@ var onMessage = function(request, sender, callback) {
 
     // Async
     switch ( request.what ) {
-        case 'getAssetUpdaterList':
-            return µb.assetUpdater.getList(callback);
-
-        case 'launchAssetUpdater':
-            return µb.assetUpdater.update(request.list, callback);
-
-        case 'readUserSettings':
-            return chrome.storage.local.get(µb.userSettings, callback);
-
-        case 'readUserFilters':
-            return µb.assets.get(µb.userFiltersPath, callback);
-
-        case 'writeUserFilters':
-            return µb.assets.put(µb.userFiltersPath, request.content, callback);
 
         default:
             break;
@@ -498,20 +485,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'loadUpdatableAssets':
-            response = µb.loadUpdatableAssets();
-            break;
-
-        case 'readFilterListSelection':
-            response = µb.remoteBlacklists;
-            break;
-
-        case 'getSomeStats':
-            response = {
-                storageQuota: µb.storageQuota,
-                storageUsed: µb.storageUsed
-            };
-            break;
 
         default:
             return µb.messaging.defaultHandler(request, sender, callback);
@@ -523,5 +496,7 @@ var onMessage = function(request, sender, callback) {
 µBlock.messaging.listen('about.js', onMessage);
 
 })();
+
+// https://www.youtube.com/watch?v=3_WcygKJP1k
 
 /******************************************************************************/

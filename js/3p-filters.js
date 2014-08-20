@@ -31,6 +31,7 @@ var userListName = chrome.i18n.getMessage('1pPageName');
 var listDetails = {};
 var externalLists = '';
 var cacheWasPurged = false;
+var needUpdate = false;
 
 /******************************************************************************/
 
@@ -40,7 +41,6 @@ var onMessage = function(msg) {
     switch ( msg.what ) {
         case 'loadUbiquitousBlacklistCompleted':
             renderBlacklists();
-            selectedBlacklistsChanged();
             break;
 
         default:
@@ -109,6 +109,8 @@ var renderBlacklists = function() {
 
     var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
     var purgeButtontext = chrome.i18n.getMessage('3pExternalListPurge');
+    var updateButtontext = chrome.i18n.getMessage('3pExternalListNew');
+    var obsoleteButtontext = chrome.i18n.getMessage('3pExternalListObsolete');
 
     var htmlFromBranch = function(groupKey, listKeys, lists) {
         var html = [
@@ -134,7 +136,7 @@ var renderBlacklists = function() {
             listStatsTemplate,
             '</span>'
         ].join('');
-        var listKey, list, listEntry;
+        var listKey, list, listEntry, entryDetails;
         for ( var i = 0; i < listKeys.length; i++ ) {
             listKey = listKeys[i];
             list = lists[listKey];
@@ -146,18 +148,35 @@ var renderBlacklists = function() {
                 .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
             html.push(listEntry);
             // https://github.com/gorhill/uBlock/issues/104
-            if ( /^https?:\/\/.+/.test(listKey) && listDetails.cache[listKey] ) {
+            entryDetails = listDetails.cache[listKey];
+            if ( entryDetails === undefined ) {
+                continue;
+            }
+            // Update status
+            if ( !list.off && (entryDetails.repoObsolete || entryDetails.cacheObsolete) ) {
                 html.push(
                     '&ensp;',
-                    '<button type="button" class="purge">',
+                    '<span class="status obsolete">',
+                    entryDetails.repoObsolete ? updateButtontext : obsoleteButtontext,
+                    '</span>'
+                );
+                needUpdate = true;
+            }
+            // In cache
+            else if ( entryDetails.cached ) {
+                html.push(
+                    '&ensp;',
+                    '<span class="status purge">',
                     purgeButtontext,
-                    '</button>'
+                    '</span>'
                 );
             }
         }
         html.push('</ul>');
         return html.join('');
     };
+
+    // https://www.youtube.com/watch?v=unCVi4hYRlY#t=30m18s
 
     var groupsFromLists = function(lists) {
         var groups = {};
@@ -178,6 +197,7 @@ var renderBlacklists = function() {
 
     var onListsReceived = function(details) {
         listDetails = details;
+        needUpdate = false;
 
         var lists = details.available;
         var html = [];
@@ -208,13 +228,10 @@ var renderBlacklists = function() {
 
         uDom('#lists .listDetails').remove();
         uDom('#lists').html(html.join(''));
-        uDom('#parseAllABPHideFilters').prop('checked', listDetails.cosmetic === true);
-        uDom('#ubiquitousParseAllABPHideFiltersPrompt2').text(
-            chrome.i18n.getMessage("listsParseAllABPHideFiltersPrompt2")
-                .replace('{{abpHideFilterCount}}', renderNumber(µb.abpHideFilters.getFilterCount()))
-        );
+        uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
+        uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
         uDom('a').attr('target', '_blank');
-        selectedBlacklistsChanged();
+        updateApplyButtons();
     };
 
     messaging.ask({ what: 'getLists' }, onListsReceived);
@@ -222,9 +239,9 @@ var renderBlacklists = function() {
 
 /******************************************************************************/
 
-// Check whether lists need reloading.
+// Return whether selection of lists changed.
 
-var needToReload = function() {
+var listsSelectionChanged = function() {
     if ( listDetails.cosmetic !== getµb().userSettings.parseAllABPHideFilters ) {
         return true;
     }
@@ -261,10 +278,19 @@ var needToReload = function() {
 
 /******************************************************************************/
 
+// Return whether content need update.
+
+var listsContentChanged = function() {
+    return needUpdate;
+};
+
+/******************************************************************************/
+
 // This is to give a visual hint that the selection of blacklists has changed.
 
-var selectedBlacklistsChanged = function() {
-    uDom('#blacklistsApply').prop('disabled', !needToReload());
+var updateApplyButtons = function() {
+    uDom('#buttonApply').toggleClass('enabled', listsSelectionChanged());
+    uDom('#buttonUpdate').toggleClass('enabled', listsContentChanged());
 };
 
 /******************************************************************************/
@@ -278,7 +304,7 @@ var onListCheckboxChanged = function() {
         return;
     }
     listDetails.available[href].off = !this.checked;
-    selectedBlacklistsChanged();
+    updateApplyButtons();
 };
 
 /******************************************************************************/
@@ -295,22 +321,22 @@ var onListLinkClicked = function(ev) {
 
 var onPurgeClicked = function(ev) {
     var button = uDom(this);
-    var href = button.parent().find('a').first().attr('href');
+    var li = button.parent();
+    var href = li.find('a').first().attr('href');
     if ( !href ) {
         return;
     }
     messaging.tell({ what: 'purgeCache', path: href });
     button.remove();
-    cacheWasPurged = true;
-    selectedBlacklistsChanged();
+    if ( li.find('input').first().prop('checked') ) {
+        cacheWasPurged = true;
+        updateApplyButtons();
+    }
 };
 
 /******************************************************************************/
 
-var blacklistsApplyHandler = function() {
-    if ( !needToReload() ) {
-        return;
-    }
+var reloadAll = function(update) {
     // Reload blacklists
     messaging.tell({
         what: 'userSettings',
@@ -334,17 +360,40 @@ var blacklistsApplyHandler = function() {
     }
     messaging.tell({
         what: 'reloadAllFilters',
-        switches: switches
+        switches: switches,
+        update: update
     });
     cacheWasPurged = false;
-    uDom('#blacklistsApply').prop('disabled', true);
+};
+
+/******************************************************************************/
+
+var buttonApplyHandler = function() {
+    reloadAll();
+    uDom('#buttonApply').toggleClass('enabled', false);
+};
+
+/******************************************************************************/
+
+var buttonUpdateHandler = function() {
+    reloadAll(true);
+};
+
+/******************************************************************************/
+
+var autoUpdateCheckboxChanged = function() {
+    messaging.tell({
+        what: 'userSettings',
+        name: 'autoUpdate',
+        value: this.checked
+    });
 };
 
 /******************************************************************************/
 
 var abpHideFiltersCheckboxChanged = function() {
     listDetails.cosmetic = this.checked;
-    selectedBlacklistsChanged();
+    updateApplyButtons();
 };
 
 /******************************************************************************/
@@ -383,11 +432,13 @@ var externalListsApplyHandler = function() {
 
 uDom.onLoad(function() {
     // Handle user interaction
-    uDom('#parseAllABPHideFilters').on('change', abpHideFiltersCheckboxChanged);
-    uDom('#blacklistsApply').on('click', blacklistsApplyHandler);
+    uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
+    uDom('#parseCosmeticFilters').on('change', abpHideFiltersCheckboxChanged);
+    uDom('#buttonApply').on('click', buttonApplyHandler);
+    uDom('#buttonUpdate').on('click', buttonUpdateHandler);
     uDom('#lists').on('change', '.listDetails > input', onListCheckboxChanged);
     uDom('#lists').on('click', '.listDetails > a:nth-of-type(1)', onListLinkClicked);
-    uDom('#lists').on('click', 'button.purge', onPurgeClicked);
+    uDom('#lists').on('click', 'span.purge', onPurgeClicked);
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);
 

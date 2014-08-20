@@ -31,6 +31,7 @@ return {
     manifest: chrome.runtime.getManifest(),
 
     userSettings: {
+        autoUpdate: true,
         collapseBlocked: true,
         externalLists: '',
         logBlockedRequests: false,

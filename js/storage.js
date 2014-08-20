@@ -70,7 +70,7 @@
 
 /******************************************************************************/
 
-µBlock.loadUserSettings = function() {
+µBlock.loadUserSettings = function(callback) {
     var settingsLoaded = function(store) {
         var µb = µBlock;
         // Backward compatibility after fix to #5
@@ -88,6 +88,8 @@
         µb.userSettings = store;
         µb.netWhitelist = µb.whitelistFromString(store.netWhitelist);
         µb.netWhitelistModifyTime = Date.now();
+
+        callback();
     };
 
     chrome.storage.local.get(this.userSettings, settingsLoaded);
@@ -265,11 +267,7 @@
                 blacklistLoadCount -= 1;
                 continue;
             }
-            if ( /^https?:\/\/.+$/.test(location) ) {
-                µb.assets.getExternal(location, mergeBlacklist);
-            } else {
-                µb.assets.get(location, mergeBlacklist);
-            }
+            µb.assets.get(location, mergeBlacklist);
         }
     };
 
@@ -400,7 +398,7 @@
 // `switches` contains the preset blacklists for which the switch must be
 // revisited.
 
-µBlock.reloadPresetBlacklists = function(switches) {
+µBlock.reloadPresetBlacklists = function(switches, update) {
     var presetBlacklists = this.remoteBlacklists;
 
     // Toggle switches, if any
@@ -420,7 +418,7 @@
     }
 
     // Now force reload
-    this.loadUbiquitousBlacklists();
+    this.loadUpdatableAssets(update);
 };
 
 /******************************************************************************/
@@ -443,9 +441,11 @@
 
 // Load updatable assets
 
-µBlock.loadUpdatableAssets = function() {
-    this.loadUbiquitousBlacklists();
+µBlock.loadUpdatableAssets = function(update) {
+    this.assets.autoUpdate = update;
+    this.assets.autoUpdateDelay = this.updateAssetsEvery;
     this.loadPublicSuffixList();
+    this.loadUbiquitousBlacklists();
 };
 
 /******************************************************************************/
@@ -453,11 +453,8 @@
 // Load all
 
 µBlock.load = function() {
-    this.loadLocalSettings();
-    this.loadUserSettings();
-
-    // load updatable assets -- after updating them if needed
-    this.assetUpdater.update(null, this.loadUpdatableAssets.bind(this));
-
+    // User settings need to be available for this because we need
+    // µBlock.userSettings.externalLists
+    this.loadUserSettings(this.loadUpdatableAssets.bind(this, this.userSettings.autoUpdate));
     this.getBytesInUse();
 };

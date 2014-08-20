@@ -35,18 +35,17 @@
 (function() {
     var µb = µBlock;
 
-    var jobDone = function(details) {
-        if ( details.changedCount === 0 ) {
+    var jobCallback = function() {
+        if ( µb.userSettings.autoUpdate !== true ) {
             return;
         }
-        µb.loadUpdatableAssets();
-    };
-
-    var jobCallback = function() {
-        µb.assetUpdater.update(null, jobDone);
+        // TODO: need smarter update, currently blindly reloading all.
+        µb.loadUpdatableAssets(true);
     };
 
     µb.asyncJobs.add('autoUpdateAssets', null, jobCallback, µb.updateAssetsEvery, true);
 })();
+
+// https://www.youtube.com/watch?v=cIrGQD84F1g
 
 /******************************************************************************/

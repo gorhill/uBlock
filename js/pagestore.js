@@ -218,7 +218,7 @@ PageStore.prototype.updateBadgeFromTab = function(tab) {
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
-        iconStr = this.perLoadBlockedRequestCount.toLocaleString();
+        iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
     }
     chrome.browserAction.setBadgeText({ tabId: tab.id, text: iconStr });
 
@@ -233,6 +233,8 @@ PageStore.prototype.updateBadge = function() {
     // anymore, so this ensures it does still exist.
     chrome.tabs.get(this.tabId, this.updateBadgeFromTab.bind(this));
 };
+
+// https://www.youtube.com/watch?v=drW8p_dTLD4
 
 /******************************************************************************/
 

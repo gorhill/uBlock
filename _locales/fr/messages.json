@@ -99,13 +99,17 @@
     "message":"{{used}} utilisé(s) sur un total de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Utiliser en plus les règles Adblock Plus esthétiques",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Mise à jour automatique des listes",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} règle(s) Adblock Plus esthétique(s) utilisée(s)",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Mettre à jour",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Utiliser en plus les règles esthétiques",
+    "description":"English: Parse and enforce cosmetic filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Cette option permet de prendre en charge les filtres AdblockPlus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de <i>µBlock<\/i><\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"vider le cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"nouvelle version disponible",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"potentiellement désuet",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",

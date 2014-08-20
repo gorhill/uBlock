@@ -36,17 +36,58 @@ ul > li > ul > li {
 .dim {
     color: #888;
     }
-button.purge {
+/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
+button.reloadAll {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
+    padding: 5px;
+    background-color: hsl(36, 0%, 72%) !important;
+    background-repeat: repeat-x;
+    background-image: linear-gradient(#f2f2f2, #dddddd);
+    color: #aaa;
+    }
+button.reloadAll.enabled {
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    color: #222;
+    background-color: hsl(36, 100%, 75%) !important;
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    cursor: pointer;
+    opacity: 0.8;
+    }
+button.reloadAll:hover {
+    opacity: 1.0;
+    }
+#buttonApply {
+    display: none;
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    }
+#buttonApply.enabled {
+    display: initial;
+    }
+span.status {
     margin: 0;
-    border: 1px solid #ccc;
+    border: 1px solid transparent;
     padding: 1px 2px;
+    display: inline-block;
+    font-size: 11px;
+    opacity: 0.7;
+}
+span.purge {
+    border-color: #ddd;
     color: #444;
     background-color: #eee;
-    font-size: 11px;
-    opacity: 0.6;
+    cursor: pointer;
     }
-button.purge:hover {
+span.purge:hover {
     opacity: 1;
+    }
+span.obsolete {
+    border-color: hsl(36, 100%, 73%);
+    color: #222;
+    background-color: hsl(36, 100%, 75%);
     }
 #externalLists {
     font-size: smaller;
@@ -59,10 +100,11 @@ button.purge:hover {
 
 <body>
 
+<button id="buttonApply" class="reloadAll" data-i18n="3pApplyChanges"></button>
 <ul id="options">
-    <li><button id="blacklistsApply" disabled="true" data-i18n="3pApplyChanges"></button>
-    <li style="margin-top:0.75em"><input type="checkbox" id="parseAllABPHideFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1"></label>
-    <span class="dim" id="3pParseAllABPHideFiltersPrompt2"></span>
+    <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1"></label>
+        <button class="reloadAll" id="buttonUpdate" data-i18n="3pUpdateNow"></button>
+    <li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1"></label>
     <button class="whatisthis"></button>
     <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
     <li style="margin-top:0.75em"><p id="listsOfBlockedHostsPrompt"></p>

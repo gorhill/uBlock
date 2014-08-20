@@ -132,15 +132,12 @@ var onMessage = function(request, port) {
 
 /******************************************************************************/
 
-// Default is for commonly used message.
+// Default is for commonly used messages.
 
 function defaultHandler(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
-            if ( /^https?:\/\//.test(request.url) ) {
-                return µBlock.assets.getExternal(request.url, callback);
-            }
             return µBlock.assets.get(request.url, callback);
 
         case 'loadUbiquitousAllowRules':
@@ -171,7 +168,7 @@ function defaultHandler(request, sender, callback) {
             break;
 
         case 'reloadAllFilters':
-            µBlock.reloadPresetBlacklists(request.switches);
+            µBlock.reloadPresetBlacklists(request.switches, request.update);
             break;
 
         case 'userSettings':
@@ -185,6 +182,8 @@ function defaultHandler(request, sender, callback) {
 
     callback(response);
 }
+
+// https://www.youtube.com/watch?v=rrzRgUAHqc8
 
 /******************************************************************************/
 
