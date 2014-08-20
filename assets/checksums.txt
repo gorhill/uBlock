@@ -1,7 +1,7 @@
-4dd9f4499805d1f89162ffaaa90dcd1f assets/ublock/thirdparty-lists.txt
+39c6f45e6a3d4ec664d24fa9cc5869dc assets/ublock/thirdparty-lists.txt
 44df76797d965a97c49cdca151beb039 assets/ublock/privacy.txt
 b5284e7e630d320546dd719c135b1954 assets/ublock/filters.txt
-3a1a4984aed3fe588c3b9c28f5e70f6f assets/ublock/filter-lists.json
+70f34ae85c9c76c5c0f8d7fc1d7aba8c assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 3739b55487ff20f235c736601319f843 assets/thirdparties/adblock.gardar.net/is.abp.txt

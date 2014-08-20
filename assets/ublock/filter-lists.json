@@ -212,5 +212,10 @@
         "off": true,
         "title": "LVA: Latvian List",
         "group": "regions"
+        },
+    "www.fanboy.co.nz/fanboy-vietnam.txt": {
+        "off": true,
+        "title": "VIE: Fanboy's Vietnamese",
+        "group": "regions"
         }
 }

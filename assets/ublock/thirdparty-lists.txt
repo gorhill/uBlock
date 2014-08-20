@@ -115,6 +115,9 @@ http://home.fredfiber.no/langsholt/adblock.txt
 www.fanboy.co.nz/fanboy-swedish.txt
 https://www.fanboy.co.nz/fanboy-swedish.txt
 
+www.fanboy.co.nz/fanboy-vietnam.txt
+https://www.fanboy.co.nz/fanboy-vietnam.txt
+
 adblock.schack.dk/block.txt
 http://adblock.schack.dk/block.txt
 
