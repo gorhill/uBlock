@@ -259,49 +259,9 @@
     "message":"Quellcode (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Externe Ressourcen dieser Erweiterung",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"Von <i>µBlock<\/i> benutzte externe Ressourcen können hier upgedatet werden, ohne auf eine neue Version dieser Erweiterung warten zu müssen. Diese Ressourcen werden bezogen vom <a href=\"https:\/\/github.com\/gorhill\/ublock\">Github Repository dieses Projekts<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Pfad",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Status",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Ein Fehler ist aufgetreten. Ist <b>XHR<\/b> blockiert für <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Hinzufügen",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Neue Version verfügbar",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Aktuell",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Entfernen",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Aktualisieren",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Wird aktualisiert...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contributors",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"Dieser Eintrag muss der letzte sein",

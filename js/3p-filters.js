@@ -319,7 +319,7 @@ var onListLinkClicked = function(ev) {
 
 /******************************************************************************/
 
-var onPurgeClicked = function(ev) {
+var onPurgeClicked = function() {
     var button = uDom(this);
     var li = button.parent();
     var href = li.find('a').first().attr('href');

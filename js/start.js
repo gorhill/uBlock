@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// ORDER IS IMPORTANT
+/* global µBlock */
 
 /******************************************************************************/
 

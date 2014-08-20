@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global chrome, µBlock */
+
 // So there might be memory leaks related to the direct use of sendMessage(),
 // as per https://code.google.com/p/chromium/issues/detail?id=320723. The issue
 // is not marked as resolved, and the last message from chromium dev is:

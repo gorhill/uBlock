@@ -259,49 +259,9 @@
     "message":"Code Source (Licence GPLv3, en Anglais)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Données de l'extension",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"Les éléments dynamiques, comprenant entre autres listes d'hôtes à bloquer et recettes prédéfinies, peuvent être mis à jour ici sans avoir à attendre la prochaine version de µBlock. Le processus s'effectue à partir de la <a href=\"https:\/\/github.com\/gorhill\/ublock\">page du projet sur Github<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Élément dynamique",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"État",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Une erreur est survenue. Veuillez vous assurer que les requêtes de type <b>XHR<\/b> ne soient pas bloquées pour <b>raw2.github.com<\/b>",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"À ajouter",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Nouvelle version disponible",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"À jour",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"À supprimer",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Mettre à jour",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Mise à jour en cours...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contributeurs",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",
