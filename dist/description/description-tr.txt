@@ -1,0 +1,51 @@
+Etkili bir engelleyici: binlerce popüler engelleyiciye göre bellek ve CPU dostu, ve daha fazla reklam engelleyebiliyor.
+
+Resimli etkililiğe genel bakış: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Karşılaştırması
+
+Kullanımı: Arayüzündeki µBlock büyük güç düğmesi ile mevcut sayfada kalıcı olarak devre dışı bırakıp/etkinleştirilebilir. Bu yalnızca o anki sayfada geçerlidir, eklentinin tüm işlevini sonlandırmaz.
+
+***
+
+Esnek, bir "reklam engelleyici"den öte: aynı zamanda host dosyanızdan okuyarak filtre oluşturabilir.
+
+Bunun dışında, aşağıdaki filtre listeleri yüklenmiştir ve uygulanır:
+
+-EasyList
+-EasyPrivacy
+-Zararlı websiteleri
+-Uzun vadeli zararlı alan adları
+-Peter Lowe'uns reklam sunucuları listesi
+- Malware Domains List
+
+Daha fazla listeyi de seçerek kullanılabilirsiniz:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’un hosts dosyası
+-hpHosts'ın reklam ve izleme sunucuları
+-MVP HOSTS
+-Spam404
+-Vs.
+
+Tabii ki, daha fazla filtre etkinleştirmek, yüksek bellek kullanımına yol açar. Ama, Fanboy'nın iki ekstra listesini, hpHosts'ın reklam ve izleme sunucusu ekledikten sonra dahi µBlock hala bir çok popüler blokerlerdan daha az bellek tüketir.
+
+Ayrıca, bazı ekstra listelerin seçilmesi web sitelerinin bozulmasına yol açabilir unutmayın-- özellikle hosts dosyası olarak normalde kullanılan listeler neden olabilir.
+
+***
+
+Halihazırda yüklü geen listeler olmadan, bu eklenti hiçbir işe yaramaz. Eğer gerçekten birşeylerle katkıda bulunmak istiyorsanız, kullandığınız filtre listeleri oluşturmak için çalışan insanları düşünün, bu listeleri kullanımı özgür ve herkes tarafından kullanılabilir yapmışlar.
+
+***
+
+Ücretsiz.
+Açık Kaynaklı (GPLv3) Kamu Lisansı
+Kullanıcılar tarafından kullanıcılara.
+
+Destekçiler @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Destekçiler @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Bu çok erken bir sürümü, gözden geçirirken, bunu göz önünde bulundurun.
+
+Proje değişiklik günlüğü:
+https://github.com/gorhill/uBlock/wiki/Change-log

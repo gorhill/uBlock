@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla kullanmaz.",
+    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -36,7 +36,7 @@
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"reklam engellendi",
+    "message":"istek engellendi",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -96,15 +96,15 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{total}} ın {{used}} ı kullanıldı",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Filtre listelerini otomatik güncelle",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Şimdi Güncelleştir",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -112,7 +112,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>, Ayrıştırma ve <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus uyumlu \"öğe gizleme\" filtre<\/a> uygulayan bu seçeneği sağlar. Bu filtreler aslında kozmetik vardır, bir web sayfasında hangi görsel sikmaya kabul ve hangi tarafından net istek tabanlı filtreleme motoru bloke edemezsin öğeleri gizlemek için hizmet.<\/p><p>Bu özellik etkinleştirildiğinde, <i>µBlock<\/i> ' nın bellek ayak izi artırır.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -152,7 +152,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"Satır başına bir URL. Satırları öneki ile '!' göz ardı edilir. Geçersiz URL sessizce yoksayılır.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -160,19 +160,19 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"Önbelleği Temizle",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"Yeni sürüm mevcut",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
+    "message":"eskimiş olabilir",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"Her satır bir süzgeç. Filtre host adı veya Adblock Plus uyumlu filtre olabilir. Satırları öneki ile '!' olursa göz ardı edilir.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -188,7 +188,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Listenizdeki host adları µBlock listesi devredışı olacak. Satır başına bir giriş. Geçersiz host adlarını sessizce yoksayılır.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -220,7 +220,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Engellenen reklamlar",
+    "message":"Engellenen istekler",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
@@ -260,7 +260,7 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"Katkıda bulunanlar",
     "description":"English: Contributors"
   },
   "dummy":{

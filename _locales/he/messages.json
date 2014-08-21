@@ -152,7 +152,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ללא התראה.",
+    "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ולא תהיה התראה לכך.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -188,7 +188,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"רשימת שמות המארחים (host names) שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מארחים לא חוקיים לא יפורשו ללא התראה.",
+    "message":"רשימת שמות המארחים (host names) שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מארחים לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -212,7 +212,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"אפשר תיעוד של של בקשות שלא חסומות",
+    "message":"אפשר תיעוד של של בקשות שלא נחסמות",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
