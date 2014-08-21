@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"פרסר ואפשר את מסנני הסתרת האלמנטים של Adblock+.",
+    "message":"פרסר ואפשר מסננים קוסמטיים.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
