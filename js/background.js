@@ -27,6 +27,13 @@ var µBlock = (function() {
 
 /******************************************************************************/
 
+var oneSecond = 1000;
+var oneMinute = 60 * oneSecond;
+var oneHour = 60 * oneMinute;
+var oneDay = 24 * oneHour;
+
+/******************************************************************************/
+
 return {
     manifest: chrome.runtime.getManifest(),
 
@@ -46,7 +53,9 @@ return {
         allowedRequestCount: 0
     },
 
-    updateAssetsEvery: 47 * 60 * 60 * 1000,
+    // EasyList, EasyPrivacy and many others have an update frequency
+    // of 4 days, as per list headers.
+    updateAssetsEvery: 75 * oneHour + 23 * oneMinute + 53 * oneSecond + 605,
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
 
