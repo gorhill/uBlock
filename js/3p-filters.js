@@ -226,10 +226,9 @@ var renderBlacklists = function() {
                 .replace('{{netFilterCount}}', renderNumber(details.netFilterCount))
                 .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
         );
-        uDom('#lists .listDetails').remove();
-        uDom('#lists').html(html.join(''));
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
+        uDom('#lists').html(html.join(''));
         uDom('a').attr('target', '_blank');
         updateApplyButtons();
     };

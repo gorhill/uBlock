@@ -172,24 +172,19 @@ FilterBucket.prototype.retrieve = function(s, out) {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.s = '';
     this.prefix = '';
     this.suffix = '';
-    this.anchor = 0;
     this.unhide = 0;
     this.hostnames = [];
     this.invalid = false;
-    this.unsupported = false;
     this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
 };
 
 /******************************************************************************/
 
 FilterParser.prototype.reset = function() {
-    this.s = '';
     this.prefix = '';
     this.suffix = '';
-    this.anchor = '';
     this.unhide = 0;
     this.hostnames.length = 0;
     this.invalid = false;
@@ -209,9 +204,7 @@ FilterParser.prototype.parse = function(s) {
     }
 
     // Remember original string
-    this.s = s;
     this.prefix = matches[1];
-    this.anchor = matches[2];
     this.suffix = matches[3];
 
     // 2014-05-23:
@@ -230,7 +223,7 @@ FilterParser.prototype.parse = function(s) {
         this.suffix = this.suffix.slice(1);
     }
 
-    this.unhide = this.anchor.charAt(1) === '@' ? 1 : 0;
+    this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
     if ( this.prefix !== '' ) {
         this.hostnames = this.prefix.split(/\s*,\s*/);
     }
@@ -394,7 +387,7 @@ var makeHash = function(unhide, token, mask) {
 // Specific filers can be enforced before the main document is loaded.
 
 var FilterContainer = function() {
-    this.filterParser = new FilterParser();
+    this.parser = new FilterParser();
     this.reset();
 };
 
@@ -403,7 +396,7 @@ var FilterContainer = function() {
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
 FilterContainer.prototype.reset = function() {
-    this.filterParser.reset();
+    this.parser.reset();
     this.frozen = false;
     this.acceptedCount = 0;
     this.duplicateCount = 0;
@@ -453,8 +446,7 @@ FilterContainer.prototype.reset = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.add = function(s) {
-    s = s.trim();
-    var parsed = this.filterParser.parse(s);
+    var parsed = this.parser.parse(s);
     if ( parsed.invalid ) {
         return false;
     }
@@ -695,7 +687,7 @@ FilterContainer.prototype.freeze = function() {
     this.freezeHostnameSpecifics('hostnameDonthide', 1);
     this.freezeEntitySpecifics('entityHide', 0);
     this.freezeEntitySpecifics('entityDonthide', 1);
-    this.filterParser.reset();
+    this.parser.reset();
     this.frozen = true;
 
     //histogram('lowGenericFilters', this.lowGenericFilters);

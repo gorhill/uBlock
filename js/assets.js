@@ -47,6 +47,8 @@ var repositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() {};
 var reIsExternalPath = /^https?:\/\/[a-z0-9]/;
 var reIsUserPath = /^assets\/user\//;
+var lastRepoMetaTimestamp = 0;
+var refreshRepoMetaPeriod = 6 * 60 * 60 * 1000;
 
 var exports = {
     autoUpdate: true,
@@ -235,10 +237,10 @@ var updateLocalChecksums = function() {
 
 // Gather meta data of all assets.
 
-var getRepoMetadata = function(callback, update) {
+var getRepoMetadata = function(callback) {
     callback = callback || nullFunc;
 
-    if ( update ) {
+    if ( (Date.now() - lastRepoMetaTimestamp) >= refreshRepoMetaPeriod ) {
         repoMetadata = null;
     }
     if ( repoMetadata !== null ) {
@@ -249,6 +251,8 @@ var getRepoMetadata = function(callback, update) {
         }
         return;
     }
+
+    lastRepoMetaTimestamp = Date.now();
 
     // https://github.com/gorhill/uBlock/issues/84
     // First try to load from the actual home server of a third-party.
@@ -402,7 +406,7 @@ var readLocalFile = function(path, callback) {
     };
 
     var onInstallFileLoaded = function() {
-        // console.log('µBlock> readLocalFile("%s") / onInstallFileLoaded()', path);
+        //console.log('µBlock> readLocalFile("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
         this.onload = this.onerror = null;
     };
@@ -414,12 +418,12 @@ var readLocalFile = function(path, callback) {
     };
 
     var onCachedContentLoaded = function(details) {
-        // console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
+        //console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
         reportBack(details.content);
     };
 
     var onCachedContentError = function(details) {
-        // console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
+        //console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
         if ( reIsExternalPath.test(path) ) {
             reportBack('', 'Error: asset not found');
             return;
@@ -448,7 +452,7 @@ var readRepoFile = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
-        console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
+        //console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
         // https://github.com/gorhill/httpswitchboard/issues/263
         if ( this.status === 200 ) {
             reportBack(this.responseText);
@@ -459,7 +463,7 @@ var readRepoFile = function(path, callback) {
 
     var onRepoFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readRepoFile("%s") / onRepoFileError()', path);
+        //console.error('µBlock> readRepoFile("%s") / onRepoFileError()', path);
         reportBack('', 'Error');
     };
 
@@ -503,7 +507,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onInstallFileLoaded = function() {
         this.onload = this.onerror = null;
-        console.log('µBlock> readRepoCopyAsset("%s") / onInstallFileLoaded()', path);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
     };
 
@@ -514,12 +518,12 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onCachedContentLoaded = function(details) {
-        console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileLoaded()', path);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileLoaded()', path);
         reportBack(details.content);
     };
 
     var onCachedContentError = function(details) {
-        console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileError()', path);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onCacheFileError()', path);
         getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
@@ -532,7 +536,7 @@ var readRepoCopyAsset = function(path, callback) {
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
-        console.debug('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
         updateChecksum();
         cachedAssetsManager.save(path, this.responseText, callback);
     };
@@ -555,7 +559,7 @@ var readRepoCopyAsset = function(path, callback) {
             }
             return;
         }
-        console.debug('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s")', path, assetEntry.homeURL);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s")', path, assetEntry.homeURL);
         updateChecksum();
         cachedAssetsManager.save(path, this.responseText, callback);
     };
@@ -577,7 +581,7 @@ var readRepoCopyAsset = function(path, callback) {
         var timestamp = entries[path];
         var obsolete = Date.now() - exports.autoUpdateDelay;
         if ( exports.autoUpdate && (typeof timestamp !== 'number' || timestamp <= obsolete) ) {
-            console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
+            //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
             getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
             return;
         }
@@ -603,7 +607,7 @@ var readRepoCopyAsset = function(path, callback) {
 
         // Repo copy changed: fetch from home URL
         if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-            console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+            //console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
             return;
         }
@@ -643,7 +647,7 @@ var readRepoOnlyAsset = function(path, callback) {
 
     var onInstallFileLoaded = function() {
         this.onload = this.onerror = null;
-        console.log('µBlock> readRepoOnlyAsset("%s") / onInstallFileLoaded()', path);
+        //console.log('µBlock> readRepoOnlyAsset("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
     };
 
@@ -654,12 +658,12 @@ var readRepoOnlyAsset = function(path, callback) {
     };
 
     var onCachedContentLoaded = function(details) {
-        console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentLoaded()', path);
+        //console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentLoaded()', path);
         reportBack(details.content);
     };
 
     var onCachedContentError = function() {
-        console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentError()', path);
+        //console.log('µBlock> readRepoOnlyAsset("%s") / onCachedContentError()', path);
         getTextFileFromURL(chrome.runtime.getURL(path), onInstallFileLoaded, onInstallFileError);
     };
 
@@ -677,7 +681,7 @@ var readRepoOnlyAsset = function(path, callback) {
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
-        console.debug('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
+        //console.log('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s")', path, repositoryURL);
         assetEntry.localChecksum = assetEntry.repoChecksum;
         updateLocalChecksums();
         cachedAssetsManager.save(path, this.responseText, callback);
@@ -700,7 +704,7 @@ var readRepoOnlyAsset = function(path, callback) {
 
         // Asset added or changed: load from repo URL and then cache result
         if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-            console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
+            //console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
             return;
         }
@@ -744,7 +748,7 @@ var readExternalAsset = function(path, callback) {
     };
 
     var onCachedContentLoaded = function(details) {
-        console.log('µBlock> readExternalAsset("%s") / onCachedContentLoaded()', path);
+        //console.log('µBlock> readExternalAsset("%s") / onCachedContentLoaded()', path);
         reportBack(details.content);
     };
 
@@ -755,7 +759,7 @@ var readExternalAsset = function(path, callback) {
 
     var onExternalFileLoaded = function() {
         this.onload = this.onerror = null;
-        console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
+        //console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
         cachedAssetsManager.save(path, this.responseText);
         reportBack(this.responseText);
     };
@@ -793,12 +797,12 @@ var readExternalAsset = function(path, callback) {
 
 var readUserAsset = function(path, callback) {
     var onCachedContentLoaded = function(details) {
-        console.log('µBlock> readUserAsset("%s") / onCachedContentLoaded()', path);
+        //console.log('µBlock> readUserAsset("%s") / onCachedContentLoaded()', path);
         callback({ 'path': path, 'content': details.content });
     };
 
     var onCachedContentError = function() {
-        console.log('µBlock> readUserAsset("%s") / onCachedContentError()', path);
+        //console.log('µBlock> readUserAsset("%s") / onCachedContentError()', path);
         callback({ 'path': path, 'content': '' });
     };
 
@@ -947,8 +951,7 @@ exports.metadata = function(callback) {
                 entryOut.homeURL = path;
             }
         }
-        // Always ask for most up-to-date version
-        getRepoMetadata(onRepoMetaReady, true);
+        getRepoMetadata(onRepoMetaReady);
     };
 
     cachedAssetsManager.entries(onCacheMetaReady);

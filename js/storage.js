@@ -293,7 +293,7 @@
     //    https://adblockplus.org/en/filters
     var abpFilters = this.abpFilters;
     var abpHideFilters = this.abpHideFilters;
-    var parseAllABPHideFilters = this.userSettings.parseAllABPHideFilters;
+    var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
     var duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount;
     var acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount;
     var reLocalhost = /(^|\s)(localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
@@ -328,7 +328,7 @@
 
         // 2014-05-18: ABP element hide filters are allowed to contain space
         // characters
-        if ( parseAllABPHideFilters ) {
+        if ( parseCosmeticFilters ) {
             if ( abpHideFilters.add(line) ) {
                 continue;
             }
