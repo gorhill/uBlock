@@ -33,7 +33,6 @@ var cosmeticSwitch = true;
 var externalLists = '';
 var cacheWasPurged = false;
 var needUpdate = false;
-var loading = false;
 
 /******************************************************************************/
 
@@ -42,7 +41,7 @@ messaging.start('3p-filters.js');
 var onMessage = function(msg) {
     switch ( msg.what ) {
         case 'loadUbiquitousBlacklistCompleted':
-            loading = false;
+            uDom('body').toggleClass('loading', false);
             renderBlacklists();
             break;
 
@@ -291,7 +290,6 @@ var listsContentChanged = function() {
 // This is to give a visual hint that the selection of blacklists has changed.
 
 var updateWidgets = function() {
-    uDom('body').toggleClass('loading', loading);
     uDom('#buttonApply').toggleClass('enabled', listsSelectionChanged());
     uDom('#buttonUpdate').toggleClass('enabled', listsContentChanged());
 };
@@ -342,8 +340,7 @@ var onPurgeClicked = function() {
 var reloadAll = function(update) {
     // Loading may take a while when resoruces are fetched from remote
     // servers. We do not want the user to force reload while we are reloading.
-    loading = true;
-    updateWidgets();
+    uDom('body').toggleClass('loading', true);
 
     // Reload blacklists
     messaging.tell({
