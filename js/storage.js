@@ -442,7 +442,7 @@
 // Load updatable assets
 
 µBlock.loadUpdatableAssets = function(update) {
-    this.assets.autoUpdate = update;
+    this.assets.autoUpdate = update || this.userSettings.autoUpdate;
     this.assets.autoUpdateDelay = this.updateAssetsEvery;
     this.loadPublicSuffixList();
     this.loadUbiquitousBlacklists();
@@ -461,6 +461,6 @@
     this.loadLocalSettings();
     // User settings need to be available for this because we need
     // µBlock.userSettings.externalLists
-    this.loadUserSettings(this.loadUpdatableAssets.bind(this, this.userSettings.autoUpdate));
+    this.loadUserSettings(this.loadUpdatableAssets.bind(this));
     this.getBytesInUse();
 };
