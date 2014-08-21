@@ -120,7 +120,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Aplicar alterações",
+    "message":"Salvar e aplicar",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -148,7 +148,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Personalizada",
+    "message":"Lista personalizada",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -156,7 +156,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Aplicar",
+    "message":"Salvar e aplicar",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
@@ -184,7 +184,7 @@
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Aplicar alterações",
+    "message":"Salvar e aplicar",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Aplicar alterações",
+    "message":"Salvar e aplicar",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
