@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: QTXSInuo0ssz+bbEcIYVjg
-! Version: 201408191240
-! Last modified: 19 Aug 2014 12:40 UTC
+! Checksum: D4ZUdVfgMpjAP0ryj70U9g
+! Version: 201408211600
+! Last modified: 21 Aug 2014 16:00 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -4946,7 +4946,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||megashara.com^*/branding/
 ||megashara.com^*_branding/
 ||megatorrents.*/forum/$object
-||megogo.net^*?autoplay=1$domain=coldfilm.ru
+||megogo.net^*?autoplay=1$domain=coldfilm.ru|kino-dom.tv
 ||melt.ru/images/cms/_*0*_/
 ||mercatos.net/banner/
 ||meta.ua/f_new.*_teaser&

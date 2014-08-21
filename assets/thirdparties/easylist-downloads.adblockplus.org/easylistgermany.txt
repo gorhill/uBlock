@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: c5ca859vcP87PfeG8B4HrQ
-! Version: 201408191241
+! Checksum: AJlZsNX7gHzFy7xKOU+r8g
+! Version: 201408211601
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 19 Aug 2014 12:41 UTC
+! Last modified: 21 Aug 2014 16:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -6775,7 +6775,7 @@ xxx-boardz.com##img[width="366"][height="48"]
 xxx-boardz.com##img[width="366"][height="56"]
 xxx-boardz.com##img[width="368"][height="46"]
 g-stream.in##img[width="468"][height="59"]
-3druck.com,amilo-forum.de,awekas.at,fake-it.biz,gntm-blog.de,mafia-linkz.to,novalja-zrce.de,technorocker.info,vampirediaries.in,velderboard.li,xboxdome.de##img[width="468"][height="60"]
+3druck.com,amilo-forum.de,awekas.at,cmmp.de,fake-it.biz,gntm-blog.de,mafia-linkz.to,novalja-zrce.de,technorocker.info,vampirediaries.in,velderboard.li,xboxdome.de##img[width="468"][height="60"]
 e-bol.net##img[width="469"][height="61"]
 emuenzen.de##img[width="486"][height="60"]
 t-online.de##img[width="609"][usemap^="#immap"]
@@ -7452,7 +7452,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||2mdn.net/viewad/*.jpg$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||2mdn.net^*.swf?clicktag=$object,domain=n-tv.de|teleboerse.de
 @@||37.59.248.204^$script,domain=ul-load.com|uploaded-premium.ru
-@@||4players.de/javascript/4players/adtag.check.js
+@@||4players.de/javascript/4players/$script
 @@||5.135.58.25^$script,domain=uploaded-premium.ru
 @@||ad-emea.doubleclick.net/crossdomain.xml$object-subrequest,domain=clipfish.de|homerj.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|spiegel.tv|sueddeutsche.de|superrtlnow.de|voxnow.de
 @@||ad-emea.doubleclick.net/pfadx/spiegel.tv.smartclip/;sz=*;dcmt=*;ord=$object-subrequest,domain=spiegel.tv

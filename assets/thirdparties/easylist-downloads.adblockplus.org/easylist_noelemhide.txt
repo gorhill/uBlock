@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: e5QLD0FLu3Bubac6L6qpHg
-! Version: 201408191240
+! Checksum: n0w2JdcGFDslrc1/vPXN2Q
+! Version: 201408211600
 ! Title: EasyList without element hiding rules
-! Last modified: 19 Aug 2014 12:40 UTC
+! Last modified: 21 Aug 2014 16:00 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7578,6 +7578,7 @@ _popunder+$popup
 ||dvaminusodin.net^$third-party
 ||dynamicoxygen.com^$third-party
 ||dynamitedata.com^$third-party
+||e-find.co^$third-party
 ||e-generator.com^$third-party
 ||e-planning.net^$third-party
 ||e-viral.com^$third-party
@@ -7741,6 +7742,7 @@ _popunder+$popup
 ||gayadnetwork.com^$third-party
 ||geek2us.net^$third-party
 ||geld-internet-verdienen.net^$third-party
+||gemineering.com^$third-party
 ||genericlink.com^$third-party
 ||genericsteps.com^$third-party
 ||genesismedia.com^$third-party
@@ -8054,6 +8056,7 @@ _popunder+$popup
 ||localsearch24.co.uk^$third-party
 ||lockhosts.com^$third-party
 ||logo-net.co.uk^$third-party
+||loodyas.com^$third-party
 ||lookit-quick.com^$third-party
 ||looksmart.com^$third-party
 ||looneyads.com^$third-party
@@ -8323,6 +8326,7 @@ _popunder+$popup
 ||online-media24.de^$third-party
 ||onlineadtracker.co.uk^$third-party
 ||onlinedl.info^$third-party
+||onlyalad.net^$third-party
 ||onrampadvertising.com^$third-party
 ||onscroll.com^$third-party
 ||onsitemarketplace.net^$third-party
@@ -9155,6 +9159,7 @@ _popunder+$popup
 ||yvoria.com^$third-party
 ||yz56lywd.com^$third-party
 ||yzrnur.com^$third-party
+||yzus09by.com^$third-party
 ||z5x.net^$third-party
 ||zangocash.com^$third-party
 ||zanox-affiliate.de^$third-party
@@ -9165,6 +9170,7 @@ _popunder+$popup
 ||zde-engage.com^$third-party
 ||zeads.com^$third-party
 ||zedo.com^$third-party
+||zeesiti.com^$third-party
 ||zenoviaexchange.com^$third-party
 ||zenoviagroup.com^$third-party
 ||zercstas.com^$third-party
@@ -9511,7 +9517,6 @@ _popunder+$popup
 ||angelpastel.com^$third-party
 ||antaraimedia.com^$third-party
 ||apromoweb.com^$third-party
-||ashleymadison.com^$third-party,domain=~ashleyrnadison.com
 ||asiafriendfinder.com^$third-party
 ||awmcenter.eu^$third-party
 ||awmpartners.com^$third-party
@@ -9881,6 +9886,7 @@ _popunder+$popup
 ||r7e0zhv8.com^$third-party
 ||rack-media.com^$third-party
 ||ragazzeinvendita.com^$third-party
+||ramctrlgate.com^$third-party
 ||rareru.ru^$third-party
 ||reachword.com^$third-party
 ||real2clean.ru^$third-party
@@ -10007,6 +10013,7 @@ _popunder+$popup
 ||vroll.net^$third-party
 ||vrstage.com^$third-party
 ||wamcash.com^$third-party
+||warsomnet.com^$third-party
 ||webcambait.com^$third-party
 ||webclickengine.com^$third-party
 ||webclickmanager.com^$third-party
@@ -10067,7 +10074,6 @@ _popunder+$popup
 ||adultmoda.com^$popup,third-party
 ||adxite.com^$popup,third-party
 ||adxpansion.com^$popup,third-party
-||ashleymadison.com^$popup,third-party
 ||banners.cams.com^$popup,third-party
 ||buy404s.com^$popup
 ||c4tracking01.com^$popup,third-party
@@ -15218,6 +15224,7 @@ _popunder+$popup
 ||theminiforum.co.uk/images/banners/
 ||themis-media.com/media/global/images/cskins/
 ||themis.yahoo.com^
+||themittani.com/sites/*-skin
 ||thenationonlineng.net^*/banners/
 ||thenewage.co.za/Image/300SB.gif
 ||thenewage.co.za/Image/IMC.png
@@ -15356,6 +15363,7 @@ _popunder+$popup
 ||toynewsi.com/a/
 ||toywiz.com/lower-caption-global.html
 ||tpb.piraten.lu/static/img/bar.gif
+||tpucdn.com/images/b/$domain=techpowerup.com
 ||tracking.hostgator.com^
 ||trackitdown.net/skins/*_campaign/
 ||tracksat.com^*/banners/
@@ -16386,7 +16394,6 @@ _popunder+$popup
 ||phoenixmarieonline.com/wp-content/images/phoenix_marie-*.jpg
 ||phoenixmarieonline.com/wp-content/images/pornpros-*.jpg
 ||phoenixmarieonline.com/wp-content/images/twistys-*.jpg
-||phun.org/*.js|
 ||phun.org/phun/gfx/banner/
 ||pichunter.com/creatives/
 ||pichunter.com/deals/
@@ -18119,6 +18126,7 @@ _popunder+$popup
 @@||supersonicads.com/delivery/singleBanner.php?*&bannerId$subdocument
 @@||svcs.ebay.com/services/search/FindingService/*affiliate.tracking$domain=bkshopper.com|geo-ship.com|testfreaks.co.uk|watchmydeals.com
 @@||switch.atdmt.com/iaction/$subdocument,domain=bestbuy.com
+@@||swordfox.co.nz^*/advertising/$~third-party
 @@||syn-api.com^*&adsafe=$script,domain=armstrongmywire.com|atlanticbb.net|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|forbbbs.org|hargray.net|hawaiiantel.net|hickorytech.net|knology.net|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net
 @@||syn.5min.com/handlers/SenseHandler.ashx?*&adUnit=$script
 @@||syracuse.com/static/common/js/ads/ads.js
@@ -18239,7 +18247,7 @@ _popunder+$popup
 @@||utdallas.edu^*/banner.js
 @@||uuuploads.com/ads-on-buildings/$image,domain=boredpanda.com
 @@||v.fwmrm.net/*/AdManager.swf$domain=marthastewart.com
-@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|cc.com|cmt.com|colbertnation.com|comedycentral.com|espn.go.com|gametrailers.com|ign.com|logotv.com|mlb.mlb.com|mtv.com|mtvnservices.com|nascar.com|nbc.com|nbcnews.com|nbcsports.com|nick.com|player.theplatform.com|sky.com|southpark.nl|southparkstudios.com|spike.com|teamcoco.com|teennick.com|thedailyshow.com|thingx.tv|tvland.com|uverseonline.att.net|vevo.com|vh1.com|video.cnbc.com|vod.fxnetworks.com
+@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|cc.com|cmt.com|colbertnation.com|comedycentral.com|eonline.com|espn.go.com|gametrailers.com|ign.com|logotv.com|mlb.mlb.com|mtv.com|mtvnservices.com|nascar.com|nbc.com|nbcnews.com|nbcsports.com|nick.com|player.theplatform.com|sky.com|southpark.nl|southparkstudios.com|spike.com|teamcoco.com|teennick.com|thedailyshow.com|thingx.tv|tvland.com|uverseonline.att.net|vevo.com|vh1.com|video.cnbc.com|vod.fxnetworks.com
 @@||v.fwmrm.net/crossdomain.xml$object-subrequest
 @@||v.fwmrm.net/p/espn_live/$object-subrequest
 @@||v.fwmrm.net|$object-subrequest,domain=tv3play.se
@@ -18540,6 +18548,7 @@ _popunder+$popup
 @@||cyberdevilz.net^$elemhide
 @@||d2anfhdgjxf8s1.cloudfront.net/ajs.php?adserver=$script
 @@||dailymotion.com/embed/video/$subdocument,domain=team-vitality.fr
+@@||decomaniacos.es^*/advertisement.js
 @@||desionlinetheater.com^$elemhide
 @@||dinglydangly.com^$script,domain=eventhubs.com
 @@||dinozap.tv/adimages/
@@ -18622,6 +18631,7 @@ _popunder+$popup
 @@||google-it.info^$script,domain=hqq.tv
 @@||googlesyndication.com/favicon.ico$domain=multiup.org
 @@||googleusercontent.com^*#-$image,domain=tvportugalhd.org
+@@||gscontxt.net/main/channels-jsonp.cgi?$domain=9news.com.au
 @@||hackers.co.id/adframe/adframe.js
 @@||hardware.no/ads/$image
 @@||hardware.no/artikler/$image,~third-party
@@ -18846,6 +18856,7 @@ _popunder+$popup
 @@||videocelebrities.eu^*/adframe/
 @@||videomega.tv/ads/$script
 @@||videomega.tv/pub/interstitial.css
+@@||videomega.tv^*/ads.php?$script
 @@||videoplaza.tv/contrib/*/advertisement.js$domain=tv4play.se
 @@||vidup.me^*/adlayer.js
 @@||vietvbb.vn/up/clientscript/google_ads.js

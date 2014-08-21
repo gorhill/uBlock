@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: N/E2rXNJlcV+1btyFaN2DQ
-! Version: 201408191241
+! Checksum: EYNlGzkQvptIsvoeyccyGA
+! Version: 201408211601
 ! Title: EasyPrivacy
-! Last modified: 19 Aug 2014 12:41 UTC
+! Last modified: 21 Aug 2014 16:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2974,6 +2974,7 @@ http://utm.
 ||lfov.net^$third-party
 ||liadm.com^$third-party
 ||linezing.com^$third-party
+||link-smart.com^$third-party
 ||linkpulse.com^$third-party
 ||linkxchanger.com^$third-party
 ||listrakbi.com^$third-party
@@ -4728,6 +4729,7 @@ http://utm.
 ||counter.htmlvalidator.com^
 ||counter.hyipexplorer.com^
 ||counter.maases.com^
+||counter.mgaserv.com^
 ||counter.pagesview.com^
 ||counter.pax.com^
 ||counter.powweb.com^
@@ -4941,6 +4943,7 @@ http://utm.
 ||googleapis.com/generate_204
 ||googleapis.com^*/gen_204?
 ||googlecode.com^*/tracker.js
+||googlesyndication.com/safeframe/$third-party
 ||googleusercontent.com/tracker/
 ||googlevideo.com/generate_204
 ||gotdns.com/track/blank.aspx?
@@ -7914,6 +7917,7 @@ http://utm.
 ||vietnamnet.vn^*/tracking.js
 ||villarenters.com/inttrack.aspx
 ||vimeo.com/log/outro_displayed
+||viralnova.com/track.php
 ||viralogy.com/javascript/viralogy_tracker.js
 ||virginholidays.co.uk/_assets/js/dc_storm/track.js
 ||virtualearth.net/mapcontrol/*/veapiAnalytics.js
@@ -8803,6 +8807,7 @@ http://utm.
 @@||buffalowildwings.com^*/google-analytics.js
 @@||bunchball.net/scripts/cookies/current/NitroCookies.js$domain=mtvema.com
 @@||by.optimost.com^$domain=ft.com
+@@||c.microsoft.com/ms.js$domain=store.office.live.com
 @@||c.mmcdn.net^*/flash/config/metrics.xml$domain=moshimonsters.com
 @@||cache.nymag.com^*/clickability.js
 @@||canada.com/js/ooyala/comscore.js
@@ -8901,7 +8906,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|tv3play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|seatgeek.com|tv3play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest

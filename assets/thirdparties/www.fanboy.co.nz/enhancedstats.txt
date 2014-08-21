@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: A2H6eIBHGB/KNN3VjQD6UA
+! Checksum: y7SikBlTOv0kWcpGOxesiw
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 15 Aug 2014
+! Updated: 22 Aug 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -482,6 +482,7 @@ wolframalpha.com###subpod_zoom
 ||cloudharmony.net^$third-party
 ||consent-st.truste.com^$third-party
 ||disqus.com/count-data.js
+||doubleclick.net^$third-party
 ||geo.query.yahoo.com^$third-party
 ||google-analytics.com^$third-party
 ||google.co.il/cse/$third-party,~stylesheet
@@ -650,7 +651,9 @@ wolframalpha.com###subpod_zoom
 @@||foodnetwork.ca/UserControls/*/omnitureMedia.swf
 @@||foxnews.com/js/omtr_code.js$domain=foxbusiness.com|foxnews.com
 @@||foxtel.com.au/shop/packages-and-deals/static/js/os-omniture.js
+@@||google-analytics.com/cx/api.js$domain=boingboing.net
 @@||google-analytics.com/ga.js$domain=comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|games.latimes.com|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net
+@@||google-analytics.com/plugins/ua/ecommerce.js
 @@||google-analytics.com/urchin.js$domain=expresspcparts.com.au|roblox.com
 @@||google.com/coop/cse/brand?form=searchbox_$script,domain=wellness.com
 @@||google.com/cse/*/sayt.js$domain=ebuyer.com

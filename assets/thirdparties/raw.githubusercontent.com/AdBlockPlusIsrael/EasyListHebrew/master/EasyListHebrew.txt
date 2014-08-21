@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: ZqygssHJxH8NdED+28lpYQ
+! Checksum: zNHp2/P+7srwHHdJfSwyqg
 ! Title: EasyList Hebrew
-! Last modified: 10/08/14  10:59
+! Last modified: 21/08/14  11:51
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -30,11 +30,12 @@
 ||adland.co.il^$third-party
 ||adtv.me^$popup
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
-||amazing-offers.co.il^$popup
+||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||ashleymadison.com/app/public/$popup
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
+||campaign.alpha.co.il/?campaign^$popup,third-party
 ||clickcenter.net^$third-party
 ||clickon.co.il^$third-party
 ||descreti.co.il^$popup
@@ -349,8 +350,8 @@ haaretz.co.il,themarker.com##.topSectionBanners
 sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
 ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
-sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
-sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
+sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
+sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
 doctors.co.il,globes.co.il##[id^="ads."]
 !
 !----------------------------Element hiding rules-----------------------------!

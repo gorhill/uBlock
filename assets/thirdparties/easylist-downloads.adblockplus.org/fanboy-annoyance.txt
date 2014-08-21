@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: xSpH1TYyuTTjG8QhEf+CbA
-! Version: 201408191241
+! Checksum: kQIDD+X4Oz5zasMHCwKZ/Q
+! Version: 201408211601
 ! Title: Fanboy's Annoyance List
-! Last modified: 19 Aug 2014 12:41 UTC
+! Last modified: 21 Aug 2014 16:01 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -193,6 +193,7 @@
 /onlineopinionV5/*
 /outbrain?
 /plugins/CookieInfo/*
+/plugins/dynamic-to-top/*
 /plugins/flattr/*
 /plugins/let-it-snow/*
 /plugins/optin-monster/*$script
@@ -347,6 +348,7 @@ _social_rss.
 -social-icon.
 -social-icons-
 -social-icons.
+-social-icons?
 -social-linked-
 -social-media-
 -social-media.
@@ -570,7 +572,9 @@ _social_rss.
 /facebook32px.
 /facebook40.png
 /facebook48.
+/facebook72.
 /facebook_16.
+/facebook_18x18_
 /facebook_24.
 /FaceBook_24x
 /facebook_29.
@@ -785,6 +789,7 @@ _social_rss.
 /google_icon.
 /google_plus-
 /google_plus.png
+/google_plus_18x18_
 /google_plus_icon.
 /google_plus_icon_
 /Google_plus_logo_
@@ -1887,9 +1892,11 @@ _social_rss.
 /twitter40.png
 /twitter45.
 /twitter48.
+/twitter72.
 /twitter_12.
 /twitter_16.
 /Twitter_16x16.
+/twitter_18x18_
 /twitter_24.
 /Twitter_24x24.
 /twitter_29.
@@ -2003,6 +2010,7 @@ _social_rss.
 /youtube1.png
 /youtube2.gif
 /youtube_16.
+/youtube_18x18_
 /youtube_32.
 /youtube_32x
 /YouTube_36.
@@ -2128,6 +2136,7 @@ _youtube_small.
 ###MBL_COMM
 ###MBT-mashable-bar
 ###MNNSurvey_adpB
+###Masthead-Newsletter
 ###Newsletter-Signup
 ###NewsletterSignup
 ###ScrollToTopContainer
@@ -2135,6 +2144,7 @@ _youtube_small.
 ###SideNewsletterBox
 ###SidebarFooterRotator1_NewsletterSignupRotator1
 ###SiteMasterPage_updCookieDisclaimer
+###Subscribe-Article-Bottom
 ###SubscribeBox
 ###TNTpageContentPlaceHolder_pnlCookieMessage
 ###ViperBar_main
@@ -2305,6 +2315,7 @@ _youtube_small.
 ###cookies_info
 ###cookies_message
 ###cookies_msg
+###cookies_warning
 ###cookiesdirective
 ###cookieshit
 ###cookiesribbon
@@ -2537,6 +2548,7 @@ _youtube_small.
 ###storytools_ad_top
 ###su-button-fixed
 ###subscribe-banner
+###subscribe-box
 ###subscribe-email
 ###subscribe-popin
 ###subscribe-popsugar
@@ -2574,6 +2586,8 @@ _youtube_small.
 ###webklipper-publisher-widget-container
 ###webklipper-publisher-widget-container-content
 ###website-cookies
+###welcome-popup-box
+###welcome-popup-overlay
 ###widget-newsletter-signup
 ###widgetNewsletter
 ###wpfront-notification-bar-spacer
@@ -2609,6 +2623,7 @@ _youtube_small.
 ##.bing-unit
 ##.bing_tabContent
 ##.bl_newsletter
+##.block-email-alerts-footer
 ##.block-newsletter
 ##.block-newsletter-signup
 ##.bookmark_services
@@ -2692,6 +2707,7 @@ _youtube_small.
 ##.dsq-global-toolbar-container
 ##.dsq-h3-reactions
 ##.dsv_video_bar
+##.email-alerts
 ##.email-promo-box
 ##.email-subscription-promo
 ##.email-to-a-friend
@@ -2774,6 +2790,7 @@ _youtube_small.
 ##.newsletter-advertisement
 ##.newsletter-bar-right
 ##.newsletter-block
+##.newsletter-box
 ##.newsletter-flyout-wrap
 ##.newsletter-icon-footer
 ##.newsletter-mod
@@ -2867,6 +2884,7 @@ _youtube_small.
 ##.scrollToTop
 ##.scrollToTopButton
 ##.scrollTo_top
+##.scrollTop
 ##.scrolltop
 ##.scrollup
 ##.sd_cookiespolicy
@@ -2893,6 +2911,7 @@ _youtube_small.
 ##.social_rss
 ##.sphinn-button-single
 ##.sprite-share-rss
+##.sprite-social-rss
 ##.sprites-rss
 ##.sprites-xing
 ##.st_email_custom
@@ -3046,6 +3065,7 @@ _youtube_small.
 ###GooglePlusTab
 ###HomeSocial
 ###IconSocialMediaContainer
+###Masthead-Social
 ###Module-Follow_Us
 ###PopularMediaShareModule
 ###PostSocialShare
@@ -3064,6 +3084,8 @@ _youtube_small.
 ###ShowsRightSocial
 ###SideBarSocialMedia
 ###Side_Block_Facebook
+###Social-Box
+###Social-Container-Right
 ###Social-Left
 ###SocialBookmarksContainer
 ###SocialIcons
@@ -3107,6 +3129,7 @@ _youtube_small.
 ###artShareLinks
 ###art_social
 ###article-sharebar
+###article-sharebox
 ###article-social
 ###article-social-top
 ###articleShare
@@ -3831,6 +3854,7 @@ _youtube_small.
 ###shareV_w
 ###shareVertical
 ###share_and_rate
+###share_art
 ###share_bar
 ###share_block
 ###share_bottom
@@ -3980,6 +4004,7 @@ _youtube_small.
 ###socailBarComponentDiv_page
 ###social-actions
 ###social-bar
+###social-block-wrapper
 ###social-bookmark-container
 ###social-bottom
 ###social-box
@@ -4843,6 +4868,7 @@ _youtube_small.
 ##.divFacebookShareButton
 ##.divFooterSocial
 ##.dmg-social-icon
+##.dpArticleShare
 ##.drop_facebook
 ##.dv-social-media
 ##.dzone-social-buttons
@@ -5010,6 +5036,7 @@ _youtube_small.
 ##.favorite-twitter
 ##.fb-activity-module
 ##.fb-activity-widget
+##.fb-author
 ##.fb-b
 ##.fb-button
 ##.fb-cont
@@ -5136,8 +5163,10 @@ _youtube_small.
 ##.fodicon-twitter
 ##.follow-buttons
 ##.follow-facebook
+##.follow-google-plus
 ##.follow-icons
 ##.follow-igoogle
+##.follow-instagram
 ##.follow-iphone
 ##.follow-label
 ##.follow-link-wrapper
@@ -5153,6 +5182,7 @@ _youtube_small.
 ##.follow-share
 ##.follow-sharer-icon
 ##.follow-social
+##.follow-tumblr
 ##.follow-twitter
 ##.follow-twt
 ##.follow-us
@@ -5167,6 +5197,7 @@ _youtube_small.
 ##.follow-us-wrapper
 ##.follow-widget
 ##.follow-yahoo
+##.follow-youtube
 ##.followBox
 ##.followButtons
 ##.followFacebook
@@ -5540,6 +5571,7 @@ _youtube_small.
 ##.icon-tumblr-square
 ##.icon-tw-footer
 ##.icon-twitter
+##.icon-twitter-circled
 ##.icon-twitter-encircled
 ##.icon-twitter-sharing
 ##.icon-twitter-sign
@@ -5582,6 +5614,7 @@ _youtube_small.
 ##.identity-fb-notice
 ##.ikonz-social
 ##.ilsb-share
+##.image-share
 ##.img-hover-share-overlay
 ##.img-share
 ##.img-share-overlay
@@ -5763,7 +5796,12 @@ _youtube_small.
 ##.nSF_recentShares
 ##.native-share-wrapper
 ##.nav--stay-connected
+##.nav-bar-facebook
 ##.nav-footer-social
+##.nav-icon-facebook
+##.nav-icon-googleplus
+##.nav-icon-instagram
+##.nav-icon-twitter
 ##.nav-social
 ##.nav-social-links
 ##.navSocial
@@ -6151,6 +6189,7 @@ _youtube_small.
 ##.share_cont
 ##.share_container
 ##.share_content
+##.share_count
 ##.share_digg
 ##.share_entry
 ##.share_fb
@@ -6265,6 +6304,7 @@ _youtube_small.
 ##.sharing-vertical
 ##.sharingBar
 ##.sharingBox
+##.sharingHd
 ##.sharingLinks
 ##.sharingPanel
 ##.sharingToolBar
@@ -6294,6 +6334,7 @@ _youtube_small.
 ##.side-post-social
 ##.side-social
 ##.side-socials
+##.sideBarShare
 ##.sideShareContainer
 ##.side_social
 ##.side_social_media
@@ -6305,6 +6346,7 @@ _youtube_small.
 ##.sidebar-share-item-twitter
 ##.sidebar-social
 ##.sidebar-social-buttons
+##.sidebar-social-links
 ##.sidebar-social-nw
 ##.sidebar-social-top
 ##.sidebar-twitter
@@ -6961,6 +7003,7 @@ _youtube_small.
 ##.tm-social-icon-buttons
 ##.tm-social-icons
 ##.tmo-share
+##.toggle-share-options
 ##.toggleSocialBox
 ##.tool-share
 ##.toolbar-sharing
@@ -7029,6 +7072,7 @@ _youtube_small.
 ##.tweets_footer
 ##.twitshare
 ##.twitter-24x24
+##.twitter-banner
 ##.twitter-block
 ##.twitter-box
 ##.twitter-btn
@@ -8400,6 +8444,7 @@ brobible.com###buzzHeadline
 wolframalpha.com###cNot
 oddee.com###c_bEMAIL
 thinkdigit.com###callout
+cambio.com###cambioIntercept
 usatoday.com###cards-next-link
 usatoday.com###cards-prev-link
 care2.com###care2_action_alerts
@@ -8954,7 +8999,9 @@ digg.com###modal-screen
 decalgirl.com###modal-subscribe
 digg.com###modal-wrapper
 mediamatters.org###modalBox
+wimp.com###modalDiv
 instructables.com###modalMask
+wimp.com###modalTableGray
 sharemyplaylists.com###modal_bg
 sharemyplaylists.com###modal_window
 techcrunch.com###module-the-crunchboard
@@ -9004,7 +9051,7 @@ wonderwall.msn.com###newsStrip
 theprovince.com###newsalert
 develop-online.net###newsflashSignup
 gossipcop.com###newsform
-6wunderkinder.com,7digital.com,bloomberg.com,buzznet.com,digitaltrends.com,disclose.tv,fyiliving.com,healthguru.com,infoworld.com,javaworld.com,mayoclinic.com,movies.com,nme.com,penny-arcade.com,pinknews.co.uk,publicradio.org,runningtimes.com,si.com,styleite.com,techvert.com,themarysue.com,usatoday.com,vetstreet.com,youbeauty.com###newsletter
+6wunderkinder.com,7digital.com,bloomberg.com,buzznet.com,digitaltrends.com,disclose.tv,fyiliving.com,healthguru.com,infoworld.com,javaworld.com,mayoclinic.com,movies.com,nme.com,penny-arcade.com,pinknews.co.uk,publicradio.org,runningtimes.com,si.com,styleite.com,techvert.com,themarysue.com,usatoday.com,vetstreet.com,wimp.com,youbeauty.com###newsletter
 csmonitor.com###newsletter-container
 details.com,gq.com,self.com###newsletter-form
 engadget.com###newsletter-mod
@@ -9350,7 +9397,7 @@ heatworld.com###slideBoxContainer
 nymag.com###slideOutBoxContainer
 pcworld.in###slide_box
 tabletmag.com###slide_in
-berryreview.com,bit.com.au,bornrich.com,business-standard.com,cjr.org,crunchyroll.com,dailynewsegypt.com,dailystar.com.lb,developersarena.com,do-while.com,ecofriend.com,fotomage.com,gearburn.com,healthcommunities.com,hometone.com,indiatimes.com,jagranjosh.com,livemint.com,memeburn.com,moveon.org,newsok.com,northjersey.com,oddee.com,pcauthority.com.au,pcmag.com,standardmedia.co.ke,technologyreview.com,theatlantic.com,theatlanticwire.com,thedailynewsegypt.com,theedge.co.nz,thehindu.com,thehindubusinessline.com,thelocal.ch,thelocal.de,thelocal.es,thelocal.fr,thelocal.it,thelocal.no,thelocal.se,therock.net.nz,theweek.co.uk,timesofisrael.com,tuaw.com,tucsoncitizen.com,washingtonexaminer.com###slidebox
+berryreview.com,bit.com.au,bornrich.com,business-standard.com,cjr.org,crunchyroll.com,dailynewsegypt.com,dailystar.com.lb,developersarena.com,do-while.com,ecofriend.com,fotomage.com,gearburn.com,healthcommunities.com,hometone.com,indiatimes.com,jagranjosh.com,livemint.com,memeburn.com,moveon.org,newsok.com,northjersey.com,oddee.com,pcauthority.com.au,pcmag.com,standardmedia.co.ke,technologyreview.com,theatlantic.com,theatlanticwire.com,thedailynewsegypt.com,theedge.co.nz,thehindu.com,thehindubusinessline.com,thelocal.ch,thelocal.de,thelocal.es,thelocal.fr,thelocal.it,thelocal.no,thelocal.se,therock.net.nz,theweek.co.uk,timesofisrael.com,tuaw.com,tucsoncitizen.com,viralnova.com,washingtonexaminer.com###slidebox
 medicalnewstoday.com###slidebox_container
 oddee.com###slidebox_left
 oddee.com###slidebox_right
@@ -10087,6 +10134,7 @@ thenewage.co.za##.footernew
 myspace.com##.footertools
 aegis7.com##.forcetoregister
 patch.com##.form-card
+ijreview.com##.formRow
 huffingtonpost.com##.forma_email
 theweek.com##.fourFreeBar
 fanpop.com##.fp_panel
@@ -10292,6 +10340,7 @@ news.moviefone.ca##.margin_top_10
 discovermagazine.com##.marketingCallouts
 mashable.com##.mashable-head-shortad
 thenextweb.com##.mb-1
+fullist.co.uk##.mc4wp-form
 medicaldaily.com##.md_con_left
 reference.com##.mdbt
 motherless.com##.media-action-networks
@@ -10687,6 +10736,7 @@ slate.com##.sl-nbox-cntr
 dupontregistry.com,makingstarwars.net,the4cast.com,unlooker.com##.slide-dock
 newsledge.com##.slide-dock-on
 earthtechling.com##.slide-in
+lifehack.org##.slide-in-pager
 discovery.com##.slide-out-div
 businessweek.com,thedissolve.com##.slideout
 fastcompany.com##.slideshowlinks
@@ -10864,6 +10914,8 @@ csmonitor.com##.ui-newsletter
 csmonitor.com##.ui-newsticker-wrapper
 alternet.org,boldprogressives.org,daniweb.com,halfhourmeals.com,mac-forums.com,motorauthority.com,nomorerack.com,rottentomatoes.com,thebolditalic.com,underarmour.com##.ui-widget-overlay
 searchenginewatch.com##.ukn-email-signup
+therouse.com##.ulp-overlay
+therouse.com##.ulp-window
 toolbox.com##.umightlike
 alarabiya.net##.under-link-objects
 howstuffworks.com##.unitLast
@@ -11007,6 +11059,7 @@ dictionary.com##a[id^="he"]
 forums.electronicarts.co.uk##a[style="border:dotted 1px #fff;padding:3px;height:90px;width:728px;display:block;"]
 politicususa.com##a[style="display: scroll; position: fixed; top: 340px; right: 0px;"]
 politicususa.com##a[style="display:scroll;position:fixed;top:340px;right:0px;"]
+watchseries-online.ch##a[title="Go Up"]
 lostlettermen.com##blockquote[style="height: 60px; max-height: 60px;"]
 google.com##button[id^="gbpwm_"]
 brighthub.com##div[data-bhtrackregion="Subscribe"]
@@ -11258,6 +11311,7 @@ worldwideinterweb.com###bottom_status
 profitguide.com###builder-124
 linux.pl,newvinevideos.com###cadencefancy-overlay
 linux.pl,newvinevideos.com###cadencefancy-wrap
+cambio.com###cambio-follow
 overstock.com###cars-facebook
 overstock.com###cars-twitter
 cbsnews.com###cbsfacebookConnect
@@ -11365,6 +11419,7 @@ testtube.com###network-list
 newsfeed.time.com###newsfeed_tweetbox_widget-3
 lolspotsarticles.com###nextLikeHolder
 produktywnie.pl###olussierfsp_likebox-3
+therichest.com###openFollow
 lyricsmania.com###overlay
 fark.com###pinterest
 blurtit.com###plusOnePage
@@ -11488,6 +11543,7 @@ philly.com##.bottomToolsNav
 machprinciple.com##.bsub
 si.com##.btn-gp
 guernicamag.com##.btn-group
+therichest.com##.btnTW
 chrome-plugins.org##.buttonfixed
 500px.com##.buttons
 care2.com##.c2fb_share_count
@@ -11523,6 +11579,7 @@ newseveryday.com##.f-sns
 lovefilm.com##.facebook-title
 cracked.com##.facebookLogo
 singularityhub.com##.facebook_connect
+doomclan.tv##.fame-icons
 gillette.com##.fan
 conservativepost.com##.fancybox-overlay
 conservativepost.com##.fancybox-wrap
@@ -11593,6 +11650,7 @@ mapometer.com##.inright
 bossip.com##.insta
 bulova.com##.instagram
 yahoo.com##.interest-bar
+viralnova.com##.is-sticky
 celebrations.com##.join_party
 bleacherreport.com##.jqmOverlay
 bleacherreport.com##.jqmWindow
@@ -11663,7 +11721,7 @@ gadling.com##.sandbox
 huffingtonpost.com##.sbm-main-new
 parentherald.com##.sc_sns
 neurope.eu##.scroll-to-fixed-fixed
-tecmint.com,unmotivating.com##.scroll-triggered-box
+fullist.co.uk,tecmint.com,unmotivating.com##.scroll-triggered-box
 sdsu.edu##.sdsuuniverse_above_header_right
 lycos.co.uk##.sfoot
 celebrations.com##.sform
@@ -11696,7 +11754,7 @@ aliexpress.com##.sns-btns
 enstarz.com,hngn.com##.sns_box
 designntrend.com##.soc_box
 onlineprnews.com##.soc_box[style=" margin-bottom:10px; border:solid 1px #EEEEEE; clear:both"]
-3net.com,about.com,aimonetti.net,al-shorfa.com,alexa.com,alligator-sunglasses.com,amctv.com,amd.com,annarbor.com,aol.com,artsyspot.com,asb.co.nz,avclub.com,avira.com,bbc.com,benswann.com,bgr.com,billboard.com,billmoyers.com,blogspot.co.uk,businessinsider.com,businessinsider.com.au,businessweek.com,catonmat.net,cnet.com,collectorsweekly.com,comicbookmovie.com,connectify.me,consequenceofsound.net,cookingchanneltv.com,dailyhaha.com,davemcelfatrick.com,deathandtaxesmag.com,debate.org,diet-blog.com,digitaltrends.com,dpreview.com,droid-life.com,duluthtrading.com,e3expo.com,electronista.com,engadget.com,eurogamer.net,evilmilk.com,examiner.com,feld.com,fiercecable.com,fiercewireless.com,foodhub.co.nz,foodnetwork.com,forbes.com,foreignpolicy.com,foxnews.com,freelanceswitch.com,fstoppers.com,fundoomails.com,funnyordie.com,gamesradar.com,givemesport.com,goal.com,goodfood.com.au,greenbot.com,greencarreports.com,gsmdome.com,guildwars2.com,halfhourmeals.com,hawaii.com,hgtvremodels.com,hightimes.com,hilton.com,hitfix.com,huffingtonpost.com,humblebundle.com,ibtimes.co.in,ibtimes.com,imdb.com,imgur.com,impresspages.org,impulsedriven.com,indiegogo.com,informationweek.com,inthralld.com,intomobile.com,investopedia.com,ipodnn.com,itproportal.com,joblo.com,juancole.com,kde.org,ketknbc.com,kogan.com,lifehacker.com.au,livescience.com,logicbuy.com,macnn.com,macstories.net,makerstudios.com,mashable.com,mayoclinic.org,memez.com,mobileindustryreview.com,mom.me,moviefone.com,mp3days.com,narr8.me,narrative.ly,neowin.net,newrepublic.com,nplusonemag.com,npr.org,nster.com,nwsource.com,nymag.com,nzherald.co.nz,opendns.com,openlogic.com,outsidexbox.com,pawnation.com,pbh2.com,pbs.org,penny-arcade.com,pocket-lint.com,pomade.com,ppfinder.com,projekktor.com,psfk.com,qmul.ac.uk,radbox.me,readwriteweb.com,reason.com,red-buzz.com,refinery29.com,retailmenot.com,ropeofsilicon.com,scalescale.com,searchmarketingexpo.com,seattletimes.com,sectionstudios.com,sheknows.com,slashdot.org,softexia.com,sophos.com,space.com,sparknotes.com,spin.com,sucuri.net,t3.com,tablet-news.com,talkingpointsmemo.com,talkweb.eu,techeblog.com,techpowerup.com,techpp.com,techradar.com,techspot.com,theblemish.com,thebolditalic.com,theonion.com,thestar.com,thewp-hub.com,tickld.com,tmonews.com,tnr.com,totalfilm.com,trendhunter.com,troyhunt.com,tubestart.com,tvline.com,typomaps.net,udreview.com,uk-mkivs.net,usatoday.com,utsandiego.com,vg247.com,vice.com,victoriassecret.com,virginmedia.com,washingtontimes.com,webs.com,weeklystandard.com,wetpaint.com,whowhatwear.com,windowsvalley.com,winrumors.com,wn.com,woot.com,wunderground.com,x17online.com,xconomy.com,xsreviews.co.uk##.social
+3net.com,about.com,aimonetti.net,al-shorfa.com,alexa.com,alligator-sunglasses.com,amctv.com,amd.com,annarbor.com,aol.com,artsyspot.com,asb.co.nz,avclub.com,avira.com,bbc.com,benswann.com,bgr.com,billboard.com,billmoyers.com,blogspot.co.uk,businessinsider.com,businessinsider.com.au,businessweek.com,catonmat.net,cnet.com,collectorsweekly.com,comicbookmovie.com,connectify.me,consequenceofsound.net,cookingchanneltv.com,dailyhaha.com,davemcelfatrick.com,deathandtaxesmag.com,debate.org,diet-blog.com,digitaltrends.com,dpreview.com,droid-life.com,duluthtrading.com,e3expo.com,electronista.com,engadget.com,eurogamer.net,evilmilk.com,examiner.com,feld.com,fiercecable.com,fiercewireless.com,foodhub.co.nz,foodnetwork.com,forbes.com,foreignpolicy.com,foxnews.com,freelanceswitch.com,fstoppers.com,fundoomails.com,funnyordie.com,gamesradar.com,givemesport.com,goal.com,goodfood.com.au,greenbot.com,greencarreports.com,gsmdome.com,guildwars2.com,halfhourmeals.com,hawaii.com,hgtvremodels.com,hightimes.com,hilton.com,hitfix.com,huffingtonpost.com,humblebundle.com,ibtimes.co.in,ibtimes.com,imdb.com,imgur.com,impresspages.org,impulsedriven.com,indiegogo.com,informationweek.com,inthralld.com,intomobile.com,investopedia.com,ipodnn.com,itproportal.com,joblo.com,juancole.com,kde.org,ketknbc.com,kogan.com,lifehacker.com.au,livescience.com,logicbuy.com,macnn.com,macstories.net,makerstudios.com,mashable.com,mayoclinic.org,memez.com,mobileindustryreview.com,mom.me,moviefone.com,mp3days.com,narr8.me,narrative.ly,neowin.net,newrepublic.com,nplusonemag.com,npr.org,nster.com,nwsource.com,nymag.com,nzherald.co.nz,opendns.com,openlogic.com,outsidexbox.com,pawnation.com,pbh2.com,pbs.org,penny-arcade.com,pocket-lint.com,pomade.com,ppfinder.com,projekktor.com,psfk.com,qmul.ac.uk,radbox.me,readwriteweb.com,reason.com,red-buzz.com,refinery29.com,retailmenot.com,ropeofsilicon.com,scalescale.com,searchmarketingexpo.com,seattletimes.com,sectionstudios.com,sheknows.com,slashdot.org,softexia.com,sophos.com,space.com,sparknotes.com,spin.com,sucuri.net,t3.com,tablet-news.com,talkingpointsmemo.com,talkweb.eu,techeblog.com,techpowerup.com,techpp.com,techradar.com,techspot.com,theblemish.com,thebolditalic.com,theonion.com,thestar.com,thewp-hub.com,tickld.com,tmonews.com,tnr.com,totalfilm.com,trendhunter.com,troyhunt.com,tubestart.com,tvline.com,typomaps.net,udreview.com,uk-mkivs.net,usatoday.com,utsandiego.com,vg247.com,vice.com,victoriassecret.com,viralnova.com,virginmedia.com,washingtontimes.com,webs.com,weeklystandard.com,wetpaint.com,whowhatwear.com,windowsvalley.com,winrumors.com,wn.com,woot.com,wunderground.com,x17online.com,xconomy.com,xsreviews.co.uk##.social
 sparknotes.com,yahoo.com##.social-container
 titanfall.com##.social-menu
 uanews.org##.social-network
