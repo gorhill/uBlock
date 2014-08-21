@@ -99,13 +99,17 @@
     "message":"{{used}} gebruik van {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parseer en pas Adblock+ element verbergfilters toe.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Filterlijst van automatische updates.",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element verbergfilters gebruikt.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Nu updaten",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Parseer en pas cosmetische filters toe.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Deze optie schakelt het parseren en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch, ze verbergen elementen in de webpagina die een visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door het net request-based filtering engine.<\/p><p>Het inschakelen van deze funtie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"cache legen",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"nieuwe versie beschikbaar",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"kan overbodig zijn",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
@@ -247,49 +259,9 @@
     "message":"Broncode (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Extensiedata",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlock<\/i> onderdelen kunnen hier geupdate worden zonder te hoeven wachten op de volgende versie van de extensie. De onderdelen worden van de <a href=\"https:\/\/github.com\/gorhill\/ublock\">Github projectpagina<\/a> gehaald.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Pad",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Status",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Er is een fout opgetreden. Is <b>XHR<\/b> geblokkeerd voor <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Toe te voegen",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Nieuwe versie beschikbaar",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"bijgewerkt",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Verwijderen",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Update",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Aan het updaten...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Medewerkers",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",

@@ -99,13 +99,17 @@
     "message":"{{total}}中使用{{used}}",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Auto-update filter lists.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Update now",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"解析并应用Adblock+元素隐藏过滤规则。",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}}条元素隐藏过滤规则被使用。",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>这项选项启用了对<a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">Adblock Plus相兼容的“元素隐藏”过滤规则<\/a>。这些过滤规则本质上只是装饰，它们被用于隐藏一个网页上被认为碍眼的元素，并且这些元素不能被矩阵过滤或ABP过滤引擎所屏蔽。<\/p><p>启用这项功能将增加<i>µBlock<\/i>的内存使用量。<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"清除缓存",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"new version available",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"may be obsolete",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"每行一条规则。一条规则可以是一个平凡的站点名或者是一条Adblock Plus的兼容过滤规则。以“!”开头的行将被忽略。",
@@ -247,49 +259,9 @@
     "message":"源代码 (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"扩展数据",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlock<\/i>使用的资源可以在这里进行升级，而不必等到扩展的下一个发行版。这些资源是拉取自<a href=\"https:\/\/github.com\/gorhill\/ublock\">本项目的Github代码托管库<\/a>。",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"路径",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"状态",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"有一个错误发生。<b>raw2.github.com<\/b>的<b>XHR<\/b>是否被屏蔽？",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"将被添加",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"有新版本",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"已是最新",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"将被移除",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"马上更新",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"正在更新...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"贡献者",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

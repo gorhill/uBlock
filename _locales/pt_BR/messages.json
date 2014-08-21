@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um Bloqueador eficiente para navegadores baseados no Chromium. Com baixo consumo de memória e CPU.",
+    "message":"Finalmente, um bloqueador eficiente para navegadores baseados no Chromium. Com baixo consumo de memória e CPU.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
@@ -99,13 +99,17 @@
     "message":"{{used}} usado(s) de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analisar e aplicar filtros de esconder elementos com Adblock Plus.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Atualização automática de listas de filtros.",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} filtros de esconder elementos usado(s).",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Atualizar agora",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Analisar e aplicar filtros cosméticos.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"esconder elementos\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"Limpar cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"nova versão disponível",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"pode estar desatualizado",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
@@ -247,49 +259,9 @@
     "message":"Código-fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Dados de extensão",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"As listas do <i>µBlock<\/i> podem ser atualizadas aqui sem ter que esperar a próxima versão da extensão. Essas listas são baixadas a partir do <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositório do Github do projeto<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Local",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Status",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Ocorreu um erro. O <b>XHR<\/b> está bloqueado para <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Para adicionar",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Nova versão disponível",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Atualizado",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Para remover",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Atualizar",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Atualizando...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contribuidores",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"Esta entrada deve ser a última",

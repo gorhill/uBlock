@@ -99,13 +99,17 @@
     "message":"{{used}} בשימוש מתוך {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"עדכן אוטומטית את רשימות המסננים.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"עדכן כעת",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"פרסר ואפשר את מסנני הסתרת האלמנטים של Adblock+.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"בוצע שימוש ב {{abpHideFilterCount}} מסנני הסתרת אלמנטים.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus<\/a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.<\/p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>µBlock<\/i><\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"נקה זיכרון מטמון",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"גרסה חדשה זמינה",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"יכול להיות מיושן",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"מסנן אחד לכל שורה. מסנן יכול להכיל שמות מארחים, או מסננים המותאמים ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
@@ -247,49 +259,9 @@
     "message":"קוד מקור (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"נתוני התוסף",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"הנכסים של <i>µBlock<\/i> יכולים להתעדכן מדף זה מבלי לחכות לגרסה הבאה של התוסף. נכסים אלו נלקחים מהמאגר של פרויקט Github.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"נתיב",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"מצב",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"אירעה שגיאה. האם<b>XHR<\/b> חסום עבור <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"להוספה",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"גרסה חדשה זמינה",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"עדכני",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"להסרה",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"עדכן",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"מעדכן...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"תורמים",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"ערך זה חייב להיות האחרון",

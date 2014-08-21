@@ -99,13 +99,17 @@
     "message":"{{used}} usati su {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Aggiornamento automatico liste.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Aggiorna ora",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Utilizza Adblock+ element hiding filters.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element hiding filters usati.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Questa opzione abilita i filtri di <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web , e che non possono essere bloccati normalmente.<\/p><p>Questa funziona aumenta l'uso della memoria da parte di <i>µBlock<\/i>.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"Elimina Cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"una nuova versione è disponibile",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"può essere obsoleto",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata.",
@@ -247,49 +259,9 @@
     "message":"Codice sorgente (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Dati dell'estensione",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"I vari file che compongono <i>µBlock<\/i> possono essere aggiornati senza attendere il rilascio della prossima versione. I file vengono scaricati dalla pagina ufficiale del progetto su <a href=\"https:\/\/github.com\/gorhill\/ublock\">Github<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Indirizzo",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Stato",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Si è verificato un errore. Assicurarsi che il dominio <b>raw2.github.com<\/b> non sia bloccato da software di terze parti",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Da aggiungere",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Una nuova versione è disponibile",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Aggiornato",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Da rimuovere",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Aggiorna",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Aggiornamento...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Collaboratori",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",

@@ -99,13 +99,17 @@
     "message":"{{total}}個中{{used}}使用",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Auto-update filter lists.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Update now",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"アドブロックプラスの要素隠蔽フィルタを使用する。",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}}要素隠蔽フィルタ使用数",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"purge cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"new version available",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"may be obsolete",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
@@ -247,49 +259,9 @@
     "message":"根源コード（GPLバージョン３）",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"エクステンションデータ",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>ユウブロック<\/i>のリストはエクステンションが更新しなくてもアップデートされます。リストの項目は自動的に<a href=\"https:\/\/github.com\/gorhill\/ublock\">のプロジェクト<\/a>から更新されます。",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"径路",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"ステータス",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"エラーが発生しました。<b>raw2.github.com<\/b>の<b>XHR<\/b>はブロックされていますか？",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"追加する",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"新しいバージョンが在ります",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"既に最新のバージョンです",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"取り除く",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"アップデート",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"アップデート中。。。",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contributors",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",

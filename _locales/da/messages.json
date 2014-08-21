@@ -99,13 +99,17 @@
     "message":"{{used}} used out of {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce Adblock+ element hiding filters.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Auto-update filter lists.",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} element hiding filters used.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Update now",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Parse and enforce cosmetic filters.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"purge cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"new version available",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"may be obsolete",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
@@ -247,49 +259,9 @@
     "message":"Source code (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Extension data",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlock<\/i> assets can be updated here without having to wait for the next release of the extension. These assets are pulled from the <a href=\"https:\/\/github.com\/gorhill\/ublock\">project's Github repository<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Path",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Status",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"An error occurred. Is <b>XHR<\/b> blocked for <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"To add",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"New version available",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Up to date",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"To remove",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Update",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Updating...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Bidragydere",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",

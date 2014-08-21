@@ -99,13 +99,17 @@
     "message":"{{used}} użytych z {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Przetwórz i użyj filtry Adblock+ element hiding.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Automatycznie aktualizuj listy filtrów.",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} użytych filtrów element hiding.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Zaktualizuj teraz",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Przetwarzaj i egzekwuj filtry kosmetyczne.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Opcja ta włącza przetwarzanie i używanie filtrów <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">ukrywania elementów kompatybilnych z Adblock Plus<\/a>. Filtry te są głównie kosmetyczne, służą do ukrycia elementów na stronach, które są uważane za wizualne uciążliwe, a które nie mogą zostać zablokowane przez mechanizm filtrujący.<\/p><p>Włączenie tej funkcji zwiększa zużycie pamięci przez <i>µBlock<\/i>.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"wyczyść pamięć podręczną",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"dostępna nowa wersja",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"może być nieaktualne",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Jeden filtr na linię. Filtrem może być nazwa hosta, albo filtr kompatybilny z Adblock Plus. Linie poprzedzone znakiem &lsquo;!&rsquo; będą ignorowane.",
@@ -247,49 +259,9 @@
     "message":"Kod źródłowy (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Dane rozszerzenia",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"Filtry mogą być zaktualizowane tutaj, bez potrzeby czekania na kolejną wersję <i>µBlock<\/i>. Filtry te pobierane są bezpośrednio z <a href=\"https:\/\/github.com\/gorhill\/ublock\">repozytorium projektu na Github<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Ścieżka",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Stan",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Wystąpił błąd. Czy <b>XHR<\/b> jest zablokowany dla <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Dodaj",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Nowa wersja dostępna",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Najnowsza wersja",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Aby usunąć",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Aktualizuj",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Aktualizowanie...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Autorzy",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"Ta pozycja musi być ostatnia",

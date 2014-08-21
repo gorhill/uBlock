@@ -99,13 +99,17 @@
     "message":"{{used}} hasnalt a {{total}}-bol",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Auto-update filter lists.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Update now",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"kötelező Adblock + elemek elrejtése.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} elem elrejtésere használt filterek.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de az internetes lekérések alapján nem szűrhetőek ki.<\/p><p>A beállítás engedélyezése megnöveli az <i>µBlock<\/i> memóriahasználatát.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"gyorsítótár kiürítése",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"new version available",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"may be obsolete",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Egy lista soronként. A filter lehet egy hostname, vagy Adblock-Plus compatibilis filter.\nSorok amik egy &lsquo;!&rsquo;-val kezdenek, nem lesznek tudomásul véve.",
@@ -247,49 +259,9 @@
     "message":"forráskód (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"µBlock adatok",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlock<\/i> file-ok nélkül birtoklás-hoz vár részére a következő kiadás a µBlock itt frissíthető. Ezek az file-ok a <a href=\"https:\/\/github.com\/gorhill\/ublock\"> projekt Github adattárban<\/a> kihúzták.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Elérési út",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"állapot",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Hiba történt. <b>XHR<\/b> blockolta a <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"hozzáad",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Új verzió elérhető",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Utolso verzio",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"eltávolítás",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"frissítés",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"frissul...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contributors",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",

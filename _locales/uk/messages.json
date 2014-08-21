@@ -99,13 +99,17 @@
     "message":"використовується {{used}} з {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Автоматично оновити списки фільтрів.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Оновити зараз",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Розбір та застосування фільтрів приховування елементів Adblock+.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"Використано {{abpHideFilterCount}} фільтрів приховування елементів.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p> Ця опція вмикає розбір та задіяння <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів<\/a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"очистити кеш",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"наявна нова версія",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"може бути застарілим",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
@@ -247,49 +259,9 @@
     "message":"Джерельний код (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Дані розширення",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"Тут можна оновити фільтри не чекаючи наступного оновлення <i>µBlock<\/i>. Ці фільтри отримуються безпосередньо з <a href=\"https:\/\/github.com\/gorhill\/ublock\">репозитарію проекту на Github<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Шлях",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Статус",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Сталася помилка. Можливо блокується <b>XHR<\/b> до <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"На додання",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Наявна нова версія",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Остання версія",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"На вилучення",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Оновити",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Оновлення...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Учасники",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"Цей запис має бути останнім",

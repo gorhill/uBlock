@@ -99,13 +99,17 @@
     "message":"{{used}} de {{total}} utilizados",
     "description":"English: {{used}} used out of {{total}}"
   },
+  "3pAutoUpdatePrompt1":{
+    "message":"Actualizar automáticamente la lista de filtros.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Actualizar ahora",
+    "description":"English: Update now"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Analizar y aplicar filtros de ocultación de elementos de Adblock+.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
-  },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} filtros de ocultación de elementos utilizados.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\"> filtros de ocultación de elementos de Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos y sirven para ocultar elementos en una página web que se consideran una molestia visual y que no se puede bloquear con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta la huella de la memoria de <i>µBlock<\/i>.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"purgar la caché",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"nueva versión disponible",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"puede ser obsoleto",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Un filtro por línea. Un filtro puede ser el nombre del servidor, o un filtro compatible con Adblock Plus. Líneas que empiezan con '!' serán ignoradas.",
@@ -247,49 +259,9 @@
     "message":"Código fuente (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Datos de la extensión",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"Se puede actualizar los archivos de <i>µBlock<\/i> aquí sin tener que esperar a la próxima versión de la extensión. Estos archivos se actualizarán desde el <a href=\"https:\/\/github.com\/gorhill\/ublock\"> repositorio de GitHub de <i>µBlock<\/i><\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Ruta de acceso",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Estado",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Se ha producido un error. <b>¿XHR<\/b> está bloqueado para <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Para agregar",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Nueva versión disponible",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Última versión",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Para quitar",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Actualizar",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Actualizando...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Contribuidores",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",

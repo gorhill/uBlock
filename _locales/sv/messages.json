@@ -99,13 +99,17 @@
     "message":"{{used}} använda utav {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
-  "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Tolka och applicera Adblock Plus-elementdöljningsfilter.",
-    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  "3pAutoUpdatePrompt1":{
+    "message":"Uppdatera filterlistor automatiskt.",
+    "description":"English: Auto-update filter lists."
   },
-  "3pParseAllABPHideFiltersPrompt2":{
-    "message":"{{abpHideFilterCount}} använda elementdöljningsfilter.",
-    "description":"English: {{abpHideFilterCount}} element hiding filters used."
+  "3pUpdateNow":{
+    "message":"Uppdatera nu",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Tolka och applicera kosmetiska filter.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
     "message":"<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;<\/a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.<\/p><p>Genom att aktivera denna funktion ökar <i>µBlocks<\/i> minnesanvändning.<\/p>",
@@ -158,6 +162,14 @@
   "3pExternalListPurge":{
     "message":"Rensa cache",
     "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"ny version tillgänglig",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"kan vara föråldrad",
+    "description":"English: may be obsolete"
   },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
@@ -247,49 +259,9 @@
     "message":"Källkod (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
-  "aboutExtensionDataHeader":{
-    "message":"Tilläggsdata",
-    "description":"English: Extension data"
-  },
-  "aboutAssetsUpdatePrompt":{
-    "message":"<i>µBlocks<\/i> tillgångar kan bli uppdaterade här utan att behöva vänta på nästa version av tillägget. Dessa tillgångar dras från <a href=\"https:\/\/github.com\/gorhill\/ublock\">projektets Github-databas<\/a>.",
-    "description":"Short descriptive text of the update feature"
-  },
-  "aboutAssetsUpdateColPath":{
-    "message":"Sökväg",
-    "description":"Path column header"
-  },
-  "aboutAssetsUpdateColStatus":{
-    "message":"Status",
-    "description":"Status column header"
-  },
-  "aboutAssetsUpdateGetListError":{
-    "message":"Ett fel uppstod. Är <b>XHR<\/b> blockerat för <b>raw2.github.com<\/b>?",
-    "description":"Successful outcome of clicking 'update' button"
-  },
-  "aboutAssetsUpdateStatusAdded":{
-    "message":"Att lägga till",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusChanged":{
-    "message":"Ny version tillgänglig",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusUnchanged":{
-    "message":"Aktuell",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateStatusRemoved":{
-    "message":"Att ta bort",
-    "description":"Displayed in the status column for each entry"
-  },
-  "aboutAssetsUpdateButton":{
-    "message":"Uppdatera",
-    "description":"Update button"
-  },
-  "aboutAssetsUpdatingButton":{
-    "message":"Uppdaterar...",
-    "description":"Updating..."
+  "aboutContributors":{
+    "message":"Bidragsgivare",
+    "description":"English: Contributors"
   },
   "dummy":{
     "message":"This entry must be the last one",
