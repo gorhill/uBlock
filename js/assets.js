@@ -915,6 +915,12 @@ exports.metadata = function(callback) {
             entryOut.repoChecksum = entryRepo.repoChecksum;
             entryOut.homeURL = entryRepo.homeURL;
             entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
+            // If the asset has a remote home and there is no corresponding
+            // cache entry, it could be obsolete (because the asset could
+            // have been modified after uBlock repo was updated).
+            if ( entryOut.homeURL && typeof entryOut.lastModified !== 'number' ) {
+                entryOut.cacheObsolete = true;
+            }
         }
         callback(out);
     };
