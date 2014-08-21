@@ -33,6 +33,7 @@ var cosmeticSwitch = true;
 var externalLists = '';
 var cacheWasPurged = false;
 var needUpdate = false;
+var loading = false;
 
 /******************************************************************************/
 
@@ -41,6 +42,7 @@ messaging.start('3p-filters.js');
 var onMessage = function(msg) {
     switch ( msg.what ) {
         case 'loadUbiquitousBlacklistCompleted':
+            loading = false;
             renderBlacklists();
             break;
 
@@ -230,7 +232,8 @@ var renderBlacklists = function() {
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
         uDom('#lists').html(html.join(''));
         uDom('a').attr('target', '_blank');
-        updateApplyButtons();
+
+        updateWidgets();
     };
 
     messaging.ask({ what: 'getLists' }, onListsReceived);
@@ -287,7 +290,8 @@ var listsContentChanged = function() {
 
 // This is to give a visual hint that the selection of blacklists has changed.
 
-var updateApplyButtons = function() {
+var updateWidgets = function() {
+    uDom('body').toggleClass('loading', loading);
     uDom('#buttonApply').toggleClass('enabled', listsSelectionChanged());
     uDom('#buttonUpdate').toggleClass('enabled', listsContentChanged());
 };
@@ -303,7 +307,7 @@ var onListCheckboxChanged = function() {
         return;
     }
     listDetails.available[href].off = !this.checked;
-    updateApplyButtons();
+    updateWidgets();
 };
 
 /******************************************************************************/
@@ -329,13 +333,18 @@ var onPurgeClicked = function() {
     button.remove();
     if ( li.find('input').first().prop('checked') ) {
         cacheWasPurged = true;
-        updateApplyButtons();
+        updateWidgets();
     }
 };
 
 /******************************************************************************/
 
 var reloadAll = function(update) {
+    // Loading may take a while when resoruces are fetched from remote
+    // servers. We do not want the user to force reload while we are reloading.
+    loading = true;
+    updateWidgets();
+
     // Reload blacklists
     messaging.tell({
         what: 'userSettings',
@@ -394,7 +403,7 @@ var autoUpdateCheckboxChanged = function() {
 
 var cosmeticSwitchChanged = function() {
     listDetails.cosmetic = this.checked;
-    updateApplyButtons();
+    updateWidgets();
 };
 
 /******************************************************************************/

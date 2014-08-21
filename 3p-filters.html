@@ -95,6 +95,21 @@ span.obsolete {
     height: 8em;
     white-space: nowrap;
     }
+body #loadingOverlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    opacity: 0.5;
+    cursor: wait;
+    display: none;
+    z-index: 1000;
+    }
+body.loading #loadingOverlay {
+    display: block;
+    }
 </style>
 </head>
 
@@ -117,6 +132,8 @@ span.obsolete {
 <textarea id="externalLists"></textarea>
 <p style="margin: 0.25em 0 0 0"><button id="externalListsApply" disabled="true" data-i18n="3pExternalListsApply"></button></p>
 </div>
+
+<div id="loadingOverlay"></div>
 
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
