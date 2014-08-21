@@ -53,8 +53,8 @@ return {
         allowedRequestCount: 0
     },
 
-    // EasyList, EasyPrivacy and many others have an update frequency
-    // of 4 days, as per list headers.
+    // EasyList, EasyPrivacy and many others have an 4-day update period,
+    // as per list headers.
     updateAssetsEvery: 75 * oneHour + 23 * oneMinute + 53 * oneSecond + 605,
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
