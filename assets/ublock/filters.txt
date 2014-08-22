@@ -99,3 +99,7 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 # http://forums.lanik.us/viewtopic.php?f=64&t=17842&sid=46bd7065193153fe46efe816b7cd32c9&start=30#p59663
 # To counter `statcounter.com` in Peter Lowe's, MVPS, Dan Pollock's and hpHosts
 @@||statcounter.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/166
+# To counter `cdn-static.liverail.com` in Peter Lowe's, MVPS, and hpHosts
+@@||cdn-static.liverail.com^$object-subrequest
