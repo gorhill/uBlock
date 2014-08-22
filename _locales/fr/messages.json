@@ -100,7 +100,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Mise à jour automatique des listes",
+    "message":"Mise à jour automatique des listes de filtres",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -160,15 +160,15 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"vider le cache",
+    "message":"Vider le cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"nouvelle version disponible",
+    "message":"Nouvelle version disponible",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"potentiellement désuet",
+    "message":"Potentiellement obsolète",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
