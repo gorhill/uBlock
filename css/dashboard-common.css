@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0 0.5em 5em 0.5em;
     font: 14px sans-serif;
+	direction: __MSG_@@bidi_dir__;
     }
 h2, h3 {
     margin: 1em 0;
@@ -17,8 +18,9 @@ h3 {
     font-size: 16px;
     }
 h2 + * {
-    margin: 0 0 0 1em;
-    padding: 0;
+	margin: 0 auto 0 auto;
+	margin-__MSG_@@bidi_start_edge__: 1em !important;
+	padding-__MSG_@@bidi_end_edge__: 0em !important;
     }
 a {
     text-decoration: none;
@@ -29,6 +31,53 @@ a {
 
 
 
+	
+body ul.lists {
+	padding-__MSG_@@bidi_end_edge__: 0em !important;
+	padding-__MSG_@@bidi_start_edge__: 1em !important;
+	}
+li.listDetails {
+	float: __MSG_@@bidi_start_edge__;
+	position: static;
+	width: 100%;
+	margin: 0 auto 0 auto !important;
+	margin-__MSG_@@bidi_start_edge__: 1em !important;
+	margin-__MSG_@@bidi_end_edge__: 0em !important;
+	}
+li.listDetails input[type="checkbox"] {
+	float: __MSG_@@bidi_start_edge__;
+	}
+.listDetails a {
+	float: __MSG_@@bidi_start_edge__;
+	}
+#buttonApply {
+	__MSG_@@bidi_end_edge__: 1em;
+	}
+#ExternalListDiv {
+	margin: 2em auto 0 auto;
+	margin-__MSG_@@bidi_start_edge__: 2em !important;
+	}
+#externalLists {
+	text-align: left;
+	}
+.userFilters {
+	text-align: left;
+	}
+#whitelist {
+	text-align: left;
+	}
+table.ooo {
+	direction: ltr;
+	float: __MSG_@@bidi_start_edge__;
+	}
+ul#AboutUL {
+	padding-__MSG_@@bidi_start_edge__: 1em;
+	margin-__MSG_@@bidi_start_edge__: 1em !important;
+	}
+	
+
+	
+	
 .whatisthis {
     margin: 0 0 0 8px;
     border: 0;
