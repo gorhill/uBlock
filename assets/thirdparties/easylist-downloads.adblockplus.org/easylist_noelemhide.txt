@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: n0w2JdcGFDslrc1/vPXN2Q
-! Version: 201408211600
+! Checksum: u42qbdwT6SKKQg4CScdN6A
+! Version: 201408231410
 ! Title: EasyList without element hiding rules
-! Last modified: 21 Aug 2014 16:00 UTC
+! Last modified: 23 Aug 2014 14:10 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -4318,6 +4318,7 @@
 /pixelads/*
 /place-ads/*
 /placeholder-ad-
+/placements/ad_
 /play/ad/*
 /player/ad/*
 /player/ads.
@@ -5266,6 +5267,7 @@
 =admeld&
 =adMenu&
 =admodeliframe&
+=adsCallback&
 =adscripts&
 =adsfinal.
 =adslot&
@@ -7396,6 +7398,7 @@ _popunder+$popup
 ||d.m3.net^$third-party
 ||d03x2011.com^$third-party
 ||d1110e4.se^$third-party
+||d2ship.com^$third-party
 ||da-ads.com^$third-party
 ||dadegid.ru^$third-party
 ||dapper.net^$third-party
@@ -8641,6 +8644,7 @@ _popunder+$popup
 ||secure-softwaremanager.com^$third-party
 ||securesoft.info^$third-party
 ||securewebsiteaccess.com^$third-party
+||securitain.com^$third-party
 ||sedoparking.com^$third-party
 ||seductionprofits.com^$third-party
 ||seekads.net^$third-party
@@ -14740,6 +14744,7 @@ _popunder+$popup
 ||rapidvideo.com/layer.php
 ||rapidvideo.com/layer2.php
 ||rapidvideo.com/ly.php
+||rapidvideo.org/images/pl_box_rapid.jpg
 ||rapidvideo.tv/images/pl.jpg
 ||ratio-magazine.com/images/banners/
 ||rawstory.com/givememyrawgfp.php?
@@ -14774,6 +14779,7 @@ _popunder+$popup
 ||reviewcentre.com/cinergy-adv.php
 ||revisionworld.co.uk/sites/default/files/imce/Double-MPU2-v2.gif
 ||rfu.com/js/jquery.jcarousel.js
+||richardroeper.com/assets/banner/
 ||richmedia.yimg.com^
 ||riderfans.com/other/
 ||rightsidenews.com/images/banners/
@@ -16810,7 +16816,7 @@ _popunder+$popup
 @@||adap.tv/crossdomain.xml$object-subrequest
 @@||adap.tv/redir/client/adplayer.swf$object-subrequest
 @@||adap.tv/redir/client/static/as3adplayer.swf$object-subrequest,domain=blogtalkradio.com|collegehumor.com|freeonlinegames.com|openfilmpod.com|stickam.com|talkingpointsmemo.com|thesource.com|wildearth.tv|wunderground.com
-@@||adap.tv/redir/client/swfloader.swf?$domain=box10.com|freeonlinegames.com|kizi.com|merriam-webster.com
+@@||adap.tv/redir/client/swfloader.swf?$domain=box10.com|freeonlinegames.com|games.latimes.com|kizi.com|merriam-webster.com
 @@||adap.tv/redir/javascript/adaptvAdPlayer.js$domain=yepi.com
 @@||adap.tv/redir/javascript/vpaid.js
 @@||adap.tv/redir/plugins/*/adotubeplugin.swf?$domain=stickam.com
@@ -17154,6 +17160,7 @@ _popunder+$popup
 @@||buyselltrade.ca/adimages/$image,~third-party
 @@||bworldonline.com/adserver/
 @@||cache.nymag.com/scripts/ad_manager.js
+@@||cameralabs.com/PG_library/Regional/US/Love_a_Coffee_120x240.jpg
 @@||campingworld.com/images/AffiliateAds/$image,domain=catalogfavoritesvip.com|freeshipping.com|freeshippingrewards.com|habandvipplus.com|inthecompanyofdogsvip.com|naturesjewelryvip.com|northstylevip.com|pyramidcollectionvip.com|serengeticatalogvip.com|travelplus.com
 @@||canada.com/js/adsync/adsynclibrary2.1.js
 @@||canadianlisted.com/css/*/ad/index.css
@@ -17442,7 +17449,7 @@ _popunder+$popup
 @@||funiaste.net/obrazki/*&adtype=
 @@||g.doubleclick.net/aclk?$subdocument,domain=nedbank.co.za
 @@||g.doubleclick.net/crossdomain.xml$object-subrequest,domain=~newgrounds.com
-@@||g.doubleclick.net/gampad/ads?$script,domain=app.com|argusleader.com|autoguide.com|battlecreekenquirer.com|baxterbulletin.com|beqala.com|boatshop24.com|bucyrustelegraphforum.com|burlingtonfreepress.com|chillicothegazette.com|cincinnati.com|clarionledger.com|coloradoan.com|coshoctontribune.com|courier-journal.com|courierpostonline.com|dailyrecord.com|dailyworld.com|defensenews.com|delawareonline.com|democratandchronicle.com|desmoinesregister.com|dnj.com|escapegames.com|fdlreporter.com|floridatoday.com|freep.com|greatfallstribune.com|greenbaypressgazette.com|greenvilleonline.com|guampdn.com|hattiesburgamerican.com|hometownlife.com|htrnews.com|indystar.com|ithacajournal.com|jacksonsun.com|jconline.com|lancastereaglegazette.com|lansingstatejournal.com|livingstondaily.com|lohud.com|mansfieldnewsjournal.com|marionstar.com|marshfieldnewsherald.com|montgomeryadvertiser.com|motorcycle.com|mycentraljersey.com|mydesert.com|mysoju.com|nedbank.co.za|nedbankgreen.co.za|newarkadvocate.com|news-leader.com|news-press.com|newsleader.com|nonags.com|orbitz.com|pal-item.com|pcper.com|podomatic.com|portclintonnewsherald.com|postcrescent.com|poughkeepsiejournal.com|powerlineblog.com|press-citizen.com|pressconnects.com|rgj.com|sctimes.com|sheboyganpress.com|shreveporttimes.com|stargazette.com|statesmanjournal.com|stevenspointjournal.com|tallahassee.com|tennessean.com|theadvertiser.com|thedailyjournal.com|theleafchronicle.com|thenews-messenger.com|thenewsstar.com|thenorthwestern.com|thespectrum.com|thestarpress.com|thetimesherald.com|thetowntalk.com|ticketek.com.ar|urbandictionary.com|virginaustralia.com|visaliatimesdelta.com|volokh.com|wausaudailyherald.com|wisconsinrapidstribune.com|wlj.net|zanesvilletimesrecorder.com|zavvi.com|zui.com
+@@||g.doubleclick.net/gampad/ads?$script,domain=app.com|argusleader.com|autoguide.com|battlecreekenquirer.com|baxterbulletin.com|beqala.com|boatshop24.com|bucyrustelegraphforum.com|burlingtonfreepress.com|chillicothegazette.com|cincinnati.com|clarionledger.com|coloradoan.com|coshoctontribune.com|courier-journal.com|courierpostonline.com|dailyrecord.com|dailyworld.com|defensenews.com|delawareonline.com|democratandchronicle.com|desmoinesregister.com|dnj.com|escapegames.com|fdlreporter.com|floridatoday.com|freep.com|games.latimes.com|greatfallstribune.com|greenbaypressgazette.com|greenvilleonline.com|guampdn.com|hattiesburgamerican.com|hometownlife.com|htrnews.com|indystar.com|ithacajournal.com|jacksonsun.com|jconline.com|lancastereaglegazette.com|lansingstatejournal.com|livingstondaily.com|lohud.com|mansfieldnewsjournal.com|marionstar.com|marshfieldnewsherald.com|montgomeryadvertiser.com|motorcycle.com|mycentraljersey.com|mydesert.com|mysoju.com|nauticexpo.com|nedbank.co.za|nedbankgreen.co.za|newarkadvocate.com|news-leader.com|news-press.com|newsleader.com|nonags.com|orbitz.com|pal-item.com|pcper.com|podomatic.com|portclintonnewsherald.com|postcrescent.com|poughkeepsiejournal.com|powerlineblog.com|press-citizen.com|pressconnects.com|rgj.com|sctimes.com|sheboyganpress.com|shreveporttimes.com|stargazette.com|statesmanjournal.com|stevenspointjournal.com|tallahassee.com|tennessean.com|theadvertiser.com|thedailyjournal.com|theleafchronicle.com|thenews-messenger.com|thenewsstar.com|thenorthwestern.com|thespectrum.com|thestarpress.com|thetimesherald.com|thetowntalk.com|ticketek.com.ar|urbandictionary.com|virginaustralia.com|visaliatimesdelta.com|volokh.com|wausaudailyherald.com|wisconsinrapidstribune.com|wlj.net|zanesvilletimesrecorder.com|zavvi.com|zui.com
 @@||g.doubleclick.net/gampad/ads?ad_type=image_text^$object-subrequest,domain=ensonhaber.com|skylinewebcams.com
 @@||g.doubleclick.net/gampad/ads?ciu_szs^$object-subrequest,domain=majorleaguegaming.com|nfl.com|player.rogersradio.ca|twitch.tv|videonuz.net|viki.com
 @@||g.doubleclick.net/gampad/ads?sz=640x480^$object-subrequest,domain=volarvideo.com
@@ -17878,8 +17885,8 @@ _popunder+$popup
 @@||partner.googleadservices.com/gampad/google_ads.js$domain=autoguide.com|avclub.com|boatshop24.com|cadenasuper.com|dailygames.com|demotywatory.pl|drivearabia.com|ensonhaber.com|juegosdiarios.com|lbox.me|letio.com|lightinthebox.com|memegenerator.net|mysoju.com|nedbank.co.za|nedbankgreen.co.za|nitrome.com|nx8.com|pcper.com|playedonline.com|powerlineblog.com|sulekha.com|volokh.com|yfrog.com
 @@||partner.googleadservices.com/gampad/google_ads2.js$domain=motorcycle.com|mysoju.com|nedbank.co.za
 @@||partner.googleadservices.com/gampad/google_ads_gpt.js$domain=amctheatres.com|pitchfork.com|podomatic.com|virginaustralia.com
-@@||partner.googleadservices.com/gampad/google_service.js$domain=autoguide.com|avclub.com|boatshop24.com|cadenasuper.com|dailygames.com|demotywatory.pl|drivearabia.com|ensonhaber.com|escapegames.com|juegosdiarios.com|lbox.me|letio.com|lightinthebox.com|memegenerator.net|motorcycle.com|mysoju.com|nedbank.co.za|nedbankgreen.co.za|nx8.com|pcper.com|playedonline.com|powerlineblog.com|readersdigest.com.au|sulekha.com|ticketek.com.ar|volokh.com|yfrog.com
-@@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=beqala.com|ew.com|orbitz.com|urbandictionary.com|wlj.net|zavvi.com
+@@||partner.googleadservices.com/gampad/google_service.js$domain=autoguide.com|avclub.com|boatshop24.com|cadenasuper.com|dailygames.com|demotywatory.pl|drivearabia.com|ensonhaber.com|escapegames.com|juegosdiarios.com|lbox.me|letio.com|lightinthebox.com|memegenerator.net|motorcycle.com|mysoju.com|nedbank.co.za|nedbankgreen.co.za|nx8.com|pcper.com|playedonline.com|playstationlifestyle.net|powerlineblog.com|readersdigest.com.au|sulekha.com|ticketek.com.ar|volokh.com|yfrog.com
+@@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=beqala.com|ew.com|games.latimes.com|nauticexpo.com|orbitz.com|urbandictionary.com|wlj.net|zavvi.com
 @@||partners.thefilter.com/crossdomain.xml$object-subrequest
 @@||partners.thefilter.com/dailymotionservice/$image,object-subrequest,script,domain=dailymotion.com
 @@||pasadenasun.com/hive/images/adv_
@@ -18781,6 +18788,7 @@ _popunder+$popup
 @@||rincondelvago.com^*_adsense.js
 @@||rubiconproject.com^$script,domain=kissanime.com
 @@||s.stooq.$script,domain=stooq.com|stooq.com.br|stooq.pl|stooq.sk
+@@||saavn.com/ads/search_config_ad.php?$subdocument
 @@||sankakucomplex.com^$script
 @@||sankakustatic.com^$script
 @@||sascdn.com/diff/video/$script,domain=eskago.pl
@@ -18867,6 +18875,7 @@ _popunder+$popup
 @@||webtv.rs/media/blic/advertisement.jpg
 @@||winwords.adhood.com^$script,domain=dizi-mag.com
 @@||world-of-hentai.to/advertisement.js
+@@||worldofapk.tk^$elemhide
 @@||writing.com^$script
 @@||xlocker.net^$elemhide
 @@||yasni.*/adframe.js

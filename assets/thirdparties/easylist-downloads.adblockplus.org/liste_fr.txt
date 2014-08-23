@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 8SI4dStC6QUYuDk421zSww
-! Version: 201408211601
+! Checksum: auCoGq1uMmVZvRNHNgUKqg
+! Version: 201408231411
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -430,6 +430,7 @@ _regiepub/
 ||hostingpics.net/pics/*ban.png$domain=tonchat.fr
 ||hotel-intime.com/banieres/
 ||hotpix.fr/widget_js.php?
+||hqq.tv/js/adb/adb.js
 ||i.imgur.com/X70wDAr.jpg$domain=lesjoiesducode.fr
 ||icpc.tv/banners/$domain=europeplusnet.info
 ||ilbanat.com/images/pubilbanat.gif
@@ -804,6 +805,7 @@ _regiepub/
 ||clubic.com/06010586-photo-bg.jpg
 ||clubpoker.net/medias/images/club-poker/habillages/
 ||coco.fr/chat/bigban
+||codepromo.programme-tv.net^
 ||commeaucinema.com/ads/
 ||compteur-gratuit.fr/images/bandeau_
 ||compteur-gratuit.fr/pub_
@@ -2232,6 +2234,7 @@ emule-island.ru###droite_bas
 emule-island.ru###droite_haut
 boulistenaute.com###dropin
 petitfute.com###dv_partenaire
+ladepeche.fr###encart_dernieres_annonces
 releve.qc.ca###entete-banniere
 conseils-courseapied.com###equipement
 easyvoyage.com###esv-pub-hp
@@ -2352,6 +2355,7 @@ imagedrole.de###main-bottom
 1fr1.net,5forum.info,actifforum.com,actifland.com,allianceogame.com,anciennestar.com,annuaire-forums.com,asdesas.net,bb-fr.com,bbactif.com,bbconcept.net,bbfr.net,bbgraph.com,board-poster.com,bonnesrecettes.org,catsboard.com,chefgourmet.fr,chez-domi-et-domi.net,cinebb.com,clictopic.com,conceptbb.com,crazy4us.com,creation-forum.com,creationforum.net,creer-forums.fr,creer-un-forum-gratuit.be,creer-un-forum-gratuit.com,creer1forum.ca,creerforum.ca,creersonforum.com,creerunforum.eu,creerunforumgratuit.com,cultureforum.net,cyberenquete.net,desforums.net,discutforum.com,discutland.net,discutplaza.com,dynamicbb.com,ephpbb.com,exprimetoi.net,fantasyboard.net,fofogourmand.com,forum-actif.net,forum-francophone.com,forum-gratuit.ca,forum-gratuit.cc,forum-gratuit.tv,forum-invision.ca,forum-nation.com,forum-phpbb.ca,forum-pro.fr,forum2discussion.com,forum2jeux.com,forum2ouf.com,forumactif.com,forumactif.fr,forumactif.org,forumalpin.com,forumandco.com,forumbenin.com,forumcanada.net,forumcanadien.ca,forumchti.com,forumculture.net,forumdediscussions.com,forumdefan.com,forumetoile.com,forumfemina.com,forumgratuit.be,forumgratuit.eu,forumgratuit.fr,forumgratuit.org,forumlimousin.com,forumloire.com,forumnord.com,forumnormandie.com,forumperso.com,forumpersos.com,forumpro.fr,forums-actifs.com,forums-gratuits.fr,forumsactifs.com,fr-bb.com,frbb.net,goodforum.net,grafbb.com,guildealliance.com,harrypotterfans.fr,ideesrecettes.net,idfforum.com,infocamargue-lejeune.com,jdrforum.com,jecuisine.org,jeunforum.com,jeunsforum.com,jeuxvideoforum.com,kanak.fr,keuf.net,kiffmylife.com,lebonforum.com,leforumdelavant.net,leforumgratuit.com,liberte.tv,limada.net,maghrebworld.net,mescops.com,mesrecettes.biz,miraculeux.net,monalliance.com,monempire.net,moninter.net,nosfofos.com,nouslesfans.com,nouvellestar.org,politiclub.net,positifforum.com,pro-forum.fr,purforum.com,realbb.net,rpg-board.net,secret-story-2.net,sos4um.net,star-ac.net,starac8.net,superforum.fr,tonempire.net,topolympique.com,topsujet.com,topsujets.com,trodlabal.com,tropfun.net,votreforumgratuit.com,winnerforum.net,yoo7.com,zikforum.com###main-content > div[style="padding:10px 0 0 0 !important;"]
 jeuxvideo.com###mc_sponso
 sfr.fr###meeticWrapper
+sofoot.com###megaban
 businessnews.com.tn###megaban-1000
 jeuxactu.com###megaban1
 elwatan.com,franceantilles.fr,franceguyane.fr,lerevenu.com,silicon.fr###megabanner
@@ -2816,7 +2820,7 @@ frandroid.com##.promo-sony
 pornojeune.net##.promo_texte2
 pornofrance.org##.promomenu
 cdiscount.com##.ptnlnk_table
-1-porno.org,abrutis.com,ados.fr,agoravox.fr,agoravox.tv,annuaire-streaming.com,bhmag.fr,centerblog.net,clubic.com,commentreparer.com,deezer.com,forums-fec.be,frandroid.com,ginjfo.com,hentai-3x.com,journaldugeek.com,journalgraphic.com,ladepeche.fr,larousse.fr,lepoint.fr,lesdebiles.com,lesoir.be,lexpress.fr,liensporno.com,macg.co,mapiaule.com,maximiles.com,meilleurtaux.com,mini-games.fr,minutefacile.com,multixa.net,over-blog.com,programme.tv,radioclassique.fr,sfr.fr,soonnight.com,wat.tv,wawacity.su,web-tricheur.net,yabiladi.com,zupimages.net##.pub
+1-porno.org,abrutis.com,ados.fr,agoravox.fr,agoravox.tv,annuaire-streaming.com,bhmag.fr,centerblog.net,clubic.com,commentreparer.com,deezer.com,forums-fec.be,frandroid.com,ginjfo.com,hentai-3x.com,journaldugeek.com,journalgraphic.com,ladepeche.fr,larousse.fr,lepoint.fr,lesdebiles.com,lesoir.be,lexpress.fr,liensporno.com,macg.co,mapiaule.com,maximiles.com,meilleurtaux.com,mini-games.fr,minutefacile.com,multixa.net,over-blog.com,programme.tv,radioclassique.fr,sfr.fr,sofoot.com,soonnight.com,wat.tv,wawacity.su,web-tricheur.net,yabiladi.com,zupimages.net##.pub
 basketusa.com##.pub-1000x90-top
 clubic.com##.pub-300x250-du-bas
 degroupnews.com,degrouptest.com##.pub-bonaboSite
@@ -3421,6 +3425,8 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ##img[width="728"][height="90"]
 #@##ad_ad
 |http://j.*.info/*.*?bid=*&cid=*&zid=*&cb=$image,third-party
+|http://j.*.info/*?b=*&cid=*&z=*&cb=$image,third-party
+||collectablefatigued.info^$third-party
 ||eschrichtiidaepiety.info^$third-party
 ||faintheartedsharkoil.info^$third-party
 ||formicafuscasyringavillosa.info^$third-party
@@ -3475,6 +3481,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||entermypicks.com/*.js|$script,third-party
 @@||evils.in/*.js|$script,third-party
 @@||eviyx.qq.my/*.js|$script,third-party
+@@||framed.net/*.js|$script,third-party
 @@||freebsd.md/*.js|$script,third-party
 @@||ftp.sh/*.js|$script,third-party
 @@||ghaman.com/*.js|$script,third-party
@@ -3560,6 +3567,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.evils.in/$third-party,xmlhttprequest
 |http://*.eye.rs/$third-party,xmlhttprequest
 |http://*.ez.lv/$third-party,xmlhttprequest
+|http://*.framed.net/$third-party,xmlhttprequest
 |http://*.freebsd.md/$third-party,xmlhttprequest
 |http://*.ftp.sh/$third-party,xmlhttprequest
 |http://*.ghaman.com/$third-party,xmlhttprequest
@@ -3877,7 +3885,6 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||easybillets.com/js/advertisement.js
 @@||ebookdz.com^$elemhide
 @@||entrepriseindividuelle.info^$elemhide
-@@||fansubresistance.biz^$script,domain=fansubresistance.in
 @@||funeralforamanga.fr/js/advertisement.js
 @@||gamersconnexion.com/js/advertisement.js
 @@||gamingroom.tv/static/img/advert.png?
@@ -3887,6 +3894,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||item-voyage.fr/ads.css
 @@||jeux-geographiques.com/js/adblock_detector.js
 @@||kpopfm.fr/lib/js/advertisement.js
+@@||lafansubresistance.biz^$script,domain=lafansubresistance.biz
 @@||lien-torrent.com/addrating.php?
 @@||lien-torrent.com/pubs/affiche.php?f=lecteurpub
 @@||mega-exclue.com^*/unblock/blockBlock/advertisement.js

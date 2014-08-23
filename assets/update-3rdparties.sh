@@ -39,7 +39,7 @@ THIRDPARTY_REMOTEURLS=(
     'https://cjxlist1.googlecode.com/svn/cjxlist.txt'
     'http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt'
     'https://adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt'
-    'http://margevicius.lt/AdBlockPlusLithuania.txt'
+    'http://margevicius.lt/easylistlithuania.txt'
     'http://stanev.org/abp/adblock_bg.txt'
     'https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt'
     'https://liste-ar-adblock.googlecode.com/hg/Liste_AR.txt'
