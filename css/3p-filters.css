@@ -1,17 +1,11 @@
-div > p:first-child {
-    margin-top: 0;
-    }
-div > p:last-child {
-    margin-bottom: 0;
+ul {
+    padding: 0;
+    list-style-type: none;
     }
 ul#lists {
     margin: 0.5em 0 0 0;
     padding-__MSG_@@bidi_end_edge__: 0em;
     padding-__MSG_@@bidi_start_edge__: 1em;
-    }
-ul {
-    padding: 0;
-    list-style-type: none;
     }
 ul#lists > li {
     margin: 0.5em 0 0 0;
@@ -19,12 +13,21 @@ ul#lists > li {
     font-size: 15px;
     list-style-type: none;
     }
-ul > li > ul {
+ul#lists > li > ul {
     margin: 0.25em 0 0 0;
     }
-ul > li > ul > li {
+li.listDetails {
     font-size: 14px;
-    margin: 0 0 0 1em;
+    margin: 0 auto 0 auto;
+    margin-__MSG_@@bidi_start_edge__: 1em;
+    margin-__MSG_@@bidi_end_edge__: 0em;
+    }
+li.listDetails > * {
+    unicode-bidi: embed;
+    }
+li.listDetails > a:nth-of-type(2) {
+    font-size: 13px;
+    opacity: 0.5;
     }
 .dim {
     opacity: 0.5;
@@ -55,7 +58,6 @@ button.reloadAll:hover {
     display: none;
     position: fixed;
     top: 1em;
-
     __MSG_@@bidi_end_edge__: 1em;
     }
 #buttonApply.enabled {
@@ -83,13 +85,16 @@ span.obsolete {
     color: #222;
     background-color: hsl(36, 100%, 75%);
     }
+#externalListsDiv {
+    margin: 2em auto 0 auto;
+    margin-__MSG_@@bidi_start_edge__: 2em;
+    }
 #externalLists {
     font-size: smaller;
     width: 48em;
     height: 8em;
     white-space: nowrap;
-
-    text-align: left;
+    direction: ltr;
     }
 body #loadingOverlay {
     position: fixed;
@@ -105,24 +110,4 @@ body #loadingOverlay {
     }
 body.loading #loadingOverlay {
     display: block;
-    }
-
-
-li.listDetails {
-    width: 100%;
-    margin: 0 auto 0 auto;
-    unicode-bidi: bidi-override;
-    margin-__MSG_@@bidi_start_edge__: 1em;
-    margin-__MSG_@@bidi_end_edge__: 0em;
-    }
-li.listDetails > * {
-    unicode-bidi: embed;
-    }
-li.listDetails > a:nth-of-type(2) {
-    font-size: 13px;
-    opacity: 0.5;
-    }
-#ExternalListDiv {
-    margin: 2em auto 0 auto;
-    margin-__MSG_@@bidi_start_edge__: 2em;
     }

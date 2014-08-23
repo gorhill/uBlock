@@ -18,19 +18,24 @@ h3 {
     font-size: 16px;
     }
 h2 + * {
-	margin: 0 auto 0 auto;
-	margin-__MSG_@@bidi_start_edge__: 1em !important;
-	padding-__MSG_@@bidi_end_edge__: 0em !important;
+	margin: 0 auto;
+	margin-__MSG_@@bidi_start_edge__: 1em;
+	padding-__MSG_@@bidi_end_edge__: 0em;
     }
 a {
     text-decoration: none;
     }
+
+div > p:first-child {
+    margin-top: 0;
+    }
+div > p:last-child {
+    margin-bottom: 0;
+    }
+
 .para {
     width: 40em;
     }
-
-
-
 	
 .userFilters {
 	text-align: left;
@@ -38,18 +43,11 @@ a {
 #whitelist {
 	text-align: left;
 	}
-table.ooo {
-	direction: ltr;
-	float: __MSG_@@bidi_start_edge__;
-	}
 ul#AboutUL {
 	padding-__MSG_@@bidi_start_edge__: 1em;
-	margin-__MSG_@@bidi_start_edge__: 1em !important;
+	margin-__MSG_@@bidi_start_edge__: 1em;
 	}
-	
 
-	
-	
 .whatisthis {
     margin: 0 0 0 8px;
     border: 0;
@@ -86,4 +84,3 @@ ul#AboutUL {
     padding: 5px;
     background-color: #FEDAE0;
     }
-
