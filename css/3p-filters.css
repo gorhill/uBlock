@@ -1,0 +1,128 @@
+div > p:first-child {
+    margin-top: 0;
+    }
+div > p:last-child {
+    margin-bottom: 0;
+    }
+ul#lists {
+    margin: 0.5em 0 0 0;
+    padding-__MSG_@@bidi_end_edge__: 0em;
+    padding-__MSG_@@bidi_start_edge__: 1em;
+    }
+ul {
+    padding: 0;
+    list-style-type: none;
+    }
+ul#lists > li {
+    margin: 0.5em 0 0 0;
+    padding: 0;
+    font-size: 15px;
+    list-style-type: none;
+    }
+ul > li > ul {
+    margin: 0.25em 0 0 0;
+    }
+ul > li > ul > li {
+    font-size: 14px;
+    margin: 0 0 0 1em;
+    }
+.dim {
+    opacity: 0.5;
+    }
+/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
+button.reloadAll {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
+    padding: 5px;
+    background-color: hsl(36, 0%, 72%);
+    background-repeat: repeat-x;
+    background-image: linear-gradient(#f2f2f2, #dddddd);
+    color: #aaa;
+    }
+button.reloadAll.enabled {
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    color: #222;
+    background-color: hsl(36, 100%, 75%);
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    cursor: pointer;
+    opacity: 0.8;
+    }
+button.reloadAll:hover {
+    opacity: 1.0;
+    }
+#buttonApply {
+    display: none;
+    position: fixed;
+    top: 1em;
+
+    __MSG_@@bidi_end_edge__: 1em;
+    }
+#buttonApply.enabled {
+    display: initial;
+    }
+span.status {
+    margin: 0;
+    border: 1px solid transparent;
+    padding: 1px 2px;
+    display: inline-block;
+    font-size: 11px;
+    opacity: 0.7;
+}
+span.purge {
+    border-color: #ddd;
+    color: #444;
+    background-color: #eee;
+    cursor: pointer;
+    }
+span.purge:hover {
+    opacity: 1;
+    }
+span.obsolete {
+    border-color: hsl(36, 100%, 73%);
+    color: #222;
+    background-color: hsl(36, 100%, 75%);
+    }
+#externalLists {
+    font-size: smaller;
+    width: 48em;
+    height: 8em;
+    white-space: nowrap;
+
+    text-align: left;
+    }
+body #loadingOverlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    opacity: 0.5;
+    cursor: wait;
+    display: none;
+    z-index: 1000;
+    }
+body.loading #loadingOverlay {
+    display: block;
+    }
+
+
+li.listDetails {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    unicode-bidi: bidi-override;
+    margin-__MSG_@@bidi_start_edge__: 1em;
+    margin-__MSG_@@bidi_end_edge__: 0em;
+    }
+li.listDetails > * {
+    unicode-bidi: embed;
+    }
+li.listDetails > a:nth-of-type(2) {
+    font-size: 13px;
+    opacity: 0.5;
+    }
+#ExternalListDiv {
+    margin: 2em auto 0 auto;
+    margin-__MSG_@@bidi_start_edge__: 2em;
+    }
