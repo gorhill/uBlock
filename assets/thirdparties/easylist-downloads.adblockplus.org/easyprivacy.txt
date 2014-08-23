@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: EYNlGzkQvptIsvoeyccyGA
-! Version: 201408211601
+! Checksum: jiwF2KcOBKTLfZIcBjLy5A
+! Version: 201408231411
 ! Title: EasyPrivacy
-! Last modified: 21 Aug 2014 16:01 UTC
+! Last modified: 23 Aug 2014 14:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -350,6 +350,7 @@
 /beacon.js
 /beacon/b.ashx?
 /beacon?
+/beacon_async.
 /beaconimg.php?
 /BehaviourCaptureHandler.
 /betamax_tracker.gif?
@@ -469,6 +470,7 @@
 /clear.gif?
 /clear/c.gif?
 /click-logger.
+/click-stat.js
 /click-tracker
 /click_metrics-jquery.js
 /click_stat/*
@@ -2514,6 +2516,7 @@ http://utm.
 ||convergetrack.com^$third-party
 ||conversionly.com^$third-party
 ||conversionruler.com^$third-party
+||convertexperiments.com^$third-party
 ||convertglobal.com^$third-party
 ||convertmarketing.net^$third-party
 ||convertro.com^$third-party
@@ -3038,6 +3041,7 @@ http://utm.
 ||mercent.com^$third-party
 ||meteorsolutions.com^$third-party
 ||metricsdirect.com^$third-party
+||mezzobit.com^$third-party
 ||midas-i.com^$third-party
 ||midkotatraffic.net^$third-party
 ||millioncounter.com^$third-party
@@ -4717,6 +4721,7 @@ http://utm.
 ||communicatorcorp.com^*/conversiontracking.js
 ||compendiumblog.com/js/stats.js
 ||concur.com/open.aspx?
+||contactatonce.com/VisitorContext.aspx?
 ||content.cpcache.com^*/js/ga.js
 ||control.adap.tv^$object-subrequest
 ||control.cityofcairns.com^$third-party
@@ -4892,6 +4897,7 @@ http://utm.
 ||feedblitz.com^*.gif?$third-party
 ||feedcat.net/button/
 ||feedsportal.com^*/1x1.gif?
+||filament-stats.herokuapp.com^
 ||filesonic.com/referral/$third-party
 ||flashi.tv/histats.php?
 ||flashstats.libsyn.com^
@@ -5476,6 +5482,7 @@ http://utm.
 ||totallylayouts.com/online-users-counter/$third-party
 ||totallylayouts.com^*/users-online-counter/online.js
 ||totallylayouts.com^*/visitor-counter/counter.js
+||touchcommerce.com/tagserver/logging/
 ||tr-metrics.loomia.com^
 ||tr.advance.net^
 ||tr.interlake.net^
@@ -5627,6 +5634,7 @@ http://utm.
 ||virtueworldwide.com/ga-test/
 ||visit.geocities.com^
 ||visit.webhosting.yahoo.com^
+||visual.ly/track.php?
 ||visualstudio.com/_da.gif?
 ||vivociti.com/images/$third-party
 ||viximo.com/1px.gif?
@@ -5731,6 +5739,7 @@ http://utm.
 ||counter.1i.kz^
 ||counter.blogoscoop.net^
 ||counter.webmart.de^
+||ctr-iwb.nmg.de^
 ||ctr-opc.nmg.de^
 ||ctr.nmg.de^$third-party
 ||data.econa.com^
@@ -6636,6 +6645,7 @@ http://utm.
 ||dell.com/metrics/
 ||depositfiles.com/view.gif?
 ||derkeiler.com/gam/tag.js
+||destructoid.com/img2.phtml?
 ||diag.doba.com^
 ||dictionary.com/track/
 ||digg.com/api/analytics/
@@ -6643,6 +6653,7 @@ http://utm.
 ||digitalriver.com^*/globaltracking
 ||digitalspy.co.uk/gip1.php
 ||dippic.com/cgi-bin/index_dl.cgi?
+||displaymate.com/cgi-bin/stat/
 ||divxden.com^*/tracker.js
 ||djtunes.com^*&__utma=
 ||dmeserv.newsinc.com^
@@ -7096,6 +7107,7 @@ http://utm.
 ||lovefilm.com/api/ioko/log/
 ||lovefilm.com/lovefilm/images/dot.gif
 ||lovefilm.com^*/lf-perf-beacon.png
+||lsam.research.microsoft.com^
 ||lslmetrics.djlmgdigital.com^
 ||lucidchart.com/analytics_
 ||luxurylink.com/t/hpr.php?
@@ -8800,6 +8812,7 @@ http://utm.
 @@||bhg.com/web/js-min/common/js/dwr/RemoteTargetingService.js
 @@||bitgo.com/vendor/googleanalytics/angular-ga.min.js
 @@||bolha.com/clicktracker/
+@@||bountysource.com/badge/tracker?
 @@||boxtops4education.com^*/ntpagetag.js
 @@||britishairways.com/cms/global/scripts/applications/tracking/visualsciences.js
 @@||browserscope.org/user/beacon/*?callback=$script,domain=jsperf.com
@@ -8913,6 +8926,7 @@ http://utm.
 @@||google.com/js/gweb/analytics/$domain=google.com
 @@||google.com/js/gweb/analytics/doubletrack.js$domain=android.com
 @@||googletagmanager.com/gtm.js?$domain=drumstick.com|ebuyer.com|google.com|toto.co.jp
+@@||gorillanation.com/js/triggertag.js$domain=playstationlifestyle.net
 @@||grapeshot.co.uk/image-resize/$image
 @@||grapeshot.co.uk/sare-api/
 @@||graphracer.com/js/libs/heatmap.js
