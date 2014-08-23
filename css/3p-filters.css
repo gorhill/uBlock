@@ -94,7 +94,7 @@ span.obsolete {
     width: 48em;
     height: 8em;
     white-space: nowrap;
-    direction: ltr;
+    direction: __MSG_@@bidi_dir__;
     }
 body #loadingOverlay {
     position: fixed;
