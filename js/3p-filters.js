@@ -79,25 +79,29 @@ var renderBlacklists = function() {
         if ( !blacklistTitle ) {
             return blacklistHref;
         }
+        return blacklistTitle;
+    };
+
+    // Assemble a pretty blacklist name if possible
+    var htmlFromHomeURL = function(blacklistHref) {
         if ( blacklistHref.indexOf('assets/thirdparties/') !== 0 ) {
-            return blacklistTitle;
+            return '';
         }
         var matches = blacklistHref.match(/^assets\/thirdparties\/([^\/]+)/);
         if ( matches === null || matches.length !== 2 ) {
-            return blacklistTitle;
+            return '';
         }
         var hostname = matches[1];
         var domain = µb.URI.domainFromHostname(hostname);
         if ( domain === '' ) {
-            return blacklistTitle;
+            return '';
         }
         var html = [
-            blacklistTitle,
-            ' <i>(<a href="http://',
+            ' <a href="http://',
             hostname,
-            '" target="_blank">',
+            '" target="_blank">(',
             domain,
-            '</a>)</i>'
+            ')</a>'
         ];
         return html.join('');
     };
@@ -122,10 +126,11 @@ var renderBlacklists = function() {
         var listEntryTemplate = [
             '<li class="listDetails">',
             '<input type="checkbox" {{checked}}>',
-            '&thinsp;',
+            ' ',
             '<a href="{{URL}}" type="text/plain">',
             '{{name}}',
-            '</a>',
+            '\u200E</a>',
+            '{{homeURL}}',
             ': ',
             '<span class="dim">',
             listStatsTemplate,
@@ -139,6 +144,7 @@ var renderBlacklists = function() {
                 .replace('{{checked}}', list.off ? '' : 'checked')
                 .replace('{{URL}}', encodeURI(listKey))
                 .replace('{{name}}', htmlFromListName(list.title, listKey))
+                .replace('{{homeURL}}', htmlFromHomeURL(listKey))
                 .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
                 .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
             html.push(listEntry);

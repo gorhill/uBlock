@@ -32,34 +32,6 @@ a {
 
 
 	
-body ul.lists {
-	padding-__MSG_@@bidi_end_edge__: 0em !important;
-	padding-__MSG_@@bidi_start_edge__: 1em !important;
-	}
-li.listDetails {
-	float: __MSG_@@bidi_start_edge__;
-	position: static;
-	width: 100%;
-	margin: 0 auto 0 auto !important;
-	margin-__MSG_@@bidi_start_edge__: 1em !important;
-	margin-__MSG_@@bidi_end_edge__: 0em !important;
-	}
-li.listDetails input[type="checkbox"] {
-	float: __MSG_@@bidi_start_edge__;
-	}
-.listDetails a {
-	float: __MSG_@@bidi_start_edge__;
-	}
-#buttonApply {
-	__MSG_@@bidi_end_edge__: 1em;
-	}
-#ExternalListDiv {
-	margin: 2em auto 0 auto;
-	margin-__MSG_@@bidi_start_edge__: 2em !important;
-	}
-#externalLists {
-	text-align: left;
-	}
 .userFilters {
 	text-align: left;
 	}
