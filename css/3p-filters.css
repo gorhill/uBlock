@@ -55,7 +55,6 @@ button.reloadAll:hover {
     display: none;
     position: fixed;
     top: 1em;
-
     __MSG_@@bidi_end_edge__: 1em;
     }
 #buttonApply.enabled {
@@ -88,7 +87,6 @@ span.obsolete {
     width: 48em;
     height: 8em;
     white-space: nowrap;
-
     text-align: left;
     }
 body #loadingOverlay {
@@ -111,7 +109,6 @@ body.loading #loadingOverlay {
 li.listDetails {
     width: 100%;
     margin: 0 auto 0 auto;
-    unicode-bidi: bidi-override;
     margin-__MSG_@@bidi_start_edge__: 1em;
     margin-__MSG_@@bidi_end_edge__: 0em;
     }
