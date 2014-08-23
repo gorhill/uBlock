@@ -1,0 +1,53 @@
+Un paravan de protectie eficient: foloseste procesorul si memoria foarte putin si totusi poate incarca si aplica filtre cu mii in plus fata de alte paravane.
+
+O ilustrare a eficientei poate fi observata la:
+https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Utilizare: Acel buton de pornire/oprire in fereastra paravanului este pentru a activa/debloca µBlock pentru siteul curent. Functia este valabila doar pentru siteul curent, nu la nivel global.
+
+***
+
+Flexibil, mai mult decat un "paravan de protectie": acesta poate citi si crea filtre din fisierele hosts.
+
+In mod implicit, aceste liste si filtre sunt incarcate si aplicate:
+
+- EasyList
+- EasyPrivacy
+- Domenii malitioase
+- Domenii malitioase inca active
+- Lista de reclame a lui Peter Lowe
+- Lista domenii malitioase
+
+De asemenea, mai sunt disponibile si alte liste precum:
+
+- Lista de urmarire a lui Fanboy
+- Lista de hosturi a lui Dan Pollock
+- Lista de reclame si urmarire hpHosts Ad
+- Hosturile MVPS
+- Spam404
+- Etc.
+
+Desigur, cu cat mai multre filtre cu atat mai mare utilizare memoriei. Totusi chiar si dupa adaugarea in plus a doua liste Fanboy, si hPhosts Ad, µBlock tot foloseste mai putina memorie decat restul paravanelor.
+
+De tinut minte, ca odata cu selectarea in plus a unora dintre liste poate conduce la afectarea aspectului siteurilor -- in special listele care sunt in mod normal fisiere hosts.
+
+***
+
+Fara lista de filtre implicita, aceasta extensie nu face nimic. Asadar, daca totusi vreti sa contribuiti, gandi-ti-va la persoanele care muncesc sa intretina aceste filtre pe care le utilizati, care sunt oferite pentru utilizarea gratuita a acestora.
+
+***
+
+Gratuit.
+Sub licenta publica gratuita (GPLv3)
+Pentru utilizatori, de la utilizatori.
+
+Contribuitori pe Github:
+https://github.com/gorhill/uBlock/graphs/contributors
+Contribuitori pe Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Este inca o aplicatie recenta, gandi-ti-va la acest lucru cand lasati un comentariu.
+
+Lista de schimbari a proiectului:
+https://github.com/gorhill/uBlock/wiki/Change-log

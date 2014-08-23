@@ -4,235 +4,235 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blocker til Chromium-baserede browsere. Lavt CPU- og hukommelsesbrug.",
+    "message":"Konačno, efikasan bloker za preglednike bazirane na Chromium kôdu. Lak na CPU i memoriji.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Indstillinger",
+    "message":"Postavke",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3-parts filtre",
+    "message":"Filteri treće strane",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Dine filtre",
+    "message":"Vaši filteri",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Popis dopuštenih",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistik",
+    "message":"Statistika",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Om",
+    "message":"O programu",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"tryk på power-knappen for at <br>permanent deaktivere eller aktivere <br>µBlock på den nuværende side",
+    "message":"kliknite gumb za pokretanje da bi <br>trajno onemogućili ili omogućili <br>µBlock za trenutnu stranicu",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"forespørgsler blokeret",
+    "message":"zahtjeva blokirano",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"på denne side",
+    "message":"na ovoj stranici",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"siden installation",
+    "message":"od instalacije",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"eller",
+    "message":"ili",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik for at åbne dashboardet",
+    "message":"Kliknite za otvaranje upravljačke ploče",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Start element-udvælger",
+    "message":"Pokrenite odabir elementa",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til forespørgselslog",
+    "message":"Odlazak na zapisnik zahtjeva",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Opret",
+    "message":"Stvaranje",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Vælg",
+    "message":"Odabir",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Afslut",
+    "message":"Izlaz",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netfiltre",
+    "message":"Mrežni filteri",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetiske filtre",
+    "message":"Estetski filteri",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Skjul blokerede elementers placeholdere",
+    "message":"Sakrij rezervirana mjesta blokiranih elemenata",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Vis antallet af blokerede forespørgsler på ikonet",
+    "message":"Pokaži broj blokiranih zahtjeva na ikoni",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} netværksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
+    "message":"{{netFilterCount}} mrežni\/ih filter\/a ＋ {{cosmeticFilterCount}} estetski\/ih filter\/a iz:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} brugt af {{total}}",
+    "message":"{{used}} korišteno od {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Opdater filterlister automatisk.",
+    "message":"Automatsko ažuriranje popisa filtera.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Opdatér nu",
+    "message":"Ažuriraj odmah",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyser og benyt kosmetiske filtre.",
+    "message":"Raščlaniti i primijeniti estetske filtre.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Denne indstilling giver mulighed for analyse og anvendelse af  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibel &ldquo;skjulnings filtre&rdquo;<\/a>. Disse filtre er i sidste ende kosmetiske, da de skjuler elementer på sider der normalt ville være visuelt irriterende, og som ikke kan blokeres med den netforespørgselsbaserede motor.<\/p><p>Ved at aktivere denne funktion bliver <i>µBlock<\/i>s hukkomelsesforbrug større.<\/p>",
+    "message":"<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; <\/a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.<\/p><p>Omogućavanje ove značajke povećava <i>µBlock<\/i>memorijski otisak.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Liste over blokerede værter",
+    "message":"Popis blokiranih hosts",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Primijeni promjene",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Reklamer",
+    "message":"Reklame",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privatliv",
+    "message":"Privatnost",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domæner",
+    "message":"Zloćudne domene",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Socijalno",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Universalfilter",
+    "message":"Višenamjensko",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regioner, sprog",
+    "message":"Regije, jezici",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Brugerdefineret",
+    "message":"Prilagođeno",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En URL pr. linje. Linjer der starter med &lsquo;!&rsquo; bliver ignoreret. Ugyldige URL'er bliver lydløst ignoreret.",
+    "message":"Jedan URL po retku. Linije sa prefiksom &lsquo;!&rsquo; zanemarit će se. Nevaljani URL-ovi će biti tiho ignorirani.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Anvend",
+    "message":"Primijeni",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"tøm cache",
+    "message":"čišćenje predmemorije",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version tilgængelig",
+    "message":"dostupna nova verzija",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan være forældet",
+    "message":"Možda je zastario",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med &lsquo;!&rsquo; vil blive ignoreret.",
+    "message":"Jedan filtar po retku. Filtar može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom &lsquo;!&rsquo;  zanemarit će se.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importer og tilføj",
+    "message":"Uvesti i dodati",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eksportér",
+    "message":"Izvoz",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Primijeni promjene",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Din liste over sider hvor µBlock vil være deaktiveret. Kun én adresse pr. linje. Ugyldige værtsnavne ignoreres lydløst.",
+    "message":"Popis host naziva za koje će µBlock biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi će tiho biti ignorirani.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importer og tilføj",
+    "message":"Uvesti i dodati",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Eksportér",
+    "message":"Izvoz",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Anvend ændringer",
+    "message":"Primijeni promjene",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Aktiver logføring af blokerede forespørgsler",
+    "message":"Omogući bilježenje blokiranih zahtjeva",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Detalje blokiranih zahtjeva možete provjeriti ako želite aktivirati ovu mogućnosti. Bilježenje blokiranih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Aktiver logføring af ikke-blokerede forespørgsler",
+    "message":"Omogućiti bilježenje blokiranih zahtjeva",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i ikke-blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Detalje neblokiranih zahtjeva možete provjeriti ako želite aktivirati ovu mogućnosti. Bilježenje neblokiranih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blokerede forespørgsler",
+    "message":"Blokirani zahtjevi",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Tilladte forespørgsler",
+    "message":"Dopušteni zahtjevi",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Tip",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domæne",
+    "message":"Domena",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -244,23 +244,23 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Ingen blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Nema blokiranih zahtjeva zapisanih za ovu stranicu",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Ingen ikke-blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Nema neblokiranih zahtjeva zapisanih za ovu stranicu",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Changelog",
+    "message":"Popis promjena",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Kildekode (GPLv3)",
+    "message":"Izvorni kôd (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Bidragydere",
+    "message":"Suradnici",
     "description":"English: Contributors"
   },
   "dummy":{
