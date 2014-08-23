@@ -4,135 +4,135 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blocker til Chromium-baserede browsere. Lavt CPU- og hukommelsesbrug.",
+    "message":"In sfarsit un paravan de protectie eficient pentru navigatoarele bazate pe Chromium. Foloseste procesorul si memoria foarte putin.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Indstillinger",
+    "message":"Optiuni",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3-parts filtre",
+    "message":"Filtre externe",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Dine filtre",
+    "message":"Filtrele tale",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Lista excluderi",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistik",
+    "message":"Statistici",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Om",
+    "message":"Despre",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"tryk på power-knappen for at <br>permanent deaktivere eller aktivere <br>µBlock på den nuværende side",
+    "message":"click pe butonul de mai sus<br>pentru a activa\/dezactiva<br>µBlock pe acest site",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"forespørgsler blokeret",
+    "message":"cereri blocate",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"på denne side",
+    "message":"pe aceasta pagina",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"siden installation",
+    "message":"de la instalare",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"eller",
+    "message":"sau",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik for at åbne dashboardet",
+    "message":"Click pentru a deschide panoul",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Start element-udvælger",
+    "message":"Modul alege element",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til forespørgselslog",
+    "message":"Mergi la inregistrari cereri",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Opret",
+    "message":"Creaza",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Vælg",
+    "message":"Alege",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Afslut",
+    "message":"Iesire",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netfiltre",
+    "message":"Filtre net",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetiske filtre",
+    "message":"Filtre vizuale",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Skjul blokerede elementers placeholdere",
+    "message":"Ascunde containerele elementelor blocate",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Vis antallet af blokerede forespørgsler på ikonet",
+    "message":"Arata numarul blocarilor pe iconita",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} netværksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
+    "message":"{{netFilterCount}} filtre retea ＋ {{cosmeticFilterCount}} filtre vizuale din:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} brugt af {{total}}",
+    "message":"{{used}} folosite din {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Opdater filterlister automatisk.",
+    "message":"Actualizare automata a filtrelor.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Opdatér nu",
+    "message":"Actualizeaza acum",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyser og benyt kosmetiske filtre.",
+    "message":"Citeste si aplica filtrele vizuale.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Denne indstilling giver mulighed for analyse og anvendelse af  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibel &ldquo;skjulnings filtre&rdquo;<\/a>. Disse filtre er i sidste ende kosmetiske, da de skjuler elementer på sider der normalt ville være visuelt irriterende, og som ikke kan blokeres med den netforespørgselsbaserede motor.<\/p><p>Ved at aktivere denne funktion bliver <i>µBlock<\/i>s hukkomelsesforbrug større.<\/p>",
+    "message":"<p>Aceasta optiune permite citirea si aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor Adblock Plus a elementelor de ascuns<\/a>. Aceste filtre sunt in esenta vizuale, acestea servind la ascunderea elementelor intr-un site care sunt marcate ca inutile si care nu pot fi blocate de cererile pe baza de filtre net.<\/p><p>Activand aceasta optiune memoria utilizata de <i>µBlock<\/i> va creste<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Liste over blokerede værter",
+    "message":"Lista adreselor blocate",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Aplicare modificari",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Reklamer",
+    "message":"Reclame",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privatliv",
+    "message":"Intimitate",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domæner",
+    "message":"Domenii malitioase",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -140,99 +140,99 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Universalfilter",
+    "message":"Multifunctionale",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regioner, sprog",
+    "message":"Regiuni, limbi",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Brugerdefineret",
+    "message":"Personalizare",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En URL pr. linje. Linjer der starter med &lsquo;!&rsquo; bliver ignoreret. Ugyldige URL'er bliver lydløst ignoreret.",
+    "message":"O adresa pe linie. Liniile care incep cu &lsquo;!&rsquo; vor fi ignorate. Adresele invalide vor fi ignorate fara avertizare.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Anvend",
+    "message":"Aplicare",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"tøm cache",
+    "message":"goleste cacheul",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version tilgængelig",
+    "message":"versiune noua disponibila",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan være forældet",
+    "message":"posibil invechit",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med &lsquo;!&rsquo; vil blive ignoreret.",
+    "message":"Un filtru pe linie. Un filtru poate fi o adresa sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importer og tilføj",
+    "message":"Importa si adauga",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eksportér",
+    "message":"Exporta",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Aplicare modificari",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Din liste over sider hvor µBlock vil være deaktiveret. Kun én adresse pr. linje. Ugyldige værtsnavne ignoreres lydløst.",
+    "message":"Lista ta de hosturi unde µBlock va fi dezactivat. Fiecare adresa pe o singura linie. Adresele invalide vor fi ignorate automat.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importer og tilføj",
+    "message":"Importa si adauga",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Eksportér",
+    "message":"Exporta",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Anvend ændringer",
+    "message":"Aplicare modificari",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Aktiver logføring af blokerede forespørgsler",
+    "message":"Activeaza inregistrarea cererilor blocate",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Poti inspecta detaliile cererilor blocate daca vrei, activand aceasta optiune. Inregistrarea blocarilor poate conduce la cresterea gradului de utilizare a memoriei. Pentru ca multi utilizatori nu vor folosi aceasta optiune, ea este dezactivata implicit.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Aktiver logføring af ikke-blokerede forespørgsler",
+    "message":"Activeaza inregistrarea cererilor care nu sunt blocate",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i ikke-blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Poti inspecta detaliile cererilor ne-blocate daca vrei, activand aceasta optiune. Inregistrarea acestora poate conduce la cresterea gradului de utilizare a memoriei. Pentru ca multi utilizatori nu vor folosi aceasta optiune, ea este dezactivata implicit.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blokerede forespørgsler",
+    "message":"Cereri blocate",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Tilladte forespørgsler",
+    "message":"Cereri permise",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Tip",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domæne",
+    "message":"Domeniu",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -240,27 +240,27 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Filtru",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Ingen blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Nici o cerere blocata pentru aceasta pagina",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Ingen ikke-blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Nici o cerere ne-blocata pentru aceasta pagina",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Changelog",
+    "message":"Jurnalul de modificari",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Kildekode (GPLv3)",
+    "message":"Cod sursa (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Bidragydere",
+    "message":"Contribuitori",
     "description":"English: Contributors"
   },
   "dummy":{

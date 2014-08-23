@@ -4,235 +4,235 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blocker til Chromium-baserede browsere. Lavt CPU- og hukommelsesbrug.",
+    "message":"Konečně efektivní blokovač pro prohlížeče založené projektu Chromium. Nezatěžuje CPU a paměť.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Indstillinger",
+    "message":"Nastavení",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3-parts filtre",
+    "message":"filtry třetích stran",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Dine filtre",
+    "message":"Vaše filtry",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Povolené domény",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistik",
+    "message":"Statistiky",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Om",
+    "message":"O rozšíření",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"tryk på power-knappen for at <br>permanent deaktivere eller aktivere <br>µBlock på den nuværende side",
+    "message":"kliknutím na vypínač<br>trvale zakážete nebo povolíte<br>µBlock pro tuto stránku",
     "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
   },
   "popupBlockedRequestPrompt":{
-    "message":"forespørgsler blokeret",
+    "message":"požadavků zablokováno",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"på denne side",
+    "message":"na této stránce",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"siden installation",
+    "message":"od instalace",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"eller",
+    "message":"nebo",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik for at åbne dashboardet",
+    "message":"Kliknutím sem otevřete řídicí panel",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Start element-udvælger",
+    "message":"Režim pro výběr prvků",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til forespørgselslog",
+    "message":"Log požadavků",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Opret",
+    "message":"Vytvořit",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Vælg",
+    "message":"Vybrat",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Afslut",
+    "message":"Ukončit",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netfiltre",
+    "message":"Síťové filtry",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetiske filtre",
+    "message":"Kosmetické filtry",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Skjul blokerede elementers placeholdere",
+    "message":"Skrýt zástupné objekty zablokovaných prvků",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Vis antallet af blokerede forespørgsler på ikonet",
+    "message":"Zobrazit počet blokovaných požadavků u ikony",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} netværksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
+    "message":"{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} brugt af {{total}}",
+    "message":"{{used}} použito z celkových {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Opdater filterlister automatisk.",
+    "message":"Automaticky aktualizovat seznamy filtrů.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Opdatér nu",
+    "message":"Aktualizovat nyní",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analyser og benyt kosmetiske filtre.",
+    "message":"Zpracovat a použít kosmetické filtry.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Denne indstilling giver mulighed for analyse og anvendelse af  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibel &ldquo;skjulnings filtre&rdquo;<\/a>. Disse filtre er i sidste ende kosmetiske, da de skjuler elementer på sider der normalt ville være visuelt irriterende, og som ikke kan blokeres med den netforespørgselsbaserede motor.<\/p><p>Ved at aktivere denne funktion bliver <i>µBlock<\/i>s hukkomelsesforbrug større.<\/p>",
+    "message":"<p>Tímto povolíte zpracovávání a používání <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus<\/a>. Tyto filtry jsou převážně kosmetické, skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.<\/p><p>Povolení této funkce zvětšuje stopy <i>µBlock<\/i>u v paměti.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Liste over blokerede værter",
+    "message":"Seznamy blokovaných hostitelů",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Použít změny",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Reklamer",
+    "message":"Reklamy",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privatliv",
+    "message":"Soukromí",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domæner",
+    "message":"Malware domény",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Sociální",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Universalfilter",
+    "message":"Víceúčelové",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regioner, sprog",
+    "message":"Regiony, jazyky",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Brugerdefineret",
+    "message":"Vlastní",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En URL pr. linje. Linjer der starter med &lsquo;!&rsquo; bliver ignoreret. Ugyldige URL'er bliver lydløst ignoreret.",
+    "message":"Jedna adresa URL na řádek. Řádky s předponou &lsquo;!&rsquo; budou ignorovány. Neplatné adresy URL budou tiše ignorovány.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Anvend",
+    "message":"Použít",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"tøm cache",
+    "message":"vyprázdnit cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version tilgængelig",
+    "message":"nová verze je k dispozici",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan være forældet",
+    "message":"může být zastaralý",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med &lsquo;!&rsquo; vil blive ignoreret.",
+    "message":"Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky s předponou &lsquo;!&rsquo; budou ignorovány.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importer og tilføj",
+    "message":"Importovat a připojit",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eksportér",
+    "message":"Exportovat",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Anvend ændringer",
+    "message":"Použít změny",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Din liste over sider hvor µBlock vil være deaktiveret. Kun én adresse pr. linje. Ugyldige værtsnavne ignoreres lydløst.",
+    "message":"Váš seznam názvů hostitelů, pro které bude zakázán µBlock. Jedna položka na řádek. Neplatné názvy hostitelů budou tiše ignorovány.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importer og tilføj",
+    "message":"Importovat a připojit",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Eksportér",
+    "message":"Exportovat",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Anvend ændringer",
+    "message":"Použít změny",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Aktiver logføring af blokerede forespørgsler",
+    "message":"Povolit protokolování blokovaných požadavků",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Pokud si přejete, podrobné informace o blokovaných požadavcích si můžete zkontrolovat povolením této možnosti. Protokolování blokovaných požadavků zvyšuje nároky <i>µBlock<\/i>u na paměť. Vzhledem k tomu, že mnoho uživatelů nikdy tuto funkci nepoužije, je ve výchozím nastavení zakázána.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Aktiver logføring af ikke-blokerede forespørgsler",
+    "message":"Povolit protokolování nezablokovaných požadavků",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i ikke-blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+    "message":"Pokud si přejete, podrobné informace o nezablokovaných požadavcích si můžete zkontrolovat povolením této možnosti. Protokolování nezablokovaných požadavků zvyšuje nároky <i>µBlock<\/i>u na paměť. Vzhledem k tomu, že mnoho uživatelů nikdy tuto funkci nepoužije, je ve výchozím nastavení zakázána.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blokerede forespørgsler",
+    "message":"Blokované požadavky",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Tilladte forespørgsler",
+    "message":"Povolené požadavky",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Typ",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domæne",
+    "message":"Doména",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -240,27 +240,27 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Filtr",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Ingen blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Žádné blokované požadavky pro tuto stránku",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Ingen ikke-blokerede forespørgsler fra denne side er blevet logget",
+    "message":"Žádné nezablokované požadavky pro tuto stránku",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Changelog",
+    "message":"Change log",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Kildekode (GPLv3)",
+    "message":"Zdrojový kód (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Bidragydere",
+    "message":"Přispěvatelé",
     "description":"English: Contributors"
   },
   "dummy":{

@@ -40,7 +40,8 @@ Gratis.
 Open source med offentlige licens (GPLv3)
 For brugere af brugere.
 
-Bidragydere: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragydere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragydere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
