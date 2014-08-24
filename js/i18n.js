@@ -31,4 +31,10 @@ uDom.onLoad(function() {
             this.setAttribute('title', title);
         }
     });
+    uDom('[data-i18n-tip]').forEach(function() {
+        this.setAttribute(
+            'data-tip', 
+            chrome.i18n.getMessage(this.getAttribute('data-i18n-tip')).replace(/<br>/g, '')
+        );
+    });
 });

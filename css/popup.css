@@ -5,6 +5,7 @@ body {
     font: 13px sans-serif;
     background-color: white;
     direction: __MSG_@@bidi_dir__;
+    min-width: 160px;
     }
 h1,h2,h3,h4 {
     margin:  0;
@@ -36,7 +37,8 @@ p {
     text-align: center;
     }
 #switch .fa {
-    font-size: 64px;
+    margin: 0;
+    font-size: 96px;
     color: green;
     cursor: pointer;
     }
@@ -73,12 +75,4 @@ p {
     }
 .tool:hover {
     color: #444;
-    }
-#options {
-    margin: 16px 0 0 0;
-    font-size: 12px;
-    }
-.dim {
-    color: #888;
-    text-decoration: none;
     }
