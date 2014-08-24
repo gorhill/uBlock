@@ -6,6 +6,8 @@ See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development 
 through benchmarking.
 
+µBlock is not an "ad blocker", it's a blocker in the broad sense, which happens to block ads through its support of [Adblock Plus filters](https://adblockplus.org/en/filters). _EasyList_, _EasyPrivacy_ and _Peter Lowe's Adservers list are enabled by default when you install µBlock.
+
 <p align="center">
 µBlock: page loaded. ABP: page still loading.<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
