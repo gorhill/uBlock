@@ -584,7 +584,7 @@ var uBlockMessaging = (function(name){
             return;
         }
         var src = target[prop];
-        if ( !src ) {
+        if ( typeof src !== 'string' || src === '' ) {
             return;
         }
         // https://github.com/gorhill/uBlock/issues/174
