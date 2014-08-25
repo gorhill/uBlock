@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
-    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+    "message":"点击按钮 µBlock 对于当前网站 永久禁用或启用",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"已拦截广告",

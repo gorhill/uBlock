@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click pe butonul de mai sus<br>pentru a activa\/dezactiva<br>µBlock pe acest site",
-    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+    "message":"click pe butonul de mai sus pentru a activa\/dezactiva µBlock pe acest site",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"cereri blocate",

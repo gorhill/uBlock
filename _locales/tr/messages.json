@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Bu sitede µBlock'u tamamen <br>kapatmak ve açmak için <br>güç düğmesine tıklatın",
-    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+    "message":"Bu sitede µBlock'u tamamen kapatmak ve açmak için güç düğmesine tıklatın",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"istek engellendi",

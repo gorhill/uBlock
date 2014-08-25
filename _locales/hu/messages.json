@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"kattintson a bekapcsoló gombon, hogy <br>véglegesen letiltja vagy engedélyezé<br> μBlockot a jelenlegi websiteon",
-    "description":"English (mind the horizontal extent): click the power button to <br>permanently disable or enable <br>µBlock for the current site"
+    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése a μBlock-ban.\n\n<Ctrl>-klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"Blockolt request-ek",
@@ -100,11 +100,11 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Szűrőlisták automatikus frissítése.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Frissítés most",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -152,7 +152,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"Soronként egy URL. A &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak. A szabálytalan URL-ek szintén figyelmen kívül maradnak, hibajelzés nélkül.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -164,11 +164,11 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"Új verzió érhető el",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
+    "message":"lehet, hogy elavult",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
@@ -260,7 +260,7 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"Közreműködők",
     "description":"English: Contributors"
   },
   "dummy":{
