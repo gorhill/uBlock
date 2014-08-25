@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 0Pvg2U3AAqJPNXWol3bmkg
+! Checksum: P+OzehOjMwuHCnyfOCFFGQ
 ! Title: ABPindo
-! Last modified: 30 Juli 2014, 22:09:11 WIB
+! Last modified: 24 Agustus 2014, 20:21:55 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -15,7 +15,6 @@
 ||abadiklan.com^$third-party
 ||ad.adflazz.com^$third-party
 ||adbusinessfree.com^$third-party
-||adcenter2u.com^$third-party
 ||addesigner.com^$third-party
 ||admitra.com^$third-party
 ||adplus.co.id^$third-party
@@ -23,17 +22,13 @@
 ||adsbingo.com^$third-party
 ||adsense-id.com^$third-party
 ||adsensemu.com^$third-party
-||adspeedy.com^$third-party
 ||adsrelease.com^$third-party
-||agenpromosi.com^$third-party
 ||ajangiklangratis.com^$third-party
 ||anadvertorial.com^$third-party
 ||anekaiklan.com^$third-party
 ||baliadv.com^$third-party
 ||clickmedia.co.id^$third-party
 ||clicks4cents.com^$third-party
-||clicksia.com^$third-party
-||entryad.com^$third-party
 ||forumiklan.com^$third-party
 ||gadget-ads.com^$third-party
 ||gratisiklanpasang.com^$third-party
@@ -55,7 +50,6 @@
 ||iklanbarisgratispasang.net^$third-party
 ||iklanbariskusuma.com^$third-party
 ||iklanbarislaris.com^$third-party
-||iklanbarismandiri.com^$third-party
 ||iklanbarismu.com^$third-party
 ||iklanbarispro.com^$third-party
 ||iklanbisnisbali.com^$third-party
@@ -91,11 +85,9 @@
 ||iklanoke.com^$third-party
 ||iklanonlinemu.com^$third-party
 ||iklanpasanggratis.com^$third-party
-||iklanpedia.com^$third-party
 ||iklanplaza.com^$third-party
 ||iklanprimaku.com^$third-party
 ||iklanpromo.com^$third-party
-||iklansilver.com^$third-party
 ||iklantanpadaftar.com^$third-party
 ||iklanteks.com^$third-party
 ||iklantelevisi.com^$third-party
@@ -117,7 +109,6 @@
 ||klikabadi.com^$third-party
 ||klikabadi.net^$third-party
 ||klikajadeh.com^$third-party
-||ladangiklan.com^$third-party
 ||ladanguang.com^$third-party
 ||lokeriklan.com^$third-party
 ||masteriklan.net^$third-party
@@ -149,8 +140,6 @@
 ||paypopup.com^$third-party
 ||pondokiklan.com^$third-party
 ||popupmoney.com^$third-party
-||portaliklan.com^$third-party
-||ppcinbox.com^$third-party
 ||promobagus.com^$third-party
 ||promosiiklan.com^$third-party
 ||promotioncamp.com^$third-party
@@ -173,7 +162,6 @@
 ||theclickers.net^$third-party
 ||tinggalklik.com^$third-party
 ||topklik.com^$third-party
-||unobux.com^$third-party
 ||useads.com^$third-party
 ||webiklan.com^$third-party
 ||weblogiklan.com^$third-party
@@ -637,6 +625,7 @@ okezone.com##.rc-ad-300x250
 filmindonesia.or.id##.row.block.ad-unit-medium-retangle.center
 semprot.com##.semprot_ads
 republika.co.id##.set-ads-468
+kabar24.com##.skycapper
 okezone.com##.skyscrapper
 bokepgratiz.info##.textwidget
 bioskop21.us##.textwidget img[width="160"][height="600"]
@@ -715,7 +704,6 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||idblognetwork.com/images/banner468x60/$third-party
 ||idblognetwork.com/images/banner728x90/$third-party
 ||imgur.com/*.gif$domain=animekompi.web.id|downloadfilmbaru.com|movie76.com|sodasusu.com|unduhfilm21.net
-||incentria.com^$third-party
 ||incrasebux.com^$third-party
 ||indoagenbola.com^$popup,third-party
 ||investasiceria.net^$third-party
@@ -733,7 +721,6 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||numpanglewat.com^$third-party
 ||onclinic24.com^$third-party
 ||paypalbisnis.com^$third-party
-||perawan.pro/$popup,third-party
 ||perawan3gp.com^$popup,third-party
 ||postimg.org/*.gif$domain=21sinema.com
 ||poweredprofits.com^$third-party
@@ -746,16 +733,13 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||sbbanner.com^$third-party
 ||sebar.idblognetwork.com^$third-party
 ||serbiansoftware.com^$popup,domain=bioskop21.us
-||suarabola.com/banners/$third-party
 ||textspace.net^$third-party
 ||tinypic.com^$image,domain=bioskopkita.com
-||topskor.us^$third-party
 ||topsurfer.com^$third-party
 ||trafficfactory.biz^$popup,third-party
 ||tri7bet.com^$third-party
 ||twap.eu^$third-party
 ||u-on.eu/c.php?$third-party
-||u1win.com^$third-party
 ||usahaberhasil.com^$third-party
 ||webtrackerplus.com^$third-party
 ! *** abpindo_whitelist.txt ***

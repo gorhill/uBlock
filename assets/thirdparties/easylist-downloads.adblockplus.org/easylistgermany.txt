@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ZIg4u0nGHNZLFtNZre6BTw
-! Version: 201408231410
+! Checksum: tVhd3ysPeSzRjbnbu7hh/A
+! Version: 201408251231
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 23 Aug 2014 14:10 UTC
+! Last modified: 25 Aug 2014 12:31 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2007,7 +2007,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-warez.in/.affiliate_
 ||ddl-warez.in/_*.php$script
 ||ddl-warez.in/images/hoster/
+||ddl-warez.in/images/hoster_logos/
 ||ddl-warez.in/images/och_logos/
+||ddl-warez.in^*.php|$script
 ||ddl-warez.in^*_popup.js
 ||ddl-warez.in^*_ulpop.
 ||deal-magazin.com/dat/pix/estatepro.gif
@@ -3682,7 +3684,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||sixx.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
 ||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de
-||videoplaza.tv^$domain=www.rtl.de|www.vox.de
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block_popup.txt ***
 &t202kw=$popup,domain=lustich.de|pcaction.de
 &utm_medium=$popup,domain=lustich.de|pcaction.de
@@ -7366,6 +7367,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||srx.de.ebayrtm.com/rtm?RtmCmd&a=$script,domain=deals.ebay.de|dealseu.ebay.de|pages.ebay.de
 @@||stadtlist.de/images/ads/$image
 @@||stadtlist.de/images/advert-$image,domain=stadtlist.de
+@@||static-fra.de/ip/js/adcontrol/adcontrol.min.js$domain=n-tv.de
 @@||static-fra.de^*/admeta.xml?$object-subrequest
 @@||static.freenet.de/adserver/introductio.js$domain=vid.buffed.de|videos.gamesaktuell.de|videos.pcgames.de|videos.videogameszone.de
 @@||static.liverail.com/libas3/$object-subrequest,domain=autoplenum.de
@@ -7748,7 +7750,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||video-magazin.de^$elemhide
 @@||video.spiegel.de/flash/*_iphone.mp4$domain=spiegel.tv
 @@||videogameszone.de^$image
-@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de
+@@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de|www.rtl.de|www.vox.de
 @@||vorsorgebote.de^$elemhide
 @@||web.de^*.html$elemhide
 @@||werbeblocker-erkennen.webconrad.com/adframe.js

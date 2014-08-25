@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: zNHp2/P+7srwHHdJfSwyqg
+! Checksum: hgwJFUrPeu9HL76WtIjpZA
 ! Title: EasyList Hebrew
-! Last modified: 21/08/14  11:51
+! Last modified: 24/08/14  12:51
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -32,7 +32,7 @@
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
-||ashleymadison.com/app/public/$popup
+||ashleymadison.com/app/public/$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||campaign.alpha.co.il/?campaign^$popup,third-party
@@ -61,7 +61,7 @@
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
 ||s.tool-site.com^$third-party
-||sekindo.com^$popup
+||sekindo.com^$popup,third-party
 ||streamin.to^$popup
 ||syngrestic.com/null^$popup
 ||talkahead.com^$third-party
@@ -93,6 +93,7 @@
 ||ynet.co.il/images/headline_video_header_samsung.png
 ||ynet.co.il/WinWinCooperation/
 ||ynet.co.il^*/ynetbanneradmin/
+||ynet.hiro.co.il/crossdomain.xml
 ||ynetshops.co.il/article/showbanner2/
 !-nrg-!
 ||nrg.co.il/cache/banners
@@ -280,7 +281,6 @@
 @@||mako.checkm8.com/adam/inline?cat=mako.*=OVERLAY$object-subrequest
 @@||mako.checkm8.com/adam/inline?cat=mako.*=SAGIR_$object-subrequest
 @@||mako.checkm8.com/crossdomain.xml$object-subrequest
-@@||mediadownload.ynet.co.il/ads/*.flv$object-subrequest
 @@||mouse.co.il/images/ad_mouse_cafe.jpg
 @@||nrg.co.il/online/*_468.htm$~third-party,xmlhttprequest
 @@||one.co.il/ads/*.mp4$object-subrequest
@@ -432,6 +432,7 @@ frogi.co.il##.adbox
 fxp.co.il###adfxp
 fxp.co.il###vc_widget
 fxp.co.il###web_3_tool
+fxp.co.il##.captain
 fxp.co.il##A[href^="http://fcdn.co.il"]
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 286.5px;"]
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 9.5px;"]

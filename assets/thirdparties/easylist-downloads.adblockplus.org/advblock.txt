@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: VsIoePFC5hT93JlzQBRrvQ
-! Version: 201408231410
-! Last modified: 23 Aug 2014 14:10 UTC
+! Checksum: JPFYOZTWqhXLjoEtLa/+fQ
+! Version: 201408251230
+! Last modified: 25 Aug 2014 12:30 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -619,6 +619,7 @@ _tizers.
 ! Исключения
 @@||autogespot.info^$third-party,script
 @@||avamd.info^$script,domain=ava.md
+@@||blockchain.info^$third-party,script
 @@||gowebinar.info^$third-party,script
 @@||kuda-edu.info^$third-party,script
 @@||lostfilm.info^$script,domain=lostfilm.tv
@@ -1892,6 +1893,7 @@ _tizers.
 ||advertmedianetwork.ru^$third-party
 ||advertom.com^
 ||advertone.ru^$third-party
+||advertrtb.com^
 ||adviwer.ru^
 ||advland.ru^$third-party
 ||advweb.ru^
@@ -2275,6 +2277,7 @@ _tizers.
 ||korenizsemi.net^
 ||koviovius.com^
 ||krab-studio.ru^
+||kvihit.com^
 ||kvvadrat.net^
 ||labadon.com^
 ||lacembre.com^
@@ -2943,6 +2946,7 @@ hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###adv002
 opennet.ru###adv3
 2ip.ru###advMenuSelector
 2ip.ru###advertNews
+click.alfabank.ru###advise
 newsbalt.ru###aside > a[target="_blank"][href]
 unionpeer.org###bg-banner
 sc2tv.ru###bg-link
@@ -2995,9 +2999,11 @@ gorod.cn.ua##.branding_left
 gorod.cn.ua##.branding_right
 multmer.org##.brend
 knigi-chitaty.ru##.button[href^="/download.php?q="]
+vgtimes.ru##.click
 lostpic.net##.content > a[target="_blank"]
 sexytales.org##.contentBox > noindex
 sivator.com##.edina > a[href="http://monstro-beats.com/"]
+vgtimes.ru##.fixed_panel > a[style^="display"]
 bountyporn.com,pornoneverdie.com##.fly_player
 dota2.ru##.hadv-block
 dota2.ru##.headshop:not([href^="/shop/"])

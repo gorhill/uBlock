@@ -4,7 +4,7 @@
 ! http://henrik.schack.dk/adblock/
 !
 ! Maintained by: henrik at schack.dk
-! Last Modified: 28-07-2014
+! Last Modified: 25-08-2014
 ! Expires: 1
 
 ! facebook.com
@@ -194,6 +194,8 @@ motion-online.dk##EMBED#Advertisement
 ! connery.dk/
 ! http://connery.dk/?renderPreroll
 
+! dr.dk
+dr.dk##.banner-ad-top-wrapper
 
 ! boyfriend.dk
 boyfriend.dk###if_ad

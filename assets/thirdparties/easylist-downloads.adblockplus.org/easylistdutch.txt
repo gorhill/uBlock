@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: k7AXbyXCfbdnhFt/XQNgTA
-! Version: 201408231411
+! Checksum: q6yBs3nVWk0nWUis+QJSVg
+! Version: 201408251231
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 23 Aug 2014 14:11 UTC
+! Last modified: 25 Aug 2014 12:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -98,7 +98,6 @@ _advertentieleaderboardhome.
 ||partnerclicks.nl^$third-party
 ||partnerprogramma.bol.com^$third-party
 ||partnerwebsites.financereview.nl^$third-party
-||partnerwebsites.mistermedia.nl^$third-party
 ||pics.obedo.nl^$third-party
 ||promotions.teasemedia.nl^$third-party
 ||radiocoupon.nl^$third-party
@@ -695,8 +694,8 @@ _advertentieleaderboardhome.
 @@||ib.adnxs.com/mtj?$script,domain=9292.nl
 @@||imageceu1.247realmedia.com/0/Player/Player_NL_Home/342x204_mensuel_NLnew.jpg
 @@||images.marktnet.eu/adimg/
-@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=radiodigitaal.nl
-@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=radiodigitaal.nl
+@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=538.nl|radiodigitaal.nl|slamfm.nl
+@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=538.nl|radiodigitaal.nl|slamfm.nl
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
 @@||media.ztat.net/media/teaser/$image,domain=zalando.nl
 @@||nl.gmads.net/crossdomain.xml$object-subrequest,domain=radioveronica.nl
@@ -891,6 +890,7 @@ sextube.nl###header > div[style="background:#121212;"]
 verhalenlezen.nl###headerBanner
 hiphopinjesmoel.com###header_banner
 filmtotaal.nl###header_banner_area
+geilestartpagina.nl###headerwidgets
 knuz.nl###homepage-content > #showimage[style^="position:absolute;width=562px;left:40px;top:250px;"] > table
 christelijkvakantieplein.nl###hoofdsponsors
 jooble.co.nl###j-1_ad
@@ -1131,6 +1131,7 @@ landenweb.net##a[href="_hPromotionADLW.htm"]
 historiek.net##a[href="http://historiek.net/1/click"]
 nuzakelijk.nl##a[href="http://www.spaarrente.nl/internetsparen.aspx"]
 partyflock.nl##a[href^="/jlnk/"]
+geilestartpagina.nl##a[href^="http://aff."]
 nrc.nl##a[href^="http://altfarm.mediaplex.com/ad/"]
 netonline.be##a[href^="http://clk.tradedoubler.com/click?p="]
 synoniemen.net##a[href^="http://ds1.nl/c/?"]

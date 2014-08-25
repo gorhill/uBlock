@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Aug 20th, 2014 at 16:28
+# Last updated: Aug 25th, 2014 at 02:19
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -4865,6 +4865,7 @@ fe80::1%lo0	localhost
 127.0.0.1 apopt.hbmediapro.com
 127.0.0.1 apparelncs.com
 127.0.0.1 apparel-offer.com
+127.0.0.1 app.datafastguru.info
 127.0.0.1 appdev.addthis.com
 127.0.0.1 appnexus.com
 127.0.0.1 apps5.oingo.com
@@ -5186,6 +5187,7 @@ fe80::1%lo0	localhost
 127.0.0.1 campaign.indieclick.com
 127.0.0.1 campaigns.f2.com.au
 127.0.0.1 campaigns.interclick.com
+127.0.0.1 canadaalltax.com
 127.0.0.1 capath.com
 127.0.0.1 cardgamespidersolitaire.com
 127.0.0.1 cards.virtuagirlhd.com
@@ -5276,6 +5278,7 @@ fe80::1%lo0	localhost
 127.0.0.1 cellphoneincentives.com
 127.0.0.1 cent.adbureau.net
 127.0.0.1 c.es.msn.com
+127.0.0.1 cfg.datafastguru.info
 127.0.0.1 c.fi.msn.com
 127.0.0.1 cf.kampyle.com
 127.0.0.1 c.fr.msn.com
@@ -5499,6 +5502,7 @@ fe80::1%lo0	localhost
 127.0.0.1 d12.zedo.com
 127.0.0.1 d14.zedo.com
 127.0.0.1 d1.openx.org
+127.0.0.1 d1qqddufal4d58.cloudfront.net
 127.0.0.1 d1ros97qkrwjf5.cloudfront.net
 127.0.0.1 d1.zedo.com
 127.0.0.1 d2.zedo.com
@@ -5828,6 +5832,7 @@ fe80::1%lo0	localhost
 127.0.0.1 gdyn.cnngo.com
 127.0.0.1 gdyn.trutv.com
 127.0.0.1 gemius.pl
+127.0.0.1 gem.pl
 127.0.0.1 geoads.osdn.com
 127.0.0.1 geoloc11.geovisite.com
 127.0.0.1 geo.precisionclick.com
@@ -6271,6 +6276,7 @@ fe80::1%lo0	localhost
 127.0.0.1 lp1.linkpulse.com
 127.0.0.1 lp4.linkpulse.com
 127.0.0.1 lpcloudsvr405.com
+127.0.0.1 ls.hit.gemius.pl
 127.0.0.1 lstats.qip.ru
 127.0.0.1 lt.andomedia.com
 127.0.0.1 lt.angelfire.com
@@ -6291,6 +6297,7 @@ fe80::1%lo0	localhost
 127.0.0.1 mads.aol.com
 127.0.0.1 mads.cnet.com
 127.0.0.1 mail.radar.imgsmail.ru
+127.0.0.1 main.vodonet.net
 127.0.0.1 manage001.adtech.de
 127.0.0.1 manage001.adtech.fr
 127.0.0.1 manage001.adtech.us
@@ -6528,6 +6535,7 @@ fe80::1%lo0	localhost
 127.0.0.1 obozua.adocean.pl
 127.0.0.1 observer.advertserve.com
 127.0.0.1 obs.nnm2.ru
+127.0.0.1 offers.bycontext.com
 127.0.0.1 offers.impower.com
 127.0.0.1 offerx.co.uk
 127.0.0.1 oinadserve.com
@@ -6602,6 +6610,7 @@ fe80::1%lo0	localhost
 127.0.0.1 pbid.pro-market.net
 127.0.0.1 pb.tynt.com
 127.0.0.1 pcads.ru
+127.0.0.1 pc-gizmos-ssl.com
 127.0.0.1 pei-ads.playboy.com
 127.0.0.1 people-choice-sites.com
 127.0.0.1 personalcare-offer.com
@@ -6670,6 +6679,7 @@ fe80::1%lo0	localhost
 127.0.0.1 playlink.pl
 127.0.0.1 playtime.tubemogul.com
 127.0.0.1 pl.bbelements.com
+127.0.0.1 pl.spanel.gem.pl
 127.0.0.1 pmstrk.mercadolivre.com.br
 127.0.0.1 pntm.adbureau.net
 127.0.0.1 pntm-images.adbureau.net
@@ -6710,6 +6720,7 @@ fe80::1%lo0	localhost
 127.0.0.1 promotion.partnercash.com
 127.0.0.1 proximityads.flipcorp.com
 127.0.0.1 proxy.blogads.com
+127.0.0.1 pstatic.datafastguru.info
 127.0.0.1 ptrads.mp3.com
 127.0.0.1 pt.trafficjunky.net
 127.0.0.1 pubdirecte.com
@@ -7032,6 +7043,7 @@ fe80::1%lo0	localhost
 127.0.0.1 somethingawful.crwdcntrl.net
 127.0.0.1 sonycomputerentertai.tt.omtrdc.net
 127.0.0.1 soongu.info
+127.0.0.1 spanel.gem.pl
 127.0.0.1 spanids.dictionary.com
 127.0.0.1 spanids.thesaurus.com
 127.0.0.1 spc.cekfmeoejdbfcfichgbfcgjf.vast2as3.glammedia-pubnet.northamerica.telemetryverification.net
@@ -7482,6 +7494,7 @@ fe80::1%lo0	localhost
 127.0.0.1 work-offer.com
 127.0.0.1 worry-free-savings.com
 127.0.0.1 wppluginspro.com
+127.0.0.1 w.prize44.com
 127.0.0.1 ws.addthis.com
 127.0.0.1 wtp101.com
 127.0.0.1 ww251.smartadserver.com

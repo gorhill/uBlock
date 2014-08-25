@@ -437,10 +437,13 @@ jeuxactu.com###infoBlock
 @@||maxcheaters.com/public/js/jsLoader.js$script
 ! straight-world.de
 @@||straight-world.de/js/ads.js$script
-! clubedohardware.com.br
-@@||ads.clubedohardware.com.br/www/delivery/spcjs.php$script
 ! hqq.tv
 !||c.hqq.tv/js/adb/adb.js$script
+! online.dramacafe.tv
+online.dramacafe.tv#@#.afs_ads
+! hln.be + nieuwsblad.be + demorgen.be
+@@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
+@@||pubads.g.doubleclick.net/gampad/ads?*$domain=syndication.vmma.be,object-subrequest
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

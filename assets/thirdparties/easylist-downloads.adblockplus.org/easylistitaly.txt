@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: tjL8mFFwB+bRb20/maHK8g
-! Version: 201408231411
+! Checksum: NaD1YWhEjB9DoAmhZiSzkQ
+! Version: 201408251231
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 23 Aug 2014 14:11 UTC
+! Ultima modifica: 25 Aug 2014 12:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -110,6 +110,7 @@ _sito/adv/
 ###mmAdDivSkLb
 ###mmAdDivSkSx
 ###ppn_ad_div
+###pubbli-alto
 ###pubbli_top
 ###pubblicita
 ###pubblicita-menu
@@ -511,11 +512,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||607080.it^*/banners/
 ||7per24.it^*/banner-
 ||892000.it/img/bannerino_
-||abruzzoweb.it/cache/banners/
-||abruzzoweb.it/images/banner/
-||abruzzoweb.it/images/banners/
-||abruzzoweb.it/images/capannoni/banner.jpg
-||abruzzoweb.it/images/grey.gif
+||abruzzolive.it^*banner
 ||accordiespartiti.it/propalco*.png
 ||accordiespartiti.it/suonarechitarra.jpg
 ||acmilan.com^*/sponsor/
@@ -1144,6 +1141,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||mammedomani.it/images/banners/
 ||manduriaoggi.it/layout_nuovo/banner.asp
 ||marigliano.net/_upload/banner/
+||marsicalive.it^*banner
 ||masterviaggi.it/banner/
 ||mattinonline.ch^*/banner_
 ||maxleggeri.it^*/uni2.png
@@ -2112,7 +2110,7 @@ genova24.it,ivg.it##.banner-middle-board
 milanofinanza.it##.banner-sfondo
 telesud3.com##.banner-sidebar
 panorama.it##.banner-spalla-dx
-farevela.net,milanofinanza.it##.banner-top
+farevela.net,forum-macchine.it,milanofinanza.it##.banner-top
 ilcapoluogo.com,latinaoggi.net##.banner1
 ilcapoluogo.com,latinaoggi.net,pianetacellulare.it##.banner2
 erbanotizie.com,lecconotizie.com##.banner234x60-right
@@ -2179,7 +2177,7 @@ messinaweb.tv##.bannerpostsingle
 nonsolocinema.com##.banners
 ilquotidianofvg.it##.banners-125
 cremonaoggi.it##.bannersx
-musictory.it##.bannertop
+album-mmt.it,musictory.it##.bannertop
 ticinolive.ch##.bannerwrap
 romagiornoenotte.it##.basebannerBox
 wallstreetitalia.com##.bestbuybiz

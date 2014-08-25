@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: jiwF2KcOBKTLfZIcBjLy5A
-! Version: 201408231411
+! Checksum: s+bLwpv2BJ9MKLAKPleOjQ
+! Version: 201408251231
 ! Title: EasyPrivacy
-! Last modified: 23 Aug 2014 14:11 UTC
+! Last modified: 25 Aug 2014 12:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2101,6 +2101,7 @@
 ://adclear.*/acc?
 ://adclear.*/acv?
 ://anx.*/anx.gif?
+://anx.*/tr.gif?
 ://apex.*/apexTarget?
 ://b.*/click?
 ://b.*/ping?
@@ -3071,6 +3072,7 @@ http://utm.
 ||mouseflow.com^$third-party
 ||mousestats.com^$third-party
 ||mousetrace.com^$third-party
+||movable-ink-6710.com^$third-party
 ||mplxtms.com^$third-party
 ||mpstat.us^$third-party
 ||msgapp.com^$third-party
@@ -3129,6 +3131,7 @@ http://utm.
 ||nik.io^$third-party
 ||noowho.com^$third-party
 ||nordicresearch.com^$third-party
+||nowinteract.com^$third-party
 ||npario-inc.net^$third-party
 ||nprove.com^$third-party
 ||nr7.us^$third-party
@@ -5199,7 +5202,7 @@ http://utm.
 ||ooyala.com/authorized?analytics
 ||ooyala.com/verify?
 ||ooyala.com^*/report?log
-||open.delivery.net^$third-party
+||open.delivery.net^
 ||ophan.co.uk/t.gif?
 ||optimizely.appspot.com^$third-party
 ||orts.wixawin.com^$third-party
@@ -5368,6 +5371,7 @@ http://utm.
 ||st.dynamicyield.com^$third-party
 ||stat.easydate.biz^
 ||stat.ed.cupidplc.com^
+||stat.itp-nyc.com^
 ||stat.segitek.hu^
 ||stat.to.cupidplc.com^$third-party
 ||stat.web-regie.com^
@@ -6679,6 +6683,7 @@ http://utm.
 ||dyo.gs/track/
 ||easy2.com^*/logging/
 ||easygoodhealth.com/js/utracker.js
+||ebay-us.com/fp/
 ||ebay.com/op/t.do?event
 ||ebayobjects.com/*;dc_pixel_url=$image
 ||ec2-prod-tracker.babelgum.com^
@@ -8877,6 +8882,7 @@ http://utm.
 @@||descopera.ro/js/addLinkerEvents-ga.js
 @@||diablo3.com/assets/js/jquery.google-analytics.js
 @@||directline.com/touchclarity/$script
+@@||dmeserv.newsinc.com^*/dynamicWidgets.js$domain=timesfreepress.com
 @@||doubleclick.net/activityi;src=$object-subrequest,domain=cicispizza.com
 @@||dw.cbsi.com/anonc.js$domain=cnet.com
 @@||dw.cbsi.com/js/dw.js$domain=cnet.com
@@ -9056,6 +9062,7 @@ http://utm.
 @@||pokemonblackwhite.com^*/jquery.google-analytics.js
 @@||polycom.com/polycomservice/js/unica/ntpagetag.js
 @@||popeater.com/traffic/?$script,domain=popeater.com
+@@||pp-serve.newsinc.com^*/unitsdata.js?$domain=timesfreepress.com
 @@||push2check.com/stats.php
 @@||quantcast.com/wp-content/themes/quantcast/$domain=quantcast.com
 @@||quantserve.com/quant.js$domain=apps.facebook.com|caranddriver.com|g4tv.com|nymag.com|salon.com|theblaze.com
