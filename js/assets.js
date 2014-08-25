@@ -254,51 +254,6 @@ var getRepoMetadata = function(callback) {
 
     lastRepoMetaTimestamp = Date.now();
 
-    // https://github.com/gorhill/uBlock/issues/84
-    // First try to load from the actual home server of a third-party.
-    var parseHomeURLs = function(text) {
-        var entries = repoMetadata.entries;
-        var urlPairs = text.split(/\n\n+/);
-        var i = urlPairs.length;
-        var pair, pos, k, v;
-        while ( i-- ) {
-            pair = urlPairs[i];
-            pos = pair.indexOf('\n');
-            if ( pos === -1 ) {
-                continue;
-            }
-            k = 'assets/thirdparties/' + pair.slice(0, pos).trim();
-            v = pair.slice(pos).trim();
-            if ( k === '' || v === '' ) {
-                continue;
-            }
-            if ( entries[k] === undefined ) {
-                entries[k] = new AssetEntry();
-            }
-            entries[k].homeURL = v;
-        }
-        while ( callback = repoMetadata.waiting.pop() ) {
-            callback(repoMetadata);
-        }
-    };
-
-    var pathToHomeURLs = 'assets/ublock/thirdparty-lists.txt';
-
-    var onLocalHomeURLsLoaded = function(details) {
-        parseHomeURLs(details.content);
-    };
-
-    var onRepoHomeURLsLoaded = function(details) {
-        var entries = repoMetadata.entries;
-        var entry = entries[pathToHomeURLs];
-        if ( YaMD5.hashStr(details.content) !== entry.repoChecksum ) {
-            entry.repoChecksum = entry.localChecksum;
-            readLocalFile(pathToHomeURLs, onLocalHomeURLsLoaded);
-            return;
-        }
-        cachedAssetsManager.save(pathToHomeURLs, details.content, onLocalHomeURLsLoaded);
-    };
-
     var localChecksums;
     var repoChecksums;
 
@@ -330,11 +285,8 @@ var getRepoMetadata = function(callback) {
             updateLocalChecksums();
         }
         // Fetch and store homeURL associations
-        entry = entries[pathToHomeURLs];
-        if ( entry.localChecksum !== entry.repoChecksum ) {
-            readRepoFile(pathToHomeURLs, onRepoHomeURLsLoaded);
-        } else {
-            readLocalFile(pathToHomeURLs, onLocalHomeURLsLoaded);
+        while ( callback = repoMetadata.waiting.pop() ) {
+            callback(repoMetadata);
         }
     };
 
@@ -894,12 +846,6 @@ exports.put = function(path, content, callback) {
 
 /******************************************************************************/
 
-exports.purge = function(pattern, before) {
-    cachedAssetsManager.remove(pattern, before);
-};
-
-/******************************************************************************/
-
 exports.metadata = function(callback) {
     var out = {};
 
@@ -955,6 +901,22 @@ exports.metadata = function(callback) {
     };
 
     cachedAssetsManager.entries(onCacheMetaReady);
+};
+
+/******************************************************************************/
+
+exports.setHomeURL = function(path, homeURL) {
+    var entry = repoMetadata[path];
+    if ( entry === undefined ) {
+        entry = repoMetadata[path] = new AssetEntry();
+    }
+    entry.homeURL = homeURL;
+};
+
+/******************************************************************************/
+
+exports.purge = function(pattern, before) {
+    cachedAssetsManager.remove(pattern, before);
 };
 
 /******************************************************************************/

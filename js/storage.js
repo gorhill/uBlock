@@ -72,6 +72,31 @@
 
 µBlock.loadUserSettings = function(callback) {
     var settingsLoaded = function(store) {
+        µBlock.userSettings = store;
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+
+    chrome.storage.local.get(this.userSettings, settingsLoaded);
+};
+
+/******************************************************************************/
+
+µBlock.saveWhitelist = function() {
+    var bin = {
+        'netWhitelist': this.stringFromWhitelist(this.netWhitelist)
+    };
+    chrome.storage.local.set(bin, function() {
+        µBlock.getBytesInUse();
+    });
+    this.netWhitelistModifyTime = Date.now();
+};
+
+/******************************************************************************/
+
+µBlock.loadWhitelist = function(callback) {
+    var onWhitelistLoaded = function(store) {
         var µb = µBlock;
         // Backward compatibility after fix to #5
         // TODO: remove once all users are up to date with latest version.
@@ -82,28 +107,21 @@
                     chrome.storage.local.set({ 'netWhitelist': store.netWhitelist });
                 }
             }
-            delete store.netExceptionList;
             chrome.storage.local.remove('netExceptionList');
         }
-        µb.userSettings = store;
         µb.netWhitelist = µb.whitelistFromString(store.netWhitelist);
         µb.netWhitelistModifyTime = Date.now();
 
-        callback();
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
     };
 
-    chrome.storage.local.get(this.userSettings, settingsLoaded);
-};
-
-/******************************************************************************/
-
-µBlock.saveWhitelist = function() {
-    this.userSettings.netWhitelist = this.stringFromWhitelist(this.netWhitelist);
-    var bin = { 'netWhitelist': this.userSettings.netWhitelist };
-    chrome.storage.local.set(bin, function() {
-        µBlock.getBytesInUse();
-    });
-    this.netWhitelistModifyTime = Date.now();
+    var bin = {
+        'netWhitelist': '',
+        'netExceptionList': ''
+    };
+    chrome.storage.local.get(bin, onWhitelistLoaded);
 };
 
 /******************************************************************************/
@@ -145,25 +163,32 @@
 
 µBlock.getAvailableLists = function(callback) {
     var availableLists = {};
+    var redirections = {};
 
     // selected lists
     var onSelectedListsLoaded = function(store) {
+        var µb = µBlock;
         var lists = store.remoteBlacklists;
         var locations = Object.keys(lists);
-        var location;
+        var oldLocation, newLocation;
+        var availableEntry, storedEntry;
 
-        while ( location = locations.pop() ) {
-            if ( !availableLists[location] ) {
+        while ( oldLocation = locations.pop() ) {
+            newLocation = redirections[oldLocation] || oldLocation;
+            availableEntry = availableLists[newLocation];
+            if ( availableEntry === undefined ) {
                 continue;
             }
-            // https://github.com/gorhill/httpswitchboard/issues/218
-            // Transfer potentially existing list title into restored list data.
-            if ( lists[location].title !== availableLists[location].title ) {
-                lists[location].title = availableLists[location].title;
+            storedEntry = lists[oldLocation];
+            availableEntry.off = storedEntry.off || false;
+            µb.assets.setHomeURL(newLocation, availableEntry.homeURL);
+            if ( storedEntry.entryCount !== undefined ) {
+                availableEntry.entryCount = storedEntry.entryCount;
             }
-            availableLists[location] = lists[location];
+            if ( storedEntry.entryUsedCount !== undefined ) {
+                availableEntry.entryUsedCount = storedEntry.entryUsedCount;
+            }
         }
-
         callback(availableLists);
     };
 
@@ -175,11 +200,17 @@
         } catch (e) {
             locations = {};
         }
+        var entry;
         for ( location in locations ) {
             if ( locations.hasOwnProperty(location) === false ) {
                 continue;
             }
-            availableLists['assets/thirdparties/' + location] = locations[location];
+            entry = locations[location];
+            availableLists['assets/thirdparties/' + location] = entry;
+            if ( entry.old !== undefined ) {
+                redirections[entry.old] = location;
+                delete entry.old;
+            }
         }
 
         // Now get user's selection of lists
@@ -423,12 +454,15 @@
 
 /******************************************************************************/
 
-µBlock.loadPublicSuffixList = function() {
+µBlock.loadPublicSuffixList = function(callback) {
     var applyPublicSuffixList = function(details) {
         // TODO: Not getting proper suffix list is a bit serious, I think
         // the extension should be force-restarted if it occurs..
         if ( !details.error ) {
             publicSuffixList.parse(details.content, punycode.toASCII);
+        }
+        if ( typeof callback === 'function' ) {
+            callback();
         }
     };
     this.assets.get(
@@ -458,9 +492,23 @@
 // Load all
 
 µBlock.load = function() {
+    var µb = this;
+
+    // User whitelist directives and filters need the Public Suffix List to be
+    // available -- because the way they are stored internally.
+    var onPSLReady = function() {
+        µb.loadWhitelist();
+        µb.loadUbiquitousBlacklists();
+    };
+
+    // Public Suffix List loader needs the user settings need to be available
+    // because we need to know whether to auto-update the list or not.
+    var onUserSettingsReady = function() {
+        µb.assets.autoUpdate = µb.userSettings.autoUpdate || true;
+        µb.loadPublicSuffixList(onPSLReady);
+    };
+    this.loadUserSettings(onUserSettingsReady);
+
     this.loadLocalSettings();
-    // User settings need to be available for this because we need
-    // µBlock.userSettings.externalLists
-    this.loadUserSettings(this.loadUpdatableAssets.bind(this));
     this.getBytesInUse();
 };

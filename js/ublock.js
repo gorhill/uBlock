@@ -34,7 +34,7 @@
         domain = this.URI.domainFromHostname(keyHostname);
     }
     if ( !domain ) {
-        return false;
+        return true;
     }
 
     var exceptions = this.netWhitelist[domain];

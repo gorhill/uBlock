@@ -88,7 +88,7 @@ THIRDPARTY_LOCALURLS=(
     'thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt'
     'thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt'
     'thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt'
-    'thirdparties/margevicius.lt/AdBlockPlusLithuania.txt'
+    'thirdparties/margevicius.lt/easylistlithuania.txt'
     'thirdparties/stanev.org/abp/adblock_bg.txt'
     'thirdparties/indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt'
     'thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt'

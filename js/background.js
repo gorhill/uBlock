@@ -44,10 +44,15 @@ return {
         logBlockedRequests: false,
         logAllowedRequests: false,
         parseAllABPHideFilters: true,
-        netExceptionList: {}, // TODO: remove once all users are up to date
-        netWhitelist: '',
         showIconBadge: true
     },
+
+    // https://github.com/gorhill/uBlock/issues/180
+    // Whitelist directives need to be loaded once the PSL is available
+    netExceptionList: {}, // TODO: remove once all users are up to date
+    netWhitelist: {},
+    netWhitelistModifyTime: 0,
+
     localSettings: {
         blockedRequestCount: 0,
         allowedRequestCount: 0
@@ -81,8 +86,6 @@ return {
     remoteBlacklists: {
     },
 
-    netWhitelist: {},
-    netWhitelistModifyTime: 0,
     pageStores: {},
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,
