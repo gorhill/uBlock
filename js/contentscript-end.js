@@ -587,10 +587,9 @@ var uBlockMessaging = (function(name){
         if ( !src ) {
             return;
         }
-        var pos = src.indexOf('#');
-        if ( pos !== -1 ) {
-            src = src.slice(0, pos);
-        }
+        // https://github.com/gorhill/uBlock/issues/174
+        // Do not remove fragment from src URL
+
         var onAnswerReceived = function(details) {
             if ( !details.blocked ) {
                 return;
@@ -605,6 +604,7 @@ var uBlockMessaging = (function(name){
                     target.style.display = 'none !important';
                 }
             }
+            // TODO: investigate injecting as a style. Is Overhead worth it?
             messaging.tell({
                 what: 'injectedSelectors',
                 type: 'net',
