@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique no botão de energia para ativar ou desativar permanentemente o µBlock para o site atual",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"Clique: para ativar\/desativar permanentemente o µBlock para o site atual.\n\nCtrl+Clique: para ativar\/desativar o µBlock apenas nesta página.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"solicitações bloqueadas",
