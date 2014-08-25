@@ -284,7 +284,7 @@ var getRepoMetadata = function(callback) {
         if ( checksumsChanged ) {
             updateLocalChecksums();
         }
-        // Fetch and store homeURL associations
+        // Notify all waiting callers
         while ( callback = repoMetadata.waiting.pop() ) {
             callback(repoMetadata);
         }
@@ -339,6 +339,19 @@ var getRepoMetadata = function(callback) {
 };
 
 // https://www.youtube.com/watch?v=-t3WYfgM4x8
+
+/******************************************************************************/
+
+exports.setHomeURL = function(path, homeURL) {
+    var onRepoMetadataReady = function(metadata) {
+        var entry = metadata.entries[path];
+        if ( entry === undefined ) {
+            entry = metadata.entries[path] = new AssetEntry();
+        }
+        entry.homeURL = homeURL;
+    }
+    getRepoMetadata(onRepoMetadataReady);
+};
 
 /******************************************************************************/
 
@@ -901,16 +914,6 @@ exports.metadata = function(callback) {
     };
 
     cachedAssetsManager.entries(onCacheMetaReady);
-};
-
-/******************************************************************************/
-
-exports.setHomeURL = function(path, homeURL) {
-    var entry = repoMetadata[path];
-    if ( entry === undefined ) {
-        entry = repoMetadata[path] = new AssetEntry();
-    }
-    entry.homeURL = homeURL;
 };
 
 /******************************************************************************/
