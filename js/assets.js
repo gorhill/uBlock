@@ -543,12 +543,15 @@ var readRepoCopyAsset = function(path, callback) {
     var onCacheMetaReady = function(entries) {
         // Fetch from remote if:
         // - Auto-update enabled AND (not in cache OR in cache but obsolete)
-        var timestamp = entries[path];
-        var obsolete = Date.now() - exports.autoUpdateDelay;
-        if ( exports.autoUpdate && (typeof timestamp !== 'number' || timestamp <= obsolete) ) {
-            //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
-            getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
-            return;
+        var homeURL = assetEntry.homeURL;
+        if ( exports.autoUpdate && typeof homeURL === 'string' && homeURL !== '' ) {
+            var timestamp = entries[path];
+            var obsolete = Date.now() - exports.autoUpdateDelay;
+            if ( typeof timestamp !== 'number' || timestamp <= obsolete ) {
+                //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
+                getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
+                return;
+            }
         }
 
         // In cache
@@ -573,7 +576,12 @@ var readRepoCopyAsset = function(path, callback) {
         // Repo copy changed: fetch from home URL
         if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
             //console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
-            getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+            var homeURL = assetEntry.homeURL;
+            if ( typeof homeURL === 'string' && homeURL !== '' ) {
+                getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
+            } else {
+                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+            }
             return;
         }
 
