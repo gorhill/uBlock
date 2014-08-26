@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"klicke das An-\/Ausschalter-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\n<Strg>-Klick: schalte µBlock nur für diese spezifische Seite aus.",
+    "message":"klicke das An-\/Ausschalter-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nur für die aktuell geöffnete Seite aus.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
