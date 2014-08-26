@@ -74,9 +74,9 @@ Free. Open source. For users by users. No donations sought.
 
 Actually, as the extension is becoming more popular, there is only one thing I ask: 
 If you like the extension, please, _please_ do not succumb to blind fanboyism. 
-I want this project to be appreciated for its objective, intellectually 
-honest measurements and benchmarks, not on arguments which can't be backed up under 
-scrutiny or worst, pulled out of thin air. **Remember: Development through benchmarking.**
+I want this project to stick to objective, intellectually honest measurements and 
+reproducible benchmarks, not on arguments which can't be backed up under scrutiny 
+or worst, pulled out of thin air. **Remember: Development through benchmarking.**
 
 Without the preset lists of filters, this extension is nothing. So if ever you 
 really do want to contribute something, think about the people working hard 
