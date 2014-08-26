@@ -604,7 +604,7 @@ var uBlockMessaging = (function(name){
                     target.style.display = 'none !important';
                 }
             }
-            // TODO: investigate injecting as a style. Is Overhead worth it?
+            // TODO: investigate injecting as a style. Is overhead worth it?
             messaging.tell({
                 what: 'injectedSelectors',
                 type: 'net',

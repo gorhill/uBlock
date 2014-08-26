@@ -94,7 +94,6 @@ span.obsolete {
     width: 48em;
     height: 8em;
     white-space: nowrap;
-	text-align: left;
     }
 body #loadingOverlay {
     position: fixed;
