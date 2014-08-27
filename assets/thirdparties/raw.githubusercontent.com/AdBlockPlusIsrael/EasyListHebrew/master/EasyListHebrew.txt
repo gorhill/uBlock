@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: hgwJFUrPeu9HL76WtIjpZA
+! Checksum: jnOUHWI3kh1J7ONHE1j9BQ
 ! Title: EasyList Hebrew
-! Last modified: 24/08/14  12:51
+! Last modified: 27/08/14  13:09
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -178,6 +178,7 @@
 ||fcdn.co.il/*.swf$domain=fxp.co.il
 ||fcdn.co.il/*/*/*.php$domain=fxp.co.il
 ||gear.co.il/Content/MediaItems/Campaigns/
+||globusmax.co.il/images/950x171leumi_diners(5).swf
 ||gozlan.be/st_j.js
 //gozlan.be/st_j.js|
 ||haflla.com/download/banners/
@@ -210,6 +211,7 @@
 ||scity.co.il/scity_728_sdarot.swf
 ||sdarot.*/banner
 ||seret.co.il/images/banners/pagehasut/PageHasut
+||seretil.me/cdn-cgi/*rocket.js
 ||seretil.me/cdn-cgi/nexp/dok9
 ||sport5.co.il/banners2/
 ||static.vgames.co.il/cdn/css/global.bg_comm.css?v=
@@ -287,6 +289,8 @@
 @@||one.co.il/images/Ads/2011/12/26/1015/logo_51x20.gif
 @@||one.co.il/images/Ads/2013/10/20/2230/racer_51x20hp.png
 @@||one.co.il/images/ads/2014/06/02/1415/MNDL2.swf
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
+@@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
 @@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il|mako.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il

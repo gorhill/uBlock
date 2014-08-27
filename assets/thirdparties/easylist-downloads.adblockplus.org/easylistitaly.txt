@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: NaD1YWhEjB9DoAmhZiSzkQ
-! Version: 201408251231
+! Checksum: +a4RSsrxmY9nWkSpjoOKZg
+! Version: 201408271351
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 25 Aug 2014 12:31 UTC
+! Ultima modifica: 27 Aug 2014 13:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING

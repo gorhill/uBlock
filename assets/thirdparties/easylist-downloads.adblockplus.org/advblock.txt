@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: JPFYOZTWqhXLjoEtLa/+fQ
-! Version: 201408251230
-! Last modified: 25 Aug 2014 12:30 UTC
+! Checksum: IZF8PlGqw/GSQgh1+HVnBw
+! Version: 201408271350
+! Last modified: 27 Aug 2014 13:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2966,6 +2966,7 @@ cwer.ws###header .right
 rebill.me###header a[target="_blank"]
 world-mmo.com###header-wrapper
 kino-teatr.ru###header_banner
+fast-torrent.ru###leftmenu h1 > span[style]
 now.ru###lightbox
 now.ru###lightboxOverlay
 rupier.com###logo > noindex
@@ -3259,9 +3260,6 @@ samlab.ws###left > .box-shadow:nth-child(n+3)
 fullgames.ru###left > div:not(#ms)
 katushka.net###left_menu > .banner
 f1news.ru###left_pan
-fast-torrent.ru###leftmenu > .wrap > div > noindex > h1
-fast-torrent.ru###leftmenu noindex > div[id^="bn_"]
-fast-torrent.ru###leftmenu noindex > table[style="text-align: center;"]
 lyrsense.com###leoDiv
 forum.rcdesign.ru###lh_bar-product
 mixupload.org###link_brand
@@ -4175,7 +4173,6 @@ megarotator.com##div[id^="FBOnce"]
 rb.ru##div[id^="adriver_banner_"]
 kinomafia.tv##div[id^="ambn"]
 pitbit.ru##div[id^="banner-right-inside"]
-cwer.ws,history.vn.ua,maccentre.ru,seedoff.net,ukrlit.vn.ua,uniongang.tv##div[id^="bn_"]
 inbox.lv##div[id^="ctw-"]
 ntv.ru##div[id^="flamur"]
 99px.ru,seedoff.net##div[id^="lx_"]
@@ -4348,6 +4345,7 @@ redtram.com##.b-informers
 siliconrus.com##.b-top-adv
 news.pn##.banner
 online.ua##.banner-top
+kino-dom.tv##.banner_1_550
 mmorpg.ua##.banner_left_col
 gorod.cn.ua##.banner_top
 motorpage.ru##.bannerplace:not(#pos6)
@@ -4368,6 +4366,7 @@ comss.ru##.links ~ .box
 forum.soft4dle.com##.navbar > br
 rentv-smolensk.ru##.promo
 medikforum.ru##.r_banner
+medvesti.com##.rew-block
 softobase.com##.rkl-horizontal
 cheboksary.ws##.ru200200
 delfi.lv##.top-banner
@@ -4384,6 +4383,7 @@ gorod.cn.ua##div[class^="bann_"]
 newsvl.ru##div[id][style="height: 120px;"]
 newsvl.ru##div[id][style="height: 80px;"]
 brb.to,cxz.to,fs.to##div[id^="admixer_async_"]
+cwer.ws,history.vn.ua,kino-dom.tv,maccentre.ru,seedoff.net,ukrlit.vn.ua,uniongang.tv##div[id^="bn_"]
 ixbt.com##div[id^="yandex_ad_"]
 yablyk.com##div[style*="-ad-bg-"]
 multik-online.net##div[style*=".am15."]
@@ -4502,6 +4502,8 @@ _advideo/$object-subrequest,domain=megogo.net
 ||ankontr.if.ua/swf/
 ||antec.com/*/web_banner/$domain=hw-lab.com
 ||antichat.ru/bn/
+||antimaydan.info/js/bn
+||antimaydan.info/js/rot
 ||antistarforce.com^$object
 ||ap.by/up/banner/
 ||ap.delfi.ua^
@@ -4722,6 +4724,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||fu.gk43.ru/media/
 ||fullgames.ru^$object
 ||futurevideo.su/images/brand_
+||g-tv.ru^*&auto_play=1$domain=kino-dom.tv
 ||gamebomb.ru/branding/
 ||gamemag.ru/admin/spaweditor/uploads/images/
 ||gamemag.ru/img/$object
@@ -4952,7 +4955,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||megashara.com^*/branding/
 ||megashara.com^*_branding/
 ||megatorrents.*/forum/$object
-||megogo.net^*?autoplay=1$domain=coldfilm.ru|kino-dom.tv
+||megogo.net^*?autoplay=1$domain=kino-dom.tv
 ||melt.ru/images/cms/_*0*_/
 ||mercatos.net/banner/
 ||meta.ua/f_new.*_teaser&
@@ -6038,7 +6041,7 @@ my.mail.ru#@#.adds
 roshlam.ru#@#.ads-content
 reklama-sev.com.ua#@#.ads-holder
 vtomske.ru#@#.adtable
-board.sibnet.ru,fridger.com.ua,postiralka.com.ua#@#.adv
+board.sibnet.ru,fridger.com.ua,postiralka.com.ua,tourdom.ru#@#.adv
 fridger.com.ua,postiralka.com.ua#@#.adv_left
 fridger.com.ua,postiralka.com.ua#@#.adv_right
 metagames.ru#@#.adv_top

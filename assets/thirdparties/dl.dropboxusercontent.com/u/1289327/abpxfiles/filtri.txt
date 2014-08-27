@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201408191032
+! Version: 201408261636
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 19-08-2014
+! Last modified: 26-08-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1600,7 +1600,6 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://it.primary.affinitad.com/?f=
 |http://*.ispazio.net/*/sfondo-ispazio_IFOA-ESPERO.jpg
 ||s.m2pub.com^$popup
-||sports.williamhill.it^$popup
 |http://*.m2pub.com/player.html?
 |http://*.adk2.com/matomy/
 |http://*.saggiamente.com/*/imgad*
@@ -1672,8 +1671,6 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 ||zedo.com^$popup
 |http://dojerena.com/*/Redirect.engine
 |http://dojerena.com/oe.ra
-|https://*.adcash.com/script/
-|http://onclickads.net/apu.php
 |http://oltreuomo.com/*/skin-*.png
 |http://*.mauxa.com/images/varie/bg-ground.png
 ||williamhill.it^$popup
@@ -3132,7 +3129,34 @@ bergamonews.it##.adv-background
 bergamonews.it###block-openx-11
 gilsmethod.com##[id^="ad_container"]
 gilsmethod.com###adsense_header
+gamemag.it###adv300top
+speedtest.net##[id^="google_ads_iframe"]
+speedtest.net###ad-top-wrap
+speedtest.net##[id^="div-gpt-ad"]
+speedtest.net##[class^="ad-vertical"]
+pingtest.net##.towerad
+pingtest.net##.ad.testbanner
+searchenterprisedesktop.techtarget.com##.sign-up-wrapper
+searchenterprisedesktop.techtarget.com##.login-register
+searchenterprisedesktop.techtarget.com##[id^="google_ads_iframe"]
+searchenterprisedesktop.techtarget.com##.ad.ad-hp
+bancheitalia.it##.adsbygoogle
+tuttosport.com##.box_Banner.bnr_728x90
+tuttosport.com##.box_Banner.bnr_300x250
+macupdate.com##[id^="google_ads_iframe"]
+macupdate.com###top_ad
+pcmag.com##[id^="google_ads_iframe"]
+thegamesmachine.it##.adsbygoogle
 ! [Gruppo di filtri suggeriti dagli utenti]
+theverge.com##.m-ad.m-ad__medrec.vert.vert300
+||adv.digisesso.com^$popup
+||cam4.it^$popup
+|http://banners.sexypartners.net/
+|http://*.exoclick.com/xhamster-945x100.php
+|http://enoratraffic.com/*/900_xhamster.php
+it.xhamster.com###adTop
+it.xhamster.com##.adVideo
+it.xhamster.com###adBottom
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB
 emuparadise.me##[class^="box ad"]

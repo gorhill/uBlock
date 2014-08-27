@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: stU0ColFXZ+yxmzPzgseSQ
-! Version: 201408251230
-! Last modified: 25 Aug 2014 12:30 UTC
+! Checksum: Qa5I/8mFe2/oN5HBni9R1A
+! Version: 201408271350
+! Last modified: 27 Aug 2014 13:50 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -75,6 +75,7 @@ _vkontakte.png
 -google-icon.
 -google-plus-
 -googleplus.
+-googleplus_
 -icon-facebook.
 -icon-fb.
 -icon-google-
@@ -91,6 +92,7 @@ _vkontakte.png
 -link-social.
 -linkedin-icon.
 -linkedin-rnd.
+-linkedin_
 -nav-social-
 -pinterest-button-
 -pinterest-button.
@@ -142,6 +144,7 @@ _vkontakte.png
 -socialMedia.
 -socialmediashare.
 -stumbleupon-icon-24.
+-stumbleupon_
 -subscribe-social.
 -twitter-15x15.
 -twitter-64.
@@ -404,6 +407,7 @@ _vkontakte.png
 /facebookwidget.
 /facebutton.png
 /fan-fb.png
+/farkit-btn.
 /fb-banner.
 /FB-Button.
 /fb-icn.
@@ -2834,6 +2838,7 @@ _youtube_small.
 ###sharebarTop
 ###sharebar_fixed
 ###sharebar_outer_wrapper
+###sharebar_wrapper
 ###sharebarp
 ###sharebarx
 ###shareblock
@@ -3624,6 +3629,7 @@ _youtube_small.
 ##.banner_tweets
 ##.bd-social
 ##.bean-social-profiles
+##.bean-social-subscribers
 ##.beauty-bookmarks
 ##.becomeFanFollow
 ##.beh-social-links-list
@@ -4689,10 +4695,12 @@ _youtube_small.
 ##.mdl_followUs
 ##.media-social
 ##.menu-article-share
+##.menu-fb
 ##.menu-social-gplus
 ##.menu-social-instagram
 ##.menu-social-menu-container
 ##.menu-socnav
+##.menu-twttr
 ##.menu_share
 ##.menusocial
 ##.messageShareButtons
@@ -4795,6 +4803,7 @@ _youtube_small.
 ##.partage-twitter
 ##.pcf-social-media-wrapper
 ##.pds-share
+##.persistent-menu_share-links
 ##.pg-caption-share
 ##.photo-share
 ##.pin-it-btn
@@ -6056,6 +6065,7 @@ _youtube_small.
 ##.twitter-follow-box
 ##.twitter-follow-button
 ##.twitter-followers
+##.twitter-grid-widget
 ##.twitter-hashtag
 ##.twitter-hover-horizontal
 ##.twitter-icon
@@ -6626,7 +6636,6 @@ _youtube_small.
 ||apis.google.com/*/socialgraph/$third-party
 ||apis.google.com/_/apps-static/_/js/gapi/*plusone/$third-party
 ||apis.google.com/_/scs/apps-static/*=page,plusone/$third-party
-||apis.google.com/js/client:plusone.js?*googlePlusButton$third-party
 ||apis.google.com/js/platform.js$third-party
 ||apis.google.com^*/widget/render/follow?$third-party
 ||apis.google.com^*/widget/render/page?$third-party
@@ -6753,6 +6762,7 @@ _youtube_small.
 ||share.loginradius.com^$third-party
 ||share.pluso.ru^$third-party
 ||share.static.skyrock.net^$third-party
+||share.yandex.ru^$third-party
 ||shareaholic.com^$third-party
 ||shares.api.awe.sm^$third-party
 ||sharethis.com^$third-party
@@ -7227,6 +7237,7 @@ _userbar_$image
 /mobile_top_icon.
 /modules/sharetools/*$script
 /myyahoo.gif
+/navicon-rss_
 /navicon_ap.gif
 /navicon_feeds.
 /newsgator.gif
@@ -7656,6 +7667,7 @@ _social_rss.
 ###live-intent-module
 ###macro-leadership-newsletter-signup
 ###mailShareButt
+###mailingListSignup
 ###main-share
 ###mbt_bar
 ###mc_embed_signup
@@ -7875,6 +7887,7 @@ _social_rss.
 ##.article-tile-newsletter
 ##.article_newsletter_signup
 ##.back-to-top
+##.backToTop
 ##.back_to_top
 ##.backtotop
 ##.bbccom_text
@@ -7888,6 +7901,7 @@ _social_rss.
 ##.bookmark_services
 ##.box-cookies
 ##.btnRSS
+##.btn__subscribe
 ##.capaAvisoCookies
 ##.capa_cookies
 ##.cb_ads
@@ -8046,10 +8060,12 @@ _social_rss.
 ##.js-newsletter-signup
 ##.js-scroll-to-top
 ##.lf_comment_notifier
+##.loggedout-follow-typekit
 ##.m-global-header__rss
 ##.m-rss
 ##.mbt-bookmark
 ##.meebo-1
+##.mk-go-top
 ##.mod-sharing-margin
 ##.mod-simplyhired
 ##.module-zerg
@@ -8213,6 +8229,7 @@ _social_rss.
 ##.targetAd
 ##.td-scroll-up
 ##.term-rss
+##.to-the-top
 ##.to-top
 ##.toTopButton
 ##.toast-type-newCookie
@@ -8279,6 +8296,7 @@ _social_rss.
 ##a[href="http://microbuttons.wordpress.com"]
 ##a[href^="http://survey.alluremedia.com.au/"]
 ##a[href^="http://www.kampyle.com/feedback_form/"]
+##a[title="Back to Top"]
 ##a[title="Daily Email Newsletter"]
 ##a[title="Get Feed RSS"]
 ##a[title="Scroll to Top"]
@@ -8588,6 +8606,7 @@ _social_rss.
 ||fem-inc.com^$third-party
 ||finderfox.smarterfox.com^*/finderfox.js$third-party
 ||flashgroup.com^$third-party
+||flaurse.net^$third-party
 ||fluidsurveys.com^$third-party
 ||followistic.com^$third-party
 ||folloyu.com^$third-party
@@ -8913,7 +8932,7 @@ mail.ru##a[id^="internet-offer"]
 !
 ! = Исключения ================================================================
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist_general_hide.txt ***
-dayz.com#@##go-top
+arma3.com,dayz.com#@##go-top
 libcom.org#@##main-share
 cookiechecker.nl,monkeegenes.co.uk#@##mc_embed_signup
 ~zippyshare.com###share_button
@@ -9344,6 +9363,9 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||wn-mobil.de^*/socialshareprivacy/$script
 @@||wn-trauer.de^*/socialshareprivacy/$script
 @@||womansday.com/cm/shared/social/social_tools-LL.js
+@@||wordpress.com/connect/googleplus-sign-in.js
+@@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-facebook.png
+@@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-twitter.png
 @@||wsj.net^*/social_icons.png$domain=marketwatch.com
 @@||www.google.*/images/*google.png
 @@||www.google.*/images/*googleplus.png

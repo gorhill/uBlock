@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: X2OfjaNLmbWSsBjA0B+iIw
-! Version: 201408251230
+! Checksum: teIPoQtXhv5QIwZRCrt3Gw
+! Version: 201408271350
 ! Title: EasyList without element hiding rules
-! Last modified: 25 Aug 2014 12:30 UTC
+! Last modified: 27 Aug 2014 13:50 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7644,6 +7644,7 @@ _popunder+$popup
 ||euroclick.com^$third-party
 ||euros4click.de^$third-party
 ||exactdrive.com^$third-party
+||excellenceads.com^$third-party
 ||exitexplosion.com^$third-party
 ||exitjunction.com^$third-party
 ||exoclick.com^$third-party
@@ -7791,6 +7792,7 @@ _popunder+$popup
 ||goviral.hs.llnwd.net^$third-party
 ||gpacalculatorhighschoolfree.com^$third-party
 ||grabmyads.com^$third-party
+||grabo.bg^$third-party
 ||grafpedia.com^$third-party
 ||grapeshot.co.uk^$third-party
 ||gratisnetwork.com^$third-party
@@ -7999,6 +8001,7 @@ _popunder+$popup
 ||klipmart.com^$third-party
 ||klixfeed.com^$third-party
 ||knorex.asia^$third-party
+||knowd.com^$third-party
 ||kolition.com^$third-party
 ||komoona.com^$third-party
 ||kontextua.com^$third-party
@@ -10054,6 +10057,7 @@ _popunder+$popup
 ||xlovecam.com^$third-party
 ||xmediawebs.net^$third-party
 ||xoliter.com^$third-party
+||xpollo.com^$third-party
 ||xpop.co^$third-party
 ||xxltr.com^$third-party
 ||xxxallaccesspass.com^$third-party
@@ -10574,6 +10578,7 @@ _popunder+$popup
 ||d2z1smm3i01tnr.cloudfront.net^
 ||d31807xkria1x4.cloudfront.net^
 ||d32pxqbknuxsuy.cloudfront.net^
+||d33f10u0pfpplc.cloudfront.net^
 ||d34obr29voew8l.cloudfront.net^
 ||d37kzqe5knnh6t.cloudfront.net^
 ||d38pxm3dmrdu6d.cloudfront.net^
@@ -11765,6 +11770,7 @@ _popunder+$popup
 ||banners.rushcommerce.com^$third-party
 ||banners.videosecrets.com^$third-party
 ||banners.webcams.com^$third-party
+||bannershotlink.perfectgonzo.com^
 ||bans.bride.ru^$third-party
 ||bbp.brazzers.com^$third-party
 ||bigmovies.com/images/banners/
@@ -12427,6 +12433,7 @@ _popunder+$popup
 ||arabseed.com/vlc.gif
 ||arabseed.com^*/open.js
 ||aravot.am/banner/
+||arenabg.com^*/banners/
 ||armorgames.com/assets/*_skin_
 ||armorgames.com^*/banners/
 ||armorgames.com^*/site-skins/
@@ -13112,6 +13119,7 @@ _popunder+$popup
 ||espn1320.net/get_preroll.php?
 ||essayinfo.com/img/125x125_
 ||esus.com/images/regiochat_logo.png
+||eteknix.com/wp-content/*-skin
 ||eteknix.com/wp-content/uploads/*Takeover
 ||etidbits.com/300x250news.php
 ||euphonik.dj/img/sponsors-
@@ -13141,9 +13149,9 @@ _popunder+$popup
 ||eweek.com^*/sponsored-
 ||ex1.gamecopyworld.com^$subdocument
 ||exceluser.com^*/pub/rotate_
-||exchangerates.org.uk/images/*_150x40.gif
-||exchangerates.org.uk/images/160x160_
-||exchangerates.org.uk/images/minibanner-
+||exchangerates.org.uk/images-NEW/tor.gif
+||exchangerates.org.uk/images/150_60_
+||exchangerates.org.uk/images/200x200_
 ||excite.com/gca_iframe.html
 ||expatexchange.com/banner/
 ||expatwomen.com/expat-women-sponsors/
@@ -16829,7 +16837,7 @@ _popunder+$popup
 @@||adap.tv/control?$object-subrequest
 @@||adap.tv/crossdomain.xml$object-subrequest
 @@||adap.tv/redir/client/adplayer.swf$object-subrequest
-@@||adap.tv/redir/client/static/as3adplayer.swf$object-subrequest,domain=blogtalkradio.com|collegehumor.com|freeonlinegames.com|openfilmpod.com|stickam.com|talkingpointsmemo.com|thesource.com|wildearth.tv|wunderground.com
+@@||adap.tv/redir/client/static/as3adplayer.swf$object-subrequest,domain=blogtalkradio.com|britannica.com|collegehumor.com|freeonlinegames.com|openfilmpod.com|stickam.com|talkingpointsmemo.com|thesource.com|wildearth.tv|wunderground.com
 @@||adap.tv/redir/client/swfloader.swf?$domain=box10.com|freeonlinegames.com|kizi.com|latimes.com|merriam-webster.com
 @@||adap.tv/redir/javascript/adaptvAdPlayer.js$domain=yepi.com
 @@||adap.tv/redir/javascript/vpaid.js
@@ -17155,6 +17163,7 @@ _popunder+$popup
 @@||brightcove.com^*bannerid$third-party
 @@||brighthouse.feedroom.com/adfinder.jsp?$domain=feedroom.com
 @@||brighthub.com/tmn/v1/bh_$subdocument
+@@||britannica.com/resources/images/shared/ad-loading.gif
 @@||britishairways.com/cms/global/styles/*/openx.css
 @@||brocraft.net/js/banners.js
 @@||brothersoft.com/gads/coop_show_download.php?soft_id=$script
@@ -18558,6 +18567,7 @@ _popunder+$popup
 @@||clkrev.com/banners/script/$script,domain=filmovizija.com
 @@||cloudvidz.net^$elemhide
 @@||clubedohardware.com.br/public/js/jsLoader.js?
+@@||clubedohardware.com.br^$elemhide
 @@||clubedohardware.com.br^*/advertisement.js
 @@||coinurl.com/get.php?id=18045
 @@||core.adprotected.com^$subdocument,domain=kissanime.com

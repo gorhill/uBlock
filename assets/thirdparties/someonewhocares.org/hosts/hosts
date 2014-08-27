@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Aug 25th, 2014 at 02:19
+# Last updated: Aug 26th, 2014 at 10:12
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -5267,6 +5267,7 @@ fe80::1%lo0	localhost
 127.0.0.1 cdnt.yottos.com
 127.0.0.1 cdn.udmserve.net
 127.0.0.1 cdn.undertone.com
+127.0.0.1 cdn.vidible.tv
 127.0.0.1 cdn.wg.uproxx.com
 127.0.0.1 cdnw.ringtonepartner.com
 127.0.0.1 cdn.yottos.com

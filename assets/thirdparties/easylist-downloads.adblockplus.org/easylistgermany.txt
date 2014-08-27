@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: tVhd3ysPeSzRjbnbu7hh/A
-! Version: 201408251231
+! Checksum: FSoYWO0FQkYqk3tjCwSRtQ
+! Version: 201408271351
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 25 Aug 2014 12:31 UTC
+! Last modified: 27 Aug 2014 13:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -6380,6 +6380,7 @@ ww3.cad.de##body > table[width="100%"][border="0"]:first-child
 acer-userforum.de##body > table[width="100%"][cellspacing="0"][cellpadding="0"][border="0"]:first-child > tbody:first-child:last-child > tr:first-child:last-child > td[width="195px"][valign="top"]:first-child
 schoener-fernsehen.com##body[allowfullscreen="true"][style="-moz-box-sizing: border-box; width: 100%; height: 100%; overflow: hidden;"] > iframe[id][class][scrolling="auto"][frameborder="0"][allowtransparency="true"][src^="http://schoener-fernsehen.com/"] + [id][class]
 schoener-fernsehen.com##body[msallowfullscreen="true"][webkitallowfullscreen="true"][mozallowfullscreen="true"][allowfullscreen="true"][data-twttr-rendered="true"][style="box-sizing: border-box; width: 100%; height: 100%; overflow: hidden;"]:last-child > div[id][class] + iframe[id][class][frameborder="0"][allowtransparency="true"][scrolling="auto"][src^="http://schoener-fernsehen.com/"] + div[id][class] + iframe[id][class][frameborder="0"][allowtransparency="true"][scrolling="auto"][src^="http://schoener-fernsehen.com/"] + div[id][class]
+schoener-fernsehen.com##body[msallowfullscreen="true"][webkitallowfullscreen="true"][mozallowfullscreen="true"][allowfullscreen="true"][data-twttr-rendered="true"][style] > iframe[id][class][frameborder="0"][allowtransparency="true"][scrolling="auto"][src^="http://schoener-fernsehen.com/"] + div[id][class]
 rtl.de##button[onclick^="verivox_go("]
 rsd-store.com##button[onclick^="visitPartner("]
 g-stream.in##button[onclick^="window.open('http://g-stream.in/mirror/"]
@@ -7400,6 +7401,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||werbung.gruppedrei.com^$~third-party
 @@||werbung.karstadt.de^$~third-party
 @@||werbung.oebb.at^$~third-party
+@@||werbung.pinkstinks.de^$domain=werbung.pinkstinks.de
 @@||werbung.specials.de^$subdocument,domain=zentralreisen.de
 @@||werkbank.bayern-online.de/oa23/www/delivery/spc.php?zones=$script,domain=bayern-online.de
 @@||werkbank.bayern-online.de/oa23/www/delivery/spcjs.php?id=$script,domain=bayern-online.de

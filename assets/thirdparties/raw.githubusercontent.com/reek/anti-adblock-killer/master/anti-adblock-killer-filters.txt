@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.4
+! Version: 7.5
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -444,6 +444,18 @@ online.dramacafe.tv#@#.afs_ads
 ! hln.be + nieuwsblad.be + demorgen.be
 @@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
 @@||pubads.g.doubleclick.net/gampad/ads?*$domain=syndication.vmma.be,object-subrequest
+! tvn24.pl
+@@||tvn.hit.gemius.pl^$script,domain=tvn24.pl
+@@||tvn.adocean.pl/_*/ad.js?*$script,domain=tvn24.pl
+! clubedohardware.com.br
+clubedohardware.com.br#@#.nexusad
+clubedohardware.com.br#@##banner
+clubedohardware.com.br#@#.ipsAd
+! secret-zone.net
+@@||secret-zone.net/abp/adblock_detector.js$script
+! cbs.com
+@@||analytics.edgesuite.net^$domain=cbs.com,object-subrequest
+@@||ailde.biz/a.sponsorads.js$domain=cbs.com,script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

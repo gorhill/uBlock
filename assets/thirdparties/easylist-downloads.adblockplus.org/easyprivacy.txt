@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: s+bLwpv2BJ9MKLAKPleOjQ
-! Version: 201408251231
+! Checksum: jGvnE5iI7IztOlh2WRquLg
+! Version: 201408271351
 ! Title: EasyPrivacy
-! Last modified: 25 Aug 2014 12:31 UTC
+! Last modified: 27 Aug 2014 13:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2970,6 +2970,7 @@ http://utm.
 ||leadintelligence.co.uk^$third-party
 ||leadlife.com^$third-party
 ||leadmanagerfx.com^$third-party
+||leadpages.net^$third-party
 ||leadsius.com^$third-party
 ||legolas-media.com^$third-party
 ||les-experts.com^$third-party
@@ -5189,6 +5190,7 @@ http://utm.
 ||o.aolcdn.com/js/mg1.js
 ||observer.ip-label.net^
 ||ocp.cnettv.com^*/Request.jsp?
+||octopart-analytics.com^$third-party
 ||oddcast.com/event.php?$object-subrequest
 ||offermatica.intuit.com^
 ||offers.keynote.com^$third-party
@@ -8788,6 +8790,7 @@ http://utm.
 @@||adobetag.com^*s_code.js$domain=fnac.com
 @@||aflac.com/js/wt_capi.js
 @@||akamai.net^*/omniture.jsp$script,domain=walmart.com
+@@||aliunicorn.com^*/click-stat.js
 @@||aliunicorn.com^*/click_stat/
 @@||analytics.atomiconline.com/services/jquery.js
 @@||analytics.edgesuite.net/html5/akamai*.js$domain=resignationbrewery.com
