@@ -403,8 +403,9 @@ var getPageDetails = function(µb, tabId) {
         return r;
     }
     var prepareRequests = function(requests, hasher) {
+        var µburi = µb.URI;
         var r = [];
-        var details, pos;
+        var details, pos, hostname, domain;
         for ( var requestURL in requests ) {
             if ( requests.hasOwnProperty(requestURL) === false ) {
                 continue;
@@ -416,9 +417,14 @@ var getPageDetails = function(µb, tabId) {
             hasher.appendStr(requestURL);
             hasher.appendStr(details);
             pos = details.indexOf('\t');
+            hostname = µburi.hostnameFromURI(requestURL);
+            domain = µburi.domainFromHostname(hostname);
+            if ( domain === '' ) {
+                domain = hostname;
+            }
             r.push({
                 type: details.slice(0, pos),
-                domain: µb.URI.domainFromURI(requestURL),
+                domain: domain,
                 url: requestURL,
                 reason: details.slice(pos + 1)
             });
