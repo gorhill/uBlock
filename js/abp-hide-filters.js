@@ -387,6 +387,10 @@ var makeHash = function(unhide, token, mask) {
 // Specific filers can be enforced before the main document is loaded.
 
 var FilterContainer = function() {
+    this.domainHashMask = (1 << 10) - 1;
+    this.genericHashMask = (1 << 15) - 1;
+    this.type0NoDomainHash = 'type0NoDomain';
+    this.type1NoDomainHash = 'type1NoDomain';
     this.parser = new FilterParser();
     this.reset();
 };
@@ -400,8 +404,6 @@ FilterContainer.prototype.reset = function() {
     this.frozen = false;
     this.acceptedCount = 0;
     this.duplicateCount = 0;
-    this.domainHashMask = (1 << 10) - 1;
-    this.genericHashMask = (1 << 15) - 1;
 
     this.selectorCache = {};
     this.selectorCacheCount = 0;
@@ -585,13 +587,20 @@ FilterContainer.prototype.freezeHostnameSpecifics = function(what, type) {
     var µburi = µb.URI;
     var entries = this[what];
     var filters = this.hostnameFilters;
-    var f, hash, bucket;
+    var f, domain, hash, bucket;
     for ( var hostname in entries ) {
         if ( entries.hasOwnProperty(hostname) === false ) {
             continue;
         }
         f = new FilterHostname(Object.keys(entries[hostname]).join(',\n'), hostname);
-        hash = makeHash(type, µburi.domainFromHostname(hostname), this.domainHashMask);
+        // https://github.com/gorhill/uBlock/issues/188
+        // If not a real domain as per PSL, assign a synthetic one
+        domain = µburi.domainFromHostname(hostname);
+        if ( domain === '' ) {
+            hash = type === 0 ? this.type0NoDomainHash : this.type1NoDomainHash;
+        } else {
+            hash = makeHash(type, domain, this.domainHashMask);
+        }
         bucket = filters[hash];
         if ( bucket === undefined ) {
             filters[hash] = f;
@@ -816,7 +825,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     //quickProfiler.start('FilterContainer.retrieve()');
 
     var hostname = µb.URI.hostnameFromURI(request.locationURL);
-    var domain = µb.URI.domainFromHostname(hostname);
+    var domain = µb.URI.domainFromHostname(hostname) || hostname;
     var pos = domain.indexOf('.');
 
     var r = {
@@ -829,16 +838,26 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     };
 
     var hash, bucket;
-    hash = makeHash(0, r.domain, this.domainHashMask);
+    hash = makeHash(0, domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
+        bucket.retrieve(hostname, r.cosmeticHide);
+    }
+    // https://github.com/gorhill/uBlock/issues/188
+    // Special bucket for those filters without a valid domain name as per PSL
+    if ( bucket = this.hostnameFilters[this.type0NoDomainHash] ) {
         bucket.retrieve(hostname, r.cosmeticHide);
     }
     hash = makeHash(0, r.entity, this.domainHashMask);
     if ( bucket = this.entityFilters[hash] ) {
         bucket.retrieve(pos === -1 ? domain : hostname.slice(0, pos - domain.length), r.cosmeticHide);
     }
-    hash = makeHash(1, r.domain, this.domainHashMask);
+    hash = makeHash(1, domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
+        bucket.retrieve(hostname, r.cosmeticDonthide);
+    }
+    // https://github.com/gorhill/uBlock/issues/188
+    // Special bucket for those filters without a valid domain name as per PSL
+    if ( bucket = this.hostnameFilters[this.type1NoDomainHash] ) {
         bucket.retrieve(hostname, r.cosmeticDonthide);
     }
 
