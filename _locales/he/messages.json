@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"לחיצה: כבה\/הפעל את µBlock לאתר זה לצמיתות.\n\n<Ctrl>-לחיצה: כבה את µBlock רק בדף זה.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"לחיצה: כבה\/הפעל את µBlock לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את µBlock רק בדף זה.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"בקשות שנחסמו",

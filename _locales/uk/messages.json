@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"натисніть кнопку живлення аби вимкнути або увімкнути µBlock для поточного сайту",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"Натиснення: вимикає\/умикає µBlock для поточного сайту.\n\nCtrl+натиснення: вимикає µBlock тільки для цієї сторінки.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"запитів заблоковано",

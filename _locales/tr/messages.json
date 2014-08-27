@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Bu sitede µBlock'u tamamen kapatmak ve açmak için güç düğmesine tıklatın",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"Tıklama: µBlock'u bu site için kalıcı olarak devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: µBlock'u sadece bu sayfa için devre dışı bırak.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"istek engellendi",
@@ -160,11 +160,11 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"Önbelleği Temizle",
+    "message":"önbelleği temizle",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Yeni sürüm mevcut",
+    "message":"yeni sürüm mevcut",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{

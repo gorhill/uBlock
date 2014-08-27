@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése a μBlock-ban.\n\n<Ctrl>-klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése a μBlock-ban.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"Blockolt request-ek",

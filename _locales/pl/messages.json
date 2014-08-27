@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Kliknij, aby na stałe włączyć\/wyłączyć µBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem <Ctrl>, aby wyłączyć µBlock tylko dla tej strony.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"zablokowane żądania",

@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"kliknutím na vypínač trvale zakážete nebo povolíte µBlock pro tuto stránku",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"Kliknutí: trvale zakázat µBlock pro celý tento web.\n\nCtrl+kliknutí: zakázat µBlock pouze pro tuto stránku.",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"požadavků zablokováno",

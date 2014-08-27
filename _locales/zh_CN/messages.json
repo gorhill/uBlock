@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"点击按钮 µBlock 对于当前网站 永久禁用或启用",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\n<Ctrl>-click: disable µBlock only on this page."
+    "message":"点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
+    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"已拦截广告",
@@ -100,11 +100,11 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"自动更新过滤规则",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"立即更新",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -164,11 +164,11 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"有新版本",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
+    "message":"可能过时了",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
