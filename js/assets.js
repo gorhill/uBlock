@@ -870,6 +870,25 @@ exports.put = function(path, content, callback) {
 exports.metadata = function(callback) {
     var out = {};
 
+    // https://github.com/gorhill/uBlock/issues/186
+    // We need to check cache obsolescence when both cache and repo meta data
+    // has been gathered.
+    var checkCacheObsolescence = function() {
+        var obsolete = Date.now() - exports.autoUpdateDelay;
+        var entry;
+        for ( var path in out ) {
+            if ( out.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            entry = out[path];
+            entry.cacheObsolete =
+                typeof entry.homeURL === 'string' &&
+                entry.homeURL !== '' &&
+                (typeof entry.lastModified !== 'number' || entry.lastModified <= obsolete);
+        }
+        callback(out);
+    };
+
     var onRepoMetaReady = function(meta) {
         var entries = meta.entries;
         var entryRepo, entryOut;
@@ -886,18 +905,11 @@ exports.metadata = function(callback) {
             entryOut.repoChecksum = entryRepo.repoChecksum;
             entryOut.homeURL = entryRepo.homeURL;
             entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
-            // If the asset has a remote home and there is no corresponding
-            // cache entry, it could be obsolete (because the asset could
-            // have been modified after uBlock repo was updated).
-            if ( entryOut.homeURL && typeof entryOut.lastModified !== 'number' ) {
-                entryOut.cacheObsolete = true;
-            }
         }
-        callback(out);
+        checkCacheObsolescence();
     };
 
     var onCacheMetaReady = function(entries) {
-        var obsolete = Date.now() - exports.autoUpdateDelay;
         var entryOut;
         for ( var path in entries ) {
             if ( entries.hasOwnProperty(path) === false ) {
@@ -913,7 +925,6 @@ exports.metadata = function(callback) {
                 continue;
             }
             entryOut.cached = true;
-            entryOut.cacheObsolete = entryOut.lastModified <= obsolete;
             if ( reIsExternalPath.test(path) ) {
                 entryOut.homeURL = path;
             }
