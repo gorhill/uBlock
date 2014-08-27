@@ -109,7 +109,11 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.previousPageURL = '';
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
-    this.pageDomain = µb.URI.domainFromHostname(this.pageHostname);
+
+    // https://github.com/gorhill/uBlock/issues/185
+    // Use hostname if no domain can be extracted
+    this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
+
     this.frames = disposeFrameStores(this.frames);
     this.netFiltering = true;
     this.netFilteringReadTime = 0;

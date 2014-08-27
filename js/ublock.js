@@ -30,11 +30,14 @@
 
     // The caller may provide an already known domain -- convenient to reduce
     // overhead of extracting a domain from the url
-    if ( domain === undefined ) {
+    if ( typeof domain !== 'string' ) {
         domain = this.URI.domainFromHostname(keyHostname);
     }
-    if ( !domain ) {
-        return true;
+
+    // https://github.com/gorhill/uBlock/issues/185
+    // Use hostname if no domain can be extracted
+    if ( domain === '' ) {
+        domain = keyHostname;
     }
 
     var exceptions = this.netWhitelist[domain];
@@ -73,8 +76,11 @@
     // The caller may provide an already known domain -- convenient to reduce
     // overhead of extracting a domain from `key`
     var domain = this.URI.domainFromHostname(keyHostname);
-    if ( !domain ) {
-        return false;
+
+    // https://github.com/gorhill/uBlock/issues/185
+    // Use hostname if no domain can be extracted
+    if ( domain === '' ) {
+        domain = keyHostname;
     }
 
     var currentState = this.getNetFilteringSwitch(url, domain);
@@ -153,14 +159,15 @@
 µBlock.whitelistFromString = function(s) {
     var exceptions = {};
     var lines = s.split(/[\n\r]+/);
-    var line, domain, bucket;
+    var line, hostname, domain, bucket;
     for ( var i = 0; i < lines.length; i++ ) {
         line = lines[i].trim();
-        domain = line.indexOf('/') !== -1 ?
-            this.URI.domainFromURI(line) :
-            this.URI.domainFromHostname(line);
-        if ( !domain ) {
-            continue;
+        hostname = line.indexOf('/') !== -1 ? this.URI.hostnameFromURI(line) : line;
+        domain = this.URI.domainFromHostname(hostname);
+        // https://github.com/gorhill/uBlock/issues/185
+        // Use hostname if no domain can be extracted
+        if ( domain === '' ) {
+            domain = hostname;
         }
         bucket = exceptions[domain];
         if ( bucket === undefined ) {
