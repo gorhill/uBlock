@@ -41,6 +41,7 @@
 
 const BlockAction = 0 << 15;
 const AllowAction = 1 << 15;
+const ToggleAction = BlockAction ^ AllowAction;
 
 const AnyType = 1 << 11;
 
@@ -209,6 +210,12 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlain.prototype.toString = function() {
+    return this.s;
+};
+
+/******************************************************************************/
+
 var FilterPlainHostname = function(s, tokenBeg, hostname) {
     this.s = s;
     this.tokenBeg = tokenBeg;
@@ -219,6 +226,10 @@ FilterPlainHostname.prototype.match = function(url, tokenBeg) {
     // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
+};
+
+FilterPlainHostname.prototype.toString = function() {
+    return this.s + '$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -232,6 +243,12 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlainPrefix0.prototype.toString = function() {
+    return this.s;
+};
+
+/******************************************************************************/
+
 var FilterPlainPrefix0Hostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
@@ -241,6 +258,10 @@ FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
     // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg, this.s.length) === this.s;
+};
+
+FilterPlainPrefix0Hostname.prototype.toString = function() {
+    return this.s + '$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -254,6 +275,12 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
+FilterPlainPrefix1.prototype.toString = function() {
+    return this.s;
+};
+
+/******************************************************************************/
+
 var FilterPlainPrefix1Hostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
@@ -263,6 +290,10 @@ FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
     // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg - 1, this.s.length) === this.s;
+};
+
+FilterPlainPrefix1Hostname.prototype.toString = function() {
+    return this.s + '$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -276,6 +307,12 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
     return url.slice(0, this.s.length) === this.s;
 };
 
+FilterPlainLeftAnchored.prototype.toString = function() {
+    return '|' + this.s;
+};
+
+/******************************************************************************/
+
 var FilterPlainLeftAnchoredHostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
@@ -285,6 +322,10 @@ FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
     // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(0, this.s.length) === this.s;
+};
+
+FilterPlainLeftAnchoredHostname.prototype.toString = function() {
+    return '|' + this.s + '$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -298,6 +339,12 @@ FilterPlainRightAnchored.prototype.match = function(url) {
     return url.slice(-this.s.length) === this.s;
 };
 
+FilterPlainRightAnchored.prototype.toString = function() {
+    return this.s + '|';
+};
+
+/******************************************************************************/
+
 var FilterPlainRightAnchoredHostname = function(s, hostname) {
     this.s = s;
     this.hostname = hostname;
@@ -309,6 +356,10 @@ FilterPlainRightAnchoredHostname.prototype.match = function(url) {
            url.slice(-this.s.length) === this.s;
 };
 
+FilterPlainRightAnchoredHostname.prototype.toString = function() {
+    return this.s + '|$domain=' + this.hostname;
+};
+
 /******************************************************************************/
 
 // With a single wildcard, regex is not optimal.
@@ -317,7 +368,6 @@ FilterPlainRightAnchoredHostname.prototype.match = function(url) {
 //   http://jsperf.com/regexp-vs-indexof-abp-hit/3
 
 var FilterSingleWildcard = function(s, tokenBeg) {
-    this.s = s;
     this.tokenBeg = tokenBeg;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
@@ -331,8 +381,13 @@ FilterSingleWildcard.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcard.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment;
+};
+
+/******************************************************************************/
+
 var FilterSingleWildcardHostname = function(s, tokenBeg, hostname) {
-    this.s = s;
     this.tokenBeg = tokenBeg;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
@@ -348,10 +403,13 @@ FilterSingleWildcardHostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardHostname.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
+};
+
 /******************************************************************************/
 
 var FilterSingleWildcardPrefix0 = function(s) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -363,8 +421,13 @@ FilterSingleWildcardPrefix0.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardPrefix0.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment;
+};
+
+/******************************************************************************/
+
 var FilterSingleWildcardPrefix0Hostname = function(s, hostname) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -378,6 +441,10 @@ FilterSingleWildcardPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardPrefix0Hostname.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
+};
+
 /******************************************************************************/
 
 // With a single wildcard, regex is not optimal.
@@ -386,7 +453,6 @@ FilterSingleWildcardPrefix0Hostname.prototype.match = function(url, tokenBeg) {
 //   http://jsperf.com/regexp-vs-indexof-abp-hit/3
 
 var FilterSingleWildcardLeftAnchored = function(s) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -398,8 +464,13 @@ FilterSingleWildcardLeftAnchored.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardLeftAnchored.prototype.toString = function() {
+    return '|' + this.lSegment + '*' + this.rSegment;
+};
+
+/******************************************************************************/
+
 var FilterSingleWildcardLeftAnchoredHostname = function(s, hostname) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -413,6 +484,10 @@ FilterSingleWildcardLeftAnchoredHostname.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardLeftAnchoredHostname.prototype.toString = function() {
+    return '|' + this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
+};
+
 /******************************************************************************/
 
 // With a single wildcard, regex is not optimal.
@@ -421,7 +496,6 @@ FilterSingleWildcardLeftAnchoredHostname.prototype.match = function(url) {
 //   http://jsperf.com/regexp-vs-indexof-abp-hit/3
 
 var FilterSingleWildcardRightAnchored = function(s) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -433,8 +507,13 @@ FilterSingleWildcardRightAnchored.prototype.match = function(url) {
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
 
+FilterSingleWildcardRightAnchored.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment + '|';
+};
+
+/******************************************************************************/
+
 var FilterSingleWildcardRightAnchoredHostname = function(s, hostname) {
-    this.s = s;
     var wcOffset = s.indexOf('*');
     this.lSegment = s.slice(0, wcOffset);
     this.rSegment = s.slice(wcOffset + 1);
@@ -446,6 +525,10 @@ FilterSingleWildcardRightAnchoredHostname.prototype.match = function(url) {
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(-this.rSegment.length) === this.rSegment &&
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
+};
+
+FilterSingleWildcardRightAnchoredHostname.prototype.toString = function() {
+    return this.lSegment + '*' + this.rSegment + '|$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -467,6 +550,12 @@ FilterManyWildcards.prototype.match = function(url, tokenBeg) {
     return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
+FilterManyWildcards.prototype.toString = function() {
+    return this.s;
+};
+
+/******************************************************************************/
+
 var FilterManyWildcardsHostname = function(s, tokenBeg, hostname) {
     this.s = s;
     this.tokenBeg = tokenBeg;
@@ -478,6 +567,10 @@ FilterManyWildcardsHostname.prototype.match = function(url, tokenBeg) {
     // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            this.re.test(url.slice(tokenBeg - this.tokenBeg));
+};
+
+FilterManyWildcardsHostname.prototype.toString = function() {
+    return this.s + '$domain=' + this.hostname;
 };
 
 /******************************************************************************/
@@ -613,20 +706,10 @@ var trimChar = function(s, c) {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.action = BlockAction;
-    this.anchor = 0;
     this.domains = [];
-    this.elemHiding = false;
-    this.f = '';
-    this.firstParty = false;
-    this.fopts = '';
-    this.hostname = false;
     this.hostnames = [];
-    this.notDomains = [];
-    this.notHostnames = [];
-    this.thirdParty = false;
     this.types = [];
-    this.unsupported = false;
+    this.reset();
 };
 
 /******************************************************************************/
@@ -648,17 +731,16 @@ FilterParser.prototype.toNormalizedType = {
 FilterParser.prototype.reset = function() {
     this.action = BlockAction;
     this.anchor = 0;
-    this.domains = [];
+    this.domains.length = 0;
     this.elemHiding = false;
     this.f = '';
     this.firstParty = false;
     this.fopts = '';
     this.hostname = false;
-    this.hostnames = [];
-    this.notDomains = [];
-    this.notHostnames = [];
+    this.hostnames.length = 0;
+    this.notHostname = false;
     this.thirdParty = false;
-    this.types = [];
+    this.types.length = 0;
     this.unsupported = false;
     return this;
 };
@@ -710,13 +792,17 @@ FilterParser.prototype.parseOptHostnames = function(raw) {
         if ( domain === '' ) {
             domain = noDomainName;
         }
-        if ( not ) {
-            this.notHostnames.push(hostname);
-            this.notDomains.push(domain);
-        } else {
-            this.hostnames.push(hostname);
-            this.domains.push(domain);
+        // https://github.com/gorhill/uBlock/issues/191
+        // Well it doesn't seem to make a whole lot of sense to have both 
+        // non-negated hostnames mixed with negated hostnames.
+        if ( this.hostnames.length !== 0 && not !== this.notHostname ) {
+            console.error('FilterContainer.parseOptHostnames(): ambiguous filter syntax: "%s"', this.f);
+            this.unsupported = true;
+            return;
         }
+        this.notHostname = not;
+        this.hostnames.push(hostname);
+        this.domains.push(domain);
     }
 };
 
@@ -811,27 +897,30 @@ FilterParser.prototype.parse = function(s) {
 
 var FilterBucket = function(a, b) {
     this.filters = [a, b];
-    this.s = '';
+    this.f = null;
 };
-
-/******************************************************************************/
 
 FilterBucket.prototype.add = function(a) {
     this.filters.push(a);
 };
-
-/******************************************************************************/
 
 FilterBucket.prototype.match = function(url, tokenBeg) {
     var filters = this.filters;
     var i = filters.length;
     while ( i-- ) {
         if ( filters[i].match(url, tokenBeg) !== false ) {
-            this.s = filters[i].s;
+            this.f = filters[i];
             return true;
         }
     }
     return false;
+};
+
+FilterBucket.prototype.toString = function() {
+    if ( this.f !== null ) {
+        return this.f.toString();
+    }
+    return '';
 };
 
 /******************************************************************************/
@@ -996,19 +1085,12 @@ FilterContainer.prototype.addFilter = function(parsed) {
     }
     var tokenBeg = matches.index;
     var tokenEnd = parsed.hostname ? reHostnameToken.lastIndex : reGoodToken.lastIndex;
-    var i, n, filter;
+    var filter;
 
-    // https://github.com/gorhill/uBlock/issues/191
-    // Well it doesn't seem to make a whole lot of sense to have both 
-    // non-negated hostnames mixed with negated hostnames.
-    if ( parsed.hostnames.length && parsed.notHostnames.length ) {
-        console.error('FilterContainer.addFilter(): ambiguous filter syntax', parsed.f);
-        return false;
-    }
+    var i = parsed.hostnames.length;
 
-    if ( parsed.hostnames.length ) {
-        n = parsed.hostnames.length;
-        for ( i = 0; i < n; i++ ) {
+    if ( i !== 0 && !parsed.notHostname ) {
+        while ( i-- ) {
             filter = makeHostnameFilter(parsed, tokenBeg, parsed.hostnames[i]);
             if ( !filter ) {
                 return false;
@@ -1026,24 +1108,29 @@ FilterContainer.prototype.addFilter = function(parsed) {
 
     // https://github.com/gorhill/uBlock/issues/191
     // Invert the purpose of the filter for negated hostnames
-    if ( parsed.notHostnames.length ) {
+    if ( i !== 0 && parsed.notHostname ) {
         filter = makeFilter(parsed, tokenBeg);
         if ( !filter ) {
             return false;
         }
         this.addFilterEntry(filter, parsed, AnyParty, tokenBeg, tokenEnd);
         // Reverse purpose of filter
-        parsed.action ^= (BlockAction ^ AllowAction);
-        n = parsed.notHostnames.length;
-        for ( i = 0; i < n; i++ ) {
-            filter = makeHostnameFilter(parsed, tokenBeg, parsed.notHostnames[i]);
+        parsed.action ^= ToggleAction;
+        while ( i-- ) {
+            filter = makeHostnameFilter(parsed, tokenBeg, parsed.hostnames[i]);
             if ( !filter ) {
                 return false;
+            }
+            // https://github.com/gorhill/uBlock/issues/191#issuecomment-53654024
+            // If it is a block filter, we need to reverse the order of
+            // evaluation.
+            if ( parsed.action === BlockAction ) {
+                filter.important = true;
             }
             this.addFilterEntry(
                 filter,
                 parsed,
-                SpecificParty | this.toDomainBits(parsed.notDomains[i]),
+                SpecificParty | this.toDomainBits(parsed.domains[i]),
                 tokenBeg,
                 tokenEnd
             );
@@ -1123,49 +1210,49 @@ FilterContainer.prototype.matchTokens = function(url) {
         if ( bucket0 !== undefined ) {
             f = bucket0[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket1 !== undefined ) {
             f = bucket1[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket2 !== undefined ) {
             f = bucket2[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket3 !== undefined ) {
             f = bucket3[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket4 !== undefined ) {
             f = bucket4[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket5 !== undefined ) {
             f = bucket5[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket6 !== undefined ) {
             f = bucket6[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
         if ( bucket7 !== undefined ) {
             f = bucket7[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f.s;
+                return f;
             }
         }
     }
@@ -1251,11 +1338,18 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
     buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
     buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
-    var br = this.matchTokens(url);
+    var bf = this.matchTokens(url);
 
     // If there is no block filter, no need to test against allow filters
-    if ( br === false ) {
+    if ( bf === false ) {
         return false;
+    }
+
+    // The purpose of the `important` property is to reverse the order of
+    // evaluation. Normally, it is "evaluate block then evaluate allow", with
+    // the `important` property it is "evaluate allow then evaluate block".
+    if ( bf.important === true  ) {
+        return bf.toString();
     }
 
     // Test against allow filters
@@ -1263,12 +1357,12 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     buckets[4] = categories[this.makeCategoryKey(AllowAction | type | party)];
     buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
     buckets[7] = categories[this.makeCategoryKey(AllowOneParty | type | this.noDomainBits)];
-    var ar = this.matchTokens(url);
-    if ( ar !== false ) {
-        return '@@' + ar;
+    var af = this.matchTokens(url);
+    if ( af !== false ) {
+        return '@@' + af.toString();
     }
 
-    return br;
+    return bf.toString();
 };
 
 /******************************************************************************/
@@ -1309,9 +1403,9 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         ThirdParty;
 
     // Test hostname-based block filters
-    var br = this.matchAnyPartyHostname(requestHostname);
-    if ( br === false && party === ThirdParty ) {
-        br = this.match3rdPartyHostname(requestHostname);
+    var bf = this.matchAnyPartyHostname(requestHostname);
+    if ( bf === false && party === ThirdParty ) {
+        bf = this.match3rdPartyHostname(requestHostname);
     }
 
     // This will be used by hostname-based filters
@@ -1323,7 +1417,7 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     var buckets = this.buckets;
 
     // Test against block filters
-    if ( br === false ) {
+    if ( bf === false ) {
         buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
         buckets[1] = categories[this.makeCategoryKey(BlockAnyType | party)];
         buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
@@ -1334,12 +1428,19 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         // Test for synthetic domain as well
         buckets[6] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | this.noDomainBits)];
         buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
-        br = this.matchTokens(url);
+        bf = this.matchTokens(url);
     }
 
     // If there is no block filter, no need to test against allow filters
-    if ( br === false ) {
+    if ( bf === false ) {
         return false;
+    }
+
+    // The purpose of the `important` property is to reverse the order of
+    // evaluation. Normally, it is "evaluate block then evaluate allow", with
+    // the `important` property it is "evaluate allow then evaluate block".
+    if ( bf.important === true  ) {
+        return bf.toString();
     }
 
     // Test against allow filters
@@ -1353,12 +1454,12 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // Test for synthetic domain as well
     buckets[6] = categories[this.makeCategoryKey(AllowAnyTypeOneParty | this.noDomainBits)];
     buckets[7] = categories[this.makeCategoryKey(AllowOneParty | type | this.noDomainBits)];
-    var ar = this.matchTokens(url);
-    if ( ar !== false ) {
-        return '@@' + ar;
+    var af = this.matchTokens(url);
+    if ( af !== false ) {
+        return '@@' + af.toString();
     }
 
-    return br;
+    return bf.toString();
 };
 
 /******************************************************************************/
