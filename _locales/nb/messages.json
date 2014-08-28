@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Hviteliste",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"klikk på strømknappen for å <br>permanent deaktivere eller aktivere <br>µBlock for den aktuelle siden",
+    "message":"Klikk: permanent deaktivere\/aktivere µBlock for dette området. \nCtrl+klikk: deaktivere µBlock bare på denne siden.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -48,19 +48,19 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"or",
+    "message":"eller",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Klikk for å åpne dashbordet",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Elementvelger modus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Gå til loggen",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -76,7 +76,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Nettfiltere",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -100,19 +100,19 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Automatisk oppdatering av filterlister.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Oppdater nå",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Analysere og håndheve kosmetisk filtre.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>Dette alternativet aktiverer analyse og håndheve <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-kompatible &ldquo;elementet skjuler&rdquo;  filtre<\/a>. Disse filtrene er hovedsakelig kosmetisk, men skjuler også elementer på en webside som anses for å være en visuell ordensforstyrrelser, og som ikke blokkeres av den&ldquo; forespørsel-basert Filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker <i>µBlock<\/i> minne fotavtrykk.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -124,51 +124,51 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"Annonser",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Personvern",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Ondsinnede domener",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Sosiale",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Flerformåls",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Regioner, språk",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Egendefinert",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"En URL-adresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige URL-adresser ignoreres stille.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"Bruke",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"rens buffer",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"ny versjon tilgjengelig",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
+    "message":"kan være foreldet",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
@@ -188,7 +188,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Listen over vertsnavn som µBlock vil bli deaktivert. Én oppføring per linje. Ugyldig vertsnavn ignorert uten advarsel.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -208,7 +208,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Hvis du ønsker ved å aktivere dette alternativet, kan du kontrollere detaljer om blokkerte forespørsler. Logging av blokkerte forespørsler øker minnet footprint av µBlock. Siden mange brukere vil aldri bruke denne funksjonen, deaktiveres som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Hvis du ønsker ved å aktivere dette alternativet, kan du kontrollere detaljer om ikke-blokkert forespørsler. Logging av ikke-blokkert forespørsler øker minnet forbruket av µBlock. Siden mange brukere vil aldri bruke denne funksjonen, er den deaktivert som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

@@ -4,267 +4,267 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Nareszcie, wydajne blokowanie reklam dla przeglądarek opartych na Chromium. Niskie użycie procesora i pamięci.",
+    "message":"Finalmente, um bloqueador eficiente para navegadores baseados no Chromium. Leve no processador e memória.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
-    "message":"Ustawienia",
+    "message":"Definições",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"Lista filtrów",
+    "message":"Filtros de terceiros",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Twoje filtry",
+    "message":"Filtros pessoais",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Biała lista",
+    "message":"Lista de permissões",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statystyki",
+    "message":"Estatísticas",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"O rozszerzeniu",
+    "message":"Acerca",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Kliknij, aby na stałe włączyć\/wyłączyć µBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć µBlock tylko dla tej strony.",
+    "message":"Clique: desactivar\/activar permanentemente o µBlock para este site.\n\nCtrl+clique: desactivar o µBlock unicamente nesta página.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"zablokowane żądania",
+    "message":"Pedidos bloqueados",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"na tej stronie",
+    "message":"nesta página",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"od instalacji",
+    "message":"desde a instalação",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"lub",
+    "message":"ou",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliknij, aby otworzyć panel",
+    "message":"Clique para abrir o painel de controlo",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Przejdź do trybu zaznaczania elementów",
+    "message":"Entrar no modo de seleccionador de elemento",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Przejdź do dziennika żądań",
+    "message":"Ir para o registo de pedidos",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Utwórz",
+    "message":"Criar",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Wybierz",
+    "message":"Seleccionar",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Zamknij",
+    "message":"Sair",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Filtry sieciowe",
+    "message":"Filtros de rede",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Filtry kosmetyczne",
+    "message":"Filtros cosméticos",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ukryj pozostałości po zablokowanych elementach",
+    "message":"Ocultar espaços ocupados por elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Pokaż liczbę zablokowanych żądań przy ikonie",
+    "message":"Mostrar o número de pedidos bloqueados no ícone",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtry sieciowe ＋ {{cosmeticFilterCount}} filtry kosmetyczne z:",
+    "message":"{{netFilterCount}} filtros de rede ＋ {{cosmeticFilterCount}} filtros cosméticos a partir de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} użytych z {{total}}",
+    "message":"{{used}} usado de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Automatycznie aktualizuj listy filtrów.",
+    "message":"Actualizar automaticamente as listas dos filtros.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Zaktualizuj teraz",
+    "message":"Actualizar agora",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Przetwarzaj i egzekwuj filtry kosmetyczne.",
+    "message":"Analisar e aplicar os filtros cosméticos.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Opcja ta włącza przetwarzanie i używanie filtrów <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">ukrywania elementów kompatybilnych z Adblock Plus<\/a>. Filtry te są głównie kosmetyczne, służą do ukrycia elementów na stronach, które są uważane za wizualne uciążliwe, a które nie mogą zostać zablokowane przez mechanizm filtrujący.<\/p><p>Włączenie tej funkcji zwiększa zużycie pamięci przez <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos numa página web que sejam considerados incómodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Activar esta funcionalidade aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lista blokowanych hostów",
+    "message":"Listas de hosts bloqueados",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Zastosuj zmiany",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Reklamy",
+    "message":"Anúncios",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Prywatność",
+    "message":"Privacidade",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Szkodliwe domeny",
+    "message":"Domínios maliciosos",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Media społecznościowe",
+    "message":"Social",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Wielofunkcyjne",
+    "message":"Multiuso",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regiony, języki",
+    "message":"Regiões, idiomas",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Niestandardowe",
+    "message":"Personalizado",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Jeden URL na linię. Linie poprzedzone znakiem &lsquo;!&rsquo; będą pominięte. Błędne URL zostaną zignorowane.",
+    "message":"Um endereço por linha. Linhas começadas com &lsquo;!&rsquo; serão ignoradas. Endereços inválidos serão ignorados silenciosamente.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Zastosuj",
+    "message":"Aplicar",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"wyczyść pamięć podręczną",
+    "message":"Limpar cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"dostępna nowa wersja",
+    "message":"nova versão disponível",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"może być nieaktualne",
+    "message":"pode ser obsoleto",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"Jeden filtr na linię. Filtrem może być nazwa hosta, albo filtr kompatybilny z Adblock Plus. Linie poprzedzone znakiem &lsquo;!&rsquo; będą ignorowane.",
+    "message":"Um filtro por linha. Um filtro pode ser um simples hostname, ou um filtro compatível com o Adblock Plus. Linhas começadas por &lsquo;!&rsquo; serão ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importuj i dołącz",
+    "message":"Importar e anexar",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eksportuj",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Zastosuj zmiany",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Twoja lista nazw hostów, na których µBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
+    "message":"Lista pessoal de hostnames para os quais o µBlock será desactivado. Uma entrada por linha. Hostnames inválidos serão ignorados silenciosamente.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importuj i dołącz",
+    "message":"Importar e anexar",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Eksportuj",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Zastosuj zmiany",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Włącz logowanie zablokowanych żądań",
+    "message":"Activar o registo de pedidos bloqueados",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"Możesz zobaczyć dokładne informacje o blokowanych żądaniach poprzez włączenie tej opcji . Logowanie blokowanych żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
+    "message":"Se desejar, poderá analisar os detalhes de pedidos bloqueados ao seleccionar esta opção. O registo de pedidos bloqueados aumenta o consumo de memória do µBlock. Como a maior parte dos utilizadores não irá usar esta funcionalidade, esta está desactivada por predefinição.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Włącz logowanie nieblokowanych żądań",
+    "message":"Activar o registo de pedidos não bloqueados",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"Możesz zobaczyć dokładne informacje o nie blokowanych żądaniach poprzez włączenie tej opcji . Logowanie nie blokowanych żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
+    "message":"Se desejar, poderá analisar os detalhes de pedidos não bloqueados ao seleccionar esta opção. O registo de pedidos não bloqueados aumenta o consumo de memória do µBlock. Como a maior parte dos utilizadores não irá usar esta funcionalidade, esta está desactivada por predefinição.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Zablokowane żądania",
+    "message":"Pedidos bloqueados",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Dozwolone żądania",
+    "message":"Pedidos permitidos",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Typ",
+    "message":"Tipo",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domena",
+    "message":"Domínio",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"URL",
+    "message":"Endereço",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filtr",
+    "message":"Filtro",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Nie zarejestrowano zablokowanych żądań dla tej strony",
+    "message":"Não há pedidos bloqueados registrados para esta página",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nie zarejestrowano nieblokowanych żądań dla tej strony",
+    "message":"Não há pedidos de não bloqueados registrados para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Dziennik zmian",
+    "message":"Registo de alterações",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Kod źródłowy (GPLv3)",
+    "message":"Código fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Autorzy",
+    "message":"Contribuidores",
     "description":"English: Contributors"
   },
   "dummy":{
-    "message":"Ta pozycja musi być ostatnia",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }
