@@ -42,7 +42,6 @@
 
 var messaging = (function(name){
     var port = null;
-    var dangling = false;
     var requestId = 1;
     var requestIdToCallbackMap = {};
     var listenCallback = null;
@@ -62,9 +61,10 @@ var messaging = (function(name){
         if ( !callback ) {
             return;
         }
-        callback(details.msg);
+        // Must be removed before calling client to be sure to not execute
+        // callback again if the client stops the messaging service.
         delete requestIdToCallbackMap[details.id];
-        checkDisconnect();
+        callback(details.msg);
     };
 
     var start = function(name) {
@@ -79,20 +79,30 @@ var messaging = (function(name){
                     )
         });
         port.onMessage.addListener(onPortMessage);
-    };
 
-    if ( typeof name === 'string' && name.length > 0 ) {
-        start(name);
-    }
+        // https://github.com/gorhill/uBlock/issues/193
+        port.onDisconnect.addListener(stop);
+    };
 
     var stop = function() {
         listenCallback = null;
-        dangling = true;
-        checkDisconnect();
+        port.disconnect();
+        port = null;
+        flushCallbacks();
     };
 
+    if ( typeof name === 'string' && name !== '' ) {
+        start(name);
+    }
+
     var ask = function(msg, callback) {
-        if ( !callback ) {
+        if ( port === null ) {
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+            return;
+        }
+        if ( callback === undefined ) {
             tell(msg);
             return;
         }
@@ -102,22 +112,30 @@ var messaging = (function(name){
     };
 
     var tell = function(msg) {
-        port.postMessage({ id: 0, msg: msg });
+        if ( port !== null ) {
+            port.postMessage({ id: 0, msg: msg });
+        }
     };
 
     var listen = function(callback) {
         listenCallback = callback;
     };
 
-    var checkDisconnect = function() {
-        if ( !dangling ) {
-            return;
+    var flushCallbacks = function() {
+        var callback;
+        for ( id in requestIdToCallbackMap ) {
+            if ( requestIdToCallbackMap.hasOwnProperty(id) === false ) {
+                continue;
+            }
+            callback = requestIdToCallbackMap[id];
+            if ( !callback ) {
+                continue;
+            }
+            // Must be removed before calling client to be sure to not execute
+            // callback again if the client stops the messaging service.
+            delete requestIdToCallbackMap[id];
+            callback();
         }
-        if ( Object.keys(requestIdToCallbackMap).length ) {
-            return;
-        }
-        port.disconnect();
-        port = null;
     };
 
     return {
