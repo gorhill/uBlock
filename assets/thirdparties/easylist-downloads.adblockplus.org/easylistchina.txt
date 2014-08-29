@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: T1SL4D2E50rgzCPqFcwynA
-! Version: 201408271351
+! Checksum: 31+jLXB4IXqD5o+3wRZqhg
+! Version: 201408291431
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 27 Aug 2014 13:51 UTC
+! Last Modified: 29 Aug 2014 14:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -717,6 +717,8 @@ hk.yahoo.com###mntl1
 /page/index.php?s=$third-party
 /page/s.php?s=$third-party
 dnserror*.wo.com.cn^
+||kaixinjiehun.com^$third-party
+||1l1.cc^
 ||9w1an.com^$third-party
 ||dian500.com^$third-party
 ||ea3721.com^$third-party
@@ -871,7 +873,8 @@ dnserror*.wo.com.cn^
 ||i3z.cn^$third-party
 ||icast.cn^$third-party
 ||img.uu1001.cn^$third-party,domain=~1688.com|~alimama.com|~taobao.com
-||ipinyou.$third-party
+||p0y.cn^*.swf
+||p0y.cn^$image
 ||is686.com^$third-party
 ||jczzjx.com^
 ||jisucn.com^$third-party
@@ -2837,7 +2840,6 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||p.szonline.net^
 ||p.tanx.com/ex?i=
 ||p.zol-img.com.cn^
-||p0y.cn^
 ||p3.img.cctvpic.com/photoAlbum/page/performance/img/2013/11/20/1384944092228_124.jpg
 ||p4p.sina.com.cn^
 ||padhz.com/pic/data/0000/04/14055677861419.gif
@@ -3735,6 +3737,22 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||awaker.hk/wp-content/uploads/ok/
 ||cpbl-elta.cdn.hinet.net/assets/images/banner-
 ||mydrivers.com/images/drivergenius.png
+||hn-pc.com/css/Fun_Div.js
+||aspjzy.com/jsweb/js/
+||ifengimg.com/zhishaofei/js/
+||b5m.com/static/html/*/popup.html?
+||b5m.com/images/banner.jpg
+||youthwant.com.tw/dodo.php?adjs=
+||cupid.qiyi.com/policy
+/house/images/*$domain=bbs.linyiren.com
+||youthwant.com.tw/images/mot_ad.jpg
+||law-lib.com/2009_ad/
+||baidu.com/static/api/js/view/select_view.js
+/adm.js$domain=400gb.com|bego.cc|pipipan.com
+||qidian.com/ploy/*swf
+||centoscn.com/money/
+||sh114so.com^$subdocument
+||sh114so.com/js/nm*.js
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
@@ -3742,7 +3760,15 @@ gpcxw.com###AA2
 yaolan.com###AD
 pcbeta.com###banner9th
 21yq.com###AD1
+b5m.com###sell-ad
+csdn.net##.AD
+bbs.linyiren.com##.toppics
+linyiren.com##DIV[style="width:960px; height:70px; margin:2px auto;"]
 mail.pchome.com.tw###main_top_frame
+17kqw.com##A[href^="gg.php?"]
+17kqw.com##TABLE[width="1000"][height="584"]
+baidu.com##.chinajoy-couplet
+xhonline.cn##.gg
 mydrivers.com##.down_in_url_center > :not(.download_url)
 wpmee.com##DIV > A[href^="http://www.wpmee.com/i?k="]
 duowan.com##.full-banner
@@ -3990,7 +4016,8 @@ bxs.cc###content > a[id^="a_"]
 fuliba.asia,fuliba.mobi,fuliba.net###content > div:first-child > a:first-child:last-child
 www.sohu.com###contentC > .columnC
 mtksj.com###contentMidPicAD
-ipv6.baidu.com,www.baidu.com,www1.baidu.com###content_left > :not(.hit_top):not(.hit_top_new):not(.result):not(.result-op)
+ipv6.baidu.com,www.baidu.com,www1.baidu.com###content_left > DIV[style="display:block !important"]
+ipv6.baidu.com,www.baidu.com,www1.baidu.com###content_left > TABLE[style="display:table !important"]
 ipv6.baidu.com,www.baidu.com,www1.baidu.com###content_right > table > tbody > tr > td > div:not(#con-ar)
 jpwind.com###content_right_ad
 0597kk.com###cool_fixed
@@ -5771,7 +5798,6 @@ d586.com##div[class^="yd_ad"]
 ganji.com##div[data-widget="app/ms_v2/common/base_page.js#selfDirectionBind"]
 txooo.com##div[duilian]
 weibo.com##div[feedtype="ad"]
-qidian.com##div[height="60"][width="990"]
 qvodsou.com##div[id$="-union"]
 mail.126.com,mail.163.com##div[id$="_AdDiv"]
 share.dmhy.me,share.dmhy.org##div[id$="_ad"]
@@ -6351,6 +6377,7 @@ house.shangdu.com#@#.top_ad
 @@||union.bokecc.com/player?
 @@||union.bokecc.com/servlet/getvideofile?
 @@||unisharp.com/images/ad.jpg
+@@||aspjzy.com/jsweb/js/hotsearch.js
 @@||v.rbc.cn/ad/
 @@||v1.cn/player/cloud/cloud_player.swf?
 @@||video.appledaily.com.hk/admedia/$object-subrequest
@@ -6363,6 +6390,10 @@ house.shangdu.com#@#.top_ad
 @@||ychr.com/picad/
 @@||yimg.com/rq/darla/*/g-r-min.js$domain=tw.news.yahoo.com
 @@||yimg.jp/combo?*/ad/
+@@||qidian.com/ploy/20*.swf
+@@&ad_type=$domain=x.jd.com
+@@.com/ad/$domain=x.jd.com
+@@&ad_width=810&$domain=jd.com
 @@||yiqifa.com/ad_images/$~third-party
 @@||yktj.yzz.cn/htmldata/mds/yzz_single_gg.js$domain=bbs.yzz.cn
 @@||youlea.com/uppic/adpic/

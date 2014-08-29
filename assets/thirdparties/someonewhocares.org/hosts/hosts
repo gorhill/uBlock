@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Aug 26th, 2014 at 10:12
+# Last updated: Aug 28th, 2014 at 00:49
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1337,6 +1337,7 @@ fe80::1%lo0	localhost
 127.0.0.1 trk.tidaltv.com
 127.0.0.1 true-counter.com
 127.0.0.1 truehits1.gits.net.th
+127.0.0.1 t.senaldos.com
 127.0.0.1 t.senaluno.com
 127.0.0.1 t.signauxdeux.com # Another email opentracker from hubspot
 127.0.0.1 tu.connect.wunderloop.net
@@ -6204,6 +6205,7 @@ fe80::1%lo0	localhost
 127.0.0.1 kona8.kontera.com
 127.0.0.1 kona.kontera.com
 127.0.0.1 kontera.com
+127.0.0.1 kos.interseek.si
 127.0.0.1 kreaffiliation.com
 127.0.0.1 kropka.onet.pl
 127.0.0.1 kuhdi.com

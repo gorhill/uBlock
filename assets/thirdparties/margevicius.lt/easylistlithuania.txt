@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: I0k54S55meVQRvUOhUI1WA
+! Checksum: mz2L8/gRl9poU+Lk5mwAvg
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-08-20
+! Paskutinis atnaujinimas: 2014-08-29
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -527,7 +527,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||120x60.lt/banners/
 ||195.82.146.52/top-rq/Kozhedub.swf?
 ||4ride.lt/media/wysiwyg/Blog/unnamed.png
-||adart.hostin.lt/banners/535-1-1400679441.jpg
+||adart.hostin.lt/banners/
 ||adbox.lt^$third-party
 ||adclick.lt^$third-party
 ||adnet.lt^$third-party
@@ -769,6 +769,8 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||kursenuparapija.lt/wp-content/uploads/logo/logo_marijos-r.gif
 ||kursenuparapija.lt/wp-content/uploads/logo/logo_pakuta.gif
 ||kursenuparapija.lt/wp-content/uploads/logo/logo_vatikano-r.gif
+||l2j.lt/ads/
+||l2r.xz.lt/l2rbanners/
 ||laimos-sapnininkas.lt/banners/baneris-2.jpg
 ||laisvaslaikrastis.lt/laikrascio%20baneris.swf
 ||lapes.lt/banners/
@@ -780,6 +782,8 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||lianosgalerija.webs.com/veriniai%20(1).jpg%20
 ||lietuvis.no/images/stories/forumas2_128.gif
 ||lilijairsaulius.ucoz.de/Ikonos/Unbenannt.png
+||lineager.lt/images/kyc1.gif
+||lineager.lt/images/kyc2.jpg
 ||lombas.lt/image/gmx/
 ||lova.lt/files/uploads/images/sitefriends/
 ||lrvalstybe.lt/images_new/gubele_960x100url2.swf
@@ -990,6 +994,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||verdiktas.lt/images/banners/
 ||verslovirusas.lt/wp-content/uploads/2013/10/logovisi.png
 ||vestuves.eu/img/banners/42.swf
+||vht.tradedoubler.com/file/248282/0814/bobutes-paskola-ruduo-750x100.swf
 ||videomuzika.lt/ads/120x60VM.gif
 ||vienaturis.lt/detales2.gif
 ||viko.lt/public_files/EMP_sugedo_210x105.gif

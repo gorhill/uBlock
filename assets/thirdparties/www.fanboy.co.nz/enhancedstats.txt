@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: UN56dnYc5SUnq0Y42g0/DQ
+! Checksum: R/IpZ68Y9S9i/u/zW7ykRA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 23 Aug 2014
+! Updated: 30 Aug 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -598,6 +598,7 @@ wolframalpha.com###subpod_zoom
 @@/s_code_$domain=adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com
 @@||aarp.net/etc/aarp/statics/global/js/omniture*.js
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
+@@||actiris.be/urchin.js
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
 @@||akamai.net/*/www-origin.walmart.com/webanalytics/$domain=walmart.com
 @@||amd.com/*/scode_global.js

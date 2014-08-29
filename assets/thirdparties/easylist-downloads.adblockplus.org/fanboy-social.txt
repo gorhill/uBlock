@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 6tfRY06cwICiqWJXtvDeMg
-! Version: 201408271351
+! Checksum: 173HodQmHgXHJVX6bVXY/w
+! Version: 201408291431
 ! Title: Fanboy's Social Blocking List
-! Last modified: 27 Aug 2014 13:51 UTC
+! Last modified: 29 Aug 2014 14:31 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -1966,6 +1966,7 @@ _youtube_small.
 ###arpae-footer-socialBar
 ###artShareLinks
 ###art_social
+###article-reveal-share
 ###article-sharebar
 ###article-sharebox
 ###article-social
@@ -3525,6 +3526,7 @@ _youtube_small.
 ##.atfollowwidget
 ##.author-follow-button
 ##.author-social
+##.authorSocial
 ##.authorSocialTools
 ##.author_socs
 ##.authorbox-social
@@ -3769,6 +3771,7 @@ _youtube_small.
 ##.fa-linkedin-square
 ##.fa-pinterest
 ##.fa-pinterest-square
+##.fa-reddit
 ##.fa-share-square-o
 ##.fa-twitter
 ##.fa-twitter-square
@@ -4019,6 +4022,7 @@ _youtube_small.
 ##.fodicon-google-plus
 ##.fodicon-tumblr
 ##.fodicon-twitter
+##.follow-bar
 ##.follow-buttons
 ##.follow-facebook
 ##.follow-google-plus
@@ -4149,6 +4153,7 @@ _youtube_small.
 ##.fs-facebook-iframe
 ##.fs-retweet-block
 ##.fs-sitesocials
+##.fs-social
 ##.fsocial
 ##.ft-facebook
 ##.ft-flickr
@@ -6572,6 +6577,7 @@ _youtube_small.
 ||facebook.com^*/plugins/subscribe?$third-party
 ||fanconverter.wetpaint.me^$third-party
 ||feedly.com/img/follows/$third-party
+||figshare.com^$third-party
 ||filamentapp-assets.s3.amazonaws.com^$third-party
 ||flickr.com/badge_code_$third-party
 ||flipboard.com/web/buttons/$third-party
@@ -7134,6 +7140,7 @@ marketingpilgrim.com##.icon-tw
 businessinsider.com,clearspring.co.uk,imgur.com,thehackernews.com##.icons
 clearspring.co.uk##.icons-top
 indianexpress.com##.ie2013-agencies
+designcurial.com##.image-tools
 alarabiya.net##.img-caption-facebook-container
 ebay.co.uk,ebay.com.au##.info > .share
 pcgscoinfacts.com##.info-connect
@@ -7558,6 +7565,7 @@ salon24.pl##.fsocBody
 @@||s7.addthis.com^*/addthis_widget.js$domain=carsom.nl|ticketmaster.nl
 @@||static.autojunk.nl/javascript/SocialMedia.js
 nu.nl#@#.socialshare
+welovemusthaves.com#@##socialContainer
 ||sanoma.nl/media/static/images/icon_zienl.png
 !
 !---------- Swedish Site Specific Hiding Rules ----------
@@ -7749,6 +7757,7 @@ bitly.com#@#.share-btn
 vimeo.com#@#.share-button
 popsugar.com.au#@#.share-container
 ~mediafire.com##.share-facebook
+greatbritishchefs.com#@#.share-header
 vimeo.com#@#.share-icon
 disqus.com,google.com#@#.share-menu
 flickr.com#@#.share-options
@@ -7978,6 +7987,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||softicons.com/download/$image
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it
+@@||ssl-images-amazon.com/images/G/01/socialmedia/sweeps/$image,domain=amazon.com
 @@||sstatic.net/img/share-sprite-new.png$domain=askubuntu.com|mathoverflow.net|serverfault.com|stackapps.com|stackexchange.com|stackoverflow.com|superuser.com
 @@||stackexchange.com/content/img/share-sprite-new.png
 @@||stackoverflow.com/content/img/share-sprite-new.png

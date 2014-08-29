@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 07 August 2014
+! Last modified: 29 August 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -15,6 +15,7 @@
 .pl/*/ads/
 .pl/data/banners
 .pl/images/baner-
+.pl/images/banners/*swf
 .pl/images/banners/reklama
 .pl/images/stories/baner
 .pl/images/stories/banner
@@ -90,10 +91,13 @@ _res/banner/glowna/
 ###rekGora
 ###reklamygoogle
 ###slideshow_minibanner
+###slot_ad_billboard
+###slot_ad_billboard2
 ###sponsoring
 ###top_banners
 ###top-lead
 ##.abwarn
+##.adoHide adoSlv OnTop
 ##.adSrodek
 ##.advert
 ##.ad_block
@@ -108,6 +112,7 @@ _res/banner/glowna/
 ##.bnMiddle
 ##.drutexban
 ##.flexbanneritem
+##.forceRefresh disableScreeningClick adoHide adoSlv OnTop
 ##.google_468x60
 ##.index_banner
 ##.main-tbaner
@@ -122,7 +127,6 @@ _res/banner/glowna/
 ##.rrestbaner
 ##.sky_layer
 ##.teaser_cnt
-##.tvn-advertisement
 ##[id^="ad_gora"]
 ##[id^="ad-rectangle"]
 ##[id^="aswift_"]
@@ -143,6 +147,7 @@ _res/banner/glowna/
 ##[id^="sponsors-"]
 ##[class^="a_box"]
 ##[class^="adocean"]
+##[class^="adoHide"]
 ##[class^="ads ads"]
 ##[class^="adv-home"]
 ##[class^="adv-ph-"]
@@ -168,12 +173,12 @@ _res/banner/glowna/
 ##[src^="reklama"]
 
 ! * - Whitelist - * !
-@@/advertisingmodule.$domain=tvn.pl
+@@/advertisingmodule.$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@/player/vidAS=pre_roll
 @@/vod/reklamy/WIZERUNEK.mp4
-@@||admin.brightcove.com^$object-subrequest,domain=ekstraklasa.tv|tvn24.pl|tvn24bis.pl
-@@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv
-@@||atmcdn.pl/*Adserver/$domain=tvn.pl
+@@||admin.brightcove.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
+@@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||atmcdn.pl/*Adserver/$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
 @@||ipla.$domain=ipla.tv
@@ -185,10 +190,9 @@ _res/banner/glowna/
 @@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
-@@||rtax.criteo.com$domain=tvn.pl
+@@||rtax.criteo.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||smartadserver.com$domain=get.x-link.pl
-@@||tvn.adocean.pl/files/js/ado.js
-@@||tvn.adocean.pl$domain=tvn.pl
+@@||tvn.adocean.pl^$script,domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
 
 ! * - 1st Party Blocking Rules & Ad-servers - * !
@@ -199,12 +203,12 @@ _res/banner/glowna/
 ||ad.sterta.pl
 ||adblockdetector.com^$script
 ||adkontekst.pl
+||adocean.pl^$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 ||ads.trojmiasto.pl
 ||adsearch.pl
 ||adtaily.pl
 ||adv.wp.pl
 ||adview.pl
-||atmcdn.pl/*Adserver/
 ||banery.bai.pl
 ||bankier.pl/gfx/ad
 ||bochnianin.pl/foto/pasek/
@@ -246,6 +250,7 @@ _res/banner/glowna/
 ||static.clickonometrics.pl
 ||static-chomikuj.pl/serve/
 ||static-kinoman.tv/n*php
+||tvn.adocean.pl/files/*.swf
 ||video.vid4u.org
 ||wrzuta.pl/ads
 ||x.interia.pl/*.ad.
@@ -261,8 +266,11 @@ _res/banner/glowna/
 ||clangames.pl^$third-party
 ||contextad.pl^$third-party
 ||dobryinteres.pl^&$third-party
+||gemius.pl$third-party,popup
+||gg.adocean.pl$third-party
 ||glossymedia.pl^$third-party
 ||incontext.pl^$third-party
+||inevitablenesses.realmoney.pl$third-party
 ||intextad.net^$third-party
 ||leadsign.pl/router/^$third-party
 ||netsales.pl^$third-party
@@ -289,10 +297,12 @@ formentorplus.pl##form
 fotosik.pl##.adv
 fronda.pl##.small-info
 gazeta-wiesci.pl##.widget.widget_text
+glamrap.pl##.popup
 gry-online.pl##[id^="teaser_cnt"]
 gry-online.poszkole.pl##FOOTER
 informacjelokalne.pl##[src^="http://www.informacjelokalne.pl/images/reklama"]
 kartuzy.info##[id^="baner"]
+komputerswiat.pl###gz_dso_scroll
 koscian.net##[class^="banery"]
 kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; display: block;"]
 lubin.pl###banner
@@ -306,10 +316,14 @@ newsweek.pl##[class^="Block-Banner"]
 optyczne.pl###warning
 orneta.net##.lof-container
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
+pinterest.com##[class="message messageUnauth"]
+player.pl##[id^="ado-"]
+popularnie.pl###gold-header
 press.pl###topBanner
 profil.wp.pl##.bxAdv
 proline.pl###layer_top
 pudelek.tv###floorBG
+pudelek.tv##[src^="http://adv.wp.pl"]
 purepc.pl##[class$="reklama"]
 repostuj.pl##[class^="warstwa"]
 sadistic.pl/pics/c57d81558fed.jpg
@@ -317,6 +331,7 @@ serwislokalny.com##.banner
 telepolis.pl##.b_750
 telepolis.pl##.wiadomosci_lista_div
 telepolis.pl##[style="text-align:center; width:369px; height:285px;"]
+tvn24.pl##[class^="adoHide"]
 wp.pl##[id^="adv"]
 wp.tv##.infoAB
 wp.tv##[src^="http://adv.wp.pl/"]

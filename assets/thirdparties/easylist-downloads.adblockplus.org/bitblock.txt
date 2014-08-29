@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Qa5I/8mFe2/oN5HBni9R1A
-! Version: 201408271350
-! Last modified: 27 Aug 2014 13:50 UTC
+! Checksum: lf1S4HqfX+l/JRAHOnlZ6w
+! Version: 201408291430
+! Last modified: 29 Aug 2014 14:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -2051,6 +2051,7 @@ _youtube_small.
 ###arpae-footer-socialBar
 ###artShareLinks
 ###art_social
+###article-reveal-share
 ###article-sharebar
 ###article-sharebox
 ###article-social
@@ -3610,6 +3611,7 @@ _youtube_small.
 ##.atfollowwidget
 ##.author-follow-button
 ##.author-social
+##.authorSocial
 ##.authorSocialTools
 ##.author_socs
 ##.authorbox-social
@@ -3854,6 +3856,7 @@ _youtube_small.
 ##.fa-linkedin-square
 ##.fa-pinterest
 ##.fa-pinterest-square
+##.fa-reddit
 ##.fa-share-square-o
 ##.fa-twitter
 ##.fa-twitter-square
@@ -4104,6 +4107,7 @@ _youtube_small.
 ##.fodicon-google-plus
 ##.fodicon-tumblr
 ##.fodicon-twitter
+##.follow-bar
 ##.follow-buttons
 ##.follow-facebook
 ##.follow-google-plus
@@ -4234,6 +4238,7 @@ _youtube_small.
 ##.fs-facebook-iframe
 ##.fs-retweet-block
 ##.fs-sitesocials
+##.fs-social
 ##.fsocial
 ##.ft-facebook
 ##.ft-flickr
@@ -6707,6 +6712,7 @@ _youtube_small.
 ||facebook.com^*/plugins/subscribe?$third-party
 ||fanconverter.wetpaint.me^$third-party
 ||feedly.com/img/follows/$third-party
+||figshare.com^$third-party
 ||filamentapp-assets.s3.amazonaws.com^$third-party
 ||flickr.com/badge_code_$third-party
 ||flipboard.com/web/buttons/$third-party
@@ -8022,6 +8028,8 @@ _social_rss.
 ##.fontawesome-rss
 ##.footer-cookies-policy
 ##.footer-follow
+##.footer-newsletter
+##.footer-top-of-page
 ##.footerButtonRSS
 ##.footerRSS
 ##.footerTwitter
@@ -8114,6 +8122,7 @@ _social_rss.
 ##.newslettersignup
 ##.newslettersrssbox
 ##.newsletterwidget
+##.nlSubscribe
 ##.nls-subscribe
 ##.notice-cookie
 ##.notice_notice_cookies
@@ -9098,6 +9107,7 @@ bitly.com#@#.share-btn
 vimeo.com#@#.share-button
 popsugar.com.au#@#.share-container
 ~mediafire.com##.share-facebook
+greatbritishchefs.com#@#.share-header
 vimeo.com#@#.share-icon
 disqus.com,google.com#@#.share-menu
 flickr.com#@#.share-options
@@ -9327,6 +9337,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||softicons.com/download/$image
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it
+@@||ssl-images-amazon.com/images/G/01/socialmedia/sweeps/$image,domain=amazon.com
 @@||sstatic.net/img/share-sprite-new.png$domain=askubuntu.com|mathoverflow.net|serverfault.com|stackapps.com|stackexchange.com|stackoverflow.com|superuser.com
 @@||stackexchange.com/content/img/share-sprite-new.png
 @@||stackoverflow.com/content/img/share-sprite-new.png
@@ -9385,6 +9396,7 @@ bt-test.ru,loginza.ru#@#.facebook
 app.tbn.ru,livejournal.com#@#.fb_iframe_widget
 gigapan.com#@#.print-page
 irc.lv#@#.share-blog
+feedly.com#@#.shareholder
 the-zomb.com#@#.sig
 jquery.com,oxymoronical.com,scala-lang.org#@#.signature
 appledevelopers.ru,europaplus.ru,mts.ru#@#.social

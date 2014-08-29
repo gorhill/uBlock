@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Mon, 18 Aug 2014 12:33:48 GMT
-# entries:        2481
+# last updated:   Fri, 29 Aug 2014 08:52:11 GMT
+# entries:        2482
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -167,6 +167,7 @@
 127.0.0.1 ad.wavu.hu
 127.0.0.1 ad.way.cz
 127.0.0.1 ad.weatherbug.com
+127.0.0.1 ad.wsod.com
 127.0.0.1 ad.wz.cz
 127.0.0.1 ad.yadro.ru
 127.0.0.1 ad.yourmedia.com
@@ -372,6 +373,7 @@
 127.0.0.1 ads.aspalliance.com
 127.0.0.1 ads.associatedcontent.com
 127.0.0.1 ads.avazu.net
+127.0.0.1 ads.batpmturner.com
 127.0.0.1 ads.beenetworks.net
 127.0.0.1 ads.belointeractive.com
 127.0.0.1 ads.berlinonline.de
@@ -460,7 +462,6 @@
 127.0.0.1 ads.filmup.com
 127.0.0.1 ads.financialcontent.com
 127.0.0.1 ads.flooble.com
-127.0.0.1 ads.foodbuzz.com
 127.0.0.1 ads.fool.com
 127.0.0.1 ads.footymad.net
 127.0.0.1 ads.forbes.com
@@ -654,7 +655,6 @@
 127.0.0.1 ads.telegraph.co.uk
 127.0.0.1 ads.theglobeandmail.com
 127.0.0.1 ads.themovienation.com
-127.0.0.1 ads.thenewpaperclip.com
 127.0.0.1 ads.thestar.com
 127.0.0.1 ads.thewebfreaks.com
 127.0.0.1 ads.timeout.com
@@ -781,7 +781,6 @@
 127.0.0.1 adserver.dotcommedia.de
 127.0.0.1 adserver.finditquick.com
 127.0.0.1 adserver.flossiemediagroup.com
-127.0.0.1 adserver.fmpub.net
 127.0.0.1 adserver.freecity.de
 127.0.0.1 adserver.freenet.de
 127.0.0.1 adserver.friendfinder.com
@@ -1382,7 +1381,6 @@
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
-127.0.0.1 dnads.directnic.com
 127.0.0.1 doclix.com
 127.0.0.1 domaining.in
 127.0.0.1 domainsponsor.com
@@ -1783,6 +1781,7 @@
 127.0.0.1 mixtraffic.com
 127.0.0.1 mlm.de
 127.0.0.1 mmismm.com
+127.0.0.1 moatads.com
 127.0.0.1 mobclix.com
 127.0.0.1 mocean.mobi
 127.0.0.1 modemspeedbooster.com
@@ -1908,6 +1907,7 @@
 127.0.0.1 pagerank-submitter.de
 127.0.0.1 pagerank-suchmaschine.de
 127.0.0.1 pagerank-united.de
+127.0.0.1 pagerank4u.eu
 127.0.0.1 pagerank4you.com
 127.0.0.1 pageranktop.com
 127.0.0.1 partage-facile.com
@@ -2024,6 +2024,7 @@
 127.0.0.1 radarurl.com
 127.0.0.1 radiate.com
 127.0.0.1 rampidads.com
+127.0.0.1 rank-master.com
 127.0.0.1 rank-master.de
 127.0.0.1 rank8.de
 127.0.0.1 rankchamp.de

@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: teIPoQtXhv5QIwZRCrt3Gw
-! Version: 201408271350
+! Checksum: bqqMMFjbJyFD4OFqXRB9cw
+! Version: 201408291430
 ! Title: EasyList without element hiding rules
-! Last modified: 27 Aug 2014 13:50 UTC
+! Last modified: 29 Aug 2014 14:30 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7242,6 +7242,7 @@ _popunder+$popup
 ||cdna.tremormedia.com^$third-party
 ||cdnservr.com^$third-party
 ||centralnervous.net^$third-party
+||cerotop.com^$third-party
 ||cgecwm.org^$third-party
 ||chango.com^$third-party
 ||charltonmedia.com^$third-party
@@ -8246,6 +8247,7 @@ _popunder+$popup
 ||nanigans.com^$third-party
 ||nbjmp.com^$third-party
 ||nbstatic.com^$third-party
+||neblotech.com^$third-party
 ||negolist.com^$third-party
 ||neobux.com^$third-party
 ||neodatagroup.com^$third-party
@@ -9269,6 +9271,7 @@ _popunder+$popup
 ||adsurve.com^$popup,third-party
 ||adtraffic.org^$popup,third-party
 ||advertserve.com^$popup,third-party
+||advmedialtd.com^$popup,third-party
 ||affbuzzads.com^$popup,third-party
 ||allslotscasino.com^$popup,third-party
 ||alpinedrct.com^$popup,third-party
@@ -11366,6 +11369,8 @@ _popunder+$popup
 ||subliminalmp3s.com^*/banners/
 ||superherostuff.com/pages/cbmpage.aspx?*&cbmid=$subdocument,third-party
 ||supersport.co.za^*180x254
+||supersport.com/content/2014_Sponsor
+||supersport.com/content/Sponsors
 ||supply.upjers.com^$third-party
 ||surf100sites.com/images/banner_
 ||surveymonkey.com/jspop.aspx?$third-party
@@ -11633,6 +11638,7 @@ _popunder+$popup
 ||lp.ilivid.com/?$popup,third-party
 ||lp.imesh.com/?$popup,third-party
 ||lp.titanpoker.com^$popup,third-party
+||lsbet.com/bonus/$popup,third-party
 ||lumosity.com/landing_pages/$popup
 ||lyricsbogie.com/?$popup,third-party
 ||makemoneyonline.2yu.in^$popup
@@ -12592,6 +12598,7 @@ _popunder+$popup
 ||bloomberg.com^*/banner.js
 ||bn0.com/4v4.js
 ||bnrs.ilm.ee^
+||bolandrugby.com/images/sponsors.
 ||bookingbuddy.com/js/bookingbuddy.strings.php?$domain=smartertravel.com
 ||bostonherald.com^*/eastern-bank-breaking.gif
 ||botcrawl.com/wp-content/uploads/*/Get-Malwarebytes-Malware-Removal-Software.jpg
@@ -12945,6 +12952,7 @@ _popunder+$popup
 ||demonoid.ph/cached/va_top.html
 ||depic.me/bann/
 ||depositphotos.com^$subdocument,third-party
+||deseretnews.com/img/sponsors/
 ||desiretoinspire.net/storage/layout/modmaxbanner.gif
 ||desiretoinspire.net/storage/layout/royalcountessad.gif
 ||desiretoinspire.net^*/mgbanner.gif
@@ -13244,6 +13252,7 @@ _popunder+$popup
 ||firstpost.in^*_skin_
 ||firstrows.biz/js/bn.js
 ||firstrows.biz/js/pu.js
+||firstrowsports.li/frame/
 ||firstrowusa.eu/js/bn.js
 ||firstrowusa.eu/js/pu.js
 ||fishchannel.com/images/sponsors/
@@ -13329,6 +13338,7 @@ _popunder+$popup
 ||frombar.com/ads/
 ||frozen-roms.in/popup.php
 ||frozen-roms.me/popup.php
+||fscheetahs.co.za/images/Sponsers/
 ||ftdworld.net/images/banners/
 ||ftlauderdalewebcam.com/images/*webcambanner
 ||ftlauderdalewebcam.com^*-WebCamBannerFall_
@@ -13971,6 +13981,7 @@ _popunder+$popup
 ||linuxmint.com/img/sponsor/
 ||linuxmint.com/pictures/sponsors/
 ||linuxtopia.org/includes/$subdocument
+||lionsrugby.co.za^*/sponsors.
 ||liquidcompass.net/player/flash/inc/flash_sync_banners.js
 ||littleindia.com/files/banners/
 ||live-proxy.com/hide-my-ass.gif
@@ -14700,6 +14711,7 @@ _popunder+$popup
 ||publicradio.org^*/banners/
 ||publicservice.co.uk^*/spons_
 ||pulsetv.com/banner/
+||pumasrugbyunion.com/images/sponsors/
 ||punchng.com/images/banners/
 ||punchng.com/images/flash/uba.swf
 ||punchng.com/images/flash/vitamofen/vitamofen.swf
@@ -15084,6 +15096,7 @@ _popunder+$popup
 ||stlyrics.com^*_az.js
 ||stlyrics.com^*_st.js
 ||stopforumspam.com/img/snelserver.swf
+||stopstream.com/ads/
 ||storewidget.pcauthority.com.au^
 ||strategypage.com^*_banner
 ||stream2watch.me/600pick.png
@@ -15199,6 +15212,7 @@ _popunder+$popup
 ||thebay.co.uk/banners/
 ||thebeat99.com/cmsadmin/banner/
 ||thebull.com.au/admin/uploads/banners/
+||thebulls.co.za^*/sponsors/
 ||theburningplatform.com/wp-content/uploads/*_180x150.gif
 ||thebusinessdesk.com/assets/_files/banners/
 ||thecenturion.co.za^*/banners/
@@ -15925,8 +15939,10 @@ _popunder+$popup
 ||servequake.com^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ||sytes.net^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ||vapingunderground.com/js/vapingunderground/fucking_adblock.js
+||watchfreeinhd.com/js/adblocker.js
 ||zapto.org^$script,domain=dsero.com|korean-candy.com|misheel.net|politicususa.com|techydoor.com|trutower.com
 ! Non-English (instead of whitelisting ads)
+||youtube.com/yva_video?adformat=$object-subrequest,domain=antena3.com|atresplayer.com|lasexta.com
 ! Mobile
 ! *** easylist:easylist/easylist_specific_block_popup.txt ***
 /sendspace-pop.$popup,domain=sendspace.com
@@ -17019,6 +17035,8 @@ _popunder+$popup
 @@||airguns.net/advertisement_images/
 @@||airguns.net/classifieds/ad_images/
 @@||airplaydirect.com/openx/www/images/$image
+@@||aiwip.com/advertisers/$image,~third-party,xmlhttprequest
+@@||aiwip.com/static/images/advertisers/$image,~third-party,xmlhttprequest
 @@||ajmadison.com/images/adverts/
 @@||aka-cdn-ns.adtech.de/apps/$object-subrequest,domain=manutd.com
 @@||akamai.net^*/ads/preroll_$object-subrequest,domain=bet.com
@@ -17584,6 +17602,7 @@ _popunder+$popup
 @@||ikea.com^*/img/ad_
 @@||ikea.com^*/img/ads/
 @@||images-amazon.com/images/*/adsimages/$domain=amazon.com
+@@||images-amazon.com/images/G/01/traffic/s9m/images/sweeps/$image,domain=amazon.com
 @@||images.dashtickets.co.nz/advertising/featured/$image
 @@||images.forbes.com/video/ads/blank_frame.flv$object-subrequest
 @@||images.frys.com/art/ads/images/$image,~third-party
@@ -18134,6 +18153,7 @@ _popunder+$popup
 @@||sprint.com^*/adservice/$xmlhttprequest
 @@||sprouts.com/ad/$image,subdocument
 @@||ssacdn.com/banners/$domain=supersonicads.com
+@@||ssl-images-amazon.com/images/G/01/traffic/s9m/images/sweeps/$image,domain=amazon.com
 @@||ssl-images-amazon.com^*/popover/popover-$script
 @@||st.com^*/banners.js
 @@||startxchange.com/textad.php?$xmlhttprequest
@@ -18163,6 +18183,7 @@ _popunder+$popup
 @@||swordfox.co.nz^*/advertising/$~third-party
 @@||syn-api.com^*&adsafe=$script,domain=armstrongmywire.com|atlanticbb.net|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|forbbbs.org|hargray.net|hawaiiantel.net|hickorytech.net|knology.net|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net
 @@||syn.5min.com/handlers/SenseHandler.ashx?*&adUnit=$script
+@@||syndication.streamads.yahoo.com/na_stream_brewer/brew/*?cid=*&url=*&pvid=*&callback=$script,domain=yimg.com
 @@||syracuse.com/static/common/js/ads/ads.js
 @@||tacdn.com^*_popunder_$script,stylesheet
 @@||tags.bkrtx.com/js/bk-coretag.js$domain=zillow.com
@@ -18260,6 +18281,7 @@ _popunder+$popup
 @@||tvgorge.com^*/adplayer.swf
 @@||tvlistings.optimum.net/scripts/app/templates/ad.handlebars.html$domain=optimum.net
 @@||tvnz.co.nz/*/advertisement.js
+@@||twitter.com/stylesheets/ads-allow.css$~third-party
 @@||twitvid.com/mediaplayer_*.swf?
 @@||twogag.com/comics/$image,~third-party
 @@||u.openx.net/v/1.0/sc?$object-subrequest,domain=motogp.com
@@ -18424,7 +18446,7 @@ _popunder+$popup
 @@.gif?ad_banner=$domain=majorleaguegaming.com
 @@.gif|$object-subrequest,domain=cbs.com
 @@.jpeg|$object-subrequest,domain=cbs.com
-@@.jpg#$domain=desionlinetheater.com|lag10.net|mac2sell.net|movie1k.net|play-old-pc-games.com|uploadlw.com
+@@.jpg#$domain=desionlinetheater.com|lag10.net|livrosdoexilado.org|mac2sell.net|movie1k.net|play-old-pc-games.com|uploadlw.com
 @@.jpg|$object-subrequest,domain=cbs.com
 @@.min.js$domain=ftlauderdalewebcam.com|nyharborwebcam.com|portcanaveralwebcam.com|portevergladeswebcam.com|portmiamiwebcam.com
 @@.png#$domain=300mblink.com|android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|hostyd.com|ilive.to|lordpyrak.net|marketmilitia.org|minecraft-forum.net|myksn.net|stream2watch.me
@@ -18480,6 +18502,7 @@ _popunder+$popup
 @@||admin.brightcove.com/viewer/*/AdvertisingModule.swf$object-subrequest,domain=player.stv.tv
 @@||admin.brightcove.com^$object-subrequest,domain=tvn.pl|tvn24.pl
 @@||adnxs.com^$script,domain=kissanime.com
+@@||adocean.pl^*/ad.js?id=$script,domain=tvn24.pl
 @@||ads.avazu.net^$subdocument,domain=casadossegredos.tv|xuuby.com
 @@||ads.clubedohardware.com.br/www/delivery/$script
 @@||ads.lzjl.com/newserving/showad.php$domain=everythingon.tv
@@ -18714,6 +18737,7 @@ _popunder+$popup
 @@||liquidcompass.net/js/advertisement.js
 @@||litecoin-faucet.tk/advertisement.js
 @@||litecoiner.net/advertisement.js
+@@||livrosdoexilado.org^$elemhide
 @@||lordpyrak.net^$elemhide
 @@||lpg-forum.pl/advertise.js
 @@||mac2sell.net^$elemhide
@@ -19093,8 +19117,9 @@ _popunder+$popup
 @@||smart.allocine.fr/def/def/xshowdef.asp$object-subrequest,domain=beyazperde.com
 @@||smartadserver.com/call/pubj/$object-subrequest,domain=antena3.com|europafm.com|vertele.com
 @@||smartadserver.com/call/pubx/*/M/$object-subrequest,domain=get.x-link.pl
+@@||smartadserver.com/call/pubx/*blq$object-subrequest,domain=antena3.com|atresplayer.com|lasexta.com
 @@||smartadserver.com/crossdomain.xml$object-subrequest
-@@||smartadserver.com/diff/*/show*.asp?*;target=blq$object-subrequest,domain=atresplayer.com
+@@||smartadserver.com/diff/*/show*.asp?*blq$object-subrequest,domain=antena3.com|atresplayer.com|lasexta.com
 @@||sms.cz/bannery/$object-subrequest,~third-party
 @@||soov.ee/js/newad.js
 @@||start.no/advertpro/servlet/view/text/html/zone?zid=$script
@@ -19266,6 +19291,7 @@ accounts.google.com#@#.adwords
 @@||la-finca-distribution.de/wp-content/uploads/*-120x240.$image
 @@||maps.google.*/staticmap*^size=300x250^$image
 @@||maps.googleapis.com/maps/api/*=300x250&
+@@||marketing.beatport.com.s3.amazonaws.com^*/728x90_AHT.jpg
 @@||motherboard.tv/content-images/*_120x60.
 @@||mozilla.org/img/covehead/plugincheck/*/728_90/loading.png$domain=mozilla.org
 @@||msecnd.net/socialfactoryimagesresized/mediaspotlight/2/300x250/$image

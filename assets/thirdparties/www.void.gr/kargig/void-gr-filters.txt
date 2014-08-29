@@ -862,6 +862,7 @@ koutipandoras.gr##.banner
 popaganda.gr##.big-banner-top
 popaganda.gr##.banner
 gossip-tv.gr###textlinks
+sport-fm.gr##.textlinks
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

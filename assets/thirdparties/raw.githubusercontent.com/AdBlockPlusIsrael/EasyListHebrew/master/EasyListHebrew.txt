@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: jnOUHWI3kh1J7ONHE1j9BQ
+! Checksum: 4LgDsUgCY0nYqzR67Hz96w
 ! Title: EasyList Hebrew
-! Last modified: 27/08/14  13:09
+! Last modified: 28/08/14  10:53
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -168,6 +168,7 @@
 ||bgu4u.co.il/download/banners/
 ||bizportal.co.il/Scripts/maavaron.js?v=
 ||cdn.mdigital.co.il/video/*.flv$domain=globes.co.il
+||cdn.salamtak.org.uk^$domain=fxp.co.il
 ||cdn.shorte.st/link-converter.min.js
 ||chabad.info/images/pirsomot/
 ||cinema-city.co.il/media/nlc2013/flash/*banner
@@ -427,6 +428,7 @@ dacho.co.il##.fixed_position1
 doctors.co.il###big_banner
 doctors.co.il##div[id^="dgBan"]
 dossinet.me###bg_banner_header_top
+fxp.co.il##.condition
 flix.mako.co.il###topBannerTable
 flix.tapuz.co.il##.headerMiddle
 flix.tapuz.co.il##DIV[style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; min-height: 94px;\a     padding-bottom: 10px; padding-top: 65px; text-align: center; width: 960px;"]

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: IZF8PlGqw/GSQgh1+HVnBw
-! Version: 201408271350
-! Last modified: 27 Aug 2014 13:50 UTC
+! Checksum: 4Hiz9DEVkIkRr5p+iJLepQ
+! Version: 201408291430
+! Last modified: 29 Aug 2014 14:30 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1790,6 +1790,7 @@ _tizers.
 //46.165.197.87^
 //5.149.255.132^
 //89.108.109.12/store/
+//89.108.109.12^$object
 //91.197.128.34/key=
 //95.169.186.139^
 //95.211.125.226^
@@ -3054,7 +3055,7 @@ nur.kz##.wallpaper
 5peciali5t.tk##.widget-content > a > img[width="200"]
 gamer-info.com##[class^="br-"]
 kinoafisha.ua##a.brandup
-pornolab.net##a[href*="/store/"][style*="color"]
+pornolab.net##a[href*="/89.108.109.12/"],a[href*="/store/"],a[href*="?partner="]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
@@ -5873,7 +5874,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@/files/banners/*$domain=interzet.ru
 @@/GFC/branding/*$domain=citi.com|citibank.com
 @@/img/banner/*$domain=imhonet.ru
-@@/js/social.js$domain=ipodtouch3g.ru|shatskih-photo.ru
+@@/js/social.js$domain=ipodtouch3g.ru|shatskih-photo.ru|vsemayki.ru
 @@/media/banners/*$domain=zakaz.ua
 @@/reklama/*$domain=velochehol.com.ua|velosumka.com
 @@/spcjs.php$script,domain=altapress.ru

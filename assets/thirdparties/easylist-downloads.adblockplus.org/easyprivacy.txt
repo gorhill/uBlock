@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: jGvnE5iI7IztOlh2WRquLg
-! Version: 201408271351
+! Checksum: F5LH2gpd8w0XFpS4vp5jVw
+! Version: 201408291431
 ! Title: EasyPrivacy
-! Last modified: 27 Aug 2014 13:51 UTC
+! Last modified: 29 Aug 2014 14:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -5474,6 +5474,8 @@ http://utm.
 ||techweb.com/beacon/
 ||the-group.net/aether/
 ||thefilter.com^*?extanonid=$~script
+||themesltd.com/hit-counter/$third-party
+||themesltd.com/online-users-counter/$third-party
 ||thepornstarlist.com/lo/lo/track.php?
 ||thespringbox.com/analytics/
 ||thetradedesk-tags.s3.amazonaws.com^
@@ -5712,7 +5714,6 @@ http://utm.
 ||yellowbrix.com/images/content/cimage.gif?
 ||yellowpages.com^*.gif?tid$third-party
 ||yext.com/plpixel?
-||yimg.com/uq/syndication/yad.js
 ||yimg.com^*/l?ig=$image
 ||ypcdn.com/*/webyp?
 ||zoover.co.uk/tracking/
@@ -6605,6 +6606,7 @@ http://utm.
 ||cooliris.com/shared/stats/
 ||cosmopolitan.co.za/rest/track/
 ||count.livetv.ru^
+||count.livetv.sx^
 ||count.prx.org^
 ||counter.promodeejay.net^
 ||counter.theconversation.edu.au^
@@ -8119,6 +8121,7 @@ http://utm.
 ||chip.de/js/omniture_somtr_code_vH.25.js
 ||consumerreports.org^*/s_code.js
 ||csmonitor.com/extension/csm_base/design/csm_design/javascript/omniture/s_code.js
+||disneylandparis.fr^*/s_code.js
 ||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com
 ||expressen.se/static/scripts/s_code.js?
 ||hayneedle.com/js/s_code.min.*.js
@@ -8799,7 +8802,7 @@ http://utm.
 @@||anthem.com/includes/foresee/foresee-trigger.js
 @@||aol.com/mm_track/slideshow/$subdocument
 @@||aolcdn.com/js/mg2.js$domain=autoblog.com|autos.aol.com|dailyfinance.com
-@@||aolcdn.com/omniunih.js$domain=autoblog.com|autos.aol.com|engadget.com|mapquest.com|video.aol.com|www.aol.com
+@@||aolcdn.com/omniunih.js$domain=aim.com|autoblog.com|autos.aol.com|engadget.com|mapquest.com|video.aol.com|www.aol.com
 @@||aolcdn.com/omniunih_int.js$domain=autoblog.com
 @@||aolcdn.com^*/beacon.min.js$domain=autoblog.com|dailyfinance.com
 @@||api.chartbeat.com^script,domain=financialpost.com|wcpo.com|couriermail.com.au|betabeat.com
@@ -9182,7 +9185,7 @@ http://utm.
 @@||gametrailers.com/b/ss/$object-subrequest
 ! Preliminarily whitelisting Omniture s_code tracking pixels (script versions H.25 - H.25.2) due to breakage (https://adblockplus.org/forum/viewtopic.php?f=10&t=11378) if blocking the script causes issues
 @@||112.2o7.net/b/ss/$image,domain=espn.com.br
-@@||122.2o7.net/b/ss/$image,domain=billetnet.dk|billettservice.no|goal.com|lippupalvelu.fi|pcworld.com|riverisland.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se
+@@||122.2o7.net/b/ss/$image,domain=billetnet.dk|billettservice.no|citibank.co.in|goal.com|lippupalvelu.fi|pcworld.com|riverisland.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se
 @@||fandango.com/b/ss/$image
 @@||globalnews.ca/b/ss/
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
