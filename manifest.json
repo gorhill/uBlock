@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_extName__",
     "short_name": "µBlock",
-    "version": "0.5.3.0",
+    "version": "0.6.0.0",
     "description": "__MSG_extShortDesc__",
     "icons": {
         "16": "img/icon_16.png",
