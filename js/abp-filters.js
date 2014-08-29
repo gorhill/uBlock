@@ -29,26 +29,29 @@
 /******************************************************************************/
 
 // fedcba9876543210
-// |   |  |
-// |   |  |
-// |   |  |
-// |   |  |
-// |   |  |
-// |   |  |
-// |   |  +---- party [0 - 7]
-// |   +---- type [0 - 15]
-// +---- [BlockAction | AllowAction]
+// |||   | |      |
+// |||   | |      |
+// |||   | |      |
+// |||   | |      |
+// |||   | |      +---- bit 0-3: domain bits
+// |||   | +---- bit 8-7: party [0 - 3]
+// |||   +---- bit 12-9: type [0 - 15]
+// ||+---- bit 13: `important`
+// |+---- bit 14: [BlockAction | AllowAction]
+// +---- bit 15: unused (to ensure valid unicode character)
 
-const BlockAction = 0 << 15;
-const AllowAction = 1 << 15;
+const BlockAction = 0 << 14;
+const AllowAction = 1 << 14;
 const ToggleAction = BlockAction ^ AllowAction;
 
-const AnyType = 1 << 11;
+const Important = 1 << 13;
+ 
+const AnyType = 1 << 9;
 
-const AnyParty = 0 << 8;
-const FirstParty = 1 << 8;
-const ThirdParty = 2 << 8;
-const SpecificParty = 3 << 8;
+const AnyParty = 0 << 7;
+const FirstParty = 1 << 7;
+const ThirdParty = 2 << 7;
+const SpecificParty = 3 << 7;
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
@@ -77,14 +80,14 @@ var reHostnameToken = /^[0-9a-z]+/g;
 var reGoodToken = /[%0-9a-z]{2,}/g;
 
 var typeNameToTypeValue = {
-        'stylesheet': 2 << 11,
-             'image': 3 << 11,
-            'object': 4 << 11,
-            'script': 5 << 11,
-    'xmlhttprequest': 6 << 11,
-         'sub_frame': 7 << 11,
-             'other': 8 << 11,
-             'popup': 9 << 11
+        'stylesheet': 2 << 9,
+             'image': 3 << 9,
+            'object': 4 << 9,
+            'script': 5 << 9,
+    'xmlhttprequest': 6 << 9,
+         'sub_frame': 7 << 9,
+             'other': 8 << 9,
+             'popup': 9 << 9
 };
 
 // ABP filters: https://adblockplus.org/en/filters
@@ -134,31 +137,6 @@ var histogram = function(label, categories) {
     console.log('\tTotal buckets count: %d', total);
 };
 */
-/*
-var adbProfiler = {
-    testCount: 0,
-    urlCount: 0,
-    dumpEach: 200,
-    countUrl: function() {
-        this.urlCount += 1;
-        if ( (this.urlCount % this.dumpEach) === 0 ) {
-            this.dump();
-        }
-    },
-    countTest: function() {
-        this.testCount += 1;
-    },
-    dump: function() {
-        console.log('µBlock.adbProfiler> number or filters tested per URL: %d (sample: %d URLs)', this.testCount / this.urlCount, this.urlCount);
-    },
-    reset: function() {
-        this.testCount = 0;
-        this.urlCount = 0;
-    },
-    dummy: 0
-};
-*/
-
 /*******************************************************************************
 
 Filters family tree:
@@ -206,7 +184,6 @@ var FilterPlain = function(s, tokenBeg) {
 };
 
 FilterPlain.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
@@ -223,7 +200,6 @@ var FilterPlainHostname = function(s, tokenBeg, hostname) {
 };
 
 FilterPlainHostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
@@ -239,7 +215,6 @@ var FilterPlainPrefix0 = function(s) {
 };
 
 FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return url.substr(tokenBeg, this.s.length) === this.s;
 };
 
@@ -255,7 +230,6 @@ var FilterPlainPrefix0Hostname = function(s, hostname) {
 };
 
 FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg, this.s.length) === this.s;
 };
@@ -271,7 +245,6 @@ var FilterPlainPrefix1 = function(s) {
 };
 
 FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
@@ -287,7 +260,6 @@ var FilterPlainPrefix1Hostname = function(s, hostname) {
 };
 
 FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
@@ -303,7 +275,6 @@ var FilterPlainLeftAnchored = function(s) {
 };
 
 FilterPlainLeftAnchored.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return url.slice(0, this.s.length) === this.s;
 };
 
@@ -319,7 +290,6 @@ var FilterPlainLeftAnchoredHostname = function(s, hostname) {
 };
 
 FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(0, this.s.length) === this.s;
 };
@@ -335,7 +305,6 @@ var FilterPlainRightAnchored = function(s) {
 };
 
 FilterPlainRightAnchored.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return url.slice(-this.s.length) === this.s;
 };
 
@@ -351,7 +320,6 @@ var FilterPlainRightAnchoredHostname = function(s, hostname) {
 };
 
 FilterPlainRightAnchoredHostname.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(-this.s.length) === this.s;
 };
@@ -375,7 +343,6 @@ var FilterSingleWildcard = function(s, tokenBeg) {
 };
 
 FilterSingleWildcard.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     tokenBeg -= this.tokenBeg;
     return url.substr(tokenBeg, this.lSegment.length) === this.lSegment &&
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
@@ -396,7 +363,6 @@ var FilterSingleWildcardHostname = function(s, tokenBeg, hostname) {
 };
 
 FilterSingleWildcardHostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     tokenBeg -= this.tokenBeg;
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg, this.lSegment.length) === this.lSegment &&
@@ -416,7 +382,6 @@ var FilterSingleWildcardPrefix0 = function(s) {
 };
 
 FilterSingleWildcardPrefix0.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return url.substr(tokenBeg, this.lSegment.length) === this.lSegment &&
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
@@ -435,7 +400,6 @@ var FilterSingleWildcardPrefix0Hostname = function(s, hostname) {
 };
 
 FilterSingleWildcardPrefix0Hostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.substr(tokenBeg, this.lSegment.length) === this.lSegment &&
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
@@ -459,7 +423,6 @@ var FilterSingleWildcardLeftAnchored = function(s) {
 };
 
 FilterSingleWildcardLeftAnchored.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return url.slice(0, this.lSegment.length) === this.lSegment &&
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
@@ -478,7 +441,6 @@ var FilterSingleWildcardLeftAnchoredHostname = function(s, hostname) {
 };
 
 FilterSingleWildcardLeftAnchoredHostname.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(0, this.lSegment.length) === this.lSegment &&
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
@@ -502,7 +464,6 @@ var FilterSingleWildcardRightAnchored = function(s) {
 };
 
 FilterSingleWildcardRightAnchored.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return url.slice(-this.rSegment.length) === this.rSegment &&
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
@@ -521,7 +482,6 @@ var FilterSingleWildcardRightAnchoredHostname = function(s, hostname) {
 };
 
 FilterSingleWildcardRightAnchoredHostname.prototype.match = function(url) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            url.slice(-this.rSegment.length) === this.rSegment &&
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
@@ -546,7 +506,6 @@ var FilterManyWildcards = function(s, tokenBeg) {
 };
 
 FilterManyWildcards.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
@@ -564,7 +523,6 @@ var FilterManyWildcardsHostname = function(s, tokenBeg, hostname) {
 };
 
 FilterManyWildcardsHostname.prototype.match = function(url, tokenBeg) {
-    // adbProfiler.countTest();
     return pageHostname.slice(-this.hostname.length) === this.hostname &&
            this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
@@ -741,6 +699,7 @@ FilterParser.prototype.reset = function() {
     this.notHostname = false;
     this.thirdParty = false;
     this.types.length = 0;
+    this.important = 0;
     this.unsupported = false;
     return this;
 };
@@ -885,9 +844,14 @@ FilterParser.prototype.parse = function(s) {
         }
         if ( opt === 'popup' ) {
             this.parseOptType('popup', not);
-            break;
+            continue;
+        }
+        if ( opt === 'important' ) {
+            this.important = Important;
+            continue;
         }
         this.unsupported = true;
+        break;
     }
     return this;
 };
@@ -1125,7 +1089,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             // If it is a block filter, we need to reverse the order of
             // evaluation.
             if ( parsed.action === BlockAction ) {
-                filter.important = true;
+                parsed.important = Important;
             }
             this.addFilterEntry(
                 filter,
@@ -1157,13 +1121,14 @@ FilterContainer.prototype.addFilter = function(parsed) {
 FilterContainer.prototype.addFilterEntry = function(filter, parsed, party, tokenBeg, tokenEnd) {
     var s = parsed.f;
     var tokenKey = s.slice(tokenBeg, tokenEnd);
+    var bits = parsed.action | parsed.important | party;
     if ( parsed.types.length === 0 ) {
-        this.addToCategory(parsed.action | AnyType | party, tokenKey, filter);
+        this.addToCategory(bits | AnyType, tokenKey, filter);
         return;
     }
     var n = parsed.types.length;
     for ( var i = 0; i < n; i++ ) {
-        this.addToCategory(parsed.action | parsed.types[i] | party, tokenKey, filter);
+        this.addToCategory(bits | parsed.types[i], tokenKey, filter);
     }
 };
 
@@ -1191,7 +1156,7 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 FilterContainer.prototype.matchTokens = function(url) {
     var re = this.reAnyToken;
-    var matches, beg, token;
+    var matches, beg, token, f;
     var buckets = this.buckets;
     var bucket0 = buckets[0];
     var bucket1 = buckets[1];
@@ -1201,7 +1166,6 @@ FilterContainer.prototype.matchTokens = function(url) {
     var bucket5 = buckets[5];
     var bucket6 = buckets[6];
     var bucket7 = buckets[7];
-    var f;
 
     re.lastIndex = 0;
     while ( matches = re.exec(url) ) {
@@ -1333,23 +1297,26 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
 
     buckets[0] = buckets[1] = buckets[2] = buckets[6] = undefined;
 
+    // https://github.com/gorhill/uBlock/issues/139
+    // Test against important block filters
+    buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
+    buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
+    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type | domainParty)];
+    buckets[7] = categories[this.makeCategoryKey(BlockOneParty | Important | type | this.noDomainBits)];
+    var bf = this.matchTokens(url);
+    if ( bf !== false ) {
+        return bf.toString();
+    }
+
     // Test against block filters
+    // If there is no block filter, no need to test against allow filters
     buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | type)];
     buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
     buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
     buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
-    var bf = this.matchTokens(url);
-
-    // If there is no block filter, no need to test against allow filters
+    bf = this.matchTokens(url);
     if ( bf === false ) {
         return false;
-    }
-
-    // The purpose of the `important` property is to reverse the order of
-    // evaluation. Normally, it is "evaluate block then evaluate allow", with
-    // the `important` property it is "evaluate allow then evaluate block".
-    if ( bf.important === true  ) {
-        return bf.toString();
     }
 
     // Test against allow filters
@@ -1368,8 +1335,6 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
 /******************************************************************************/
 
 FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
-    // adbProfiler.countUrl();
-
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
     //     `match-case` option not supported, but then, I saw only one
@@ -1402,12 +1367,6 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         FirstParty :
         ThirdParty;
 
-    // Test hostname-based block filters
-    var bf = this.matchAnyPartyHostname(requestHostname);
-    if ( bf === false && party === ThirdParty ) {
-        bf = this.match3rdPartyHostname(requestHostname);
-    }
-
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
@@ -1415,6 +1374,30 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
+
+    // https://github.com/gorhill/uBlock/issues/139
+    // Test against important block filters.
+    // The purpose of the `important` option is to reverse the order of
+    // evaluation. Normally, it is "evaluate block then evaluate allow", with
+    // the `important` property it is "evaluate allow then evaluate block".
+    buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)];
+    buckets[1] = categories[this.makeCategoryKey(BlockAnyType | Important | party)];
+    buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important | domainParty)];
+    buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
+    buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
+    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type | domainParty)];
+    buckets[6] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important | this.noDomainBits)];
+    buckets[7] = categories[this.makeCategoryKey(BlockOneParty | Important | type | this.noDomainBits)];
+    var bf = this.matchTokens(url);
+    if ( bf !== false ) {
+        return bf.toString();
+    }
+
+    // Test hostname-based block filters
+    bf = this.matchAnyPartyHostname(requestHostname);
+    if ( bf === false && party === ThirdParty ) {
+        bf = this.match3rdPartyHostname(requestHostname);
+    }
 
     // Test against block filters
     if ( bf === false ) {
@@ -1434,13 +1417,6 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // If there is no block filter, no need to test against allow filters
     if ( bf === false ) {
         return false;
-    }
-
-    // The purpose of the `important` property is to reverse the order of
-    // evaluation. Normally, it is "evaluate block then evaluate allow", with
-    // the `important` property it is "evaluate allow then evaluate block".
-    if ( bf.important === true  ) {
-        return bf.toString();
     }
 
     // Test against allow filters
