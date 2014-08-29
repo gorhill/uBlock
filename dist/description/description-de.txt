@@ -24,11 +24,11 @@ Auf Wunsch können zusätzliche Listen ausgewählt werden:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- etc.
 
-Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
+Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von "Fanboy" und "hpHosts’s Ad and tracking servers" ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
 
-Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
+Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten möglicherweise nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
 
 ***
 
