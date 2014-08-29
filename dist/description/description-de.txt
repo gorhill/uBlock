@@ -6,7 +6,7 @@ Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum
 
 ***
 
-µBlock ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+µBlock ist flexibel, denn es ist mehr als ein bloßer "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
 
 Standardmäßig werden folgende Filterlisten geladen und angewandt:
 
