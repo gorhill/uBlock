@@ -1171,51 +1171,51 @@ FilterContainer.prototype.matchTokens = function(url) {
     while ( matches = re.exec(url) ) {
         beg = matches.index;
         token = url.slice(beg, re.lastIndex);
-        if ( bucket0 !== undefined ) {
+        if ( bucket0 !== undefined && bucket0.hasOwnProperty(token) ) {
             f = bucket0[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket1 !== undefined ) {
+        if ( bucket1 !== undefined && bucket1.hasOwnProperty(token) ) {
             f = bucket1[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket2 !== undefined ) {
+        if ( bucket2 !== undefined && bucket2.hasOwnProperty(token) ) {
             f = bucket2[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket3 !== undefined ) {
+        if ( bucket3 !== undefined && bucket3.hasOwnProperty(token) ) {
             f = bucket3[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket4 !== undefined ) {
+        if ( bucket4 !== undefined && bucket4.hasOwnProperty(token) ) {
             f = bucket4[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket5 !== undefined ) {
+        if ( bucket5 !== undefined && bucket5.hasOwnProperty(token) ) {
             f = bucket5[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket6 !== undefined ) {
+        if ( bucket6 !== undefined && bucket6.hasOwnProperty(token) ) {
             f = bucket6[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket7 !== undefined ) {
+        if ( bucket7 !== undefined && bucket7.hasOwnProperty(token) ) {
             f = bucket7[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
+            if ( f.match(url, beg) !== false ) {
                 return f;
             }
         }
