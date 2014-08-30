@@ -240,6 +240,8 @@ var divDialog = null;
 var taCandidate = null;
 
 var targetElements = [];
+var svgWidth = 0;
+var svgHeight = 0;
 
 /******************************************************************************/
 
@@ -636,9 +638,22 @@ var onKeyPressed = function(ev) {
 
 /******************************************************************************/
 
+var onScrolled = function(ev) {
+    var newHeight = this.scrollY + this.innerHeight;
+    if ( newHeight > svgHeight ) {
+        svgHeight = newHeight;
+        svgRoot.setAttribute('height', svgHeight);
+        svgRoot.setAttribute("viewBox", '0 0 ' + svgWidth + ' ' + svgHeight);
+    }
+    highlightElements(targetElements, true);
+};
+
+/******************************************************************************/
+
 var stopPicker = function() {
     if ( pickerRoot !== null ) {
         document.removeEventListener('keydown', onKeyPressed);
+        window.removeEventListener('scroll', onScrolled);
         taCandidate.removeEventListener('input', onCandidateChanged);
         divDialog.removeEventListener('click', onDialogClicked);
         svgRoot.removeEventListener('mousemove', onSvgHovered);
@@ -790,8 +805,11 @@ var startPicker = function() {
 
     svgRoot = document.createElementNS(svgns, 'svg');
     svgRoot.innerHTML = '<path /><path />';
-    var svgWidth = document.documentElement.scrollWidth;
-    var svgHeight = document.documentElement.scrollHeight;
+    svgWidth = document.documentElement.scrollWidth;
+    svgHeight = Math.max(
+        document.documentElement.scrollHeight,
+        window.scrollY + window.innerHeight
+    );
     svgRoot.setAttribute('x', 0);
     svgRoot.setAttribute('y', 0);
     svgRoot.setAttribute('width', svgWidth);
@@ -829,6 +847,7 @@ var startPicker = function() {
     divDialog.addEventListener('click', onDialogClicked);
     taCandidate = divDialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
+    window.addEventListener('scroll', onScrolled);
     document.addEventListener('keydown', onKeyPressed);
 };
 
