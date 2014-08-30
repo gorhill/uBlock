@@ -638,6 +638,10 @@ var onKeyPressed = function(ev) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/190
+// May need to dynamically adjust the height of the overlay + new position
+// of highlighted elements.
+
 var onScrolled = function(ev) {
     var newHeight = this.scrollY + this.innerHeight;
     if ( newHeight > svgHeight ) {
