@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"kliknite gumb za pokretanje da bi trajno onemogućili ili omogućili µBlock za trenutnu stranicu",
+    "message":"Klik: trajno onemogućiti\/omogućiti µBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock samo za ovu stranicu.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{

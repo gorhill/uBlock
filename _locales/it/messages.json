@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"clicca sul pulsante power per <br>disabilitare permanentemente o abilitare <br>µBlock per questo sito",
+    "message":"Click: disabilita\/abilita permanentemente µBlock per questo sito.\n\nCtrl+click: disabilita µBlock solo su questa pagina.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
