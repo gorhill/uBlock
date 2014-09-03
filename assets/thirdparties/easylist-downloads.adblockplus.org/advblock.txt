@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 4Hiz9DEVkIkRr5p+iJLepQ
-! Version: 201408291430
-! Last modified: 29 Aug 2014 14:30 UTC
+! Checksum: Kh5Q1T3CR/mBa6zMldMrFg
+! Version: 201409030300
+! Last modified: 03 Sep 2014 03:00 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -55,6 +55,7 @@
 ! - Редиректоры (открываются в попапе и перекидывают на другой сайт) ----------
 .tnt-online.ru/?utm_$popup
 ||10host.ru/go.php?id=$popup
+||4pda.ru/pages/go/*%26utm_$popup
 ||actionpay.ru^$popup
 ||adserv01.ru^$popup
 ||adspynet.com/reference?pid=$popup
@@ -2953,6 +2954,9 @@ unionpeer.org###bg-banner
 sc2tv.ru###bg-link
 topgame.su###bg_img
 goha.ru###branding
+pikabu.ru###branding_ad_comment
+pikabu.ru###branding_ad_footer
+pikabu.ru###branding_ad_header
 world-mmo.com###brend
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###cc_fm_prem
 xxx-base.org###center2 > .block
@@ -2995,6 +2999,7 @@ sonikelf.ru,tvernews.ru##.banner
 popmech.ru##.banner-label
 allmoldova.com##.banner_main
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
+4pda.ru##.brand-page
 101.ru,tfilm.tv##.branding
 zaycev.net##.branding-link
 gorod.cn.ua##.branding_left
@@ -3155,8 +3160,6 @@ animeonline.su###brand_link
 voxpopuli.kz###brand_logo
 dfiles.ru,gidonline.ru,iguides.ru,namba.kg,namba.tj###branding
 namba.kg,namba.tj###branding-html
-pikabu.ru###branding_ad_footer
-pikabu.ru###branding_ad_header
 iguides.ru###branding_clear
 computerra.ru,kolyan.net###branding_link
 computerra.ru###branding_link + div[style^="height:"]
@@ -3457,7 +3460,6 @@ animeonline.su##.adv_left_body
 animeonline.su##.adv_left_up
 animeonline.su##.adv_right_body
 animeonline.su##.adv_right_up
-pikabu.ru##.adv_wrap
 gamestar.ru##.advback
 katushka.net,nightwarez.ru,paparazzi.ru,tltorrent.org##.advert
 moskva.fm##.advert-bond-block
@@ -3652,7 +3654,6 @@ ipicture.ru##.faq > ul > li + div
 bigness.ru##.fark
 vesti.ru##.filmpro-widget
 rl-team.net##.find_lp
-pikabu.ru##.first_story:not(.pg)
 ekabu.ru##.fixedBanner
 amovies.tv,free-torrents.org,riper.am,toptracker.ru##.flash
 novafilm.tv##.foot-partners
@@ -3736,7 +3737,6 @@ mmotop.ru##.link-1
 ucrazy.ru##.links
 soccer.ru##.linksblock
 ekabu.ru##.lk > div[style]:not([class])
-pikabu.ru##.login_f > a[href^="http://cpm.wargaming.net/"]
 platon.kz##.logo + #ja-search
 hi-fi.ru##.logo + noindex
 21region.org##.logo_ad_wrap
@@ -4336,6 +4336,7 @@ seonews.ru###tpl_vertbanner_block
 appleinsider.ru##.a-position
 4pda.ru##.ad-box
 allinfo.kz##.adb
+pikabu.ru##.adv_wrap
 forbes.ua##.adver_top
 9111.ru##.advzone
 europaplus.ru##.adwolf-holder
@@ -4453,6 +4454,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||3mp3.ru/dhtml/adv.
 ||3mv.ru/oboi
 ||4allforum.com/banner/
+||4pda.to/css/brandpage/
 ||4pda.to/forum/style_images/dl/*_$image
 ||4pda.to/img/brand/
 ||5ka.ru/js/banners.
@@ -6116,6 +6118,7 @@ chatovod.ru#@#.withAds
 @@||olegon.ru^$elemhide
 @@||online.ua/adsence.js|$domain=online.ua
 @@||paste.org/style/adframe.js$domain=paste.org
+@@||pesikot.org^*/advert.js|$domain=pesikot.org
 @@||picforall.ru/ads/banner.$image,domain=picforall.ru
 @@||recreativ.ru/rcode.$script,domain=all-episodes.com
 @@||ualinux.com/modules/mod_jpayday/js/advertisement.js$domain=ualinux.com

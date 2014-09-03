@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1XzpTv7IdUyMd1z1AFG5zQ
-! Version: 201408291431
+! Checksum: dGtp900P5YUYzv5ioojIBg
+! Version: 201409030301
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 29 Aug 2014 14:31 UTC
+! Ultima modifica: 03 Sep 2014 03:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -770,6 +770,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||eventiesagre.it/images/banner/
 ||everyeye.it/topskin/
 ||everyeye.it/topskin_2012/
+||exxun.com/adi/
 ||f052.it/archivefile/*/banner-
 ||f1passion.it^*/banner.
 ||factotum.ra.it/attachments/banner_
@@ -1618,6 +1619,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||videohifi.com^*/AcusticaApplicata690x90.jpg
 ||videohifi.com^*/MONITORAUDIO.JPG
 ||videohifi.com^*/SICK4MILK.png
+||videomakers.net//wp-content/banners/
 ||videopornoitaliani.com/banner/random/
 ||videopornoitaliani.com/banner/top/
 ||videopornoitaliani.com/images/banner_
@@ -1632,6 +1634,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||virgilio.it/src_tag_sponsor_
 ||vivafm.it^*/banners/
 ||vivereancona.it/images/banners_
+||viverejesi.it/images/banners_
 ||voceditalia.it/banner.js
 ||voceditalia.it/banner/
 ||voceditalia.it/banner_ev.js
@@ -2660,6 +2663,7 @@ acquaportal.it##table[width="284px"][style="border:1px solid #A5C9ED"]
 tio.ch##table[width="302"][style="border:1px solid #A7A9AC;border-top:none;"]
 mnews.it##table[width="728"][height="280"]
 312.it##table[width="728"][height="90"]
+edixxon.com##table[width="764"][cellpadding="4"]
 cinemadelsilenzio.it##table[width="956"][height="306"]
 cinemadelsilenzio.it##table[width="956"][height="72"]
 tgmonline.it##td[align="right"][width="305"][valign="top"]

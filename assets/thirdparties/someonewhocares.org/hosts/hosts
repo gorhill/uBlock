@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Aug 28th, 2014 at 00:49
+# Last updated: Aug 30th, 2014 at 03:21
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -4862,6 +4862,7 @@ fe80::1%lo0	localhost
 127.0.0.1 apex-ad.com
 127.0.0.1 api.addthis.com
 127.0.0.1 api.affinesystems.com
+127.0.0.1 api.opencandy.com
 127.0.0.1 api-public.addthis.com
 127.0.0.1 apopt.hbmediapro.com
 127.0.0.1 apparelncs.com
@@ -6558,6 +6559,7 @@ fe80::1%lo0	localhost
 127.0.0.1 openads.smithmag.net
 127.0.0.1 openads.zeads.com
 127.0.0.1 openad.travelnow.com
+127.0.0.1 opencandy.com
 127.0.0.1 opentable.tt.omtrdc.net
 127.0.0.1 openx2.fotoflexer.com
 127.0.0.1 openx.adfactor.nl

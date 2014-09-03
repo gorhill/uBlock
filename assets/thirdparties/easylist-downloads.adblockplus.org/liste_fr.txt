@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: DgJAVhtpSqtjY3GIut53Jw
-! Version: 201408291431
+! Checksum: 5iZL8Pn6HTF80ky1Shb4cA
+! Version: 201409030301
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3430,6 +3430,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ||eschrichtiidaepiety.info^$third-party
 ||faintheartedsharkoil.info^$third-party
 ||formicafuscasyringavillosa.info^$third-party
+||friulitheosophism.info^$third-party
 ||georgfriedrichbernhardriemannhorseradishsauce.info^$third-party
 ||hectometertriple.info^$third-party
 ||jewryhear.info^$third-party
@@ -3488,6 +3489,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||ghaman.com/*.js|$script,third-party
 @@||ghostnation.org/*.js|$script,third-party
 @@||google-it.info/*.js|$script,third-party
+@@||hackedbox.net/*.js|$script,third-party
 @@||hebmr.cc.st/*.js|$script,third-party
 @@||hmlbz.ez.lv/*.js|$script,third-party
 @@||home.kg/*.js|$script,third-party
@@ -3576,6 +3578,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.ghostnation.org/$third-party,xmlhttprequest
 |http://*.google-it.info/$third-party,xmlhttprequest
 |http://*.gw.lt/$third-party,xmlhttprequest
+|http://*.hackedbox.net/$third-party,xmlhttprequest
 |http://*.home.kg/$third-party,xmlhttprequest
 |http://*.homenet.org/$third-party,xmlhttprequest
 |http://*.hpc.tw/$third-party,xmlhttprequest
@@ -3770,7 +3773,6 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||femmes-de-footballeurs.fr^$elemhide
 @@||festivalboujdour.com^$elemhide
 @@||fight4craft.fr^$elemhide
-@@||gamekult.com^$elemhide
 @@||gamer-network.fr^$elemhide
 @@||gamewinner.fr^$elemhide
 @@||geek-area.fr^$elemhide

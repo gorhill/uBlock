@@ -456,6 +456,8 @@ clubedohardware.com.br#@#.ipsAd
 ! cbs.com
 @@||analytics.edgesuite.net^$domain=cbs.com,object-subrequest
 @@||ailde.biz/a.sponsorads.js$domain=cbs.com,script
+! gamingroom.tv
+gamingroom.tv#@#.adsbygoogle
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

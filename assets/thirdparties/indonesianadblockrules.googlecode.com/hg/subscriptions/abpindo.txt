@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: P+OzehOjMwuHCnyfOCFFGQ
+! Checksum: Vj441g+oKXSO2ZsJYDn8Bw
 ! Title: ABPindo
-! Last modified: 24 Agustus 2014, 20:21:55 WIB
+! Last modified: 01 September 2014, 15:10:36 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -427,6 +427,7 @@ blogspot.com##img[alt="ads"]
 ||mractionclub.com/banner/
 ||musisi.com/musifile/images_banner/
 ||my.postsgenius.com/style/banners/
+||mylogin.co^$domain=hentai2read.com
 ||newopenx.detik.com/images/
 ||pancet.com/kbads/
 ||resep.web.id/banner/
@@ -468,7 +469,7 @@ detik.com###bottom_banner
 indogamers.com###bottombanner
 bioskop21.us###box-message
 tribunnews.com###boxright [style="width:300px; height:250px;"]
-adipedia.com,bokepgratiz.info,downloadfilmbaru.com,movie76.com,nusareborn.in###btm_banner
+adipedia.com,bokepgratiz.info,downloadfilmbaru.com,mangaku.web.id,movie76.com,nusareborn.in###btm_banner
 cinema81.com###btm_banner_kanan
 cinema81.com###btm_banner_kiri
 movie76.com###close-teaser
@@ -481,6 +482,7 @@ teknoup.com###fancybox-wrap
 teknoup.com###fancybox_ajax
 forumbokep.com,krucil.net,vocland.com###floating_banner_bottom
 ganool.com###floating_banner_top2
+populerkan.com###flowads
 untukku.com###footer-adcont
 resep.web.id###googlebox
 indosiar.com###headerbanner
@@ -498,6 +500,7 @@ harakahdaily.net###jsemrp_373_873
 harakahdaily.net###jsemrp_374_469
 harakahdaily.net###jsemrp_380_290
 zonabola.com###lAds
+pkspiyungan.org###largebanner
 komikbaru.com,mangafox.me###left-skyscraper
 duniasex.ws###main_content_section > div[align="center"]
 dapurpacu.com###mid-banner
@@ -560,6 +563,7 @@ kompas.com##.adsMR1Lipsus1
 antaranews.com##.ads_top_728
 utusan.com.my##.adspace_300
 m.iklanbaris.detik.com##.adtext01
+mangaku.web.id##.adv
 teknoup.com##.advertisement_box1
 teknoup.com##.advertisement_box2
 palingseru.com##.alignnone.size-large.wp-image-458
@@ -628,12 +632,14 @@ republika.co.id##.set-ads-468
 kabar24.com##.skycapper
 okezone.com##.skyscrapper
 bokepgratiz.info##.textwidget
+icinema3satu.com##.textwidget img
 bioskop21.us##.textwidget img[width="160"][height="600"]
 lapar.com##.top-banner
 galaxymaya.com##.widget-content
 movie76.com##.widget-content img[alt="ads"]
 lintas.me##.xad-160x600
 lintas.me##.xad-300x250
+iberita.com##[style="float:right; margin:7px 0 10px 10px;"] > small
 kaskus.co.id##a[href^="http://kad.kaskus."]
 m.inilah.com##a[href^="http://mkhoj.com"]
 downloadfilem.com##a[href^="http://promosipraktis.com/"]
@@ -706,6 +712,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||imgur.com/*.gif$domain=animekompi.web.id|downloadfilmbaru.com|movie76.com|sodasusu.com|unduhfilm21.net
 ||incrasebux.com^$third-party
 ||indoagenbola.com^$popup,third-party
+||infoskorbola.com^$third-party
 ||investasiceria.net^$third-party
 ||javapic.com^$third-party
 ||jingkrak.com^$third-party
@@ -719,6 +726,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||mpnrs.com^$third-party
 ||mybannermaker.com^$third-party
 ||numpanglewat.com^$third-party
+||octafx.com^$popup,third-party
 ||onclinic24.com^$third-party
 ||paypalbisnis.com^$third-party
 ||perawan3gp.com^$popup,third-party
@@ -734,6 +742,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||sebar.idblognetwork.com^$third-party
 ||serbiansoftware.com^$popup,domain=bioskop21.us
 ||textspace.net^$third-party
+||tinypic.com/*.gif$domain=icinema3satu.com
 ||tinypic.com^$image,domain=bioskopkita.com
 ||topsurfer.com^$third-party
 ||trafficfactory.biz^$popup,third-party

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: rD8ZJLrGdVCbMK4SWKGBNQ
-! Version: 201408291431
+! Checksum: X7GSSVQmHa9bZGz/8vWzMQ
+! Version: 201409030301
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 29 Aug 2014 14:31 UTC
+! Last modified: 03 Sep 2014 03:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -230,11 +230,11 @@ _woz_banner_vote.
 ###werbekasten
 ###werbeleiste
 ###werbetrenner
-! ###werbung
+###werbung
 ###werbung-banner
 ###werbung-left
 ###werbung-map-top
-! ###werbung-skyscraper
+###werbung-skyscraper
 ###werbung125_links
 ###werbung125_rechts
 ###werbung2
@@ -270,12 +270,12 @@ _woz_banner_vote.
 ##.WerbungDetailRectangle
 ##.WerbungLinksRechts
 ##.WerbungMitte
-! ##.ad_mitte
-! ##.adrechts
+##.ad_mitte
+##.adrechts
 ##.ads-artikel-contentAd-medium
 ##.ads-artikel-contentAd-top
 ##.ads_bueroklammer
-! ##.ads_rechts
+##.ads_rechts
 ##.adsense-ArtikelOben
 ##.adzeiger
 ##.anzeigenwerbung
@@ -333,25 +333,25 @@ _woz_banner_vote.
 ##.werbehinweis
 ##.werbekennzeichnerrectangle
 ##.werbepause
-! ##.werblinks
-! ##.werbrechts
-! ##.werbung
-! ##.werbung-1
-! ##.werbung-2
+##.werblinks
+##.werbrechts
+##.werbung
+##.werbung-1
+##.werbung-2
 ##.werbung-250x250
-! ##.werbung-3
+##.werbung-3
 ##.werbung-bigbox
 ##.werbung-bigsize
 ##.werbung-box
 ##.werbung-content
 ##.werbung-contentad
-! ##.werbung-fullbanner
-! ##.werbung-halfbanner
-! ##.werbung-inline
-! ##.werbung-label
-! ##.werbung-leiste
-! ##.werbung-rectangle
-! ##.werbung-skyscraper
+##.werbung-fullbanner
+##.werbung-halfbanner
+##.werbung-inline
+##.werbung-label
+##.werbung-leiste
+##.werbung-rectangle
+##.werbung-skyscraper
 ##.werbung-skyscraper2
 ##.werbung-unten
 ##.werbung1
@@ -702,7 +702,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||doubleclick.net/pfadx/telewest.de/$third-party
 ||doubleclick.net/pfadx/toggo.de/$third-party
 ||doubleclick.net/pfadx/www.teleboerse.de/$third-party
-||doubleclick.net^$third-party,domain=augsburger-allgemeine.de|autobild.de|bigbrother.de|bild.de|buffed.de|bunch.tv|bundesliga.de|cnet.de|comedycentral.de|computerbild.de|dashausanubis.de|de.msn.com|dooloop.tv|eyep.tv|filmjunkies.de|flashgames.de|focus.de|frauenzimmer.de|gameone.de|gamepro.de|gamesaktuell.de|gamestar.de|gameswelt.at|gameswelt.ch|gameswelt.de|gameswelt.tv|gamezone.de|gzsz.rtl.de|hatenight.com|homerj.de|icarly.de|kabeleins.de|kino.de|kochbar.de|laola1.tv|lustich.de|motorvision.de|myvideo.at|myvideo.ch|myvideo.de|n-tv.de|onlinewelten.com|pcaction.de|pcgames.de|pcgameshardware.de|pcwelt.de|prosieben.at|prosieben.ch|prosieben.de|radio.de|ran.de|rtlregional.de|sat1.de|southpark.de|spiegel.tv|spiele-zone.de|spongebob.de|sport.de|spox.com|spreeradio.de|t-online.de|tape.tv|teleboerse.de|the-hills.tv|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de|trailerseite.de|tvmovie.de|video.de|videogameszone.de|vip.de|vodafonelive.de|vox.de|welt.de|wetter.de|wetterschnecken.de|wikifit.de|www.rtl2.de|zdnet.de
+||doubleclick.net^$third-party,domain=augsburger-allgemeine.de|autobild.de|bigbrother.de|bild.de|buffed.de|bunch.tv|bundesliga.de|cnet.de|comedycentral.de|computerbild.de|dashausanubis.de|de.msn.com|dooloop.tv|eyep.tv|filmjunkies.de|flashgames.de|focus.de|frauenzimmer.de|gameone.de|gamepro.de|gamesaktuell.de|gamestar.de|gameswelt.at|gameswelt.ch|gameswelt.de|gameswelt.tv|gamezone.de|gzsz.rtl.de|hatenight.com|homerj.de|icarly.de|kino.de|kochbar.de|laola1.tv|lustich.de|motorvision.de|myvideo.at|myvideo.ch|myvideo.de|n-tv.de|onlinewelten.com|pcaction.de|pcgames.de|pcgameshardware.de|pcwelt.de|radio.de|ran.de|rtlregional.de|southpark.de|spiegel.tv|spiele-zone.de|spongebob.de|sport.de|spox.com|spreeradio.de|t-online.de|tape.tv|teleboerse.de|the-hills.tv|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de|trailerseite.de|tvmovie.de|video.de|videogameszone.de|vip.de|vodafonelive.de|vox.de|welt.de|wetter.de|wetterschnecken.de|wikifit.de|www.rtl2.de|zdnet.de
 ||doubleclick.net^*/DE_PUTPATTV/$third-party
 ||doubleclick.net^*/pfadx/DE_N24.*.video/*;vpos=*;zz=*;fs=$third-party
 ||doubleclick.net^*/pfadx/tele5.de/$third-party
@@ -7440,8 +7440,8 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@/^https?\:\/\/(?!(as\.ebz\.io|ad\.adnet\.de|de\.ioam\.de|partner\.googleadservices\.com|static\.plista\.com|www\.google-analytics\.com|www\.google\.com|epochtim\.ivwbox\.de|www\.googleapis\.com|tracking\.rce\.veeseo\.com|adfarm\.nativeads\.de|d\.ligatus\.com|epochtimes\.de\.intellitxt\.com)\/)/$image,script,third-party,domain=epochtimes.de
 @@/^https?\:\/\/(?!(cdn\.krxd\.net|ad\.yieldlab\.net|ad\.de\.doubleclick\.net|de\.ioam\.de|dis\.eu\.criteo\.com|ip\.nuggad\.net|pagead2\.googlesyndication\.com|pq-direct\.revsci\.net|qs\.ioam\.de|static\.plista\.com|tracking\.netzathleten-media\.de|www\.google-analytics\.com|www\.googleadservices\.com|apis\.google\.com|connect\.facebook\.net|script\.ioam\.de)\/)/$image,script,third-party,domain=lustich.de
 @@/^https?\:\/\/(?!(de-uim\.videoplaza\.tv|adclient\.uimserv\.net)\/)/$object-subrequest,third-party,domain=gmx.net|web.de
+@@/^https?\:\/\/(?!(ds\.serving-sys\.com|cdn\.flashtalking\.com|pubads\.g\.doubleclick\.net|redirector\.gvt1\.com|adscale\.nuggad\.net|ad\.doubleclick\.net|www\.google-analytics\.com)\/)/$object-subrequest,third-party,domain=pcgames.de
 @@/^https?\:\/\/(?!(im\.banner\.t-online\.de|de-ipd\.videoplaza\.tv)\/)/$object-subrequest,third-party,domain=t-online.de
-@@/^https?\:\/\/(?!(pubads\.g\.doubleclick\.net|redirector\.gvt1\.com|adscale\.nuggad\.net|ad\.doubleclick\.net|www\.google-analytics\.com)\/)/$object-subrequest,third-party,domain=pcgames.de
 @@/^https?\:\/\/(?!(qs\.ivwbox\.de|qs\.ioam.de|platform\.twitter\.com|connect\.facebook\.net|de\.ioam\.de|pubads\.g\.doubleclick\.net|stats\.wordpress\.com|www\.google-analytics\.com|www\.googletagservices\.com|apis\.google\.com|script\.ioam\.de)\/)/$script,third-party,domain=gamona.de
 @@/^https?\:\/\/(?!(spiegel\.ivwbox\.de|c\.spiegel\.de|adserv\.quality-channel\.de|video\.spiegel\.de)\/)/$object-subrequest,third-party,domain=spiegel.tv
 @@/qos.phtml?$object-subrequest,domain=gmx.net|golem.de|homerj.de|spiegel.tv|sueddeutsche.de|t-online.de|web.de
@@ -7609,8 +7609,8 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||gearwom.de^$script,domain=gamona.de|lustich.de
 @@||gerichtsboulevard.de^$elemhide
 @@||gesehen.es^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
-@@||gmads.net/crossdomain.xml$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||gmads.net/r?$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+@@||gmads.net/crossdomain.xml$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
+@@||gmads.net/r?$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
 @@||golem.de^*.html$elemhide
 @@||goolive.de^*.js|
 @@||green-24.de^$elemhide

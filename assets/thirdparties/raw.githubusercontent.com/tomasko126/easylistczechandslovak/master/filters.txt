@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list for AdBlock and Adblock Plus
-! Last change: 24/07/2014
+! Last change: 01/09/2014
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! License: GNU GPL v3
 ! Email: tomastaro@adblock.sk
@@ -249,6 +249,8 @@ exashare.com###player_img
 ||ourphorum.com/images/banner*
 ||ourphorum.com/images/brapid.gif
 ||ourphorum.com/images/showlivecz.jpg
+||parabola.cz/img_menu/b*.gif
+||parabola.cz/img_menu/flash_astra.swf
 ||partner.zoznam.sk
 ||pcforum.sk/styles/white/imageset/topic_moved.gif
 ||player.joj.sk/age-chooser.swf
@@ -312,7 +314,7 @@ exashare.com###player_img
 ||betclick.com^$third-party
 ||bidmax.cz^$third-party
 ||c.imedia.cz^$third-party
-||cars.cz^$third-party
+||ads.cars.cz^$third-party
 ||data.itiscali.cz^$third-party
 ||dev.youcan.cz^$third-party
 ||dot.idot.cz^$third-party
@@ -384,13 +386,16 @@ exashare.com###player_img
 @@||hry.cz/ad/ad.aspx?
 @@||hry.sazka.cz/banners/new_banner*.*
 @@||iboys.cz/advert-list.php
+@@||i.imedia.cz/$third-party,domain=stream.cz
 @@||i.imedia.cz/js/im2.js
 @@||moviezone.cz/js/
 @@||ocko.tv/content/adv/flash/
+@@||reklama-*.cz
 @@||smartmania.cz/advertisment.js
 @@||sokolov.cz/images/reklama/
 @@||static.cz.prg.cmestatic.com/static/cz/shared/js/adtrack.nova.js
 @@||static.tn.nova.cz/static/cz/shared/js/banners.js
+@@||*-reklama.cz
 @@||ta3.com/advert-async-system/load-items.html?
 lidovky.cz#@#.col-ad
 realitygo.cz#@#.advert-detail
@@ -886,6 +891,7 @@ etrend.sk##.sponsors
 europa2.sk###bgr-anchor
 f1.sk##.banner_300x300
 filmy.kinotip.in##DIV[id^="ad"]
+filmy.teevee.sk##.rp
 fony.sk##.divArticleBannerTop
 forum.mobilmania.azet.sk###rwrap
 forum.zive.sk###rwrap

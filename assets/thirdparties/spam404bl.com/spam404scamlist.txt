@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4537
-! Last modified: 29 Aug 2014
+! Version: 4557
+! Last modified: 1 Sep 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -14,6 +14,7 @@
 !
 !-_-_-_-_-_-_-_-External Link Survey Scams-_-_-_-_-_-_-_-!
 ##[href^="http://cleanfiles.net/"]
+##[href^="https://cleanfiles.net/"]
 ##[href^="http://downloadity.net/"]
 ##[href^="http://dream-file.com/"]
 ##[href^="http://fileice.net/"]
@@ -4532,6 +4533,25 @@ shortz.so##[onclick="awaiting();"]
 ||onlinehack24.com^
 ||freehackstory.com^
 ||mixedhacks.com^
+||codegeneratorfree.net^
+||free-facebook-hack-account.com^
+||clashofclanhacks.com^
+||mgcheats.com^
+||thronerushcheats.net^
+||gamecrackproi.com^
+||hackspix.com^
+||skidrow-apps.com^
+||e-gamespot.com^
+||arboxyl.com^
+||steamcormuniity.com^
+||steamconnmunitly.com^
+||steannconnmunity.com^
+||steamcommunnitly.com^
+||stearncormmunity.com^
+||gripfiles.co^
+||gripdownload.co^
+||fkedup.com^
+||giftcards4free.net^
 !
 !
 !
