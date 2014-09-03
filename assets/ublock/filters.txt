@@ -106,3 +106,6 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 
 # Twitter Analytics needs Twitter Analytics
 @@||analytics.twitter.com^$domain=analytics.twitter.com
+
+# EasyPrivacy fixes
+@@||target.122.2o7.net^$domain=target.com
