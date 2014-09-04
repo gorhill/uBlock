@@ -142,7 +142,10 @@ return asyncJobManager;
         if ( pageStore ) {
             pageStore.updateBadge();
         } else {
-            chrome.browserAction.setIcon({ tabId: tabId, path: 'img/browsericons/icon19-off.png' });
+            chrome.browserAction.setIcon({
+                tabId: tabId,
+                path: { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' }
+            });
         }
     };
     this.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadgeCallback, 250);
