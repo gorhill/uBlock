@@ -384,7 +384,8 @@ var readLocalFile = function(path, callback) {
 
     var onCachedContentReady = function(details) {
         //console.log('µBlock> readLocalFile("%s") / onCachedContentReady()', path);
-        if ( !details.error && details.content !== '' ) {
+        // It's ok for user data to be empty
+        if ( !details.error && (details.content !== '' || reIsUserPath.test(path)) ) {
             reportBack(details.content);
             return;
         }
