@@ -371,32 +371,27 @@ var readLocalFile = function(path, callback) {
     };
 
     var onInstallFileLoaded = function() {
+        this.onload = this.onerror = null;
         //console.log('µBlock> readLocalFile("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
-        this.onload = this.onerror = null;
     };
 
     var onInstallFileError = function() {
+        this.onload = this.onerror = null;
         console.error('µBlock> readLocalFile("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
-        this.onload = this.onerror = null;
     };
 
-    var onCachedContentLoaded = function(details) {
-        //console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
-        reportBack(details.content);
-    };
-
-    var onCachedContentError = function(details) {
-        //console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
-        if ( reIsExternalPath.test(path) ) {
-            reportBack('', 'Error: asset not found');
+    var onCachedContentReady = function(details) {
+        //console.log('µBlock> readLocalFile("%s") / onCachedContentReady()', path);
+        if ( !details.error && details.content !== '' ) {
+            reportBack(details.content);
             return;
         }
         getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
-    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+    cachedAssetsManager.load(path, onCachedContentReady);
 };
 
 // https://www.youtube.com/watch?v=r9KVpuFPtHc
