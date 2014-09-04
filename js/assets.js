@@ -382,17 +382,26 @@ var readLocalFile = function(path, callback) {
         reportBack('', 'Error');
     };
 
-    var onCachedContentReady = function(details) {
-        //console.log('µBlock> readLocalFile("%s") / onCachedContentReady()', path);
+    var onCachedContentLoaded = function(details) {
+        //console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
+        reportBack(details.content);
+    };
+		
+    var onCachedContentError = function(details) {
+        //console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
+        if ( reIsExternalPath.test(path) ) {
+            reportBack('', 'Error: asset not found');
+            return;
+        }
         // It's ok for user data to be empty
-        if ( !details.error && (details.content !== '' || reIsUserPath.test(path)) ) {
-            reportBack(details.content);
+        if ( reIsUserPath.test(path) ) {
+            reportBack('');
             return;
         }
         getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
-    cachedAssetsManager.load(path, onCachedContentReady);
+    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
 };
 
 // https://www.youtube.com/watch?v=r9KVpuFPtHc
