@@ -216,7 +216,9 @@ PageStore.prototype.updateBadgeFromTab = function(tab) {
         return;
     }
     var netFiltering = this.getNetFilteringSwitch();
-    var iconPath = netFiltering ? 'img/browsericons/icon19.png' : 'img/browsericons/icon19-off.png';
+    var iconPath = netFiltering ?
+        { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
+        { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
 
     chrome.browserAction.setIcon({ tabId: tab.id, path: iconPath });
 
