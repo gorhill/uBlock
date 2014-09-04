@@ -281,6 +281,11 @@ var uBlockMessaging = (function(name){
     };
 
     var hideElements = function(selectors) {
+        // https://github.com/gorhill/uBlock/issues/207
+        // Do not call querySelectorAll() using invalid CSS selectors
+        if ( selectors.length === 0 ) {
+            return;
+        }
         if ( document.body === null ) {
             return;
         }
