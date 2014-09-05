@@ -501,7 +501,7 @@ var uBlockMessaging = (function(name){
                 if ( typeof node.querySelectorAll !== 'function' ) {
                     continue;
                 }
-                if ( ignoreTags[node.tagName] ) {
+                if ( ignoreTags.hasOwnProperty(node.tagName) ) {
                     continue;
                 }
                 contextNodes.push(node);
@@ -563,13 +563,14 @@ var uBlockMessaging = (function(name){
             }
             // If `!important` is not there, going back using history will
             // likely cause the hidden element to re-appear.
-            elem.style.visibility = 'hidden !important';
             if ( collapse ) {
                 if ( elem.parentNode ) {
                     elem.parentNode.removeChild(elem);
                 } else {
-                    elem.style.display = 'none !important';
+                    elem.style.setProperty('display', 'none', 'important');
                 }
+            } else {
+                elem.style.setProperty('visibility', 'hidden', 'important');
             }
             selectors.push(tagName + '[' + prop + '="' + src + '"]');
         }
@@ -594,6 +595,7 @@ var uBlockMessaging = (function(name){
 
     var failedElements = {
         'img': 'src',
+        'input': 'src',
         'object': 'data'
     };
 
@@ -619,15 +621,15 @@ var uBlockMessaging = (function(name){
             }
             // If `!important` is not there, going back using history will
             // likely cause the hidden element to re-appear.
-            target.style.visibility = 'hidden !important';
             if ( details.collapse ) {
                 if ( target.parentNode ) {
                     target.parentNode.removeChild(target);
                 } else {
-                    target.style.display = 'none !important';
+                    target.style.setProperty('display', 'none', 'important');
                 }
+            } else {
+                target.style.setProperty('visibility', 'hidden', 'important');
             }
-            // TODO: investigate injecting as a style. Is overhead worth it?
             messaging.tell({
                 what: 'injectedSelectors',
                 type: 'net',
@@ -644,7 +646,7 @@ var uBlockMessaging = (function(name){
     };
 
     var onResourceFailed = function(ev) {
-        //console.debug('Failed to load %o[src="%s"]', eev.target.tagName, ev.target.src);
+        //console.debug('Failed to load %s[src="%s"]', ev.target.tagName, ev.target.src);
         onResource(ev.target, failedElements);
     };
 
