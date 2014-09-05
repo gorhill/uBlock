@@ -386,14 +386,14 @@ var readLocalFile = function(path, callback) {
         //console.log('µBlock> readLocalFile("%s") / onCachedContentLoaded()', path);
         reportBack(details.content);
     };
-		
+
     var onCachedContentError = function(details) {
         //console.error('µBlock> readLocalFile("%s") / onCachedContentError()', path);
         if ( reIsExternalPath.test(path) ) {
             reportBack('', 'Error: asset not found');
             return;
         }
-        // It's ok for user data to be empty
+        // It's ok for user data to not be found
         if ( reIsUserPath.test(path) ) {
             reportBack('');
             return;
