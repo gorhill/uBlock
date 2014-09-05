@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"اضغط: تعطيل الاضافه بالكامل\/تشغيل المانع للموقع.\n\nCtrl+click",
+    "message":"اضغط: لتعطيل\/لتشغيل الاضافه بالكامل.\n\nCtrl+click لتعطيل الاداة لصفحه فقط",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
