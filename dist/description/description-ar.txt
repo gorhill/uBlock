@@ -1,0 +1,50 @@
+اقوى واسرع واخف مانع اعلانات في العالم: لا يتعمل الكثير من الذاكره او المعالج, ولكن يمكن استخدام ألاف من الفلاتر ويكون اسرع من الاضافات التي موجوده حالياً.
+
+نظرة عامة على قوة الاضافه: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+جداً مرن, بإمكان الاضافه تقرى وتعمل فلتر من ملف الهوست.
+
+فلترات توها خارجه من الصندوق, هذي الفلترات تم ادخالها في الاضافه 
+
+- EasyList
+- EasyPrivacy
+- Malware domains
+- Long-lived malware domains
+- Peter Lowe’s Ad server list
+- Malware Domains List
+
+لستات فلاتر اخرى بامكانك تفعيلها داخل اعدادات الاضافه
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Etc.
+
+طبعاً تذكر كل فلتر جديد فعلته او اضفته كل ما زاد الذاكره و لكن من بعد التحليل والتطبيق والتجربه اذا اضفت بعض الفلاتر  µBlock اداءها جداً جميل وخفيف على الذلكره ليس نفس الاضافات الاخرى
+
+وتذكر ايضاً يوجد امكانيه اذا اخترت وفعلت  بعض الفلاتر بعض المواقع لا تشتغل خاصة لستات التي يتم اخذها من  ملف الهوست
+
+***
+
+بدون لستات التي موجوده في الاضافه, الاضافه لا تساوي شي. اذا انت جاد في مساعدة المشروع فكر في الاشخاص الذين تعبوا واستطاعوا جلب الفلترات مجاناً 
+
+***
+
+مجاناً 
+مفتوح المصدر مع رخصة (GPLv3)
+مصنوع من المستخدمين  للمستخدمين
+
+
+Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contributors @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+انه لحد الان في طور التطوير 
+تذكر ذلك اذا سمحت 
+
+Project change log:
+https://github.com/gorhill/uBlock/wiki/Change-log
+
