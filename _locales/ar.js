@@ -104,7 +104,7 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"حدث الان",
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -116,39 +116,39 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"لستة مواقع المحضوره",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Apply changes",
+    "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Ads",
+    "message":"اعلانات",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"خصوصيه",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"مواقع مصابه او تحتوي على فايروسات",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"مواقع الاجتماعيه",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"متعددة الأغراض",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"المناطق واللغات",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"مخصصه",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -156,19 +156,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"حفظ",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"مسح الكاش ",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"يوجد اصدار جديد",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
+    "message":"قد يكون قديم ولا يعمل ",
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
@@ -176,15 +176,15 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"استيراد",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"تصدير",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
@@ -192,19 +192,19 @@
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"استيراد",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"تصدير",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
   "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
+    "message":"تفعيل تسجيل الطلبات المحظوره",
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
@@ -212,7 +212,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
+    "message":"تفعيل تسجيل الطلبات الغير محظوره",
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
@@ -220,27 +220,27 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"الطلبات المحظوره",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"طلبات المسموحه",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"النوع",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"الموقع",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"URL",
+    "message":"رابط الموقع",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"فلتر",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
@@ -252,15 +252,15 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Change log",
+    "message":"سجل التغيير",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Source code (GPLv3)",
+    "message":"اكواد البرنامج (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"المساهمين",
     "description":"English: Contributors"
   },
   "dummy":{
