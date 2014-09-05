@@ -96,11 +96,11 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} تم استعماله من {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"تحديث تلقائي للستات  الفلاتر",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -108,11 +108,11 @@
     "description":"English: Update now"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"تحليل وتطبيق فلاتر التجميليه",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"هذا الخيار يفعل تحليل وتطبيق فلاتر <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> هذي الفلاتر مخصصه للتجميل الصفحه. هذي الفلاتر تخفي بعض صناديق او اعلانات المزعجه التي لا يمنعها محرك الفلاتر تفعيل هذي الخاصيه سوف يجعل الاضافه تستعمل الذاكره اكثر",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -152,7 +152,8 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"
+رابط واحد كل سطر. روابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها . الروابط الغير صحيحه سوف ايضاً تجاهلها .",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -172,7 +173,7 @@
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"كل سطر يمكن ان يتحمل على فلتر واحد. يمكن ان يكون الفلتر رابط موقع او فلتر متعارف مع نظام AdBlock Plus. روابط التي تحتوي على &lsquo;!&rsquo;  سوف يتم تجاهلها.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -188,7 +189,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"لستتك الخاصه فيك التي سوف يتم منعها من قبل الاداة. رابط واحد كل سطر, الروابط الغير صحيحه سوف يتم تجاهلها.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -208,7 +209,8 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"
+بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
@@ -216,7 +218,7 @@
     "description":"English: Enable the logging of non-blocked requests"
   },
   "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"بإمكانك ان ترى الطلبات التي لم تمنعها الاداة اذا فعلت هذي الخاصيه ولكن احذر سوف تستعمل قوه اكثر من الذاكره ",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -244,11 +246,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No blocked requests logged for this page",
+    "message":"لا يوجد اي طلب ممنوع في هذي الصفحه.",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"لا يوجد اي طلب غير ممنوع في هذي الصفحه.",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
