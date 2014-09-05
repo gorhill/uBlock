@@ -81,7 +81,7 @@ var renderStats = function() {
             '<span class="dim">&nbsp;',
             or,
             '&nbsp;',
-            (blocked * 100 / total).toFixed(0),
+            formatNumber(Math.floor(blocked * 100 / total)),
             '%</span>'
         );
     }
@@ -98,7 +98,7 @@ var renderStats = function() {
             '<span class="dim">&nbsp;',
             or,
             '&nbsp;',
-            (blocked * 100 / total).toFixed(0),
+            formatNumber(Math.floor(blocked * 100 / total)),
             '%</span>'
         );
     }
