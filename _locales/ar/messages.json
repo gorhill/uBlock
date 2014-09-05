@@ -4,7 +4,7 @@
     "description":"اسم الاضافه"
   },
   "extShortDesc":{
-    "message":".وأخيراً, مانع اعلانات بكفاءه جداً عاليه على متصفحات مبنيه على نظام كروميوم. خفيف على الذاكره والمعالج. اقوى مانع اعلانات في الانترنت.",
+    "message":"وأخيراً, مانع اعلانات بكفاءه جداً عاليه على متصفحات مبنيه على نظام كروميوم. خفيف على الذاكره والمعالج",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "settingsPageName":{
