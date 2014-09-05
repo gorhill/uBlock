@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 0FV54grypmSQHVr+TGQgag
-! Version: 201409030300
-! Last modified: 03 Sep 2014 03:00 UTC
+! Checksum: 4YG625h+sHKntq2KQO9BLQ
+! Version: 201409051420
+! Last modified: 05 Sep 2014 14:20 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -2211,6 +2211,7 @@ _youtube_small.
 ###eventSocialMedia
 ###ewpd-share
 ###extra-share
+###fShare
 ###facebook-after-post
 ###facebook-bottom-like-box
 ###facebook-box
@@ -2652,6 +2653,7 @@ _youtube_small.
 ###popsugar-social-bar
 ###popup_social
 ###post-share
+###post-share-bottom
 ###post-share-float
 ###post-share-icons
 ###post-share-tools-container
@@ -2756,6 +2758,7 @@ _youtube_small.
 ###share-tweet
 ###share-twitter
 ###share-widget
+###share1
 ###share1_w
 ###share42
 ###shareBadges
@@ -3997,6 +4000,7 @@ _youtube_small.
 ##.facebooklink
 ##.facebookshare_div
 ##.fan-follow-promo
+##.fasteasysocialsharing
 ##.favicon-facebook
 ##.favicon-tumblr
 ##.favicon-twitter
@@ -4233,6 +4237,7 @@ _youtube_small.
 ##.footer-social-media-links
 ##.footer-social-network
 ##.footer-socialmedia-share
+##.footer-socials
 ##.footer-tumblr
 ##.footer-tw
 ##.footer-twitter
@@ -4534,6 +4539,7 @@ _youtube_small.
 ##.icon-pinterest-alt
 ##.icon-pinterest-circle
 ##.icon-pinterest-encircled
+##.icon-pinterest-share
 ##.icon-pinterest-sign
 ##.icon-plusone
 ##.icon-plusone-mini
@@ -5810,6 +5816,7 @@ _youtube_small.
 ##.social_media
 ##.social_media_btns
 ##.social_media_bttn
+##.social_media_buttons
 ##.social_media_container
 ##.social_media_links
 ##.social_media_section
@@ -6183,6 +6190,7 @@ _youtube_small.
 ##.twitter_icon
 ##.twitter_image
 ##.twitter_large
+##.twitter_logo_small_footer
 ##.twitter_share
 ##.twitter_sub
 ##.twitter_tease
@@ -6472,6 +6480,7 @@ _youtube_small.
 ##a[href^="https://twitter.com/share?"]
 ##a[href^="https://www.facebook.com/sharer.php?"]
 ##a[href^="https://www.facebook.com/sharer/sharer.php?u="]
+##a[href^="https://www.stumbleupon.com/submit?url="]
 ##a[name="sharethis"]
 ##a[title="Add to Facebook"]
 ##a[title="Become a Fan on Facebook!"]
@@ -6780,7 +6789,6 @@ _youtube_small.
 ||graph.facebook.com/fql?q=SELECT$third-party
 ||gu-social-share-experiments.appspot.com^$third-party
 ||hn-button.herokuapp.com^$third-party
-||i.po.st/static/$third-party
 ||insidesoci.al^$third-party
 ||instagramfollowbutton.com^$third-party
 ||interestingnation.com/like.php$third-party
@@ -6810,6 +6818,7 @@ _youtube_small.
 ||plus.google.com^*/js/widget/$third-party
 ||plusone.google.com^$third-party
 ||po.st/share/$script
+||po.st/static/$third-party
 ||readrboard.com^$third-party
 ||reddit.com/api/info.json?$third-party
 ||reddit.com/button.js?$third-party
@@ -8909,6 +8918,7 @@ russia.tv###adv_right + .b-mini_video
 vk.com###app_container_outer + div[style]
 bfm.ru###block-now
 lostfilm.tv###bogi_panel
+moya-planeta.ru###content > .white_header_text
 megafon.ru###divBanner > a[href*=".megafon.ru/"]
 lols.ru###dle-content td[style="padding-left:20px;"] > noindex
 turbobit.net###download-top-note
@@ -8960,6 +8970,7 @@ piratbit.net##.chat
 terabit.biz##.cnt2l
 kino-govno.com##.des_front
 seasonvar.ru##.films-num + * + .film-list-block
+moya-planeta.ru##.full_object_shop_article_recommend
 dota2.ru##.hadv
 lkforum.ru##.head
 superhimik.com##.headerbar
@@ -8978,6 +8989,7 @@ sports.ru##.popup.team-popup
 sports.ru##.popup[data-control="Common.Compulsion"]
 ntv.ru##.popup_overlay
 rustrek.ru,tapochek.net##.poster
+moya-planeta.ru##.products_list_full
 domru.ru##.promslider
 freakenergy.ru##.sidebar > div > noindex
 topgir.com.ua##.singing
@@ -9268,6 +9280,7 @@ facebook.com#@#a[href^="https://facebook.com/sharer.php?"]
 twitter.com#@#a[href^="https://twitter.com/intent/follow?"]
 yellosoft.us#@#a[href^="https://twitter.com/intent/tweet?"]
 facebook.com#@#a[href^="https://www.facebook.com/sharer.php?"]
+stumbleupon.com#@#a[href^="https://www.stumbleupon.com/submit?url="]
 ~digg.com##div[id^="digg-widget-"]
 t3n.de#@#img[alt="Facebook"]
 acceptableads.org,easyicon.net#@#img[alt="Reddit"]

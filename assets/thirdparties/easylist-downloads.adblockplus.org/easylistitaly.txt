@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: dGtp900P5YUYzv5ioojIBg
-! Version: 201409030301
+! Checksum: npPwQ05m4czJUcm5R52Fyw
+! Version: 201409051421
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 03 Sep 2014 03:01 UTC
+! Ultima modifica: 05 Sep 2014 14:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -495,6 +495,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||98.130.248.39^$popup,third-party
 ||bet365-scommesse.com/?affiliate=$popup,third-party
 ||betclic.it/partner.aspx?$popup
+||edreams.it/?affiliate=$popup
 ||funpage.it^$popup,third-party
 ||goo.gl^$popup,domain=ispazio.net
 ||gooble.info^$popup
@@ -2103,7 +2104,7 @@ piacenzanight.com##.back_style
 avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
-advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf

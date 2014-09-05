@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: HlARYYeImBoKGw04xP5JsQ
-! Version: 201409030301
+! Checksum: b+SLR45BdYOc8GCl55RtFQ
+! Version: 201409051421
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 03 Sep 2014 03:01 UTC
+! Last Modified: 05 Sep 2014 14:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -196,7 +196,6 @@
 ||cpm360.com^$third-party
 ||cpmadworld.com^$third-party
 ||cpvm.net^$third-party
-||crazymike.tw^$third-party
 ||cs.37see.com^$third-party
 ||ctrmi.com^$third-party
 ||d9ad.com^$third-party
@@ -216,7 +215,6 @@
 ||ezsaving.com^$third-party
 ||feedsportal.com^$third-party
 ||feesee.com^$third-party
-||feitian001.com^$third-party
 ||flashwing.net^$third-party
 ||flunion.cn^$third-party
 ||game141.com^$third-party
@@ -360,7 +358,6 @@
 ||uctrac.com^$third-party
 ||ugooo.cc^$third-party
 ||ugoooo.com^$third-party
-||ujian.cc^$third-party
 ||ujoin.net^$third-party
 ||un.5d6d.com^
 ||union001.$third-party
@@ -435,18 +432,12 @@
 /data/ad/*
 /floatad.
 /gaog/*
-/gg1.
-/gg2.
 /ggao/*
-/ggjs/*
 /ggpic/*
-/guangao/*
-/guanggao.
 /main/s?
 /pic/ad/*
 /picad/*
 /proxy.htm?id=
-/proxy.html?id=
 /tan1.js
 !*** chinalist-specific.txt ***
 !--有道
@@ -535,6 +526,12 @@ hk.yahoo.com###mntl1
 ||tudou.com^*/outside.php
 !------------------------End of ChinaList--------------------
 !-----------------------General advert blocking filters-----------------------!
+/ggjs/*
+/proxy.html?id=
+/guanggao.
+/guangao/*
+/gg1.
+/gg2.
 /paypic/*
 .cc/js/ads/
 .cn/ads/
@@ -601,6 +598,7 @@ hk.yahoo.com###mntl1
 |https://*/ad/
 !------------------------General element hiding rules-------------------------!
 ###MyMoveAd
+##.leftadv
 ###QQ_Full
 ###ad_box1
 ###ad_box2
@@ -695,6 +693,9 @@ hk.yahoo.com###mntl1
 ##a[href^="plugin.php?id=stoola_adcenter:userclick&adid="]
 ~dsjunshi.com##div[id^="ad_thread"]
 !----------------------------------Ads-Union----------------------------------!
+||ujian.cc^$third-party
+||crazymike.tw^$third-party
+||feitian001.com^$third-party
 ||3975lm.com^$third-party
 /adscpv/*
 /AShow.aspx?AID=
@@ -2324,7 +2325,7 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||huoxingyu.com/images/hxy_350_330.gif
 ||hutc.zj.cn/skins/hutc2012/js/fp.js
 ||huxiu.com/static/js/jobAds/
-||hx95.com/images/vip.gif
+||hx95.com/images/sn88.gif
 ||hx9m.com/ggtp/
 ||hxjs.tool.hexun.com^
 ||hxland.com/bbs/static/image/A*.gif
@@ -3164,7 +3165,7 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||shangdu.com/1002/1002031301.js
 ||shangdu.com/comiis_ad/
 ||shangdu.com/newfile2007/ad/tu/flash/3dboard.swf
-||shanhe.cc/index.php?m=poster
+||shanhe.cc/index.php?m=poster&
 ||shanhe.cc/Scripts/ads_dl.js
 ||shanhe.cc/Scripts/main-pf.js
 ||shanwen.com^$script
@@ -3792,12 +3793,58 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||admin10000.com/skin/lagou_250x100.jpg
 /gyw_index/*/images/ad_
 ||gywb.cn/gggl/content_gg/
+||86696.com/images/indexad.jpg
+||xlpu.cc/adv/
+||gg163.net/js/gg163ad.js
+||gg163.net/2014ad/
+||shaoxing.com.cn^*gg.
+||myexception.cn/u/cms/www/bf.gif
+||maolihui.com/wp-content/themes/miao/img/adb
+||on.cc/js/v2/iframe_ysm_
+||greenxf.com/GreenxfAD/
+||classbm.hkgolden.com^
+||hkgolden.com/google_ad
+||house.sina.com.cn/2.0/ads/
+||house.sina.com.cn/2.0/abp/
+||siyu88.cn/xl/xiaoke960_90.gif
+||nanrenshu.com/rmb/st_dh.js
+||alexa.cn/ad$subdocument
+||bdimg.com/brands/yxtg/source/juhe-v2.js
+||baidu.com/brands/yxtg/source/yxCoupletsAd.js
+||loorin.com/templets/loorin/images/nubiaxk.jpg
+||loorin.com/uploads/140616/yijia.jpg
+||loorin.com/uploads/140903/mx2.jpg
+||house.sina.com.cn/images/*/jiaju_1000x120.jpg
+||shulink.com/js/pagetop5.js
+||zj.com/bm_images/102975_1.jpg
+||chinaiiss.com/images/jianyu_erweima
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
 yaolan.com###AD
 21yq.com###AD1
+jgtj.com.cn##.ad
+mxwz.com###QwMove
+mxwz.com###leftDiv
+mxwz.com###rightDiv
+163.com###js_a_bobo
+youxi.baidu.com###banner
+shushanwenhai.com##.banner
+shaoxing.com.cn###ad_Full
+cdyee.com##.adbox
+maolihui.com##.ad
+gnhome.com###ads
+loorin.com##.gg_one
+loorin.com##.gg_three
+loorin.com##.gg_two
+loorin.com##.yincangmenu
+jgtj.com.cn##.n_ad1
+jgtj.com.cn##DIV[style="width:500px; height:200px; margin:auto; margin-top:10px; margin-bottom:10px;"]
+jgtj.com.cn##DIV[style="width:654px; height:300px; margin:auto; margin-top:10px;"]
+house.sina.com.cn##DIV[style="width: 1000px; height: 120px; margin-bottom:15px; position: relative;"]
+ithome.com##.zhaopin
+pcbeta.com###BXZ93D2v2OSd
 gywb.cn##DIV.bill-box1.mb5
 ttshuba.com##.bd980
 zdface.com###msg_win
@@ -5309,7 +5356,6 @@ haxiu.com##.left_a2_04
 lz13.cn##.left_box3
 lz13.cn##.left_box4
 lz13.cn##.left_box5
-cnchu.com,hkwb.net,xinhuanet.com##.leftadv
 hao123.com##.leftbanner
 ks.js.cn##.leftgg
 ifeng.com##.leftpopad
@@ -5744,7 +5790,7 @@ weiqitv.com##a[href^="http://www.yiwugou.com/"]
 kqiuba.com##a[name="thegg"]
 verygoogle.com##a[style="color: red;text-decoration: underline;  "]
 dianxinnews.com##a[style="color:red;"][href="http://finance.huanqiu.com/"]
-houdao.com##a[style^="background:url(http://bbs.houdao."]
+houdao.com##A[style^="background:url"]
 kutj.com##a[target="_blank"] > img[src*="gao/"]
 qzntv.com,qzwb.com##body > .area[style^="height:60px;"]
 danyang.com##body > div[align="center"]
@@ -6408,6 +6454,7 @@ house.shangdu.com#@#.top_ad
 @@||s.acs86.com/FrameWork/AFP/ASP_v523.swf$domain=mytv365.com
 @@||sc.jb51.net/adimg/*.jpg
 @@||sdc.pingan.com^$~image
+@@||meizu.com/fileserver/ad/img/
 @@||share.dmhy.*/generate-captcha?
 @@||shu008.com/heibing/js/ad/style1.js
 @@||sina.com.cn/litong/zhitou/pic/close-
@@ -6441,6 +6488,8 @@ house.shangdu.com#@#.top_ad
 @@||union.bokecc.com/servlet/getvideofile?
 @@||unisharp.com/images/ad.jpg
 @@||v.rbc.cn/ad/
+@@||tmall.com/go/*/banner.php
+@@||hkjc.com/banners/
 @@/page/adv.html?advId=$subdocument
 @@||v1.cn/player/cloud/cloud_player.swf?
 @@||video.appledaily.com.hk/admedia/$object-subrequest

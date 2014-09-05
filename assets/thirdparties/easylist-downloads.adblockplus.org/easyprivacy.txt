@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 4ziS23/kUMTopWzDbb4BEQ
-! Version: 201409030301
+! Checksum: C1Vk21SvhfwLQYitUgU9og
+! Version: 201409051421
 ! Title: EasyPrivacy
-! Last modified: 03 Sep 2014 03:01 UTC
+! Last modified: 05 Sep 2014 14:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -517,6 +517,7 @@
 /clicktrends/*
 /clicky.js
 /client-event-logger.
+/client_pathlog.asp?
 /clientlibs/ga.js
 /cm?ci=*&tid=
 /cm?tid=
@@ -1471,6 +1472,7 @@
 /referral_tracking.
 /RefinedAdsTracker.swf
 /refstats.asp?
+/reg_stat.php?
 /register_stats.php?
 /RegisterWebPageVisit.
 /RemoteTargetingService.
@@ -2431,6 +2433,7 @@ http://utm.
 ||bugsnag.com^$third-party
 ||burstbeacon.com^$third-party
 ||burt.io^$third-party
+||bux1le001.com^$third-party
 ||bytemgdd.com^$third-party
 ||c-o-u-n-t.com^$third-party
 ||c-webstats.de^$third-party
@@ -2702,6 +2705,7 @@ http://utm.
 ||exacttarget.com^$third-party
 ||exclusiveclicks.com^$third-party
 ||exelator.com^$third-party
+||exitmonitor.com^$third-party
 ||explore-123.com^$third-party
 ||extole.com^$third-party
 ||extreme-dm.com^$third-party
@@ -3288,6 +3292,7 @@ http://utm.
 ||r7ls.net^$third-party
 ||radarstats.com^$third-party
 ||radarurl.com^$third-party
+||rampmetrics.com^$third-party
 ||rank-hits.com^$third-party
 ||rankingpartner.com^$third-party
 ||rankinteractive.com^$third-party
@@ -4456,6 +4461,7 @@ http://utm.
 ||a2a.lockerz.com^
 ||aaa.aj5.info^
 ||aan.amazon.com^$third-party
+||aao.org/aao/sdc/track.js
 ||abc.hearst.co.uk^$third-party
 ||acces-charme.com/fakebar/track.php?
 ||acount.alley.ws^$third-party
@@ -4839,6 +4845,7 @@ http://utm.
 ||disqus.com/stats.html
 ||distillery.wistia.com^
 ||djibeacon.djns.com^
+||dkj2m377b0yzw.cloudfront.net^
 ||dl1d2m8ri9v3j.cloudfront.net^
 ||dmdentertainment.com^*/video_debug.gif?
 ||dn-net.com/cc.js
@@ -5193,7 +5200,6 @@ http://utm.
 ||netscape.com/c.cgi?
 ||neulion.vo.llnwd.net^*/track.js
 ||newsanalytics.com.au^$third-party
-||newsinc.com/getids?
 ||newsletters.infoworld.com/db/$image,third-party
 ||newsletters.nationalgeographic.com^$image,third-party
 ||nol.yahoo.com^
@@ -5312,6 +5318,7 @@ http://utm.
 ||rackcdn.com/1x1.gif?
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
+||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|rotoworld.com|thesun.co.uk|thetimes.co.uk
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||realplayer.com^*/pixel?
@@ -6521,7 +6528,8 @@ http://utm.
 ||buzzfeed.com^*/tracker.js
 ||buzzurl.jp/api/counter/
 ||c.microsoft.com^
-||c.newsinc.com^$~script
+||c.newsinc.com^
+||c.x.oanda.com^
 ||c.ypcdn.com^*/webyp?rid=
 ||caixin.com/webjs/common/caixinlog.js
 ||caller.com/metrics/
@@ -7102,7 +7110,6 @@ http://utm.
 ||life.com/sm-stat/
 ||lifehacker.com/at.js.php
 ||lifehacker.com^*/trackers.html
-||lightreading.com/client_pathlog.asp
 ||likes.com/api/track_pv
 ||linguee.com*/white_pixel.gif?
 ||link.codeyear.com/img/
@@ -7462,6 +7469,7 @@ http://utm.
 ||redding.com/metrics/
 ||redeye.williamhill.com^
 ||rediff.com^*/?rkey=
+||redtube.com/_status/pix.php
 ||redtube.com/_status/pixa.php
 ||redtube.com/blockcount|
 ||redtube.com/js/track.js
@@ -7635,7 +7643,6 @@ http://utm.
 ||st.fanatics.com^
 ||st.mirror.co.uk^
 ||st.virginmedia.com^
-||staging-beacon-1.newrelic.com^
 ||stat.alibaba.com^
 ||stat.dealtime.com^
 ||stat.ruvr.ru^
@@ -7659,9 +7666,9 @@ http://utm.
 ||stats.ebay.com^
 ||stats.eyeviewdigital.com^
 ||stats.farfetch.com^
+||stats.firedrive.com^
 ||stats.harpercollins.com^
 ||stats.irishmirror.ie^
-||stats.jtvnw.net^
 ||stats.macmillanusa.com^
 ||stats.mehrnews.com^
 ||stats.mirror.co.uk^
@@ -8677,7 +8684,6 @@ http://utm.
 ||smsaffari.it/count_new.php?
 ||spaziogames.it/ajax/player_impression.ashx?
 ||stats.splinder.com^
-||taliatools.com/videolive/util/reg_stat.php?
 ||tiscali.it/banner-tiscali/stats.html?
 ||topolino.it^*/omniture.php?
 ||track.tesiteca.it^
@@ -9054,6 +9060,7 @@ http://utm.
 @@||mycokerewards.com^*/webtrends/mcr3-webtrends_POST_$script
 @@||mycommunitynow.com/includes/JI_trafficTracking.js$domain=mycommunitynow.com
 @@||narf-archive.com^*/clickstream.js
+@@||nationaljournal.com/js/bizo.js
 @@||nationwide.co.uk/_/js/webAnalytics.js
 @@||ncbi.nlm.nih.gov/stat?
 @@||netdna-ssl.com/lib/jquery-google-analytics/jquery.google-analytics.js$domain=homepath.com
@@ -9114,7 +9121,7 @@ http://utm.
 @@||s.youtube.com/api/stats/playback?$object-subrequest
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
-@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|cbc.ca|deviantart.com|discovery.com|fastcompany.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|linkinpark.com|mainstreet.com|newsday.com|ning.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|thestar.com|thinkatheist.com
+@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|calgaryherald.com|canada.com|cbc.ca|deviantart.com|discovery.com|edmontonjournal.com|fastcompany.com|financialpost.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|leaderpost.com|linkinpark.com|mainstreet.com|montrealgazette.com|nationalpost.com|newsday.com|ning.com|ottawacitizen.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|theprovince.com|thestar.com|thestarphoenix.com|thinkatheist.com|vancouversun.com|windsorstar.com
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com

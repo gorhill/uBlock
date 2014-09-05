@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 29 Aug 2014 08:52:11 GMT
-# entries:        2482
+# entries:        2476
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -12,7 +12,6 @@
 127.0.0.1 101com.com
 127.0.0.1 101order.com
 127.0.0.1 123found.com
-127.0.0.1 123pagerank.com
 127.0.0.1 180hits.de
 127.0.0.1 180searchassistant.com
 127.0.0.1 1x1rank.com
@@ -371,7 +370,6 @@
 127.0.0.1 ads.asiafriendfinder.com
 127.0.0.1 ads.ask.com
 127.0.0.1 ads.aspalliance.com
-127.0.0.1 ads.associatedcontent.com
 127.0.0.1 ads.avazu.net
 127.0.0.1 ads.batpmturner.com
 127.0.0.1 ads.beenetworks.net
@@ -514,7 +512,6 @@
 127.0.0.1 ads.ibest.com.br
 127.0.0.1 ads.ibryte.com
 127.0.0.1 ads.icq.com
-127.0.0.1 ads.iforex.com
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
@@ -759,7 +756,6 @@
 127.0.0.1 adserv.qconline.com
 127.0.0.1 adserv.quality-channel.de
 127.0.0.1 adserver-live.yoc.mobi
-127.0.0.1 adserver.00web.com
 127.0.0.1 adserver.3digit.de
 127.0.0.1 adserver.43plc.com
 127.0.0.1 adserver.71i.de
@@ -1006,7 +1002,6 @@
 127.0.0.1 as2.advfn.com
 127.0.0.1 as5000.com
 127.0.0.1 assets.loomia.com
-127.0.0.1 assets.penny-arcade.com
 127.0.0.1 assets1.exgfnetwork.com
 127.0.0.1 assoc-amazon.com
 127.0.0.1 at-adserver.alltop.com
@@ -1381,6 +1376,7 @@
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
+127.0.0.1 dnads.directnic.com
 127.0.0.1 doclix.com
 127.0.0.1 domaining.in
 127.0.0.1 domainsponsor.com
@@ -1627,7 +1623,6 @@
 127.0.0.1 infolinks.com
 127.0.0.1 information.com
 127.0.0.1 infra-ad.com
-127.0.0.1 initgroup.com
 127.0.0.1 inringtone.com
 127.0.0.1 insightexpress.com
 127.0.0.1 insightexpressai.com
@@ -1749,7 +1744,6 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
-127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com

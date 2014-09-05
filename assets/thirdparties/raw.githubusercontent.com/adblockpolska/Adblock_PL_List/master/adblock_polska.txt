@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 02 September 2014
+! Last modified: 04 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -11,6 +11,7 @@
 
 ! * - General Blocking Rules - * !
 .info/images/banners/
+.goldbachpoland.
 .pl/*/adds/
 .pl/*/ads/
 .pl/data/banners
@@ -93,12 +94,13 @@ _res/banner/glowna/
 ###slideshow_minibanner
 ###slot_ad_billboard
 ###slot_ad_billboard2
+###sponsDiv
 ###sponsoring
 ###top_ad
 ###top_banners
 ###top-lead
 ##.abwarn
-##.adoHide adoSlv OnTop
+##.adoHide.adoSlv.OnTop
 ##.adSrodek
 ##.advert
 ##.ad_block
@@ -108,6 +110,8 @@ _res/banner/glowna/
 ##.baner_reklama
 ##.banneritem
 ##.banner-block
+##.box.ad.filled
+##.box.advertisement
 ##.box.player.special
 ##.boxadtop
 ##.bxTBaner
@@ -115,7 +119,7 @@ _res/banner/glowna/
 ##.bnMiddle
 ##.drutexban
 ##.flexbanneritem
-##.forceRefresh disableScreeningClick adoHide adoSlv OnTop
+##.forceRefresh.disableScreeningClick.adoHide.adoSlv.OnTop
 ##.google_468x60
 ##.index_banner
 ##.main-tbaner
@@ -124,12 +128,15 @@ _res/banner/glowna/
 ##.peeloverlay
 ##.pnbbaner
 ##.popup-fadeOverlay
+##.rectadv
 ##.reklama_title
 ##.reklamy_banner
 ##.results__entry--ads
 ##.rrestbaner
+##.site.spaced.centered.ad
 ##.sky_layer
 ##.teaser_cnt
+##.theAd
 ##[id^="AdArea"]
 ##[id^="ads300_100"]
 ##[id^="ad_gora"]
@@ -180,10 +187,9 @@ _res/banner/glowna/
 ! * - Whitelist - * !
 @@/advertisingmodule.$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@/player/vidAS=pre_roll
-@@/vod/reklamy/WIZERUNEK.mp4
 @@||admin.brightcove.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||adocean.pl/*xml$domain=player.pl
-@@||adv.wp.pl/RM/Box/$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||adv.wp.pl/RM/Box/$domain=aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||atmcdn.pl/*Adserver/$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
@@ -192,8 +198,8 @@ _res/banner/glowna/
 @@||ocdn.eu/files/pulscms/*.png
 @@||pah.org.pl
 @@||legnica.eu/uploads/pub/ads_files/
-@@||rek.www.wp.pl/pliki/$script,domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
-@@||rek.www.wp.pl/vad.xml?$domain=pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/pliki/$script,domain=aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/vad.xml?$domain=aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
 @@||rtax.criteo.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
@@ -203,6 +209,8 @@ _res/banner/glowna/
 
 ! * - 1st Party Blocking Rules & Ad-servers - * !
 ||a.techmaniak.pl/www/images/
+||abc7.pl
+||activepl.tv/rek/
 ||ad.filmweb.pl
 ||ad.gazeta.pl
 ||ad.prv.pl
@@ -210,6 +218,7 @@ _res/banner/glowna/
 ||adblockdetector.com^$script
 ||adkontekst.pl
 ||adocean.pl^$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
+||ads.edipresse.pl
 ||ads.trojmiasto.pl
 ||adsearch.pl
 ||adtaily.pl
@@ -218,14 +227,18 @@ _res/banner/glowna/
 ||badanie.pollster.pl$popup
 ||banery.bai.pl
 ||bankier.pl/gfx/ad
+||bbrmedia24.com
 ||bochnianin.pl/foto/pasek/
 ||boksy.onet.pl
 ||brodnica.net/banery/
 ||brwinow.com/images/banners
+||cba.pl/cba.gif
 ||cdn.sterta.pl
+||cpm24.pl/baner/
 ||comperialead.pl/widget/
 ||csr.onet.pl
 ||debica24.eu/system/45/assets/000/00*baner
+||doladowanko.pl/banners/
 ||dot.wp.pl
 ||ec.bankier.pl/file/
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
@@ -236,6 +249,7 @@ _res/banner/glowna/
 ||gry-online.pl/im/zmieniarka/
 ||hub.com.pl
 ||img.wiocha.pl/img/gry
+||infogazeta.pl
 ||j.o2.pl
 ||jelonka.com/flash/
 ||koscian.net/js/scripts.js?
@@ -243,6 +257,9 @@ _res/banner/glowna/
 ||legio24.pl*/baner
 ||lokalna24.pl/banery/
 ||lubartow24.pl/f*_bok.
+||moneystrategy.info/b/
+||moviechannel.pl
+||myao.adocean.pl$domain=tvp.pl
 ||napisy24.pl/files/*
 ||napisy24.pl/images/190x260x_
 ||pclab.pl/img/extra/*_top.png
@@ -263,6 +280,7 @@ _res/banner/glowna/
 ||static-kinoman.tv/n*php
 ||supernowosci24.pl/openx/www/delivery/
 ||supernowosci24.pl/wp-content/uploads/pliki/*swf
+||superwiadomosci24.pl
 ||tvn.adocean.pl/files/*.swf
 ||video.vid4u.org
 ||wrzuta.pl/ads
@@ -275,7 +293,8 @@ _res/banner/glowna/
 ||18hd.pl^$third-party
 ||ad.zanox.com$third-party
 ||admailtiser.com^$third-party,popup
-||adprize.pl^$third-party
+||adprize.pl$third-party
+||adtraffic.pl$third-party
 ||afilo.pl^$third-party
 ||bbcdn.go.arbopl.bbelements.com$third-party
 ||clangames.pl^$third-party
@@ -291,6 +310,8 @@ _res/banner/glowna/
 ||netsales.pl^$third-party
 ||novem.pl^$third-party
 ||panel.adtify.pl^$third-party
+||partnerzy.skapiec.pl$third-party
+||ppwidget.skapiec.pl$third-party
 ||spot.o2.pl$third-party
 ||stat24.com$third-party
 
@@ -298,12 +319,18 @@ _res/banner/glowna/
 24.pl###oglmetka
 4lomza.pl##.bxbanner
 7dni.pila.pl###content-left
+activepl.tv##[src$=".swf"]
 alemiasto.pl##[class^="ad"]
 appmaniak.pl###bannerTop
 autocentrum.pl##[style="float: right; width: 300px; height: 250px; margin-left: 5px; display: block;"]
 autocentrum.pl##[style="float:right;width:300px;height:250px;margin-left:5px;"]
 benchmark.pl###adblock-info
+bezuzyteczna.pl##.special
 bochnianin.pl###slideText
+chip.pl##.portlet.portletCeneo
+chip.pl##.portletReklama
+chip.pl##.portletWrapper.kssattr-portlethash-706c6f6e652e7269676874636f6c756d6e7468656d6174696373657276696365730a636f6e746578740a2f636869700a637573746f6d2d626f782d31
+chip.pl##[action^="http://www.njobs.eu/search"]
 filmweb.pl###flashcontent3
 filmweb.pl###homeBar1-pl_PL
 filmweb.pl##[id^="homeBox"]
@@ -311,6 +338,8 @@ filmweb.pl##.relative.iplaParent
 formentorplus.pl##form
 fotosik.pl##.adv
 fronda.pl##.small-info
+fukk.pl###comment-captcha
+gazeta.pl##[class^="mod mod_cpCommerce"]
 gazeta-wiesci.pl##.widget.widget_text
 glamrap.pl##.popup
 gry-online.pl##[id^="teaser_cnt"]
@@ -324,6 +353,7 @@ kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; d
 lubin.pl###banner
 miedzyrzec.info##[id^="baner"]
 moszczenica.info##.bannergroup
+mpolska24.pl##.tplAds
 napisy24.pl###baner_300_250
 napisy24.pl##.header_210
 narodowcy.net##.custom
@@ -331,6 +361,7 @@ naszamlawa.pl##[id^="fancybox-"]
 newsweek.pl##[class^="Block-Banner"]
 optyczne.pl###warning
 orneta.net##.lof-container
+pclab.pl##[href^="http://e.clk.onet.pl"]
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
 pinterest.com##[class="message messageUnauth"]
 player.pl##[id^="ado-"]
@@ -339,11 +370,15 @@ press.pl###topBanner
 profil.wp.pl##.bxAdv
 proline.pl###layer_top
 pudelek.tv###floorBG
+pudelek.tv##.npp-close
+pudelek.tv##[id^="adv"]
 pudelek.tv##[src^="http://adv.wp.pl"]
 purepc.pl##[class$="reklama"]
 repostuj.pl##[class^="warstwa"]
 sadistic.pl/pics/c57d81558fed.jpg
+se.pl##[class^="item art_reklama"]
 serwislokalny.com##.banner
+sportowefakty.pl##.centered.spaced
 supernowosci24.pl###notificationbar
 supernowosci24.pl###ocena
 supernowosci24.pl###wideSidebar
@@ -352,11 +387,18 @@ telepolis.pl##.b_750
 telepolis.pl##.wiadomosci_lista_div
 telepolis.pl##[style="text-align:center; width:369px; height:285px;"]
 tvn24.pl##[class^="adoHide"]
+tvp.pl##.rectangleWrapper.hidden-phone
+twojapogoda.pl##.billboard
 walbrzyszek.com##.marconi
 walbrzyszek.com##[style="text-align:center;padding-bottom:15px;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999997;left:0;top:0;width:100%;height:100%;background:#999;opacity:0.4;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999998;left:0;top:0;width:100%;height:100%;"]
+wiocha.pl###ad4sc
 wp.pl##[id^="adv"]
 wp.tv##.infoAB
 wp.tv##[src^="http://adv.wp.pl/"]
+wysokieobcasy.pl##.c1
 xn--portalmawa-g0b.pl##[id^="xc-98-primary"]
+zarabiara.pl##.new_adbanners
+zarabiara.pl##.new_adtaily
+

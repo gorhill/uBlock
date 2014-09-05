@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Kh5Q1T3CR/mBa6zMldMrFg
-! Version: 201409030300
-! Last modified: 03 Sep 2014 03:00 UTC
+! Checksum: 8mrv3bKDQ9RVkE6WJl5mkg
+! Version: 201409051420
+! Last modified: 05 Sep 2014 14:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -692,7 +692,6 @@ _tizers.
 ||adsclick.ru^
 ||adsellers.net^
 ||adsplius.lt^
-||adstark.ru^
 ||adtaily.pl^
 ||adteaser.ru^
 ||adtidy.net^
@@ -2963,7 +2962,7 @@ xxx-base.org###center2 > .block
 dota2.ru###click
 dota2.ru###click2
 last.by###dbtn2
-zdsimulator.com.ua###flashContent
+afisha.ru,zdsimulator.com.ua###flashContent
 tvnet.lv###footer_banner
 gameround.ru###global_back_link
 gmbox.ru###gmboxPromoSliderBlock
@@ -2992,7 +2991,9 @@ orakul.ua##.advBlock ~ div
 acer-a500.ru##.advs
 auto.e1.ru##.au-main-container_e1 > noindex
 orakul.ua##.b-cont
+afisha.ru##.b-fullscreen-promo
 sinoptik.ua##.b-partners
+afisha.ru##.b-top-advert
 magtimes.info##.b1
 mmorpg.ua##.back1
 sonikelf.ru,tvernews.ru##.banner
@@ -3031,7 +3032,10 @@ allmoldova.com##.middle_banner
 nur.kz##.mmc-holder-top
 macosworld.ru##.morefoot_back
 forum.soft4dle.com##.navbar > center
+moya-planeta.ru##.nofs_banner_html_item
 magtimes.info##.owl-carousel
+afisha.ru##.page_banner_top_container
+afisha.ru##.page_block_content_adv-header
 allmoldova.com##.promo
 stopgame.ru##.promo-wg-league
 mmogamez.info##.publicity-line
@@ -3088,6 +3092,7 @@ sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
 forum.antichat.ru##p[align="center"] > b > a
 tvgid.ua##table[bgcolor="#00488d"][cellpadding="1"]
+netall.ru##table[cellspacing="5"][cellpadding="5"][align="center"][style*="1px solid"]
 comss.ru##td[style="width:19%; vertical-align:top;"]
 0day.kiev.ua##td[width="100%"] > center + table[style="margin-bottom: 20px"]
 pics-money.ru##td[width="192"]
@@ -4392,6 +4397,7 @@ multik-online.net##div[style*=".am15."]
 brb.to,cxz.to,fs.to##div[style*="min-height: 274px;"]
 forum.watch.ru##div[style="display:block; width:100%; min-width:800px; height:100px; overflow:hidden;"]
 tfilm.tv##div[style="height: 300px;"]
+adme.ru##div[style="min-height:138px;"]
 softobase.com##div[style="width:336px; height:280px;"]
 pise4ka.com##iframe[src="/site/in"]
 auto.e1.ru##noindex > .au-content-section
@@ -4473,6 +4479,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||ad.megatrack.org^
 ||adultmult.tv/afon/
 ||adverman.*/banners/
+||afisha.ru/dsn/google-
 ||agronews.ru/images/$object
 ||agsat.com.ua/beuty/
 ||ais.com.ua/usersimage/banners/
@@ -5925,6 +5932,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||amazonaws.com/c.swf?path=http
 @@||asg.vidigital.ru/crossdomain.xml$domain=ivi.ru
 @@||atlant-m.in.ua/uploads/banners/$domain=atlant-m.in.ua
+@@||awaps.yandex.ru^*_video_$script,domain=kinopoisk.ru
 @@||bash.im/webmaster|$elemhide
 @@||beeline.ru/ban/$domain=beeline.ru
 @@||beeline.ru/media/banners/$domain=beeline.ru
@@ -5956,6 +5964,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||maritimebank.com/All/Images/Banner.gif
 @@||mmi.bemobile.ua/lib/lib.js
 @@||my.south.rt.ru^$document
+@@||myband.info/advert/$~third-party
 @@||myradio24.com/informer.php
 @@||nic.ru/styles/advertising.css$domain=nic.ru
 @@||now.ru/minify/index.php?$script,domain=now.ru
