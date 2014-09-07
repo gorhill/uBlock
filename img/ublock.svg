@@ -7,15 +7,17 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="603.11639"
+   height="603.88739"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
-   sodipodi:docname="ublock.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ublock.svg"
+   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/private/badge-1400x560.png"
+   inkscape:export-xdpi="83.459267"
+   inkscape:export-ydpi="83.459267">
   <defs
      id="defs4">
     <inkscape:path-effect
@@ -25,22 +27,26 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#000000"
+     pagecolor="#404040"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.9899495"
-     inkscape:cx="376.71576"
-     inkscape:cy="811.94917"
+     inkscape:cx="373.81573"
+     inkscape:cy="359.14259"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
      showgrid="false"
-     inkscape:window-width="1680"
-     inkscape:window-height="997"
-     inkscape:window-x="1362"
-     inkscape:window-y="-4"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1375"
+     inkscape:window-height="967"
+     inkscape:window-x="249"
+     inkscape:window-y="69"
+     inkscape:window-maximized="0"
+     fit-margin-top="20"
+     fit-margin-left="20"
+     fit-margin-right="20"
+     fit-margin-bottom="20" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -57,7 +63,8 @@
      inkscape:label="polygon"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(-2.9000336,4.3318037)">
     <g
        id="g3003"
        transform="matrix(4.4946163,0,0,4.4784113,-1996.8254,-3025.1919)"
@@ -79,7 +86,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="text"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(-2.9000336,4.3318037)">
     <g
        transform="matrix(0.97521805,0,0,1.0217146,0,0.07624875)"
        style="font-size:421.6192627px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Source Sans Pro;-inkscape-font-specification:Sans Bold"
