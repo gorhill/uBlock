@@ -70,13 +70,13 @@
     var bindToTabs = function(tabs) {
         var scriptStart = function(tabId) {
             var scriptEnd = function() {
-                chrome.tabs.executeScript(tab.id, {
+                chrome.tabs.executeScript(tabId, {
                     file: 'js/contentscript-end.js',
                     allFrames: true,
                     runAt: 'document_idle'
                 });
             };
-            chrome.tabs.executeScript(tab.id, {
+            chrome.tabs.executeScript(tabId, {
                 file: 'js/contentscript-start.js',
                 allFrames: true,
                 runAt: 'document_idle'
