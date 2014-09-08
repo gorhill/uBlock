@@ -258,18 +258,13 @@ var getLists = function(callback) {
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
-        if ( r.available ) {
-            callback(r);
-        }
+        callback(r);
     };
     var onLists = function(lists) {
         r.available = lists;
-        if ( r.cache ) {
-            callback(r);
-        }
+        µb.assets.metadata(onMetadataReady);
     };
     µb.getAvailableLists(onLists);
-    µb.assets.metadata(onMetadataReady);
 };
 
 /******************************************************************************/
@@ -282,8 +277,11 @@ var onMessage = function(request, sender, callback) {
         case 'getLists':
             return getLists(callback);
 
-        case 'readUserUbiquitousBlockRules':
-            return µb.assets.get(µb.userFiltersPath, callback);
+        case 'getLists':
+            return getLists(callback);
+
+        case 'purgeAllCaches':
+            return µb.assets.purgeAll(callback);
 
         case 'writeUserUbiquitousBlockRules':
             return µb.assets.put(µb.userFiltersPath, request.content, callback);

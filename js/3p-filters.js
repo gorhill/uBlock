@@ -33,6 +33,10 @@ var cosmeticSwitch = true;
 var externalLists = '';
 var cacheWasPurged = false;
 var needUpdate = false;
+var hasCachedContent = false;
+
+var reExternalAsset = /^https?:\/\/[a-z0-9]+/;
+var reRepo3rdPartyAsset = /^assets\/thirdparties\/([^\/]+)/;
 
 /******************************************************************************/
 
@@ -87,7 +91,7 @@ var renderBlacklists = function() {
         if ( blacklistHref.indexOf('assets/thirdparties/') !== 0 ) {
             return '';
         }
-        var matches = blacklistHref.match(/^assets\/thirdparties\/([^\/]+)/);
+        var matches = reRepo3rdPartyAsset.exec(blacklistHref);
         if ( matches === null || matches.length !== 2 ) {
             return '';
         }
@@ -136,7 +140,7 @@ var renderBlacklists = function() {
             listStatsTemplate,
             '</span>'
         ].join('');
-        var listKey, list, listEntry, entryDetails;
+        var listKey, list, listEntry, entryDetails, obsolete;
         for ( var i = 0; i < listKeys.length; i++ ) {
             listKey = listKeys[i];
             list = lists[listKey];
@@ -154,23 +158,29 @@ var renderBlacklists = function() {
                 continue;
             }
             // Update status
-            if ( !list.off && (entryDetails.repoObsolete || entryDetails.cacheObsolete) ) {
-                html.push(
-                    '&ensp;',
-                    '<span class="status obsolete">',
-                    entryDetails.repoObsolete ? updateButtontext : obsoleteButtontext,
-                    '</span>'
-                );
-                needUpdate = true;
+            if ( list.off !== true ) {
+                obsolete = entryDetails.repoObsolete ||
+                           entryDetails.cacheObsolete ||
+                           entryDetails.cached !== true && reExternalAsset.test(listKey);
+                if ( obsolete ) {
+                    html.push(
+                        '&ensp;',
+                        '<span class="status obsolete">',
+                        entryDetails.repoObsolete ? updateButtontext : obsoleteButtontext,
+                        '</span>'
+                    );
+                    needUpdate = true;
+                }
             }
             // In cache
-            else if ( entryDetails.cached ) {
+            if ( entryDetails.cached ) {
                 html.push(
                     '&ensp;',
                     '<span class="status purge">',
                     purgeButtontext,
                     '</span>'
                 );
+                hasCachedContent = true;
             }
         }
         html.push('</ul>');
@@ -200,6 +210,7 @@ var renderBlacklists = function() {
         listDetails = details;
         cosmeticSwitch = details.cosmetic;
         needUpdate = false;
+        hasCachedContent = false;
 
         var lists = details.available;
         var html = [];
@@ -298,6 +309,7 @@ var listsContentChanged = function() {
 var updateWidgets = function() {
     uDom('#buttonApply').toggleClass('enabled', listsSelectionChanged());
     uDom('#buttonUpdate').toggleClass('enabled', listsContentChanged());
+    uDom('#buttonPurgeAll').toggleClass('enabled', hasCachedContent);
 };
 
 /******************************************************************************/
@@ -394,6 +406,15 @@ var buttonUpdateHandler = function() {
 
 /******************************************************************************/
 
+var buttonPurgeAllHandler = function() {
+    var onCompleted = function() {
+        renderBlacklists();
+    };
+    messaging.ask({ what: 'purgeAllCaches' }, onCompleted);
+};
+
+/******************************************************************************/
+
 var autoUpdateCheckboxChanged = function() {
     messaging.tell({
         what: 'userSettings',
@@ -449,6 +470,7 @@ uDom.onLoad(function() {
     uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
     uDom('#buttonApply').on('click', buttonApplyHandler);
     uDom('#buttonUpdate').on('click', buttonUpdateHandler);
+    uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
     uDom('#lists').on('change', '.listDetails > input', onListCheckboxChanged);
     uDom('#lists').on('click', '.listDetails > a:nth-of-type(1)', onListLinkClicked);
     uDom('#lists').on('click', 'span.purge', onPurgeClicked);

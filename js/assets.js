@@ -205,6 +205,18 @@ var cachedAssetsManager = (function() {
         getEntries(onEntries);
     };
 
+    exports.removeAll = function(callback) {
+        var onEntries = function() {
+            exports.remove(/^https?:\/\/[a-z0-9]+/);
+            exports.remove(/^assets\/(ublock|thirdparties)\//);
+            exports.remove('assets/checksums.txt');
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+        };
+        getEntries(onEntries);
+    };
+
     return exports;
 })();
 
@@ -956,24 +968,7 @@ exports.purge = function(pattern, before) {
 /******************************************************************************/
 
 exports.purgeAll = function(callback) {
-    var onMetaDataReady = function(entries) {
-        var out = {};
-        var entry;
-        for ( var path in entries ) {
-            if ( entries.hasOwnProperty(path) === false ) {
-                continue;
-            }
-            entry = entries[path];
-            if ( !entry.cacheObsolete && !entry.repoObsolete ) {
-                continue;
-            }
-            cachedAssetsManager.remove(path);
-            out[path] = true;
-        }
-        callback(out);
-    };
-
-    exports.metadata(onMetaDataReady);
+    cachedAssetsManager.removeAll(callback);
 };
 
 /******************************************************************************/

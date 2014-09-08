@@ -107,6 +107,10 @@
     "message":"Jetzt aktualisieren",
     "description":"English: Update now"
   },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Adblock+ Filter zum Verstecken von Elementen analysieren und anwenden.",
     "description":"English: Parse and enforce cosmetic filters."

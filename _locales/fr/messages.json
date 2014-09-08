@@ -107,6 +107,10 @@
     "message":"Mettre à jour",
     "description":"English: Update now"
   },
+  "3pPurgeAll":{
+    "message":"Vider tous les caches",
+    "description":"English: Purge all caches"
+  },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Utiliser en plus les règles esthétiques",
     "description":"English: Parse and enforce cosmetic filters."

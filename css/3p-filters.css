@@ -33,7 +33,7 @@ li.listDetails > a:nth-of-type(2) {
     opacity: 0.5;
     }
 /* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button.reloadAll {
+button {
     border: 1px solid transparent;
     border-radius: 3px;
     border-color: #dddddd #dddddd hsl(36, 0%, 85%);
@@ -43,15 +43,20 @@ button.reloadAll {
     background-image: linear-gradient(#f2f2f2, #dddddd);
     color: #aaa;
     }
-button.reloadAll.enabled {
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+button.enabled {
+    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
+    background-color: hsl(216, 100%, 75%);
+    background-image: linear-gradient(#a8cbff, #80b3ff);
     color: #222;
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
     cursor: pointer;
     opacity: 0.8;
     }
-button.reloadAll:hover {
+button.reloadAll.enabled {
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    background-color: hsl(36, 100%, 75%);
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    }
+button.enabled:hover {
     opacity: 1.0;
     }
 #buttonApply {
