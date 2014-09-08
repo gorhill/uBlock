@@ -24,13 +24,15 @@
 /******************************************************************************/
 
 (function(){
+    var µb = µBlock;
+
     // When the DOM content of root frame is loaded, this means the tab
     // content has changed.
     function onNavigationCommitted(details) {
         if ( details.frameId !== 0 ) {
             return;
         }
-        µBlock.bindTabToPageStats(details.tabId, details.url);
+        µb.bindTabToPageStats(details.tabId, details.url);
     }
     chrome.webNavigation.onCommitted.addListener(onNavigationCommitted);
 
@@ -44,7 +46,7 @@
         if ( !changeInfo.url ) {
             return;
         }
-        µBlock.bindTabToPageStats(tabId, changeInfo.url);
+        µb.bindTabToPageStats(tabId, changeInfo.url);
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
@@ -52,17 +54,44 @@
         if ( tabId < 0 ) {
             return;
         }
-        µBlock.unbindTabFromPageStats(tabId);
+        µb.unbindTabFromPageStats(tabId);
     }
     chrome.tabs.onRemoved.addListener(onTabRemoved);
+})();
 
-    // Initialize internal state with maybe already existing tabs
-    chrome.tabs.query({ url: '<all_urls>' }, function(tabs) {
-        var i = tabs.length;
+/******************************************************************************/
+
+// Initialize internal state with maybe already existing tabs
+// This needs to be executed once, hence it has its own scope, which will
+// allow the code to be flushed once completed.
+
+(function(){
+    var µb = µBlock;
+    var bindToTabs = function(tabs) {
+        var scriptStart = function(tabId) {
+            var scriptEnd = function() {
+                chrome.tabs.executeScript(tab.id, {
+                    file: 'js/contentscript-end.js',
+                    allFrames: true,
+                    runAt: 'document_idle'
+                });
+            };
+            chrome.tabs.executeScript(tab.id, {
+                file: 'js/contentscript-start.js',
+                allFrames: true,
+                runAt: 'document_idle'
+            }, scriptEnd);
+        };
+        var i = tabs.length, tab;
         while ( i-- ) {
-            µBlock.bindTabToPageStats(tabs[i].id, tabs[i].url);
+            tab = tabs[i];
+            µb.bindTabToPageStats(tab.id, tab.url);
+            // https://github.com/gorhill/uBlock/issues/129
+            scriptStart(tab.id);
         }
-    });
+    };
+    chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
+    chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
 })();
 
 /******************************************************************************/
