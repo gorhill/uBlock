@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 8mrv3bKDQ9RVkE6WJl5mkg
-! Version: 201409051420
-! Last modified: 05 Sep 2014 14:20 UTC
+! Checksum: I/9ozPSMigKB67se/odD0w
+! Version: 201409081220
+! Last modified: 08 Sep 2014 12:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -483,6 +483,7 @@ by,ru,ua##.banner_box
 /sexvodnokalssnikah/*
 /shared/promos/*
 /shop-banner.ashx?
+/show.php*^placeid=*&rnd=$script
 /show/?block_id=*&r=$script
 /show_adv.php?page_id=
 /showf.php?u=$subdocument
@@ -2976,6 +2977,7 @@ now.ru###lightboxOverlay
 rupier.com###logo > noindex
 mediachat.ru###ma > .obl
 mega-tracker.net###mb_top_space
+tapochek.net###page_header td[width="230"] + td
 programmersforum.ru###pagenav_menu + center
 fototeens.lifeforums.ru###popup
 wmforum.2bb.ru###pun-announcement
@@ -2996,6 +2998,8 @@ sinoptik.ua##.b-partners
 afisha.ru##.b-top-advert
 magtimes.info##.b1
 mmorpg.ua##.back1
+opensharing.org##.backgr
+opensharing.org##.backgr ~ tr
 sonikelf.ru,tvernews.ru##.banner
 popmech.ru##.banner-label
 allmoldova.com##.banner_main
@@ -3068,7 +3072,9 @@ pornolab.net##a[href*="/89.108.109.12/"],a[href*="/store/"],a[href*="?partner="]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
+alogvinov.com,compulenta.ru,computerra.ru,f1news.ru,fishki.net,gamemag.ru,gismeteo.ru,gotps3.ru,sovsport.ru,sportbox.ru,thg.ru##a[href^="http://ad.adriver."]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
+tapochek.net##a[href^="http://download.mediaplay.ru/"]
 tapochek.net##a[href^="http://firstvds.ru/products/"]
 unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
@@ -3088,6 +3094,7 @@ moviki.ru##div[id^="player_adv_"]
 fsell.biz##div[id^="slot-"]
 comss.ru##img[style="width:728px;height:90px;"]
 goldroyal.net##img[width="140"][height="30"]
+post-tracker.ru##img[width^="8"][height^="3"][src$=".gif"]
 sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
 forum.antichat.ru##p[align="center"] > b > a
@@ -3592,10 +3599,8 @@ myvi.ru##.brand-link
 carambatv.ru##.brand-overlay
 film.ru,online.anidub.com##.branding
 championat.com##.branding-link
-fishki.net##.branding_bottom
 kinoafisha.spb.ru##.branding_header
 gamer.ru##.branding_link
-fishki.net##.branding_top_link
 games-tv.ru##.brandingh
 cybergame.tv,nur.kz##.brandlink
 nur.kz##.brandtop
@@ -3736,7 +3741,6 @@ vedomosti.ru##.left_banner
 dofiga.net##.left_banners
 softru.ru##.left_block_bg_container + td td[width="340"]:first-child
 thevista.ru##.leftblinks
-fishki.net##.leftbox > .innerbox > a:not([href*="fishki"])
 cwer.ws##.like_hide
 mmotop.ru##.link-1
 ucrazy.ru##.links
@@ -3926,9 +3930,7 @@ filmz.ru,rtkorr.com##.topbanner
 mp3poisk.net##.topbnr
 cmexota.ru##.topbrmenu
 superkot.com##.topic-actions + .clear + .post.bg2 + .divider + .post.bg3
-fishki.net##.topictext a[target="_blank"][href*="http://"]:not([href*="autoutro."]):not([href*="fishki.net"]):not([href*="24gadget."]):not([href*="dofiga."])
 finiz.ru##.topline
-fishki.net##.toplinks
 meteo.ua##.topshop_ban
 ekabu.ru##.triline_block
 iguides.ru##.uaBrandLeft
@@ -4050,7 +4052,6 @@ ochevidec.net##a[href^="http:"]:not([href*="ochevidec.net"]):not([href*="livejou
 hvosty.ru,vsehvosty.ru##a[href^="http://"]:not(.postlink) > img
 kinomoov.net##a[href^="http://2vulkan.com/"]
 4pna.com##a[href^="http://4pna.com/rbs_banner."]
-alogvinov.com,compulenta.ru,computerra.ru,f1news.ru,gamemag.ru,gismeteo.ru,gotps3.ru,sovsport.ru,sportbox.ru,thg.ru##a[href^="http://ad.adriver."]
 argumenti.ru##a[href^="http://argumenti.ru/ad_informer/click/"]
 z-music.org##a[href^="http://bit.ly/"]
 kanobu.ru##a[href^="http://brandings.kanobu.ru/click/"]
@@ -4082,7 +4083,6 @@ forum-profit.ru##a[href^="vB.Sponsors/link.php?f="]
 voxpopuli.kz##a[onclick*="Branding"][style]
 riotpixels.com##a[onclick*="Brandy"]
 prestige-gaming.ru##a[onclick][target="_blank"]
-fishki.net##a[onmousedown]:not([href*="fishki.net"])
 macdigger.ru##a[rel="nofollow"][target="_blank"] > img[src^="http://cdn"]
 lu4ok.ws##a[rel="nofollow"][target="_blank"][href^="http://lu4ok.ws/go/?"]
 mebelminsk.by##a[rel="nofollow"][target="_new"][href^="/ref&url="]
@@ -4350,7 +4350,8 @@ siliconrus.com##.b-adv
 siliconrus.com##.b-adv-micro
 redtram.com##.b-informers
 siliconrus.com##.b-top-adv
-news.pn##.banner
+news.pn,post-tracker.ru##.banner
+hh.ru##.banner-place
 online.ua##.banner-top
 kino-dom.tv##.banner_1_550
 mmorpg.ua##.banner_left_col
@@ -4691,11 +4692,8 @@ _advideo/$object-subrequest,domain=megogo.net
 ||filmix.net/branding
 ||finnews.ru^*&img=banners/
 ||firebit.org/clc.js
-||fishki.net/branding/
-||fishki.net/picsw/*.swf
-||fishki.net/skin/img/branding/
-||fishki.net/upload/ftp/*_700x600
-||fishki.net^*.html$subdocument
+||fishki.net/adv/
+||fishki.net^*/top.$image
 ||fix-pix.ru/rotator.php
 ||flashboot.ru/plugins/banneroid/
 ||flashboot.ru/uploads/bnr/
@@ -4789,6 +4787,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||hdtrailer.ru/images/bg/
 ||hdtv.ru/resources/$object
 ||hentaichan.ru/r/
+||hhcdn.ru/nposter/
 ||hi-fi.ru/bitrix/images/
 ||hideme.ru/images/prx/prx_bnr_
 ||hm6.ru/banner

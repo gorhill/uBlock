@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: n++Sh+gTvvmkPEyRhhbsIA
+! Checksum: 4Iv78Pd293+2bAUGbNXTMg
 ! Title: EasyList Hebrew
-! Last modified: 31/08/14  19:36
+! Last modified: 07/09/14  03:05
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -295,7 +295,7 @@
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il|mako.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|mako.co.il|ynet.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -305,6 +305,7 @@
 @@||upf.co.il/advertisment.js
 @@||xads.zedo.com^$popup,domain=one.co.il
 @@||yad2.co.il/ajax/click_stat.php?BannerID=$xmlhttprequest
+@@||ynet.co.il/dc/dcLoadAds/
 @@||zvz.co.il/AdImages/$~third-party,image
 !
 !------Whitelists Element Hiding Rules (caused by EasyList / EasyPrivacy )----!

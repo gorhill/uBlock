@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: C1Vk21SvhfwLQYitUgU9og
-! Version: 201409051421
+! Checksum: IzM7gtcN7tyh6Kgl3ucsXA
+! Version: 201409081221
 ! Title: EasyPrivacy
-! Last modified: 05 Sep 2014 14:21 UTC
+! Last modified: 08 Sep 2014 12:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -242,6 +242,7 @@
 /analytics-tag.
 /analytics.ashx
 /Analytics.aspx?
+/analytics.compressed.js
 /analytics.google.js
 /analytics.html?action=
 /analytics.php.
@@ -4961,6 +4962,7 @@ http://utm.
 ||getrockerbox.com/pixel?
 ||getsidecar.s3.amazonaws.com^
 ||gigya.com^*/cimp.gif?
+||github.com/notifications/beacon/
 ||glam.com/cece/agof/
 ||glam.com/ctagsimgcmd.act?
 ||glbdns.microsoft.com^
@@ -5079,6 +5081,7 @@ http://utm.
 ||legacy.com/globalscripts/tracking/
 ||legacy.com^*/unicaclicktracking.js?
 ||lela.com/api/v2/tracking.js
+||lijit.com/ip.php?
 ||lijit.com/res/images/wijitTrack.gif
 ||lijit.com^*.containertag.min.js$third-party
 ||lingows.appspot.com/page_data/?
@@ -5516,6 +5519,7 @@ http://utm.
 ||totallylayouts.com^*/users-online-counter/online.js
 ||totallylayouts.com^*/visitor-counter/counter.js
 ||touchcommerce.com/tagserver/logging/
+||tourradar.com/def/partner?$third-party
 ||tr-metrics.loomia.com^
 ||tr.advance.net^
 ||tr.interlake.net^
@@ -5568,6 +5572,7 @@ http://utm.
 ||tracking.allposters.com^
 ||tracking.badgeville.com^$third-party
 ||tracking.bidmizer.com^$third-party
+||tracking.cmcigroup.com^
 ||tracking.dealerwebwatcher.com^
 ||tracking.drsfostersmith.com^$third-party
 ||tracking.dsmmadvantage.com^
@@ -6551,6 +6556,7 @@ http://utm.
 ||cbs.com/assets/js/*AdvCookie.js
 ||cbs.wondershare.com^
 ||cbsimg.net/js/cbsi/dw.js
+||cbslocal.com^*/cbs1x1.gif?
 ||cbsnews.com/i/trk/
 ||cbssports.com/common/p?
 ||cclickvidservgs.com/mattel/cclick.js
@@ -6817,6 +6823,7 @@ http://utm.
 ||flipboard.com/usage?
 ||flipkart.com/ajaxlog/visitIdlog?
 ||flipkart.com/bbeacon.php?
+||flixist.com/img2.phtml
 ||flixster.com^*/pixels?
 ||flybmi.com/livetrack/
 ||flyjazz.ca/ow_ga.js
@@ -7195,6 +7202,7 @@ http://utm.
 ||metro.us/api/trackPage/
 ||metroweekly.com/tools/blog_add_visitor/
 ||mf2fm.com/php/stats.php?
+||microsoft.com/blankpixel.gif
 ||microsoft.com/getsilverlight/scripts/silverlight/SilverlightAtlas-MSCOM-Tracking.js
 ||microsoft.com/getsilverlight/scripts/Tracker.js
 ||microsoft.com/library/svy/
@@ -7661,7 +7669,9 @@ http://utm.
 ||stats.behance.net^
 ||stats.blogg.se^
 ||stats.break.com^
+||stats.christianpost.com^
 ||stats.clear-media.com^
+||stats.dailypost.co.uk^
 ||stats.dailyrecord.co.uk^
 ||stats.ebay.com^
 ||stats.eyeviewdigital.com^
@@ -7751,6 +7761,7 @@ http://utm.
 ||tdwaterhouse.ca/includes/javascript/rtesurvey.js
 ||tdwaterhouse.co.uk^*/track.js
 ||ted.dailymail.co.uk^
+||ted.metro.co.uk^
 ||ted1.metro.co.uk^
 ||telegraph.co.uk^*/tmglmultitrackselector.js
 ||tesco.com/cgi-bin3/buyrate?type=
@@ -8162,6 +8173,7 @@ http://utm.
 ||images-amazon.com/images/*/wcs-help-omniture/wcs-help-omniture-$script
 ||img-bahn.de/v/*/js/s_code.js$domain=bahn.de
 ||lexus.com/lexus-share/js/tracking_omn/s_code.js
+||loc.gov/js/global/metrics/*/s_code.js
 ||mercedes-benz.ca/js/omniture.js
 ||mercola.com/Assets/js/omniture/sitecatalyst/mercola_s_code.js
 ||michaelkors.com/common/js/extern/omniture/s_code.js
@@ -8820,6 +8832,7 @@ http://utm.
 ! *** easylist:easyprivacy/easyprivacy_whitelist.txt ***
 @@||a.visualrevenue.com/vrs.js$domain=nydailynews.com
 @@||about-australia.com/*/clickheat.js
+@@||accorhotels.com^*/xtanalyzer_roi.js
 @@||ad.crwdcntrl.net^$object-subrequest,domain=ap.org|newsinc.com
 @@||adidas.com^*/adidasAnalytics.js?
 @@||adobetag.com/d2/$script,domain=thestar.com
@@ -8859,6 +8872,7 @@ http://utm.
 @@||bhg.com/web/js-min/common/js/dwr/RemoteTargetingService.js
 @@||bitgo.com/vendor/googleanalytics/angular-ga.min.js
 @@||bolha.com/clicktracker/
+@@||bonappetit.com/wp-content/config/cn-fe-stats/$script
 @@||bountysource.com/badge/tracker?
 @@||boxtops4education.com^*/ntpagetag.js
 @@||britishairways.com/cms/global/scripts/applications/tracking/visualsciences.js
@@ -9393,7 +9407,7 @@ http://utm.
 @@||swa.mail.ru/cgi-bin/counters?$script
 @@||wargag.ru/public/js/counter.js?
 @@||widget.myrentacar.me^$script,subdocument
-@@||yandex.ru/metrika/watch.js$domain=anoncer.net
+@@||yandex.ru/metrika/watch.js$domain=anoncer.net|tv.yandex.ru
 @@||yandex.ru/watch/$xmlhttprequest,domain=anoncer.net
 @@||yandex.ru/webvisor/$xmlhttprequest,domain=anoncer.net
 ! Anti-Adblock

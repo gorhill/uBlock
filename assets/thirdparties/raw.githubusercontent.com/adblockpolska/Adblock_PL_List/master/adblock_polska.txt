@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 04 September 2014
+! Last modified: 08 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -62,15 +62,18 @@
 /storiesflash/baner
 /upload/banery_pl/*
 /vardata/banery/*
-_1100x200.
+_1100x200
+_300x700
 _750x200
-_750x700.
+_750x700
 _baner/980x200
 _banner.png
 _reklama.jpg
 _res/banner/glowna/
+_werbung_
 -lokazje.
 -reklama.gif
+bannerad.png
 
 ! * - General Element Hiding Rules - * !
 ###adv_bottom
@@ -89,6 +92,7 @@ _res/banner/glowna/
 ###page-peel-banner
 ###page_top_reklama
 ###prv-billboard
+###recommendAdv
 ###rekGora
 ###reklamygoogle
 ###slideshow_minibanner
@@ -137,6 +141,7 @@ _res/banner/glowna/
 ##.sky_layer
 ##.teaser_cnt
 ##.theAd
+##.widget.widget-ad.widget-ad-sidebar-top
 ##[id^="AdArea"]
 ##[id^="ads300_100"]
 ##[id^="ad_gora"]
@@ -204,6 +209,7 @@ _res/banner/glowna/
 @@||reklama.onet.pl*logo*png
 @@||rtax.criteo.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||smartadserver.com$domain=get.x-link.pl
+@@||static.wirtualnemedia.pl/media/advs/
 @@||tvn.adocean.pl^$script,domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
 
@@ -242,6 +248,7 @@ _res/banner/glowna/
 ||dot.wp.pl
 ||ec.bankier.pl/file/
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
+||eurotax.pl/img/*.swf
 ||extra-plonsk.pl/images/banners/
 ||fm.tuba.pl*prosba.jpg
 ||fwcdn.pl/adv/*
@@ -270,11 +277,13 @@ _res/banner/glowna/
 ||pino.pl/static/empire/
 ||pocketads.pl
 ||portalprzemyski.pl/wp-content/re/
+||realmoney.pl
 ||redir.atmcdn.pl*swf$domain=tvn24.pl|tvn24bis.pl
 ||rek.www.wp.pl
 ||reklama.osemka.pl
 ||spidersweb.pl/wp-content/themes/new_sw_v2/images/*.swf
 ||static.clickonometrics.pl
+||static.fakt.pl
 ||static*jelonka.com
 ||static-chomikuj.pl/serve/
 ||static-kinoman.tv/n*php
@@ -287,6 +296,8 @@ _res/banner/glowna/
 ||x.interia.pl/*.ad.
 ||x.o2.pl
 ||xxxxxxx.pl
+||zambrow.org/firmy/grafika/banner
+||zasiltelefon.com.pl
 ||zycie-pleszewa.pl/images/banners
 
 ! * - 3rd Party Blocking Rules - * !
@@ -304,7 +315,6 @@ _res/banner/glowna/
 ||gg.adocean.pl$third-party
 ||glossymedia.pl^$third-party
 ||incontext.pl^$third-party
-||inevitablenesses.realmoney.pl$third-party
 ||intextad.net^$third-party
 ||leadsign.pl/router/^$third-party
 ||netsales.pl^$third-party
@@ -324,6 +334,7 @@ alemiasto.pl##[class^="ad"]
 appmaniak.pl###bannerTop
 autocentrum.pl##[style="float: right; width: 300px; height: 250px; margin-left: 5px; display: block;"]
 autocentrum.pl##[style="float:right;width:300px;height:250px;margin-left:5px;"]
+axn.pl##.region.region-header-ad-space
 benchmark.pl###adblock-info
 bezuzyteczna.pl##.special
 bochnianin.pl###slideText
@@ -340,10 +351,14 @@ fotosik.pl##.adv
 fronda.pl##.small-info
 fukk.pl###comment-captcha
 gazeta.pl##[class^="mod mod_cpCommerce"]
+gazetapolska.pl##[style="float: left; width: 980px; display: block;"]
+gazetapolska.pl##[style="float: left;width:980px;"]
 gazeta-wiesci.pl##.widget.widget_text
 glamrap.pl##.popup
 gry-online.pl##[id^="teaser_cnt"]
 gry-online.poszkole.pl##FOOTER
+groupon.pl###spotlight
+groupon.pl###sub_dlg
 informacjelokalne.pl##[src^="http://www.informacjelokalne.pl/images/reklama"]
 jelonka.com##.marconi
 kartuzy.info##[id^="baner"]
@@ -359,8 +374,10 @@ napisy24.pl##.header_210
 narodowcy.net##.custom
 naszamlawa.pl##[id^="fancybox-"]
 newsweek.pl##[class^="Block-Banner"]
+nudziara.pl###post.format_post.nudziara.masonry-brick
 optyczne.pl###warning
 orneta.net##.lof-container
+oxforddictionaries.com##.responsive_cell_whole
 pclab.pl##[href^="http://e.clk.onet.pl"]
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
 pinterest.com##[class="message messageUnauth"]
@@ -378,6 +395,9 @@ repostuj.pl##[class^="warstwa"]
 sadistic.pl/pics/c57d81558fed.jpg
 se.pl##[class^="item art_reklama"]
 serwislokalny.com##.banner
+spidersweb.pl##.four.columns.hide-for-small
+spidersweb.pl##.g.g-16
+sport.pl##.mod.mod_cpCommerce.small
 sportowefakty.pl##.centered.spaced
 supernowosci24.pl###notificationbar
 supernowosci24.pl###ocena
@@ -394,11 +414,16 @@ walbrzyszek.com##[style="text-align:center;padding-bottom:15px;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999997;left:0;top:0;width:100%;height:100%;background:#999;opacity:0.4;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999998;left:0;top:0;width:100%;height:100%;"]
 wiocha.pl###ad4sc
+wirtualnemedia.pl###article_promo
+wp.pl##.adv
+wp.pl##[href^="http://emisja.contentstream.pl/_/"]
 wp.pl##[id^="adv"]
 wp.tv##.infoAB
 wp.tv##[src^="http://adv.wp.pl/"]
 wysokieobcasy.pl##.c1
 xn--portalmawa-g0b.pl##[id^="xc-98-primary"]
+zambrow.org##.adv
+zambrow.org##.bannerRotator
 zarabiara.pl##.new_adbanners
 zarabiara.pl##.new_adtaily
 

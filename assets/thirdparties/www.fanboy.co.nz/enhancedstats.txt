@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: LjR7IQOHL6LrkpyqvSP0Kg
+! Checksum: KRDoTl4nUK1jrnfVkGXcOg
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 5 Sep 2014
+! Updated: 6 Sep 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -414,7 +414,7 @@ wolframalpha.com###subpod_zoom
 ||cbc.ca/includes/stats/hbx_
 ||ccom-cdn.com/assets/js/ga.js
 ||cdc.gov/JScript/metrics/
-||cf2.rackcdn.com^$script,domain=comingsoon.net|cnet.com|destructoid.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com|wikia.com|memory-alpha.org
+||cf2.rackcdn.com^$script,domain=comingsoon.net|cnet.com|flixist.com|destructoid.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com|wikia.com|memory-alpha.org
 ||chevron.com/js/chevron_ga.js
 ||cknw.com^*/s_cknwam_code.js
 ||cleartrip.com/javascripts/ga.*.js
@@ -484,6 +484,7 @@ wolframalpha.com###subpod_zoom
 ||consent-st.truste.com^$third-party
 ||disqus.com/count-data.js
 ||doubleclick.net^$third-party
+||dsr.livefyre.com/livecountping/
 ||geo.query.yahoo.com^$third-party
 ||google-analytics.com^$third-party
 ||google.co.il/cse/$third-party,~stylesheet

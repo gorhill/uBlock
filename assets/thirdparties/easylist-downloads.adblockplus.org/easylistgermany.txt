@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ACffvHeoRtCIDPC6jhcIow
-! Version: 201409051421
+! Checksum: fgGKKK9aZhLtPCStYWiCQA
+! Version: 201409081221
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 05 Sep 2014 14:21 UTC
+! Last modified: 08 Sep 2014 12:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -74,6 +74,7 @@
 /partneradzwerk/*
 /pic/werbung/*
 /pic/werbung_
+/sidebar_werbung/*
 /styles/*/werbung/*
 /upload/werbung/*
 /usemax/*
@@ -575,7 +576,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||admanagement.ch^$third-party
 ||adminlose.de^$third-party
 ||admonkey.cc^$third-party
-||adnet.de^$third-party
 ||adnited.net^$third-party
 ||adpark.de^$third-party
 ||adperform.de^$third-party
@@ -811,7 +811,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mmogtrade.de^$third-party
 ||money-fun.de^$third-party
 ||moneymakers.de^$third-party
-||mpnrs.com^$third-party
 ||multimedia-internet.org^$third-party
 ||mupads.de^$third-party
 ||murcs.org^$third-party
@@ -2008,8 +2007,10 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-warez.in/_*.php$script
 ||ddl-warez.in/images/hoster/
 ||ddl-warez.in/images/hoster_logos/
+||ddl-warez.in/images/hosterlogos/
 ||ddl-warez.in/images/och_logos/
 ||ddl-warez.in^*.php|$script
+||ddl-warez.in^*_js.js
 ||ddl-warez.in^*_popup.js
 ||ddl-warez.in^*_ulpop.
 ||deal-magazin.com/dat/pix/estatepro.gif
@@ -2330,6 +2331,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamersplus.de/images/branding/
 ||gamersplus.de/uploads/tx_consolmedia/bg_*.jpg
 ||games.ch^*/banner/
+||gamestar.de/_misc/countdown/
 ||gamestar.de/img/gamestar/_misc/gcEventBtnPrmBg.png
 ||gamestar.de/img/gamestar/_misc/prm_logoheader_gs_
 ||gamestar.de/img/gamestar/_misc/promotion/*/amazon_button*.png
@@ -2400,6 +2402,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gooster.ch/js/ov.js.php?
 ||gooster.de/js/ov.js.php?
 ||gotv.at^*_clicktag.swf
+||gratis-hoerspiele.de/wp-content/uploads/*/heias_
 ||grauzone.us^*/dropin.js
 ||green.ingame.de^
 ||grillratte.de/wp-content/uploads/2011/12/1-und-1.gif
@@ -2431,6 +2434,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||hammonline.de/bannerlb.php
 ||hammstars.de/bannerBOX.php
 ||hammstars.de/bannerLB.php
+||handball-neuhausen.de/images/logos/sponsoren/slider/
 ||handelsblatt.com/images/icon/anzeige_h.gif
 ||handwerksblatt.de/banner_scripte/
 ||handy-sparen.net^$domain=germanload.to
@@ -2462,6 +2466,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||hc-aschersleben.de/SponsorenBanner.swf
 ||hc-empor.de/images/content/sponsors/
 ||hc-erlangen.de/fileadmin/user_upload/bundesliga/sponsoren/
+||hcempor.de/images/content/sponsors/
 ||hd-vidz.net/layer.php
 ||hd-vidz.net/out.js
 ||heddesheimblog.de^*/anzeige-
@@ -2472,6 +2477,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||heise.de/icons/ho/seen_by_banner.gif
 ||heldendesalltags.net/rss/handyz_rss_.php
 ||hertener-allgemeine.de^*/anzeigen/
+||hg-saarlouis.de/uploads/pics/swsls_vdsl_
 ||hifitest.de/wb/*_MediumRectangle
 ||hifitest.de/wb/*_Offerbox
 ||hifitest.de/wb/*_Skyscraper
@@ -2522,6 +2528,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||hotel-tip-thailand.de/images2/best_deal_hotels.jpg
 ||hotel-tip-thailand.de/layer_add.js
 ||housetime.fm/banner/
+||hsc2000.de/files/knoch-web-banner-hsc.jpg
 ||hsc2000.de/files/livestream_2014_oben.png
 ||hsc2000.de/files/livestream_2014_unten.png
 ||hsc2000.de^*/cosponsoren/$subdocument
@@ -3896,6 +3903,7 @@ erf.de,fiverdeal.de,gepostet.com,haustierstall.de,musotalk.de,radiof.de,seniorko
 gmx.net,web.de###advSpecialMain
 web.de###advTop
 rimparerhandballer.de###adv_matchDayPresenter
+rimparerhandballer.de###adv_partner
 spielaffe.de###adv_skyscraper_pos
 pennercity.de###advert
 gloria.tv###advertisement
@@ -4082,6 +4090,7 @@ frimon.de###content:last-child > #sky_right:first-child + .padding_down + .paddi
 sprachnudel.de###content:last-child > ul[class]:first-child
 1001spiele.de###contentBanner
 creativeproxy.uimserv.net###contentContainer
+scdhfk-handball.de###contentInnerWrap > #c629
 wetter.net###content_anzeige
 mydealz.de###content_banner
 softonic.de###content_list_leaderboard
@@ -4098,7 +4107,7 @@ kayak.de###crossSaleBody
 kicker.de###ctl00_ControlNavi_presenterCtrl
 gbase.ch,gbase.de###ctl00_MainContent_radrMetaboli
 hardware-experten.de###dailybanner
-de.msn.com###dating
+at.msn.com,de.msn.com###dating
 ch.msn.com###datingflash
 wetter.com###db_banner
 abacho.de###depart_tbl_main
@@ -4173,6 +4182,7 @@ nick.de,weltwoche.ch###fullbanner
 wer-weiss-was.de###fullbanner_02
 radiogong.de###fullsize
 pinfy.de###fullsize-background-container
+yasni.de###fullsizeBannerContainer
 kino-zeit.de###fullsize_banner
 stb-web.de###fullsizebanner
 buergerstimme.com###g-1
@@ -4273,6 +4283,7 @@ boomerangtv.de,channelpartner.de,ebay.at,ebay.ch,ebay.de,ircgalerie.net,ringrock
 silicon.de###leaderboard-top
 laut.de###leaderboardSpace
 depechemode.de###leaderboardtop
+busliniensuche.de###leaderbord-top
 channelpartner.de###leadfull
 winload.de###leftBanner
 e-recht24.de###leftColumn > .tborder[cellspacing="0"][cellpadding="0"][style="text-align:center;background-color:#F1F1F1!important;width:100%;height:620px;overflow:hidden;"]
@@ -4322,6 +4333,7 @@ businessxp.at,gamingxp.com,mobilexp.com###main_skyscraper
 jetztspielen.de###main_top_banner
 contaxe.com###maintable
 bazonline.ch###marketBox
+markt.de###markt_superbanner
 ef-magazin.de,macmagazin.de,macnews.de###marktplatz
 euronics.de###master_footer_box_placeholder
 startxxl.com###mcebox
@@ -4654,7 +4666,7 @@ t-online.de,wetter.info###sky_anz
 frimon.de###sky_right
 xboxdynasty.de###skyright
 ebay.at,ebay.ch,ebay.de###skyscrape
-alternate.de,apotheke-adhoc.de,boomerangtv.de,centertv.de,charivari986.de,china.ahk.de,curt.de,das-inserat.de,eurogamer.de,gamingxp.com,halle.de,msxfaq.de,nickles.de,sf.tv,surffact.de,vanion.eu###skyscraper
+alternate.de,apotheke-adhoc.de,boomerangtv.de,busliniensuche.de,centertv.de,charivari986.de,china.ahk.de,curt.de,das-inserat.de,eurogamer.de,gamingxp.com,halle.de,msxfaq.de,nickles.de,sf.tv,surffact.de,vanion.eu###skyscraper
 apotheke-adhoc.de###skyscraper-left
 apotheke-adhoc.de###skyscraper-right
 dashitradio.de###skyscraper-wide
@@ -4687,7 +4699,7 @@ wetteralarm.at###sponsor-info
 gamestar.de###sponsorbar
 pressetext.com###sponsoredLinkPortletId
 frischauf-gp.de,fvillertissen.de,gwd-minden.de,h-bw.de,hg-saarlouis.de,hsc-bad-neustadt.de,s15815331.onlinehome-server.info,tbv-lemgo.de###sponsoren
-studententage.tu-freiberg.de###sponsoren2
+hg-saarlouis.de,studententage.tu-freiberg.de###sponsoren2
 achtzehn99.de,hsc2000.de###sponsors
 wetter.com###spox_box
 trendhure.com###sprite-content-title-buchtipp
@@ -4711,7 +4723,7 @@ sims-3.net###subheader
 xolopo.de###subnav_partner
 nanu.de###superBanner
 t-online.de###superBannerContainer
-allesueberfilme.de,apotheke-adhoc.de,boulevard-baden.de,braunschweiger-zeitung.de,deutsche-wirtschafts-nachrichten.de,donaukurier.de,internetworld.de,itwissen.info,lecker.de,lpgforum.de,morgenpost.de,morgenweb.de,netdoktor.at,neue-braunschweiger.de,pkw-forum.de,rtl.de,stimme.de,vogue.de,wer-kennt-wen.de###superbanner
+allesueberfilme.de,apotheke-adhoc.de,boulevard-baden.de,braunschweiger-zeitung.de,deutsche-wirtschafts-nachrichten.de,donaukurier.de,internetworld.de,itwissen.info,lecker.de,lpgforum.de,morgenpost.de,morgenweb.de,netdoktor.at,neue-braunschweiger.de,pkw-forum.de,rtl.de,stimme.de,tvh1.de,vogue.de,wer-kennt-wen.de###superbanner
 juve.de###superbanner_side
 juve.de###superbanner_top
 tri-mag.de###superbanner_wide
@@ -5188,6 +5200,7 @@ volksblatt.li##.divBanner
 volksblatt.li##.divPdfAnzeigen
 volksblatt.li##.divRectangle
 ladies.de##.div_head_main_anzeige
+chip.de##.dl-faktbox + .button-box
 gamestar.de##.dlightboxContainerBody > div[style="color: #5D5D5D; font-size: 18px; margin: 10px 10px 10px 20px; text-align: left;"] + .standardcontent > [type="text/css"] + .articlelb > table
 xxx-blog.to##.dltable + .easySpoilerWrapper + p:last-child
 activevb.de##.dontprint[cellpadding="1"][bgcolor="#c0c0c0"][align="center"]
@@ -5273,7 +5286,7 @@ airgamer.de##.fullbanner2
 phpforum.de##.ga336
 quoka.de##.gad
 sinn-frei.com##.gadline
-preisgenau.de##.gads
+markt.de,preisgenau.de##.gads
 rawsucker.com,sinn-frei.com##.galine
 lakeparty.de##.gallery-banner-wrapper
 tagesspiegel.de##.gam_wrapper
@@ -5298,6 +5311,8 @@ pcaction.de,pcgames.de##.gul300
 myvideo.de##.hAdHead
 wetter.de##.halfsizerect + .pageItem
 map24.com##.hand[onclick="showbahn();"]
+tvemsdetten.com##.hauptsponsor
+baunataler.de##.hauptsponsoren
 au-ja.de##.headADB
 au-ja.de##.headADV
 fernsehlounge.de,staedte-info.net##.headbanner
@@ -5436,6 +5451,7 @@ ebay.de##.mrec
 motor-talk.de##.mtbwrapper
 express.de##.nah_box_horizonal
 express.de##.nah_box_vertical
+hsgnordhorn-lingen.de##.navbar-fixed-bottom
 boerse.bz##.navbar_notice > b:first-child + p:last-child
 boerse.bz##.navbar_notice > p + p
 boerse.bz##.navbar_notice > p > a[href^="/"]
@@ -5484,6 +5500,7 @@ freiburger-nachrichten.ch##.pane-frn-content-inserate-slider
 oekoportal.de##.panel-display > .panel-col-side > #block-views-website-block-1
 spiegelfechter.com##.parship
 computerbild.de,dvd-forum.at,dwdl.de,euractiv.de,giga.de,ibash.de,leinehertz.net,multipic.de##.partner
+tvemsdetten.com##.partner-slider
 sat1.de##.partner_box
 eatsmarter.de##.partnerbox
 quoka.de##.partnersmall
@@ -5657,6 +5674,7 @@ yigg.de,zeit.de##.sponsoring
 eblogx.com##.sponsorleft
 fc-suedtirol.com##.sponsorliste
 svm-fan.net##.sponsorlogo
+svhu-frogs.de##.sponsors
 fcbayern.de##.sponsors-wrapper
 euractiv.de##.sponzor
 collabxt.de,schnellangeld.de##.squarebanner
@@ -7526,6 +7544,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||combatarms-game.de/adframe.js
 @@||connect.de^$elemhide
 @@||connected-home.de^$elemhide
+@@||coordur.de^$document,subdocument
 @@||crackajack.de^*/advertising.js
 @@||cuiron.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||cuiron.de^$image,domain=epochtimes.de|gamona.de|lustich.de
@@ -7611,7 +7630,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||gesehen.es^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||gmads.net/crossdomain.xml$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
 @@||gmads.net/r?$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
-@@||golem.de^*.html$elemhide
 @@||goolive.de^*.js|
 @@||green-24.de^$elemhide
 @@||grundrechteschutz.de^$elemhide
@@ -7681,7 +7699,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=gamona.de
 @@||pc-magazin.de^$elemhide
 @@||pcaction.de^$image
-@@||pcgames.de^$elemhide
 @@||pcgameshardware.de^$image
 @@||peugeot-metropolis.de^$elemhide
 @@||picload.org/ads-1.js
@@ -7754,11 +7771,9 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||videogameszone.de^$image
 @@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de|www.rtl.de|www.vox.de
 @@||vorsorgebote.de^$elemhide
-@@||web.de^*.html$elemhide
 @@||werbeblocker-erkennen.webconrad.com/adframe.js
 @@||wintotal-forum.de^$elemhide
 @@||wirtschaft-recht-aktuell.de^$elemhide
-@@||www.gmx.net^$elemhide
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist_dimensions.txt ***
 @@_120x60.$image,domain=sunsteps.org
 @@||bueropartner24.de/out/pictures/generated/category/icon/728_90_$image,~third-party
