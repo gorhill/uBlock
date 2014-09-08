@@ -63,6 +63,7 @@ return {
     updateAssetsEvery: 75 * oneHour + 23 * oneMinute + 53 * oneSecond + 605,
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
+    pslPath: 'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
 
     // permanent lists
     permanentLists: {
@@ -86,10 +87,20 @@ return {
     remoteBlacklists: {
     },
 
+    firstUpdateAfter: 5 * oneMinute,
+    nextUpdateAfter: 7 * oneHour,
+
+    selfieMagic: 'ccolmudazpvm',
+    selfieAfter: 7 * oneMinute,
+
     pageStores: {},
 
     storageQuota: chrome.storage.local.QUOTA_BYTES,
     storageUsed: 0,
+
+    noopFunc: function(){},
+
+    apiErrorCount: 0,
 
     // so that I don't have to care for last comma
     dummy: 0

@@ -139,12 +139,18 @@
 /******************************************************************************/
 
 µBlock.appendUserFilters = function(content) {
+    var µb = this;
+
+    var onFiltersReady = function() {
+    };
+
     var onSaved = function(details) {
         if ( details.error ) {
             return;
         }
-        µBlock.loadUbiquitousBlacklists();
+        µb.loadFilterLists(onFiltersReady);
     };
+
     var onLoaded = function(details) {
         if ( details.error ) {
             return;
@@ -152,8 +158,9 @@
         if ( details.content.indexOf(content.trim()) !== -1 ) {
             return;
         }
-        µBlock.saveUserFilters(details.content + '\n' + content, onSaved);
+        µb.saveUserFilters(details.content + '\n' + content, onSaved);
     };
+
     if ( content.length > 0 ) {
         this.loadUserFilters(onLoaded);
     }
@@ -256,15 +263,21 @@
 
 /******************************************************************************/
 
-µBlock.loadUbiquitousBlacklists = function() {
+µBlock.loadFilterLists = function(callback) {
     var µb = this;
     var blacklistLoadCount;
 
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
+
     var loadBlacklistsEnd = function() {
-        µb.abpFilters.freeze();
-        µb.abpHideFilters.freeze();
-        µb.messaging.announce({ what: 'loadUbiquitousBlacklistCompleted' });
+        µb.netFilteringEngine.freeze();
+        µb.cosmeticFilteringEngine.freeze();
         chrome.storage.local.set({ 'remoteBlacklists': µb.remoteBlacklists });
+        µb.messaging.announce({ what: 'loadUbiquitousBlacklistCompleted' });
+        µb.toSelfieAsync();
+        callback();
     };
 
     var mergeBlacklist = function(details) {
@@ -277,10 +290,9 @@
 
     var loadBlacklistsStart = function(lists) {
         µb.remoteBlacklists = lists;
-
-        // rhill 2013-12-10: set all existing entries to `false`.
-        µb.abpFilters.reset();
-        µb.abpHideFilters.reset();
+        µb.netFilteringEngine.reset();
+        µb.cosmeticFilteringEngine.reset();
+        µb.destroySelfie();
         var locations = Object.keys(lists);
         blacklistLoadCount = locations.length;
         if ( blacklistLoadCount === 0 ) {
@@ -322,11 +334,11 @@
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
-    var abpFilters = this.abpFilters;
-    var abpHideFilters = this.abpHideFilters;
+    var netFilteringEngine = this.netFilteringEngine;
+    var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
     var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
-    var duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount;
-    var acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount;
+    var duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
+    var acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
     var reLocalhost = /(^|\s)(localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
     var reAdblockFilter = /^[^a-z0-9:]|[^a-z0-9]$|[^a-z0-9_:.-]/;
     var reAdblockHostFilter = /^\|\|([a-z0-9.-]+[a-z0-9])\^?$/;
@@ -360,7 +372,7 @@
         // 2014-05-18: ABP element hide filters are allowed to contain space
         // characters
         if ( parseCosmeticFilters ) {
-            if ( abpHideFilters.add(line) ) {
+            if ( cosmeticFilteringEngine.add(line) ) {
                 continue;
             }
         }
@@ -396,7 +408,7 @@
 
         // Likely an ABP net filter?
         if ( reAdblockFilter.test(line) ) {
-            if ( abpFilters.add(line) ) {
+            if ( netFilteringEngine.add(line) ) {
                 continue;
             }
             // rhill 2014-01-22: Transpose possible Adblock Plus-filter syntax
@@ -412,13 +424,13 @@
             continue;
         }
 
-        abpFilters.addAnyPartyHostname(line);
+        netFilteringEngine.addAnyPartyHostname(line);
     }
 
     // For convenience, store the number of entries for this
     // blacklist, user might be happy to know this information.
-    duplicateCount = abpFilters.duplicateCount + abpHideFilters.duplicateCount - duplicateCount;
-    acceptedCount = abpFilters.acceptedCount + abpHideFilters.acceptedCount - acceptedCount;
+    duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
+    acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
 
     this.remoteBlacklists[details.path].entryCount = acceptedCount + duplicateCount;
     this.remoteBlacklists[details.path].entryUsedCount = acceptedCount;
@@ -449,42 +461,119 @@
     }
 
     // Now force reload
-    this.loadUpdatableAssets(update);
+    this.loadUpdatableAssets({ update: update, psl: update });
 };
 
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
     var applyPublicSuffixList = function(details) {
         // TODO: Not getting proper suffix list is a bit serious, I think
         // the extension should be force-restarted if it occurs..
         if ( !details.error ) {
             publicSuffixList.parse(details.content, punycode.toASCII);
         }
-        if ( typeof callback === 'function' ) {
-            callback();
-        }
+        callback();
     };
-    this.assets.get(
-        'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
-        applyPublicSuffixList
-    );
+    this.assets.get(this.pslPath, applyPublicSuffixList);
 };
 
 /******************************************************************************/
 
 // Load updatable assets
 
-µBlock.loadUpdatableAssets = function(update) {
+µBlock.loadUpdatableAssets = function(details) {
+    var µb = this;
+
+    details = details || {};
+    var update = details.update !== false;
+
     this.assets.autoUpdate = update || this.userSettings.autoUpdate;
     this.assets.autoUpdateDelay = this.updateAssetsEvery;
-    this.loadPublicSuffixList();
-    this.loadUbiquitousBlacklists();
 
-    // It could be a manual update, so we reset the auto-updater
-    if ( update ) {
-        this.updater.restart();
+    var onFiltersReady = function() {
+        if ( update ) {
+            µb.updater.restart();
+        }
+    };
+
+    var onPSLReady = function() {
+        µb.loadFilterLists(onFiltersReady);
+    };
+
+    if ( details.psl !== false ) {
+        this.loadPublicSuffixList(onPSLReady);
+    } else {
+        this.loadFilterLists(onFiltersReady);
     }
+};
+
+/******************************************************************************/
+
+µBlock.toSelfie = function() {
+    var selfie = {
+        magic: this.selfieMagic,
+        publicSuffixList: publicSuffixList.toSelfie(),
+        filterLists: this.remoteBlacklists,
+        netFilteringEngine: this.netFilteringEngine.toSelfie(),
+        cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie(),
+    };
+    chrome.storage.local.set({ selfie: selfie });
+    // console.log('µBlock.toSelfie> made a selfie!');
+};
+
+// This is to be sure the selfie is generated in a sane manner: the selfie will
+// be generated if the user doesn't change his filter lists selection for 
+// some set time.
+µBlock.toSelfieAsync = function(after) {
+    if ( typeof after !== 'number' ) {
+        after = this.selfieAfter;
+    }
+    this.asyncJobs.add(
+        'toSelfie',
+        null,
+        this.toSelfie.bind(this),
+        after,
+        false
+    );
+};
+
+/******************************************************************************/
+
+µBlock.fromSelfie = function(callback) {
+    var µb = this;
+
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
+
+    var onSelfieReady = function(store) {
+        var selfie = store.selfie;
+        if ( typeof selfie !== 'object' || selfie.magic !== µb.selfieMagic ) {
+            callback(false);
+            return;
+        }
+        if ( publicSuffixList.fromSelfie(selfie.publicSuffixList) !== true ) {
+            callback(false);
+            return;
+        }
+        // console.log('µBlock.fromSelfie> selfie looks good');
+        µb.remoteBlacklists = selfie.filterLists;
+        µb.netFilteringEngine.fromSelfie(selfie.netFilteringEngine);
+        µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
+        callback(true);
+    };
+
+    chrome.storage.local.get('selfie', onSelfieReady);
+};
+
+/******************************************************************************/
+
+µBlock.destroySelfie = function() {
+    chrome.storage.local.remove('selfie');
 };
 
 /******************************************************************************/
@@ -494,21 +583,70 @@
 µBlock.load = function() {
     var µb = this;
 
-    // User whitelist directives and filters need the Public Suffix List to be
-    // available -- because the way they are stored internally.
+    // Final initialization steps after all needed assets are in memory
+    var onAllDone = function(wasAutoUpdated) {
+        // Initialize internal state with maybe already existing tabs
+        var bindToTabs = function(tabs) {
+            var scriptStart = function(tabId) {
+                var scriptEnd = function() {
+                    chrome.tabs.executeScript(tabId, {
+                        file: 'js/contentscript-end.js',
+                        allFrames: true,
+                        runAt: 'document_idle'
+                    });
+                };
+                chrome.tabs.executeScript(tabId, {
+                    file: 'js/contentscript-start.js',
+                    allFrames: true,
+                    runAt: 'document_idle'
+                }, scriptEnd);
+            };
+            var i = tabs.length, tab;
+            while ( i-- ) {
+                tab = tabs[i];
+                µb.bindTabToPageStats(tab.id, tab.url);
+                // https://github.com/gorhill/uBlock/issues/129
+                scriptStart(tab.id);
+            }
+        };
+        chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
+        chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
+
+        // https://github.com/gorhill/uBlock/issues/184
+        // If we restored a selfie, check for updates not too far
+        //  in the future.
+        µb.updater.restart(wasAutoUpdated ? µb.nextUpdateAfter : µb.firstUpdateAfter);
+    };
+
+    // Filters are in memory
+    var onFiltersReady = function() {
+        onAllDone(µb.userSettings.autoUpdate);
+    };
+
+    // Load order because dependencies:
+    // User settings -> PSL -> [filter lists, user whitelist]
     var onPSLReady = function() {
         µb.loadWhitelist();
-        µb.loadUbiquitousBlacklists();
+        µb.loadFilterLists(onFiltersReady);
     };
 
-    // Public Suffix List loader needs the user settings need to be available
-    // because we need to know whether to auto-update the list or not.
-    var onUserSettingsReady = function() {
-        µb.assets.autoUpdate = µb.userSettings.autoUpdate || true;
+    // If no selfie available, take the long way, i.e. load and parse 
+    // raw data.
+    var onSelfieReady = function(success) {
+        if ( success === true ) {
+            onAllDone(false);
+            return;
+        }
+        µb.assets.autoUpdate = µb.userSettings.autoUpdate;
         µb.loadPublicSuffixList(onPSLReady);
     };
-    this.loadUserSettings(onUserSettingsReady);
 
+    // User settings are in memory
+    var onUserSettingsReady = function() {
+        µb.fromSelfie(onSelfieReady);
+    };
+
+    this.loadUserSettings(onUserSettingsReady);
     this.loadLocalSettings();
     this.getBytesInUse();
 };

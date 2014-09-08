@@ -380,7 +380,7 @@ var reloadAll = function(update) {
 /******************************************************************************/
 
 var buttonApplyHandler = function() {
-    reloadAll();
+    reloadAll(false);
     uDom('#buttonApply').toggleClass('enabled', false);
 };
 

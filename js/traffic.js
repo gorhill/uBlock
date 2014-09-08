@@ -80,7 +80,7 @@ var onBeforeRequest = function(details) {
 
     var reason = false;
     if ( pageStore.getNetFilteringSwitch() ) {
-        reason = µb.abpFilters.matchString(requestContext, requestURL, requestType, requestHostname);
+        reason = µb.netFilteringEngine.matchString(requestContext, requestURL, requestType, requestHostname);
     }
     // Record what happened.
     pageStore.recordRequest(requestType, requestURL, reason);
@@ -168,7 +168,7 @@ var onBeforeSendHeaders = function(details) {
     // in multiple tabs.
     var reason = false;
     if ( pageStore.getNetFilteringSwitch() ) {
-        reason = µb.abpFilters.matchStringExactType(
+        reason = µb.netFilteringEngine.matchStringExactType(
             pageDetails,
             requestURL,
             'popup',

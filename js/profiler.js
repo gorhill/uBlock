@@ -40,12 +40,15 @@ var quickProfiler = (function() {
         prompt = s || '';
         tstart = timer.now();
     };
-    var stop = function() {
+    var stop = function(period) {
+        if ( period === undefined ) {
+            period = 10000;
+        }
         var now = timer.now();
         count += 1;
         time += (now - tstart);
-        if ( (now - lastlog) > 10000 ) {
-            console.log('µBlock > %s: %s ms (%d samples)', prompt, avg().toFixed(3), count);
+        if ( (now - lastlog) >= period ) {
+            console.log('µBlock> %s: %s ms (%d samples)', prompt, avg().toFixed(3), count);
             lastlog = now;
         }
     };

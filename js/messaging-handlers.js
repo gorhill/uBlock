@@ -121,7 +121,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
         case 'retrieveDomainCosmeticSelectors':
             if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-                response = µb.abpHideFilters.retrieveDomainSelectors(request);
+                response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
             }
             break;
 
@@ -162,12 +162,12 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
         case 'retrieveGenericCosmeticSelectors':
             if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-                response = µb.abpHideFilters.retrieveGenericSelectors(request);
+                response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(request);
             }
             break;
 
         case 'injectedSelectors':
-            µb.abpHideFilters.addToSelectorCache(request);
+            µb.cosmeticFilteringEngine.addToSelectorCache(request);
             break;
 
         case 'blockedRequests':
@@ -250,8 +250,8 @@ var getLists = function(callback) {
         available: null,
         current: µb.remoteBlacklists,
         cosmetic: µb.userSettings.parseAllABPHideFilters,
-        netFilterCount: µb.abpFilters.getFilterCount(),
-        cosmeticFilterCount: µb.abpHideFilters.getFilterCount(),
+        netFilterCount: µb.netFilteringEngine.getFilterCount(),
+        cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         autoUpdate: µb.userSettings.autoUpdate,
         userFiltersPath: µb.userFiltersPath,
         cache: null

@@ -24,12 +24,19 @@
 
 /******************************************************************************/
 
-µBlock.abpHideFilters = (function(){
+µBlock.cosmeticFilteringEngine = (function(){
 
 
 /******************************************************************************/
 
 var µb = µBlock;
+
+/******************************************************************************/
+
+// Could be replaced with encodeURIComponent/decodeURIComponent,
+// which seems faster on Firefox.
+var encode = JSON.stringify;
+var decode = JSON.parse;
 
 /******************************************************************************/
 /*
@@ -86,6 +93,16 @@ FilterPlain.prototype.retrieve = function(s, out) {
     }
 };
 
+FilterPlain.prototype.fid = '#';
+
+FilterPlain.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlain.fromSelfie = function(s) {
+    return new FilterPlain(s);
+};
+
 /******************************************************************************/
 
 // Id- and class-based filters with extra selector stuff following.
@@ -102,6 +119,50 @@ FilterPlainMore.prototype.retrieve = function(s, out) {
     if ( s === this.s.slice(0, s.length) ) {
         out.push(this.s);
     }
+};
+
+FilterPlainMore.prototype.fid = '#+';
+
+FilterPlainMore.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainMore.fromSelfie = function(s) {
+    return new FilterPlainMore(s);
+};
+
+/******************************************************************************/
+
+var FilterBucket = function(a, b) {
+    this.f = null;
+    this.filters = [];
+    if ( a !== undefined ) {
+        this.filters[0] = a;
+        if ( b !== undefined ) {
+            this.filters[1] = b;
+        }
+    }
+};
+
+FilterBucket.prototype.add = function(a) {
+    this.filters.push(a);
+};
+
+FilterBucket.prototype.retrieve = function(s, out) {
+    var i = this.filters.length;
+    while ( i-- ) {
+        this.filters[i].retrieve(s, out);
+    }
+};
+
+FilterBucket.prototype.fid = '[]';
+
+FilterBucket.prototype.toSelfie = function() {
+    return this.filters.length.toString();
+};
+
+FilterBucket.fromSelfie = function() {
+    return new FilterBucket();
 };
 
 /******************************************************************************/
@@ -127,6 +188,17 @@ FilterHostname.prototype.retrieve = function(hostname, out) {
     }
 };
 
+FilterHostname.prototype.fid = 'h';
+
+FilterHostname.prototype.toSelfie = function() {
+    return encode(this.s) + '\t' + this.hostname;
+};
+
+FilterHostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterHostname(decode(s.slice(0, pos)), s.slice(pos + 1));
+};
+
 /******************************************************************************/
 
 // Any selector specific to an entity
@@ -144,28 +216,15 @@ FilterEntity.prototype.retrieve = function(entity, out) {
     }
 };
 
-/******************************************************************************/
-/******************************************************************************/
+FilterEntity.prototype.fid = 'e';
 
-// TODO: evaluate the gain (if any) from avoiding the use of an array for when
-// there are only two filters (or three, etc.). I suppose there is a specific
-// number of filters below which using an array is more of an overhead than
-// using a couple of property members.
-// i.e. FilterBucket2, FilterBucket3, FilterBucketN.
-
-var FilterBucket = function(a, b) {
-    this.filters = [a, b];
+FilterEntity.prototype.toSelfie = function() {
+    return encode(this.s) + '\t' + this.entity;
 };
 
-FilterBucket.prototype.add = function(a) {
-    this.filters.push(a);
-};
-
-FilterBucket.prototype.retrieve = function(s, out) {
-    var i = this.filters.length;
-    while ( i-- ) {
-        this.filters[i].retrieve(s, out);
-    }
+FilterEntity.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterEntity(decode(s.slice(0, pos)), s.slice(pos + 1));
 };
 
 /******************************************************************************/
@@ -419,6 +478,7 @@ FilterContainer.prototype.reset = function() {
     this.hostnameDonthide = {};
     this.entityHide = {};
     this.entityDonthide = {};
+
     // permanent
     // [class], [id]
     this.lowGenericFilters = {};
@@ -436,11 +496,12 @@ FilterContainer.prototype.reset = function() {
     this.highMediumGenericDonthideCount = 0;
 
     // everything else
-    this.highHighGenericHide = [];
-    this.highHighGenericDonthide = [];
+    this.highHighGenericHide = '';
+    this.highHighGenericDonthide = '';
     this.highHighGenericHideCount = 0;
     this.highHighGenericDonthideCount = 0;
 
+    // hostname, entity-based filters
     this.hostnameFilters = {};
     this.entityFilters = {};
 };
@@ -701,6 +762,120 @@ FilterContainer.prototype.freeze = function() {
 
     //histogram('lowGenericFilters', this.lowGenericFilters);
     //histogram('hostnameFilters', this.hostnameFilters);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.toSelfie = function() {
+    var selfieFromDict = function(dict) {
+        var selfie = [];
+        var bucket, ff, n, i, f;
+        for ( var k in dict ) {
+            if ( dict.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            // We need to encode the key because there could be a `\n`
+            // character in it, which would trip the code at parse time.
+            selfie.push('k\t' + encode(k));
+            bucket = dict[k];
+            selfie.push(bucket.fid + '\t' + bucket.toSelfie());
+            if ( bucket.fid !== '[]' ) {
+                continue;
+            }
+            ff = bucket.filters;
+            n = ff.length;
+            for ( i = 0; i < n; i++ ) {
+                f = ff[i];
+                selfie.push(f.fid + '\t' + f.toSelfie());
+            }
+        }
+        return selfie.join('\n');
+    };
+
+    return {
+        acceptedCount: this.acceptedCount,
+        duplicateCount: this.duplicateCount,
+        hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
+        entitySpecificFilters: selfieFromDict(this.entityFilters),
+        lowGenericFilters: selfieFromDict(this.lowGenericFilters),
+        highLowGenericHide: this.highLowGenericHide,
+        highLowGenericDonthide: this.highLowGenericDonthide,
+        highLowGenericHideCount: this.highLowGenericHideCount,
+        highLowGenericDonthideCount: this.highLowGenericDonthideCount,
+        highMediumGenericHide: this.highMediumGenericHide,
+        highMediumGenericDonthide: this.highMediumGenericDonthide,
+        highMediumGenericHideCount: this.highMediumGenericHideCount,
+        highMediumGenericDonthideCount: this.highMediumGenericDonthideCount,
+        highHighGenericHide: this.highHighGenericHide,
+        highHighGenericDonthide: this.highHighGenericDonthide,
+        highHighGenericHideCount: this.highHighGenericHideCount,
+        highHighGenericDonthideCount: this.highHighGenericDonthideCount
+    };
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.fromSelfie = function(selfie) {
+    var factories = {
+        '[]': FilterBucket,
+         '#': FilterPlain,
+        '#+': FilterPlainMore,
+         'h': FilterHostname,
+         'e': FilterEntity
+    };
+
+    var dictFromSelfie = function(selfie) {
+        var dict = {};
+        var dictKey;
+        var bucket = null;
+        var rawText = selfie;
+        var rawEnd = rawText.length;
+        var lineBeg = 0, lineEnd;
+        var line, pos, what, factory;
+        while ( lineBeg < rawEnd ) {
+            lineEnd = rawText.indexOf('\n', lineBeg);
+            if ( lineEnd < 0 ) {
+                lineEnd = rawEnd;
+            }
+            line = rawText.slice(lineBeg, lineEnd);
+            lineBeg = lineEnd + 1;
+            pos = line.indexOf('\t');
+            what = line.slice(0, pos);
+            if ( what === 'k' ) {
+                dictKey = decode(line.slice(pos + 1));
+                bucket = null;
+                continue;
+            }
+            factory = factories[what];
+            if ( bucket === null ) {
+                bucket = dict[dictKey] = factory.fromSelfie(line.slice(pos + 1));
+                continue;
+            }
+            // When token key is reused, it can't be anything
+            // else than FilterBucket
+            bucket.add(factory.fromSelfie(line.slice(pos + 1)));
+        }
+        return dict;
+    };
+
+    this.frozen = true;
+    this.acceptedCount = selfie.acceptedCount;
+    this.duplicateCount = selfie.duplicateCount;
+    this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
+    this.entityFilters = dictFromSelfie(selfie.entitySpecificFilters);
+    this.lowGenericFilters = dictFromSelfie(selfie.lowGenericFilters);
+    this.highLowGenericHide = selfie.highLowGenericHide;
+    this.highLowGenericDonthide = selfie.highLowGenericDonthide;
+    this.highLowGenericHideCount = selfie.highLowGenericHideCount;
+    this.highLowGenericDonthideCount = selfie.highLowGenericDonthideCount;
+    this.highMediumGenericHide = selfie.highMediumGenericHide;
+    this.highMediumGenericDonthide = selfie.highMediumGenericDonthide;
+    this.highMediumGenericHideCount = selfie.highMediumGenericHideCount;
+    this.highMediumGenericDonthideCount = selfie.highMediumGenericDonthideCount;
+    this.highHighGenericHide = selfie.highHighGenericHide;
+    this.highHighGenericDonthide = selfie.highHighGenericDonthide;
+    this.highHighGenericHideCount = selfie.highHighGenericHideCount;
+    this.highHighGenericDonthideCount = selfie.highHighGenericDonthideCount;
 };
 
 /******************************************************************************/

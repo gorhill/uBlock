@@ -19,6 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* jshint bitwise: false */
+/* global µBlock */
+
 /******************************************************************************/
 
 µBlock.LiquidDict = (function() {
@@ -94,12 +97,20 @@ LiquidDict.prototype.makeKey = function(word) {
     if ( len > 255 ) {
         len = 255;
     }
-    var i = len >> 2;
+    var i8 = len >>> 3;
+    var i4 = len >>> 2;
+    var i2 = len >>> 1;
+
+    // Be sure the msb is not set, this will guarantee a valid unicode 
+    // character (because 0xD800-0xDFFF).
     return String.fromCharCode(
-        (word.charCodeAt(    0) & 0x03) << 14 |
-        (word.charCodeAt(    i) & 0x03) << 12 |
-        (word.charCodeAt(  i+i) & 0x03) << 10 |
-        (word.charCodeAt(i+i+i) & 0x03) <<  8 |
+        (word.charCodeAt(      i8) & 0x01) << 14 |
+        (word.charCodeAt(   i4   ) & 0x01) << 13 |
+        (word.charCodeAt(   i4+i8) & 0x01) << 12 |
+        (word.charCodeAt(i2      ) & 0x01) << 11 |
+        (word.charCodeAt(i2   +i8) & 0x01) << 10 |
+        (word.charCodeAt(i2+i4   ) & 0x01) <<  9 |
+        (word.charCodeAt(i2+i4+i8) & 0x01) <<  8 ,
         len
     );
 };
@@ -183,6 +194,26 @@ LiquidDict.prototype.reset = function() {
     this.count = 0;
     this.bucketCount = 0;
     this.frozenBucketCount = 0;
+};
+
+/******************************************************************************/
+
+LiquidDict.prototype.toSelfie = function() {
+    return {
+        count: this.count,
+        bucketCount: this.bucketCount,
+        frozenBucketCount: this.frozenBucketCount,
+        dict: this.dict
+    };
+};
+
+/******************************************************************************/
+
+LiquidDict.prototype.fromSelfie = function(selfie) {
+    this.count = selfie.count;
+    this.bucketCount = selfie.bucketCount;
+    this.frozenBucketCount = selfie.frozenBucketCount;
+    this.dict = selfie.dict;
 };
 
 /******************************************************************************/

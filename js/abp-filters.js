@@ -24,7 +24,7 @@
 
 /******************************************************************************/
 
-µBlock.abpFilters = (function(){
+µBlock.netFilteringEngine = (function(){
 
 /******************************************************************************/
 
@@ -137,6 +137,19 @@ var histogram = function(label, categories) {
     console.log('\tTotal buckets count: %d', total);
 };
 */
+/******************************************************************************/
+
+// Could be replaced with encodeURIComponent/decodeURIComponent,
+// which seems faster on Firefox.
+var encode = JSON.stringify;
+var decode = JSON.parse;
+
+var cachedParseInt = parseInt;
+
+var atoi = function(s) {
+    return cachedParseInt(s, 10);
+};
+
 /*******************************************************************************
 
 Filters family tree:
@@ -187,8 +200,20 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlain.prototype.fid = 'a';
+
 FilterPlain.prototype.toString = function() {
     return this.s;
+};
+
+FilterPlain.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.tokenBeg;
+};
+
+FilterPlain.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlain(s.slice(0, pos), atoi(s.slice(pos + 1)));
 };
 
 /******************************************************************************/
@@ -204,8 +229,21 @@ FilterPlainHostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlainHostname.prototype.fid = 'ah';
+
 FilterPlainHostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
+};
+
+FilterPlainHostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.tokenBeg + '\t' +
+           this.hostname;
+};
+
+FilterPlainHostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterPlainHostname(args[0], atoi(args[1]), args[2]);
 };
 
 /******************************************************************************/
@@ -218,8 +256,18 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlainPrefix0.prototype.fid = '0a';
+
 FilterPlainPrefix0.prototype.toString = function() {
     return this.s;
+};
+
+FilterPlainPrefix0.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainPrefix0.fromSelfie = function(s) {
+    return new FilterPlainPrefix0(s);
 };
 
 /******************************************************************************/
@@ -234,8 +282,20 @@ FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg, this.s.length) === this.s;
 };
 
+FilterPlainPrefix0Hostname.prototype.fid = '0ah';
+
 FilterPlainPrefix0Hostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
+};
+
+FilterPlainPrefix0Hostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.hostname;
+};
+
+FilterPlainPrefix0Hostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlainPrefix0Hostname(s.slice(0, pos), s.slice(pos + 1));
 };
 
 /******************************************************************************/
@@ -248,8 +308,18 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
+FilterPlainPrefix1.prototype.fid = '1a';
+
 FilterPlainPrefix1.prototype.toString = function() {
     return this.s;
+};
+
+FilterPlainPrefix1.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainPrefix1.fromSelfie = function(s) {
+    return new FilterPlainPrefix1(s);
 };
 
 /******************************************************************************/
@@ -264,8 +334,20 @@ FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
+FilterPlainPrefix1Hostname.prototype.fid = '1ah';
+
 FilterPlainPrefix1Hostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
+};
+
+FilterPlainPrefix1Hostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.hostname;
+};
+
+FilterPlainPrefix1Hostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlainPrefix1Hostname(s.slice(0, pos), s.slice(pos + 1));
 };
 
 /******************************************************************************/
@@ -278,8 +360,18 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
     return url.slice(0, this.s.length) === this.s;
 };
 
+FilterPlainLeftAnchored.prototype.fid = '|a';
+
 FilterPlainLeftAnchored.prototype.toString = function() {
     return '|' + this.s;
+};
+
+FilterPlainLeftAnchored.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainLeftAnchored.fromSelfie = function(s) {
+    return new FilterPlainLeftAnchored(s);
 };
 
 /******************************************************************************/
@@ -294,8 +386,20 @@ FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
            url.slice(0, this.s.length) === this.s;
 };
 
+FilterPlainLeftAnchoredHostname.prototype.fid = '|ah';
+
 FilterPlainLeftAnchoredHostname.prototype.toString = function() {
     return '|' + this.s + '$domain=' + this.hostname;
+};
+
+FilterPlainLeftAnchoredHostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.hostname;
+};
+
+FilterPlainLeftAnchoredHostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlainLeftAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
 };
 
 /******************************************************************************/
@@ -308,8 +412,18 @@ FilterPlainRightAnchored.prototype.match = function(url) {
     return url.slice(-this.s.length) === this.s;
 };
 
+FilterPlainRightAnchored.prototype.fid = 'a|';
+
 FilterPlainRightAnchored.prototype.toString = function() {
     return this.s + '|';
+};
+
+FilterPlainRightAnchored.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainRightAnchored.fromSelfie = function(s) {
+    return new FilterPlainRightAnchored(s);
 };
 
 /******************************************************************************/
@@ -324,8 +438,20 @@ FilterPlainRightAnchoredHostname.prototype.match = function(url) {
            url.slice(-this.s.length) === this.s;
 };
 
+FilterPlainRightAnchoredHostname.prototype.fid = 'a|h';
+
 FilterPlainRightAnchoredHostname.prototype.toString = function() {
     return this.s + '|$domain=' + this.hostname;
+};
+
+FilterPlainRightAnchoredHostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.hostname;
+};
+
+FilterPlainRightAnchoredHostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlainRightAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
 };
 
 /******************************************************************************/
@@ -335,11 +461,10 @@ FilterPlainRightAnchoredHostname.prototype.toString = function() {
 //   http://jsperf.com/regexp-vs-indexof-abp-miss/3
 //   http://jsperf.com/regexp-vs-indexof-abp-hit/3
 
-var FilterSingleWildcard = function(s, tokenBeg) {
+var FilterSingleWildcard = function(lSegment, rSegment, tokenBeg) {
     this.tokenBeg = tokenBeg;
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
 };
 
 FilterSingleWildcard.prototype.match = function(url, tokenBeg) {
@@ -348,17 +473,29 @@ FilterSingleWildcard.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcard.prototype.fid = '*';
+
 FilterSingleWildcard.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment;
 };
 
+FilterSingleWildcard.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment + '\t' +
+           this.tokenBeg;
+};
+
+FilterSingleWildcard.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterSingleWildcard(args[0], args[1], atoi(args[2]));
+};
+
 /******************************************************************************/
 
-var FilterSingleWildcardHostname = function(s, tokenBeg, hostname) {
+var FilterSingleWildcardHostname = function(lSegment, rSegment, tokenBeg, hostname) {
     this.tokenBeg = tokenBeg;
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
     this.hostname = hostname;
 };
 
@@ -369,16 +506,29 @@ FilterSingleWildcardHostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardHostname.prototype.fid = '*h';
+
 FilterSingleWildcardHostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
 };
 
+FilterSingleWildcardHostname.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment + '\t' +
+           this.tokenBeg + '\t' +
+           this.hostname;
+};
+
+FilterSingleWildcardHostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterSingleWildcardHostname(args[0], args[1], atoi(args[2]), args[3]);
+};
+
 /******************************************************************************/
 
-var FilterSingleWildcardPrefix0 = function(s) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardPrefix0 = function(lSegment, rSegment) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
 };
 
 FilterSingleWildcardPrefix0.prototype.match = function(url, tokenBeg) {
@@ -386,16 +536,27 @@ FilterSingleWildcardPrefix0.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardPrefix0.prototype.fid = '0*';
+
 FilterSingleWildcardPrefix0.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment;
 };
 
+FilterSingleWildcardPrefix0.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment;
+};
+
+FilterSingleWildcardPrefix0.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterSingleWildcardPrefix0(s.slice(0, pos), s.slice(pos + 1));
+};
+
 /******************************************************************************/
 
-var FilterSingleWildcardPrefix0Hostname = function(s, hostname) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardPrefix0Hostname = function(lSegment, rSegment, hostname) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
     this.hostname = hostname;
 };
 
@@ -405,21 +566,28 @@ FilterSingleWildcardPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardPrefix0Hostname.prototype.fid = '0*h';
+
 FilterSingleWildcardPrefix0Hostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
 };
 
+FilterSingleWildcardPrefix0Hostname.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment + '\t' +
+           this.hostname;
+};
+
+FilterSingleWildcardPrefix0Hostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterSingleWildcardPrefix0Hostname(args[0], args[1], args[2]);
+};
+
 /******************************************************************************/
 
-// With a single wildcard, regex is not optimal.
-// See:
-//   http://jsperf.com/regexp-vs-indexof-abp-miss/3
-//   http://jsperf.com/regexp-vs-indexof-abp-hit/3
-
-var FilterSingleWildcardLeftAnchored = function(s) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardLeftAnchored = function(lSegment, rSegment) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
 };
 
 FilterSingleWildcardLeftAnchored.prototype.match = function(url) {
@@ -427,16 +595,27 @@ FilterSingleWildcardLeftAnchored.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardLeftAnchored.prototype.fid = '|*';
+
 FilterSingleWildcardLeftAnchored.prototype.toString = function() {
     return '|' + this.lSegment + '*' + this.rSegment;
 };
 
+FilterSingleWildcardLeftAnchored.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment;
+};
+
+FilterSingleWildcardLeftAnchored.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterSingleWildcardLeftAnchored(s.slice(0, pos), s.slice(pos + 1));
+};
+
 /******************************************************************************/
 
-var FilterSingleWildcardLeftAnchoredHostname = function(s, hostname) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardLeftAnchoredHostname = function(lSegment, rSegment, hostname) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
     this.hostname = hostname;
 };
 
@@ -446,21 +625,28 @@ FilterSingleWildcardLeftAnchoredHostname.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
+FilterSingleWildcardLeftAnchoredHostname.prototype.fid = '|*h';
+
 FilterSingleWildcardLeftAnchoredHostname.prototype.toString = function() {
     return '|' + this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
 };
 
+FilterSingleWildcardLeftAnchoredHostname.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment + '\t' +
+           this.hostname;
+};
+
+FilterSingleWildcardLeftAnchoredHostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterSingleWildcardLeftAnchoredHostname(args[0], args[1], args[2]);
+};
+
 /******************************************************************************/
 
-// With a single wildcard, regex is not optimal.
-// See:
-//   http://jsperf.com/regexp-vs-indexof-abp-miss/3
-//   http://jsperf.com/regexp-vs-indexof-abp-hit/3
-
-var FilterSingleWildcardRightAnchored = function(s) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardRightAnchored = function(lSegment, rSegment) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
 };
 
 FilterSingleWildcardRightAnchored.prototype.match = function(url) {
@@ -468,16 +654,27 @@ FilterSingleWildcardRightAnchored.prototype.match = function(url) {
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
 
+FilterSingleWildcardRightAnchored.prototype.fid = '*|';
+
 FilterSingleWildcardRightAnchored.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '|';
 };
 
+FilterSingleWildcardRightAnchored.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment;
+};
+
+FilterSingleWildcardRightAnchored.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterSingleWildcardRightAnchored(s.slice(0, pos), s.slice(pos + 1));
+};
+
 /******************************************************************************/
 
-var FilterSingleWildcardRightAnchoredHostname = function(s, hostname) {
-    var wcOffset = s.indexOf('*');
-    this.lSegment = s.slice(0, wcOffset);
-    this.rSegment = s.slice(wcOffset + 1);
+var FilterSingleWildcardRightAnchoredHostname = function(lSegment, rSegment, hostname) {
+    this.lSegment = lSegment;
+    this.rSegment = rSegment;
     this.hostname = hostname;
 };
 
@@ -487,8 +684,21 @@ FilterSingleWildcardRightAnchoredHostname.prototype.match = function(url) {
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
 
+FilterSingleWildcardRightAnchoredHostname.prototype.fid = '*|h';
+
 FilterSingleWildcardRightAnchoredHostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '|$domain=' + this.hostname;
+};
+
+FilterSingleWildcardRightAnchoredHostname.prototype.toSelfie = function() {
+    return this.lSegment + '\t' +
+           this.rSegment + '\t' +
+           this.hostname;
+};
+
+FilterSingleWildcardRightAnchoredHostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterSingleWildcardRightAnchoredHostname(args[0], args[1], args[2]);
 };
 
 /******************************************************************************/
@@ -509,8 +719,20 @@ FilterManyWildcards.prototype.match = function(url, tokenBeg) {
     return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
+FilterManyWildcards.prototype.fid = '*+';
+
 FilterManyWildcards.prototype.toString = function() {
     return this.s;
+};
+
+FilterManyWildcards.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.tokenBeg;
+};
+
+FilterManyWildcards.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterManyWildcards(s.slice(0, pos), atoi(s.slice(pos + 1)));
 };
 
 /******************************************************************************/
@@ -527,8 +749,67 @@ FilterManyWildcardsHostname.prototype.match = function(url, tokenBeg) {
            this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
+FilterManyWildcardsHostname.prototype.fid = '*+h';
+
 FilterManyWildcardsHostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
+};
+
+FilterManyWildcardsHostname.prototype.toSelfie = function() {
+    return this.s + '\t' +
+           this.tokenBeg + '\t' +
+           this.hostname;
+};
+
+FilterManyWildcardsHostname.fromSelfie = function(s) {
+    var args = s.split('\t');
+    return new FilterManyWildcardsHostname(args[0], atoi(args[1]), args[2]);
+};
+
+/******************************************************************************/
+
+var FilterBucket = function(a, b) {
+    this.f = null;
+    this.filters = [];
+    if ( a !== undefined ) {
+        this.filters[0] = a;
+        if ( b !== undefined ) {
+            this.filters[1] = b;
+        }
+    }
+};
+
+FilterBucket.prototype.add = function(a) {
+    this.filters.push(a);
+};
+
+FilterBucket.prototype.match = function(url, tokenBeg) {
+    var filters = this.filters;
+    var i = filters.length;
+    while ( i-- ) {
+        if ( filters[i].match(url, tokenBeg) !== false ) {
+            this.f = filters[i];
+            return true;
+        }
+    }
+    return false;
+};
+
+FilterBucket.prototype.fid = '[]';
+
+FilterBucket.prototype.toString = function() {
+    if ( this.f !== null ) {
+        return this.f.toString();
+    }
+    return '';
+};
+
+FilterBucket.prototype.toSelfie = function() {
+    return this.filters.length.toString();
+};
+
+FilterBucket.fromSelfie = function() {
+    return new FilterBucket();
 };
 
 /******************************************************************************/
@@ -536,20 +817,22 @@ FilterManyWildcardsHostname.prototype.toString = function() {
 var makeFilter = function(details, tokenBeg) {
     var s = details.f;
     var wcOffset = s.indexOf('*');
-    if ( wcOffset > 0 ) {
-        if ( (/\*[^*]\*/).test(s) ) {
+    if ( wcOffset !== -1 ) {
+        if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
             return details.anchor === 0 ? new FilterManyWildcards(s, tokenBeg) : null;
         }
+        var lSegment = s.slice(0, wcOffset);
+        var rSegment = s.slice(wcOffset + 1);
         if ( details.anchor < 0 ) {
-            return new FilterSingleWildcardLeftAnchored(s);
+            return new FilterSingleWildcardLeftAnchored(lSegment, rSegment);
         }
         if ( details.anchor > 0 ) {
-            return new FilterSingleWildcardRightAnchored(s);
+            return new FilterSingleWildcardRightAnchored(lSegment, rSegment);
         }
         if ( tokenBeg === 0 ) {
-            return new FilterSingleWildcardPrefix0(s);
+            return new FilterSingleWildcardPrefix0(lSegment, rSegment);
         }
-        return new FilterSingleWildcard(s, tokenBeg);
+        return new FilterSingleWildcard(lSegment, rSegment, tokenBeg);
     }
     if ( details.anchor < 0 ) {
         return new FilterPlainLeftAnchored(s);
@@ -571,20 +854,22 @@ var makeFilter = function(details, tokenBeg) {
 var makeHostnameFilter = function(details, tokenBeg, hostname) {
     var s = details.f;
     var wcOffset = s.indexOf('*');
-    if ( wcOffset > 0 ) {
-        if ( (/\*[^*]\*/).test(s) ) {
+    if ( wcOffset !== -1 ) {
+        if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
             return details.anchor === 0 ? new FilterManyWildcardsHostname(s, tokenBeg, hostname) : null;
         }
+        var lSegment = s.slice(0, wcOffset);
+        var rSegment = s.slice(wcOffset + 1);
         if ( details.anchor < 0 ) {
-            return new FilterSingleWildcardLeftAnchoredHostname(s, hostname);
+            return new FilterSingleWildcardLeftAnchoredHostname(lSegment, rSegment, hostname);
         }
         if ( details.anchor > 0 ) {
-            return new FilterSingleWildcardRightAnchoredHostname(s, hostname);
+            return new FilterSingleWildcardRightAnchoredHostname(lSegment, rSegment, hostname);
         }
         if ( tokenBeg === 0 ) {
-            return new FilterSingleWildcardPrefix0Hostname(s, hostname);
+            return new FilterSingleWildcardPrefix0Hostname(lSegment, rSegment, hostname);
         }
-        return new FilterSingleWildcardHostname(s, tokenBeg, hostname);
+        return new FilterSingleWildcardHostname(lSegment, rSegment, tokenBeg, hostname);
     }
     if ( details.anchor < 0 ) {
         return new FilterPlainLeftAnchoredHostname(s, hostname);
@@ -613,6 +898,7 @@ var badTokens = {
     'com': true,
     'http': true,
     'https': true,
+    'icon': true,
     'images': true,
     'img': true,
     'js': true,
@@ -661,6 +947,7 @@ var trimChar = function(s, c) {
     return s;
 };
 
+/******************************************************************************/
 /******************************************************************************/
 
 var FilterParser = function() {
@@ -783,6 +1070,19 @@ FilterParser.prototype.parse = function(s) {
         s = s.slice(2);
     }
 
+    // options
+    var pos = s.indexOf('$');
+    if ( pos > 0 ) {
+        this.fopts = s.slice(pos + 1);
+        s = s.slice(0, pos);
+    }
+
+    // regex? (not supported)
+    if ( s.charAt(0) === '/' && s.slice(-1) === '/' ) {
+        this.unsupported = true;
+        return this;
+    }
+
     // hostname anchoring
     if ( s.slice(0, 2) === '||' ) {
         this.hostname = true;
@@ -793,13 +1093,6 @@ FilterParser.prototype.parse = function(s) {
     if ( s.charAt(0) === '|' ) {
         this.anchor = -1;
         s = s.slice(1);
-    }
-
-    // options
-    var pos = s.indexOf('$');
-    if ( pos > 0 ) {
-        this.fopts = s.slice(pos + 1);
-        s = s.slice(0, pos);
     }
 
     // right-anchored
@@ -859,37 +1152,6 @@ FilterParser.prototype.parse = function(s) {
 /******************************************************************************/
 /******************************************************************************/
 
-var FilterBucket = function(a, b) {
-    this.filters = [a, b];
-    this.f = null;
-};
-
-FilterBucket.prototype.add = function(a) {
-    this.filters.push(a);
-};
-
-FilterBucket.prototype.match = function(url, tokenBeg) {
-    var filters = this.filters;
-    var i = filters.length;
-    while ( i-- ) {
-        if ( filters[i].match(url, tokenBeg) !== false ) {
-            this.f = filters[i];
-            return true;
-        }
-    }
-    return false;
-};
-
-FilterBucket.prototype.toString = function() {
-    if ( this.f !== null ) {
-        return this.f.toString();
-    }
-    return '';
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
     this.buckets = new Array(8);
@@ -908,6 +1170,7 @@ FilterContainer.prototype.reset = function() {
     this.frozen = false;
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
+    this.rejectedCount = 0;
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.duplicateCount = 0;
@@ -927,6 +1190,136 @@ FilterContainer.prototype.freeze = function() {
     this.duplicates = {};
     this.filterParser.reset();
     this.frozen = true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.toSelfie = function() {
+    var categoryToSelfie = function(dict) {
+        var selfie = [];
+        var bucket, ff, n, i, f;
+        for ( var k in dict ) {
+            if ( dict.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            // We need to encode the key because there could be a `\n` or '\t'
+            // character in it, which would trip the code at parse time.
+            selfie.push('k2\t' + encode(k));
+            bucket = dict[k];
+            selfie.push(bucket.fid + '\t' + bucket.toSelfie());
+            if ( bucket.fid !== '[]' ) {
+                continue;
+            }
+            ff = bucket.filters;
+            n = ff.length;
+            for ( i = 0; i < n; i++ ) {
+                f = ff[i];
+                selfie.push(f.fid + '\t' + f.toSelfie());
+            }
+        }
+        return selfie.join('\n');
+    };
+
+    var categoriesToSelfie = function(dict) {
+        var selfie = [];
+        for ( var k in dict ) {
+            if ( dict.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            // We need to encode the key because there could be a `\n` or '\t'
+            // character in it, which would trip the code at parse time.
+            selfie.push('k1\t' + encode(k));
+            selfie.push(categoryToSelfie(dict[k]));
+        }
+        return selfie.join('\n');
+    };
+
+    return {
+        processedFilterCount: this.processedFilterCount,
+        acceptedCount: this.acceptedCount,
+        rejectedCount: this.rejectedCount,
+        allowFilterCount: this.allowFilterCount,
+        blockFilterCount: this.blockFilterCount,
+        duplicateCount: this.duplicateCount,
+        categories: categoriesToSelfie(this.categories),
+        blockedAnyPartyHostnames: this.blockedAnyPartyHostnames.toSelfie(),
+        blocked3rdPartyHostnames: this.blocked3rdPartyHostnames.toSelfie()
+    };
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.fromSelfie = function(selfie) {
+    this.frozen = true;
+    this.processedFilterCount = selfie.processedFilterCount;
+    this.acceptedCount = selfie.acceptedCount;
+    this.rejectedCount = selfie.rejectedCount;
+    this.allowFilterCount = selfie.allowFilterCount;
+    this.blockFilterCount = selfie.blockFilterCount;
+    this.duplicateCount = selfie.duplicateCount;
+    this.blockedAnyPartyHostnames.fromSelfie(selfie.blockedAnyPartyHostnames);
+    this.blocked3rdPartyHostnames.fromSelfie(selfie.blocked3rdPartyHostnames);
+
+    var factories = {
+         '[]': FilterBucket,
+          'a': FilterPlain,
+         'ah': FilterPlainHostname,
+         '0a': FilterPlainPrefix0,
+        '0ah': FilterPlainPrefix0Hostname,
+         '1a': FilterPlainPrefix1,
+        '1ah': FilterPlainPrefix1Hostname,
+         '|a': FilterPlainLeftAnchored,
+        '|ah': FilterPlainLeftAnchoredHostname,
+         'a|': FilterPlainRightAnchored,
+        'a|h': FilterPlainRightAnchoredHostname,
+          '*': FilterSingleWildcard,
+         '*h': FilterSingleWildcardHostname,
+         '0*': FilterSingleWildcardPrefix0,
+        '0*h': FilterSingleWildcardPrefix0Hostname,
+         '|*': FilterSingleWildcardLeftAnchored,
+        '|*h': FilterSingleWildcardLeftAnchoredHostname,
+         '*|': FilterSingleWildcardRightAnchored,
+        '*|h': FilterSingleWildcardRightAnchoredHostname,
+         '*+': FilterManyWildcards,
+        '*+h': FilterManyWildcardsHostname
+    };
+
+    var catKey, tokenKey;
+    var dict = this.categories, subdict;
+    var bucket = null;
+    var rawText = selfie.categories;
+    var rawEnd = rawText.length;
+    var lineBeg = 0, lineEnd;
+    var line, pos, what, factory;
+    while ( lineBeg < rawEnd ) {
+        lineEnd = rawText.indexOf('\n', lineBeg);
+        if ( lineEnd < 0 ) {
+            lineEnd = rawEnd;
+        }
+        line = rawText.slice(lineBeg, lineEnd);
+        lineBeg = lineEnd + 1;
+        pos = line.indexOf('\t');
+        what = line.slice(0, pos);
+        if ( what === 'k1' ) {
+            catKey = decode(line.slice(pos + 1));
+            subdict = dict[catKey] = {};
+            bucket = null;
+            continue;
+        }
+        if ( what === 'k2' ) {
+            tokenKey = decode(line.slice(pos + 1));
+            bucket = null;
+            continue;
+        }
+        factory = factories[what];
+        if ( bucket === null ) {
+            bucket = subdict[tokenKey] = factory.fromSelfie(line.slice(pos + 1));
+            continue;
+        }
+        // When token key is reused, it can't be anything
+        // else than FilterBucket
+        bucket.add(factory.fromSelfie(line.slice(pos + 1)));
+    }
 };
 
 /******************************************************************************/
@@ -989,6 +1382,13 @@ FilterContainer.prototype.add = function(s) {
 
     var parsed = this.filterParser.parse(s);
 
+    // Ignore rules with other conditions for now
+    if ( parsed.unsupported ) {
+        this.rejectedCount += 1;
+        // console.log('µBlock> abp-filter.js/FilterContainer.add(): unsupported filter "%s"', s);
+        return false;
+    }
+
     // Ignore element-hiding filters
     if ( parsed.elemHiding ) {
         return false;
@@ -1001,12 +1401,6 @@ FilterContainer.prototype.add = function(s) {
     this.duplicates[s] = true;
 
     this.processedFilterCount += 1;
-
-    // Ignore rules with other conditions for now
-    if ( parsed.unsupported ) {
-        // console.log('µBlock> abp-filter.js/FilterContainer.add(): unsupported filter "%s"', s);
-        return false;
-    }
 
     // Ignore optionless hostname rules, these will be taken care of by µBlock.
     if ( parsed.hostname && parsed.fopts === '' && parsed.action === BlockAction && reHostnameRule.test(parsed.f) ) {
@@ -1145,7 +1539,7 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
         categoryBucket[tokenKey] = filter;
         return;
     }
-    if ( filterEntry instanceof FilterBucket ) {
+    if ( filterEntry.fid === '[]' ) {
         filterEntry.add(filter);
         return;
     }

@@ -60,41 +60,6 @@
 })();
 
 /******************************************************************************/
-
-// Initialize internal state with maybe already existing tabs
-// This needs to be executed once, hence it has its own scope, which will
-// allow the code to be flushed once completed.
-
-(function(){
-    var µb = µBlock;
-    var bindToTabs = function(tabs) {
-        var scriptStart = function(tabId) {
-            var scriptEnd = function() {
-                chrome.tabs.executeScript(tabId, {
-                    file: 'js/contentscript-end.js',
-                    allFrames: true,
-                    runAt: 'document_idle'
-                });
-            };
-            chrome.tabs.executeScript(tabId, {
-                file: 'js/contentscript-start.js',
-                allFrames: true,
-                runAt: 'document_idle'
-            }, scriptEnd);
-        };
-        var i = tabs.length, tab;
-        while ( i-- ) {
-            tab = tabs[i];
-            µb.bindTabToPageStats(tab.id, tab.url);
-            // https://github.com/gorhill/uBlock/issues/129
-            scriptStart(tab.id);
-        }
-    };
-    chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
-    chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/gorhill/httpswitchboard/issues/303

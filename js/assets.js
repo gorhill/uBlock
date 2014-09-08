@@ -43,16 +43,23 @@ File system structure:
 
 /******************************************************************************/
 
+var oneSecond = 1000;
+var oneMinute = 60 * oneSecond;
+var oneHour = 60 * oneMinute;
+var oneDay = 24 * oneHour;
+
+/******************************************************************************/
+
 var repositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() {};
 var reIsExternalPath = /^https?:\/\/[a-z0-9]/;
 var reIsUserPath = /^assets\/user\//;
 var lastRepoMetaTimestamp = 0;
-var refreshRepoMetaPeriod = 6 * 60 * 60 * 1000;
+var refreshRepoMetaPeriod = 5 * oneHour;
 
 var exports = {
     autoUpdate: true,
-    autoUpdateDelay: 2 * 24 * 60 * 60 * 1000
+    autoUpdateDelay: 4 * oneDay
 };
 
 /******************************************************************************/
@@ -349,7 +356,7 @@ exports.setHomeURL = function(path, homeURL) {
             entry = metadata.entries[path] = new AssetEntry();
         }
         entry.homeURL = homeURL;
-    }
+    };
     getRepoMetadata(onRepoMetadataReady);
 };
 
@@ -548,9 +555,9 @@ var readRepoCopyAsset = function(path, callback) {
     var onCacheMetaReady = function(entries) {
         // Fetch from remote if:
         // - Auto-update enabled AND (not in cache OR in cache but obsolete)
+        var timestamp = entries[path];
         var homeURL = assetEntry.homeURL;
         if ( exports.autoUpdate && typeof homeURL === 'string' && homeURL !== '' ) {
-            var timestamp = entries[path];
             var obsolete = Date.now() - exports.autoUpdateDelay;
             if ( typeof timestamp !== 'number' || timestamp <= obsolete ) {
                 //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);

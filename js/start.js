@@ -31,36 +31,76 @@
 /******************************************************************************/
 
 var µb = µBlock;
-var bufferTime = 0 * 60 * 1000;
-var exports = {};
 
 var jobCallback = function() {
+    // Simpler to fire restart here, and safe given how far this will happen
+    // in the future.
+    restart();
+
+    // If auto-update is disabled, check again in a while.
     if ( µb.userSettings.autoUpdate !== true ) {
         return;
     }
-    // TODO: need smarter update, currently blindly reloading all.
-    µb.loadUpdatableAssets(true);
+
+    var onMetadataReady = function(metadata) {
+        // Check PSL
+        var mdEntry = metadata[µb.pslPath];
+        if ( mdEntry.repoObsolete ) {
+            // console.log('µBlock.updater> updating all updatable assets');
+            µb.loadUpdatableAssets({ update: true });
+            return;
+        }
+        // Check used filter lists
+        var lists = µb.remoteBlacklists;
+        for ( var path in lists ) {
+            if ( lists.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            if ( lists[path].off ) {
+                continue;
+            }
+            if ( metadata.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            mdEntry = metadata[path];
+            if ( mdEntry.cacheObsolete || mdEntry.repoObsolete ) {
+                // console.log('µBlock.updater> updating only filter lists');
+                µb.loadUpdatableAssets({ update: true, psl: false });
+                return;
+            }
+        }
+
+        // console.log('µBlock.updater> all is up to date');
+    };
+
+    µb.assets.metadata(onMetadataReady);
 };
 
 // https://www.youtube.com/watch?v=cIrGQD84F1g
 
 /******************************************************************************/
 
-exports.restart = function() {
+var restart = function(after) {
+    if ( after === undefined ) {
+        after = µb.nextUpdateAfter;
+    }
+
     µb.asyncJobs.add(
         'autoUpdateAssets',
         null,
         jobCallback,
-        µb.updateAssetsEvery - bufferTime,
-        true
+        after,
+        false
     );
 };
 
-exports.restart();
-
 /******************************************************************************/
 
-return exports;
+return {
+    restart: restart
+};
+
+/******************************************************************************/
 
 })();
 
