@@ -1,0 +1,270 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "settingsPageName":{
+    "message":"Cài đặt",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"Các bộ lọc bên thứ ba",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"Các bộ lọc của bạn",
+    "description":"appears as tab name in dashboard."
+  },
+  "whitelistPageName":{
+    "message":"Danh sách trắng",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"Thống kê",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"Giới thiệu",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"Nhấp chuột: vĩnh viễn vô hiệu hóa\/kích hoạt µBlock cho trang web này.\nCtrl + bấm chuột: vô hiệu hóa µBlock chỉ trên trang này.",
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"các yêu cầu bị chặn",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"Trong trang này",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"kể từ khi cài đặt",
+    "description":"English: since install"
+  },
+  "popupOr":{
+    "message":"hoặc",
+    "description":"English: or"
+  },
+  "popupTipDashboard":{
+    "message":"Bấm để mở bảng điều khiển",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Chuyển sang chế độ chọn phần tử",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Go to request log",
+    "description":"English: Go to request log"
+  },
+  "pickerCreate":{
+    "message":"Tạo",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Chọn",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Thoát",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Cosmetic filters",
+    "description":"English: Cosmetic filters"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Ẩn các phần giữ chỗ của những phần tử bị chặn",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Hiển thị số lượng yêu cầu bị chặn trên biểu tượng",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} used out of {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pAutoUpdatePrompt1":{
+    "message":"Các danh sách bộ lọc tự cập nhật.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Cập nhật bây giờ",
+    "description":"English: Update now"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Parse and enforce cosmetic filters.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Danh sách những máy chủ bị chặn",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"Áp dụng các thay đổi",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Quảng cáo",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Bảo mật",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Các tên miền độc hại",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Xã hội",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Đa chức năng",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Khu vực, ngôn ngữ",
+    "description":"English: Regions, languages"
+  },
+  "3pGroupCustom":{
+    "message":"Tuỳ chỉnh",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Một URL cho mỗi dòng. Dòng bắt đầu với &lsquo;!&rsquo;sẽ bị bỏ qua. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Áp dụng",
+    "description":"English: Apply"
+  },
+  "3pExternalListPurge":{
+    "message":"Xóa bộ nhớ đệm",
+    "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"Phiên bản mới đã sẵn sàng",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"có thể là lỗi thời",
+    "description":"English: may be obsolete"
+  },
+  "1pFormatHint":{
+    "message":"Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc Adblock Plus tương thích. Những dòng bắt đầu với &lsquo;!&rsquo; sẽ bị bỏ qua.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Nhập và thêm vào",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Xuất",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"Áp dụng các thay đổi",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"Danh sách tên các máy chủ mà µBlock sẽ bị vô hiệu. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
+    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"Nhập và thêm vào",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"Xuất",
+    "description":"English: Export"
+  },
+  "whitelistApply":{
+    "message":"Áp dụng các thay đổi",
+    "description":"English: Apply changes"
+  },
+  "logBlockedRequestsPrompt":{
+    "message":"Cho phép ghi lại những yêu cầu bị chặn",
+    "description":"English: Enable the logging of blocked requests"
+  },
+  "logBlockedRequestsHelp":{
+    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logAllowedRequestsPrompt":{
+    "message":"Cho phép ghi lại những yêu cầu không bị chặn",
+    "description":"English: Enable the logging of non-blocked requests"
+  },
+  "logAllowedRequestsHelp":{
+    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Những yêu cầu bị chặn",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Những yêu cầu được cho phép",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Loại",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Tên miền",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"Đường dẫn",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Bộ lọc",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"Không có những yêu cầu bị chặn được ghi lại cho trang này",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"Không có những yêu cầu không bị chặn được ghi lại cho trang này",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"Thay đổi",
+    "description":"English: Change log"
+  },
+  "aboutCode":{
+    "message":"Mã nguồn (GPLv3)",
+    "description":"English: Source code (GPLv3)"
+  },
+  "aboutContributors":{
+    "message":"Những người đóng góp",
+    "description":"English: Contributors"
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}
