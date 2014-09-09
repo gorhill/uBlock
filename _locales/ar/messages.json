@@ -156,8 +156,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"
-رابط واحد كل سطر. روابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها . الروابط الغير صحيحه سوف ايضاً تجاهلها .",
+    "message":"رابط واحد كل سطر. روابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها . الروابط الغير صحيحه سوف ايضاً تجاهلها .",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -213,8 +212,7 @@
     "description":"English: Enable the logging of blocked requests"
   },
   "logBlockedRequestsHelp":{
-    "message":"
-بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر.",
+    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logAllowedRequestsPrompt":{
