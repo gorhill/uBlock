@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: para ativar\/desativar permanentemente o µBlock para o site atual.\n\nCtrl+Clique: para ativar\/desativar o µBlock apenas nesta página.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Clique: para ativar\/desativar o µBlock para o site atual.\n\nCtrl+Clique: para ativar\/desativar o µBlock apenas nesta página.",
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"solicitações bloqueadas",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Atualizar agora",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Limpar todos os caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Analisar e aplicar filtros cosméticos.",

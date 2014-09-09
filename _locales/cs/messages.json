@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Kliknutí: trvale zakázat µBlock pro celý tento web.\n\nCtrl+kliknutí: zakázat µBlock pouze pro tuto stránku.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"požadavků zablokováno",
@@ -48,7 +48,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"nebo",
+    "message":"neboli",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Aktualizovat nyní",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Zpracovat a použít kosmetické filtry.",

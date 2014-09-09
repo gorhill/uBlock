@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Click: disabilita\/abilita permanentemente µBlock per questo sito.\n\nCtrl+click: disabilita µBlock solo su questa pagina.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"richieste bloccate",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Aggiorna ora",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Utilizza Adblock+ element hiding filters.",

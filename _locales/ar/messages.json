@@ -1,7 +1,7 @@
 {
   "extName":{
     "message":"µBlock",
-    "description":"اسم الاضافه"
+    "description":"extension name."
   },
   "extShortDesc":{
     "message":"وأخيراً, مانع اعلانات بكفاءه جداً عاليه على متصفحات مبنيه على نظام كروميوم. خفيف على الذاكره والمعالج",
@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"اضغط: لتعطيل\/لتشغيل الاضافه بالكامل.\n\nCtrl+click لتعطيل الاداة لصفحه فقط",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"تم منع الطلبات",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"حدث الان",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"تحليل وتطبيق فلاتر التجميليه",

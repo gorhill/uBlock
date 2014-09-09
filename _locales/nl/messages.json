@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klik op de aan\/uit-knop om <br>permanent µBlock aan en uit te schakelen<br> voor de huidge website",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"geblokkeerde verzoeken",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Nu updaten",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Parseer en pas cosmetische filters toe.",

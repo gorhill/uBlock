@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klik: Nonaktifkan\/Aktifkan µBlock di situs ini secara permanen.\n\nCtrl+klik: Nonaktifkan µBlock hanya di halaman ini.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"permintaan yang diblokir",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Perbarui sekarang",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Bersihkan semua cache",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Baca dan jalankan filter kosmetik.",
@@ -264,7 +268,7 @@
     "description":"English: Contributors"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Catatan ini harus menjadi yang terakhir",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

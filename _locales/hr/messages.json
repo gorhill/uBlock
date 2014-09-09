@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klik: trajno onemogućiti\/omogućiti µBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock samo za ovu stranicu.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"zahtjeva blokirano",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Ažuriraj odmah",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Očistiti sve cache-ove",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Raščlaniti i primijeniti estetske filtre.",

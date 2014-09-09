@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klick: avaktivera\/aktivera µBlock för denna hemsida permanent.\n\nCtrl+klick: avaktivera µBlock för endast denna sida.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"blockerade förfrågningar",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"Uppdatera nu",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Rensa alla cachar",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"Tolka och applicera kosmetiska filter.",

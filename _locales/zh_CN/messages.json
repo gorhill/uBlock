@@ -33,7 +33,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"已拦截广告",
@@ -106,6 +106,10 @@
   "3pUpdateNow":{
     "message":"立即更新",
     "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
     "message":"解析并应用Adblock+元素隐藏过滤规则。",
