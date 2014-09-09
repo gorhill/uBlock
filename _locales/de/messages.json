@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"klicke das An-\/ Ausschalter-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die aktuell geöffnete Seite.",
+    "message":"klicke das An-\/ Ausschalt-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die <i>aktuell geöffnete<\/i> Seite.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Leere alle Cache-Speicher",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
