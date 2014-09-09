@@ -35,8 +35,8 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var reExternalAsset = /^https?:\/\/[a-z0-9]+/;
-var reRepo3rdPartyAsset = /^assets\/thirdparties\/([^\/]+)/;
+var re3rdPartyExternalAsset = /^https?:\/\/[a-z0-9]+/;
+var re3rdPartyRepoAsset = /^assets\/thirdparties\/([^\/]+)/;
 
 /******************************************************************************/
 
@@ -45,7 +45,6 @@ messaging.start('3p-filters.js');
 var onMessage = function(msg) {
     switch ( msg.what ) {
         case 'loadUbiquitousBlacklistCompleted':
-            uDom('body').toggleClass('loading', false);
             renderBlacklists();
             break;
 
@@ -73,6 +72,8 @@ var renderNumber = function(value) {
 // TODO: get rid of background page dependencies
 
 var renderBlacklists = function() {
+    uDom('body').toggleClass('busy', true);
+
     var µb = getµb();
 
     // Assemble a pretty blacklist name if possible
@@ -91,7 +92,7 @@ var renderBlacklists = function() {
         if ( blacklistHref.indexOf('assets/thirdparties/') !== 0 ) {
             return '';
         }
-        var matches = reRepo3rdPartyAsset.exec(blacklistHref);
+        var matches = re3rdPartyRepoAsset.exec(blacklistHref);
         if ( matches === null || matches.length !== 2 ) {
             return '';
         }
@@ -110,12 +111,68 @@ var renderBlacklists = function() {
         return html.join('');
     };
 
-    var listStatsTemplate = chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats');
     var purgeButtontext = chrome.i18n.getMessage('3pExternalListPurge');
     var updateButtontext = chrome.i18n.getMessage('3pExternalListNew');
     var obsoleteButtontext = chrome.i18n.getMessage('3pExternalListObsolete');
+    var liTemplate = [
+        '<li class="listDetails">',
+        '<input type="checkbox" {{checked}}>',
+        ' ',
+        '<a href="{{URL}}" type="text/plain">',
+        '{{name}}',
+        '\u200E</a>',
+        '{{homeURL}}',
+        ': ',
+        '<span class="dim">',
+        chrome.i18n.getMessage('3pListsOfBlockedHostsPerListStats'),
+        '</span>'
+    ].join('');
 
-    var htmlFromBranch = function(groupKey, listKeys, lists) {
+    var htmlFromLeaf = function(listKey) {
+        var html = [];
+        var list = listDetails.available[listKey];
+        var li = liTemplate
+            .replace('{{checked}}', list.off ? '' : 'checked')
+            .replace('{{URL}}', encodeURI(listKey))
+            .replace('{{name}}', htmlFromListName(list.title, listKey))
+            .replace('{{homeURL}}', htmlFromHomeURL(listKey))
+            .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
+            .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
+        html.push(li);
+        // https://github.com/gorhill/uBlock/issues/104
+        var asset = listDetails.cache[listKey];
+        if ( asset === undefined ) {
+            return html.join('\n');
+        }
+        // Update status
+        if ( list.off !== true ) {
+            var obsolete = asset.repoObsolete ||
+                       asset.cacheObsolete ||
+                       asset.cached !== true && re3rdPartyExternalAsset.test(listKey);
+            if ( obsolete ) {
+                html.push(
+                    '&ensp;',
+                    '<span class="status obsolete">',
+                    asset.repoObsolete ? updateButtontext : obsoleteButtontext,
+                    '</span>'
+                );
+                needUpdate = true;
+            }
+        }
+        // In cache
+        if ( asset.cached ) {
+            html.push(
+                '&ensp;',
+                '<span class="status purge">',
+                purgeButtontext,
+                '</span>'
+            );
+            hasCachedContent = true;
+        }
+        return html.join('\n');
+    };
+
+    var htmlFromBranch = function(groupKey, listKeys) {
         var html = [
             '<li>',
             chrome.i18n.getMessage('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1)),
@@ -125,63 +182,10 @@ var renderBlacklists = function() {
             return html.join('');
         }
         listKeys.sort(function(a, b) {
-            return lists[a].title.localeCompare(lists[b].title);
+            return listDetails.available[a].title.localeCompare(listDetails.available[b].title);
         });
-        var listEntryTemplate = [
-            '<li class="listDetails">',
-            '<input type="checkbox" {{checked}}>',
-            ' ',
-            '<a href="{{URL}}" type="text/plain">',
-            '{{name}}',
-            '\u200E</a>',
-            '{{homeURL}}',
-            ': ',
-            '<span class="dim">',
-            listStatsTemplate,
-            '</span>'
-        ].join('');
-        var listKey, list, listEntry, entryDetails, obsolete;
         for ( var i = 0; i < listKeys.length; i++ ) {
-            listKey = listKeys[i];
-            list = lists[listKey];
-            listEntry = listEntryTemplate
-                .replace('{{checked}}', list.off ? '' : 'checked')
-                .replace('{{URL}}', encodeURI(listKey))
-                .replace('{{name}}', htmlFromListName(list.title, listKey))
-                .replace('{{homeURL}}', htmlFromHomeURL(listKey))
-                .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
-                .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
-            html.push(listEntry);
-            // https://github.com/gorhill/uBlock/issues/104
-            entryDetails = listDetails.cache[listKey];
-            if ( entryDetails === undefined ) {
-                continue;
-            }
-            // Update status
-            if ( list.off !== true ) {
-                obsolete = entryDetails.repoObsolete ||
-                           entryDetails.cacheObsolete ||
-                           entryDetails.cached !== true && reExternalAsset.test(listKey);
-                if ( obsolete ) {
-                    html.push(
-                        '&ensp;',
-                        '<span class="status obsolete">',
-                        entryDetails.repoObsolete ? updateButtontext : obsoleteButtontext,
-                        '</span>'
-                    );
-                    needUpdate = true;
-                }
-            }
-            // In cache
-            if ( entryDetails.cached ) {
-                html.push(
-                    '&ensp;',
-                    '<span class="status purge">',
-                    purgeButtontext,
-                    '</span>'
-                );
-                hasCachedContent = true;
-            }
+            html.push(htmlFromLeaf(listKeys[i]));
         }
         html.push('</ul>');
         return html.join('');
@@ -207,14 +211,15 @@ var renderBlacklists = function() {
     };
 
     var onListsReceived = function(details) {
+        // Before all, set context vars
         listDetails = details;
         cosmeticSwitch = details.cosmetic;
         needUpdate = false;
         hasCachedContent = false;
 
-        var lists = details.available;
+        // Visually split the filter lists in purpose-based groups
         var html = [];
-        var groups = groupsFromLists(lists);
+        var groups = groupsFromLists(details.available);
         var groupKey, i;
         var groupKeys = [
             'default',
@@ -228,14 +233,14 @@ var renderBlacklists = function() {
         ];
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            html.push(htmlFromBranch(groupKey, groups[groupKey], lists));
+            html.push(htmlFromBranch(groupKey, groups[groupKey]));
             delete groups[groupKey];
         }
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            html.push(htmlFromBranch(groupKey, groups[groupKey], lists));
+            html.push(htmlFromBranch(groupKey, groups[groupKey]));
             delete groups[groupKey];
         }
 
@@ -307,9 +312,10 @@ var listsContentChanged = function() {
 // This is to give a visual hint that the selection of blacklists has changed.
 
 var updateWidgets = function() {
-    uDom('#buttonApply').toggleClass('enabled', listsSelectionChanged());
-    uDom('#buttonUpdate').toggleClass('enabled', listsContentChanged());
-    uDom('#buttonPurgeAll').toggleClass('enabled', hasCachedContent);
+    uDom('#buttonApply').toggleClass('disabled', !listsSelectionChanged());
+    uDom('#buttonUpdate').toggleClass('disabled', !listsContentChanged());
+    uDom('#buttonPurgeAll').toggleClass('disabled', !hasCachedContent);
+    uDom('body').toggleClass('busy', false);
 };
 
 /******************************************************************************/
@@ -356,9 +362,9 @@ var onPurgeClicked = function() {
 /******************************************************************************/
 
 var reloadAll = function(update) {
-    // Loading may take a while when resoruces are fetched from remote
+    // Loading may take a while when resources are fetched from remote
     // servers. We do not want the user to force reload while we are reloading.
-    uDom('body').toggleClass('loading', true);
+    uDom('body').toggleClass('busy', true);
 
     // Reload blacklists
     messaging.tell({
@@ -465,7 +471,6 @@ var externalListsApplyHandler = function() {
 /******************************************************************************/
 
 uDom.onLoad(function() {
-    // Handle user interaction
     uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
     uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
     uDom('#buttonApply').on('click', buttonApplyHandler);

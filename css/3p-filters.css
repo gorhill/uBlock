@@ -2,6 +2,12 @@ ul {
     padding: 0;
     list-style-type: none;
     }
+ul#options {
+    margin-top: 0;
+    }
+ul#options li {
+    margin-bottom: 0.5em;
+    }
 ul#lists {
     margin: 0.5em 0 0 0;
     padding-__MSG_@@bidi_end_edge__: 0em;
@@ -33,40 +39,41 @@ li.listDetails > a:nth-of-type(2) {
     opacity: 0.5;
     }
 /* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button {
-    border: 1px solid transparent;
-    border-radius: 3px;
-    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
+button.custom {
     padding: 5px;
-    background-color: hsl(36, 0%, 72%);
-    background-repeat: repeat-x;
-    background-image: linear-gradient(#f2f2f2, #dddddd);
-    color: #aaa;
-    }
-button.enabled {
+    border: 1px solid transparent;
     border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
+    border-radius: 3px;
     background-color: hsl(216, 100%, 75%);
     background-image: linear-gradient(#a8cbff, #80b3ff);
+    background-repeat: repeat-x;
     color: #222;
     cursor: pointer;
     opacity: 0.8;
     }
-button.reloadAll.enabled {
+button.custom.disabled {
+    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
+    background-color: hsl(36, 0%, 72%);
+    background-image: linear-gradient(#f2f2f2, #dddddd);
+    color: #aaa;
+    pointer-events: none;
+    }
+button.custom:hover {
+    opacity: 1.0;
+    }
+button.custom.reloadAll:not(.disabled) {
     border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
     background-color: hsl(36, 100%, 75%);
     background-image: linear-gradient(#ffdca8, #ffcc7f);
     }
-button.enabled:hover {
-    opacity: 1.0;
-    }
 #buttonApply {
-    display: none;
     position: fixed;
+    display: initial;
     top: 1em;
     __MSG_@@bidi_end_edge__: 1em;
     }
-#buttonApply.enabled {
-    display: initial;
+#buttonApply.disabled {
+    display: none;
     }
 span.status {
     margin: 0;
@@ -100,7 +107,7 @@ span.obsolete {
     height: 8em;
     white-space: nowrap;
     }
-body #loadingOverlay {
+body #busyOverlay {
     position: fixed;
     top: 0;
     right: 0;
@@ -112,6 +119,6 @@ body #loadingOverlay {
     display: none;
     z-index: 1000;
     }
-body.loading #loadingOverlay {
+body.busy #busyOverlay {
     display: block;
     }
