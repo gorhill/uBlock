@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"נקה את כל זיכרוני המטמון",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{

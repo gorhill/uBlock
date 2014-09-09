@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Wyczyść całą pamięć podręczną",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
