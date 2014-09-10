@@ -107,5 +107,10 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 # Twitter Analytics needs Twitter Analytics
 @@||analytics.twitter.com^$domain=analytics.twitter.com
 
+# cnet.com needs this for video players
+# To counter `2mdn.net` in Peter Lowe's
+# To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
+@@||s0.2mdn.net/instream/*$domain=cnet.com
+
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
