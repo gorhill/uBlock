@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: a398LnSxZrgFJZxJ9dLPdA
-! Version: 201409081221
+! Checksum: J/2T0vzDisiLU3TO8rw3tg
+! Version: 201409101731
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 08 Sep 2014 12:21 UTC
+! Last modified: 10 Sep 2014 17:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -529,6 +529,7 @@ _advertentieleaderboardhome.
 ||racesport.nl^*/flash/shoptk.swf
 ||racesport.nl^*/ibanner/
 ||red.nl/images/banner_
+||rhedennieuws.nl/scripts/afb_v2.js
 ||rolhockey.be/sponsoring/
 ||rondomvoetbal.nl/images/uploads/frontpage_banners/
 ||rookmelden.nl/images/stories/banner-
@@ -972,6 +973,7 @@ nederland.fm###xttm
 vinden.nl###zoektip
 blog.nl##.ADV
 stoerejongenzzz.nl##.BolPartner_Bestsellers_PlaceHolder
+opwindend.net##.MN[style="Color: Red; Font-Weight: Bold;"]
 bokt.be##.PopupDiv
 bokt.be##.PopupScreen
 marktnet.nl##.ThumbGoogle
@@ -1157,6 +1159,7 @@ techzine.nl##a[onclick*="ADVERTORIAL"] ~ *
 mokkels.nl##a[onclick*="extern/affiliates/"]
 rijnmond.nl##a[onclick^="HitCountAjax('/Banners/"]
 dutchattraction.nl##a[onclick^="countAdClick("]
+opwindend.net##a[rel="nofollow"][target="_blank"]
 leukstespel.nl##a[target="_blank"] > img
 hln.be##a[title="Powered by Autozone.be"]
 moviemeter.nl##div[class^="banner"]

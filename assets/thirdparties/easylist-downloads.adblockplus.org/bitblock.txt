@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: WzJOc/HhTeVNzUnYPGSmDQ
-! Version: 201409081220
-! Last modified: 08 Sep 2014 12:20 UTC
+! Checksum: 2Wdo2Mg9aRsH1drByb2xhg
+! Version: 201409101730
+! Last modified: 10 Sep 2014 17:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -126,6 +126,7 @@ _vkontakte.png
 -social-icons.
 -social-icons?
 -social-linked-
+-social-linkedin.
 -social-media-
 -social-media.
 -social-post-sharer/$~stylesheet
@@ -895,6 +896,7 @@ _vkontakte.png
 /images/twitter_
 /images/youtube-
 /images/youtube_
+/img-social-
 /img/*/facebook.jpg
 /img/*/flickr.png
 /img/*/social-
@@ -1068,6 +1070,10 @@ _vkontakte.png
 /pintrest.
 /pintrest_
 /pix/Share-
+/plain/facebook-
+/plain/pinterest-
+/plain/tumblr-
+/plain/twitter-
 /pluck.js
 /pluckApps.js
 /plugins/2-click-socialmedia-buttons/*$~stylesheet
@@ -3076,6 +3082,7 @@ _youtube_small.
 ###social-side2
 ###social-sidebar
 ###social-single-margin
+###social-slideout
 ###social-slider
 ###social-slider-menu
 ###social-spotify
@@ -3817,6 +3824,7 @@ _youtube_small.
 ##.comment_share
 ##.comment_share_link
 ##.common-ui-facebook-bottom
+##.commonheader_social
 ##.connect-social-items
 ##.connect-widget-wrapper
 ##.connectBtns
@@ -3919,6 +3927,7 @@ _youtube_small.
 ##.fa-pinterest-square
 ##.fa-reddit
 ##.fa-share-square-o
+##.fa-tumblr
 ##.fa-twitter
 ##.fa-twitter-square
 ##.fa-youtube
@@ -4881,6 +4890,7 @@ _youtube_small.
 ##.open_share_box
 ##.overlay_facebook
 ##.p-button-social
+##.page-footer_social
 ##.page-share-button
 ##.pageFbLike
 ##.pane-custom-social-networking-links
@@ -5608,6 +5618,7 @@ _youtube_small.
 ##.social-link-pinterest
 ##.social-link-top
 ##.social-link-twitter
+##.social-linkedin
 ##.social-links
 ##.social-links-block
 ##.social-links-title
@@ -7327,6 +7338,7 @@ _userbar_$image
 /header-rss.
 /headsoc.
 /ic_rss.
+/icit-cookie-law/*
 /icn-rss-
 /ico-rss.
 /ico-subscribe-
@@ -7668,6 +7680,7 @@ _social_rss.
 ###cookie_consent
 ###cookie_header
 ###cookie_info
+###cookie_law_banner
 ###cookie_message_container
 ###cookie_policies
 ###cookie_policy
@@ -8136,6 +8149,7 @@ _social_rss.
 ##.cookies-info
 ##.cookies-popup
 ##.cookies-warning
+##.cookiesAlert
 ##.cookiesContent
 ##.cookiesInfo
 ##.cookiesMessageBanner
@@ -8909,6 +8923,7 @@ _social_rss.
 ||tapcdn.com/mosaic/tap_button.js
 ||teamautofollow.com/modules/mod_jtwitter/
 ||technorati.com^$third-party
+||th4wwe.net^$third-party
 ||theechosystem.com^$third-party
 ||thelovebucks.com^$third-party
 ||theslingshot.com^$third-party
@@ -9159,6 +9174,7 @@ wired.com#@#.rss-widget
 newinhomes.com#@#.rssFeed
 scribol.com#@#.scribol
 ~way2sms.com##.share-box
+openstreetmap.org#@#.share-link
 ~facebook.com##.shareLink
 ~photobucket.com##.shareLinks
 ~facebook.com##.shareText
@@ -9325,7 +9341,7 @@ nytimes.com#@#.sharetools
 golem.de#@#.social-bar
 golem.de#@#.social-bottom
 bitbucket.org,paypal.com,tvspielfilm.de#@#.social-box
-udemy.com#@#.social-btn
+gog.com,udemy.com#@#.social-btn
 golem.de#@#.social-button
 cheezburger.com#@#.social-buttons
 github.com#@#.social-count
@@ -9347,7 +9363,7 @@ leica-camera.com#@#.social_toolbar
 wuala.com#@#.socialbox
 wuala.com#@#.socialboxp
 heise.de#@#.socialmedia
-chaturbate.com#@#.socials
+chaturbate.com,gog.com#@#.socials
 stumbleupon.com#@#.stumble-button
 bitbucket.org,geekli.st,plug.dj#@#.twitter-button
 twitter.com#@#.twitter-hashtag
@@ -9612,7 +9628,7 @@ loginza.ru#@#.vkontakte
 @@/btns.png$domain=antivirus.ua
 @@/images/icons/*_auth.$domain=rusfolder.com|rusfolder.net
 @@/images/share_$domain=joyreactor.cc
-@@/images/social/*$domain=zaycev.net
+@@/images/social/*$domain=ren-tv.com|zaycev.net
 @@/sharebox.$domain=vk.me
 @@/wp-content/plugins/wp-minify/min/?f=$stylesheet,~third-party
 @@_facebook.png$domain=antivirus.ua

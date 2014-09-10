@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: I/9ozPSMigKB67se/odD0w
-! Version: 201409081220
-! Last modified: 08 Sep 2014 12:20 UTC
+! Checksum: yQMO/Z8cTpOwiIFB/mjUzw
+! Version: 201409101730
+! Last modified: 10 Sep 2014 17:30 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1790,8 +1790,8 @@ _tizers.
 //46.165.197.231^
 //46.165.197.87^
 //5.149.255.132^
-//89.108.109.12/store/
 //89.108.109.12^$object
+//89.108.121.205^$object
 //91.197.128.34/key=
 //95.169.186.139^
 //95.211.125.226^
@@ -2998,8 +2998,6 @@ sinoptik.ua##.b-partners
 afisha.ru##.b-top-advert
 magtimes.info##.b1
 mmorpg.ua##.back1
-opensharing.org##.backgr
-opensharing.org##.backgr ~ tr
 sonikelf.ru,tvernews.ru##.banner
 popmech.ru##.banner-label
 allmoldova.com##.banner_main
@@ -3066,9 +3064,11 @@ nur.kz##.travel-slider__holder
 dota2.ru##.vadv-block
 nur.kz##.wallpaper
 5peciali5t.tk##.widget-content > a > img[width="200"]
+opensharing.org##:not(#index) > table > tbody > .backgr
+opensharing.org##:not(#index) > table > tbody > .backgr ~ tr
 gamer-info.com##[class^="br-"]
 kinoafisha.ua##a.brandup
-pornolab.net##a[href*="/89.108.109.12/"],a[href*="/store/"],a[href*="?partner="]
+pornolab.net##a[href*="//128.68.74.41"],a[href*="//89.108.109.12"],a[href*="//89.108.121.205"],a[href*="/store/"],a[href*="?partner="]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
@@ -3092,11 +3092,13 @@ tvnet.lv##div[class^="right_custom_ad_"]
 exler.ru##div[id^="Banner"]
 moviki.ru##div[id^="player_adv_"]
 fsell.biz##div[id^="slot-"]
+pornolab.net##embed[width="200"][height="400"]
 comss.ru##img[style="width:728px;height:90px;"]
 goldroyal.net##img[width="140"][height="30"]
 post-tracker.ru##img[width^="8"][height^="3"][src$=".gif"]
 sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
+adultmult.tv##object[width="600"][height="200"]
 forum.antichat.ru##p[align="center"] > b > a
 tvgid.ua##table[bgcolor="#00488d"][cellpadding="1"]
 netall.ru##table[cellspacing="5"][cellpadding="5"][align="center"][style*="1px solid"]
@@ -4478,7 +4480,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||aaa.piccash.net^
 ||actualcomment.ru^*/banner/
 ||ad.megatrack.org^
-||adultmult.tv/afon/
+||adultmult.tv/*/*.swf|
 ||adverman.*/banners/
 ||afisha.ru/dsn/google-
 ||agronews.ru/images/$object
@@ -5985,6 +5987,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||promo.leadia.ru^$domain=zakonrf.info
 @@||promo.static.gamexp.ru^
 @@||propellerads.com/ajs.php?zoneid=$domain=goclips.tv|letitbit.net
+@@||pub.tvigle.ru/swf/new_ad_wrapper.swf$domain=ren-tv.com
 @@||renault.ru/_beta/banner_system/banner.php$domain=renault.ru
 @@||rf-mods.ru/uploads/banners/
 @@||rock-online.ru/thema/rock/images/baner_$~third-party

@@ -1,13 +1,12 @@
 [Adblock Plus 2.0]
 ! If you have questions,please email 994722209@qq.com
-! List version 20140827
-! Version: 20140827
+! List version 20140909
+! Version: 20140909
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
 ! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
 &ad_type=
 &ad_url=
-/WebAd/*
 &ad_zones=
 &adnum=
 &adsourceid=
@@ -1622,4 +1621,77 @@ broadbandreports.com,dslreports.com##td[style="border-right: 1px #CCCCCC solid;"
 @@||www.google.com/analytics/web/$xmlhttprequest,domain=www.google.com
 ! *** easylist:easylist_adult/adult_whitelist.txt ***
 @@||ad.thisav.com/player/jw.swf
+.ca/ads/
+.name/ads/
+.se/?placement=$script,subdocument,third-party
+/ad_index_
+/adheader.
+/adhtml/*
+/adplayer/*
+/ads05.
+/adtest/*
+/adv_banner_
+/banner.php
+/btn_ad_
+/js.ng/site=
+/jspopunder.
+/openad.
+/scripts/ad/*
+/scripts/ads.
+/topad/*
+/WebAd/*
+?adtype=
+_ad_2012.
+_advertisement.
+/160_600_
+/468-60.
+/728-90.
+/728_90_
+###AdArea
+###ad250
+###ad728
+###adIframe
+###ad_04
+###ad_300_250
+###bannerads
+###footerad
+###home-ad
+###related-ads
+###sidebar-ad1
+###sidebar-ads
+###top-right-ad
+###top_ad_box
+##.ad300x90
+##.adGroup
+##.ad_250x250
+##.ad_600
+##.ad_640x90
+##.ad_728x90
+##.ad_border
+##.adboard
+##.adcode
+##.adheader
+##.ads-1
+##.ads-2
+##.adstitle
+##.adv250
+##.adv_banner
+##.botad2
+##.hr_ad
+##.inline-ad
+##.m-ad
+##.postad
+##.sideads
+##.widget_adsensem
+##iframe[id^="google_ads_frame"]
+||adlooxtracking.com^$third-party
+||hypertrackeraff.com^$third-party
+||media.net^$third-party
+||nuseek.com^$third-party
+||adf.ly/js/$third-party,domain=~j.gs|~q.gs
+||amazonaws.com/fvefwdds/
+||ebayrtm.com/rtm?RtmCmd*&enc=
+||ebayrtm.com/rtm?RtmIt
+@@||bauer-power.net/misc/tc/advertisement.js
+@@||www.google.com/analytics/web/$xmlhttprequest,domain=www.google.co
 !----------------------------------The End------------------------------------!

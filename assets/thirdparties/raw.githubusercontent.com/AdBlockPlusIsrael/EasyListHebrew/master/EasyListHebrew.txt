@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 4Iv78Pd293+2bAUGbNXTMg
+! Checksum: Uiuds42UGSd5MLxucJeq0Q
 ! Title: EasyList Hebrew
-! Last modified: 07/09/14  03:05
+! Last modified: 10/09/14  19:30
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -23,28 +23,32 @@
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
-||213.8.137.51^$popup
 ||213.8.137.51^
+||213.8.137.51^$popup,third-party
 ||3dots.co.il^$third-party,domain=~maple-team.com
 ||ad-sys.com^$third-party
 ||adland.co.il^$third-party
 ||adtv.me^$popup
+||ahituv.biz^$popup,third-party
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
-||ashleymadison.com/app/public/$popup,third-party
+||ashleymadison.com/a$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||campaign.alpha.co.il/?campaign^$popup,third-party
 ||campaign.chevrolet.co.il/$popup,third-party
 ||clickcenter.net^$third-party
-||clickon.co.il^$third-party
+||clickon.co.il^$popup,third-party
 ||descreti.co.il^$popup
+||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
 ||forifiha.com/null^$popup
 ||great-offers.co.il^$popup
 ||greenlead.co.il^$popup
 ||ha-deal.co.il^$popup
+||hizoq.com^$popup,third-party
+||horserace.co.il^$popup,third-party
 ||ilikethis.info/il^$popup
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
@@ -126,9 +130,11 @@
 ||dwnmedia.a7.org/inntv/media/
 ||info.a7.org^$domain=inn.co.il
 ||inn.co.il/info_en/
+||inn.co.il/leads/view/$popup
 !-Globes-!
 ||download.cast-tv.com/*_flv/prerole$object-subrequest
 ||globes.co.il/data/js/gtv_ads.js
+||globes.co.il/globes/newsletters/minisites_2/banners/
 ||globes.co.il/news/frames/topbannerflash$subdocument
 !-zvz-!
 ||bannerwebservice.zvz.co.il^
@@ -155,17 +161,19 @@
 !-fxp-!
 ||cdn.salamtak.org.uk^$domain=fxp.co.il
 ||fcdn.co.il/*.swf$domain=fxp.co.il
+||fortest.info^$domain=fxp.co.il
+||fxp.co.il/skinfxp/*.php$script,image
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
 
 !
 !--------------------------1st party blocking rules---------------------------!
 !
-||212.129.12.90/zivlin/t4/*.swf
+||212.129.12.90/zivlin/*.swf
 ||2eat.co.il/banner/
 ||ads.one.co.il^
 ||ashdodnet.com/dyncontent/t_ad/
-||auto.co.il/Banner/
-||auto.co.il/BannersIfarme/
+||auto.co.il/Banner
+||auto.co.il/Base/UserControls/Banner/IframeBanner.aspx?
 ||banners*.bizportal.co.il^
 ||banners.bizportal.co.il^$popup
 ||banners.news1.co.il^
@@ -295,7 +303,7 @@
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|mako.co.il|ynet.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il|mako.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -305,7 +313,6 @@
 @@||upf.co.il/advertisment.js
 @@||xads.zedo.com^$popup,domain=one.co.il
 @@||yad2.co.il/ajax/click_stat.php?BannerID=$xmlhttprequest
-@@||ynet.co.il/dc/dcLoadAds/
 @@||zvz.co.il/AdImages/$~third-party,image
 !
 !------Whitelists Element Hiding Rules (caused by EasyList / EasyPrivacy )----!
@@ -365,16 +372,20 @@ doctors.co.il,globes.co.il##[id^="ads."]
 !----------------------------Element hiding rules-----------------------------!
 !
 2all.co.il##.DivFlowBannerRight
+api.vicomi.com##.vc-comment-inner.shadow.recommend_comment.recommend_comment_ad
 ashdodnet.com##.Banner
 ashdodnet.com##DIV[style="height: 78px; overflow: hidden; width: 510px;"]
 ashdodnet.com##DIV[style="height: 78px; padding-right: 10px; margin-bottom: 20px;"]
-auto.co.il###PlazmaOnOff
 auto.co.il###ctl00_MainContent_divBannerHasut
+auto.co.il###PlazmaOnOff
+auto.co.il###top-banners-container
+auto.co.il##.banner2
 auto.co.il##.content.awLng[style="text-align: center;"]
+auto.co.il##.tower-banner
 auto.co.il##div[style="width:300px;height:250px;margin-left:auto;margin-right:auto;"]
 bari-p2.co.il##TD[style="padding-left:3px; padding-right:3px; padding-top:3px; padding-bottom:4px"]
-bbls.co.il###phonepopup
 bbls.co.il###opacity_curtain
+bbls.co.il###phonepopup
 beok.co.il##.BannerMid
 bhol.co.il###AdvertisementSystemTakeOver
 bhol.co.il###divPlazma
@@ -425,6 +436,8 @@ chabad.info##.left_pirsomot
 cinema-city.co.il##[style="position:absolute;width:258px;height:256px;left:33px;top:13px;"]
 cinema-city.co.il##[style="position:absolute;width:258px;height:256px;left:33px;top:852px;"]
 cinema-city.co.il##[style="position:absolute;width:275px;height:155px;left:24px;top:1140px;"]
+cinemascope.mako.co.il###jambo_div
+cinemascope.mako.co.il###monster1_div
 d.co.il##.header_banner
 d.co.il##.premium-d-strip-banner-container
 dacho.co.il##.fixed_position1
@@ -541,6 +554,7 @@ likudnik.co.il##DIV[style="text-align: center;"]
 link4u.co.il###link_banner
 link4u.co.il##.banner_300x224
 link4u.co.il##.banner_main
+maariv.co.il##TABLE[width="748"][height="110"][style="background-color:#e8e8e8"]
 madas.co.il##.AdsContainer
 madas.co.il##.LeftColumn_container.Floater
 madas.co.il##.TextLinkBanner
@@ -571,6 +585,7 @@ mishlohim.co.il###TopMenu1_bannerDiv
 mishlohim.co.il##.Banners
 moreshet.co.il###superJamboBanner
 morfix.co.il##.adv_ph
+mouse.co.il###articleAdvert
 mouse.co.il###floatingbannerdiv
 mouse.co.il##.ads
 mouse.co.il##.noprint + .inline-box-text_new.noprint
@@ -646,6 +661,8 @@ onlife.co.il##.commercial
 ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
 rateonclick.com##A[href*="campaigns.layer.co.il/"]
+reshet.tv##div[id^="CM8ShowAd"]
+reshet.tv###Ctrl_nPromotionBanner
 reshet.tv###DivContent[rel="5498"]
 reshet.tv###prArea
 rest.co.il###divLeftBanner

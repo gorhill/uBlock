@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 34O+da8nf0rdBT8F7oAHbw
-! Version: 201409081221
+! Checksum: JCqmNEAlqVYvOZDMIj2g4g
+! Version: 201409101731
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 08 Sep 2014 12:21 UTC
+! Ultima modifica: 10 Sep 2014 17:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2497,6 +2497,7 @@ ultimissime.net##div[style="margin:auto; background-image:url('/images/stories/p
 serviziopubblico.it##div[style="min-height:90px;"]
 agichina24.it##div[style="overflow: hidden; width: 459px; height: 27px;"]
 liguriawebcam.com##div[style="overflow:hidden;height:90px;margin:4px 0;"]
+freeones.it##div[style="padding: 0px; margin: 10px 0px; height: 100px; width: 898px; background-color: #4C89F9; border: 1px solid #4C89F9"]
 puntosicuro.it##div[style="padding: 5px; font-family: Verdana, Arial; font-size: 10px;"]
 giornaledicomo.it,tempi.it##div[style="position: relative; height: 250px; width: 300px;"]
 telefonino.net##div[style="position: relative;width: 310px;height: 110px;margin: 0px -5px 5px -5px;"]

@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: mz2L8/gRl9poU+Lk5mwAvg
+! Checksum: XkrRbv+LXE0by74Ua4DB0A
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-08-29
+! Paskutinis atnaujinimas: 2014-09-10
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -180,6 +180,7 @@ diskusijos.darnipora.lt##.post.bg3
 diskusijos.darnipora.lt##IMG[onclick="Set_Cookie( 'popunder31254', 'true', 3, '/', '', '' );document.getElementById('myBtn').style.display='none';"]
 donoryste.eu##[alt="Klipas Donorystė"]
 dratas.lt##IMG[title="Poko.lt = (lietuviški blogai + socialiniai tinklai) * vienas kitas algoritmas"]
+draugas.lt##.row.dr-ad-top
 drauge.org##.side-body > TABLE[bgcolor="#87B6D9"]
 drg.lt##.module-content A > IMG
 dumblas.com##.content.citems.banner
@@ -206,6 +207,7 @@ etaplius.lt##.marquee0
 etaplius.lt##A[href="http://etaplius.lt/reklama"]
 fightclub.lt##.advert
 filosofija.info##A[href="http://www.filosofija.info/"]
+fortuna.draugas.lt##.rkl
 forum.mintys.lt##.post.bg2
 fotofabrikas.lt###popup-w
 fotofaze.lt##.xoxo.blogroll A[href="/"] > IMG
@@ -215,6 +217,7 @@ friendsclub.lt##[src^="http://www.friendsclub.lt/banners/"] + *
 g-taskas.lt##A[href="http://www.vilniausgidas.lt"]
 galjuokauji.lt##.cosmo-infoblock
 galjuokauji.lt##.panele-infoblock
+gamtosnamai.lt###marquee > .tickercontainer IMG
 garaziukas.com###banners-2
 gedulas.lt###ct_testimonials-4
 gintarinesvajone.lt##.xoxo.blogroll IMG
@@ -464,6 +467,7 @@ sveksnosnaujienos.lt##.blog-sidebar *
 sveksnosnaujienos.lt##.wsite-image.wsite-image-border-none
 tattoo.lt###layerslider_widget-3
 technews.lt##.left_side
+technologijos.lt###portal_baner_750x100_td_v2
 technologijos.lt##.lygiuoti_centras[style="padding: 1.5em 0em 1.25em 0em;"]
 technologijos.lt##.visualPadding.lygiuoti_centras
 technorama.lt##.leasing-info
@@ -576,6 +580,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||basketnews.lt/config/basketnews.lt/files/3/1753.swf
 ||basketnews.lt/config/basketnews.lt/files/7/1807.swf
 ||basketnews.lt/config/basketnews.lt/files/9/1809.swf
+||basketnews.lt/config/basketnews.lt/themes/ads_topsport_20140826/bg04.jpg
 ||basketnews.lt/config/basketnews.lt/themes/ads_unibet_20131105/bg01.jpg
 ||basketnews.lt/config/basketnews.lt/themes/ads_unibet_20140319/bg01.jpg
 ||basset-hound.lt/uploads/basset_banner.gif
@@ -952,6 +957,8 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||sveikatosabc.lt/vidpadziai200x229.swf
 ||tavovaikas.lt/newsfeed/?p=
 ||technologijos.lt/archyvas/skydeliai_mainams/
+||technologijos.lt/n/iframe_baneris
+||technologijos.lt/n/url/straipsnio_viduje/iframe_baneris
 ||technologijos.lt/upload/image/n/iliustracijos/skelbimu_logotipai/ban/
 ||tekstai.lt/images/stories/draugai/
 ||themusic.lt/images/geramada12x120.gif
@@ -980,8 +987,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||ultrashop.lt/images/160x160xasus_160.jpg
 ||ultrashop.lt/radiocool.php
 ||urmas.net/upload/rk/
-||vaga.lt/get.php?i.744360"][style="WIDTH:%20170px;%20HEIGHT:%20107px
-||vaga.lt/get.php?i.790830
+||vaga.lt/get.php?i.
 ||vairuokime.lt/img/lyoness.png
 ||veberis.com/banner/
 ||veberis.com/foto/balionucentras/balionai.jpg

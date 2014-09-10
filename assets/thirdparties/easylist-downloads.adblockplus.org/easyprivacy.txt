@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: IzM7gtcN7tyh6Kgl3ucsXA
-! Version: 201409081221
+! Checksum: IQ4xirIgBfLT0hdxlwOmEg
+! Version: 201409101731
 ! Title: EasyPrivacy
-! Last modified: 08 Sep 2014 12:21 UTC
+! Last modified: 10 Sep 2014 17:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -13,6 +13,7 @@
 !
 !-----------------General tracking systems-----------------!
 ! *** easylist:easyprivacy/easyprivacy_general.txt ***
+&ctxId=*&pubId=*&objId=
 &pageReferrer=
 &trackingserver=
 -AdTracking.
@@ -260,6 +261,7 @@
 /analytics/tracker.
 /analytics/trackers?
 /Analytics/Tracking.
+/analytics?http_referer
 /analytics_embed.
 /analytics_ping.
 /analytics_prod.
@@ -1089,6 +1091,7 @@
 /log_agent.
 /log_e.php?id=
 /log_hit.
+/log_impression/*
 /log_presence/*
 /log_stats.php?
 /log_syndication.
@@ -2868,6 +2871,7 @@ http://utm.
 ||hqhrt.com^$third-party
 ||hs-analytics.net^$third-party
 ||humanclick.com^$third-party
+||hunt-leads.com^$third-party
 ||hurra.com^$third-party
 ||hwpub.com^$third-party
 ||hxtrack.com^$third-party
@@ -5303,6 +5307,7 @@ http://utm.
 ||ptsc.shoplocal.com^
 ||publicbroadcasting.net/analytics/
 ||publish.pizzazzemail.com^$third-party
+||pubnub.com/time/$third-party
 ||purevideo.com^*/pvshim.gif?
 ||pussy.org^*.cgi?pid=
 ||pussy.org^*/track.php
@@ -7297,6 +7302,7 @@ http://utm.
 ||newstatesman.com/js/NewStatesmanSDC.js
 ||newswire.ca/rt.gif?
 ||next.co.uk/log.php
+||nfl.com/imp?
 ||nhk.jp^*/bc.gif?
 ||nick.co.uk/global/js/tracking.js
 ||nick.com/common/images/spacer.gif?
@@ -7671,17 +7677,13 @@ http://utm.
 ||stats.break.com^
 ||stats.christianpost.com^
 ||stats.clear-media.com^
-||stats.dailypost.co.uk^
-||stats.dailyrecord.co.uk^
 ||stats.ebay.com^
 ||stats.eyeviewdigital.com^
 ||stats.farfetch.com^
 ||stats.firedrive.com^
 ||stats.harpercollins.com^
-||stats.irishmirror.ie^
 ||stats.macmillanusa.com^
 ||stats.mehrnews.com^
-||stats.mirror.co.uk^
 ||stats.nymag.com^
 ||stats.pandora.com^
 ||stats.paste2.org^
@@ -7697,11 +7699,9 @@ http://utm.
 ||stats.slideshare.net^
 ||stats.storify.com^
 ||stats.suite101.com^
-||stats.thejournal.co.uk^
 ||stats.townnews.com^
 ||stats.uswitch.com^
 ||stats.video.search.yahoo.com^
-||stats.walesonline.co.uk^
 ||stats.wordpress.com^
 ||stats.wwd.com^
 ||stats.zmags.com^
@@ -7991,7 +7991,6 @@ http://utm.
 ||visit.theglobeandmail.com^
 ||visitors.dooyoo.co.uk^
 ||visitors.sourcingmap.com^
-||visualdna-widgets.mirror.co.uk^
 ||visualware.com/vvv?
 ||vitamine.networldmedia.net^
 ||vixy.net/fb-traffic-pop.js
@@ -8897,7 +8896,7 @@ http://utm.
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
 @@||cdn.clicktale.net^$script,domain=cbc.ca
-@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch
+@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch|techrepublic.com
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script
 @@||chartbeat.com/*/chartbeat/$~third-party
@@ -9141,6 +9140,7 @@ http://utm.
 @@||sellpoint.net/smart_button/$script,domain=walmart.com
 @@||service.collarity.com/cust/nbcu/ucs.js$xmlhttprequest
 @@||services.fliqz.com/metrics/*/applications/$object-subrequest,domain=leftlanenews.com
+@@||setelia.com*/page-tracking.js?$script,~third-party
 @@||sfdict.com/app/*/click_tracking.js$domain=reference.com|thesaurus.com
 @@||sh.st/bundles/smeadvertisement/img/track.gif?$xmlhttprequest
 @@||siteanalytics.compete.com^$~third-party
