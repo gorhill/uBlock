@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik op de aan\/uit-knop om <br>permanent µBlock aan en uit te schakelen<br> voor de huidge website",
+    "message":"Klikken: schakel µBlock aan\/uit voor deze website.\n\nCtrl+klikken: schakel µBlock uit enkel voor deze pagina.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Alle cache legen",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
