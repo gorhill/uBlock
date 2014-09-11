@@ -519,7 +519,7 @@
         publicSuffixList: publicSuffixList.toSelfie(),
         filterLists: this.remoteBlacklists,
         netFilteringEngine: this.netFilteringEngine.toSelfie(),
-        cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie(),
+        cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
     };
     chrome.storage.local.set({ selfie: selfie });
     // console.log('µBlock.toSelfie> made a selfie!');
@@ -582,9 +582,10 @@
 
 µBlock.load = function() {
     var µb = this;
+    var fromSelfie = false;
 
     // Final initialization steps after all needed assets are in memory
-    var onAllDone = function(wasAutoUpdated) {
+    var onAllDone = function() {
         // Initialize internal state with maybe already existing tabs
         var bindToTabs = function(tabs) {
             var scriptStart = function(tabId) {
@@ -615,18 +616,28 @@
         // https://github.com/gorhill/uBlock/issues/184
         // If we restored a selfie, check for updates not too far
         //  in the future.
-        µb.updater.restart(wasAutoUpdated ? µb.nextUpdateAfter : µb.firstUpdateAfter);
+        var nextUpdate = fromSelfie === false && µb.userSettings.autoUpdate ?
+            µb.nextUpdateAfter :
+            µb.firstUpdateAfter;
+        µb.updater.restart(nextUpdate);
     };
 
-    // Filters are in memory
+    // https://github.com/gorhill/uBlock/issues/226
+    // Whitelist in memory.
+    // Whitelist parser needs PSL to be ready.
+    var onWhitelistReady = function() {
+        onAllDone();
+    };
+
+    // Filters are in memory.
+    // Filter engines need PSL to be ready.
     var onFiltersReady = function() {
-        onAllDone(µb.userSettings.autoUpdate);
+        µb.loadWhitelist(onWhitelistReady);
     };
 
     // Load order because dependencies:
     // User settings -> PSL -> [filter lists, user whitelist]
     var onPSLReady = function() {
-        µb.loadWhitelist();
         µb.loadFilterLists(onFiltersReady);
     };
 
@@ -634,7 +645,8 @@
     // raw data.
     var onSelfieReady = function(success) {
         if ( success === true ) {
-            onAllDone(false);
+            fromSelfie = true;
+            µb.loadWhitelist(onWhitelistReady);
             return;
         }
         µb.assets.autoUpdate = µb.userSettings.autoUpdate;
