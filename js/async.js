@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global µBlock */
 
 /******************************************************************************/
 
@@ -137,26 +137,18 @@ return asyncJobManager;
     if ( tabId < 0 ) {
         return;
     }
-    var safeUpdateBagde = function(tab) {
-        if ( chrome.runtime.lastError ) {
-            return;
-        }
-        var pageStore = µBlock.pageStoreFromTabId(tab.id);
+    var µb = this;
+    var updateBadge = function() {
+        var pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore ) {
             pageStore.updateBadge();
-        } else {
-            chrome.browserAction.setIcon({
-                tabId: tab.id,
-                path: { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' }
-            });
+            return;
         }
+        µb.XAL.setIcon(
+            tabId,
+            { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' },
+            ''
+        );
     };
-    // https://github.com/gorhill/uBlock/issues/19
-    // https://github.com/gorhill/uBlock/issues/207
-    // Since we may be called asynchronously, the tab id may not exist
-    // anymore, so this ensures it does still exist.
-    var unsafeUpdateBadge = function(tabId) {
-        chrome.tabs.get(tabId, safeUpdateBagde);
-    };
-    this.asyncJobs.add('updateBadge-' + tabId, tabId, unsafeUpdateBadge, 250);
+    this.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
 };

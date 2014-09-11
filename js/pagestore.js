@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global µBlock */
 
 /*******************************************************************************
 
@@ -213,21 +213,15 @@ PageStore.prototype.recordRequest = function(type, url, reason) {
 
 PageStore.prototype.updateBadge = function() {
     var netFiltering = this.getNetFilteringSwitch();
-    var iconPath = netFiltering ?
+    var iconPaths = netFiltering ?
         { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
         { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-
-    chrome.browserAction.setIcon({ tabId: this.tabId, path: iconPath });
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
         iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
     }
-    chrome.browserAction.setBadgeText({ tabId: this.tabId, text: iconStr });
-
-    if ( iconStr !== '' ) {
-        chrome.browserAction.setBadgeBackgroundColor({ tabId: this.tabId, color: '#666' });
-    }
+    µb.XAL.setIcon(this.tabId, iconPaths, iconStr);
 };
 
 // https://www.youtube.com/watch?v=drW8p_dTLD4
