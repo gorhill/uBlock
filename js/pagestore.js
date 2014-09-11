@@ -211,33 +211,23 @@ PageStore.prototype.recordRequest = function(type, url, reason) {
 
 /******************************************************************************/
 
-PageStore.prototype.updateBadgeFromTab = function(tab) {
-    if ( !tab ) {
-        return;
-    }
+PageStore.prototype.updateBadge = function() {
     var netFiltering = this.getNetFilteringSwitch();
     var iconPath = netFiltering ?
         { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
         { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
 
-    chrome.browserAction.setIcon({ tabId: tab.id, path: iconPath });
+    chrome.browserAction.setIcon({ tabId: this.tabId, path: iconPath });
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
         iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
     }
-    chrome.browserAction.setBadgeText({ tabId: tab.id, text: iconStr });
+    chrome.browserAction.setBadgeText({ tabId: this.tabId, text: iconStr });
 
     if ( iconStr !== '' ) {
-        chrome.browserAction.setBadgeBackgroundColor({ tabId: tab.id, color: '#666' });
+        chrome.browserAction.setBadgeBackgroundColor({ tabId: this.tabId, color: '#666' });
     }
-};
-
-PageStore.prototype.updateBadge = function() {
-    // https://github.com/gorhill/uBlock/issues/19
-    // Since we may be called asynchronously, the tab id may not exist
-    // anymore, so this ensures it does still exist.
-    chrome.tabs.get(this.tabId, this.updateBadgeFromTab.bind(this));
 };
 
 // https://www.youtube.com/watch?v=drW8p_dTLD4
