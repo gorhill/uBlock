@@ -113,5 +113,9 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 # To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
 @@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com
 
+# Temporary, until EasyList provides a fix
+# https://github.com/gorhill/uBlock/issues/227
+@@||z.cdn.turner.com/*/ads/freewheel/*$object-subrequest,domain=nba.com
+
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
