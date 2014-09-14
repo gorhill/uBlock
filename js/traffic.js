@@ -51,7 +51,6 @@ var onBeforeRequest = function(details) {
     }
 
     var µburi = µb.URI.set(requestURL);
-    var requestHostname = µburi.hostname;
     var requestPath = µburi.path;
 
     // rhill 2013-12-15:
@@ -78,31 +77,35 @@ var onBeforeRequest = function(details) {
         }
     }
 
-    var reason = false;
+    var result = '';
     if ( pageStore.getNetFilteringSwitch() ) {
-        reason = µb.netFilteringEngine.matchString(requestContext, requestURL, requestType, requestHostname);
+        result = pageStore.filterRequest(requestContext, requestType, requestURL);
     }
-    // Record what happened.
-    pageStore.recordRequest(requestType, requestURL, reason);
 
-    // Not blocked?
-    if ( reason === false || reason.slice(0, 2) === '@@' ) {
-        //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
+    // Not blocked
+    if ( pageStore.boolFromResult(result) === false ) {
+        pageStore.perLoadAllowedRequestCount++;
+        µb.localSettings.allowedRequestCount++;
 
         // https://github.com/gorhill/uBlock/issues/114
         if ( frameId > 0 && frameStore === undefined ) {
             pageStore.addFrame(frameId, requestURL);
         }
+
+        //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
         return;
     }
 
     // Blocked
-    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, reason);
+    pageStore.perLoadBlockedRequestCount++;
+    µb.localSettings.blockedRequestCount++;
+    µb.updateBadgeAsync(tabId);
 
     // https://github.com/gorhill/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
 
+    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
     return { 'cancel': true };
 };
 
@@ -166,18 +169,13 @@ var onBeforeSendHeaders = function(details) {
     // switch of the popup. If so, that would require being able to lookup
     // a page store from a URL. Have to keep in mind the same URL can appear
     // in multiple tabs.
-    var reason = false;
+    var result = '';
     if ( pageStore.getNetFilteringSwitch() ) {
-        reason = µb.netFilteringEngine.matchStringExactType(
-            pageDetails,
-            requestURL,
-            'popup',
-            µburi.hostnameFromURI(requestURL)
-        );
+        result = µb.netFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
     }
 
     // Not blocked?
-    if ( reason === false || reason.slice(0, 2) === '@@' ) {
+    if ( result === '' || result.slice(0, 2) === '@@' ) {
         return;
     }
 

@@ -27,6 +27,8 @@
 
 µBlock.asyncJobs = (function() {
 
+/******************************************************************************/
+
 var processJobs = function() {
     asyncJobManager.process();
 };
@@ -45,6 +47,8 @@ AsyncJobEntry.prototype.destroy = function() {
     this.callback = null;
 };
 
+/******************************************************************************/
+
 var AsyncJobManager = function() {
     this.timeResolution = 200;
     this.jobs = {};
@@ -54,7 +58,15 @@ var AsyncJobManager = function() {
     this.timerWhen = Number.MAX_VALUE;
 };
 
+/******************************************************************************/
+
 AsyncJobManager.prototype.restartTimer = function() {
+    // TODO: Another way to do this is to extract the keys, sort the keys
+    // in chronological order, than pick the first entry to get the next
+    // time at which we want a time event to fire. Completely unsure the
+    // overhead of extracting keys/sorting is less than what is below.
+    // I could also keep the keys ordered, and use binary search when adding
+    // a new job.
     var when = Number.MAX_VALUE;
     var jobs = this.jobs, job;
     for ( var jobName in jobs ) {
@@ -68,12 +80,18 @@ AsyncJobManager.prototype.restartTimer = function() {
     // Quantize time value
     when = Math.floor((when + this.timeResolution - 1) / this.timeResolution) * this.timeResolution;
 
+    // TODO: Maybe use chrome.alarms() API when the next job is at more than
+    // one minute in the future... From reading about it, chrome.alarms() is
+    // smarter in that it will fire the event only when the browser is not
+    // too busy. (through XAL to abstract API specificities)
     if ( when < this.timerWhen ) {
         clearTimeout(this.timerId);
         this.timerWhen = when;
         this.timerId = setTimeout(processJobs, Math.max(when - Date.now(), 10));
     }
 };
+
+/******************************************************************************/
 
 AsyncJobManager.prototype.add = function(name, data, callback, delay, recurrent) {
     var job = this.jobs[name];
@@ -93,6 +111,22 @@ AsyncJobManager.prototype.add = function(name, data, callback, delay, recurrent)
     job.period = recurrent ? delay : 0;
     this.restartTimer();
 };
+
+/******************************************************************************/
+
+AsyncJobManager.prototype.remove = function(jobName) {
+    if ( this.jobs.hasOwnProperty(jobName) === false ) {
+        return;
+    }
+    var job = this.jobs[jobName];
+    delete this.jobs[jobName];
+    job.destroy();
+    this.jobCount--;
+    this.jobJunkyard.push(job);
+    this.restartTimer();
+};
+
+/******************************************************************************/
 
 AsyncJobManager.prototype.process = function() {
     this.timerId = null;
@@ -120,8 +154,12 @@ AsyncJobManager.prototype.process = function() {
     this.restartTimer();
 };
 
+/******************************************************************************/
+
 // Only one instance
 var asyncJobManager = new AsyncJobManager();
+
+/******************************************************************************/
 
 // Publish
 return asyncJobManager;
@@ -133,12 +171,12 @@ return asyncJobManager;
 // Update visual of extension icon.
 // A time out is used to coalesce adjacent requests to update badge.
 
-µBlock.updateBadgeAsync = function(tabId) {
-    if ( tabId < 0 ) {
-        return;
-    }
-    var µb = this;
-    var updateBadge = function() {
+µBlock.updateBadgeAsync = (function(){
+    var µb = µBlock;
+
+    // Cache callback definition, it was a bad idea to define this one inside 
+    // updateBadgeAsync
+    var updateBadge = function(tabId) {
         var pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore ) {
             pageStore.updateBadge();
@@ -150,5 +188,13 @@ return asyncJobManager;
             ''
         );
     };
-    this.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
-};
+
+    var updateBadgeAsync = function(tabId) {
+        if ( tabId < 0 ) {
+            return;
+        }
+        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
+    };
+
+    return updateBadgeAsync;
+})();

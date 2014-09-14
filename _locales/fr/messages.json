@@ -207,20 +207,12 @@
     "message":"Appliquer",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Activer la journalisation des requêtes bloquées",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Activer la journalisation des requêtes",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes bloquées en activant cette option. La journalisation des requêtes bloquées augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Activer la journalisation des requêtes autorisées",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes autorisées en activant cette option. La journalisation des requêtes autorisées augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+  "logNetRequestsHelp":{
+    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par µBlock. Puisque que bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

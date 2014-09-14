@@ -50,6 +50,7 @@
 
 /******************************************************************************/
 
+var runtimeIdGenerator = 1;
 var nameToPortMap = {};
 var nameToListenerMap = {};
 var nullFunc = function(){};
@@ -58,7 +59,7 @@ var nullFunc = function(){};
 
 var listenerNameFromPortName = function(portName) {
     var pos = portName.indexOf('/');
-    if ( pos <= 0 ) {
+    if ( pos === -1 ) {
         return '';
     }
     return portName.slice(0, pos);
@@ -213,14 +214,13 @@ var onDisconnect = function(port) {
 
 var onConnect = function(port) {
     // We must have a port name.
-    if ( !port.name ) {
-        throw 'µBlock> messaging.js / onConnectHandler(): no port name!';
+    if ( typeof port.name !== 'string' || port.name === '' ) {
+        console.error('µBlock> messaging.js / onConnectHandler(): no port name!');
+        return;
     }
 
-    // Port should not already exist.
-    if ( nameToPortMap[port.name] ) {
-        throw 'µBlock> messaging.js / onConnectHandler():  port already exists!';
-    }
+    // Ensure port name is unique
+    port.name += '/' + runtimeIdGenerator++;
 
     nameToPortMap[port.name] = port;
     port.onMessage.addListener(onMessage);

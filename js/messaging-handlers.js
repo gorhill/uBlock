@@ -22,6 +22,7 @@
 /* global chrome, µBlock, YaMD5 */
 
 /******************************************************************************/
+/******************************************************************************/
 
 (function() {
 
@@ -40,8 +41,7 @@ var getStats = function(request) {
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
-        logBlockedRequests: µb.userSettings.logBlockedRequests,
-        logAllowedRequests: µb.userSettings.logAllowedRequests
+        logRequests: µb.userSettings.logRequests
     };
     var pageStore = µb.pageStoreFromTabId(request.tabId);
     if ( pageStore ) {
@@ -96,6 +96,7 @@ var onMessage = function(request, sender, callback) {
 })();
 
 /******************************************************************************/
+/******************************************************************************/
 
 // contentscript-start.js
 
@@ -137,6 +138,7 @@ var onMessage = function(request, sender, callback) {
 })();
 
 /******************************************************************************/
+/******************************************************************************/
 
 // contentscript-end.js
 
@@ -144,9 +146,70 @@ var onMessage = function(request, sender, callback) {
 
 var µb = µBlock;
 
-var onMessage = function(request, sender, callback) {
+/******************************************************************************/
+
+var tagNameToRequestTypeMap = {
+     'embed': 'object',
+    'iframe': 'sub_frame',
+       'img': 'image',
+    'object': 'object'
+};
+
+/******************************************************************************/
+
+// Evaluate many requests
+
+var filterRequests = function(pageStore, details) {
+    details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+
+    var inRequests = details.requests;
+    var outRequests = [];
+    var request, result;
+    var i = inRequests.length;
+    while ( i-- ) {
+        request = inRequests[i];
+        if ( tagNameToRequestTypeMap.hasOwnProperty(request.tagName) === false ) {
+            continue;
+        }
+        result = pageStore.filterRequest(
+            details,
+            tagNameToRequestTypeMap[request.tagName],
+            request.url
+        );
+        if ( pageStore.boolFromResult(result) ) {
+            outRequests.push(request);
+        }
+    }
+    return {
+        collapse: µb.userSettings.collapseBlocked,
+        requests: outRequests
+    };
+};
+
+/******************************************************************************/
+
+// Evaluate a single request
+
+var filterRequest = function(pageStore, details) {
+    if ( tagNameToRequestTypeMap.hasOwnProperty(details.tagName) === false ) {
+        return;
+    }
+    details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+    var result = pageStore.filterRequest(
+        details,
+        tagNameToRequestTypeMap[details.tagName],
+        details.requestURL
+    );
+    if ( pageStore.boolFromResult(result) ) {
+        return { collapse: µb.userSettings.collapseBlocked };
+    }
+};
+
+/******************************************************************************/
+
+var onMessage = function(details, sender, callback) {
     // Async
-    switch ( request.what ) {
+    switch ( details.what ) {
         default:
             break;
     }
@@ -159,34 +222,33 @@ var onMessage = function(request, sender, callback) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
 
-    switch ( request.what ) {
+    switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
             if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-                response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(request);
+                response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;
 
         case 'injectedSelectors':
-            µb.cosmeticFilteringEngine.addToSelectorCache(request);
+            µb.cosmeticFilteringEngine.addToSelectorCache(details);
             break;
 
-        case 'blockedRequests':
-            response = {
-                collapse: µb.userSettings.collapseBlocked,
-                blockedRequests: pageStore ? pageStore.blockedRequests : {}
-            };
+        // Evaluate many requests
+        case 'filterRequests':
+            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+                response = filterRequests(pageStore, details);
+            }
             break;
 
-        // Check a single request
-        case 'blockedRequest':
-            response = {
-                collapse: µb.userSettings.collapseBlocked,
-                blocked: pageStore && pageStore.blockedRequests[request.url]
-            };
+        // Evaluate a single request
+        case 'filterRequest':
+            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+                response = filterRequest(pageStore, details);
+            }
             break;
 
         default:
-            return µb.messaging.defaultHandler(request, sender, callback);
+            return µb.messaging.defaultHandler(details, sender, callback);
     }
 
     callback(response);
@@ -196,6 +258,7 @@ var onMessage = function(request, sender, callback) {
 
 })();
 
+/******************************************************************************/
 /******************************************************************************/
 
 // element-picker.js
@@ -238,6 +301,7 @@ var onMessage = function(request, sender, callback) {
 
 })();
 
+/******************************************************************************/
 /******************************************************************************/
 
 // 3p-filters.js
@@ -310,6 +374,7 @@ var onMessage = function(request, sender, callback) {
 })();
 
 /******************************************************************************/
+/******************************************************************************/
 
 // 1p-filters.js
 
@@ -345,6 +410,7 @@ var onMessage = function(request, sender, callback) {
 
 })();
 
+/******************************************************************************/
 /******************************************************************************/
 
 // whitelist.js
@@ -385,6 +451,7 @@ var onMessage = function(request, sender, callback) {
 })();
 
 /******************************************************************************/
+/******************************************************************************/
 
 // stats.js
 
@@ -400,45 +467,47 @@ var getPageDetails = function(µb, tabId) {
     if ( !pageStore ) {
         return r;
     }
-    var prepareRequests = function(requests, hasher) {
+    var prepareRequests = function(wantBlocked, hasher) {
         var µburi = µb.URI;
+        var dict = pageStore.netFilteringCache.fetchAll();
         var r = [];
-        var details, pos, hostname, domain;
-        for ( var requestURL in requests ) {
-            if ( requests.hasOwnProperty(requestURL) === false ) {
+        var details, pos, result, hostname, domain;
+        for ( var url in dict ) {
+            if ( dict.hasOwnProperty(url) === false ) {
                 continue;
             }
-            details = requests[requestURL];
+            details = dict[url].data;
             if ( typeof details !== 'string' ) {
                 continue;
             }
-            hasher.appendStr(requestURL);
-            hasher.appendStr(details);
             pos = details.indexOf('\t');
-            hostname = µburi.hostnameFromURI(requestURL);
-            domain = µburi.domainFromHostname(hostname);
-            if ( domain === '' ) {
-                domain = hostname;
+            result = details.slice(pos + 1);
+            if ( wantBlocked !== pageStore.boolFromResult(result) ) {
+                continue;
             }
+            hasher.appendStr(url);
+            hasher.appendStr(details);
+            hostname = µburi.hostnameFromURI(url);
+            domain = µburi.domainFromHostname(hostname) || hostname;
             r.push({
                 type: details.slice(0, pos),
                 domain: domain,
-                url: requestURL,
-                reason: details.slice(pos + 1)
+                url: url,
+                reason: result
             });
         }
         return r;
     };
     var hasher = new YaMD5();
-    if ( µb.userSettings.logBlockedRequests ) {
-        r.blockedRequests = prepareRequests(pageStore.blockedRequests, hasher);
-    }
-    if ( µb.userSettings.logAllowedRequests ) {
-        r.allowedRequests = prepareRequests(pageStore.allowedRequests, hasher);
+    if ( µb.userSettings.logRequests ) {
+        r.blockedRequests = prepareRequests(true, hasher);
+        r.allowedRequests = prepareRequests(false, hasher);
     }
     r.hash = hasher.end();
     return r;
 };
+
+/******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
     var µb = µBlock;
@@ -472,6 +541,7 @@ var onMessage = function(request, sender, callback) {
 
 })();
 
+/******************************************************************************/
 /******************************************************************************/
 
 // about.js

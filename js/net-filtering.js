@@ -28,6 +28,8 @@
 
 /******************************************************************************/
 
+var µb = µBlock;
+
 // fedcba9876543210
 // |||   | |      |
 // |||   | |      |
@@ -1023,7 +1025,7 @@ FilterParser.prototype.parseOptParty = function(not) {
 /******************************************************************************/
 
 FilterParser.prototype.parseOptHostnames = function(raw) {
-    var µburi = µBlock.URI;
+    var µburi = µb.URI;
     var hostnames = raw.split('|');
     var hostname, not, domain;
     for ( var i = 0; i < hostnames.length; i++ ) {
@@ -1155,8 +1157,8 @@ FilterParser.prototype.parse = function(s) {
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
     this.buckets = new Array(8);
-    this.blockedAnyPartyHostnames = new µBlock.LiquidDict();
-    this.blocked3rdPartyHostnames = new µBlock.LiquidDict();
+    this.blockedAnyPartyHostnames = new µb.LiquidDict();
+    this.blocked3rdPartyHostnames = new µb.LiquidDict();
     this.filterParser = new FilterParser();
     this.noDomainBits = this.toDomainBits(noDomainName);
     this.reset();
@@ -1633,7 +1635,7 @@ FilterContainer.prototype.matchAnyPartyHostname = function(requestHostname) {
         return '||' + requestHostname + '^';
     }
     // Check parent hostnames if quick test failed
-    var hostnames = µBlock.URI.parentHostnamesFromHostname(requestHostname);
+    var hostnames = µb.URI.parentHostnamesFromHostname(requestHostname);
     for ( var i = 0, n = hostnames.length; i < n; i++ ) {
         if ( this.blockedAnyPartyHostnames.test(hostnames[i]) ) {
             return '||' + hostnames[i] + '^';
@@ -1658,7 +1660,7 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
         return '||' + requestHostname + '^$third-party';
     }
     // Check parent hostnames if quick test failed
-    var hostnames = µBlock.URI.parentHostnamesFromHostname(requestHostname);
+    var hostnames = µb.URI.parentHostnamesFromHostname(requestHostname);
     for ( var i = 0, n = hostnames.length; i < n; i++ ) {
         if ( this.blocked3rdPartyHostnames.test(hostnames[i]) ) {
             return '||' + hostnames[i] + '^$third-party';
@@ -1675,9 +1677,10 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 // Some type of requests are exceptional, they need custom handling,
 // not the generic handling.
 
-FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType, requestHostname) {
+FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType) {
     var url = requestURL.toLowerCase();
     var pageDomain = pageDetails.pageDomain || '';
+    var requestHostname = µb.URI.hostnameFromURI(requestURL);
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
         FirstParty :
         ThirdParty;
@@ -1710,7 +1713,7 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
     bf = this.matchTokens(url);
     if ( bf === false ) {
-        return false;
+        return '';
     }
 
     // Test against allow filters
@@ -1728,7 +1731,7 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType, requestHostname) {
+FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType) {
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
     //     `match-case` option not supported, but then, I saw only one
@@ -1757,9 +1760,17 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // filter.
 
     var pageDomain = pageDetails.pageDomain || '';
-    var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
-        FirstParty :
-        ThirdParty;
+    var requestHostname = µb.URI.hostnameFromURI(requestURL);
+
+    // Find out the relation between the page and request
+    var party = ThirdParty;
+    if ( requestHostname.slice(0 - pageDomain.length) === pageDomain ) {
+        // Be sure to not confuse 'example.com' with 'anotherexample.com'
+        var c = requestHostname.charAt(0 - pageDomain.length - 1);
+        if ( c === '' || c === '.' ) {
+            party = FirstParty;
+        }
+    }
 
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
@@ -1784,7 +1795,7 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     buckets[7] = categories[this.makeCategoryKey(BlockOneParty | Important | type | this.noDomainBits)];
     var bf = this.matchTokens(url);
     if ( bf !== false ) {
-        return bf.toString();
+        return bf.toString() + '$important';
     }
 
     // Test hostname-based block filters
@@ -1810,7 +1821,7 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
 
     // If there is no block filter, no need to test against allow filters
     if ( bf === false ) {
-        return false;
+        return '';
     }
 
     // Test against allow filters

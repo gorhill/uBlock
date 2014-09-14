@@ -207,20 +207,12 @@
     "message":"Apply changes",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Enable the logging of blocked requests",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"You can inspect the details of blocked requests if you wish by enabling this option. The logging of blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Enable the logging of non-blocked requests",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"You can inspect the details of non-blocked requests if you wish by enabling this option. The logging of non-blocked requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

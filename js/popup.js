@@ -59,7 +59,7 @@ var renderStats = function() {
     //   - logging of requests enabled
     uDom('#gotoLog').toggleClass(
         'enabled',
-        isHTTP && (stats.logBlockedRequests || stats.logAllowedRequests)
+        isHTTP && stats.logRequests
     );
 
     // Conditions for element picker:

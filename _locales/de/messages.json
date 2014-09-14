@@ -207,20 +207,12 @@
     "message":"Änderungen anwenden",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
+  "logNetRequestsPrompt":{
     "message":"Protokollieren von blockierten Elementen aktivieren",
-    "description":"English: Enable the logging of blocked requests"
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
+  "logNetRequestsHelp":{
     "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Protokollieren von nicht-blockierten Elementen aktivieren",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Du kannst dir die Details von nicht-blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von nicht-blockierten Anfragen erhöht den Speicherbedarf von µBlock. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

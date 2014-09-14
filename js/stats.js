@@ -31,27 +31,13 @@ messaging.start('stats.js');
 
 /******************************************************************************/
 
-var logBlockedSettingChanged = function() {
+var logSettingChanged = function() {
     messaging.tell({
         what: 'userSettings',
-        name: 'logBlockedRequests',
+        name: 'logRequests',
         value: this.checked
     });
-    uDom('#requests table').toggleClass('hideBlocked', !this.checked);
-    uDom('#requests').toggleClass('logEnabled', this.checked || uDom('#logAllowedRequests').prop('checked'));
-    renderPageSelector();
-};
-
-/******************************************************************************/
-
-var logAllowedSettingChanged = function() {
-    messaging.tell({
-        what: 'userSettings',
-        name: 'logAllowedRequests',
-        value: this.checked
-    });
-    uDom('#requests table').toggleClass('hideAllowed', !this.checked);
-    uDom('#requests').toggleClass('logEnabled', this.checked || uDom('#logBlockedRequests').prop('checked'));
+    uDom('#requests').toggleClass('logEnabled', this.checked);
     renderPageSelector();
 };
 
@@ -186,7 +172,7 @@ var pageSelectorChanged = function() {
 /******************************************************************************/
 
 var renderPageSelector = function(targetTabId) {
-    if ( !uDom('#logBlockedRequests').prop('checked') && !uDom('#logAllowedRequests').prop('checked') ) {
+    if ( !uDom('#logRequests').prop('checked') ) {
         return;
     }
     var selectedTabId = targetTabId || parseInt(uDom('#pageSelector').val(), 10);
@@ -228,18 +214,14 @@ var renderPageSelector = function(targetTabId) {
 /******************************************************************************/
 
 var onUserSettingsReceived = function(details) {
-    uDom('#logBlockedRequests').prop('checked', details.logBlockedRequests);
-    uDom('#logAllowedRequests').prop('checked', details.logAllowedRequests);
-    uDom('#requests').toggleClass('logEnabled', details.logBlockedRequests || details.logAllowedRequests);
-    uDom('#requests table').toggleClass('hideBlocked', !details.logBlockedRequests);
-    uDom('#requests table').toggleClass('hideAllowed', !details.logAllowedRequests);
+    uDom('#logRequests').prop('checked', details.logRequests);
+    uDom('#requests').toggleClass('logEnabled', details.logRequests);
 
     var matches = window.location.search.slice(1).match(/(?:^|&)which=(\d+)/);
     var tabId = matches && matches.length === 2 ? parseInt(matches[1], 10) : 0;
     renderPageSelector(tabId);
 
-    uDom('#logBlockedRequests').on('change', logBlockedSettingChanged);
-    uDom('#logAllowedRequests').on('change', logAllowedSettingChanged);
+    uDom('#logRequests').on('change', logSettingChanged);
     uDom('#refresh').on('click', function() { renderPageSelector(); });
     uDom('#pageSelector').on('change', pageSelectorChanged);
 };

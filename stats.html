@@ -70,12 +70,6 @@ tr.requestEntry td:nth-of-type(1) {
 tr.requestEntry td:nth-of-type(2) {
     text-align: right;
     }
-table.hideBlocked tr.logBlocked {
-    display: none;
-    }
-table.hideAllowed tr.logAllowed {
-    display: none;
-    }
 tr.logBlocked {
     background-color: #fff8f8;
     }
@@ -98,12 +92,9 @@ tr.logAllowed ~ tr td:nth-of-type(3) b {
 <body>
 
 <ul>
-    <li><input id="logBlockedRequests" type="checkbox" data-range="bool" /><label data-i18n="logBlockedRequestsPrompt"></label>
+    <li><input id="logRequests" type="checkbox" data-range="bool" /><label data-i18n="logNetRequestsPrompt"></label>
     <button class="whatisthis"></button>
-    <div class="whatisthis-expandable para" data-i18n="logBlockedRequestsHelp"></div>
-    <li><input id="logAllowedRequests" type="checkbox" data-range="bool" /><label data-i18n="logAllowedRequestsPrompt"></label>
-    <button class="whatisthis"></button>
-    <div class="whatisthis-expandable para" data-i18n="logAllowedRequestsHelp"></div>
+    <div class="whatisthis-expandable para" data-i18n="logNetRequestsHelp"></div>
 </ul>
 
 <div id="requests">

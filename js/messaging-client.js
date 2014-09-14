@@ -68,16 +68,7 @@ var messaging = (function(name){
     };
 
     var start = function(name) {
-        port = chrome.runtime.connect({
-            name:   name +
-                    '/' +
-                    String.fromCharCode(
-                        Math.random() * 0x7FFF | 0, 
-                        Math.random() * 0x7FFF | 0,
-                        Math.random() * 0x7FFF | 0,
-                        Math.random() * 0x7FFF | 0
-                    )
-        });
+        port = chrome.runtime.connect({ name: name });
         port.onMessage.addListener(onPortMessage);
 
         // https://github.com/gorhill/uBlock/issues/193
@@ -123,7 +114,7 @@ var messaging = (function(name){
 
     var flushCallbacks = function() {
         var callback;
-        for ( id in requestIdToCallbackMap ) {
+        for ( var id in requestIdToCallbackMap ) {
             if ( requestIdToCallbackMap.hasOwnProperty(id) === false ) {
                 continue;
             }

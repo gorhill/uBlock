@@ -41,8 +41,7 @@ return {
         autoUpdate: true,
         collapseBlocked: true,
         externalLists: '',
-        logBlockedRequests: false,
-        logAllowedRequests: false,
+        logRequests: false,
         parseAllABPHideFilters: true,
         showIconBadge: true
     },

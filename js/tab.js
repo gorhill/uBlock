@@ -114,7 +114,11 @@
 
 µBlock.unbindTabFromPageStats = function(tabId) {
     //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
-    delete this.pageStores[tabId];
+    var pageStore = this.pageStores[tabId];
+    if ( pageStore !== undefined ) {
+        pageStore.dispose();
+        delete this.pageStores[tabId];
+    }
 };
 
 /******************************************************************************/

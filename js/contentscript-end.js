@@ -56,16 +56,7 @@ var uBlockMessaging = (function(name){
     };
 
     var start = function(name) {
-        port = chrome.runtime.connect({
-            name:   name +
-                    '/' +
-                    String.fromCharCode(
-                        Math.random() * 0x7FFF | 0, 
-                        Math.random() * 0x7FFF | 0,
-                        Math.random() * 0x7FFF | 0,
-                        Math.random() * 0x7FFF | 0
-                    )
-        });
+        port = chrome.runtime.connect({ name: name });
         port.onMessage.addListener(onPortMessage);
 
         // https://github.com/gorhill/uBlock/issues/193
@@ -111,7 +102,7 @@ var uBlockMessaging = (function(name){
 
     var flushCallbacks = function() {
         var callback;
-        for ( id in requestIdToCallbackMap ) {
+        for ( var id in requestIdToCallbackMap ) {
             if ( requestIdToCallbackMap.hasOwnProperty(id) === false ) {
                 continue;
             }
@@ -527,62 +518,10 @@ var uBlockMessaging = (function(name){
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/7
+// Permanent
 
 (function() {
     var messaging = uBlockMessaging;
-
-    var blockableElements = {
-        'embed': 'src',
-        'iframe': 'src',
-        'img': 'src',
-        'object': 'data'
-    };
-
-    // First pass
-    messaging.ask({ what: 'blockedRequests' }, function(details) {
-        var elems = document.querySelectorAll('embed,iframe,img,object');
-        var blockedRequests = details.blockedRequests;
-        var collapse = details.collapse;
-        var i = elems.length;
-        var elem, tagName, prop, src;
-        var selectors = [];
-        while ( i-- ) {
-            elem = elems[i];
-            tagName = elem.tagName.toLowerCase();
-            prop = blockableElements[tagName];
-            if ( prop === undefined ) {
-                continue;
-            }
-            src = elem[prop];
-            if ( typeof src !== 'string' || src === '' ) {
-                continue;
-            }
-            if ( blockedRequests[src] === undefined ) {
-                continue;
-            }
-            // If `!important` is not there, going back using history will
-            // likely cause the hidden element to re-appear.
-            if ( collapse ) {
-                if ( elem.parentNode ) {
-                    elem.parentNode.removeChild(elem);
-                } else {
-                    elem.style.setProperty('display', 'none', 'important');
-                }
-            } else {
-                elem.style.setProperty('visibility', 'hidden', 'important');
-            }
-            selectors.push(tagName + '[' + prop + '="' + src + '"]');
-        }
-        if ( selectors.length !== 0 ) {
-            messaging.tell({
-                what: 'injectedSelectors',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors: selectors
-            });
-        }
-    });
 
     // Listeners to mop up whatever is otherwise missed:
     // - Future requests not blocked yet
@@ -612,11 +551,15 @@ var uBlockMessaging = (function(name){
         if ( typeof src !== 'string' || src === '' ) {
             return;
         }
+        if ( src.slice(0, 4) !== 'http' ) {
+            return;
+        }
+
         // https://github.com/gorhill/uBlock/issues/174
         // Do not remove fragment from src URL
 
         var onAnswerReceived = function(details) {
-            if ( !details.blocked ) {
+            if ( typeof details !== 'object' || details === null ) {
                 return;
             }
             // If `!important` is not there, going back using history will
@@ -637,7 +580,15 @@ var uBlockMessaging = (function(name){
                 selectors: tagName + '[' + prop + '="' + src + '"]'
             });
         };
-        messaging.ask({ what: 'blockedRequest', url: src }, onAnswerReceived);
+
+        var details = {
+            what: 'filterRequest',
+            tagName: tagName,
+            requestURL: src,
+            pageHostname: window.location.hostname,
+            pageURL: window.location.href
+        };
+        messaging.ask(details, onAnswerReceived);
     };
 
     var onResourceLoaded = function(ev) {
@@ -652,6 +603,98 @@ var uBlockMessaging = (function(name){
 
     document.addEventListener('load', onResourceLoaded, true);
     document.addEventListener('error', onResourceFailed, true);
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/7
+
+// Executed only once
+
+(function() {
+    var messaging = uBlockMessaging;
+
+    var readyProps = {
+        'img': 'complete'
+    };
+    var srcProps = {
+        'embed': 'src',
+        'iframe': 'src',
+        'img': 'src',
+        'object': 'data'
+    };
+    var elements = [];
+
+    var onAnswerReceived = function(details) {
+        if ( typeof details !== 'object' || details === null ) {
+            return;
+        }
+        var requests = details.requests;
+        var collapse = details.collapse;
+        var selectors = [];
+        var i = requests.length;
+        var request, elem;
+        while ( i-- ) {
+            request = requests[i];
+            elem = elements[request.index];
+            if ( collapse ) {
+                if ( elem.parentNode ) {
+                    elem.parentNode.removeChild(elem);
+                } else {
+                    elem.style.setProperty('display', 'none', 'important');
+                }
+            } else {
+                elem.style.setProperty('visibility', 'hidden', 'important');
+            }
+            selectors.push(request.tagName + '[' + srcProps[request.tagName] + '="' + request.url + '"]');
+        }
+        if ( selectors.length !== 0 ) {
+            messaging.tell({
+                what: 'injectedSelectors',
+                type: 'net',
+                hostname: window.location.hostname,
+                selectors: selectors
+            });
+        }
+    };
+
+    var requests = [];
+    var tagNames = ['embed','iframe','img','object'];
+    var elementIndex = 0;
+    var tagName, elems, i, elem, prop, src;
+    while ( tagName = tagNames.pop() ) {
+        elems = document.getElementsByTagName(tagName);
+        i = elems.length;
+        while ( i-- ) {
+            elem = elems[i];
+            prop = srcProps[tagName];
+            if ( prop === undefined ) {
+                continue;
+            }
+            src = elem[prop];
+            if ( typeof src !== 'string' || src === '' ) {
+                continue;
+            }
+            if ( src.slice(0, 4) !== 'http' ) {
+                continue;
+            }
+            requests.push({
+                index: elementIndex,
+                tagName: tagName,
+                url: src
+            });
+            elements[elementIndex] = elem;
+            elementIndex += 1;
+        }
+    }
+    var details = {
+        what: 'filterRequests',
+        pageURL: window.location.href,
+        pageHostname: window.location.hostname,
+        requests: requests
+    };
+    messaging.ask(details, onAnswerReceived);
 })();
 
 /******************************************************************************/

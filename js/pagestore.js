@@ -38,36 +38,196 @@ To create a log of net requests
 /******************************************************************************/
 
 var µb = µBlock;
-var frameStoreJunkyard = [];
-var pageStoreJunkyard = [];
+
+/******************************************************************************/
+/******************************************************************************/
+
+// To mitigate memory churning
+var netFilteringResultCacheEntryJunkyard = [];
+var netFilteringResultCacheEntryJunkyardMax = 200;
 
 /******************************************************************************/
 
-var frameStoreFactory = function(frameURL) {
-    var entry = frameStoreJunkyard.pop();
-    if ( entry ) {
-        return entry.init(frameURL);
-    }
-    return new FrameStore(frameURL);
+var NetFilteringResultCacheEntry = function(data) {
+    this.init(data);
 };
 
-var disposeFrameStores = function(map) {
-    for ( var k in map ) {
-        if ( map.hasOwnProperty(k) === false ) {
+/******************************************************************************/
+
+NetFilteringResultCacheEntry.prototype.init = function(data) {
+    this.data = data;
+    this.time = Date.now();
+};
+
+/******************************************************************************/
+
+NetFilteringResultCacheEntry.prototype.dispose = function() {
+    this.data = null;
+    if ( netFilteringResultCacheEntryJunkyard.length < netFilteringResultCacheEntryJunkyardMax ) {
+        netFilteringResultCacheEntryJunkyard.push(this);
+    }
+};
+
+/******************************************************************************/
+
+NetFilteringResultCacheEntry.factory = function(data) {
+    var entry = netFilteringResultCacheEntryJunkyard.pop();
+    if ( entry === undefined ) {
+        entry = new NetFilteringResultCacheEntry(data);
+    } else {
+        entry.init(data);
+    }
+    return entry;
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
+// To mitigate memory churning
+var uidGenerator = 1;
+var netFilteringCacheJunkyard = [];
+var netFilteringCacheJunkyardMax = 10;
+
+/******************************************************************************/
+
+var NetFilteringResultCache = function() {
+    this.init();
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.factory = function() {
+    var entry = netFilteringCacheJunkyard.pop();
+    if ( entry === undefined ) {
+        entry = new NetFilteringResultCache();
+    } else {
+        entry.init();
+    }
+    return entry;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.init = function() {
+    this.uname = 'NetFilteringResultCache:' + uidGenerator++;
+    this.urls = {};
+    this.count = 0;
+    this.shelfLife = 60 * 1000;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.dispose = function() {
+    for ( var key in this.urls ) {
+        if ( this.urls.hasOwnProperty(key) === false ) {
             continue;
         }
-        if ( frameStoreJunkyard.length > 50 ) {
+        this.urls[key].dispose();
+    }
+    µBlock.asyncJobs.remove(this.uname);
+    this.uname = '';
+    this.urls = {};
+    this.count = 0;
+    if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
+        netFilteringCacheJunkyard.push(this);
+    }
+    return null;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.add = function(url, data) {
+    var entry = this.urls[url];
+    if ( entry !== undefined ) {
+        entry.data = data;
+        entry.time = Date.now();
+        return;
+    }
+    this.urls[url] = NetFilteringResultCacheEntry.factory(data);
+    if ( this.count === 0 ) {
+        this.pruneAsync();
+    }
+    this.count += 1;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.fetchAll = function() {
+    return this.urls;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.compareEntries = function(a, b) {
+    return this.urls[b].time - this.urls[a].time;
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.prune = function() {
+    var keys = Object.keys(this.urls).sort(this.compareEntries.bind(this));
+    var obsolete = Date.now() - this.shelfLife;
+    var key, entry;
+    var i = keys.length;
+    while ( i-- ) {
+        key = keys[i];
+        entry = this.urls[key];
+        if ( entry.time > obsolete ) {
             break;
         }
-        frameStoreJunkyard.push(map[k].dispose());
+        entry.dispose();
+        delete this.urls[key];
     }
-    return {};
+    this.count -= keys.length - i - 1;
+    if ( this.count > 0 ) {
+        this.pruneAsync();
+    }
 };
+
+// https://www.youtube.com/watch?v=0vTBZzB_gfY
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.pruneAsync = function() {
+    µBlock.asyncJobs.add(
+        this.uname,
+        null,
+        this.prune.bind(this),
+        this.shelfLife + 120000,
+        false
+    );
+};
+
+/******************************************************************************/
+
+NetFilteringResultCache.prototype.lookup = function(url) {
+    var entry = this.urls[url];
+    return entry !== undefined ? entry.data : undefined;
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
+// To mitigate memory churning
+var frameStoreJunkyard = [];
+var frameStoreJunkyardMax = 50;
 
 /******************************************************************************/
 
 var FrameStore = function(frameURL) {
     this.init(frameURL);
+};
+
+/******************************************************************************/
+
+FrameStore.factory = function(frameURL) {
+    var entry = frameStoreJunkyard.pop();
+    if ( entry === undefined ) {
+        entry = new FrameStore(frameURL);
+    } else {
+        entry.init(frameURL);
+    }
+    return entry;
 };
 
 /******************************************************************************/
@@ -83,23 +243,41 @@ FrameStore.prototype.init = function(frameURL) {
 
 FrameStore.prototype.dispose = function() {
     this.pageHostname = this.pageDomain = '';
-    return this;
+    if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
+        frameStoreJunkyard.push(this);
+    }
+    return null;
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
-var pageStoreFactory = function(tabId, pageURL) {
-    var entry = pageStoreJunkyard.pop();
-    if ( entry ) {
-        return entry.init(tabId, pageURL);
-    }
-    return new PageStore(tabId, pageURL);
-};
+// To mitigate memory churning
+var pageStoreJunkyard = [];
+var pageStoreJunkyardMax = 10;
+
+/******************************************************************************/
+
+// Cache only what is worth it if logging is disabled
+// http://jsperf.com/string-indexof-vs-object
+var collapsibleRequestTypes = 'image sub_frame object';
 
 /******************************************************************************/
 
 var PageStore = function(tabId, pageURL) {
     this.init(tabId, pageURL);
+};
+
+/******************************************************************************/
+
+PageStore.factory = function(tabId, pageURL) {
+    var entry = pageStoreJunkyard.pop();
+    if ( entry === undefined ) {
+        entry = new PageStore(tabId, pageURL);
+    } else {
+        entry.init(tabId, pageURL);
+    }
+    return entry;
 };
 
 /******************************************************************************/
@@ -114,25 +292,32 @@ PageStore.prototype.init = function(tabId, pageURL) {
     // Use hostname if no domain can be extracted
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
 
-    this.frames = disposeFrameStores(this.frames);
+    this.frames = {};
     this.netFiltering = true;
     this.netFilteringReadTime = 0;
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
-    this.blockedRequests = {};
-    this.allowedRequests = {};
-    this.disposeTime = 0;
+
+    this.netFilteringCache = NetFilteringResultCache.factory();
+    if ( µb.userSettings.logRequests ) {
+        this.netFilteringCache.shelfLife = 30 * 60 * 1000;
+    }
+
     return this;
 };
 
 /******************************************************************************/
 
 PageStore.prototype.reuse = function(pageURL) {
+    this.disposeFrameStores();
+    this.netFilteringCache = this.netFilteringCache.dispose();
     var previousPageURL = this.pageURL;
     this.init(this.tabId, pageURL);
     this.previousPageURL = previousPageURL;
     return this;
 };
+
+// https://www.youtube.com/watch?v=dltNSbOupgE
 
 /******************************************************************************/
 
@@ -142,11 +327,30 @@ PageStore.prototype.dispose = function() {
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
     this.pageURL = '';
+    this.previousPageURL = '';
     this.pageHostname = '';
     this.pageDomain = '';
-    if ( pageStoreJunkyard.length < 8 ) {
+    this.disposeFrameStores();
+    this.netFilteringCache = this.netFilteringCache.dispose();
+    if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
         pageStoreJunkyard.push(this);
     }
+    return null;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.disposeFrameStores = function() {
+    var frames = this.frames;
+    if ( typeof frames === 'object' ) {
+        for ( var k in frames ) {
+            if ( frames.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            frames[k].dispose();
+        }
+    }
+    this.frames = {};
 };
 
 /******************************************************************************/
@@ -154,7 +358,7 @@ PageStore.prototype.dispose = function() {
 PageStore.prototype.addFrame = function(frameId, frameURL) {
     var frameStore = this.frames[frameId];
     if ( frameStore === undefined ) {
-        this.frames[frameId] = frameStore = frameStoreFactory(frameURL);
+        this.frames[frameId] = frameStore = FrameStore.factory(frameURL);
         //console.debug('µBlock> PageStore.addFrame(%d, "%s")', frameId, frameURL);
     }
     return frameStore;
@@ -178,35 +382,26 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 
 /******************************************************************************/
 
-PageStore.prototype.recordRequest = function(type, url, reason) {
-    var blocked = reason !== false && reason.slice(0, 2) !== '@@';
-
-    if ( !blocked ) {
-        this.perLoadAllowedRequestCount++;
-        µb.localSettings.allowedRequestCount++;
-        if ( µb.userSettings.logAllowedRequests ) {
-            this.allowedRequests[url] = type + '\t' + (reason || '');
-        }
-        return;
+PageStore.prototype.filterRequest = function(context, requestType, requestURL) {
+    var result = this.netFilteringCache.lookup(requestURL);
+    if ( result !== undefined ) {
+        return result.slice(result.indexOf('\t') + 1);
     }
-
-    µb.updateBadgeAsync(this.tabId);
-
-    this.perLoadBlockedRequestCount++;
-    µb.localSettings.blockedRequestCount++;
-
-    // https://github.com/gorhill/uBlock/issues/7
-    // https://github.com/gorhill/uBlock/issues/12
-
-    // No need to record blocked requests which are not image or frame, as
-    // these are the only ones we try to hide when they are blocked.
-    if ( µb.userSettings.logBlockedRequests === false ) {
-        if ( type === 'image' || type === 'sub_frame' ) {
-            this.blockedRequests[url] = true;
-        }
-        return;
+    //console.debug('µBlock> PageStore.filterRequest(): "%s" not in cache', requestURL);
+    result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
+    if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
+        this.netFilteringCache.add(requestURL, requestType + '\t' + result);
     }
-    this.blockedRequests[url] = type + '\t' + reason;
+    return result;
+};
+
+/******************************************************************************/
+
+// false: not blocked
+// true: blocked
+
+PageStore.prototype.boolFromResult = function(result) {
+    return typeof result === 'string' && result !== '' && result.slice(0, 2) !== '@@';
 };
 
 /******************************************************************************/
@@ -229,7 +424,7 @@ PageStore.prototype.updateBadge = function() {
 /******************************************************************************/
 
 return {
-    factory: pageStoreFactory
+    factory: PageStore.factory
 };
 
 })();
