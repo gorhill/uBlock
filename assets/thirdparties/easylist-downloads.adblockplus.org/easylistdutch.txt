@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: J/2T0vzDisiLU3TO8rw3tg
-! Version: 201409101731
+! Checksum: tdndxqIbnvjufZGSuBJXlA
+! Version: 201409141321
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 10 Sep 2014 17:31 UTC
+! Last modified: 14 Sep 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -35,6 +35,7 @@
 /bolcom-partnerprogramma-wordpress-plugin/*
 /img/recl/*
 /nmc/adv/*
+/prikbordAdvertentie_
 /reclame-extra.
 /reclame-nieuws.
 /reclame.*=banner&
@@ -434,6 +435,8 @@ _advertentieleaderboardhome.
 ||jouwpage.nl/images/banner
 ||jouwtomtom.nl^*/back_adblock.gif
 ||jouwvoordeelindekempen.be^*/banner/
+||katholieknieuwsblad.nl/images/banners/onlineluisteren.gif
+||katholieknieuwsblad.nl/images/banners^*banner
 ||kennisnet.nl/templates/cms/swf/kennisnet/caroussel_v2.swf?
 ||kieskeurig.nl/rectangle?
 ||kijkshop.nl/flash/vanvoordeel.swf
@@ -738,6 +741,7 @@ _advertentieleaderboardhome.
 @@||zeelandnet.nl/prikbord/assets/*/advertenties.js
 ! Uitzonderingen voor EasyList
 @@||ad.nl/ad/css/$~third-party
+@@||ad.nl/static/nmc/prm/frameset/overlay/imago/v2/728x90.jpg?
 @@||adhese.standaard.be/jsonp/callback/sl_test_dso_ipad_optimized_avondeditie_-interstitial/?$script
 @@||adsense.nl^$domain=adsense.nl
 @@||adv.scoutingkatwijk.nl^$domain=scoutingkatwijk.nl
@@ -903,6 +907,7 @@ pen.nl###kolomlinksdiv > a[target="_self"]
 pen.nl###kolomrechtsdiv
 beursgorilla.nl###layer
 hollandsheetste.nl###ldrbrd
+techzine.nl###lead
 accountant.nl,deloads.nl,eindexamen.nu,eindexamens.nu,fok.nl###leaderboard
 nickelodeon.nl###leaderboard_container
 landbouwagenda.nl###leftBottom > div > a[target="_blank"]
@@ -937,6 +942,7 @@ hetkanwel.net###secondary > aside[id^="text-"]:nth-child(3) > .ssc > .textwidget
 hetkanwel.net###secondary > aside[id^="text-"]:nth-child(5) > .ssc > .textwidget
 stoerejongenzzz.nl###sidebar .jetpack-image-container > a
 beautylab.nl###sidebar .textwidget > a[target="_blank"]
+skipr.nl###sidebar > .block.special:nth-child(2)
 gelrenieuws.nl###sidebar2 > script + center
 dejaap.nl###sidebarRight > .blockHeading + article
 computertotaal.nl###sidebar_mediamarkt
@@ -992,7 +998,7 @@ nu.nl##.adsilver
 allradio.nl##.adv
 9292.nl,classicfm.nl,fcupdate.nl,onemorething.nl##.advert
 computeridee.nl##.advertentie-1korting-nl
-apparata.nl,autoblog.nl##.advertisement
+apparata.nl,autoblog.nl,skipr.nl##.advertisement
 biertijd.com##.advertorialtitle ~ *
 synoniemen.net##.annblokslot
 welingelichtekringen.nl##.artblok:nth-child(-2n+6)
@@ -1101,6 +1107,7 @@ weeronline.nl##.specialBlockSmall
 engineeringnet.be##.sponslinks
 europages.nl,utopiatv.nl,vcmw-sigma.nl##.sponsor
 afspraakjes.be,boekmeter.nl,gamesmeter.nl,moviemeter.nl,musicmeter.nl,tvgids.nl##.sponsored
+zeelandnet.nl##.spotlight-list-item._left
 voetbalkrant.com##.take-banner
 z24.nl##.teaser
 metronieuws.nl##.teaser-component-inner
@@ -1109,6 +1116,7 @@ viva.nl##.teasers_sidebar
 noordhollandsdagblad.nl##.textLinksPlus
 marktnet.nl##.textlink.snap_noshots
 tvgids.nl##.tips
+katholieknieuwsblad.nl##.tm-toolbar
 wetenschapsforum.nl##.top_banner
 limburger.nl##.top_story_banner
 chatmetvreemden.be,chatmetvreemden.nl##.trackerclick
@@ -1180,6 +1188,7 @@ phphulp.nl##div[style$="background: #ff0000 url(/img/ads/bhosted.png) top left n
 voetbalzone.nl##div[style*="url(http://static-voetbalzone.nl/images/adfactor/"]
 voetbalzone.nl##div[style*="url(http://static-voetbalzone.nl/images/banners/bannerback.gif)"]
 gpupdate.net##div[style="margin: 0px; background-color: #BDCDE4;"]
+freeones.nl##div[style="padding: 0px; margin: 10px 0px; height: 100px; width: 898px; background-color: #4C89F9; border: 1px solid #4C89F9"]
 dekrantvanmiddendrenthe.nl##div[style="position: relative; width: 300px; height: 250px; overflow: hidden;"]
 moviescene.nl##form[name="justeat"]
 promootjesite.nl##iframe[width="728"][height="90"] + style + script + div[id]

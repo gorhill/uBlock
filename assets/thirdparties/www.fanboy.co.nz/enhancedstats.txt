@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: KRDoTl4nUK1jrnfVkGXcOg
+! Checksum: UAZYuy2YqgmfI6pWc4/4wA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 6 Sep 2014
+! Updated: 14 Sep 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -199,6 +199,7 @@
 /ote/ote.js
 /ote/ste.js
 /pageLevelOmniture.
+/pagespeed.js?
 /ParseOmniture.
 /PluginEndPlayOmniture_
 /pubsys.js
@@ -376,6 +377,7 @@ jsonline.com##.blockPage
 !
 ! ---------- Personal Filters ------
 !
+###topstuff > #wmxmsg
 @@||thepiratebay.se^*/details.js
 @@||thepiratebay.se^*/effects.js
 @@||thepiratebay.se^*/prototype.js
@@ -458,6 +460,7 @@ wolframalpha.com###subpod_zoom
 ||randomhouse.com/js/resxclsa35.js
 ||reuters.com/pulse/2/trb.js
 ||rogersdigitalmedia.com/libs/analytics/RDMOmniture.swf
+||s.update.entrepreneur.com^
 ||schwab.com^*filename=hbx.js
 ||seatguru.com^*/sg-tracking.js
 ||servingyourtown.com/js/metrics.js
@@ -602,6 +605,8 @@ wolframalpha.com###subpod_zoom
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
 @@||actiris.be/urchin.js
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
+@@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com
+@@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com
 @@||akamai.net/*/www-origin.walmart.com/webanalytics/$domain=walmart.com
 @@||amd.com/*/scode_global.js
 @@||amd.com/us/as/scode_$script

@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Fri, 29 Aug 2014 08:52:11 GMT
-# entries:        2476
+# last updated:   Thu, 11 Sep 2014 08:04:45 GMT
+# entries:        2471
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -20,8 +20,6 @@
 127.0.0.1 24log.com
 127.0.0.1 24log.de
 127.0.0.1 24pm-affiliation.com
-127.0.0.1 2log.com
-127.0.0.1 2mdn.net
 127.0.0.1 2o7.net
 127.0.0.1 360yield.com
 127.0.0.1 4affiliate.net
@@ -411,6 +409,7 @@
 127.0.0.1 ads.clubtickets.com
 127.0.0.1 ads.cnn.com
 127.0.0.1 ads.co.com
+127.0.0.1 ads.collegclub.com
 127.0.0.1 ads.com.com
 127.0.0.1 ads.comicbookresources.com
 127.0.0.1 ads.contactmusic.com
@@ -512,27 +511,22 @@
 127.0.0.1 ads.ibest.com.br
 127.0.0.1 ads.ibryte.com
 127.0.0.1 ads.icq.com
+127.0.0.1 ads.iforex.com
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
 127.0.0.1 ads.incgamers.com
-127.0.0.1 ads.indiatimes.com
 127.0.0.1 ads.infi.net
-127.0.0.1 ads.internic.co.il
 127.0.0.1 ads.ipowerweb.com
 127.0.0.1 ads.isoftmarketing.com
-127.0.0.1 ads.itv.com
-127.0.0.1 ads.iwon.com
 127.0.0.1 ads.jewishfriendfinder.com
 127.0.0.1 ads.jiwire.com
 127.0.0.1 ads.jobsite.co.uk
-127.0.0.1 ads.jpost.com
 127.0.0.1 ads.jubii.dk
 127.0.0.1 ads.justhungry.com
 127.0.0.1 ads.kaktuz.net
 127.0.0.1 ads.kelbymediagroup.com
 127.0.0.1 ads.kinobox.cz
-127.0.0.1 ads.kinxxx.com
 127.0.0.1 ads.komli.com
 127.0.0.1 ads.kompass.com
 127.0.0.1 ads.krawall.de
@@ -718,6 +712,7 @@
 127.0.0.1 ads180.com
 127.0.0.1 ads2.brazzers.com
 127.0.0.1 ads2.clearchannel.com
+127.0.0.1 ads2.collegclub.com
 127.0.0.1 ads2.collegeclub.com
 127.0.0.1 ads2.exhedra.com
 127.0.0.1 ads2.gamecity.net
@@ -1430,6 +1425,7 @@
 127.0.0.1 euroclick.com
 127.0.0.1 european-toplist.de
 127.0.0.1 europeanbanners.com
+127.0.0.1 europebanner.net
 127.0.0.1 euroranking.de
 127.0.0.1 euros4click.de
 127.0.0.1 eusta.de
@@ -1623,6 +1619,7 @@
 127.0.0.1 infolinks.com
 127.0.0.1 information.com
 127.0.0.1 infra-ad.com
+127.0.0.1 initgroup.com
 127.0.0.1 inringtone.com
 127.0.0.1 insightexpress.com
 127.0.0.1 insightexpressai.com
@@ -1908,7 +1905,6 @@
 127.0.0.1 partner-ads.com
 127.0.0.1 partner.gonamic.de
 127.0.0.1 partner.pelikan.cz
-127.0.0.1 partner.topcities.com
 127.0.0.1 partnerad.l.google.com
 127.0.0.1 partnercash.de
 127.0.0.1 partners.priceline.com
@@ -1989,6 +1985,7 @@
 127.0.0.1 promozia.de
 127.0.0.1 pronetadvertising.com
 127.0.0.1 propellerads.com
+127.0.0.1 proranktracker.com
 127.0.0.1 proton-tm.com
 127.0.0.1 protraffic.com
 127.0.0.1 provexia.com
@@ -1998,7 +1995,6 @@
 127.0.0.1 pub.club-internet.fr
 127.0.0.1 pub.hardware.fr
 127.0.0.1 pub.opt.pf
-127.0.0.1 pub.realmedia.fr
 127.0.0.1 pubdirecte.com
 127.0.0.1 publicidad.elmundo.es
 127.0.0.1 pubmatic.com
@@ -2248,7 +2244,6 @@
 127.0.0.1 thruport.com
 127.0.0.1 tinybar.com
 127.0.0.1 tizers.net
-127.0.0.1 tldadserv.com
 127.0.0.1 tlvmedia.com
 127.0.0.1 tntclix.co.uk
 127.0.0.1 top-casting-termine.de

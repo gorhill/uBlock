@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: LYkwAMVX67xKNmAFO9sbmA
-! Version: 201409101731
+! Checksum: 3fwKNzqazNl8Zse6AuXn0A
+! Version: 201409141321
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 10 Sep 2014 17:31 UTC
+! Last modified: 14 Sep 2014 13:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -4954,7 +4954,7 @@ modernboard.de##.alt1[style="padding-top:0px"] > div[style="clear:both"] + ul[st
 dforum.net##.alt2[colspan="2"][style="background: #eaeab4"] > font[color="#000"]:first-child:last-child > table[width="100%"][cellspacing="0"][cellpadding="0"]:first-child:last-child
 winboard.org##.alt2[style="padding-top:0px"] > ul[style="list-style-type:none; margin:0px; padding:0px"] > br:first-child + div[align="center"]:last-child
 heise.de##.ama
-radiopsr.de,rsh.de##.amazon
+plattentests.de,radiopsr.de,rsh.de##.amazon
 computerbase.de##.amazon-links
 computerbase.de##.amazon-links-2
 ratgeber-hausmittel.info##.amazon-product-table
@@ -5499,7 +5499,7 @@ archiv.raid-rush.ws##.pagebody:first-child > div[style="margin-bottom:80px;heigh
 freiburger-nachrichten.ch##.pane-frn-content-inserate-slider
 oekoportal.de##.panel-display > .panel-col-side > #block-views-website-block-1
 spiegelfechter.com##.parship
-computerbild.de,dvd-forum.at,dwdl.de,euractiv.de,giga.de,ibash.de,leinehertz.net,multipic.de##.partner
+computerbild.de,dvd-forum.at,dwdl.de,euractiv.de,giga.de,ibash.de,leinehertz.net,multipic.de,plattentests.de##.partner
 tvemsdetten.com##.partner-slider
 sat1.de##.partner_box
 eatsmarter.de##.partnerbox
@@ -7169,6 +7169,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||coolespiele.com/game.php?url=http://richmedia.coolespiele.com/$subdocument
 @@||dawanda.com/ads?$xmlhttprequest
 @@||de.ebayobjects.com/1ai/mobile.homepage/superteaser;$subdocument,domain=mobile.de
+@@||dein-werbebanner.de^$~third-party
 @@||derstandard.at/adserver/t.gif$domain=videoservice.apa.at
 @@||devaki.ch/www/delivery/ajs.php?$script,domain=tagesanzeiger.ch
 @@||devaki.ch/www/delivery/lg.php?$image,domain=tagesanzeiger.ch
@@ -7590,6 +7591,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||ebook-hell.to/js/ads.js
 @@||eclipso.*/plugins/js/adframe.js
 @@||einrichtungsbeispiele.de^*/click.js
+@@||eltelmis.de^$document,subdocument,domain=gamona.de
 @@||energielupe.de^$elemhide
 @@||epochtimes.de^$elemhide
 @@||ethnarc.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de

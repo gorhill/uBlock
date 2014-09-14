@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Uiuds42UGSd5MLxucJeq0Q
+! Checksum: y9bS+ShXkq9zv5kIfdE9mA
 ! Title: EasyList Hebrew
-! Last modified: 10/09/14  19:30
+! Last modified: 14/09/14  10:51
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -61,6 +61,7 @@
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
+||newclio.co.il/sep$popup,third-party
 ||oceanmedia.co.il/landingpages/$popup
 ||onclickads.net^$popup
 ||osef.co.il^$third-party
@@ -110,7 +111,6 @@
 ||common.nana10.co.il/JScript/GeneralModules/Banner/
 ||nana10.co.il/SiteServicePromotion/
 !-Haaretz/TheMarker/Mouse.co.il-!
-/neto_search.$domain=haaretz.co.il|themarker.com|mouse.co.il
 |http://dclk.$domain=haaretz.co.il|themarker.com|mouse.co.il
 ||haaretz.co.il/htz/images/bg/Ad_bg.gif
 ||haaretz.co.il^*/Banners/
@@ -161,8 +161,10 @@
 !-fxp-!
 ||cdn.salamtak.org.uk^$domain=fxp.co.il
 ||fcdn.co.il/*.swf$domain=fxp.co.il
+||fifa.games-il.info/AHfVczS/fed/repeat/*
 ||fortest.info^$domain=fxp.co.il
 ||fxp.co.il/skinfxp/*.php$script,image
+||games-il.org.uk^$domain=fxp.co.il
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
 
 !
@@ -524,6 +526,7 @@ israelweather.co.il###weekFlashes
 junkyard.co.il##.plasma_banner
 junkyard.co.il##DIV[id^="banner"]
 jobmaster.co.il##TABLE[width="100%"][style="border-top:1px solid #EEEEEE;"]
+kafe.co.il###adv
 kikarhashabat.co.il###exposeMask
 kikarhashabat.co.il###jumbo
 kikarhashabat.co.il###maavaron_overlay
@@ -569,6 +572,7 @@ mako.co.il###topPageStrip.not_for_print
 mako.co.il##.header_level2_container
 mako.co.il##.mako_banner_coast
 mako.co.il##.sidebar_pic
+mako.co.il##div[id^="dclk_overlay_"]
 mako.co.il##[href^="http://apps.mako.co.il/common/Advert"]
 mako.co.il##[href^="http://styleriver.mako.co.il/"]
 mako.co.il##[href^="http://www.mysupermarket.co.il/?banner"]
@@ -586,6 +590,9 @@ mishlohim.co.il##.Banners
 moreshet.co.il###superJamboBanner
 morfix.co.il##.adv_ph
 mouse.co.il###articleAdvert
+mouse.co.il###commercial_box
+mouse.co.il###div-gpt-ad2-top-banner728x90
+mouse.co.il###div-gpt-extra_670x189_madors
 mouse.co.il###floatingbannerdiv
 mouse.co.il##.ads
 mouse.co.il##.noprint + .inline-box-text_new.noprint
@@ -665,6 +672,7 @@ reshet.tv##div[id^="CM8ShowAd"]
 reshet.tv###Ctrl_nPromotionBanner
 reshet.tv###DivContent[rel="5498"]
 reshet.tv###prArea
+reshet.tv##.comercialarea
 rest.co.il###divLeftBanner
 rest.co.il##.adBox2
 rest.co.il##.ad_box_1

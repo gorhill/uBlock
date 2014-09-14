@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! [Icelandic ABP List]
 ! Adblock Plus listi fyrir íslenskar vefsíður / Adblock Plus list for icelandic websites
-! Síðast uppfærður / Last updated 12 Júní/June 2014
+! Síðast uppfærður / Last updated 11 September/September 2014
 ! Listinn er í þróun, láttu vita ef þú finnur villur eða vefi sem vantar í listann / The list is under development, please let me know if you find any errors or webs missing from the list
 ! adblock@gardar.net
 ! http://adblock.gardar.net
@@ -80,6 +80,7 @@ menn.is###text_mnky-2
 menn.is###text_mnky-3
 mbl.is###slot-668
 mbl.is##.augl
+mbl.is/a/vedur/icelandair_vedur.gif
 ||kynning.olis.is/
 pressan.is##.randombanner-upperright
 apache.hvitahusid.is###augl
@@ -114,9 +115,11 @@ fotbolti.net###banner14
 fotbolti.net###banner15
 fotbolti.net###banner16
 fotbolti.net###banner17
+fotbolti.net###banner23
 ||fotbolti.net/themes/2013/images/LG_rammi_mestlesid.jpg
 ||fotbolti.net/themes/2013/images/LG_rammi_mestlesid_back.jpg
 ||fotbolti.net/themes/2013/images/vef_bg.png
 ||fotbolti.net/themes/2013/images/dominos_logo1.png
 ||fotbolti.net/themes/2013/images/vodafone_logo.png
 ||auglysingar.pipar.is/
+||ads.hun.is/

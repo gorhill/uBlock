@@ -3349,6 +3349,7 @@
 127.0.0.1	ads2.delfi.ee
 127.0.0.1	ads2.ero-advertising.com
 127.0.0.1	ads2.exhedra.com
+127.0.0.1	ads2.fingersoft.net
 127.0.0.1	ads2.focalink.com
 127.0.0.1	ads2.gamecity.net
 127.0.0.1	ads2.greystripe.com
@@ -4186,6 +4187,7 @@
 127.0.0.1	advombat.ru
 127.0.0.1	advprotraffic.com
 127.0.0.1	advrtice.com
+127.0.0.1	advrts.s3.amazonaws.com
 127.0.0.1	advspot.com
 127.0.0.1	advt.webindia123.com
 127.0.0.1	adw.ero-advertising.com
@@ -4230,6 +4232,7 @@
 127.0.0.1	adzonk.com
 127.0.0.1	adzouk.com
 127.0.0.1	aehistory.112.2o7.net
+127.0.0.1	aen.belugaboost.com
 127.0.0.1	aeropostale.resultspage.com
 127.0.0.1	aetv.112.2o7.net
 127.0.0.1	afe.specificclick.net
@@ -4264,6 +4267,7 @@
 127.0.0.1	affiliate.casinorewards.com
 127.0.0.1	affiliate.ckmtracker.com
 127.0.0.1	affiliate.cpavhits.com
+127.0.0.1	affiliate.cshtracker.com
 127.0.0.1	affiliate.distrigame.com
 127.0.0.1	affiliate.domaindirect.net
 127.0.0.1	affiliate.doteasy.com
@@ -4483,6 +4487,7 @@
 127.0.0.1	alloydigital.com
 127.0.0.1	allsolutionsnetwork.com
 127.0.0.1	allyes.com
+127.0.0.1	alog.umeng.com
 127.0.0.1	alogin.linksynergy.com
 127.0.0.1	alpha.bnex.com
 127.0.0.1	alphagirlz.mobi
@@ -4712,6 +4717,7 @@
 127.0.0.1	api.keen.io
 127.0.0.1	api.kiip.me
 127.0.0.1	api.kissmetrics.com
+127.0.0.1	api.magmamobile.com
 127.0.0.1	api.mixpanel.com
 127.0.0.1	api.mobpartner.mobi
 127.0.0.1	api.optimizely.com
@@ -6798,6 +6804,8 @@
 127.0.0.1	cdn.xeontopa.com
 127.0.0.1	cdn.zerezas.com
 127.0.0.1	cdn.zopim.com
+127.0.0.1	cdn0.mobmore.com
+127.0.0.1	cdn0.puata.info
 127.0.0.1	cdn1-ref.landing.comcontent.net
 127.0.0.1	cdn1.ads.contentabc.com
 127.0.0.1	cdn1.appia.com
@@ -9582,6 +9590,8 @@
 127.0.0.1	e-tracker.de
 127.0.0.1	e-zeeinternet.com
 127.0.0.1	e.admob.com
+127.0.0.1	e.ai.inmobi.com
+127.0.0.1	e.crashlytics.com
 127.0.0.1	e.ilovethat.co.uk
 127.0.0.1	e.ligatus.com
 127.0.0.1	e.monetate.net
@@ -10033,6 +10043,7 @@
 127.0.0.1	evwr.hitbox.com
 127.0.0.1	ewordofmouth.com
 127.0.0.1	ex.joyjasp.com
+127.0.0.1	ex.mobmore.com
 127.0.0.1	ex.puata.info
 127.0.0.1	ex.umengcloud.com
 127.0.0.1	exactseek.com
@@ -12065,7 +12076,6 @@
 127.0.0.1	img.testsuite.adition.com
 127.0.0.1	img.tradedoubler.com
 127.0.0.1	img.users.51.la
-127.0.0.1	img.web.de
 127.0.0.1	img.webring.com
 127.0.0.1	img.wmp10.elsitiodc.com
 127.0.0.1	img.woolik.com
@@ -13280,6 +13290,7 @@
 127.0.0.1	m.livejasmin.com
 127.0.0.1	m.matdm.com
 127.0.0.1	m.millennialmedia.com
+127.0.0.1	m.quantcount.com
 127.0.0.1	m.sancdn.net
 127.0.0.1	m.sh4.co
 127.0.0.1	m.trb.com
@@ -13884,6 +13895,7 @@
 127.0.0.1	mobilemovie.bitterstrawberry.com
 127.0.0.1	mobiletest.2cnt.net
 127.0.0.1	mobiletest2.2cnt.net
+127.0.0.1	mobisystems.com
 127.0.0.1	mobitracker.info
 127.0.0.1	mobitraffictracker.net
 127.0.0.1	mobooka.go2cloud.org
@@ -15744,6 +15756,7 @@
 127.0.0.1	redirects.timesink.com
 127.0.0.1	redirecttest.conducent.com
 127.0.0.1	redirsvc.com
+127.0.0.1	redshiftleads.steele.net
 127.0.0.1	reduxmedia.com
 127.0.0.1	redvase.bravenet.com
 127.0.0.1	redvertisment.com
@@ -16744,6 +16757,7 @@
 127.0.0.1	sociomantic.com
 127.0.0.1	soclock.com
 127.0.0.1	socratos.forrestersurveys.com
+127.0.0.1	softcash.biz
 127.0.0.1	softclick.com.br
 127.0.0.1	softcore.xxxcounter.com
 127.0.0.1	softlinkers.popunder.ru
@@ -17255,6 +17269,7 @@
 127.0.0.1	stats.truetech.com
 127.0.0.1	stats.tudou.com
 127.0.0.1	stats.united-domains.de
+127.0.0.1	stats.unity3d.com
 127.0.0.1	stats.uswitch.com
 127.0.0.1	stats.viddler.com
 127.0.0.1	stats.walesonline.co.uk
@@ -18087,6 +18102,7 @@
 127.0.0.1	tracker.uprinting.com
 127.0.0.1	tracker.winload.de
 127.0.0.1	trackerclick2web.com
+127.0.0.1	trackercounts.com
 127.0.0.1	trackermodules.com
 127.0.0.1	trackerstatistik.init-ag.de
 127.0.0.1	trackersuperweb.com
@@ -21720,6 +21736,7 @@
 127.0.0.1	www.sociomantic.com
 127.0.0.1	www.soclock.com
 127.0.0.1	www.sofia-lathem.us
+127.0.0.1	www.softcash.biz
 127.0.0.1	www.somanyhits.info
 127.0.0.1	www.sondra-donalson.us
 127.0.0.1	www.sonia-brough.us
@@ -21875,6 +21892,7 @@
 127.0.0.1	www.trackbacksecure.com
 127.0.0.1	www.trackedclicks.com
 127.0.0.1	www.trackerclick2web.com
+127.0.0.1	www.trackercounts.com
 127.0.0.1	www.trackermodules.com
 127.0.0.1	www.trackersuperweb.com
 127.0.0.1	www.trackflv.net
@@ -22518,4 +22536,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22513
+# Hosts: 22531

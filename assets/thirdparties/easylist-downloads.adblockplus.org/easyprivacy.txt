@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: IQ4xirIgBfLT0hdxlwOmEg
-! Version: 201409101731
+! Checksum: 2+R2e1X0/WbhhdH/P2U6Zg
+! Version: 201409141321
 ! Title: EasyPrivacy
-! Last modified: 10 Sep 2014 17:31 UTC
+! Last modified: 14 Sep 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -461,6 +461,7 @@
 /chartbeat-
 /chartbeat.jhtml
 /chartbeat.js
+/chartbeat.min.js
 /chartbeat/*
 /chartbeat_
 /chartbeatCode.
@@ -1223,6 +1224,7 @@
 /netmining.js
 /netratings.js
 /netresults.js
+/nettracker.js
 /nettracker/*
 /netupdate/live.php?
 /neustar.beacon.
@@ -1739,6 +1741,7 @@
 /track.js?referrer
 /track.js?screen=
 /track.php?*&uid=
+/track/*&CheckCookieId=
 /track/*?rnd=0.$image
 /track/?site
 /track/aggregate?
@@ -2051,6 +2054,7 @@
 /wp-js/analytics.js?
 /wp-powerstat/*
 /wp-slimstat/*
+/wp-stat/analytics/*
 /wp-useronline/useronline.
 /wp.gif?wpi
 /wp_stat.php?
@@ -2143,6 +2147,7 @@
 ?eventtype=request&pid=
 ?googleTrack=
 ?record&*&serve_js
+?ref=*&itemcnt=
 ?stwc_cz=
 ?token=*&sessionid=*&visitorid=
 ?triggertags=
@@ -2434,6 +2439,7 @@ http://utm.
 ||btstatic.com^$third-party
 ||bttrack.com^$third-party
 ||bubblestat.com^$third-party
+||bugherd.com^$third-party
 ||bugsnag.com^$third-party
 ||burstbeacon.com^$third-party
 ||burt.io^$third-party
@@ -2612,6 +2618,7 @@ http://utm.
 ||dimestore.com^$third-party
 ||dinkstat.com^$third-party
 ||directrdr.com^$third-party
+||discover-path.com^$third-party
 ||discovertrail.net^$third-party
 ||displaymarketplace.com^$third-party
 ||distralytics.com^$third-party
@@ -3282,7 +3289,6 @@ http://utm.
 ||qbop.com^$third-party
 ||qdtracking.com^$third-party
 ||qsstats.com^$third-party
-||qualtrics.com^$third-party
 ||quantserve.com/api/
 ||quantserve.com/pixel/$object-subrequest,third-party
 ||quantserve.com^$~object-subrequest,third-party
@@ -3613,6 +3619,8 @@ http://utm.
 ||tylere.net^$third-party
 ||tynt.com^$third-party
 ||u5e.com^$third-party
+||uadx.com^$third-party
+||ubertags.com^$third-party
 ||ubertracking.info^$third-party
 ||ugdturner.com^$third-party
 ||ukrre-tea.info^$third-party
@@ -4908,6 +4916,7 @@ http://utm.
 ||eveonline.com/redir.asp$third-party
 ||evri.com/analytics/
 ||evt.collarity.com^$image
+||exct.net/open.aspx?
 ||facebook.com*/impression.php
 ||facebook.com/common/scribe_endpoint.php
 ||facebook.com/email_open_log_pic.php
@@ -5155,6 +5164,7 @@ http://utm.
 ||mediaite.com^*/track/
 ||mediametrics.mpsa.com^
 ||mediapartner.bigpoint.net^$third-party
+||mediaplex.com^*?mpt=
 ||meebo.com/cim/sandbox.php?
 ||merchenta.com/track/
 ||metabroadcast.com^*/log?
@@ -5839,6 +5849,7 @@ http://utm.
 ||pixel.holtzbrinckdigital.info^
 ||pixel.nbsp.de^
 ||plista.com/getuid?
+||plista.com/iframeShowItem.php
 ||pyroactive.de/counter/
 ||rc.aol.de^*/getrcmd.js
 ||retresco.de^*/stats/$third-party
@@ -7673,6 +7684,7 @@ http://utm.
 ||stats.avg.com^
 ||stats.bbc.co.uk^
 ||stats.behance.net^
+||stats.binki.es^
 ||stats.blogg.se^
 ||stats.break.com^
 ||stats.christianpost.com^
@@ -8948,13 +8960,13 @@ http://utm.
 @@||eircomphonebook.ie/js/wt_capi.js?
 @@||eloqua.com/include/livevalidation_standalone.compressed.js$domain=pbs.org
 @@||eloqua.com/visitor/v200/svrgp.aspx?$domain=itworld.com|juniper.net
-@@||ensighten.com/amex/Bootstrap.js?$domain=americanexpress.com
-@@||ensighten.com/amex/prod/code/*.js?ruleId=$script,domain=americanexpress.com
-@@||ensighten.com/amex/serverComponent.php?$script,domain=americanexpress.com
 @@||ensighten.com/crossdomain.xml$object-subrequest
 @@||ensighten.com/libs/flowplayer/ensightenplugin.swf$object-subrequest
 @@||ensighten.com/symantec/scode/$script,domain=norton.com
 @@||ensighten.com/target/$script,domain=target.com
+@@||ensighten.com^*/Bootstrap.js$domain=americanexpress.com|dell.com
+@@||ensighten.com^*/prod/code/*.js?ruleId=$script,domain=americanexpress.com|dell.com
+@@||ensighten.com^*/serverComponent.php?$script,domain=americanexpress.com|dell.com
 @@||espncdn.com/combiner/*/chartbeat/$script,domain=espn.go.com
 @@||espncdn.com/combiner/*/foresee/$script,domain=espn.go.com
 @@||everestjs.net/static/st.js$domain=ford.com
@@ -8974,6 +8986,8 @@ http://utm.
 @@||geoplugin.net/javascript.gp$script,domain=christianhouseshare.com.au|gamemazing.com|soundsonline.com
 @@||geoplugin.net/json.gp?jsoncallback=$script,domain=worldc.am
 @@||getclicky.com/ajax/marketshare?$script
+@@||getsmartcontent.com/gateway/?callback$domain=visitpa.com
+@@||getsmartcontent.com/gsc.js$domain=visitpa.com
 @@||ghstatic.com/images/site/zylom/scripts/google-analytics.js?$domain=zylom.com
 @@||glamour.com/aspen/components/cn-fe-stats/js/$script
 @@||go.com/stat/dolwebanalytics.js

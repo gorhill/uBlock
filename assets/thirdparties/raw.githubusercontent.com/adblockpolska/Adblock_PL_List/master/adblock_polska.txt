@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 09 September 2014
+! Last modified: 11 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -76,6 +76,8 @@ _werbung_
 bannerad.png
 
 ! * - General Element Hiding Rules - * !
+###adsense_banner_top
+###adsenseLeft
 ###adv_bottom
 ###baner300x250
 ###baner635x85
@@ -360,6 +362,7 @@ gry-online.poszkole.pl##FOOTER
 groupon.pl###spotlight
 groupon.pl###sub_dlg
 informacjelokalne.pl##[src^="http://www.informacjelokalne.pl/images/reklama"]
+iv.pl###FlyingLayer
 jelonka.com##.marconi
 kartuzy.info##[id^="baner"]
 komputerswiat.pl###gz_dso_scroll

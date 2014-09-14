@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: yQMO/Z8cTpOwiIFB/mjUzw
-! Version: 201409101730
-! Last modified: 10 Sep 2014 17:30 UTC
+! Checksum: Ly9AuWun9Nn+CG4QfMjj1w
+! Version: 201409141320
+! Last modified: 14 Sep 2014 13:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -3068,7 +3068,7 @@ opensharing.org##:not(#index) > table > tbody > .backgr
 opensharing.org##:not(#index) > table > tbody > .backgr ~ tr
 gamer-info.com##[class^="br-"]
 kinoafisha.ua##a.brandup
-pornolab.net##a[href*="//128.68.74.41"],a[href*="//89.108.109.12"],a[href*="//89.108.121.205"],a[href*="/store/"],a[href*="?partner="]
+pornolab.net##a[href*="//128.68.74.41"],a[href*="//89.108.109.12"],a[href*="//89.108.121.205"],a[href*="//89.178.20.156"],a[href*="/store/"],a[href*="?partner="]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
