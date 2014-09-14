@@ -201,8 +201,7 @@ var onDisconnect = function(port) {
     listener(msg, port.sender, nullFunc);
 
     // Cleanup port if no longer in use.
-    port = nameToPortMap[port.name];
-    if ( port ) {
+    if ( nameToPortMap.hasOwnProperty(port.name) ) {
         delete nameToPortMap[port.name];
         port.onMessage.removeListener(onMessage);
         port.onDisconnect.removeListener(onDisconnect);
