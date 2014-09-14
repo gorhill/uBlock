@@ -100,7 +100,6 @@ var announce = function(msg) {
     defaultHandler(msg, null, nullFunc);
 
     // Extension pages & content scripts handlers
-    var port;
     for ( var portName in nameToPortMap ) {
         if ( nameToPortMap.hasOwnProperty(portName) === false ) {
             continue;
@@ -202,7 +201,7 @@ var onDisconnect = function(port) {
     listener(msg, port.sender, nullFunc);
 
     // Cleanup port if no longer in use.
-    var port = nameToPortMap[port.name];
+    port = nameToPortMap[port.name];
     if ( port ) {
         delete nameToPortMap[port.name];
         port.onMessage.removeListener(onMessage);

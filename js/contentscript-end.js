@@ -615,9 +615,6 @@ var uBlockMessaging = (function(name){
 (function() {
     var messaging = uBlockMessaging;
 
-    var readyProps = {
-        'img': 'complete'
-    };
     var srcProps = {
         'embed': 'src',
         'iframe': 'src',

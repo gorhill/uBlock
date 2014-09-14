@@ -40,6 +40,8 @@
 // implementation of Math.random(), but as long as I have a good expectation
 // of uniqueness, it's ok, we are not dealing with critical stuff here.
 
+/* global chrome */
+
 var messaging = (function(name){
     var port = null;
     var requestId = 1;
