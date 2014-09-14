@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"posibil invechit",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Un filtru pe linie. Un filtru poate fi o adresa sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
@@ -207,20 +207,12 @@
     "message":"Aplicare modificari",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Activeaza inregistrarea cererilor blocate",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Poti inspecta detaliile cererilor blocate daca vrei, activand aceasta optiune. Inregistrarea blocarilor poate conduce la cresterea gradului de utilizare a memoriei. Pentru ca multi utilizatori nu vor folosi aceasta optiune, ea este dezactivata implicit.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Activeaza inregistrarea cererilor care nu sunt blocate",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Poti inspecta detaliile cererilor ne-blocate daca vrei, activand aceasta optiune. Inregistrarea acestora poate conduce la cresterea gradului de utilizare a memoriei. Pentru ca multi utilizatori nu vor folosi aceasta optiune, ea este dezactivata implicit.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

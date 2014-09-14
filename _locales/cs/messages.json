@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Vyčistit celou mezipaměť",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -172,8 +172,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"může být zastaralý",
-    "description":"English: may be obsolete"
+    "message":"zastaralé",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky s předponou &lsquo;!&rsquo; budou ignorovány.",
@@ -207,20 +207,12 @@
     "message":"Použít změny",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Povolit protokolování blokovaných požadavků",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Povolit protokolování síťových požadavků",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Pokud si přejete, podrobné informace o blokovaných požadavcích si můžete zkontrolovat povolením této možnosti. Protokolování blokovaných požadavků zvyšuje nároky <i>µBlock<\/i>u na paměť. Vzhledem k tomu, že mnoho uživatelů nikdy tuto funkci nepoužije, je ve výchozím nastavení zakázána.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Povolit protokolování nezablokovaných požadavků",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Pokud si přejete, podrobné informace o nezablokovaných požadavcích si můžete zkontrolovat povolením této možnosti. Protokolování nezablokovaných požadavků zvyšuje nároky <i>µBlock<\/i>u na paměť. Vzhledem k tomu, že mnoho uživatelů nikdy tuto funkci nepoužije, je ve výchozím nastavení zakázána.",
+  "logNetRequestsHelp":{
+    "message":"Pokud chcete kontrolovat detaily síťových požadavků, povolte tuto možnost. Protokolování síťových požadavků zvětšuje stopu µBlocku v paměti. Jelikož tuto funkci mnoho uživatelů nikdy nepoužije, je ve výchozím nastavení zakázána.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"kan være forældet",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med &lsquo;!&rsquo; vil blive ignoreret.",
@@ -207,20 +207,12 @@
     "message":"Anvend ændringer",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Aktiver logføring af blokerede forespørgsler",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Aktiver logføring af ikke-blokerede forespørgsler",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Du kan inspicere detaljerne i ikke-blokerede forespørgsler, hvis du ønsker, ved at aktivere denne indstilling. Logføringen af ikke-blokerede forespørgsler forøger µBlocks hukommelsesforbrug. Siden mange brugere aldrig vil bruge denne indstillinger, er den deaktiveret som standard.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

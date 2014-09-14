@@ -172,8 +172,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"Možda je zastario",
-    "description":"English: may be obsolete"
+    "message":"zastarjelo",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Jedan filtar po retku. Filtar može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom &lsquo;!&rsquo;  zanemarit će se.",
@@ -207,20 +207,12 @@
     "message":"Primijeni promjene",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Omogući bilježenje blokiranih zahtjeva",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Omogućiti zapisivanje mrežnih zahtjeva",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Detalje blokiranih zahtjeva možete provjeriti ako želite aktivirati ovu mogućnosti. Bilježenje blokiranih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Omogućiti bilježenje blokiranih zahtjeva",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Detalje neblokiranih zahtjeva možete provjeriti ako želite aktivirati ovu mogućnosti. Bilježenje neblokiranih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
+  "logNetRequestsHelp":{
+    "message":"Detalje mrežnih zahtjeva možete provjeriti aktiviranjem ove mogućnosti. Bilježenje mrežnih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

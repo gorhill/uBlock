@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"kan vara föråldrad",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
@@ -207,20 +207,12 @@
     "message":"Verkställ ändringar",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Aktivera loggning av blockerade förfrågningar",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Om du vill inspektera detaljerna över blockerade förfrågningar kan du aktivera detta alternativ. Loggning av blockerade förfrågningar ökar µBlocks minnesanvändning. Eftersom många användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Aktivera loggning av icke-blockerade förfrågningar",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Om du vill inspektera detaljerna över icke-blockerade förfrågningar kan du aktivera detta alternativ. Loggning av icke-blockerade förfrågningar ökar µBlocks minnesanvändning. Eftersom många användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

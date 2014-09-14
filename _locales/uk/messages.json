@@ -152,7 +152,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Користувацький",
+    "message":"Користувацькі",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"може бути застарілим",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
@@ -207,20 +207,12 @@
     "message":"Застосувати зміни",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Увімкнути журналювання заблокованих запитів",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Задіявши цю опцію ви зможете досліджувати деталі заблокованих запитів. Журналювання збільшує використання пам’яті µBlock. Так як більшість користувачів ніколи не використовують цю функцію за замовчуванням її вимкнено.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Задіяти журналювання для незаблокованих запитів",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Задіявши цю опцію ви зможете досліджувати деталі незаблокованих запитів. Журналювання збільшує використання пам’яті µBlock. Так як більшість користувачів ніколи не використовують цю функцію за замовчуванням її вимкнено.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

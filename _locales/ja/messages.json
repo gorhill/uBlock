@@ -172,8 +172,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"may be obsolete",
-    "description":"English: may be obsolete"
+    "message":"outdated",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
@@ -207,20 +207,12 @@
     "message":"変更を適用",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"ブロックされたリクエストをログする",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"このオプションを有効にしたい場合非ブロック要求の詳細を調べることができます。非ブロック要求のログはこのエクステンションのメモリ フット プリントが増加します。以来、多くのユーザーは決してこの機能を使用するのは示唆されていません。",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"非ブロック要求のログを有効にします。",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"このオプションを有効にしたい場合非ブロック要求の詳細を調べることができます。非ブロック要求のログはこのエクステンションのメモリ フット プリントが増加します。以来、多くのユーザーは決してこの機能を使用するのは示唆されていません。",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

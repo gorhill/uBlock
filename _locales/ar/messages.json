@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"قد يكون قديم ولا يعمل ",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"كل سطر يمكن ان يتحمل على فلتر واحد. يمكن ان يكون الفلتر رابط موقع او فلتر متعارف مع نظام AdBlock Plus. روابط التي تحتوي على &lsquo;!&rsquo;  سوف يتم تجاهلها.",
@@ -207,20 +207,12 @@
     "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
+  "logNetRequestsPrompt":{
     "message":"تفعيل تسجيل الطلبات المحظوره",
-    "description":"English: Enable the logging of blocked requests"
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"تفعيل تسجيل الطلبات الغير محظوره",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"بإمكانك ان ترى الطلبات التي لم تمنعها الاداة اذا فعلت هذي الخاصيه ولكن احذر سوف تستعمل قوه اكثر من الذاكره ",
+  "logNetRequestsHelp":{
+    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

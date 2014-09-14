@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"יכול להיות מיושן",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"מסנן אחד לכל שורה. מסנן יכול להכיל שמות מארחים, או מסננים המותאמים ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
@@ -207,20 +207,12 @@
     "message":"החל שינויים",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"אפשר תיעוד של של בקשות שנחסמות",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"אפשר תיעוד של בקשות רשת",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"באפשרותך לבדוק את הפרטים של בקשות חסומות אם תרצה על-ידי איפשור אפשרות זו. התיעוד של בקשות חסומות מעלה את השימוש בזיכרון של µBlock. מכיוון שמשתמשים רבים לעולם לא ישתמשו באפשרות זו, היא מכובה בברירת מחדל.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"אפשר תיעוד של של בקשות שלא נחסמות",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"באפשרותך לבדוק את הפרטים של בקשות לא חסומות אם תרצה על-ידי איפשור אפשרות זו. התיעוד של בקשות לא חסומות מעלה את השימוש בזיכרון של µBlock. מכיוון שמשתמשים רבים לעולם לא ישתמשו באפשרות זו, היא מכובה בברירת מחדל.",
+  "logNetRequestsHelp":{
+    "message":"באפשרותך לבדוק את הפרטים של בקשות רשת אם תרצה על-ידי איפשור אפשרות זו. התיעוד של בקשות רשת מעלה את השימוש בזיכרון של µBlock. מכיוון שמשתמשים רבים לעולם לא ישתמשו באפשרות זו, היא מכובה בברירת מחדל.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

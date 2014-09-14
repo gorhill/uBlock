@@ -60,7 +60,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir para o log de solicitações",
+    "message":"Ir para o registro de solicitações",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -172,8 +172,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"pode estar desatualizado",
-    "description":"English: may be obsolete"
+    "message":"desatualizada",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
@@ -207,20 +207,12 @@
     "message":"Salvar e aplicar",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Habilitar o log de solicitações bloqueadas",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Ativar o registro de solicitações de rede",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações bloqueadas ativando esta opção. O registro de solicitações bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários não usarem este recurso ele será desativado por padrão.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Habilitar o log de solicitações não-bloqueadas",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Você pode inspecionar os detalhes das solicitações não-bloqueadas ativando esta opção. O registro de solicitações não-bloqueadas aumenta o consumo de memória do μBlock. Uma vez que muitos usuários não usarem este recurso ele será desativado por padrão.",
+  "logNetRequestsHelp":{
+    "message":"Ativando essa opção você pode inspecionar os detalhes das solicitações de rede. O registro de solicitações de rede aumenta o consumo de memória do μBlock. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

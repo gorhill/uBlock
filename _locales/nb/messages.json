@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"kan være foreldet",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
@@ -207,20 +207,12 @@
     "message":"Bruk endringer",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Aktiver logging av blokkerte forespørsler",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Hvis du ønsker ved å aktivere dette alternativet, kan du kontrollere detaljer om blokkerte forespørsler. Logging av blokkerte forespørsler øker minnet footprint av µBlock. Siden mange brukere vil aldri bruke denne funksjonen, deaktiveres som standard.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Aktiver logging av ikke-blokkerte forespørsler",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Hvis du ønsker ved å aktivere dette alternativet, kan du kontrollere detaljer om ikke-blokkert forespørsler. Logging av ikke-blokkert forespørsler øker minnet forbruket av µBlock. Siden mange brukere vil aldri bruke denne funksjonen, er den deaktivert som standard.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

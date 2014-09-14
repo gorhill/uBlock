@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"lehet, hogy elavult",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Egy lista soronként. A filter lehet egy hostname, vagy Adblock-Plus compatibilis filter.\nSorok amik egy &lsquo;!&rsquo;-val kezdenek, nem lesznek tudomásul véve.",
@@ -207,20 +207,12 @@
     "message":"módosítások alkalmazása",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Blokkolt request-ek naplózásá",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Ezen beállítás engedélyezésével megtekintheti a letiltott lekérések részleteit. A letiltott lekérések naplózása megnöveli az µBlock memóriahasználatát. Mivel sokan nem használják ezt a beállítást, alapértelmezetten ki van kapcsolva.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Nem-blokkolt request-ek naplózásá",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Ezen beállítás engedélyezésével megtekintheti a nem letiltott lekérések részleteit. A nem letiltott lekérések naplózása megnöveli az µBlock memóriahasználatát. Mivel sokan nem használják ezt a beállítást, alapértelmezetten ki van kapcsolva.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

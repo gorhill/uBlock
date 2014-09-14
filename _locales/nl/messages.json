@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"kan overbodig zijn",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
@@ -207,20 +207,12 @@
     "message":"Pas veranderingen toe",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Schakel het loggen van geblokkeerde verzoeken in",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Je kan de details van geblokkeerde verzoeken blokkeren inspecteren door deze optie in te schakelen, Het loggen van geblokkeerde verzoeken verhoogt het geheugengebruik van µBlock. Veel gebruikers gebruiken deze functie nooit, dus is het standaard uitgeschakeld.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Schakel het loggen van niet-geblokkeerde verzoeken in",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Je kan de details van geblokkeerde verzoeken blokkeren inspecteren door deze optie in te schakelen, Het loggen van geblokkeerde verzoeken verhoogt het geheugengebruik van µBlock. Veel gebruikers gebruiken deze functie nooit, dus is het standaard uitgeschakeld.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

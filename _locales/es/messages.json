@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"puede ser obsoleto",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Un filtro por línea. Un filtro puede ser el nombre del servidor, o un filtro compatible con Adblock Plus. Líneas que empiezan con '!' serán ignoradas.",
@@ -207,20 +207,12 @@
     "message":"Aplicar cambios",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Habilitar el registro de peticiones bloqueadas",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Se puede inspeccionar los detalles de las peticiones bloqueadas habilitando esta opción. El registro de peticiones bloqueadas aumenta la huella de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Habilitar el registro de peticiones no bloqueadas",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Se puede inspeccionar los detalles de las peticiones no bloqueadas habilitando esta opción. El registro de peticiones no bloqueadas aumenta la huella de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

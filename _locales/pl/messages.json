@@ -172,8 +172,8 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"może być nieaktualne",
-    "description":"English: may be obsolete"
+    "message":"może być nieaktualna",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Jeden filtr na linię. Filtrem może być nazwa hosta, albo filtr kompatybilny z Adblock Plus. Linie poprzedzone znakiem &lsquo;!&rsquo; będą ignorowane.",
@@ -207,20 +207,12 @@
     "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Włącz logowanie zablokowanych żądań",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Możesz zobaczyć dokładne informacje o blokowanych żądaniach poprzez włączenie tej opcji . Logowanie blokowanych żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Włącz logowanie nieblokowanych żądań",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Możesz zobaczyć dokładne informacje o nie blokowanych żądaniach poprzez włączenie tej opcji . Logowanie nie blokowanych żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

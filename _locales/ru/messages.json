@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"может быть устаревшей",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Линии, начинающиеся с &lsquo;!&rsquo;, будут пропущены.",
@@ -207,20 +207,12 @@
     "message":"Применить изменения",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Включить ведение журнала для заблокированных запросов",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Включить ведение журнала сетевых запросов",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Вы можете проверить сведения о заблокированных запросах, включив эту опцию. Журнал заблокированных запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Включить ведение журнала для незаблокированных запросов",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Вы можете проверить сведения о незаблокированных запросах, включив эту опцию. Журнал незаблокированных запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
+  "logNetRequestsHelp":{
+    "message":"Вы можете проверить сведения о сетевых запросах, включив эту опцию. Журнал сетевых запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

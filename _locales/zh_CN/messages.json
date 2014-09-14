@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"清除所有缓存",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"可能过时了",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"每行一条规则。一条规则可以是一个平凡的站点名或者是一条Adblock Plus的兼容过滤规则。以“!”开头的行将被忽略。",
@@ -207,20 +207,12 @@
     "message":"应用变更",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"启用拦截记录",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"开启此选项，将可以查看已拦截请求的记录。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"启用未拦截记录",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"开启此选项，将可以查看未拦截请求的记录。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

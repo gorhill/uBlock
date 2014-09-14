@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"pode ser obsoleto",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Um filtro por linha. Um filtro pode ser um simples hostname, ou um filtro compatível com o Adblock Plus. Linhas começadas por &lsquo;!&rsquo; serão ignoradas.",
@@ -207,20 +207,12 @@
     "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Activar o registo de pedidos bloqueados",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Se desejar, poderá analisar os detalhes de pedidos bloqueados ao seleccionar esta opção. O registo de pedidos bloqueados aumenta o consumo de memória do µBlock. Como a maior parte dos utilizadores não irá usar esta funcionalidade, esta está desactivada por predefinição.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Activar o registo de pedidos não bloqueados",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Se desejar, poderá analisar os detalhes de pedidos não bloqueados ao seleccionar esta opção. O registo de pedidos não bloqueados aumenta o consumo de memória do µBlock. Como a maior parte dos utilizadores não irá usar esta funcionalidade, esta está desactivada por predefinição.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{

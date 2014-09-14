@@ -108,7 +108,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Tüm önbelleği temizle",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -173,7 +173,7 @@
   },
   "3pExternalListObsolete":{
     "message":"eskimiş olabilir",
-    "description":"English: may be obsolete"
+    "description":"English: outdated"
   },
   "1pFormatHint":{
     "message":"Her satır bir süzgeç. Filtre host adı veya Adblock Plus uyumlu filtre olabilir. Satırları öneki ile '!' olursa göz ardı edilir.",
@@ -207,20 +207,12 @@
     "message":"Değişiklikleri uygula",
     "description":"English: Apply changes"
   },
-  "logBlockedRequestsPrompt":{
-    "message":"Engellenmiş reklamların kaydını tutmayı etkinleştir",
-    "description":"English: Enable the logging of blocked requests"
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
   },
-  "logBlockedRequestsHelp":{
-    "message":"Bu seçeneği etkinleştirerek isterseniz engellenmiş reklamların detaylarını inceleyebiliriz. Engellenmiş reklamların günlüğü μBlock bellek izini artırır. Birçok kullanıcı bu özelliği kullanmaz, varsayılan olarak devre dışıdır.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logAllowedRequestsPrompt":{
-    "message":"Engellenmemiş reklamların kaydını tutmayı etkinleştirin",
-    "description":"English: Enable the logging of non-blocked requests"
-  },
-  "logAllowedRequestsHelp":{
-    "message":"Bu seçeneği etkinleştirerek isterseniz engellenmemiş reklamların detaylarını inceleyebiliriz. Engellenmemiş reklamların günlüğü μBlock bellek izini artırır. Birçok kullanıcı bu özelliği kullanmaz, varsayılan olarak devre dışıdır.",
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
