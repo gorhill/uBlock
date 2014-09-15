@@ -57,6 +57,9 @@ var reIsUserPath = /^assets\/user\//;
 var lastRepoMetaTimestamp = 0;
 var refreshRepoMetaPeriod = 5 * oneHour;
 
+// TODO: move chrome.i18n.getMessage to XAL
+var errorCantConnectTo = chrome.i18n.getMessage('errorCantConnectTo');
+
 var exports = {
     autoUpdate: true,
     autoUpdateDelay: 4 * oneDay
@@ -439,6 +442,8 @@ var readRepoFile = function(path, callback) {
         callback(details);
     };
 
+    var repositoryURL = repositoryRoot + path;
+
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
         //console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
@@ -452,13 +457,13 @@ var readRepoFile = function(path, callback) {
 
     var onRepoFileError = function() {
         this.onload = this.onerror = null;
-        //console.error('µBlock> readRepoFile("%s") / onRepoFileError()', path);
+        console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         reportBack('', 'Error');
     };
 
     // 'ublock=...' is to skip browser cache
     getTextFileFromURL(
-        repositoryRoot + path + '?ublock=' + Date.now(),
+        repositoryURL + '?ublock=' + Date.now(),
         onRepoFileLoaded,
         onRepoFileError
     );
@@ -516,7 +521,8 @@ var readRepoCopyAsset = function(path, callback) {
         getTextFileFromURL(chrome.runtime.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
-    var repositoryURL = repositoryRoot + path + '?ublock=' + Date.now();
+    var repositoryURL = repositoryRoot + path;
+    var repositoryURLSkipCache = repositoryURL + '?ublock=' + Date.now();
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
@@ -532,7 +538,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onRepoFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileError("%s"):', path, repositoryURL, this.statusText);
+        console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
@@ -542,7 +548,7 @@ var readRepoCopyAsset = function(path, callback) {
             console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, assetEntry.homeURL);
             // Fetch from repo only if obsolescence was due to repo checksum
             if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+                getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
             } else {
                 cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             }
@@ -555,10 +561,10 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onHomeFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileError("%s"):', path, assetEntry.homeURL, this.statusText);
+        console.error(errorCantConnectTo.replace('{{url}}', assetEntry.homeURL));
         // Fetch from repo only if obsolescence was due to repo checksum
         if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
-            getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+            getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
         } else {
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
         }
@@ -604,7 +610,7 @@ var readRepoCopyAsset = function(path, callback) {
             if ( typeof homeURL === 'string' && homeURL !== '' ) {
                 getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
             } else {
-                getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
+                getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
             }
             return;
         }
@@ -686,7 +692,7 @@ var readRepoOnlyAsset = function(path, callback) {
 
     var onRepoFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileError("%s"):', path, repositoryURL, this.statusText);
+        console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
@@ -763,7 +769,7 @@ var readExternalAsset = function(path, callback) {
 
     var onExternalFileError = function() {
         this.onload = this.onerror = null;
-        console.error('µBlock> readExternalAsset("%s") / onExternalFileError()', path);
+        console.error(errorCantConnectTo.replace('{{url}}', path));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 

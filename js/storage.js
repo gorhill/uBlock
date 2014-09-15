@@ -584,24 +584,34 @@
     var µb = this;
     var fromSelfie = false;
 
-    // Final initialization steps after all needed assets are in memory
+    // Final initialization steps after all needed assets are in memory.
+    // - Initialize internal state with maybe already existing tabs.
+    // - Schedule next update operation.
     var onAllDone = function() {
-        // Initialize internal state with maybe already existing tabs
+        // http://code.google.com/p/chromium/issues/detail?id=410868#c11
+        // Need to be sure to access `chrome.runtime.lastError` to prevent
+        // spurious warnings in the console.
+        var scriptDone = function(tabId) {
+            chrome.runtime.lastError;
+        };
+        var scriptEnd = function(tabId) {
+            if ( chrome.runtime.lastError ) {
+                return;
+            }
+            chrome.tabs.executeScript(tabId, {
+                file: 'js/contentscript-end.js',
+                allFrames: true,
+                runAt: 'document_idle'
+            }, scriptDone);
+        };
+        var scriptStart = function(tabId) {
+            chrome.tabs.executeScript(tabId, {
+                file: 'js/contentscript-start.js',
+                allFrames: true,
+                runAt: 'document_idle'
+            }, function(){ scriptEnd(tabId); });
+        };
         var bindToTabs = function(tabs) {
-            var scriptStart = function(tabId) {
-                var scriptEnd = function() {
-                    chrome.tabs.executeScript(tabId, {
-                        file: 'js/contentscript-end.js',
-                        allFrames: true,
-                        runAt: 'document_idle'
-                    });
-                };
-                chrome.tabs.executeScript(tabId, {
-                    file: 'js/contentscript-start.js',
-                    allFrames: true,
-                    runAt: 'document_idle'
-                }, scriptEnd);
-            };
             var i = tabs.length, tab;
             while ( i-- ) {
                 tab = tabs[i];

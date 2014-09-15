@@ -259,6 +259,10 @@
     "message":"Contributeurs",
     "description":"English: Contributors"
   },
+  "errorCantConnectTo":{
+    "message":"Erreur de connexion: {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
