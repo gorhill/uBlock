@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Kontrol paneli",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -212,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Ağ isteklerinin kaydını tut",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Bu seçeneği etkinleştirerek isterseniz engellenmiş reklamların detaylarını inceleyebiliriz. Engellenmiş reklamların kaydını tutmak μBlock bellek izini artırır. Birçok kullanıcı bu özelliği kullanmaz, bu yüzden varsayılan olarak devre dışıdır.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -264,11 +264,11 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"{{url}} sitesine bağlanılamıyor",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Bu giriş sonuncusu olmalıdır",
     "description":"so we dont need to deal with comma for last entry"
   }
 }
