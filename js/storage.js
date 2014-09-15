@@ -442,26 +442,27 @@
 // revisited.
 
 µBlock.reloadPresetBlacklists = function(switches, update) {
-    var presetBlacklists = this.remoteBlacklists;
+    var µb = µBlock;
+
+    var onFilterListsReady = function() {
+        µb.loadUpdatableAssets({ update: update, psl: update });
+    };
 
     // Toggle switches, if any
     if ( switches !== undefined ) {
+        var filterLists = this.remoteBlacklists;
         var i = switches.length;
         while ( i-- ) {
-            if ( !presetBlacklists[switches[i].location] ) {
+            if ( filterLists.hasOwnProperty(switches[i].location) === false ) {
                 continue;
             }
-            presetBlacklists[switches[i].location].off = !!switches[i].off;
+            filterLists[switches[i].location].off = !!switches[i].off;
         }
-
         // Save switch states
-        chrome.storage.local.set({ 'remoteBlacklists': presetBlacklists }, function() {
-            µBlock.getBytesInUse();
-        });
+        chrome.storage.local.set({ 'remoteBlacklists': filterLists }, onFilterListsReady);
+    } else {
+        onFilterListsReady();
     }
-
-    // Now force reload
-    this.loadUpdatableAssets({ update: update, psl: update });
 };
 
 /******************************************************************************/
