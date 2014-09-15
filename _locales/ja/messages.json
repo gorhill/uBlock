@@ -7,6 +7,10 @@
     "message":"終に、とても使いやすいグーグルクローム専用のインターネット広告ぶろっかー。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":" 設定",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Contributors",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

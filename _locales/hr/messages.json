@@ -7,6 +7,10 @@
     "message":"Konačno, efikasan bloker za preglednike bazirane na Chromium kôdu. Lak na CPU i memoriji.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Nadzorna ploča",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Postavke",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Suradnici",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Nemoguće se povezati sa {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

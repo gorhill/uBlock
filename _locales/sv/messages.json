@@ -7,6 +7,10 @@
     "message":"Äntligen, en effektiv blockerare för Chromium-baserade webbläsare. Lätt på minne och CPU.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Inställningar",
     "description":"appears as tab name in dashboard."
@@ -172,7 +176,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan vara föråldrad",
+    "message":"utdaterad",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -208,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Aktivera loggning av nätverksförfrågningar",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Om du vill kan du inspektera detaljer över blockerade förfrågningar genom att aktivera detta alternativ. Loggning av nätverksförfrågningar ökar µBlocks minnesanvändning. Eftersom de flesta användare aldrig kommer använda denna funktion är den inaktiverad som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Bidragsgivare",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Det gick inte att ansluta till {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

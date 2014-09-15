@@ -7,6 +7,10 @@
     "message":"Эффективный блокировщик для браузеров на базе Chromium, не нагружающий ЦП и память.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Панель управления",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Настройки",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Участники",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Не удается подключиться к {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Эта запись должна быть последней",

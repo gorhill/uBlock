@@ -7,6 +7,10 @@
     "message":"In sfarsit un paravan de protectie eficient pentru navigatoarele bazate pe Chromium. Foloseste procesorul si memoria foarte putin.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Panou Control",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Optiuni",
     "description":"appears as tab name in dashboard."
@@ -108,7 +112,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Goleste cacheurile",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -208,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Activeaza inregistrarea cererilor de retea",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Poti inspecta detaliile cererilor de retea daca vrei, activand aceasta optiune. Inregistrarea cererilor de retea poate conduce la cresterea gradului de utilizare a memoriei de catre µBlock. Pentru ca multi utilizatori n-or sa foloseasca niciodata aceasta optiune, aceasta este dezactivata implicit.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -259,8 +263,12 @@
     "message":"Contribuitori",
     "description":"English: Contributors"
   },
+  "errorCantConnectTo":{
+    "message":"Nu ma pot conecta la {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Aceasta intrare trebuie sa fie ultima",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

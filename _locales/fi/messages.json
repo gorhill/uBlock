@@ -7,6 +7,10 @@
     "message":"Viimein, tehokas mainosten blokkaaja Chromium selaimille. Kevyt prosessorille ja keskusmuistille.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Asetukset",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Kehittäjät",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

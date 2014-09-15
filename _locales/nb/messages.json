@@ -7,6 +7,10 @@
     "message":"Endelig en effektiv blokker for Chromium-baserte nettlesere. Lett på CPU og minne.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Innstillinger",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Bidragsytere",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

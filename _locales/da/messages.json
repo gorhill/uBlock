@@ -7,6 +7,10 @@
     "message":"Endelig en effektiv blocker til Chromium-baserede browsere. Lavt CPU- og hukommelsesbrug.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Indstillinger",
     "description":"appears as tab name in dashboard."
@@ -108,7 +112,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Tøm alle caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -208,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Aktiver logføring af netværksanmodninger",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Bidragydere",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Kan ikke forbinde til {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",

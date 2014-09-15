@@ -7,6 +7,10 @@
     "message":"Nareszcie, wydajne blokowanie reklam dla przeglądarek opartych na Chromium. Niskie użycie procesora i pamięci.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Kokpit",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Ustawienia",
     "description":"appears as tab name in dashboard."
@@ -52,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Kliknij, aby otworzyć panel",
+    "message":"Kliknij, aby otworzyć kokpit",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -172,7 +176,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"może być nieaktualna",
+    "message":"nieaktualna",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -208,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Włącz rejestrowanie żądań sieciowych",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Możesz zobaczyć dokładne informacje o żądaniach sieciowych poprzez włączenie tej opcji. Rejestrowanie żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Autorzy",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Nie można połączyć się z {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Ta pozycja musi być ostatnia",

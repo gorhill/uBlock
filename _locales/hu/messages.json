@@ -7,6 +7,10 @@
     "message":"Végre egy hatékony reklám és követésblokkoló a Chromium-alapú böngészőkhöz, amely kíméletes a processzorral és a memóriával.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Beallitasok",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Közreműködők",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",

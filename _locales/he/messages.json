@@ -7,6 +7,10 @@
     "message":"סוף סוף, חוסם יעיל לדפדפנים מבוססי Chromium. קל על המעבד והזיכרון.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — פאנל הקונפיגורציות",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"הגדרות",
     "description":"appears as tab name in dashboard."
@@ -172,7 +176,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"יכול להיות מיושן",
+    "message":"לא עדכני",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"תורמים",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"אין אפשרות להתחבר ל {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"ערך זה חייב להיות האחרון",

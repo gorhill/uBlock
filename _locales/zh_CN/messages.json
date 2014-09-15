@@ -7,6 +7,10 @@
     "message":"一款基于Chromium浏览器的高效广告拦截工具，超低的CPU与内存使用。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"设置",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"贡献者",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

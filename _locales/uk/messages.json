@@ -7,6 +7,10 @@
     "message":"Ефективний блокувальник реклами для браузерів на основі Chromium таки з’явився. Не навантажує процесор та пам'ять.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Панель керування",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Налаштування",
     "description":"appears as tab name in dashboard."
@@ -172,7 +176,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"може бути застарілим",
+    "message":"застаріле",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -208,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Задіяти журналювання мережевих запитів",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті µBlock. Так як більшість користувачів ніколи не використовують цю функцію, за замовчуванням її вимкнено.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Учасники",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Не вдалося підключитися до {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Цей запис має бути останнім",

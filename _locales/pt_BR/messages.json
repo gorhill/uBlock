@@ -7,6 +7,10 @@
     "message":"Finalmente, um bloqueador eficiente para navegadores baseados no Chromium. Com baixo consumo de memória e CPU.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Painel de opções",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Preferências",
     "description":"appears as tab name in dashboard."
@@ -52,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clique para abrir o painel de controle",
+    "message":"Clique para abrir o painel de opções",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Contribuidores",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Não foi possível conectar a {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Esta entrada deve ser a última",

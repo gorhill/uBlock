@@ -7,6 +7,10 @@
     "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con un uso ligero del procesador y memoria.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Configuración",
     "description":"appears as tab name in dashboard."
@@ -108,7 +112,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Purgar todas las cachés",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -208,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Habilitar el registro de solicitudes de red",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Se puede inspeccionar los detalles de las peticiones bloqueadas habilitando esta opción. El registro de peticiones bloqueadas aumenta la huella de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -259,8 +263,12 @@
     "message":"Contribuidores",
     "description":"English: Contributors"
   },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Esta entrada debe ser la última",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

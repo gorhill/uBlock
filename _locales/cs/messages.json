@@ -7,6 +7,10 @@
     "message":"Konečně efektivní blokovač pro prohlížeče založené projektu Chromium. Nezatěžuje CPU a paměť.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Řídící panel",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Nastavení",
     "description":"appears as tab name in dashboard."
@@ -258,6 +262,10 @@
   "aboutContributors":{
     "message":"Přispěvatelé",
     "description":"English: Contributors"
+  },
+  "errorCantConnectTo":{
+    "message":"Nelze se připojit k {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"This entry must be the last one",
