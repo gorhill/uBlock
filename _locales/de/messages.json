@@ -7,6 +7,10 @@
     "message":"Endlich ein effizienter Blocker für Chromium-basierte Browser. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Dashboard",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Einstellungen",
     "description":"appears as tab name in dashboard."

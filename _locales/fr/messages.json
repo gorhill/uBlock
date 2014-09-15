@@ -7,6 +7,10 @@
     "message":"Enfin un bloqueur de pubs et de pisteurs efficace pour les navigateurs basés sur Chromium, qui est léger en CPU et en RAM",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
+  "dashboardName":{
+    "message":"µBlock — Tableau de bord",
+    "description":"English: µBlock — Dashboard"
+  },
   "settingsPageName":{
     "message":"Paramètres",
     "description":"appears as tab name in dashboard."
