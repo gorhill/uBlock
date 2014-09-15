@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Bedienfeld",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"klicke das An-\/ Ausschalt-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die <i>aktuell geöffnete<\/i> Seite.",
+    "message":"klicke das An-\/ Ausschalt-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die aktuell geöffnete Seite.",
     "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Protokollieren von blockierten Elementen aktivieren",
+    "message":"Protokollieren von Netzwerkanfragen aktivieren",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -264,7 +264,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Netzwerkfehler: Verbindung zu {{url}} nicht möglich",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
