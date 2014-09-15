@@ -591,7 +591,7 @@
         // http://code.google.com/p/chromium/issues/detail?id=410868#c11
         // Need to be sure to access `chrome.runtime.lastError` to prevent
         // spurious warnings in the console.
-        var scriptDone = function(tabId) {
+        var scriptDone = function() {
             chrome.runtime.lastError;
         };
         var scriptEnd = function(tabId) {
