@@ -119,7 +119,3 @@ google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px
 
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
-
-# Why is this not in EasyList? (it is in hpHosts and MVPS)
-# Example: frame @ http://us-ads.openx.net/w/1.0/afr?auid=[...]&cb=[...]
-||openx.net^
