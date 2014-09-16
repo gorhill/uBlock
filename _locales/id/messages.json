@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"Dashboard",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -264,7 +264,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Tidak dapat terhubung ke {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
