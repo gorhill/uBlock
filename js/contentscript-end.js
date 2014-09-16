@@ -247,28 +247,37 @@ var uBlockMessaging = (function(name){
                 processHighMediumGenerics(highGenerics.hideMedium, hideSelectors);
             }
             if ( highGenerics.hideHighCount ) {
-                processHighHighGenerics(highGenerics.hideHigh, hideSelectors);
+                processHighHighGenericsAsync();
             }
         }
         if ( hideSelectors.length ) {
-            hideElements(hideSelectors);
-            var style = document.createElement('style');
-            style.setAttribute('class', 'ublock-postload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-            // The linefeed before the style block is very important: do no remove!
-            style.appendChild(document.createTextNode(hideSelectors.join(',\n') + '\n{display:none !important;}'));
-            var parent = document.body || document.documentElement;
-            if ( parent ) {
-                parent.appendChild(style);
-            }
-            messaging.tell({
-                what: 'injectedSelectors',
-                type: 'cosmetic',
-                hostname: window.location.hostname,
-                selectors: hideSelectors
-            });
-            //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', hideSelectors.length, text);
+            addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
+    };
+
+    // Ensure elements matching a set of selectors are visually removed 
+    // from the page, by:
+    // - Modifying the style property on the elements themselves
+    // - Injecting a style tag
+
+    var addStyleTag = function(selectors) {
+        hideElements(selectors);
+        var style = document.createElement('style');
+        style.setAttribute('class', 'ublock-postload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+        // The linefeed before the style block is very important: do no remove!
+        style.appendChild(document.createTextNode(selectors.join(',\n') + '\n{display:none !important;}'));
+        var parent = document.body || document.documentElement;
+        if ( parent ) {
+            parent.appendChild(style);
+        }
+        messaging.tell({
+            what: 'injectedSelectors',
+            type: 'cosmetic',
+            hostname: window.location.hostname,
+            selectors: selectors
+        });
+        //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
     var hideElements = function(selectors) {
@@ -288,6 +297,8 @@ var uBlockMessaging = (function(name){
             elems[i].style.setProperty('display', 'none', 'important');
         }
     };
+
+    // Extract and return the staged nodes which (may) match the selectors.
 
     var selectNodes = function(selector) {
         var targetNodes = [];
@@ -309,6 +320,10 @@ var uBlockMessaging = (function(name){
         return targetNodes;
     };
 
+    // Low generics:
+    // - [id]
+    // - [class]
+
     var processLowGenerics = function(generics, out) {
         var i = generics.length;
         var selector;
@@ -321,6 +336,10 @@ var uBlockMessaging = (function(name){
             out.push(selector);
         }
     };
+
+    // High-low generics:
+    // - [alt="..."]
+    // - [title="..."]
 
     var processHighLowGenerics = function(generics, out) {
         var attrs = ['title', 'alt'];
@@ -351,6 +370,9 @@ var uBlockMessaging = (function(name){
         }
     };
 
+    // High-medium generics:
+    // - [href^="http"]
+
     var processHighMediumGenerics = function(generics, out) {
         var nodeList = selectNodes('a[href^="http"]');
         var iNode = nodeList.length;
@@ -376,21 +398,44 @@ var uBlockMessaging = (function(name){
         }
     };
 
-    var processHighHighGenerics = function(generics, out) {
+    // High-high generics are *very costly* to process, so we will coalesce 
+    // requests to process high-high generics into as few requests as possible.
+    // The gain is *significant* on bloated pages.
+
+    var processHighHighGenericsTimer = null;
+
+    var processHighHighGenerics = function() {
+        processHighHighGenericsTimer = null;
         if ( injectedSelectors['{{highHighGenerics}}'] !== undefined ) { return; }
-        if ( document.querySelector(generics) === null ) { return; }
+        if ( document.querySelector(highGenerics.hideHigh) === null ) { return; }
         injectedSelectors['{{highHighGenerics}}'] = true;
-        var selectors = generics.split(',\n');
-        var iSelector = selectors.length;
+        // We need to filter out possible exception cosmetic filters from 
+        // high-high generics selectors.
+        var selectors = highGenerics.hideHigh.split(',\n');
+        var i = selectors.length;
         var selector;
-        while ( iSelector-- ) {
-            selector = selectors[iSelector];
-            if ( injectedSelectors[selector] === undefined ) {
+        while ( i-- ) {
+            selector = selectors[i];
+            if ( injectedSelectors.hasOwnProperty(selector) ) {
+                selectors.splice(i, 1);
+            } else {
                 injectedSelectors[selector] = true;
-                out.push(selector);
             }
         }
+        if ( selectors.length !== 0 ) {
+            addStyleTag(selectors);
+        }
     };
+
+    var processHighHighGenericsAsync = function() {
+        if ( processHighHighGenericsTimer !== null ) {
+            clearTimeout(processHighHighGenericsTimer);
+        }
+        processHighHighGenericsTimer = setTimeout(processHighHighGenerics, 300);
+    };
+
+    // Extract all ids: these will be passed to the cosmetic filtering
+    // engine, and in return we will obtain only the relevant CSS selectors.
 
     var idsFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
@@ -417,6 +462,9 @@ var uBlockMessaging = (function(name){
             qq[v] = true;
         }
     };
+
+    // Extract all classes: these will be passed to the cosmetic filtering
+    // engine, and in return we will obtain only the relevant CSS selectors.
 
     var classesFromNodeList = function(nodes) {
         if ( !nodes || !nodes.length ) {
@@ -460,7 +508,13 @@ var uBlockMessaging = (function(name){
         }
     };
 
+    // Start cosmetic filtering.
+
     domLoaded();
+
+    // Below this point is the code which takes care to observe changes in
+    // the page and to add if needed relevant CSS rules as a result of the
+    // changes.
 
     // Observe changes in the DOM only if...
     // - there is a document.body

@@ -385,9 +385,10 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 PageStore.prototype.filterRequest = function(context, requestType, requestURL) {
     var result = this.netFilteringCache.lookup(requestURL);
     if ( result !== undefined ) {
+        //console.debug(' cache HIT: PageStore.filterRequest("%s")', requestURL);
         return result.slice(result.indexOf('\t') + 1);
     }
-    //console.debug('µBlock> PageStore.filterRequest(): "%s" not in cache', requestURL);
+    //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
     result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
     if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
         this.netFilteringCache.add(requestURL, requestType + '\t' + result);
