@@ -478,14 +478,13 @@ var uBlockMessaging = (function(name){
         'STYLE': true
     };
 
-    var mutationObservedHandler = function(mutations) {
-        var iMutation = mutations.length;
+    // Added node lists will be cumulated here before being processed
+    var addedNodeLists = [];
+    var addedNodeListsTimer = null;
+
+    var mutationObservedHandler = function() {
         var nodeList, iNode, node;
-        while ( iMutation-- ) {
-            nodeList = mutations[iMutation].addedNodes;
-            if ( !nodeList ) {
-                continue;
-            }
+        while ( nodeList = addedNodeLists.pop() ) {
             iNode = nodeList.length;
             while ( iNode-- ) {
                 node = nodeList[iNode];
@@ -498,6 +497,7 @@ var uBlockMessaging = (function(name){
                 contextNodes.push(node);
             }
         }
+        addedNodeListsTimer = null;
         if ( contextNodes.length !== 0 ) {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
@@ -505,8 +505,26 @@ var uBlockMessaging = (function(name){
         }
     };
 
+    // https://github.com/gorhill/uBlock/issues/205
+    // Do not handle added node directly from within mutation observer.
+    var mutationObservedHandlerAsync = function(mutations) {
+        var iMutation = mutations.length;
+        var nodeList;
+        while ( iMutation-- ) {
+            if ( nodeList = mutations[iMutation].addedNodes ) {
+                addedNodeLists.push(nodeList);
+            }
+        }
+        if ( addedNodeListsTimer === null ) {
+            // I arbitrarily chose 50 ms for now:
+            // I have to compromise between the overhead of processing too few 
+            // nodes too often and the delay of many nodes less often.
+            addedNodeListsTimer = setTimeout(mutationObservedHandler, 50);
+        }
+    };
+
     // https://github.com/gorhill/httpswitchboard/issues/176
-    var observer = new MutationObserver(mutationObservedHandler);
+    var observer = new MutationObserver(mutationObservedHandlerAsync);
     observer.observe(document.body, {
         attributes: false,
         childList: true,
