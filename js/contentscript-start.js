@@ -56,7 +56,7 @@ var uBlockMessaging = (function(name){
             return;
         }
         var callback = requestIdToCallbackMap[details.id];
-        if ( !callback ) {
+        if ( callback === undefined ) {
             return;
         }
         // Must be removed before calling client to be sure to not execute
@@ -117,7 +117,7 @@ var uBlockMessaging = (function(name){
                 continue;
             }
             callback = requestIdToCallbackMap[id];
-            if ( !callback ) {
+            if ( callback === undefined ) {
                 continue;
             }
             // Must be removed before calling client to be sure to not execute
@@ -143,7 +143,12 @@ var uBlockMessaging = (function(name){
 // These can be inserted before the DOM is loaded.
 
 var cosmeticFilters = function(details) {
-    var style = document.createElement('style');
+    // Maybe uBlock's style tag was already injected?
+    var style = document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+    if ( style !== null ) {
+        return;
+    }
+    style = document.createElement('style');
     style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
     var hide = details.cosmeticHide;
@@ -198,18 +203,18 @@ var netFilters = function(details) {
 };
 
 var filteringHandler = function(details) {
-    // The port will never be used again at this point, disconnecting allows
-    // the browser to flush this script from memory.
+    if ( details ) {
+        if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
+            cosmeticFilters(details);
+        }
+        if ( details.netHide.length !== 0 ) {
+            netFilters(details);
+        }
+        // The port will never be used again at this point, disconnecting allows
+        // the browser to flush this script from memory.
+    }
+    // Do not close the port before we are done.
     uBlockMessaging.stop();
-    if ( !details ) {
-        return;
-    }
-    if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
-        cosmeticFilters(details);
-    }
-    if ( details.netHide.length !== 0 ) {
-        netFilters(details);
-    }
 };
 
 var hideElements = function(selectors) {

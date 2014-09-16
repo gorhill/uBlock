@@ -111,15 +111,15 @@ var announce = function(msg) {
 /******************************************************************************/
 
 var onMessage = function(request, port) {
+    var reqId = request.id;
     // Annoucement: dispatch everywhere.
-    if ( request.id < 0 ) {
+    if ( reqId < 0 ) {
         announce(request.msg);
         return;
     }
     var listener = listenerFromPortName(port.name) || defaultHandler;
-    var reqId = request.id;
     // Being told
-    if ( reqId <= 0 ) {
+    if ( reqId === 0 ) {
         listener(request.msg, port.sender, nullFunc);
         return;
     }
