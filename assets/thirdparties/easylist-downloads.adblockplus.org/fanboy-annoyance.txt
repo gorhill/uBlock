@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 7bOE4EtYEmJIEVSN6eOLNQ
-! Version: 201409141321
+! Checksum: qR65Hx/PnoCkQzAdsljvLA
+! Version: 201409170351
 ! Title: Fanboy's Annoyance List
-! Last modified: 14 Sep 2014 13:21 UTC
+! Last modified: 17 Sep 2014 03:51 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -2276,6 +2276,7 @@ _youtube_small.
 ###cc-notification
 ###circAd
 ###cmn_tb_wrapper
+###cne-feedback-button
 ###cometchat
 ###cometchat_base
 ###communityWidget
@@ -2867,6 +2868,7 @@ _youtube_small.
 ##.dsv_video_bar
 ##.email-alerts
 ##.email-promo-box
+##.email-signup-form-wrapper
 ##.email-subscribe
 ##.email-subscription-promo
 ##.email-to-a-friend
@@ -5974,6 +5976,7 @@ _youtube_small.
 ##.js-socialise-wrapper
 ##.js-tweet-button
 ##.js-twitter-share
+##.js-video-social-panel
 ##.jwdock[style^="display: block;"]
 ##.jwsharethis
 ##.kindleWidget
@@ -8464,6 +8467,7 @@ _youtube_small.
 ||cjr.org/interstitial_
 ||cmpnet.com^*/popup.js
 ||cmpnet.com^*/popwindow.js
+||cnevids.com/annotations/
 ||complex.com/toolbar/
 ||d.yimg.com/ds/badge2.js
 ||dailydeals.sfgate.com/widget/
@@ -10752,6 +10756,7 @@ geektyrant.com##.journal-entry-navigation-next
 geektyrant.com##.journal-entry-navigation-prev
 bitchmagazine.org,debka.com,esetindia.com,gizmag.com,mediamatters.org,ncregister.com##.jqmOverlay
 bitchmagazine.org,esetindia.com##.jqmWindow
+wired.com##.js-annotation
 itwire.com##.jwDisqusArticleCounter
 rent-a-home.com.au,yahoo.com##.k_float
 sfgate.com##.kaango
@@ -13320,6 +13325,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||slkimg.com^*/facebook-login-icon.png$domain=slacker.com
 @@||socialmedia.by^$~third-party
 @@||softicons.com/download/$image
+@@||softpedia-static.com/images/*-Google-plus-$image,domain=softpedia.com
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it
 @@||ssl-images-amazon.com/images/G/01/socialmedia/sweeps/$image,domain=amazon.com

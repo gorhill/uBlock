@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: tdndxqIbnvjufZGSuBJXlA
-! Version: 201409141321
+! Checksum: LWWlGdhfuFZTEOMvn/dzWw
+! Version: 201409170351
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 14 Sep 2014 13:21 UTC
+! Last modified: 17 Sep 2014 03:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -35,6 +35,7 @@
 /bolcom-partnerprogramma-wordpress-plugin/*
 /img/recl/*
 /nmc/adv/*
+/pebble-adhese.
 /prikbordAdvertentie_
 /reclame-extra.
 /reclame-nieuws.
@@ -82,7 +83,6 @@ _advertentieleaderboardhome.
 ||gratis-neuken.com^$third-party
 ||hotlinkie.com^$third-party
 ||inviteonly.nl^$third-party
-||jobat.be^$third-party
 ||k1s.nl^$third-party
 ||kimhollandpartners.nl^$third-party
 ||klikbonus.com^$third-party
@@ -99,8 +99,10 @@ _advertentieleaderboardhome.
 ||partnerclicks.nl^$third-party
 ||partnerprogramma.bol.com^$third-party
 ||partnerwebsites.financereview.nl^$third-party
+||pebblemedia.be^$third-party
 ||pics.obedo.nl^$third-party
 ||promotions.teasemedia.nl^$third-party
+||qads6.nl^$third-party
 ||radiocoupon.nl^$third-party
 ||sallandacties.nl^$third-party
 ||samenresultaat.nl^$third-party
@@ -188,6 +190,7 @@ _advertentieleaderboardhome.
 ||infopagina.nl/startpagina/banner/
 ||internetbode.nl^*banner
 ||jarasoft.org/images/banners/
+||jobat.be/scripts/jobatscripts.js
 ||klikbonvoordeel.nl/dagdeal.php
 ||koopon.nl/banners/
 ||laagstehypotheekofferte.nl/widget/*/
@@ -1091,6 +1094,7 @@ vastgoedjournaal.nl##.randomcontent
 kijkshop.nl##.rechterkolom-banner
 9292ov.nl,rtvnh.nl,valuta.nl##.rectangle
 marktplaats.nl##.search-result.bottom-listing
+vinden.nl##.searchresult-a
 zita.be##.sidebar-add
 techzine.nl##.sidebar_rect
 digitaalburg.com##.sidebar_top
@@ -1131,6 +1135,7 @@ medianed.com##.widget_text[id^="text-"]
 dichtbij.nl##.widgetbanner
 smulweb.nl##.winestein
 haarlemsdagblad.nl,leidschdagblad.nl,noordhollandsdagblad.nl##.x728x222.headerRow
+vinden.nl##.yhads
 nsmbl.nl##A[rel^="ADVERTORIAL:"]
 hababam.nl##[id^="yui-gen"].postcontainer
 cartweet.com,viva.nl##a[href*="&utm_medium=banner&"]
@@ -1175,12 +1180,14 @@ startpagina.nl##div[class^="banner-"]
 hababam.nl##div[class^="had"]
 sexdumpert.nl##div[class^="maincenterbanner"]
 sexdumpert.nl##div[class^="mainleftbanner"]
+parool.nl##div[id$="-ad"]
 pp2g.com##div[id$="_Rectangle"]
 motor-forum.nl##div[id$="_banner"]
 ongein.nl##div[id$="_divAdNL"]
 songteksten.net##div[id$="banner"]
 pp2g.com##div[id*="_Leaderboard_"]
 zie.nl##div[id^="advertisement_"]
+marktplaats.nl##div[id^="google_ads_iframe_"]
 hababam.nl##div[id^="had"]
 binaries4all.nl##div[id^="payserver"]
 treinreiziger.nl##div[id^="subbanner"]

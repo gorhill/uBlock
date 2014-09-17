@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 11 September 2014
+! Last modified: 15 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -196,7 +196,7 @@ bannerad.png
 @@/player/vidAS=pre_roll
 @@||admin.brightcove.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||adocean.pl/*xml$domain=player.pl
-@@||adv.wp.pl/RM/Box/$domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||adv.wp.pl/RM/Box/$domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|biztok.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||atmcdn.pl/*Adserver/$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||iap.pl/ads/
 @@||informacjelokalne.pl/images/storiesflash/czolowka
@@ -205,8 +205,8 @@ bannerad.png
 @@||ocdn.eu/files/pulscms/*.png
 @@||pah.org.pl
 @@||legnica.eu/uploads/pub/ads_files/
-@@||rek.www.wp.pl/pliki/$script,domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
-@@||rek.www.wp.pl/vad.xml?$domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/pliki/$script,domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|biztok.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
+@@||rek.www.wp.pl/vad.xml?$domain=alemodelki.pl|aleseriale.pl|autokrata.pl|babol.pl|biztok.pl|komediowo.pl|pudelek.pl|pudelek.tv|wp.pl|wp.tv|wrzuta.pl
 @@||rek.www.wp.pl/*pudelek.tv
 @@||reklama.onet.pl*logo*png
 @@||rtax.criteo.com$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
@@ -252,6 +252,7 @@ bannerad.png
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
 ||eurotax.pl/img/*.swf
 ||extra-plonsk.pl/images/banners/
+||fakty-wiadomosci.pl
 ||fm.tuba.pl*prosba.jpg
 ||fwcdn.pl/adv/*
 ||filmweb.pl/welcomeScreenJS?*
@@ -271,6 +272,7 @@ bannerad.png
 ||myao.adocean.pl$domain=tvp.pl
 ||napisy24.pl/files/*
 ||napisy24.pl/images/190x260x_
+||partner.vinemo.pl
 ||pclab.pl/img/extra/*_top.png
 ||pclab.pl/img/extra/*_left.jpg
 ||pclab.pl/img/extra/*_right.jpg
@@ -294,6 +296,9 @@ bannerad.png
 ||superwiadomosci24.pl
 ||tvn.adocean.pl/files/*.swf
 ||video.vid4u.org
+||wiadomosci-fakty.pl
+||wiadomosci-kraj.pl
+||wiadomosci-net.pl
 ||wrzuta.pl/ads
 ||x.interia.pl/*.ad.
 ||x.o2.pl

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 2+R2e1X0/WbhhdH/P2U6Zg
-! Version: 201409141321
+! Checksum: T8uD8ak0OwgbEaxX3ENUnQ
+! Version: 201409170351
 ! Title: EasyPrivacy
-! Last modified: 14 Sep 2014 13:21 UTC
+! Last modified: 17 Sep 2014 03:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -5270,6 +5270,7 @@ http://utm.
 ||ping.aclst.com^
 ||ping.dozuki.com^
 ||ping.hellobar.com^
+||ping.rasset.ie^
 ||pings.conviva.com^
 ||pix.speedbit.com^$third-party
 ||pixel.colorupmedia.com^
@@ -6353,7 +6354,6 @@ http://utm.
 ||allvoices.com/track_page
 ||alot.com/js/tracking.js
 ||alot.com/tb/cookiewriter.php?
-||amazon.*^uedata^
 ||amazon.com/clog/
 ||amazon.com/gp/forum/email/tracking?
 ||amazon.com/gp/yourstore/recs/
@@ -7212,6 +7212,7 @@ http://utm.
 ||metric.gstatic.com^
 ||metric.inetcore.com^
 ||metrics.aws.sitepoint.com^
+||metrics.bustle.com^
 ||metrics.dailymotion.com^
 ||metrics.ted.com^
 ||metrics.washingtonpost.com^

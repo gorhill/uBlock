@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Ly9AuWun9Nn+CG4QfMjj1w
-! Version: 201409141320
-! Last modified: 14 Sep 2014 13:20 UTC
+! Checksum: l5Thn2Q2KpUwiOoscnhBCQ
+! Version: 201409170350
+! Last modified: 17 Sep 2014 03:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2348,6 +2348,7 @@ _tizers.
 ||magicanfy.com^
 ||mamypos.com^
 ||managedcollapsed.in^
+||manfys.com^
 ||manuelu.com^
 ||markhab.ru^
 ||masterconvert.ru^
@@ -2460,6 +2461,7 @@ _tizers.
 ||nolix.ru^
 ||nonoqcm.net^
 ||noptes.ru^
+||nrged.com^
 ||nuigyin.net^
 ||numberia.com^
 ||numking.com^
@@ -2579,6 +2581,7 @@ _tizers.
 ||sexshop4ik.ru^
 ||sexvrusko.org^
 ||sheat.ru^
+||shotad.com^
 ||shotyfy.com^
 ||shoveac.com^
 ||showdysl.com^
@@ -2693,6 +2696,7 @@ _tizers.
 ||traffru.ru^
 ||trafidet.ru^$~popup,popup
 ||trafka.ru^$third-party
+||trafmake.ru^
 ||trafsiz.com^
 ||traftiz.com^
 ||trahik.ru^
@@ -2907,7 +2911,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|politland.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|bestcamsxxx.com|bestrepack.net|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|fotooplata.ru|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|politland.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -3015,6 +3019,7 @@ sexytales.org##.contentBox > noindex
 sivator.com##.edina > a[href="http://monstro-beats.com/"]
 vgtimes.ru##.fixed_panel > a[style^="display"]
 bountyporn.com,pornoneverdie.com##.fly_player
+unionpeer.org##.genmed
 dota2.ru##.hadv-block
 dota2.ru##.headshop:not([href^="/shop/"])
 iccup.com##.imageBgLeft
@@ -3026,6 +3031,7 @@ adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.le
 onedivision.ru##.left-branding-container
 allmoldova.com##.left_banner > a[target="_blank"]
 winzoro.net##.left_block_e img:not([src^="/uploads/posts/"])
+anistar.ru##.link_brend
 tvnet.lv##.list.customer
 torrent-pirat.com##.logo + div
 glav.su##.ma_block
@@ -3074,9 +3080,9 @@ zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 alogvinov.com,compulenta.ru,computerra.ru,f1news.ru,fishki.net,gamemag.ru,gismeteo.ru,gotps3.ru,sovsport.ru,sportbox.ru,thg.ru##a[href^="http://ad.adriver."]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
-tapochek.net##a[href^="http://download.mediaplay.ru/"]
+tapochek.net,unionpeer.org##a[href^="http://download.mediaplay.ru/"]
+unionpeer.org##a[href^="http://filesboom.ru/download?"],a[href^="http://forces.loading-master.ru/"]
 tapochek.net##a[href^="http://firstvds.ru/products/"]
-unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
@@ -4060,7 +4066,6 @@ kanobu.ru##a[href^="http://brandings.kanobu.ru/click/"]
 tapochek.net##a[href^="http://casino-x.com/?partner="]
 adultmult.tv##a[href^="http://cityadspix.com/click-"]
 topwar.ru##a[href^="http://cpm.worldoftanks.com?code="]
-unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 torrentino.com##a[href^="http://go.admulti.com/clicks/"]
 z-music.org##a[href^="http://i100.ru"]
 mainspy.ru##a[href^="http://mainspy.ru/banner/"]
@@ -4511,6 +4516,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||animemaga.ru^*/blog/layers/
 ||animenfo.com/*/ads/
 ||animeonline.su^*/images/da/
+||anistar.ru/uploads/fon
 ||ankontr.if.ua/images/mod_banners/
 ||ankontr.if.ua/swf/
 ||antec.com/*/web_banner/$domain=hw-lab.com
@@ -4701,6 +4707,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||flashboot.ru/uploads/bnr/
 ||flasher.ru/data/images/swf/
 ||floomby.ru/files/flash/
+||fonarevka.ru/images/partners/
 ||football.ua/i/hihi/
 ||footballhd.ru^$subdocument
 ||for-foto.ru/*/adv.js|

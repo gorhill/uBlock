@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: VVTszcNd3CEa9/pUQ0j98g
-! Version: 201409141321
+! Checksum: 65RbVcTESLqb2XXC16ku2g
+! Version: 201409170351
 ! Title: Fanboy's Social Blocking List
-! Last modified: 14 Sep 2014 13:21 UTC
+! Last modified: 17 Sep 2014 03:51 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -4656,6 +4656,7 @@ _youtube_small.
 ##.js-socialise-wrapper
 ##.js-tweet-button
 ##.js-twitter-share
+##.js-video-social-panel
 ##.jwdock[style^="display: block;"]
 ##.jwsharethis
 ##.kindleWidget
@@ -8210,6 +8211,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||slkimg.com^*/facebook-login-icon.png$domain=slacker.com
 @@||socialmedia.by^$~third-party
 @@||softicons.com/download/$image
+@@||softpedia-static.com/images/*-Google-plus-$image,domain=softpedia.com
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it
 @@||ssl-images-amazon.com/images/G/01/socialmedia/sweeps/$image,domain=amazon.com

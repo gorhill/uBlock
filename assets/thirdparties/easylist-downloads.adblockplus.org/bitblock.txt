@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: rwQaFg3057RUcNDRwc93yQ
-! Version: 201409141320
-! Last modified: 14 Sep 2014 13:20 UTC
+! Checksum: k9RYGN+Y1i+AAfT2ubwfAQ
+! Version: 201409170350
+! Last modified: 17 Sep 2014 03:50 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -4741,6 +4741,7 @@ _youtube_small.
 ##.js-socialise-wrapper
 ##.js-tweet-button
 ##.js-twitter-share
+##.js-video-social-panel
 ##.jwdock[style^="display: block;"]
 ##.jwsharethis
 ##.kindleWidget
@@ -7655,6 +7656,7 @@ _social_rss.
 ###cc-notification
 ###circAd
 ###cmn_tb_wrapper
+###cne-feedback-button
 ###cometchat
 ###cometchat_base
 ###communityWidget
@@ -8246,6 +8248,7 @@ _social_rss.
 ##.dsv_video_bar
 ##.email-alerts
 ##.email-promo-box
+##.email-signup-form-wrapper
 ##.email-subscribe
 ##.email-subscription-promo
 ##.email-to-a-friend
@@ -9638,6 +9641,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||slkimg.com^*/facebook-login-icon.png$domain=slacker.com
 @@||socialmedia.by^$~third-party
 @@||softicons.com/download/$image
+@@||softpedia-static.com/images/*-Google-plus-$image,domain=softpedia.com
 @@||spardaspendenwahl.de^*/jquery.socialshareprivacy.min.js
 @@||ssl-images-amazon.com/images/*/socialmedia/$image,domain=affiliate-program.amazon.co.uk|affiliate-program.amazon.com|affiliate-program.amazon.in|affiliate.amazon.co.jp|afiliados.amazon.es|associados.amazon.com.br|associates.amazon.ca|associates.amazon.cn|partenaires.amazon.fr|partnernet.amazon.de|programma-affiliazione.amazon.it
 @@||ssl-images-amazon.com/images/G/01/socialmedia/sweeps/$image,domain=amazon.com

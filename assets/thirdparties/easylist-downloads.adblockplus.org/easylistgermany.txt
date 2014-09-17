@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 3fwKNzqazNl8Zse6AuXn0A
-! Version: 201409141321
+! Checksum: GEglMWapxdVqRT7PR6lAtQ
+! Version: 201409170351
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 14 Sep 2014 13:21 UTC
+! Last modified: 17 Sep 2014 03:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3670,6 +3670,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /\bwww\.pc-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=pc-magazin.de
 /\bwww\.video-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+||doubleclick.net^$domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
 ||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
 ||gamona.de/assets/*_1000x140.
@@ -3682,6 +3683,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
+||ip-ads.de^$domain=rtl-now.rtl.de|rtl2now.rtl2.de
 ||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||media.epochtimes.de/img/
 ||mv-spion.de/ajax/lc?content=qwert
@@ -7066,6 +7068,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||ad.zanox.com/ppc/?$subdocument,domain=eule.de|grossklein.de|gutscheindoktor.de|literatur-fast-pur.de|preismafia.com|preisvergleich.de
 @@||ad4.liverail.com/interstitial/?lr_publisher_id=$script,domain=jam.fm|paradiso.de
 @@||adap.tv/redir/client/swfloader.swf?id=swfloader$object,domain=lycos.de
+@@||adback.de^$~third-party
 @@||adcell.de/click.php?bid=$subdocument,domain=gutscheindoktor.de|mein-rabatt.com
 @@||adcounter.darmstaedter-echo.de^$~third-party
 @@||adfarm1.adition.com/banner?sid=$script,domain=jam.fm
@@ -7474,13 +7477,11 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@|http://www-$object-subrequest,third-party,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||2mdn.net/879366/flashwrite_1_2.js$domain=n-tv.de|teleboerse.de
 @@||2mdn.net/viewad/*-grey.gif|$domain=n-tv.de|teleboerse.de
-@@||2mdn.net/viewad/*.gif$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||2mdn.net/viewad/*.jpg$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||2mdn.net^*.swf?clicktag=$object,domain=n-tv.de|teleboerse.de
 @@||37.59.248.204^$script,domain=ul-load.com|uploaded-premium.ru
 @@||4players.de/javascript/4players/$script
 @@||5.135.58.25^$script,domain=uploaded-premium.ru
-@@||ad-emea.doubleclick.net/crossdomain.xml$object-subrequest,domain=clipfish.de|homerj.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|spiegel.tv|sueddeutsche.de|superrtlnow.de|voxnow.de
+@@||ad-emea.doubleclick.net/crossdomain.xml$object-subrequest,domain=homerj.de|spiegel.tv|sueddeutsche.de
 @@||ad-emea.doubleclick.net/pfadx/spiegel.tv.smartclip/;sz=*;dcmt=*;ord=$object-subrequest,domain=spiegel.tv
 @@||ad.71i.de/global_js/*/adplayer.min.js$domain=gamestar.de
 @@||ad.71i.de/global_js/AdScripts/standard.js$domain=gamestar.de
@@ -7488,19 +7489,12 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||ad.71i.de/global_js/Sites/$domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
 @@||ad.adnet.de/adj.php?$script,domain=schoener-fernsehen.com
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=homerj.de
-@@||ad4.liverail.com/?LR_PUBLISHER_ID=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ad4mat.de/ads/js/adtrust-min.php?*&w=468&h=60&$script,domain=mufa.de
 @@||adclient.uimserv.net/crossdomain.xml$object-subrequest,domain=gmx.net|web.de
 @@||adclient.uimserv.net/js.ng/|$object-subrequest,domain=gmx.net|web.de
 @@||adclient.uimserv.net/|$object-subrequest,domain=gmx.net|web.de
-@@||adfarm1.adition.com/banner?co=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||adfarm1.adition.com/banner?sid=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||adfarm1.adition.com/banner?sid=*&adjsver=*&clickurl=http%3A//ad.de.doubleclick.net/click%$script,domain=n-tv.de
-@@||adfarm1.adition.com/crossdomain.xml$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||adfarm1.adition.com/js?wp_id=*&kid=*&ts=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||adfarm1.adition.com/js?wp_id=*&kid=*&ts=*&clickurl=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de
-@@||adform.net/crossdomain.xml$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||adform.net/serving/videoad/?$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||adnet.de/ad2.js$domain=schoener-fernsehen.com
 @@||ads.exoclick.com/ads.js$domain=board.world-of-hentai.to
 @@||ads.flirttown.net/www/delivery/afr.php?zoneid=1&age=*&gender=$subdocument
@@ -7529,16 +7523,12 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||blick.ch^*/advertisement.js
 @@||boardking.de^*/adframe.js
 @@||brasilienfreunde.net^$elemhide
-@@||bs.serving-sys.com/burstingpipe/adserver.bs?$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||bs.serving-sys.com/crossdomain.xml$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||buffed.de^$image
 @@||bullhost.de^$elemhide
 @@||bullhost.de^*#-$image
 @@||cas.criteo.com/delivery/afr.php?zoneid=$subdocument,domain=netzkino.de
 @@||cas.criteo.com/delivery/ajs.php?zoneid=$script,domain=mufa.de
 @@||cdn.flashtalking.com/xre/*/js/j-*.js$domain=teleboerse.de
-@@||cdn.flashtalking.com^*.flv$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||cdn.flashtalking.com^*.mp4$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||chat.lycos.de/adimages/$subdocument
 @@||cloudfront.net^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||colorfoto.de^$elemhide
@@ -7559,7 +7549,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||digentu.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||digentu.de^$script,domain=gamona.de|lustich.de
 @@||dokumente-online.com^*/adframe.js
-@@||doubleclick.net/ad/*;sz=1x1;ord=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||doubleclick.net/ad/clipfish.smartclip/$object-subrequest,domain=clipfish.de
 @@||doubleclick.net/ad/pushbackde.smartclip/clipfish.smartclip/$object-subrequest,domain=clipfish.de
 @@||doubleclick.net/ad/|$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
@@ -7569,7 +7558,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||doubleclick.net/adj/*.4players.de_de/*;sz=301x250;$script,domain=4players.de
 @@||doubleclick.net/adj/*.4players.de_de/*;sz=728x90,728x180,1000x150;$script,domain=4players.de
 @@||doubleclick.net/crossdomain.xml$domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
-@@||doubleclick.net/ddm/trackimp/*.IPDEUTSCHLAND/*;dc_trk_aid=*;dc_trk_cid=*;ord=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||doubleclick.net/pfadx/*;sz=0x0;$object-subrequest,domain=sueddeutsche.de
 @@||doubleclick.net/pfadx/iqd_sueddeutsche;sz=$object-subrequest
 @@||doubleclick.net/pfadx/iqdsde/video;sz=$object-subrequest
@@ -7604,7 +7592,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||fernsehen.to/advertisement.js
 @@||feropt.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||feropt.de^$image,script,domain=gamona.de|lustich.de
-@@||files.adform.net/Banners/Stream/*.flv$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||finanzmarkttransaktionssteuer.de^$elemhide
 @@||flashtalking.com/imp/*;BMWTVTeaser220x180/?click=$script,domain=teleboerse.de
 @@||forum-fuer-senioren.de^*/ad.js
@@ -7618,7 +7605,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||g.doubleclick.net/activity;*/DE-AudiencePixel/Gamestar;dc_seg=$image,domain=gamestar.de
 @@||g.doubleclick.net/gampad/ads?*&callback=googletag.impl.pubads.setAdContentsBySlotForSync&$script,domain=gamona.de
 @@||g.doubleclick.net/gampad/ads?sz=320x240&iu=/4444/pcgames_video.de_fx_sdm/Rest&ciu_szs&$object-subrequest,domain=pcgames.de
-@@||g.doubleclick.net/pagead/adview?ai=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
 @@||game-advertising-online.com/images/s-l.gif$domain=anime-loads.org
 @@||game-advertising-online.com/index.php?section=serve&id=$subdocument,domain=anime-loads.org
 @@||gamesaktuell.de^$image
@@ -7630,8 +7616,8 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||gearwom.de^$script,domain=gamona.de|lustich.de
 @@||gerichtsboulevard.de^$elemhide
 @@||gesehen.es^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
-@@||gmads.net/crossdomain.xml$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
-@@||gmads.net/r?$object-subrequest,domain=clipfish.de|kabeleins.de|n-tvnow.de|prosieben.at|prosieben.ch|prosieben.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|sat1.de|sixx.de|superrtlnow.de|voxnow.de
+@@||gmads.net/crossdomain.xml$object-subrequest,domain=kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.de|sixx.de
+@@||gmads.net/r?$object-subrequest,domain=kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.de|sixx.de
 @@||goolive.de^*.js|
 @@||green-24.de^$elemhide
 @@||grundrechteschutz.de^$elemhide
@@ -7644,7 +7630,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||inciteb.de^$script,domain=gamona.de|lustich.de
 @@||indalam.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||indalam.de^$script,domain=gamona.de|lustich.de
-@@||innovid.com^*;cb=$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||ivwbox.de^*#$image,domain=lustich.de
 @@||jagdlupe.de^$elemhide
 @@||java-forum.org^$elemhide
@@ -7719,10 +7704,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||schuetzenrecht.de^$elemhide
 @@||schulzeux.de/js/show_ads.js
 @@||schweizer-abgeltungssteuer.ch^$elemhide
-@@||servedby.flashtalking.com/imp/$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||serving-sys.com/BurstingRes/Site-*.flv$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||serving-sys.com/BurstingRes/Site-*.mp4$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||serving-sys.com/BurstingRes/Site-*/Type-$object-subrequest,domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||sevenads.net/images/v4/white_logo.png$domain=uploaded-premium.ru
 @@||sevenads.net/layer.php?p=$script,domain=uploaded-premium.ru
 @@||sevenads.net^*/close.png$domain=uploaded-premium.ru
@@ -7748,8 +7729,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||tape.tv/js/adblockdetection.js
 @@||tape.tv^$elemhide
 @@||teamspeak-ts.com^$elemhide
-@@||telemetryverification.net/?*;cb=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-@@||telemetryverification.net/?cb=$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||teleskipp.de/jump/www/delivery/ajs.php?zoneid=$script,domain=mv-spion.de
 @@||tiervermittlung.de/adblock.js
 @@||tiervermittlung.de/advertisement.js

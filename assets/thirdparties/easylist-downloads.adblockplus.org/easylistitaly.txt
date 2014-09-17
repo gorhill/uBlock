@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: /USO6EeRRxAeNEZSuZqKMw
-! Version: 201409141321
+! Checksum: ePKZjDKUNnm5VjarfIRTig
+! Version: 201409170351
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 14 Sep 2014 13:21 UTC
+! Ultima modifica: 17 Sep 2014 03:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -408,6 +408,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||oasjs.kataweb.it^
 ||overlays.fr/js/launcher.js
 ||pangora.com^$image,third-party
+||partner.leguide.com^$third-party
 ||passionevideo.it/inc/ova.swf$object-subrequest
 ||percorsidigitali.com/consulting300.gif
 ||plug.it/*/oas/
@@ -1542,6 +1543,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||tio.ch/img/2013/iframe/postfinance.jpg
 ||tio.ch^*/banner/
 ||tipresentoilcane.com/banner/
+||tiscali.it^*/meetic3.swf
 ||tmnews.it^*/banner_
 ||today.it/images/*_skin_
 ||today.it/images/lg.jpg
@@ -2125,7 +2127,7 @@ outcast.it##.banner250250
 ilcapoluogo.com##.banner3
 firstonline.info,mediapason.it##.banner300
 outcast.it##.banner300250
-hwupgrade.it##.banner300x250
+hwupgrade.it,italiaoggi.it,milanofinanza.it##.banner300x250
 ildesk.it##.banner385x198
 ilcapoluogo.com##.banner4
 ildesk.it##.banner468x60
@@ -2295,6 +2297,7 @@ livesicilia.it##.manchette-l
 livesicilia.it##.manchette-r
 erbanotizie.com,lecconotizie.com##.manchette-sx
 cremonaoggi.it##.manchette2
+tiscali.it##.maxi-box
 europaquotidiano.it##.mct_dx
 europaquotidiano.it##.mct_sx
 gazzettadasti.it##.medium-rotate-banner

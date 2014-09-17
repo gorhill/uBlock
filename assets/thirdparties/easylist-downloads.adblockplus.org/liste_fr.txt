@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: VM/A/ve9qEKjSMr5paogEg
-! Version: 201409141321
+! Checksum: NS01NI3QURu83sFdH2fxxg
+! Version: 201409170351
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3242,6 +3242,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||afcdn.com/world/ads.js?$domain=marmiton.org
 @@||afe2.specificclick.net/crossdomain.xml$domain=videos.nt1.tv|videos.tmc.tv
 @@||agir.bloomassociation.org/adserver2/
+@@||agir.planfrance.org/adserver2/
 @@||allocine.fr/crossdomain.xml
 @@||ami2.com/resources/img/mysite/publicites/$image,domain=ami2.com
 @@||appeals.diabetes.org.uk/adserver2/

@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: XkrRbv+LXE0by74Ua4DB0A
+! Checksum: l34IUi5U6DJcQ+hWN+kNcw
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-09-10
+! Paskutinis atnaujinimas: 2014-09-16
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -140,6 +140,11 @@ chatas.lt##a[href="http://www.100skelbimu.lt/"]
 ciurlioniopaveldas.lt##.bx-viewport
 cosmopolitan.lt##.cosmo-article-banner
 cust.lt##.footer_banners
+cvzona.lt###top-b
+cvzona.lt##.b-group
+cvzona.lt##.no-print[style="background: #eee; padding: 3px 3px 3px 12px; margin-top: 7px; line-height: 0; text-align: center; position: relative; width: 750px; margin-left: 40px"]
+cvzona.lt##DIV[style="position: absolute; text-align: center; height: 100px; width: 750px; border:1px solid #F1F1F1; border-top:none; background: #F7F7F7"]
+cvzona.lt##[style="position: absolute; bottom:6px; left: 2px; font-size: 10px; background: url(/img/icon-reklama.gif) no-repeat; width: 7px; height: 41px"] + #fl-embd-736
 daiktai.eu##TABLE[style="background: #4b4442; width: 160px; border: 0px solid white;padding-top:5px;padding-left:5px"]
 daiktai.eu##TABLE[style="font-family: verdana;font-weight:normal;color:indigo;font-size:11px;background:#4b4442; width:160px;border: 0px solid brown;padding-left:16;"]
 daiktai.eu##[bgcolor="#87B6D9"] > [bordercolor="beige"][style="font-family: verdana;font-weight:bold;color:indigo;font-size:11px;background:whitesmoke; width:300px;border: 0px solid brown;margin-left:6px"] > *
@@ -260,6 +265,11 @@ kabutes.kasvyksta.lt##.miestasreng *
 kabutes.lt###reklama-desine
 kamane.lt##.left_banner
 katiluturgus.lt##a[href^="/banners/"]
+kaunas.cvzona.lt###top-b
+kaunas.cvzona.lt##.b-group
+kaunas.cvzona.lt##.no-print[style="background: #eee; padding: 3px 3px 3px 12px; margin-top: 7px; line-height: 0; text-align: center; position: relative; width: 750px; margin-left: 40px"]
+kaunas.cvzona.lt##DIV[style="position: absolute; text-align: center; height: 100px; width: 750px; border:1px solid #F1F1F1; border-top:none; background: #F7F7F7"]
+kaunas.cvzona.lt##[style="position: absolute; bottom:6px; left: 2px; font-size: 10px; background: url(/img/icon-reklama.gif) no-repeat; width: 7px; height: 41px"] + #fl-embd-736
 kaunas.lt##TD[style="PADDING-BOTTOM: 13px; PADDING-LEFT: 0px; BACKGROUND: url(/kaunas/m/m_images/wfiles/il4sk332.jpg) #faf6f5 no-repeat left top; PADDING-TOP: 13px"]
 kaunieciai.lt##.mod_mtc_container *
 kaunieciai.lt,panevezieciai.lt###zoro-offers-mod-container *
@@ -962,6 +972,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||technologijos.lt/upload/image/n/iliustracijos/skelbimu_logotipai/ban/
 ||tekstai.lt/images/stories/draugai/
 ||themusic.lt/images/geramada12x120.gif
+||themusic.lt/images/imknuolaida2.png
 ||themusic.lt/images/thesport.png
 ||themusic.lt/images/vienisi.png
 ||tic.siauliai.lt/ezmediacatalogue/catalogue/php4ZH7kE.swf

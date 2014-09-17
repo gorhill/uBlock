@@ -448,8 +448,7 @@ online.dramacafe.tv#@#.afs_ads
 @@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
 @@||pubads.g.doubleclick.net/gampad/ads?*$domain=syndication.vmma.be,object-subrequest
 ! tvn24.pl
-@@||tvn.hit.gemius.pl^$script,domain=tvn24.pl
-@@||tvn.adocean.pl/_*/ad.js?*$script,domain=tvn24.pl
+@@||admin.brightcove.com^$object-subrequest
 ! clubedohardware.com.br
 clubedohardware.com.br#@#.nexusad
 clubedohardware.com.br#@##banner
@@ -463,6 +462,10 @@ clubedohardware.com.br#@#.ipsAd
 gamingroom.tv#@#.adsbygoogle
 ! upf.co.il
 @@||upf.co.il/advertisment.js$script
+! paidverts.com
+paidverts.com#@#.afs_ads
+! sat1.de
+@@||gmads.net^$object-subrequest,domain=sat1.de|sat1.ch
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -471,7 +474,8 @@ gamingroom.tv#@#.adsbygoogle
 /plugins/main/js/jquery.simplemodal.js$script
 /plugins/social-traffic-pop/stp.js$script
 /social-traffic-pop/jquery.stp.js$script
-/plugins/advanced-facebook-content-locker/js/jquery.simplemodal.js|$script
+/plugins/advanced-facebook-content-locker/
+/plugins/social-locker/
 !----------------------------------------------------------------------------------------------------!
 ! Tracking
 !----------------------------------------------------------------------------------------------------!
