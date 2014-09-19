@@ -35,7 +35,7 @@ var µb = µBlock;
 // |||   | |      |
 // |||   | |      |
 // |||   | |      |
-// |||   | |      +---- bit 0-3: domain bits
+// |||   | |      +---- bit 0-6: unused
 // |||   | +---- bit 8-7: party [0 - 3]
 // |||   +---- bit 12-9: type [0 - 15]
 // ||+---- bit 13: `important`
@@ -70,8 +70,6 @@ const AllowAnyTypeOneParty = AllowAction | AnyType | SpecificParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 const AllowOneParty = AllowAction | SpecificParty;
-
-const noDomainName = 'not-a-real-domain';
 
 var pageHostname = '';
 
@@ -1019,7 +1017,6 @@ var trimChar = function(s, c) {
 /******************************************************************************/
 
 var FilterParser = function() {
-    this.domains = [];
     this.hostnames = [];
     this.types = [];
     this.reset();
@@ -1044,7 +1041,6 @@ FilterParser.prototype.toNormalizedType = {
 FilterParser.prototype.reset = function() {
     this.action = BlockAction;
     this.anchor = 0;
-    this.domains.length = 0;
     this.elemHiding = false;
     this.f = '';
     this.firstParty = false;
@@ -1092,20 +1088,13 @@ FilterParser.prototype.parseOptParty = function(not) {
 /******************************************************************************/
 
 FilterParser.prototype.parseOptHostnames = function(raw) {
-    var µburi = µb.URI;
     var hostnames = raw.split('|');
-    var hostname, not, domain;
+    var hostname, not;
     for ( var i = 0; i < hostnames.length; i++ ) {
         hostname = hostnames[i];
         not = hostname.charAt(0) === '~';
         if ( not ) {
             hostname = hostname.slice(1);
-        }
-        // https://github.com/gorhill/uBlock/issues/188
-        // If not a real domain as per PSL, assign a synthetic one
-        domain = µburi.domainFromHostname(hostname);
-        if ( domain === '' ) {
-            domain = noDomainName;
         }
         // https://github.com/gorhill/uBlock/issues/191
         // Well it doesn't seem to make a whole lot of sense to have both 
@@ -1117,7 +1106,6 @@ FilterParser.prototype.parseOptHostnames = function(raw) {
         }
         this.notHostname = not;
         this.hostnames.push(hostname);
-        this.domains.push(domain);
     }
 };
 
@@ -1234,11 +1222,10 @@ FilterParser.prototype.parse = function(s) {
 
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
-    this.buckets = new Array(8);
+    this.buckets = new Array(6);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
     this.filterParser = new FilterParser();
-    this.noDomainBits = this.toDomainBits(noDomainName);
     this.reset();
 };
 
@@ -1405,19 +1392,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toDomainBits = function(domain) {
-    if ( domain === undefined ) {
-        return 0;
-    }
-    var i = domain.length >> 2;
-    return (domain.charCodeAt(    0) & 0x01) << 3 |
-           (domain.charCodeAt(    i) & 0x01) << 2 |
-           (domain.charCodeAt(  i+i) & 0x01) << 1 |
-           (domain.charCodeAt(i+i+i) & 0x01) << 0;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.makeCategoryKey = function(category) {
     return String.fromCharCode(category);
 };
@@ -1523,7 +1497,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             this.addFilterEntry(
                 filter,
                 parsed,
-                SpecificParty | this.toDomainBits(parsed.domains[i]),
+                SpecificParty,
                 tokenBeg,
                 tokenEnd
             );
@@ -1557,7 +1531,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             this.addFilterEntry(
                 filter,
                 parsed,
-                SpecificParty | this.toDomainBits(parsed.domains[i]),
+                SpecificParty,
                 tokenBeg,
                 tokenEnd
             );
@@ -1629,8 +1603,6 @@ FilterContainer.prototype.matchTokens = function(url) {
     var bucket3 = buckets[3];
     var bucket4 = buckets[4];
     var bucket5 = buckets[5];
-    var bucket6 = buckets[6];
-    var bucket7 = buckets[7];
 
     re.lastIndex = 0;
     while ( matches = re.exec(url) ) {
@@ -1668,18 +1640,6 @@ FilterContainer.prototype.matchTokens = function(url) {
         }
         if ( bucket5 !== undefined && bucket5.hasOwnProperty(token) ) {
             f = bucket5[token];
-            if ( f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket6 !== undefined && bucket6.hasOwnProperty(token) ) {
-            f = bucket6[token];
-            if ( f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket7 !== undefined && bucket7.hasOwnProperty(token) ) {
-            f = bucket7[token];
             if ( f.match(url, beg) !== false ) {
                 return f;
             }
@@ -1747,7 +1707,6 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
         FirstParty :
         ThirdParty;
-    var domainParty = this.toDomainBits(pageDomain);
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
@@ -1755,14 +1714,13 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
-    buckets[0] = buckets[1] = buckets[2] = buckets[6] = undefined;
+    buckets[0] = buckets[1] = buckets[2] = undefined;
 
     // https://github.com/gorhill/uBlock/issues/139
     // Test against important block filters
     buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
     buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type | domainParty)];
-    buckets[7] = categories[this.makeCategoryKey(BlockOneParty | Important | type | this.noDomainBits)];
+    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type)];
     var bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString();
@@ -1772,8 +1730,7 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // If there is no block filter, no need to test against allow filters
     buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | type)];
     buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
-    buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
+    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type)];
     bf = this.matchTokens(url);
     if ( bf === false ) {
         return '';
@@ -1782,8 +1739,7 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // Test against allow filters
     buckets[3] = categories[this.makeCategoryKey(AllowAnyParty | type)];
     buckets[4] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
-    buckets[7] = categories[this.makeCategoryKey(AllowOneParty | type | this.noDomainBits)];
+    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type)];
     var af = this.matchTokens(url);
     if ( af !== false ) {
         return '@@' + af.toString();
@@ -1838,7 +1794,6 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
-    var domainParty = this.toDomainBits(pageDomain);
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
@@ -1850,12 +1805,10 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // the `important` property it is "evaluate allow then evaluate block".
     buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)];
     buckets[1] = categories[this.makeCategoryKey(BlockAnyType | Important | party)];
-    buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important | domainParty)];
+    buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important)];
     buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
     buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type | domainParty)];
-    buckets[6] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important | this.noDomainBits)];
-    buckets[7] = categories[this.makeCategoryKey(BlockOneParty | Important | type | this.noDomainBits)];
+    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type)];
     var bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString() + '$important';
@@ -1871,14 +1824,10 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     if ( bf === false ) {
         buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
         buckets[1] = categories[this.makeCategoryKey(BlockAnyType | party)];
-        buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | domainParty)];
+        buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty)];
         buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | type)];
         buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
-        buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type | domainParty)];
-        // https://github.com/gorhill/uBlock/issues/188
-        // Test for synthetic domain as well
-        buckets[6] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | this.noDomainBits)];
-        buckets[7] = categories[this.makeCategoryKey(BlockOneParty | type | this.noDomainBits)];
+        buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type)];
         bf = this.matchTokens(url);
     }
 
@@ -1890,14 +1839,10 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // Test against allow filters
     buckets[0] = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)];
     buckets[1] = categories[this.makeCategoryKey(AllowAnyType | party)];
-    buckets[2] = categories[this.makeCategoryKey(AllowAnyTypeOneParty | domainParty)];
+    buckets[2] = categories[this.makeCategoryKey(AllowAnyTypeOneParty)];
     buckets[3] = categories[this.makeCategoryKey(AllowAnyParty | type)];
     buckets[4] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type | domainParty)];
-    // https://github.com/gorhill/uBlock/issues/188
-    // Test for synthetic domain as well
-    buckets[6] = categories[this.makeCategoryKey(AllowAnyTypeOneParty | this.noDomainBits)];
-    buckets[7] = categories[this.makeCategoryKey(AllowOneParty | type | this.noDomainBits)];
+    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type)];
     var af = this.matchTokens(url);
     if ( af !== false ) {
         return '@@' + af.toString();
