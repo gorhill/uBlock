@@ -713,6 +713,7 @@ var startPicker = function() {
             'position: absolute;',
             'top: 0;',
             'left: 0;',
+            'pointer-events: auto;',
             'cursor: crosshair;',
             'z-index: 4999999999;',
         '}',
