@@ -6,7 +6,13 @@ See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development 
 through benchmarking.
 
-**µBlock is not an "ad blocker", it's a blocker in the broad sense**, which happens to block ads through its support of [Adblock Plus filters](https://adblockplus.org/en/filters). _EasyList_, _EasyPrivacy_ and _Peter Lowe's Adservers_ list are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads.
+**µBlock is not an "ad blocker", it's a blocker in the broad sense**, which happens to block ads through its support of [Adblock Plus filters](https://adblockplus.org/en/filters).
+
+_EasyList_, _EasyPrivacy_ and _Peter Lowe's Adservers_ list are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads.
+
+In my opinion, ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
+
+My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads are the visible portion) for users who do not want to deal with more technical means like [HTTP Switchboard](https://github.com/gorhill/httpswitchboard#http-switchboard-for-chromium).
 
 <p align="center">
 µBlock: page loaded. ABP: page still loading.<br>
