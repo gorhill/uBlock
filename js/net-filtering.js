@@ -1222,7 +1222,7 @@ FilterParser.prototype.parse = function(s) {
 
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
-    this.buckets = new Array(6);
+    this.buckets = new Array(4);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
     this.filterParser = new FilterParser();
@@ -1494,13 +1494,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             if ( !filter ) {
                 return false;
             }
-            this.addFilterEntry(
-                filter,
-                parsed,
-                SpecificParty,
-                tokenBeg,
-                tokenEnd
-            );
+            this.addFilterEntry(filter, parsed, AnyParty, tokenBeg, tokenEnd);
         }
         return true;
     }
@@ -1528,13 +1522,7 @@ FilterContainer.prototype.addFilter = function(parsed) {
             if ( parsed.action === BlockAction ) {
                 parsed.important = Important;
             }
-            this.addFilterEntry(
-                filter,
-                parsed,
-                SpecificParty,
-                tokenBeg,
-                tokenEnd
-            );
+            this.addFilterEntry(filter, parsed, AnyParty, tokenBeg, tokenEnd);
         }
         return true;
     }
@@ -1601,8 +1589,6 @@ FilterContainer.prototype.matchTokens = function(url) {
     var bucket1 = buckets[1];
     var bucket2 = buckets[2];
     var bucket3 = buckets[3];
-    var bucket4 = buckets[4];
-    var bucket5 = buckets[5];
 
     re.lastIndex = 0;
     while ( matches = re.exec(url) ) {
@@ -1628,18 +1614,6 @@ FilterContainer.prototype.matchTokens = function(url) {
         }
         if ( bucket3 !== undefined && bucket3.hasOwnProperty(token) ) {
             f = bucket3[token];
-            if ( f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket4 !== undefined && bucket4.hasOwnProperty(token) ) {
-            f = bucket4[token];
-            if ( f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket5 !== undefined && bucket5.hasOwnProperty(token) ) {
-            f = bucket5[token];
             if ( f.match(url, beg) !== false ) {
                 return f;
             }
@@ -1714,13 +1688,12 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
-    buckets[0] = buckets[1] = buckets[2] = undefined;
+    buckets[0] = buckets[1] = undefined;
 
     // https://github.com/gorhill/uBlock/issues/139
     // Test against important block filters
-    buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
-    buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type)];
+    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
+    buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
     var bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString();
@@ -1728,18 +1701,16 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
 
     // Test against block filters
     // If there is no block filter, no need to test against allow filters
-    buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | type)];
-    buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type)];
+    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | type)];
+    buckets[3] = categories[this.makeCategoryKey(BlockAction | type | party)];
     bf = this.matchTokens(url);
     if ( bf === false ) {
         return '';
     }
 
     // Test against allow filters
-    buckets[3] = categories[this.makeCategoryKey(AllowAnyParty | type)];
-    buckets[4] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type)];
+    buckets[2] = categories[this.makeCategoryKey(AllowAnyParty | type)];
+    buckets[3] = categories[this.makeCategoryKey(AllowAction | type | party)];
     var af = this.matchTokens(url);
     if ( af !== false ) {
         return '@@' + af.toString();
@@ -1805,10 +1776,8 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // the `important` property it is "evaluate allow then evaluate block".
     buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)];
     buckets[1] = categories[this.makeCategoryKey(BlockAnyType | Important | party)];
-    buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty | Important)];
-    buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
-    buckets[4] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(BlockOneParty | Important | type)];
+    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
+    buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
     var bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString() + '$important';
@@ -1824,10 +1793,8 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     if ( bf === false ) {
         buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
         buckets[1] = categories[this.makeCategoryKey(BlockAnyType | party)];
-        buckets[2] = categories[this.makeCategoryKey(BlockAnyTypeOneParty)];
-        buckets[3] = categories[this.makeCategoryKey(BlockAnyParty | type)];
-        buckets[4] = categories[this.makeCategoryKey(BlockAction | type | party)];
-        buckets[5] = categories[this.makeCategoryKey(BlockOneParty | type)];
+        buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | type)];
+        buckets[3] = categories[this.makeCategoryKey(BlockAction | type | party)];
         bf = this.matchTokens(url);
     }
 
@@ -1839,10 +1806,8 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // Test against allow filters
     buckets[0] = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)];
     buckets[1] = categories[this.makeCategoryKey(AllowAnyType | party)];
-    buckets[2] = categories[this.makeCategoryKey(AllowAnyTypeOneParty)];
-    buckets[3] = categories[this.makeCategoryKey(AllowAnyParty | type)];
-    buckets[4] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    buckets[5] = categories[this.makeCategoryKey(AllowOneParty | type)];
+    buckets[2] = categories[this.makeCategoryKey(AllowAnyParty | type)];
+    buckets[3] = categories[this.makeCategoryKey(AllowAction | type | party)];
     var af = this.matchTokens(url);
     if ( af !== false ) {
         return '@@' + af.toString();
