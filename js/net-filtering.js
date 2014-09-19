@@ -80,6 +80,7 @@ var reIgnoreComment = /^\[|^!/;
 var reHostnameRule = /^[0-9a-z][0-9a-z.-]+[0-9a-z]$/;
 var reHostnameToken = /^[0-9a-z]+/g;
 var reGoodToken = /[%0-9a-z]{2,}/g;
+var reURLPostHostnameAnchors = /[\/?#]/;
 
 var typeNameToTypeValue = {
         'stylesheet': 2 << 9,
@@ -166,6 +167,9 @@ Filters family tree:
   - anchored at end
     - no hostname
     - specific hostname
+  - anchored within hostname
+    - no hostname
+    - specific hostname (not implemented)
 
 - one wildcard
   - anywhere
@@ -177,6 +181,9 @@ Filters family tree:
   - anchored at end
     - no hostname
     - specific hostname
+  - anchored within hostname
+    - no hostname (not implemented)
+    - specific hostname (not implemented)
 
 - more than one wildcard
   - anywhere
@@ -188,6 +195,9 @@ Filters family tree:
   - anchored at end
     - no hostname
     - specific hostname
+  - anchored within hostname
+    - no hostname (not implemented)
+    - specific hostname (not implemented)
 
 */
 
@@ -455,6 +465,41 @@ FilterPlainRightAnchoredHostname.fromSelfie = function(s) {
     var pos = s.indexOf('\t');
     return new FilterPlainRightAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
 };
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/235
+// The filter is left-anchored somewhere within the hostname part of the URL.
+
+var FilterPlainHnAnchored = function(s) {
+    this.s = s;
+};
+
+FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
+    if ( url.substr(tokenBeg, this.s.length) !== this.s ) {
+        return false;
+    }
+    // Valid only if hostname-valid characters to the left of token
+    var pos = url.indexOf('://');
+    return pos !== -1 &&
+           reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
+};
+
+FilterPlainHnAnchored.prototype.fid = 'h|a';
+
+FilterPlainHnAnchored.prototype.toString = function() {
+    return '||' + this.s;
+};
+
+FilterPlainHnAnchored.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterPlainHnAnchored.fromSelfie = function(s) {
+    return new FilterPlainHnAnchored(s);
+};
+
+// https://www.youtube.com/watch?v=71YS6xDB-E4
 
 /******************************************************************************/
 
@@ -770,6 +815,24 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 
 /******************************************************************************/
 
+// TODO: Some buckets may grow quite large (see histogram excerpt below).
+// Evaluate the gain from having an internal dictionary for such large 
+// buckets: the key would be created by concatenating the char preceding and 
+// following the token. The dict would contain smaller buckets, and there 
+// would be a special bucket for those filters for which a prefix, suffix, or 
+// both is missing.
+// I used to do this, but at a higher level, during tokenization, and in the
+// end I found out the overhead was to much. I believe it will be a gain 
+// here because the special treatment would be only for a few specific tokens,
+// not systematically done for all tokens.
+
+// key=Ȁ ad          count=655
+// key=Ȁ ads         count=432
+// key=̀  doubleclick count= 94
+// key=Ȁ adv         count= 89
+// key=Ȁ google      count= 67
+// key=Ȁ banner      count= 55
+
 var FilterBucket = function(a, b) {
     this.f = null;
     this.filters = [];
@@ -841,6 +904,9 @@ var makeFilter = function(details, tokenBeg) {
     }
     if ( details.anchor > 0 ) {
         return new FilterPlainRightAnchored(s);
+    }
+    if ( details.hostnameAnchored ) {
+        return new FilterPlainHnAnchored(s);
     }
     if ( tokenBeg === 0 ) {
         return new FilterPlainPrefix0(s);
@@ -983,7 +1049,8 @@ FilterParser.prototype.reset = function() {
     this.f = '';
     this.firstParty = false;
     this.fopts = '';
-    this.hostname = false;
+    this.hostnameAnchored = false;
+    this.hostnamePure = false;
     this.hostnames.length = 0;
     this.notHostname = false;
     this.thirdParty = false;
@@ -1060,6 +1127,12 @@ FilterParser.prototype.parse = function(s) {
     // important!
     this.reset();
 
+    if ( reHostnameRule.test(s) ) {
+        this.f = s;
+        this.hostnamePure = this.hostnameAnchored = true;
+        return this;
+    }
+
     // element hiding filter?
     if ( s.indexOf('##') >= 0 || s.indexOf('#@') >= 0 ) {
         this.elemHiding = true;
@@ -1087,7 +1160,7 @@ FilterParser.prototype.parse = function(s) {
 
     // hostname anchoring
     if ( s.slice(0, 2) === '||' ) {
-        this.hostname = true;
+        this.hostnameAnchored = true;
         s = s.slice(2);
     }
 
@@ -1110,7 +1183,12 @@ FilterParser.prototype.parse = function(s) {
     s = s.replace(/\*\*+/g, '*');
 
     // remove leading and trailing wildcards
-    this.f = trimChar(s, '*');
+    s = trimChar(s, '*');
+
+    // pure hostname-based?
+    this.hostnamePure = this.hostnameAnchored && reHostnameRule.test(s);
+
+    this.f = s;
 
     if ( !this.fopts ) {
         return this;
@@ -1274,6 +1352,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         '|ah': FilterPlainLeftAnchoredHostname,
          'a|': FilterPlainRightAnchored,
         'a|h': FilterPlainRightAnchoredHostname,
+        'h|a': FilterPlainHnAnchored,
           '*': FilterSingleWildcard,
          '*h': FilterSingleWildcardHostname,
          '0*': FilterSingleWildcardPrefix0,
@@ -1345,30 +1424,6 @@ FilterContainer.prototype.makeCategoryKey = function(category) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.addAnyPartyHostname = function(hostname) {
-    if ( this.blockedAnyPartyHostnames.add(hostname) ) {
-        this.acceptedCount++;
-        this.blockFilterCount++;
-        return true;
-    }
-    this.duplicateCount++;
-    return false;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.add3rdPartyHostname = function(hostname) {
-    if ( this.blocked3rdPartyHostnames.add(hostname) ) {
-        this.acceptedCount++;
-        this.blockFilterCount++;
-        return true;
-    }
-    this.duplicateCount++;
-    return false;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.add = function(s) {
     // ORDER OF TESTS IS IMPORTANT!
 
@@ -1396,30 +1451,34 @@ FilterContainer.prototype.add = function(s) {
         return false;
     }
 
+    this.processedFilterCount += 1;
+    this.acceptedCount += 1;
+
+    // Pure hostnames, use more efficient liquid dict
+    if ( parsed.hostnamePure && parsed.action === BlockAction ) {
+        if ( parsed.fopts === '' ) {
+            if ( this.blockedAnyPartyHostnames.add(parsed.f) ) {
+                this.blockFilterCount++;
+            } else {
+                this.duplicateCount++;
+            }
+            return true;
+        }
+        if ( parsed.fopts === 'third-party' ) {
+            if ( this.blocked3rdPartyHostnames.add(parsed.f) ) {
+                this.blockFilterCount++;
+            } else {
+                this.duplicateCount++;
+            }
+            return true;
+        }
+    }
+
     if ( this.duplicates[s] ) {
         this.duplicateCount++;
         return false;
     }
     this.duplicates[s] = true;
-
-    this.processedFilterCount += 1;
-
-    // Ignore optionless hostname rules, these will be taken care of by µBlock.
-    if ( parsed.hostname && parsed.fopts === '' && parsed.action === BlockAction && reHostnameRule.test(parsed.f) ) {
-        return false;
-    }
-
-    this.acceptedCount += 1;
-
-    // Pure third-party hostnames, use more efficient liquid dict
-    if ( reHostnameRule.test(parsed.f) && parsed.hostname && parsed.action === BlockAction ) {
-        if ( parsed.fopts === 'third-party' ) {
-            return this.blocked3rdPartyHostnames.add(parsed.f);
-        }
-        if ( parsed.fopts === '' ) {
-            return this.blockedAnyPartyHostnames.add(parsed.f);
-        }
-    }
 
     var r = this.addFilter(parsed);
     if ( r === false ) {
@@ -1439,15 +1498,21 @@ FilterContainer.prototype.add = function(s) {
 FilterContainer.prototype.addFilter = function(parsed) {
     // TODO: avoid duplicates
 
-    var matches = parsed.hostname ? findHostnameToken(parsed.f) : findFirstGoodToken(parsed.f);
+    var matches = parsed.hostnameAnchored ?
+        findHostnameToken(parsed.f) :
+        findFirstGoodToken(parsed.f);
     if ( !matches || !matches[0].length ) {
         return false;
     }
     var tokenBeg = matches.index;
-    var tokenEnd = parsed.hostname ? reHostnameToken.lastIndex : reGoodToken.lastIndex;
+    var tokenEnd = parsed.hostnameAnchored ?
+        reHostnameToken.lastIndex :
+        reGoodToken.lastIndex;
     var filter;
 
     var i = parsed.hostnames.length;
+
+    // Applies to specific domains
 
     if ( i !== 0 && !parsed.notHostname ) {
         while ( i-- ) {
@@ -1465,6 +1530,8 @@ FilterContainer.prototype.addFilter = function(parsed) {
         }
         return true;
     }
+
+    // Applies to all domains, with exception(s)
 
     // https://github.com/gorhill/uBlock/issues/191
     // Invert the purpose of the filter for negated hostnames
@@ -1497,6 +1564,8 @@ FilterContainer.prototype.addFilter = function(parsed) {
         }
         return true;
     }
+
+    // Applies to all domains without exceptions
 
     filter = makeFilter(parsed, tokenBeg);
     if ( !filter ) {
@@ -1630,18 +1699,15 @@ FilterContainer.prototype.matchTokens = function(url) {
 // specialized to deal with other complex filters.
 
 FilterContainer.prototype.matchAnyPartyHostname = function(requestHostname) {
-    // Quick test first
-    if ( this.blockedAnyPartyHostnames.test(requestHostname) ) {
-        return '||' + requestHostname + '^';
-    }
-    // Check parent hostnames if quick test failed
-    var hostnames = µb.URI.parentHostnamesFromHostname(requestHostname);
-    for ( var i = 0, n = hostnames.length; i < n; i++ ) {
-        if ( this.blockedAnyPartyHostnames.test(hostnames[i]) ) {
-            return '||' + hostnames[i] + '^';
+    var pos;
+    while ( this.blockedAnyPartyHostnames.test(requestHostname) !== true ) {
+        pos = requestHostname.indexOf('.');
+        if ( pos === -1 ) {
+            return false;
         }
+        requestHostname = requestHostname.slice(pos + 1);
     }
-    return false;
+    return '||' + requestHostname + '^';
 };
 
 /******************************************************************************/
@@ -1655,18 +1721,15 @@ FilterContainer.prototype.matchAnyPartyHostname = function(requestHostname) {
 // specialized to deal with other complex filters.
 
 FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
-    // Quick test first
-    if ( this.blocked3rdPartyHostnames.test(requestHostname) ) {
-        return '||' + requestHostname + '^$third-party';
-    }
-    // Check parent hostnames if quick test failed
-    var hostnames = µb.URI.parentHostnamesFromHostname(requestHostname);
-    for ( var i = 0, n = hostnames.length; i < n; i++ ) {
-        if ( this.blocked3rdPartyHostnames.test(hostnames[i]) ) {
-            return '||' + hostnames[i] + '^$third-party';
+    var pos;
+    while ( this.blocked3rdPartyHostnames.test(requestHostname) !== true ) {
+        pos = requestHostname.indexOf('.');
+        if ( pos === -1 ) {
+            return false;
         }
+        requestHostname = requestHostname.slice(pos + 1);
     }
-    return false;
+    return '||' + requestHostname + '^$third-party';
 };
 
 /******************************************************************************/

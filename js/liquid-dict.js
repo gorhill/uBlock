@@ -36,7 +36,7 @@ var LiquidDict = function() {
 
     // Somewhat arbitrary: I need to come up with hard data to know at which
     // point binary search is better than indexOf.
-    this.cutoff = 500;
+    this.cutoff = 256;
 };
 
 /******************************************************************************/
@@ -127,7 +127,7 @@ LiquidDict.prototype.test = function(word) {
         return bucket[word] !== undefined;
     }
     if ( bucket.charAt(0) === ' ' ) {
-        return bucket.indexOf(' ' + word + ' ') >= 0;
+        return bucket.indexOf(' ' + word + ' ') !== -1;
     }
     // binary search
     var len = word.length;

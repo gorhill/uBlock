@@ -339,9 +339,7 @@
     var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
     var duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
     var acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
-    var reLocalhost = /(^|\s)(localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
-    var reAdblockFilter = /^[^a-z0-9:]|[^a-z0-9]$|[^a-z0-9_:.-]/;
-    var reAdblockHostFilter = /^\|\|([a-z0-9.-]+[a-z0-9])\^?$/;
+    var reLocalhost = /(?:^|\s)(?:localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
     var reAsciiSegment = /^[\x21-\x7e]+$/;
     var matches;
     var lineBeg = 0, lineEnd, currentLineBeg;
@@ -392,7 +390,8 @@
         // The filter is whatever sequence of printable ascii character without
         // whitespaces
         matches = reAsciiSegment.exec(line);
-        if ( !matches || matches.length === 0 ) {
+        if ( matches === null ) {
+            //console.debug('µBlock.mergeUbiquitousBlacklist(): skipping "%s"', lineRaw);
             continue;
         }
 
@@ -404,27 +403,7 @@
             continue;
         }
 
-        line = matches[0];
-
-        // Likely an ABP net filter?
-        if ( reAdblockFilter.test(line) ) {
-            if ( netFilteringEngine.add(line) ) {
-                continue;
-            }
-            // rhill 2014-01-22: Transpose possible Adblock Plus-filter syntax
-            // into a plain hostname if possible.
-            matches = reAdblockHostFilter.exec(line);
-            if ( !matches || matches.length < 2 ) {
-                continue;
-            }
-            line = matches[1];
-        }
-
-        if ( line === '' ) {
-            continue;
-        }
-
-        netFilteringEngine.addAnyPartyHostname(line);
+        netFilteringEngine.add(matches[0]);
     }
 
     // For convenience, store the number of entries for this
