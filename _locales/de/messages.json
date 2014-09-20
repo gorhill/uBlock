@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Bedienfeld",
+    "message":"µBlock — Steuerpult",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
