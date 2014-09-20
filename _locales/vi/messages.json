@@ -64,7 +64,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Đi đến nhật kí yêu cầu",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -80,7 +80,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Các bộ lọc internet",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -212,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Cho phép ghi lại các yêu cầu mạng",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Bạn có thể kiểm tra các chi tiết của các yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng bộ nhớ của µBlock. Vì nhiều người sử dụng sẽ không bao giờ sử dụng tính năng này, nó bị tắt theo mặc định.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -264,7 +264,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Không thể kết nối tới {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

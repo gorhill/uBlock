@@ -88,7 +88,7 @@
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"הסתר את המקום שנשאר מהחסימה של האלמנטים",
+    "message":"הסתר את המקום שנשאר מחסימה של אלמנטים",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{

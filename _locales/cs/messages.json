@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Konečně efektivní blokovač pro prohlížeče založené projektu Chromium. Nezatěžuje CPU a paměť.",
+    "message":"Konečně efektivní blokovač pro prohlížeče založené na projektu Chromium. Nezatěžuje CPU a paměť.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
