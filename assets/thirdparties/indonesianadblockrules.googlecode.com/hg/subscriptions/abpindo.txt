@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Vj441g+oKXSO2ZsJYDn8Bw
+! Checksum: EOpvWggF/AhIwHQEpcyvyg
 ! Title: ABPindo
-! Last modified: 01 September 2014, 15:10:36 WIB
+! Last modified: 18 September 2014, 21:15:35 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -116,6 +116,7 @@
 ||mediaiklanpapua.com^$third-party
 ||nuansaiklan.com^$third-party
 ||onedollarptc.com^$third-party
+||openadserving.com^$third-party
 ||paidforfree.com^$third-party
 ||paidtoclick.com^$third-party
 ||paneniklan.com^$third-party
@@ -478,7 +479,8 @@ gudang.tv###container-bottom-menu-ads2
 90animax.com###energysaving
 lintas.me###facebox_overlay
 bioskop21.us###fadeinbox
-teknoup.com###fancybox-wrap
+r-l.me###fancybox-overlay
+r-l.me,teknoup.com###fancybox-wrap
 teknoup.com###fancybox_ajax
 forumbokep.com,krucil.net,vocland.com###floating_banner_bottom
 ganool.com###floating_banner_top2
@@ -617,14 +619,12 @@ detik.com##.iklan_tengah
 gambarkeren.info##.iklankotak1
 krucil.net##.krucil_ads
 krucil.net##.krucil_floating_banner_top
-kaskus.co.id##.l-link
 lapar.com##.leftcontent[style="padding:0px; margin:0px auto; height:250px; width:720px; border:0px; background:none; "]
 tribunnews.com##.mb20.ac.bsh3.ads
 dapurpacu.com##.mid-banner
 detik.com##.otp_banner_close
 tribunnews.com##.ovh[style="width:468px;height:60px"]
 lintas.me##.popup
-kaskus.co.id##.r-link
 okezone.com##.rc-ad-300x250
 filmindonesia.or.id##.row.block.ad-unit-medium-retangle.center
 semprot.com##.semprot_ads
@@ -701,6 +701,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||edomz.com^$third-party
 ||everyday-carry.com^$popup,third-party
 ||ewetot.com^$image,object,domain=bintangmawar.net
+||exeleech.com^$third-party
 ||flexterkita.com^$third-party
 ||formulabisnis.com/images/$third-party
 ||galaxybola.com^$third-party
@@ -730,7 +731,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||onclinic24.com^$third-party
 ||paypalbisnis.com^$third-party
 ||perawan3gp.com^$popup,third-party
-||postimg.org/*.gif$domain=21sinema.com
+||postimg.org/*.gif$domain=21sinema.com|r-l.me
 ||poweredprofits.com^$third-party
 ||publish.web.id^$third-party
 ||pundibux.net^$third-party

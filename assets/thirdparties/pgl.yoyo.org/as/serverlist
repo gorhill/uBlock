@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Thu, 11 Sep 2014 08:04:45 GMT
-# entries:        2471
+# entries:        2478
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -20,6 +20,7 @@
 127.0.0.1 24log.com
 127.0.0.1 24log.de
 127.0.0.1 24pm-affiliation.com
+127.0.0.1 2mdn.net
 127.0.0.1 2o7.net
 127.0.0.1 360yield.com
 127.0.0.1 4affiliate.net
@@ -175,7 +176,6 @@
 127.0.0.1 ad1.emule-project.org
 127.0.0.1 ad1.kde.cz
 127.0.0.1 ad1.pamedia.com.au
-127.0.0.1 ad1.zendmedia.com
 127.0.0.1 ad2.bb.ru
 127.0.0.1 ad2.doublepimp.com
 127.0.0.1 ad2.iinfo.cz
@@ -516,17 +516,23 @@
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
 127.0.0.1 ads.incgamers.com
+127.0.0.1 ads.indiatimes.com
 127.0.0.1 ads.infi.net
+127.0.0.1 ads.internic.co.il
 127.0.0.1 ads.ipowerweb.com
 127.0.0.1 ads.isoftmarketing.com
+127.0.0.1 ads.itv.com
+127.0.0.1 ads.iwon.com
 127.0.0.1 ads.jewishfriendfinder.com
 127.0.0.1 ads.jiwire.com
 127.0.0.1 ads.jobsite.co.uk
+127.0.0.1 ads.jpost.com
 127.0.0.1 ads.jubii.dk
 127.0.0.1 ads.justhungry.com
 127.0.0.1 ads.kaktuz.net
 127.0.0.1 ads.kelbymediagroup.com
 127.0.0.1 ads.kinobox.cz
+127.0.0.1 ads.kinxxx.com
 127.0.0.1 ads.komli.com
 127.0.0.1 ads.kompass.com
 127.0.0.1 ads.krawall.de
@@ -1741,6 +1747,7 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
+127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com

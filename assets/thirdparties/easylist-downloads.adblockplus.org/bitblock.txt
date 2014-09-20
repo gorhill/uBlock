@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: k9RYGN+Y1i+AAfT2ubwfAQ
-! Version: 201409170350
-! Last modified: 17 Sep 2014 03:50 UTC
+! Checksum: PMd/OFnrFE7f2Zd1DkHdfw
+! Version: 201409200040
+! Last modified: 20 Sep 2014 00:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -894,6 +894,7 @@ _vkontakte.png
 /images/social.
 /images/social/*
 /images/social_$image
+/images/tumblr-
 /images/twitter-
 /images/twitter.
 /images/twitter_
@@ -1543,12 +1544,15 @@ _vkontakte.png
 /socialsIcons/*
 /socialSmall/*
 /SocialSprite.
+/socialsprites.
 /socila-media-
 /sociofluid/*$~script,~stylesheet
 /socjal/facebook.
 /socjal/twitter.
+/socmedicons.
 /sp_social-
 /splash/twitter.
+/spr-social.
 /sprite-share.
 /sprite-sharetools.
 /sprite-social-
@@ -2663,6 +2667,7 @@ _youtube_small.
 ###navPinterest
 ###navSocialIcons
 ###navTwitter
+###nav_social_links
 ###navigation-social
 ###navigation-social-media
 ###navigation-social-networking
@@ -3920,6 +3925,7 @@ _youtube_small.
 ##.easyshareit
 ##.element-share
 ##.element-share-ftr
+##.element-sharethis
 ##.element-socialbookmarks
 ##.element-socials
 ##.entry-bottom-share
@@ -3980,6 +3986,7 @@ _youtube_small.
 ##.facebook-fans
 ##.facebook-flyout
 ##.facebook-follow-button
+##.facebook-ft
 ##.facebook-hover-horizontal
 ##.facebook-icon
 ##.facebook-icon-small
@@ -4086,6 +4093,7 @@ _youtube_small.
 ##.fb-custom-share
 ##.fb-dialog
 ##.fb-footer-recommend
+##.fb-hd
 ##.fb-icon
 ##.fb-info
 ##.fb-like
@@ -4214,6 +4222,7 @@ _youtube_small.
 ##.fodicon-twitter
 ##.follow-bar
 ##.follow-btn
+##.follow-button-gplus
 ##.follow-buttons
 ##.follow-facebook
 ##.follow-fb
@@ -4465,6 +4474,12 @@ _youtube_small.
 ##.header-facebook
 ##.header-share-facebook
 ##.header-share-twitter
+##.header-social-button
+##.header-social-button-fb
+##.header-social-button-gp
+##.header-social-button-tu
+##.header-social-button-tw
+##.header-social-button-yt
 ##.header-social-buttons
 ##.header-social-links
 ##.header-socials
@@ -4746,6 +4761,7 @@ _youtube_small.
 ##.jwsharethis
 ##.kindleWidget
 ##.klasSideSocialLinks
+##.kodda_social_link
 ##.ksm-post-facebook
 ##.ksm-post-twitter
 ##.landing-feed--story-shares
@@ -4776,6 +4792,7 @@ _youtube_small.
 ##.likeUsLayer
 ##.like_share.left
 ##.likebox-widget
+##.likebtn
 ##.likegate-dimmer
 ##.likegate-overlay
 ##.likegate-v2
@@ -5169,7 +5186,9 @@ _youtube_small.
 ##.share-section
 ##.share-section-mini
 ##.share-section-pink
+##.share-side
 ##.share-side-bar
+##.share-side-buttons
 ##.share-sidenav-box
 ##.share-signup
 ##.share-sm-icons
@@ -5457,6 +5476,7 @@ _youtube_small.
 ##.show_facebook_widget
 ##.show_social
 ##.shr-bookmarks
+##.shr-btn-scl2
 ##.shr-btn-tbl
 ##.shr-btns
 ##.shr_bx
@@ -5536,6 +5556,7 @@ _youtube_small.
 ##.soc-fb
 ##.soc-gplus
 ##.soc-icons-bar
+##.soc-insta
 ##.soc-share-cont
 ##.soc-tw
 ##.soc-twitter
@@ -6138,6 +6159,8 @@ _youtube_small.
 ##.subscribe-block
 ##.subscribe-box
 ##.subscribe-follow
+##.subscribe-option-facebook
+##.subscribe-option-twitter
 ##.subscribe-widget
 ##.subscribeSocialTool
 ##.subscribe_ad
@@ -6235,6 +6258,7 @@ _youtube_small.
 ##.tweet_container
 ##.tweet_meme
 ##.tweetbox
+##.tweetbtn
 ##.tweeter
 ##.tweeter_follower
 ##.tweethead
@@ -6261,8 +6285,10 @@ _youtube_small.
 ##.twitter-follow-button
 ##.twitter-follow-us
 ##.twitter-followers
+##.twitter-ft
 ##.twitter-grid-widget
 ##.twitter-hashtag
+##.twitter-hd
 ##.twitter-hover-horizontal
 ##.twitter-icon
 ##.twitter-icon-small
@@ -6423,6 +6449,7 @@ _youtube_small.
 ##.widget_ione-facebook-activity
 ##.widget_ione-facebook-like
 ##.widget_ione-social_conversion
+##.widget_likeBox
 ##.widget_mhsidebarsocialwidget
 ##.widget_n2_social_contacts
 ##.widget_oauth_twitter_widget
@@ -6636,6 +6663,7 @@ _youtube_small.
 ##a[title="Follow Us on Pinterest"]
 ##a[title="Follow Us on Youtube"]
 ##a[title="Follow me on  Facebook"]
+##a[title="Follow on Google Plus"]
 ##a[title="Follow our Boards on Pinterest"]
 ##a[title="Follow us on Google Plus"]
 ##a[title="Follow us on Google"]
@@ -7133,9 +7161,9 @@ cheklab.ru##.art-postcontent > .buttons
 tvnet.lv##.articleTools
 korrespondent.net##.artpop_shad
 247auto.ru,caredge.ru##.auth_vkontakte
-news.tut.by##.b-article-share
+tut.by##.b-article-share
 siliconrus.com##.b-article__social
-news.tut.by##.b-articleshare
+tut.by##.b-articleshare
 sports.ru##.b-forced-registration
 podrobnosti.ua##.b-news-share
 utro.ru##.b-repost
@@ -8088,6 +8116,7 @@ _social_rss.
 ###taboola-vid-container
 ###taboola_wrapper
 ###tesco_cookie_widget
+###to-the-top
 ###toTop
 ###to_top
 ###toolboxDiv1
@@ -8280,6 +8309,7 @@ _social_rss.
 ##.followRSS
 ##.fontawesome-rss
 ##.footer-cookies-policy
+##.footer-email-signup-container
 ##.footer-follow
 ##.footer-newsletter
 ##.footer-top-of-page
@@ -8424,6 +8454,8 @@ _social_rss.
 ##.roh-cookies
 ##.rr_newsletter
 ##.rss-b
+##.rss-ft
+##.rss-hd
 ##.rss-icon
 ##.rss-link
 ##.rss-subscribers

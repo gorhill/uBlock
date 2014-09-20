@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: GEglMWapxdVqRT7PR6lAtQ
-! Version: 201409170351
+! Checksum: IZbheb+zcVDePq9eS0W3gw
+! Version: 201409200041
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 17 Sep 2014 03:51 UTC
+! Last modified: 20 Sep 2014 00:41 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1603,6 +1603,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block.txt ***
 /?placement=$domain=movie-blog.org
 /oase_banner.jpg$domain=mysummit.wordpress.com
+/werbe-banner/*
 |http://$subdocument,third-party,domain=bonimail.de
 |http://*.pw^$script,domain=byte.to
 |http://byte.to^$script
@@ -3412,6 +3413,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||trancebase.fm/banner/
 ||transfermarkt.de/bilder/inter_sport_
 ||transfermarkt.de/bilder/intersport-
+||trapp-it-consulting.com/images/freelancer-it-
 ||travianstats.de/amenu.php
 ||travianstats.de/aoben.php
 ||travianstats.de/aunten.php
@@ -4440,6 +4442,7 @@ yasni.de###offer
 mixeryrawdeluxe.tv###outerBanner
 de.msn.com###ov24_imageteaser
 4forums.de###p
+hstt.net###page-header + br + .forabg
 unternehmerkarte.de###pageBannerRgt
 unternehmerkarte.de###pageBannerTop
 wetter.de###pageRelated > #pageHalfpage

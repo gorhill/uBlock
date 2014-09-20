@@ -466,6 +466,8 @@ gamingroom.tv#@#.adsbygoogle
 paidverts.com#@#.afs_ads
 ! sat1.de
 @@||gmads.net^$object-subrequest,domain=sat1.de|sat1.ch
+! firstrowfr.eu
+firstrowfr.eu###adblockplus
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

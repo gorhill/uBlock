@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Aug 30th, 2014 at 03:21
+# Last updated: Sep 16th, 2014 at 23:47
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -33,6 +33,9 @@
 #                       or "C:\winnt\system32\drivers\etc\hosts"
 # For Windows 7 and Vista use "C:\windows\system32\drivers\etc\hosts"
 #			or "%systemroot%\system32\drivers\etc\hosts"
+# For Windows 8 use "C:\Windows\System32\drivers\etc\hosts"
+# 		You may need to tell Windows Defender to ignore this path
+# 		see: http://support.microsoft.com/kb/2764944
 # You may have to use Notepad and "Run as Administrator"
 # For Linux, Unix, or OS X place this file at "/etc/hosts". You will 
 #    require root access to do this. Saving this file to "~/hosts" will

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: y9bS+ShXkq9zv5kIfdE9mA
+! Checksum: LpAOcjeRQVEmJmzgSRZZoQ
 ! Title: EasyList Hebrew
-! Last modified: 14/09/14  10:51
+! Last modified: 18/09/14  00:10
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -40,6 +40,7 @@
 ||campaign.chevrolet.co.il/$popup,third-party
 ||clickcenter.net^$third-party
 ||clickon.co.il^$popup,third-party
+||clickon.co.il^$third-party
 ||descreti.co.il^$popup
 ||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
@@ -96,6 +97,7 @@
 ||alljobs.co.il/Partners/Ynet/Engine.aspx
 ||go.ynet.co.il/short/commerce/
 ||go.ynet.co.il/short/content/2010/Career/banner/
+||go.ynet.co.il/short/Demos/*/Ads/
 ||images1.ynet.co.il/PicServer3/2013/10/17/4920698/150_200.jpg
 ||mediadownload.ynet.co.il/static/FXG_V14_FULL/images/vertical_header.png
 ||ynet.co.il/images/headline_video_header_samsung.png

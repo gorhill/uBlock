@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: DKlu18ALTa/IXnT+jG1UzA
-! Version: 201409170351
+! Checksum: xRVuPRCItOtPBzyc8sb+yg
+! Version: 201409200041
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 17 Sep 2014 03:51 UTC
+! Last Modified: 20 Sep 2014 00:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -692,6 +692,7 @@ hk.yahoo.com###mntl1
 ~dsjunshi.com##div[id^="ad_thread"]
 !----------------------------------Ads-Union----------------------------------!
 ||2155ec.com^$third-party
+||eyouv.cn^$third-party
 /99vjj/*$third-party
 /adscpv/*
 /AShow.aspx?AID=
@@ -1691,7 +1692,7 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||bbs.yhcgo.com/attachment/Mon_1112/74_1_5c13cbc5db6ba7c.jpg
 ||bcbj100.com/upload_files/label/1_20140319010342_geuxh.gif
 ||bcc.com.tw/imgs/adv/
-||bccn.net/aaa/index_top.html
+||bccn.net/aaa/
 ||bcok.com^$subdocument
 ||bdimg.com/brands/yxtg/source/juhe-v2.js
 ||bdimg.com/newmap/static/common/images/nav-ad_
@@ -3140,7 +3141,7 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||res.ythouse.com/image/index/2012/
 ||resource.*.kukuplay.com/upload/$object-subrequest
 ||resource.updrv.com/drivers/img/tu_
-||rexuedongman.com/scripts/suiji
+||rexuedongman.com/scripts/sui
 ||rfidworld.com.cn/js/a.js
 ||rfidworld.com.cn/js/b.js
 ||rfidworld.com.cn/js/c.html
@@ -3867,13 +3868,13 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||yanu.qiniudn.com/*x60.
 ||tietuku.com/8e81aa8e5298383e.jpg
 ||tietuku.com/0bb9bfe57636dc55.jpg
-||sf-express.com/cn/sc/.galleries/sfbest/tickets_right_sc.jpg
+||sf-express.com/cn/sc/.galleries/sfbest/*_right_sc.
 ||jbtalks.cc/static/image/custom/sme-web-hosting-splash.jpg
 ||mymusic.net.tw/upload/mobile_web_tmp/indexad01.
 ||kfs.io/article5/global/*/original.gif
 ||sinaimg.cn/mw690/a6a976a2jw1ekate4cecig206y06ytge.gif
 ||dh2.kimg.cn/v/upload/20140828/eecba9649f92d58114a67684c76b73b7.swf?
-||v2ex.com/assets/sidebar/100offer_
+||v2ex.com/assets/sidebar/
 ||downza.cn/html/skin/default/ad/
 ||sz5.cn/template/comiis_kmsjx3hlx/ads/ad
 ||haxiu.miaotiao.com^
@@ -3882,13 +3883,37 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||12pe.com/aajjss/
 ||vvvdj.com/sms/
 ||qpic.cn/mblogpic/f7052e063cec814c8a44/2000
+||miyun360.com/data/attachment/portal/
+||uuu9.tieba.com^$subdocument
+||pcbeta.com/static/image/5PYs
+||news.cn/forum/script/float2.js
+||ifxtx.com^*589x60.
+||ifxtx.com/js/ad-02.js
+||ifxtx.com/tp/
+||kuaihei.com/js/980
+||kuaihei.com/js/view.js
+||kuaihei.com/js/xiazaishang.js
+||saaee.com/view/youkuvip/*ad.gif
+||rexuedongman.com/scripts/show/3
+||rexuedongman.com/scripts/show/a
+||inimc.com//static/image/eFkL
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
+rexuedongman.com##.w980.uzmh-0
+ltaaa.com##.lAds
+ltaaa.com##.topAds2
+jump.bdimg.com,tieba.baidu.com##.live_show_aside
+saaee.com##.lad
+saaee.com##.rad
+ifxtx.com##.ad
+pcbeta.com##BODY > [style*="height:"]
+so.360.cn,so.com###e_idea_pp
+so.360.cn,so.com###qiyu-brand-container
+pcbeta.com##A[id][href="http://bbs.pcbeta.com/viewthread-1541980-1-1.html"]
 ithome.com##.bx-recom2
 vvvdj.com##TD[valign="top"][bgcolor="#13161E"][align="center"]
-pcbeta.com##BODY > DIV[style^="height:"]
 duba.com###ad-detail-banner
 mymusic.net.tw###prom
 csdn.net##.ad_class
@@ -3898,7 +3923,6 @@ udn.com###mpromote
 21cn.com###Show_TopAd_Iframe0
 life.21cn.com##A[href^="http://news.haxiu.com/"]
 uhaoye.com##.picturead
-v2ex.com##DIV[style="width: 240px; margin: 0px auto 0px auto; text-align: left;"]
 uhaoye.com##DIV[style="width:100%;text-align:center;margin-bottom:-6px;"]
 pconline.com.cn##.jcztl
 jbtalks.cc###ad_region_E
@@ -5800,7 +5824,6 @@ cyzone.cn##.tzkd_bottom
 cyzone.cn##.tzkd_top
 jump.bdimg.com,tieba.baidu.com##.u9_head
 7sel.com##.ui-sponsor950
-rexuedongman.com##.uzmh-vv.w980.uzmh-0
 iciba.com##.vRecomm
 400gb.com,bego.cc,fmdisk.com,pipipan.com##.viewfile_content_main_r > .row-fluid:nth-child(2)
 kanxi123.com##.viewt_77
@@ -6333,8 +6356,10 @@ mobile01.com#@#.navad
 dianmi.net#@#.top-ads
 house.shangdu.com#@#.top_ad
 17ppt.com#@#.topads
+appbyme.com#@#.adchange
 !---------------------------------URL Whitelist-------------------------------!
 @@&ad_type=$domain=x.jd.com
+@@||appbyme.com/adclient/
 @@&ad_width=810&$domain=jd.com
 @@,modules/adMedia.
 @@.beautifulphoto.net/ads/music
@@ -6627,6 +6652,8 @@ house.shangdu.com#@#.top_ad
 @@||eden.org.tw*/script/ad_banner/
 @@||eden.org.tw/themes/liger/images/banner_
 @@||ad*.8591.com.tw^$domain=8591.com.tw
+@@||ads.ribiaozi.info^*.jpg
+@@||sf-express.com/.galleries/advertisement/
 @@||cb.baidu.com/ecom?di=933918&
 !--------------------------------Tracking Systems-----------------------------!
 /1.gif?$domain=scol.com.cn

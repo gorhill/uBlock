@@ -6459,6 +6459,7 @@
 127.0.0.1	c16.statcounter.com
 127.0.0.1	c17.statcounter.com
 127.0.0.1	c2.amazingcounters.com
+127.0.0.1	c2.clickprotects.com
 127.0.0.1	c2.edapebaf.com
 127.0.0.1	c2.gostats.com
 127.0.0.1	c2.gostats.de
@@ -14577,6 +14578,7 @@
 127.0.0.1	obfm40.com
 127.0.0.1	objects.tremormedia.com
 127.0.0.1	observer.ip-label.net
+127.0.0.1	oceango.net
 127.0.0.1	oclaserver.com
 127.0.0.1	oclasrv.com
 127.0.0.1	ocs.websponsors.com
@@ -14735,6 +14737,7 @@
 127.0.0.1	other.xxxcounter.com
 127.0.0.1	otherprofit.com
 127.0.0.1	otmsrv.com
+127.0.0.1	otnnetwork.net
 127.0.0.1	otracking.com
 127.0.0.1	otto.ixn.local.vmsn.de
 127.0.0.1	ouah.com
@@ -14851,6 +14854,7 @@
 127.0.0.1	paris.typepad.com
 127.0.0.1	pariswallpapers.powered-by.seekmo.com
 127.0.0.1	paritycube.go2cloud.org
+127.0.0.1	park.above.com
 127.0.0.1	parkingcrew.net
 127.0.0.1	parksurve.com
 127.0.0.1	parradoodle.bravejournal.com
@@ -15034,6 +15038,7 @@
 127.0.0.1	pi.feedsportal.com
 127.0.0.1	pi.pardot.com
 127.0.0.1	pi.safer-networking.ie
+127.0.0.1	picket0.com
 127.0.0.1	pickyourplum.hasoffers.com
 127.0.0.1	pics.firstload.de
 127.0.0.1	pics3.inxhost.com
@@ -16833,6 +16838,7 @@
 127.0.0.1	spixl.ivwbox.de
 127.0.0.1	spixlcont.ivwbox.de
 127.0.0.1	splashpageadvertising.com
+127.0.0.1	splitter.ndsplitter.com
 127.0.0.1	sponsorads.de
 127.0.0.1	sponsors.s2ki.com
 127.0.0.1	sponsors.thoughtsmedia.com
@@ -17847,6 +17853,7 @@
 127.0.0.1	tizer8.net
 127.0.0.1	tizermy.net
 127.0.0.1	tj.phpwind.net
+127.0.0.1	tk3.sbc60.com
 127.0.0.1	tldadserv.com
 127.0.0.1	tlvmedia.adk2.co
 127.0.0.1	tlvmedia.com
@@ -18022,6 +18029,7 @@
 127.0.0.1	track.monitis.com
 127.0.0.1	track.mypcbackup.com
 127.0.0.1	track.net
+127.0.0.1	track.netshelter.net
 127.0.0.1	track.netzero.net
 127.0.0.1	track.ning.com
 127.0.0.1	track.offermatch.fr
@@ -19206,6 +19214,7 @@
 127.0.0.1	w88.m.espn.go.com
 127.0.0.1	w9.hitbox.com
 127.0.0.1	wa.ui-portal.de
+127.0.0.1	wac.658e.edgecastcdn.net
 127.0.0.1	wac.a164.edgecastcdn.net
 127.0.0.1	wahoha.com
 127.0.0.1	waiwidgets-1246822334.eu-west-1.elb.amazonaws.com
@@ -21379,6 +21388,7 @@
 127.0.0.1	www.o2onbusiness.de
 127.0.0.1	www.oamtrk.com
 127.0.0.1	www.obfm40.com
+127.0.0.1	www.oceango.net
 127.0.0.1	www.oddcast.com
 127.0.0.1	www.offerdeliver.com
 127.0.0.1	www.offers-track.com
@@ -21457,6 +21467,7 @@
 127.0.0.1	www.phenomcrm.com
 127.0.0.1	www.photoshop-master.org
 127.0.0.1	www.phpbbex.com
+127.0.0.1	www.picket0.com
 127.0.0.1	www.pigment-adv.co.il
 127.0.0.1	www.ping-fast.com
 127.0.0.1	www.pinkcount.com
@@ -22505,6 +22516,7 @@
 127.0.0.1	zbx02.ixn.vmsn.de
 127.0.0.1	zbxproxy01.bob.local.vmsn.de
 127.0.0.1	zbxproxy01.con.local.vmsn.de
+127.0.0.1	zc.zeroredirect1.com
 127.0.0.1	zc.zeroredirect2.com
 127.0.0.1	zdau-builder.122.2o7.net
 127.0.0.1	zdau-zdnetau.122.2o7.net
@@ -22546,4 +22558,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22541
+# Hosts: 22553

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: l5Thn2Q2KpUwiOoscnhBCQ
-! Version: 201409170350
-! Last modified: 17 Sep 2014 03:50 UTC
+! Checksum: NL6hFmwdpy5T80YYehVB7A
+! Version: 201409200040
+! Last modified: 20 Sep 2014 00:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -3025,6 +3025,7 @@ dota2.ru##.headshop:not([href^="/shop/"])
 iccup.com##.imageBgLeft
 iccup.com##.imageBgRight
 sinoptik.ua##.informerTop
+promodj.com##.js-core_branding
 brb.to,cxz.to,fs.to##.l-body-branding-link
 my-cinema.net##.left-a
 adultmanga.ru,doramatv.ru,findanime.ru,grouple.ru,readmanga.me,selfmanga.ru##.left-branding
@@ -3088,7 +3089,6 @@ cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
 futurevideo.su##a[href^="http://www.futurevideo.su/rtr/"]
 porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
-goodgame.ru##a[id^="banner-"]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
 magtimes.info##aside img[src^="http://magtimes.info/wp-content/uploads/"]
@@ -4374,6 +4374,7 @@ softobase.com##.gc-question-ads-2
 popmech.ru##.grid-cell[class*="article-banner-"]
 popmech.ru##.grid-cell__4.grid-cell__no-hover
 popmech.ru##.grid-cell__tgb
+i.ua##.header_adv
 101.ru##.ind-adv-carousel
 comss.ru##.links ~ .box
 3mv.ru##.logo
@@ -5156,6 +5157,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||pozdrav.ru/url/*.vfl.ru
 ||pr-cy.ru^$object,domain=pr-cy.ru
 ||pravdapskov.ru/upload/b/
+||premium.goodgame.ru^
 ||prestige-gaming.ru/styles/hestia/theme/images/$object
 ||prikols.com.ru/eroru/
 ||priorovod.ru/button/$object
@@ -5168,6 +5170,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||prom.x-lime.net^
 ||promodeejay.net/branding/
 ||promodj.com/brandings/
+||promodj.com/legacy/i/branding/
 ||prostopleer.com/t.php?
 ||prostoporno.net/br_
 ||proxyweb.net/js/dhtmlwindow.js
@@ -5944,6 +5947,8 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||bash.im/webmaster|$elemhide
 @@||beeline.ru/ban/$domain=beeline.ru
 @@||beeline.ru/media/banners/$domain=beeline.ru
+@@||begun.ru/video.jsp?$domain=vidin.ru
+@@||begun.ru/vpaid_lib.swf|$domain=vidin.ru
 @@||changecopyright.ru/bannersout/
 @@||com/banners/$domain=akprior.com|eurobank-ua.com|maingear.com
 @@||content.videoclick.ru/crossdomain.xml|$object-subrequest,domain=~vefire.ru

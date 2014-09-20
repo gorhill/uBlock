@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: T8uD8ak0OwgbEaxX3ENUnQ
-! Version: 201409170351
+! Checksum: 9+0AOsu+doYU142KlKM56w
+! Version: 201409200041
 ! Title: EasyPrivacy
-! Last modified: 17 Sep 2014 03:51 UTC
+! Last modified: 20 Sep 2014 00:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2827,7 +2827,6 @@ http://utm.
 ||gosquared.com^$third-party
 ||gostats.com^$third-party
 ||gostats.ro^$third-party
-||gourmetads.com^$third-party
 ||govmetric.com^$third-party
 ||grapheffect.com^$third-party
 ||grepdata.com^$third-party
@@ -5318,7 +5317,6 @@ http://utm.
 ||ptsc.shoplocal.com^
 ||publicbroadcasting.net/analytics/
 ||publish.pizzazzemail.com^$third-party
-||pubnub.com/time/$third-party
 ||purevideo.com^*/pvshim.gif?
 ||pussy.org^*.cgi?pid=
 ||pussy.org^*/track.php
@@ -8135,6 +8133,7 @@ http://utm.
 ||youtube-nocookie.com/device_204?
 ||youtube-nocookie.com/gen_204?
 ||youtube-nocookie.com/robots.txt?
+||youtube.com/api/stats/ads?
 ||youtube.com/api/stats/atr?
 ||youtube.com/gen_204?
 ||youtube.com/generate_204

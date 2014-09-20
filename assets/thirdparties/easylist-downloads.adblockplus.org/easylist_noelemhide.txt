@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 4/zdrP4e+31Y/dj1Ha0LCw
-! Version: 201409170350
+! Checksum: aPS28oMmroKNJJ17qcAjHw
+! Version: 201409200040
 ! Title: EasyList without element hiding rules
-! Last modified: 17 Sep 2014 03:50 UTC
+! Last modified: 20 Sep 2014 00:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2604,6 +2604,7 @@
 /adweb.
 /adweb2.
 /adwidgets/*
+/adwise/*
 /adWiseShopPlus1.
 /adwiz.
 /adwiz/*
@@ -4557,6 +4558,7 @@
 /rg-erdr.php$xmlhttprequest
 /rg-rlog.php$xmlhttprequest
 /rgads.
+/rhspushads/*
 /richoas.
 /right-ad-
 /right_ad.
@@ -7835,6 +7837,7 @@ _popunder+$popup
 ||googletagservices.com/tag/js/gpt_$third-party
 ||googletagservices.com/tag/static/$third-party
 ||gopjn.com^$third-party
+||gourmetads.com^$third-party
 ||governmenttrainingexchange.com^$third-party
 ||goviral-content.com^$third-party
 ||goviral.hs.llnwd.net^$third-party
@@ -8081,6 +8084,7 @@ _popunder+$popup
 ||leadadvert.info^$third-party
 ||leadbolt.net^$third-party
 ||leadcola.com^$third-party
+||leaderpub.fr^$third-party
 ||leadmediapartners.com^$third-party
 ||leetmedia.com^$third-party
 ||letsgoshopping.tk^$third-party
@@ -8844,6 +8848,7 @@ _popunder+$popup
 ||statcamp.net^$third-party
 ||statelead.com^$third-party
 ||stealthlockers.com^$third-party
+||stickyadstv.com^$third-party
 ||stocker.bonnint.net^$third-party
 ||streamate.com^$third-party
 ||streamdownloadonline.com^$third-party
@@ -10719,6 +10724,7 @@ _popunder+$popup
 ||dev-cms.com^*/promobanners/
 ||developermedia.com/a.min.js
 ||dew9ckzjyt2gn.cloudfront.net^
+||dhgate.com^$third-party,domain=sammyhub.com
 ||digitalmediacommunications.com/belleville/employment/
 ||digitalsatellite.tv/banners/
 ||direct.quasir.info^$third-party
@@ -12529,6 +12535,7 @@ _popunder+$popup
 ||arabseed.com/vlc.gif
 ||arabseed.com^*/open.js
 ||aravot.am/banner/
+||archeagedatabase.net/images/okaygoods.gif
 ||arenabg.com^*/banners/
 ||armorgames.com/assets/*_skin_
 ||armorgames.com^*/banners/
@@ -13006,6 +13013,7 @@ _popunder+$popup
 ||dailymail.co.uk/i/pix/*_308x164.jpg
 ||dailymail.co.uk/i/pix/*_308x262.jpg
 ||dailymail.co.uk/i/pix/ebay/
+||dailymail.co.uk/modules/commercial/
 ||dailymail.co.uk^*/promoboxes/
 ||dailymotion.com/images/ie.png
 ||dailymotion.com/skin/data/default/partner/$~stylesheet
@@ -13162,6 +13170,8 @@ _popunder+$popup
 ||e90post.com/forums/images/banners/
 ||earthlink.net^*/promos/
 ||earthmoversmagazine.co.uk/nimg/
+||eastonline.eu/images/banners/
+||eastonline.eu/images/eng_banner_
 ||easybytez.com/pop3.js
 ||ebayrtm.com/rtm?RtmCmd*&enc=
 ||ebayrtm.com/rtm?RtmIt
@@ -16610,6 +16620,7 @@ _popunder+$popup
 ||pornfanplace.com/js/pops.
 ||pornfanplace.com/rec/
 ||pornhub.com/front/alternative/
+||pornhub.com^$script,domain=pornhub.com
 ||pornhub.com^$subdocument,~third-party
 ||pornhub.phncdn.com/images/campaign-backgrounds/
 ||pornhub.phncdn.com/misc/xml/preroll.xml
@@ -16672,6 +16683,7 @@ _popunder+$popup
 ||realhomesex.net/floater.js
 ||realhomesex.net/pop/
 ||redtube.com/sexychicks/
+||redtube.com^$script,domain=redtube.com
 ||redtube.com^$subdocument,~third-party
 ||redtube.com^*/banner/
 ||redtubefiles.com^*/banner/
@@ -16870,6 +16882,7 @@ _popunder+$popup
 ||youporn-hub.com/newlcd.js
 ||youporn.com/channel/potatoes/
 ||youporn.com/watch_postroll/
+||youporn.com^$script,domain=youporn.com
 ||youporn.com^$subdocument,~third-party
 ||yourdailygirls.com/vanilla/process.php
 ||yourdarkdesires.com/1.html
@@ -17308,6 +17321,7 @@ _popunder+$popup
 @@||boracay.mobi/boracay/imageAds/$image,domain=boracay.tel
 @@||boston.com/images/ads/yourtown_social_widget/$image
 @@||box10.com/advertising/*-preroll.swf
+@@||boxedlynch.com/advertising-gallery.html
 @@||brainient.com/crossdomain.xml$object-subrequest
 @@||brightcove.com/viewer/*/advertisingmodule.swf$domain=aetv.com|al.com|amctv.com|as.com|channel5.com|cleveland.com|fox.com|fxnetworks.com|guardian.co.uk|lehighvalleylive.com|masslive.com|mlive.com|nj.com|nola.com|oregonlive.com|pennlive.com|people.com|silive.com|slate.com|syracuse.com|weather.com
 @@||brightcove.com^*bannerid$third-party
@@ -18111,6 +18125,7 @@ _popunder+$popup
 @@||player.streamtheworld.com/liveplayer.php?*adstype=
 @@||player.tritondigital.com^$domain=kmozart.com
 @@||player.ventunotech.com/adplugin_reduce.swf$object-subrequest,domain=indiablooms.com
+@@||player.ventunotech.com/VtnGoogleVpaidIMA_1.swf?$object-subrequest,domain=indianexpress.com
 @@||player.vioapi.com/ads/flash/vioplayer.swf
 @@||playintraffik.com/advertising/
 @@||plugcomputer.org^*/ad1.jpg
@@ -19517,6 +19532,13 @@ accounts.google.com#@#.adwords
 @@||pop6.com/banners/$domain=horny.net|xmatch.com
 @@||promo.cdn.homepornbay.com/key=*.mp4$object-subrequest,domain=hiddencamsvideo.com
 @@||redtube.com/htmllogin|$subdocument
+@@||redtube.com/js/autocomplete.js?v=
+@@||redtube.com/js/community.js?v=
+@@||redtube.com/js/disableEnter.js?v=
+@@||redtube.com/js/jquery/jquery-ui-1.10.4.autocomplete.min.js
+@@||redtube.com/js/lib.js?v=
+@@||redtube.com/js/redtube.js?v=
+@@||redtube.com/js/video.js?v=
 @@||sextoyfun.com/admin/aff_files/BannerManager/$~third-party
 @@||sextoyfun.com/control/aff_banners/$~third-party
 @@||skimtube.com/advertisements.php?
