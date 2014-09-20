@@ -224,17 +224,19 @@
 /******************************************************************************/
 
 µBlock.transposeType = function(type, path) {
-    if ( type === 'other' ) {
-        var pos = path.lastIndexOf('.');
-        if ( pos > 0 ) {
-            var ext = path.slice(pos);
-            if ( '.eot.ttf.otf.svg.woff'.indexOf(ext) >= 0 ) {
-                return 'stylesheet';
-            }
-            if ( '.ico.png'.indexOf(ext) >= 0 ) {
-                return 'image';
-            }
-        }
+    if ( type !== 'other' ) {
+        return type;
+    }
+    var pos = path.lastIndexOf('.');
+    if ( pos === -1 ) {
+        return type;
+    }
+    var ext = path.slice(pos);
+    if ( '.eot.ttf.otf.svg.woff'.indexOf(ext) !== -1 ) {
+        return 'stylesheet';
+    }
+    if ( '.ico.png.gif.jpg.jpeg'.indexOf(ext) !== -1 ) {
+        return 'image';
     }
     return type;
 };

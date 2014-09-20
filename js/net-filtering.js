@@ -31,29 +31,27 @@
 var µb = µBlock;
 
 // fedcba9876543210
-// |||   | |      |
-// |||   | |      |
-// |||   | |      |
-// |||   | |      |
-// |||   | |      +---- bit 0-6: unused
-// |||   | +---- bit 8-7: party [0 - 3]
-// |||   +---- bit 12-9: type [0 - 15]
-// ||+---- bit 13: `important`
-// |+---- bit 14: [BlockAction | AllowAction]
-// +---- bit 15: unused (to ensure valid unicode character)
+// |      |   | |||
+// |      |   | |||
+// |      |   | |||
+// |      |   | |||
+// |      |   | ||+---- bit 0: [BlockAction | AllowAction]
+// |      |   | |+---- bit 1: `important`
+// |      |   | +---- bit 2-3: party [0 - 3]
+// |      |   +---- bit 4-7: type [0 - 15]
+// |      +---- bit 8-15: unused
+// +---- bit 15: never use! (to ensure valid unicode character)
 
-const BlockAction = 0 << 14;
-const AllowAction = 1 << 14;
+const BlockAction = 0 << 0;
+const AllowAction = 1 << 0;
 const ToggleAction = BlockAction ^ AllowAction;
 
-const Important = 1 << 13;
- 
-const AnyType = 1 << 9;
+const Important = 1 << 1;
 
-const AnyParty = 0 << 7;
-const FirstParty = 1 << 7;
-const ThirdParty = 2 << 7;
-const SpecificParty = 3 << 7;
+const AnyParty = 0 << 2;
+const FirstParty = 1 << 2;
+const ThirdParty = 2 << 2;
+const SpecificParty = 3 << 2;
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
@@ -71,6 +69,19 @@ const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 const AllowOneParty = AllowAction | SpecificParty;
 
+const AnyType = 1 << 4;
+
+var typeNameToTypeValue = {
+        'stylesheet': 2 << 4,
+             'image': 3 << 4,
+            'object': 4 << 4,
+            'script': 5 << 4,
+    'xmlhttprequest': 6 << 4,
+         'sub_frame': 7 << 4,
+             'other': 8 << 4,
+             'popup': 9 << 4
+};
+
 var pageHostname = '';
 
 var reIgnoreEmpty = /^\s+$/;
@@ -79,17 +90,6 @@ var reHostnameRule = /^[0-9a-z][0-9a-z.-]+[0-9a-z]$/;
 var reHostnameToken = /^[0-9a-z]+/g;
 var reGoodToken = /[%0-9a-z]{2,}/g;
 var reURLPostHostnameAnchors = /[\/?#]/;
-
-var typeNameToTypeValue = {
-        'stylesheet': 2 << 9,
-             'image': 3 << 9,
-            'object': 4 << 9,
-            'script': 5 << 9,
-    'xmlhttprequest': 6 << 9,
-         'sub_frame': 7 << 9,
-             'other': 8 << 9,
-             'popup': 9 << 9
-};
 
 // ABP filters: https://adblockplus.org/en/filters
 // regex tester: http://regex101.com/
@@ -824,12 +824,16 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 // here because the special treatment would be only for a few specific tokens,
 // not systematically done for all tokens.
 
-// key=Ȁ ad          count=655
-// key=Ȁ ads         count=432
-// key=̀  doubleclick count= 94
-// key=Ȁ adv         count= 89
-// key=Ȁ google      count= 67
-// key=Ȁ banner      count= 55
+// key=?? ad           count=657
+// key=?? ads          count=431
+// key=?? mdn          count=267
+// key=?? google       count=181
+// key=?? pagead2      count=166
+// key=?? doubleclick  count=118
+// key=?? g            count=100
+// key=?? doubleclick  count=94
+// key=?? js           count=88
+// key=?? adv          count=88
 
 var FilterBucket = function(a, b) {
     this.f = null;
@@ -843,6 +847,9 @@ var FilterBucket = function(a, b) {
 };
 
 FilterBucket.prototype.add = function(a) {
+    // If filter count > n, create dictionary in which filter buckets will be 
+    // keyed on prefix-suffix string. There will be a special bucket, always 
+    // evaluated for those filters who can't supply a two-char keys.
     this.filters.push(a);
 };
 
