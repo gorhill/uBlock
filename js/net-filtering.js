@@ -95,14 +95,10 @@ var histogram = function(label, categories) {
     var h = [],
         categoryBucket;
     for ( var k in categories ) {
-        if ( categories.hasOwnProperty(k) === false ) {
-            continue;
-        }
+        // No need for hasOwnProperty() here: there is no prototype chain.
         categoryBucket = categories[k];
         for ( var kk in categoryBucket ) {
-            if ( categoryBucket.hasOwnProperty(kk) === false ) {
-                continue;
-            }
+            // No need for hasOwnProperty() here: there is no prototype chain.
             filterBucket = categoryBucket[kk];
             h.push({
                 k: k + ' ' + kk,
@@ -1243,8 +1239,8 @@ FilterContainer.prototype.reset = function() {
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.duplicateCount = 0;
-    this.categories = {};
-    this.duplicates = {};
+    this.categories = Object.create(null);
+    this.duplicates = Object.create(null);
     this.blockedAnyPartyHostnames.reset();
     this.blocked3rdPartyHostnames.reset();
     this.filterParser.reset();
@@ -1256,7 +1252,7 @@ FilterContainer.prototype.freeze = function() {
     //histogram('allFilters', this.categories);
     this.blockedAnyPartyHostnames.freeze();
     this.blocked3rdPartyHostnames.freeze();
-    this.duplicates = {};
+    this.duplicates = Object.create(null);
     this.filterParser.reset();
     this.frozen = true;
 };
@@ -1268,9 +1264,7 @@ FilterContainer.prototype.toSelfie = function() {
         var selfie = [];
         var bucket, ff, n, i, f;
         for ( var k in dict ) {
-            if ( dict.hasOwnProperty(k) === false ) {
-                continue;
-            }
+            // No need for hasOwnProperty() here: there is no prototype chain.
             // We need to encode the key because there could be a `\n` or '\t'
             // character in it, which would trip the code at parse time.
             selfie.push('k2\t' + encode(k));
@@ -1292,9 +1286,7 @@ FilterContainer.prototype.toSelfie = function() {
     var categoriesToSelfie = function(dict) {
         var selfie = [];
         for ( var k in dict ) {
-            if ( dict.hasOwnProperty(k) === false ) {
-                continue;
-            }
+            // No need for hasOwnProperty() here: there is no prototype chain.
             // We need to encode the key because there could be a `\n` or '\t'
             // character in it, which would trip the code at parse time.
             selfie.push('k1\t' + encode(k));
@@ -1372,7 +1364,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         what = line.slice(0, pos);
         if ( what === 'k1' ) {
             catKey = decode(line.slice(pos + 1));
-            subdict = dict[catKey] = {};
+            subdict = dict[catKey] = Object.create(null);
             bucket = null;
             continue;
         }
@@ -1567,7 +1559,7 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
     var categoryKey = this.makeCategoryKey(category);
     var categoryBucket = this.categories[categoryKey];
     if ( !categoryBucket ) {
-        categoryBucket = this.categories[categoryKey] = {};
+        categoryBucket = this.categories[categoryKey] = Object.create(null);
     }
     var filterEntry = categoryBucket[tokenKey];
     if ( filterEntry === undefined ) {
@@ -1596,27 +1588,27 @@ FilterContainer.prototype.matchTokens = function(url) {
     while ( matches = re.exec(url) ) {
         beg = matches.index;
         token = url.slice(beg, re.lastIndex);
-        if ( bucket0 !== undefined && bucket0.hasOwnProperty(token) ) {
+        if ( bucket0 !== undefined ) {
             f = bucket0[token];
-            if ( f.match(url, beg) !== false ) {
+            if ( f !== undefined && f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket1 !== undefined && bucket1.hasOwnProperty(token) ) {
+        if ( bucket1 !== undefined ) {
             f = bucket1[token];
-            if ( f.match(url, beg) !== false ) {
+            if ( f !== undefined && f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket2 !== undefined && bucket2.hasOwnProperty(token) ) {
+        if ( bucket2 !== undefined ) {
             f = bucket2[token];
-            if ( f.match(url, beg) !== false ) {
+            if ( f !== undefined && f.match(url, beg) !== false ) {
                 return f;
             }
         }
-        if ( bucket3 !== undefined && bucket3.hasOwnProperty(token) ) {
+        if ( bucket3 !== undefined ) {
             f = bucket3[token];
-            if ( f.match(url, beg) !== false ) {
+            if ( f !== undefined && f.match(url, beg) !== false ) {
                 return f;
             }
         }
@@ -1758,7 +1750,7 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     var party = ThirdParty;
     if ( requestHostname.slice(0 - pageDomain.length) === pageDomain ) {
         // Be sure to not confuse 'example.com' with 'anotherexample.com'
-        var c = requestHostname.charAt(0 - pageDomain.length - 1);
+        var c = requestHostname.charAt(requestHostname.length - pageDomain.length - 1);
         if ( c === '' || c === '.' ) {
             party = FirstParty;
         }
