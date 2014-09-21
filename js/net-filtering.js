@@ -53,6 +53,19 @@ const FirstParty = 1 << 2;
 const ThirdParty = 2 << 2;
 const SpecificParty = 3 << 2;
 
+var typeNameToTypeValue = {
+               'any': 1 << 4,
+        'stylesheet': 2 << 4,
+             'image': 3 << 4,
+            'object': 4 << 4,
+            'script': 5 << 4,
+    'xmlhttprequest': 6 << 4,
+         'sub_frame': 7 << 4,
+             'other': 8 << 4,
+             'popup': 9 << 4
+};
+const AnyType = typeNameToTypeValue['any'];
+
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
 const BlockAnyType3rdParty = BlockAction | AnyType | ThirdParty;
@@ -68,19 +81,6 @@ const AllowAnyTypeOneParty = AllowAction | AnyType | SpecificParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 const AllowOneParty = AllowAction | SpecificParty;
-
-const AnyType = 1 << 4;
-
-var typeNameToTypeValue = {
-        'stylesheet': 2 << 4,
-             'image': 3 << 4,
-            'object': 4 << 4,
-            'script': 5 << 4,
-    'xmlhttprequest': 6 << 4,
-         'sub_frame': 7 << 4,
-             'other': 8 << 4,
-             'popup': 9 << 4
-};
 
 var pageHostname = '';
 
