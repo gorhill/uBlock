@@ -63,7 +63,7 @@ var typeNameToTypeValue = {
              'other': 8 << 4,
              'popup': 9 << 4
 };
-const AnyType = typeNameToTypeValue['any'];
+const AnyType = typeNameToTypeValue.any;
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
@@ -90,8 +90,10 @@ var reURLPostHostnameAnchors = /[\/?#]/;
 // regex tester: http://regex101.com/
 
 /******************************************************************************/
+
+var histogram = function() {};
 /*
-var histogram = function(label, categories) {
+histogram = function(label, categories) {
     var h = [],
         categoryBucket;
     for ( var k in categories ) {
@@ -101,7 +103,7 @@ var histogram = function(label, categories) {
             // No need for hasOwnProperty() here: there is no prototype chain.
             filterBucket = categoryBucket[kk];
             h.push({
-                k: k + ' ' + kk,
+                k: k.charCodeAt(0).toString(2) + ' ' + kk,
                 n: filterBucket instanceof FilterBucket ? filterBucket.filters.length : 1
             });
         }
@@ -815,16 +817,30 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 // here because the special treatment would be only for a few specific tokens,
 // not systematically done for all tokens.
 
-// key=?? ad           count=657
-// key=?? ads          count=431
-// key=?? mdn          count=267
-// key=?? google       count=181
-// key=?? pagead2      count=166
-// key=?? doubleclick  count=118
-// key=?? g            count=100
-// key=?? doubleclick  count=94
-// key=?? js           count=88
-// key=?? adv          count=88
+// key=  10000 ad           count=660
+// key=  10000 ads          count=433
+// key=  10001 google       count=277
+// key=1000000 2mdn         count=267
+// key=  10000 social       count=240
+// key=  10001 pagead2      count=166
+// key=  10000 twitter      count=122
+// key=  10000 doubleclick  count=118
+// key=  10000 facebook     count=114
+// key=  10000 share        count=113
+// key=  10000 google       count=106
+// key=  10001 code         count=103
+// key=  11000 doubleclick  count=100
+// key=1010001 g            count=100
+// key=  10001 js           count= 89
+// key=  10000 adv          count= 88
+// key=  10000 youtube      count= 61
+// key=  10000 plugins      count= 60
+// key=  10001 partner      count= 59
+// key=  10000 ico          count= 57
+// key= 110001 ssl          count= 57
+// key=  10000 banner       count= 53
+// key=  10000 footer       count= 51
+// key=  10000 rss          count= 51
 
 var FilterBucket = function(a, b) {
     this.f = null;
@@ -1218,8 +1234,17 @@ FilterParser.prototype.parse = function(s) {
 /******************************************************************************/
 /******************************************************************************/
 
+var TokenEntry = function() {
+    this.beg = 0;
+    this.end = 0;
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
+    this.tokens = [];
     this.buckets = new Array(4);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
@@ -1249,7 +1274,7 @@ FilterContainer.prototype.reset = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    //histogram('allFilters', this.categories);
+    histogram('allFilters', this.categories);
     this.blockedAnyPartyHostnames.freeze();
     this.blocked3rdPartyHostnames.freeze();
     this.duplicates = Object.create(null);
@@ -1575,19 +1600,49 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchTokens = function(url) {
+FilterContainer.prototype.tokenize = function(url) {
+    var tokens = this.tokens;
     var re = this.reAnyToken;
-    var matches, beg, token, f;
+    var matches, tokenEntry;
+    re.lastIndex = 0;
+    var i = 0;
+    while ( matches = re.exec(url) ) {
+        tokenEntry = tokens[i];
+        if ( tokenEntry === undefined ) {
+            tokenEntry = tokens[i] = new TokenEntry();
+        }
+        tokenEntry.beg = matches.index;
+        tokenEntry.end = re.lastIndex;
+        i += 1;
+    }
+    // Sentinel
+    tokenEntry = tokens[i];
+    if ( tokenEntry === undefined ) {
+        tokenEntry = tokens[i] = new TokenEntry();
+    }
+    tokenEntry.end = 0;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.matchTokens = function(url) {
     var buckets = this.buckets;
     var bucket0 = buckets[0];
     var bucket1 = buckets[1];
     var bucket2 = buckets[2];
     var bucket3 = buckets[3];
 
-    re.lastIndex = 0;
-    while ( matches = re.exec(url) ) {
-        beg = matches.index;
-        token = url.slice(beg, re.lastIndex);
+    var tokens = this.tokens;
+    var tokenEntry, beg, end, token, f;
+    var i = 0;
+    for (;;) {
+        tokenEntry = tokens[i++];
+        end = tokenEntry.end;
+        if ( end === 0 ) {
+            break;
+        }
+        beg = tokenEntry.beg;
+        token = url.slice(beg, end);
         if ( bucket0 !== undefined ) {
             f = bucket0[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
@@ -1682,6 +1737,10 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
+    // Tokenize only once
+    this.tokenize(url);
+
+    // We are testing for a specific type, skip "any type" buckets
     buckets[0] = buckets[1] = undefined;
 
     // https://github.com/gorhill/uBlock/issues/139
@@ -1762,6 +1821,9 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
+
+    // Tokenize only once
+    this.tokenize(url);
 
     // https://github.com/gorhill/uBlock/issues/139
     // Test against important block filters.
