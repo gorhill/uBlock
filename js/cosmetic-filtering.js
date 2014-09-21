@@ -558,11 +558,10 @@ FilterContainer.prototype.addGenericSelector = function(parsed) {
     }
     if ( entries[parsed.suffix] === undefined ) {
         entries[parsed.suffix] = true;
-        this.acceptedCount += 1;
     } else {
         this.duplicateCount += 1;
     }
-    return true;
+    this.acceptedCount += 1;
 };
 
 /******************************************************************************/
@@ -581,13 +580,12 @@ FilterContainer.prototype.addHostnameSelector = function(hostname, parsed) {
     if ( entry === undefined ) {
         entry = entries[hostname] = {};
         entry[parsed.suffix] = true;
-        this.acceptedCount += 1;
     } else if ( entry[parsed.suffix] === undefined ) {
         entry[parsed.suffix] = true;
-        this.acceptedCount += 1;
     } else {
         this.duplicateCount += 1;
     }
+    this.acceptedCount += 1;
 };
 
 /******************************************************************************/
@@ -601,13 +599,12 @@ FilterContainer.prototype.addEntitySelector = function(hostname, parsed) {
     if ( entry === undefined ) {
         entry = entries[entity] = {};
         entry[parsed.suffix] = true;
-        this.acceptedCount += 1;
     } else if ( entry[parsed.suffix] === undefined ) {
         entry[parsed.suffix] = true;
-        this.acceptedCount += 1;
     } else {
         this.duplicateCount += 1;
     }
+    this.acceptedCount += 1;
 };
 
 /******************************************************************************/

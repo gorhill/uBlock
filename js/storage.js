@@ -411,8 +411,8 @@
     duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
     acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
 
-    this.remoteBlacklists[details.path].entryCount = acceptedCount + duplicateCount;
-    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount;
+    this.remoteBlacklists[details.path].entryCount = acceptedCount;
+    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount - duplicateCount;
 };
 
 /******************************************************************************/
