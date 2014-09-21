@@ -51,7 +51,6 @@ const Important = 1 << 1;
 const AnyParty = 0 << 2;
 const FirstParty = 1 << 2;
 const ThirdParty = 2 << 2;
-const SpecificParty = 3 << 2;
 
 var typeNameToTypeValue = {
                'any': 1 << 4,
@@ -69,18 +68,14 @@ const AnyType = typeNameToTypeValue['any'];
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
 const BlockAnyType3rdParty = BlockAction | AnyType | ThirdParty;
-const BlockAnyTypeOneParty = BlockAction | AnyType | SpecificParty;
 const BlockAnyType = BlockAction | AnyType;
 const BlockAnyParty = BlockAction | AnyParty;
-const BlockOneParty = BlockAction | SpecificParty;
 
 const AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 const AllowAnyType1stParty = AllowAction | AnyType | FirstParty;
 const AllowAnyType3rdParty = AllowAction | AnyType | ThirdParty;
-const AllowAnyTypeOneParty = AllowAction | AnyType | SpecificParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
-const AllowOneParty = AllowAction | SpecificParty;
 
 var pageHostname = '';
 
