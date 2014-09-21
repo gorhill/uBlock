@@ -1237,6 +1237,7 @@ FilterParser.prototype.parse = function(s) {
 var TokenEntry = function() {
     this.beg = 0;
     this.end = 0;
+    this.token = '';
 };
 
 /******************************************************************************/
@@ -1600,6 +1601,10 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 /******************************************************************************/
 
+// Since the addition of the `important` evaluation, this means it is now 
+// likely that the url will have to be scanned more than once. So this is
+// to ensure we do it once only, and reuse results.
+
 FilterContainer.prototype.tokenize = function(url) {
     var tokens = this.tokens;
     var re = this.reAnyToken;
@@ -1613,6 +1618,7 @@ FilterContainer.prototype.tokenize = function(url) {
         }
         tokenEntry.beg = matches.index;
         tokenEntry.end = re.lastIndex;
+        tokenEntry.token = matches[0];
         i += 1;
     }
     // Sentinel
@@ -1620,7 +1626,7 @@ FilterContainer.prototype.tokenize = function(url) {
     if ( tokenEntry === undefined ) {
         tokenEntry = tokens[i] = new TokenEntry();
     }
-    tokenEntry.end = 0;
+    tokenEntry.token = '';
 };
 
 /******************************************************************************/
@@ -1633,16 +1639,15 @@ FilterContainer.prototype.matchTokens = function(url) {
     var bucket3 = buckets[3];
 
     var tokens = this.tokens;
-    var tokenEntry, beg, end, token, f;
+    var tokenEntry, beg, token, f;
     var i = 0;
     for (;;) {
         tokenEntry = tokens[i++];
-        end = tokenEntry.end;
-        if ( end === 0 ) {
+        token = tokenEntry.token;
+        if ( token === '' ) {
             break;
         }
         beg = tokenEntry.beg;
-        token = url.slice(beg, end);
         if ( bucket0 !== undefined ) {
             f = bucket0[token];
             if ( f !== undefined && f.match(url, beg) !== false ) {
