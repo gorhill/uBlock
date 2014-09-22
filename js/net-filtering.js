@@ -805,17 +805,12 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
-// TODO: Some buckets may grow quite large (see histogram excerpt below).
-// Evaluate the gain from having an internal dictionary for such large 
-// buckets: the key would be created by concatenating the char preceding and 
-// following the token. The dict would contain smaller buckets, and there 
-// would be a special bucket for those filters for which a prefix, suffix, or 
-// both is missing.
-// I used to do this, but at a higher level, during tokenization, and in the
-// end I found out the overhead was to much. I believe it will be a gain 
-// here because the special treatment would be only for a few specific tokens,
-// not systematically done for all tokens.
+// Some buckets can grow quite large, and finding a hit in these buckets
+// may end up being expensive. After considering various solutions, the one
+// retained is to promote hit filters to a smaller index, so that next time 
+// they can be looked-up faster.
 
 // key=  10000 ad           count=660
 // key=  10000 ads          count=433
@@ -842,7 +837,11 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 // key=  10000 footer       count= 51
 // key=  10000 rss          count= 51
 
+/******************************************************************************/
+
 var FilterBucket = function(a, b) {
+    this.promoted = 0;
+    this.vip = 16;
     this.f = null;
     this.filters = [];
     if ( a !== undefined ) {
@@ -854,18 +853,39 @@ var FilterBucket = function(a, b) {
 };
 
 FilterBucket.prototype.add = function(a) {
-    // If filter count > n, create dictionary in which filter buckets will be 
-    // keyed on prefix-suffix string. There will be a special bucket, always 
-    // evaluated for those filters who can't supply a two-char keys.
     this.filters.push(a);
+};
+
+// Promote hit filters so they can be found faster next time.
+FilterBucket.prototype.promote = function(i) {
+    var filters = this.filters;
+    var pivot = filters.length >>> 1;
+    while ( i < pivot ) {
+        pivot >>>= 1;
+        if ( pivot < this.vip ) {
+            break;
+        }
+    }
+    if ( i <= pivot ) {
+        return;
+    }
+    var j = this.promoted % pivot;
+    //console.debug('FilterBucket.promote(): promoted %d to %d', i, j);
+    var f = filters[j];
+    filters[j] = filters[i];
+    filters[i] = f;
+    this.promoted += 1;
 };
 
 FilterBucket.prototype.match = function(url, tokenBeg) {
     var filters = this.filters;
-    var i = filters.length;
-    while ( i-- ) {
+    var n = filters.length;
+    for ( var i = 0; i < n; i++ ) {
         if ( filters[i].match(url, tokenBeg) !== false ) {
             this.f = filters[i];
+            if ( i >= this.vip ) {
+                this.promote(i);
+            }
             return true;
         }
     }
@@ -1236,7 +1256,6 @@ FilterParser.prototype.parse = function(s) {
 
 var TokenEntry = function() {
     this.beg = 0;
-    this.end = 0;
     this.token = '';
 };
 
@@ -1617,7 +1636,6 @@ FilterContainer.prototype.tokenize = function(url) {
             tokenEntry = tokens[i] = new TokenEntry();
         }
         tokenEntry.beg = matches.index;
-        tokenEntry.end = re.lastIndex;
         tokenEntry.token = matches[0];
         i += 1;
     }
