@@ -52,8 +52,8 @@ const AnyParty = 0 << 2;
 const FirstParty = 1 << 2;
 const ThirdParty = 2 << 2;
 
+const AnyType = 1 << 4;
 var typeNameToTypeValue = {
-               'any': 1 << 4,
         'stylesheet': 2 << 4,
              'image': 3 << 4,
             'object': 4 << 4,
@@ -63,7 +63,6 @@ var typeNameToTypeValue = {
              'other': 8 << 4,
              'popup': 9 << 4
 };
-const AnyType = typeNameToTypeValue.any;
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
