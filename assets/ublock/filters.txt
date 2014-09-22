@@ -116,6 +116,10 @@ google.*###center_col > #tads
 # To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
 @@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com
 
+# https://github.com/gorhill/uBlock/issues/243
+# To counter `cdn-i.dmdentertainment.com` in hpHosts
+@@||cdn-i.dmdentertainment.com^$domain=cracked.com
+
 # Temporary, until EasyList provides a fix
 # https://github.com/gorhill/uBlock/issues/227
 @@||z.cdn.turner.com/*/ads/freewheel/*$object-subrequest,domain=nba.com
