@@ -4,7 +4,7 @@
 6aa2e322cf9cbe0c0e9ba81ec304ad30 assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
-779e04eec5051916bf91b06761e31dc2 assets/thirdparties/adblock.gardar.net/is.abp.txt
+8a2e3d2a4b690044deaf2584c2f71fef assets/thirdparties/adblock.gardar.net/is.abp.txt
 20a79c0f028768876d01ad37d6f83397 assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
 3baa0ece729805ce8d5d471a67e0c4df assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt
 54f7032c0e7ef73feb32d3c5437b8694 assets/thirdparties/raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt
