@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: PMd/OFnrFE7f2Zd1DkHdfw
-! Version: 201409200040
-! Last modified: 20 Sep 2014 00:40 UTC
+! Checksum: flm0vyZisLcMftoWeT0mvA
+! Version: 201409220540
+! Last modified: 22 Sep 2014 05:40 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -124,6 +124,7 @@ _vkontakte.png
 -social-icon.
 -social-icons-
 -social-icons.
+-social-icons/$~stylesheet
 -social-icons?
 -social-linked-
 -social-linkedin.
@@ -190,6 +191,7 @@ _vkontakte.png
 /add-mymsn2.
 /addthis-stumble.
 /addthis.png$domain=~addthis.com
+/addthis_horizontal.
 /addthis_widget.
 /addtoany-
 /advanced-social-widget/*$~stylesheet
@@ -277,6 +279,7 @@ _vkontakte.png
 /connect-twitter-
 /connect-twitter.
 /connect-youtube-
+/connectfb.
 /context-social.
 /crowdbooster-
 /crowdbooster_
@@ -392,6 +395,7 @@ _vkontakte.png
 /facebookBtn.
 /facebookbutton.
 /FacebookFanWidgetFrame.
+/facebookFooterIcon-
 /facebookHeader.
 /facebookicn.
 /facebookicon.$~object-subrequest
@@ -507,6 +511,9 @@ _vkontakte.png
 /followtwitter.
 /followus.
 /followus_
+/foot-fb.
+/foot-gplus.
+/foot-linkedin.
 /footer-facebook.
 /footer-google-
 /footer-google.
@@ -524,6 +531,7 @@ _vkontakte.png
 /footer/pinterest.
 /footer/social/*
 /footer/social_
+/footer/twit-
 /footer/twitter-
 /footer/twitter.
 /footer/youtube.
@@ -614,6 +622,7 @@ _vkontakte.png
 /gplusbadge-
 /gplusbtn.
 /gpluslogo-50.
+/graphics/twitter.
 /guys_social.
 /head-social.
 /head_facebook.
@@ -938,6 +947,7 @@ _vkontakte.png
 /include/twitter/*
 /insta-icon-
 /instagram-32px.
+/instagram-48.
 /instagram-button.
 /instagram-footer-
 /instagram-icon.
@@ -1304,6 +1314,7 @@ _vkontakte.png
 /SiteImages/Twitter.
 /slashdot-icon.
 /slick-social-share-buttons/*
+/slideshare-48.
 /sm-youtube-
 /small_fb.
 /small_twitter.
@@ -1316,6 +1327,7 @@ _vkontakte.png
 /soc-tw.
 /soc-vk.
 /soc-yt.
+/soc_bottom_
 /soc_facebook_
 /soc_med_
 /soc_media_
@@ -1654,6 +1666,7 @@ _vkontakte.png
 /tweets.js
 /twfollowfp.
 /twit-button-
+/twit-icon.
 /twit_icon.
 /twitbadge.
 /Twiticon.
@@ -1789,6 +1802,7 @@ _vkontakte.png
 /uploads/youtube2.
 /view_social_
 /viewboxTraffic_min.js
+/vimeo-48.
 /vimeo_32.
 /vimeo_icon_
 /visual/social/*
@@ -1823,6 +1837,7 @@ _vkontakte.png
 /you-tube.jpg
 /Youicon.
 /youtube-32x32.
+/youtube-48.
 /youtube-button.
 /Youtube-Buttons.
 /Youtube-icon-
@@ -1848,8 +1863,12 @@ _vkontakte.png
 /youtube_icon_
 /youtubebadge.
 /youtubebutton.
+/youtubeFooterIcon-
 /youtubeIcon.
 /ytwitter_widget_
+_bottom_google.
+_bottom_linkedin.
+_bottom_vimeo.
 _btn_facebook.
 _btn_like_
 _BTN_LinkedIn_
@@ -2082,6 +2101,7 @@ _youtube_small.
 ###aFbLikeBottom
 ###aa_header_shares
 ###about-edition-social
+###action-share
 ###acx-social-icons-widget-2
 ###addThis
 ###addshare
@@ -2171,6 +2191,7 @@ _youtube_small.
 ###blog-share-widget
 ###blog-social
 ###blog_social
+###bloggerspiceFBpop
 ###bookmarks-share
 ###bottom-share-buttons
 ###bottom-share-tools
@@ -3511,6 +3532,7 @@ _youtube_small.
 ##.BVRRSocialBookmarkingLinks
 ##.CustomSocial
 ##.DiggThisButton
+##.EE-social
 ##.Entry_Sharer_Buttons
 ##.FBLikeBox
 ##.FacebookICN
@@ -3711,6 +3733,7 @@ _youtube_small.
 ##.authorSocialTools
 ##.author_socs
 ##.authorbox-social
+##.avia_socialcount
 ##.b-buttons_social
 ##.b-follow-us
 ##.b-social
@@ -3846,6 +3869,8 @@ _youtube_small.
 ##.cd-fb-like-widget
 ##.cdc_social_icons
 ##.clean-share-box
+##.club_func_social
+##.cmp_share_container
 ##.cmuShareWidget
 ##.cne-share
 ##.cnn-social-icons
@@ -4029,6 +4054,7 @@ _youtube_small.
 ##.facebookGroup
 ##.facebookHomepageBottom
 ##.facebookIcon
+##.facebookImage
 ##.facebookItem
 ##.facebookLike
 ##.facebookLikeboxContentContainer
@@ -4297,6 +4323,7 @@ _youtube_small.
 ##.fontawesome-google-plus
 ##.fontawesome-twitter
 ##.foot-social
+##.foot-twit
 ##.foot_Facebook
 ##.foot_GooglePlus
 ##.foot_Twitter
@@ -4332,12 +4359,14 @@ _youtube_small.
 ##.footerButtonFacebook
 ##.footerButtonGoogle
 ##.footerButtonTwitter
+##.footerFacebook
 ##.footerFollow
 ##.footerFollowUs
 ##.footerNavSocials
 ##.footerShare
 ##.footerSocial
 ##.footerSocials
+##.footerYouTube
 ##.footer_head_social
 ##.footer_share
 ##.footer_social
@@ -4356,6 +4385,7 @@ _youtube_small.
 ##.fourSq-widget
 ##.fpbiz_share
 ##.fr_follow
+##.frame-social
 ##.frontpage-social-block
 ##.fs-facebook-iframe
 ##.fs-retweet-block
@@ -4381,6 +4411,7 @@ _youtube_small.
 ##.g-plus-box
 ##.g-plusone
 ##.g-plusone-holder
+##.g1-twitter
 ##.gPlusPageBadge_widget
 ##.gab_share_widget
 ##.gab_social_widget
@@ -4946,6 +4977,7 @@ _youtube_small.
 ##.open_share_box
 ##.overlay_facebook
 ##.p-button-social
+##.padded-footer-connect
 ##.page-footer_social
 ##.page-share-button
 ##.pageFbLike
@@ -5535,6 +5567,7 @@ _youtube_small.
 ##.sl-fb-sharer-button
 ##.slickshare
 ##.slider-social
+##.slideshow-share-buttons
 ##.slinkedin
 ##.sm-page-widget-sociallinks
 ##.sm-social-links-horizontal
@@ -5773,6 +5806,7 @@ _youtube_small.
 ##.social-sliver
 ##.social-small
 ##.social-stack
+##.social-stats
 ##.social-stick
 ##.social-sticky
 ##.social-story-bar
@@ -5788,6 +5822,7 @@ _youtube_small.
 ##.social-tool
 ##.social-tools
 ##.social-tools-bottom
+##.social-tools-home
 ##.social-tools-wrapper-bottom
 ##.social-top
 ##.social-top-barz
@@ -6319,6 +6354,7 @@ _youtube_small.
 ##.twitterFeedsMR
 ##.twitterFollow
 ##.twitterIcon
+##.twitterImage
 ##.twitterItem
 ##.twitterLink
 ##.twitterPanel
@@ -7903,6 +7939,7 @@ _social_rss.
 ###fsd_signup
 ###future-cookie-bar
 ###g-outbrain
+###g1-back-to-top
 ###global-cookie-message
 ###gmm-panel-promo
 ###go-to-top
@@ -7912,6 +7949,7 @@ _social_rss.
 ###goTopFooter
 ###gotop
 ###have-a-cookie
+###hellobar-container
 ###hi-cookie-box
 ###icoCookiesBanner
 ###id_cookieconsent
@@ -8106,11 +8144,13 @@ _social_rss.
 ###taboola-autosized-1r
 ###taboola-below-article
 ###taboola-below-main-column-mix
+###taboola-below-main-column-sc
 ###taboola-belowarticle
 ###taboola-bottom-main-column
 ###taboola-div
 ###taboola-horizontal-toolbar
 ###taboola-horizontalx4-responsive
+###taboola-right-rail
 ###taboola-right-rail-thumbnails
 ###taboola-text-2-columns-mix
 ###taboola-vid-container
@@ -8272,6 +8312,7 @@ _social_rss.
 ##.divider-taboola
 ##.dmg-newsletter
 ##.do-register-newsletter
+##.dom-content--eu-banner
 ##.dsq-global-toolbar-container
 ##.dsq-h3-reactions
 ##.dsv_video_bar
@@ -8443,6 +8484,7 @@ _social_rss.
 ##.pin-it-btn-wrapper
 ##.polityka-cookie
 ##.popup-cookie
+##.postSubscribeByEmail
 ##.prevNextPost
 ##.print-page
 ##.publishToStatus
@@ -8545,6 +8587,7 @@ _social_rss.
 ##.toast-type-newCookie
 ##.toasterAd
 ##.topofpage
+##.totop
 ##.track-action-RSS
 ##.tsq_sailthru_newsletter_widget
 ##.ui-fixed-panel-go-top
@@ -8864,6 +8907,7 @@ _social_rss.
 ||alluremedia.com.au/s/au.js$third-party
 ||amazonaws.com/fby.js
 ||amazonaws.com/fby/
+||amazonaws.com/mailmunch/widgets/$script,third-party
 ||amazonaws.com^*/feedback-v2.js
 ||api.flattr.com^$third-party
 ||api.search.live.net^$third-party,domain=~bing.com
@@ -9411,12 +9455,13 @@ google.com#@#.g-plusone
 google.com#@#.google-plus
 google.com,inoreader.com#@#.google_plus
 airbnb.de,gleam.io,shared.com,squidoo.com#@#.icon-facebook
+lockerdome.com#@#.icon-facebook2
 register.thisis.co.uk#@#.icon-google-plus-sign
 gleam.io#@#.icon-instagram
 carsguide.com.au#@#.icon-social-facebook
 carsguide.com.au#@#.icon-social-linkedin
 gleam.io#@#.icon-soundcloud
-gleam.io,squidoo.com#@#.icon-twitter
+gleam.io,lockerdome.com,squidoo.com#@#.icon-twitter
 dailymail.co.uk,thisismoney.co.uk#@#.img-share
 instagram.com#@#.instagram-follow
 katproxy.com,kickass.to,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
@@ -9619,6 +9664,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||lastpass.com/images/vault/share.png
 @@||lemaker.org/uploadfile/icon/google.jpg
 @@||lifetricks.com/wp-content/plugins/nextend-facebook-connect/
+@@||livescience.com/images/site/social/footer_*.gif
 @@||livescience.com/images/site/social/footer_buttons.gif
 @@||mediafirerepack.net^*/facebook-page-promoter-lightbox/$script
 @@||meetmecdna.com/images/Connect/btn_facebook_custom_text.png$domain=meetme.com
@@ -9716,6 +9762,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||wordpress.com/connect/googleplus-sign-in.js
 @@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-facebook.png
 @@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-twitter.png
+@@||wphub.com/wp-content/uploads/2010/05/design-freebies-vector-social-icon-set1-138x98.png
 @@||wsj.net^*/social_icons.png$domain=marketwatch.com
 @@||www.google.*/images/*google.png
 @@||www.google.*/images/*googleplus.png

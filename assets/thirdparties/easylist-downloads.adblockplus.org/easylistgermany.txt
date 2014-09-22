@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: IZbheb+zcVDePq9eS0W3gw
-! Version: 201409200041
+! Checksum: t7za0u6Q3EyaEypwH5MLxw
+! Version: 201409220541
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 20 Sep 2014 00:41 UTC
+! Last modified: 22 Sep 2014 05:41 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1393,6 +1393,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ruhrgebiet.ws/test/$third-party
 ||s1.ja-pics.net^$subdocument,third-party
 ||saarland-deals.de/*-widget/$subdocument,third-party
+||safeterms.de/images/public/banner/$third-party
 ||sandra-messer.info/wp-content/uploads/*/video-newsletter.gif$third-party
 ||sat1.de/ran/clsponsor_opener_short_$object-subrequest
 ||satchef.de/banner/$third-party
@@ -3672,7 +3673,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /\bwww\.pc-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=pc-magazin.de
 /\bwww\.video-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
-||doubleclick.net^$domain=clipfish.de|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
+||doubleclick.net^$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
 ||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
 ||gamona.de/assets/*_1000x140.
@@ -4134,7 +4135,7 @@ golyr.de###drk
 112-magazin.de,forendienst.de,navi-forum.net,wohnmobilforum.de###dropin
 abnehmen-forum.com###dropinboxv2cover
 abnehmen-forum.com###dropinboxv3cover
-drehscheibe-foren.de###dsBanner
+drehscheibe-foren.de,drehscheibe-online.de###dsBanner
 800gs.de###duonix
 onlinewebservice4.de###dwindow
 de.msn.com###ebay
@@ -7608,6 +7609,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||g.doubleclick.net/activity;*/DE-AudiencePixel/Gamestar;dc_seg=$image,domain=gamestar.de
 @@||g.doubleclick.net/gampad/ads?*&callback=googletag.impl.pubads.setAdContentsBySlotForSync&$script,domain=gamona.de
 @@||g.doubleclick.net/gampad/ads?sz=320x240&iu=/4444/pcgames_video.de_fx_sdm/Rest&ciu_szs&$object-subrequest,domain=pcgames.de
+@@||g.doubleclick.net/pagead/adview?ai=$object-subrequest,domain=clipfish.de
 @@||game-advertising-online.com/images/s-l.gif$domain=anime-loads.org
 @@||game-advertising-online.com/index.php?section=serve&id=$subdocument,domain=anime-loads.org
 @@||gamesaktuell.de^$image

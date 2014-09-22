@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: NL6hFmwdpy5T80YYehVB7A
-! Version: 201409200040
-! Last modified: 20 Sep 2014 00:40 UTC
+! Checksum: yyog+kk56hq8RH3Jxza8Rg
+! Version: 201409220540
+! Last modified: 22 Sep 2014 05:40 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1797,6 +1797,7 @@ _tizers.
 //95.211.125.226^
 ||0ux.ru^
 ||12-dd-2.net^
+||123retr312.ru^
 ||1traff.ru^
 ||1under.ru^
 ||2-tr-45.net^
@@ -2193,6 +2194,7 @@ _tizers.
 ||houmekredit.ru^
 ||hugedi.com^
 ||i-adv.biz^
+||iadv.biz^
 ||iberacon.com^
 ||icqad001.net^
 ||icqad002.net^
@@ -2961,6 +2963,7 @@ goha.ru###branding
 pikabu.ru###branding_ad_comment
 pikabu.ru###branding_ad_footer
 pikabu.ru###branding_ad_header
+hdfilms.tv###branding_link
 world-mmo.com###brend
 hentai-imperia.com,imperia-of-hentai.biz,imperia-of-hentai.net###cc_fm_prem
 xxx-base.org###center2 > .block
@@ -4773,6 +4776,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||goldenshara.com/misc/js/golde_link.js
 ||golosua.com/img/banners/
 ||good73.net^$object
+||goodgame.ru^*/www/
 ||gorod.cn.ua/*/banners/
 ||gorod.cn.ua/*/brending/
 ||gorodkirov.ru/kaFile?b_id=
@@ -4793,6 +4797,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||gzt.ru/upload/*.rklite/
 ||hacker-pro.net/banner/
 ||hdclub.org/mg/
+||hdfilms.tv/images/bg/
 ||hdserials.tv^$object
 ||hdtrailer.ru/images/bg/
 ||hdtv.ru/resources/$object
@@ -5157,7 +5162,6 @@ _advideo/$object-subrequest,domain=megogo.net
 ||pozdrav.ru/url/*.vfl.ru
 ||pr-cy.ru^$object,domain=pr-cy.ru
 ||pravdapskov.ru/upload/b/
-||premium.goodgame.ru^
 ||prestige-gaming.ru/styles/hestia/theme/images/$object
 ||prikols.com.ru/eroru/
 ||priorovod.ru/button/$object
@@ -5413,6 +5417,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||xakep.ru/post/*_final.jpg
 ||xenforo.info/728.swf
 ||xf.xyu.tv^
+||xfont.ru^*/add_ref/
 ||xmages.net/*/banner/
 ||xxx-russian.ru/js/38fbf0.js
 ||xxx-tracker.com/pics/
@@ -6139,6 +6144,7 @@ chatovod.ru#@#.withAds
 @@||luxup.ru^$script,domain=99px.ru
 @@||moonwalk.cc^$image,subdocument,domain=moonwalk.cc
 @@||olegon.ru^$elemhide
+@@||onclickads.net/adv/$image,domain=moonwalk.cc
 @@||online.ua/adsence.js|$domain=online.ua
 @@||paste.org/style/adframe.js$domain=paste.org
 @@||pesikot.org^*/advert.js|$domain=pesikot.org

@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: xRVuPRCItOtPBzyc8sb+yg
-! Version: 201409200041
+! Checksum: ADbexYcPfMM8QWVLgzLwTw
+! Version: 201409220541
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 20 Sep 2014 00:41 UTC
+! Last Modified: 22 Sep 2014 05:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -319,7 +319,6 @@
 ||rekanw.com^$third-party
 ||resmkt.dipan.com^$third-party
 ||resource.gamediad.com^$third-party
-||rsccs.com^$third-party
 ||s.vipcnzz.com^$third-party
 ||samboc.com^$third-party
 ||shendu.cc^$third-party
@@ -691,6 +690,9 @@ hk.yahoo.com###mntl1
 ##a[href^="plugin.php?id=stoola_adcenter:userclick&adid="]
 ~dsjunshi.com##div[id^="ad_thread"]
 !----------------------------------Ads-Union----------------------------------!
+||rsccs.com^$third-party
+||366safego.com^
+||ihualun.com^
 ||2155ec.com^$third-party
 ||eyouv.cn^$third-party
 /99vjj/*$third-party
@@ -706,7 +708,6 @@ hk.yahoo.com###mntl1
 /page/?s=$third-party
 /page/index.php?s=$third-party
 /page/s.php?s=$third-party
-dnserror*.wo.com.cn^
 ||007.mx^$third-party
 ||007y.net^$third-party
 ||0591101.com^$third-party
@@ -979,7 +980,7 @@ dnserror*.wo.com.cn^
 /pushstart.aspx?$popup,third-party
 |http:$popup,third-party,domain=520cc.cc|5278.cc|5278bbs.com|bforu.info|downp2p.com|dwbpy.com|jandown.com|jxedt.com|kxddd.com|mimima.com|rmdown.com|see3r.com|shclk.com|tenitt.info|ttft.in|xhcbb.com|xunfs.com
 ||133gp.com^$popup
-||189.gd^*.html?p=$popup,third-party
+||189.gd^*.html?p=$popup
 ||90hnbb.pw^$popup,script
 ||ad.189so.cn^$popup
 ||ad1111.com^$popup
@@ -3897,10 +3898,27 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||rexuedongman.com/scripts/show/3
 ||rexuedongman.com/scripts/show/a
 ||inimc.com//static/image/eFkL
+||cnzol.com/page/
+||cnzol.com/userfiles/image/*#
+||cnzol.com/template/style/images/wlfloat.js
+||books.com.tw/web/apActivityStick?
+||youxi.baidu.com/tips/bdtips_min.js
+||yinfuren.com/ads/
+||yinfuren.com/config.js
+||videospeedy.com/Res/images/wuy0u.jpg
+||dota2.uuu9.com^$subdocument
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
+wenwen.sogou.com###float_window
+newxue.com##.bd500
+newxue.com##.dashuggtop
+newxue.com##.dashuggtop1
+newxue.com##.left300250
+91.com##.banner-gg
+cnzol.com###Wl_Float_Div
+cnzol.com##A[href*="zhuan5."]
 rexuedongman.com##.w980.uzmh-0
 ltaaa.com##.lAds
 ltaaa.com##.topAds2
@@ -5719,7 +5737,7 @@ sogou.com,soso.com##.sponsored
 163.com##.sports_300x60_ad1
 so.360.cn,so.com##.spread
 jump.bdimg.com,tieba.baidu.com##.spreadad
-1024go.info,5d7y.net,caoliuhome.com,cl.man.lv,cl.s1.lv,clsq1024.pw,lesile.net,lovecaoliu.pw,mecaoliu.org,t66y.com,zlvc.net##.sptable
+1024go.info,5d7y.net,caoliuhome.com,cl.man.lv,cl.s1.lv,clsq1024.pw,lesile.net,lovecaoliu.pw,mecaoliu.org,t66y.com,yao.cl,zlvc.net,woyao.cl##.sptable
 10jqka.com.cn##.subbanner
 qingdaonews.com##.surround
 shm.com.cn##.surround2
@@ -6651,7 +6669,7 @@ appbyme.com#@#.adchange
 @@||zhibowu.com/ad2.htm
 @@||eden.org.tw*/script/ad_banner/
 @@||eden.org.tw/themes/liger/images/banner_
-@@||ad*.8591.com.tw^$domain=8591.com.tw
+@@||adjs.8591.com.tw/ajs.php?$domain=8591.com.tw
 @@||ads.ribiaozi.info^*.jpg
 @@||sf-express.com/.galleries/advertisement/
 @@||cb.baidu.com/ecom?di=933918&

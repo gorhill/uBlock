@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: aPS28oMmroKNJJ17qcAjHw
-! Version: 201409200040
+! Checksum: D0I5sXvAwfyXkWiAA5KuMw
+! Version: 201409220540
 ! Title: EasyList without element hiding rules
-! Last modified: 20 Sep 2014 00:40 UTC
+! Last modified: 22 Sep 2014 05:40 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1080,6 +1080,7 @@
 /ad_square.
 /ad_square_
 /ad_squares.
+/ad_styling_
 /ad_supertile/*
 /ad_sys/*
 /ad_syshome.
@@ -4922,6 +4923,7 @@
 /t.php?uid=*.*&src=
 /tabads/*
 /tableadnorth.
+/taboola-
 /tag-adv.
 /tagadv_
 /talkads/*
@@ -5087,6 +5089,7 @@
 /valueclick.
 /valueclickbanner.
 /valueclickvert.
+/vast_ads_
 /VASTAdPlugin.
 /vb/ads/*
 /vboard/ads/*
@@ -7679,6 +7682,7 @@ _popunder+$popup
 ||eptord.com^$third-party
 ||eptum.com^$third-party
 ||erendri.com^$third-party
+||ergerww.net^$third-party
 ||ergodob.ru^$third-party
 ||ero-advertising.com^$third-party
 ||erovation.com^$third-party
@@ -8344,6 +8348,7 @@ _popunder+$popup
 ||nobleppc.com^$third-party
 ||nobsetfinvestor.com^$third-party
 ||nonstoppartner.de^$third-party
+||noretia.com^$third-party
 ||northmay.com^$third-party
 ||nowlooking.net^$third-party
 ||nowspots.com^$third-party
@@ -8466,6 +8471,7 @@ _popunder+$popup
 ||paydotcom.com^$third-party
 ||payperpost.com^$third-party
 ||pc-ads.com^$third-party
+||pe2k2dty.com^$third-party
 ||peakclick.com^$third-party
 ||peelawaymaker.com^$third-party
 ||peemee.com^$third-party
@@ -8992,6 +8998,7 @@ _popunder+$popup
 ||trafficsway.com^$third-party
 ||trafficsynergy.com^$third-party
 ||traffictrader.net^$third-party
+||trafficvance.com^$third-party
 ||trafficwave.net^$third-party
 ||trafficz.com^$third-party
 ||trafficzap.com^$third-party
@@ -9755,6 +9762,7 @@ _popunder+$popup
 ||fuelbuck.com^$third-party
 ||funcel.mobi^$third-party
 ||funnypickuplinesforgirls.com^$third-party
+||g726n8cy.com^$third-party
 ||ganardineroreal.com^$third-party
 ||gayadpros.com^$third-party
 ||gayxperience.com^$third-party
@@ -10496,6 +10504,7 @@ _popunder+$popup
 ||blogspot.com^*/nCircle-$domain=thehackernews.com
 ||blogspot.com^*/nCircle.$domain=thehackernews.com
 ||bloodstock.uk.com/affiliates/
+||bluepromocode.com/images/widgets/$third-party
 ||bluesattv.net/bluesat.swf
 ||bluhostedbanners.blucigs.com^
 ||bo-videos.s3.amazonaws.com^$third-party
@@ -11623,6 +11632,7 @@ _popunder+$popup
 ||widget.scoutpa.com^$third-party
 ||widget.shopstyle.com.au^
 ||widget.shopstyle.com/widget?pid=$subdocument,third-party
+||widgetcf.adviceiq.com^$third-party
 ||widgets.itunes.apple.com^*&affiliate_id=$third-party
 ||widgets.mobilelocalnews.com^$third-party
 ||widgets.mozo.com.au^$third-party
@@ -11662,6 +11672,7 @@ _popunder+$popup
 ||yimg.com/gs/apex/mediastore/
 ||yimg.com^*/quickplay_maxwellhouse.png
 ||yimg.com^*/sponsored.js
+||yimg.com^*_skin_$domain=yahoo.com
 ||ynet.co.il^*/ynetbanneradmin/
 ||yontoo.com^$subdocument,third-party
 ||yooclick.com^$subdocument,third-party
@@ -12252,7 +12263,7 @@ _popunder+$popup
 ||yuvutu.com^$popup,third-party
 !----------------------Specific advert blocking filters-----------------------!
 ! *** easylist:easylist/easylist_specific_block.txt ***
-.com/jquery/static.js?*Math.floor$script,third-party
+.com/jquery/*.js?_t=Math.floor$script,third-party
 .info^$script,domain=allmyvideos.net|mediafire.com|mooshare.biz|muchshare.net|tvmuse.com|tvmuse.eu|vidspot.net
 /*;sz=*;ord=$domain=webhostingtalk.com
 /3market.php?$domain=adf.ly|j.gs|q.gs|u.bb
@@ -12265,6 +12276,7 @@ _popunder+$popup
 /assets/_takeover/*$domain=deadspin.com|gawker.com|gizmodo.com|io9.com|jalopnik.com|jezebel.com|kotaku.com|lifehacker.com
 /clickpop.js$domain=miliblog.co.uk
 /com.js$domain=kinox.to
+/get/path/.banners.$image,third-party
 /market.php?$domain=adf.ly|u.bb
 /static/js/pop*.js$script,domain=baymirror.com|getpirate.com|livepirate.com|mypiratebay.cl|noncensuram.info|pirateproxy.net|pirateproxy.se|proxicity.info|thepiratebay.se.coevoet.nl|tpb.chezber.org|tpb.ipredator.se|tpb.piraten.lu|tpb.pirateparty.ca|tpb.pirates.ie
 /vendors/*$domain=rzrforums.net
@@ -12687,6 +12699,7 @@ _popunder+$popup
 ||blog.co.uk/script/blogs/afc.js
 ||blogorama.com/images/banners/
 ||blogsdna.com/wp-content/themes/blogsdna2011/images/advertisments.png
+||blogsmithmedia.com/www.joystiq.com/*wallpaper$image,domain=joystiq.com
 ||blogsmithmedia.com^*/media/alienware_wallpaper.jpg
 ||blogsmithmedia.com^*_skin.
 ||blogsmithmedia.com^*_skin_
@@ -13899,6 +13912,7 @@ _popunder+$popup
 ||israelvideonetwork.com^*-300x75-
 ||isup.me/images/dotbiz_banner.jpg
 ||isxdead.com/images/showbox.png
+||itdigitalworld.com/wp-content/uploads/*/wp-discount.gif
 ||itpro.co.uk/images/skins/
 ||itv.com/adexplore/*/config.xml
 ||itv.com/priority/$object-subrequest,domain=u.tv
@@ -15103,6 +15117,7 @@ _popunder+$popup
 ||slickvid.com/js/fun2.js
 ||slyck.com/pics/*304x83_
 ||smartcompany.com.au/images/stories/sponsored-posts/
+||smartearningsecrets.com^*/FameThemes.png
 ||smartmoney.net^*-sponsor-
 ||smartname.com/scripts/google_afd_v2.js
 ||smashingapps.com/banner/
@@ -16147,10 +16162,12 @@ _popunder+$popup
 ||zmovie.tv^$popup,domain=deditv.com|vidbox.net|vidreel.com
 ! *** easylist:easylist_adult/adult_specific_block.txt ***
 .info^$script,domain=pornhub.com
-/^https?\:\/\/(?!(apis\.google\.com|accounts\.google\.com|platform\.twitter\.com|ss\.phncdn\.com|www\.youporn\.com|www\.google-analytics\.com|platform\.tumblr\.com|cdn1\.static\.youporn\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=youporn.com
-/^https?\:\/\/(?!(apis\.google\.com|ct1\.addthis\.com|www\.tube8\.com|s7\.addthis\.com|ss\.phncdn\.com|www\.google-analytics\.com|cdn1\.static\.tube8\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=tube8.com
+/^https?\:\/\/(?!(ajax\.googleapis\.com|ss\.phncdn\.com|ct1\.addthis\.com|s7\.addthis\.com|www\.google-analytics\.com|www\.pornhub\.com|www\.keezmovies\.com|cdn1\.static\.keezmovies\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=keezmovies.com
+/^https?\:\/\/(?!(apis\.google\.com|ajax\.googleapis\.com|accounts\.google\.com|platform\.twitter\.com|ss\.phncdn\.com|www\.youporn\.com|www\.google-analytics\.com|platform\.tumblr\.com|cdn1\.static\.youporn\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=youporn.com
+/^https?\:\/\/(?!(apis\.google\.com|ct1\.addthis\.com|www\.tube8\.com|s7\.addthis\.com|ss\.phncdn\.com|www\.google-analytics\.com|cdn1\.static\.tube8\.phncdn\.com|cdn1b\.static\.tube8\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=tube8.com
 /^https?\:\/\/(?!(apis\.google\.com|ss\.phncdn\.com|www\.google-analytics\.com|www\.pornhub\.com|cdn1b\.static\.pornhub\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=pornhub.com
 /^https?\:\/\/(?!(apis\.google\.com|ss\.phncdn\.com|www\.google-analytics\.com|www\.redtube\.com|www\.google\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=redtube.com
+/^https?\:\/\/(?!(ss\.phncdn\.com|ct1\.addthis\.com|s7\.addthis\.com|www\.google-analytics\.com|www\.gaytube\.com|cdn\.static\.gaytube\.phncdn\.com)\/)/$script,subdocument,third-party,xmlhttprequest,domain=gaytube.com
 ||109.201.146.142^$domain=xxxbunker.com
 ||213.174.140.38/bftv/js/msn-
 ||213.174.140.38^*/msn-*.js$domain=boyfriendtv.com|pornoxo.com
@@ -16478,6 +16495,7 @@ _popunder+$popup
 ||m2.xhamster.com^
 ||madmovs.com/rec/
 ||madthumbs.com/madthumbs/sponsor/
+||mallandrinhas.net/flutuante
 ||matureworld.ws/images/banners/
 ||maxjizztube.com/downloadfreemovies.php
 ||meatspin.com/facebookchatlist.php
@@ -16883,6 +16901,7 @@ _popunder+$popup
 ||youporn.com/channel/potatoes/
 ||youporn.com/watch_postroll/
 ||youporn.com^$script,domain=youporn.com
+||youporn.com^$script,subdocument,domain=youporngay.com
 ||youporn.com^$subdocument,~third-party
 ||yourdailygirls.com/vanilla/process.php
 ||yourdarkdesires.com/1.html
@@ -16896,8 +16915,6 @@ _popunder+$popup
 ||yuvutu.com^*/banners/
 ||zazzybabes.com/misc/virtuagirl-skin.js
 ! *** easylist:easylist_adult/adult_specific_block_popup.txt ***
-/fp.engine?$popup,domain=tube8.com
-/Redirect.eng?$popup,domain=tube8.com
 ^utm_medium=pops^$popup,domain=ratedporntube.com|sextuberate.com
 ||ad.userporn.com^$popup
 ||eporner.com/pop.php$popup

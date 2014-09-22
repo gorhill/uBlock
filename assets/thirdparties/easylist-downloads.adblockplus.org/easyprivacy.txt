@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 9+0AOsu+doYU142KlKM56w
-! Version: 201409200041
+! Checksum: qScVZ2vQNTqJktC0D9f7Gg
+! Version: 201409220541
 ! Title: EasyPrivacy
-! Last modified: 20 Sep 2014 00:41 UTC
+! Last modified: 22 Sep 2014 05:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1431,6 +1431,7 @@
 /pview?event
 /pvserver/pv.js
 /PvServlet?
+/px.gif?
 /px_trans.gif
 /pxl.cgi?
 /pxlctl.gif?
@@ -1556,6 +1557,7 @@
 /sessioncam/*
 /SETCOOKAFF.
 /setcooki.
+/setcookie?
 /SetSabreAnalyticsCookie.
 /setTDUID.do?
 /shareCounts.
@@ -1753,6 +1755,7 @@
 /track/pix.asp?
 /track/pixel.
 /track/site/*
+/track/track.php?
 /track/view/*
 /track/visitors/?
 /track/visits/?
@@ -1965,6 +1968,7 @@
 /visitor.gif?ts=
 /visitor.js?key=
 /visitor.min.js
+/visitor/index.php?*referrer$image
 /visitortracker.pl?
 /visits_contor.
 /VisitTracking?
@@ -2518,6 +2522,7 @@ http://utm.
 ||clustrmaps.com^$third-party
 ||cmcore.com^$third-party
 ||cmmeglobal.com^$third-party
+||cmptch.com^$third-party
 ||cnt1.net^$third-party
 ||cnxweb.com^$third-party
 ||cnzz.com^$third-party
@@ -2993,7 +2998,6 @@ http://utm.
 ||leadintelligence.co.uk^$third-party
 ||leadlife.com^$third-party
 ||leadmanagerfx.com^$third-party
-||leadpages.net^$third-party
 ||leadsius.com^$third-party
 ||legolas-media.com^$third-party
 ||les-experts.com^$third-party
@@ -5088,6 +5092,7 @@ http://utm.
 ||laurel.macrovision.com^
 ||laurel.rovicorp.com^
 ||lct.salesforce.com^$third-party
+||leadpages.net^*/tracking.js
 ||leadtracking.plumvoice.com^
 ||lederer.nl/incl/stats.js.php?
 ||legacy.com/globalscripts/tracking/
@@ -6271,7 +6276,6 @@ http://utm.
 ||198.105.253.2/lvl3/$image,domain=searchguide.level3.com
 ||1e400.net/tracking.js
 ||213.8.193.45/themarker/$domain=haaretz.com
-||21sextury.com/setcookie?
 ||24caratleeds.co.uk/tr/laredoute/carat_laredoute_
 ||24hourfitness.com/includes/script/siteTracking.js
 ||37signals.com/ga.js
@@ -6892,6 +6896,7 @@ http://utm.
 ||gawker.com/?op=hyperion_useragent_data
 ||gawker.com/at.js.php
 ||gawker.com^*/trackers.html
+||gaytube.com/counter/
 ||geico.com/vs/track2.js?
 ||general-files.com/stat
 ||general-search.com/stat
@@ -7212,6 +7217,7 @@ http://utm.
 ||metrics.aws.sitepoint.com^
 ||metrics.bustle.com^
 ||metrics.dailymotion.com^
+||metrics.ee.co.uk^
 ||metrics.ted.com^
 ||metrics.washingtonpost.com^
 ||metro.us/api/trackPage/
@@ -8296,7 +8302,6 @@ http://utm.
 ||express.de/analytics/
 ||extszm.web.de^
 ||fanfiktion.de^*/s.js
-||fcbayern.t-home.de^*/px.gif?
 ||feed-reader.net/tracking.php
 ||fireball.de/statistikframe.asp?
 ||fr-online.de/analytics/
@@ -8767,7 +8772,6 @@ http://utm.
 ||dot.wp.pl^
 ||kropka.onet.pl^
 ||nasza-klasa.pl^*/pp_gemius
-||onet.pli^*/px.gif?
 ||rek.www.wp.pl^
 ||stats.teledyski.info^
 ! Portuguese
@@ -8994,8 +8998,9 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|ch10.co.il|deviantart.com|infogr.am|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|deviantart.com|infogr.am|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
+@@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
 @@||google.com/js/gweb/analytics/$domain=google.com

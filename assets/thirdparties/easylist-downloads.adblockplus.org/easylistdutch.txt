@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: 59TRRUYkzkVmBUwdD41obg
-! Version: 201409200041
+! Checksum: lPNYZZOrRbm7A2LC1qbaLw
+! Version: 201409220541
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 20 Sep 2014 00:41 UTC
+! Last modified: 22 Sep 2014 05:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -385,6 +385,7 @@ _advertentieleaderboardhome.
 ||festivalinfo.nl/img/banner/
 ||fiets.nl/uploads/banners/
 ||fiets.nl^*-banner-
+||flevoland.to/~birgit/*-banner.gif
 ||flirtmee.nl/chat/banner_
 ||forum.spaarinformatie.nl/si-info.html
 ||frankrijk.nl/flash/banner_
@@ -1202,6 +1203,7 @@ moviescene.nl##form[name="justeat"]
 promootjesite.nl##iframe[width="728"][height="90"] + style + script + div[id]
 partyflock.nl##img[alt^="[BANNER#"]
 pollennieuws.nl##img[height="90"][width="728"]
+flevoland.to##img[width="120"][height="60"]
 oisterwijknieuws.nl##img[width="250"][height="100"]
 pollennieuws.nl##img[width="543"][height="86"]
 pollennieuws.nl##img[width="575"][height="63"]

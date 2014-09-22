@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 15 September 2014
+! Last modified: 21 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -74,6 +74,7 @@ _werbung_
 -lokazje.
 -reklama.gif
 bannerad.png
+washa_reklama
 
 ! * - General Element Hiding Rules - * !
 ###adsense_banner_top
@@ -110,6 +111,7 @@ bannerad.png
 ##.adSrodek
 ##.advert
 ##.ad_block
+##.ad-vig
 ##.adv_info
 ##.advertHolder
 ##.BanerHPBig
@@ -131,6 +133,7 @@ bannerad.png
 ##.main-tbaner
 ##.moduletable_reklama
 ##.moduletable_reklama_banner
+##.nsg_ad_box
 ##.peeloverlay
 ##.pnbbaner
 ##.popup-fadeOverlay
@@ -287,6 +290,7 @@ bannerad.png
 ||reklama.osemka.pl
 ||spidersweb.pl/wp-content/themes/new_sw_v2/images/*.swf
 ||static.clickonometrics.pl
+||static.dpcdn.pl/2014_09_09/assets/img/skin_amd/
 ||static.fakt.pl
 ||static*jelonka.com
 ||static-chomikuj.pl/serve/
@@ -391,6 +395,7 @@ oxforddictionaries.com##.responsive_cell_whole
 pclab.pl##[href^="http://e.clk.onet.pl"]
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
 pinterest.com##[class="message messageUnauth"]
+pl###comment-captcha
 player.pl##[id^="ado-"]
 popularnie.pl###gold-header
 press.pl###topBanner
@@ -424,6 +429,7 @@ walbrzyszek.com##[style="text-align:center;padding-bottom:15px;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999997;left:0;top:0;width:100%;height:100%;background:#999;opacity:0.4;"]
 walbrzyszek.com##[style="position:fixed;z-index:9999998;left:0;top:0;width:100%;height:100%;"]
 wiocha.pl###ad4sc
+wiocha.pl##.babanner
 wirtualnemedia.pl###article_promo
 wp.pl##.adv
 wp.pl##[href^="http://emisja.contentstream.pl/_/"]

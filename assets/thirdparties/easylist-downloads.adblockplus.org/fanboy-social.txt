@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 0llcFi2fOx+WEwd3h8JtdA
-! Version: 201409200041
+! Checksum: JLz31mYEzE+m34nsdOAPWQ
+! Version: 201409220541
 ! Title: Fanboy's Social Blocking List
-! Last modified: 20 Sep 2014 00:41 UTC
+! Last modified: 22 Sep 2014 05:41 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -85,6 +85,7 @@
 -social-icon.
 -social-icons-
 -social-icons.
+-social-icons/$~stylesheet
 -social-icons?
 -social-linked-
 -social-linkedin.
@@ -151,6 +152,7 @@
 /add-mymsn2.
 /addthis-stumble.
 /addthis.png$domain=~addthis.com
+/addthis_horizontal.
 /addthis_widget.
 /addtoany-
 /advanced-social-widget/*$~stylesheet
@@ -238,6 +240,7 @@
 /connect-twitter-
 /connect-twitter.
 /connect-youtube-
+/connectfb.
 /context-social.
 /crowdbooster-
 /crowdbooster_
@@ -353,6 +356,7 @@
 /facebookBtn.
 /facebookbutton.
 /FacebookFanWidgetFrame.
+/facebookFooterIcon-
 /facebookHeader.
 /facebookicn.
 /facebookicon.$~object-subrequest
@@ -468,6 +472,9 @@
 /followtwitter.
 /followus.
 /followus_
+/foot-fb.
+/foot-gplus.
+/foot-linkedin.
 /footer-facebook.
 /footer-google-
 /footer-google.
@@ -485,6 +492,7 @@
 /footer/pinterest.
 /footer/social/*
 /footer/social_
+/footer/twit-
 /footer/twitter-
 /footer/twitter.
 /footer/youtube.
@@ -575,6 +583,7 @@
 /gplusbadge-
 /gplusbtn.
 /gpluslogo-50.
+/graphics/twitter.
 /guys_social.
 /head-social.
 /head_facebook.
@@ -899,6 +908,7 @@
 /include/twitter/*
 /insta-icon-
 /instagram-32px.
+/instagram-48.
 /instagram-button.
 /instagram-footer-
 /instagram-icon.
@@ -1265,6 +1275,7 @@
 /SiteImages/Twitter.
 /slashdot-icon.
 /slick-social-share-buttons/*
+/slideshare-48.
 /sm-youtube-
 /small_fb.
 /small_twitter.
@@ -1277,6 +1288,7 @@
 /soc-tw.
 /soc-vk.
 /soc-yt.
+/soc_bottom_
 /soc_facebook_
 /soc_med_
 /soc_media_
@@ -1615,6 +1627,7 @@
 /tweets.js
 /twfollowfp.
 /twit-button-
+/twit-icon.
 /twit_icon.
 /twitbadge.
 /Twiticon.
@@ -1750,6 +1763,7 @@
 /uploads/youtube2.
 /view_social_
 /viewboxTraffic_min.js
+/vimeo-48.
 /vimeo_32.
 /vimeo_icon_
 /visual/social/*
@@ -1784,6 +1798,7 @@
 /you-tube.jpg
 /Youicon.
 /youtube-32x32.
+/youtube-48.
 /youtube-button.
 /Youtube-Buttons.
 /Youtube-icon-
@@ -1809,8 +1824,12 @@
 /youtube_icon_
 /youtubebadge.
 /youtubebutton.
+/youtubeFooterIcon-
 /youtubeIcon.
 /ytwitter_widget_
+_bottom_google.
+_bottom_linkedin.
+_bottom_vimeo.
 _btn_facebook.
 _btn_like_
 _BTN_LinkedIn_
@@ -1997,6 +2016,7 @@ _youtube_small.
 ###aFbLikeBottom
 ###aa_header_shares
 ###about-edition-social
+###action-share
 ###acx-social-icons-widget-2
 ###addThis
 ###addshare
@@ -2086,6 +2106,7 @@ _youtube_small.
 ###blog-share-widget
 ###blog-social
 ###blog_social
+###bloggerspiceFBpop
 ###bookmarks-share
 ###bottom-share-buttons
 ###bottom-share-tools
@@ -3426,6 +3447,7 @@ _youtube_small.
 ##.BVRRSocialBookmarkingLinks
 ##.CustomSocial
 ##.DiggThisButton
+##.EE-social
 ##.Entry_Sharer_Buttons
 ##.FBLikeBox
 ##.FacebookICN
@@ -3626,6 +3648,7 @@ _youtube_small.
 ##.authorSocialTools
 ##.author_socs
 ##.authorbox-social
+##.avia_socialcount
 ##.b-buttons_social
 ##.b-follow-us
 ##.b-social
@@ -3761,6 +3784,8 @@ _youtube_small.
 ##.cd-fb-like-widget
 ##.cdc_social_icons
 ##.clean-share-box
+##.club_func_social
+##.cmp_share_container
 ##.cmuShareWidget
 ##.cne-share
 ##.cnn-social-icons
@@ -3944,6 +3969,7 @@ _youtube_small.
 ##.facebookGroup
 ##.facebookHomepageBottom
 ##.facebookIcon
+##.facebookImage
 ##.facebookItem
 ##.facebookLike
 ##.facebookLikeboxContentContainer
@@ -4212,6 +4238,7 @@ _youtube_small.
 ##.fontawesome-google-plus
 ##.fontawesome-twitter
 ##.foot-social
+##.foot-twit
 ##.foot_Facebook
 ##.foot_GooglePlus
 ##.foot_Twitter
@@ -4247,12 +4274,14 @@ _youtube_small.
 ##.footerButtonFacebook
 ##.footerButtonGoogle
 ##.footerButtonTwitter
+##.footerFacebook
 ##.footerFollow
 ##.footerFollowUs
 ##.footerNavSocials
 ##.footerShare
 ##.footerSocial
 ##.footerSocials
+##.footerYouTube
 ##.footer_head_social
 ##.footer_share
 ##.footer_social
@@ -4271,6 +4300,7 @@ _youtube_small.
 ##.fourSq-widget
 ##.fpbiz_share
 ##.fr_follow
+##.frame-social
 ##.frontpage-social-block
 ##.fs-facebook-iframe
 ##.fs-retweet-block
@@ -4296,6 +4326,7 @@ _youtube_small.
 ##.g-plus-box
 ##.g-plusone
 ##.g-plusone-holder
+##.g1-twitter
 ##.gPlusPageBadge_widget
 ##.gab_share_widget
 ##.gab_social_widget
@@ -4861,6 +4892,7 @@ _youtube_small.
 ##.open_share_box
 ##.overlay_facebook
 ##.p-button-social
+##.padded-footer-connect
 ##.page-footer_social
 ##.page-share-button
 ##.pageFbLike
@@ -5450,6 +5482,7 @@ _youtube_small.
 ##.sl-fb-sharer-button
 ##.slickshare
 ##.slider-social
+##.slideshow-share-buttons
 ##.slinkedin
 ##.sm-page-widget-sociallinks
 ##.sm-social-links-horizontal
@@ -5688,6 +5721,7 @@ _youtube_small.
 ##.social-sliver
 ##.social-small
 ##.social-stack
+##.social-stats
 ##.social-stick
 ##.social-sticky
 ##.social-story-bar
@@ -5703,6 +5737,7 @@ _youtube_small.
 ##.social-tool
 ##.social-tools
 ##.social-tools-bottom
+##.social-tools-home
 ##.social-tools-wrapper-bottom
 ##.social-top
 ##.social-top-barz
@@ -6234,6 +6269,7 @@ _youtube_small.
 ##.twitterFeedsMR
 ##.twitterFollow
 ##.twitterIcon
+##.twitterImage
 ##.twitterItem
 ##.twitterLink
 ##.twitterPanel
@@ -6981,6 +7017,7 @@ _youtube_small.
 ||marketingsherpa.com/Zlatko/in.jpg
 ||mybetting.co.uk/facebook.png
 ||mybetting.co.uk/twitter.png
+||netdna-cdn.com^*/follow.png$domain=edmsauce.com
 ||newsarama.com/social.php
 ||omgubuntu.co.uk/wp-content/plugins/omg-magnific/magnific.min.js?
 ||phoronix.com/*/facebook.png
@@ -7033,6 +7070,7 @@ brobible.com,uproxx.com###belowpost-like
 popsci.com###block-block-104
 moreintelligentlife.com###block-block-13
 okmagazine.com###block-block-5
+landlords.org.uk###block-block-86
 thebulletin.org###block-bulletin-facebook-activity-feed
 neurope.eu###block-neweurope-4
 thebulletin.org###block-views-bulletin-tweets-block
@@ -7362,6 +7400,7 @@ gamersbook.com##.gb-follow-tools
 gamepressure.com##.go-face
 gamepressure.com##.go-plus
 fixya.com,flippinawesome.org,geeksandbeats.com,independent.ie,latintimes.com,sciencenews.org##.google
+hughesnet.com##.googleImage
 scion.com##.googlePlus
 gcn.com##.google_top
 cbs.com##.gp
@@ -7414,6 +7453,7 @@ filestube.to##.linkbox
 reuters.com##.linkedIn
 entrepreneur.com##.linkedhead
 enom.com,flippinawesome.org,geeksandbeats.com,hsbc.com,opensiteexplorer.org,project-syndicate.org,sap.com##.linkedin
+expertreviews.co.uk##.links
 wsj.com##.lk-fb
 wsj.com##.lk-tw
 webpronews.com##.login-social
@@ -7469,7 +7509,7 @@ ryot.org##.ryot_share
 gadling.com##.sandbox
 huffingtonpost.com##.sbm-main-new
 neurope.eu##.scroll-to-fixed-fixed
-fullist.co.uk,tecmint.com,unmotivating.com##.scroll-triggered-box
+edmsauce.com,fullist.co.uk,tecmint.com,unmotivating.com##.scroll-triggered-box
 sdsu.edu##.sdsuuniverse_above_header_right
 lycos.co.uk##.sfoot
 celebrations.com##.sform
@@ -7587,7 +7627,7 @@ laughingsquid.com##.wpsr-floatbar-float_left
 careersinfo.co.uk##.wysiwyg_viewer_skins_LinkBarNoBGSkinlb1-itemsContainer
 yahoo.com##.yom-follow-property
 tweaktown.com##.you_tube
-askvg.com,healthymagination.com,sap.com,saturn.de,techspot.com##.youtube
+9to5mac.com,askvg.com,healthymagination.com,sap.com,saturn.de,techspot.com##.youtube
 mstarz.com##.yt-b
 zillow.com##.zss-follow-us
 flamefusion.net##[alt="Facebook icon"]
@@ -7630,6 +7670,7 @@ thefreedictionary.com,zam.com##a[href^="http://twitter.com/"]
 yourcityoffice.com##a[href^="http://www.facebook.com/"]
 mlbtraderumors.com,mzhiphop.com,thefreedictionary.com##a[href^="http://www.facebook.com/pages/"]
 yourcityoffice.com##a[href^="http://www.linkedin.com"]
+edmsauce.com##a[href^="https://my.leadpages.net/leadbox/"]
 thefreedictionary.com##a[href^="https://plus.google.com/"]
 yourcityoffice.com##a[href^="https://twitter.com/"]
 goibibo.com##a[href^="https://twitter.com/"] > button
@@ -7980,12 +8021,13 @@ google.com#@#.g-plusone
 google.com#@#.google-plus
 google.com,inoreader.com#@#.google_plus
 airbnb.de,gleam.io,shared.com,squidoo.com#@#.icon-facebook
+lockerdome.com#@#.icon-facebook2
 register.thisis.co.uk#@#.icon-google-plus-sign
 gleam.io#@#.icon-instagram
 carsguide.com.au#@#.icon-social-facebook
 carsguide.com.au#@#.icon-social-linkedin
 gleam.io#@#.icon-soundcloud
-gleam.io,squidoo.com#@#.icon-twitter
+gleam.io,lockerdome.com,squidoo.com#@#.icon-twitter
 dailymail.co.uk,thisismoney.co.uk#@#.img-share
 instagram.com#@#.instagram-follow
 katproxy.com,kickass.to,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
@@ -8188,6 +8230,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||lastpass.com/images/vault/share.png
 @@||lemaker.org/uploadfile/icon/google.jpg
 @@||lifetricks.com/wp-content/plugins/nextend-facebook-connect/
+@@||livescience.com/images/site/social/footer_*.gif
 @@||livescience.com/images/site/social/footer_buttons.gif
 @@||mediafirerepack.net^*/facebook-page-promoter-lightbox/$script
 @@||meetmecdna.com/images/Connect/btn_facebook_custom_text.png$domain=meetme.com
@@ -8285,6 +8328,7 @@ acceptableads.org,easyicon.net#@#img[alt="Reddit"]
 @@||wordpress.com/connect/googleplus-sign-in.js
 @@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-facebook.png
 @@||wp.com/wp-content/mu-plugins/post-flair/sharing/images/icon-twitter.png
+@@||wphub.com/wp-content/uploads/2010/05/design-freebies-vector-social-icon-set1-138x98.png
 @@||wsj.net^*/social_icons.png$domain=marketwatch.com
 @@||www.google.*/images/*google.png
 @@||www.google.*/images/*googleplus.png

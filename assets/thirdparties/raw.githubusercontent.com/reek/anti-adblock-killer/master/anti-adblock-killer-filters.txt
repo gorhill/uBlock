@@ -91,6 +91,9 @@
 ||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3|
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
+! StopAdBlock
+! http://www.stopadblock.org/
+||stopadblock.org/adblocker-deaktivieren$subdocument
 ! Plugins Wordpress ------------------------------------------------------------------------
 ! No Adblock
 ! http://www.noadblock.com/
@@ -468,6 +471,10 @@ paidverts.com#@#.afs_ads
 @@||gmads.net^$object-subrequest,domain=sat1.de|sat1.ch
 ! firstrowfr.eu
 firstrowfr.eu###adblockplus
+! spaste.com
+||spaste.com/adblock-detector.htm$subdocument
+! linkshrink.net
+linkshrink.net#@#.overlay_ad
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
