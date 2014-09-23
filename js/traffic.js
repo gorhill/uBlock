@@ -231,7 +231,7 @@ var cr410382Workaround = function(details) {
     // Reference: https://codereview.chromium.org/451923002/patch/120001/130008
     var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
         'object' :
-        µb.transposeType(requestType, requestPath);
+        µb.transposeType(details.type, requestPath);
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(details.tabId);
