@@ -40,9 +40,20 @@ var onBeforeRequest = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/206
+    // https://code.google.com/p/chromium/issues/detail?id=410382
+    // Work around the issue of Chromium not properly setting the type for
+    // `object` requests. Unclear whether this issue will be fixed, hence this
+    // workaround to prevent torch-and-pitchfork mobs because ads are no longer
+    // blocked in videos.
+    // onBeforeSendHeaders() will handle this for now.
+    var requestType = details.type;
+    if ( requestType === 'other' ) {
+        return;
+    }
+
     var µb = µBlock;
     var requestURL = details.url;
-    var requestType = details.type;
 
     // Special handling for root document.
     if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
@@ -50,15 +61,16 @@ var onBeforeRequest = function(details) {
         return;
     }
 
-    var µburi = µb.URI.set(requestURL);
-    var requestPath = µburi.path;
-
-    // rhill 2013-12-15:
+    // Commented out until (and if ever) there is a fix for:
+    // https://code.google.com/p/chromium/issues/detail?id=410382
+    //
     // Try to transpose generic `other` category into something more
     // meaningful.
-    if ( requestType === 'other' ) {
-        requestType = µb.transposeType(requestType, requestPath);
-    }
+    //var µburi = µb.URI.set(requestURL);
+    //var requestPath = µburi.path;
+    //if ( requestType === 'other' ) {
+    //    requestType = µb.transposeType(requestType, requestPath);
+    //}
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
@@ -125,6 +137,15 @@ var onBeforeSendHeaders = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/206
+    // https://code.google.com/p/chromium/issues/detail?id=410382
+    // Work around the issue of Chromium not properly setting the type for
+    // `object` requests. Unclear whether this issue will be fixed, hence this
+    // workaround to prevent widespread breakage of the extension.
+    if ( details.type === 'other' ) {
+        return cr410382Workaround(details);
+    }
+
     // Only root document.
     if ( details.parentFrameId !== -1 ) {
         return;
@@ -149,7 +170,7 @@ var onBeforeSendHeaders = function(details) {
         return;
     }
 
-    var referrer = referrerFromHeaders(details.requestHeaders);
+    var referrer = headerValue(details.requestHeaders, 'referer');
     if ( referrer === '' ) {
         return;
     }
@@ -188,16 +209,85 @@ var onBeforeSendHeaders = function(details) {
 
 /******************************************************************************/
 
-var referrerFromHeaders = function(headers) {
+// Work around the issue of Chromium not properly setting the type for
+// `object` requests. Unclear whether this issue will be fixed, hence this
+// workaround to prevent widespread breakage of the extension.
+
+var cr410382Workaround = function(details) {
+    //console.debug('cr410382Workaround()> "%s": %o', details.url, details);
+
+    var µb = µBlock;
+    var requestURL = details.url;
+    var µburi = µb.URI.set(requestURL);
+    var requestPath = µburi.path;
+
+    // Lookup "X-Requested-With" header: this will tell us whether the request
+    // is of type "object".
+    // Reference: https://code.google.com/p/chromium/issues/detail?id=145090
+    var requestedWith = headerValue(details.requestHeaders, 'x-requested-with');
+
+    // Try to transpose generic `other` category into something more
+    // meaningful.
+    // Reference: https://codereview.chromium.org/451923002/patch/120001/130008
+    var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
+        'object' :
+        µb.transposeType(requestType, requestPath);
+
+    // Lookup the page store associated with this tab id.
+    var pageStore = µb.pageStoreFromTabId(details.tabId);
+    if ( !pageStore ) {
+        return;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/114
+    var requestContext = pageStore;
+    var frameStore;
+    var frameId = details.frameId;
+    if ( frameId > 0 ) {
+        if ( frameStore = pageStore.getFrame(frameId) ) {
+            requestContext = frameStore;
+        }
+    }
+
+    var result = '';
+    if ( pageStore.getNetFilteringSwitch() ) {
+        result = pageStore.filterRequest(requestContext, requestType, requestURL);
+    }
+
+    // Not blocked
+    if ( pageStore.boolFromResult(result) === false ) {
+        pageStore.perLoadAllowedRequestCount++;
+        µb.localSettings.allowedRequestCount++;
+
+        // https://github.com/gorhill/uBlock/issues/114
+        if ( frameId > 0 && frameStore === undefined ) {
+            pageStore.addFrame(frameId, requestURL);
+        }
+
+        //console.debug('µBlock> cr410382Workaround()> ALLOW "%s" (%o)', details.url, details);
+        return;
+    }
+
+    // Blocked
+    pageStore.perLoadBlockedRequestCount++;
+    µb.localSettings.blockedRequestCount++;
+    µb.updateBadgeAsync(details.tabId);
+
+    //console.debug('µBlock> cr410382Workaround()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
+    return { 'cancel': true };
+};
+
+/******************************************************************************/
+
+var headerValue = function(headers, name) {
     var i = headers.length;
     while ( i-- ) {
-        if ( headers[i].name.toLowerCase() === 'referer' ) {
+        if ( headers[i].name.toLowerCase() === name ) {
             return headers[i].value;
         }
     }
     return '';
 };
-
 /******************************************************************************/
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -220,8 +310,8 @@ chrome.webRequest.onBeforeRequest.addListener(
             "script",
             "image",
             "object",
-            "xmlhttprequest",
-            "other"
+            "xmlhttprequest"
+            // "other"       // Because cr410382Workaround()
         ]
     },
     [ "blocking" ]
@@ -241,7 +331,8 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             "https://*/*",
         ],
         "types": [
-            "main_frame"
+            "main_frame",
+            "other"          // Because cr410382Workaround()
         ]
     },
     [ "blocking", "requestHeaders" ]
