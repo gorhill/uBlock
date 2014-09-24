@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: qScVZ2vQNTqJktC0D9f7Gg
-! Version: 201409220541
+! Checksum: lmDhx20z6oCp2M4RMr0iYA
+! Version: 201409241611
 ! Title: EasyPrivacy
-! Last modified: 22 Sep 2014 05:41 UTC
+! Last modified: 24 Sep 2014 16:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -220,6 +220,7 @@
 /aftrack.
 /aftrackingplugin.swf
 /aggbug.aspx?
+/agof/iam-
 /ajax-hits-counter/*
 /ajaxClicktrack.
 /ajaxlog?
@@ -255,6 +256,7 @@
 /analytics/gw.
 /analytics/js/*
 /analytics/mbox.js
+/analytics/report/*
 /analytics/socialTracking.js
 /analytics/track-
 /analytics/track?
@@ -284,6 +286,7 @@
 /angularlytics.
 /anycent_tracker_
 /api/0/stats
+/api/analytics/*
 /apitracking.
 /apixel?
 /appendOmnitureTracking.
@@ -451,6 +454,7 @@
 /cgi-bin/vdz/*
 /cgi-sys/count.cgi?df=
 /cgi/bin/trk.js
+/cgi/count?
 /cgi/stats.pl?
 /cgi/trk.js
 /chan_slidesurvey.js
@@ -1814,6 +1818,7 @@
 /tracking.php?id
 /tracking.phtml?
 /tracking.vidt
+/tracking/*/agof-
 /tracking/addview/*
 /tracking/beacon/?
 /tracking/clicks
@@ -2940,6 +2945,7 @@ http://utm.
 ||invitemedia.com^$third-party
 ||invodo.com^$third-party
 ||ip-adress.com^$third-party
+||ip-api.com^$third-party
 ||ip-label.net^$third-party
 ||ip2location.com^$third-party
 ||ip2map.com^$third-party
@@ -2949,6 +2955,7 @@ http://utm.
 ||iperceptions.com^$third-party
 ||ipfingerprint.com^$third-party
 ||ipinfo.info^$third-party
+||ipinfo.io^$third-party
 ||ipinfodb.com^$third-party
 ||ipinyou.com.cn^$third-party
 ||iplocationtools.com^$third-party
@@ -3422,6 +3429,7 @@ http://utm.
 ||simplehitcounter.com^$third-party
 ||simplereach.com^$third-party
 ||simpli.fi^$third-party
+||simplycast.us^$third-party
 ||singlefeed.com^$third-party
 ||siteapps.com^$third-party
 ||sitebro.com^$third-party
@@ -4563,6 +4571,7 @@ http://utm.
 ||analytics.matchbin.com^
 ||analytics.optilead.co.uk^
 ||analytics.performable.com^
+||analytics.photorank.me^
 ||analytics.prod.aws.ecnext.net^
 ||analytics.r17.com^
 ||analytics.radiatemedia.com^
@@ -6786,6 +6795,7 @@ http://utm.
 ||eulerian.splendia.com/ea.js
 ||euroleague.tv^*/tracking.js
 ||eventlogger.soundcloud.com^
+||eventtracker.elitedaily.com^
 ||everythinggirl.com/assets/tracker/
 ||evisit.exeter.ac.uk^
 ||eweek.com/hqxapi/
@@ -6883,6 +6893,7 @@ http://utm.
 ||g2a-com.newsletter.com.pl^$image,third-party
 ||ga.canoe.ca^
 ||gaiaonline.com/internal/mkt_t.php?
+||galleries.bz/track/
 ||gallup.wn.com/1x1.gif
 ||gamefront.com/wp-content/plugins/tracker/
 ||gamerdeals.net/aggbug.aspx
@@ -8987,6 +8998,7 @@ http://utm.
 @@||gameplayer.io^*/EventTracker.js
 @@||gardenista.com/media/js/libs/ga_social_tracking.js
 @@||gatheringmagic.com/wp-content/plugins/bwp-minify/min/*/google-analyticator/$script
+@@||geo.query.yahoo.com^$xmlhttprequest,domain=m.flickr.com
 @@||geoplugin.net/javascript.gp$script,domain=christianhouseshare.com.au|gamemazing.com|soundsonline.com
 @@||geoplugin.net/json.gp?jsoncallback=$script,domain=worldc.am
 @@||getclicky.com/ajax/marketshare?$script

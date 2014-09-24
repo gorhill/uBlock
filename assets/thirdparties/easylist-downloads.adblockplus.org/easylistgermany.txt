@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: t7za0u6Q3EyaEypwH5MLxw
-! Version: 201409220541
+! Checksum: gM70alFZ2rSmg5wa+rmtBg
+! Version: 201409241611
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 22 Sep 2014 05:41 UTC
+! Last modified: 24 Sep 2014 16:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -495,7 +495,7 @@ der-postillon.com#@#.middleads
 netbooknews.de#@#.post-ad
 tsv-thedinghausen.de#@#.postad
 blesius.de#@#.text_werbung
-christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
+brandworkgroup.com,christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
 berlin.de,watchever.de#@#a[href^="http://adfarm.mediaplex.com/"]
@@ -2915,6 +2915,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||omfg.to^*.php|$subdocument
 ||onlinebanking-forum.de/phpbb2/banner/
 ||onlinekosten.de/images/tactixx-banner.gif
+||onlinemarketing.de/wp-content/themes/stream/images/sponsor/logo-d3media.jpg
+||onlinemarketing.de/wp-content/uploads/*/125x125-onlinebanner_omd.png
+||onlinemarketing.de/wp-content/uploads/*/onpage_ebook.png
 ||onlinereports.ch/uploads/tx_macinabanners/
 ||onlinetvrecorder.com^*/ingoslayer.js
 ||onlinewahn.de/sky.js
@@ -4188,6 +4191,7 @@ wer-weiss-was.de###fullbanner_02
 radiogong.de###fullsize
 pinfy.de###fullsize-background-container
 yasni.de###fullsizeBannerContainer
+yasni.at,yasni.ch,yasni.de###fullsizeWrapper
 kino-zeit.de###fullsize_banner
 stb-web.de###fullsizebanner
 buergerstimme.com###g-1
@@ -4326,6 +4330,7 @@ mov-world.net###main > #lblock + [style*="width: 180px"]
 emergency-forum.de###main > .border > .container-1[style="text-align: center"]:first-child:last-child
 abendblatt.de###main > .column-1 > .widget > #lt_Wrap
 esbgforum.de###main > .pageOptions + .info + div[align="center"]
+yasni.at,yasni.ch,yasni.de###main-content-ac1
 lesen.to###main:first-child > br:first-child + br + .box2
 grosseleute.de###mainContainer > :nth-child(n) + div:last-child div:first-child:last-child > div:first-child:last-child > a[href] > img[src^="image/"]
 grosseleute.de###mainContainer > :nth-child(n) div:first-child:last-child > div:first-child:last-child > a[href] > img[src^="image/"]
@@ -7599,6 +7604,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||finanzmarkttransaktionssteuer.de^$elemhide
 @@||flashtalking.com/imp/*;BMWTVTeaser220x180/?click=$script,domain=teleboerse.de
 @@||forum-fuer-senioren.de^*/ad.js
+@@||frantro.de^$document,subdocument,domain=lustich.de
 @@||free-klingeltoene-handy.de/adframe.js
 @@||fribre.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||fribre.de^$image,domain=audio.de|colorfoto.de|connected-home.de|lustich.de|pc-magazin.de|video-magazin.de

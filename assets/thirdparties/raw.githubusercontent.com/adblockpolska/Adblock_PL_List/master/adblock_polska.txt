@@ -1,13 +1,14 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 21 September 2014
+! Last modified: 24 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
 ! Report problems or unblocked ads to adblockpolska@gmail.com
 ! Thanks to Adblocklist.org and Niecko.pl for inspiration!
 ! Works best with EasyList - be sure to subscribe it as well!
+! For even better ad blocking, make sure to install Anti-Adblock Killer by Reek: https://github.com/reek/anti-adblock-killer
 
 ! * - General Blocking Rules - * !
 .info/images/banners/
@@ -74,6 +75,7 @@ _werbung_
 -lokazje.
 -reklama.gif
 bannerad.png
+pl/adsys2
 washa_reklama
 
 ! * - General Element Hiding Rules - * !
@@ -265,6 +267,7 @@ washa_reklama
 ||infogazeta.pl
 ||j.o2.pl
 ||jelonka.com/flash/
+||komputerswiat.pl/static/v1/gfx/additional_sections/lg/background
 ||koscian.net/js/scripts.js?
 ||kryptokursy.pl/bnrs/
 ||legio24.pl*/baner
@@ -349,10 +352,12 @@ axn.pl##.region.region-header-ad-space
 benchmark.pl###adblock-info
 bezuzyteczna.pl##.special
 bochnianin.pl###slideText
+ceneo.pl##.promoted-products.vertical
 chip.pl##.portlet.portletCeneo
 chip.pl##.portletReklama
 chip.pl##.portletWrapper.kssattr-portlethash-706c6f6e652e7269676874636f6c756d6e7468656d6174696373657276696365730a636f6e746578740a2f636869700a637573746f6d2d626f782d31
 chip.pl##[action^="http://www.njobs.eu/search"]
+epoznan.pl##[id="news-gallery-overlay"]
 filmweb.pl###flashcontent3
 filmweb.pl###homeBar1-pl_PL
 filmweb.pl##[id^="homeBox"]
@@ -374,7 +379,11 @@ informacjelokalne.pl##[src^="http://www.informacjelokalne.pl/images/reklama"]
 iv.pl###FlyingLayer
 jelonka.com##.marconi
 kartuzy.info##[id^="baner"]
+komputerswiat.pl###ks_bezpieczenstwo_podaj_dalej_1048x100
 komputerswiat.pl###gz_dso_scroll
+komputerswiat.pl##.ncwAdCommon.ncwAd1
+komputerswiat.pl##.self_rectangle
+komputerswiat.pl##.smart_baner.billboard
 koscian.net##[class^="banery"]
 kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; display: block;"]
 lubin.pl###banner
@@ -386,15 +395,20 @@ napisy24.pl###baner_300_250
 napisy24.pl##.header_210
 narodowcy.net##.custom
 naszamlawa.pl##[id^="fancybox-"]
+newsweek.pl###ARTICLE_CONTENT_INNER_2
 newsweek.pl##[class^="Block-Banner"]
+newsweek.pl##[href^="http://www.agito.pl/ofertadnia?"]
 nocoty.pl###slider300Wrapper
 nudziara.pl###post.format_post.nudziara.masonry-brick
+optyczne.pl##.center
+optyczne.pl##.skyscraper
 optyczne.pl###warning
 orneta.net##.lof-container
 oxforddictionaries.com##.responsive_cell_whole
 pclab.pl##[href^="http://e.clk.onet.pl"]
 pclab.pl##[href^="http://kropka.onet.pl/redir/redir.rd?banner"]
 pinterest.com##[class="message messageUnauth"]
+pl##.skyscraper
 pl###comment-captcha
 player.pl##[id^="ado-"]
 popularnie.pl###gold-header
@@ -436,6 +450,7 @@ wp.pl##[href^="http://emisja.contentstream.pl/_/"]
 wp.pl##[id^="adv"]
 wp.tv##.infoAB
 wp.tv##[src^="http://adv.wp.pl/"]
+wyborcza.biz##.mod.mod_cpCommerce.small
 wysokieobcasy.pl##.c1
 xn--portalmawa-g0b.pl##[id^="xc-98-primary"]
 zambrow.org##.adv

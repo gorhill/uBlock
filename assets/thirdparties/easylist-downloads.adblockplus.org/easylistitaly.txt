@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1k5JNeVZBLLOaAXZbAyWkA
-! Version: 201409220541
+! Checksum: JEP3Em3uvcS39c/UKQTxuw
+! Version: 201409241611
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 22 Sep 2014 05:41 UTC
+! Ultima modifica: 24 Sep 2014 16:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -397,6 +397,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||locandinebest.net/locandina/$subdocument,third-party
 ||macrolibrarsi.it/banners/
 ||macrolibrarsi.org/banner/
+||mediaon.it/objects/deal_list/
 ||mmvid.s3.amazonaws.com^
 ||neonisi.com^*/items.external?$third-party
 ||net-expire.tccstatic.com^*/banner.js
@@ -838,8 +839,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||gazzetta.it^*/includemanager/pub/
 ||gazzettabenevento.it/Sito2009/image/banner/
 ||gazzettadicaserta.net/banner/
-||gazzettadiparma.it/gfx/txtlink/
-||gazzettadiparma.it/swf/autozatti_14062013.swf
+||gazzettadiparma.it/resizer/80/80/
 ||gazzettadisondrio.it/images/banner/
 ||gazzettamatin.com/admin/banner_
 ||gazzettamatin.com/admin/img_banner/
@@ -2143,6 +2143,7 @@ avvenire.it,borsaitaliana.it,ilmessaggero.it##.bannerTop
 ilquotidianodellacalabria.it##.banner_186x290
 ilquotidianodellacalabria.it##.banner_234x90
 spaziofilm.it##.banner_300
+gazzettadiparma.it##.banner_300x170
 ilmattinodifoggia.it##.banner_300x250_3
 liberoquotidiano.it##.banner_300x250_colonna_6
 everyeye.it##.banner_600_new
@@ -2210,6 +2211,7 @@ tuttosport.com##.box_Banner
 tuttosport.com##.box_LeaderBoard
 calcioblog.it##.box_highlight
 omniauto.it##.box_listinousato
+gazzettadiparma.it##.box_preview_column_promo_article
 35mm.it##.box_rightcol_banner1
 35mm.it##.box_rightcol_banner2
 subito.it##.box_sponsor
@@ -2234,7 +2236,6 @@ blastingnews.com##.dfp-mobile-leadeboard
 ansa.it##.diretta-sponsor
 lavoratorio.it##.divBoxbanner300x250
 gossipetv.com##.ebuzzing_box
-gazzettadiparma.it##.elenco-textlink
 digisesso.com,gorillaporno.com,iltrombatore.com,koalaporno.com,pandasesso.com,ranaporno.com,sessosadomaso.com##.embed1
 digisesso.com,gorillaporno.com,iltrombatore.com,koalaporno.com,pandasesso.com,ranaporno.com,sessosadomaso.com##.embed2
 adnkronos.com##.evidenceBox

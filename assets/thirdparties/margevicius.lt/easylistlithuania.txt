@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: l34IUi5U6DJcQ+hWN+kNcw
+! Checksum: O5yQiEg4Bwo6njqXSPVMbw
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-09-16
+! Paskutinis atnaujinimas: 2014-09-24
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -165,6 +165,7 @@ delfi.lt##.delfi-anonsai.category-header-line
 delfi.lt##.delfi-content-ads
 delfi.lt##.delfi-content-container.delfi-category-anonsai-external
 delfi.lt##A[href="http://kaunas.kasvyksta.lt/"] > *
+delfi.lt##A[rel="nofollow"][href^="http://www.delfi.lt/reklama/"] > *
 delfi.lt##DIV[class$="-infoblock"]
 delfi.lt##DIV[class^="alio-"]
 delfi.lt##DIV[class^="con-"]
