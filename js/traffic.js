@@ -279,6 +279,52 @@ var cr410382Workaround = function(details) {
 
 /******************************************************************************/
 
+// To handle `inline-script`.
+
+var onHeadersReceived = function(details) {
+    // Only root document.
+    if ( details.parentFrameId !== -1 ) {
+        return;
+    }
+
+    // Do not interfere with behind-the-scene requests.
+    var tabId = details.tabId;
+    if ( tabId < 0 ) {
+        return;
+    }
+
+    // Lookup the page store associated with this tab id.
+    var µb = µBlock;
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        return;
+    }
+
+    var result = '';
+    if ( pageStore.getNetFilteringSwitch() ) {
+        result = µb.netFilteringEngine.matchStringExactType(pageStore, details.url, 'inline-script');
+    }
+
+    // Not blocked?
+    if ( result === '' || result.slice(0, 2) === '@@' ) {
+        return;
+    }
+
+    // Blocked
+    pageStore.perLoadBlockedRequestCount++;
+    µb.localSettings.blockedRequestCount++;
+    µb.updateBadgeAsync(tabId);
+
+    details.responseHeaders.push({
+        'name': 'Content-Security-Policy',
+        'value': "script-src *"
+    });
+
+    return { 'responseHeaders': details.responseHeaders };
+};
+
+/******************************************************************************/
+
 var headerValue = function(headers, name) {
     var i = headers.length;
     while ( i-- ) {
@@ -336,6 +382,20 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         ]
     },
     [ "blocking", "requestHeaders" ]
+);
+
+chrome.webRequest.onHeadersReceived.addListener(
+    onHeadersReceived,
+    {
+        "urls": [
+            "http://*/*",
+            "https://*/*",
+        ],
+        "types": [
+            "main_frame"
+        ]
+    },
+    [ "blocking", "responseHeaders" ]
 );
 
 console.log('µBlock> Beginning to intercept net requests at %s', (new Date()).toISOString());

@@ -54,14 +54,15 @@ const ThirdParty = 2 << 2;
 
 const AnyType = 1 << 4;
 var typeNameToTypeValue = {
-        'stylesheet': 2 << 4,
-             'image': 3 << 4,
-            'object': 4 << 4,
-            'script': 5 << 4,
-    'xmlhttprequest': 6 << 4,
-         'sub_frame': 7 << 4,
-             'other': 8 << 4,
-             'popup': 9 << 4
+        'stylesheet':  2 << 4,
+             'image':  3 << 4,
+            'object':  4 << 4,
+            'script':  5 << 4,
+    'xmlhttprequest':  6 << 4,
+         'sub_frame':  7 << 4,
+             'other':  8 << 4,
+     'inline-script': 14 << 4,
+             'popup': 15 << 4
 };
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
@@ -1066,6 +1067,7 @@ FilterParser.prototype.toNormalizedType = {
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
              'other': 'other',
+     'inline-script': 'inline-script',
              'popup': 'popup'
 };
 
@@ -1095,12 +1097,19 @@ FilterParser.prototype.parseOptType = function(raw, not) {
     var type = this.toNormalizedType[raw];
     if ( not ) {
         for ( var k in typeNameToTypeValue ) {
-            if ( k === type ) { continue; }
+            if ( typeNameToTypeValue.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            if ( k === type ) {
+                continue;
+            }
             // https://github.com/gorhill/uBlock/issues/121
             // `popup` is a special type, it cannot be set for filters intended
             // for real net request types. The test is safe since there is no
             // such thing as a filter using `~popup`.
-            if ( k === 'popup' ) { continue; }
+            if ( typeNameToTypeValue[k] > typeNameToTypeValue['other'] ) {
+                continue;
+            }
             this.types.push(typeNameToTypeValue[k]);
         }
     } else {
