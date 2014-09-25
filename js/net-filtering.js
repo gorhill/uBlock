@@ -1499,7 +1499,9 @@ FilterContainer.prototype.add = function(s) {
         this.duplicateCount++;
         return false;
     }
-    this.duplicates[s] = true;
+    if ( this.frozen === false ) {
+        this.duplicates[s] = true;
+    }
 
     var r = this.addFilter(parsed);
     if ( r === false ) {
@@ -1546,6 +1548,11 @@ FilterContainer.prototype.addFilter = function(parsed) {
         return true;
     }
 
+    var party = AnyParty;
+    if ( parsed.firstParty !== parsed.thirdParty ) {
+        party = parsed.firstParty ? FirstParty : ThirdParty;
+    }
+
     // Applies to all domains, with exception(s)
 
     // https://github.com/gorhill/uBlock/issues/191
@@ -1555,7 +1562,9 @@ FilterContainer.prototype.addFilter = function(parsed) {
         if ( !filter ) {
             return false;
         }
-        this.addFilterEntry(filter, parsed, AnyParty, tokenBeg, tokenEnd);
+        // https://github.com/gorhill/uBlock/issues/251
+        // Apply third-party option if it is present
+        this.addFilterEntry(filter, parsed, party, tokenBeg, tokenEnd);
         // Reverse purpose of filter
         parsed.action ^= ToggleAction;
         while ( i-- ) {
@@ -1580,13 +1589,9 @@ FilterContainer.prototype.addFilter = function(parsed) {
     if ( !filter ) {
         return false;
     }
-    if ( parsed.firstParty ) {
-        this.addFilterEntry(filter, parsed, FirstParty, tokenBeg, tokenEnd);
-    } else if ( parsed.thirdParty ) {
-        this.addFilterEntry(filter, parsed, ThirdParty, tokenBeg, tokenEnd);
-    } else {
-        this.addFilterEntry(filter, parsed, AnyParty, tokenBeg, tokenEnd);
-    }
+
+    this.addFilterEntry(filter, parsed, party, tokenBeg, tokenEnd);
+
     return true;
 };
 
