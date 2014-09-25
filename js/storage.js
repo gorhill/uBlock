@@ -141,14 +141,15 @@
 µBlock.appendUserFilters = function(content) {
     var µb = this;
 
-    var onFiltersReady = function() {
-    };
-
     var onSaved = function(details) {
         if ( details.error ) {
             return;
         }
-        µb.loadFilterLists(onFiltersReady);
+        µb.mergeFilterText(content);
+        µb.netFilteringEngine.freeze();
+        µb.cosmeticFilteringEngine.freeze();
+        µb.destroySelfie();
+        µb.toSelfieAsync();
     };
 
     var onLoaded = function(details) {
@@ -281,7 +282,7 @@
     };
 
     var mergeBlacklist = function(details) {
-        µb.mergeUbiquitousBlacklist(details);
+        µb.mergeFilterList(details);
         blacklistLoadCount -= 1;
         if ( blacklistLoadCount === 0 ) {
             loadBlacklistsEnd();
@@ -319,26 +320,38 @@
 
 /******************************************************************************/
 
-µBlock.mergeUbiquitousBlacklist = function(details) {
-    // console.log('µBlock > mergeUbiquitousBlacklist from "%s": "%s..."', details.path, details.content.slice(0, 40));
+µBlock.mergeFilterList = function(details) {
+    // console.log('µBlock > mergeFilterList from "%s": "%s..."', details.path, details.content.slice(0, 40));
 
-    var rawText = details.content;
+    var netFilteringEngine = this.netFilteringEngine;
+    var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
+    var duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
+    var acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
+
+    this.mergeFilterText(details.content);
+
+    // For convenience, store the number of entries for this
+    // blacklist, user might be happy to know this information.
+    duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
+    acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
+
+    this.remoteBlacklists[details.path].entryCount = acceptedCount;
+    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount - duplicateCount;
+};
+
+/******************************************************************************/
+
+µBlock.mergeFilterText = function(rawText) {
     var rawEnd = rawText.length;
 
-    // rhill 2013-10-21: No need to prefix with '* ', the hostname is just what
-    // we need for preset blacklists. The prefix '* ' is ONLY needed when
-    // used as a filter in temporary blacklist.
-
-    // rhill 2014-01-22: Transpose possible Adblock Plus-filter syntax
-    // into a plain hostname if possible.
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     var netFilteringEngine = this.netFilteringEngine;
     var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
     var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
-    var duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
-    var acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
+
+    var reIsCosmeticFilter = /#@?#/;
     var reLocalhost = /(?:^|\s)(?:localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
     var reAsciiSegment = /^[\x21-\x7e]+$/;
     var matches;
@@ -347,9 +360,9 @@
 
     while ( lineBeg < rawEnd ) {
         lineEnd = rawText.indexOf('\n', lineBeg);
-        if ( lineEnd < 0 ) {
+        if ( lineEnd === -1 ) {
             lineEnd = rawText.indexOf('\r', lineBeg);
-            if ( lineEnd < 0 ) {
+            if ( lineEnd === -1 ) {
                 lineEnd = rawEnd;
             }
         }
@@ -367,12 +380,13 @@
             continue;
         }
 
-        // 2014-05-18: ABP element hide filters are allowed to contain space
-        // characters
+        // Parse or skip cosmetic filters
         if ( parseCosmeticFilters ) {
             if ( cosmeticFilteringEngine.add(line) ) {
                 continue;
             }
+        } else if ( reIsCosmeticFilter.test(line) ) {
+            continue;
         }
 
         if ( c === '#' ) {
@@ -391,7 +405,7 @@
         // whitespaces
         matches = reAsciiSegment.exec(line);
         if ( matches === null ) {
-            //console.debug('µBlock.mergeUbiquitousBlacklist(): skipping "%s"', lineRaw);
+            //console.debug('µBlock.mergeFilterList(): skipping "%s"', lineRaw);
             continue;
         }
 
@@ -399,20 +413,12 @@
         // For example, when a filter contains whitespace characters, or
         // whatever else outside the range of printable ascii characters.
         if ( matches[0] !== line ) {
-            // console.error('"%s": "%s" !== "%s"', details.path, matches[0], line);
+            // console.error('"%s" !== "%s"', matches[0], line);
             continue;
         }
 
         netFilteringEngine.add(matches[0]);
     }
-
-    // For convenience, store the number of entries for this
-    // blacklist, user might be happy to know this information.
-    duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
-    acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
-
-    this.remoteBlacklists[details.path].entryCount = acceptedCount;
-    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount - duplicateCount;
 };
 
 /******************************************************************************/
@@ -508,6 +514,7 @@
 // This is to be sure the selfie is generated in a sane manner: the selfie will
 // be generated if the user doesn't change his filter lists selection for 
 // some set time.
+
 µBlock.toSelfieAsync = function(after) {
     if ( typeof after !== 'number' ) {
         after = this.selfieAfter;
