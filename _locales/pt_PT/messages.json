@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Painel de Controlo",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -112,7 +112,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Limpar todos os caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -176,7 +176,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"pode ser obsoleto",
+    "message":"desactualizado",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -212,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Activar o registo de pedidos de rede",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Poderá analisar os detalhes dos pedidos de rede se activar esta opção. O registo de pedidos de rede aumenta a memória utilizada pelo µBlock. Sendo que muitos utilizadores não utilizaram esta opção, esta está desactivada por predefinição.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -264,7 +264,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Não é possível conectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

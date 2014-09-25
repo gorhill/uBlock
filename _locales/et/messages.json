@@ -4,235 +4,235 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Eindelijk, een efficënte blokkeerder voor Chromiumgebasseerde browsers. Light CPU- en geheugenverbruik.",
+    "message":"Lõpuks Chromiumil põhinevatele veebilehitsejatele on valmis saanud tõhus blokeerija. CPU ja mälusõbralik.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Töölaud",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Instellingen",
+    "message":"Seaded",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"Kolmanda osapoole filtrid",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Jouw filters",
+    "message":"Teie filtrid",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Valge loend",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statistieken",
+    "message":"Statistika",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Over",
+    "message":"Info",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikken: schakel µBlock aan\/uit voor deze website.\n\nCtrl+klikken: schakel µBlock uit enkel voor deze pagina.",
+    "message":"Vajutamine: keela\/luba µBlock portaalis.\n\nCtrl+vajutamine: keela µBlock ainult selles portaalis.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"geblokkeerde verzoeken",
+    "message":"blokeeritud",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"op deze pagina",
+    "message":"selles portaalis",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"sinds installatie",
+    "message":"paigaldamisest alates",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"of",
+    "message":"või",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik op dashboard te openen",
+    "message":"Avage töölaud",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Elementkiesmodus openen",
+    "message":"Sisene elemendi valikuolekusse",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ga naar verzoekenlog",
+    "message":"Mine taotluste logisse",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Maak",
+    "message":"Loo",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Kies",
+    "message":"Vali",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Sluiten",
+    "message":"Välju",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netfilters",
+    "message":"Netifiltrid",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetische filters",
+    "message":"Kohandatud filtrid",
     "description":"English: Cosmetic filters"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Verberg tijdelijke aanduidingen van geblokkeerde elementen",
+    "message":"Peitke blokeeritud elementide asukohad",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Toon het aantal geblokkeerde aanvragen op het icoon",
+    "message":"Kuvage ikoonil blokeeritud elementide arv",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} netwerkfilters ＋ {{cosmeticFilterCount}} cosmetische filters van:",
+    "message":"{{netFilterCount}} netifiltrid ＋ {{cosmeticFilterCount}} kohandatud filtrid:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} gebruik van {{total}}",
+    "message":"{{used}} kasutusel {{total}}-st",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Filterlijst van automatische updates.",
+    "message":"Uuenda filtrite loendeid automaatselt.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Nu updaten",
+    "message":"Uuendage praegu",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Alle cache legen",
+    "message":"Tühjendage kõik vahemälud",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parseer en pas cosmetische filters toe.",
+    "message":"Tuvasta ja rakenda kohandatud filtrid.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Deze optie schakelt het parseren en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch, ze verbergen elementen in de webpagina die een visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door het net request-based filtering engine.<\/p><p>Het inschakelen van deze funtie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
+    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid on vajalikud, et peita elemente portaalides, mis näevad välja visuaalselt halvad ja, kus netist soovitatud filtrite ei pruugi töötada.<\/p><p>Selle valiku lubamine täiustab <i>µBlock<\/i>i mälu kasutavust.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lijst van geblokkeerde hosts",
+    "message":"Blokeeritud domeenide loendid",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Pas veranderingen toe",
+    "message":"Kinnita muudatused",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Advertenties",
+    "message":"Reklaamid",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Privaatsus",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Pahavara domeenid",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Sociaal",
+    "message":"Sotsiaalsed",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multifunctioneel",
+    "message":"Mitmeotstarbelised",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Gebieden, talen",
+    "message":"Regioonid, keeled",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Kohandatud",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Één URL per lijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stil genegeerd.",
+    "message":"Üks URL rea kohta. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Toepassen",
+    "message":"Kinnita",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"cache legen",
+    "message":"tühjenda vahemälu",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"nieuwe versie beschikbaar",
+    "message":"uus versioon on saadaval",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan overbodig zijn",
+    "message":"vananenud",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
+    "message":"Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importeer en voeg toe",
+    "message":"Impordi ja lisa",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exporteren",
+    "message":"Eskpordi",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Pas veranderingen toe",
+    "message":"Kinnita muudatused",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Één per lijn ingeven. Ongeldige hostnamen worden genegeerd zonder melding.",
+    "message":"Teie domeenilist, mida µBlock hakkab keelama. Üks domeen rea kohta. Vigaseid domeeninimesid eiratakse.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importeer en voeg toe",
+    "message":"Impordi ja lisa",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exporteren",
+    "message":"Ekspordi",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Pas veranderingen toe",
+    "message":"Kinnita muudatused",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Schakel het loggen van netwerkverzoeken in",
+    "message":"Luba võrgupäringute logimine",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie aan te zetten. Het loggen van netwerkverzoeken vraagt meer geheugen. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
+    "message":"Lubades seda valikut, on teil võimalik netipäringuid detailselt uurida. Netipäringute logimine suurendab µBlocki mälu kasutamist. Kuna enamik kasutajaid ei kasuta seda, on valik keelatud alguses.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Geblokkeerde verzoeken",
+    "message":"Blokeeritud taotlused",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Toegelaten verzoeken",
+    "message":"Lubatud taotlused",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Tüüp",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domein",
+    "message":"Domeen",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -244,27 +244,27 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Geen geblokkeerde verzoeken zijn gelogd voor deze pagina",
+    "message":"Selles portaalis pole ühtegi blokeeritud päringut logitud",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Geen niet-geblokkeerde verzoeken zijn gelogd voor deze pagina",
+    "message":"Selles portaalis pole ühtegi blokeerimata päringut logitud",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Veranderingenlogboek",
+    "message":"Muudatuste logi",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Broncode (GPLv3)",
+    "message":"Lähtekood (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Medewerkers",
+    "message":"Toetajad",
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Kan niet verbinden met {{url}}",
+    "message":"Ei suudetud ühenduda {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

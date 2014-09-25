@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"filtry třetích stran",
+    "message":"Filtry třetích stran",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
@@ -160,7 +160,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Jedna adresa URL na řádek. Řádky s předponou &lsquo;!&rsquo; budou ignorovány. Neplatné adresy URL budou tiše ignorovány.",
+    "message":"Jedna adresa URL na řádek. Řádky začínající na &lsquo;!&rsquo; budou ignorovány. Neplatné adresy URL budou tiše ignorovány.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -180,7 +180,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky s předponou &lsquo;!&rsquo; budou ignorovány.",
+    "message":"Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající na &lsquo;!&rsquo; budou ignorovány.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
