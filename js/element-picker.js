@@ -340,10 +340,11 @@ var netFilterFromElement = function(elem) {
     if ( tagName !== 'img' && tagName !== 'iframe' ) {
         return;
     }
-    if ( typeof elem.src !== 'string' || elem.src.length === 0 ) {
+    var src = elem.getAttribute('src');
+    if ( typeof src !== 'string' || src.length === 0 ) {
         return;
     }
-    return elem.src.replace(/^https?:\/\//, '||').replace(/\?.*$/, '');
+    return src.replace(/^https?:\/\//, '||').replace(/\?.*$/, '');
 };
 
 /******************************************************************************/
@@ -424,15 +425,13 @@ var cosmeticFilterFromElement = function(elem) {
 var selectorFromCandidate = function() {
     var selector = '';
     var v = taCandidate.value;
-    if ( v.indexOf('##') === 0 ) {
+    if ( v.slice(0, 2) === '##' ) {
         selector = v.replace('##', '');
     } else {
-        var matches = v.match(/^\|\|([^$]+)$/);
-        if ( matches && matches.length === 2 ) {
-            selector = '[src*="' + matches[1] + '"]';
-        } else {
-            return '';
+        if ( v.slice(0, 2) === '||' ) {
+            v = v.replace('||', '');
         }
+        selector = '[src*="' + v + '"]';
     }
     try {
         if ( document.querySelector(selector) === null ) {
@@ -455,18 +454,16 @@ var userFilterFromCandidate = function() {
     var v = taCandidate.value;
 
     // Cosmetic filter?
-    var matches = v.match(/^##.+$/);
-    if ( matches ) {
-        return window.location.hostname + matches[0];
+    if ( v.slice(0, 2) === '##' ) {
+        return window.location.hostname + v;
     }
 
-    // Net filter?
-    matches = v.match(/^\|\|[^$]+$/);
-    if ( matches ) {
-        return matches[0] + '$domain=' + window.location.hostname;
+    // If domain included in filter, no need for domain option
+    if ( v.slice(0, 2) === '||' ) {
+        return v;
     }
-
-    return false;
+    // Assume net filter
+    return v + '$domain=' + window.location.hostname;
 };
 
 /******************************************************************************/
@@ -495,7 +492,7 @@ var candidateFromClickEvent = function(ev) {
     }
 
     // For net filters there no such thing as a path
-    if ( target.textContent.slice(0, 2) === '||' ) {
+    if ( target.textContent.charAt(0) !== '#' ) {
         return target.textContent;
     }
 
@@ -506,6 +503,10 @@ var candidateFromClickEvent = function(ev) {
             continue;
         }
         selector.unshift(target.textContent.replace(/^##/, ''));
+        // Stop at any element with an id: these are unique in a web page
+        if ( target.textContent.slice(0, 3) === '###' ) {
+            break;
+        }
         target = target.nextSibling;
     }
     return '##' + selector.join(' > ');
