@@ -216,7 +216,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Poderá analisar os detalhes dos pedidos de rede se activar esta opção. O registo de pedidos de rede aumenta a memória utilizada pelo µBlock. Sendo que muitos utilizadores não utilizaram esta opção, esta está desactivada por predefinição.",
+    "message":"Poderá analisar os detalhes dos pedidos de rede se activar esta opção. O registo de pedidos de rede aumenta a memória utilizada pelo µBlock. Sendo que muitos utilizadores não utilizarão esta opção, ela estará desactivada por predefinição.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
