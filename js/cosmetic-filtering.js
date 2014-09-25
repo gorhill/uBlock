@@ -701,26 +701,41 @@ FilterContainer.prototype.freezeHighGenerics = function(what) {
     var selectors = this['highGeneric' + what];
 
     // ["title"] and ["alt"] will go in high-low generic bin.
-    // [href^="..."] wil go in high-mdium generic bin.
-    // The rest will be put in the high-high generic bin.
-    var highLowGeneric = {};
+    var highLowGenericProp = 'highLowGeneric' + what;
+    var highLowGeneric = this[highLowGenericProp];
     var highLowGenericCount = 0;
-    var highMediumGeneric = {};
+
+    // [href^="..."] will go in high-medium generic bin.
+    var highMediumGenericProp = 'highMediumGeneric' + what;
+    var highMediumGeneric = this[highMediumGenericProp];
     var highMediumGenericCount = 0;
+
+    // The rest will be put in the high-high generic bin.
+    // https://github.com/gorhill/uBlock/issues/236
+    // Insert whatever we already have
     var highHighGeneric = [];
+    var highHighGenericProp = 'highHighGeneric' + what;
+    if ( this[highHighGenericProp] !== '' ) {
+        highHighGeneric.push(this[highHighGenericProp]);
+    }
+    var highHighGenericCount = 0;
+
     var reHighLow = /^[a-z]*(\[(?:alt|title)="[^"]+"\])$/;
     var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
     var matches, hash;
+
     for ( var selector in selectors ) {
         if ( selectors.hasOwnProperty(selector) === false ) {
             continue;
         }
+        // ["title"] and ["alt"] will go in high-low generic bin.
         matches = reHighLow.exec(selector);
         if ( matches && matches.length === 2 ) {
             highLowGeneric[matches[1]] = true;
             highLowGenericCount += 1;
             continue;
         }
+        // [href^="..."] will go in high-medium generic bin.
         matches = reHighMedium.exec(selector);
         if ( matches && matches.length === 2 ) {
             hash = matches[1];
@@ -732,14 +747,17 @@ FilterContainer.prototype.freezeHighGenerics = function(what) {
             highMediumGenericCount += 1;
             continue;
         }
+        // All else
         highHighGeneric.push(selector);
+        highHighGenericCount += 1;
     }
-    this['highLowGeneric' + what] = highLowGeneric;
-    this['highLowGeneric' + what + 'Count'] = highLowGenericCount;
-    this['highMediumGeneric' + what] = highMediumGeneric;
-    this['highMediumGeneric' + what + 'Count'] = highMediumGenericCount;
-    this['highHighGeneric' + what] = highHighGeneric.join(',\n');
-    this['highHighGeneric' + what + 'Count'] = highHighGeneric.length;
+
+    this[highLowGenericProp + 'Count'] += highLowGenericCount;
+    this[highMediumGenericProp + 'Count'] += highMediumGenericCount;
+    this[highHighGenericProp] = highHighGeneric.join(',\n');
+    this[highHighGenericProp + 'Count'] += highHighGenericCount;
+
+    // Empty cumulated selectors
     this['highGeneric' + what] = {};
 };
 
