@@ -347,7 +347,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     {
         "urls": [
             "http://*/*",
-            "https://*/*",
+            "https://*/*"
         ],
         "types": [
             "main_frame",
@@ -374,7 +374,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     {
         "urls": [
             "http://*/*",
-            "https://*/*",
+            "https://*/*"
         ],
         "types": [
             "main_frame",
@@ -389,7 +389,7 @@ chrome.webRequest.onHeadersReceived.addListener(
     {
         "urls": [
             "http://*/*",
-            "https://*/*",
+            "https://*/*"
         ],
         "types": [
             "main_frame"
