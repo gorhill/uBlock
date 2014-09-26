@@ -34,13 +34,27 @@ var oneDay = 24 * oneHour;
 
 /******************************************************************************/
 
+var defaultExternalLists = [
+    '! Examples:',
+    '! https://easylist-downloads.adblockplus.org/antiadblockfilters.txt',
+    '! https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt',
+    '! https://easylist-downloads.adblockplus.org/fb_annoyances_sidebar.txt',
+    '! https://easylist-downloads.adblockplus.org/fb_annoyances_newsfeed.txt',
+    '! https://easylist-downloads.adblockplus.org/yt_annoyances_full.txt',
+    '! https://easylist-downloads.adblockplus.org/yt_annoyances_comments.txt',
+    '! https://easylist-downloads.adblockplus.org/yt_annoyances_suggestions.txt',
+    '! https://easylist-downloads.adblockplus.org/yt_annoyances_other.txt'
+].join('\n');
+
+/******************************************************************************/
+
 return {
     manifest: chrome.runtime.getManifest(),
 
     userSettings: {
         autoUpdate: true,
         collapseBlocked: true,
-        externalLists: '',
+        externalLists: defaultExternalLists,
         logRequests: false,
         parseAllABPHideFilters: true,
         showIconBadge: true
