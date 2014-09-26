@@ -12,7 +12,7 @@
     - Select the directory `ublock` which was created above.
     - Click *Open*.
 
-The extension will now be available in your chromium/chrome browser.
+The extension will now be available in your chromium/chromium-based browser.
 
 Remember that you have to update manually also. For some users, updating manually is actually an advantage because:
 - You can update when **you** want
