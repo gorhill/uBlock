@@ -131,3 +131,4 @@ google.*###center_col > #tads
 
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
+@@||chiptec.net/skin/*$script
