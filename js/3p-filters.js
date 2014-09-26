@@ -77,14 +77,16 @@ var renderBlacklists = function() {
     var µb = getµb();
 
     // Assemble a pretty blacklist name if possible
-    var htmlFromListName = function(blacklistTitle, blacklistHref) {
-        if ( blacklistHref === listDetails.userFiltersPath ) {
+    var listNameFromListKey = function(listKey) {
+        if ( listKey === listDetails.userFiltersPath ) {
             return userListName;
         }
-        if ( !blacklistTitle ) {
-            return blacklistHref;
+        var list = listDetails.current[listKey] || listDetails.available[listKey];
+        var listTitle = list ? list.title : '';
+        if ( listTitle === '' ) {
+            return listKey;
         }
-        return blacklistTitle;
+        return listTitle;
     };
 
     // Assemble a pretty blacklist name if possible
@@ -134,7 +136,7 @@ var renderBlacklists = function() {
         var li = liTemplate
             .replace('{{checked}}', list.off ? '' : 'checked')
             .replace('{{URL}}', encodeURI(listKey))
-            .replace('{{name}}', htmlFromListName(list.title, listKey))
+            .replace('{{name}}', listNameFromListKey(listKey))
             .replace('{{homeURL}}', htmlFromHomeURL(listKey))
             .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
             .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');

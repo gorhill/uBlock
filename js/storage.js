@@ -196,6 +196,10 @@
             if ( storedEntry.entryUsedCount !== undefined ) {
                 availableEntry.entryUsedCount = storedEntry.entryUsedCount;
             }
+            // This may happen if the list name was pulled from the list content
+            if ( availableEntry.title === '' && storedEntry.title !== '' ) {
+                availableEntry.title = storedEntry.title;
+            }
         }
         callback(availableLists);
     };
@@ -335,8 +339,19 @@
     duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
     acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
 
-    this.remoteBlacklists[details.path].entryCount = acceptedCount;
-    this.remoteBlacklists[details.path].entryUsedCount = acceptedCount - duplicateCount;
+    var filterListMeta = this.remoteBlacklists[details.path];
+
+    filterListMeta.entryCount = acceptedCount;
+    filterListMeta.entryUsedCount = acceptedCount - duplicateCount;
+
+    // Try to extract a human-friendly name (works only for 
+    // ABP-compatible filter lists)
+    if ( filterListMeta.title === '' ) {
+        var matches = details.content.slice(0, 1024).match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+        if ( matches !== null ) {
+            filterListMeta.title = matches[1].trim();
+        }
+    }
 };
 
 /******************************************************************************/
