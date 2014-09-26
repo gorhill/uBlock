@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4563
-! Last modified: 22 Sep 2014
+! Version: 4566
+! Last modified: 25 Sep 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4558,6 +4558,9 @@ shortz.so##[onclick="awaiting();"]
 ||commentpiratercomptefacebook.org^
 ||premium-linkz.com^
 ||cnn-local.info^
+||grippedownloads.co^
+||gta5millions.com^
+||methodelafayfemme.fr^
 !
 !
 !

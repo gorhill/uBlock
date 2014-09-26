@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: vE/FBXOhyzGm6mEx/ab6Tg
-! Version: 201409241610
+! Checksum: uB/ruoRlPKGG3XJmRjHyYA
+! Version: 201409260500
 ! Title: EasyList without element hiding rules
-! Last modified: 24 Sep 2014 16:10 UTC
+! Last modified: 26 Sep 2014 05:00 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -7854,6 +7854,7 @@ _popunder+$popup
 ||greenads.org^$third-party
 ||greenlabelppc.com^$third-party
 ||gretzalz.com^$third-party
+||gripdownload.co^$third-party
 ||grllopa.com^$third-party
 ||groovinads.com^$third-party
 ||groupcommerce.com^$third-party
@@ -9351,6 +9352,7 @@ _popunder+$popup
 ||adshostnet.com^$popup,third-party
 ||adsmarket.com^$popup,third-party
 ||adsurve.com^$popup,third-party
+||adtrace.org^$popup,third-party
 ||adtraffic.org^$popup,third-party
 ||advertserve.com^$popup,third-party
 ||advmedialtd.com^$popup,third-party
@@ -9636,6 +9638,7 @@ _popunder+$popup
 ||bookofsex.com^$third-party
 ||branzas.com^$third-party
 ||brightcpm.net^$third-party
+||brothersincash.com^$third-party
 ||bumblecash.com^$third-party
 ||bumskontakte.ch^$third-party
 ||cache.imagehost123.com^$third-party
@@ -9683,6 +9686,7 @@ _popunder+$popup
 ||crocoads.com^$third-party
 ||cwgads.com^$third-party
 ||cyberbidhost.com^$third-party
+||cybernetentertainment.com^$third-party
 ||d0main.ru^$third-party
 ||daffaite.com^$third-party
 ||dallavel.com^$third-party
@@ -9697,7 +9701,6 @@ _popunder+$popup
 ||datingfactory.com^$third-party
 ||datingidol.com^$third-party
 ||dblpmp.com^$third-party
-||ddfcash.com^$third-party,domain=~ddfnetwork.com
 ||deecash.com^$third-party
 ||demanier.com^$third-party
 ||depilflash.tv^$third-party
@@ -11931,6 +11934,7 @@ _popunder+$popup
 ||dailyvideo.securejoin.com^
 ||daredorm.com^$subdocument,third-party
 ||datefree.com^$third-party
+||ddfcash.com/promo/banners/
 ||ddstatic.com^*/banners/
 ||desk.cmix.org^
 ||dom2xxx.com/ban/$third-party
@@ -11996,6 +12000,7 @@ _popunder+$popup
 ||hosted.x-art.com/potd$third-party
 ||hosting24.com/images/banners/$third-party
 ||hotcaracum.com/banner/
+||hotkinkyjo.xxx/resseler/banners/
 ||hotmovies.com/custom_videos.php?
 ||hotsocialz.com^$third-party
 ||iframe.adultfriendfinder.com^$third-party
@@ -12087,6 +12092,7 @@ _popunder+$popup
 ||prettyincash.com/premade/$third-party
 ||privatamateure.com/promotion/
 ||private.camz.$third-party
+||private.com/banner/
 ||profile.bharatmatrimony.com^$third-party
 ||promo.blackcrush.com^$third-party
 ||promo.cams.com^$third-party
@@ -13216,6 +13222,7 @@ _popunder+$popup
 ||ed2k.2x4u.de/mfc/
 ||edgedatg.com^*/AdCountdownPlugin.swf$object-subrequest,domain=abc.go.com
 ||edgedatg.com^*/FreeWheelDATGPlugin.swf$object-subrequest,domain=abc.go.com
+||educationbusinessuk.net/images/stage.gif
 ||edugeek.net/a/
 ||egamer.co.za^*-background-
 ||ehow.co.uk/frames/directas_
@@ -13280,6 +13287,7 @@ _popunder+$popup
 ||europeonline-magazine.eu/nuroa/
 ||euroweb.com^*/banner/
 ||eva.ucas.com^
+||eve-search.com/gge.gif
 ||eveningecho.ie/cdn-cgi/pe/bag?r[]=*pubads.g.doubleclick.net
 ||eventful.com/tools/click/url?
 ||evernote.com/prom/img/
@@ -13916,6 +13924,7 @@ _popunder+$popup
 ||islandecho.co.uk/wp-content/themes/newstoday/images/scad.jpg
 ||islandecho.co.uk/wp-content/themes/newstoday/images/vickynail.gif
 ||islandecho.co.uk/wp-content/themes/newstoday/images/wighteaglead.jpg
+||isportconnect.com//images/banners/
 ||israeldefense.com/_Uploads/dbsBanners/
 ||israelidiamond.co.il^*/bannerdisplay.aspx?
 ||israelvideonetwork.com^*-300x150.jpg
@@ -16682,9 +16691,9 @@ _popunder+$popup
 ||pornsharia.com^*/adppornsharia.js
 ||pornsharia.com^*/exo-
 ||pornsharia.com^*/js/pcin.js
-||pornsharing.com/App_Themes/pornsharianew/$subdocument
+||pornsharing.com/App_Themes/pornsharianew/$subdocument,~third-party
 ||pornsharing.com/App_Themes/pornsharianew/js/adppornsharia*.js
-||pornsharing.com/App_Themes/pornsharingnew/$subdocument
+||pornsharing.com/App_Themes/pornsharingnew/$subdocument,~third-party
 ||pornsharing.com/App_Themes/pornsharingnew/js/adppornsharia*.js
 ||pornslash.com/images/a.gif
 ||pornslash.com/images/cbside.gif
@@ -19114,7 +19123,6 @@ _popunder+$popup
 @@||tv3.co.nz/Portals/*/advertisement.js
 @@||tvdez.com/ads/ads_$subdocument
 @@||tvn.adocean.pl/files/js/ado.js$domain=tvn.pl|tvn24.pl
-@@||tvn.pl^$elemhide
 @@||tvpelis.net^*/advertisement2.js
 @@||tvportugalhd.org^$elemhide
 @@||twitch.tv/ads/ads.js

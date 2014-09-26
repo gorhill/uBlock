@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: lmDhx20z6oCp2M4RMr0iYA
-! Version: 201409241611
+! Checksum: DJoAXobEUp+Q1h/svxessw
+! Version: 201409260501
 ! Title: EasyPrivacy
-! Last modified: 24 Sep 2014 16:11 UTC
+! Last modified: 26 Sep 2014 05:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -241,6 +241,7 @@
 /analyticReporting.
 /analyticReportingAS3.$domain=~miniclip.com
 /analytics-beacon-
+/analytics-js.
 /analytics-tag.
 /analytics.ashx
 /Analytics.aspx?
@@ -7273,6 +7274,7 @@ http://utm.
 ||msn.co.nz/share/long_cache/js/tracking/
 ||msn.com/ro.aspx?
 ||msn.com/script/tracking*.js
+||msn.com/tracker/
 ||msn.com^*/report.js
 ||msn.com^*/track.js
 ||msnbc.msn.com^*/analytics.js

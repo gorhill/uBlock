@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: RjQvLcMtq8GJh05zIMGFkA
-! Version: 201409241621
+! Checksum: 52Im2SszdxSs8RnHe3QrQg
+! Version: 201409260501
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 24 Sep 2014 16:21 UTC
+! Last Modified: 26 Sep 2014 05:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -582,6 +582,7 @@ hk.yahoo.com###mntl1
 |http://*/*_ad.js
 |http://*/ad.js?sn=
 |http://*/ad.js?v=
+|http://*/ad.0.js?v=
 |http://*/gg/
 |http://*/i.js$third-party,domain=~liuyanbaike.com
 |http://*/js/ad.
@@ -3935,10 +3936,16 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||wo318.com/good/
 ||wo318.com/sjs/km/xixitv.js
 ||wo318.com/template/
+||github.io/2048/full/meta/cmpay.gif
+||alabout.com/images/*.760x90.
+/2tu/heisiwang.js
+||jandan.com/static/gggg/
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
+crsky.com##.banner-leader
+jump.bdimg.com,tieba.baidu.com###platform_left_float
 yyets.com##DIV[style="margin-bottom:1em; text-align:center;width:700px;overflow:hidden;"]
 divcss5.com##.if1000
 divcss5.com##DIV[style*="width:336px;height:280px;"]
@@ -5029,7 +5036,7 @@ inpai.com.cn##.baiduad3
 3qzw.com##.ban1
 msn.people.com.cn##.banNSch
 phpfans.net##.banad
-3gsc.com.cn,51cto.com,51jifenbao.net,591hx.com,7zbook.com,99.com.cn,bamuyu.com,bbs.yzz.cn,btkitty.org,crsky.com,daqianduan.com,e0514.com,eastmoney.com,fj.xinhuanet.com,ganji.com,haixiachina.com,ibuylady.com,iciba.com,jxgdw.com,kumi.cn,qichelian.com,shushanwenhai.com,tiboo.cn,tiexue.net,xiumei.com,xizi.com##.banner
+3gsc.com.cn,51cto.com,51jifenbao.net,591hx.com,7zbook.com,99.com.cn,bamuyu.com,bbs.yzz.cn,btkitty.org,daqianduan.com,e0514.com,eastmoney.com,fj.xinhuanet.com,ganji.com,haixiachina.com,ibuylady.com,iciba.com,jxgdw.com,kumi.cn,qichelian.com,shushanwenhai.com,tiboo.cn,tiexue.net,xiumei.com,xizi.com##.banner
 cnool.net##.banner-ad001
 voc.com.cn##.banner-box1
 softonic.cn##.banner-caption
@@ -5771,7 +5778,7 @@ shm.com.cn##.surround2
 2345.com##.swf_banner
 3bbb.net##.swfright
 heiguang.com##.syAdTopTxt
-zerodm.net##.syad
+zerodm.tv##.syad
 zhlzw.com##.sygg
 zhifang.com##.sytl
 elecinfo.com##.t-ad
@@ -5834,7 +5841,7 @@ baidu.com##.top-banner-ad-wrap
 163.com##.top-gg
 www.uuu9.com##.top1bar
 uuu9.com##.top2box
-52wubi.com,zerodm.net,zerodm.tv##.top960
+52wubi.com,zerodm.tv##.top960
 cn.msn.com,ifeng.com,nen.com.cn,sina.com.tw##.topAd
 ltaaa.com##.topAds2
 yeyou.com##.topBackgroundAdv_bgbody
@@ -6714,6 +6721,8 @@ house.shangdu.com#@#.top_ad
 @@||zhaozi.cn/d/js/acmsd/ggao5$script
 @@/images/ad$domain=vvpan.com
 @@||adsense.woso.cn^$domain=woso.cn
+@@||webcrow.jp/adjs/ncskt.js
+@@||127.0.0.1/admin/admin_ad.php?$domain=127.0.0.1
 @@||zhibowu.com/ad2.htm
 !--------------------------------Tracking Systems-----------------------------!
 /1.gif?$domain=scol.com.cn

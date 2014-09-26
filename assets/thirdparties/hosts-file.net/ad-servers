@@ -6749,6 +6749,7 @@
 127.0.0.1	cdn.chuknu.sokrati.com
 127.0.0.1	cdn.clickigniter.io
 127.0.0.1	cdn.complexmedianetwork.com
+127.0.0.1	cdn.cpmstar.com
 127.0.0.1	cdn.cpnscdn.com
 127.0.0.1	cdn.creative.medialytics.com
 127.0.0.1	cdn.digitalcity.com
@@ -8591,6 +8592,7 @@
 127.0.0.1	counter.tripod.com
 127.0.0.1	counter.w3open.com
 127.0.0.1	counter.wapstart.ru
+127.0.0.1	counter.wbtiger.mmska.ru
 127.0.0.1	counter.webmart.de
 127.0.0.1	counter.webmedia.pl
 127.0.0.1	counter.xeanon.com
@@ -19325,6 +19327,7 @@
 127.0.0.1	wap08.bob.local.vmsn.de
 127.0.0.1	wap08.con.local.vmsn.de
 127.0.0.1	wapdollar.in
+127.0.0.1	wapplanet.org
 127.0.0.1	warcry.us.intellitxt.com
 127.0.0.1	warnerbros.112.2o7.net
 127.0.0.1	warp.prnewswire.co.uk
@@ -22105,6 +22108,7 @@
 127.0.0.1	www.wantstraffic.com
 127.0.0.1	www.wap.co.il
 127.0.0.1	www.wapdollar.in
+127.0.0.1	www.wapplanet.org
 127.0.0.1	www.web-controlling.com
 127.0.0.1	www.web-counter.5u.com
 127.0.0.1	www.web-marketing.8m.com
@@ -22632,4 +22636,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22627
+# Hosts: 22631

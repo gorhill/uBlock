@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 24 September 2014
+! Last modified: 25 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -74,6 +74,7 @@ _res/banner/glowna/
 _werbung_
 -lokazje.
 -reklama.gif
+adserwer.
 bannerad.png
 pl/adsys2
 washa_reklama
@@ -323,6 +324,7 @@ washa_reklama
 ||afilo.pl^$third-party
 ||bbcdn.go.arbopl.bbelements.com$third-party
 ||clangames.pl^$third-party
+||comperialead.pl^$third-party
 ||contextad.pl^$third-party
 ||dobryinteres.pl^&$third-party
 ||gemius.pl$third-party,popup
@@ -457,4 +459,5 @@ zambrow.org##.adv
 zambrow.org##.bannerRotator
 zarabiara.pl##.new_adbanners
 zarabiara.pl##.new_adtaily
+zelaznalogika.net##[href^="http://www.comperialead.pl"]
 

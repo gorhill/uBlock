@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: BCeifOWAY/+X+djxoiFMxg
-! Version: 201409241620
-! Last modified: 24 Sep 2014 16:20 UTC
+! Checksum: IBy3QK7150TpWtjwSP9xsg
+! Version: 201409260500
+! Last modified: 26 Sep 2014 05:00 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -975,6 +975,7 @@ _vkontakte.png
 /like-facebook-
 /like-facebook_
 /like-follow.
+/like-follow_
 /like-share.
 /like_bttn_
 /like_button.
@@ -1653,6 +1654,7 @@ _vkontakte.png
 /tumblr_badge_
 /Tumblr_Icon.
 /tumblr_logo.
+/tumblr_logo4.
 /tumblr_share.
 /tumblrbigicon.
 /tw-icon.
@@ -2544,6 +2546,7 @@ _youtube_small.
 ###googleplus
 ###googleplusone
 ###gplus-follow
+###gplus-sb
 ###gplus_button
 ###h-nav_social
 ###h-social
@@ -3465,6 +3468,7 @@ _youtube_small.
 ###twitter-link
 ###twitter-module
 ###twitter-panel
+###twitter-sb
 ###twitter-share
 ###twitter-sidebar
 ###twitter-sidebar-re
@@ -3607,6 +3611,7 @@ _youtube_small.
 ##.SocialSection
 ##.SocialSharing
 ##.SocialSharingWrapper
+##.SocialThis
 ##.SocialTwitter
 ##.Social_Widget
 ##.Social_container
@@ -5019,6 +5024,7 @@ _youtube_small.
 ##.photo-share
 ##.pin-it-btn
 ##.pin-it-btn-shortcode-wrapper
+##.pin-it-large
 ##.pin-share
 ##.pin-social
 ##.pin_custom_button
@@ -5655,6 +5661,7 @@ _youtube_small.
 ##.social-bookmark-links
 ##.social-bookmarks
 ##.social-bottom
+##.social-botton
 ##.social-box
 ##.social-box-tab
 ##.social-btn
@@ -7091,6 +7098,7 @@ _youtube_small.
 ||statigr.am^*/follow/$third-party
 ||stipple.cachefly.net^$third-party
 ||stipple.com^$third-party
+||storeya.com/externalscript/$third-party
 ||stumble-upon.com^$third-party,domain=~stumbleupon.com
 ||stumbleupon.com/badge/$third-party
 ||stumbleupon.com/hostedbadge$third-party
@@ -7223,6 +7231,7 @@ kp.ru##.all_partners
 russia.ru,vz.ru##.append-other-applecations
 cheklab.ru##.art-postcontent > .buttons
 tvnet.lv##.articleTools
+russian.rt.com##.article__share
 korrespondent.net##.artpop_shad
 247auto.ru,caredge.ru##.auth_vkontakte
 tut.by##.b-article-share
@@ -7937,6 +7946,7 @@ _social_rss.
 ###embtv-static-ribbon-bottom
 ###envato-widget
 ###eprivacy-outer
+###eu-cp-banner
 ###eucookielaw
 ###fc-friendbar-outer
 ###feedback-tab
@@ -7973,7 +7983,6 @@ _social_rss.
 ###global-cookie-message
 ###gmm-panel-promo
 ###go-to-top
-###go-top
 ###goDownFooter
 ###goTop
 ###goTopFooter
@@ -8299,6 +8308,8 @@ _social_rss.
 ##.cookieBar
 ##.cookieBox
 ##.cookieDisclaimer
+##.cookieDisclaimerContainer
+##.cookieDisclaimerContainerWrapper
 ##.cookieLaw
 ##.cookieMessageDiv
 ##.cookieNotice
@@ -9212,6 +9223,7 @@ _social_rss.
 ||ukranekdot.com/logo/
 ||uppod.ru/player/logo/
 ||ura.ru/jsb/
+||xyya.net/uploads/medals/
 ||yatv.ru/storage/userdata/*/banner_
 ||yatv.ru/storage/userdata/*/page_background_
 ! *** bitblock/annoyance_specific_hide.txt ***
@@ -9658,7 +9670,7 @@ twitter.com#@#img[alt="Vine"]
 @@||evasionjailbreak.com/wp-content/plugins/*/social_widget.css$stylesheet
 @@||facebook.com/plugins/facepile.php?$domain=gu-facebook.appspot.com
 @@||facebook.com/plugins/like.php?$domain=archivedbook.com|gmx.net|gu-facebook.appspot.com|home.1und1.de|web.de
-@@||facebook.com/plugins/likebox.php?$domain=colbertnation.com|thedailyshow.com
+@@||facebook.com/plugins/likebox.php?$domain=colbertnation.com|rafflecopter.com|thedailyshow.com
 @@||facebook.com/plugins/recommendations.php?$subdocument,domain=techcrunch.com
 @@||facebook.com/widgets/like.php?$domain=farmville.com|likearea.com
 @@||fbcdn.net/connect.php/js/FB.Share$domain=jamendo.com
@@ -9685,6 +9697,7 @@ twitter.com#@#img[alt="Vine"]
 @@||gstatic.com/*/notifications/logo/google-plus-$image,domain=google.com
 @@||gstatic.com/chrome/webstore/images/share_$domain=google.com
 @@||gstatic.com^*/gplus*.png$domain=google.com
+@@||gu-byline-data.appspot.com/api/twitter/lookup?$domain=theguardian.com
 @@||handmadebydominos.com^*/socialShare.js
 @@||huffpost.com/assets/js.php?*-pinterest.js
 @@||huffpost.com/images/social-profile/lightbox/snn_lightbox_close.png
@@ -9729,6 +9742,7 @@ twitter.com#@#img[alt="Vine"]
 @@||platform.twitter.com/anywhere.js?$domain=ge.tt|mtv.com|pennsundayschool.com|projects.wsj.com|soychile.cl
 @@||platform.twitter.com/widgets.js$domain=agame.com|cbsnews.com|complex.com|egotastic.com|globalpost.com|guardian.co.uk|guildwars2.com|livestream.com|mandatory.com|pawnation.com|pennsundayschool.com|reviews.cnet.com|simcity.com|soychile.cl|spielen.com|thedailyshow.com|wikia.com|wwe.com
 @@||platform.twitter.com/widgets/$domain=theguardian.com
+@@||platform.twitter.com/widgets/follow_button.html?$subdocument,domain=rafflecopter.com
 @@||platform.twitter.com^$domain=klout.com|twimg.com|twitpic.com
 @@||plus.im/static/img/facebook.png
 @@||plus.im/static/img/facebook_over.png
