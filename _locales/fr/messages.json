@@ -91,6 +91,10 @@
     "message":"Click, Ctrl-click",
     "description":"English: Click, Ctrl-click"
   },
+  "pickerContextMenuEntry":{
+    "message":"Bloquer cet élément",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Cacher les espaces réservés aux éléments bloqués",
     "description":"English: Hide placeholders of blocked elements"
