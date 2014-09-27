@@ -87,6 +87,10 @@
     "message":"Cosmetic filters",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Click, Ctrl-click",
+    "description":"English: Click, Ctrl-click"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Hide placeholders of blocked elements",
     "description":"English: Hide placeholders of blocked elements"
