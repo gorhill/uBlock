@@ -87,6 +87,10 @@
     "message":"Kosmetische Filter",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Click, Ctrl-click",
+    "description":"English: Click, Ctrl-click"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Verstecke die Platzhalter für blockierte Elemente",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +98,10 @@
   "settingsIconBadgePrompt":{
     "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} Netzwerkfilter ＋ {{cosmeticFilterCount}} kosmetische Filter von:",
