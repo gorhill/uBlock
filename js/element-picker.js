@@ -954,6 +954,8 @@ var startPicker = function() {
     urlNormalizer = document.createElement('a');
     window.addEventListener('scroll', onScrolled);
     document.addEventListener('keydown', onKeyPressed);
+
+    highlightElements([], true);
 };
 
 /******************************************************************************/
@@ -985,9 +987,11 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
     // Try using mouse position
     if ( details.clientX !== -1 ) {
         elem = elementFromPoint(details.clientX, details.clientY);
-        filtersFromElement(elem);
-        showDialog();
-        return;
+        if ( elem !== null ) {
+            filtersFromElement(elem);
+            showDialog();
+            return;
+        }
     }
 
     // No mouse position available, use suggested target
@@ -1026,6 +1030,8 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
         return;
     }
 });
+
+// https://www.youtube.com/watch?v=sociXdKnyr8
 
 /******************************************************************************/
 
