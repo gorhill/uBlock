@@ -638,8 +638,8 @@ var showDialog = function(options) {
         root.style.display = src.length !== 0 ? '' : 'none';
     };
 
-    populate(netFilterCandidates, 'ul > li:nth-of-type(1)');
-    populate(cosmeticFilterCandidates, 'ul > li:nth-of-type(2)');
+    populate(netFilterCandidates, '#netFilters');
+    populate(cosmeticFilterCandidates, '#cosmeticFilters');
 
     divDialog.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
     divDialog.querySelector('#create').disabled = true;
@@ -938,8 +938,8 @@ var startPicker = function() {
         '</div>',
         '</div>',
         '<ul>',
-        '<li><span>.</span><ul></ul>',
-        '<li><span>.</span><span>.</span><ul></ul>',
+        '<li id="netFilters"><span>.</span><ul></ul>',
+        '<li id="cosmeticFilters"><span>.</span><span>.</span><ul></ul>',
         '</ul>',
         ''
     ].join('');
@@ -969,9 +969,9 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
         '#create': 'create',
         '#pick': 'pick',
         '#quit': 'quit',
-        'ul > li:nth-of-type(1) > span:nth-of-type(1)': 'netFilters',
-        'ul > li:nth-of-type(2) > span:nth-of-type(1)': 'cosmeticFilters',
-        'ul > li:nth-of-type(2) > span:nth-of-type(2)': 'cosmeticFiltersHint'
+        'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
+        'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
+        'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
 
     };
     for ( var k in i18nMap ) {
