@@ -132,3 +132,6 @@ google.*###center_col > #tads
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
 @@||chiptec.net/skin/*$script
+
+# To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
+@@||adm.fwmrm.net^$domain=go.com
