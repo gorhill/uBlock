@@ -84,6 +84,9 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'gotoPick':
+            // Picker launched from popup: clear context menu args
+            µb.contextMenuClientX = -1;
+            µb.contextMenuClientY = -1;
             µb.elementPickerExec(request.tabId);
             break;
 
