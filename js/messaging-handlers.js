@@ -307,9 +307,13 @@ var onMessage = function(request, sender, callback) {
                     cosmeticFilters: chrome.i18n.getMessage('pickerCosmeticFilters'),
                     cosmeticFiltersHint: chrome.i18n.getMessage('pickerCosmeticFiltersHint')
                 },
-                targetElement: µb.elementPickerTarget
+                target: µb.contextMenuTarget,
+                clientX: µb.contextMenuClientX,
+                clientY: µb.contextMenuClientY
             };
-            µb.elementPickerTarget = '';
+            µb.contextMenuTarget = '';
+            µb.contextMenuClientX = -1;
+            µb.contextMenuClientY = -1;
             break;
 
         case 'createUserFilter':

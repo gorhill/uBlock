@@ -137,13 +137,15 @@ var onMessage = function(request, port) {
 // Default is for commonly used messages.
 
 function defaultHandler(request, sender, callback) {
+    var µb = µBlock;
+
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
-            return µBlock.assets.getLocal(request.url, callback);
+            return µb.assets.getLocal(request.url, callback);
 
         case 'loadUbiquitousAllowRules':
-            return µBlock.loadUbiquitousWhitelists();
+            return µb.loadUbiquitousWhitelists();
 
         default:
             break;
@@ -153,28 +155,33 @@ function defaultHandler(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+        case 'contextMenuEvent':
+            µb.contextMenuClientX = request.clientX;
+            µb.contextMenuClientY = request.clientY;
+            break;
+
         case 'forceReloadTab':
-            µBlock.forceReload(request.pageURL);
+            µb.forceReload(request.pageURL);
             break;
 
         case 'getUserSettings':
-            response = µBlock.userSettings;
+            response = µb.userSettings;
             break;
 
         case 'gotoExtensionURL':
-            µBlock.utils.gotoExtensionURL(request.url);
+            µb.utils.gotoExtensionURL(request.url);
             break;
 
         case 'gotoURL':
-            µBlock.utils.gotoURL(request);
+            µb.utils.gotoURL(request);
             break;
 
         case 'reloadAllFilters':
-            µBlock.reloadPresetBlacklists(request.switches, request.update);
+            µb.reloadPresetBlacklists(request.switches, request.update);
             break;
 
         case 'userSettings':
-            response = µBlock.changeUserSettings(request.name, request.value);
+            response = µb.changeUserSettings(request.name, request.value);
             break;
 
         default:

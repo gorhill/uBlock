@@ -115,7 +115,9 @@ return {
     noopFunc: function(){},
 
     apiErrorCount: 0,
-    elementPickerTarget: '',
+    contextMenuTarget: '',
+    contextMenuClientX: -1,
+    contextMenuClientY: -1,
 
     // so that I don't have to care for last comma
     dummy: 0

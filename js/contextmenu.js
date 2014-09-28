@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global */
+/* global chrome, µBlock */
 
 /******************************************************************************/
 
@@ -63,10 +63,6 @@ var onContextMenuClicked = function(details, tab) {
         src = details.linkUrl;
     }
 
-    if ( src === '' ) {
-        return;
-    }
-
     µb.elementPickerExec(tab.id, tagName + '\t' + src);
 };
 
@@ -78,7 +74,7 @@ var toggleMenu = function(on) {
     var menuCreateDetails = {
         id: 'blockElement',
         title: chrome.i18n.getMessage('pickerContextMenuEntry'),
-        contexts: ['frame', 'link', 'image', 'video'],
+        contexts: ['page', 'frame', 'link', 'image', 'video'],
         documentUrlPatterns: ['https://*/*', 'http://*/*']
     };
 

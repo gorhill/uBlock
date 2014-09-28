@@ -53,6 +53,12 @@ exports.setIcon = function(id, imgDict, overlayStr) {
 
 /******************************************************************************/
 
+exports.injectScript = function(id, details) {
+    chrome.tabs.executeScript(id, details);
+};
+
+/******************************************************************************/
+
 return exports;
 
 /******************************************************************************/

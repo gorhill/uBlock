@@ -246,7 +246,7 @@
 
 µBlock.elementPickerExec = function(tabId, targetElement) {
     this.elementPickerTarget = targetElement || '';
-    chrome.tabs.executeScript(tabId, { file: 'js/element-picker.js' });
+    this.XAL.injectScript(tabId, { file: 'js/element-picker.js' });
 };
 
 /******************************************************************************/

@@ -544,7 +544,6 @@ var candidateFromFilterChoice = function(filterChoice) {
 
     // Return path: the target element, then all siblings prepended
     var selector = [];
-    var filter;
     for ( ; slot < filters.length; slot++ ) {
         filter = filters[slot];
         selector.unshift(filter.replace(/^##/, ''));
@@ -669,27 +668,37 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var onSvgHovered = function(ev) {
-    if ( pickerPaused() ) {
-        return;
-    }
-
+var elementFromPoint = function(x, y) {
     svgRoot.style.pointerEvents = 'none';
-    var elem = document.elementFromPoint(ev.clientX, ev.clientY);
-    if ( elem == document.body || elem === document.documentElement ) {
+    var elem = document.elementFromPoint(x, y);
+    if ( elem === document.body || elem === document.documentElement ) {
         elem = null;
     }
-    highlightElements(elem ? [elem] : []);
     svgRoot.style.pointerEvents = 'auto';
+    return elem;
 };
 
 /******************************************************************************/
 
-var onSvgClicked = function() {
+var onSvgHovered = function(ev) {
     if ( pickerPaused() ) {
         return;
     }
-    filtersFromElement(targetElements[0]);
+    var elem = elementFromPoint(ev.clientX, ev.clientY);
+    highlightElements(elem ? [elem] : []);
+};
+
+/******************************************************************************/
+
+var onSvgClicked = function(ev) {
+    if ( pickerPaused() ) {
+        return;
+    }
+    var elem = elementFromPoint(ev.clientX, ev.clientY);
+    if ( elem === null ) {
+        return;
+    }
+    filtersFromElement(elem);
     showDialog();
 };
 
@@ -709,7 +718,7 @@ var onKeyPressed = function(ev) {
 // May need to dynamically adjust the height of the overlay + new position
 // of highlighted elements.
 
-var onScrolled = function(ev) {
+var onScrolled = function() {
     var newHeight = this.scrollY + this.innerHeight;
     if ( newHeight > svgHeight ) {
         svgHeight = newHeight;
@@ -971,8 +980,19 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
     }
 
     // Auto-select a specific target, if any, and if possible
-    var targetElement = details.targetElement || '';
-    var pos = targetElement.indexOf('\t');
+    var elem;
+
+    // Try using mouse position
+    if ( details.clientX !== -1 ) {
+        elem = elementFromPoint(details.clientX, details.clientY);
+        filtersFromElement(elem);
+        showDialog();
+        return;
+    }
+
+    // No mouse position available, use suggested target
+    var target = details.target || '';
+    var pos = target.indexOf('\t');
     if ( pos === -1 ) {
         return;
     }
@@ -983,28 +1003,27 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
         'video': 'src',
         'audio': 'src'
     };
-    var tagName = targetElement.slice(0, pos);
-    var url = targetElement.slice(pos + 1);
+    var tagName = target.slice(0, pos);
+    var url = target.slice(pos + 1);
     var attr = srcAttrMap[tagName];
     if ( attr === undefined ) {
         return;
     }
     var elems = document.querySelectorAll(tagName + '[' + attr + ']');
     var i = elems.length;
-    var elem, src;
+    var src;
     while ( i-- ) {
         elem = elems[i];
-        src = elem.getAttribute(attr);
-        if ( src === null || src === '' ) {
+        src = elem[attr];
+        if ( typeof src !== 'string' || src === '' ) {
             continue;
         }
-        urlNormalizer.href = src;
-        src = urlNormalizer.href;
-        if ( src === url ) {
-            filtersFromElement(elem);
-            showDialog({ modifier: true });
-            break;
+        if ( src !== url ) {
+            continue;
         }
+        filtersFromElement(elem);
+        showDialog({ modifier: true });
+        return;
     }
 });
 
