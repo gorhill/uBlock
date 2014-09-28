@@ -4,15 +4,15 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"In sfarsit un paravan de protectie eficient pentru navigatoarele bazate pe Chromium. Foloseste procesorul si memoria foarte putin.",
+    "message":"În sfârșit un paravan de protecție eficient pentru navigatoarele bazate pe Chromium. Folosește procesorul și memoria foarte puțin.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Panou Control",
+    "message":"µBlock — Panou de control",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Optiuni",
+    "message":"Opțiuni",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Lista excluderi",
+    "message":"Lista de excluderi",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"click pe butonul de mai sus<br>pentru a activa\/dezactiva<br>µBlock pe acest site",
+    "message":"Clic: dezactivează\/activează µBlock pentru acest site.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -44,7 +44,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"pe aceasta pagina",
+    "message":"pe această pagină",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -56,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click pentru a deschide panoul",
+    "message":"Clic pentru a deschide panoul",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -64,11 +64,11 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Mergi la inregistrari cereri",
+    "message":"Deschide jurnalul cererilor",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"Creaza",
+    "message":"Creează",
     "description":"English: Create"
   },
   "pickerPick":{
@@ -76,7 +76,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Iesire",
+    "message":"Ieșire",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -87,16 +87,28 @@
     "message":"Filtre vizuale",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Clic, Ctrl-clic",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Blochează elementul",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Ascunde containerele elementelor blocate",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Arata numarul blocarilor pe iconita",
+    "message":"Arată numărul cererilor blocate pe pictogramă",
     "description":"English: Show the number of blocked requests on the icon"
   },
+  "settingsContextMenuPrompt":{
+    "message":"Folosește meniul contextual unde este cazul",
+    "description":"English: Make use of context menu where appropriate"
+  },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtre retea ＋ {{cosmeticFilterCount}} filtre vizuale din:",
+    "message":"{{netFilterCount}} filtre rețea ＋ {{cosmeticFilterCount}} filtre vizuale din:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -104,19 +116,19 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Actualizare automata a filtrelor.",
+    "message":"Actualizare automată a listelor de filtre.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Actualizeaza acum",
+    "message":"Actualizează acum",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Goleste cacheurile",
+    "message":"Golește cacheurile",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Citeste si aplica filtrele vizuale.",
+    "message":"Citește și aplică filtrele vizuale.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -128,7 +140,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Aplicare modificari",
+    "message":"Aplică modificările",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -148,7 +160,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multifunctionale",
+    "message":"Multifuncționale",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -164,7 +176,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Aplicare",
+    "message":"Aplică",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
@@ -172,7 +184,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"versiune noua disponibila",
+    "message":"versiune nouă disponibilă",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -184,35 +196,35 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importa si adauga",
+    "message":"Importă și adaugă",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exporta",
+    "message":"Exportă",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"Aplicare modificari",
+    "message":"Aplică modificările",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Lista ta de hosturi unde µBlock va fi dezactivat. Fiecare adresa pe o singura linie. Adresele invalide vor fi ignorate automat.",
+    "message":"Lista ta de nume de gazde unde µBlock va fi dezactivat. Fiecare adresă pe o singura linie. Adresele nevalide vor fi ignorate automat.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importa si adauga",
+    "message":"Importă și adaugă",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exporta",
+    "message":"Exportă",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"Aplicare modificari",
+    "message":"Aplică modificările",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Activeaza inregistrarea cererilor de retea",
+    "message":"Activează înregistrarea cererilor de rețea",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -244,19 +256,19 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Nici o cerere blocata pentru aceasta pagina",
+    "message":"Nicio cerere blocată pentru această pagină",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nici o cerere ne-blocata pentru aceasta pagina",
+    "message":"Nicio cerere ne-blocată pentru această pagină",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Jurnalul de modificari",
+    "message":"Jurnalul de modificări",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Cod sursa (GPLv3)",
+    "message":"Cod sursă (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -264,7 +276,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Nu ma pot conecta la {{url}}",
+    "message":"Nu mă pot conecta la {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

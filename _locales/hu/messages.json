@@ -87,6 +87,14 @@
     "message":"Cosmetikus filterek",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Click, Ctrl-click",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Block element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Elrejteni a blockolt elemeknek helyőrzőit",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Mutasa a számat a blokkolt requestek-nek az ikonon",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} net filterek + {{cosmeticFilterCount}} cosmetikus filterek:",

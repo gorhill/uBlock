@@ -87,6 +87,14 @@
     "message":"Kosmetiska filter",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Klick, Ctrl-klick",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Blockera element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Dölj platshållare för blockerade element",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Visa antalet blockerade förfrågningar på ikonen",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Utnyttja kontextmenyn där så är lämpligt",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",

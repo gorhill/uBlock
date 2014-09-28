@@ -60,7 +60,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Režim pro výběr prvků",
+    "message":"Režim výběru prvků",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -87,6 +87,14 @@
     "message":"Kosmetické filtry",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Kliknutí, Ctrl+Kliknutí",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Block element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Skrýt zástupné objekty zablokovaných prvků",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Zobrazit počet blokovaných požadavků u ikony",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",

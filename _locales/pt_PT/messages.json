@@ -40,7 +40,7 @@
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"Pedidos bloqueados",
+    "message":"pedidos bloqueados",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -87,6 +87,14 @@
     "message":"Filtros cosméticos",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Clique, Ctrl-clique",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Bloquear elemento",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Ocultar espaços ocupados por elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
@@ -95,12 +103,16 @@
     "message":"Mostrar o número de pedidos bloqueados no ícone",
     "description":"English: Show the number of blocked requests on the icon"
   },
+  "settingsContextMenuPrompt":{
+    "message":"Fazer uso do menu de contexto quando for apropriado",
+    "description":"English: Make use of context menu where appropriate"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtros de rede ＋ {{cosmeticFilterCount}} filtros cosméticos a partir de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} usado de {{total}}",
+    "message":"{{used}} usados de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -112,7 +124,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Limpar todos os caches",
+    "message":"Limpar todas as caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -168,7 +180,7 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"Limpar cache",
+    "message":"limpar cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -244,11 +256,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Não há pedidos bloqueados registrados para esta página",
+    "message":"Não há pedidos bloqueados registados para esta página",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Não há pedidos de não bloqueados registrados para esta página",
+    "message":"Não há pedidos de não bloqueados registados para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
@@ -268,7 +280,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Esta entrada deve ser a última",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

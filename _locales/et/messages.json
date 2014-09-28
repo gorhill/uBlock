@@ -87,6 +87,14 @@
     "message":"Kohandatud filtrid",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Klõps, Ctrl-klõps",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Blokeeri element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Peitke blokeeritud elementide asukohad",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Kuvage ikoonil blokeeritud elementide arv",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Kasuta sobivusel kontekstmenüüd",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} netifiltrid ＋ {{cosmeticFilterCount}} kohandatud filtrid:",
@@ -268,7 +280,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"See sisestus peab olema viimane",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

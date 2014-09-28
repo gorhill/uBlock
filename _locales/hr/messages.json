@@ -87,6 +87,14 @@
     "message":"Estetski filteri",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Klik, Ctrl-klik",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Blokiraj element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Sakrij rezervirana mjesta blokiranih elemenata",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Pokaži broj blokiranih zahtjeva na ikoni",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Koristite kontekstni izbornik gdje je prikladno",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} mrežni\/ih filter\/a ＋ {{cosmeticFilterCount}} estetski\/ih filter\/a iz:",

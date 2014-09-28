@@ -87,6 +87,14 @@
     "message":"Kozmetik filtreler",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Ctrl-tıkla, tıklayın",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Öge engelle",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Engellenen reklamların yerlerini gizle",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Engellenmiş reklam sayısını ikon üstünde göster",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Uygun olduğunda bağlam menüsünden yararlan",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} ağ filtreleri ＋ {{cosmeticFilterCount}} kozmetik filtreler :",

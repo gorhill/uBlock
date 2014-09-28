@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — — 控制面板",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -87,6 +87,14 @@
     "message":"元素过滤",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Click, Ctrl-click",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Block element",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"隐藏已屏蔽元素的占位符",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"在图标上显示拦截广告数量",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"当前使用{{netFilterCount}} 网址过滤和{{cosmeticFilterCount}} 元素过滤规则:",
@@ -212,11 +224,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"启用网络请求记录",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"开启此选项，将可以查看网络请求的详细信息。这个功能会增加µBlock的内存使用量。由于多数用户不需要此功能，它默认是禁用的。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -264,7 +276,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"无法连接到 {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

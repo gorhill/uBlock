@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker for Chromium-based browsers. Easy on CPU and memory.",
+    "message":"Cuối cùng, là một bộ chặn hiệu quả cho các trình duyệt dựa trên Chromium. Dễ dàng cho CPU và bộ nhớ.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Bảng điều khiển",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -87,6 +87,14 @@
     "message":"Cosmetic filters",
     "description":"English: Cosmetic filters"
   },
+  "pickerCosmeticFiltersHint":{
+    "message":"Nhấp chuột, Ctrl-nhấp chuột",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Chặn phần tử",
+    "description":"English: Block element"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Ẩn các phần giữ chỗ của những phần tử bị chặn",
     "description":"English: Hide placeholders of blocked elements"
@@ -94,6 +102,10 @@
   "settingsIconBadgePrompt":{
     "message":"Hiển thị số lượng yêu cầu bị chặn trên biểu tượng",
     "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
@@ -112,7 +124,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Dọn sạch tất cả lưu trữ",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
