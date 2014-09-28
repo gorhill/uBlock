@@ -104,7 +104,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Utiliser le menu contextuel lorsque approprié",
+    "message":"Utiliser le menu contextuel si possible",
     "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
