@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_extName__",
     "short_name": "µBlock",
-    "version": "0.6.4.0",
+    "version": "0.6.5.0",
     "description": "__MSG_extShortDesc__",
     "icons": {
         "16": "img/icon_16.png",
@@ -38,6 +38,7 @@
     "minimum_chrome_version": "22.0",
     "options_page": "dashboard.html",
     "permissions": [
+        "contextMenus",
         "downloads",
         "storage",
         "tabs",

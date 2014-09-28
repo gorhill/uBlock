@@ -24,14 +24,17 @@
 /******************************************************************************/
 /******************************************************************************/
 
+// popup.js
+
 (function() {
 
-// popup.js
+/******************************************************************************/
+
+var µb = µBlock;
 
 /******************************************************************************/
 
 var getStats = function(request) {
-    var µb = µBlock;
     var r = {
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
@@ -72,26 +75,28 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'toggleNetFiltering':
-            µBlock.toggleNetFilteringSwitch(
+            µb.toggleNetFilteringSwitch(
                 request.url,
                 request.scope,
                 request.state
             );
-            µBlock.updateBadgeAsync(request.tabId);
+            µb.updateBadgeAsync(request.tabId);
             break;
 
         case 'gotoPick':
-            chrome.tabs.executeScript(request.tabId, { file: 'js/element-picker.js' });
+            µb.elementPickerExec(request.tabId);
             break;
 
         default:
-            return µBlock.messaging.defaultHandler(request, sender, callback);
+            return µb.messaging.defaultHandler(request, sender, callback);
     }
 
     callback(response);
 };
 
-µBlock.messaging.listen('popup.js', onMessage);
+µb.messaging.listen('popup.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -102,7 +107,11 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
+/******************************************************************************/
+
 var µb = µBlock;
+
+/******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
     // Async
@@ -135,6 +144,8 @@ var onMessage = function(request, sender, callback) {
 
 µb.messaging.listen('contentscript-start.js', onMessage);
 
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/
@@ -143,6 +154,8 @@ var onMessage = function(request, sender, callback) {
 // contentscript-end.js
 
 (function() {
+
+/******************************************************************************/
 
 var µb = µBlock;
 
@@ -256,6 +269,8 @@ var onMessage = function(details, sender, callback) {
 
 µb.messaging.listen('contentscript-end.js', onMessage);
 
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/
@@ -264,6 +279,12 @@ var onMessage = function(details, sender, callback) {
 // element-picker.js
 
 (function() {
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
     // Async
@@ -276,28 +297,35 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'i18n':
+        case 'elementPickerArguments':
             response = {
-                create: chrome.i18n.getMessage('pickerCreate'),
-                pick: chrome.i18n.getMessage('pickerPick'),
-                quit: chrome.i18n.getMessage('pickerQuit'),
-                netFilters: chrome.i18n.getMessage('pickerNetFilters'),
-                cosmeticFilters: chrome.i18n.getMessage('pickerCosmeticFilters')
+                i18n: {
+                    create: chrome.i18n.getMessage('pickerCreate'),
+                    pick: chrome.i18n.getMessage('pickerPick'),
+                    quit: chrome.i18n.getMessage('pickerQuit'),
+                    netFilters: chrome.i18n.getMessage('pickerNetFilters'),
+                    cosmeticFilters: chrome.i18n.getMessage('pickerCosmeticFilters'),
+                    cosmeticFiltersHint: chrome.i18n.getMessage('pickerCosmeticFiltersHint')
+                },
+                targetElement: µb.elementPickerTarget
             };
+            µb.elementPickerTarget = '';
             break;
 
         case 'createUserFilter':
-            µBlock.appendUserFilters(request.filters);
+            µb.appendUserFilters(request.filters);
             break;
 
         default:
-            return µBlock.messaging.defaultHandler(request, sender, callback);
+            return µb.messaging.defaultHandler(request, sender, callback);
     }
 
     callback(response);
 };
 
-µBlock.messaging.listen('element-picker.js', onMessage);
+µb.messaging.listen('element-picker.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -308,8 +336,13 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
 var getLists = function(callback) {
-    var µb = µBlock;
     var r = {
         available: null,
         current: µb.remoteBlacklists,
@@ -334,8 +367,6 @@ var getLists = function(callback) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
-
     // Async
     switch ( request.what ) {
         case 'getLists':
@@ -369,7 +400,9 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('3p-filters.js', onMessage);
+µb.messaging.listen('3p-filters.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -380,9 +413,13 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
-var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
+/******************************************************************************/
 
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'readUserFilters':
@@ -406,7 +443,9 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('1p-filters.js', onMessage);
+µb.messaging.listen('1p-filters.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -417,9 +456,13 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
-var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
+/******************************************************************************/
 
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         default:
@@ -446,7 +489,9 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('whitelist.js', onMessage);
+µb.messaging.listen('whitelist.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -456,6 +501,12 @@ var onMessage = function(request, sender, callback) {
 // stats.js
 
 (function() {
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
 
 var getPageDetails = function(µb, tabId) {
     var r = {
@@ -510,8 +561,6 @@ var getPageDetails = function(µb, tabId) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
-
     // Async
     switch ( request.what ) {
         default:
@@ -537,7 +586,9 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('stats.js', onMessage);
+µb.messaging.listen('stats.js', onMessage);
+
+/******************************************************************************/
 
 })();
 
@@ -548,9 +599,13 @@ var onMessage = function(request, sender, callback) {
 
 (function() {
 
-var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
+/******************************************************************************/
 
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
 
@@ -570,7 +625,9 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-µBlock.messaging.listen('about.js', onMessage);
+µb.messaging.listen('about.js', onMessage);
+
+/******************************************************************************/
 
 })();
 

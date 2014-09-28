@@ -74,7 +74,7 @@
     var settingsLoaded = function(store) {
         µBlock.userSettings = store;
         if ( typeof callback === 'function' ) {
-            callback();
+            callback(store);
         }
     };
 
@@ -666,7 +666,8 @@
     };
 
     // User settings are in memory
-    var onUserSettingsReady = function() {
+    var onUserSettingsReady = function(settings) {
+        µb.contextMenu.toggle(settings.contextMenuEnabled);
         µb.fromSelfie(onSelfieReady);
     };
 

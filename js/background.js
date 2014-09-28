@@ -54,6 +54,7 @@ return {
     userSettings: {
         autoUpdate: true,
         collapseBlocked: true,
+        contextMenuEnabled: false,
         externalLists: defaultExternalLists,
         logRequests: false,
         parseAllABPHideFilters: true,
@@ -114,6 +115,7 @@ return {
     noopFunc: function(){},
 
     apiErrorCount: 0,
+    elementPickerTarget: '',
 
     // so that I don't have to care for last comma
     dummy: 0

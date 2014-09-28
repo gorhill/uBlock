@@ -55,6 +55,12 @@ var onUserSettingsReceived = function(details) {
         .on('change', function(){
             changeUserSettings('showIconBadge', this.checked);
         });
+
+    uDom('#context-menu-enabled')
+        .prop('checked', details.contextMenuEnabled === true)
+        .on('change', function(){
+            changeUserSettings('contextMenuEnabled', this.checked);
+        });
 };
 
 messaging.ask({ what: 'userSettings' }, onUserSettingsReceived);

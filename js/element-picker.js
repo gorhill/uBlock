@@ -229,6 +229,10 @@ var svgOcean = null;
 var svgIslands = null;
 var divDialog = null;
 var taCandidate = null;
+var urlNormalizer = null;
+
+var netFilterCandidates = [];
+var cosmeticFilterCandidates = [];
 
 var targetElements = [];
 var svgWidth = 0;
@@ -329,7 +333,7 @@ var removeElements = function(elems) {
 
 // Extract the best possible net filter, i.e. as specific as possible.
 
-var netFilterFromElement = function(elem) {
+var netFilterFromElement = function(elem, out) {
     if ( elem === null ) {
         return;
     }
@@ -344,14 +348,31 @@ var netFilterFromElement = function(elem) {
     if ( typeof src !== 'string' || src.length === 0 ) {
         return;
     }
-    return src.replace(/^https?:\/\//, '||').replace(/\?.*$/, '');
+    // Remove fragment
+    var pos = src.indexOf('#');
+    if ( pos !== -1 ) {
+        src = src.slice(0, pos);
+    }
+    // Feed the attribute to a link element, then retrieve back: this
+    // should normalize it.
+    urlNormalizer.href = src;
+    src = urlNormalizer.href;
+    // Anchor absolute filter to hostname
+    src = src.replace(/^https?:\/\//, '||');
+    out.push(src);
+    // Suggest a less narrow filter if possible
+    pos = src.indexOf('?');
+    if ( pos !== -1 ) {
+        src = src.slice(0, pos);
+        out.push(src);
+    }
 };
 
 /******************************************************************************/
 
 // Extract the best possible cosmetic filter, i.e. as specific as possible.
 
-var cosmeticFilterFromElement = function(elem) {
+var cosmeticFilterFromElement = function(elem, out) {
     if ( elem === null ) {
         return;
     }
@@ -417,41 +438,72 @@ var cosmeticFilterFromElement = function(elem) {
         }
     }
 
-    return '##' + prefix + suffix.join('');
+    out.push('##' + prefix + suffix.join(''));
 };
 
 /******************************************************************************/
 
-var selectorFromCandidate = function() {
-    var selector = '';
-    var v = taCandidate.value;
-    if ( v.slice(0, 2) === '##' ) {
-        selector = v.replace('##', '');
-    } else {
-        if ( v.slice(0, 2) === '||' ) {
-            v = v.replace('||', '');
-        }
-        selector = '[src*="' + v + '"]';
+var filtersFromElement = function(elem) {
+    netFilterCandidates.length = 0;
+    cosmeticFilterCandidates.length = 0;
+    while ( elem && elem !== document.body ) {
+        netFilterFromElement(elem, netFilterCandidates);
+        cosmeticFilterFromElement(elem, cosmeticFilterCandidates);
+        elem = elem.parentNode;
     }
-    try {
-        if ( document.querySelector(selector) === null ) {
-            return '';
-        }
-    }
-    catch (e) {
-        return '';
-    }
-    return selector;
 };
+
+/******************************************************************************/
+
+var elementsFromFilter = function(filter) {
+    var out = [];
+
+    // Cosmetic filters: these are straight CSS selectors
+    // TODO: This is still not working well for a[href], because there are
+    // many ways to compose a valid href to the same effective URL.
+    // One idea is to normalize all a[href] on the page, but for now I will
+    // wait and see, as I prefer to refrain from tampering with the page
+    // content if I can avoid it.
+    if ( filter.slice(0, 2) === '##' ) {
+        try {
+            out = document.querySelectorAll(filter.replace('##', ''));
+        }
+        catch (e) {
+        }
+        return out;
+    }
+
+    // Net filters: we need to lookup manually -- translating into a
+    // foolproof CSS selector is just not possible
+    if ( filter.slice(0, 2) === '||' ) {
+        filter = filter.replace('||', '');
+    }
+    var elems = document.querySelectorAll('[src]');
+    var i = elems.length;
+    var elem;
+    while ( i-- ) {
+        elem = elems[i];
+        if ( typeof elem.src !== 'string' ) {
+            continue;
+        }
+        if ( elem.src.indexOf(filter) !== -1 ) {
+            out.push(elem);
+        }
+    }
+    return out;
+};
+
+// https://www.youtube.com/watch?v=YI2XuIOW3gM
 
 /******************************************************************************/
 
 var userFilterFromCandidate = function() {
-    if ( selectorFromCandidate() === '' ) {
+    var v = taCandidate.value;
+
+    var elems = elementsFromFilter(v);
+    if ( elems.length === 0 ) {
         return false;
     }
-
-    var v = taCandidate.value;
 
     // Cosmetic filter?
     if ( v.slice(0, 2) === '##' ) {
@@ -468,48 +520,58 @@ var userFilterFromCandidate = function() {
 
 /******************************************************************************/
 
-var onCandidateChanged = function(ev) {
-    var selector = selectorFromCandidate();
-    divDialog.querySelector('#create').disabled = selector === '';
-    if ( selector === '' ) {
-        highlightElements([]);
-        return;
-    }
-    highlightElements(document.querySelectorAll(selector));
+var onCandidateChanged = function() {
+    var elems = elementsFromFilter(taCandidate.value);
+    divDialog.querySelector('#create').disabled = elems.length === 0;
+    highlightElements(elems);
 };
 
 /******************************************************************************/
 
-var candidateFromClickEvent = function(ev) {
-    var target = ev.target;
-    if ( !target ) {
+var candidateFromFilterChoice = function(filterChoice) {
+    var slot = filterChoice.slot;
+    var filters = filterChoice.filters;
+    var filter = filters[slot];
+
+    if ( filter === undefined ) {
         return '';
     }
 
-    // Bare
-    if ( ev.ctrlKey || ev.metaKey ) {
-        return target.textContent;
-    }
-
     // For net filters there no such thing as a path
-    if ( target.textContent.charAt(0) !== '#' ) {
-        return target.textContent;
+    if ( filterChoice.type === 'net' || filterChoice.modifier ) {
+        return filter;
     }
 
     // Return path: the target element, then all siblings prepended
     var selector = [];
-    while ( target ) {
-        if ( target.nodeType !== 1 || target.tagName.toLowerCase() !== 'li' ) {
-            continue;
-        }
-        selector.unshift(target.textContent.replace(/^##/, ''));
+    var filter;
+    for ( ; slot < filters.length; slot++ ) {
+        filter = filters[slot];
+        selector.unshift(filter.replace(/^##/, ''));
         // Stop at any element with an id: these are unique in a web page
-        if ( target.textContent.slice(0, 3) === '###' ) {
+        if ( filter.slice(0, 3) === '###' ) {
             break;
         }
-        target = target.nextSibling;
     }
     return '##' + selector.join(' > ');
+};
+
+/******************************************************************************/
+
+var filterChoiceFromEvent = function(ev) {
+    var li = ev.target;
+    var isNetFilter = li.textContent.slice(0, 2) !== '##';
+    var r = {
+        type: isNetFilter ? 'net' : 'cosmetic',
+        filters: isNetFilter ? netFilterCandidates : cosmeticFilterCandidates,
+        slot: 0,
+        modifier: ev.ctrlKey || ev.metaKey
+    };
+    while ( li.previousSibling !== null ) {
+        li = li.previousSibling;
+        r.slot += 1;
+    }
+    return r;
 };
 
 /******************************************************************************/
@@ -523,7 +585,7 @@ var onDialogClicked = function(ev) {
         var filter = userFilterFromCandidate();
         if ( filter ) {
             messaging.tell({ what: 'createUserFilter', filters: filter });
-            removeElements(document.querySelectorAll(selectorFromCandidate()));
+            removeElements(elementsFromFilter(taCandidate.value));
             stopPicker();
         }
     }
@@ -537,7 +599,7 @@ var onDialogClicked = function(ev) {
     }
 
     else if ( ev.target.tagName.toLowerCase() === 'li' && pickerRootDistance(ev.target) === 5 ) {
-        taCandidate.value = candidateFromClickEvent(ev);
+        taCandidate.value = candidateFromFilterChoice(filterChoiceFromEvent(ev));
         onCandidateChanged();
     }
 
@@ -558,28 +620,51 @@ var removeAllChildren = function(parent) {
 // TODO: for convenience I could provide a small set of net filters instead
 // of just a single one. Truncating the right-most part of the path etc.
 
-var showDialog = function(filters) {
-    var divNet = divDialog.querySelector('ul > li:nth-of-type(1) > ul');
-    var divCosmetic = divDialog.querySelector('ul > li:nth-of-type(2) > ul');
-    removeAllChildren(divCosmetic);
-    removeAllChildren(divNet);
-    var filter, li;
-    for ( var i = 0; i < filters.length; i++ ) {
-        filter = filters[i];
-        li = document.createElement('li');
-        li.textContent = filter;
-        if ( filter.indexOf('##') === 0 ) {
-            divCosmetic.appendChild(li);
-        } else {
-            divNet.appendChild(li);
-        }
-    }
-    divDialog.querySelector('ul > li:nth-of-type(1)').style.display = divNet.firstChild ? '' : 'none';
-    divDialog.querySelector('ul > li:nth-of-type(2)').style.display = divCosmetic.firstChild ? '' : 'none';
-    divDialog.querySelector('ul').style.display = divNet.firstChild || divCosmetic.firstChild ? '' : 'none';
-    taCandidate.value = '';
-    divDialog.querySelector('#create').disabled = true;
+var showDialog = function(options) {
     pausePicker();
+
+    options = options || {};
+
+    // Create lists of candidate filters
+    var populate = function(src, des) {
+        var root = divDialog.querySelector(des);
+        var ul = root.querySelector('ul');
+        removeAllChildren(ul);
+        var li;
+        for ( var i = 0; i < src.length; i++ ) {
+            li = document.createElement('li');
+            li.textContent = src[i];
+            ul.appendChild(li);
+        }
+        root.style.display = src.length !== 0 ? '' : 'none';
+    };
+
+    populate(netFilterCandidates, 'ul > li:nth-of-type(1)');
+    populate(cosmeticFilterCandidates, 'ul > li:nth-of-type(2)');
+
+    divDialog.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
+    divDialog.querySelector('#create').disabled = true;
+
+    // Auto-select a candidate filter
+    var filterChoice = {
+        type: '',
+        filters: [],
+        slot: 0,
+        modifier: options.modifier || false
+    };
+    if ( netFilterCandidates.length ) {
+        filterChoice.type = 'net';
+        filterChoice.filters = netFilterCandidates;
+    } else if ( cosmeticFilterCandidates.length ) {
+        filterChoice.type = 'cosmetic';
+        filterChoice.filters = cosmeticFilterCandidates;
+    }
+
+    taCandidate.value = '';
+    if ( filterChoice.type !== '' ) {
+        taCandidate.value = candidateFromFilterChoice(filterChoice);
+        onCandidateChanged();
+    }
 };
 
 /******************************************************************************/
@@ -604,18 +689,8 @@ var onSvgClicked = function() {
     if ( pickerPaused() ) {
         return;
     }
-
-    var filter;
-    var filters = [];
-    for ( var elem = targetElements[0]; elem && elem !== document.body; elem = elem.parentNode ) {
-        if ( filter = cosmeticFilterFromElement(elem) ) {
-            filters.push(filter);
-        }
-        if ( filter = netFilterFromElement(elem) ) {
-            filters.push(filter);
-        }
-    }
-    showDialog(filters);
+    filtersFromElement(targetElements[0]);
+    showDialog();
 };
 
 /******************************************************************************/
@@ -646,6 +721,9 @@ var onScrolled = function(ev) {
 
 /******************************************************************************/
 
+// Let's have the element picker code flushed from memory when no longer
+// in use: to ensure this, release all local references.
+
 var stopPicker = function() {
     if ( pickerRoot !== null ) {
         document.removeEventListener('keydown', onKeyPressed);
@@ -655,7 +733,11 @@ var stopPicker = function() {
         svgRoot.removeEventListener('mousemove', onSvgHovered);
         svgRoot.removeEventListener('click', onSvgClicked);
         document.body.removeChild(pickerRoot);
-        pickerRoot = divDialog = svgRoot = svgOcean = svgIslands = taCandidate = null;
+        pickerRoot = 
+        divDialog = 
+        svgRoot = svgOcean = svgIslands = 
+        taCandidate = 
+        urlNormalizer = null;
         messaging.stop();
     }
     targetElements = [];
@@ -685,6 +767,7 @@ var startPicker = function() {
             'color: #000;',
             'font: 12px sans-serif;',
             'margin: 0;',
+            'max-width: none;',
             'outline: 0;',
             'overflow: visible;',
             'padding: 0;',
@@ -709,6 +792,9 @@ var startPicker = function() {
         '.µBlock button:disabled {',
             'color: #999;',
             'background-color: #ccc;',
+        '}',
+        '.µBlock button#create:not(:disabled) {',
+            'background-color: #ffdca8;',
         '}',
         '.µBlock > svg {',
             'position: absolute;',
@@ -782,6 +868,17 @@ var startPicker = function() {
             'text-align: left;',
             'overflow: hidden;',
         '}',
+        '.µBlock > div > ul > li:not(:first-child) {',
+            'margin-top: 0.5em;',
+        '}',
+        '.µBlock > div > ul > li > span:nth-of-type(1) {',
+            'font-weight: bold;',
+        '}',
+        '.µBlock > div > ul > li > span:nth-of-type(2) {',
+            'margin: 0 0 0 1em;',
+            'font-size: smaller;',
+            'color: gray;',
+        '}',
         '.µBlock > div > ul > li > ul {',
             'margin: 0 0 0 1em;',
             'list-style-type: none;',
@@ -832,8 +929,8 @@ var startPicker = function() {
         '</div>',
         '</div>',
         '<ul>',
-        '<li>.<ul></ul>',
-        '<li>.<ul></ul>',
+        '<li><span>.</span><ul></ul>',
+        '<li><span>.</span><span>.</span><ul></ul>',
         '</ul>',
         ''
     ].join('');
@@ -845,6 +942,7 @@ var startPicker = function() {
     divDialog.addEventListener('click', onDialogClicked);
     taCandidate = divDialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
+    urlNormalizer = document.createElement('a');
     window.addEventListener('scroll', onScrolled);
     document.addEventListener('keydown', onKeyPressed);
 };
@@ -855,12 +953,59 @@ startPicker();
 
 /******************************************************************************/
 
-messaging.ask({ what: 'i18n' }, function(details) {
-    divDialog.querySelector('#create').firstChild.nodeValue = details.create;
-    divDialog.querySelector('#pick').firstChild.nodeValue = details.pick;
-    divDialog.querySelector('#quit').firstChild.nodeValue = details.quit;
-    divDialog.querySelector('ul > li:nth-of-type(1)').firstChild.nodeValue = details.netFilters;
-    divDialog.querySelector('ul > li:nth-of-type(2)').firstChild.nodeValue = details.cosmeticFilters;
+messaging.ask({ what: 'elementPickerArguments' }, function(details) {
+    var i18nMap = {
+        '#create': 'create',
+        '#pick': 'pick',
+        '#quit': 'quit',
+        'ul > li:nth-of-type(1) > span:nth-of-type(1)': 'netFilters',
+        'ul > li:nth-of-type(2) > span:nth-of-type(1)': 'cosmeticFilters',
+        'ul > li:nth-of-type(2) > span:nth-of-type(2)': 'cosmeticFiltersHint'
+
+    };
+    for ( var k in i18nMap ) {
+        if ( i18nMap.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        divDialog.querySelector(k).firstChild.nodeValue = details.i18n[i18nMap[k]];
+    }
+
+    // Auto-select a specific target, if any, and if possible
+    var targetElement = details.targetElement || '';
+    var pos = targetElement.indexOf('\t');
+    if ( pos === -1 ) {
+        return;
+    }
+    var srcAttrMap = {
+        'a': 'href',
+        'img': 'src',
+        'iframe': 'src',
+        'video': 'src',
+        'audio': 'src'
+    };
+    var tagName = targetElement.slice(0, pos);
+    var url = targetElement.slice(pos + 1);
+    var attr = srcAttrMap[tagName];
+    if ( attr === undefined ) {
+        return;
+    }
+    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
+    var i = elems.length;
+    var elem, src;
+    while ( i-- ) {
+        elem = elems[i];
+        src = elem.getAttribute(attr);
+        if ( src === null || src === '' ) {
+            continue;
+        }
+        urlNormalizer.href = src;
+        src = urlNormalizer.href;
+        if ( src === url ) {
+            filtersFromElement(elem);
+            showDialog({ modifier: true });
+            break;
+        }
+    }
 });
 
 /******************************************************************************/

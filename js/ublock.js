@@ -184,10 +184,8 @@
 // Return all settings if none specified.
 
 µBlock.changeUserSettings = function(name, value) {
-    var µb = µBlock;
-
     if ( name === undefined ) {
-        return µb.userSettings;
+        return this.userSettings;
     }
 
     if ( typeof name !== 'string' || name === '' ) {
@@ -195,12 +193,12 @@
     }
 
     // Do not allow an unknown user setting to be created
-    if ( µb.userSettings[name] === undefined ) {
+    if ( this.userSettings[name] === undefined ) {
         return;
     }
 
     if ( value === undefined ) {
-        return µb.userSettings[name];
+        return this.userSettings[name];
     }
 
     // Pre-change
@@ -210,15 +208,18 @@
     }
 
     // Change
-    µb.userSettings[name] = value;
+    this.userSettings[name] = value;
 
     // Post-change
     switch ( name ) {
+        case 'contextMenuEnabled':
+            this.contextMenu.toggle(value === true);
+            break;
         default:
             break;
     }
 
-    µb.saveUserSettings();
+    this.saveUserSettings();
 };
 
 /******************************************************************************/
@@ -239,6 +240,13 @@
         return 'image';
     }
     return type;
+};
+
+/******************************************************************************/
+
+µBlock.elementPickerExec = function(tabId, targetElement) {
+    this.elementPickerTarget = targetElement || '';
+    chrome.tabs.executeScript(tabId, { file: 'js/element-picker.js' });
 };
 
 /******************************************************************************/
