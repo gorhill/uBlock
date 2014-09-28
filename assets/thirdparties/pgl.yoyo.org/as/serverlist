@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Mon, 22 Sep 2014 14:36:14 GMT
-# entries:        2480
+# last updated:   Sat, 27 Sep 2014 11:08:06 GMT
+# entries:        2479
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -408,7 +408,6 @@
 127.0.0.1 ads.channel4.com
 127.0.0.1 ads.cimedia.com
 127.0.0.1 ads.clearchannel.com
-127.0.0.1 ads.clubtickets.com
 127.0.0.1 ads.cnn.com
 127.0.0.1 ads.co.com
 127.0.0.1 ads.collegclub.com
@@ -1240,6 +1239,7 @@
 127.0.0.1 click2freemoney.com
 127.0.0.1 click2paid.com
 127.0.0.1 clickability.com
+127.0.0.1 clickadz.com
 127.0.0.1 clickagents.com
 127.0.0.1 clickbank.com
 127.0.0.1 clickbank.net
@@ -1448,6 +1448,7 @@
 127.0.0.1 exitexchange.com
 127.0.0.1 exitfuel.com
 127.0.0.1 exoclick.com
+127.0.0.1 exogripper.com
 127.0.0.1 experteerads.com
 127.0.0.1 exponential.com
 127.0.0.1 express-submit.de
@@ -1485,7 +1486,6 @@
 127.0.0.1 fpctraffic.com
 127.0.0.1 fpctraffic2.com
 127.0.0.1 fragmentserv.iac-online.de
-127.0.0.1 francetop.com
 127.0.0.1 free-banners.com
 127.0.0.1 freebanner.com
 127.0.0.1 freelogs.com
@@ -1581,7 +1581,6 @@
 127.0.0.1 hyperbanner.net
 127.0.0.1 hypertracker.com
 127.0.0.1 i-clicks.net
-127.0.0.1 i-lookup.com
 127.0.0.1 i.xx.openx.com
 127.0.0.1 i1img.com
 127.0.0.1 i1media.no
@@ -1914,6 +1913,7 @@
 127.0.0.1 partner-ads.com
 127.0.0.1 partner.gonamic.de
 127.0.0.1 partner.pelikan.cz
+127.0.0.1 partner.topcities.com
 127.0.0.1 partnerad.l.google.com
 127.0.0.1 partnercash.de
 127.0.0.1 partners.priceline.com
@@ -1962,7 +1962,6 @@
 127.0.0.1 popups.infostart.com
 127.0.0.1 popupsponsor.com
 127.0.0.1 popuptraffic.com
-127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
 127.0.0.1 postmasterbannernet.com
 127.0.0.1 postrelease.com

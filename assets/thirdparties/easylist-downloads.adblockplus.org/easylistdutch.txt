@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: 4levh+dKeZ91/rKqNVuwlg
-! Version: 201409260501
+! Checksum: JcYRLw7IzzYNLT7uiB7dNQ
+! Version: 201409281621
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 26 Sep 2014 05:01 UTC
+! Last modified: 28 Sep 2014 16:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1232,7 +1232,7 @@ koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal1_no_border
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2_no_border
 drenthemobiel.nl,flevolandmobiel.nl,gelderlandmobiel.nl,gratisaftehalen.org,gratisoptehalen.org,gratistehalen.nl,groningenmobiel.nl,limburgmobiel.nl,marktplaza.nl,nederlandmobiel.nl,noord-brabantmobiel.nl,noord-hollandmobiel.nl,overijsselmobiel.nl,paginamarkt.nl,utrechtmobiel.nl,zeelandmobiel.nl,zuid-hollandmobiel.nl#@#.advertentie
-zeelandnet.nl#@#.advertenties
+haven.nl,zeelandnet.nl#@#.advertenties
 blikopnieuws.nl,computeridee.nl#@#.reclame
 ! Uitzonderingen voor EasyList
 innerlijk-besef.nl#@##ad-main

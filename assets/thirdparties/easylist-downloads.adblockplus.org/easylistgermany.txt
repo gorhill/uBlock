@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: vDnLHoE/0qszo8UJ8oh5rw
-! Version: 201409260501
+! Checksum: HQMxuIQVTGweC0AoFkiYJQ
+! Version: 201409281621
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 26 Sep 2014 05:01 UTC
+! Last modified: 28 Sep 2014 16:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -80,6 +80,7 @@
 /usemax/*
 /werb.gif
 /werb.php
+/werbe-banner/*
 /werbeanzeige/*
 /werbeanzeigen/*
 /werbebanner-
@@ -910,6 +911,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||trafficlayer.de^$third-party
 ||traffictrack.de^$third-party
 ||trocado.at^$third-party
+||turboads.de^$third-party
 ||txtads.de^$third-party
 ||uabp.tk^$third-party
 ||uclo.net^$third-party
@@ -1586,6 +1588,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mannagor.de/?track=ad:$popup,third-party
 ||mediadealr.com^$popup,third-party
 ||o2-freikarte.de/affiliate/$popup
+||oboom.com/ref/$popup
 ||ollys.to/?td=$popup,third-party
 ||relink.us^*/landing.php$popup
 ||sau-billig.net/?log=$popup,third-party
@@ -1604,7 +1607,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block.txt ***
 /?placement=$domain=movie-blog.org
 /oase_banner.jpg$domain=mysummit.wordpress.com
-/werbe-banner/*
 |http://$subdocument,third-party,domain=bonimail.de
 |http://*.pw^$script,domain=byte.to
 |http://byte.to^$script
@@ -2003,6 +2005,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-scene.com/usenext.php
 ||ddl-search.biz/banner/
 ||ddl-search.biz^$image,popup,domain=w3-warez.cc
+||ddl-warez.in/.$script
 ||ddl-warez.in/.*.js..php
 ||ddl-warez.in/.*.js.php
 ||ddl-warez.in/.affiliate_
@@ -2010,6 +2013,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-warez.in/images/hoster/
 ||ddl-warez.in/images/hoster_logos/
 ||ddl-warez.in/images/hosterlogos/
+||ddl-warez.in/images/och/
 ||ddl-warez.in/images/och_logos/
 ||ddl-warez.in^*.php|$script
 ||ddl-warez.in^*_js.js
@@ -2396,6 +2400,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||goastro.de/popup_chat/
 ||goettgen.de/g-a-s/www/images/
 ||gofeminin.de/home4/skin/*_*/home.css|
+||golem.de/_img/microcity.jpg
 ||golem.de^*_afc1.js
 ||golem.de^*_afc2.js
 ||golem.de^*_afc3.js
@@ -3248,6 +3253,11 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||sms4free.cc/js/more.php
 ||smsit.me^$subdocument,domain=g-stream.in|playporn.to|rapidvideo.com
 ||soft-ware.net/banner/
+||solinger-bote.de/wp-content/uploads/*/AZ-2014-Sparkasse-Immobilienmesse.gif
+||solinger-bote.de/wp-content/uploads/*/AZ-SLT-online_zD_3.gif
+||solinger-bote.de/wp-content/uploads/*/AZ-SWS-SchnupperAbo.jpg
+||solinger-bote.de/wp-content/uploads/*/VoBa_Baufinanzierung.gif
+||solinger-bote.de/wp-content/uploads/*120x600-
 ||songtexte.bz^*/spreadshirt.png
 ||spartoo.de/footer_tag_iframe_
 ||spass-junkies.de^*.php|$subdocument
@@ -4447,6 +4457,8 @@ versicherungsjournal.de###oben-skyscraper-box
 yasni.de###offer
 mixeryrawdeluxe.tv###outerBanner
 de.msn.com###ov24_imageteaser
+schiffsansagedienst-cuxhaven.de###overlay
+schiffsansagedienst-cuxhaven.de###overlay + #lightBox
 4forums.de###p
 hstt.net###page-header + br + .forabg
 unternehmerkarte.de###pageBannerRgt
@@ -4973,6 +4985,7 @@ computerbase.de##.amazon-links
 computerbase.de##.amazon-links-2
 ratgeber-hausmittel.info##.amazon-product-table
 buffed.de,gamesaktuell.de,gamezone.de,pcgames.de,pcgameshardware.de,videogameszone.de##.amazonTopList
+winfuture.de##.amazon_deal
 winfuture.de##.amazon_top_deal_box
 pcaction.de,pcgameshardware.de##.amazonorder
 gamepro.de,gamestar.de##.amz
@@ -6397,6 +6410,8 @@ boerse.bz##body > #wrapper:first-child:last-child > header:first-child + aside
 boerse.bz##body > #wrapper:first-child:last-child > header:first-child + aside + #content
 spieletipps.de##body > .jqmOverlay
 weihnachtsbaeckerei.com##body > .noprint[style="position: absolute; left: 50%; margin-left: 355px; top: 123px;"]
+solinger-bote.de##body > .xWrap > .xWrapLeft
+solinger-bote.de##body > .xWrap > .xWrapLeft + .xWrapRight
 langes-forum.de##body > :nth-child(75) + .tablec[align="center"][style="width:98%"] > tbody > tr > td[width="100%"] > .tableb[cellspacing="1"][cellpadding="4"][border="0"][style="width:100%"]
 tv-stream.to##body > :nth-child(9) + div[id][style]
 boerse.bz##body > :nth-child(n+12) + div[class][style]
@@ -6660,6 +6675,7 @@ winload.de##div[style="width: 180px; height: 90px; padding: 6px 0px 12px 3px;"]
 lpgforum.de##div[style="width: 258px; min-height: 322px; margin-bottom: 15px;border: 1px solid #C1C1C1;padding: 10px 20px;"]
 winload.de##div[style="width: 260px; float: right; margin-left: 10px; margin-bottom: 15px;"] > div[style="margin-left: 5px;"] > div[style="overflow: hidden"]
 dwdl.de##div[style="width: 300px; height: 100px; margin-bottom: 20px;"]
+solinger-bote.de##div[style="width: 300px; height: 225px; position: relative;"]
 dwdl.de##div[style="width: 300px; height: 250px; margin-bottom: 20px; text-align: right;"]
 welt.de##div[style="width: 300px; height: 250px;"]
 104.6rtl.com##div[style="width: 300px; height: 255px; background-color: white;"]

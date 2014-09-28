@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: 52Im2SszdxSs8RnHe3QrQg
-! Version: 201409260501
+! Checksum: SsSKElQG0wFZCJlCLftdVA
+! Version: 201409281621
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 26 Sep 2014 05:01 UTC
+! Last Modified: 28 Sep 2014 16:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -223,7 +223,6 @@
 ||gglmcp.com^$third-party
 ||ggmmwan.com^$popup
 ||gocsgo.com^$third-party
-||gohappy.com.tw^$third-party
 ||googleadsl.com^$third-party
 ||gsdwj.com^$third-party
 ||guobie.com^$third-party
@@ -692,6 +691,8 @@ hk.yahoo.com###mntl1
 ~dsjunshi.com##div[id^="ad_thread"]
 !----------------------------------Ads-Union----------------------------------!
 ||9ead.com^$third-party
+||gohappy.com.tw^$third-party
+||sstc360.com^
 /99vjj/*$third-party
 /adscpv/*
 /AShow.aspx?AID=
@@ -1045,7 +1046,7 @@ hk.yahoo.com###mntl1
 /ifengRotatorAd.js
 /images/*.gif$domain=174.37.129.197|174.37.147.136|iu91.co|sejie.com|ukhuaren.co
 /Images/ak47/*$domain=hanzify.net|hanzify.org
-/images/cc.js$domain=174.123.15.33|70.86.24.117|mayaix.com|mayalike.com|mimiwe.com
+/images/cc.js$domain=70.86.24.117|mayahh.com|mimihh.com
 /images/content/1436/*$domain=chineseinla.com
 /images/g_js/*$domain=jide123.com|jide123.net
 /images/gtj*.jpg$domain=paipai.fm|paipaitxt.com
@@ -3226,7 +3227,7 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 /view/youkuvip/*ad.gif
 ||same.chinadaily.com.cn^
 ||same.eastmoney.com^
-||same.jrj.com.cn^$script,subdocument
+||same*.jrj.com.cn^$script,subdocument
 ||same.stockstar.com^
 ||sax.sina.com.cn/crossdomain.xml
 ||sc.chinaiiss.com/do.php?do=ad&
@@ -3940,10 +3941,40 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||alabout.com/images/*.760x90.
 /2tu/heisiwang.js
 ||jandan.com/static/gggg/
+/view/youkuvip/750.png
+||ckjdh.com/lenovo/pc/all.js
+||11dndn.com/java/
+||jq22.com/assets/ad.png
+||4kkbb.com/JSs/*.js
+||taobaocdn.com/imgextra/$domain=backtrack.org.cn
+||lanrenzhijia.com/uploads/ibeifeng.jpg
+||jobbole.com/wp-content/uploads/sites/8/2014/09/
+||youthwant.com.tw/scripts/youthad.js
+||youthwant.com.tw/S_YahooContentMatch1.
+||youthwant.com.tw/event/*/swf/970x
+||iguang.tw/bm/seo_rotation/html/js/
+||93t.cc/template/93t/images/41550.gif
+||thmz.com/003/619/392/276/760/919/3619392276760919.ssm/manifest.f4m
+||daed.pw/Runtime/js/
+||setudou.org/Runtime/js/
+||6rooms.com^$domain=yayaxz.com
+||yayaxz.com/ad-js/
+||qidian.com/javascript/fkkyk.js
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
+mail.qq.com###plp_ad_container
+yayaxz.com##.room
+yyets.com###yyets_slide_ad
+060s.com###left_Ad_300
+060s.com##DIV[style="height:250px;width:300px"]
+youthwant.com.tw###ig_cont
+youthwant.com.tw##.top_fad
+ifabao.com###PopupLayer
+lanrenzhijia.com##.ads
+hc360.com###newAppBox
+hc360.com###newAppBox1
 crsky.com##.banner-leader
 jump.bdimg.com,tieba.baidu.com###platform_left_float
 yyets.com##DIV[style="margin-bottom:1em; text-align:center;width:700px;overflow:hidden;"]
@@ -4623,7 +4654,7 @@ heartinkstone.pixnet.net###spotlight
 srzc.com###srzcad
 k7mm.com###t2 + a
 skyme.com,tom365.com,tom365.net###t365
-174.123.15.33,70.86.24.117,mayaix.com,mayalike.com,mimiwe.com###table1
+70.86.24.117,mayahh.com,mimihh.com###table1
 bbs.hiapk.com###tag_1_7
 zymk.cn###tanchuang
 e23.cn###taobaorba
@@ -5308,7 +5339,7 @@ sina.com.tw##.game_ad
 jump.bdimg.com,tieba.baidu.com##.game_banner_common_wapper
 jump.bdimg.com,tieba.baidu.com##.game_content
 game.9724.com##.game_details
-qdwenxue.com,qidian.com##.game_info
+qdmm.com,qdwenxue.com,qidian.com##.game_info
 jump.bdimg.com,tieba.baidu.com##.game_list_and_rank
 jump.bdimg.com,tieba.baidu.com##.game_spread_thread
 jump.bdimg.com,tieba.baidu.com##.game_tab

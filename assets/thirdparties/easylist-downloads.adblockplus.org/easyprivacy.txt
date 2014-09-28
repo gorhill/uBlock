@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: DJoAXobEUp+Q1h/svxessw
-! Version: 201409260501
+! Checksum: gljQdaTElOcZGUeYvgFyzg
+! Version: 201409281621
 ! Title: EasyPrivacy
-! Last modified: 26 Sep 2014 05:01 UTC
+! Last modified: 28 Sep 2014 16:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1716,6 +1716,8 @@
 /tc_targeting.
 /tc_throttle.js
 /TCMAnalytics_
+/TeaLeaf.js
+/TeaLeafCfg.js
 /TealeafSDK.js
 /tealium.js
 /tealiumpixel.
@@ -2760,6 +2762,7 @@ http://utm.
 ||flixfacts.co.uk^$third-party
 ||flixfacts.com^$third-party
 ||flixsyndication.net^$third-party
+||flowstats.net^$third-party
 ||fluctuo.com^$third-party
 ||fluencymedia.com^$third-party
 ||flurry.com^$third-party
@@ -3229,6 +3232,7 @@ http://utm.
 ||paidstats.com^$third-party
 ||pardot.com^$third-party
 ||parklogic.com^$third-party
+||pass-1234.com^$third-party
 ||pathful.com^$third-party
 ||pclicks.com^$third-party
 ||pcspeedup.com^$third-party
@@ -3300,6 +3304,7 @@ http://utm.
 ||qbop.com^$third-party
 ||qdtracking.com^$third-party
 ||qsstats.com^$third-party
+||qualtrics.com^$third-party
 ||quantserve.com/api/
 ||quantserve.com/pixel/$object-subrequest,third-party
 ||quantserve.com^$~object-subrequest,third-party
@@ -4612,6 +4617,7 @@ http://utm.
 ||appdynamics.com/geo/$third-party
 ||appliedsemantics.com/images/x.gif
 ||appsolutions.com/hitme?$third-party
+||appspot.com/api/track/
 ||apture.com/v3/?5=%7b%22stats%22$xmlhttprequest
 ||archive.org/includes/analytics.js
 ||arclk.net/trax?
@@ -4696,6 +4702,7 @@ http://utm.
 ||canvas-usage-v2.conduit-data.com^
 ||capture.bi.movideo.com/dc?
 ||capture.camify.com/dc?
+||carambo.la/analytics/
 ||cdn.trafficexchangelist.com^$third-party
 ||cdnma.com/apps/capture.js
 ||cdnplanet.com/static/rum/rum.js
@@ -4937,6 +4944,7 @@ http://utm.
 ||facebook.com/js/conversions/tracking.js
 ||facebook.com/offsite_event.php$third-party
 ||facebook.com/tr/?
+||facebook.com/tr?
 ||facebook.com^*/tracking.js$third-party
 ||fairfax.com.au/js/track/
 ||fastcounter.bcentral.com^
@@ -5682,6 +5690,7 @@ http://utm.
 ||v.giantrealm.com/players/stats.swf?
 ||vanilladev.com/analytics.
 ||vapedia.com^*/largebanner.
+||vast.com/vimpressions.js$third-party
 ||veeseo.com/tracking/
 ||ventunotech.com/beacon/
 ||vertical-stats.huffpost.com^
@@ -6126,6 +6135,7 @@ http://utm.
 ||yahoo.co.jp/js/retargeting.js
 ||yahoo.co.jp/js/s_retargeting.js
 ! Korean
+||180.70.93.115/ndmclick/$domain=~daum.ip
 ||cafe24.com/weblog.js
 ||naver.net/wcslog.js
 ! Latvian
@@ -7338,6 +7348,7 @@ http://utm.
 ||nickjr.co.uk/global/js/tracking.js
 ||nih.gov/medlineplus/images/mplus_en_survey.js
 ||nih.gov/share/scripts/survey.js
+||nike.com/cms/analytics-store-desktop.js
 ||ninemsn.com.au^*.tracking.udc.
 ||ning.com^*/ga/ga.js
 ||nj.com/cgi-bin/stats/
@@ -7443,6 +7454,7 @@ http://utm.
 ||pixel.facebook.com^
 ||pixel.honestjohn.co.uk^
 ||pixel.klout.com^
+||pixel.newsdiscover.com.au^
 ||pixel.pcworld.com^
 ||pixel.reddit.com^
 ||pixel.redditmedia.com^
@@ -8153,7 +8165,6 @@ http://utm.
 ||youtube-nocookie.com/gen_204?
 ||youtube-nocookie.com/robots.txt?
 ||youtube.com/api/stats/ads?
-||youtube.com/api/stats/atr?
 ||youtube.com/gen_204?
 ||youtube.com/generate_204
 ||youtube.com/get_video?
@@ -8995,6 +9006,7 @@ http://utm.
 @@||fifa.com^*/webanalytics.js?
 @@||firstdirect.com^*/logging-code.js
 @@||fitloop.co/packages/GAnalytics.js?
+@@||flurry.com/js/flurry.js$domain=pocketdice.io
 @@||focus.ti.com^*/metrics-min.js
 @@||freehostedscripts.net/online/$script,~third-party
 @@||gameplayer.io^*/EventTracker.js
@@ -9012,7 +9024,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|deviantart.com|infogr.am|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|deviantart.com|infogr.am|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
@@ -9167,7 +9179,7 @@ http://utm.
 @@||s.youtube.com/api/stats/playback?$object-subrequest
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
-@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|calgaryherald.com|canada.com|cbc.ca|deviantart.com|discovery.com|edmontonjournal.com|fastcompany.com|financialpost.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|leaderpost.com|linkinpark.com|mainstreet.com|montrealgazette.com|nationalpost.com|newsday.com|ning.com|ottawacitizen.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|thedailybeast.com|theprovince.com|thestar.com|thestarphoenix.com|thinkatheist.com|vancouversun.com|windsorstar.com
+@@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|calgaryherald.com|canada.com|cbc.ca|dailymail.co.uk|deviantart.com|discovery.com|edmontonjournal.com|fastcompany.com|financialpost.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|leaderpost.com|linkinpark.com|mainstreet.com|montrealgazette.com|nationalpost.com|newsday.com|ning.com|ottawacitizen.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|sci2.tv|thedailybeast.com|theprovince.com|thestar.com|thestarphoenix.com|thinkatheist.com|vancouversun.com|windsorstar.com
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com
@@ -9345,6 +9357,7 @@ http://utm.
 @@||static-fra.de^*/targeting.js$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||stats.g.doubleclick.net/dc.js$domain=diejugendherbergen.de
 @@||stylished.de/js/vendors/emos2.js$domain=stylished.de
+@@||sunday.de/skin/*/googleanalytics.js$script
 @@||swr3.de/static/swrplayer/web/plugins/ivw/ivw.js
 @@||t-online.de/js/xtcore_t_online.js?$xmlhttprequest
 @@||thebrighttag.com/tag?site=$script,domain=oralb.de
@@ -9372,6 +9385,8 @@ http://utm.
 @@||tv5.org/cms/javascript/*/sitestat.js
 ! Arabic
 @@||turner.com/analytics/cnn_arabic/jsmd.min.js$domain=arabic.cnn.com
+! Bulgarian
+@@||google-analytics.com/analytics.js$domain=novatv.bg
 ! Chinese
 @@||amazonaws.com/angular-ui-router.min.js*-google-analytics.js$script,domain=dcard.tw
 @@||aolcdn.com/js/mg2.js$domain=engadget.com

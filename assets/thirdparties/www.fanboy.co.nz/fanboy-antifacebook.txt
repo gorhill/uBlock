@@ -1,5 +1,5 @@
 [Adblock Plus 2.0]
-! Checksum: 41r30uxgG771lpeJWxzmmw
+! Checksum: 3RebBhxPFg9BlE0c2grGfg
 ! Title: Anti-ThirdpartySocial
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
@@ -67,5 +67,5 @@
 !
 ! Problematic sites
 !
-@@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com|southpark.cc.com
+@@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com|southpark.cc.com|sci2.tv
 @@||google.com/js/plusone.js$domain=abcnews.go.com|watch.nba.com

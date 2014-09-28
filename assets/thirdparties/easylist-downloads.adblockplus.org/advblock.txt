@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 5VIDi1iTvGUiNQwD6587sg
-! Version: 201409260500
-! Last modified: 26 Sep 2014 05:00 UTC
+! Checksum: rp4Pnuk7K4NOmfOtzEuGdQ
+! Version: 201409281620
+! Last modified: 28 Sep 2014 16:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2456,6 +2456,7 @@ _tizers.
 ||nepalon.com^
 ||netrotator.net^
 ||new.fotooplata.ru^
+||newanons.ru^$third-party,script
 ||newlixica.com^
 ||news-announce.org^
 ||newsanons.ru^$third-party
@@ -2523,6 +2524,7 @@ _tizers.
 ||promoblocks.ru^
 ||promoboom.org^
 ||promobuster.org^
+||proravnovesie.ru^
 ||proteaser.com^
 ||protrafv2.com^
 ||prozapas.dn.ua^
@@ -2993,6 +2995,7 @@ gamebomb.ru###main--background
 mega-tracker.net###mb_top_space
 tapochek.net###page_header td[width="230"] + td
 programmersforum.ru###pagenav_menu + center
+riotpixels.com###playo-article
 fototeens.lifeforums.ru###popup
 wmforum.2bb.ru###pun-announcement
 magtimes.info###s\(1\)
@@ -3094,7 +3097,6 @@ alogvinov.com,compulenta.ru,computerra.ru,f1news.ru,fishki.net,gamemag.ru,gismet
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
 tapochek.net,unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 unionpeer.org##a[href^="http://filesboom.ru/download?"],a[href^="http://forces.loading-master.ru/"]
-tapochek.net##a[href^="http://firstvds.ru/products/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
@@ -3103,6 +3105,7 @@ porno-monster.ru##a[href^="http://www.mirorgazma.ru/?partner="]
 chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
 magtimes.info##aside img[src^="http://magtimes.info/wp-content/uploads/"]
+riotpixels.com##body > a
 programmersforum.ru##body > form + br + center
 auto.e1.ru##div[class*="advlink-hide-"]
 tvnet.lv##div[class^="right_custom_ad_"]
@@ -3117,6 +3120,7 @@ sysadmins.ru##noindex > a > img
 kino-teatr.ru##noindex > a[href^="/go/"]
 adultmult.tv##object[width="600"][height="200"]
 forum.antichat.ru##p[align="center"] > b > a
+lostfilm.tv##script + a[title][target="_blank"]
 tvgid.ua##table[bgcolor="#00488d"][cellpadding="1"]
 netall.ru##table[cellspacing="5"][cellpadding="5"][align="center"][style*="1px solid"]
 comss.ru##td[style="width:19%; vertical-align:top;"]
@@ -3135,7 +3139,6 @@ popmech.ru###auction_tizer
 xyu.tv###azartplay-bttn
 meta.ua###b_meta_popup
 rutube.ru###b_top-banner
-tapochek.net###b_tz_300
 meteonova.ru###ban_200
 online.ua###ban_news_r
 video.online.ua###ban_video_top
@@ -3174,7 +3177,6 @@ beloe-oblako.com.ua,rebill.me###bnr
 hdtv.ru###bnr_1
 52.ru,nn.ru###body > table > tbody > tr > td[width="10"] + td[style^="width:20"]:last-child
 torrent-games.net###body1 > #footer > a[target="_blank"]
-tapochek.net###body_container > a
 lineageternal.ru###bordTop
 fastpic.ru###bottom
 animeonline.su###bottomRe
@@ -4007,7 +4009,7 @@ horadric.ru##[id^="brand-"]
 forum-profit.ru##[id^="edit"] > .tborder:not([id])
 forum-profit.ru##[id^="edit"] > [id^="post"]:not(:first-child):last-child
 funmult.ru##[id^="icqwin_"]
-echo.msk.ru,tapochek.net##[id^="smi2adblock_"]
+echo.msk.ru##[id^="smi2adblock_"]
 dni.ru##[id^="tieserBlock"] > [id^="tb_"]
 euro-football.ru##[id^="topbanner"]
 mirmmo.ru##[id^="trumedia_holder_"]
@@ -4074,7 +4076,6 @@ kinomoov.net##a[href^="http://2vulkan.com/"]
 argumenti.ru##a[href^="http://argumenti.ru/ad_informer/click/"]
 z-music.org##a[href^="http://bit.ly/"]
 kanobu.ru##a[href^="http://brandings.kanobu.ru/click/"]
-tapochek.net##a[href^="http://casino-x.com/?partner="]
 adultmult.tv##a[href^="http://cityadspix.com/click-"]
 topwar.ru##a[href^="http://cpm.worldoftanks.com?code="]
 torrentino.com##a[href^="http://go.admulti.com/clicks/"]
@@ -4082,9 +4083,9 @@ z-music.org##a[href^="http://i100.ru"]
 mainspy.ru##a[href^="http://mainspy.ru/banner/"]
 cwer.ws##a[href^="http://mediaget.com/torrent.php"]
 kaddr.com##a[href^="http://photo.stylus.com.ua/"]
-tapochek.net##a[href^="http://pleasedirect.me/vulkan"]
 delfi.lv##a[href^="http://prodai.delfi.lv/adv/"]
 adult-torrent.com,leporno.org##a[href^="http://putanapartners.com/go.php?p="]
+tapochek.net##a[href^="http://re-directme.com/"],a[href^="http://pleasedirect.me/"]
 newstudio.tv##a[href^="http://ru.avxcore.com"]
 coop-land.ru##a[href^="http://sell-accs.ru"]
 rus-torrents.com,rus-torrents.ru##a[href^="http://sex-v-"]
@@ -5215,10 +5216,10 @@ _advideo/$object-subrequest,domain=megogo.net
 ||rin.ru/bodyadv.
 ||rin.ru/images/bannerpic/
 ||riotpixels.com/i/$object
-||riotpixels.com/i/AO_Riot_pix_03.jpg
+||riotpixels.com/i/bg-
 ||riotpixels.com/i/brand
-||riotpixels.com/playo/
-||riotpixels.com/playo_gen/
+||riotpixels.com/playo
+||riotpixels.com/plg/
 ||riper.am/branding/
 ||riper.am/rekoin.js
 ||rlsnet.ru/image_banner_id_
@@ -5312,6 +5313,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||takelink.org/engine/ajax/check.js
 ||talos.dota2.ru^
 ||tapochek.net^$object
+||tapochek.net^$subdocument
 ||teksta.org/*.php|
 ||teksta.org/images/adv
 ||telekomza.ru/wp-content/uploads/$object

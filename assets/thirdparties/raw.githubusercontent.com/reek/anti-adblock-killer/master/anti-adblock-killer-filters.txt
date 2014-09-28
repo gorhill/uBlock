@@ -484,6 +484,11 @@ cast.coolkora.com###co_holder
 ! videomega.tv
 @@||videomega.tv/JWJFfELSbJ/advertising.php*$script
 ||goo.gl^$popup,domain=videomega.tv
+! javso.com
+@@/adblock/adblock.js$script,domain=javso.com
+||javso.com/popjs/popred.js$script
+||js.adkrazy.com^$script,domain=javso.com
+||adkrazy.com^$popup,domain=javso.com
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
