@@ -88,11 +88,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Klick, Strg-Klick",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Element blockieren",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -104,7 +104,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Verwende gegebenenfalls das Kontext-Menü",
     "description":"English: Make use of context menu where appropriate"
   },
   "3pListsOfBlockedHostsPrompt":{
