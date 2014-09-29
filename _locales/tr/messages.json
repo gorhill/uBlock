@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
+    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla kullanmaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -180,11 +180,11 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"önbelleği temizle",
+    "message":"Önbelleği Temizle",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"yeni sürüm mevcut",
+    "message":"Yeni sürüm mevcut",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
