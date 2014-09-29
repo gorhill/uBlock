@@ -125,10 +125,6 @@ google.*###center_col > #tads
 # To counter `cdn-i.dmdentertainment.com` in hpHosts
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
-# Temporary, until EasyList provides a fix
-# https://github.com/gorhill/uBlock/issues/227
-@@||z.cdn.turner.com/*/ads/freewheel/*$object-subrequest,domain=nba.com
-
 # EasyPrivacy fixes
 @@||target.122.2o7.net^$domain=target.com
 @@||chiptec.net/skin/*$script
