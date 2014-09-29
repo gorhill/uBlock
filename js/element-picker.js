@@ -782,6 +782,7 @@ var startPicker = function() {
             'padding: 0;',
             'text-transform: none;',
             'vertical-align: baseline;',
+            'z-index: auto;',
         '}',
         '.µBlock button {',
             'border: 1px solid #aaa;',
