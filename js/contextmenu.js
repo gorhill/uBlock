@@ -69,6 +69,11 @@ var onContextMenuClicked = function(details, tab) {
 /******************************************************************************/
 
 var toggleMenu = function(on) {
+    // In case the permission for contextMenu was not granted.
+    if ( chrome.contextMenus === undefined ) {
+        return;
+    }
+
     // This needs to be local scope: we can't reuse it for more than one
     // menu creation call.
     var menuCreateDetails = {
