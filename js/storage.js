@@ -669,6 +669,7 @@
     var onUserSettingsReady = function(settings) {
         µb.contextMenu.toggle(settings.contextMenuEnabled);
         µb.fromSelfie(onSelfieReady);
+        µb.mirrors.toggle(settings.experimentalEnabled);
     };
 
     this.loadUserSettings(onUserSettingsReady);

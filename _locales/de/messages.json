@@ -107,6 +107,10 @@
     "message":"Verwende das Kontext-Menü, falls möglich",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Enable experimental features",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} Netzwerkfilter ＋ {{cosmeticFilterCount}} kosmetische Filter von:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

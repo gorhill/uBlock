@@ -61,6 +61,12 @@ var onUserSettingsReceived = function(details) {
         .on('change', function(){
             changeUserSettings('contextMenuEnabled', this.checked);
         });
+
+    uDom('#experimental-enabled')
+        .prop('checked', details.experimentalEnabled === true)
+        .on('change', function(){
+            changeUserSettings('experimentalEnabled', this.checked);
+        });
 };
 
 messaging.ask({ what: 'userSettings' }, onUserSettingsReceived);

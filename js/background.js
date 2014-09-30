@@ -55,6 +55,7 @@ return {
         autoUpdate: true,
         collapseBlocked: true,
         contextMenuEnabled: false,
+        experimentalEnabled: false,
         externalLists: defaultExternalLists,
         logRequests: false,
         parseAllABPHideFilters: true,

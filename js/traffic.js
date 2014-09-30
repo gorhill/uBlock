@@ -104,6 +104,14 @@ var onBeforeRequest = function(details) {
             pageStore.addFrame(frameId, requestURL);
         }
 
+        if ( µb.userSettings.experimentalEnabled ) {
+            var redirectURL = µb.mirrors.toURL(requestURL, true);
+            if ( redirectURL !== '' ) {
+                //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
+                return { redirectUrl: redirectURL };
+            }
+        }
+
         //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
         return;
     }

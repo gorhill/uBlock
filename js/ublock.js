@@ -213,7 +213,12 @@
     // Post-change
     switch ( name ) {
         case 'contextMenuEnabled':
-            this.contextMenu.toggle(value === true);
+            this.contextMenu.toggle(value);
+            break;
+        case 'experimentalEnabled':
+            if ( typeof this.mirrors === 'object' ) {
+                this.mirrors.toggle(value);
+            }
             break;
         default:
             break;
