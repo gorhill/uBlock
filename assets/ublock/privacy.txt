@@ -18,7 +18,7 @@
 # if you plan to install it alongside µBlock (suggested).
 
 # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
-||addthis.com^$third-party
+||addthis.com^$third-party,important
 
 # I think web sites can live without this
-||linkedin.com^$third-party
+||linkedin.com^$third-party,important
