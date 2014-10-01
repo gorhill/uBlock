@@ -129,6 +129,9 @@ google.*###center_col > #tads
 @@||target.122.2o7.net^$domain=target.com
 @@||chiptec.net/skin/*$script
 @@||www.youtube.com/api/analytics/*$~third-party
+@@||imasdk.googleapis.com/js/core/*$domain=foxnews.com
+@@||analytics.edgesuite.net/config/*.xml$domain=foxnews.com
+@@||analytics.edgesuite.net/html5/*.js$domain=foxnews.com
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
