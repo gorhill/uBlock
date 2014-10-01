@@ -11,10 +11,11 @@ Flexible, it's more than an "ad blocker": it can also read and create filters fr
 Out of the box, these lists of filters are loaded and enforced:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 More lists are available for you to select if you wish:
