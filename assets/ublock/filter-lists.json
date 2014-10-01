@@ -29,6 +29,11 @@
         "group": "malware",
         "homeURL": "http://www.malwaredomainlist.com/hostslist/hosts.txt"
         },
+    "easylist-downloads.adblockplus.org/fanboy-social.txt": {
+        "title": "Fanboy’s Social Blocking List",
+        "group": "social",
+        "homeURL": "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+        },
     "hosts-file.net/ad-servers": {
         "off": true,
         "title": "hpHosts’s Ad and tracking servers",
@@ -52,12 +57,6 @@
         "title": "Fanboy’s Annoyance List",
         "group": "social",
         "homeURL": "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
-        },
-    "easylist-downloads.adblockplus.org/fanboy-social.txt": {
-        "off": true,
-        "title": "Fanboy’s Social Blocking List",
-        "group": "social",
-        "homeURL": "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
         },
     "www.fanboy.co.nz/fanboy-antifacebook.txt": {
         "off": true,
