@@ -106,7 +106,7 @@ var onBeforeRequest = function(details) {
             var redirectURL = µb.mirrors.toURL(requestURL, true);
             if ( redirectURL !== '' ) {
                 pageStore.setRequestFlags(requestURL, 0x01, 0x01);
-                console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
+                //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
                 return { redirectUrl: redirectURL };
             }
         }
