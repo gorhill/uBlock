@@ -107,6 +107,10 @@
     "message":"Utnyttja kontextmenyn där så är lämpligt",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Aktivera experimentella funktioner",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

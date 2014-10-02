@@ -107,6 +107,10 @@
     "message":"Využít kontextovou nabídku kde je to možné",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Povolit experimentální funkce",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

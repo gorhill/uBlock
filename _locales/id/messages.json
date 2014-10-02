@@ -107,6 +107,10 @@
     "message":"Pergunakan menu konteks jika sesuai",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Aktifkan fitur eksperimental",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filter jaringan + filter kosmetik {{cosmeticFilterCount}} dari:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

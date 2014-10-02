@@ -107,6 +107,10 @@
     "message":"Kasuta sobivusel kontekstmenüüd",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Luba katselised funktsioonid",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} netifiltrid ＋ {{cosmeticFilterCount}} kohandatud filtrid:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

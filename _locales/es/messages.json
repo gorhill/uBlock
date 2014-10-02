@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Panel de control",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -88,11 +88,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Clic, Ctrl-clic",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Bloquear elemento",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -104,8 +104,12 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Hacer uso del menú contextual cuando \tcorresponde",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"Habilitar funciones experimentales",
+    "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtros de red y {{cosmeticFilterCount}} filtros cosméticos de:",
@@ -276,7 +280,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"No se puede conectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

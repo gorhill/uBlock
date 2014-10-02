@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"点击按钮<br>µBlock 对于当前网站<br>永久禁用或启用",
+    "message":"点击: µBlock 对此网站 禁用\/启用。Ctrl + 单击：仅在此页面禁用 µBlock。",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -88,11 +88,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"单击，按住 Ctrl 键单击",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"屏蔽元素",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -104,8 +104,12 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"加入右键菜单",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"启用实验功能",
+    "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"当前使用{{netFilterCount}} 网址过滤和{{cosmeticFilterCount}} 元素过滤规则:",

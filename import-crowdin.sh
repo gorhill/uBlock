@@ -8,6 +8,7 @@ unzip -q ~/Downloads/ublock.zip -d ~/Downloads/crowdin
 cp ~/Downloads/crowdin/ar/messages.json    ./_locales/ar/messages.json
 cp ~/Downloads/crowdin/cs/messages.json    ./_locales/cs/messages.json
 cp ~/Downloads/crowdin/da/messages.json    ./_locales/da/messages.json
+cp ~/Downloads/crowdin/el/messages.json    ./_locales/el/messages.json
 cp ~/Downloads/crowdin/es-ES/messages.json ./_locales/es/messages.json
 cp ~/Downloads/crowdin/et/messages.json    ./_locales/et/messages.json
 cp ~/Downloads/crowdin/fi/messages.json    ./_locales/fi/messages.json

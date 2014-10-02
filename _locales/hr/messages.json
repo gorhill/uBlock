@@ -107,6 +107,10 @@
     "message":"Koristite kontekstni izbornik gdje je prikladno",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Omogućiti eksperimentalne mogućnosti",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} mrežni\/ih filter\/a ＋ {{cosmeticFilterCount}} estetski\/ih filter\/a iz:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

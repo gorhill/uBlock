@@ -107,6 +107,10 @@
     "message":"Fazer o uso do menu de contexto onde apropriado",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Ativar recursos experimentais",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtros de rede + {{cosmeticFilterCount}} filtros cosméticos de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -132,7 +136,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"esconder elementos\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Habilitar este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"esconder elementos\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedido líquido.<\/p><p>Ativando este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{

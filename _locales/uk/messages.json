@@ -107,6 +107,10 @@
     "message":"Використовувати контекстне меню там, де це можливо",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsExperimentalPrompt":{
+    "message":"Увімкнути експериментальні функції",
+    "description":"English: Enable experimental features"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} мережевих фільтрів ＋ {{cosmeticFilterCount}} косметичних фільтрів з:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

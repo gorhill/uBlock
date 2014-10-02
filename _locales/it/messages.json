@@ -92,7 +92,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Blocca elemento",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -104,8 +104,12 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Usa il menu contestuale quando è possibile",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"Attiva le funzionalità sperimentali",
+    "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtri di rete + {{cosmeticFilterCount}} filtri cosmetici da:",

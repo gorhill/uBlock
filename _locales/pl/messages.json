@@ -88,11 +88,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Kliknięcie, kliknięcie z Ctrl",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Blokuj element",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -106,6 +106,10 @@
   "settingsContextMenuPrompt":{
     "message":"Make use of context menu where appropriate",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"Włącz funkcje eksperymentalne",
+    "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtry sieciowe ＋ {{cosmeticFilterCount}} filtry kosmetyczne z:",
