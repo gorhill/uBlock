@@ -529,29 +529,25 @@ var getPageDetails = function(µb, tabId) {
         var µburi = µb.URI;
         var dict = pageStore.netFilteringCache.fetchAll();
         var r = [];
-        var details, pos, result, hostname, domain;
+        var details, hostname, domain;
         for ( var url in dict ) {
             if ( dict.hasOwnProperty(url) === false ) {
                 continue;
             }
-            details = dict[url].data;
-            if ( typeof details !== 'string' ) {
-                continue;
-            }
-            pos = details.indexOf('\t');
-            result = details.slice(pos + 1);
-            if ( wantBlocked !== pageStore.boolFromResult(result) ) {
+            details = dict[url];
+            if ( wantBlocked !== pageStore.boolFromResult(details.result) ) {
                 continue;
             }
             hasher.appendStr(url);
-            hasher.appendStr(details);
+            hasher.appendStr(details.result);
             hostname = µburi.hostnameFromURI(url);
             domain = µburi.domainFromHostname(hostname) || hostname;
             r.push({
-                type: details.slice(0, pos),
-                domain: domain,
                 url: url,
-                reason: result
+                domain: domain,
+                reason: details.result,
+                type: details.type,
+                flags: details.flags
             });
         }
         return r;

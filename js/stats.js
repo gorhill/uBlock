@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* jshint bitwise: false */
 /* global chrome, uDom, messaging */
 
 /******************************************************************************/
@@ -55,6 +56,18 @@ var toPrettyTypeNames = {
 
 /******************************************************************************/
 
+var chunkify = function(s) {
+    var chunkSize = 50;
+    var chunks = [];
+    while ( s.length ) {
+        chunks.push(s.slice(0, chunkSize));
+        s = s.slice(chunkSize);
+    }
+    return chunks;
+};
+
+/******************************************************************************/
+
 var renderURL = function(url, filter) {
     var chunkSize = 50;
     // make a regex out of the filter
@@ -75,12 +88,7 @@ var renderURL = function(url, filter) {
         ;
     var re = new RegExp(reText, 'gi');
     var matches = re.exec(url);
-
-    var renderedURL = [];
-    while ( url.length ) {
-        renderedURL.push(url.slice(0, chunkSize));
-        url = url.slice(chunkSize);
-    }
+    var renderedURL = chunkify(url);
 
     if ( matches && matches[0].length ) {
         var index = (re.lastIndex / chunkSize) | 0;
@@ -145,11 +153,11 @@ var renderPageDetails = function(tabId) {
                     );
                 }
                 html.push(
-                    '<tr class="', className, ' requestEntry">',
+                    '<tr class="', className, request.flags & 0x01 ? ' logMirrored': '', ' requestEntry">',
                     '<td>',
                     '<td>', toPrettyTypeNames[request.type] || request.type,
                     '<td>', renderURL(request.url, request.reason),
-                    '<td>', request.reason || ''
+                    '<td>', chunkify(request.reason).join('\n')
                 );
             }
             return html;

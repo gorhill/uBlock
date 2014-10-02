@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* jshint bitwise: false */
 /* global µBlock */
 
 /*******************************************************************************
@@ -48,21 +49,24 @@ var netFilteringResultCacheEntryJunkyardMax = 200;
 
 /******************************************************************************/
 
-var NetFilteringResultCacheEntry = function(data) {
-    this.init(data);
+var NetFilteringResultCacheEntry = function(result, type, flags) {
+    this.init(result, type, flags);
 };
 
 /******************************************************************************/
 
-NetFilteringResultCacheEntry.prototype.init = function(data) {
-    this.data = data;
+NetFilteringResultCacheEntry.prototype.init = function(result, type, flags) {
+    this.result = result;
+    this.type = type;
+    this.flags = flags;
     this.time = Date.now();
 };
 
 /******************************************************************************/
 
 NetFilteringResultCacheEntry.prototype.dispose = function() {
-    this.data = null;
+    this.result = '';
+    this.type = '';
     if ( netFilteringResultCacheEntryJunkyard.length < netFilteringResultCacheEntryJunkyardMax ) {
         netFilteringResultCacheEntryJunkyard.push(this);
     }
@@ -70,12 +74,12 @@ NetFilteringResultCacheEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCacheEntry.factory = function(data) {
+NetFilteringResultCacheEntry.factory = function(result, type, flags) {
     var entry = netFilteringResultCacheEntryJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new NetFilteringResultCacheEntry(data);
+        entry = new NetFilteringResultCacheEntry(result, type, flags);
     } else {
-        entry.init(data);
+        entry.init(result, type, flags);
     }
     return entry;
 };
@@ -136,14 +140,16 @@ NetFilteringResultCache.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.add = function(url, data) {
+NetFilteringResultCache.prototype.add = function(url, result, type, flags) {
     var entry = this.urls[url];
     if ( entry !== undefined ) {
-        entry.data = data;
+        entry.result = result;
+        entry.type = type;
+        entry.flags = flags;
         entry.time = Date.now();
         return;
     }
-    this.urls[url] = NetFilteringResultCacheEntry.factory(data);
+    this.urls[url] = NetFilteringResultCacheEntry.factory(result, type, flags);
     if ( this.count === 0 ) {
         this.pruneAsync();
     }
@@ -184,7 +190,7 @@ NetFilteringResultCache.prototype.prune = function() {
     }
 };
 
-// https://www.youtube.com/watch?v=0vTBZzB_gfY
+// https://www.youtube.com/watch?v=hcVpbsDyOhM
 
 /******************************************************************************/
 
@@ -201,8 +207,7 @@ NetFilteringResultCache.prototype.pruneAsync = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.lookup = function(url) {
-    var entry = this.urls[url];
-    return entry !== undefined ? entry.data : undefined;
+    return this.urls[url];
 };
 
 /******************************************************************************/
@@ -308,7 +313,20 @@ PageStore.prototype.init = function(tabId, pageURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.reuse = function(pageURL) {
+PageStore.prototype.reuse = function(pageURL, context) {
+    // If URL changes without a page reload (more and more common), then we 
+    // need to keep all that we collected for reuse. In particular, not
+    // doing so was causing a problem in `videos.foxnews.com`: clicking a
+    // video thumbnail would not work, because the frame hierarchy structure
+    // was flushed from memory, while not really being flushed on the page.
+    if ( context === 'tabUpdated' ) {
+        this.previousPageURL = this.pageURL;
+        this.pageURL = pageURL;
+        this.pageHostname = µb.URI.hostnameFromURI(pageURL);
+        this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
+        return this;
+    }
+    // A new page is completely reloaded from scratch, reset all.
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     var previousPageURL = this.pageURL;
@@ -383,17 +401,26 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 /******************************************************************************/
 
 PageStore.prototype.filterRequest = function(context, requestType, requestURL) {
-    var result = this.netFilteringCache.lookup(requestURL);
-    if ( result !== undefined ) {
+    var entry = this.netFilteringCache.lookup(requestURL);
+    if ( entry !== undefined ) {
         //console.debug(' cache HIT: PageStore.filterRequest("%s")', requestURL);
-        return result.slice(result.indexOf('\t') + 1);
+        return entry.result;
     }
     //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
-    result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
+    var result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
     if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
-        this.netFilteringCache.add(requestURL, requestType + '\t' + result);
+        this.netFilteringCache.add(requestURL, result, requestType, 0);
     }
     return result;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.setRequestFlags = function(requestURL, targetBits, valueBits) {
+    var entry = this.netFilteringCache.lookup(requestURL);
+    if ( entry !== undefined ) {
+        entry.flags = (entry.flags & ~targetBits) | (valueBits & targetBits);
+    }
 };
 
 /******************************************************************************/

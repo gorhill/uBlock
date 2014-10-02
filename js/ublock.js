@@ -238,7 +238,7 @@
         return type;
     }
     var ext = path.slice(pos) + '.';
-    if ( '.eot.ttf.otf.svg.woff.'.indexOf(ext) !== -1 ) {
+    if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
         return 'stylesheet';
     }
     if ( '.ico.png.gif.jpg.jpeg.'.indexOf(ext) !== -1 ) {

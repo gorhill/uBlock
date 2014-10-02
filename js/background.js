@@ -93,7 +93,7 @@ return {
         },
         'assets/ublock/privacy.txt': {
             off: true,
-            title: 'µBlock filters - Privacy',
+            title: 'µBlock filters – Privacy',
             group: 'default'
         }
     },

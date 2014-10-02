@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* jshint bitwise: false */
 /* global chrome, YaMD5, µBlock */
 
 /******************************************************************************/
@@ -29,7 +30,16 @@
 
 /******************************************************************************/
 
+// To show keys in local storage from console:
+// chrome.storage.local.get(null, function (data) { console.log(Object.keys(data)) });
+
+// To cleanup cached items from console:
+// chrome.storage.local.get(null, function (data) { chrome.storage.local.remove(Object.keys(data).filter(function(a){ return a.indexOf('mirrors_item_') === 0; })); });
+
+
 var exports = {
+    bytesInUseMax: 5 * 1024 * 1024,
+    ttl: 21 * 24 * 60 * 60 * 1000,
     bytesInUse: 0,
     hitCount: 0
 };
@@ -38,6 +48,8 @@ var exports = {
 
 var nullFunc = function() {};
 
+// TODO: need to come up with something better. Key shoud be domain. More
+// control over what significant part(s) of a URL is to be used as key.
 var mirrorCandidates = {
           'ajax.googleapis.com': /^ajax\.googleapis\.com\/ajax\/libs\//,
          'fonts.googleapis.com': /^fonts\.googleapis\.com/,
@@ -45,27 +57,34 @@ var mirrorCandidates = {
          'cdnjs.cloudflare.com': /^cdnjs\.cloudflare\.com\/ajax\/libs\//,
               'code.jquery.com': /^code\.jquery\.com/,
                   's0.2mdn.net': /(2mdn\.net\/instream\/html5\/ima3\.js)/,
-         'connect.facebook.net': /(connect\.facebook\.net\/[^\/]+\/all\.js)/,
-    'www.googletagservices.com': /(www\.googletagservices\.com\/tag\/js\/gpt\.js)/
+    'www.googletagservices.com': /(www\.googletagservices\.com\/tag\/js\/gpt\.js)/,
+      'maxcdn.bootstrapcdn.com': /^maxcdn\.bootstrapcdn\.com\/font-awesome\//,
+      'b.scorecardresearch.com': /^b\.scorecardresearch\.com\/beacon\.js/,
+         'platform.twitter.com': /^platform\.twitter\.com\/widgets\.js/,
+        'cdn.quilt.janrain.com': /^cdn\.quilt\.janrain\.com\//
 };
 
-
 var magicId = 'rmwwgwkzcgfv';
-var bytesInUseMax = 20 * 1024 * 1024;
-var ttl = 30 * 24 * 60 * 60 * 1000;
 var metadataPersistTimer = null;
+var bytesInUseMercy = 1 * 1024 * 1024;
 
 var metadata = {
     magicId: magicId,
     urlKeyToHashMap: {}
 };
 
-// Hash to content map
-var hashToDataUrlMap = {};
+var hashToContentMap = {};
 
 var loaded = false;
 
 /******************************************************************************/
+
+// Ideally, URL keys and access time would be attached to the data URL entry 
+// itself, but then this would mean the need to persist the whole data URL 
+// every time a new URL key is added or the data URL is accessed, and given the
+// data URL can be quite large, that would make no sense efficiency-wise to 
+// re-persist the whole thing.
+// So, ContentEntry persisted once, MetadataEntry persisted often.
 
 var MetadataEntry = function(hash) {
     this.accessTime = Date.now();
@@ -98,6 +117,64 @@ var getTextFileFromURL = function(url, onLoad, onError) {
 
 /******************************************************************************/
 
+// Safe binary-to-base64. Because window.btoa doesn't work for binary data...
+//
+// This implementation doesn't require the creation of a full-length 
+// intermediate buffer. I expect less short-term memory use will translate in 
+// more efficient conversion. Hopefully I will get time to confirm with 
+// benchmarks in the future.
+
+var btoaMap = (function(){
+    var out = new Uint8Array(64);
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var i = chars.length;
+    while ( i-- ) {
+        out[i] = chars.charCodeAt(i);
+    }
+    return out;
+})();
+
+var btoaSafe = function(input) {
+    var output = [];
+    var bamap = btoaMap;
+    var n = Math.floor(input.length / 3) * 3;
+    var b1, b2, b3;
+    for ( var ii = 0; ii < n; ii += 3 ) {
+        b1 = input.charCodeAt(ii  );
+        b2 = input.charCodeAt(ii+1);
+        b3 = input.charCodeAt(ii+2);
+        output.push(String.fromCharCode(
+            bamap[                   b1 >>> 2],
+            bamap[(b1 & 0x03) << 4 | b2 >>> 4],
+            bamap[(b2 & 0x0F) << 2 | b3 >>> 6],
+            bamap[ b3 & 0x3F                 ]
+        ));
+    }
+    // Leftover
+    var m = input.length - n;
+    if ( m > 1 ) {
+        b1 = input.charCodeAt(ii  );
+        b2 = input.charCodeAt(ii+1);
+        output.push(String.fromCharCode(
+            bamap[                   b1 >>> 2],
+            bamap[(b1 & 0x03) << 4 | b2 >>> 4],
+            bamap[(b2 & 0x0F) << 2],
+            0x3D
+        ));
+    } else if ( m !== 0 ) {
+        b1 = input.charCodeAt(ii);
+        output.push(String.fromCharCode(
+            bamap[                   b1 >>>2],
+            bamap[(b1 & 0x03) << 4          ],
+            0x3D,
+            0x3D
+        ));
+    }
+    return output.join('');
+};
+
+/******************************************************************************/
+
 // Extract a `key` from a URL.
 
 var toUrlKey = function(url) {
@@ -111,10 +188,10 @@ var toUrlKey = function(url) {
     url = url.slice(pos + 3);
     pos = url.indexOf('/');
     if ( pos === -1 ) {
-        return -1;
+        return '';
     }
     var re = mirrorCandidates[url.slice(0, pos)];
-    if ( typeof re !== 'object' || typeof re.test !== 'function' ) {
+    if ( typeof re !== 'object' || typeof re.exec !== 'function' ) {
         return '';
     }
     var matches = re.exec(url);
@@ -148,13 +225,84 @@ var normalizeContentType = function(ctin) {
 /******************************************************************************/
 
 var metadataExists = function(urlKey) {
-    return typeof urlKey === 'string' && metadata.urlKeyToHashMap.hasOwnProperty(urlKey);
+    return typeof urlKey === 'string' &&
+           metadata.urlKeyToHashMap.hasOwnProperty(urlKey);
 };
 
 /******************************************************************************/
 
 var contentExists = function(hash) {
-    return typeof hash === 'string' && hashToDataUrlMap.hasOwnProperty(hash);
+    return typeof hash === 'string' &&
+           hashToContentMap.hasOwnProperty(hash);
+};
+
+/******************************************************************************/
+
+var storageKeyFromHash = function(hash) {
+    return 'mirrors_item_' + hash;
+};
+
+/******************************************************************************/
+
+// Given that a single data URL can be shared by many URL keys, pruning is a
+// bit hairy. So the steps are:
+// - Collate information about each data URL:
+//   - Last time they were used
+//   - Which URL keys reference them
+// This will allow us to flush from memory the ones least recently used first.
+
+var pruneToSize = function(toSize) {
+    if ( exports.bytesInUse < toSize ) {
+        return;
+    }
+    var k2hMap = metadata.urlKeyToHashMap;
+    var h2cMap = hashToContentMap;
+    var urlKey, hash;
+    var mdEntry, ctEntry, prEntry;
+    var pruneMap = {};
+    for ( urlKey in k2hMap ) {
+        if ( k2hMap.hasOwnProperty(urlKey) === false ) {
+            continue;
+        }
+        mdEntry = k2hMap[urlKey];
+        hash = mdEntry.hash;
+        if ( pruneMap.hasOwnProperty(hash) === false ) {
+            pruneMap[hash] = {
+                urlKeys: [urlKey],
+                accessTime: mdEntry.accessTime
+            };
+            continue;
+        }
+        prEntry = pruneMap[hash];
+        prEntry.urlKeys.push(urlKey);
+        prEntry.accessTime = Math.max(prEntry.accessTime, mdEntry.accessTime);
+    }
+    // Least recent at the end of array
+    var compare = function(a, b) {
+        return pruneMap[b].accessTime - pruneMap[a].accessTime;
+    };
+    var hashes = Object.keys(pruneMap).sort(compare);
+    var toRemove = [];
+    var i = hashes.length;
+    while ( i-- ) {
+        hash = hashes[i];
+        prEntry = pruneMap[hash];
+        ctEntry = h2cMap[hash];
+        delete h2cMap[hash];
+        toRemove.push(storageKeyFromHash(hash));
+        exports.bytesInUse -= ctEntry.dataURL.length;
+        while ( urlKey = prEntry.urlKeys.pop() ) {
+            delete k2hMap[urlKey];
+        }
+        if ( exports.bytesInUse < toSize ) {
+            break;
+        }
+    }
+    if ( toRemove.length !== 0 ) {
+        //console.debug('mirrors.pruneToSize(%d): removing %o', toSize, toRemove);
+        removeContent(toRemove);
+        updateMetadataNow();
+    }
 };
 
 /******************************************************************************/
@@ -166,16 +314,7 @@ var updateMetadata = function() {
 
 /******************************************************************************/
 
-var updateMetadataAsync = function(urlKey, hash) {
-    var doesExist = metadataExists(urlKey);
-    if ( doesExist ) {
-        metadata.urlKeyToHashMap[urlKey].accessTime = Date.now();
-        if ( metadataPersistTimer === null ) {
-            setTimeout(updateMetadata, 60 * 1000);
-        }
-        return;
-    }
-    metadata.urlKeyToHashMap[urlKey] = new MetadataEntry(hash);
+var updateMetadataNow = function() {
     if ( metadataPersistTimer !== null ) {
         clearTimeout(metadataPersistTimer);
     }
@@ -184,16 +323,45 @@ var updateMetadataAsync = function(urlKey, hash) {
 
 /******************************************************************************/
 
-var updateContent = function(hash, dataURL) {
-    if ( contentExists(hash) !== false ) {
+var updateMetadataAsync = function() {
+    if ( metadataPersistTimer === null ) {
+        setTimeout(updateMetadata, 60 * 1000);
+    }
+};
+
+/******************************************************************************/
+
+var addMetadata = function(urlKey, hash) {
+    metadata.urlKeyToHashMap[urlKey] = new MetadataEntry(hash);
+    updateMetadataNow();
+};
+
+/******************************************************************************/
+
+var removeMetadata = function(urlKey) {
+    delete metadata.urlKeyToHashMap[urlKey];
+};
+
+/******************************************************************************/
+
+var addContent = function(hash, dataURL) {
+    if ( contentExists(hash) ) {
         return;
     }
-    var contentEntry = hashToDataUrlMap[hash] = new ContentEntry(dataURL);
+    var contentEntry = hashToContentMap[hash] = new ContentEntry(dataURL);
     exports.bytesInUse += dataURL.length;
-    var key = 'mirrors_item_' + hash;
     var bin = {};
-    bin[key] = contentEntry;
+    bin[storageKeyFromHash(hash)] = contentEntry;
     chrome.storage.local.set(bin);
+    if ( exports.bytesInUse >= exports.bytesInUseMax + bytesInUseMercy ) {
+        pruneToSize(exports.bytesInUseMax);
+    }
+};
+
+/******************************************************************************/
+
+var removeContent = function(what) {
+    chrome.storage.local.remove(what);
 };
 
 /******************************************************************************/
@@ -218,7 +386,7 @@ var cacheAsset = function(url) {
         yamd5.appendAsciiStr(contentType);
         yamd5.appendAsciiStr(this.response);
         var hash = yamd5.end();
-        updateMetadataAsync(urlKey, hash);
+        addMetadata(urlKey, hash);
         if ( contentExists(hash) ) {
             //console.debug('mirrors.cacheAsset(): reusing existing content for "%s"', urlKey);
             return;
@@ -226,10 +394,18 @@ var cacheAsset = function(url) {
         //console.debug('mirrors.cacheAsset(): caching new content for "%s"', urlKey);
         // Keep original encoding if there was one, otherwise use base64 --
         // as the result is somewhat more compact I believe
-        var dataUrl = contentType.indexOf(';') !== -1 ?
-            'data:' + contentType + ',' + encodeURIComponent(this.responseText) :
-            'data:' + contentType + ';base64,' + btoa(this.response);
-        updateContent(hash, dataUrl);
+        var dataUrl = null;
+        try {
+            dataUrl = contentType.indexOf(';') !== -1 ?
+                'data:' + contentType + ',' + encodeURIComponent(this.responseText) :
+                'data:' + contentType + ';base64,' + btoa(this.response);
+        } catch (e) {
+            //console.debug(e);
+        }
+        if ( dataUrl === null ) {
+            dataUrl = 'data:' + contentType + ';base64,' + btoaSafe(this.response);
+        }
+        addContent(hash, dataUrl);
     };
 
     var onRemoteAssetError = function() {
@@ -256,14 +432,18 @@ var toURL = function(url, cache) {
         }
         return '';
     }
+    var dataURL = '';
     var metadataEntry = metadata.urlKeyToHashMap[urlKey];
-    if ( contentExists(metadataEntry.hash) === false ) {
-        return '';
+    if ( contentExists(metadataEntry.hash) ) {
+        dataURL = hashToContentMap[metadataEntry.hash].dataURL;
+        metadataEntry.accessTime = Date.now();
+        exports.hitCount += 1;
+    } else {
+        //console.debug('mirrors.toURL(): content not found "%s"', url);
+        delete metadata.urlKeyToHashMap[urlKey];
     }
-    var contentEntry = hashToDataUrlMap[metadataEntry.hash];
-    updateMetadataAsync(urlKey);
-    exports.hitCount += 1;
-    return contentEntry.dataURL;
+    updateMetadataAsync();
+    return dataURL;
 };
 
 /******************************************************************************/
@@ -271,46 +451,55 @@ var toURL = function(url, cache) {
 var load = function() {
     loaded = true;
 
-    var loadContent = function(hash) {
-        var key = 'mirrors_item_' + hash;
+    var loadContent = function(urlKey, hash) {
+        var binKey = storageKeyFromHash(hash);
         var onContentReady = function(bin) {
-            if ( chrome.runtime.lastError ) {
+            if ( chrome.runtime.lastError || bin.hasOwnProperty(binKey) === false ) {
+                //console.debug('mirrors.load(): failed to load content "%s"', binKey);
+                removeMetadata(urlKey);
+                removeContent(binKey);
                 return;
             }
-            var contentEntry = bin[key];
-            hashToDataUrlMap[hash] = contentEntry;
-            exports.bytesInUse += contentEntry.dataURL.length;
+            //console.debug('mirrors.load(): loaded content "%s"', binKey);
+            var ctEntry = hashToContentMap[hash] = bin[binKey];
+            exports.bytesInUse += ctEntry.dataURL.length;
         };
-        var bin = {};
-        bin[key] = '';
-        chrome.storage.local.get(bin, onContentReady);
+        chrome.storage.local.get(binKey, onContentReady);
     };
 
     var onMetadataReady = function(bin) {
-        if ( chrome.runtime.lastError ) {
-            return;
-        }
+        //console.debug('mirrors.load(): loaded metadata');
         metadata = bin.mirrors_metadata;
-        var hemap = metadata.urlKeyToHashMap;
-        for ( var urlKey in hemap ) {
-            if ( hemap.hasOwnProperty(urlKey) === false ) {
+        var toRemove = [];
+        var u2hmap = metadata.urlKeyToHashMap;
+        var hash;
+        for ( var urlKey in u2hmap ) {
+            if ( u2hmap.hasOwnProperty(urlKey) === false ) {
                 continue;
             }
-            loadContent(hemap[urlKey].hash);
+            hash = u2hmap[urlKey].hash;
+            if ( metadata.magicId !== magicId ) {
+                toRemove.push(storageKeyFromHash(hash));
+                removeMetadata(urlKey);
+                continue;
+            }
+            loadContent(urlKey, hash);
+        }
+        if ( toRemove.length !== 0 ) {
+            removeContent(toRemove);
+            updateMetadataNow();
         }
     };
 
-    chrome.storage.local.get({ 'mirrors_metadata' : metadata }, onMetadataReady);
+    chrome.storage.local.get({ 'mirrors_metadata': metadata }, onMetadataReady);
 };
 
 /******************************************************************************/
 
 var unload = function() {
-    if ( metadataPersistTimer !== null ) {
-        updateMetadata();
-    }
+    updateMetadataNow();
     metadata.urlKeyToHashMap = {};
-    hashToDataUrlMap = {};
+    hashToContentMap = {};
     exports.bytesInUse = 0;
     exports.hitCount = 0;
 
@@ -332,6 +521,7 @@ exports.toggle = function(on) {
 // Export API
 
 exports.toURL = toURL;
+exports.pruneToSize = pruneToSize;
 
 return exports;
 

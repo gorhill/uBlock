@@ -40,20 +40,9 @@ var onBeforeRequest = function(details) {
         return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/206
-    // https://code.google.com/p/chromium/issues/detail?id=410382
-    // Work around the issue of Chromium not properly setting the type for
-    // `object` requests. Unclear whether this issue will be fixed, hence this
-    // workaround to prevent torch-and-pitchfork mobs because ads are no longer
-    // blocked in videos.
-    // onBeforeSendHeaders() will handle this for now.
-    var requestType = details.type;
-    if ( requestType === 'other' ) {
-        return;
-    }
-
     var µb = µBlock;
     var requestURL = details.url;
+    var requestType = details.type;
 
     // Special handling for root document.
     if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
@@ -64,13 +53,20 @@ var onBeforeRequest = function(details) {
     // Commented out until (and if ever) there is a fix for:
     // https://code.google.com/p/chromium/issues/detail?id=410382
     //
-    // Try to transpose generic `other` category into something more
-    // meaningful.
-    //var µburi = µb.URI.set(requestURL);
-    //var requestPath = µburi.path;
-    //if ( requestType === 'other' ) {
-    //    requestType = µb.transposeType(requestType, requestPath);
-    //}
+    // Try to transpose generic `other` category into something more meaningful.
+    if ( requestType === 'other' ) {
+        requestType = µb.transposeType('other', µb.URI.set(requestURL).path);
+        // https://github.com/gorhill/uBlock/issues/206
+        // https://code.google.com/p/chromium/issues/detail?id=410382
+        // Work around the issue of Chromium not properly setting the type for
+        // `object` requests. Unclear whether this issue will be fixed, hence 
+        // this workaround to prevent torch-and-pitchfork mobs because ads are 
+        // no longer blocked in videos.
+        // onBeforeSendHeaders() will handle this for now.
+        if ( requestType === 'other' ) {
+            return;
+        }
+    }
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
@@ -105,9 +101,12 @@ var onBeforeRequest = function(details) {
         }
 
         if ( µb.userSettings.experimentalEnabled ) {
+            // https://code.google.com/p/chromium/issues/detail?id=387198
+            // Not all redirects will succeed, until bug above is fixed.
             var redirectURL = µb.mirrors.toURL(requestURL, true);
             if ( redirectURL !== '' ) {
-                //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
+                pageStore.setRequestFlags(requestURL, 0x01, 0x01);
+                console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
                 return { redirectUrl: redirectURL };
             }
         }
@@ -125,7 +124,7 @@ var onBeforeRequest = function(details) {
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
 
-    //console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
+    // console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
     return { 'cancel': true };
 };
 
@@ -227,19 +226,22 @@ var cr410382Workaround = function(details) {
     var µb = µBlock;
     var requestURL = details.url;
     var µburi = µb.URI.set(requestURL);
-    var requestPath = µburi.path;
+
+    // If the type can be successfully transposed, this means the request
+    // was processed at onBeforeRequest time.
+    if ( µb.transposeType('other', µburi.path) !== 'other' ) {
+        return;
+    }
 
     // Lookup "X-Requested-With" header: this will tell us whether the request
     // is of type "object".
     // Reference: https://code.google.com/p/chromium/issues/detail?id=145090
     var requestedWith = headerValue(details.requestHeaders, 'x-requested-with');
 
-    // Try to transpose generic `other` category into something more
-    // meaningful.
     // Reference: https://codereview.chromium.org/451923002/patch/120001/130008
     var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
         'object' :
-        µb.transposeType(details.type, requestPath);
+        'other';
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(details.tabId);
@@ -364,8 +366,8 @@ chrome.webRequest.onBeforeRequest.addListener(
             "script",
             "image",
             "object",
-            "xmlhttprequest"
-            // "other"       // Because cr410382Workaround()
+            "xmlhttprequest",
+            "other"
         ]
     },
     [ "blocking" ]

@@ -46,7 +46,7 @@
         if ( !changeInfo.url ) {
             return;
         }
-        µb.bindTabToPageStats(tabId, changeInfo.url);
+        µb.bindTabToPageStats(tabId, changeInfo.url, 'tabUpdated');
     }
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
@@ -103,7 +103,7 @@
 
     if ( pageStore ) {
         if ( pageURL !== pageStore.pageURL || context === 'beforeRequest' ) {
-            pageStore.reuse(pageURL);
+            pageStore.reuse(pageURL, context);
         }
     } else {
         pageStore = this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL);
