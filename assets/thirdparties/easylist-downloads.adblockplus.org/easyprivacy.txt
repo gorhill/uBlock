@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: gljQdaTElOcZGUeYvgFyzg
-! Version: 201409281621
+! Checksum: bSRtPi6/mtJZoTEbDemx7Q
+! Version: 201410022021
 ! Title: EasyPrivacy
-! Last modified: 28 Sep 2014 16:21 UTC
+! Last modified: 02 Oct 2014 20:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -492,6 +492,7 @@
 /clickability-
 /clickability.
 /clickability/*
+/clickability2/*
 /clickAnalyse.
 /clickcount.cfm?
 /clickcount_
@@ -705,6 +706,8 @@
 /event/*/*?*&euidl=*&url=
 /eventLogServlet?
 /eventtracker.js
+/evercookie.
+/evercookie/*
 /evercookie_
 /ewtrack.
 /EWTRACK_
@@ -1020,6 +1023,7 @@
 /IVWAnalytics.
 /ivwbox/*
 /IVWTracker.swf
+/iwa.js
 /javascript/analytics/*
 /javascript/ci/*landing.js$script
 /Javascript/ga.js
@@ -2291,6 +2295,7 @@ http://utm.
 ||acestats.net^$third-party
 ||acetrk.com^$third-party
 ||acint.net^$third-party
+||acq.io^$third-party
 ||active-trk7.com^$third-party
 ||activeconversion.com^$third-party
 ||activemeter.com^$third-party
@@ -3012,6 +3017,7 @@ http://utm.
 ||leadsius.com^$third-party
 ||legolas-media.com^$third-party
 ||les-experts.com^$third-party
+||letterboxtrail.com^$third-party
 ||levexis.com^$third-party
 ||lexity.com^$third-party
 ||lfov.net^$third-party
@@ -3159,6 +3165,7 @@ http://utm.
 ||netmining.com^$third-party
 ||netmng.com^$third-party
 ||netratings.com^$third-party
+||newpoints.info^$third-party
 ||newrelic.com^$third-party
 ||newscurve.com^$third-party
 ||newstatscounter.info^$third-party
@@ -3247,7 +3254,6 @@ http://utm.
 ||petametrics.com^$third-party
 ||phonalytics.com^$third-party
 ||phone-analytics.com^$third-party
-||piano-media.com^$third-party
 ||pickzor.com^$third-party
 ||pikzor.com^$third-party
 ||ping-fast.com^$third-party
@@ -3327,6 +3333,7 @@ http://utm.
 ||rapidstats.net^$third-party
 ||rating.in^$third-party
 ||reachforce.com^$third-party
+||reachsocket.com^$third-party
 ||reactful.com^$third-party
 ||readertracking.com^$third-party
 ||readnotify.com^$third-party
@@ -3474,6 +3481,7 @@ http://utm.
 ||speed-trap.com^$third-party
 ||splittag.com^$third-party
 ||splurgi.com^$third-party
+||splyt.com^$third-party
 ||spn.ee^$third-party
 ||spotmx.com^$third-party
 ||spring.de^$third-party
@@ -3552,6 +3560,7 @@ http://utm.
 ||tcactivity.net^$third-party
 ||tcimg.com^$third-party
 ||tdstats.com^$third-party
+||tealiumiq.com^$third-party
 ||telemetrytaxonomy.net^$third-party
 ||telize.com^$third-party
 ||teljari.is^$third-party
@@ -3790,6 +3799,7 @@ http://utm.
 ||zoomino.com^$third-party
 ||zoosnet.net^$third-party
 ||zowary.com^$third-party
+||zqtk.net^$third-party
 ||zroitracker.com^$third-party
 !-----------------International third-party tracking domains-----------------!
 ! *** easylist:easyprivacy/easyprivacy_trackingservers_international.txt ***
@@ -4312,6 +4322,7 @@ http://utm.
 ||clickonometrics.pl^$third-party
 ||gemius.pl^$third-party
 ||gostats.pl^$third-party
+||interia.pl^$third-party
 ||legenhit.com^$third-party
 ||ngacm.com^$third-party
 ||ngastatic.com^$third-party
@@ -6728,6 +6739,7 @@ http://utm.
 ||dell.com/metrics/
 ||depositfiles.com/view.gif?
 ||derkeiler.com/gam/tag.js
+||designtaxi.com/tracker.php
 ||destructoid.com/img2.phtml?
 ||diag.doba.com^
 ||dictionary.com/track/
@@ -6881,6 +6893,8 @@ http://utm.
 ||foxbusiness.com/control/
 ||foxtel.com.au/cms/fragments/corp_analytics/
 ||freaksofcock.com/track/
+||free-tv-video-online.me/imp.php?
+||free-tv-video-online.me/resources/js/counter.js
 ||freebase.com/log?
 ||freebiesms.com/tracker.aspx?
 ||freecause.com^*.png?
@@ -8163,6 +8177,7 @@ http://utm.
 ||yourtv.com.au/share/com/js/fb_google_intercept.js
 ||youtube-nocookie.com/device_204?
 ||youtube-nocookie.com/gen_204?
+||youtube-nocookie.com/ptracking?
 ||youtube-nocookie.com/robots.txt?
 ||youtube.com/api/stats/ads?
 ||youtube.com/gen_204?
@@ -8887,6 +8902,7 @@ http://utm.
 @@||analytics.edgesuite.net/html5/akamai*.js$domain=resignationbrewery.com
 @@||analytics.rogersmedia.com/js/rdm_dil_code.full.js$domain=rogersradio.ca
 @@||analytics.rogersmedia.com/js/rdm_s_code.min.js$domain=rogersradio.ca
+@@||analytics.twitter.com^$domain=analytics.twitter.com
 @@||anthem.com/includes/foresee/foresee-trigger.js
 @@||aol.com/mm_track/slideshow/$subdocument
 @@||aolcdn.com/js/mg2.js$domain=autoblog.com|autos.aol.com|dailyfinance.com
@@ -9024,7 +9040,7 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|deviantart.com|infogr.am|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|cliphunter.com|deviantart.com|infogr.am|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com
 @@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
@@ -9274,6 +9290,7 @@ http://utm.
 @@||yimg.com^*/ywa.js$domain=nydailynews.com|travelscream.com|yahoo.com
 @@||ynet.co.il/Common/App/Video/Gemius/gstream.js
 @@||ynetnews.com/Common/App/Video/Gemius/gstream.js
+@@||youtube.com/api/analytics/$~third-party
 @@||zappos.com/js/trackingPixel/mercentTracker.js
 @@||zillowstatic.com/c/*/linktrack.js$domain=zillow.com
 @@||zylom.com/images/site/zylom/scripts/google-analytics.js
@@ -9284,7 +9301,7 @@ http://utm.
 @@||112.2o7.net/b/ss/$image,domain=espn.com.br
 @@||122.2o7.net/b/ss/$image,domain=billetnet.dk|billettservice.no|citibank.co.in|goal.com|lippupalvelu.fi|pcworld.com|riverisland.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se
 @@||fandango.com/b/ss/$image
-@@||globalnews.ca/b/ss/
+@@||globalnews.ca/b/ss/$image
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
 @@||kohls.com/b/ss/$image
 @@||metrics.ancestry.com/b/ss/$image
@@ -9443,6 +9460,7 @@ http://utm.
 @@||stat24.com/crossdomain.xml$domain=ipla.tv
 ! Portuguese
 @@||77.91.202.130/js/20050/xiti.js$domain=custojusto.pt
+@@||chiptec.net/skin/*/GoogleAnalyticsPlus/$script
 @@||dfdbz2tdq3k01.cloudfront.net/js/2.1.0/IbtRealTimeSJ/IbtRealTimeSJ.js?$domain=social.economico.pt
 @@||dfdbz2tdq3k01.cloudfront.net/js/2.1.0/IbtRealTimeSJ/IbtRealTimeSJCore.js?$domain=social.economico.pt
 @@||dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js$domain=social.economico.pt

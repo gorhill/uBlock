@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4566
-! Last modified: 28 Sep 2014
+! Version: 4569
+! Last modified: 1 Oct 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -129,6 +129,7 @@
 ##[href^="http://fdownload52.com/"]
 ##[href^="http://downupfiles.com/"]
 ##[href^="http://track.cmllk1.info/"]
+##[href^="http://gripdownloads.co/"]
 !
 !
 !
@@ -4561,6 +4562,8 @@ shortz.so##[onclick="awaiting();"]
 ||grippedownloads.co^
 ||gta5millions.com^
 ||methodelafayfemme.fr^
+||gripdownloads.co^
+||snapchathack.org^
 !
 !
 !

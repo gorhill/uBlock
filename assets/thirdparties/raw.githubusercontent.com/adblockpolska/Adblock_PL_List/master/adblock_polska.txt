@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
 ! Homepage: http://fb.com/adblockpl
-! Last modified: 25 September 2014
+! Last modified: 29 September 2014
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126
 ! License: GNU GPL v3
@@ -14,7 +14,6 @@
 .info/images/banners/
 .goldbachpoland.
 .pl/*/adds/
-.pl/*/ads/
 .pl/data/banners
 .pl/images/baner-
 .pl/images/banners/*swf
@@ -25,6 +24,7 @@
 .pl/files/bannery/
 .pl/news/banery/
 .pl/wp-content/banners/
+/1100x200_
 /300x750_
 /300x700_
 /adexon_
@@ -113,6 +113,7 @@ washa_reklama
 ##.adoHide.adoSlv.OnTop
 ##.adSrodek
 ##.advert
+##.ad.top
 ##.ad_block
 ##.ad-vig
 ##.adv_info
@@ -130,7 +131,6 @@ washa_reklama
 ##.bnMiddle
 ##.drutexban
 ##.flexbanneritem
-##.forceRefresh.disableScreeningClick.adoHide.adoSlv.OnTop
 ##.google_468x60
 ##.index_banner
 ##.main-tbaner
@@ -260,13 +260,16 @@ washa_reklama
 ||extra-plonsk.pl/images/banners/
 ||fakty-wiadomosci.pl
 ||fm.tuba.pl*prosba.jpg
-||fwcdn.pl/adv/*
-||filmweb.pl/welcomeScreenJS?*
+||fwcdn.pl/adv/
+||filmweb.pl/welcomeScreenJS?
 ||gry-online.pl/im/zmieniarka/
 ||hub.com.pl
 ||img.wiocha.pl/img/gry
 ||infogazeta.pl
+||infoweb-24.com
+||infoweb-24.pl
 ||j.o2.pl
+||jbzd.pl/public/*swf
 ||jelonka.com/flash/
 ||komputerswiat.pl/static/v1/gfx/additional_sections/lg/background
 ||koscian.net/js/scripts.js?
@@ -276,8 +279,7 @@ washa_reklama
 ||lubartow24.pl/f*_bok.
 ||moneystrategy.info/b/
 ||moviechannel.pl
-||myao.adocean.pl$domain=tvp.pl
-||napisy24.pl/files/*
+||napisy24.pl/files/
 ||napisy24.pl/images/190x260x_
 ||partner.vinemo.pl
 ||pclab.pl/img/extra/*_top.png
@@ -302,7 +304,6 @@ washa_reklama
 ||supernowosci24.pl/openx/www/delivery/
 ||supernowosci24.pl/wp-content/uploads/pliki/*swf
 ||superwiadomosci24.pl
-||tvn.adocean.pl/files/*.swf
 ||video.vid4u.org
 ||wiadomosci-fakty.pl
 ||wiadomosci-kraj.pl
@@ -326,9 +327,9 @@ washa_reklama
 ||clangames.pl^$third-party
 ||comperialead.pl^$third-party
 ||contextad.pl^$third-party
+||cudne.pl^$third-party
 ||dobryinteres.pl^&$third-party
 ||gemius.pl$third-party,popup
-||gg.adocean.pl$third-party
 ||glossymedia.pl^$third-party
 ||incontext.pl^$third-party
 ||intextad.net^$third-party
@@ -359,7 +360,7 @@ chip.pl##.portlet.portletCeneo
 chip.pl##.portletReklama
 chip.pl##.portletWrapper.kssattr-portlethash-706c6f6e652e7269676874636f6c756d6e7468656d6174696373657276696365730a636f6e746578740a2f636869700a637573746f6d2d626f782d31
 chip.pl##[action^="http://www.njobs.eu/search"]
-epoznan.pl##[id="news-gallery-overlay"]
+epoznan.pl###news-gallery-overlay
 filmweb.pl###flashcontent3
 filmweb.pl###homeBar1-pl_PL
 filmweb.pl##[id^="homeBox"]
@@ -367,7 +368,6 @@ filmweb.pl##.relative.iplaParent
 formentorplus.pl##form
 fotosik.pl##.adv
 fronda.pl##.small-info
-fukk.pl###comment-captcha
 gazeta.pl##[class^="mod mod_cpCommerce"]
 gazetapolska.pl##[style="float: left; width: 980px; display: block;"]
 gazetapolska.pl##[style="float: left;width:980px;"]
@@ -390,6 +390,7 @@ koscian.net##[class^="banery"]
 kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; display: block;"]
 lubin.pl###banner
 luxclub.pl##.policyLink
+macrumors.com##.ad
 miedzyrzec.info##[id^="baner"]
 moszczenica.info##.bannergroup
 mpolska24.pl##.tplAds
@@ -403,7 +404,6 @@ newsweek.pl##[href^="http://www.agito.pl/ofertadnia?"]
 nocoty.pl###slider300Wrapper
 nudziara.pl###post.format_post.nudziara.masonry-brick
 optyczne.pl##.center
-optyczne.pl##.skyscraper
 optyczne.pl###warning
 orneta.net##.lof-container
 oxforddictionaries.com##.responsive_cell_whole
@@ -428,6 +428,7 @@ se.pl##[class^="item art_reklama"]
 serwislokalny.com##.banner
 spidersweb.pl##.four.columns.hide-for-small
 spidersweb.pl##.g.g-16
+spidersweb.pl##.viking_intro
 sport.pl##.mod.mod_cpCommerce.small
 sportowefakty.pl##.centered.spaced
 supernowosci24.pl###notificationbar
@@ -437,7 +438,6 @@ swidniczka.com##.marconi
 telepolis.pl##.b_750
 telepolis.pl##.wiadomosci_lista_div
 telepolis.pl##[style="text-align:center; width:369px; height:285px;"]
-tvn24.pl##[class^="adoHide"]
 tvp.pl##.rectangleWrapper.hidden-phone
 twojapogoda.pl##.billboard
 walbrzyszek.com##.marconi

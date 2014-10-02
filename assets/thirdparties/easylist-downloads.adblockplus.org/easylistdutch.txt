@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: JcYRLw7IzzYNLT7uiB7dNQ
-! Version: 201409281621
+! Checksum: FRo0pqj6qy7cNR+vX8WCKA
+! Version: 201410022021
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 28 Sep 2014 16:21 UTC
+! Last modified: 02 Oct 2014 20:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -41,6 +41,7 @@
 /reclame-nieuws.
 /reclame.*=banner&
 /reclame2.
+/reclamebanners/*
 /scripts/edoris/edoris.dll?tem=ln_banner_view&
 /scripts/edoris/shared/*$object
 /small_reclames/*
@@ -667,6 +668,7 @@ _advertentieleaderboardhome.
 ||zalando.nl/pop/$popup
 !--------Uitzonderingen (derden)--------!
 ! *** easylistdutch/block_third_party_whitelist.txt ***
+@@||advertentieplanet.nl/public/advertenties/
 @@||media.rtl.nl/web/components/service/streamspots/*.mp4$object-subrequest,domain=538.nl|rtl7darts.nl
 @@||staticfinancereview.nl/advertenties/$image,domain=rente.nl
 ! Uitzonderingen voor EasyList

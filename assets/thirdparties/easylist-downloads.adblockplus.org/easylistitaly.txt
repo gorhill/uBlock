@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 89J92/e0ZvUPvFUe9WFXdA
-! Version: 201409281621
+! Checksum: EuqPA9ZfwrRsn1dqQDnK/w
+! Version: 201410022021
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 28 Sep 2014 16:21 UTC
+! Ultima modifica: 02 Oct 2014 20:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -165,6 +165,7 @@ _sito/adv/
 ##.tabellaPubblicita
 ##.tccbanner
 ##.view-pubblicita
+##a[href^="http://adserver.html.it/"]
 ##a[href^="http://adserver.ilmessaggero.it/"]
 ##a[href^="http://crazylead.com/video/"]
 ##a[href^="http://edintorni.net/related/service/sponsor/redirect/?"]
@@ -440,6 +441,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||serverplan.com/affiliati/$third-party
 ||servizi-web-marketing.it^$image,third-party
 ||sessotop.com/img/annunci*.gif
+||simpleview.it^*/ptnrship/
 ||sitinuovi.it/banner/
 ||sk1.it/images/banners/
 ||sk1.it/images/promo/
@@ -590,6 +592,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||atlassib.it^*/banner/
 ||atnews.it^*/1000x40_
 ||audi-usato.motori24.ilsole24ore.com^
+||audirsclub.it/images/banners/
+||audirsclub.it/images/misc/Faratech3.png
 ||autoinserzioni.it/css/images/banner_
 ||autoline-eu.it/atlads/
 ||automania.it^*-238x60-anim.gif
@@ -900,6 +904,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||hi-techitaly.com/images/banners/
 ||histonium.net/moduli/banner/
 ||hostgame.it/images/banner/
+||html.it^*/banner/
 ||html5today.it/images/banners/
 ||hubcomunicazione.it/images/banners/
 ||hwmobile.it/images/banners/
@@ -1918,6 +1923,7 @@ kveeniland.com,poseidonbistro.com###nebanner
 telefonino.net###news336x280GoogleBox
 agimondo.it###overhp
 studiocataldi.it###overlayer
+globalist.it###pCollar_c
 pcworld.it###pangora-chunnel
 amicidimotociclismo.it###partnerfooter
 fantascienza.com###partners
@@ -2198,6 +2204,7 @@ ilgiornale.it##.block-ilg-adsense
 ilcapoluogo.com##.block-view-bannerSlide
 risultati.it##.bookmarker-53
 beppegrillo.it##.bottom-banner
+pmi.it##.box-300-special
 ilquotidiano.it,parmasera.it,piacenzasera.it,rsvn.it##.box-attico
 europa-in.it,gazzettadelladda.it,notiziaoggi.it,settegiorni.it##.box-banner-menu
 sportnews.bz##.box-fullbanner
@@ -2367,6 +2374,7 @@ agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_top
 soldionline.it##.sm_widget_contenitore
 tgcom24.mediaset.it##.spaceBanner
+pmi.it##.special-widget
 ciao.it##.specialOfferMod
 europages.it,gazzetta.it,ilgiornale.it,pubblicitaitalia.it,repubblica.it,stickmangames.altervista.org,violanews.com##.sponsor
 fcparma.com##.sponsor-group
@@ -2500,6 +2508,7 @@ calciomercato.napoli.it##div[style="margin-top:-25px; margin-bottom:20px; height
 affaritaliani.it##div[style="margin-top:10px;height:90px"]
 horsemoonpost.com##div[style="margin: 0 auto; width: 728px; height: 90px; background: #ccc;"]
 donnamoderna.com##div[style="margin: 10px 0px 0px 0px; padding: 0px 15px 9px 15px; width: 285px; height:90px; background-image:url('http://www.donnamoderna.com/extension/donnamoderna/design/donnamoderna/images/bg-immobiliare.png'); background-repeat: no-repeat; "]
+globalist.it##div[style="margin: 5px 0;padding: 9px; border: 1px solid #ccc; zoom:1;overflow:hidden;height:80px;width:280px;font: normal 12px/14px arial, sans-serif"]
 ultimissime.net##div[style="margin:auto; background-image:url('/images/stories/professionecasinO.jpg'); height: 153px; width: 287px"]
 serviziopubblico.it##div[style="min-height:90px;"]
 agichina24.it##div[style="overflow: hidden; width: 459px; height: 27px;"]

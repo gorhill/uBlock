@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: rp4Pnuk7K4NOmfOtzEuGdQ
-! Version: 201409281620
-! Last modified: 28 Sep 2014 16:20 UTC
+! Checksum: 4iKUFna6wkePHotKzZEdhg
+! Version: 201410022020
+! Last modified: 02 Oct 2014 20:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -374,7 +374,7 @@ by,ru,ua##.banner_box
 /branding.css
 /branding.js
 /branding/casino/*
-/branding/css/*
+/branding/css/*$~object-subrequest,~object
 /branding/images/*-banners.
 /branding/js/*
 /bshow.php?dimension=$third-party,script
@@ -5206,6 +5206,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||regnum.ru/i/bn/
 ||reibert.info/images/
 ||relinka.net/banner
+||remoteshaman.com^*/gcheck.js
 ||restoclub.ru/pic/iblocks/
 ||restotv.ru/promo/$domain=restoclub.ru
 ||rf-cheats.ru/img/$object
@@ -5918,7 +5919,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@/teasers/*$domain=hock5.ru|rw.by
 @@/tizer/*$domain=sibtravel42.ru|tutu.ru
 @@/tizer_$domain=led66.ru
-@@/upload/banners/*$domain=travelata.ru
+@@/upload/banners/*$domain=rossa-m.ru|travelata.ru
 @@/upload/bx/*$domain=ffan.ru|transbank.ru
 @@/webadvert.$domain=webadvert.ru
 @@://ads.$domain=alfabank.ru|mts.ru
@@ -6163,6 +6164,7 @@ chatovod.ru#@#.withAds
 @@||pesikot.org^*/advert.js|$domain=pesikot.org
 @@||picforall.ru/ads/banner.$image,domain=picforall.ru
 @@||recreativ.ru/rcode.$script,domain=all-episodes.com
+@@||remoteshaman.com/templates/remotehelp/js/ads.js|
 @@||ualinux.com/modules/mod_jpayday/js/advertisement.js$domain=ualinux.com
 @@||visitweb.com^$script,domain=99px.ru
 @@||vse.kz/public/js/jsLoader.js?adType=

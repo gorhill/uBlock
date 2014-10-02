@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Sep 16th, 2014 at 23:47
+# Last updated: Sep 30th, 2014 at 02:07
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -5543,6 +5543,7 @@ fe80::1%lo0	localhost
 127.0.0.1 del1.phillyburbs.com
 127.0.0.1 delb.mspaceads.com
 127.0.0.1 delivery.adyea.com
+127.0.0.1 delivery.clickonometrics.pl
 127.0.0.1 delivery.trafficjunky.net
 127.0.0.1 delivery.w00tads.com
 127.0.0.1 delivery.way2traffic.com
@@ -5614,6 +5615,7 @@ fe80::1%lo0	localhost
 127.0.0.1 eb.adbureau.net
 127.0.0.1 eblastengine.upickem.net
 127.0.0.1 ecomadserver.com
+127.0.0.1 ecs1.engageya.com
 127.0.0.1 eddamedia.linkpulse.com
 127.0.0.1 edge.bnmla.com
 127.0.0.1 edge.quantserve.com

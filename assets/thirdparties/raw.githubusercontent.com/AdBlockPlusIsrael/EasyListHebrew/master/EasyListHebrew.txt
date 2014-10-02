@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: fkr5zr20t+8Ng3VwiPKF9A
+! Checksum: ISe3KW5RfVLwVfzaBVXtIQ
 ! Title: EasyList Hebrew
-! Last modified: 28/09/14  13:09
+! Last modified: 02/10/14  11:20
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -118,16 +118,13 @@
 ||haaretz.co.il^*/Banners/
 ||themarker.com/dclk/
 !-Tapuz/Flix-!
-/albums/intro5.flv$domain=flix.co.il|tapuz.co.il
-=adv1.tapuz.co.il/
 ||biz.tapuz.co.il/iframes/ForumMessageBanner.aspx
-||rm.tapuz.co.il^
 ||tapuz.co.il/Forums2008/JS/replaceLinks.js
 ||tapuz.co.il/communa/merlin_
 ||tapuz.co.il/forums2008/googleInTreeFrame.html
 ||tapuz.co.il/vilonBanner/
 ||tapuz.co.il^*CloseBanner.gif
-||tapuz.co.il^*ClosePopup.gif
+||tapuz.hiro.co.il^
 !-inn-!
 ||dwnmedia.a7.org/inntv/media/
 ||info.a7.org^$domain=inn.co.il
@@ -284,6 +281,8 @@
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
+@@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
+@@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
 @@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
 @@||gplanet.co.il/js/adx.js
 @@||ifat.com/VideoControl/makoinformation$object-subrequest,domain=mako.co.il,media
@@ -674,6 +673,7 @@ onlife.co.il###block-freelancer-1
 onlife.co.il###top_article_ads_wrapper
 onlife.co.il##.commercial
 ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
+pcmagazine.co.il##.ad
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
 rateonclick.com##A[href*="campaigns.layer.co.il/"]
 reshet.tv##div[id^="CM8ShowAd"]
@@ -795,8 +795,11 @@ winwin.co.il##.MiddleBanners
 wisebuy.co.il##.LboxGrey[style="height:270px;text-align:center;"]
 wisebuy.co.il##.LboxGrey[style="height:337px;text-align:center;"]
 wisebuy.co.il##table[width="100%"][align="center"]
-xnet.co.il###XnetAdSenceThinkAdAD-300
+xnet.co.il###ads\.250x250\.top
 xnet.co.il###ads\.top\.1
+xnet.co.il###XnetAdSenceThinkAdAD-300
+xnet.co.il##.ad.hdn
+xnet.co.il##.ContentLink.banner.Low
 yad2.co.il###left_banner
 yad2.co.il###left_sekindo
 yad2.co.il###td_banner

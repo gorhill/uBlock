@@ -474,7 +474,7 @@ firstrowfr.eu###adblockplus
 ! linkshrink.net
 linkshrink.net#@#.overlay_ad
 ! eclypsia.com
-eclypsia.com#@##adv_tester
+@@||eclypsia.com^$elemhide
 @@||adverts.eclypsia.com/www/images/*.jpg$image
 @@||adverts.eclypsia.com/www/delivery/spcjs.php*$script
 @@||eclypsia.com/advertisement_fr.js$script
@@ -489,6 +489,12 @@ cast.coolkora.com###co_holder
 ||javso.com/popjs/popred.js$script
 ||js.adkrazy.com^$script,domain=javso.com
 ||adkrazy.com^$popup,domain=javso.com
+! online.dramacafe.in
+online.dramacafe.in#@#.afs_ads
+! lequipe.fr
+/js/adUnblock.js$script,domain=lequipe.fr
+! receive-sms-online.info
+@@||receive-sms-online.info/advertisment.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

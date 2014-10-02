@@ -2464,6 +2464,7 @@
 127.0.0.1	adnet.ru
 127.0.0.1	adnet.vn
 127.0.0.1	adnetinternational.com
+127.0.0.1	adnetwork.free-h.fr
 127.0.0.1	adnetwork.kataweb.it
 127.0.0.1	adnetwork.nextgen.net
 127.0.0.1	adnetworkme.com
@@ -4945,6 +4946,7 @@
 127.0.0.1	assets.oomz.de
 127.0.0.1	assets.pinterest.com
 127.0.0.1	assets.scan.me
+127.0.0.1	assets.servedby-buysellads.com
 127.0.0.1	assets.sharethrough.com
 127.0.0.1	assoc-amazon.co.uk
 127.0.0.1	associatedcontent.112.2o7.net
@@ -7030,6 +7032,7 @@
 127.0.0.1	click.adknowledge.com
 127.0.0.1	click.aristotle.net
 127.0.0.1	click.atdmt.com
+127.0.0.1	click.atdmt.net
 127.0.0.1	click.bokecc.com
 127.0.0.1	click.buzzcity.net
 127.0.0.1	click.cashengines.com
@@ -9624,7 +9627,6 @@
 127.0.0.1	e-zeeinternet.com
 127.0.0.1	e.admob.com
 127.0.0.1	e.ai.inmobi.com
-127.0.0.1	e.crashlytics.com
 127.0.0.1	e.ilovethat.co.uk
 127.0.0.1	e.ligatus.com
 127.0.0.1	e.monetate.net
@@ -10030,6 +10032,7 @@
 127.0.0.1	ethn.io
 127.0.0.1	etoys.bfast.com
 127.0.0.1	etrack51.com
+127.0.0.1	etracker.com
 127.0.0.1	etracker.de
 127.0.0.1	etrader.kalahari.com
 127.0.0.1	etrader.kalahari.net
@@ -12955,15 +12958,18 @@
 127.0.0.1	linicom.co.il
 127.0.0.1	link.ac
 127.0.0.1	link.americastestkitchencorp.com
+127.0.0.1	link.astraspace.fr
 127.0.0.1	link.belati.net
 127.0.0.1	link.email.dynect.net
 127.0.0.1	link.huffingtonpost.com
 127.0.0.1	link.informer.com
 127.0.0.1	link.mochiads.com
 127.0.0.1	link.net
+127.0.0.1	link.openfile.fr
 127.0.0.1	link.p0.com
 127.0.0.1	link.profitreload.com
 127.0.0.1	link.tbtrack.com
+127.0.0.1	link.transiworld.fr
 127.0.0.1	link4link.com
 127.0.0.1	link4u.de
 127.0.0.1	linkads.de
@@ -15990,6 +15996,7 @@
 127.0.0.1	rmaiauth.ads.vip.bf1.yahoo.com
 127.0.0.1	rmatic.go2cloud.org
 127.0.0.1	rmbn.ru
+127.0.0.1	rmd.atdmt.com
 127.0.0.1	rmedia.boston.com
 127.0.0.1	rnd.yxo.ru
 127.0.0.1	ro.adocean.pl
@@ -16588,7 +16595,6 @@
 127.0.0.1	setihome.com
 127.0.0.1	seto.createsend.com
 127.0.0.1	sett.i12.de
-127.0.0.1	settings.crashlytics.com
 127.0.0.1	setup01.ixn.local.vmsn.de
 127.0.0.1	seu.cleverreach.com
 127.0.0.1	seumundomobile.com.pt
@@ -17541,6 +17547,7 @@
 127.0.0.1	swift.com
 127.0.0.1	swimsuitnetwork.com
 127.0.0.1	switch.atdmt.com
+127.0.0.1	switch.atdmt.net
 127.0.0.1	switch1.castup.net
 127.0.0.1	switch2.castup.net
 127.0.0.1	switch248-01.castup.net
@@ -19084,6 +19091,7 @@
 127.0.0.1	vidzur.com
 127.0.0.1	view-ads.de
 127.0.0.1	view.atdmt.com
+127.0.0.1	view.atdmt.net
 127.0.0.1	view.autoscout24.de
 127.0.0.1	view.binlayer.com
 127.0.0.1	view.ilove.de
@@ -20652,6 +20660,7 @@
 127.0.0.1	www.etahub.com
 127.0.0.1	www.ethn.io
 127.0.0.1	www.etrack51.com
+127.0.0.1	www.etracker.com
 127.0.0.1	www.etracker.de
 127.0.0.1	www.euroclick.com
 127.0.0.1	www.euros4click.de
@@ -22214,6 +22223,7 @@
 127.0.0.1	www.yoast.com
 127.0.0.1	www.you2mail.com
 127.0.0.1	www.youll-find.com
+127.0.0.1	www.youradexchange.com
 127.0.0.1	www.youradslab.com
 127.0.0.1	www.yourcartoons.com
 127.0.0.1	www.yourhitstats.com
@@ -22564,6 +22574,7 @@
 127.0.0.1	yorick.adjuggler.net
 127.0.0.1	you2mail.com
 127.0.0.1	youll-find.com
+127.0.0.1	youradexchange.com
 127.0.0.1	youradslab.com
 127.0.0.1	yourcartoons.com
 127.0.0.1	yourhitstats.com
@@ -22652,4 +22663,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22647
+# Hosts: 22658

@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201408261636
+! Version: 201410011144
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 26-08-2014
+! Last modified: 01-10-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1694,6 +1694,11 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://plavid.com/adv_
 |http://adv*.bgnews.it/images/
 |http://*.downforeveryoneorjustme.com/*/dotbiz_banner.jpg
+|http://slotoaff.net/placement.do?bannertag
+|http://*.unilibro.it/*/skin/
+|http://*.cdnads.com/www/images/
+|http://*.cb01.tv/HD-Player-728x90-IT.JPG
+|http://go.padstm.com/?id=
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3147,6 +3152,26 @@ macupdate.com##[id^="google_ads_iframe"]
 macupdate.com###top_ad
 pcmag.com##[id^="google_ads_iframe"]
 thegamesmachine.it##.adsbygoogle
+creativemac.com##.topbannerad
+creativemac.com##.sideads
+melamorsicata.it##.adsbygoogle
+iphoneitalia.com##.adsbygoogle
+tuttosport.com##[id^="ligatus_sportnetwork_"]
+pcworld.com##[id^="google_ads_iframe"]
+digitaltrends.com##.m-leaderboard
+ehow.com##[id^="google_ads_iframe"]
+thegamesmachine.it###Advertisement
+ilsole24ore.com###bannerTop
+unilibro.it##.active-skin
+forums.msexchange.org##[id^="google_ads_iframe"]
+badgames.it##.adsbygoogle
+herdprotect.com##.adsbygoogle
+gamepal.it###background-ad
+forum.notebookreview.com##.adBox
+forum.notebookreview.com##[id^="google_ads_iframe"]
+notebookheavy.com##.adsbygoogle
+fileforum.betanews.com##.ad300
+perfectgeeks.com##.ads_1
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup

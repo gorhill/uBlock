@@ -1,5 +1,5 @@
 [Adblock Plus 1.1]
-! Checksum: U9ZrtdSz0quMtaice6e1tA
+! Checksum: +/IUb19mxIRAD5ypTb1TOw
 ! This is bulgarian list hosted at http://stanev.org/abp
 ! Contact me at alex at stanev dot org
 !
@@ -69,12 +69,18 @@ adv.gepime.com
 ||afera.bg/wp-content/uploads/2012/05/yurt-banner.swf
 aha.aukro.bg/banners.php
 ||alabala.bg/media/banners/
+||alarmanews.com/wp-content/uploads/2013/11/toptravel.jpg
+||alarmanews.com/wp-content/uploads/2014/04/%D0%9B%D0%BE%D0%B3%D0%BE%D0%B0%D0%BB%D0%B0%D1%80%D0%BC%D0%B0.jpg
 ||alein.org/images/aimg_280x150.jpg
 ||alein.org/images/bgtop4.gif
 ||alein.org/images/doggydoggy2.jpg
 ||alein.org/images/godaddy*
 ||alein.org/images/putdrive*
+||alein.org/images/user/evowow.new.img.gif
+||alein.org/images/user/Glabo.jpg
+||alein.org/images/user/Kosebose.com.jpg
 ||alein.org/images/user/putdrive*
+||alein.org/images/user/zoomax.gif
 ||alfa.kachi-snimka.info/images/viu1326708098u.jpg
 ||amam.bg/a-d-s/
 ||amam.bg/bans/
@@ -103,6 +109,7 @@ as.adwise.bg/j/context3rd.jsp
 ||banerss.hit.bg/banners/
 ||banner1.eu/images/advert.jpg
 ||banners.friendfinder.com/
+banners.pik.bg
 ||bansko24.com/files/banner/
 ||bansko.net/files/banner/
 ||barometar.net/wp-content/uploads/2011/03/
@@ -188,6 +195,7 @@ cdn.plus500.com/Media/Banners/
 ||club9000.org/banners/
 ||club-bg.org/images/banner*
 ||computers.bg/120x460.
+||comunicatorbg.com/comu_files/bulgarino.swf
 ||conquiztador.bg/banner/
 ||conquiztador.bg/bgbanners/
 ||conquiztador.bg/getbannerframe.php
@@ -200,6 +208,7 @@ cdn.plus500.com/Media/Banners/
 ||dalavera.com/reklama/
 ||dar.bg/images/*banner
 ||dariknews.bg/images/sg_bg__2.png
+||dartsnews.bg/ads/
 ||data.bg/data*.swf
 ||data.bg/media/*banner
 ||data.bg/media/databg_*
@@ -578,6 +587,7 @@ rem.rezonmedia.eu/images/
 ||reporterbg.com/Kiwi-banner360x184.swf
 ||reset.bg/images/banners/
 ||retv.bg/loader/loader.swf
+||rezervacia.bg/banners
 ||rezervaciq.com/img/banners
 ||rodopinews.com/images/banners/
 ||rp-mobil.com/images/b/
@@ -702,6 +712,7 @@ torrent.alein.org/images/system/itnet_img_h.png
 torrent.alein.org/images/system/moreimg_img_top.png
 torrent.alein.org/images/system/place_for_you.png
 torrent.alein.org/images/system/wotlk_new_img.png
+||torrent-team.net##IMG[src*="/baner"]
 ||tribali.info/user_pic/flash/MegaSOD_3.swf
 ||trud.bg/BannerRotate.asp
 ||trud.bg/media/banners/
@@ -760,6 +771,8 @@ webmoney.borsa.bg/BannerFactory.php5
 ||zdrave.net/document/banner/
 ||zepir.com/storage/banners/
 ||znam.li/ad/
+||магазинвелосипеди.com/images/avtogumi.gif
+||магазинвелосипеди.com/images/banners/
 !
 !--- Specific element hiding rules ---!
 18-sexshop.com##.banner728_90
@@ -922,6 +935,7 @@ petel.bg###banner_right_bottom
 petel.bg###banner_right_middle
 petel.bg###banner_right_top
 petel.bg###banner_top
+petel.bg###fb_likeBox
 photo-forum.net###banner_top
 photo-forum.net###header_img_right
 pik.bg###brand
@@ -1026,4 +1040,5 @@ zovnews.com##.banner_top
 @@slotbg.com/images/adds/*
 @@||sportal.bg/uploads/video_advertising/
 @@||subsmania.info
+@@||v.fwmrm.net/ad/p/*$domain=play.novatv.bg
 

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: HQMxuIQVTGweC0AoFkiYJQ
-! Version: 201409281621
+! Checksum: qWbkutHmRB274jd4VnpC3Q
+! Version: 201410022021
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 28 Sep 2014 16:21 UTC
+! Last modified: 02 Oct 2014 20:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -440,6 +440,7 @@ jagsttaltipp.de#@##werbeleiste
 anime-loads.org,nicht-lustig.de,studentenwerk-aachen.de,vegaklub.net,youthweb.net#@##werbung
 anzeigen-kostenlos.com#@#.AdBox
 egofm.de#@#.WerbungLinksRechts
+ebay.de#@#.ad-active
 zeitleser.de#@#.ad-bottom
 siemens-home.de#@#.ad-item
 willhaben.at#@#.ad-text
@@ -3302,8 +3303,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||sprachnudel.de^*?*^q=$xmlhttprequest
 ||sprachnudel.de^*_/*&*=$xmlhttprequest
 ||spreadnews.de/banner/
+||spreeblick.com/wp-content/banner/teufel-spreeblick.gif
+||spreeblick.com/wp-content/themes/*/thomann_banner_
 ||spreeblick.com^*/intro_banner.png
-||spreeblick.com^*/thomann_banner_2.jpg
 ||spvggunterhaching.de/themes/haching/images/BSWALP-Onlinebanner.gif
 ||stadt-bremerhaven.de/grafiken/footer.gif
 ||stadt-bremerhaven.de/grafiken/getgoods2013.jpg
@@ -3699,6 +3701,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
+||img.lokalisten.de/img/*LB_
+||img.lokalisten.de/img/*SKY
 ||ip-ads.de^$domain=rtl-now.rtl.de|rtl2now.rtl2.de
 ||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||media.epochtimes.de/img/
@@ -4789,7 +4793,6 @@ wintotal.de###topads
 dotnetpro.de###topbar
 byte.to###topclips
 byte.to###topclipsbar
-wetteronline.de###topcontainer
 tecchannel.de###toplineBar
 computerbild.de###toplinks > .first
 byte.to###toplist
@@ -7632,6 +7635,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||fruited.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|epochtimes.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||fruited.de^$script,domain=gamona.de|lustich.de
 @@||g.doubleclick.net/activity;*/DE-AudiencePixel/Gamestar;dc_seg=$image,domain=gamestar.de
+@@||g.doubleclick.net/gampad/ads?$script,domain=wetteronline.de
 @@||g.doubleclick.net/gampad/ads?*&callback=googletag.impl.pubads.setAdContentsBySlotForSync&$script,domain=gamona.de
 @@||g.doubleclick.net/gampad/ads?sz=320x240&iu=/4444/pcgames_video.de_fx_sdm/Rest&ciu_szs&$object-subrequest,domain=pcgames.de
 @@||g.doubleclick.net/pagead/adview?ai=$object-subrequest,domain=clipfish.de
@@ -7713,7 +7717,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=brasilienfreunde.net|bullhost.de|gamestar.de|green-24.de|java-forum.org|lablue.at|lablue.ch|lablue.de|mufa.de|rappers.in|rene-neuweiler.ch|risiko-gesundheit.de|vol.at|wintotal-forum.de
 @@||partner.googleadservices.com/gampad/google_ads.js$domain=abfrager.de
 @@||partner.googleadservices.com/gampad/google_service.js$domain=abfrager.de
-@@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=gamona.de
+@@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=gamona.de|wetteronline.de
 @@||pc-magazin.de^$elemhide
 @@||pcaction.de^$image
 @@||pcgameshardware.de^$image
