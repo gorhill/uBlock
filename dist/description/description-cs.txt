@@ -11,10 +11,11 @@ Flexibilní, více než jen "blokovač reklam": umí také číst a vytvářet f
 Po instalaci jsou načteny a použity tyto filtry:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Pokud chcete, můžete si vybrat tyto další filtry:

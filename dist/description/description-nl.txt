@@ -11,10 +11,11 @@ Flexibel, het is meer dan een "advertentieblokkeerder": het kan ook filters leze
 Standaard worden de volgende filterlijsten geladen en toegepast:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Meer lijsten zijn beschikbaar om te selecteren indien gewenst:

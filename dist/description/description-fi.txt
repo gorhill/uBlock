@@ -1,4 +1,4 @@
-Tehokas mainosten blokkaaja: kevyt keskusmuistille ja prosessorille, silti voi ladata ja pakottaa tuhansia jopa enemmän kuin muut suositut mainosten blokkaajat.
+Tehokas mainosten blokkaaja: kevyt keskusmuistille ja prosessorille, silti voit ladata ja pakottaa tuhansia jopa enemmän kuin muut suositut mainosten blokkaajat.
 
 Kuvitettu yleiskatsaus tehokkuudesta: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
@@ -11,10 +11,11 @@ Joustava, se on enemmän kuin "mainosten blokkaaja": se voi lukea ja luoda filtt
 Automaattisesti, nämä filtterien listat on ladattu ja pakotettu:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Voit valita lisää listoja käyttöösi jos haluat:

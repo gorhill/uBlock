@@ -11,10 +11,11 @@ Fleksibel, µBlock er mer enn en "reklameblokker": den kan også lese og opprett
 Som standard er disse filterlistene lastet og i bruk:
 
 - EasyList
+- Peter Lowe's Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe's Ad server list
 - Malware Domains lst
 
 Flere lister er tilgjengelige om du ønsker:

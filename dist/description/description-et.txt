@@ -11,10 +11,11 @@ Paindlik, midagi rohkemat kui "reklaamide blokeerija": laiend suudab lugeda ja l
 Järjekorda panemata on välja toodud filtrid, mida toetame:
 
 - EasyList
+- Peter Lowe reklaamiserveri loend
 - EasyPrivacy
+- Fanboy sotsiaalvõrkude blokeerimisloend
 - Pahavara levitavad domeenid
 - Aegunud pahavara domeenid
-- Peter Lowe reklaamiserveri loend
 - Pahavara domeenide loend
 
 Lisaks neile on veel saadaval:

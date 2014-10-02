@@ -11,10 +11,11 @@ Molto più che un ad-blocker: può anche creare filtri dal file host.
 Per default sono attivate queste liste:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Puoi anche attivare moltre altre liste:

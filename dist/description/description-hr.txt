@@ -11,10 +11,11 @@ Fleksibilan, nije samo "reklamni bloker": može i čitati i napraviti filtre iz 
 Odmah po instalaciji slijedeći popisi filtera su pokrenuti i provode se:
 
 - EasyList
+- Peter Loweov popis reklamnih poslužitelja
 - EasyPrivacy
+- Fanboy socijalni popis za blokiranje
 - Zloćudne domene
 - Dugovječne zloćudne domene
-- Peter Loweov popis reklamnih poslužitelja
 - Lista zloćudnih domena
 
 Ostale liste su dostupne za odabir ako ih želite:

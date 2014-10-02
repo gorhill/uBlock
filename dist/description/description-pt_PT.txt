@@ -12,10 +12,11 @@ Flexível, é mais do que um "ad blocker": pode também ler e criar filtros a pa
 Por predefinição, estas listas de filtros são carregadas e aplicadas:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Mais listas estão disponíveis para seleccionar se desejar:

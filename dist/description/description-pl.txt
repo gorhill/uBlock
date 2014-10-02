@@ -11,10 +11,11 @@ Elastyczny, to coś więcej niż "ad blocker": może także czytać i tworzyć f
 Po zainstalowaniu te listy filtrów są ładowane i egzekwowane:
 
 - EasyList
+- Peter Lowe serwer listy reklam
 - EasyPrivacy
+- Społecznie blokowane listy Fanboy'ów 
 - Malware domen
 - Długotrwałe malware domen
-- Peter Lowe serwer listy reklam
 - Lista domen Malware
 
 Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:

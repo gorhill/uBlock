@@ -30,5 +30,36 @@ cp ~/Downloads/crowdin/tr/messages.json    ./_locales/tr/messages.json
 cp ~/Downloads/crowdin/uk/messages.json    ./_locales/uk/messages.json
 cp ~/Downloads/crowdin/vi/messages.json    ./_locales/vi/messages.json
 cp ~/Downloads/crowdin/zh-CN/messages.json ./_locales/zh_CN/messages.json
+
+# 
+
+cp ~/Downloads/crowdin/ar/description.txt    ./dist/description/description-ar.txt
+cp ~/Downloads/crowdin/cs/description.txt    ./dist/description/description-cs.txt
+cp ~/Downloads/crowdin/da/description.txt    ./dist/description/description-da.txt
+#cp ~/Downloads/crowdin/el/description.txt    ./dist/description/description-el.txt
+#cp ~/Downloads/crowdin/es-ES/description.txt ./dist/description/description-es.txt
+cp ~/Downloads/crowdin/et/description.txt    ./dist/description/description-et.txt
+cp ~/Downloads/crowdin/fi/description.txt    ./dist/description/description-fi.txt
+cp ~/Downloads/crowdin/he/description.txt    ./dist/description/description-he.txt
+cp ~/Downloads/crowdin/hr/description.txt    ./dist/description/description-hr.txt
+#cp ~/Downloads/crowdin/hu/description.txt    ./dist/description/description-hu.txt
+cp ~/Downloads/crowdin/id/description.txt    ./dist/description/description-id.txt
+cp ~/Downloads/crowdin/it/description.txt    ./dist/description/description-it.txt
+#cp ~/Downloads/crowdin/ja/description.txt    ./dist/description/description-ja.txt
+cp ~/Downloads/crowdin/no/description.txt    ./dist/description/description-no.txt
+cp ~/Downloads/crowdin/nl/description.txt    ./dist/description/description-nl.txt
+cp ~/Downloads/crowdin/pl/description.txt    ./dist/description/description-pl.txt
+cp ~/Downloads/crowdin/pt-BR/description.txt ./dist/description/description-pt_BR.txt
+cp ~/Downloads/crowdin/pt-PT/description.txt ./dist/description/description-pt_PT.txt
+cp ~/Downloads/crowdin/ro/description.txt    ./dist/description/description-ro.txt
+cp ~/Downloads/crowdin/ru/description.txt    ./dist/description/description-ru.txt
+cp ~/Downloads/crowdin/sv-SE/description.txt ./dist/description/description-sv.txt
+cp ~/Downloads/crowdin/tr/description.txt    ./dist/description/description-tr.txt
+cp ~/Downloads/crowdin/uk/description.txt    ./dist/description/description-uk.txt
+#cp ~/Downloads/crowdin/vi/description.txt    ./dist/description/description-vi.txt
+cp ~/Downloads/crowdin/zh-CN/description.txt ./dist/description/description-zh_CN.txt
+
+#
+
 rm -r ~/Downloads/crowdin
 echo "*** uBlock: Import done."

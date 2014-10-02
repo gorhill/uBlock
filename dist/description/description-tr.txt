@@ -11,16 +11,17 @@ Esnek, bir "reklam engelleyici"den öte: aynı zamanda host dosyanızdan okuyara
 Bunun dışında, aşağıdaki filtre listeleri yüklenmiştir ve uygulanır:
 
 -EasyList
+-Peter Lowe'uns reklam sunucuları listesi
 -EasyPrivacy
+-Fanboy'un sosyal engelleme listesi
 -Zararlı websiteleri
 -Uzun vadeli zararlı alan adları
--Peter Lowe'uns reklam sunucuları listesi
--Malware Domains List
+- Malware Domains List
 
 Daha fazla listeyi de seçerek kullanılabilirsiniz:
 
--Fanboy’s Enhanced Tracking List
--Dan Pollock’un hosts dosyası
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’un hosts dosyası
 -hpHosts'ın reklam ve izleme sunucuları
 -MVP HOSTS
 -Spam404

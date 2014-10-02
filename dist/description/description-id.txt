@@ -11,10 +11,11 @@ Fleksibel, lebih dari sekedar "Pemblokir iklan": juga dapat membaca dan membuat 
 Berikut ini daftar filter yang bisa langsung dipakai:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Tersedia daftar filter lain yang bisa Anda pilih jika ingin:

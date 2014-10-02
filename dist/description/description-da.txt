@@ -11,10 +11,11 @@ Fleksibel, det er mere end en "ad blocker": det kan også læse og oprette filtr
 Ud af boksen, er disse lister over filtre indlæses og håndhævet:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Flere lister er tilgængelige for dig at vælge når du ønsker det:

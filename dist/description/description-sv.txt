@@ -12,10 +12,11 @@ Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktiv
 Som standard är följande filterlistor laddade och applicerade:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Fler filterlistor finns tillgängliga att använda om du vill:
@@ -33,7 +34,7 @@ Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det st�
 
 ***
 
-µBlock vore ingenting utan filterlistorna. Så om du verkligen vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
+µBlock vore ingenting utan filterlistorna. Så om du vill bidra med någonting, tänk på människorna som arbetar hårt med att upprätthålla de filterlistor du använder, vilka är fritt tillgängliga för allas användning.
 
 ***
 

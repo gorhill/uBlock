@@ -12,10 +12,11 @@ https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 初始默认加载和执行下列过滤规则：
 
 -EasyList
+- Peter Lowe’s Ad server list
 -EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 这里还拥有更多的过滤规则供你选择：
@@ -41,7 +42,7 @@ https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 开放源代码与公共许可证 (GPLv3)
 一切为了用户。
 
-贡献者 @ Github： 
+贡献者@ Github： 
 https://github.com/gorhill/uBlock/graphs/contributors
 贡献者 @ Crowdin： 
 https://crowdin.net/project/ublock
