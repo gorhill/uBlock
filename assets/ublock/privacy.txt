@@ -15,7 +15,6 @@
 ||addthis.com^$third-party,important
 
 # I think web sites can live without this
-||linkedin.com^$third-party,important
-
-# Seen on cheezburger.com, on 2014-10-01
-||data.splyt.com^
+# Commented out on 2014-10-03: I don't see it anymore in benchmarks. Will see.
+# Commenting it out allows me to enable this one out-of-the-box.
+# ||linkedin.com^$third-party,important
