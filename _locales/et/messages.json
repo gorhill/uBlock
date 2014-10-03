@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Lõpuks Chromiumil põhinevatele veebilehitsejatele on valmis saanud tõhus blokeerija. CPU ja mälusõbralik.",
+    "message":"Lõpuks on Chromiumil põhinevatele veebilehitsejatele valmis saanud tõhus blokeerija. CPU ja mälusõbralik.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -32,23 +32,23 @@
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Info",
+    "message":"Teave",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Vajutamine: keela\/luba µBlock portaalis.\n\nCtrl+vajutamine: keela µBlock ainult selles portaalis.",
+    "message":"Klõps: keela\/luba µBlock sellel saidil.\n\nCtrl+klõps: keela µBlock ainult sellel lehel.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blokeeritud",
+    "message":"blokeeritud taotlusi",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"selles portaalis",
+    "message":"sellel lehel",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"paigaldamisest alates",
+    "message":"paigaldamise algusest",
     "description":"English: since install"
   },
   "popupOr":{
@@ -56,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Avage töölaud",
+    "message":"Klõpsa, et avada töölaud",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -80,11 +80,11 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netifiltrid",
+    "message":"Võrgufiltrid",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kohandatud filtrid",
+    "message":"Ilufiltrid",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -112,11 +112,11 @@
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} netifiltrid ＋ {{cosmeticFilterCount}} kohandatud filtrid:",
+    "message":"{{netFilterCount}} võrgufiltrit ＋ {{cosmeticFilterCount}} ilufiltrit:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} kasutusel {{total}}-st",
+    "message":"kasutusel {{used}}\/{{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -124,7 +124,7 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Uuendage praegu",
+    "message":"Uuenda kohe",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
@@ -132,11 +132,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Tuvasta ja rakenda kohandatud filtrid.",
+    "message":"Tuvasta ja rakenda ilufiltrid.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid on vajalikud, et peita elemente portaalides, mis näevad välja visuaalselt halvad ja, kus netist soovitatud filtrite ei pruugi töötada.<\/p><p>Selle valiku lubamine täiustab <i>µBlock<\/i>i mälu kasutavust.<\/p>",
+    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>µBlock<\/i>'i mälu kasutavust.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -204,7 +204,7 @@
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Eskpordi",
+    "message":"Ekspordi",
     "description":"English: Export"
   },
   "1pApplyChanges":{
@@ -212,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Teie domeenilist, mida µBlock hakkab keelama. Üks domeen rea kohta. Vigaseid domeeninimesid eiratakse.",
+    "message":"Nimekiri domeenidest, millel µBlock keelatakse. Üks domeen rea kohta. Vigaseid domeeninimesid eiratakse.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -232,7 +232,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Lubades seda valikut, on teil võimalik netipäringuid detailselt uurida. Netipäringute logimine suurendab µBlocki mälu kasutamist. Kuna enamik kasutajaid ei kasuta seda, on valik keelatud alguses.",
+    "message":"Selle valiku lubamisel on teil võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab µBlocki mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -260,11 +260,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Selles portaalis pole ühtegi blokeeritud päringut logitud",
+    "message":"Sellel lehel pole logitud ühtegi blokeeritud päringut",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Selles portaalis pole ühtegi blokeerimata päringut logitud",
+    "message":"Sellel lehel pole logitud ühtegi blokeerimata päringut",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
@@ -280,7 +280,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Ei suudetud ühenduda {{url}}",
+    "message":"Ei suudetud ühenduda aadressiga {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

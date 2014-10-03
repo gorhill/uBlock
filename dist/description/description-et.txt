@@ -2,13 +2,13 @@ Tõhus blokeerija: kasutab vähe mälu ja CPU-d ning sellest hoolimata suudab ü
 
 Laienduse kasulikkuse täpne ülevaade: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Kasutamine: Ikoonide alas oleva suure punase nupu kaudu on võimalik ajutiselt keelata/lubada külastatavas portaalis µBlock. See käib ainult hetkel avatud portaali, mitte kõikide avatud kaartide kohta.
+Kasutamine: hüpikaknas oleva suure rohelise nupu kaudu on võimalik µBlock praegusel lehel püsivalt keelata/lubada. See käib ainult hetkel avatud lehe, mitte kõikide saitide kohta.
 
 ***
 
-Paindlik, midagi rohkemat kui "reklaamide blokeerija": laiend suudab lugeda ja luua domeenifailide filtreid.
+Paindlik, midagi rohkemat kui ainult "reklaamide blokeerija" - laiendus suudab lugeda ja luua filtreid ka domeenifailidest.
 
-Järjekorda panemata on välja toodud filtrid, mida toetame:
+Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
 
 - EasyList
 - Peter Lowe reklaamiserveri loend
@@ -20,16 +20,16 @@ Järjekorda panemata on välja toodud filtrid, mida toetame:
 
 Lisaks neile on veel saadaval:
 
-- Fanboy Täiustatud Jälitusloend
-- Dan Pollocki domeenifail
-- hpHostsi reklaami ja jälitamisserverid
+- Fanboy täiustatud jälitusloend
+- Dan Pollock'i domeenifail
+- hpHosts'i reklaami- ja jälitusserverid
 - MVPS HOSTS
 - Spam404
-- Jne
+- ja palju muud
 
-Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi, hpHostsi reklaami ja jälitamisserverite lisamist kasutab µBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
+Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab µBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
 
-Lisaks pidage meeles, et täiendavate loendite lisamine tõstab portaalide valesti kuvamise ohtu -- eriti domeenilistide puhul.
+Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti domeenilistide puhul.
 
 ***
 
@@ -41,9 +41,9 @@ Tasuta.
 Avatud lähtekoodiga avaliku litsentsiga (GPLv3)
 Kasutajatelt kasutajaile.
 
-Toetajad Githubis:
+Toetajad Github'is:
 https://github.com/gorhill/uBlock/graphs/contributors
-Toetajad Crowdinis: https://crowdin.net/project/ublock
+Toetajad Crowdin'is: https://crowdin.net/project/ublock
 
 ***
 
