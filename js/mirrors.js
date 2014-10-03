@@ -59,6 +59,7 @@ var mirrorCandidates = {
                   's0.2mdn.net': /(2mdn\.net\/instream\/html5\/ima3\.js)/,
     'www.googletagservices.com': /(www\.googletagservices\.com\/tag\/js\/gpt\.js)/,
       'maxcdn.bootstrapcdn.com': /^maxcdn\.bootstrapcdn\.com\/font-awesome\//,
+      'netdna.bootstrapcdn.com': /^netdna\.bootstrapcdn\.com\/bootstrap\//,
       'b.scorecardresearch.com': /^b\.scorecardresearch\.com\/beacon\.js/,
          'platform.twitter.com': /^platform\.twitter\.com\/widgets\.js/,
         'cdn.quilt.janrain.com': /^cdn\.quilt\.janrain\.com\//
@@ -158,7 +159,7 @@ var btoaSafe = function(input) {
         output.push(String.fromCharCode(
             bamap[                   b1 >>> 2],
             bamap[(b1 & 0x03) << 4 | b2 >>> 4],
-            bamap[(b2 & 0x0F) << 2],
+            bamap[(b2 & 0x0F) << 2           ],
             0x3D
         ));
     } else if ( m !== 0 ) {
