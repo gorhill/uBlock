@@ -88,7 +88,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Clic, Ctrl-clic",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -280,7 +280,7 @@
     "description":"English: Contributors"
   },
   "errorCantConnectTo":{
-    "message":"Erreur de connexion: {{url}}",
+    "message":"Erreur de connexion : {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
