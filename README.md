@@ -10,7 +10,7 @@ through benchmarking.
 
 **µBlock is not an "ad blocker", it's a blocker in the broad sense**, which happens to block ads through its support of [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax.
 
-_EasyList_, _EasyPrivacy_ and _Peter Lowe's Adservers_ list are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads. Hosts files are supported.
+_EasyList_, _Peter Lowe's Adservers_ , _EasyPrivacy_ and _Fanboy's Social Block List_ are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads. Hosts files are supported.
 
 In my opinion, ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
 
