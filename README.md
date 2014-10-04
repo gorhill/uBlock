@@ -1,5 +1,7 @@
 # µBlock for Chromium
 
+Foreword: Using a blocker is **NOT** [theft](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/leaverou-adblock-is-theft.png). Do not fall for this creepy idea. The _ultimate_ logical consequence of "blocking = theft" is the criminalisation of the inalienable right to privacy.
+
 See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes. 
 See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
