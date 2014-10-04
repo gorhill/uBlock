@@ -836,6 +836,7 @@ var startPicker = function() {
             'font: 12px sans-serif;',
             'background-color: rgba(255,255,255,0.9);',
             'z-index: 5999999999;',
+            'direction: ', chrome.i18n.getMessage('@@bidi_dir'), ';',
         '}',
         '.µBlock.paused > div {',
             'display: initial;',
@@ -863,6 +864,7 @@ var startPicker = function() {
             'right: 2px;',
             'bottom: 2px;',
             'opacity: 0.2;',
+            'direction: ltr;',
         '}',
         '.µBlock > div > div > div:hover {',
             'opacity: 1;',
@@ -878,6 +880,8 @@ var startPicker = function() {
             'text-align: left;',
             'overflow: hidden;',
         '}',
+        '.µBlock > div > ul > li {',
+        '}',
         '.µBlock > div > ul > li:not(:first-child) {',
             'margin-top: 0.5em;',
         '}',
@@ -885,7 +889,6 @@ var startPicker = function() {
             'font-weight: bold;',
         '}',
         '.µBlock > div > ul > li > span:nth-of-type(2) {',
-            'margin: 0 0 0 1em;',
             'font-size: smaller;',
             'color: gray;',
         '}',
@@ -900,6 +903,7 @@ var startPicker = function() {
             'font: 11px monospace;',
             'white-space: nowrap;',
             'cursor: pointer;',
+            'direction: ltr;',
         '}',
         '.µBlock > div > ul > li > ul > li:hover {',
             'background-color: rgba(255,255,255,1.0);',
@@ -931,7 +935,7 @@ var startPicker = function() {
     divDialog = document.createElement('div');
     divDialog.innerHTML = [
         '<div>',
-        '<textarea spellcheck="false"></textarea>',
+        '<textarea dir="ltr" spellcheck="false"></textarea>',
         '<div>',
         '<button id="create" type="button" disabled>.</button>',
         '<button id="pick" type="button">.</button>',
@@ -940,7 +944,7 @@ var startPicker = function() {
         '</div>',
         '<ul>',
         '<li id="netFilters"><span>.</span><ul></ul>',
-        '<li id="cosmeticFilters"><span>.</span><span>.</span><ul></ul>',
+        '<li id="cosmeticFilters"><span>.</span>&ensp;<span>.</span><ul></ul>',
         '</ul>',
         ''
     ].join('');
@@ -973,7 +977,6 @@ messaging.ask({ what: 'elementPickerArguments' }, function(details) {
         'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
         'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
         'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
-
     };
     for ( var k in i18nMap ) {
         if ( i18nMap.hasOwnProperty(k) === false ) {
