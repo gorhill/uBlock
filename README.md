@@ -12,7 +12,7 @@ through benchmarking.
 
 _EasyList_, _Peter Lowe's Adservers_ , _EasyPrivacy_ and _Fanboy's Social Block List_ are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads. Hosts files are supported.
 
-In my opinion, ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
+Ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
 
 My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads, "unintrusive" or not, are just the visible portion) for users who do not want to deal with more technical means like [HTTP Switchboard](https://github.com/gorhill/httpswitchboard#http-switchboard-for-chromium).
 
