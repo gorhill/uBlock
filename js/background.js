@@ -54,7 +54,7 @@ return {
     userSettings: {
         autoUpdate: true,
         collapseBlocked: true,
-        contextMenuEnabled: false,
+        contextMenuEnabled: true,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
         logRequests: false,
