@@ -27,4 +27,4 @@ cdn.quilt.janrain.com
 # https://github.com/gorhill/uBlock/issues/270#issuecomment-57913228
 # Ref: http://www.asp.net/ajax/cdn
 ajax.aspnetcdn.com
-    ^ajax\.aspnetcdn\.com\/ajax\/[^?]+
+    ^ajax\.aspnetcdn\.com\/ajax\/[^?#]+
