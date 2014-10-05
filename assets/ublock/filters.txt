@@ -127,3 +127,7 @@ google.*###center_col > #tads
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
+
+# https://github.com/gorhill/uBlock/issues/274
+# To counter `mopub.com` in Peter Lowe's
+@@||mopub.com^$~third-party
