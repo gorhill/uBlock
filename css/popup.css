@@ -5,7 +5,7 @@ body {
     font: 13px sans-serif;
     background-color: white;
     direction: __MSG_@@bidi_dir__;
-    min-width: 160px;
+    min-width: 180px;
     }
 h1,h2,h3,h4 {
     margin:  0;
@@ -58,6 +58,7 @@ p {
     }
 #total-blocked {
     margin-top: 4px;
+    margin-bottom: 8px;
     font-size: 14px;
     }
 #stats {
@@ -75,4 +76,111 @@ p {
     }
 .tool:hover {
     color: #444;
+    }
+    
+#dynamicFilteringToggler {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 100vw;
+    text-align: center;
+    cursor: pointer;
+    }
+#dynamicFilteringToggler::after {
+    content: '\f107';
+    }
+#dynamicFilteringToggler.on::after {
+    content: '\f106';
+    }
+#dynamicFilteringContainer {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: none;
+    }
+#dynamicFilteringToggler.on + #dynamicFilteringContainer {
+    display: initial;
+    }
+.dynamicFiltering {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    height: 2.75em;
+    position: relative;
+    }
+.dynamicFiltering.local {
+    border-bottom: 1px solid white;
+    }
+.dynamicFiltering.global {
+    height: 1.25em;
+    }
+.dynamicFiltering > div {
+    margin: 0;
+    border: 1px solid #eee;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #eee;
+    position: absolute;
+    cursor: pointer;
+    }
+.dynamicFiltering > div:not(:first-child) {
+    border-left: 1px solid white !important;
+    }
+.dynamicFiltering > div:nth-of-type(1) {
+    left: 0;
+    width: 7vw;
+    height: 100%;
+    }
+.dynamicFiltering > div:nth-of-type(2) {
+    left: 7vw;
+    width: 18vw;
+    height: 100%;
+    }
+.dynamicFiltering > div:nth-of-type(3) {
+    left: 25vw;
+    width: 25vw;
+    height: 100%;
+    }
+.dynamicFiltering > div:nth-of-type(4) {
+    left: 50vw;
+    width: 25vw;
+    height: 100%;
+    }
+.dynamicFiltering > div:nth-of-type(5) {
+    left: 75vw;
+    width: 25vw;
+    height: 100%;
+    }
+.dynamicFiltering > div:nth-of-type(6) {
+    left: 0;
+    width: 50vw;
+    }
+.dynamicFiltering > div:nth-of-type(7) {
+    left: 50vw;
+    width: 50vw;
+    }
+.dynamicFiltering > div.label {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    pointer-events: none;
+    color: black;
+    opacity: 0.2;
+    font: 12px monospace;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    }
+.dynamicFiltering > div.blocked {
+    border-color: #fdd;
+    background-color: #fdd;
+    }
+.dynamicFiltering > div.ownFilter {
+    border-color: #bbb;
+    background-color: #bbb;
+    }
+.dynamicFiltering > div.blocked.ownFilter {
+    border-color: #eaa;
+    background-color: #eaa;
     }

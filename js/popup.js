@@ -29,6 +29,7 @@
 /******************************************************************************/
 
 var stats;
+var reResultParser = /^(@@)?(\*|\|\|([^$^]+)\^)\$(.+)$/;
 
 /******************************************************************************/
 
@@ -43,6 +44,34 @@ var formatNumber = function(count) {
         return '';
     }
     return count.toLocaleString();
+};
+
+/******************************************************************************/
+
+var syncDynamicFilter = function(scope, i, result) {
+    var el = uDom('[data-scope="' + scope + '"] > div:nth-of-type(' + i + ')');
+    var matches = reResultParser.exec(result) || [];
+    var blocked = matches.length !== 0 && matches[1] !== '@@';
+    el.toggleClass('blocked', blocked);
+    var ownFilter = matches[3] !== undefined && matches[3] === stats.pageHostname;
+    el.toggleClass('ownFilter', ownFilter);
+};
+
+/******************************************************************************/
+
+var syncAllDynamicFilters = function() {
+    var scopes = ['.', '/'];
+    var scope, results, i;
+    while ( scope = scopes.pop() ) {
+        if ( stats.dynamicFilterResults.hasOwnProperty(scope) === false ) {
+            continue;
+        }
+        results = stats.dynamicFilterResults[scope];
+        i = 5;
+        while ( i-- ) {
+            syncDynamicFilter(scope, i + 1, results[i]);
+        }
+    }
 };
 
 /******************************************************************************/
@@ -102,12 +131,12 @@ var renderStats = function() {
             '%</span>'
         );
     }
-    uDom('#total-blocked').html(html.join(''));
 
-    uDom('#switch .fa').toggleClass(
-        'off',
-        stats.pageURL === '' || !stats.netFilteringSwitch
-    );
+    syncAllDynamicFilters();
+
+    uDom('#total-blocked').html(html.join(''));
+    uDom('#switch .fa').toggleClass('off', stats.pageURL === '' || !stats.netFilteringSwitch);
+    uDom('#dynamicFilteringToggler').toggleClass('on', stats.dynamicFilteringEnabled);
 };
 
 /******************************************************************************/
@@ -185,11 +214,46 @@ var renderHeader = function() {
 
 /******************************************************************************/
 
+var onDynamicFilterClicked = function(ev) {
+    var elScope = uDom(ev.currentTarget);
+    var scope = elScope.attr('data-scope') === '/' ? '*' : stats.pageHostname;
+    var elFilter = uDom(ev.target);
+    var onDynamicFilterChanged = function(details) {
+        stats.dynamicFilterResults = details;
+        syncAllDynamicFilters();
+    };
+    messaging.ask({
+        what: 'toggleDynamicFilter',
+        hostname: scope,
+        requestType: elFilter.attr('data-type'),
+        firstParty: elFilter.attr('data-first-party') !== null,
+        block: elFilter.hasClassName('blocked') === false,
+        pageHostname: stats.pageHostname
+    }, onDynamicFilterChanged);
+
+};
+
+/******************************************************************************/
+
+var toggleDynamicFiltering = function() {
+    var el = uDom('#dynamicFilteringToggler');
+    el.toggleClass('on');
+    messaging.tell({
+        what: 'userSettings',
+        name: 'dynamicFilteringEnabled',
+        value: el.hasClassName('on')
+    });
+};
+
+/******************************************************************************/
+
 var installEventHandlers = function() {
     uDom('h1,h2,h3,h4').on('click', gotoDashboard);
     uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
     uDom('#gotoLog').on('click', gotoStats);
     uDom('#gotoPick').on('click', gotoPick);
+    uDom('#dynamicFilteringToggler').on('click', toggleDynamicFiltering);
+    uDom('.dynamicFiltering').on('click', 'div', onDynamicFilterClicked);
 };
 
 /******************************************************************************/

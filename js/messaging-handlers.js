@@ -34,6 +34,18 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var getDynamicFilterResults = function(scope) {
+    return [
+        µb.netFilteringEngine.matchDynamicFilters(scope, 'inline-script', true),
+        µb.netFilteringEngine.matchDynamicFilters(scope, 'script', true),
+        µb.netFilteringEngine.matchDynamicFilters(scope, 'script', false),
+        µb.netFilteringEngine.matchDynamicFilters(scope, 'sub_frame', true),
+        µb.netFilteringEngine.matchDynamicFilters(scope, 'sub_frame', false)
+    ];
+};
+
+/******************************************************************************/
+
 var getStats = function(request) {
     var r = {
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
@@ -44,7 +56,11 @@ var getStats = function(request) {
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
-        logRequests: µb.userSettings.logRequests
+        logRequests: µb.userSettings.logRequests,
+        dynamicFilteringEnabled: µb.userSettings.dynamicFilteringEnabled,
+        dynamicFilterResults: {
+            '/': getDynamicFilterResults('*')
+        }
     };
     var pageStore = µb.pageStoreFromTabId(request.tabId);
     if ( pageStore ) {
@@ -53,6 +69,7 @@ var getStats = function(request) {
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
+        r.dynamicFilterResults['.'] = getDynamicFilterResults(r.pageHostname);
     }
     return r;
 };
@@ -70,6 +87,13 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+        case 'gotoPick':
+            // Picker launched from popup: clear context menu args
+            µb.contextMenuClientX = -1;
+            µb.contextMenuClientY = -1;
+            µb.elementPickerExec(request.tabId);
+            break;
+
         case 'stats':
             response = getStats(request);
             break;
@@ -83,11 +107,12 @@ var onMessage = function(request, sender, callback) {
             µb.updateBadgeAsync(request.tabId);
             break;
 
-        case 'gotoPick':
-            // Picker launched from popup: clear context menu args
-            µb.contextMenuClientX = -1;
-            µb.contextMenuClientY = -1;
-            µb.elementPickerExec(request.tabId);
+        case 'toggleDynamicFilter':
+            µb.toggleDynamicFilter(request);
+            response = { '/': getDynamicFilterResults('*') };
+            if ( request.pageHostname ) {
+                response['.'] = getDynamicFilterResults(request.pageHostname);
+            }
             break;
 
         default:

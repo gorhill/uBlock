@@ -66,18 +66,14 @@ var typeNameToTypeValue = {
 };
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
-const BlockAnyType1stParty = BlockAction | AnyType | FirstParty;
-const BlockAnyType3rdParty = BlockAction | AnyType | ThirdParty;
 const BlockAnyType = BlockAction | AnyType;
 const BlockAnyParty = BlockAction | AnyParty;
 
 const AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
-const AllowAnyType1stParty = AllowAction | AnyType | FirstParty;
-const AllowAnyType3rdParty = AllowAction | AnyType | ThirdParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 
-var pageHostname = '';
+var pageHostname = ''; // short-lived register
 
 var reIgnoreEmpty = /^\s+$/;
 var reIgnoreComment = /^\[|^!/;
@@ -842,7 +838,7 @@ FilterManyWildcardsHostname.fromSelfie = function(s) {
 var FilterBucket = function(a, b) {
     this.promoted = 0;
     this.vip = 16;
-    this.f = null;
+    this.f = null;  // short-lived register
     this.filters = [];
     if ( a !== undefined ) {
         this.filters[0] = a;
@@ -1107,7 +1103,7 @@ FilterParser.prototype.parseOptType = function(raw, not) {
             // `popup` is a special type, it cannot be set for filters intended
             // for real net request types. The test is safe since there is no
             // such thing as a filter using `~popup`.
-            if ( typeNameToTypeValue[k] > typeNameToTypeValue['other'] ) {
+            if ( typeNameToTypeValue[k] > typeNameToTypeValue.other ) {
                 continue;
             }
             this.types.push(typeNameToTypeValue[k]);
@@ -1296,6 +1292,7 @@ FilterContainer.prototype.reset = function() {
     this.duplicates = Object.create(null);
     this.blockedAnyPartyHostnames.reset();
     this.blocked3rdPartyHostnames.reset();
+    this.dynamicFilters = {};
     this.filterParser.reset();
 };
 
@@ -1633,6 +1630,190 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 /******************************************************************************/
 
+// Dynamic filters
+
+// Bits:
+//  0: inline script blocked
+//  1: inline script allowed
+//  2: first-party script blocked
+//  3: first-party script allowed
+//  4: third-party script blocked
+//  5: third-party script allowed
+//  6: first-party frame blocked
+//  7: first-party frame allowed
+//  8: third-party frame blocked
+//  9: third-party frame allowed
+//
+// I chose separate bits for blocked/unblocked as I want to have an "undefined"
+// state, which will be used to inherit from wider-scoped filters.
+//
+// undefined: 0x00
+//   blocked: 0x01
+//   allowed: 0x02
+//    unused: 0x03
+
+FilterContainer.prototype.dynamicFilterBitOffsets = {};
+FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty | typeNameToTypeValue['inline-script']] = 0;
+FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty |           typeNameToTypeValue.script] = 2;
+FilterContainer.prototype.dynamicFilterBitOffsets[ThirdParty |           typeNameToTypeValue.script] = 4;
+FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty |        typeNameToTypeValue.sub_frame] = 6;
+FilterContainer.prototype.dynamicFilterBitOffsets[ThirdParty |        typeNameToTypeValue.sub_frame] = 8;
+FilterContainer.prototype.dynamicFiltersMagicId = 'numrebvoacir';
+
+/******************************************************************************/
+
+FilterContainer.prototype.dynamicFilterSet = function(hostname, requestType, firstParty, value) {
+    if ( typeNameToTypeValue.hasOwnProperty(requestType) === false ) {
+        return false;
+    }
+    var party = firstParty ? FirstParty : ThirdParty;
+    var categoryKey = party | typeNameToTypeValue[requestType];
+    if ( this.dynamicFilterBitOffsets.hasOwnProperty(categoryKey) === false ) {
+        return false;
+    }
+    var bitOffset = this.dynamicFilterBitOffsets[categoryKey];
+    var oldFilter = this.dynamicFilters[hostname] || 0;
+    var newFilter = (oldFilter & ~(0x0003 << bitOffset)) | (value << bitOffset);
+    if ( newFilter === oldFilter ) {
+        return false;
+    }
+    if ( newFilter === 0 ) {
+        delete this.dynamicFilters[hostname];
+    } else {
+        this.dynamicFilters[hostname] = newFilter;
+    }
+    return true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.dynamicFilterBlock = function(hostname, requestType, firstParty) {
+    if ( typeof hostname !== 'string' || hostname === '' ) {
+        return false;
+    }
+    var result = this.matchDynamicFilters(hostname, requestType, firstParty);
+    if ( result !== '' && result.slice(0, 2) !== '@@' ) {
+        return false;
+    }
+    this.dynamicFilterSet(hostname, requestType, firstParty, 0x00);
+    result = this.matchDynamicFilters(hostname, requestType, firstParty);
+    if ( result !== '' && result.slice(0, 2) !== '@@' ) {
+        return true;
+    }
+    this.dynamicFilterSet(hostname, requestType, firstParty, 0x01);
+    return true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.dynamicFilterUnblock = function(hostname, requestType, firstParty) {
+    if ( typeof hostname !== 'string' || hostname === '' ) {
+        return false;
+    }
+    var result = this.matchDynamicFilters(hostname, requestType, firstParty);
+    if ( result === '' || result.slice(0, 2) === '@@' ) {
+        return false;
+    }
+    this.dynamicFilterSet(hostname, requestType, firstParty, 0x00);
+    result = this.matchDynamicFilters(hostname, requestType, firstParty);
+    if ( result === '' || result.slice(0, 2) === '@@' ) {
+        return true;
+    }
+    this.dynamicFilterSet(hostname, requestType, firstParty, 0x02);
+    return true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.dynamicFilterStateToType = {
+    0x0001: '',
+    0x0002: '@@',
+    0x0004: '',
+    0x0008: '@@',
+    0x0010: '',
+    0x0020: '@@',
+    0x0040: '',
+    0x0080: '@@',
+    0x0100: '',
+    0x0200: '@@'
+};
+
+FilterContainer.prototype.dynamicFilterStateToOption = {
+    0x0001: '$inline-script,important',
+    0x0002: '$inline-script',
+    0x0004: '$~third-party,script,important',
+    0x0008: '$~third-party,script',
+    0x0010: '$third-party,script,important',
+    0x0020: '$third-party,script',
+    0x0040: '$~third-party,subdocument,important',
+    0x0080: '$~third-party,subdocument',
+    0x0100: '$third-party,subdocument,important',
+    0x0200: '$third-party,subdocument'
+};
+
+FilterContainer.prototype.matchDynamicFilters = function(hostname, requestType, firstParty) {
+    var party = firstParty ? FirstParty : ThirdParty;
+    if ( typeNameToTypeValue.hasOwnProperty(requestType) === false ) {
+        return '';
+    }
+    var categoryKey = party | typeNameToTypeValue[requestType];
+    if ( this.dynamicFilterBitOffsets.hasOwnProperty(categoryKey) === false ) {
+        return '';
+    }
+    var bitOffset = this.dynamicFilterBitOffsets[categoryKey];
+    var bitMask = 0x0003 << bitOffset;
+    var bitState, pos;
+    for ( ;; ) {
+        if ( this.dynamicFilters.hasOwnProperty(hostname) !== false ) {
+            bitState = this.dynamicFilters[hostname] & bitMask;
+            if ( bitState !== 0 ) {
+                if ( hostname !== '*' ) {
+                    hostname = '||' + hostname + '^';
+                }
+                return this.dynamicFilterStateToType[bitState] +
+                       hostname +
+                       this.dynamicFilterStateToOption[bitState];
+            }
+        }
+        pos = hostname.indexOf('.');
+        if ( pos === -1 ) {
+            if ( hostname === '*' ) {
+                return '';
+            }
+            hostname = '*';
+        } else {
+            hostname = hostname.slice(pos + 1);
+        }
+    }
+    // unreachable
+};
+
+/******************************************************************************/
+
+
+FilterContainer.prototype.selfieFromDynamicFilters = function() {
+    var bin = {
+        magicId: this.dynamicFiltersMagicId,
+        filters: this.dynamicFilters
+    };
+    return JSON.stringify(bin);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.dynamicFiltersFromSelfie = function(selfie) {
+    if ( selfie === '' ) {
+        return;
+    }
+    var bin = JSON.parse(selfie);
+    if ( bin.magicId !== this.dynamicFiltersMagicId ) {
+        return;
+    }
+    this.dynamicFilters = bin.filters;
+};
+
+/******************************************************************************/
+
 // Since the addition of the `important` evaluation, this means it is now 
 // likely that the url will have to be scanned more than once. So this is
 // to ensure we do it once only, and reuse results.
@@ -1766,6 +1947,14 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
         FirstParty :
         ThirdParty;
+
+    // Evaluate dynamic filters first. "Block" dynamic filters are always
+    // "important", they override everything else.
+    var bf = this.matchDynamicFilters(requestHostname, requestType, party === FirstParty);
+    if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
+        return bf;
+    }
+
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
@@ -1783,7 +1972,7 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     // Test against important block filters
     buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
     buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    var bf = this.matchTokens(url);
+    bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString();
     }
@@ -1851,6 +2040,13 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         }
     }
 
+    // Evaluate dynamic filters first. "Block" dynamic filters are always
+    // "important", they override everything else.
+    var bf = this.matchDynamicFilters(requestHostname, requestType, party === FirstParty);
+    if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
+        return bf;
+    }
+
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
 
@@ -1870,7 +2066,7 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     buckets[1] = categories[this.makeCategoryKey(BlockAnyType | Important | party)];
     buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
     buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    var bf = this.matchTokens(url);
+    bf = this.matchTokens(url);
     if ( bf !== false ) {
         return bf.toString() + '$important';
     }

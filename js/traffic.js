@@ -320,6 +320,11 @@ var onHeadersReceived = function(details) {
         return;
     }
 
+    // Record request
+    if ( result !== '' ) {
+        pageStore.recordResult('script', details.url, result);
+    }
+
     // Blocked
     pageStore.perLoadBlockedRequestCount++;
     µb.localSettings.blockedRequestCount++;
@@ -327,7 +332,7 @@ var onHeadersReceived = function(details) {
 
     details.responseHeaders.push({
         'name': 'Content-Security-Policy',
-        'value': "script-src *"
+        'value': "script-src 'unsafe-eval' *"
     });
 
     return { 'responseHeaders': details.responseHeaders };

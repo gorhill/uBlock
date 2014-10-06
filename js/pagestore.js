@@ -425,6 +425,14 @@ PageStore.prototype.setRequestFlags = function(requestURL, targetBits, valueBits
 
 /******************************************************************************/
 
+PageStore.prototype.recordResult = function(requestType, requestURL, result) {
+    if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
+        this.netFilteringCache.add(requestURL, result, requestType, 0);
+    }
+};
+
+/******************************************************************************/
+
 // false: not blocked
 // true: blocked
 

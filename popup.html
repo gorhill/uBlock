@@ -24,6 +24,28 @@
 <p id="total-blocked">?</p>
 </div>
 
+<div id="dynamicFilteringToggler" class="fa on"></div>
+
+<div id="dynamicFilteringContainer">
+<div class="dynamicFiltering local" data-scope=".">
+    <div data-first-party data-type="inline-script"></div>
+    <div data-first-party data-type="script"></div>
+    <div data-type="script"></div>
+    <div data-first-party data-type="sub_frame"></div>
+    <div data-type="sub_frame"></div>
+    <div class="label">&lt;script&gt;</div>
+    <div class="label">&lt;iframe&gt;</div>
+</div>
+<div class="dynamicFiltering global" data-scope="/">
+    <div data-first-party data-type="inline-script"></div>
+    <div data-first-party data-type="script"></div>
+    <div data-type="script"></div>
+    <div data-first-party data-type="sub_frame"></div>
+    <div data-type="sub_frame"></div>
+    <div class="label">&lt;script&gt;</div>
+    <div class="label">&lt;iframe&gt;</div>
+</div>
+</div>
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/messaging-client.js"></script>

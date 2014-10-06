@@ -55,6 +55,8 @@ return {
         autoUpdate: true,
         collapseBlocked: true,
         contextMenuEnabled: true,
+        dynamicFilteringSelfie: '',
+        dynamicFilteringEnabled: false,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
         logRequests: false,

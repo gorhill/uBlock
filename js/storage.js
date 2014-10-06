@@ -661,13 +661,14 @@
             µb.loadWhitelist(onWhitelistReady);
             return;
         }
-        µb.assets.autoUpdate = µb.userSettings.autoUpdate;
         µb.loadPublicSuffixList(onPSLReady);
     };
 
     // User settings are in memory
     var onUserSettingsReady = function(settings) {
+        µb.assets.autoUpdate = settings.autoUpdate;
         µb.contextMenu.toggle(settings.contextMenuEnabled);
+        µb.netFilteringEngine.dynamicFiltersFromSelfie(settings.dynamicFilteringSelfie);
         µb.fromSelfie(onSelfieReady);
         µb.mirrors.toggle(settings.experimentalEnabled);
     };
