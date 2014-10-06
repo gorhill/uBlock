@@ -41,6 +41,7 @@ var exports = {
     bytesInUseMax: 5 * 1024 * 1024,
     ttl: 21 * 24 * 60 * 60 * 1000,
     bytesInUse: 0,
+    tryCount: 0,
     hitCount: 0
 };
 
@@ -50,22 +51,9 @@ var nullFunc = function() {};
 
 // TODO: need to come up with something better. Key shoud be domain. More
 // control over what significant part(s) of a URL is to be used as key.
-var mirrorCandidates = {
-          'ajax.googleapis.com': /^ajax\.googleapis\.com\/ajax\/libs\//,
-         'fonts.googleapis.com': /^fonts\.googleapis\.com/,
-            'fonts.gstatic.com': /^fonts\.gstatic\.com/,
-         'cdnjs.cloudflare.com': /^cdnjs\.cloudflare\.com\/ajax\/libs\//,
-              'code.jquery.com': /^code\.jquery\.com/,
-                  's0.2mdn.net': /(2mdn\.net\/instream\/html5\/ima3\.js)/,
-    'www.googletagservices.com': /(www\.googletagservices\.com\/tag\/js\/gpt\.js)/,
-      'maxcdn.bootstrapcdn.com': /^maxcdn\.bootstrapcdn\.com\/font-awesome\//,
-      'netdna.bootstrapcdn.com': /^netdna\.bootstrapcdn\.com\/bootstrap\//,
-      'b.scorecardresearch.com': /^b\.scorecardresearch\.com\/beacon\.js/,
-         'platform.twitter.com': /^platform\.twitter\.com\/widgets\.js/,
-        'cdn.quilt.janrain.com': /^cdn\.quilt\.janrain\.com\//
-};
+var mirrorCandidates = Object.create(null);
 
-var magicId = 'rmwwgwkzcgfv';
+var magicId = 'zicibucpobdu';
 var metadataPersistTimer = null;
 var bytesInUseMercy = 1 * 1024 * 1024;
 
@@ -107,12 +95,12 @@ var getTextFileFromURL = function(url, onLoad, onError) {
         onError = onLoad;
     }
     var xhr = new XMLHttpRequest();
-    xhr.responseType = 'text';
     xhr.timeout = 10000;
     xhr.onload = onLoad;
     xhr.onerror = onError;
     xhr.ontimeout = onError;
     xhr.open('get', url, true);
+    xhr.responseType = 'arraybuffer';
     xhr.send();
 };
 
@@ -141,9 +129,9 @@ var btoaSafe = function(input) {
     var n = Math.floor(input.length / 3) * 3;
     var b1, b2, b3;
     for ( var ii = 0; ii < n; ii += 3 ) {
-        b1 = input.charCodeAt(ii  );
-        b2 = input.charCodeAt(ii+1);
-        b3 = input.charCodeAt(ii+2);
+        b1 = input[ii  ];
+        b2 = input[ii+1];
+        b3 = input[ii+2];
         output.push(String.fromCharCode(
             bamap[                   b1 >>> 2],
             bamap[(b1 & 0x03) << 4 | b2 >>> 4],
@@ -154,8 +142,8 @@ var btoaSafe = function(input) {
     // Leftover
     var m = input.length - n;
     if ( m > 1 ) {
-        b1 = input.charCodeAt(ii  );
-        b2 = input.charCodeAt(ii+1);
+        b1 = input[ii  ];
+        b2 = input[ii+1];
         output.push(String.fromCharCode(
             bamap[                   b1 >>> 2],
             bamap[(b1 & 0x03) << 4 | b2 >>> 4],
@@ -163,7 +151,7 @@ var btoaSafe = function(input) {
             0x3D
         ));
     } else if ( m !== 0 ) {
-        b1 = input.charCodeAt(ii);
+        b1 = input[ii  ];
         output.push(String.fromCharCode(
             bamap[                   b1 >>>2],
             bamap[(b1 & 0x03) << 4          ],
@@ -191,36 +179,29 @@ var toUrlKey = function(url) {
     if ( pos === -1 ) {
         return '';
     }
-    var re = mirrorCandidates[url.slice(0, pos)];
-    if ( typeof re !== 'object' || typeof re.exec !== 'function' ) {
+    var regexes = mirrorCandidates[url.slice(0, pos)];
+    if ( regexes === undefined ) {
         return '';
     }
-    var matches = re.exec(url);
-    if ( matches === null ) {
-        return '';
+    var i = regexes.length;
+    var matches;
+    while ( i-- ) {
+        matches = regexes[i].exec(url);
+        if ( matches === null ) {
+            continue;
+        }
+        return matches.length === 1 ? matches[0] : matches[1];
     }
-    return matches.length === 1 ? url : matches[1];
+    return '';
 };
 
 /******************************************************************************/
 
 // Ref: http://www.iana.org/assignments/media-types/media-types.xhtml
 
-var normalizeContentType = function(ctin) {
-    var ctout;
-    var encoding;
+var extractMimeType = function(ctin) {
     var pos = ctin.indexOf(';');
-    if ( pos === -1 ) {
-        ctout = ctin.trim();
-        encoding = '';
-    } else {
-        ctout = ctin.slice(0, pos).trim();
-        encoding = ctin.slice(pos + 1).trim();
-    }
-    if ( encoding !== '' ) {
-        ctout += ';' + encoding;
-    }
-    return ctout;
+    return pos === -1 ? ctin.trim() : ctin.slice(0, pos).trim();
 };
 
 /******************************************************************************/
@@ -378,13 +359,9 @@ var cacheAsset = function(url) {
         if ( this.status !== 200 ) {
             return;
         }
-        var contentType = normalizeContentType(this.getResponseHeader('Content-Type'));
-        if ( contentType === '' ) {
-            //console.debug('mirrors.cacheAsset(): no good content type available');
-            return;
-        }
+        var mimeType = extractMimeType(this.getResponseHeader('Content-Type'));
         var yamd5 = new YaMD5();
-        yamd5.appendAsciiStr(contentType);
+        yamd5.appendAsciiStr(mimeType);
         yamd5.appendAsciiStr(this.response);
         var hash = yamd5.end();
         addMetadata(urlKey, hash);
@@ -397,16 +374,13 @@ var cacheAsset = function(url) {
         // as the result is somewhat more compact I believe
         var dataUrl = null;
         try {
-            dataUrl = contentType.indexOf(';') !== -1 ?
-                'data:' + contentType + ',' + encodeURIComponent(this.responseText) :
-                'data:' + contentType + ';base64,' + btoa(this.response);
+            dataUrl = 'data:' + mimeType + ';base64,' + btoaSafe(new Uint8Array(this.response));
         } catch (e) {
-            //console.debug(e);
+            //console.debug('"%s":', url, e);
         }
-        if ( dataUrl === null ) {
-            dataUrl = 'data:' + contentType + ';base64,' + btoaSafe(this.response);
+        if ( dataUrl !== null ) {
+            addContent(hash, dataUrl);
         }
-        addContent(hash, dataUrl);
     };
 
     var onRemoteAssetError = function() {
@@ -423,6 +397,7 @@ var cacheAsset = function(url) {
 /******************************************************************************/
 
 var toURL = function(url, cache) {
+    exports.tryCount += 1;
     var urlKey = toUrlKey(url);
     if ( urlKey === '' ) {
         return '';
@@ -449,8 +424,49 @@ var toURL = function(url, cache) {
 
 /******************************************************************************/
 
+var parseMirrorCandidates = function(rawText) {
+    var rawTextEnd = rawText.length;
+    var lineBeg = 0, lineEnd;
+    var line;
+    var key = '', re;
+    while ( lineBeg < rawTextEnd ) {
+        lineEnd = rawText.indexOf('\n', lineBeg);
+        if ( lineEnd === -1 ) {
+            lineEnd = rawText.indexOf('\r', lineBeg);
+            if ( lineEnd === -1 ) {
+                lineEnd = rawTextEnd;
+            }
+        }
+        line = rawText.slice(lineBeg, lineEnd);
+        lineBeg = lineEnd + 1;
+        if ( line.charAt(0) === '#' ) {
+            continue;
+        }
+        if ( line.charAt(0) !== ' ' ) {
+            key = line.trim();
+            continue;
+        }
+        if ( key === '' ) {
+            continue;
+        }
+        re = new RegExp(line.trim());
+        if ( mirrorCandidates[key] === undefined ) {
+            mirrorCandidates[key] = [];
+        }
+        mirrorCandidates[key].push(re);
+    }
+};
+
+/******************************************************************************/
+
 var load = function() {
     loaded = true;
+
+    var onMirrorCandidatesReady = function(details) {
+        if ( details.content !== '' ) {
+            parseMirrorCandidates(details.content);
+        }
+    };
 
     var loadContent = function(urlKey, hash) {
         var binKey = storageKeyFromHash(hash);
@@ -471,6 +487,7 @@ var load = function() {
     var onMetadataReady = function(bin) {
         //console.debug('mirrors.load(): loaded metadata');
         metadata = bin.mirrors_metadata;
+        var mustReset = metadata.magicId !== magicId;
         var toRemove = [];
         var u2hmap = metadata.urlKeyToHashMap;
         var hash;
@@ -479,7 +496,7 @@ var load = function() {
                 continue;
             }
             hash = u2hmap[urlKey].hash;
-            if ( metadata.magicId !== magicId ) {
+            if ( mustReset ) {
                 toRemove.push(storageKeyFromHash(hash));
                 removeMetadata(urlKey);
                 continue;
@@ -493,12 +510,13 @@ var load = function() {
     };
 
     chrome.storage.local.get({ 'mirrors_metadata': metadata }, onMetadataReady);
+    µBlock.assets.get('assets/ublock/mirror-candidates.txt', onMirrorCandidatesReady);
 };
 
 /******************************************************************************/
 
 var unload = function() {
-    updateMetadataNow();
+    pruneToSize(0);
     metadata.urlKeyToHashMap = {};
     hashToContentMap = {};
     exports.bytesInUse = 0;
