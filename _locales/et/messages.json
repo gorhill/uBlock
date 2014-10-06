@@ -96,11 +96,11 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Peitke blokeeritud elementide asukohad",
+    "message":"Peida blokeeritud elementide asukohad",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Kuvage ikoonil blokeeritud elementide arv",
+    "message":"Kuva ikoonil blokeeritud elementide arv",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -128,7 +128,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Tühjendage kõik vahemälud",
+    "message":"Tühjenda kõik vahemälud",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{

@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — — 控制面板",
+    "message":"µBlock  控制面板",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -192,7 +192,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"可能过时了",
+    "message":"过期",
     "description":"English: outdated"
   },
   "1pFormatHint":{

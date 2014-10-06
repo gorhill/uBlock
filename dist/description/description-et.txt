@@ -25,7 +25,7 @@ Lisaks neile on veel saadaval:
 - hpHosts'i reklaami- ja jälitusserverid
 - MVPS HOSTS
 - Spam404
-- ja palju muud
+- Ja paljud teised
 
 Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab µBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
 
