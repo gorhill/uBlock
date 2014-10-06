@@ -1752,6 +1752,9 @@ FilterContainer.prototype.dynamicFilterStateToOption = {
 };
 
 FilterContainer.prototype.matchDynamicFilters = function(hostname, requestType, firstParty) {
+    if ( typeof hostname !== 'string' || hostname === '' ) {
+        return '';
+    }
     var party = firstParty ? FirstParty : ThirdParty;
     if ( typeNameToTypeValue.hasOwnProperty(requestType) === false ) {
         return '';
@@ -1948,9 +1951,12 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
         FirstParty :
         ThirdParty;
 
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
+
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(requestHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(pageHostname, requestType, party === FirstParty);
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
@@ -1958,9 +1964,6 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
     var buckets = this.buckets;
-
-    // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
 
     // Tokenize only once
     this.tokenize(url);
@@ -2040,15 +2043,15 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         }
     }
 
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
+
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(requestHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(pageHostname, requestType, party === FirstParty);
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
-
-    // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
 
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
