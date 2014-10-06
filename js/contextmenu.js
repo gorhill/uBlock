@@ -79,7 +79,7 @@ var toggleMenu = function(on) {
     var menuCreateDetails = {
         id: 'blockElement',
         title: chrome.i18n.getMessage('pickerContextMenuEntry'),
-        contexts: ['page', 'frame', 'link', 'image', 'video'],
+        contexts: ['page', 'editable', 'frame', 'link', 'image', 'video'],
         documentUrlPatterns: ['https://*/*', 'http://*/*']
     };
 
