@@ -667,10 +667,10 @@
     // User settings are in memory
     var onUserSettingsReady = function(settings) {
         µb.assets.autoUpdate = settings.autoUpdate;
-        µb.contextMenu.toggle(settings.contextMenuEnabled);
         µb.netFilteringEngine.dynamicFiltersFromSelfie(settings.dynamicFilteringSelfie);
         µb.fromSelfie(onSelfieReady);
         µb.mirrors.toggle(settings.experimentalEnabled);
+        µb.contextMenu.toggle(settings.contextMenuEnabled);
     };
 
     this.loadUserSettings(onUserSettingsReady);

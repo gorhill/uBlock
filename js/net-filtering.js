@@ -1272,6 +1272,7 @@ var FilterContainer = function() {
     this.buckets = new Array(4);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
+    this.dynamicFilters = {};
     this.filterParser = new FilterParser();
     this.reset();
 };
@@ -1292,7 +1293,6 @@ FilterContainer.prototype.reset = function() {
     this.duplicates = Object.create(null);
     this.blockedAnyPartyHostnames.reset();
     this.blocked3rdPartyHostnames.reset();
-    this.dynamicFilters = {};
     this.filterParser.reset();
 };
 
