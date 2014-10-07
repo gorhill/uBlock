@@ -913,7 +913,6 @@
 127.0.0.1	a.glcdn.co
 127.0.0.1	a.intentmedia.net
 127.0.0.1	a.intgr.net
-127.0.0.1	a.intsig.net
 127.0.0.1	a.kat.ph
 127.0.0.1	a.livefreefunwith.me
 127.0.0.1	a.mologiq.net
@@ -1268,6 +1267,7 @@
 127.0.0.1	ad.in.doubleclick.net
 127.0.0.1	ad.infoseek.com
 127.0.0.1	ad.insightexpress.com
+127.0.0.1	ad.intsig.net
 127.0.0.1	ad.investopedia.com
 127.0.0.1	ad.ipredictive.com
 127.0.0.1	ad.ir.ru
@@ -4328,6 +4328,7 @@
 127.0.0.1	affiliateprogram.keywordspy.com
 127.0.0.1	affiliatequality.com
 127.0.0.1	affiliates-cdn.mozilla.org
+127.0.0.1	affiliates.5dimes.com
 127.0.0.1	affiliates.about.com
 127.0.0.1	affiliates.allposters.com
 127.0.0.1	affiliates.bfast.com
@@ -4528,8 +4529,18 @@
 127.0.0.1	ams.addflow.ru
 127.0.0.1	ams1.ib.adnxs.com
 127.0.0.1	ams10.ib.adnxs.com
+127.0.0.1	ams11.ib.adnxs.com
+127.0.0.1	ams12.ib.adnxs.com
+127.0.0.1	ams13.ib.adnxs.com
+127.0.0.1	ams14.ib.adnxs.com
+127.0.0.1	ams15.ib.adnxs.com
+127.0.0.1	ams16.ib.adnxs.com
+127.0.0.1	ams17.ib.adnxs.com
+127.0.0.1	ams18.ib.adnxs.com
+127.0.0.1	ams19.ib.adnxs.com
 127.0.0.1	ams2.100tb.heyzap.com
 127.0.0.1	ams2.ib.adnxs.com
+127.0.0.1	ams20.ib.adnxs.com
 127.0.0.1	ams3.100tb.heyzap.com
 127.0.0.1	ams3.ib.adnxs.com
 127.0.0.1	ams4.100tb.heyzap.com
@@ -4728,7 +4739,6 @@
 127.0.0.1	api.getvero.com
 127.0.0.1	api.innomdc.com
 127.0.0.1	api.intensifier.de
-127.0.0.1	api.intsig.net
 127.0.0.1	api.ipinfodb.com
 127.0.0.1	api.keen.io
 127.0.0.1	api.kiip.me
@@ -5091,6 +5101,7 @@
 127.0.0.1	b.c8.net.ua
 127.0.0.1	b.casalemedia.com
 127.0.0.1	b.chartboost.com
+127.0.0.1	b.grvcdn.com
 127.0.0.1	b.huffingtonpost.com
 127.0.0.1	b.localpages.com
 127.0.0.1	b.retailmenot.com
@@ -9522,7 +9533,6 @@
 127.0.0.1	download.akamaitools.com.edgesuite.net
 127.0.0.1	download.enigmasoftware.com
 127.0.0.1	download.hitbox.com
-127.0.0.1	download.intsig.net
 127.0.0.1	download.pchubs.com
 127.0.0.1	download.scorecardresearch.com
 127.0.0.1	download.timesink.com
@@ -10126,7 +10136,6 @@
 127.0.0.1	extntechnologies.us.intellitxt.com
 127.0.0.1	extra.wavecdn.net
 127.0.0.1	extra33.com
-127.0.0.1	extras.mnginteractive.com
 127.0.0.1	extreme-dm.com
 127.0.0.1	extremetracking.com
 127.0.0.1	extremetracking.net
@@ -12394,6 +12403,7 @@
 127.0.0.1	j.adlooxtracking.com
 127.0.0.1	j.clickdensity.com
 127.0.0.1	j.kissinsights.com
+127.0.0.1	j.ophan.co.uk
 127.0.0.1	j.zeroredirect.com
 127.0.0.1	j.zeroredirect1.com
 127.0.0.1	j.zeroredirect2.com
@@ -12958,6 +12968,10 @@
 127.0.0.1	linicom.co.il
 127.0.0.1	link.ac
 127.0.0.1	link.americastestkitchencorp.com
+127.0.0.1	link.astrabox.fr
+127.0.0.1	link.astraflash.fr
+127.0.0.1	link.astraserv.fr
+127.0.0.1	link.astrasoft.fr
 127.0.0.1	link.astraspace.fr
 127.0.0.1	link.belati.net
 127.0.0.1	link.email.dynect.net
@@ -12966,9 +12980,15 @@
 127.0.0.1	link.mochiads.com
 127.0.0.1	link.net
 127.0.0.1	link.openfile.fr
+127.0.0.1	link.openpix.fr
+127.0.0.1	link.opensoftt.fr
 127.0.0.1	link.p0.com
 127.0.0.1	link.profitreload.com
 127.0.0.1	link.tbtrack.com
+127.0.0.1	link.transifil.fr
+127.0.0.1	link.transinet.fr
+127.0.0.1	link.transisky.fr
+127.0.0.1	link.transiweb.fr
 127.0.0.1	link.transiworld.fr
 127.0.0.1	link4link.com
 127.0.0.1	link4u.de
@@ -14732,6 +14752,7 @@
 127.0.0.1	operationfabulous.com
 127.0.0.1	opf.ooyala.com
 127.0.0.1	ophan.guardian.co.uk
+127.0.0.1	ophan.theguardian.com
 127.0.0.1	opi.yahoo.com
 127.0.0.1	opinionlab.com
 127.0.0.1	opportunity-tracking.com
@@ -19144,7 +19165,6 @@
 127.0.0.1	visualnetworks.com
 127.0.0.1	vitax.abc-sms.de
 127.0.0.1	viziomothersday.brandmovers.net
-127.0.0.1	vjs.zencdn.net
 127.0.0.1	vlog.leadformix.com
 127.0.0.1	vlogic.ak-networks.com
 127.0.0.1	vml-127.com
@@ -19977,6 +19997,7 @@
 127.0.0.1	www.adspics.com
 127.0.0.1	www.adspinner.com
 127.0.0.1	www.adsplay.in
+127.0.0.1	www.adspserving.com
 127.0.0.1	www.adsuperstar.com
 127.0.0.1	www.adsupplyads.com
 127.0.0.1	www.adsview.com
@@ -22663,4 +22684,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22658
+# Hosts: 22679

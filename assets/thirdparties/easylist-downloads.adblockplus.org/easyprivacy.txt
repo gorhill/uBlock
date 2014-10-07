@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: bSRtPi6/mtJZoTEbDemx7Q
-! Version: 201410022021
+! Checksum: G2sDDHlPtQy+mVN8knOVTA
+! Version: 201410071851
 ! Title: EasyPrivacy
-! Last modified: 02 Oct 2014 20:21 UTC
+! Last modified: 07 Oct 2014 18:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -236,7 +236,6 @@
 /amdhfp/t.do?id$image
 /analiz.php3?
 /analyse.js
-/analysis-logger/logger?
 /analytic_data_
 /analyticReporting.
 /analyticReportingAS3.$domain=~miniclip.com
@@ -706,8 +705,6 @@
 /event/*/*?*&euidl=*&url=
 /eventLogServlet?
 /eventtracker.js
-/evercookie.
-/evercookie/*
 /evercookie_
 /ewtrack.
 /EWTRACK_
@@ -877,7 +874,7 @@
 /google_tracker.
 /googleana.
 /GoogleAnalystics.
-/googleanalytics-prod.swf
+/googleanalytics-
 /googleanalytics.js
 /GoogleAnalytics.swf
 /googleanalytics/*
@@ -1122,7 +1119,6 @@
 /logger.ashx?
 /logger.dll/*
 /logger/p.gif?
-/logger?*ctxid=
 /logger?d=
 /logging-code.
 /logging/pixel?
@@ -2837,6 +2833,7 @@ http://utm.
 ||google-analytics.com/collect?
 ||google-analytics.com/ga_exp.js
 ||google-analytics.com/plugins/
+||google-analytics.com/r/collect?
 ||google-analytics.com/siteopt.js?
 ||google-analytics.com/urchin.js
 ||googleadservices.com^$third-party
@@ -4644,6 +4641,7 @@ http://utm.
 ||audit.303br.net^
 ||audit.median.hu^
 ||autoline-top.com/counter.php?
+||awe.sm/conversions/
 ||aweber.com/form/displays.htm?$image
 ||axislogger.appspot.com^
 ||b.bedop.com^
@@ -6636,6 +6634,7 @@ http://utm.
 ||cisco.com/web/*/s.gif?
 ||cisco.com/web/*/trackEvent.min.js?
 ||cjtube.com/tp/*.php
+||cl.expedia.com^
 ||cl.ly/metrics?
 ||clck.yandex.com^
 ||click.aliexpress.com^
@@ -6694,6 +6693,7 @@ http://utm.
 ||count.livetv.ru^
 ||count.livetv.sx^
 ||count.prx.org^
+||counter.entertainmentwise.com^
 ||counter.promodeejay.net^
 ||counter.theconversation.edu.au^
 ||coupons.com/pmm.asp
@@ -6802,6 +6802,7 @@ http://utm.
 ||encrypted.google.*/imghover?$image
 ||encrypted.google.*/url?$image
 ||engadget.com/traffic/?
+||engineeringnews.co.za/count.php?
 ||enlightenment.secureshoppingbasket.com^
 ||entensity.net/pages/c.htm
 ||entry-stats.huffingtonpost.com^
@@ -7254,6 +7255,7 @@ http://utm.
 ||metrics.bustle.com^
 ||metrics.dailymotion.com^
 ||metrics.ee.co.uk^
+||metrics.tbliab.net^
 ||metrics.ted.com^
 ||metrics.washingtonpost.com^
 ||metro.us/api/trackPage/
@@ -7270,6 +7272,7 @@ http://utm.
 ||military.com/Scripts/mnfooter.js
 ||military.com^*/statistic?
 ||miniclip.com^*/swhsproxy.swf?
+||miningweekly.com/count.php?
 ||miniurls.co/track/
 ||miniusa.com^*/trackDeeplink.gif?
 ||mint.boingboing.net^
@@ -7484,6 +7487,7 @@ http://utm.
 ||pluto.airbnb.com^*.php?uuid=
 ||pnet.co.za/js/ga.js
 ||pokernews.com/track-views.php?
+||polity.org.za/count.php?
 ||popcap.com^*/interstitial_zones.js
 ||potterybarn.com/pbimgs/*/external/thirdparty.js
 ||potterybarnkids.com/pkimgs/*/external/thirdparty.js
@@ -7561,6 +7565,7 @@ http://utm.
 ||reporting.theonion.com^
 ||reporting.wilkinsonplus.com^
 ||request.issuu.com^
+||researchchannel.co.za/count.php?
 ||resellerclub.com/helpdesk/visitor/index.php?$image
 ||retrevo.com/m/vm/tracking/
 ||retrevo.com/search/v2/jsp/blank.jsp?
@@ -7724,6 +7729,7 @@ http://utm.
 ||statistics.crowdynews.com^
 ||statravel.co.uk/static/uk_division_web_live/Javascript/wt_gets.js
 ||statravel.com^*/Javascript/wt_gets.js
+||stats.aplus.com^
 ||stats.articlesbase.com^
 ||stats.avg.com^
 ||stats.bbc.co.uk^
@@ -8238,6 +8244,7 @@ http://utm.
 ||mnginteractive.com/live/omniture/sccore_NEW_JRC.js$domain=delcotimes.com
 ||nwsource.com/shared/js/s_code.js?$domain=seattletimes.com
 ||nyteknik.se/ver02/javascript/2012_s_code_global.js
+||paypal.com/acquisition-app/static/js/s_code.js
 ||playstation.com/pscomauth/groups/public/documents/webasset/community_secured_s_code.js
 ||r7.com/scode/s_code_portal_$script
 ||redbox.com^*/scripts/s_code.js
@@ -8899,7 +8906,8 @@ http://utm.
 @@||aliunicorn.com^*/click-stat.js
 @@||aliunicorn.com^*/click_stat/
 @@||analytics.atomiconline.com/services/jquery.js
-@@||analytics.edgesuite.net/html5/akamai*.js$domain=resignationbrewery.com
+@@||analytics.edgesuite.net/config/beacon-*.xml$domain=video.foxnews.com
+@@||analytics.edgesuite.net/html5/akamaihtml5-min.js$domain=resignationbrewery.com|video.foxnews.com
 @@||analytics.rogersmedia.com/js/rdm_dil_code.full.js$domain=rogersradio.ca
 @@||analytics.rogersmedia.com/js/rdm_s_code.min.js$domain=rogersradio.ca
 @@||analytics.twitter.com^$domain=analytics.twitter.com
@@ -8915,6 +8923,7 @@ http://utm.
 @@||arstechnica.com/services/incr.php?*=interactions.adblock-annoy.click$xmlhttprequest
 @@||assets.espn.go.com/espn360/builds/nielsen/ggce*.swf$object-subrequest
 @@||autoscout24.net/unifiedtracking/ivw.js
+@@||barclays.co.uk/touchclarity/mbox.js
 @@||barclays.touchclarity.com^$domain=barclaycard.co.uk
 @@||bbc.co.uk/frameworks/nedstat/$script,~third-party
 @@||bc.geocities.*/not_found/
@@ -9043,7 +9052,7 @@ http://utm.
 @@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|cliphunter.com|deviantart.com|infogr.am|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com
-@@||google-analytics.com/urchin.js$domain=denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
+@@||google-analytics.com/urchin.js$domain=chocomaru.com|denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
 @@||google.com/js/gweb/analytics/$domain=google.com
 @@||google.com/js/gweb/analytics/doubletrack.js$domain=android.com
@@ -9061,7 +9070,7 @@ http://utm.
 @@||hotmail.com/mail/*/i2a.js
 @@||hotwirestatic.com^*/opinionLab.js$domain=hotwire.com
 @@||img.en25.com/eloquaimages/clients/PentonMediaInc/$image,domain=windowsitpro.com
-@@||imrworldwide.com/crossdomain.xml$object-subrequest,domain=sbs.com.au
+@@||imrworldwide.com/crossdomain.xml$object-subrequest,domain=cc.com|sbs.com.au
 @@||imrworldwide.com/novms/*/ggcm*.js$domain=europafm.com
 @@||imrworldwide.com/v60.js$domain=musicfeeds.com.au|nzherald.co.nz|sf.se|weatherchannel.com.au
 @@||imrworldwide.com^*-mediaplayer&$domain=au.launch.yahoo.com
@@ -9121,6 +9130,7 @@ http://utm.
 @@||mlb.com/shared/scripts/bam.tracking.js
 @@||monetate.net/js/$domain=nike.com
 @@||mongoosemetrics.com/jsfiles/js-correlation/mm-rules.min.js$domain=subaru.com
+@@||motorolasolutions.com/wrs/b2bsdc.js
 @@||moulinex.com/js/xtroi.js
 @@||mpsnare.iesnare.com/snare.js$domain=citibank.com|enmasse.com|login.skype.com
 @@||msecnd.net^*/site-tracker.js$domain=momondo.co.uk
@@ -9168,7 +9178,6 @@ http://utm.
 @@||pillsbury.com/Shared/StarterKit/Javascript/UnicaTag.js
 @@||ping.hellobar.com/?*&_e=click&$image
 @@||piwik.pro/images/
-@@||pix04.revsci.net/E05510/a4/0/0/pcx.js?$domain=video.foxbusiness.com
 @@||pixel.facebook.com/ajax/notifications/mark_read.php?*&alert_ids%$image
 @@||pixel.fetchback.com^$subdocument,domain=sears.com
 @@||pixel.quantserve.com/api/segments.json?$domain=ap.org|newsinc.com
@@ -9191,7 +9200,6 @@ http://utm.
 @@||reinvigorate.net/re_.js$domain=thenounproject.com
 @@||remodelista.com/media/js/libs/ga_social_tracking.js
 @@||res-x.com^*/Resonance.aspx?
-@@||revsci.net/*/pcx.js?csid=$script,domain=video.foxnews.com
 @@||s.youtube.com/api/stats/playback?$object-subrequest
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?

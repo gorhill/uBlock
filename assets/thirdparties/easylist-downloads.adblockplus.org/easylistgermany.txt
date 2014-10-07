@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: qWbkutHmRB274jd4VnpC3Q
-! Version: 201410022021
+! Checksum: XO91fFX+UjPRVZCzKT6D8g
+! Version: 201410071851
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 02 Oct 2014 20:21 UTC
+! Last modified: 07 Oct 2014 18:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1745,6 +1745,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||atomload.at/js/alanal.php
 ||atomload.at/js/atom.js
 ||atomload.at/js/holz.js
+||atomload.at/js/jspop.
 ||atomload.at/js/llll.js
 ||atomload.at/js/volume.js
 ||atomload.at/net.js
@@ -3688,6 +3689,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 /\bwww\.pc-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=pc-magazin.de
 /\bwww\.video-magazin\.de\/+\b(?!img\/|abo\/)/$image,domain=video-magazin.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
+||csgo.99damage.de/wp-content/$image
 ||doubleclick.net^$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
 ||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
@@ -3701,8 +3703,10 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
-||img.lokalisten.de/img/*LB_
-||img.lokalisten.de/img/*SKY
+||img.lokalisten.de^*134AA$image
+||img.lokalisten.de^*431A4$image
+||img.lokalisten.de^*LB$image
+||img.lokalisten.de^*SKY$image
 ||ip-ads.de^$domain=rtl-now.rtl.de|rtl2now.rtl2.de
 ||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||media.epochtimes.de/img/
@@ -3762,6 +3766,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||filmpalast.to/ad/$popup
 ||finya.de/Index/logoutAd/$popup
 ||firstload.us^$popup,domain=movie-blog.org
+||flower-blog.org/usenet-nl-gratis-$popup
 ||g-stream.in/lla2/$popup
 ||g-stream.in/mirror/$popup
 ||g-stream.in/out.php|$popup
@@ -6290,7 +6295,7 @@ ultras.ws##a[href^="http://www1.belboon.de/"]
 jenatv.de##a[href^="http://www1.belboon.de/adtracking/"]
 goldesel.to,mega-stream.to,moviebox.to,woom.ws##a[href^="http://www2.filedroid.net/AF_"]
 readmore.de##a[href^="http://www4.smartadserver.com/"]
-movie-blog.org##a[href^="http://x.co/"]
+byte.to,movie-blog.org##a[href^="http://x.co/"]
 movie-blog.org##a[href^="http://y.ahoo.it/"]
 movie-blog.org##a[href^="http://yi.tl/"]
 hd-world.org,movie-blog.org##a[href^="http://zip5.de/"]
@@ -6301,6 +6306,7 @@ gamiano.de##a[href^="https://www.amazon.de/"][href*="?tag=gamiano-21&"]
 livestreamfussball.org##a[href^="https://www.bwin.com/de/registration?wm="]
 ebook-hell.to##a[href^="https://www.filemonkey.in/ref/"]
 boerse.bz##a[href^="https://www.hide.io/?"] > img
+atomload.at##a[href^="https://www.oboom.com/ref/"]
 g-stream.in##a[href^="mirror/?"]
 angesagter.de##a[href^="out.php?bid="]
 sinn-frei.com##a[href^="out2_"]

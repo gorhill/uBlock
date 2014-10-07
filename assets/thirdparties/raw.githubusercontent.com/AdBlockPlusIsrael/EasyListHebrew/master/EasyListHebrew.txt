@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: ISe3KW5RfVLwVfzaBVXtIQ
+! Checksum: qqC1VaBDqpWvrwwd2GZ/2w
 ! Title: EasyList Hebrew
-! Last modified: 02/10/14  11:20
+! Last modified: 06/10/14  18:51
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -94,11 +94,13 @@
 !-ynet-!
 /CdaMarketingLink/*
 /CdaMarketTextlinks_
+||akamai.net/7/1948/5064/v0001/prdupl02.ynet.co.il/MediaSvrFiles/$domain=ynet.co.il
 ||alljobs.co.il/Partners/Ynet/Engine.aspx
 ||go.ynet.co.il/short/commerce/
 ||go.ynet.co.il/short/content/2010/Career/banner/
 ||go.ynet.co.il/short/Demos/*/Ads/
 ||images1.ynet.co.il/PicServer3/2013/10/17/4920698/150_200.jpg
+||images1.ynet.co.il/PicServer4/2014/09/15/5587311/
 ||mediadownload.ynet.co.il/static/FXG_V14_FULL/images/vertical_header.png
 ||ynet.co.il/images/headline_video_header_samsung.png
 ||ynet.co.il/WinWinCooperation/
@@ -126,10 +128,11 @@
 ||tapuz.co.il^*CloseBanner.gif
 ||tapuz.hiro.co.il^
 !-inn-!
-||dwnmedia.a7.org/inntv/media/
+||a7.org/scripts/Maavaron.js
 ||info.a7.org^$domain=inn.co.il
 ||inn.co.il/info_en/
 ||inn.co.il/leads/view/$popup
+||dwnmedia.a7.org/inntv/media/
 !-Globes-!
 ||download.cast-tv.com/*_flv/prerole$object-subrequest
 ||globes.co.il/data/js/gtv_ads.js
@@ -166,7 +169,7 @@
 ||games-il.org.uk^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
-
+||why-love-fifa.me.uk^$domain=fxp.co.il
 !
 !--------------------------1st party blocking rules---------------------------!
 !
@@ -466,6 +469,7 @@ fxp.co.il##.captain
 fxp.co.il##.hungry
 fxp.co.il##A[href*="ofofof.info"]
 fxp.co.il##A[href^="http://fcdn.co.il"]
+fxp.co.il##[src="http://tpc.googlesyndication.com/safeframe/1-0-0/html/container.html"] + *
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 286.5px;"]
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 9.5px;"]
 fxp.co.il##[style^="opacity:"]

@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sat, 27 Sep 2014 11:08:06 GMT
-# entries:        2479
+# entries:        2474
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -337,7 +337,6 @@
 127.0.0.1 adrotator.net
 127.0.0.1 adrotator.se
 127.0.0.1 ads-click.com
-127.0.0.1 ads.128b.com
 127.0.0.1 ads.4tube.com
 127.0.0.1 ads.5ci.lt
 127.0.0.1 ads.abovetopsecret.com
@@ -359,7 +358,6 @@
 127.0.0.1 ads.alwayson-network.com
 127.0.0.1 ads.amdmb.com
 127.0.0.1 ads.amigos.com
-127.0.0.1 ads.anm.co.uk
 127.0.0.1 ads.aol.co.uk
 127.0.0.1 ads.aol.com
 127.0.0.1 ads.apn.co.nz
@@ -1250,7 +1248,6 @@
 127.0.0.1 clickcompare.co.uk
 127.0.0.1 clickdensity.com
 127.0.0.1 clickedyclick.com
-127.0.0.1 clickforwebmasters.com
 127.0.0.1 clickhereforcellphones.com
 127.0.0.1 clickhouse.com
 127.0.0.1 clickhype.com
@@ -1550,7 +1547,6 @@
 127.0.0.1 hightrafficads.com
 127.0.0.1 histats.com
 127.0.0.1 hit-parade.com
-127.0.0.1 hit-ranking.de
 127.0.0.1 hit.bg
 127.0.0.1 hit.ua
 127.0.0.1 hit.webcentre.lycos.co.uk
@@ -1748,7 +1744,6 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
-127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com
@@ -1962,6 +1957,7 @@
 127.0.0.1 popups.infostart.com
 127.0.0.1 popupsponsor.com
 127.0.0.1 popuptraffic.com
+127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
 127.0.0.1 postmasterbannernet.com
 127.0.0.1 postrelease.com
@@ -2023,7 +2019,6 @@
 127.0.0.1 radiate.com
 127.0.0.1 rampidads.com
 127.0.0.1 rank-master.com
-127.0.0.1 rank-master.de
 127.0.0.1 rank8.de
 127.0.0.1 rankchamp.de
 127.0.0.1 ranking-charts.de

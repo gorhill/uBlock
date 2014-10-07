@@ -447,6 +447,7 @@ ad.gr.doubleclick.net
 ||focuswebtv.gr/banners/*
 ||iefimerida.gr/sites/all/themes/base/images/iefimerida_xmas_offer.jpg
 ||efsyn.gr/ads/*
+||efsyn.gr/wp-content/uploads/2014/05/housebanner300x250d.jpg
 ||athinorama.gr/lmnts/skins/*
 ||protothema.gr/Themes/1/Default/Media/opap-news.png
 ||protothema.gr/files/1/2012/11/07/opap_live_150x425.jpg

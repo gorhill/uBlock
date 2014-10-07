@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.5
+! Version: 7.6
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -310,6 +310,9 @@ uptobox.com#@#.ad-leader > div[id]
 dailybitcoins.org#@#.ad-img
 ! freebitco.in
 @@/ad_pages/1386307785/left_sky_out.html|$domain=freebitco.in
+! freedoge.co.in
+freedoge.co.in#@#.ad-img
+freedoge.co.in#@#.adsbygoogle
 ! 2unlimited.info
 @@||2unlimited.info/js/adsense.js
 ! anime-shinden.info
@@ -495,6 +498,13 @@ online.dramacafe.in#@#.afs_ads
 /js/adUnblock.js$script,domain=lequipe.fr
 ! receive-sms-online.info
 @@||receive-sms-online.info/advertisment.js$script
+! extreamleech.com
+extreamleech.com#@#.afs_ads
+! linkguard.biz
+||linkguard.biz/adblock-detector.htm$subdocument
+! doulci.net
+doulci.net###adbuddy-no-adb-container
+doulci.net###adbuddy-overlay
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -509,6 +519,7 @@ online.dramacafe.in#@#.afs_ads
 ! Tracking
 !----------------------------------------------------------------------------------------------------!
 ||js.sapo.pt/SAPOWebAnalytics/
+||flash.banners-service.info^
 !----------------------------------------------------------------------------------------------------!
 ! Ads
 !----------------------------------------------------------------------------------------------------!
@@ -784,7 +795,8 @@ pirlotv.tv###ad_overlay_countdown
 @@||cdn.chatytvgratis.me/ads/ads2.php?*$domain=cineplanet21.com
 ! sharecast.to
 sharecast.to###closeb
-||sharecast.to/matomybanner.html
+||sharecast.to/stats.php
+||sharecast.to/popup.html$popup
 ! youmoviz.tv
 youmoviz.tv##.plugbarremozi
 ! adbuck.cc
@@ -948,3 +960,5 @@ pregen.net###olayer
 ||s3-sa-east-1.amazonaws.com^$third-party
 ! bet-at-home.com
 ||affiliates.bet-at-home.com^$popup
+! ||scorebull.com
+||scorebull.com/adv/*$popup

@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201410011144
+! Version: 201410071057
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 01-10-2014
+! Last modified: 07-10-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1699,6 +1699,9 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://*.cdnads.com/www/images/
 |http://*.cb01.tv/HD-Player-728x90-IT.JPG
 |http://go.padstm.com/?id=
+|http://images.eurogamer.net/*/takeovers/*420x83*
+||gamer-network.net^$popup
+|http://*.catanzaroinforma.it/public/sponsor/
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3172,6 +3175,19 @@ forum.notebookreview.com##[id^="google_ads_iframe"]
 notebookheavy.com##.adsbygoogle
 fileforum.betanews.com##.ad300
 perfectgeeks.com##.ads_1
+vg247.it##IMG[width="1260"][height="110"][src^="http://images.eurogamer.net/"]
+vg247.it##.advert
+vg247.it##[id^="ox_"]
+vg247.it##[id^="beacon_"]
+hackintosh.zone##.adsbygoogle
+majorgeeks.com##.geekad
+majorgeeks.com##[width="336"][height="280"][type="application/x-shockwave-flash"]
+catanzaroinforma.it###skinlink
+catanzaroinforma.it###top3-pubbli
+catanzaroinforma.it##.adsbygoogle
+catanzaroinforma.it###mainsponsor
+catanzaroinforma.it##.pubbli300
+catanzaroinforma.it###pubbliinmezzo
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup

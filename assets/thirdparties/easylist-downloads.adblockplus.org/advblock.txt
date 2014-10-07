@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 4iKUFna6wkePHotKzZEdhg
-! Version: 201410022020
-! Last modified: 02 Oct 2014 20:20 UTC
+! Checksum: 8J6e1GuihYdtFtE1pjY2YQ
+! Version: 201410071850
+! Last modified: 07 Oct 2014 18:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -2982,6 +2982,7 @@ afisha.ru,zdsimulator.com.ua###flashContent
 tvnet.lv###footer_banner
 gameround.ru###global_back_link
 gmbox.ru###gmboxPromoSliderBlock
+joyreactor.cc###header + a
 cwer.ws###header .right
 rebill.me###header a[target="_blank"]
 world-mmo.com###header-wrapper
@@ -3263,7 +3264,6 @@ coldfilm.ru###hbanka
 megatorrents.org###head > table[width="100%"]
 goha.ru###head-icons + div:not(#head-menu)
 6barrel.com,samru.ru###header
-joyreactor.cc###header + a[target="_blank"]
 hostingkartinok.com###header + div[style*="960px"]
 delay-dengi.ru###header a[href^="http://delay-dengi.ru/forum/showthread.php?t="]
 bagnet.org,dni.ru###header-banner
@@ -4434,7 +4434,6 @@ $third-party,subdocument,domain=ints.rusfolder.com|ints.rusfolder.net|pornolab.n
 .ru/inc/$subdocument,domain=vz.ru
 .ru/rightdown/$domain=pic4you.ru|pic5you.ru
 //195.82.146.52^$object,domain=rutracker.org
-//joyreactor.cc/css/*
 //www.vsevam.ru^$object
 /ad*.tutu.ru^*_*.php|
 /banner_fullscreen.js|$domain=namba.kg|namba.tj
@@ -4876,6 +4875,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||ixbt.com/img/branding/
 ||ixbt.com/include/ctx2.js
 ||jaymedianetwork.com/get.php?id=
+||joyreactor.cc/images/bk/
 ||jurnalik.ru/slider.php
 ||k.img.com.ua/static/img/banners/
 ||k.img.com.ua/static/js/fotos_banner.js
@@ -5902,6 +5902,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@/adline.$domain=adline.by|adline.reformal.ru
 @@/adriver.core.$domain=delfi.ua
 @@/adsense/*$domain=winxclub.com
+@@/advert-$domain=advert-control.ru|advert-empire.com|advert-technology.ru
 @@/ai/adbanner/*$domain=akado.ru|megafon.ru
 @@/assets/ads/*$domain=abcphoto.com.ua
 @@/branding.css$domain=microsoft.com
@@ -5944,8 +5945,6 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||adsbox.$domain=adsbox.com.ua|adsbox.ru
 @@||adv.d3.ru^$domain=adv.d3.ru
 @@||adv.ramr.ru^$domain=adv.ramr.ru
-@@||advert-control.ru^$~third-party
-@@||advert-technology.ru^$~third-party
 @@||advert.akado.ru/$domain=akado.ru
 @@||advert.kp.ru^$~object,~third-party
 @@||advert.starlightmedia.ua/crossdomain.xml

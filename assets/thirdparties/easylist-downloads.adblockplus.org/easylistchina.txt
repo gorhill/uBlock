@@ -1,9 +1,9 @@
 [Adblock Plus 2.1]
-! Checksum: q68/Tfj3aPvyi83RGy69jg
-! Version: 201410022021
+! Checksum: kkhZxDwXYLQl/fWmnvk0fg
+! Version: 201410071851
 ! Title: EasyList China
 ! Chinese supplement for the EasyList filters
-! Last Modified: 02 Oct 2014 20:21 UTC
+! Last Modified: 07 Oct 2014 18:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpchina.org/forum/
 ! License: https://easylist-downloads.adblockplus.org/COPYING
@@ -211,7 +211,6 @@
 ||ee4kdushuba.com^$third-party
 ||esearches.com.tw^$third-party
 ||ezsaving.com^$third-party
-||feedsportal.com^$third-party
 ||feesee.com^$third-party
 ||flashwing.net^$third-party
 ||flunion.cn^$third-party
@@ -690,6 +689,10 @@ hk.yahoo.com###mntl1
 ~dsjunshi.com##div[id^="ad_thread"]
 !----------------------------------Ads-Union----------------------------------!
 /99vjj/*$third-party
+||at98.com^
+||poxzyu.com^$third-party
+||ye3.com^$third-party
+/pagecpv/*
 /adscpv/*
 /AShow.aspx?AID=
 /code/cpc.asp?
@@ -1092,7 +1095,6 @@ hk.yahoo.com###mntl1
 /tt7z.js$domain=tt7z.com|ttrar.com
 /upload/gad/*$domain=pbzy.com|shanzhaiben.com
 /view/youkuvip/*ad.gif
-/view/youkuvip/750.png
 /wallstcn/img/head-event-
 /wangyuedeux/imgs/daibang.jpg
 /www.soft4fun.net/wp-content/uploads/*_banner
@@ -3408,8 +3410,6 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||sogou.com/adpub/
 ||sogou.com/images/app_1200X90.jpg
 ||sogou.com/skins/images/skinlist_ad.
-||sogoucdn.com/app/a/100520113/20140812133958
-||sogoucdn.com/app/a/100520113/20140812172821
 ||sohu.com.cn/ppp/bms/bms.popup.
 ||sohu.com/ssi/ad.js
 ||soso.com/baike/js/ad_
@@ -3969,10 +3969,47 @@ _iframe.htm|$domain=news.cn|xinhuanet.com
 ||93s8.com/UploadFiles/ad/
 ||99mst.com/upfiles/adv/main02.jpg
 ||e0575.cn/js/advBigPopup/
+||china.com/zh_cn/ads/
+||china.com/zh_cn/etc/gghead.html
+||ifood1.com/aobntech/pic/9300.jpg
+||18888.com^*/Mon_*.gif
+||222.47.26.21/m.js
+||27.255.67.120^
+||chinaqking.com/images/newPage/zhaopin.jpg
+||chinaqking.com/userUpload/jobApply2.jpg
+||big-cup.tv/uploads/banner/
+||178.com/lol/201410/206398796489/206398807404.jpg
+||178.com/lol/201410/206406421945/206406428217.jpg
+||178.com/dayan/
+||fefe22.com/js/config.js
+||sto.cn/temp/adv.jpg
+||js.leafletsoft.com^
+||5adm.net/79070.gif
+||imgur.com^*.gif$domain=18p2p.com
+/view/youkuvip/buyip.gif
+||654mmm.com^
+/hushiwin/images/gouqi.jpg
 ||zzqhy.com^*/page/
 ||zzsky.cn/images/zzskycom_
 !------------------------Specific element hiding rules------------------------!
 gpcxw.com###AA2
+win007.com##TD[height="18"][bgcolor="#FFFFE8"]
+188bifen.com##.ad_left
+500.com###live_top_ad
+500.com###semFloatL
+1lou.com##.error
+hushiwin.com##.ad_ritht_1
+hushiwin.com##.ad_ritht_3
+hushiwin.com##.taobaoad
+5adm.net##.ad780
+51rhca.com###InviteWindow
+sto.cn##.network_adv
+xindm.cn##.gg_botom_gg
+lol.178.com##DIV[style="height: 60px; text-align: center;"]
+big-cup.tv##.col-md-12.text-center[style="margin-top: 3px;"]
+18888.com##.t5[style^="margin-top:"]
+map.baidu.com###mapBanner
+china.com##OBJECT[width="360"][height="300"]
 sogou.com##.sg-ad
 sogou.com##.sg-ad-r
 cntv.cn###bbspop
@@ -4964,7 +5001,8 @@ ifeng.com##.adbox03
 xcar.com.cn##.adbox980
 qq.com##.adbutton-Aritcle-QQ
 qq.com##.adcent
-saaee.com,saaeecom.duapp.com##.adclose
+id97.com##.leftadch
+id97.com##.rightadch
 ifeng.com##.adcontent
 jgzj.net##.adcss
 4493.com,hao.rising.cn,jq22.com##.add
@@ -5528,7 +5566,6 @@ tiexue.net##.jph-goods
 jrj.com.cn##.jrj-ad
 finance.jrj.com.cn##.jrj-wrap[style="margin-bottom:2px;"]
 sucaijiayuan.com##.jsPart1Right
-sogou.com##.js_banner
 tiexue.net##.junph-new-tmp
 sports.qq.com##.juzhong2
 jiaonan.net##.k974
@@ -6267,7 +6304,6 @@ win007.com##div[style="padding:6px 0; width:950px; height:45px"]
 witvc.com##div[style="position:relative; height:255px; width:958px; overflow:hidden;"]
 house.sina.com.cn##div[style="width: 1000px; height: 120px; margin-bottom:15px; position: relative;"]
 v2ex.com##div[style="width: 240px; margin: 0px auto 0px auto; text-align: left;"]
-sogou.com##div[style="width: 250px;height: 400px;overflow: hidden;position: relative;margin-left: 15px;margin-bottom: 15px;"]
 580k.com##div[style="width: 300px; height: 250px; float: left; margin:18px 10px 5px;border:solid 1px #ddd"]
 neihan8.com##div[style="width: 630px; height: 250px; margin: 15px auto;"]
 imanhua.com##div[style="width: 978px; height: 70px; overflow: hidden; margin: 0 auto; border: 1px solid #ccc; text-align: center; position:relative; z-index:1; "]
@@ -6416,6 +6452,7 @@ taihainet.com##ul[style=" width:1000px; height:90px; padding:10px 0; background-
 00sy.com##ul[style="width: 830px;margin:0 auto;height:250px;text-align:center;margin-top:10px;"]
 !---------------------------------CSS Whitelist-------------------------------!
 920url.com#@##AdDiv
+d77.com#@##ad-wrap
 the-sun.on.cc#@##ContentAd1
 news.now.com#@##ad-2
 greedio.com#@##adBox
@@ -6474,6 +6511,11 @@ house.shangdu.com#@#.top_ad
 17ppt.com#@#.topads
 !---------------------------------URL Whitelist-------------------------------!
 @@&ad_type=$domain=x.jd.com
+@@||ad.10010.com^
+@@||10010.com^*/ad.
+@@||10010.com^*/ad/
+@@?bannerId=$domain=qianbao666.com
+@@||edgesuite.net^*/ad.css?
 @@&ad_width=810&$domain=jd.com
 @@,modules/adMedia.
 @@.beautifulphoto.net/ads/music

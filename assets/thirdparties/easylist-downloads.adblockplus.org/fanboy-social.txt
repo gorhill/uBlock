@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: r1Puy9GoYQ7lIzMyK3lEYw
-! Version: 201410022021
+! Checksum: 7fNCFLGfQ2N39atmxs8mTQ
+! Version: 201410071851
 ! Title: Fanboy's Social Blocking List
-! Last modified: 02 Oct 2014 20:21 UTC
+! Last modified: 07 Oct 2014 18:51 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -60,6 +60,7 @@
 -link-social.
 -linkd-32.
 -linkedin-16x16.
+-linkedin-32.
 -linkedin-icon.
 -linkedin-rnd.
 -linkedin-s.
@@ -68,6 +69,7 @@
 -pinterest-button-
 -pinterest-button.
 -pinterest-icon-
+-pinterest-logo.
 -pinterest.
 -plus_social.
 -share-16.
@@ -139,6 +141,7 @@
 -webicon-twitter-
 -webicon-youtube-
 -youtube-24x24.
+-youtube-32.
 -youtube-btn.
 -YouTube-Button1.
 -youtube-flat-
@@ -266,6 +269,7 @@
 /connect-twitter-
 /connect-twitter.
 /connect-youtube-
+/connect_with_us.
 /connectfb.
 /consumer/social-
 /context-social.
@@ -316,6 +320,7 @@
 /facebook-button2.
 /Facebook-Buttons-
 /Facebook-Buttons.
+/facebook-Custom.
 /facebook-follow-
 /facebook-footer-
 /facebook-head.
@@ -525,6 +530,7 @@
 /footer/fb-
 /footer/google-
 /footer/pinterest.
+/footer/social-
 /footer/social/*
 /footer/social_
 /footer/twit-
@@ -665,6 +671,7 @@
 /ico-google-
 /ico-google.
 /ico-gplus-
+/ico-instagram.
 /ico-linkedin.
 /ico-pinterest-
 /ico-reddit.
@@ -751,6 +758,7 @@
 /icon-youtube-
 /icon-youtube.
 /icon-youtube_
+/icon/fb.
 /icon/google.
 /icon/share-$image
 /icon/share/*
@@ -774,6 +782,7 @@
 /icon_facebook_
 /icon_fb.
 /icon_fb_
+/icon_google+
 /icon_google.
 /icon_google_
 /icon_googleplus-
@@ -784,6 +793,7 @@
 /icon_linkedin.
 /icon_linkedin_
 /icon_orkut.
+/icon_pinterest.
 /icon_pinterest_
 /icon_reddit.
 /icon_reddit_
@@ -1056,6 +1066,7 @@
 /orkut.gif
 /orkut_16.
 /outsidesocialsprite.
+/partnerNavSocialButtons.
 /pics/*facebook.png
 /pics/*twitter.png
 /pin-icon-
@@ -1102,6 +1113,9 @@
 /plain/twitter-
 /pluck.js
 /pluckApps.js
+/plugins/*facebook.png
+/plugins/*google.png
+/plugins/*twitter.png
 /plugins/2-click-socialmedia-buttons/*$~stylesheet
 /plugins/add-to-any/*$~stylesheet
 /plugins/anmiated-twitter-bird/*
@@ -1385,6 +1399,7 @@
 /social-media-sprite.
 /social-media-widget/*$~stylesheet
 /social-media.$image
+/social-media2.
 /social-myspace-
 /social-nav-
 /social-network-icons-
@@ -1707,6 +1722,7 @@
 /twitter-button2.
 /Twitter-Buttons-
 /Twitter-Buttons.
+/twitter-Custom.
 /twitter-follow-
 /twitter-footer-
 /twitter-ico.
@@ -1862,6 +1878,8 @@
 /youtube-48.
 /youtube-button.
 /Youtube-Buttons.
+/youtube-Custom.
+/youtube-follow.
 /Youtube-icon-
 /youtube-icon.
 /Youtube-icon_
@@ -2017,6 +2035,8 @@ _youtube-button.
 _youTube.gif
 _youtube_32.
 _youtube_small.
+! https://www.wpvideolock.com/
+/wp-content/plugins/videolock/*$script
 !------------------------General element hiding rules-------------------------!
 ! *** easylist:fanboy-addon/fanboy_social_general_hide.txt ***
 ###AKDSocialBottom
@@ -2312,6 +2332,7 @@ _youtube_small.
 ###facebook-link
 ###facebook-module
 ###facebook-panel
+###facebook-share
 ###facebook-slider
 ###facebook-twitter-block
 ###facebook-twitter-block-bottom
@@ -2333,6 +2354,7 @@ _youtube_small.
 ###facebookPromo
 ###facebookRecommend
 ###facebookRodape
+###facebookTab
 ###facebookTabset
 ###facebookWidget
 ###facebookWrapper
@@ -2505,6 +2527,8 @@ _youtube_small.
 ###footSocial
 ###footer-facebook
 ###footer-fb
+###footer-follow-us-facebook
+###footer-follow-us-youtube
 ###footer-share-facebook
 ###footer-share-google
 ###footer-share-linkedin
@@ -2565,6 +2589,7 @@ _youtube_small.
 ###hdr_social_row
 ###headSnsBtn
 ###header-bebo
+###header-facebook-social-link
 ###header-follow
 ###header-share
 ###header-social
@@ -2576,6 +2601,7 @@ _youtube_small.
 ###header-social-twitter
 ###header-social_icons-wrapper
 ###header-socials
+###header-youtube-social-link
 ###headerSocialIcons
 ###header_social
 ###header_social_icons
@@ -2712,6 +2738,7 @@ _youtube_small.
 ###module_social_links
 ###multiplesocialwidget-id
 ###multix_icons_facebook
+###nSocial
 ###nav-fbook
 ###nav-gplus
 ###nav-twitter
@@ -2824,6 +2851,8 @@ _youtube_small.
 ###service-links-facebook-2
 ###service-links-twitter-1
 ###service-links-twitter-2
+###service_fb
+###service_tw
 ###sexy-bookmarks
 ###sexy-bookmarks-wrapper
 ###sh_socialized
@@ -3201,6 +3230,7 @@ _youtube_small.
 ###social-twitter32x32
 ###social-vert
 ###social-vertical
+###social-view
 ###social-votes
 ###social-widget
 ###social-wrap
@@ -3214,6 +3244,7 @@ _youtube_small.
 ###socialBar
 ###socialBlock
 ###socialBlockFollow
+###socialBlog
 ###socialBookMarks
 ###socialBookmarks
 ###socialBottom
@@ -3231,6 +3262,7 @@ _youtube_small.
 ###socialFloor
 ###socialFollow
 ###socialFooter
+###socialGoogle
 ###socialGrid
 ###socialHead
 ###socialHeader
@@ -3238,6 +3270,7 @@ _youtube_small.
 ###socialIconsBox
 ###socialIconsContainer
 ###socialInner
+###socialInstagram
 ###socialLinks
 ###socialLinksLeft
 ###socialLinksMainColumns
@@ -3263,6 +3296,7 @@ _youtube_small.
 ###socialNlBloc
 ###socialOverlay
 ###socialOverlayRemix
+###socialPinterest
 ###socialPromote_facebook
 ###socialPromote_googleplusone
 ###socialPromote_twitter
@@ -3748,6 +3782,7 @@ _youtube_small.
 ##.advanced-social-widget
 ##.advancedsocialwidget
 ##.after-post-social-media-container
+##.ah_share
 ##.ajmint-social-counts
 ##.akp-sharebar-fixed
 ##.all-share-links
@@ -3781,6 +3816,7 @@ _youtube_small.
 ##.article-social-buttons
 ##.article-social-tools
 ##.article-socials
+##.article-sticky-nav__shares
 ##.article-twitter-experiment
 ##.articleShare
 ##.articleSocialBar
@@ -3831,6 +3867,7 @@ _youtube_small.
 ##.beingSocial
 ##.besocial
 ##.big-pinterest-icon
+##.big-share-button
 ##.big-share-container
 ##.big_facebook_share
 ##.bio-socials
@@ -3863,6 +3900,8 @@ _youtube_small.
 ##.blog-social
 ##.blog-social-item
 ##.blog-social-left
+##.blog-social-side-bar
+##.blog-social-side-bar-top
 ##.blogIndexFollowOn
 ##.bloque-social
 ##.blox-social-tools-horizontal
@@ -3939,6 +3978,7 @@ _youtube_small.
 ##.c_sharetitle
 ##.care2_share_bar
 ##.cat-hdr-share
+##.cb-google-follow-widget
 ##.cb-social-media-widget
 ##.cb-social-sharing
 ##.ccm_social__box
@@ -3967,6 +4007,7 @@ _youtube_small.
 ##.comment_share_link
 ##.common-ui-facebook-bottom
 ##.commonheader_social
+##.connect-icons
 ##.connect-social-items
 ##.connect-widget-wrapper
 ##.connectBtns
@@ -4044,6 +4085,7 @@ _youtube_small.
 ##.element-sharethis
 ##.element-socialbookmarks
 ##.element-socials
+##.embed-twitter
 ##.entry-bottom-share
 ##.entry-footer-share
 ##.entry-share
@@ -4097,6 +4139,7 @@ _youtube_small.
 ##.facebook-banner-wrapper
 ##.facebook-block
 ##.facebook-box
+##.facebook-box-widget
 ##.facebook-broadcasting-widget
 ##.facebook-btn
 ##.facebook-button
@@ -4220,6 +4263,7 @@ _youtube_small.
 ##.fb-cont
 ##.fb-custom-share
 ##.fb-dialog
+##.fb-flyin
 ##.fb-footer-recommend
 ##.fb-ftr
 ##.fb-hd
@@ -4333,6 +4377,7 @@ _youtube_small.
 ##.field-name-field-sharebar
 ##.fixed-bar-social-icons
 ##.fixed-share-bar
+##.fixed-share-btns
 ##.fixed-sharebar
 ##.fixed-side-social-container
 ##.fixtweet
@@ -4438,6 +4483,8 @@ _youtube_small.
 ##.foot_GooglePlus
 ##.foot_Twitter
 ##.foot__social
+##.footer--social
+##.footer--social-link
 ##.footer-facebook
 ##.footer-facebook-icon
 ##.footer-fb
@@ -4450,6 +4497,7 @@ _youtube_small.
 ##.footer-icon-youtube
 ##.footer-instagram
 ##.footer-instagram-icon
+##.footer-main-bottom-social
 ##.footer-pinterest-icon
 ##.footer-share
 ##.footer-share-bar-social
@@ -4498,6 +4546,7 @@ _youtube_small.
 ##.footer_sosial
 ##.footer_sprite_facebook
 ##.footer_sprite_twitter
+##.footerlinks.social
 ##.format-social-buttons
 ##.fourSq-widget
 ##.fpbiz_share
@@ -4516,6 +4565,7 @@ _youtube_small.
 ##.ft-gplus
 ##.ft-tumblr
 ##.ft-twitter
+##.ftr-share
 ##.ftr-social
 ##.full_share_container
 ##.full_social
@@ -4691,6 +4741,8 @@ _youtube_small.
 ##.i-twitter
 ##.iNavSocialNet
 ##.iSocialB
+##.i_big_facebook
+##.i_big_twitter
 ##.i_twitter
 ##.i_v_fb_like
 ##.ibbsocial
@@ -4705,7 +4757,9 @@ _youtube_small.
 ##.icn-footer-facebook
 ##.icn-footer-twitter
 ##.icn-footer-youtube
+##.icn-google
 ##.icn-gplus
+##.icn-instagram
 ##.icn-pinterest
 ##.icn-share
 ##.icn-stumbleupon
@@ -4766,6 +4820,7 @@ _youtube_small.
 ##.icon-facebook-sharing
 ##.icon-facebook-sign
 ##.icon-facebook-square
+##.icon-facebook-sticky
 ##.icon-facebook2
 ##.icon-fark
 ##.icon-fb
@@ -4774,6 +4829,7 @@ _youtube_small.
 ##.icon-flickr
 ##.icon-footer-facebook
 ##.icon-footer-twitter
+##.icon-github
 ##.icon-google
 ##.icon-google-plus
 ##.icon-google-plus-2
@@ -4806,6 +4862,7 @@ _youtube_small.
 ##.icon-pinterest-encircled
 ##.icon-pinterest-share
 ##.icon-pinterest-sign
+##.icon-pinterest-sticky
 ##.icon-plusone
 ##.icon-plusone-mini
 ##.icon-reddit
@@ -4835,6 +4892,7 @@ _youtube_small.
 ##.icon-twitter-sharing
 ##.icon-twitter-sign
 ##.icon-twitter-small
+##.icon-twitter-sticky
 ##.icon-twitter2
 ##.icon-vimeo
 ##.icon-youtube
@@ -4977,6 +5035,7 @@ _youtube_small.
 ##.linkedin_top
 ##.linkedinlink
 ##.linkendinIcon
+##.list-social
 ##.list_share
 ##.listing-share2
 ##.lit-guides-social
@@ -5033,6 +5092,7 @@ _youtube_small.
 ##.media-social
 ##.menu-article-share
 ##.menu-fb
+##.menu-item-type-social
 ##.menu-social-gplus
 ##.menu-social-instagram
 ##.menu-social-menu-container
@@ -5098,6 +5158,7 @@ _youtube_small.
 ##.nav-icon-googleplus
 ##.nav-icon-instagram
 ##.nav-icon-twitter
+##.nav-share
 ##.nav-social
 ##.nav-social-left
 ##.nav-social-links
@@ -5239,6 +5300,7 @@ _youtube_small.
 ##.pullquote_shares_wrapper
 ##.pw-share-popups
 ##.pw-share-tools
+##.qlsocialicons
 ##.ra-share
 ##.rawhtml_twitter_widget
 ##.rcshare
@@ -5256,6 +5318,7 @@ _youtube_small.
 ##.review_sharebar_vertical
 ##.rfd-sharetools
 ##.right-share-module
+##.rightNavSocial
 ##.rightShare
 ##.right_social
 ##.right_social_block
@@ -5377,6 +5440,7 @@ _youtube_small.
 ##.share-pinterest-dialog
 ##.share-plus
 ##.share-plusone
+##.share-popup
 ##.share-position
 ##.share-post
 ##.share-prefix
@@ -5515,6 +5579,7 @@ _youtube_small.
 ##.share_bk
 ##.share_block
 ##.share_bottom
+##.share_bottons
 ##.share_box
 ##.share_boxes_box_block_b_wraper
 ##.share_boxes_new
@@ -5537,6 +5602,7 @@ _youtube_small.
 ##.share_count
 ##.share_digg
 ##.share_entry
+##.share_facebook
 ##.share_fb
 ##.share_group
 ##.share_hidden
@@ -5570,6 +5636,7 @@ _youtube_small.
 ##.share_tools
 ##.share_top
 ##.share_tw
+##.share_twitter
 ##.share_v2
 ##.share_widget
 ##.share_widgets
@@ -5735,6 +5802,7 @@ _youtube_small.
 ##.site-footer-social-icon-link
 ##.site-footer-social-icon-list
 ##.site-header-social
+##.site-nav-social-item
 ##.site-social
 ##.site-social-icon
 ##.site-stats-fb
@@ -5773,9 +5841,11 @@ _youtube_small.
 ##.soc-icons-bar
 ##.soc-insta
 ##.soc-share-cont
+##.soc-tu
 ##.soc-tw
 ##.soc-twitter
 ##.soc-widget
+##.soc-yt
 ##.socButtons
 ##.socFbShare
 ##.socFollowMod
@@ -5926,6 +5996,7 @@ _youtube_small.
 ##.social-media-button
 ##.social-media-buttons
 ##.social-media-buttons-single
+##.social-media-call-to-action
 ##.social-media-column
 ##.social-media-container
 ##.social-media-facebook
@@ -5954,6 +6025,9 @@ _youtube_small.
 ##.social-networks
 ##.social-networks-2
 ##.social-networks-bayside
+##.social-networks__badges
+##.social-networks__item
+##.social-networks__wrapper
 ##.social-number-large
 ##.social-onscroll
 ##.social-options
@@ -5979,6 +6053,7 @@ _youtube_small.
 ##.social-share-count
 ##.social-share-counts-cont
 ##.social-share-facebook
+##.social-share-flat
 ##.social-share-google
 ##.social-share-icons
 ##.social-share-overlay
@@ -6064,6 +6139,7 @@ _youtube_small.
 ##.socialCount
 ##.socialFBContainer
 ##.socialFacebook
+##.socialFeed
 ##.socialFooter
 ##.socialHeader
 ##.socialIcns
@@ -6321,6 +6397,9 @@ _youtube_small.
 ##.socmedia-logo
 ##.song-social
 ##.spIconLinkTwitter
+##.sp_facebook
+##.sp_google
+##.sp_twitter
 ##.spe-share-wrap
 ##.sprite-facebook
 ##.sprite-fb
@@ -6605,6 +6684,7 @@ _youtube_small.
 ##.twitter_share
 ##.twitter_sub
 ##.twitter_tease
+##.twitter_tile
 ##.twitter_widget
 ##.twitterbox
 ##.twitterboxot
@@ -6643,6 +6723,11 @@ _youtube_small.
 ##.undocked-share
 ##.uni-social
 ##.unspoken-getconnected
+##.us_facebook_fan_count_link
+##.us_fan_count_button
+##.us_share_text
+##.us_twitter_fan_count
+##.us_youtube_fan_count
 ##.user-share-settings
 ##.util-bar-btn-facebook
 ##.util-bar-btn-twitter
@@ -6681,6 +6766,7 @@ _youtube_small.
 ##.wds-tweet-data
 ##.widget-cardoza-fb-like
 ##.widget-facebook
+##.widget-facebook-2
 ##.widget-facebook-box
 ##.widget-fb-recommendations
 ##.widget-followus
@@ -6948,7 +7034,10 @@ _youtube_small.
 ##a[title="Follow us on Google+"]
 ##a[title="Follow us on Houzz"]
 ##a[title="Follow us on Instagram"]
+##a[title="Follow us on Linked In"]
 ##a[title="Follow us on LinkedIn"]
+##a[title="Follow us on Pinterest"]
+##a[title="Follow us on Scoop.it"]
 ##a[title="Follow us on Tumblr"]
 ##a[title="Join Us on Facebook"]
 ##a[title="Join our Twitter army"]
@@ -7388,6 +7477,7 @@ _youtube_small.
 !------------------------Specific element hiding rules------------------------!
 ! *** easylist:fanboy-addon/fanboy_social_specific_hide.txt ***
 pcb.cc###Cntnr6
+softwares-serials.in###FTslide
 x17online.com###Facebook
 hothardware.com###Follow
 zylab.com###Footercolumn3
@@ -7429,8 +7519,9 @@ dailymail.co.uk###dms-txt
 tipstrickshack.blogspot.co.uk###doulike-outer
 chinasf.org###element226
 dupontregistry.com###essb_displayed_top
+softwares-serials.in###exepopup
 visual.ly###eyebrow
-annyas.com,ap.org,avclub.com,dirwell.com,fark.com,feedmyapp.com,flyordie.com,iefa.org,imgur.com,linux.org###facebook
+annyas.com,ap.org,avclub.com,dirwell.com,fark.com,feedmyapp.com,flyordie.com,iefa.org,imgur.com,linux.org,prospect.org###facebook
 splitsider.com###facebook-fans
 picadilo.com###facebookNews
 jokeroo.com###facebookPage
@@ -7462,6 +7553,7 @@ allfacebook.com,amateurgourmet.com,annyas.com,glogster.com,mediabistro.com,metof
 socialitelife.com###follow-list
 wired.com###follow-wired
 diffen.com###followDfn
+thisoldhouse.com###followToh
 businessinsider.com,businessinsider.com.au###follow_wrap
 gambling.com###footer-connect-list
 instructables.com###footer-findus
@@ -7582,6 +7674,7 @@ file-24.com###stp-main
 makeuseof.com###subnav-container[style$=" position: fixed; top: 0px;"]
 bustedcoverage.com,fightday.com###subscribe
 bustedcoverage.com###subscribe-container
+softwares-serials.in###tBird
 amazon.co.uk,amazon.com###tafContainerDiv
 amazon.com###tell-a-friend
 care2.com###tellAFriendBottom_share
@@ -7602,7 +7695,7 @@ premiumbeautynews.com###topbar
 hexus.net###topicons
 entertainmentwise.com###trend
 slate.com###twit_hp_box
-ap.org,bitcoins.lc,creativeapplications.net,dansingerman.com,digitalstormonline.com,fark.com,feedmyapp.com,fluffyapp.com,lawyersweekly.com.au,longreads.com,nintendogal.com,thekit.ca,thetvaddict.com,womenwithmustaches.com,x17online.com,zap2it.com###twitter
+ap.org,bitcoins.lc,creativeapplications.net,dansingerman.com,digitalstormonline.com,fark.com,feedmyapp.com,fluffyapp.com,lawyersweekly.com.au,longreads.com,nintendogal.com,prospect.org,thekit.ca,thetvaddict.com,womenwithmustaches.com,x17online.com,zap2it.com###twitter
 foxnews.com###twitter-api
 nationaljournal.com###walkingHeader
 suckmytrend.com###wdsi-slide_in
@@ -7639,6 +7732,7 @@ bbc.co.uk##.bookmark-list
 romansinternational.com##.border_bar_area
 damn.com##.bottomSlider
 philly.com##.bottomToolsNav
+bankrate.com##.br_connect
 machprinciple.com##.bsub
 si.com##.btn-gp
 guernicamag.com##.btn-group
@@ -7677,7 +7771,7 @@ doomclan.tv##.fame-icons
 gillette.com##.fan
 conservativepost.com##.fancybox-overlay
 conservativepost.com##.fancybox-wrap
-alternativeto.net,cbs.com,clickindia.com,cloudmark.com,esquire.com,fashionmagazine.com,idigitaltimes.com,latintimes.com,medicaldaily.com,mp3juices.com,propublica.org,scufgaming.com,speedtest.net##.fb
+alternativeto.net,cbs.com,clickindia.com,cloudmark.com,esquire.com,fashionmagazine.com,idigitaltimes.com,latintimes.com,medicaldaily.com,mp3juices.com,propublica.org,scufgaming.com,speedtest.net,yonhapnews.co.kr##.fb
 inktank.fi##.fb-box
 afterdawn.com##.fb_connect
 abajournal.com,allthingsd.com,buddytv.com,comingsoon.net,craveonline.com,dailydot.com,digitaljournal.com,elektronista.dk,geekzenith.com,gospelway.com,gpforums.co.nz,harvard.edu,khaleejtimes.com,macworld.co.uk,masslive.com,mentalfloss.com,mlive.com,modamee.com,nationalgeographic.com,onextrapixel.com,revision3.com,rfi.fr,searchengineland.com,shocktillyoudrop.com,smithsonianmag.com,tech2.in.com,theslingshot.com,tnr.com,topsecretwriters.com,zdnet.com##.fb_iframe_widget
@@ -7697,6 +7791,7 @@ huffingtonpost.com##.follow-huffpost
 thehill.com##.follow-the-hill
 theverge.com##.follow-the-verge
 mashable.com##.follow-trigger
+thisoldhouse.com##.followLink
 parent24.com##.follow_news
 bet.com##.followstorieslikethis
 indiatimes.com##.folow_box
@@ -7708,6 +7803,7 @@ imagecollect.com##.footerLinks_03
 inquisitr.com##.frButton
 goibibo.com##.fr_folus > .hd_fllus
 ageofwushu.com##.friendlink
+scan.co.uk##.ft-SocialMedia
 digitalcontentnext.org##.ft-soc
 fundable.com##.fundable-social-box
 dailynewsnow.com,dailyzone.com,mstarz.com,newseveryday.com##.g-b
@@ -7718,7 +7814,7 @@ fixya.com,flippinawesome.org,geeksandbeats.com,independent.ie,latintimes.com,sci
 hughesnet.com##.googleImage
 scion.com##.googlePlus
 gcn.com##.google_top
-cbs.com##.gp
+cbs.com,yonhapnews.co.kr##.gp
 bossip.com,esquire.com,mp3juices.com,opensiteexplorer.org,saturn.de##.gplus
 hollywood.com##.gsfn-widget-tab
 geektyrant.com##.gtFace
@@ -7819,7 +7915,7 @@ sdsu.edu##.sdsuuniverse_above_header_right
 lycos.co.uk##.sfoot
 celebrations.com##.sform
 toothpastefordinner.com##.shadow[style="margin-top: 0px; width: 500px; height: 25px; background-color:#cccccc; padding-top: 1px;"]
-3net.com,500px.com,9gag.com,about.com,acculturated.com,al.com,alibaba.com,askmen.com,autoblog.com,autoguide.com,bbc.co.uk,beemp3.com,bit-tech.net,bloomberg.com,bossip.com,businessinsider.com,care2.com,cbsnews.com,cheezburger.com,cnet.com,couriermail.com.au,dailycaller.com,dailystar.co.uk,dancestarparty.com,democracynow.org,dogandponyshowwebsite.com,drama.net,espnmediazone.com,everybodydancegame.com,famouslyfit.com,flowingdata.com,foodnetwork.com,forzaitalianfootball.com,foxnews.com,freshtechweb.com,g4tv.com,galoremag.com,gamepro.com,gizmodo.com.au,google.com,gossiponthis.com,guyism.com,healthguru.com,heavytshirt.com,howstuffworks.com,html5rocks.com,hulu.com,ibtimes.co.uk,idigitaltimes.com,ifc.com,ijreview.com,independent.co.uk,india.com,infamousthegame.com,intomobile.com,jumbosky.com,kotaku.com.au,leadingcompany.com.au,lifehacker.com,maindevice.com,makeagif.com,mandatory.com,mediauk.com,milesplit.com,mobilespect.com,mozilla.org,mtv.com,myrecipes.com,naughtydog.com,newegg.com,newrepublic.com,nickmom.com,nj.com,nola.com,novirusthanks.org,nzherald.co.nz,onextrapixel.com,openforum.com,paidcontent.org,pcmag.com,pcworld.com,people.com,playstation.com,pleaseshutup.com,psfk.com,qz.com,rackspace.com,reddit.com,rent-a-home.com.au,sacbee.com,salon.com,shacknews.com,similarweb.com,singstar.com,ski.com.au,skype.com,slantmagazine.com,soulwire.co.uk,sourcefednews.com,springer.com,sprintfeed.com,steampowered.com,suntimes.com,take40.com,ted.com,thefile.me,theglobaldispatch.com,thenational.ae,thewindowsclub.com,timeslive.co.za,tomonews.net,tor.com,torontosun.com,tv.yahoo.com,tvnz.co.nz,twitchy.com,uanews.org,unhearit.com,usatoday.com,vanityfair.com,vh1.com,videoweed.es,virtex.com,washingtonpost.com,wired.co.uk,wmagazine.com,wsj.com,xda-developers.com,yipit.com##.share
+3net.com,500px.com,9gag.com,about.com,acculturated.com,al.com,alibaba.com,askmen.com,autoblog.com,autoguide.com,bbc.co.uk,beemp3.com,bit-tech.net,bloomberg.com,bossip.com,businessinsider.com,care2.com,cbsnews.com,cheezburger.com,cnet.com,couriermail.com.au,crossmap.com,dailycaller.com,dailystar.co.uk,dancestarparty.com,democracynow.org,dogandponyshowwebsite.com,drama.net,espnmediazone.com,everybodydancegame.com,famouslyfit.com,flowingdata.com,foodnetwork.com,forzaitalianfootball.com,foxnews.com,freshtechweb.com,g4tv.com,galoremag.com,gamepro.com,gizmodo.com.au,google.com,gossiponthis.com,guyism.com,healthguru.com,heavytshirt.com,howstuffworks.com,html5rocks.com,hulu.com,ibtimes.co.uk,idigitaltimes.com,ifc.com,ijreview.com,independent.co.uk,india.com,infamousthegame.com,intomobile.com,jumbosky.com,kotaku.com.au,leadingcompany.com.au,lifehacker.com,maindevice.com,makeagif.com,mandatory.com,mediauk.com,milesplit.com,mobilespect.com,mozilla.org,mtv.com,myrecipes.com,naughtydog.com,newegg.com,newrepublic.com,nickmom.com,nj.com,nola.com,novirusthanks.org,nzherald.co.nz,onextrapixel.com,openforum.com,paidcontent.org,pcmag.com,pcworld.com,people.com,playstation.com,pleaseshutup.com,psfk.com,qz.com,rackspace.com,reddit.com,rent-a-home.com.au,sacbee.com,salon.com,shacknews.com,similarweb.com,singstar.com,ski.com.au,skype.com,slantmagazine.com,soulwire.co.uk,sourcefednews.com,springer.com,sprintfeed.com,steampowered.com,suntimes.com,take40.com,ted.com,thefile.me,theglobaldispatch.com,thenational.ae,thewindowsclub.com,timeslive.co.za,tomonews.net,tor.com,torontosun.com,tv.yahoo.com,tvnz.co.nz,twitchy.com,uanews.org,unhearit.com,usatoday.com,vanityfair.com,vh1.com,videoweed.es,virtex.com,washingtonpost.com,wired.co.uk,wmagazine.com,wsj.com,xda-developers.com,yipit.com##.share
 ausdroid.net##.share-ausdroid
 tvline.com##.share-comment
 boardgamegeek.com##.sharecontrols
@@ -7847,10 +7943,10 @@ sonymobile.com##.smdw-footer-stay-connected
 mstarz.com,parentherald.com,realtytoday.com##.sns
 designntrend.com##.soc_box
 onlineprnews.com##.soc_box[style=" margin-bottom:10px; border:solid 1px #EEEEEE; clear:both"]
-3net.com,411.ca,about.com,adtile.me,aimonetti.net,al-shorfa.com,alexa.com,alligator-sunglasses.com,amctv.com,amd.com,annarbor.com,aol.com,artsyspot.com,asb.co.nz,avclub.com,avira.com,bbc.com,bellurbis.com,benswann.com,bgr.com,billboard.com,billmoyers.com,blogspot.co.uk,businessinsider.com,businessinsider.com.au,businessweek.com,canonclast.com,catonmat.net,cc.com,cnet.com,collectorsweekly.com,comicbookmovie.com,connectify.me,consequenceofsound.net,cookingchanneltv.com,dailyhaha.com,davemcelfatrick.com,deathandtaxesmag.com,debate.org,diet-blog.com,digitaltrends.com,direct.gov.uk,dpreview.com,droid-life.com,duluthtrading.com,e3expo.com,egopay.com,electronista.com,engadget.com,eurogamer.net,evilmilk.com,examiner.com,feld.com,fiercecable.com,fiercewireless.com,foodhub.co.nz,foodnetwork.com,forbes.com,foreignpolicy.com,foxnews.com,freelanceswitch.com,fstoppers.com,fundoomails.com,funnyordie.com,gamesradar.com,givemesport.com,goal.com,goodfood.com.au,gothamist.com,greatist.com,greenbot.com,greencarreports.com,gsmdome.com,guildwars2.com,halfhourmeals.com,hawaii.com,hgtvremodels.com,hightimes.com,hilton.com,hitfix.com,huffingtonpost.com,humblebundle.com,ibtimes.co.in,ibtimes.com,imdb.com,imgur.com,impresspages.org,impulsedriven.com,indiegogo.com,informationweek.com,inthralld.com,intomobile.com,investopedia.com,ipodnn.com,itproportal.com,joblo.com,juancole.com,kde.org,ketknbc.com,kogan.com,lifehacker.com.au,livescience.com,logicbuy.com,macnn.com,macstories.net,makerstudios.com,mashable.com,mayoclinic.org,memez.com,mobileindustryreview.com,mom.me,moviefone.com,mp3days.com,msn.com,narr8.me,narrative.ly,nationalcareersweek.com,neowin.net,networkworld.com,newrepublic.com,nocamels.com,nplusonemag.com,npr.org,nster.com,nwsource.com,nymag.com,nzherald.co.nz,opendns.com,openlogic.com,outsidexbox.com,pawnation.com,pbh2.com,pbs.org,penny-arcade.com,playboy.com,pocket-lint.com,pomade.com,pootlepress.com,ppfinder.com,projekktor.com,psfk.com,qmul.ac.uk,radbox.me,readwriteweb.com,reason.com,red-buzz.com,reference.com,refinery29.com,retailmenot.com,rickey.org,ropeofsilicon.com,rtcc.org,scalescale.com,searchmarketingexpo.com,seattletimes.com,sectionstudios.com,sheknows.com,slashdot.org,softexia.com,sophos.com,space.com,sparknotes.com,spectator.org,spin.com,sucuri.net,t3.com,tablet-news.com,talkingpointsmemo.com,talkweb.eu,techeblog.com,techpowerup.com,techpp.com,techradar.com,techspot.com,theblemish.com,thebolditalic.com,theonion.com,thestar.com,thewp-hub.com,tickld.com,tmonews.com,tnr.com,totalfilm.com,trendhunter.com,troyhunt.com,tubestart.com,tvline.com,typomaps.net,udreview.com,uk-mkivs.net,usatoday.com,utsandiego.com,vg247.com,vice.com,victoriassecret.com,viralnova.com,virginmedia.com,wallpaper.com,washingtontimes.com,webs.com,weeklystandard.com,wetpaint.com,whowhatwear.com,windowsvalley.com,winrumors.com,wn.com,woot.com,wunderground.com,x17online.com,xconomy.com,xsreviews.co.uk##.social
-ligo.co.uk,sparknotes.com,yahoo.com##.social-container
+3net.com,411.ca,about.com,adtile.me,aimonetti.net,al-shorfa.com,alexa.com,alligator-sunglasses.com,amctv.com,amd.com,annarbor.com,aol.com,artsyspot.com,asb.co.nz,avclub.com,avira.com,bbc.com,bellurbis.com,benswann.com,bgr.com,billboard.com,billmoyers.com,blogspot.co.uk,businessinsider.com,businessinsider.com.au,businessweek.com,canonclast.com,catonmat.net,cc.com,cnet.com,collectorsweekly.com,comicbookmovie.com,connectify.me,consequenceofsound.net,cookingchanneltv.com,dailyhaha.com,davemcelfatrick.com,deathandtaxesmag.com,debate.org,diet-blog.com,digitaltrends.com,direct.gov.uk,dpreview.com,droid-life.com,duluthtrading.com,e3expo.com,egopay.com,electronista.com,engadget.com,eurogamer.net,evilmilk.com,examiner.com,feld.com,fiercecable.com,fiercewireless.com,foodhub.co.nz,foodnetwork.com,forbes.com,foreignpolicy.com,foxnews.com,freelanceswitch.com,fstoppers.com,fundoomails.com,funnyordie.com,gamesradar.com,givemesport.com,goal.com,goodfood.com.au,gothamist.com,greatist.com,greenbot.com,greencarreports.com,gsmdome.com,guildwars2.com,halfhourmeals.com,hawaii.com,hgtvremodels.com,hightimes.com,hilton.com,hitfix.com,huffingtonpost.com,humblebundle.com,ibtimes.co.in,ibtimes.com,imdb.com,imgur.com,impresspages.org,impulsedriven.com,indiegogo.com,informationweek.com,inthralld.com,intomobile.com,investopedia.com,ipodnn.com,itproportal.com,joblo.com,juancole.com,kde.org,ketknbc.com,kogan.com,lifehacker.com.au,livescience.com,logicbuy.com,macnn.com,macstories.net,makerstudios.com,mashable.com,mayoclinic.org,memez.com,mobileindustryreview.com,mom.me,moviefone.com,mp3days.com,msn.com,myrecipes.com,narr8.me,narrative.ly,nationalcareersweek.com,neowin.net,networkworld.com,newrepublic.com,nocamels.com,nplusonemag.com,npr.org,nster.com,nwsource.com,nymag.com,nzherald.co.nz,opendns.com,openlogic.com,outsidexbox.com,pawnation.com,pbh2.com,pbs.org,penny-arcade.com,playboy.com,pocket-lint.com,pomade.com,pootlepress.com,ppfinder.com,projekktor.com,psfk.com,qmul.ac.uk,radbox.me,readwriteweb.com,reason.com,red-buzz.com,reference.com,refinery29.com,resignationbrewery.com,retailmenot.com,rickey.org,ropeofsilicon.com,rottentomatoes.com,rtcc.org,scalescale.com,searchmarketingexpo.com,seattletimes.com,sectionstudios.com,sheknows.com,slashdot.org,softexia.com,sophos.com,space.com,sparknotes.com,spectator.org,spin.com,sucuri.net,t3.com,tablet-news.com,talkingpointsmemo.com,talkweb.eu,techeblog.com,techpowerup.com,techpp.com,techradar.com,techspot.com,theblemish.com,thebolditalic.com,theonion.com,thestar.com,thewp-hub.com,tickld.com,tmonews.com,tnr.com,totalfilm.com,trendhunter.com,troyhunt.com,tubestart.com,tvline.com,typomaps.net,udreview.com,uk-mkivs.net,usatoday.com,utsandiego.com,vg247.com,vice.com,victoriassecret.com,viralnova.com,virginmedia.com,wallpaper.com,washingtontimes.com,webs.com,weeklystandard.com,wetpaint.com,whowhatwear.com,windowsvalley.com,winrumors.com,wn.com,woot.com,wunderground.com,x17online.com,xconomy.com,xsreviews.co.uk##.social
+jheberg.net,ligo.co.uk,sparknotes.com,yahoo.com##.social-container
 system-ns.com##.social-login
-uanews.org##.social-network
+clickhole.com,uanews.org##.social-network
 reuters.com##.socialComments
 thisisrnb.com##.socialIconsBLAHBLAH
 pdnonline.com,voanews.com##.socialNetwork
@@ -7894,7 +7990,7 @@ kdramastars.com##.top-sns
 firstshowing.net##.topsoc
 chicagotribune.com##.trb_barker_blurb
 bulova.com,chacha.com,yahoo.com,yourdailymedia.com##.tumblr
-billboard.com,cbs.com,clickindia.com,esquire.com,expansys-usa.com,propublica.org,speedtest.net##.tw
+billboard.com,cbs.com,clickindia.com,esquire.com,expansys-usa.com,propublica.org,speedtest.net,yonhapnews.co.kr##.tw
 drama.net,foxnews.com,pastebin.com##.tweet
 scribol.com##.tweetme
 nymag.com##.twit
@@ -8332,12 +8428,14 @@ lockerdome.com#@#.icon-facebook2
 register.thisis.co.uk#@#.icon-google-plus-sign
 comicbook.com#@#.icon-googleplus
 gleam.io#@#.icon-instagram
+rottentomatoes.com#@#.icon-rss
 carsguide.com.au#@#.icon-social-facebook
 carsguide.com.au#@#.icon-social-linkedin
 gleam.io#@#.icon-soundcloud
 comicbook.com,gleam.io,lockerdome.com,squidoo.com#@#.icon-twitter
 dailymail.co.uk,thisismoney.co.uk#@#.img-share
 instagram.com#@#.instagram-follow
+sap.com#@#.j-social-actions
 katproxy.com,kickass.to,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
 ~pinterest.com##.pin-it-button
 llbean.com#@#.pinit-overlay

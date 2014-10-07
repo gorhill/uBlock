@@ -4,7 +4,7 @@
 ! http://henrik.schack.dk/adblock/
 !
 ! Maintained by: henrik at schack.dk
-! Last Modified: 24-09-2014
+! Last Modified: 06-10-2014
 ! Expires: 1
 
 ! facebook.com
@@ -188,6 +188,7 @@ dba.dk##.banner.takeover.original
 dba.dk##.sekBannerTop.fixIeBox
 dba.dk##.topBannerWrapper.expandableTopBannerWrapper
 dba.dk##.banner.megaboard
+dba.dk##.dbaListing.listing.cpcListing
 
 ! motion-online.dk
 motion-online.dk##EMBED#Advertisement
@@ -296,6 +297,7 @@ ontv.dk###ad930x180t
 ! mobilsiden.dk
 mobilsiden.dk##DIV#ads
 mobilsiden.dk##DIV#rightAds
+mobilsiden.dk##.banner
 
 ! mobildebat.dk
 mobildebat.dk##DIV#ads

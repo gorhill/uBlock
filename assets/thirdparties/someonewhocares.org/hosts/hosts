@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Sep 30th, 2014 at 02:07
+# Last updated: Oct 7th, 2014 at 11:43
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1791,6 +1791,7 @@ fe80::1%lo0	localhost
 127.0.0.1 supernaturalart.com
 127.0.0.1 superprotection10.com
 127.0.0.1 sverd.net
+127.0.0.1 system-kernel-disk-errorx001dsxx-microsoft-windows.55errors5353.net
 127.0.0.1 tahoesup.com
 127.0.0.1 tattooshaha.info			# Facebook trojan
 127.0.0.1 test.ishvara-yoga.com
@@ -2991,7 +2992,6 @@ fe80::1%lo0	localhost
 127.0.0.1 24trk.com
 127.0.0.1 25184.hittail.com
 127.0.0.1 2754.btrll.com
-127.0.0.1 2912a.v.fwmrm.net
 127.0.0.1 2.adbrite.com
 127.0.0.1 2-art-coliseum.com
 127.0.0.1 2leep.com
@@ -3016,7 +3016,6 @@ fe80::1%lo0	localhost
 127.0.0.1 8574dnj3yzjace8c8io6zr9u3n.hop.clickbank.net
 127.0.0.1 888casino.com
 127.0.0.1 961.com
-127.0.0.1 9cf9.v.fwmrm.net
 127.0.0.1 a01.gestionpub.com
 127.0.0.1 a.0day.kiev.ua
 127.0.0.1 a1.greenadworks.net
@@ -6746,6 +6745,7 @@ fe80::1%lo0	localhost
 127.0.0.1 pub.sapo.pt
 127.0.0.1 pubshop.img.uol.com.br
 127.0.0.1 purgecolon.net
+127.0.0.1 purryowl.com
 127.0.0.1 px10.net
 127.0.0.1 q.azcentral.com
 127.0.0.1 q.b.h.cltomedia.info
@@ -7340,7 +7340,6 @@ fe80::1%lo0	localhost
 127.0.0.1 vclick.adbrite.com
 127.0.0.1 venus.goclick.com
 127.0.0.1 ve.tscapeplay.com
-127.0.0.1 v.fwmrm.net
 127.0.0.1 vibrantmedia.com
 127.0.0.1 videocop.com
 127.0.0.1 videoegg.adbureau.net
