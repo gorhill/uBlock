@@ -85,18 +85,44 @@ p {
     width: 100vw;
     text-align: center;
     cursor: pointer;
+    position: relative;
+    }
+#dynamicFilteringToggler > div {
+    font-size: 9px;
+    line-height: 100%;
+    color: #aaa;
+    position: absolute;
+    bottom: 0;
+    width: 25vw;
+    display: none;
+    pointer-events: none;
+    }
+#dynamicFilteringToggler.on:hover > div {
+    display: initial;
+    }
+#dynamicFilteringToggler > div:nth-of-type(1) {
+    left: 0;
+    }
+#dynamicFilteringToggler > div:nth-of-type(2) {
+    left: 25vw;
+    }
+#dynamicFilteringToggler > div:nth-of-type(3) {
+    left: 50vw;
+    }
+#dynamicFilteringToggler > div:nth-of-type(4) {
+    left: 75vw;
     }
 #dynamicFilteringToggler a {
-    padding: 0 2px 0 4px;
+    padding: 0 2px 0 8px;
     position: absolute;
     __MSG_@@bidi_end_edge__: 0;
-    color: #ccc;
+    color: #aaa;
     visibility: hidden;
     }
 #dynamicFilteringToggler a:hover {
-    color: #888;
+    color: #444;
     }
-#dynamicFilteringToggler.on a {
+#dynamicFilteringToggler.on:hover a {
     visibility: visible;
     }
 #dynamicFilteringToggler::before {
