@@ -280,15 +280,15 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton" : {
-    "message": "Backup to file...",
+    "message": "Backup in eine Datei...",
     "description": "English: Backup to file..."
   },
   "aboutRestoreDataButton" : {
-    "message": "Restore from file...",
+    "message": "Aus einer Datei wiederherstellen...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton" : {
-    "message": "Start from scratch...",
+    "message": "Fange von ganz vorne an...",
     "description": "English: Start from scratch..."
   },
   "aboutRestoreDataConfirm" : {
