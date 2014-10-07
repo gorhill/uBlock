@@ -202,6 +202,8 @@ var tagNameToRequestTypeMap = {
 
 var filterRequests = function(pageStore, details) {
     details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+    details.rootHostname = pageStore.rootHostname;
+    details.rootDomain = pageStore.rootDomain;
 
     var inRequests = details.requests;
     var outRequests = [];
@@ -236,6 +238,8 @@ var filterRequest = function(pageStore, details) {
         return;
     }
     details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+    details.rootHostname = pageStore.rootHostname;
+    details.rootDomain = pageStore.rootDomain;
     var result = pageStore.filterRequest(
         details,
         tagNameToRequestTypeMap[details.tagName],

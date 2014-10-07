@@ -240,15 +240,17 @@ FrameStore.factory = function(rootHostname, frameURL) {
 FrameStore.prototype.init = function(rootHostname, frameURL) {
     var µburi = µb.URI;
     this.pageHostname = µburi.hostnameFromURI(frameURL);
-    this.pageDomain = µburi.domainFromHostname(this.pageHostname);
+    this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
     this.rootHostname = rootHostname;
+    this.rootDomain = µburi.domainFromHostname(rootHostname) || rootHostname;
     return this;
 };
 
 /******************************************************************************/
 
 FrameStore.prototype.dispose = function() {
-    this.pageHostname = this.pageDomain = this.rootHostname = '';
+    this.pageHostname = this.pageDomain =
+    this.rootHostname = this.rootDomain = '';
     if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
         frameStoreJunkyard.push(this);
     }
@@ -298,6 +300,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     // Use hostname if no domain can be extracted
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
     this.rootHostname = this.pageHostname;
+    this.rootDomain = this.pageDomain;
 
     this.frames = {};
     this.netFiltering = true;
@@ -327,6 +330,7 @@ PageStore.prototype.reuse = function(pageURL, context) {
         this.pageHostname = µb.URI.hostnameFromURI(pageURL);
         this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
         this.rootHostname = this.pageHostname;
+        this.rootDomain = this.pageDomain;
         return this;
     }
     // A new page is completely reloaded from scratch, reset all.
@@ -347,11 +351,9 @@ PageStore.prototype.dispose = function() {
     // need to release the memory taken by these, which can amount to
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
-    this.pageURL = '';
-    this.previousPageURL = '';
-    this.pageHostname = '';
-    this.pageDomain = '';
-    this.rootHostname = '';
+    this.pageURL = this.previousPageURL =
+    this.pageHostname = this.pageDomain = 
+    this.rootHostname = this.rootDomain = '';
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {

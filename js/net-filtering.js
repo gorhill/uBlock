@@ -140,6 +140,15 @@ var atoi = function(s) {
     return cachedParseInt(s, 10);
 };
 
+var isFirstParty = function(firstPartyDomain, hostname) {
+    if ( hostname.slice(0 - firstPartyDomain.length) !== firstPartyDomain ) {
+        return false;
+    }
+    // Be sure to not confuse 'example.com' with 'anotherexample.com'
+    var c = hostname.charAt(hostname.length - firstPartyDomain.length - 1);
+    return c === '.' || c === '';
+};
+
 /*******************************************************************************
 
 Filters family tree:
@@ -1945,18 +1954,20 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 
 FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType) {
     var url = requestURL.toLowerCase();
-    var pageDomain = pageDetails.pageDomain || '';
     var requestHostname = µb.URI.hostnameFromURI(requestURL);
-    var party = requestHostname.slice(-pageDomain.length) === pageDomain ?
-        FirstParty :
-        ThirdParty;
 
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(pageDetails.rootHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(
+        pageDetails.rootHostname,
+        requestType,
+        isFirstParty(pageDetails.rootDomain, requestHostname)
+    );
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
+
+    var party = isFirstParty(pageDetails.pageDomain, requestHostname) ? FirstParty : ThirdParty;
 
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
@@ -2030,25 +2041,20 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // filters are tested *only* if there is a (unlikely) hit on a block
     // filter.
 
-    var pageDomain = pageDetails.pageDomain || '';
     var requestHostname = µb.URI.hostnameFromURI(requestURL);
-
-    // Find out the relation between the page and request
-    var party = ThirdParty;
-    if ( requestHostname.slice(0 - pageDomain.length) === pageDomain ) {
-        // Be sure to not confuse 'example.com' with 'anotherexample.com'
-        var c = requestHostname.charAt(requestHostname.length - pageDomain.length - 1);
-        if ( c === '' || c === '.' ) {
-            party = FirstParty;
-        }
-    }
 
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(pageDetails.rootHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(
+        pageDetails.rootHostname,
+        requestType,
+        isFirstParty(pageDetails.rootDomain, requestHostname)
+    );
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
+
+    var party = isFirstParty(pageDetails.pageDomain, requestHostname) ? FirstParty : ThirdParty ;
 
     // This will be used by hostname-based filters
     pageHostname = pageDetails.pageHostname || '';
