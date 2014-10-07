@@ -279,6 +279,26 @@
     "message":"Přispěvatelé",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Zálohovat do souboru...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Obnovit ze souboru...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Začít znovu...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Všechna nastavení budou přepsána těmi zálohovanými {{time}} a µBlock se restartuje.\n\nPřepsat všechna existující nastavení zálohovanými daty?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Všechna nastavení budou smazána a µBlock se restaruje.\n\nObnovit µBlock do továrního nastavení?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Nelze se připojit k {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

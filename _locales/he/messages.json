@@ -279,6 +279,26 @@
     "message":"תורמים",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"גבה לקובץ...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"שחזר מקובץ...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"התחל מאפס...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"כל ההגדרות שלך יוחלף תוך שימוש בנתונים שגובו ב {{time}}, ו µBlock יופיל מחדש.\n\nהאם להחליף את כל ההגדרות הקיימות בנתונים המגובים?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"כל ההגדרות שלך יימחקו, ו µBlock יופעל מחדש.\n\nלאפס את µBlock להגדרות ברירת מחדל?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"אין אפשרות להתחבר ל {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

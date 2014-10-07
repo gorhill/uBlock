@@ -279,6 +279,26 @@
     "message":"Kehittäjät",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Backup to file...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Restore from file...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Start from scratch...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Unable to connect to {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

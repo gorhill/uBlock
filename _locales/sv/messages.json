@@ -279,6 +279,26 @@
     "message":"Bidragsgivare",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Backup till fil...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Återställ från fil...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Börja om från början...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Alla dina inställningar kommer överskrivas med data som säkerhetskopierats den {{time}} och µBlock kommer startas om.\n\nVill du skriva över befintliga inställningar med säkerhetskopierade data?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Alla dina inställningar raderas och µBlock kommer startas om.\n\nVill du återställa µBlock till fabriksinställningar?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Det gick inte att ansluta till {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

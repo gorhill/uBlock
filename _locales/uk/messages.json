@@ -279,6 +279,26 @@
     "message":"Учасники",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Зберегти резервну копію у файл...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Відновити з файлу...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Почати з нуля...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Всі ваші налаштування будуть перезаписані з резервної копії від {{time}} та µBlock буде перезапущено.\n\nПерезаписати всі налаштування використовуючи резервну копію?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Ваші налаштування буде знищено та µBlock буде перезапущено.\n\nПовернути µBlock до заводських налаштувань?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Не вдалося підключитися до {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

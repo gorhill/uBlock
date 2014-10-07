@@ -104,7 +104,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Używaj menu kontekstowego, gdzie to możliwe",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
@@ -192,7 +192,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"nieaktualna",
+    "message":"nieaktualne",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -278,6 +278,26 @@
   "aboutContributors":{
     "message":"Autorzy",
     "description":"English: Contributors"
+  },
+  "aboutBackupDataButton":{
+    "message":"Stwórz kopię zapasową do pliku...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Przywróć z pliku...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Zresetuj ustawienia...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Wszystkie twoje ustawienia zostaną nadpisane przez kopię stworzoną {{time}}. µBlock zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Wszystkie twoje ustawienia zostaną usunięte, µBlock uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
+    "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
     "message":"Nie można połączyć się z {{url}}",

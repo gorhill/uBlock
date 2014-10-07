@@ -279,6 +279,26 @@
     "message":"Contribuidores",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Backup para ficheiro...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Restaurar de ficheiro...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Começar do zero...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Todas as suas configurações serão substituídas usando o backup de dados de {{time}}, e µBlock irá reiniciar.  Substituir todas as configurações existentes usando o backup de dados?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Todas as suas configurações serão apagadas, e µBlock irá reiniciar.  Redefinir µBlock para as configurações de fábrica?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Não é possível conectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

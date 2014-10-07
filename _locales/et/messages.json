@@ -279,6 +279,26 @@
     "message":"Toetajad",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Varunda faili...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Taasta failist...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Alusta nullist...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning µBlock taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Kõik seaded kustutatakse ning µBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Ei suudetud ühenduda aadressiga {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

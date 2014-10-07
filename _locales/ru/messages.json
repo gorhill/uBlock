@@ -279,6 +279,26 @@
     "message":"Участники",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton":{
+    "message":"Резервное копирование в файл...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Восстановление из файла...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Начать с нуля...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Все Ваши настройки будут заменены данными от {{time}}, и µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Все Ваши настройки будут удалены, и µBlock будет перезапущен. \n\nВернуться к заводским настройкам?",
+    "description":"Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Не удается подключиться к {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
