@@ -219,35 +219,36 @@ var frameStoreJunkyardMax = 50;
 
 /******************************************************************************/
 
-var FrameStore = function(frameURL) {
-    this.init(frameURL);
+var FrameStore = function(rootHostname, frameURL) {
+    this.init(rootHostname, frameURL);
 };
 
 /******************************************************************************/
 
-FrameStore.factory = function(frameURL) {
+FrameStore.factory = function(rootHostname, frameURL) {
     var entry = frameStoreJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new FrameStore(frameURL);
+        entry = new FrameStore(rootHostname, frameURL);
     } else {
-        entry.init(frameURL);
+        entry.init(rootHostname, frameURL);
     }
     return entry;
 };
 
 /******************************************************************************/
 
-FrameStore.prototype.init = function(frameURL) {
+FrameStore.prototype.init = function(rootHostname, frameURL) {
     var µburi = µb.URI;
     this.pageHostname = µburi.hostnameFromURI(frameURL);
     this.pageDomain = µburi.domainFromHostname(this.pageHostname);
+    this.rootHostname = rootHostname;
     return this;
 };
 
 /******************************************************************************/
 
 FrameStore.prototype.dispose = function() {
-    this.pageHostname = this.pageDomain = '';
+    this.pageHostname = this.pageDomain = this.rootHostname = '';
     if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
         frameStoreJunkyard.push(this);
     }
@@ -296,6 +297,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     // https://github.com/gorhill/uBlock/issues/185
     // Use hostname if no domain can be extracted
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
+    this.rootHostname = this.pageHostname;
 
     this.frames = {};
     this.netFiltering = true;
@@ -324,6 +326,7 @@ PageStore.prototype.reuse = function(pageURL, context) {
         this.pageURL = pageURL;
         this.pageHostname = µb.URI.hostnameFromURI(pageURL);
         this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
+        this.rootHostname = this.pageHostname;
         return this;
     }
     // A new page is completely reloaded from scratch, reset all.
@@ -348,6 +351,7 @@ PageStore.prototype.dispose = function() {
     this.previousPageURL = '';
     this.pageHostname = '';
     this.pageDomain = '';
+    this.rootHostname = '';
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
@@ -376,7 +380,7 @@ PageStore.prototype.disposeFrameStores = function() {
 PageStore.prototype.addFrame = function(frameId, frameURL) {
     var frameStore = this.frames[frameId];
     if ( frameStore === undefined ) {
-        this.frames[frameId] = frameStore = FrameStore.factory(frameURL);
+        this.frames[frameId] = frameStore = FrameStore.factory(this.rootHostname, frameURL);
         //console.debug('µBlock> PageStore.addFrame(%d, "%s")', frameId, frameURL);
     }
     return frameStore;

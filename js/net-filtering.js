@@ -1951,15 +1951,15 @@ FilterContainer.prototype.matchStringExactType = function(pageDetails, requestUR
         FirstParty :
         ThirdParty;
 
-    // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
-
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(pageHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(pageDetails.rootHostname, requestType, party === FirstParty);
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
+
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
 
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
@@ -2043,15 +2043,15 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
         }
     }
 
-    // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
-
     // Evaluate dynamic filters first. "Block" dynamic filters are always
     // "important", they override everything else.
-    var bf = this.matchDynamicFilters(pageHostname, requestType, party === FirstParty);
+    var bf = this.matchDynamicFilters(pageDetails.rootHostname, requestType, party === FirstParty);
     if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
         return bf;
     }
+
+    // This will be used by hostname-based filters
+    pageHostname = pageDetails.pageHostname || '';
 
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
