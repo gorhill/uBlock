@@ -87,11 +87,14 @@ p {
     cursor: pointer;
     }
 #dynamicFilteringToggler a {
-    padding: 0 2px;
+    padding: 0 2px 0 4px;
     position: absolute;
     __MSG_@@bidi_end_edge__: 0;
-    color: #aaa;
+    color: #ccc;
     visibility: hidden;
+    }
+#dynamicFilteringToggler a:hover {
+    color: #888;
     }
 #dynamicFilteringToggler.on a {
     visibility: visible;
