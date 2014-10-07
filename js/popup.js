@@ -235,7 +235,11 @@ var onDynamicFilterClicked = function(ev) {
 
 /******************************************************************************/
 
-var toggleDynamicFiltering = function() {
+var toggleDynamicFiltering = function(ev) {
+    // Discard events destined to child elements.
+    if ( ev !== undefined && ev.target !== this ) {
+        return;
+    }
     var el = uDom('#dynamicFilteringToggler');
     el.toggleClass('on');
     messaging.tell({

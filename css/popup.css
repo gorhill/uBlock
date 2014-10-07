@@ -86,10 +86,20 @@ p {
     text-align: center;
     cursor: pointer;
     }
-#dynamicFilteringToggler::after {
+#dynamicFilteringToggler a {
+    padding: 0 2px;
+    position: absolute;
+    __MSG_@@bidi_end_edge__: 0;
+    color: #aaa;
+    visibility: hidden;
+    }
+#dynamicFilteringToggler.on a {
+    visibility: visible;
+    }
+#dynamicFilteringToggler::before {
     content: '\f107';
     }
-#dynamicFilteringToggler.on::after {
+#dynamicFilteringToggler.on::before {
     content: '\f106';
     }
 #dynamicFilteringContainer {
@@ -116,10 +126,10 @@ p {
     }
 .dynamicFiltering > div {
     margin: 0;
-    border: 1px solid #eee;
+    border: 1px solid #e6e6e6;
     padding: 0;
     box-sizing: border-box;
-    background-color: #eee;
+    background-color: #e6e6e6;
     position: absolute;
     cursor: pointer;
     }
@@ -173,14 +183,14 @@ p {
     background-color: transparent;
     }
 .dynamicFiltering > div.blocked {
-    border-color: #fdd;
-    background-color: #fdd;
+    border-color: #fbb;
+    background-color: #fbb;
     }
 .dynamicFiltering > div.ownFilter {
     border-color: #bbb;
     background-color: #bbb;
     }
 .dynamicFiltering > div.blocked.ownFilter {
-    border-color: #eaa;
-    background-color: #eaa;
+    border-color: #f66;
+    background-color: #f66;
     }

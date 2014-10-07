@@ -28,6 +28,7 @@
 /******************************************************************************/
 
 var exports = {};
+var noopFunc = function(){};
 
 /******************************************************************************/
 
@@ -74,7 +75,7 @@ exports.keyvalSetMany = function(dict) {
 /******************************************************************************/
 
 exports.keyvalRemoveAll = function(callback) {
-    chrome.storage.local.clear(callback);
+    chrome.storage.local.clear(callback || noopFunc);
 };
 
 /******************************************************************************/

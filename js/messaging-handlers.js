@@ -650,27 +650,24 @@ var getUserData = function(callback) {
 /******************************************************************************/
 
 var restoreUserData = function(userData) {
-    var onUserFiltersSaved = function() {
-        µb.XAL.restart();
-    };
-    µb.destroySelfie();
+    // If we are going to restore all, might as well wipe out clean local
+    // storage
+    µb.XAL.keyvalRemoveAll();
+    µBlock.saveLocalSettings();
     µb.XAL.keyvalSetMany(userData.userSettings);
     µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists);
     µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist);
-    µb.assets.put('assets/user/filters.txt', userData.userFilters, onUserFiltersSaved);
+    µb.assets.put('assets/user/filters.txt', userData.userFilters);
+    µb.XAL.restart();
 };
 
 /******************************************************************************/
 
 var resetUserData = function() {
-    var onAllDone = function() {
-        µb.XAL.restart();
-    };
+    µb.XAL.keyvalRemoveAll();
     // Keep global counts, people can become quite attached to numbers
-    var onAllRemoved = function() {
-        µBlock.saveLocalSettings(onAllDone);
-    };
-    µb.XAL.keyvalRemoveAll(onAllRemoved);
+    µBlock.saveLocalSettings();
+    µb.XAL.restart();
 };
 
 /******************************************************************************/
