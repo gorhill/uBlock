@@ -5,18 +5,13 @@
 <title>µBlock — About</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
-<style>
-ul {
-    padding-left: 1em;
-	padding-right: 1em;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="css/about.css">
 </head>
 
 <body>
 
 <h2>µBlock <span id="aboutVersion"></span></h2>
-<ul id="AboutUL">
+<ul>
     <li><a href="https://github.com/gorhill/uBlock/releases" data-i18n="aboutChangelog"></a>
     <li><a href="https://github.com/gorhill/ublock" data-i18n="aboutCode"></a>
     <li><span data-i18n="aboutContributors"></span>
@@ -26,9 +21,19 @@ ul {
         </ul>
 </ul>
 
+<div style="margin:3em 0;border-top:1px solid #ccc;"></div>
+
+<div style="margin:1em 0 0 0;">
+<p><button type="button" id="export" data-i18n="aboutBackupDataButton"></button>
+<button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
+<p>
+<p><button type="button" id="reset" data-i18n="aboutResetDataButton">Start from scratch...</button>
+</div>
+
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/dashboard-common.js"></script>
+<script src="js/messaging-client.js"></script>
 <script src="js/about.js"></script>
 
 </body>

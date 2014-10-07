@@ -25,7 +25,9 @@ h2 + * {
 a {
     text-decoration: none;
     }
-
+button {
+    padding: 0.33em;
+    }
 div > p:first-child {
     margin-top: 0;
     }
@@ -36,18 +38,6 @@ div > p:last-child {
 .para {
     width: 40em;
     }
-	
-.userFilters {
-	text-align: left;
-	}
-#whitelist {
-	text-align: left;
-	}
-ul#AboutUL {
-	padding-__MSG_@@bidi_start_edge__: 1em;
-	margin-__MSG_@@bidi_start_edge__: 1em;
-	}
-
 .whatisthis {
     margin: 0 0 0 8px;
     border: 0;

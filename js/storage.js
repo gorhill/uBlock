@@ -32,10 +32,11 @@
 
 /******************************************************************************/
 
-µBlock.saveLocalSettings = function() {
-    chrome.storage.local.set(this.localSettings, function() {
-        µBlock.getBytesInUse();
-    });
+µBlock.saveLocalSettings = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
+    chrome.storage.local.set(this.localSettings, callback);
 };
 
 /******************************************************************************/

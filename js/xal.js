@@ -59,10 +59,28 @@ exports.injectScript = function(id, details) {
 
 /******************************************************************************/
 
-exports.keyValSetOne = function(key, val) {
+exports.keyvalSetOne = function(key, val) {
     var bin = {};
     bin[key] = val;
     chrome.storage.local.set(bin);
+};
+
+/******************************************************************************/
+
+exports.keyvalSetMany = function(dict) {
+    chrome.storage.local.set(dict);
+};
+
+/******************************************************************************/
+
+exports.keyvalRemoveAll = function(callback) {
+    chrome.storage.local.clear(callback);
+};
+
+/******************************************************************************/
+
+exports.restart = function() {
+    chrome.runtime.reload();
 };
 
 /******************************************************************************/

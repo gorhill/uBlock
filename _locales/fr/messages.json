@@ -279,6 +279,26 @@
     "message":"Contributeurs",
     "description":"English: Contributors"
   },
+  "aboutBackupDataButton" : {
+    "message": "Exporter vers un fichier",
+    "description": "English: Backup to file..."
+  },
+  "aboutRestoreDataButton" : {
+    "message": "Importer depuis un fichier",
+    "description": "English: Restore from file..."
+  },
+  "aboutResetDataButton" : {
+    "message": "Repartir à zéro",
+    "description": "English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm" : {
+    "message": "Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis µBlock redémarrera.\n\nProcéder à l'importation ?",
+    "description": "Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm" : {
+    "message": "Vos paramètres seront effacés, puis µBlock redémarrera.\n\nProcéder à la remise à zéro ?",
+    "description": "Message asking user to confirm restore"
+  },
   "errorCantConnectTo":{
     "message":"Erreur de connexion : {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"

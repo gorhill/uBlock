@@ -633,9 +633,53 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var getUserData = function(callback) {
+    var onUserFiltersReady = function(details) {
+        callback({
+            'timeStamp': Date.now(),
+            'version': µb.manifest.version,
+            'userSettings': µb.userSettings,
+            'filterLists': µb.remoteBlacklists,
+            'netWhitelist': µb.stringFromWhitelist(µb.netWhitelist),
+            'userFilters': details.content
+        });
+    };
+    µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
+};
+
+/******************************************************************************/
+
+var restoreUserData = function(userData) {
+    var onUserFiltersSaved = function() {
+        µb.XAL.restart();
+    };
+    µb.destroySelfie();
+    µb.XAL.keyvalSetMany(userData.userSettings);
+    µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists);
+    µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist);
+    µb.assets.put('assets/user/filters.txt', userData.userFilters, onUserFiltersSaved);
+};
+
+/******************************************************************************/
+
+var resetUserData = function() {
+    var onAllDone = function() {
+        µb.XAL.restart();
+    };
+    // Keep global counts, people can become quite attached to numbers
+    var onAllRemoved = function() {
+        µBlock.saveLocalSettings(onAllDone);
+    };
+    µb.XAL.keyvalRemoveAll(onAllRemoved);
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+        case 'getUserData':
+            return getUserData(callback);
 
         default:
             break;
@@ -645,6 +689,13 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+        case 'restoreUserData':
+            restoreUserData(request.userData);
+            break;
+
+        case 'resetUserData':
+            resetUserData();
+            break;
 
         default:
             return µb.messaging.defaultHandler(request, sender, callback);

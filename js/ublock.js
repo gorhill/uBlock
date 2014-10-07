@@ -265,6 +265,6 @@
     }
     if ( changed ) {
         this.userSettings.dynamicFilteringSelfie = this.netFilteringEngine.selfieFromDynamicFilters();
-        this.XAL.keyValSetOne('dynamicFilteringSelfie', this.userSettings.dynamicFilteringSelfie);
+        this.XAL.keyvalSetOne('dynamicFilteringSelfie', this.userSettings.dynamicFilteringSelfie);
     }
 };

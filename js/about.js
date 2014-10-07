@@ -27,7 +27,83 @@ uDom.onLoad(function() {
 
 /******************************************************************************/
 
+messaging.start('about.js');
+
+/******************************************************************************/
+
+var exportToFile = function() {
+    var onUserDataReady = function(userData) {
+        chrome.downloads.download({
+            'url': 'data:text/plain,' + encodeURIComponent(JSON.stringify(userData)),
+            'filename': 'ublock-backup.txt',
+            'saveAs': true
+        });
+    };
+
+    messaging.ask({ what: 'getUserData' }, onUserDataReady);
+};
+
+/******************************************************************************/
+
+var importFromFile = function() {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'text/plain');
+
+    var fileReaderOnLoadHandler = function() {
+        var userData;
+        try {
+            userData = JSON.parse(this.result);
+        }
+        catch (e) {
+        }
+        if ( userData === undefined ) {
+            return;
+        }
+        var time = new Date(userData.timeStamp);
+        var msg = chrome.i18n
+            .getMessage('aboutRestoreDataConfirm')
+            .replace('{{time}}', time.toLocaleString());
+        var proceed = window.confirm(msg);
+        if ( proceed ) {
+            messaging.tell({ what: 'restoreUserData', userData: userData });
+        }
+    };
+
+    var filePickerOnChangeHandler = function() {
+        input.removeEventListener('change', filePickerOnChangeHandler);
+        var file = this.files[0];
+        if ( !file ) {
+            return;
+        }
+        if ( file.type.indexOf('text') !== 0 ) {
+            return;
+        }
+        var fr = new FileReader();
+        fr.onload = fileReaderOnLoadHandler;
+        fr.readAsText(file);
+    };
+
+    input.addEventListener('change', filePickerOnChangeHandler);
+    input.click();
+};
+
+/******************************************************************************/
+
+var resetUserData = function() {
+    var msg = chrome.i18n.getMessage('aboutResetDataConfirm');
+    var proceed = window.confirm(msg);
+    if ( proceed ) {
+        messaging.tell({ what: 'resetUserData' });
+    }
+};
+
+/******************************************************************************/
+
 uDom('#aboutVersion').html(chrome.runtime.getManifest().version);
+uDom('#export').on('click', exportToFile);
+uDom('#import').on('click', importFromFile);
+uDom('#reset').on('click', resetUserData);
 
 /******************************************************************************/
 
