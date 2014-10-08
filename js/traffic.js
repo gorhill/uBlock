@@ -235,15 +235,20 @@ var cr410382Workaround = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/281
+    // Looks like Chrome 38 (but not 39) doesn't provide the expected request
+    // header `X-Requested-With`. Sigh.
+    var requestType = 'object';
+
     // Lookup "X-Requested-With" header: this will tell us whether the request
     // is of type "object".
     // Reference: https://code.google.com/p/chromium/issues/detail?id=145090
-    var requestedWith = headerValue(details.requestHeaders, 'x-requested-with');
+    //var requestedWith = headerValue(details.requestHeaders, 'x-requested-with');
 
     // Reference: https://codereview.chromium.org/451923002/patch/120001/130008
-    var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
-        'object' :
-        'other';
+    //var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
+    //    'object' :
+    //    'other';
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(details.tabId);
