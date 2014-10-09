@@ -8,8 +8,6 @@ cdnjs.cloudflare.com
     ^cdnjs\.cloudflare\.com\/ajax\/libs\/
 code.jquery.com
     ^code\.jquery\.com
-s0.2mdn.net
-    [^\\]*2mdn\.net\/instream\/html5\/ima3\.js
 www.googletagservices.com
     www\.googletagservices\.com\/tag\/js\/gpt\.js
 maxcdn.bootstrapcdn.com
@@ -17,12 +15,8 @@ maxcdn.bootstrapcdn.com
 netdna.bootstrapcdn.com
     [^\\]+\.bootstrapcdn\.com\/bootstrap\/
     [^\\]+\.bootstrapcdn\.com\/font-awesome\/
-b.scorecardresearch.com
-    ^b\.scorecardresearch\.com\/beacon\.js
 platform.twitter.com
     ^platform\.twitter\.com\/widgets\.js
-cdn.quilt.janrain.com
-    ^cdn\.quilt\.janrain\.com\/
 
 # https://github.com/gorhill/uBlock/issues/270#issuecomment-57913228
 # Ref: http://www.asp.net/ajax/cdn
