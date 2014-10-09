@@ -356,6 +356,7 @@ var headerValue = function(headers, name) {
     }
     return '';
 };
+
 /******************************************************************************/
 
 chrome.webRequest.onBeforeRequest.addListener(
