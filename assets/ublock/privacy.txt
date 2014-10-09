@@ -18,3 +18,6 @@
 # Commented out on 2014-10-03: I don't see it anymore in benchmarks. Will see.
 # Commenting it out allows me to enable this one out-of-the-box.
 # ||linkedin.com^$third-party,important
+
+# https://github.com/gorhill/uBlock/issues/289
+||www.googletagservices.com/tag/js/gpt.js

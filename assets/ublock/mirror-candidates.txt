@@ -8,8 +8,6 @@ cdnjs.cloudflare.com
     ^cdnjs\.cloudflare\.com\/ajax\/libs\/
 code.jquery.com
     ^code\.jquery\.com
-www.googletagservices.com
-    www\.googletagservices\.com\/tag\/js\/gpt\.js
 maxcdn.bootstrapcdn.com
     ^maxcdn\.bootstrapcdn\.com\/font-awesome\/
 netdna.bootstrapcdn.com
