@@ -280,8 +280,11 @@ var highlightElements = function(elems, force) {
         }
     }
     targetElements = elems;
-    var offx = window.pageXOffset;
-    var offy = window.pageYOffset;
+
+    // https://github.com/gorhill/uBlock/issues/210
+    var bodyRect = document.body.getBoundingClientRect();
+    var offx = bodyRect.left;
+    var offy = bodyRect.top;
     var ow = svgRoot.getAttribute('width');
     var ocean = [
         'M0 0',
@@ -299,14 +302,14 @@ var highlightElements = function(elems, force) {
         }
         r = elem.getBoundingClientRect();
         ocean.push(
-            'M', r.left + offx, ' ', r.top + offy,
+            'M', r.left - offx, ' ', r.top - offy,
             'h', r.width,
             'v', r.height,
             'h-', r.width,
             'z'
         );
         islands.push(
-            'M', r.left + offx, ' ', r.top + offy,
+            'M', r.left - offx, ' ', r.top - offy,
             'h', r.width,
             'v', r.height,
             'h-', r.width,
