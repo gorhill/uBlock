@@ -123,7 +123,8 @@ google.*###center_col > #tads
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
 # EasyPrivacy fixes
-# None!
+@@||b.scorecardresearch.com^$domain=www.eltiempo.com
+@@||eltiempo.112.2o7.net^$domain=www.eltiempo.com
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
