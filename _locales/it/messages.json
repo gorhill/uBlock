@@ -280,23 +280,23 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file...",
+    "message":"Crea file di backup...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Ripristina dal file...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"Riparti da zero...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Tutte le impostazioni verranno sovrascritte utilizzando i dati di backup del {{time}} e µBlock sarà riavviato.\n\nSovrascrivere tutte le impostazioni esistenti con quelle del backup?",
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Verranno cancellate tutte le impostazioni, e µBlock sarà riavviato.\n\nResettare µBlock alle impostazioni di fabbrica?",
     "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{

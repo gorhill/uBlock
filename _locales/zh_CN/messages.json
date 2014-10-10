@@ -280,15 +280,15 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file...",
+    "message":"备份到文件...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"从文件还原...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"清除所有的设置...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{

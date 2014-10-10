@@ -108,7 +108,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features",
+    "message":"Kích hoạt các tính năng thử nghiệm",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -280,23 +280,23 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file...",
+    "message":"Sao lưu vào tập tin...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Khôi phục từ tập tin...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"Bắt đầu từ đầu...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Tất cả các thiết lập của bạn sẽ bị ghi đè bởi dữ liệu sao lưu vào lúc {{time}}, và µBlock sẽ khởi động lại. \n\nGhi đè lên tất cả các cài đặt hiện tại bằng cách sử dụng dữ liệu sao lưu?",
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Tất cả các thiết lập của bạn sẽ bị xóa, và µBlock sẽ khởi động lại. \n\nThiết lập lại µBlock về cài đặt ban đầu?",
     "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
