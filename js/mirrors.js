@@ -53,7 +53,7 @@ var nullFunc = function() {};
 // control over what significant part(s) of a URL is to be used as key.
 var mirrorCandidates = Object.create(null);
 
-var magicId = 'zicibucpobdu';
+var magicId = 'nmewkrsniruu';
 var metadataPersistTimer = null;
 var bytesInUseMercy = 1 * 1024 * 1024;
 
