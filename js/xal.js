@@ -86,6 +86,16 @@ exports.restart = function() {
 
 /******************************************************************************/
 
+exports.destroyTab = function(tabId) {
+    chrome.tabs.remove(tabId, function() {
+        // required by chrome API, or else warnings at console (also, mind jshint)
+        if ( chrome.runtime.lastError ) {
+        }
+    });
+};
+
+/******************************************************************************/
+
 return exports;
 
 /******************************************************************************/

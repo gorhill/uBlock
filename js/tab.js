@@ -28,18 +28,18 @@
 
     // When the DOM content of root frame is loaded, this means the tab
     // content has changed.
-    function onNavigationCommitted(details) {
+    var onNavigationCommitted = function(details) {
         if ( details.frameId !== 0 ) {
             return;
         }
         µb.bindTabToPageStats(details.tabId, details.url);
-    }
+    };
     chrome.webNavigation.onCommitted.addListener(onNavigationCommitted);
 
     // It may happen the URL in the tab changes, while the page's document
     // stays the same (for instance, Google Maps). Without this listener,
     // the extension icon won't be properly refreshed.
-    function onTabUpdated(tabId, changeInfo, tab) {
+    var onTabUpdated = function(tabId, changeInfo, tab) {
         if ( !tab.url || tab.url === '' ) {
             return;
         }
@@ -47,16 +47,40 @@
             return;
         }
         µb.bindTabToPageStats(tabId, changeInfo.url, 'tabUpdated');
-    }
+    };
     chrome.tabs.onUpdated.addListener(onTabUpdated);
 
-    function onTabRemoved(tabId) {
+    var onTabRemoved = function(tabId) {
         if ( tabId < 0 ) {
             return;
         }
         µb.unbindTabFromPageStats(tabId);
-    }
+    };
     chrome.tabs.onRemoved.addListener(onTabRemoved);
+
+    // https://github.com/gorhill/uBlock/issues/297
+    var onCreatedNavigationTarget = function(details) {
+        var pageStore = µb.pageStoreFromTabId(details.sourceTabId);
+        if ( !pageStore ) {
+            return;
+        }
+        if ( pageStore.getNetFilteringSwitch() !== true ) {
+            return;
+        }
+        var requestURL = details.url;
+        var result = µb.netFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+        // https://github.com/gorhill/uBlock/issues/91
+        pageStore.recordResult('popup', requestURL, result);
+        // Not blocked
+        if ( pageStore.boolFromResult(result) === false ) {
+            return;
+        }
+        // Blocked
+        // It is a popup, block and remove the tab.
+        µb.unbindTabFromPageStats(details.tabId);
+        µb.XAL.destroyTab(details.tabId);
+    };
+    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
 })();
 
 /******************************************************************************/

@@ -154,7 +154,7 @@ var onBeforeSendHeaders = function(details) {
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        console.error('µBlock> onBeforeSendHeaders(): no page store for "%s"', requestURL);
+        // This happens under normal circumstances in Opera.
         return;
     }
 
@@ -201,7 +201,7 @@ var onBeforeSendHeaders = function(details) {
 
     // It is a popup, block and remove the tab.
     µb.unbindTabFromPageStats(tabId);
-    chrome.tabs.remove(tabId);
+    µb.XAL.destroyTab(tabId);
 
     return { 'cancel': true };
 };
