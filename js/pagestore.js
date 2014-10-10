@@ -407,13 +407,16 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 /******************************************************************************/
 
 PageStore.prototype.filterRequest = function(context, requestType, requestURL) {
-    var entry = this.netFilteringCache.lookup(requestURL);
-    if ( entry !== undefined ) {
-        //console.debug(' cache HIT: PageStore.filterRequest("%s")', requestURL);
-        return entry.result;
+    var result = '';
+    if ( this.getNetFilteringSwitch() ) {
+        var entry = this.netFilteringCache.lookup(requestURL);
+        if ( entry !== undefined ) {
+            //console.debug(' cache HIT: PageStore.filterRequest("%s")', requestURL);
+            return entry.result;
+        }
+        //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
+        result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
     }
-    //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
-    var result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
     if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
         this.netFilteringCache.add(requestURL, result, requestType, 0);
     }

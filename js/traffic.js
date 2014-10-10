@@ -62,9 +62,11 @@ var onBeforeRequest = function(details) {
         // `object` requests. Unclear whether this issue will be fixed, hence 
         // this workaround to prevent torch-and-pitchfork mobs because ads are 
         // no longer blocked in videos.
-        // onBeforeSendHeaders() will handle this for now.
+        // https://github.com/gorhill/uBlock/issues/281
+        // Looks like Chrome 38 (but not 39) doesn't provide the expected request
+        // header `X-Requested-With`. Sigh.
         if ( requestType === 'other' ) {
-            return;
+            requestType = 'object';
         }
     }
 
@@ -85,10 +87,7 @@ var onBeforeRequest = function(details) {
         }
     }
 
-    var result = '';
-    if ( pageStore.getNetFilteringSwitch() ) {
-        result = pageStore.filterRequest(requestContext, requestType, requestURL);
-    }
+    var result = pageStore.filterRequest(requestContext, requestType, requestURL);
 
     // Not blocked
     if ( pageStore.boolFromResult(result) === false ) {
@@ -142,15 +141,6 @@ var onBeforeSendHeaders = function(details) {
     var tabId = details.tabId;
     if ( tabId < 0 ) {
         return;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/206
-    // https://code.google.com/p/chromium/issues/detail?id=410382
-    // Work around the issue of Chromium not properly setting the type for
-    // `object` requests. Unclear whether this issue will be fixed, hence this
-    // workaround to prevent widespread breakage of the extension.
-    if ( details.type === 'other' ) {
-        return cr410382Workaround(details);
     }
 
     // Only root document.
@@ -213,84 +203,6 @@ var onBeforeSendHeaders = function(details) {
     µb.unbindTabFromPageStats(tabId);
     chrome.tabs.remove(tabId);
 
-    return { 'cancel': true };
-};
-
-/******************************************************************************/
-
-// Work around the issue of Chromium not properly setting the type for
-// `object` requests. Unclear whether this issue will be fixed, hence this
-// workaround to prevent widespread breakage of the extension.
-
-var cr410382Workaround = function(details) {
-    //console.debug('cr410382Workaround()> "%s": %o', details.url, details);
-
-    var µb = µBlock;
-    var requestURL = details.url;
-    var µburi = µb.URI.set(requestURL);
-
-    // If the type can be successfully transposed, this means the request
-    // was processed at onBeforeRequest time.
-    if ( µb.transposeType('other', µburi.path) !== 'other' ) {
-        return;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/281
-    // Looks like Chrome 38 (but not 39) doesn't provide the expected request
-    // header `X-Requested-With`. Sigh.
-    var requestType = 'object';
-
-    // Lookup "X-Requested-With" header: this will tell us whether the request
-    // is of type "object".
-    // Reference: https://code.google.com/p/chromium/issues/detail?id=145090
-    //var requestedWith = headerValue(details.requestHeaders, 'x-requested-with');
-
-    // Reference: https://codereview.chromium.org/451923002/patch/120001/130008
-    //var requestType = requestedWith.indexOf('ShockwaveFlash') !== -1 ?
-    //    'object' :
-    //    'other';
-
-    // Lookup the page store associated with this tab id.
-    var pageStore = µb.pageStoreFromTabId(details.tabId);
-    if ( !pageStore ) {
-        return;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/114
-    var requestContext = pageStore;
-    var frameStore;
-    var frameId = details.frameId;
-    if ( frameId > 0 ) {
-        if ( frameStore = pageStore.getFrame(frameId) ) {
-            requestContext = frameStore;
-        }
-    }
-
-    var result = '';
-    if ( pageStore.getNetFilteringSwitch() ) {
-        result = pageStore.filterRequest(requestContext, requestType, requestURL);
-    }
-
-    // Not blocked
-    if ( pageStore.boolFromResult(result) === false ) {
-        pageStore.perLoadAllowedRequestCount++;
-        µb.localSettings.allowedRequestCount++;
-
-        // https://github.com/gorhill/uBlock/issues/114
-        if ( frameId > 0 && frameStore === undefined ) {
-            pageStore.addFrame(frameId, requestURL);
-        }
-
-        //console.debug('µBlock> cr410382Workaround()> ALLOW "%s" (%o)', details.url, details);
-        return;
-    }
-
-    // Blocked
-    pageStore.perLoadBlockedRequestCount++;
-    µb.localSettings.blockedRequestCount++;
-    µb.updateBadgeAsync(details.tabId);
-
-    //console.debug('µBlock> cr410382Workaround()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
     return { 'cancel': true };
 };
 
@@ -400,8 +312,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             "https://*/*"
         ],
         "types": [
-            "main_frame",
-            "other"          // Because cr410382Workaround()
+            "main_frame"
         ]
     },
     [ "blocking", "requestHeaders" ]
