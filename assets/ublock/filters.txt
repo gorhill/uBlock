@@ -135,4 +135,4 @@ google.*###center_col > #tads
 
 # https://github.com/gorhill/uBlock/issues/293
 # To counter `safelinking.net` in hpHosts
-@@||safelinking.net^$third-party
+@@||safelinking.net^$~third-party
