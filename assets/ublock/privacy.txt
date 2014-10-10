@@ -20,4 +20,8 @@
 # ||linkedin.com^$third-party,important
 
 # https://github.com/gorhill/uBlock/issues/289
-||www.googletagservices.com/tag/js/gpt.js
+# Commented out, breaks to many sites. See:
+#   https://hg.adblockplus.org/easylist/rev/9f6e928c258a#l2.12
+#   Users can still block this one through hpHosts, MVPS, Dan Pollock's or
+#   manually through custom filters, or 3rd-party scripts
+# ||www.googletagservices.com/tag/js/gpt.js
