@@ -1,6 +1,6 @@
 39c6f45e6a3d4ec664d24fa9cc5869dc assets/ublock/thirdparty-lists.txt
-735f8640fe485cb0695aaa20c068f214 assets/ublock/privacy.txt
-4372d5059ca4ba97e241bd0a85c5f7e6 assets/ublock/filters.txt
+6572a7bce5f1747fee597cb170bd3b98 assets/ublock/privacy.txt
+0a0d63f577339091d18b8ecfb65857fc assets/ublock/filters.txt
 5b632be7361db556f795a0e3894ff03c assets/ublock/mirror-candidates.txt
 19e25ce60f7b9e470c110334506b5e15 assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
