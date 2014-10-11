@@ -60,16 +60,16 @@ exports.injectScript = function(id, details) {
 
 /******************************************************************************/
 
-exports.keyvalSetOne = function(key, val) {
+exports.keyvalSetOne = function(key, val, callback) {
     var bin = {};
     bin[key] = val;
-    chrome.storage.local.set(bin);
+    chrome.storage.local.set(bin, callback || noopFunc);
 };
 
 /******************************************************************************/
 
-exports.keyvalSetMany = function(dict) {
-    chrome.storage.local.set(dict);
+exports.keyvalSetMany = function(dict, callback) {
+    chrome.storage.local.set(dict, callback || noopFunc);
 };
 
 /******************************************************************************/

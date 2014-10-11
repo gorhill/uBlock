@@ -654,15 +654,26 @@ var getUserData = function(callback) {
 /******************************************************************************/
 
 var restoreUserData = function(userData) {
+    var countdown = 5;
+    var onCountdown = function() {
+        countdown -= 1;
+        if ( countdown === 0 ) {
+            µb.XAL.restart();
+        }
+    };
+
+    var onAllRemoved = function() {
+        // Be sure to adjust `countdown` if adding/removing anything below
+        µBlock.saveLocalSettings(onCountdown);
+        µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
+        µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist, onCountdown);
+        µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
+    };
+
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    µb.XAL.keyvalRemoveAll();
-    µBlock.saveLocalSettings();
-    µb.XAL.keyvalSetMany(userData.userSettings);
-    µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists);
-    µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist);
-    µb.assets.put('assets/user/filters.txt', userData.userFilters);
-    µb.XAL.restart();
+    µb.XAL.keyvalRemoveAll(onAllRemoved);
 };
 
 /******************************************************************************/
