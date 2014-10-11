@@ -1,3 +1,6 @@
+# As of now 2014-10-11:
+#   If no regex capture: use whole URL
+#   If regex capture: use capture index 1
 ajax.googleapis.com
     ^ajax\.googleapis\.com\/ajax\/libs\/
 fonts.googleapis.com

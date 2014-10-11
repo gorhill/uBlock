@@ -53,7 +53,7 @@ var nullFunc = function() {};
 // control over what significant part(s) of a URL is to be used as key.
 var mirrorCandidates = Object.create(null);
 
-var magicId = 'nmewkrsniruu';
+var magicId = 'yawqboypxuhs';
 var metadataPersistTimer = null;
 var bytesInUseMercy = 1 * 1024 * 1024;
 
@@ -190,7 +190,9 @@ var toUrlKey = function(url) {
         if ( matches === null ) {
             continue;
         }
-        return matches.length === 1 ? matches[0] : matches[1];
+        // https://github.com/gorhill/uBlock/issues/301
+        // Use whole URL as key when no regex capture
+        return matches.length === 1 ? url : matches[1];
     }
     return '';
 };
@@ -360,9 +362,10 @@ var cacheAsset = function(url) {
             return;
         }
         var mimeType = extractMimeType(this.getResponseHeader('Content-Type'));
+        var uint8Buffer = new Uint8Array(this.response);
         var yamd5 = new YaMD5();
         yamd5.appendAsciiStr(mimeType);
-        yamd5.appendAsciiStr(this.response);
+        yamd5.appendByteArray(uint8Buffer);
         var hash = yamd5.end();
         addMetadata(urlKey, hash);
         if ( contentExists(hash) ) {
@@ -374,7 +377,7 @@ var cacheAsset = function(url) {
         // as the result is somewhat more compact I believe
         var dataUrl = null;
         try {
-            dataUrl = 'data:' + mimeType + ';base64,' + btoaSafe(new Uint8Array(this.response));
+            dataUrl = 'data:' + mimeType + ';base64,' + btoaSafe(uint8Buffer);
         } catch (e) {
             //console.debug('"%s":', url, e);
         }
@@ -486,10 +489,9 @@ var load = function() {
 
     var onMetadataReady = function(bin) {
         //console.debug('mirrors.load(): loaded metadata');
-        metadata = bin.mirrors_metadata;
-        var mustReset = metadata.magicId !== magicId;
+        var u2hmap = metadata.urlKeyToHashMap = bin.mirrors_metadata.urlKeyToHashMap;
+        var mustReset = bin.mirrors_metadata.magicId !== magicId;
         var toRemove = [];
-        var u2hmap = metadata.urlKeyToHashMap;
         var hash;
         for ( var urlKey in u2hmap ) {
             if ( u2hmap.hasOwnProperty(urlKey) === false ) {
