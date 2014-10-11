@@ -238,6 +238,13 @@ var targetElements = [];
 var svgWidth = 0;
 var svgHeight = 0;
 
+var rectVolatile = {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0
+};
+
 /******************************************************************************/
 
 var pickerPaused = function() {
@@ -272,6 +279,24 @@ var pickerRootDistance = function(elem) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/210
+
+// HTMLElement.getBoundingClientRect() is unreliable (or I misunderstand what
+// it does). I will just compute it myself.
+
+var getBoundingClientRect = function(elem, r) {
+    r.w = elem.offsetWidth;
+    r.h = elem.offsetHeight;
+    r.x = elem.offsetLeft - elem.scrollLeft;
+    r.y = elem.offsetTop - elem.scrollTop;
+    while ( elem = elem.offsetParent ) {
+        r.x += elem.offsetLeft - elem.scrollLeft;
+        r.y += elem.offsetTop - elem.scrollTop;
+    }
+};
+
+/******************************************************************************/
+
 var highlightElements = function(elems, force) {
     // To make mouse move handler more efficient
     if ( !force && elems.length === targetElements.length ) {
@@ -281,10 +306,6 @@ var highlightElements = function(elems, force) {
     }
     targetElements = elems;
 
-    // https://github.com/gorhill/uBlock/issues/210
-    var bodyRect = document.body.getBoundingClientRect();
-    var offx = bodyRect.left;
-    var offy = bodyRect.top;
     var ow = svgRoot.getAttribute('width');
     var ocean = [
         'M0 0',
@@ -293,28 +314,17 @@ var highlightElements = function(elems, force) {
         'h-', ow,
         'z'
     ];
+    var offx = window.pageXOffset;
+    var offy = window.pageYOffset;
     var islands = [];
-    var elem, r;
+    // To avoid memory churning, reuse object
+    var r = rectVolatile;
+    var poly;
     for ( var i = 0; i < elems.length; i++ ) {
-        elem = elems[i];
-        if ( typeof elem.getBoundingClientRect !== 'function' ) {
-            continue;
-        }
-        r = elem.getBoundingClientRect();
-        ocean.push(
-            'M', r.left - offx, ' ', r.top - offy,
-            'h', r.width,
-            'v', r.height,
-            'h-', r.width,
-            'z'
-        );
-        islands.push(
-            'M', r.left - offx, ' ', r.top - offy,
-            'h', r.width,
-            'v', r.height,
-            'h-', r.width,
-            'z'
-        );
+        getBoundingClientRect(elems[i], r);
+        poly = 'M' + (r.x + offx) + ' ' + (r.y + offy) + 'h' + r.w + 'v' + r.h + 'h-' + r.w + 'z';
+        ocean.push(poly);
+        islands.push(poly);
     }
     svgOcean.setAttribute('d', ocean.join(''));
     svgIslands.setAttribute('d', islands.join(''));
@@ -846,7 +856,11 @@ var startPicker = function() {
             'direction: ', chrome.i18n.getMessage('@@bidi_dir'), ';',
         '}',
         '.µBlock.paused > div {',
+            'opacity: 0.2;',
             'display: initial;',
+        '}',
+        '.µBlock.paused > div:hover {',
+            'opacity: 1;',
         '}',
         '.µBlock > div > div {',
             'padding: 0;',
