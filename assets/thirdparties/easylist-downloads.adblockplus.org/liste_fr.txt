@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: Repe2rIPRiNui1UjGvuNfw
-! Version: 201410071851
+! Checksum: MBYppqu0GBnLlMpyCWKikA
+! Version: 201410112151
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3870,7 +3870,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 /fadb.min.js?
 @@.gif#$domain=automobile-sportive.com
 @@.jpg#$domain=dpstream.cc
-@@.png#$domain=dpstream.cc|dpstream.tv|ebookdz.com|leetgamerz.net|total-sport.tv|tout-gratuit.be
+@@.png#$domain=dpstream.cc|dpstream.tv|ebookdz.com|leetgamerz.net|rapidebrideur.com|total-sport.tv|tout-gratuit.be
 @@||ad.advertstream.com/adjs_r.php?$script,domain=forum.virtualdjing.com
 @@||adspub.net/javascript/advertisement-AdBlock.js
 @@||anime-story.com/css/advertise.css
@@ -3917,6 +3917,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||pro-zik.ws/js/ads.js
 @@||pubads.g.doubleclick.net/gampad/ads?$script,domain=replay.fr
 @@||rapide-cash.fr/ads.css
+@@||rapidebrideur.com^$elemhide
 @@||s.wat.tv/images/static/partner/*/rev.txt-ads?
 @@||scan-manga.com^$stylesheet
 @@||scan-manga.fr^$stylesheet

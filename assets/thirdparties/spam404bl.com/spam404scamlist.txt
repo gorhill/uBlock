@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4576
-! Last modified: 7 Oct 2014
+! Version: 4587
+! Last modified: 9 Oct 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -131,6 +131,8 @@
 ##[href^="http://track.cmllk1.info/"]
 ##[href^="http://gripdownloads.co/"]
 ##[href^="http://www.v4download.com/"]
+##[href^="http://grippedownloads.co/"]
+##[href^="http://www.tricheurhq.com/"]
 !
 !
 !
@@ -139,6 +141,7 @@
 dream-file.com##[alt="Regular Download"]
 ##[onclick="$(this).hide(); $('#offerlst').show('slow');"]
 shortz.so##[onclick="awaiting();"]
+##.login-window[href="#stream"]
 !
 !
 !
@@ -4571,6 +4574,14 @@ shortz.so##[onclick="awaiting();"]
 ||psncodegeneratornow.com^
 ||warofmercenarieshack.net^
 ||submityourgta5gamertag.com^
+||moviefox.us
+||getcashforsurveys.com^
+||zonepa.com^
+||elitemoneymethods.com^
+||dldzfr.com^
+||boost-my-game.com^
+||trippinger.com^
+||tricheurhq.com^
 !
 !
 !

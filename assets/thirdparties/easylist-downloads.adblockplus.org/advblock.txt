@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 8J6e1GuihYdtFtE1pjY2YQ
-! Version: 201410071850
-! Last modified: 07 Oct 2014 18:50 UTC
+! Checksum: SjulMQV11BQIV2VOB0WD4g
+! Version: 201410112150
+! Last modified: 11 Oct 2014 21:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -3036,6 +3036,7 @@ bountyporn.com,pornoneverdie.com##.fly_player
 unionpeer.org##.genmed
 dota2.ru##.hadv-block
 dota2.ru##.headshop:not([href^="/shop/"])
+hh.ua##.i-topbanner
 iccup.com##.imageBgLeft
 iccup.com##.imageBgRight
 sinoptik.ua##.informerTop
@@ -4812,6 +4813,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||hdtv.ru/resources/$object
 ||hentaichan.ru/r/
 ||hhcdn.ru/nposter/
+||hhcdn.ru^*.banners.
 ||hi-fi.ru/bitrix/images/
 ||hideme.ru/images/prx/prx_bnr_
 ||hm6.ru/banner
@@ -5981,6 +5983,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||imgsmail.ru^*/btn/adv/$domain=mail.ru
 @@||imhonet.ru/js/templates/views/tiles/m-tiles.advert.$domain=imhonet.ru
 @@||irr.ru/ajax/*/submission/get_cat$domain=irr.ru
+@@||killot.ru/banners/$domain=killot.ru
 @@||kino-dom.tv/branding_vulkan/css/branding.css|$domain=kino-dom.tv
 @@||krutilka.net^$domain=24smile.net
 @@||legionhardware.com/images/teasers/$~third-party

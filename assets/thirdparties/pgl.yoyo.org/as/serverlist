@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Sat, 27 Sep 2014 11:08:06 GMT
-# entries:        2474
+# last updated:   Fri, 10 Oct 2014 21:56:38 GMT
+# entries:        2477
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -1744,6 +1744,7 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
+127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com
@@ -1811,6 +1812,7 @@
 127.0.0.1 nedstat.nl
 127.0.0.1 nedstatbasic.net
 127.0.0.1 nedstatpro.net
+127.0.0.1 nend.net
 127.0.0.1 neocounter.neoworx-blog-tools.net
 127.0.0.1 neocounter.net
 127.0.0.1 neoffic.com
@@ -1999,6 +2001,7 @@
 127.0.0.1 pub.club-internet.fr
 127.0.0.1 pub.hardware.fr
 127.0.0.1 pub.opt.pf
+127.0.0.1 pub.realmedia.fr
 127.0.0.1 pubdirecte.com
 127.0.0.1 publicidad.elmundo.es
 127.0.0.1 pubmatic.com
@@ -2087,6 +2090,7 @@
 127.0.0.1 roxr.net
 127.0.0.1 rpxnow.com
 127.0.0.1 rtbpop.com
+127.0.0.1 rtbpopd.com
 127.0.0.1 rts.doublepimp.com
 127.0.0.1 ru-traffic.com
 127.0.0.1 ru4.com
@@ -2227,7 +2231,6 @@
 127.0.0.1 tdsearchware.com
 127.0.0.1 techclicks.net
 127.0.0.1 teenrevenue.com
-127.0.0.1 teknosurf3.com
 127.0.0.1 teliad.de
 127.0.0.1 test.com
 127.0.0.1 text-link-ads.com

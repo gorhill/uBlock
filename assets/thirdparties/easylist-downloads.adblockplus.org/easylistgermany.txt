@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: XO91fFX+UjPRVZCzKT6D8g
-! Version: 201410071851
+! Checksum: tMtiH/kCZ/V0YnOPtCZJ9w
+! Version: 201410112151
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 07 Oct 2014 18:51 UTC
+! Last modified: 11 Oct 2014 21:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -502,6 +502,7 @@ ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
 berlin.de,watchever.de#@#a[href^="http://adfarm.mediaplex.com/"]
 schnittberichte.com#@#a[href^="http://bs.serving-sys.com/"]
+onvista.de#@#a[href^="http://track.adform.net/"]
 hbf-info.de,rakuten.at,rakuten.de#@#div[id^="div-gpt-ad-"]
 ! Anti-Adblock
 gamestar.de#@##AdTop
@@ -1765,6 +1766,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||austriansoccerboard.at/public/banner/
 ||austriansoccerboard.at/public/sponsoren/
 ||auto-bild.de/js/rd/google.js
+||auto-motor-und-sport.de/img/*LB_
+||auto-motor-und-sport.de/img/*MR_
+||auto-motor-und-sport.de/img/*SKY
 ||autobild.de/js/rd/google.js
 ||autofreies-lautertal.de/images/banner/
 ||autoline-eu.at/atlads/
@@ -3703,7 +3707,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
+||img.lokalisten.de^*133$image
 ||img.lokalisten.de^*134AA$image
+||img.lokalisten.de^*430$image
 ||img.lokalisten.de^*431A4$image
 ||img.lokalisten.de^*LB$image
 ||img.lokalisten.de^*SKY$image
@@ -4000,6 +4006,7 @@ geemag.de###banner_content
 freizeitparks.de,suxedoo.ch###banner_left
 nrhz.de###banner_left_container_lc
 tageblatt.com.ar###banner_lufthansa_apaisado
+erotikum.de###banner_map
 fohlen-hautnah.de###banner_oben
 stern.de###banner_placeholder
 webfail.at###banner_post
@@ -5094,6 +5101,7 @@ heise.de##.bcadv
 bildderfrau.de##.bdf_megabannerBack
 saarbruecker-zeitung.de##.beilagen
 movie-blog.org##.beitrag > div > div > a[href^="http://movie-blog.org/"]
+auto-motor-und-sport.de##.beitragsrechner_sideteaser2
 ariva.de##.bgAnzeige
 oilimperium.de##.bg_img
 yelp.de##.biz-details-yla
@@ -5172,7 +5180,7 @@ daspureleben.com##.column-first > .content > .logo-slider
 bluewin.ch##.column-right > .column-right-right > .teaser-special > .ts-image + .ts-content
 gamestar.de##.columnContentTeaser > .gl
 tripadvisor.de##.commerce
-azonline.de,getgoods.4teams.de,mv-online.de,wn.de##.commercial
+auto-motor-und-sport.de,azonline.de,getgoods.4teams.de,mv-online.de,wn.de##.commercial
 deutscherskiverband.de##.container-banner-2
 secured.in##.container-banner-image
 tarifagent.com##.container_fullbanner
@@ -5412,7 +5420,7 @@ chemnitzerfc.de##.lay_banner_teaser2
 games.ch##.layer
 1a-order.de,hoh.de##.lb_skyscraper
 ichspiele.cc##.leader
-airgamer.de,billig-flieger-vergleich.de,buffed.de,de.de,gamesaktuell.de,gamezone.de,pcaction.de,pcgames.de,pcgameshardware.de,spielefilmetechnik.de,trailerzone.info,videogameszone.de##.leaderboard
+airgamer.de,auto-motor-und-sport.de,billig-flieger-vergleich.de,buffed.de,de.de,gamesaktuell.de,gamezone.de,pcaction.de,pcgames.de,pcgameshardware.de,spielefilmetechnik.de,trailerzone.info,videogameszone.de##.leaderboard
 istream.ws##.leaderboard2
 lkz.de##.left > .content[style="min-height:100px"]
 au-ja.de##.leftADB
@@ -5582,7 +5590,7 @@ jappy.at,jappy.de##.promiflash
 blick.ch##.promo
 kabeldeutschland.de##.promo_teaser_2c
 wegwerfemailadresse.com##.promobox
-lakeparty.de##.promotion
+20min.ch,lakeparty.de##.promotion
 focus.de##.ps-redAnzeige
 psvita-forum.de##.psads
 lingostudy.de##.psw_banner
@@ -5668,7 +5676,7 @@ lokalisten.de##.skyScraper
 t-online.de##.skybannerWrapper
 internet-sms.com##.skybg
 spiele-kostenlos-online.de##.skycraper
-buffed.de,bvb.de,chat4free.de,dmax.de,dynamo-dresden.de,erotikchat4free.de,freechat.de,gamesaktuell.de,genderblog.de,gentleman-blog.de,kanu.de,magistrix.de,nonstopnews.de,pcaction.de,pcgames.de,spielefilmetechnik.de,swoodoo.com,techno4ever.fm,tsv1860.de,videogameszone.de##.skyscraper
+auto-motor-und-sport.de,buffed.de,bvb.de,chat4free.de,dmax.de,dynamo-dresden.de,erotikchat4free.de,freechat.de,gamesaktuell.de,genderblog.de,gentleman-blog.de,kanu.de,magistrix.de,nonstopnews.de,pcaction.de,pcgames.de,spielefilmetechnik.de,swoodoo.com,techno4ever.fm,tsv1860.de,videogameszone.de##.skyscraper
 fettspielen.de##.skyscraper-container
 b2run.de##.skyscraperContainer
 kidszone.de##.skyscraper_background
@@ -5712,6 +5720,7 @@ svm-fan.net##.sponsorlogo
 svhu-frogs.de##.sponsors
 fcbayern.de##.sponsors-wrapper
 euractiv.de##.sponzor
+auto-motor-und-sport.de##.spritpreisvergleich_sideteaser
 collabxt.de,schnellangeld.de##.squarebanner
 woerterbuch.info##.standard[valign="top"][bgcolor="#e5e5e5"][align="right"][colspan="2"]
 spielaffe.de##.start_overview_adv_container
@@ -5782,6 +5791,7 @@ t-online.de##.tsc_www_p4p
 t-online.de##.tsc_www_p4p_bottom
 teltarif.de##.ttcen1[style="height: 59px; margin: 0; padding-bottom: 21px;"]
 teltarif.de##.ttsidecol > aside > div[style="text-align:right;color:#CCCCCC"]:first-child
+computerhilfen.de##.tuneupshop1
 wetter24.de##.two_big_rows > .two_big_rows_second > .one_big_row_html
 wetter24.de##.two_big_rows_second > .two_small_rows + .one_big_row_html
 china.ahk.de##.tx-bannermanagement-pi1
@@ -5842,6 +5852,8 @@ derboersianer.com##.xmlnewsSingleCheap
 chilloutzone.net##.yeah
 bild.de##.yield
 yelp.de##.yla
+yelp.at,yelp.ch,yelp.de##.yloca-list
+yelp.at,yelp.ch,yelp.de##.yloca-search-result
 magistrix.de##.zeezee
 german-bash.org##.zitat > div[style="width:300px;"]
 3dl.tv##:not(td) > a[target="_blank"][href*=".3dl.tv/"][href*=".php?"][href*="="]:first-child
@@ -5865,6 +5877,7 @@ htwk-leipzig.de##a[href*="/adclick.php?"]
 3dl.tv##a[href*="/folder/"] + a[href*=" "]
 serienjunkies.org##a[href*="/mirror."]
 bild.de##a[href*="/partner/"]
+20min.ch##a[href*="/sponsored/story/"]
 emfis.de##a[href*="/uebersicht.html?tx_ricrotation_"]
 3dl.tv##a[href*="MonztA"]
 xp-antispy.org##a[href*="com_partner&link="]
@@ -7324,6 +7337,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||media.gan-online.com/www/delivery/*.php?$script,subdocument,domain=myfreefarm.de
 @@||media.laendleauto.at/topad/$image,~third-party
 @@||media.laendleimmo.at/topad/$image,~third-party
+@@||meinestadt.de^*/googleads.js
 @@||menshealth.de/videoads/$object-subrequest
 @@||merkur-werbebanner.de^$~third-party
 @@||metzgerei-giering.de^*/advertising/$~third-party
@@ -7811,6 +7825,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist_popup.txt ***
 @@||888casino.com^$popup,domain=online-casino.de
 @@||ad.doubleclick.net/clk;$popup,domain=gutscheindoktor.de
+@@||adform.net^$popup,domain=onvista.de
 @@||ads.qipu.de/www/delivery/ck.php?zoneid=$popup
 @@||bigpoint.com/?aid=$popup,domain=gametwist.de
 @@||eurogrand.com^$popup,domain=online-casino.de

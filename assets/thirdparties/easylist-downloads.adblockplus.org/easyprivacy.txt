@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: G2sDDHlPtQy+mVN8knOVTA
-! Version: 201410071851
+! Checksum: DSa5nHDfWmVi/IVarmdDFw
+! Version: 201410112151
 ! Title: EasyPrivacy
-! Last modified: 07 Oct 2014 18:51 UTC
+! Last modified: 11 Oct 2014 21:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -705,6 +705,7 @@
 /event/*/*?*&euidl=*&url=
 /eventLogServlet?
 /eventtracker.js
+/evercookie/*
 /evercookie_
 /ewtrack.
 /EWTRACK_
@@ -899,6 +900,7 @@
 /googlytics-
 /gosquared-livestats/*
 /gPageTracking.
+/gravity-beacon.js
 /gs-analytics-
 /gtrack.
 /gweb/analytics/*
@@ -3085,6 +3087,7 @@ http://utm.
 ||meteorsolutions.com^$third-party
 ||metricsdirect.com^$third-party
 ||mezzobit.com^$third-party
+||mialbj6.com^$third-party
 ||midas-i.com^$third-party
 ||midkotatraffic.net^$third-party
 ||millioncounter.com^$third-party
@@ -4867,6 +4870,7 @@ http://utm.
 ||data.beyond.com^$third-party
 ||data.imakenews.com^$third-party
 ||data.marketgid.com^$third-party
+||datam8.co.nz^$third-party
 ||daylogs.com/counter/
 ||dc8na2hxrj29i.cloudfront.net^
 ||delivra.com/tracking/$third-party
@@ -5161,6 +5165,7 @@ http://utm.
 ||log1.survey.io^
 ||logger.sociablelabs.com^
 ||loggingapi.spingo.com^
+||logs.ggweb.nl^
 ||logs.vmixcore.com^
 ||logssl.enquisite.com^
 ||longtailvideo.com^*/yourlytics-
@@ -5298,6 +5303,9 @@ http://utm.
 ||pg.buzzfeed.com^
 ||phncdn.com/js/ssig_helper.js
 ||phoenix.untd.com^
+||piano-media.com/bucket/novosense.swf$third-party
+||piano-media.com/ping
+||piano-media.com/uid/$third-party
 ||ping.aclst.com^
 ||ping.dozuki.com^
 ||ping.hellobar.com^
@@ -6131,6 +6139,7 @@ http://utm.
 ||analyzer51.fc2.com^
 ||clickanalyzer.jp^$third-party
 ||counter2.blog.livedoor.com^
+||imgstat.ameba.jp^$third-party
 ||l.popin.cc^
 ||lcs.livedoor.net^
 ||mofa.go.jp^*/count.cgi?
@@ -8230,6 +8239,7 @@ http://utm.
 ||csmonitor.com/extension/csm_base/design/csm_design/javascript/omniture/s_code.js
 ||disneylandparis.fr^*/s_code.js
 ||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com
+||eltiempo.com/js/produccion/s_code_*.js
 ||expressen.se/static/scripts/s_code.js?
 ||hayneedle.com/js/s_code.min.*.js
 ||images-amazon.com/images/*/wcs-help-omniture/wcs-help-omniture-$script
@@ -8424,6 +8434,7 @@ http://utm.
 ||pcwelt.de^*/pic.gif?
 ||pix.friendscout24.de^
 ||pixel.1und1.de^
+||pixel.bild.de^
 ||pixel.prosieben.de^
 ||playomat.de/sfye_noscript.php?
 ||pnn.de/counter/
@@ -8779,7 +8790,6 @@ http://utm.
 ||fujitv.co.jp/pc/space.gif?
 ||goo.ne.jp^*/vltracedmd.js
 ||i2i.jp/bin/
-||imgstat.ameba.jp^
 ||mainichi.jp^*/null.gif?
 ||visit.geocities.jp^
 ||yahoo.co.jp/b?p=
@@ -9049,9 +9059,9 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|cliphunter.com|deviantart.com|infogr.am|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|bebo.com|ch10.co.il|cliphunter.com|deviantart.com|infogr.am|sbnation.com|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|vox.com|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
-@@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com
+@@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com|vox.com
 @@||google-analytics.com/urchin.js$domain=chocomaru.com|denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
 @@||google.com/js/gweb/analytics/$domain=google.com
@@ -9126,7 +9136,7 @@ http://utm.
 @@||mightyspring.com/static/js/beacon.js?$~third-party
 @@||milb.com/shared/scripts/bam.tracking.js
 @@||mixpanel.com/site_media/js/api/mixpanel.js$domain=blog.cloudflare.com
-@@||mixpanel.com/track/?data=$xmlhttprequest,domain=change.org|kickstarter.com|mint.com|thefrisky.com|vid.me
+@@||mixpanel.com/track/?data=$xmlhttprequest,domain=ads.twitter.com|change.org|kickstarter.com|mint.com|thefrisky.com|vid.me
 @@||mlb.com/shared/scripts/bam.tracking.js
 @@||monetate.net/js/$domain=nike.com
 @@||mongoosemetrics.com/jsfiles/js-correlation/mm-rules.min.js$domain=subaru.com
@@ -9216,6 +9226,7 @@ http://utm.
 @@||smetrics.blackberry.com/b/ss/*:jump-page:$image,domain=bbm.com
 @@||songza.com/static/*/songza/systems/$script
 @@||sportsgrid.com/decor/javascript/magnify_stats.js
+@@||star-telegram.com/mistats/sites/dfw/startelegram.js
 @@||statcounter.com/chart.php?$script
 @@||statcounter.com/js/fusioncharts.js
 @@||statcounter.com/msline.swf

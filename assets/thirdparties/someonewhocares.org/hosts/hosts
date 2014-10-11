@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Oct 7th, 2014 at 11:43
+# Last updated: Oct 8th, 2014 at 10:33
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -343,6 +343,7 @@ fe80::1%lo0	localhost
 127.0.0.1 adcounter.globeandmail.com
 127.0.0.1 adcounter.theglobeandmail.com
 127.0.0.1 addfreestats.com
+127.0.0.1 adelogs.adobe.com
 127.0.0.1 ademails.com
 127.0.0.1 adlog.com.com # Used by Ziff Davis to serve 
   # ads and track users across 
@@ -3411,6 +3412,7 @@ fe80::1%lo0	localhost
 127.0.0.1 adpulse.ads.targetnet.com
 127.0.0.1 adpush.dreamscape.com
 127.0.0.1 adq.nextag.com
+127.0.0.1 ad.reduxmediia.com
 127.0.0.1 adremote.pathfinder.com
 127.0.0.1 adremote.timeinc.aol.com
 127.0.0.1 adremote.timeinc.net

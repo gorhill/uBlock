@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: chzLwH9S+kIdmev8k0dLAQ
-! Version: 201410071851
+! Checksum: lwKQg58JdKLZqgBGGBW6Jw
+! Version: 201410112151
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 07 Oct 2014 18:51 UTC
+! Ultima modifica: 11 Oct 2014 21:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1700,7 +1700,7 @@ ascoltareradio.com###ad3
 digital-forum.it,esigarettaforum.com###ad_global_below_navbar
 bordighera.net,italianhack.org,mailexpress.it,spaziogames.it###ads
 ilgazzettinovesuviano.com###adsensing
-la7.it,ustation.it,xvideoscopate.com###adv
+la7.it,ustation.it,virgilio.it,xvideoscopate.com###adv
 agarymathematics.net###adv1
 cinquequotidiano.it###adv2
 cinquequotidiano.it###adv_1
@@ -2080,7 +2080,7 @@ caserta24ore.it,fantagazzetta.com,gamemag.it,phicatube.net,radiospeaker.it,teleb
 meteowebcam.it##.ads_menu
 corriereadriatico.it,ilgazzettino.it,ilmattino.it,ilmessaggero.it,ilsecoloxix.it,leggo.it,pcprofessionale.it,pubblicitaitalia.it,quotidianodipuglia.it##.adsense
 meteowebcam.it##.adsense_menu
-a-realestate.it,adessoin.tv,animalidalmondo.it,ansa.it,beauty.it,dagospia.com,esseresani.it,faidatemania.it,gay.it,giornalettismo.com,guidecucina.it,ideeviaggi.it,ilsole24ore.com,iobloggo.com,iogames.it,iomobile.it,lavoroefinanza.it,mammaebambino.it,nonsolocultura.it,odiami.it,outcast.it,pianetagreen.it,pianetamotori.it,radiolina.it,radiomontecarlo.net,repubblica.it,romagnaoggi.it,sky.it,sportpower.it,tuttopercasa.it,verytech.it,virgilio.it,vivalascuola.it,vocenuova.tv##.adv
+a-realestate.it,adessoin.tv,animalidalmondo.it,ansa.it,beauty.it,dagospia.com,esseresani.it,faidatemania.it,gay.it,giornalettismo.com,guidecucina.it,ideeviaggi.it,ilsole24ore.com,iobloggo.com,iogames.it,iomobile.it,lavoroefinanza.it,mammaebambino.it,mtv.it,nonsolocultura.it,odiami.it,outcast.it,pianetagreen.it,pianetamotori.it,radiolina.it,radiomontecarlo.net,repubblica.it,romagnaoggi.it,sky.it,sportpower.it,tuttopercasa.it,verytech.it,virgilio.it,vivalascuola.it,vocenuova.tv##.adv
 famigliacristiana.it##.adv-box
 motori.it##.adv-items
 oktennis.it##.adv1
@@ -2107,7 +2107,7 @@ ilsecoloxix.it##.artbanner
 violanews.com##.article_banners
 si24.it##.attachment-300x600
 radiogold.it##.autobanner
-tiscali.it##.b300x250
+tiscali.it,virgilio.it##.b300x250
 nonsolocap.it##.ba
 gazzetta.it##.bacheca-mkt
 gazzetta.it##.bacheca-mkt-square
@@ -2810,6 +2810,7 @@ termometropolitico.it##[id^="bsa"]
 @@||codeclan.altervista.org^$elemhide
 @@||dataok.altervista.org^$elemhide
 @@||italiatv.org^$elemhide
+@@||mtv.it/advertisement.js
 @@||tvgratis.altervista.org^$elemhide
 @@||tvgratis.altervista.org^*#$image
 @@||tvgratis.altervista.org^*/advertisement.js
