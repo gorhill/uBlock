@@ -79,13 +79,17 @@ var renderURL = function(url, filter) {
     if ( reText.slice(0, 2) === '@@' ) {
         reText = reText.slice(2);
     }
-    reText = reText
-        .replace(/\./g, '\\.')
-        .replace(/\?/g, '\\?')
-        .replace('||', '')
-        .replace(/\^/g, '.')
-        .replace(/\*/g, '.*')
-        ;
+    if ( reText === '*' ) {
+        reText = '\\*';
+    } else {
+        reText = reText
+            .replace(/\./g, '\\.')
+            .replace(/\?/g, '\\?')
+            .replace('||', '')
+            .replace(/\^/g, '.')
+            .replace(/\*/g, '.*')
+            ;
+    }
     var re = new RegExp(reText, 'gi');
     var matches = re.exec(url);
     var renderedURL = chunkify(url);
