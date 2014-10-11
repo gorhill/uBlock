@@ -5,6 +5,8 @@ ajax.googleapis.com
     ^ajax\.googleapis\.com\/ajax\/libs\/
 fonts.googleapis.com
     ^fonts\.googleapis\.com
+www.googletagservices.com
+    ^www\.googletagservices\.com\/tag\/js\/gpt\.js
 fonts.gstatic.com
     ^fonts\.gstatic\.com
 cdnjs.cloudflare.com
