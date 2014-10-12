@@ -45,11 +45,7 @@ var exportToFile = function() {
 
 /******************************************************************************/
 
-var importFromFile = function() {
-    var input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'text/plain');
-
+var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
         var userData;
         try {
@@ -70,21 +66,26 @@ var importFromFile = function() {
         }
     };
 
-    var filePickerOnChangeHandler = function() {
-        input.removeEventListener('change', filePickerOnChangeHandler);
-        var file = this.files[0];
-        if ( !file ) {
-            return;
-        }
-        if ( file.type.indexOf('text') !== 0 ) {
-            return;
-        }
-        var fr = new FileReader();
-        fr.onload = fileReaderOnLoadHandler;
-        fr.readAsText(file);
-    };
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
+    }
+    if ( file.type.indexOf('text') !== 0 ) {
+        return;
+    }
+    var fr = new FileReader();
+    fr.onload = fileReaderOnLoadHandler;
+    fr.readAsText(file);
+};
 
-    input.addEventListener('change', filePickerOnChangeHandler);
+/******************************************************************************/
+
+var startImportFilePicker = function() {
+    var input = document.getElementById('restoreFilePicker');
+    // Reset to empty string, this will ensure an change event is properly
+    // triggered if the user pick a file, even if it is the same as the last
+    // one picked.
+    input.value = '';
     input.click();
 };
 
@@ -102,8 +103,9 @@ var resetUserData = function() {
 
 uDom('#aboutVersion').html(chrome.runtime.getManifest().version);
 uDom('#export').on('click', exportToFile);
-uDom('#import').on('click', importFromFile);
+uDom('#import').on('click', startImportFilePicker);
 uDom('#reset').on('click', resetUserData);
+uDom('#restoreFilePicker').on('change', handleImportFilePicker);
 
 /******************************************************************************/
 
