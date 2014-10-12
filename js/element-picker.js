@@ -238,12 +238,7 @@ var targetElements = [];
 var svgWidth = 0;
 var svgHeight = 0;
 
-var rectVolatile = {
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0
-};
+var rectVolatile = { x: 0, y: 0, w: 0, h: 0 };
 
 /******************************************************************************/
 
