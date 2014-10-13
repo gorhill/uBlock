@@ -65,6 +65,8 @@ which can be extracted from the URL address of the current page**. (It applies t
 the current web site only, it is **not** a global power button.) The state of the power 
 switch for a specific site will be remembered.
 
+The right-hand screenshot shows optional [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering) at work.
+
 ## About
 
 µBlock is born out of [HTTP Switchboard](https://github.com/gorhill/httpswitchboard).
