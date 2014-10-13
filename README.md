@@ -25,8 +25,6 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 <p align="center">
 Chromium on Linux 64-bit<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" /><br><br>
-Opera 22 on Windows 7 32-bit<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-opera-1.png" /><br>
 <sup>The screenshots above were taken after visiting links in 
 <a href="https://github.com/gorhill/uBlock/wiki/Reference-benchmark">reference benchmark</a> 
 plus a bit of random browsing. All blockers were active at the same time, 
@@ -60,7 +58,7 @@ Also of interest: [About the required permissions](https://github.com/gorhill/uB
 
 I think it is pretty obvious, except for this I suppose:
 
-![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
+![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)&emsp; ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-2.png)
 
 The big power button is to disable/enable µBlock **for the specific hostname
 which can be extracted from the URL address of the current page**. (It applies to 
