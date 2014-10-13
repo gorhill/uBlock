@@ -424,8 +424,10 @@ var cosmeticFilterFromElement = function(elem, out) {
         v = elem.getAttribute('href');
         if ( v ) {
             v = v.replace(/\?.*$/, '');
+            if ( v.length ) {
+                attributes.push({ k: 'href', v: v });
+            }
         }
-        attributes.push({ k: 'href', v: v });
         break;
     case 'img':
         v = elem.getAttribute('alt');
