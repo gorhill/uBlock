@@ -60,31 +60,33 @@ var renderWhitelist = function() {
 
 /******************************************************************************/
 
-var importWhitelistFromFile = function() {
-    var input = uDom('<input />').attr({
-        type: 'file',
-        accept: 'text/plain'
-    });
+var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
         var textarea = uDom('#whitelist');
         textarea.val([textarea.val(), this.result].join('\n').trim());
         whitelistChanged();
     };
-    var filePickerOnChangeHandler = function() {
-        input.off('change', filePickerOnChangeHandler);
-        var file = this.files[0];
-        if ( !file ) {
-            return;
-        }
-        if ( file.type.indexOf('text') !== 0 ) {
-            return;
-        }
-        var fr = new FileReader();
-        fr.onload = fileReaderOnLoadHandler;
-        fr.readAsText(file);
-    };
-    input.on('change', filePickerOnChangeHandler);
-    input.trigger('click');
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
+    }
+    if ( file.type.indexOf('text') !== 0 ) {
+        return;
+    }
+    var fr = new FileReader();
+    fr.onload = fileReaderOnLoadHandler;
+    fr.readAsText(file);
+};
+
+/******************************************************************************/
+
+var startImportFilePicker = function() {
+    var input = document.getElementById('importFilePicker');
+    // Reset to empty string, this will ensure an change event is properly
+    // triggered if the user pick a file, even if it is the same as the last
+    // one picked.
+    input.value = '';
+    input.click();
 };
 
 /******************************************************************************/
@@ -112,7 +114,8 @@ var whitelistApplyHandler = function() {
 /******************************************************************************/
 
 uDom.onLoad(function() {
-    uDom('#importWhitelistFromFile').on('click', importWhitelistFromFile);
+    uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
+    uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
     uDom('#whitelist').on('input', whitelistChanged);
     uDom('#whitelistApply').on('click', whitelistApplyHandler);

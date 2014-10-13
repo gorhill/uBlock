@@ -37,7 +37,7 @@ messaging.start('1p-filters.js');
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-function userFiltersChanged(ev) {
+function userFiltersChanged() {
     uDom('#userFiltersApply').prop(
         'disabled',
         uDom('#userFilters').val().trim() === cachedUserFilters
@@ -66,32 +66,34 @@ function allFiltersApplyHandler() {
 
 /******************************************************************************/
 
-function appendToUserFiltersFromFile() {
-    var input = uDom('<input />').attr({
-        type: 'file',
-        accept: 'text/plain'
-    });
+function handleImportFilePicker() {
     var fileReaderOnLoadHandler = function() {
         var textarea = uDom('#userFilters');
         textarea.val([textarea.val(), this.result].join('\n').trim());
         userFiltersChanged();
     };
-    var filePickerOnChangeHandler = function() {
-        var file = this.files[0];
-        if ( !file ) {
-            return;
-        }
-        if ( file.type.indexOf('text') !== 0 ) {
-            return;
-        }
-        var fr = new FileReader();
-        fr.onload = fileReaderOnLoadHandler;
-        fr.readAsText(file);
-        input.off('change', filePickerOnChangeHandler);
-    };
-    input.on('change', filePickerOnChangeHandler);
-    input.trigger('click');
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
+    }
+    if ( file.type.indexOf('text') !== 0 ) {
+        return;
+    }
+    var fr = new FileReader();
+    fr.onload = fileReaderOnLoadHandler;
+    fr.readAsText(file);
 }
+
+/******************************************************************************/
+
+var startImportFilePicker = function() {
+    var input = document.getElementById('importFilePicker');
+    // Reset to empty string, this will ensure an change event is properly
+    // triggered if the user pick a file, even if it is the same as the last
+    // one picked.
+    input.value = '';
+    input.click();
+};
 
 /******************************************************************************/
 
@@ -125,7 +127,8 @@ function userFiltersApplyHandler() {
 
 uDom.onLoad(function() {
     // Handle user interaction
-    uDom('#importUserFiltersFromFile').on('click', appendToUserFiltersFromFile);
+    uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
+    uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
     uDom('#userFilters').on('input', userFiltersChanged);
     uDom('#userFiltersApply').on('click', userFiltersApplyHandler);
@@ -134,6 +137,8 @@ uDom.onLoad(function() {
 });
 
 /******************************************************************************/
+
+// https://www.youtube.com/watch?v=UNilsLf6eW4
 
 })();
 
