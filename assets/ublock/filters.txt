@@ -140,3 +140,7 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/302
 # To counter `outbrain.com` in hpHosts
 @@||outbrain.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/316
+# To counter `inc.com` in Peter Lowe's, hpHosts
+@@||inc.com^$~third-party
