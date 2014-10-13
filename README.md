@@ -58,7 +58,7 @@ Also of interest: [About the required permissions](https://github.com/gorhill/uB
 
 I think it is pretty obvious, except for this I suppose:
 
-![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
+![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)&emsp; ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-2.png)
 
 The big power button is to disable/enable µBlock **for the specific hostname
 which can be extracted from the URL address of the current page**. (It applies to 
