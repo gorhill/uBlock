@@ -987,6 +987,74 @@ var startPicker = function() {
     document.addEventListener('keydown', onKeyPressed);
 
     highlightElements([], true);
+
+    var initPicker = function(details) {
+        var i18nMap = {
+            '#create': 'create',
+            '#pick': 'pick',
+            '#quit': 'quit',
+            'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
+            'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
+            'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
+        };
+        for ( var k in i18nMap ) {
+            if ( i18nMap.hasOwnProperty(k) === false ) {
+                continue;
+            }
+            divDialog.querySelector(k).firstChild.nodeValue = details.i18n[i18nMap[k]];
+        }
+
+        // Auto-select a specific target, if any, and if possible
+        var elem;
+
+        // Try using mouse position
+        if ( details.clientX !== -1 ) {
+            elem = elementFromPoint(details.clientX, details.clientY);
+            if ( elem !== null ) {
+                filtersFromElement(elem);
+                showDialog();
+                return;
+            }
+        }
+
+        // No mouse position available, use suggested target
+        var target = details.target || '';
+        var pos = target.indexOf('\t');
+        if ( pos === -1 ) {
+            return;
+        }
+        var srcAttrMap = {
+            'a': 'href',
+            'img': 'src',
+            'iframe': 'src',
+            'video': 'src',
+            'audio': 'src'
+        };
+        var tagName = target.slice(0, pos);
+        var url = target.slice(pos + 1);
+        var attr = srcAttrMap[tagName];
+        if ( attr === undefined ) {
+            return;
+        }
+        var elems = document.querySelectorAll(tagName + '[' + attr + ']');
+        var i = elems.length;
+        var src;
+        while ( i-- ) {
+            elem = elems[i];
+            src = elem[attr];
+            if ( typeof src !== 'string' || src === '' ) {
+                continue;
+            }
+            if ( src !== url ) {
+                continue;
+            }
+            filtersFromElement(elem);
+            showDialog({ modifier: true });
+            return;
+        }
+    };
+
+    messaging.ask({ what: 'elementPickerArguments' }, initPicker);
 };
 
 /******************************************************************************/
@@ -994,72 +1062,6 @@ var startPicker = function() {
 startPicker();
 
 /******************************************************************************/
-
-messaging.ask({ what: 'elementPickerArguments' }, function(details) {
-    var i18nMap = {
-        '#create': 'create',
-        '#pick': 'pick',
-        '#quit': 'quit',
-        'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
-        'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
-        'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
-    };
-    for ( var k in i18nMap ) {
-        if ( i18nMap.hasOwnProperty(k) === false ) {
-            continue;
-        }
-        divDialog.querySelector(k).firstChild.nodeValue = details.i18n[i18nMap[k]];
-    }
-
-    // Auto-select a specific target, if any, and if possible
-    var elem;
-
-    // Try using mouse position
-    if ( details.clientX !== -1 ) {
-        elem = elementFromPoint(details.clientX, details.clientY);
-        if ( elem !== null ) {
-            filtersFromElement(elem);
-            showDialog();
-            return;
-        }
-    }
-
-    // No mouse position available, use suggested target
-    var target = details.target || '';
-    var pos = target.indexOf('\t');
-    if ( pos === -1 ) {
-        return;
-    }
-    var srcAttrMap = {
-        'a': 'href',
-        'img': 'src',
-        'iframe': 'src',
-        'video': 'src',
-        'audio': 'src'
-    };
-    var tagName = target.slice(0, pos);
-    var url = target.slice(pos + 1);
-    var attr = srcAttrMap[tagName];
-    if ( attr === undefined ) {
-        return;
-    }
-    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    var i = elems.length;
-    var src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) {
-            continue;
-        }
-        if ( src !== url ) {
-            continue;
-        }
-        filtersFromElement(elem);
-        showDialog({ modifier: true });
-        return;
-    }
-});
 
 // https://www.youtube.com/watch?v=sociXdKnyr8
 
