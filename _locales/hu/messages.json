@@ -4,51 +4,51 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Végre egy hatékony reklám és követésblokkoló a Chromium-alapú böngészőkhöz, amely kíméletes a processzorral és a memóriával.",
+    "message":"Végre egy hatékony reklám és követésblokkoló, amely kíméletes a processzorral és a memóriával.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Vezérlőpult",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Beallitasok",
+    "message":"Beállítások",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
-    "message":"külső filterek",
+    "message":"Külső szűrők",
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Ön filterey",
+    "message":"Saját szűrők",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"engedélyezett lista",
+    "message":"Kivételek",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Statisztikak",
+    "message":"Statisztika",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"µBlock-rol",
+    "message":"Névjegy",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése a μBlock-ban.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"Blockolt request-ek",
+    "message":"blokkolt kérések",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"Ezen a lapon",
+    "message":"ezen a lapon",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"mióta telepített",
+    "message":"telepítés óta",
     "description":"English: since install"
   },
   "popupOr":{
@@ -60,63 +60,63 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Belépés az elemválasztó módba",
+    "message":"Elemválasztó mód aktiválása",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Lekérések listája",
+    "message":"Naplózott lekéréséek megtekintése",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
-    "message":"létrehozni",
+    "message":"Létrehoz",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"válasszon",
+    "message":"Választ",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Kilépés",
+    "message":"Kilép",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filterek",
+    "message":"Net-szürők",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetikus filterek",
+    "message":"Kozmetikai szűrők",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Klikk, Ctrl-klikk",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Elem tiltása",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Elrejteni a blockolt elemeknek helyőrzőit",
+    "message":"Blokkolt elemek helyőrzőinek elrejtése",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Mutasa a számat a blokkolt requestek-nek az ikonon",
+    "message":"Jelenjen meg a blokkolt kérések száma az ikonon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Környezeti menü alkalmazása, ahol lehetséges",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features",
+    "message":"Kísérleti funkciók engedélyezése",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} net filterek + {{cosmeticFilterCount}} cosmetikus filterek:",
+    "message":"{{netFilterCount}} net-szűrők ＋ {{cosmeticFilterCount}} kozmetikai szűrők:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} hasnalt a {{total}}-bol",
+    "message":"{{used}} használatban a listában lévő {{total}} szűrő közül",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -128,27 +128,27 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Gyorsítótárak ürítése",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"kötelező Adblock + elemek elrejtése.",
+    "message":"Értelmezze és alkalmazza a kozmetikai szűrőket.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de az internetes lekérések alapján nem szűrhetőek ki.<\/p><p>A beállítás engedélyezése megnöveli az <i>µBlock<\/i> memóriahasználatát.<\/p>",
+    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de az internetes lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>µBlock<\/i> memóriahasználatát.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Letiltott hostok listája",
+    "message":"Blokkolt hosztokat tartalmazó listák",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"módosítások mentésé",
+    "message":"Módosítások alkalmazása",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"hirdetések",
+    "message":"Hirdetések",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
@@ -160,15 +160,15 @@
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Socialis",
+    "message":"Közösségi",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"többcélú",
+    "message":"Többcélú",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Nemzetiségek, nyelvek",
+    "message":"Régiók, nyelvek",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -184,71 +184,71 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"gyorsítótár kiürítése",
+    "message":"gyorsítótár ürítése",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Új verzió érhető el",
+    "message":"új verzió érhető el",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"lehet, hogy elavult",
+    "message":"elavult",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Egy lista soronként. A filter lehet egy hostname, vagy Adblock-Plus compatibilis filter.\nSorok amik egy &lsquo;!&rsquo;-val kezdenek, nem lesznek tudomásul véve.",
+    "message":"Egy sor egy szűrő. A szűrő lehet egy hosztnév, vagy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importalni és hozzadni",
+    "message":"Importál és hozzáad",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportalni",
+    "message":"Exportál",
     "description":"English: Export"
   },
   "1pApplyChanges":{
-    "message":"alkalmazni módosításokat",
+    "message":"Módosítások alkalmazása",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"A lista a host nevekel, amelyikeken μBlock le-lesz tiltva. Egy bejegyzés soronként. Incorrect host nevek nem lesznek hasznalva.",
+    "message":"Az álábbi listában felsorolt hosztokon a kiegészítő nem fog működni. Egy sor egy bejegyzés. Érvénytelen hosztnevek figyelmen kívül maradnak.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importalni es Hozzadni",
+    "message":"Importál és hozzáad",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exportalni",
+    "message":"Exportál",
     "description":"English: Export"
   },
   "whitelistApply":{
-    "message":"módosítások alkalmazása",
+    "message":"Módosítások alkalmazása",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Naplózza a hálózati kéréseket",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"E beállítással lehetőség adatik az egyes kérések részleteinek megfigyelésére. Bekapcsolása megnöveli a memóriahasználatot. Alapértelmezetten inaktív, mivel legtöbb felhasználónak valószínű nem lesz szüksége erre a funkcióra.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blokkolt request-ek",
+    "message":"Blokkolt kérések",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Engedélyezett request-ek",
+    "message":"Engedélyezett kérések",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Typus",
+    "message":"Típus",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"domain",
+    "message":"Domain",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -256,23 +256,23 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Szűrő",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Nincs blockolt request ezen a lapon",
+    "message":"Nincs blokkolt kérés ezen a lapon",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nincs nem-blockolt request ezen a lapon",
+    "message":"Nincs engedélyezett kérés ezen a lapon",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"változás napló",
+    "message":"Változások listája",
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"forráskód (GPLv3)",
+    "message":"Forráskód (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -280,31 +280,31 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file...",
+    "message":"Biztonsági mentés fájlba...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Biztonsági mentés visszaállítása fájlból...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"Kezdj mindent előről...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"A jelenlegi beállítások felülíródnak a mentett adatokkal (mentési idő: {{time}}), utána a µBlock újraindul.\n\nFelülírja a jelenlegi beállításokat a biztonsági mentéssel?",
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
-    "description":"Message asking user to confirm restore"
+    "message":"A jelenlegi beállítások elvesznek, utána a µBlock újraindul.\n\nÁllítsa vissza a gyári beállításokat?",
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Csatlakozás sikertelen a következő címhez: {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",
-    "description":"so we dont need to deal with comma for last entry"
+    "description":"so we don't need to deal with comma for last entry"
   }
 }
