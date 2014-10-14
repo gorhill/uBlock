@@ -853,6 +853,3 @@ bornholmermarked.dk/nonsec/NPIX/Banner/
 ||specificclick.net
 ||adnxs.com
 #||b.scorecardresearch.com
-
-! whitelist Google adds
-@@googleads.g.doubleclick.net
