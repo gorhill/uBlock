@@ -224,8 +224,7 @@
     "adblock.schack.dk/block.txt": {
         "off": true,
         "title": "DNK: Schacks Adblock Plus liste",
-        "group": "regions",
-        "homeURL": "http://adblock.schack.dk/block.txt"
+        "group": "regions"
         },
     "www.void.gr/kargig/void-gr-filters.txt": {
         "off": true,
