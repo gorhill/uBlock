@@ -172,27 +172,30 @@ var onBeforeSendHeaders = function(details) {
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/323
+    if ( pageStore.getNetFilteringSwitch() === false ) {
+        return;
+    }
+
     // TODO: I think I should test the switch of the referrer instead, not the
     // switch of the popup. If so, that would require being able to lookup
     // a page store from a URL. Have to keep in mind the same URL can appear
     // in multiple tabs.
-    var result = '';
-    if ( pageStore.getNetFilteringSwitch() ) {
-        // https://github.com/gorhill/uBlock/issues/67
-        // We need to pass the details of the page which opened this popup,
-        // so that the `third-party` option works.
-        // Create a synthetic context based on the referrer.
-        var µburi = µb.URI;
-        var referrerHostname = µburi.hostnameFromURI(referrer);
-        var pageDetails = {
-            pageHostname: referrerHostname,
-            pageDomain: µburi.domainFromHostname(referrerHostname),
-        };
-        pageDetails.rootHostname = pageDetails.pageHostname;
-        pageDetails.rootDomain = pageDetails.pageDomain;
-        //console.debug('Referrer="%s"', referrer);
-        result = µb.netFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
-    }
+
+    // https://github.com/gorhill/uBlock/issues/67
+    // We need to pass the details of the page which opened this popup,
+    // so that the `third-party` option works.
+    // Create a synthetic context based on the referrer.
+    var µburi = µb.URI;
+    var referrerHostname = µburi.hostnameFromURI(referrer);
+    var pageDetails = {
+        pageHostname: referrerHostname,
+        pageDomain: µburi.domainFromHostname(referrerHostname),
+    };
+    pageDetails.rootHostname = pageDetails.pageHostname;
+    pageDetails.rootDomain = pageDetails.pageDomain;
+    //console.debug('Referrer="%s"', referrer);
+    var result = µb.netFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
 
     // Not blocked?
     if ( result === '' || result.slice(0, 2) === '@@' ) {

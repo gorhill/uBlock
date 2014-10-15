@@ -64,17 +64,23 @@
         if ( !pageStore ) {
             return;
         }
-        if ( pageStore.getNetFilteringSwitch() !== true ) {
-            return;
-        }
         var requestURL = details.url;
-        var result = µb.netFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+        var result = '';
+
+        // https://github.com/gorhill/uBlock/issues/323
+        // If popup URL is whitelisted, do not block it
+        if ( µb.getNetFilteringSwitch(requestURL) ) {
+            result = µb.netFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+        }
+
         // https://github.com/gorhill/uBlock/issues/91
         pageStore.recordResult('popup', requestURL, result);
+
         // Not blocked
         if ( pageStore.boolFromResult(result) === false ) {
             return;
         }
+
         // Blocked
         // It is a popup, block and remove the tab.
         µb.unbindTabFromPageStats(details.tabId);
