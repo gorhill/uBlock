@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: DSa5nHDfWmVi/IVarmdDFw
-! Version: 201410112151
+! Checksum: Tr6+qA1Z4MXRVP1pXemhEg
+! Version: 201410161151
 ! Title: EasyPrivacy
-! Last modified: 11 Oct 2014 21:51 UTC
+! Last modified: 16 Oct 2014 11:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1247,6 +1247,7 @@
 /Nielsen.v53.
 /nielsen/*
 /Nielsen53.
+/nielsen_geotarget/*
 /nielsen_v53.
 /NielsenAnalytics.
 /NielsenData/*
@@ -3152,6 +3153,7 @@ http://utm.
 ||natpal.com^$third-party
 ||navdmp.com^$third-party
 ||navegg.com^$third-party
+||naytev.com^$third-party
 ||neatstats.com^$third-party
 ||nedstat.com^$third-party
 ||nedstat.net^$third-party
@@ -3721,6 +3723,7 @@ http://utm.
 ||w55c.net^$third-party
 ||waplog.net^$third-party
 ||waudit.cz^$third-party
+||web-counter.net^$third-party
 ||web-stat.com^$third-party
 ||web-stat.net^$third-party
 ||webalytics.pw^$third-party
@@ -3822,6 +3825,7 @@ http://utm.
 ||analytics.rechtslupe.org^
 ||andyhoppe.com^$third-party
 ||anormal-tracker.de^$third-party
+||atsfi.de^$third-party
 ||avencio.de^$third-party
 ||backlink-test.de^$third-party
 ||backlink-umsonst.de^$third-party
@@ -7975,6 +7979,7 @@ http://utm.
 ||tscapeplay.com/msvp.php?
 ||tscapeplay.com/pvim?
 ||ttxm.co.uk^*/log.js
+||tubeplus.me/geoip.php?
 ||tubeplus.me/imp.php?
 ||tumblr.com/analytics.html
 ||tumblr.com/impixu?
@@ -8011,6 +8016,7 @@ http://utm.
 ||up.boston.com^
 ||up.nytimes.com^
 ||upi.com/*/stat/
+||uploadrocket.net/downloadfiles.php?*&ip
 ||upromise.com/js/csgather.js
 ||upsellit.com^*/visitor?
 ||uptpro.homestead.com^
@@ -8694,6 +8700,7 @@ http://utm.
 ||o2.cz^*-ga_o2cz_bundle.js?
 ! Dutch
 ||klik.nrc.nl/ping?
+||logs.ggweb.nl^
 ||marktplaats.nl/add_counter_image.
 ||microreporting.metronieuws.nl^
 ||rtl.nl/system/track/
@@ -9432,6 +9439,7 @@ http://utm.
 @@||ijinshan.com/static/js/analyse.js
 @@||imrworldwide.com/novms/js/2/ggcmb353.js$domain=nexttv.com.tw
 @@||itc.cn/v2/asset/*/pageView.js
+@@||linezing.com^$domain=lz.taobao.com
 @@||pingjs.qq.com/ping_tcss_ied.js$domain=dnf.qq.com
 @@||s-msn.com^*/udctrack*.js$domain=ynet.com
 @@||uwants.com/include/*/swfaddress.js

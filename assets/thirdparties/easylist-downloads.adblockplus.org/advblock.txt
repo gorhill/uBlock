@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: SjulMQV11BQIV2VOB0WD4g
-! Version: 201410112150
-! Last modified: 11 Oct 2014 21:50 UTC
+! Checksum: TTkxJobYpxHiXDs4dj4C3Q
+! Version: 201410161150
+! Last modified: 16 Oct 2014 11:50 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1951,7 +1951,7 @@ _tizers.
 ||assantie.com^
 ||associazio.com^
 ||associeta.com^
-||astdn.ru^$~popup,popup
+||astdn.ru^$third-party
 ||attiveri.com^
 ||b.klanwin.ru^
 ||b117f8da23446a91387efea0e428392a.pl^
@@ -2144,6 +2144,7 @@ _tizers.
 ||freddyman.com^
 ||fulldl.net^
 ||fxhoog.com^
+||fyrafi.ru^
 ||gagnifie.com^
 ||gainclick.biz^
 ||gainclick.co^
@@ -6195,10 +6196,10 @@ all-episodes.com##div[class^="bn_"]
 @@/prepareCode?*&pct=a&$script,domain=7days.ru|championat.com|now.ru|tjournal.ru
 @@/prepareCode?*&prr=*&dl=$script,domain=aif.ru|diary.ru|irr.ru|kakprosto.ru|lenta.ru|rosbalt.ru|soccer.ru|sport-express.ru|vesti.ru
 @@/prepareCode?*&puid1=|$domain=rg.ru
-@@||adriver.ru/cgi-bin/erle.cgi?$script,domain=afisha.ru|aif.ru|cnews.ru|ex.ua|forum.tatfish.com|meta.ua|ozon.ru|ria.ru|rian.ru|thg.ru|vz.ru
+@@||adriver.ru/cgi-bin/erle.cgi?$script,domain=afisha.ru|aif.ru|cnews.ru|ex.ua|forum.tatfish.com|meta.ua|ozon.ru|ria.ru|rian.ru|vz.ru
 @@||adriver.ru/cgi-bin/erle.cgi?*&target=blank&tail$script,domain=eg.ru
 @@||adriver.ru/extender.js|$script,domain=vz.ru
-@@||adriver.ru/images/*/0/script.js?$script,domain=afisha.ru|aif.ru|cnews.ru|eg.ru|ex.ua|forum.tatfish.com|meta.ua|mobile-review.com|ozon.ru|ria.ru|rian.ru|thg.ru|vz.ru
+@@||adriver.ru/images/*/0/script.js?$script,domain=afisha.ru|aif.ru|cnews.ru|eg.ru|ex.ua|forum.tatfish.com|meta.ua|mobile-review.com|ozon.ru|ria.ru|rian.ru|vz.ru
 @@||adspynet.com/code?*&oin=0&$script,domain=fishki.net
 @@||adspynet.com/test?*&oin=0$script,domain=fishki.net
 @@||adv.magna.ru/?id=$script,domain=glav.su

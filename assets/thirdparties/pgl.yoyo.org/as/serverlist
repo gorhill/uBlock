@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 21:56:38 GMT
-# entries:        2477
+# entries:        2476
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -1915,7 +1915,6 @@
 127.0.0.1 partnercash.de
 127.0.0.1 partners.priceline.com
 127.0.0.1 passion-4.net
-127.0.0.1 passport.baidu.com
 127.0.0.1 pay-ads.com
 127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com

@@ -219,7 +219,6 @@
         "off": true,
         "title": "ISL: Icelandic ABP List",
         "group": "regions",
-        "homeURL": "http://adblock.gardar.net/is.abp.txt"
         },
     "adblock.schack.dk/block.txt": {
         "off": true,

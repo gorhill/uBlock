@@ -502,9 +502,16 @@ online.dramacafe.in#@#.afs_ads
 extreamleech.com#@#.afs_ads
 ! linkguard.biz
 ||linkguard.biz/adblock-detector.htm$subdocument
+! sylnk.net
+||sylnk.net/adblock-detector.htm$subdocument
 ! doulci.net
 doulci.net###adbuddy-no-adb-container
 doulci.net###adbuddy-overlay
+! planetatvonlinehd.blogspot.com
+planetatvonlinehd.blogspot.com###tupiklan
+planetatvonlinehd.blogspot.com###anuncio
+! videodroid.org
+||videodroid.org/vip/adblockcheck.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -686,6 +693,12 @@ rapid8.com##.backk
 aseanlegacy.net##[id^="box"]
 ||amkserver1.com^$subdocument,document=aseanlegacy.net
 ||adgila.com^$subdocument,document=aseanlegacy.net
+! referencemega.com
+referencemega.com###hebdotop_t
+||track.effiliation.com/servlet/*$popup,domain=referencemega.com
+||siteunder.unclejeans.com^$popup,domain=referencemega.com
+! keepfiles.fr
+keepfiles.fr###shadow
 ! Cloud --------------------------------------------------------------------------------------
 ! wawa-film.org
 wawa-film.org##A[href^="http://api.adlure.net/partner/click/"]
@@ -697,7 +710,7 @@ planet-series.tv##IMG[src="http://www.planet-series.tv/images/250-1.png"]
 planet-series.tv##IMG[src="http://www.planet-series.tv/images/728-2.png"]
 ! Streaming --------------------------------------------------------------------------------------
 ! floatLayer
-tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com##*[id^="floatLayer"]
+tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu##*[id^="floatLayer"]
 ! livesoccerhq
 s.m2pub.com###adk2_img
 ! tvportugalhd
@@ -962,3 +975,13 @@ pregen.net###olayer
 ||affiliates.bet-at-home.com^$popup
 ! ||scorebull.com
 ||scorebull.com/adv/*$popup
+! rapidgator.net
+||kovla.com/?*$popup,domain=rapidgator.net
+! antipubfirefox.org
+splash.antipubfirefox.org##DIV[align="center"]
+! 
+ojogo.pt###moldura_ojogo
+! 
+||flash.banners-service.info/demo.swf?*
+! 
+||europacash.com^$third-party,script

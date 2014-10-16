@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4587
-! Last modified: 9 Oct 2014
+! Version: 4595
+! Last modified: 13 Oct 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4582,6 +4582,14 @@ shortz.so##[onclick="awaiting();"]
 ||boost-my-game.com^
 ||trippinger.com^
 ||tricheurhq.com^
+||anonymoushack.com^
+||freeminecraftgiftcode.net^
+||freeriotpoint.net^
+||keygenet.com^
+||gripnode.co^
+||csgoiunge.com^
+||gameshacksandcheats.com^
+||androidhacks4u.com^
 !
 !
 !

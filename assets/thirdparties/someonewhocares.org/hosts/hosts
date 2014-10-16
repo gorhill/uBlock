@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Oct 8th, 2014 at 10:33
+# Last updated: Oct 15th, 2014 at 02:01
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -343,7 +343,7 @@ fe80::1%lo0	localhost
 127.0.0.1 adcounter.globeandmail.com
 127.0.0.1 adcounter.theglobeandmail.com
 127.0.0.1 addfreestats.com
-127.0.0.1 adelogs.adobe.com
+127.0.0.1 adelogs.adobe.com	#See http://www.theregister.co.uk/2014/10/07/adobe_digital_editions_4_caught_snooping_into_ebook_collections_of_users/
 127.0.0.1 ademails.com
 127.0.0.1 adlog.com.com # Used by Ziff Davis to serve 
   # ads and track users across 
@@ -6122,6 +6122,7 @@ fe80::1%lo0	localhost
 127.0.0.1 iq001.adtech.us
 127.0.0.1 i.qitrck.com
 127.0.0.1 i.radzolo.com # advertising server hosted by NutraClick
+127.0.0.1 ir-na.amazon-adsystem.com
 127.0.0.1 is.casalemedia.com
 127.0.0.1 i.securecontactinfo.com
 127.0.0.1 isg01.casalemedia.com
@@ -6449,6 +6450,7 @@ fe80::1%lo0	localhost
 127.0.0.1 nationalissuepanel.com
 127.0.0.1 nationalpost.adperfect.com
 127.0.0.1 nationalsurveypanel.com
+127.0.0.1 native.sharethrough.com
 127.0.0.1 nbads.com
 127.0.0.1 nbc.adbureau.net
 127.0.0.1 nbimg.dt00.net
@@ -7123,6 +7125,7 @@ fe80::1%lo0	localhost
 127.0.0.1 static.ifa.camads.net
 127.0.0.1 static.l3.cdn.adbucks.com
 127.0.0.1 static.l3.cdn.adsucks.com
+127.0.0.1 static.nrelate.com
 127.0.0.1 static.plista.com
 127.0.0.1 static.plugrush.com
 127.0.0.1 static.pulse360.com
