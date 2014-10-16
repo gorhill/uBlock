@@ -74,7 +74,9 @@
         }
 
         // https://github.com/gorhill/uBlock/issues/91
-        pageStore.recordResult('popup', requestURL, result);
+        if ( result !== '' ) {
+            pageStore.recordResult('popup', requestURL, result);
+        }
 
         // Not blocked
         if ( pageStore.boolFromResult(result) === false ) {
