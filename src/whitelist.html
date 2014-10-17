@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — Whitelist</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/whitelist.css">
+</head>
+
+<body>
+
+<div>
+    <p data-i18n="whitelistPrompt"></p>
+    <p><button id="importWhitelistFromFile" data-i18n="whitelistImport"></button> &emsp; <button id="exportWhitelistToFile" data-i18n="whitelistExport"></button></p>
+    <input id="importFilePicker" type="file" accept="text/plain" style="display:none;">
+    <textarea id="whitelist" dir="auto" spellcheck="false"></textarea>
+    <p><button id="whitelistApply" type="button" disabled="true" data-i18n="whitelistApply"></button></p>
+</div>
+
+<script src="js/js-loader.js" data-jsList="
+lib/punycode.min.js
+js/vapi-common.js
+js/vapi-client.js
+js/udom.js
+js/i18n.js
+js/dashboard-common.js
+js/whitelist.js
+"></script>
+
+</body>
+</html>

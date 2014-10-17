@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — About</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/about.css">
+</head>
+
+<body>
+
+<h2>µBlock <span id="aboutVersion"></span></h2>
+<ul>
+    <li><a href="https://github.com/gorhill/uBlock/releases" data-i18n="aboutChangelog"></a>
+    <li><a href="https://github.com/gorhill/uBlock" data-i18n="aboutCode"></a>
+    <li><span data-i18n="aboutContributors"></span>
+        <ul>
+            <li><a href="https://github.com/gorhill/uBlock/graphs/contributors">Github</a>
+            <li><a href="https://crowdin.net/project/ublock">Crowdin</a>
+        </ul>
+</ul>
+
+<div style="margin:3em 0;border-top:1px solid #ccc;"></div>
+
+<div style="margin:1em 0 0 0;">
+<p><button type="button" id="export" data-i18n="aboutBackupDataButton"></button>
+  <button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
+  <input id="restoreFilePicker" type="file" accept="text/plain" style="display:none;">
+<p>
+<p><button type="button" id="reset" data-i18n="aboutResetDataButton">Start from scratch...</button>
+</div>
+
+<script src="js/js-loader.js" data-jsList="
+js/vapi-common.js
+js/vapi-client.js
+js/udom.js
+js/i18n.js
+js/dashboard-common.js
+js/about.js
+"></script>
+
+</body>
+</html>

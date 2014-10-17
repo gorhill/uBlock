@@ -2,10 +2,10 @@
 
 **Foreword:** Using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Do not fall for this creepy idea. The _ultimate_ logical consequence of "blocking = theft" is the criminalisation of the inalienable right to privacy.
 
-See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes. 
+See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes.
 See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
 
-An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development 
+An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development
 through benchmarking.
 
 **µBlock is not an "ad blocker", it's a blocker in the broad sense**, which happens to block ads through its support of [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax.
@@ -25,31 +25,31 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 <p align="center">
 Chromium on Linux 64-bit<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" /><br><br>
-<sup>The screenshots above were taken after visiting links in 
-<a href="https://github.com/gorhill/uBlock/wiki/Reference-benchmark">reference benchmark</a> 
-plus a bit of random browsing. All blockers were active at the same time, 
-thus they had to deal with exactly the same workload. Before the screenshots were 
-taken, I left the browser idle for many minutes so as to let the browser's 
+<sup>The screenshots above were taken after visiting links in
+<a href="https://github.com/gorhill/uBlock/wiki/Reference-benchmark">reference benchmark</a>
+plus a bit of random browsing. All blockers were active at the same time,
+thus they had to deal with exactly the same workload. Before the screenshots were
+taken, I left the browser idle for many minutes so as to let the browser's
 garbage collector kicks in. Also, after a while idling, it's good to open the dev
-console for each extension and force a garbage collection cycle by clicking a couple of times 
-the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera) 
+console for each extension and force a garbage collection cycle by clicking a couple of times
+the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera)
 as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
 </p>
 
 <p align="center">
 Being lean doesn't mean blocking less.<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201409-30.png" /><br>
-<sup>For details of benchmark, see latest 
+<sup>For details of benchmark, see latest
 <a href="https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares">µBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
 ## Installation
 
-From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm), 
+From the [Chrome store](https://chrome.google.com/webstore/detail/µblock/cjpalhdlnbpafiamejdnhcphjbkeiagm),
 the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
 
-To benefit from the higher efficiency, it is of course not advised to use an 
-inefficient blocker at the same time. µBlock will do as well or better than the 
+To benefit from the higher efficiency, it is of course not advised to use an
+inefficient blocker at the same time. µBlock will do as well or better than the
 popular blockers out there.
 
 Also of interest: [About the required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
@@ -61,8 +61,8 @@ I think it is pretty obvious, except for this I suppose:
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)&emsp; ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-2.png)
 
 The big power button is to disable/enable µBlock **for the specific hostname
-which can be extracted from the URL address of the current page**. (It applies to 
-the current web site only, it is **not** a global power button.) The state of the power 
+which can be extracted from the URL address of the current page**. (It applies to
+the current web site only, it is **not** a global power button.) The state of the power
 switch for a specific site will be remembered.
 
 The right-hand screenshot shows optional [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering) at work.
@@ -71,22 +71,22 @@ The right-hand screenshot shows optional [dynamic filtering](https://github.com/
 
 µBlock is born out of [HTTP Switchboard](https://github.com/gorhill/httpswitchboard).
 All the niceties of HTTPSB have been removed, and what is left is a straightforward
-blocker which support EasyList and the likes, and also support host files. 
+blocker which support EasyList and the likes, and also support host files.
 Cosmetic filters ("element hiding") are supported.
 
 There is nothing more to it. But it does what popular blockers out there do, at a
-fraction of CPU and memory usage for the same blocking power. Also, no unique user id 
+fraction of CPU and memory usage for the same blocking power. Also, no unique user id
 and no home means no phoning home (some popular blockers do this, just be careful).
 
 Free. Open source. For users by users. No donations sought.
 
-Without the preset lists of filters, this extension is nothing. So if ever you 
-really do want to contribute something, think about the people working hard 
-to maintain the filter lists you are using, which were made available to use by 
+Without the preset lists of filters, this extension is nothing. So if ever you
+really do want to contribute something, think about the people working hard
+to maintain the filter lists you are using, which were made available to use by
 all for free.
 
-You may contribute by helping to translate this project. I created an 
-[entry on Crowdin](https://crowdin.net/project/ublock), where you may contribute 
+You may contribute by helping to translate this project. I created an
+[entry on Crowdin](https://crowdin.net/project/ublock), where you may contribute
 to the translation work.
 
 ## License

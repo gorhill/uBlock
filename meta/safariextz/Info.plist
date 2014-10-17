@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>{author}</string>
+	<key>Builder Version</key>
+	<string>534.57.2</string>
+	<key>CFBundleDisplayName</key>
+	<string>{name}</string>
+	<key>CFBundleIdentifier</key>
+	<string>{app_id}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>{version}</string>
+	<key>CFBundleVersion</key>
+	<string>{build_number}</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Database Quota</key>
+		<real>52428800</real>
+		<key>Global Page</key>
+		<string>background.html</string>
+		<key>Popovers</key>
+		<array>
+			<dict>
+				<key>Identifier</key>
+				<string>popover</string>
+				<key>Filename</key>
+				<string>popup.html</string>
+			</dict>
+		</array>
+		<key>Toolbar Items</key>
+		<array>
+			<dict>
+				<key>Identifier</key>
+				<string>toolbarItem</string>
+				<key>Image</key>
+				<string>img/icon_16.png</string>
+				<key>Label</key>
+				<string>{name}</string>
+				<key>Popover</key>
+				<string>popover</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>Start</key>
+			<array>
+				<string>js/vapi-client.js</string>
+				<string>js/contentscript-start.js</string>
+			</array>
+			<key>End</key>
+			<array>
+				<string>js/contentscript-end.js</string>
+			</array>
+		</dict>
+		<key>Whitelist</key>
+		<array>
+			<string>http://*/*</string>
+			<string>https://*/*</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>{description}</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Include Secure Pages</key>
+			<true/>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+	<!-- <key>Update Manifest URL</key>
+	<string>{url}update_safariextz.plist</string> -->
+	<key>Website</key>
+	<string>{url}</string>
+</dict>
+</plist>

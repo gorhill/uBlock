@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — Settings</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<style>
+ul {
+    list-style-type: none;
+    }
+#experimental-enabled {
+    margin-top: 1em;
+    }
+</style>
+</head>
+
+<body>
+
+<ul>
+    <li><input id="collapse-blocked" type="checkbox"><label data-i18n="settingsCollapseBlockedPrompt" for="collapse-blocked"></label>
+    <li><input id="icon-badge" type="checkbox"><label data-i18n="settingsIconBadgePrompt" for="icon-badge"></label>
+    <li><input id="context-menu-enabled" type="checkbox"><label data-i18n="settingsContextMenuPrompt" for="context-menu-enabled"></label>
+    <li><input id="experimental-enabled" type="checkbox"><label data-i18n="settingsExperimentalPrompt" for="experimental-enabled"></label>
+    (<a href="https://github.com/gorhill/uBlock/wiki/Experimental-features" style="font-style:italic">Experimental features</a>)
+</ul>
+
+<script src="js/js-loader.js" data-jsList="
+js/vapi-common.js
+js/vapi-client.js
+js/udom.js
+js/i18n.js
+js/dashboard-common.js
+js/settings.js
+"></script>
+
+</body>
+</html>

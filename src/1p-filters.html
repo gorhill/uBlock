@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — Your filters</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/1p-filters.css">
+</head>
+
+<body>
+
+<div>
+    <p data-i18n="1pFormatHint"></p>
+    <p><button id="importUserFiltersFromFile" data-i18n="1pImport"></button> &emsp; <button id="exportUserFiltersToFile" data-i18n="1pExport"></button></p>
+    <input id="importFilePicker" type="file" accept="text/plain" style="display:none;">
+    <textarea class="userFilters" id="userFilters" dir="auto" spellcheck="false"></textarea>
+    <p><button id="userFiltersApply" disabled="true" data-i18n="1pApplyChanges"></button></p>
+</div>
+
+<script src="js/js-loader.js" data-jsList="
+js/vapi-common.js
+js/vapi-client.js
+js/udom.js
+js/i18n.js
+js/dashboard-common.js
+js/1p-filters.js
+"></script>
+
+</body>
+</html>

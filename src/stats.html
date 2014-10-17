@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>µBlock — Statistics</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<style>
+div {
+    margin: 1em 0;
+    }
+ul {
+    list-style-type: none;
+    }
+#refresh {
+    margin: 0 0.5em 0 4px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 2em;
+    cursor: pointer;
+
+    }
+select {
+    padding: 2px 0;
+    font-size: 14px;
+    min-width: 20em;
+    max-width: 40em;
+    }
+select option {
+    max-width: 40em;
+    }
+#requests {
+    margin: 2em 0 0 0;
+    display: none;
+    }
+#requests.logEnabled {
+    display: block;
+    }
+#requests table {
+    margin: 1em 0;
+    border: 0;
+    border-collapse: collapse;
+    min-width: 600px;
+    }
+#requests.empty table {
+    display: none;
+    }
+tr td, tr th {
+    border: 1px solid #aaa;
+    padding: 4px 6px;
+    white-space: pre;
+    }
+tr.domainHeader td {
+    font: 16px sans-serif;
+    }
+tr.domainHeader td span {
+    margin-right: 0.5em;
+    font-size: 14px;
+    color: #aaa;
+    cursor: pointer;
+    }
+tr.requestEntry {
+    font: 12px monospace;
+    }
+tr.requestEntry td:nth-of-type(1) {
+    border: 0;
+    background-color: white;
+    width: 3em;
+    }
+tr.requestEntry td:nth-of-type(2) {
+    text-align: right;
+    }
+tr.logBlocked {
+    background-color: #fff8f8;
+    }
+tr.logBlocked ~ tr td:nth-of-type(3) b {
+    padding: 2px 0;
+    color: #000;
+    background-color: rgba(255,0,0,0.1);
+    }
+tr.logAllowed {
+    background-color: #f8fff8
+    }
+tr.logAllowed ~ tr td:nth-of-type(3) b {
+    padding: 2px 0;
+    color: #000;
+    background-color: rgba(0,255,0,0.2);
+    }
+tr.logMirrored {
+    background-color: #ffffbb !important;
+    }
+</style>
+</head>
+
+<body>
+
+<ul>
+    <li><input id="logRequests" type="checkbox" data-range="bool" /><label data-i18n="logNetRequestsPrompt" for="logRequests"></label>
+    <button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="logNetRequestsHelp"></div>
+</ul>
+
+<div id="requests">
+<span id="refresh" class="fa">&#xf021;</span><select id="pageSelector"></select>
+
+<table>
+<tr class="tableHeader">
+<th>
+<th data-i18n="logRequestsHeaderType">
+<th data-i18n="logRequestsHeaderURL">
+<th data-i18n="logRequestsHeaderFilter">
+</table>
+
+</div>
+
+<script src="js/js-loader.js" data-jsList="
+js/vapi-common.js
+js/vapi-client.js
+js/udom.js
+js/i18n.js
+js/dashboard-common.js
+js/stats.js
+"></script>
+
+</body>
+</html>
