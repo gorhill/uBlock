@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Steuerpult",
+    "message":"µBlock — Dashboard",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -56,11 +56,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicke um das Bedienfeld zu öffnen",
+    "message":"Klicke um das Dashboard zu öffnen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Öffne den Element Picker - Modus",
+    "message":"Öffne den Element-Picker-Modus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -80,7 +80,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netzwerk Filter",
+    "message":"Netzwerkfilter",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -104,7 +104,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Verwende das Kontext-Menü, falls möglich",
+    "message":"Verwende das Kontextmenü, falls möglich",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
@@ -132,15 +132,15 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Adblock+ Filter zum Verstecken von Elementen analysieren und anwenden.",
+    "message":"Adblock-Plus-Filter zum Verstecken von Elementen analysieren und anwenden.",
     "description":"English: Parse and enforce cosmetic filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock-Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listen blockierter Host-Namen",
+    "message":"Listen blockierter Hostnamen",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -176,7 +176,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Eine URL pro Zeile. Zeilem mit vorangestelltem &lsquo;!&rsquo; werden ignoriert. Ungültige URLs werden stillschweigend ignoriert.",
+    "message":"Eine URL pro Zeile. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert. Ungültige URLs werden stillschweigend ignoriert.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -196,7 +196,7 @@
     "description":"English: may be obsolete"
   },
   "1pFormatHint":{
-    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Host-Name sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
+    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock-Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -212,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Deine Liste von Host-Namen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Host-Namen werden stillschweigend ignoriert.",
+    "message":"Deine Liste von Hostnamen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Hostnamen werden stillschweigend ignoriert.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -292,11 +292,11 @@
     "description": "English: Start from scratch..."
   },
   "aboutRestoreDataConfirm" : {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird µBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch das Backup ersetzt werden?",
     "description": "Message asking user to confirm restore"
   },
   "aboutResetDataConfirm" : {
-    "message": "All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message": "Alle Einstellungen werden gelöscht und µBlock neu gestartet.\n\nSoll µBlock auf Werkseinstellungen zurückgesetzt werden?",
     "description": "Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
