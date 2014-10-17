@@ -122,8 +122,16 @@ google.*###center_col > #tads
 # To counter `cdn-i.dmdentertainment.com` in hpHosts
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
-# EasyPrivacy fixes
-# None!
+# EasyList/EasyPrivacy fixes
+# https://github.com/gorhill/uBlock/issues/328#issuecomment-59572907
+# To counter EasyList's "||imasdk.googleapis.com^$third-party"
+@@||imasdk.googleapis.com^$domain=live.geo.tv
+# To counter EasyPrivacy's "/fingerprint.js"
+@@||live.seenreport.com^*/fingerprint.js
+# To counter EasyList's "||imasdk.googleapis.com^$third-party"
+@@||imasdk.googleapis.com^$domain=live.express.pk
+# To counter EasyPrivacy's "/ping.gif?"
+@@||i.n.jwpltx.com/v1/jwplayer6/ping.gif?$domain=live.express.pk
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
