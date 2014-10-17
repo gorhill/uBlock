@@ -1,0 +1,52 @@
+Egy hatékony blokkoló: kíméletes a processzorral és a memóriával, mégis képes nagyságrendekkel több szűrő betöltésére és alkalmazására a többi népszerű blokkolóhoz viszonyítva.
+
+Szemléltetett áttekintés a hatékonyságáról: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Használat: a nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenleg aktív webhelyre érvényes, nem pedig globálisan.
+
+***
+
+Több mint egy egyszerű reklámblokkoló: képes hosts fájlok bejegyzéseit is értelmezni, és azokból szűrőket létrehozni.
+
+Alapértelmezetten a következő szűrőlisták kerülnek betöltésre és alkalmazásra:
+
+- EasyList
+- Peter Lowe hirdetési szerverlistája
+- EasyPrivacy
+- Fanboy közösségi tiltólistája
+- Kártékony domének
+- Hosszúéletű kártékony domének
+- Malware Domains List
+
+Egyéb listák is kiválaszthatók a felhasználó igénye szerint:
+
+- Fanboy bővített követők listája
+- Dan Pollock hosts fájlja
+- hpHosts hirdetés és követőszerverek listája
+- MVPS HOSTS
+- Spam404
+- És sok másik
+
+Természetesen, több szűrő használatával a memóriaigény is növekszik. Ennek ellenére Fanboy két extra listája és a hpHosts (reklám és követőszerverek) lista hozzáadásával a µBlock memóriafogyasztása még mindig alacsonyabb, mint a legnépszerűbb blokkolóké.
+
+Emellett, néhány extra lista kiválasztásával megnövekszik az esély arra, hogy a weboldalak használhatatlanná válnak -- főleg azon listákról van szó, melyek normál esetben hosts fájlként használatosak.
+
+***
+
+A szűrőlisták nélkül a kiegészítő nem sokat érne. Tehát, ha valaha is eszedbe jutna támogatást kínálni, akkor előbb gondolj azokra, akik keményen dolgoznak a listák karbantartásával, illetve ingyenesen hozzáférhetővé teszik azokat mindenki számára.
+
+***
+
+Ingyenes.
+Nyílt forráskódú nyilvános licenccel (GPLv3)
+Felhasználóknak felhasználóktól.
+
+Közreműködők a Github-on: https://github.com/gorhill/uBlock/graphs/contributors
+Közreműködők a Crowdin-en: https://crowdin.net/project/ublock
+
+***
+
+A kiegészítő még gyerekcipőben jár, amit illik szem előtt tartani vélemény nyilvánításakor.
+
+Változások listája:
+https://github.com/gorhill/uBlock/wiki/Change-log
