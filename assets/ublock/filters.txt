@@ -151,3 +151,7 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/316
 # To counter `inc.com` in Peter Lowe's, hpHosts
 @@||inc.com^$~third-party
+
+# Chrome store feedback
+# To counter Peter Lowe's `intergi.com`
+@@||intergi.com^$domain=tvgolo.com
