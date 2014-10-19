@@ -21,7 +21,9 @@
 
 /* jshint bitwise: false */
 /* global µBlock */
-'use strict';
+
+// Older Safari throws an exception for const when it's used with 'use strict'.
+// 'use strict';
 
 /******************************************************************************/
 
