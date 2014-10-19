@@ -263,12 +263,6 @@ if (window.chrome) {
 } else if (window.safari) {
     vAPI.safari = true;
 
-    safari.extension.settings.addEventListener('change', function(e) {
-        if (e.key === 'open_prefs') {
-            vAPI.tabs.open({url: 'dashboard.html', active: true});
-        }
-    }, false);
-
     vAPI.storage = {
         _storage: safari.extension.settings,
         QUOTA_BYTES: 52428800, // copied from Info.plist
