@@ -49,12 +49,35 @@ if (window.chrome) {
 
     // update popover size to its content
     if (safari.self.identifier === 'popover' && safari.self) {
-        vAPI.updatePopoverSize = function() {
-            safari.self.width = document.body.clientWidth;
-            safari.self.height = document.body.clientHeight;
-        };
+        (function() {
+            var upadteTimer = null;
+            var resizePopover = function() {
+                if (upadteTimer) {
+                    return;
+                }
 
-        setTimeout(vAPI.updatePopoverSize, 200);
+                upadteTimer = setTimeout(function() {
+                    safari.self.width = document.body.clientWidth;
+                    safari.self.height = document.body.clientHeight;
+                    upadteTimer = null;
+                }, 50);
+            };
+
+            var mutObs = window.MutationObserver || window.WebkitMutationObserver;
+
+            if (mutObs) {
+                (new mutObs(resizePopover)).observe(document, {
+                    childList: true,
+                    attributes: true,
+                    characterData: true,
+                    subtree: true
+                });
+            }
+            else {
+                // Safari doesn't support DOMAttrModified
+                document.addEventListener('DOMSubtreeModified', resizePopover);
+            }
+        })();
     }
 }
 
