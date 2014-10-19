@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global uDom, vAPI */
+/* global uDom */
 'use strict';
 
 /******************************************************************************/

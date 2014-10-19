@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global µBlock, vAPI */
+/* global µBlock */
 'use strict';
 
 /*******************************************************************************
@@ -460,7 +460,7 @@ PageStore.prototype.updateBadge = function() {
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
-        // Safari knows numbers only, 0 (zero) means empty badge
+        // Safari can't show formatted strings, only integers.
         if (vAPI.safari) {
             iconStr = this.perLoadBlockedRequestCount;
         }

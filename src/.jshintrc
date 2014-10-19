@@ -13,6 +13,7 @@
 	"newcap": false,
 	"-W058": true, // suppress "Missing '()' invoking a constructor" message
 	"globals": {
+		"vAPI": false,
 		"chrome": false,
 		"safari": false,
 		"Components": false // global variable in Firefox

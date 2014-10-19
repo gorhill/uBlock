@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, vAPI, uDom */
+/* global µBlock, uDom */
 'use strict';
 
 /******************************************************************************/
