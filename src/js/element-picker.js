@@ -660,7 +660,7 @@ var stopPicker = function() {
         divDialog.removeEventListener('click', onDialogClicked);
         svgRoot.removeEventListener('mousemove', onSvgHovered);
         svgRoot.removeEventListener('click', onSvgClicked);
-        document.body.removeChild(pickerRoot);
+        pickerRoot.parentNode.removeChild(pickerRoot)
         pickerRoot =
         divDialog =
         svgRoot = svgOcean = svgIslands =
@@ -684,7 +684,7 @@ var startPicker = function() {
     var pickerStyle = document.createElement('style');
     pickerStyle.setAttribute('scoped', '');
     pickerStyle.textContent = [
-       '#µBlock, #µBlock * {',
+        '#µBlock, #µBlock * {',
             'background: transparent;',
             'background-image: none;',
             'border: 0;',
@@ -766,7 +766,6 @@ var startPicker = function() {
             'font: 12px sans-serif;',
             'background-color: rgba(255,255,255,0.9);',
             'z-index: 5999999999;',
-            'direction: ', chrome.i18n.getMessage('@@bidi_dir'), ';',
         '}',
         '#µBlock.paused > div {',
             'opacity: 0.2;',
@@ -900,6 +899,7 @@ var startPicker = function() {
 
     var initPicker = function(details) {
         var i18nMap = {
+            '#µBlock > div': '@@bidi_dir',
             '#create': 'create',
             '#pick': 'pick',
             '#quit': 'quit',
@@ -907,6 +907,12 @@ var startPicker = function() {
             'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
             'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
         };
+
+        if (details.i18n['@@bidi_dir']) {
+            divDialog.style.direction = details.i18n['@@bidi_dir'];
+            delete i18nMap['#µBlock > div'];
+        }
+
         for ( var k in i18nMap ) {
             if ( i18nMap.hasOwnProperty(k) === false ) {
                 continue;

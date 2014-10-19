@@ -339,44 +339,13 @@ var onMessage = function(details, sender, callback) {
                 response = filterRequest(pageStore, details);
             }
             break;
-    }
 
-    callback(response);
-};
 
-vAPI.messaging.listen('contentscript-end.js', onMessage);
-
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
-// element-picker.js
-
-(function() {
-
-/******************************************************************************/
-
-var µb = µBlock;
-
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-    // Async
-    switch ( request.what ) {
-        default:
-            break;
-    }
-
-    // Sync
-    var response;
-
-    switch ( request.what ) {
+        // the following is used by element-picker.js
         case 'elementPickerArguments':
             response = {
                 i18n: {
+                    '@@bidi_dir': vAPI.i18n('@@bidi_dir'),
                     create: vAPI.i18n('pickerCreate'),
                     pick: vAPI.i18n('pickerPick'),
                     quit: vAPI.i18n('pickerQuit'),
@@ -402,7 +371,7 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('element-picker.js', onMessage);
+vAPI.messaging.listen('contentscript-end.js', onMessage);
 
 /******************************************************************************/
 
