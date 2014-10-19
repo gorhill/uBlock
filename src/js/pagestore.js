@@ -460,7 +460,13 @@ PageStore.prototype.updateBadge = function() {
 
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
-        iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
+        // Safari knows numbers only, 0 (zero) means empty badge
+        if (vAPI.safari) {
+            iconStr = this.perLoadBlockedRequestCount;
+        }
+        else {
+            iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
+        }
     }
     vAPI.setIcon(this.tabId, iconPaths, iconStr);
 };
