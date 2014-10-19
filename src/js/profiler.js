@@ -22,7 +22,7 @@
 /******************************************************************************/
 
 var quickProfiler = (function() {
-    var timer = typeof performance === "undefined" ? Date : performance;
+    var timer = window.performance || Date;
     var time = 0;
     var count = 0;
     var tstart = 0;

@@ -271,7 +271,7 @@ if (window.chrome) {
 
     vAPI.storage = {
         _storage: safari.extension.settings,
-        QUOTA_BYTES: 50 * 1024 * 1024,
+        QUOTA_BYTES: 52428800, // copied from Info.plist
         get: function(keys, callback) {
             if (typeof callback !== 'function') {
                 return;
