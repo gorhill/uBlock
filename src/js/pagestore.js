@@ -20,7 +20,8 @@
 */
 
 /* jshint bitwise: false */
-/* global µBlock */
+/* global µBlock, vAPI */
+'use strict';
 
 /*******************************************************************************
 

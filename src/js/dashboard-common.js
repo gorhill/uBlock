@@ -19,6 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global uDom */
+'use strict';
+
 /******************************************************************************/
 
 uDom.onLoad(function() {

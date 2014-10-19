@@ -1,5 +1,4 @@
 // for non background pages
-/* global chrome, Components, safari */
 
 (function() {
 'use strict';

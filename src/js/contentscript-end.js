@@ -19,18 +19,24 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, vAPI */
+/* global vAPI */
+'use strict';
+
+/******************************************************************************/
 
 // Injected into content pages
+
+/******************************************************************************/
 
 // because Safari
 if (location.protocol !== "http:" && location.protocol !== "https:") {
     throw "uBlock> contentscript-end.js > Skipping page... " + location.protocol + location.host;
 }
 
+/******************************************************************************/
+
 var messager = vAPI.messaging.channel('contentscript-end.js');
 
-/******************************************************************************/
 /******************************************************************************/
 
 // ABP cosmetic filters

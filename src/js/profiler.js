@@ -19,6 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* exported quickProfiler */
+'use strict';
+
 /******************************************************************************/
 
 var quickProfiler = (function() {

@@ -1,0 +1,20 @@
+{
+	"browser": true,
+	"devel": true,
+	"esnext": true,
+	"globalstrict": true,
+	"undef": true,
+	"unused": true,
+	"nonew": false,
+	"sub": true,
+	"boss": true,
+	"laxbreak": true,
+	"validthis": true,
+	"newcap": false,
+	"-W058": true, // suppress "Missing '()' invoking a constructor" message
+	"globals": {
+		"chrome": false,
+		"safari": false,
+		"Components": false // global variable in Firefox
+	}
+}

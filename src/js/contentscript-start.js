@@ -20,7 +20,10 @@
 */
 
 /* jshint multistr: true */
-/* global chrome */
+/* global vAPI */
+'use strict';
+
+/******************************************************************************/
 
 // Injected into content pages
 

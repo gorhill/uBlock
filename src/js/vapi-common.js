@@ -1,5 +1,4 @@
 // only for background and other extension pages
-/* global chrome, Components, BeforeLoadEvent */
 
 (function() {
 'use strict';

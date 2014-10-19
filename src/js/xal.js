@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, µBlock */
+/* global µBlock, vAPI */
+'use strict';
 
 /******************************************************************************/
 

@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome, vAPI, uDom */
+/* global vAPI, uDom */
+'use strict';
 
 /******************************************************************************/
 

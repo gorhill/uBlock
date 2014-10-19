@@ -21,6 +21,7 @@
 
 /* jshint bitwise: false */
 /* global µBlock */
+'use strict';
 
 /******************************************************************************/
 
@@ -60,16 +61,16 @@ var meltBucket = function(ldict, len, bucket) {
 
 /******************************************************************************/
 
-var melt = function(ldict) {
-    var buckets = ldict.dict;
-    var bucket;
-    for ( var key in buckets ) {
-        bucket = buckets[key];
-        if ( typeof bucket === 'string' ) {
-            buckets[key] = meltBucket(ldict, key.charCodeAt(0) & 0xFF, bucket);
-        }
-    }
-};
+// var melt = function(ldict) {
+//     var buckets = ldict.dict;
+//     var bucket;
+//     for ( var key in buckets ) {
+//         bucket = buckets[key];
+//         if ( typeof bucket === 'string' ) {
+//             buckets[key] = meltBucket(ldict, key.charCodeAt(0) & 0xFF, bucket);
+//         }
+//     }
+// };
 
 /******************************************************************************/
 

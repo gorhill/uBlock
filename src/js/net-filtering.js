@@ -19,8 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esnext: true, bitwise: false */
+/* jshint bitwise: false */
 /* global µBlock */
+'use strict';
 
 /******************************************************************************/
 

@@ -1,4 +1,6 @@
 (function() {
+	'use strict';
+
 	document.body.style.display = "none";
 	document.addEventListener("DOMContentLoaded", function onDOMReady(e) {
 		document.removeEventListener(e.type, onDOMReady, false);

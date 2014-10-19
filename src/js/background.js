@@ -19,7 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global chrome */
+/* global vAPI */
+/* exported µBlock */
+'use strict';
 
 /******************************************************************************/
 
@@ -30,7 +32,7 @@ var µBlock = (function() {
 var oneSecond = 1000;
 var oneMinute = 60 * oneSecond;
 var oneHour = 60 * oneMinute;
-var oneDay = 24 * oneHour;
+// var oneDay = 24 * oneHour;
 
 /******************************************************************************/
 

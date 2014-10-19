@@ -20,7 +20,8 @@
 */
 
 /* jshint bitwise: false */
-/* global chrome, YaMD5, µBlock */
+/* global µBlock, vAPI, YaMD5 */
+'use strict';
 
 /******************************************************************************/
 

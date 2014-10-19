@@ -19,6 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global vAPI, uDom */
+'use strict';
+
+/******************************************************************************/
+
 // Helper to deal with the i18n'ing of HTML files.
 
 uDom.onLoad(function() {
