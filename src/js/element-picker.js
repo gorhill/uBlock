@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global messager, CSS */
+/* global CSS */
 'use strict';
 
 /******************************************************************************/
@@ -120,6 +120,8 @@
 
 /******************************************************************************/
 
+var localMessager = vAPI.messaging.channel('element-picker.js');
+
 // https://github.com/gorhill/uBlock/issues/314#issuecomment-58878112
 // Using an id makes uBlock's CSS rules more specific, thus prevents
 // surrounding external rules from winning over own rules.
@@ -203,11 +205,11 @@ var highlightElements = function(elems, force) {
     }
     targetElements = elems;
 
-    var ow = svgRoot.getAttribute('width');
+    var ow = parseInt(svgRoot.style.width, 10);
     var ocean = [
         'M0 0',
         'h', ow,
-        'v', svgRoot.getAttribute('height'),
+        'v', parseInt(svgRoot.style.height, 10),
         'h-', ow,
         'z'
     ];
@@ -231,7 +233,7 @@ var highlightElements = function(elems, force) {
         islands.push(poly);
     }
     svgOcean.setAttribute('d', ocean.join(''));
-    svgIslands.setAttribute('d', islands.join(''));
+    svgIslands.setAttribute('d', islands.join('') || 'M 0 0');
 };
 
 /******************************************************************************/
@@ -502,7 +504,7 @@ var onDialogClicked = function(ev) {
     else if ( ev.target.id === 'create' ) {
         var filter = userFilterFromCandidate();
         if ( filter ) {
-            messager.send({ what: 'createUserFilter', filters: filter });
+            localMessager.send({ what: 'createUserFilter', filters: filter });
             removeElements(elementsFromFilter(taCandidate.value));
             stopPicker();
         }
@@ -588,12 +590,12 @@ var showDialog = function(options) {
 /******************************************************************************/
 
 var elementFromPoint = function(x, y) {
-    svgRoot.style.pointerEvents = 'none';
+    svgRoot.style.display = 'none';
     var elem = document.elementFromPoint(x, y);
     if ( elem === document.body || elem === document.documentElement ) {
         elem = null;
     }
-    svgRoot.style.pointerEvents = 'auto';
+    svgRoot.style.display = '';
     return elem;
 };
 
@@ -641,8 +643,8 @@ var onScrolled = function() {
     var newHeight = this.scrollY + this.innerHeight;
     if ( newHeight > svgHeight ) {
         svgHeight = newHeight;
-        svgRoot.setAttribute('height', svgHeight);
-        svgRoot.setAttribute("viewBox", '0 0 ' + svgWidth + ' ' + svgHeight);
+        svgRoot.style.height = svgHeight + 'px';
+        svgRoot.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
     }
     highlightElements(targetElements, true);
 };
@@ -654,19 +656,19 @@ var onScrolled = function() {
 
 var stopPicker = function() {
     if ( pickerRoot !== null ) {
-        document.removeEventListener('keydown', onKeyPressed);
-        window.removeEventListener('scroll', onScrolled);
+        window.removeEventListener('keydown', onKeyPressed, true);
+        window.removeEventListener('scroll', onScrolled, true);
         taCandidate.removeEventListener('input', onCandidateChanged);
         divDialog.removeEventListener('click', onDialogClicked);
         svgRoot.removeEventListener('mousemove', onSvgHovered);
         svgRoot.removeEventListener('click', onSvgClicked);
-        pickerRoot.parentNode.removeChild(pickerRoot)
+        pickerRoot.parentNode.removeChild(pickerRoot);
         pickerRoot =
         divDialog =
         svgRoot = svgOcean = svgIslands =
         taCandidate =
         urlNormalizer = null;
-        messager.close();
+        localMessager.close();
     }
     targetElements = [];
 };
@@ -740,7 +742,6 @@ var startPicker = function() {
             'position: absolute;',
             'top: 0;',
             'left: 0;',
-            'pointer-events: auto;',
             'cursor: crosshair;',
             'z-index: 4999999999;',
         '}',
@@ -846,7 +847,8 @@ var startPicker = function() {
     pickerRoot.appendChild(pickerStyle);
 
     svgRoot = document.createElementNS(svgns, 'svg');
-    svgRoot.innerHTML = '<path /><path />';
+    svgRoot.appendChild(document.createElementNS(svgns, 'path'));
+    svgRoot.appendChild(document.createElementNS(svgns, 'path'));
     svgWidth = document.documentElement.scrollWidth;
     svgHeight = Math.max(
         document.documentElement.scrollHeight,
@@ -854,11 +856,11 @@ var startPicker = function() {
     );
     svgRoot.setAttribute('x', 0);
     svgRoot.setAttribute('y', 0);
-    svgRoot.setAttribute('width', svgWidth);
-    svgRoot.setAttribute('height', svgHeight);
-    svgRoot.setAttribute("viewBox", '0 0 ' + svgWidth + ' ' + svgHeight);
-    svgOcean = svgRoot.querySelector('path:first-child');
-    svgIslands = svgRoot.querySelector('path + path');
+    svgRoot.style.width = svgWidth + 'px';
+    svgRoot.style.height = svgHeight + 'px';
+    svgRoot.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
+    svgOcean = svgRoot.firstChild;
+    svgIslands = svgRoot.lastChild;
     pickerRoot.appendChild(svgRoot);
 
     // TODO: do not rely on element ids, they could collide with whatever
@@ -892,8 +894,8 @@ var startPicker = function() {
     taCandidate = divDialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
     urlNormalizer = document.createElement('a');
-    window.addEventListener('scroll', onScrolled);
-    document.addEventListener('keydown', onKeyPressed);
+    window.addEventListener('scroll', onScrolled, true);
+    window.addEventListener('keydown', onKeyPressed, true);
 
     highlightElements([], true);
 
@@ -970,12 +972,15 @@ var startPicker = function() {
         }
     };
 
-    messager.send({ what: 'elementPickerArguments' }, initPicker);
+    localMessager.send({ what: 'elementPickerArguments' }, initPicker);
 };
 
 /******************************************************************************/
 
 startPicker();
+
+// This triggers the hiding of the popover in Safari
+window.focus();
 
 /******************************************************************************/
 

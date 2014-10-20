@@ -252,7 +252,7 @@
 
 µBlock.elementPickerExec = function(tabId, targetElement) {
     this.elementPickerTarget = targetElement || '';
-    this.XAL.injectScript(tabId, { file: 'js/element-picker.js' });
+    vAPI.tabs.injectScript(tabId, { file: 'js/element-picker.js' });
 };
 
 /******************************************************************************/

@@ -27,11 +27,11 @@ var messagingConnector = function(response) {
 
     if (response.requestId) {
         listener = vAPI.messaging.listeners[response.requestId];
+    }
 
-        if (!listener) {
-            channel = vAPI.messaging.channels[response.portName];
-            listener = channel && channel.listener;
-        }
+    if (!listener) {
+        channel = vAPI.messaging.channels[response.portName];
+        listener = channel && channel.listener;
     }
 
     if (typeof listener === 'function') {
@@ -230,7 +230,6 @@ if (window.chrome) {
     // relevant?
     // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
     vAPI.messaging = {
-        port: null,
         requestId: 0,
         listeners: {},
         channels: {},
@@ -240,10 +239,19 @@ if (window.chrome) {
                 vAPI.messaging.connector(msg.message);
             };
             safari.self.addEventListener('message', this._connector, false);
+
+            this.channels['vAPI'] = {
+                listener: function(msg) {
+                    if (msg.cmd === 'runScript' && msg.details.code) {
+                        Function(msg.details.code).call(window);
+                    }
+                }
+            };
         },
         close: function() {
             if (this._connector) {
                 safari.self.removeEventListener('message', this._connector, false);
+                this.channels = this.listeners = null;
             }
         },
         channel: function(name, callback) {

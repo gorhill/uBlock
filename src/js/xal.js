@@ -31,12 +31,6 @@
 var exports = {};
 var noopFunc = function(){};
 
-/******************************************************************************/
-
-
-exports.injectScript = function(id, details) {
-    chrome.tabs.executeScript(id, details);
-};
 
 /******************************************************************************/
 

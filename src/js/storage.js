@@ -602,14 +602,14 @@
             if ( chrome.runtime.lastError ) {
                 return;
             }
-            chrome.tabs.executeScript(tabId, {
+            vAPI.tabs.injectScript(tabId, {
                 file: 'js/contentscript-end.js',
                 allFrames: true,
                 runAt: 'document_idle'
             }, scriptDone);
         };
         var scriptStart = function(tabId) {
-            chrome.tabs.executeScript(tabId, {
+            vAPI.tabs.injectScript(tabId, {
                 file: 'js/contentscript-start.js',
                 allFrames: true,
                 runAt: 'document_idle'

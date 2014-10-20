@@ -136,7 +136,19 @@ if (window.chrome) {
                 wrapper();
             }
         },
-        close: chrome.tabs.remove.bind(chrome.tabs)
+        close: chrome.tabs.remove.bind(chrome.tabs),
+        injectScript: function(tabId, details, callback) {
+            if (!callback) {
+                callback = function(){};
+            }
+
+            if (tabId) {
+                chrome.tabs.executeScript(tabId, details, callback);
+            }
+            else {
+                chrome.tabs.executeScript(details, callback);
+            }
+        }
     };
 
     // Must read: https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -176,7 +188,7 @@ if (window.chrome) {
                 var onMessage = function(request) {
                     var callback = function(response) {
                         // stfu
-                        if (chrome.runtime.lastError) {
+                        if (chrome.runtime.lastError || response === undefined) {
                             return;
                         }
 
@@ -492,6 +504,29 @@ if (window.chrome) {
             if (tab) {
                 tab.close();
             }
+        },
+        injectScript: function(tabId, details, callback) {
+            var tab = tabId ? this.stack[tabId] : safari.application.activeBrowserWindow.activeTab;
+
+            if (details.file) {
+                var xhr = new XMLHttpRequest;
+                xhr.overrideMimeType('application/x-javascript;charset=utf-8');
+                xhr.open('GET', details.file, false);
+                xhr.send();
+                details.code = xhr.responseText;
+            }
+
+            tab.page.dispatchMessage('message', {
+                portName: 'vAPI',
+                msg: {
+                    cmd: 'runScript',
+                    details: details
+                }
+            });
+
+            if (typeof callback === 'function') {
+                setTimeout(callback, 13);
+            }
         }
     };
 
@@ -624,7 +659,7 @@ if (window.chrome) {
                 }
 
                 var callback = function(response) {
-                    if (request.message.requestId) {
+                    if (request.message.requestId && response !== undefined) {
                         request.target.page.dispatchMessage(
                             'message',
                             {

@@ -339,9 +339,41 @@ var onMessage = function(details, sender, callback) {
                 response = filterRequest(pageStore, details);
             }
             break;
+    }
 
+    callback(response);
+};
 
-        // the following is used by element-picker.js
+vAPI.messaging.listen('contentscript-end.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// element-picker.js
+
+(function() {
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
         case 'elementPickerArguments':
             response = {
                 i18n: {
@@ -371,7 +403,7 @@ var onMessage = function(details, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('contentscript-end.js', onMessage);
+vAPI.messaging.listen('element-picker.js', onMessage);
 
 /******************************************************************************/
 
