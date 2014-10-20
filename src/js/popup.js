@@ -179,6 +179,13 @@ var toggleNetFilteringSwitch = function(ev) {
 
 /******************************************************************************/
 
+var renderHeader = function() {
+    var hdr = uDom('#version');
+    hdr.html(hdr.html() + 'v'); // + chrome.runtime.getManifest().version);
+};
+
+/******************************************************************************/
+
 var gotoDashboard = function() {
     messager.send({
         what: 'gotoURL',
@@ -215,9 +222,21 @@ var gotoPick = function() {
 
 /******************************************************************************/
 
-var renderHeader = function() {
-    var hdr = uDom('#version');
-    hdr.html(hdr.html() + 'v'); // + chrome.runtime.getManifest().version);
+var gotoLink = function(ev) {
+    if (!ev.target.href) {
+        return;
+    }
+
+    ev.preventDefault();
+
+    messager.send({
+        what: 'gotoURL',
+        details: {
+            url: ev.target.href,
+            select: true,
+            index: -1
+        }
+    });
 };
 
 /******************************************************************************/
@@ -264,6 +283,7 @@ var installEventHandlers = function() {
     uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
     uDom('#gotoLog').on('click', gotoStats);
     uDom('#gotoPick').on('click', gotoPick);
+    uDom('a[href^=http]').on('click', gotoLink);
     uDom('#dynamicFilteringToggler').on('click', toggleDynamicFiltering);
     uDom('.dynamicFiltering').on('click', 'div', onDynamicFilterClicked);
 };
