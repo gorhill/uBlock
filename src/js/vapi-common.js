@@ -1,9 +1,34 @@
-// only for background and other extension pages
+// could be used for background and other extension pages
 
 (function() {
 'use strict';
 
 window.vAPI = window.vAPI || {};
+
+vAPI.download = function(details) {
+    if (!details.url) {
+        return;
+    }
+
+    var a = document.createElement('a');
+
+    if ('download' in a) {
+        a.href = details.url;
+        a.setAttribute('download', details.filename || '');
+        a.dispatchEvent(new MouseEvent('click'));
+    }
+    else {
+        var messager = vAPI.messaging.channel('download');
+        messager.send({
+            what: 'gotoURL',
+            details: {
+                url: a.target.href,
+                index: -1
+            }
+        });
+        messager.close();
+    }
+};
 
 if (window.chrome) {
     var chrome = window.chrome;

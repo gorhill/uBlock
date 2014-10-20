@@ -34,11 +34,14 @@ var messager = vAPI.messaging.channel('about.js');
 
 var exportToFile = function() {
     var onUserDataReady = function(userData) {
-        chrome.downloads.download({
+        if (!userData) {
+            return;
+        }
+
+        vAPI.download({
             'url': 'data:text/plain,' + encodeURIComponent(JSON.stringify(userData)),
-            'filename': 'ublock-backup.txt',
-            'saveAs': true
-});
+            'filename': 'ublock-backup.txt'
+        });
     };
 
     messager.send({ what: 'getUserData' }, onUserDataReady);

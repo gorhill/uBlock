@@ -95,6 +95,88 @@ if (window.chrome) {
         }
     };
 } else if (window.safari) {
+    // relevant?
+    // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
+    vAPI.messaging = {
+        requestId: 0,
+        listeners: {},
+        channels: {},
+        connector: messagingConnector,
+        setup: function() {
+            this._connector = function(msg) {
+                vAPI.messaging.connector(msg.message);
+            };
+            safari.self.addEventListener('message', this._connector, false);
+
+            this.channels['vAPI'] = {
+                listener: function(msg) {
+                    if (msg.cmd === 'runScript' && msg.details.code) {
+                        Function(msg.details.code).call(window);
+                    }
+                }
+            };
+        },
+        close: function() {
+            if (this._connector) {
+                safari.self.removeEventListener('message', this._connector, false);
+                this.channels = this.listeners = null;
+            }
+        },
+        channel: function(name, callback) {
+            if (!name) {
+                return;
+            }
+
+            if (!this._connector) {
+                this.setup();
+            }
+
+            this.channels[name] = {
+                portName: name,
+                listener: typeof callback === 'function' ? callback : null,
+                send: function(message, callback) {
+                    message = {
+                        portName: this.portName,
+                        msg: message
+                    };
+
+                    if (callback) {
+                        message.requestId = ++vAPI.messaging.requestId;
+                        vAPI.messaging.listeners[message.requestId] = callback;
+                    }
+
+                    if (safari.extension.globalPage) {
+                        // popover content doesn't know messaging...
+                        safari.extension.globalPage.contentWindow
+                            .vAPI.messaging.connector({
+                                name: 'message',
+                                message: message,
+                                target: {
+                                    page: {
+                                        dispatchMessage: function(name, msg) {
+                                            vAPI.messaging.connector(msg);
+                                        }
+                                    }
+                                }
+                            });
+                    }
+                    else {
+                        safari.self.tab.dispatchMessage('message', message);
+                    }
+                },
+                close: function() {
+                    delete vAPI.messaging.channels[this.portName];
+                }
+            };
+
+            return this.channels[name];
+        }
+    };
+
+    if (location.protocol === "safari-extension:") {
+        return;
+    }
+
     var linkHelper = document.createElement('a');
     var onBeforeLoad = function(e, details) {
         if (e.url && e.url.slice(0, 5) === 'data:') {
@@ -176,12 +258,10 @@ if (window.chrome) {
         }
     };
 
+    document.addEventListener('beforeload', onBeforeLoad, true);
+
     // intercepting xhr requests
     setTimeout(function() {
-        if (location.protocol === "safari-extension:") {
-            return;
-        }
-
         var randomEventName = parseInt(Math.random() * 1e15, 10).toString(36);
         var beforeLoadEvent = document.createEvent('Event');
         beforeLoadEvent.initEvent('beforeload');
@@ -224,86 +304,6 @@ if (window.chrome) {
             "};",
         "})();"].join(''));
     }, 0);
-
-    document.addEventListener('beforeload', onBeforeLoad, true);
-
-    // relevant?
-    // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
-    vAPI.messaging = {
-        requestId: 0,
-        listeners: {},
-        channels: {},
-        connector: messagingConnector,
-        setup: function() {
-            this._connector = function(msg) {
-                vAPI.messaging.connector(msg.message);
-            };
-            safari.self.addEventListener('message', this._connector, false);
-
-            this.channels['vAPI'] = {
-                listener: function(msg) {
-                    if (msg.cmd === 'runScript' && msg.details.code) {
-                        Function(msg.details.code).call(window);
-                    }
-                }
-            };
-        },
-        close: function() {
-            if (this._connector) {
-                safari.self.removeEventListener('message', this._connector, false);
-                this.channels = this.listeners = null;
-            }
-        },
-        channel: function(name, callback) {
-            if (!name) {
-                return;
-            }
-
-            if (!this._connector) {
-                this.setup();
-            }
-
-            this.channels[name] = {
-                portName: name,
-                listener: typeof callback === 'function' ? callback : null,
-                send: function(message, callback) {
-                    message = {
-                        portName: this.portName,
-                        msg: message
-                    };
-
-                    if (callback) {
-                        message.requestId = ++vAPI.messaging.requestId;
-                        vAPI.messaging.listeners[message.requestId] = callback;
-                    }
-
-                    if (safari.extension.globalPage) {
-                        // popover content doesn't know messaging...
-                        safari.extension.globalPage.contentWindow
-                            .vAPI.messaging.connector({
-                                name: 'message',
-                                message: message,
-                                target: {
-                                    page: {
-                                        dispatchMessage: function(name, msg) {
-                                            vAPI.messaging.connector(msg);
-                                        }
-                                    }
-                                }
-                            });
-                    }
-                    else {
-                        safari.self.tab.dispatchMessage('message', message);
-                    }
-                },
-                close: function() {
-                    delete vAPI.messaging.channels[this.portName];
-                }
-            };
-
-            return this.channels[name];
-        }
-    };
 
     var onContextMenu = function(e) {
         var details = {

@@ -99,11 +99,14 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 function exportUserFiltersToFile() {
-    chrome.downloads.download({
-        'url': 'data:text/plain,' + encodeURIComponent(uDom('#userFilters').val()),
-        'filename': 'my-ublock-filters.txt',
-        'saveAs': true
-    });
+    var val = uDom('#userFilters').val().trim();
+
+    if (val) {
+        vAPI.download({
+            'url': 'data:text/plain,' + encodeURIComponent(val),
+            'filename': 'my-ublock-filters.txt'
+        });
+    }
 }
 
 /******************************************************************************/

@@ -21,7 +21,6 @@
 
     "permissions": [
         "contextMenus",
-        "downloads",
         "storage",
         "tabs",
         "unlimitedStorage",

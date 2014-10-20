@@ -93,11 +93,14 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 var exportWhitelistToFile = function() {
-    chrome.downloads.download({
-        'url': 'data:text/plain,' + encodeURIComponent(uDom('#whitelist').val()),
-        'filename': 'my-ublock-whitelist.txt',
-        'saveAs': true
-    });
+    var val = uDom('#whitelist').val().trim();
+
+    if (val) {
+        vAPI.download({
+            'url': 'data:text/plain,' + encodeURIComponent(val),
+            'filename': 'my-ublock-whitelist.txt'
+        });
+    }
 };
 
 /******************************************************************************/
