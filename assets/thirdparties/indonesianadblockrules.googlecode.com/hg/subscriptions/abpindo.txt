@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: fcz6e19DFyG8bukJc/IZ6A
+! Checksum: l3ASWR+gUw807U53Iq/vfg
 ! Title: ABPindo
-! Last modified: 02 Oktober 2014, 06:58:17 WIB
+! Last modified: 18 Oktober 2014, 12:20:25 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -144,6 +144,7 @@
 ||pusatpromosiiklan.com^$third-party
 ||referral-secrets.com^$third-party
 ||rupiahbux.com^$third-party
+||semuaberita.com/banner/
 ||sentra-iklan.com^$third-party
 ||sentrapromosi.com^$third-party
 ||serbapromo.com^$third-party
@@ -183,6 +184,7 @@
 ||duitmu.com^$third-party
 ||fairbet88.com^$popup,third-party
 ||galaxybola.com^$third-party
+||galaxytoto.com^$third-party
 ||kakakdewa.com^$third-party
 ||kakakdewa.net^$third-party
 ||mabosbet.com^$third-party
@@ -376,6 +378,7 @@ com##img[alt="Space Iklan"]
 com##img[alt="Taruhan Bola Online"]
 blogspot.com##img[alt="ads"]
 ! *** abpindo_specific_block.txt ***
+|http://cdn.kaskus.com/img/skin/*.gif
 ||alertpay.com/banners/
 ||angel.exabytes.com.my/banners/
 ||animeindo.tv/ad/
@@ -391,6 +394,7 @@ blogspot.com##img[alt="ads"]
 ||bokepgratiz.info/banner/
 ||bolavegas.com/ads/
 ||detik.com/images/banners/
+||dewa.tv/banner/
 ||dinastybet.com/banner/
 ||dixam.net/banner/
 ||drtuber.com/templates/drtuber/js/adx_flash_embed.js?
@@ -473,6 +477,8 @@ widih.modifikasi.com###MAX_frame2.bannerbottom
 widih.modifikasi.com###MAX_frame3.bannerright
 lihat.co.id###SidebarIklan-wrapper
 chip.co.id###TopBannerBg
+krucil.net###ad_floating_bottom
+krucil.net###ad_floating_top
 forumbokep.com,idfl.biz,idfl.info,idfl.me,idfl.my.id,idfl.us,indofiles.web.id,sodasusu.com,vocland.com###ad_global_below_navbar
 harianjogja.com,solopos.com###ads-float
 dapurpacu.com###ads-mid
@@ -487,7 +493,7 @@ detik.com###bottom_banner
 indogamers.com###bottombanner
 bioskop21.us###box-message
 tribunnews.com###boxright [style="width:300px; height:250px;"]
-adipedia.com,blifnews.com,bokepgratiz.info,downloadfilmbaru.com,mangaku.web.id,movie76.com,nusareborn.in###btm_banner
+adipedia.com,blifnews.com,bokepgratiz.info,downloadfilmbaru.com,mangaku.web.id,movie76.com,nusareborn.in,semuaberita.com###btm_banner
 cinema81.com###btm_banner_kanan
 cinema81.com###btm_banner_kiri
 movie76.com###close-teaser
@@ -641,16 +647,19 @@ detik.com##.iklan_tengah
 gambarkeren.info##.iklankotak1
 krucil.net##.krucil_ads
 krucil.net##.krucil_floating_banner_top
+kaskus.co.id##.l-link
 lapar.com##.leftcontent[style="padding:0px; margin:0px auto; height:250px; width:720px; border:0px; background:none; "]
 tribunnews.com##.mb20.ac.bsh3.ads
 dapurpacu.com##.mid-banner
 detik.com##.otp_banner_close
 tribunnews.com##.ovh[style="width:468px;height:60px"]
 lintas.me##.popup
+kaskus.co.id##.r-link
 okezone.com##.rc-ad-300x250
 filmindonesia.or.id##.row.block.ad-unit-medium-retangle.center
 semprot.com##.semprot_ads
 republika.co.id##.set-ads-468
+kaskus.co.id##.skin
 kabar24.com##.skycapper
 okezone.com##.skyscrapper
 bokepgratiz.info##.textwidget
@@ -679,6 +688,7 @@ bokepgratiz.info##img[alt="smart-forex-system.com"]
 movie76.com##img[src="http://2.bp.blogspot.com/-2afHigsbpYY/UguQyTqs5SI/AAAAAAAAAcg/8E4df8rMZMU/s1600/Download+noww.jpg'"]
 tribunnews.com##img[src="http://www.tribunnews.com/stylesheets/close.gif"]
 kompas.com##img[src^="http://img.ads."]
+lihat.co.id##img[style="border:0;display:block;"]
 ic31linkpage.com,icinema3satu.com##img[style="height: 125px; width: 125px;"]
 icinema3satu.com##img[style="height:125x;width:125px;"]
 isdaryanto.com##img[style="width: 125px; height: 125px;"]
@@ -776,6 +786,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||usahaberhasil.com^$third-party
 ||webtrackerplus.com^$third-party
 ! *** abpindo_whitelist.txt ***
+@@.png#$domain=narutobleachlover.net|wardhanime.net
 @@||ads.id^$~third-party
 @@||animeindo.tv^$elemhide
 @@||narutobleachlover.net^$elemhide

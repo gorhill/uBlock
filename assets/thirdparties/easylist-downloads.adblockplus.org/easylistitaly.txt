@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: wFU1pvrC56UmfiPhUSEsvA
-! Version: 201410161151
+! Checksum: Saf1axiwsrvVhXfoPUL5Xg
+! Version: 201410201351
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 16 Oct 2014 11:51 UTC
+! Ultima modifica: 20 Oct 2014 13:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1011,6 +1011,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilvolo.it/images/banners/
 ||ilvolo.it/images/stories/banner-
 ||ilwebmaster21.it/script1.js
+||imperiapost.it^*/Banner
 ||indie-roccia.it/itunesbox.php?
 ||indie-rock.it/itunesbox.php?
 ||infooggi.it/banner/
@@ -1857,6 +1858,7 @@ key4biz.it###ebookNews
 unita.it###eimp[style="width:298px;float:left;margin-top:20px;height:248px;border:1px solid #cccccc; position:relative; z-index:0"]
 comingsoon.it###expSkin
 tipiace.it###externalbanner
+imperiapost.it###extlnk
 gqitalia.it###fogliaBanner
 avvisatore.ilsecoloxix.it,lavocedivenezia.it,shippingonline.ilsecoloxix.it,ttmweb.it###footer
 insegreto.it###footer-banners

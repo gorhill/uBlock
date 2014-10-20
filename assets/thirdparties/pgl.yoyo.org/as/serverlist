@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 21:56:38 GMT
-# entries:        2476
+# entries:        2474
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -12,6 +12,7 @@
 127.0.0.1 101com.com
 127.0.0.1 101order.com
 127.0.0.1 123found.com
+127.0.0.1 123pagerank.com
 127.0.0.1 180hits.de
 127.0.0.1 180searchassistant.com
 127.0.0.1 1x1rank.com
@@ -639,7 +640,6 @@
 127.0.0.1 ads.sptimes.com
 127.0.0.1 ads.stackoverflow.com
 127.0.0.1 ads.stationplay.com
-127.0.0.1 ads.stratics.com
 127.0.0.1 ads.struq.com
 127.0.0.1 ads.sun.com
 127.0.0.1 ads.supplyframe.com
@@ -1622,7 +1622,6 @@
 127.0.0.1 infolinks.com
 127.0.0.1 information.com
 127.0.0.1 infra-ad.com
-127.0.0.1 initgroup.com
 127.0.0.1 inringtone.com
 127.0.0.1 insightexpress.com
 127.0.0.1 insightexpressai.com
@@ -1999,7 +1998,6 @@
 127.0.0.1 pub.chez.com
 127.0.0.1 pub.club-internet.fr
 127.0.0.1 pub.hardware.fr
-127.0.0.1 pub.opt.pf
 127.0.0.1 pub.realmedia.fr
 127.0.0.1 pubdirecte.com
 127.0.0.1 publicidad.elmundo.es

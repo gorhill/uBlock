@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: gwfxLJTP2GFX3zcnRR5fQg
+! Checksum: kn0Zruiu1KHRP+uiamzfaA
 ! Title: EasyList Hebrew
-! Last modified: 15/10/14  12:28
+! Last modified: 20/10/14  16:37
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -33,7 +33,7 @@
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
-||ashleymadison.com/a$popup,third-party
+||ashleymadison.com^$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||booking.com/index.html^$popup,domain=daka90.co.il
@@ -42,6 +42,7 @@
 ||clickcenter.net^$third-party
 ||clickon.co.il^$popup,third-party
 ||clickon.co.il^$third-party
+||dcampaigns.mitsubishi-israel.co.il/space$popup,third-party
 ||descreti.co.il^$popup
 ||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
@@ -64,11 +65,13 @@
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
+||mysupermarket.co.il/landingpages/^$popup,third-party
 ||newclio.co.il/sep$popup,third-party
 ||oceanmedia.co.il/landingpages/$popup
 ||onclickads.net^$popup
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
+||rateonclick.com^$popup,third-party
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup,third-party
 ||shorter.co.il/js/fp.js.php
@@ -170,6 +173,7 @@
 ||fifa.games-il.info/AHfVczS/fed/repeat/*
 ||fortest.info^$domain=fxp.co.il
 ||fxp.co.il/skinfxp/*.php$script,image
+||games-il.info^$domain=fxp.co.il
 ||games-il.org.uk^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
@@ -177,6 +181,7 @@
 !
 !--------------------------1st party blocking rules---------------------------!
 !
+||0404.co.il/public/assets/images/*banner
 ||212.129.12.90/zivlin/*.swf
 ||2eat.co.il/banner/
 ||ads.one.co.il^
@@ -254,6 +259,7 @@
 @@||dclk.themarker.com/js.ng/$script
 @@||forbes.co.il/download/banners/
 @@||go.ynet.co.il/short/commerce/2012/weathernew/
+@@||hamidrasha.co.il/ads
 @@||i.total-media.net/yc/dc.$script,domain=winwin.co.il
 @@||info.a7.org/info/$script
 @@||internet-bee.com/Feats/
@@ -369,7 +375,7 @@ bizportal.co.il,bursagraph.co.il,saloona.co.il###top_banner
 bhol-forums.co.il,bhol.co.il###top_banner_ph
 fun-city.co.il,popcorate.co.il###videoImage1_login
 beok.co.il,winwin.co.il##.TopBanners
-mako.co.il,rest.co.il##.ad
+mako.co.il,pcmagazine.co.il,rest.co.il##.ad
 globes.co.il,onlife.co.il,sport5.co.il##.banner
 haaretz.co.il,themarker.com##.border-box.bottomStripBanners
 bhol-forums.co.il,bhol.co.il##.centered.padt10 > .clear
@@ -456,10 +462,12 @@ cinemascope.mako.co.il###monster1_div
 d.co.il##.header_banner
 d.co.il##.premium-d-strip-banner-container
 dacho.co.il##.fixed_position1
+dinovich.com###noLike
+dinovich.com##.overlay
 doctors.co.il###big_banner
 doctors.co.il##div[id^="dgBan"]
 dossinet.me###bg_banner_header_top
-fxp.co.il##.condition
+fbssl.walla.co.il##.container_footer
 flix.mako.co.il###topBannerTable
 flix.tapuz.co.il##.headerMiddle
 flix.tapuz.co.il##DIV[style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; min-height: 94px;\a     padding-bottom: 10px; padding-top: 65px; text-align: center; width: 960px;"]
@@ -471,6 +479,7 @@ fxp.co.il###adfxp
 fxp.co.il###vc_widget
 fxp.co.il###web_3_tool
 fxp.co.il##.captain
+fxp.co.il##.condition
 fxp.co.il##.hungry
 fxp.co.il##A[href*="ofofof.info"]
 fxp.co.il##A[href^="http://fcdn.co.il"]
@@ -682,7 +691,6 @@ onlife.co.il###block-freelancer-1
 onlife.co.il###top_article_ads_wrapper
 onlife.co.il##.commercial
 ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
-pcmagazine.co.il##.ad
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
 rateonclick.com##A[href*="campaigns.layer.co.il/"]
 reshet.tv##div[id^="CM8ShowAd"]
@@ -774,6 +782,7 @@ vodmovies.co.il##.classtop_img
 vodmovies.co.il##.ulp-content
 vodmovies.co.il##.ulp-overlay
 vodmovies.co.il##.ulp-window
+vodmovies.co.il##.youtube
 vodx.co.il##.top-banner
 walla.co.il###ARKIA_CONTAINER
 walla.co.il###navbar

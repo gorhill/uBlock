@@ -512,6 +512,16 @@ planetatvonlinehd.blogspot.com###tupiklan
 planetatvonlinehd.blogspot.com###anuncio
 ! videodroid.org
 ||videodroid.org/vip/adblockcheck.js$script
+! rapeit.net
+rapeit.net#@#.afs_ads
+! skiplimite.tv
+@@||skiplimite.tv^$elemhide
+@@||pubdirecte.com/script/banniere.php?*$domain=skiplimite.tv
+! tzetze.it
+tzetze.it#@##TzeTze_728x90
+tzetze.it#@#div[id^="div-gpt-ad-"]
+! filmweb.pl
+@@||ad.filmweb.pl/adbanner/reklamy/adx.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -653,6 +663,9 @@ torrentproject.com##A[href^="//torrentproject.com/out/?"]
 ||torrent-avenue.com/popup.js
 ! torrent-francais.com
 torrent-francais.com##A[onclick^="this.href='http://www.FriendlyDuck.com/AF_TA/rel/"]
+! t411.me
+t411.me##IMG[src="http://www.t411.me/images/external/usenet.jpg"]
+t411.me##.ads
 ! Debriders --------------------------------------------------------------------------------------
 ! preemlinks.com
 preemlinks.com#@##divads
@@ -985,3 +998,8 @@ ojogo.pt###moldura_ojogo
 ||flash.banners-service.info/demo.swf?*
 ! 
 ||europacash.com^$third-party,script
+!
+||media.rencontreshard.com^$third-party,script
+! 
+go4up.com##[href^="http://liversely.com/g4u?q="]
+go4up.com##[href^="http://go.ad2up.com/afu.php?id="] 

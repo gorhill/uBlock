@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: oxbUoaD+gkfNXp0L5+WjVA
-! Version: 201410161151
+! Checksum: hy0cq1R6i3cuCQWfz37Q4w
+! Version: 201410201351
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 16 Oct 2014 11:51 UTC
+! Last modified: 20 Oct 2014 13:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -148,6 +148,7 @@ _advertentieleaderboardhome.
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
 ||bol.com/nl/upload/banners/
+||bongacash.com/promo.php?
 ||booking.com/?aid=$domain=puuropreis.nl
 ||brightcove.com/js/BrightcoveExperiences.js$domain=backpackgek.nl
 ||buzzlab.nl/input/*Banner
@@ -662,6 +663,7 @@ _advertentieleaderboardhome.
 ||datescoren.nl^*.pop|$popup
 ||nuvreemdgaan.nl^$popup,third-party
 ||seksdatematch.nl^*.pop|$popup
+||stkdx.com^$popup,third-party
 ||vloerenvoordelig.nl^$popup,third-party
 !--------Popups--------!
 ! *** easylistdutch/block_first_party_popup.txt ***
@@ -1008,8 +1010,9 @@ computeridee.nl##.advertentie-1korting-nl
 apparata.nl,autoblog.nl,skipr.nl##.advertisement
 biertijd.com##.advertorialtitle ~ *
 synoniemen.net##.annblokslot
+waldnet.nl##.art-lin > div:first-child > a[target="_blank"]
 welingelichtekringen.nl##.artblok:nth-child(-2n+6)
-2xklikken.nl,at5.nl,belgie.fm,camping-frankrijk.nl,ed.nl,elkspel.nl,express.be,fd.nl,hardwarewoensdag.tv,hetkrantje-online.nl,insidegamer.nl,koopplein.nl,mensenlinq.nl,nederland.fm,nederlandmobiel.nl,nieuws.nl,privesexopname.nl,startbewijs.nl,studenten.nl,telegraaf.nl,toeto.com,westlanders.nu,zappsite.nl##.banner
+2xklikken.nl,at5.nl,belgie.fm,camping-frankrijk.nl,ed.nl,elkspel.nl,express.be,fd.nl,hardwarewoensdag.tv,hetkrantje-online.nl,insidegamer.nl,koopplein.nl,mensenlinq.nl,nederland.fm,nederlandmobiel.nl,nieuws.nl,privesexopname.nl,startbewijs.nl,studenten.nl,telegraaf.nl,toeto.com,waldnet.nl,westlanders.nu,zappsite.nl##.banner
 weeronline.nl##.banner + .specialBlockDiv
 at5.nl##.banner-300-100
 tvgids.nl##.banner-custom

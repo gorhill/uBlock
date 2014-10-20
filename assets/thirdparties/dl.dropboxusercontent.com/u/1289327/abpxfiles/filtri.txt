@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201410071057
+! Version: 201410170956
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 07-10-2014
+! Last modified: 17-10-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -46,7 +46,7 @@ http://*.citynews-napolitoday.stgy.it/*/skin/
 http://*.linearadio.it/bnrs/
 http://*.sassuolo2000.it/bnrs/
 http://*.mangaforever.net/*/mercatino-sfondo-*.*
-://adv.$domain=~sky.it|~la7.it|~la7.tv|~tre.it
+://adv.$domain=~sky.it|~la7.it|~la7.tv|~tre.it|~tzetze.it
 /eas_tag.1.0.js
 http://affiliate.godaddy.com/ads/
 http://*.adsalsaitalybranch.com/imagenes/creatividades/
@@ -61,7 +61,7 @@ http://*.slidetomac.com/*/spinblog-slidetomac/skin/*.jpg
 http://*.iphoneitalia.com/*/skin/*.jpg
 http://*.dotandad.com/*/*.jpg
 http://*.revsci.net/adserver/
-http://*.247realmedia.com/*/ads/$domain=~serviziopubblico.it|~rcsadv.it
+http://*.247realmedia.com/*/ads/$domain=~serviziopubblico.it|~rcsadv.it|~reachadv.it
 http://*.easybytez.com/*/*728x90.swf
 http://udmserve.net/udm/
 http://*.citynews-romatoday.stgy.it/images/skin/
@@ -427,7 +427,7 @@ http://ads*.bpath.com
 http://ads*.extreme-players.de/
 http://ads*.msn.com
 http://ads*.youporn.com
-http://ads.*/*$domain=~mail.yahoo.com|~docs.yahoo.com|~finance.yahoo.com|~teleradiopadrepio.it
+http://ads.*/*$domain=~mail.yahoo.com|~docs.yahoo.com|~finance.yahoo.com|~teleradiopadrepio.it|~tzetze.it|~reachadv.it
 http://ads.arcuspubblicita.it
 http://ads.bitage.it
 http://ads.capitan-trash.com
@@ -740,7 +740,7 @@ http://open.fuzzyx.com/*images*
 http://openads.mynight.pl
 http://openx.dol.it/openx/www/delivery/avw.php
 http://openx.innogames.de/delivery/
-http://optimized-by.simply.com/*
+http://optimized-by.simply.com/*$domain=~reachadv.it
 http://ov2.ag6.bdx.live-banner.com/
 http://oz.valueclick.com/cycle?host
 http://pagead2.googlesyndication.com/
@@ -1316,7 +1316,7 @@ http://avaxhome.ws/banners/
 http://forums.novell.com/*/banners/
 http://*.chicchedicala.it/banner/
 http://*.calciomercato.com/*/banners/
-http://*.criteo.com/delivery/ajs.php
+http://*.criteo.com/delivery/ajs.php$domain=~tzetze.it
 http://*.liverail.com/*/admanager.swf
 http://*.calciomercato.com/images/back.driveilfilm.*.jpg
 http://*.neobux.com/*/banner*
@@ -1702,6 +1702,9 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://images.eurogamer.net/*/takeovers/*420x83*
 ||gamer-network.net^$popup
 |http://*.catanzaroinforma.it/public/sponsor/
+|http://*.artribune.com/wp-content/uploads/*/*SKIN*
+|http://*.artribune.com/wp-content/uploads/*/*LEADERBOARD*
+|http://sport-gadgets.net/wp-content/plugins/facebook-page-promoter-lightbox/
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3188,6 +3191,29 @@ catanzaroinforma.it##.adsbygoogle
 catanzaroinforma.it###mainsponsor
 catanzaroinforma.it##.pubbli300
 catanzaroinforma.it###pubbliinmezzo
+artribune.com###skinlink
+artribune.com###head-sidebar
+artribune.com##[id^="div-gpt-ad-"]
+thehackernews.com###insidearticlead
+thehackernews.com##.adsbygoogle
+autos.yahoo.com##[id^="yom-ad-"]
+oilproject.org###sideAdv
+beppegrillo.it##[id^="div-gpt-ad-"]
+computerandvideogames.com##.promo.promo--leaderboard
+computerandvideogames.com##.promo__content
+computerandvideogames.com##.promo.promo--mpu
+computerandvideogames.com##[id^="taboola-below-article-thumbnails"]
+polygon.com##.m-ad.m-ad__medrec
+maps.google.com###adunit
+servizioallerta.it##[id^="google_ads_iframe"]
+servizioallerta.it##.ad.affiliate
+joystiq.com##[id^="adsDiv"]
+joystiq.com##[id^="div-gpt-ad"]
+sport-gadgets.net##.adsbygoogle
+nolabnoparty.com##.adsbygoogle
+nolabnoparty.com##.ad-cell
+tzetze.it###publyAdsOverlay
+tzetze.it##[id^="div-gpt-ad-"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup

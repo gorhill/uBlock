@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: OmZ4UcYJHCyEbeSdqF0myA
-! Version: 201410161151
+! Checksum: Ap0Au2yRZYQy9lA2W09fAg
+! Version: 201410201351
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 16 Oct 2014 11:51 UTC
+! Last modified: 20 Oct 2014 13:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -496,6 +496,7 @@ styleranking.de#@#.medrect-ad
 der-postillon.com#@#.middleads
 netbooknews.de#@#.post-ad
 tsv-thedinghausen.de#@#.postad
+quoka.de#@#.related-ads
 blesius.de#@#.text_werbung
 brandworkgroup.com,christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
@@ -5545,7 +5546,7 @@ archiv.raid-rush.ws##.pagebody:first-child > div[style="margin-bottom:80px;heigh
 freiburger-nachrichten.ch##.pane-frn-content-inserate-slider
 oekoportal.de##.panel-display > .panel-col-side > #block-views-website-block-1
 spiegelfechter.com##.parship
-computerbild.de,dvd-forum.at,dwdl.de,euractiv.de,giga.de,ibash.de,leinehertz.net,multipic.de,plattentests.de##.partner
+computerbild.de,dvd-forum.at,dwdl.de,euractiv.de,giga.de,ibash.de,leinehertz.net,multipic.de,plattentests.de,quoka.de##.partner
 tvemsdetten.com##.partner-slider
 sat1.de##.partner_box
 eatsmarter.de##.partnerbox
