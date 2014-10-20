@@ -46,6 +46,18 @@ config['build_number'] = strftime('%y' + str(int(tmp.total_seconds() * 65535 / 3
 
 rmtree(target_locale_dir)
 
+
+with open(pj(src_dir, 'js', 'vapi-appinfo.js'), 'r+t', encoding='utf-8', newline='\n') as f:
+    tmp = f.read()
+    f.seek(0)
+
+    f.write(re.sub(
+        r'/\*\*/([^:]+:).+',
+        lambda m: '/**/' + m.group(1) + " '" + config[m.group(1)[:-1]] + "',",
+        tmp
+    ))
+
+
 for alpha2 in os.listdir(source_locale_dir):
     with open(pj(source_locale_dir, alpha2, 'messages.json'), encoding='utf-8') as f:
         string_data = json.load(f, object_pairs_hook=OrderedDict)

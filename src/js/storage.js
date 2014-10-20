@@ -592,47 +592,47 @@
     // - Initialize internal state with maybe already existing tabs.
     // - Schedule next update operation.
     var onAllDone = function() {
-        // http://code.google.com/p/chromium/issues/detail?id=410868#c11
-        // Need to be sure to access `chrome.runtime.lastError` to prevent
-        // spurious warnings in the console.
-        var scriptDone = function() {
-            chrome.runtime.lastError;
-        };
-        var scriptEnd = function(tabId) {
-            if ( chrome.runtime.lastError ) {
-                return;
-            }
-            vAPI.tabs.injectScript(tabId, {
-                file: 'js/contentscript-end.js',
-                allFrames: true,
-                runAt: 'document_idle'
-            }, scriptDone);
-        };
-        var scriptStart = function(tabId) {
-            vAPI.tabs.injectScript(tabId, {
-                file: 'js/contentscript-start.js',
-                allFrames: true,
-                runAt: 'document_idle'
-            }, function(){ scriptEnd(tabId); });
-        };
-        var bindToTabs = function(tabs) {
-            var i = tabs.length, tab;
-            while ( i-- ) {
-                tab = tabs[i];
-                µb.bindTabToPageStats(tab.id, tab.url);
-                // https://github.com/gorhill/uBlock/issues/129
-                scriptStart(tab.id);
-            }
-        };
-
         if (vAPI.chrome) {
+            // http://code.google.com/p/chromium/issues/detail?id=410868#c11
+            // Need to be sure to access `chrome.runtime.lastError` to prevent
+            // spurious warnings in the console.
+            var scriptDone = function() {
+                chrome.runtime.lastError;
+            };
+            var scriptEnd = function(tabId) {
+                if ( chrome.runtime.lastError ) {
+                    return;
+                }
+                vAPI.tabs.injectScript(tabId, {
+                    file: 'js/contentscript-end.js',
+                    allFrames: true,
+                    runAt: 'document_idle'
+                }, scriptDone);
+            };
+            var scriptStart = function(tabId) {
+                vAPI.tabs.injectScript(tabId, {
+                    file: 'js/contentscript-start.js',
+                    allFrames: true,
+                    runAt: 'document_idle'
+                }, function(){ scriptEnd(tabId); });
+            };
+            var bindToTabs = function(tabs) {
+                var i = tabs.length, tab;
+                while ( i-- ) {
+                    tab = tabs[i];
+                    µb.bindTabToPageStats(tab.id, tab.url);
+                    // https://github.com/gorhill/uBlock/issues/129
+                    scriptStart(tab.id);
+                }
+            };
+
             chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
             chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
         }
 
         // https://github.com/gorhill/uBlock/issues/184
         // If we restored a selfie, check for updates not too far
-        //  in the future.
+        // in the future.
         var nextUpdate = fromSelfie === false && µb.userSettings.autoUpdate ?
             µb.nextUpdateAfter :
             µb.firstUpdateAfter;

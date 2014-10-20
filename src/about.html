@@ -10,7 +10,7 @@
 
 <body>
 
-<h2>µBlock <span id="aboutVersion"></span></h2>
+<h2 id="aboutNameVer"></h2>
 <ul>
     <li><a href="https://github.com/gorhill/uBlock/releases" data-i18n="aboutChangelog"></a>
     <li><a href="https://github.com/gorhill/uBlock" data-i18n="aboutCode"></a>
@@ -28,12 +28,13 @@
   <button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
   <input id="restoreFilePicker" type="file" accept="text/plain" style="display:none;">
 <p>
-<p><button type="button" id="reset" data-i18n="aboutResetDataButton">Start from scratch...</button>
+<p><button type="button" id="reset" data-i18n="aboutResetDataButton"></button>
 </div>
 
 <script src="js/js-loader.js" data-jsList="
 js/vapi-common.js
 js/vapi-client.js
+js/vapi-appinfo.js
 js/udom.js
 js/i18n.js
 js/dashboard-common.js

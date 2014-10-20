@@ -51,9 +51,6 @@ var defaultExternalLists = [
 /******************************************************************************/
 
 return {
-    name: "µBlock",
-    version: "0.7.0",
-
     userSettings: {
         autoUpdate: true,
         collapseBlocked: true,

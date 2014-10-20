@@ -181,7 +181,8 @@ var toggleNetFilteringSwitch = function(ev) {
 
 var renderHeader = function() {
     var hdr = uDom('#version');
-    hdr.html(hdr.html() + 'v'); // + chrome.runtime.getManifest().version);
+    hdr.nodes[0].previousSibling.textContent = vAPI.app.name;
+    hdr.html(hdr.html() + 'v' + vAPI.app.version);
 };
 
 /******************************************************************************/

@@ -97,7 +97,7 @@ var cachedAssetsManager = (function() {
         // Flush cached non-user assets if these are from a prior version.
         // https://github.com/gorhill/httpswitchboard/issues/212
         var onLastVersionRead = function(store) {
-            var currentVersion = µBlock.version;
+            var currentVersion = vAPI.app.version;
             var lastVersion = store.extensionLastVersion || '0.0.0.0';
             if ( currentVersion !== lastVersion ) {
                 vAPI.storage.set({ 'extensionLastVersion': currentVersion });

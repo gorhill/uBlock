@@ -108,7 +108,7 @@ uDom('#export').on('click', exportToFile);
 uDom('#import').on('click', startImportFilePicker);
 uDom('#reset').on('click', resetUserData);
 uDom('#restoreFilePicker').on('change', handleImportFilePicker);
-uDom('#aboutVersion').html(µBlock.version);
+uDom('#aboutNameVer').html(vAPI.app.name + ' v' + vAPI.app.version);
 
 /******************************************************************************/
 

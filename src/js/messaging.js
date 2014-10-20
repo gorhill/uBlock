@@ -677,7 +677,7 @@ var getUserData = function(callback) {
     var onUserFiltersReady = function(details) {
         callback({
             'timeStamp': Date.now(),
-            'version': µb.version,
+            'version': vAPI.app.version,
             'userSettings': µb.userSettings,
             'filterLists': µb.remoteBlacklists,
             'netWhitelist': µb.stringFromWhitelist(µb.netWhitelist),
