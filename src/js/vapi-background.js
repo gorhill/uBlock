@@ -187,7 +187,6 @@ if (window.chrome) {
             this.connector = function(port) {
                 var onMessage = function(request) {
                     var callback = function(response) {
-                        // stfu
                         if (chrome.runtime.lastError || response === undefined) {
                             return;
                         }
