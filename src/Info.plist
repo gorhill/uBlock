@@ -15,7 +15,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.7.0.7</string>
 	<key>CFBundleVersion</key>
-	<string>1452035</string>
+	<string>1452564</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -28,11 +28,11 @@
 				<key>Filename</key>
 				<string>popup.html</string>
 				<key>Height</key>
-				<real>1</real>
+				<real>310</real>
 				<key>Identifier</key>
 				<string>popover</string>
 				<key>Width</key>
-				<real>1</real>
+				<real>180</real>
 			</dict>
 		</array>
 		<key>Toolbar Items</key>

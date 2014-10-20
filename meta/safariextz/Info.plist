@@ -28,11 +28,11 @@
 				<key>Filename</key>
 				<string>popup.html</string>
 				<key>Height</key>
-				<real>1</real>
+				<real>310</real>
 				<key>Identifier</key>
 				<string>popover</string>
 				<key>Width</key>
-				<real>1</real>
+				<real>180</real>
 			</dict>
 		</array>
 		<key>Toolbar Items</key>

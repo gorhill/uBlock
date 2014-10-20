@@ -49,7 +49,10 @@ if (window.chrome) {
 
     // update popover size to its content
     if (safari.self.identifier === 'popover' && safari.self) {
-        (function() {
+        window.addEventListener('load', function() {
+            // Initial dimensions are set in Info.plist
+            var pWidth = safari.self.width;
+            var pHeight = safari.self.height;
             var upadteTimer = null;
             var resizePopover = function() {
                 if (upadteTimer) {
@@ -57,10 +60,10 @@ if (window.chrome) {
                 }
 
                 upadteTimer = setTimeout(function() {
-                    safari.self.width = document.body.clientWidth;
-                    safari.self.height = document.body.clientHeight;
+                    safari.self.width = Math.max(pWidth, document.body.clientWidth);
+                    safari.self.height = Math.max(pHeight, document.body.clientHeight);
                     upadteTimer = null;
-                }, 50);
+                }, 20);
             };
 
             var mutObs = window.MutationObserver || window.WebkitMutationObserver;
@@ -77,7 +80,7 @@ if (window.chrome) {
                 // Safari doesn't support DOMAttrModified
                 document.addEventListener('DOMSubtreeModified', resizePopover);
             }
-        })();
+        });
     }
 }
 
