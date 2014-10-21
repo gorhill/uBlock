@@ -97,7 +97,7 @@ var exportWhitelistToFile = function() {
 
     if (val) {
         vAPI.download({
-            'url': 'data:text/plain,' + encodeURIComponent(val),
+            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
             'filename': 'my-ublock-whitelist.txt'
         });
     }

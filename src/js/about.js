@@ -39,7 +39,7 @@ var exportToFile = function() {
         }
 
         vAPI.download({
-            'url': 'data:text/plain,' + encodeURIComponent(JSON.stringify(userData)),
+            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData)),
             'filename': 'ublock-backup.txt'
         });
     };
