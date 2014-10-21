@@ -18,11 +18,11 @@ vAPI.download = function(details) {
         a.dispatchEvent(new MouseEvent('click'));
     }
     else {
-        var messager = vAPI.messaging.channel('download');
+        var messager = vAPI.messaging.channel('_download');
         messager.send({
             what: 'gotoURL',
             details: {
-                url: a.target.href,
+                url: details.url,
                 index: -1
             }
         });
