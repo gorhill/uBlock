@@ -35,6 +35,12 @@ var messagingConnector = function(response) {
     }
 
     if (typeof listener === 'function') {
+        // Safari bug
+        // Deleting the response.requestId below (only in some cases, probably
+        // when frames are present on the page) will remove it from all the
+        // following messages too, however with the following line it won't
+        vAPI.safari && console.log;
+
         delete vAPI.messaging.listeners[response.requestId];
         delete response.requestId;
         listener(response.msg);
@@ -42,6 +48,7 @@ var messagingConnector = function(response) {
 };
 
 if (window.chrome) {
+    vAPI.chrome = true;
     vAPI.messaging = {
         port: null,
         requestId: 0,
@@ -95,6 +102,8 @@ if (window.chrome) {
         }
     };
 } else if (window.safari) {
+    vAPI.safari = true;
+
     // relevant?
     // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
     vAPI.messaging = {
