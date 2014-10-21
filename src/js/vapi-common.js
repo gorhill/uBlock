@@ -5,6 +5,14 @@
 
 window.vAPI = window.vAPI || {};
 
+// http://www.w3.org/International/questions/qa-scripts#directions
+var setScriptDirection = function(langugae) {
+    document.body.setAttribute(
+        'dir',
+        ~['ar', 'he', 'fa', 'ps', 'ur'].indexOf(langugae) ? 'rtl' : 'ltr'
+    );
+};
+
 vAPI.download = function(details) {
     if (!details.url) {
         return;
@@ -40,6 +48,8 @@ if (window.chrome) {
     vAPI.i18n = function(s) {
         return chrome.i18n.getMessage(s) || s;
     };
+
+    setScriptDirection(vAPI.i18n('@@ui_locale'));
 } else if (window.safari) {
     vAPI.getURL = function(path) {
         return safari.extension.baseURI + path;
@@ -53,14 +63,14 @@ if (window.chrome) {
 
     if (vAPI.i18nData[vAPI.i18n = navigator.language.replace('-', '_')]
         || vAPI.i18nData[vAPI.i18n = vAPI.i18n.slice(0, 2)]) {
-        vAPI.i18nAlpha2 = vAPI.i18n;
+        vAPI.i18nLocale = vAPI.i18n;
     } else {
-        vAPI.i18nAlpha2 = vAPI.i18nData._;
+        vAPI.i18nLocale = vAPI.i18nData._;
     }
 
     xhr = new XMLHttpRequest;
     xhr.overrideMimeType('application/json;charset=utf-8');
-    xhr.open('GET', './_locales/' + vAPI.i18nAlpha2 + '/messages.json', false);
+    xhr.open('GET', './_locales/' + vAPI.i18nLocale + '/messages.json', false);
     xhr.send();
     vAPI.i18nData = JSON.parse(xhr.responseText);
 
@@ -71,6 +81,8 @@ if (window.chrome) {
     vAPI.i18n = function(s) {
         return this.i18nData[s] || s;
     };
+
+    setScriptDirection(vAPI.i18nLocale);
 
     // update popover size to its content
     if (safari.self.identifier === 'popover' && safari.self) {

@@ -2,31 +2,39 @@ ul {
     padding: 0;
     list-style-type: none;
     }
-ul#options {
+#options {
     margin-top: 0;
     }
-ul#options li {
+#options li {
     margin-bottom: 0.5em;
     }
-ul#lists {
+#lists {
     margin: 0.5em 0 0 0;
-    padding-__MSG_@@bidi_end_edge__: 0em;
-    padding-__MSG_@@bidi_start_edge__: 1em;
+    padding-left: 1em;
+    padding-right: 0em;
     }
-ul#lists > li {
+body[dir=rtl] #lists {
+    padding-left: 0em;
+    padding-right: 1em;
+    }
+#lists > li {
     margin: 0.5em 0 0 0;
     padding: 0;
     font-size: 15px;
     list-style-type: none;
     }
-ul#lists > li > ul {
+#lists > li > ul {
     margin: 0.25em 0 0 0;
     }
 li.listDetails {
     font-size: 14px;
     margin: 0 auto 0 auto;
-    margin-__MSG_@@bidi_start_edge__: 1em;
-    margin-__MSG_@@bidi_end_edge__: 0em;
+    margin-left: 1em;
+    margin-right: 0em;
+    }
+body[dir=rtl] li.listDetails {
+    margin-left: 0em;
+    margin-right: 1em;
     }
 li.listDetails > * {
     unicode-bidi: embed;
@@ -70,7 +78,11 @@ button.custom.reloadAll:not(.disabled) {
     position: fixed;
     display: initial;
     top: 1em;
-    __MSG_@@bidi_end_edge__: 1em;
+    right: 1em;
+    }
+body[dir=rtl] #buttonApply {
+    right: auto;
+    left: 1em;
     }
 #buttonApply.disabled {
     display: none;
@@ -98,8 +110,10 @@ span.obsolete {
     background-color: hsl(36, 100%, 75%);
     }
 #externalListsDiv {
-    margin: 2em auto 0 auto;
-    margin-__MSG_@@bidi_start_edge__: 2em;
+    margin: 2em auto 0 2em;
+    }
+body[dir=rtl] #externalListsDiv {
+    margin: 2em 2em 0;
     }
 #externalLists {
     font-size: smaller;

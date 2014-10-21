@@ -4,7 +4,6 @@ body {
     padding: 0;
     font: 13px sans-serif;
     background-color: white;
-    direction: __MSG_@@bidi_dir__;
     min-width: 180px;
     overflow: hidden;
     display: inline-block;
@@ -114,13 +113,18 @@ p {
 #dynamicFilteringToggler > div:nth-of-type(4) {
     left: 75%;
     }
-#dynamicFilteringToggler a {
+#dynamicFilteringToggler > a {
     padding: 0 2px 0 8px;
     position: absolute;
-    __MSG_@@bidi_end_edge__: 0;
+    right: 0;
     color: #aaa;
     visibility: hidden;
     }
+body[dir=rtl] #dynamicFilteringToggler > a {
+    right: auto;
+    left: 0;
+}
+
 #dynamicFilteringToggler a:hover {
     color: #444;
     }

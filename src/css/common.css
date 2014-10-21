@@ -12,42 +12,48 @@
     vertical-align: baseline;
     display: inline-block;
     }
-#dashboard-nav-widgets {
-	direction: __MSG_@@bidi_dir__;
-	}
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
-*[data-tip] {
+[data-tip] {
     cursor: pointer;
     position: relative;
     }
-*[data-tip]:hover:after {
+[data-tip]:hover:after {
     background-color: #ffffee;
     border: 1px solid gray;
     border-radius: 3px;
     box-shadow: 1px 1px 3px gray;
     color: black;
     content: attr(data-tip);
-	direction: __MSG_@@bidi_dir__;
     font: 11px sans-serif;
     left: 0;
     line-height: 130%;
     min-width: 55%;
     padding: 4px 6px;
     position: absolute;
-    text-align: __MSG_@@bidi_start_edge__;
+    text-align: left;
     top: 110%;
     white-space: pre-line;
     z-index: 20;
     animation: tooltip 0.8s;
     -webkit-animation: tooltip 0.8s;
     }
-*[data-tip][data-tip-anchor="top"]:hover:after {
-    bottom: 105%;
-    __MSG_@@bidi_start_edge__: auto;
-    __MSG_@@bidi_end_edge__: -10%;
-    top: auto;
+body[dir=rtl] [data-tip]:hover:after {
+    text-align: right;
     }
+
+[data-tip][data-tip-anchor="top"]:hover:after {
+    bottom: 105%;
+    top: auto;
+    left: auto;
+    right: -10%;
+    }
+
+body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
+    left: -10%;
+    right: auto;
+    }
+
 @keyframes tooltip {
       0% { opacity: 0; }
      85% { opacity: 0; }

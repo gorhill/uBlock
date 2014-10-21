@@ -1,91 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
 <title data-i18n="dashboardName"></title>
-<style>
-html, body {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    font: 15px httpsb,sans-serif;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    }
-#dashboard-nav {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    height: 50px;
-    z-index: 10;
-    }
-#dashboard-nav-widgets {
-    margin: 0;
-    border-bottom: 1px solid #ccc;
-    padding: 4px 0 0;
-    white-space: nowrap;
-    background-color: white;
-    }
-#dashboard-nav-widgets span {
-    padding: 0 0.5em;
-    font-size: larger;
-    }
-.tabButton {
-    margin: 0;
-    border: 1px solid #ccc;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom: 1px solid #ccc;
-    padding: 4px;
-    display: inline-block;
-    position: relative;
-    top: 1px;
-    color: black;
-    background-color: #eee;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    }
-.tabButton:focus {
-    outline: 0;
-    }
-.tabButton:active,.tabButton:visited {
-    color: inherited;
-    }
-.tabButton.selected {
-    border-bottom: 1px solid white;
-    background-color: white;
-    border-bottom: 1px solid white;
-    }
-iframe {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-    border-top: 50px solid transparent;
-    box-sizing: border-box;
-    }
-</style>
-<link href='css/common.css' rel='stylesheet' type='text/css'>
+<link href="css/dashboard.css" rel="stylesheet" type="text/css">
+<link href="css/common.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <div id="dashboard-nav">
     <div id="dashboard-nav-widgets">
-        <span>µBlock</span>
-        <a class="tabButton" href="#" data-dashboard-panel-url="3p-filters.html" data-i18n="3pPageName"></a>
-        <a class="tabButton" href="#" data-dashboard-panel-url="1p-filters.html" data-i18n="1pPageName"></a>
-        <a class="tabButton" href="#" data-dashboard-panel-url="whitelist.html" data-i18n="whitelistPageName"></a>
-        <a class="tabButton" href="#" data-dashboard-panel-url="settings.html" data-i18n="settingsPageName"></a>
-        <a class="tabButton" href="#" data-dashboard-panel-url="stats.html" data-i18n="statsPageName"></a>
-        <a class="tabButton" href="#" data-dashboard-panel-url="about.html" data-i18n="aboutPageName"></a>
+        <span data-i18n="extName"></span>
+        <a class="tabButton" href="#3p-filters.html" data-i18n="3pPageName"></a>
+        <a class="tabButton" href="#1p-filters.html" data-i18n="1pPageName"></a>
+        <a class="tabButton" href="#whitelist.html" data-i18n="whitelistPageName"></a>
+        <a class="tabButton" href="#settings.html" data-i18n="settingsPageName"></a>
+        <a class="tabButton" href="#stats.html" data-i18n="statsPageName"></a>
+        <a class="tabButton" href="#about.html" data-i18n="aboutPageName"></a>
     </div>
 </div>
 

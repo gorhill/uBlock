@@ -377,7 +377,7 @@ var onMessage = function(request, sender, callback) {
         case 'elementPickerArguments':
             response = {
                 i18n: {
-                    '@@bidi_dir': vAPI.i18n('@@bidi_dir'),
+                    '@@bidi_dir': document.body.getAttribute('dir'),
                     create: vAPI.i18n('pickerCreate'),
                     pick: vAPI.i18n('pickerPick'),
                     quit: vAPI.i18n('pickerQuit'),

@@ -29,7 +29,7 @@
 /******************************************************************************/
 
 var loadDashboardPanel = function(tab, q) {
-    var tabButton = uDom('[data-dashboard-panel-url="' + tab + '"]');
+    var tabButton = uDom('[href="#' + tab + '"]');
     if ( !tabButton ) {
         return;
     }
@@ -42,7 +42,7 @@ var loadDashboardPanel = function(tab, q) {
 /******************************************************************************/
 
 var onTabClickHandler = function(e) {
-    loadDashboardPanel(uDom(this).attr('data-dashboard-panel-url'));
+    loadDashboardPanel(this.hash.slice(1));
     e.preventDefault();
 };
 

@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0 0.5em 5em 0.5em;
     font: 14px sans-serif;
-	direction: __MSG_@@bidi_dir__;
     }
 h2, h3 {
     margin: 1em 0;
@@ -16,11 +15,6 @@ h2:nth-of-type(1) {
     }
 h3 {
     font-size: 16px;
-    }
-h2 + * {
-	margin: 0 auto;
-	margin-__MSG_@@bidi_start_edge__: 1em;
-	padding-__MSG_@@bidi_end_edge__: 0em;
     }
 a {
     text-decoration: none;
