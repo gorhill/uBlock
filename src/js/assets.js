@@ -215,7 +215,7 @@ var cachedAssetsManager = (function() {
             exports.remove(/^assets\/(ublock|thirdparties)\//);
             exports.remove('assets/checksums.txt');
             if ( typeof callback === 'function' ) {
-                callback();
+                callback(null);
             }
         };
         getEntries(onEntries);
