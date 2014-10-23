@@ -28,85 +28,85 @@
 /*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
 ;(function(root) {
 
-	if (!root.CSS) {
-		root.CSS = {};
-	}
+    if (!root.CSS) {
+        root.CSS = {};
+    }
 
-	var CSS = root.CSS;
+    var CSS = root.CSS;
 
-	var InvalidCharacterError = function(message) {
-		this.message = message;
-	};
-	InvalidCharacterError.prototype = new Error();
-	InvalidCharacterError.prototype.name = 'InvalidCharacterError';
+    var InvalidCharacterError = function(message) {
+        this.message = message;
+    };
+    InvalidCharacterError.prototype = new Error();
+    InvalidCharacterError.prototype.name = 'InvalidCharacterError';
 
-	if (!CSS.escape) {
-		// http://dev.w3.org/csswg/cssom/#serialize-an-identifier
-		CSS.escape = function(value) {
-			var string = String(value);
-			var length = string.length;
-			var index = -1;
-			var codeUnit;
-			var result = '';
-			var firstCodeUnit = string.charCodeAt(0);
-			while (++index < length) {
-				codeUnit = string.charCodeAt(index);
-				// Note: there’s no need to special-case astral symbols, surrogate
-				// pairs, or lone surrogates.
+    if (!CSS.escape) {
+        // http://dev.w3.org/csswg/cssom/#serialize-an-identifier
+        CSS.escape = function(value) {
+            var string = String(value);
+            var length = string.length;
+            var index = -1;
+            var codeUnit;
+            var result = '';
+            var firstCodeUnit = string.charCodeAt(0);
+            while (++index < length) {
+                codeUnit = string.charCodeAt(index);
+                // Note: there’s no need to special-case astral symbols, surrogate
+                // pairs, or lone surrogates.
 
-				// If the character is NULL (U+0000), then throw an
-				// `InvalidCharacterError` exception and terminate these steps.
-				if (codeUnit === 0x0000) {
-					throw new InvalidCharacterError(
-						'Invalid character: the input contains U+0000.'
-					);
-				}
+                // If the character is NULL (U+0000), then throw an
+                // `InvalidCharacterError` exception and terminate these steps.
+                if (codeUnit === 0x0000) {
+                    throw new InvalidCharacterError(
+                        'Invalid character: the input contains U+0000.'
+                    );
+                }
 
-				if (
-					// If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
-					// U+007F, […]
-					(codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit == 0x007F ||
-					// If the character is the first character and is in the range [0-9]
-					// (U+0030 to U+0039), […]
-					(index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
-					// If the character is the second character and is in the range [0-9]
-					// (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
-					(
-						index == 1 &&
-						codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
-						firstCodeUnit == 0x002D
-					)
-				) {
-					// http://dev.w3.org/csswg/cssom/#escape-a-character-as-code-point
-					result += '\\' + codeUnit.toString(16) + ' ';
-					continue;
-				}
+                if (
+                    // If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
+                    // U+007F, […]
+                    (codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit == 0x007F ||
+                    // If the character is the first character and is in the range [0-9]
+                    // (U+0030 to U+0039), […]
+                    (index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
+                    // If the character is the second character and is in the range [0-9]
+                    // (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
+                    (
+                        index == 1 &&
+                        codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
+                        firstCodeUnit == 0x002D
+                    )
+                ) {
+                    // http://dev.w3.org/csswg/cssom/#escape-a-character-as-code-point
+                    result += '\\' + codeUnit.toString(16) + ' ';
+                    continue;
+                }
 
-				// If the character is not handled by one of the above rules and is
-				// greater than or equal to U+0080, is `-` (U+002D) or `_` (U+005F), or
-				// is in one of the ranges [0-9] (U+0030 to U+0039), [A-Z] (U+0041 to
-				// U+005A), or [a-z] (U+0061 to U+007A), […]
-				if (
-					codeUnit >= 0x0080 ||
-					codeUnit == 0x002D ||
-					codeUnit == 0x005F ||
-					codeUnit >= 0x0030 && codeUnit <= 0x0039 ||
-					codeUnit >= 0x0041 && codeUnit <= 0x005A ||
-					codeUnit >= 0x0061 && codeUnit <= 0x007A
-				) {
-					// the character itself
-					result += string.charAt(index);
-					continue;
-				}
+                // If the character is not handled by one of the above rules and is
+                // greater than or equal to U+0080, is `-` (U+002D) or `_` (U+005F), or
+                // is in one of the ranges [0-9] (U+0030 to U+0039), [A-Z] (U+0041 to
+                // U+005A), or [a-z] (U+0061 to U+007A), […]
+                if (
+                    codeUnit >= 0x0080 ||
+                    codeUnit == 0x002D ||
+                    codeUnit == 0x005F ||
+                    codeUnit >= 0x0030 && codeUnit <= 0x0039 ||
+                    codeUnit >= 0x0041 && codeUnit <= 0x005A ||
+                    codeUnit >= 0x0061 && codeUnit <= 0x007A
+                ) {
+                    // the character itself
+                    result += string.charAt(index);
+                    continue;
+                }
 
-				// Otherwise, the escaped character.
-				// http://dev.w3.org/csswg/cssom/#escape-a-character
-				result += '\\' + string.charAt(index);
+                // Otherwise, the escaped character.
+                // http://dev.w3.org/csswg/cssom/#escape-a-character
+                result += '\\' + string.charAt(index);
 
-			}
-			return result;
-		};
-	}
+            }
+            return result;
+        };
+    }
 
 }(this));
 
@@ -120,16 +120,21 @@
 
 /******************************************************************************/
 
-var localMessager = vAPI.messaging.channel('element-picker.js');
-
 // https://github.com/gorhill/uBlock/issues/314#issuecomment-58878112
 // Using an id makes uBlock's CSS rules more specific, thus prevents
 // surrounding external rules from winning over own rules.
 var µBlockId = CSS.escape('µBlock');
 
+var pickerRoot = document.getElementById(µBlockId);
+
+if ( pickerRoot ) {
+    return;
+}
+
+var localMessager = vAPI.messaging.channel('element-picker.js');
+
 var svgns = 'http://www.w3.org/2000/svg';
 
-var pickerRoot = null;
 var svgRoot = null;
 var svgOcean = null;
 var svgIslands = null;
@@ -143,23 +148,25 @@ var cosmeticFilterCandidates = [];
 var targetElements = [];
 var svgWidth = 0;
 var svgHeight = 0;
+var elementFromPointCSSProperty = 'pointerEvents';
+var onSvgHoveredTimer = null;
 
 /******************************************************************************/
 
 var pickerPaused = function() {
-    return /(^| )paused( |$)/.test(pickerRoot.className);
+    return pickerRoot.classList.contains('paused');
 };
 
 /******************************************************************************/
 
 var pausePicker = function() {
-    pickerRoot.className += ' paused';
+    pickerRoot.classList.add('paused');
 };
 
 /******************************************************************************/
 
 var unpausePicker = function() {
-    pickerRoot.className = pickerRoot.className.replace(/(^| )paused( |$)/g, '').trim();
+    pickerRoot.classList.remove('paused');
 };
 
 /******************************************************************************/
@@ -174,24 +181,6 @@ var pickerRootDistance = function(elem) {
         distance += 1;
     }
     return -1;
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/210
-
-// HTMLElement.getBoundingClientRect() is unreliable (or I misunderstand what
-// it does). I will just compute it myself.
-
-var getBoundingClientRect = function(elem, r) {
-    r.w = elem.offsetWidth;
-    r.h = elem.offsetHeight;
-    r.x = elem.offsetLeft - elem.scrollLeft;
-    r.y = elem.offsetTop - elem.scrollTop;
-    while ( elem = elem.offsetParent ) {
-        r.x += elem.offsetLeft - elem.scrollLeft;
-        r.y += elem.offsetTop - elem.scrollTop;
-    }
 };
 
 /******************************************************************************/
@@ -216,7 +205,6 @@ var highlightElements = function(elems, force) {
     var offx = window.pageXOffset;
     var offy = window.pageYOffset;
     var islands = [];
-    // To avoid memory churning, reuse object
     var elem, rect, poly;
     for ( var i = 0; i < elems.length; i++ ) {
         elem = elems[i];
@@ -233,7 +221,7 @@ var highlightElements = function(elems, force) {
         islands.push(poly);
     }
     svgOcean.setAttribute('d', ocean.join(''));
-    svgIslands.setAttribute('d', islands.join('') || 'M 0 0');
+    svgIslands.setAttribute('d', islands.join('') || 'M0 0');
 };
 
 /******************************************************************************/
@@ -590,23 +578,27 @@ var showDialog = function(options) {
 /******************************************************************************/
 
 var elementFromPoint = function(x, y) {
-    svgRoot.style.display = 'none';
+    svgRoot.style[elementFromPointCSSProperty] = 'none';
     var elem = document.elementFromPoint(x, y);
     if ( elem === document.body || elem === document.documentElement ) {
         elem = null;
     }
-    svgRoot.style.display = '';
+    svgRoot.style[elementFromPointCSSProperty] = '';
     return elem;
 };
 
 /******************************************************************************/
 
 var onSvgHovered = function(ev) {
-    if ( pickerPaused() ) {
+    if ( pickerPaused() || onSvgHoveredTimer) {
         return;
     }
-    var elem = elementFromPoint(ev.clientX, ev.clientY);
-    highlightElements(elem ? [elem] : []);
+
+    onSvgHoveredTimer = setTimeout(function() {
+        var elem = elementFromPoint(ev.clientX, ev.clientY);
+        highlightElements(elem ? [elem] : []);
+        onSvgHoveredTimer = null;
+    }, 50);
 };
 
 /******************************************************************************/
@@ -675,11 +667,7 @@ var stopPicker = function() {
 
 /******************************************************************************/
 
-var startPicker = function() {
-    pickerRoot = document.getElementById(µBlockId);
-    if ( pickerRoot !== null ) {
-        return;
-    }
+var startPicker = function(details) {
     pickerRoot = document.createElement('div');
     pickerRoot.id = µBlockId;
 
@@ -742,6 +730,7 @@ var startPicker = function() {
             'position: absolute;',
             'top: 0;',
             'left: 0;',
+            'pointer-events: auto;',
             'cursor: crosshair;',
             'z-index: 4999999999;',
         '}',
@@ -899,85 +888,89 @@ var startPicker = function() {
 
     highlightElements([], true);
 
-    var initPicker = function(details) {
-        var i18nMap = {
-            '#µBlock > div': '@@bidi_dir',
-            '#create': 'create',
-            '#pick': 'pick',
-            '#quit': 'quit',
-            'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
-            'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
-            'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
-        };
-
-        if (details.i18n['@@bidi_dir']) {
-            divDialog.style.direction = details.i18n['@@bidi_dir'];
-            delete i18nMap['#µBlock > div'];
-        }
-
-        for ( var k in i18nMap ) {
-            if ( i18nMap.hasOwnProperty(k) === false ) {
-                continue;
-            }
-            divDialog.querySelector(k).firstChild.nodeValue = details.i18n[i18nMap[k]];
-        }
-
-        // Auto-select a specific target, if any, and if possible
-        var elem;
-
-        // Try using mouse position
-        if ( details.clientX !== -1 ) {
-            elem = elementFromPoint(details.clientX, details.clientY);
-            if ( elem !== null ) {
-                filtersFromElement(elem);
-                showDialog();
-                return;
-            }
-        }
-
-        // No mouse position available, use suggested target
-        var target = details.target || '';
-        var pos = target.indexOf('\t');
-        if ( pos === -1 ) {
-            return;
-        }
-        var srcAttrMap = {
-            'a': 'href',
-            'img': 'src',
-            'iframe': 'src',
-            'video': 'src',
-            'audio': 'src'
-        };
-        var tagName = target.slice(0, pos);
-        var url = target.slice(pos + 1);
-        var attr = srcAttrMap[tagName];
-        if ( attr === undefined ) {
-            return;
-        }
-        var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-        var i = elems.length;
-        var src;
-        while ( i-- ) {
-            elem = elems[i];
-            src = elem[attr];
-            if ( typeof src !== 'string' || src === '' ) {
-                continue;
-            }
-            if ( src !== url ) {
-                continue;
-            }
-            filtersFromElement(elem);
-            showDialog({ modifier: true });
-            return;
-        }
+    var i18nMap = {
+        '#µBlock > div': '@@bidi_dir',
+        '#create': 'create',
+        '#pick': 'pick',
+        '#quit': 'quit',
+        'ul > li#netFilters > span:nth-of-type(1)': 'netFilters',
+        'ul > li#cosmeticFilters > span:nth-of-type(1)': 'cosmeticFilters',
+        'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
     };
 
-    localMessager.send({ what: 'elementPickerArguments' }, initPicker);
+    if (details.i18n['@@bidi_dir']) {
+        divDialog.style.direction = details.i18n['@@bidi_dir'];
+        delete i18nMap['#µBlock > div'];
+    }
+
+    for ( var k in i18nMap ) {
+        if ( i18nMap.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        divDialog.querySelector(k).firstChild.nodeValue = details.i18n[i18nMap[k]];
+    }
+
+    // First we test if pointer-events are hadnled in Node.elementFromPoint().
+    // If the browser ignores pointer-events in Node.elementFromPoint(),
+    // then use the display property instead (e.g., for older Safari).
+    var elem = elementFromPoint(0, 0);
+
+    if ( elem === svgRoot ) {
+        elementFromPointCSSProperty = 'display';
+    }
+
+    // Auto-select a specific target, if any, and if possible
+
+    // Try using mouse position
+    if ( details.clientX !== -1 ) {
+        elem = elementFromPoint(details.clientX, details.clientY);
+        if ( elem !== null ) {
+            filtersFromElement(elem);
+            showDialog();
+            return;
+        }
+    }
+
+    // No mouse position available, use suggested target
+    var target = details.target || '';
+    var pos = target.indexOf('\t');
+    if ( pos === -1 ) {
+        return;
+    }
+    var srcAttrMap = {
+        'a': 'href',
+        'img': 'src',
+        'iframe': 'src',
+        'video': 'src',
+        'audio': 'src'
+    };
+    var tagName = target.slice(0, pos);
+    var url = target.slice(pos + 1);
+    var attr = srcAttrMap[tagName];
+    if ( attr === undefined ) {
+        return;
+    }
+    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
+    var i = elems.length;
+    var src;
+    while ( i-- ) {
+        elem = elems[i];
+        src = elem[attr];
+        if ( typeof src !== 'string' || src === '' ) {
+            continue;
+        }
+        if ( src !== url ) {
+            continue;
+        }
+        filtersFromElement(elem);
+        showDialog({ modifier: true });
+        return;
+    }
 };
 
 /******************************************************************************/
 
-startPicker();
+localMessager.send({ what: 'elementPickerArguments' }, startPicker);
 
 // This triggers the hiding of the popover in Safari
 window.focus();
