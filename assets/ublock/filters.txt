@@ -155,3 +155,7 @@ google.*###center_col > #tads
 # Chrome store feedback
 # To counter Peter Lowe's `intergi.com`
 @@||intergi.com^$domain=tvgolo.com
+
+# https://github.com/gorhill/uBlock/issues/336
+# To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
+@@||flurry.com^$~third-party
