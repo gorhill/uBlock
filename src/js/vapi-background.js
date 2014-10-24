@@ -1,3 +1,4 @@
+/* global SafariBrowserTab, Services, XPCOMUtils */
 // for background page only
 
 (function() {
@@ -15,7 +16,7 @@ if (window.chrome) {
     vAPI.tabs = {
         registerListeners: function() {
             if (typeof this.onNavigation === 'function') {
-             chrome.webNavigation.onCommitted.addListener(this.onNavigation);
+                chrome.webNavigation.onCommitted.addListener(this.onNavigation);
             }
 
             if (typeof this.onUpdated === 'function') {
@@ -392,16 +393,11 @@ if (window.chrome) {
             }
 
             // ??
-            /*if (typeof onUpdated === 'function') {
-                chrome.tabs.onUpdated.addListener(this.onUpdated);
-            }*/
+            /* if (typeof this.onUpdated === 'function') { } */
 
             // onClosed handled in the main tab-close event
-
-            // maybe intercept window.open on web-pages?
-            /*if (typeof onPopup === 'function') {
-                chrome.webNavigation.onCreatedNavigationTarget.addListener(this.onPopup);
-            }*/
+            // onPopup is handled in window.open on web-pages?
+            /* if (typeof onPopup === 'function') { } */
         },
         getTabId: function(tab) {
             for (var i in vAPI.tabs.stack) {
@@ -653,10 +649,6 @@ if (window.chrome) {
             }
 
             this.connector = function(request) {
-                if (request.name === 'canLoad') {
-                    return;
-                }
-
                 var callback = function(response) {
                     if (request.message.requestId && response !== undefined) {
                         request.target.page.dispatchMessage(
@@ -689,6 +681,9 @@ if (window.chrome) {
                 }
             };
 
+            // the third parameter must stay false (bubbling), so later
+            // onBeforeRequest will use true (capturing), where we can invoke
+            // stopPropagation() (this way this.connector won't be fired)
             safari.application.addEventListener('message', this.connector, false);
         },
         broadcast: function(message) {
@@ -705,8 +700,6 @@ if (window.chrome) {
 
     vAPI.net = {
         registerListeners: function() {
-            // onBeforeRequest is used in the messaging above, in the connector method
-            // in order to use only one listener
             var onBeforeRequest = this.onBeforeRequest;
 
             if (typeof onBeforeRequest.callback === 'function') {
@@ -715,64 +708,79 @@ if (window.chrome) {
                 }
 
                 onBeforeRequest = onBeforeRequest.callback;
-                this.onBeforeRequest.callback = function(request) {
-                    if (request.name !== 'canLoad') {
+                this.onBeforeRequest.callback = function(e) {
+                    if (e.name !== 'canLoad') {
                         return;
                     }
 
                     // no stopPropagation if it was called from beforeNavigate event
-                    if (request.stopPropagation) {
-                        request.stopPropagation();
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+
+                    // blocking unwanted pop-ups
+                    if (e.message.type === 'popup') {
+                        if (typeof vAPI.tabs.onPopup === 'function') {
+                            e.message.type = 'main_frame';
+                            e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
+
+                            if (vAPI.tabs.onPopup(e.message)) {
+                                e.message = false;
+                                return;
+                            }
+                        }
+
+                        e.message = true;
+                        return;
                     }
 
                     var block = vAPI.net.onBeforeRequest;
 
-                    if (block.types.indexOf(request.message.type) < 0) {
-                        return;
+                    if (block.types.indexOf(e.message.type) < 0) {
+                        return true;
                     }
 
-                    request.message.tabId = vAPI.tabs.getTabId(request.target);
-                    block = onBeforeRequest(request.message);
+                    e.message.tabId = vAPI.tabs.getTabId(e.target);
+                    block = onBeforeRequest(e.message);
 
                     // truthy return value will allow the request,
                     // except when redirectUrl is present
                     if (block && typeof block === 'object') {
                         if (block.cancel) {
-                            request.message = false;
+                            e.message = false;
                         }
-                        else if (typeof block.redirectUrl === "string") {
-                            request.message = block.redirectUrl;
+                        else if (e.message.type === 'script'
+                            && typeof block.redirectUrl === "string") {
+                            e.message = block.redirectUrl;
                         }
                         else {
-                            request.message = true;
+                            e.message = true;
                         }
                     }
                     else {
-                        request.message = true;
+                        e.message = true;
                     }
 
-                    return request.message;
+                    return e.message;
                 };
                 safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
 
                 // 'main_frame' simulation, since this isn't available in beforeload
                 safari.application.addEventListener('beforeNavigate', function(e) {
                     // e.url is not present for local files or data URIs
-                    if (!e.url) {
-                        return;
+                    if (e.url) {
+                        vAPI.net.onBeforeRequest.callback({
+                            name: 'canLoad',
+                            target: e.target,
+                            message: {
+                                url: e.url,
+                                type: 'main_frame',
+                                frameId: 0,
+                                parentFrameId: -1,
+                                timeStamp: e.timeStamp
+                            }
+                        }) || e.preventDefault();
                     }
-
-                    vAPI.net.onBeforeRequest.callback({
-                        name: 'canLoad',
-                        target: e.target,
-                        message: {
-                            url: e.url,
-                            type: 'main_frame',
-                            frameId: 0,
-                            parentFrameId: -1,
-                            timeStamp: e.timeStamp
-                        }
-                    }) || e.preventDefault();
                 }, true);
             }
         }
@@ -861,7 +869,7 @@ if (window.chrome) {
             safari.application.addEventListener('contextmenu', this.onContextMenu);
             safari.application.addEventListener("command", this.onContextMenuCommand);
         },
-        remove: function(argument) {
+        remove: function() {
             safari.application.removeEventListener('contextmenu', this.onContextMenu);
             safari.application.removeEventListener("command", this.onContextMenuCommand);
             this.onContextMenu = null;

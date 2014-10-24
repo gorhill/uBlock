@@ -611,6 +611,11 @@
             };
             var scriptStart = function(tabId) {
                 vAPI.tabs.injectScript(tabId, {
+                    file: 'js/vapi-client.js',
+                    allFrames: true,
+                    runAt: 'document_start'
+                }, function(){ });
+                vAPI.tabs.injectScript(tabId, {
                     file: 'js/contentscript-start.js',
                     allFrames: true,
                     runAt: 'document_idle'

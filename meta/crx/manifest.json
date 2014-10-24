@@ -5,7 +5,7 @@
     "update_url": "https://clients2.google.com/service/update2/crx",
 
     "version": "{version}",
-    "name": "__MSG_extName__",
+    "name": "{name}",
     "description": "__MSG_extShortDesc__",
     "homepage_url": "{url}",
     "author": "{author}",

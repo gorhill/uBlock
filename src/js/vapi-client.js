@@ -1,3 +1,4 @@
+/* global addMessageListener, removeMessageListener, sendAsyncMessage */
 // for non background pages
 
 (function() {
@@ -200,7 +201,6 @@ if (window.chrome) {
 
         if (details) {
             details.url = linkHelper.href;
-            details.type = 'xmlhttprequest';
         }
         else {
             details = {
@@ -237,6 +237,11 @@ if (window.chrome) {
                 default:
                     details.type = 'other';
             }
+
+            // This can run even before the first DOMSubtreeModified event fired
+            if (firstMutation) {
+                firstMutation();
+            }
         }
 
         // tabId is determined in the background script
@@ -252,25 +257,22 @@ if (window.chrome) {
             return false;
         }
         // local mirroring, response is a data: URL here
-        else if (typeof response === 'string') {
-            if (details.type === 'script') {
-                e.preventDefault();
-                return response;
-            }
-            else if (details.type === 'script') {
-                e.preventDefault();
-                details = document.createElement('script');
-                details.textContent = atob(response.slice(35));
-                e.target.parentNode.insertBefore(details, e.target);
-                details.parentNode.removeChild(details);
-            }
+        else if (typeof response === 'string' && details.type === 'script') {
+            // Content Security Policy with disallowed inline scripts may break things
+            e.preventDefault();
+            details = document.createElement('script');
+            details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
+            e.target.parentNode.insertBefore(details, e.target);
+            details.parentNode.removeChild(details);
         }
     };
 
     document.addEventListener('beforeload', onBeforeLoad, true);
 
-    // intercepting xhr requests
-    setTimeout(function() {
+    // blocking pop-ups and intercepting xhr requests
+    var firstMutation = function() {
+        document.removeEventListener('DOMSubtreeModified', firstMutation, true);
+        firstMutation = null;
         var randomEventName = parseInt(Math.random() * 1e15, 10).toString(36);
         var beforeLoadEvent = document.createEvent('Event');
         beforeLoadEvent.initEvent('beforeload');
@@ -278,41 +280,35 @@ if (window.chrome) {
         window.addEventListener(randomEventName, function(e) {
             var result = onBeforeLoad(beforeLoadEvent, e.detail);
 
-            if (onBeforeLoad(beforeLoadEvent, e.detail) === false) {
+            if (result === false) {
                 e.detail.url = false;
-            }
-            else if (typeof result === 'string') {
-                e.detail.url = result;
             }
         }, true);
 
-        // since the extension context is unable to reach the page context
-        var tempScript = document.createElement('script');
-        tempScript.onload = function() {
-            this.parentNode.removeChild(this);
-        };
-        document.head.appendChild(tempScript).src = "data:application/x-javascript;base64," + btoa(["(function() {",
-            "var xhr_open = XMLHttpRequest.prototype.open;",
-
-            "XMLHttpRequest.prototype.open = function(method, url, async, u, p) {",
-                "var ev = document.createEvent('CustomEvent');",
-                "var detail = {url: url};",
-                "ev.initCustomEvent(",
-                    "'" + randomEventName + "',",
-                    "false, false,",
-                    "detail",
+        // the extension context is unable to reach the page context,
+        // also this only works when Content Security Policy allows inline scripts
+        var tmpJS = document.createElement('script');
+        tmpJS.textContent = ["(function() {",
+            "var block = function(u, t) {",
+                "var e = document.createEvent('CustomEvent'),",
+                    "d = {url: u, type: t};",
+                "e.initCustomEvent(",
+                    "'" + randomEventName + "', !1, !1, d",
                 ");",
-                "window.dispatchEvent(ev);",
-                "if (detail.url === false) {",
-                    "throw Error;",
-                "}",
-                "else if (typeof detail.url === 'string') {",
-                    "url = detail.url;",
-                "}",
-                "return xhr_open.call(this, method, url, async, u, p);",
+                "dispatchEvent(e);",
+                "return d.url === !1;",
+            "}, wo = open, xo = XMLHttpRequest.prototype.open;",
+            "open = function(u) {",
+                "return block(u, 'popup') ? null : wo.apply(this, [].slice.call(arguments));",
             "};",
-        "})();"].join(''));
-    }, 0);
+            "XMLHttpRequest.prototype.open = function(m, u) {",
+                "return block(u, 'xmlhttprequest') ? null : xo.apply(this, [].slice.call(arguments));",
+            "};",
+        "})();"].join('');
+        document.head.removeChild(document.head.appendChild(tmpJS));
+    };
+
+    document.addEventListener('DOMSubtreeModified', firstMutation, true);
 
     var onContextMenu = function(e) {
         var details = {

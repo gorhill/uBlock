@@ -69,9 +69,9 @@ vAPI.tabs.onPopup = function(details) {
     }
 
     // https://github.com/gorhill/uBlock/issues/91
-        if ( result !== '' ) {
-            pageStore.recordResult('popup', requestURL, result);
-        }
+    if ( result !== '' ) {
+        pageStore.recordResult('popup', requestURL, result);
+    }
 
     // Not blocked
     if ( pageStore.boolFromResult(result) === false ) {
@@ -79,6 +79,12 @@ vAPI.tabs.onPopup = function(details) {
     }
 
     // Blocked
+
+    // Safari blocks before the pop-up opens, so there is no window to remove.
+    if (vAPI.safari) {
+        return true;
+    }
+
     // It is a popup, block and remove the tab.
     µBlock.unbindTabFromPageStats(details.tabId);
     µBlock.XAL.destroyTab(details.tabId);
