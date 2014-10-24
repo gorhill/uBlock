@@ -125,6 +125,8 @@ google.*###center_col > #tads
 # EasyList/EasyPrivacy fixes
 # https://github.com/gorhill/uBlock/issues/328#issuecomment-59572907
 # To counter EasyList's "||imasdk.googleapis.com^$third-party"
+@@||el-mundo.net^$domain=www.tiramillas.net
+
 @@||imasdk.googleapis.com^$domain=live.geo.tv
 # To counter EasyPrivacy's "/fingerprint.js"
 @@||live.seenreport.com^*/fingerprint.js
@@ -159,3 +161,7 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/336
 # To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
 @@||flurry.com^$~third-party
+
+# Chrome store feedback
+# To counter `scorecardresearch.com` in Peter's Lowe, hpHosts, Dan Pollock's, MVPS
+@@||scorecardresearch.com^$domain=tiramillas.net
