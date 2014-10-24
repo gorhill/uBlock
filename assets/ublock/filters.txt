@@ -125,7 +125,7 @@ google.*###center_col > #tads
 # EasyList/EasyPrivacy fixes
 # https://github.com/gorhill/uBlock/issues/328#issuecomment-59572907
 # To counter EasyList's "||imasdk.googleapis.com^$third-party"
-@@||el-mundo.net^$domain=www.tiramillas.net
+@@||active.cache.el-mundo.net/banners/cxense/cx.js$domain=tiramillas.net
 
 @@||imasdk.googleapis.com^$domain=live.geo.tv
 # To counter EasyPrivacy's "/fingerprint.js"
