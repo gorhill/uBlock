@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Saf1axiwsrvVhXfoPUL5Xg
-! Version: 201410201351
+! Checksum: fDdCkV85HKhvI7D23bpo6A
+! Version: 201410251421
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 20 Oct 2014 13:51 UTC
+! Ultima modifica: 25 Oct 2014 14:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -65,6 +65,7 @@ _sito/adv/
 ###MediamondAd_bp_1
 ###MediamondAd_rn_2
 ###MediamondAd_rn_u
+###MediamondAd_sn_u
 ###Sponsor728x90Top
 ###UNITIS_ads_300250
 ###ad_testa_foto
@@ -904,6 +905,9 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||hi-techitaly.com/images/banners/
 ||histonium.net/moduli/banner/
 ||hostgame.it/images/banner/
+||hostingtv.org/files/cubicgobbopink
+||hostingtv.org/files/smartwp
+||hostingtv.org/files/sportweek
 ||html.it^*/banner/
 ||html5today.it/images/banners/
 ||hubcomunicazione.it/images/banners/
@@ -1095,6 +1099,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||lavocedinewyork.com^*/52DBA386-71AE-11.jpg
 ||lavocedinewyork.com^*/5303FE28-71AE-11.jpg
 ||lavocedivenezia.it/player/banner/
+||lavocedivenezia.it/x_rotazione
 ||lavorare-spettacolo.com/images/banners/
 ||lavorincasa.it/banner/
 ||lavorincasa.it/images/testata/
@@ -2732,7 +2737,7 @@ termometropolitico.it##[id^="bsa"]
 @@||corrieredellosport.it/res/advertising/ad.js
 @@||dotandad.com/crossdomain.xml$object-subrequest,domain=r101.it|radioitalia.it
 @@||dotandad.com/mediamond.jsp?$object-subrequest,domain=r101.it|radioitalia.it
-@@||dotandad.com/mediamond?mpo=$script,domain=panorama.it|radioitalia.it|sportube.tv
+@@||dotandad.com/mediamond?mpo=$script,domain=grazia.it|panorama.it|radioitalia.it|sportube.tv
 @@||dotandad.com/MediamondAds.js$script,domain=sportube.tv
 @@||dotandad.com^*.flv$object-subrequest,domain=donnamoderna.com|radioitalia.it
 @@||dotandad.com^*.mp3$object-subrequest,domain=r101.it
@@ -2762,7 +2767,7 @@ termometropolitico.it##[id^="bsa"]
 @@||mail.virgilio.it/common/tech_includes/mail/$subdocument,domain=webmail.virgilio.it
 @@||mail.virgilio.it/google/$subdocument,domain=webmail.virgilio.it
 @@||mda.matrixspa.it/RealMedia/ads/adstream_jx.ads/virgilio.it/Mail/$script,domain=webmail.virgilio.it
-@@||mediamond.it/MediamondAds.js$domain=panorama.it|radioitalia.it
+@@||mediamond.it/MediamondAds.js$domain=grazia.it|panorama.it|radioitalia.it
 @@||mediamond.it/MediamondAdsAsync.js$domain=video.mediaset.it
 @@||mymovies.it/live/myads/preroll/$object-subrequest
 @@||oasjs.kataweb.it/adsetup.js$domain=video.repubblica.it
@@ -2807,12 +2812,13 @@ termometropolitico.it##[id^="bsa"]
 @@||youreporter.it/adv/ova-matrix-yrn.xml.php?$object-subrequest,domain=youreporternews.it
 @@||youreporter.it/adv/ova-matrix.xml.php?$object-subrequest
 ! Anti-Adblock
-@@.png#$domain=codeclan.altervista.org|italiatv.org
+@@.png#$domain=codeclan.altervista.org|italiatv.org|naturaselvaggia2.altervista.org
 @@||blogspot.com^*#$image,domain=dataok.altervista.org
 @@||codeclan.altervista.org^$elemhide
 @@||dataok.altervista.org^$elemhide
 @@||italiatv.org^$elemhide
 @@||mtv.it/advertisement.js
+@@||naturaselvaggia2.altervista.org^$elemhide
 @@||tvgratis.altervista.org^$elemhide
 @@||tvgratis.altervista.org^*#$image
 @@||tvgratis.altervista.org^*/advertisement.js

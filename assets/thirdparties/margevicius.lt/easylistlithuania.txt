@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: O5yQiEg4Bwo6njqXSPVMbw
+! Checksum: /6m9ltiu7fsnPHAlMZ0L2w
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-09-24
+! Paskutinis atnaujinimas: 2014-10-25
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -64,9 +64,12 @@
 @@||pildyk.lt/uploads/files/BANERIS_pildyk.jpg
 @@||post.lt/bin/banners/
 @@||post.lt/files/resized/*x*/banners/
+@@||tavovaikams.lt//images/goods/*$domain=~tavovaikams.lt
 @@||teatras.lt/uploads/img/banners/
 @@||technologijos.lt/iframe_komentarai
 @@||v.fwmrm.net$domain=tv3play.lt
+@@||vaikutis.lt/image/cache/data/baneriai/*
+@@||vaikutis.lt/image/data/baneriai/*
 aciu.lt###adrotate_2
 aciu.lt##.parama
 aciu.lt,gydomasismasazas.lt###adrotate_1
@@ -254,6 +257,7 @@ hardas.lt###v1b13546c9f
 hdpaveiksliukai.lt##.partners_right *
 igloro.info,alio.lt##.margint10
 imunitetas.lt,mesmoterys.lt##.ad
+inbox.lt##DIV[id="inxAds-imr"]
 info.lt###Reklama
 infoma.lt##.baneriai
 infrost.lt##IMG[alt="inFROST - CS 1.6 Serveriai"]
@@ -283,6 +287,7 @@ kkml.lt##.left-banner-wrap
 klauskkunigo.lt,voruta.lt##A[rel="nofollow"] > IMG
 klubas.lt###klubas-right-column
 klubas.lt##IMG[src*="http://delfilt.adocean.pl/files/*"]
+kmobiles.lt##.sidebar-item.friends
 knygoholike.blogspot.com##A[href="http://www.veltinis.lt"] > IMG
 konsultuokis.lt##.useful_banner_manager_banner *
 kovosakademija.lt###links_container *
@@ -333,6 +338,7 @@ lzinios.lt###treciaStop
 lzskelbimai.com###banners_170
 macpartija.lt##A[href^="http://www."][target="_blank"]
 magic-shop.lt###container-ads
+mail.inbox.lt##.b-kaspersky > *
 mamairtetis.lt##.djslider-loader
 mamairvaikas.lt##IMG[alt="SVEIKATOS RADIJO LOGObaneris180 x90"]
 mamyciuklubas.lt##.banners_mklt_side1.banner_cont
@@ -383,6 +389,7 @@ patiekalu-receptai.lt##.tekstas_cont A[href="http://www.ruba.lt/vyrams/vyriski-m
 pazintys.draugas.lt##DIV[style="border: solid 3px #fcb617; width: 166px; padding: 8px 0px 8px 5px;"]
 pegasusfoto.lt##A + * + A
 pegasusfoto.lt##[style="font-family: georgia,palatino; font-size: 10pt;"] > A[href^="http://"]
+perkuvaikui.lt##.baneriokas + * *
 perpasauli.lt##.pp-article-banner
 perpasauli.lt##a[href="http://www.perpasauli.lt/naujienos/10-ispudingiausiu-austrijos-kampeliu.d?id=64743063&utm_source=external&utm_medium=newsexport&utm_campaign=250x500"] > IMG
 pho.lt##.xoxo.blogroll A
@@ -477,6 +484,7 @@ sveikatossodas.lt##[class^="baneris"]
 sveksnosnaujienos.lt##.blog-sidebar *
 sveksnosnaujienos.lt##.wsite-image.wsite-image-border-none
 tattoo.lt###layerslider_widget-3
+tavovaikams.lt##DIV[class="margin: 10px 0px"]
 technews.lt##.left_side
 technologijos.lt###portal_baner_750x100_td_v2
 technologijos.lt##.lygiuoti_centras[style="padding: 1.5em 0em 1.25em 0em;"]
@@ -502,6 +510,8 @@ tv3play.lt#@#.ad-banner
 tv3play.lt#@#.section-ad
 tvenkiniu-projektai.lt,nemokamosknygos.lt##.banner1
 vaga.lt###block_new_block3 A > IMG[src^="/get.php?i."]
+vaikutis.lt###area1.home-banner
+vaikutis.lt###area2.home-banner
 vaistai.lt###bannerright [data^="http://www.vaistai.lt/images/banners/"]
 vaistai.lt###table-rightbanner1
 vaistai.lt###table-rightbanner3.rightbanner_info
@@ -580,6 +590,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||automedia.lt/resources/_banners/
 ||autotaurage.lt/images/jau_at.png
 ||autotaurage.lt/images/salvage_lt.jpg
+||b.inbox.lt/b/*
 ||baidare.com/images/gera_dovana.png
 ||balsas.lt/Uploads/image/baneriams/
 ||balsas.lt/Uploads/image/logo/1/baneris1.jpg
@@ -590,6 +601,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||banners.igloro.info/
 ||basketnews.lt/config/basketnews.lt/files/3/1753.swf
 ||basketnews.lt/config/basketnews.lt/files/7/1807.swf
+||basketnews.lt/config/basketnews.lt/files/8/1838.swf
 ||basketnews.lt/config/basketnews.lt/files/9/1809.swf
 ||basketnews.lt/config/basketnews.lt/themes/ads_topsport_20140826/bg04.jpg
 ||basketnews.lt/config/basketnews.lt/themes/ads_unibet_20131105/bg01.jpg
@@ -855,6 +867,22 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||nuotykiu-lenktynes.pramoguslenis.lt/failai/iliustracijos/2014/SmaPro.JPG
 ||nuotykiu-lenktynes.pramoguslenis.lt/failai/iliustracijos/2014/s_sportas_LOGOTIPAS_horizontalus_small.jpg
 ||nuotykiu-lenktynes.pramoguslenis.lt/failai/iliustracijos/AiC%20logo%20copy_2.JPG
+||nyksciai.lt/images/1551.jpg
+||nyksciai.lt/images/a_k_banner1.jpg
+||nyksciai.lt/images/anyksciu_vandenys_160.jpg
+||nyksciai.lt/images/anyksciu_vynas_2014_1.gif
+||nyksciai.lt/images/baidariu_nuoma.gif
+||nyksciai.lt/images/edox_200x91.gif
+||nyksciai.lt/images/futbolo_sporto_klubas.jpg
+||nyksciai.lt/images/jaros_prekyba_140403_1.gif
+||nyksciai.lt/images/kompeksa_200x150
+||nyksciai.lt/images/nominacijos.gif
+||nyksciai.lt/images/nyksciai_168x91.gif
+||nyksciai.lt/images/res_banner.jpg
+||nyksciai.lt/images/siluma_200x200.gif
+||nyksciai.lt/images/sportas_1.jpg
+||nyksciai.lt/images/sveikatos_oaze_982x110new1
+||nyksciai.lt/images/tvika_200x200_11.gif
 ||on-line.lt^$third-party
 ||onlyoffice.com/images/banners/
 ||opti-myst.lt/wp-content/uploads/2014/05/linava_2.jpg
@@ -869,6 +897,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||perkuvaikui.lt/media/upload/image/mamu%20unija-1.png
 ||perkuvaikui.lt/media/upload/image/mokinukas(1).gif
 ||perkuvaikui.lt/media/upload/image/perku%20vaikui1.jpg
+||perkuvaikui.lt/media/wysiwyg/ARTmanija%20DOVANOS-04.jpg
 ||petworld.lt/images/uploader/ba/banner_
 ||pho.lt/wp-content/uploads/2009/10/logo.jpg
 ||pho.lt/wp-content/uploads/2009/10/musu_paveldas_150x300.gif
@@ -966,6 +995,9 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||sveikata.info/files/zaidimai-protui.jpg
 ||sveikatosabc.lt/templates/main/images/skradio.jpg
 ||sveikatosabc.lt/vidpadziai200x229.swf
+||tavovaikams.lt//cshowimage/augantys_rasomieji_stalai_vaikams_akcija6264s.jpg/165/170
+||tavovaikams.lt//cshowimage/mamairvaik._180_5207s.jpg/165/170
+||tavovaikams.lt//images/goods/baneris_180_180_2753s.swf
 ||tavovaikas.lt/newsfeed/?p=
 ||technologijos.lt/archyvas/skydeliai_mainams/
 ||technologijos.lt/n/iframe_baneris

@@ -61,6 +61,7 @@ scdn.gr/images/helmet/promo_material/*
 ||newsbeast.gr/files/1/top100europe/airfasttickets.png
 ||megatv.com/webtv/newsbeast.asp?*
 ||insurer.gr/widgets/calc/insuCalc.html?*
+||static.reembed.com/data/logos/*
 ant1online.gr/SiteCollectionImages/SiteImages/betonet.gif
 zougla.gr/news/data/upimages/image.php?image=ororotot9018231.jpg
 cosmopolitan.gr/images/vod_logo_100x70.jpg
@@ -864,6 +865,7 @@ popaganda.gr##.big-banner-top
 popaganda.gr##.banner
 gossip-tv.gr###textlinks
 sport-fm.gr##.textlinks
+meteo.gr##.cityAdv
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: kn0Zruiu1KHRP+uiamzfaA
+! Checksum: CbbpBIFWB5HxloUuDTN39A
 ! Title: EasyList Hebrew
-! Last modified: 20/10/14  16:37
+! Last modified: 24/10/14  12:35
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -34,6 +34,7 @@
 ||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||ashleymadison.com^$popup,third-party
+||ashleyrnadison.com^$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||booking.com/index.html^$popup,domain=daka90.co.il
@@ -74,6 +75,7 @@
 ||rateonclick.com^$popup,third-party
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup,third-party
+||sex-party.co.il^$popup,third-party
 ||shorter.co.il/js/fp.js.php
 ||streamin.to^$popup
 ||syngrestic.com/null^$popup
@@ -177,6 +179,7 @@
 ||games-il.org.uk^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
+||shaoli-the-king.xyz^$domain=fxp.co.il
 ||why-love-fifa.me.uk^$domain=fxp.co.il
 !
 !--------------------------1st party blocking rules---------------------------!
@@ -197,6 +200,7 @@
 ||besttv1.cdn.it.best-tv.com/reshet/components/BCPCLilyTrackBarCompanion/BCPCLilyTrackBarCompanion.swf
 ||bgu4u.co.il/download/banners/
 ||bizportal.co.il/Scripts/maavaron.js?v=
+||bladna.co.il/Public/flash/
 ||cdn.mdigital.co.il/video/*.flv$domain=globes.co.il
 ||cdn.shorte.st/link-converter.min.js
 ||chabad.info/images/pirsomot/
@@ -217,6 +221,7 @@
 ||israelpost.co.il/content.nsf/0/D4413A7599E19E34C2257B2300467D0D/$FILE/*.swf
 ||jobmaster.co.il/code/kot/$object
 ||jobmaster.co.il/images/banners/
+||karmel.co.il/images/banners/
 ||kikarhashabat.co.il/data/auto/images/landing_pages_
 ||kipa.co.il/banner/
 ||kipasruga.com/banner/
@@ -239,6 +244,7 @@
 ||seret.co.il/images/banners/pagehasut/PageHasut
 ||seretil.me/cdn-cgi/*rocket.js
 ||seretil.me/cdn-cgi/nexp/dok9
+||shoofoo.co.il/banners
 ||sport5.co.il/banners2/
 ||static.vgames.co.il/cdn/css/global.bg_comm.css?v=
 ||tgspot.co.il/wp-content/cache/minify/000000/yygpKbDS18_JzMtMzs_VS87Xy8wB8bKL9ZPz88pSi0riTS31sooB.js
@@ -388,11 +394,15 @@ ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
 sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
 sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
+almadar.co.il,marmar.co.il##IMG[src^="VIRARTICLES/shadv/"]
+aiwa.co.il,bladna.co.il,karmelna.net##[class*="banner"]
+hwzone.co.il,shoofoo.co.il##[class^="banner"]
 doctors.co.il,globes.co.il##[id^="ads."]
 !
 !----------------------------Element hiding rules-----------------------------!
 !
 2all.co.il##.DivFlowBannerRight
+aiwa.co.il##.bigbnr
 api.vicomi.com##.vc-comment-inner.shadow.recommend_comment.recommend_comment_ad
 ashdodnet.com##.Banner
 ashdodnet.com##DIV[style="height: 78px; overflow: hidden; width: 510px;"]
@@ -483,6 +493,7 @@ fxp.co.il##.condition
 fxp.co.il##.hungry
 fxp.co.il##A[href*="ofofof.info"]
 fxp.co.il##A[href^="http://fcdn.co.il"]
+fxp.co.il##A[href^="http://video.shaoli-the-king.xyz"]
 fxp.co.il##[src="http://tpc.googlesyndication.com/safeframe/1-0-0/html/container.html"] + *
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 286.5px;"]
 fxp.co.il##[style="width: 160px; height: 600px; top: 50px; position: fixed; right: 9.5px;"]
@@ -526,7 +537,6 @@ homeless.co.il##TH[colspan="20"]
 hwzone.co.il###cubicbigarticlesbannertable
 hwzone.co.il##.box2.alljobBox
 hwzone.co.il##.wideBanner
-hwzone.co.il##[class^="banner"]
 i.start.co.il###boxes
 ice.co.il##.top_pirsomet
 ilimudim.co.il##.mp-hd-banner
@@ -807,6 +817,7 @@ wallashops.co.il###mainBanner
 wallashops.co.il###megaBanner
 wallashops.co.il###promotionBanner0
 wallashops.co.il##[id^="textBanner"]
+wen.co.il##.wenBanner
 winwin.co.il###tvBannerContWinWin
 winwin.co.il###tvBannerContWinWinDFP
 winwin.co.il##.MiddleBanners

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 3Ygy4/gRUzSSXmwnzKKXEA
-! Version: 201410201351
+! Checksum: xnLRsxZrTaFpYT0UDfpXUw
+! Version: 201410251421
 ! Title: EasyPrivacy
-! Last modified: 20 Oct 2014 13:51 UTC
+! Last modified: 25 Oct 2014 14:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -265,6 +265,7 @@
 /Analytics/Tracking.
 /analytics?http_referer
 /analytics_embed.
+/analytics_frame.
 /analytics_ping.
 /analytics_prod.
 /analytics_tag.
@@ -705,6 +706,8 @@
 /event/*/*?*&euidl=*&url=
 /eventLogServlet?
 /eventtracker.js
+/evercookie.
+/evercookie/*
 /evercookie_
 /ewtrack.
 /EWTRACK_
@@ -1110,6 +1113,7 @@
 /logadhit.
 /logAdv.
 /logaholictracker.
+/LogAnalysisTracker/thetracker.js
 /logclick.
 /logcollect.
 /logcollect_
@@ -1515,6 +1519,7 @@
 /rpc/log?
 /rtkbeacon.gif?
 /rtoaster.js
+/rtt-log-data?
 /rubics_trk
 /rubicsimp/c.gif?
 /rwtag.gif?
@@ -2718,6 +2723,7 @@ http://utm.
 ||europagerank.com^$third-party
 ||europuls.eu^$third-party
 ||europuls.net^$third-party
+||evanetpro.com^$third-party
 ||everestjs.net^$third-party
 ||everesttech.net^$third-party
 ||evergage.com^$third-party
@@ -3274,6 +3280,7 @@ http://utm.
 ||pm0.net^$third-party
 ||pm14.com^$third-party
 ||pointomatic.com^$third-party
+||polarmobile.com^$third-party
 ||popsample.com^$third-party
 ||porngraph.com^$third-party
 ||posst.co^$third-party
@@ -3541,7 +3548,6 @@ http://utm.
 ||sundaysky.com^$third-party
 ||supercounters.com^$third-party
 ||superstats.com^$third-party
-||supert.ag^$third-party
 ||surfcounters.com^$third-party
 ||surfertracker.com^$third-party
 ||surveyscout.com^$third-party
@@ -4563,6 +4569,7 @@ http://utm.
 ||amazonaws.com/js/reach.js
 ||amazonaws.com/ki.js/
 ||amazonaws.com/new.cetrk.com/
+||amazonaws.com/searchdiscovery-satellite-production/
 ||amazonaws.com/statics.reedge.com/
 ||amazonaws.com/wgntrk/
 ||amazonaws.com^*.kissinsights.com/
@@ -5381,7 +5388,7 @@ http://utm.
 ||rackcdn.com/1x1.gif?
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|rotoworld.com|thesun.co.uk|thetimes.co.uk
+||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|metrolyrics.com|rotoworld.com|thesun.co.uk|thetimes.co.uk
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||realplayer.com^*/pixel?
@@ -5496,6 +5503,7 @@ http://utm.
 ||stats.load.com^
 ||stats.magnify.net^
 ||stats.manticoretechnology.com^
+||stats.nebula.fi^
 ||stats.netbopdev.co.uk^
 ||stats.olark.com^
 ||stats.ozwebsites.biz^
@@ -5532,6 +5540,7 @@ http://utm.
 ||su.pr/hosted_js$third-party
 ||sugarops.com/w?action=impression$third-party
 ||sulia.com/papi/sulia_partner.js/$third-party
+||supert.ag^*/supertag-async.js
 ||survey.g.doubleclick.net^
 ||survey.interquest.com^
 ||survey.io/log?
@@ -7609,7 +7618,6 @@ http://utm.
 ||rover.ebay.com.au^*&cguid=
 ||rsscache.com/Section/Stats/
 ||rsys2.net/pub/as?
-||rt.com/debug/jslog/jstest.gif?
 ||rt.prnewswire.com^
 ||rt.rakuten.co.jp^
 ||rta.dailymail.co.uk^
@@ -8248,7 +8256,7 @@ http://utm.
 ||csmonitor.com/extension/csm_base/design/csm_design/javascript/omniture/s_code.js
 ||demandware.edgesuite.net^*/omniture.js$domain=otterbox.com
 ||disneylandparis.fr^*/s_code.js
-||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com
+||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com|tiramillas.net
 ||eltiempo.com/js/produccion/s_code_*.js
 ||expressen.se/static/scripts/s_code.js?
 ||hayneedle.com/js/s_code.min.*.js
@@ -8372,6 +8380,7 @@ http://utm.
 ||fireball.de/statistikframe.asp?
 ||fr-online.de/analytics/
 ||ftd.de^*/track.php?
+||gala.de/js/tracking-
 ||gamepro.de^*/visitcount.js
 ||gamestar.de/_misc/tracking/
 ||gets.faz.net^
@@ -8939,7 +8948,6 @@ http://utm.
 @@||aolcdn.com/omniunih_int.js$domain=autoblog.com
 @@||aolcdn.com^*/beacon.min.js$domain=autoblog.com|dailyfinance.com
 @@||api.chartbeat.com^script,domain=financialpost.com|wcpo.com|couriermail.com.au|betabeat.com
-@@||apps.beta620.nytimes.com^*/EventTracker.js
 @@||arkadiumhosted.com^*/google-analytics-logger.swf$object-subrequest
 @@||arstechnica.com/services/incr.php?*=interactions.adblock-annoy.click$xmlhttprequest
 @@||assets.espn.go.com/espn360/builds/nielsen/ggce*.swf$object-subrequest
@@ -8956,6 +8964,7 @@ http://utm.
 @@||bettycrocker.com/Shared/Javascript/UnicaTag.js
 @@||bhg.com/web/js-min/common/js/dwr/RemoteTargetingService.js
 @@||bitgo.com/vendor/googleanalytics/angular-ga.min.js
+@@||blogsmithmedia.com^*/gravity-beacon.js$domain=engadget.com
 @@||bolha.com/clicktracker/
 @@||bonappetit.com/wp-content/config/cn-fe-stats/$script
 @@||bountysource.com/badge/tracker?
@@ -8973,6 +8982,7 @@ http://utm.
 @@||canadiantire.ca^*/analytics.sitecatalyst.js
 @@||canoe.ca/generix/omniture/TagOmnitureEngine.js
 @@||care2.com/assets/scripts/cookies/care2/NitroCookies.js
+@@||cbc.ca^*/loggingservice.js?
 @@||cbsimg.net/js/cbsi/dw.js$domain=cbssports.com
 @@||cbsistatic.com^*/clicktale-$script,domain=cbsnews.com|cnet.com
 @@||cbsistatic.com^*/google-analytics.js$domain=cnet.com
@@ -8981,7 +8991,6 @@ http://utm.
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
-@@||cdn.clicktale.net^$script,domain=cbc.ca
 @@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch|techrepublic.com
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script
@@ -8992,6 +9001,7 @@ http://utm.
 @@||cisco.com/web/fw/lib/ntpagetag.js
 @@||cleananalytics.com/browser.js?$script,domain=cheapflights.com
 @@||clicktale.net/wrb.js$domain=microsoft.com
+@@||clicktale.net^$script,domain=cbc.ca
 @@||cloudflare.com/analytics?$domain=cloudflare.com
 @@||cloudfront.net/assets/js/comscore_beacon.js?$domain=zap2it.com
 @@||cloudfront.net/atrk.js$domain=karnaval.com|livestream.com|luxuryrealestate.com
@@ -9107,6 +9117,7 @@ http://utm.
 @@||js.dmtry.com/channel.js$domain=zillow.com
 @@||js.vpro.nl/vpro/*/statcounter.js?
 @@||kaltura.com/content/*/comscorePlugin.swf
+@@||keep2s.cc/ext/evercookie/$script
 @@||kentucky.com/mistats/finalizestats.js
 @@||keremerkan.net/wp-content/plugins/wp-minify/min/*/google-analyticator/
 @@||koldcast.tv/mint/*/tracker.php?
@@ -9132,7 +9143,7 @@ http://utm.
 @@||maps.google.*/gen_204?$xmlhttprequest
 @@||maxmind.com/app/country.js$domain=lenovo.com|nationalgeographic.com|paypal.fr
 @@||maxmind.com/app/geoip.js$domain=fab.com
-@@||maxmind.com^*/geoip.js$domain=aljazeera.com|ballerstatus.com|bikemap.net|carltonjordan.com|coolsport.tv|dereon.com|dr.dk|everydaysource.com|girlgames4u.com|incgamers.com|ip-address.cc|maaduu.com|qatarairways.com|sat-direction.com|sotctours.com|stoli.com|vibe.com
+@@||maxmind.com^*/geoip.js$domain=aljazeera.com|ballerstatus.com|bikemap.net|carltonjordan.com|cashu.com|coolsport.tv|dereon.com|dr.dk|everydaysource.com|girlgames4u.com|incgamers.com|ip-address.cc|maaduu.com|qatarairways.com|sat-direction.com|sotctours.com|stoli.com|vibe.com
 @@||mec.ca/media/javascript/resxclsx.js
 @@||media-imdb.com^*/clickstream.js
 @@||media.ft.com/j/optimost-$domain=ft.com
@@ -9173,12 +9184,13 @@ http://utm.
 @@||networkworld.com^*/demandbase.js
 @@||next.co.uk/Scripts/GoogleAnalytics.js?
 @@||nike.com/checkout/analytics/js/analyticFunctions.js$domain=nike.com
+@@||nokia.com/b/ss/$image,domain=here.com
 @@||nyandcompany.com^*/resxclsa.js$domain=nyandcompany.com
 @@||nymag.com/decor/javascript/magnify_stats.js
 @@||nymag.com/vltr/scripts/analytics.js$domain=vulture.com
 @@||nyt.com/bi/js/tagx/tagx.js$domain=nytimes.com
-@@||nytimes.com/bi/js/analytics/EventTracker.js
 @@||nytimes.com/bi/js/tagx/tagx.js$domain=myaccount.nytimes.com
+@@||nytimes.com^*/EventTracker.js
 @@||nytimes.com^*/wtbase.js
 @@||nytimes.com^*/wtinit.js
 @@||odcdn.com^*/cm.js
@@ -9475,7 +9487,7 @@ http://utm.
 ! Italian
 @@||androidgalaxys.net/wp-content/plugins/*/google-analyticator/$script
 @@||beppegrillo.it/mt-static/js/ga_social_tracking.js
-@@||codicebusiness.shinystat.com/cgi-bin/getcod.cgi?USER=panoramait&P=2$script,domain=panorama.it
+@@||codicebusiness.shinystat.com/cgi-bin/getcod.cgi?$script,domain=grazia.it|panorama.it
 @@||codicefl.shinystat.com/cgi-bin/getserver.cgi?$script,domain=3bmeteo.com|quotidiano.net|radioitalia.it
 @@||codicefl.shinystat.com/cgi-bin/getswf.cgi?*PolymediaShow$object-subrequest,domain=corriereadriatico.it|ilgazzettino.it|ilmattino.it|ilmessaggero.it|leggo.it|quotidianodipuglia.it
 @@||imrworldwide.com/novms/*/ggcm*.js$domain=sky.it

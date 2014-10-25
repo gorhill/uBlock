@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: rkzRkY2Lz6LZlohSB2ZBaA
-! Version: 201410201350
+! Checksum: o7B48WMhVvAx+puYmN9/Gg
+! Version: 201410251420
 ! Title: EasyList without element hiding rules
-! Last modified: 20 Oct 2014 13:50 UTC
+! Last modified: 25 Oct 2014 14:20 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -300,6 +300,7 @@
 .ads-and-tracking.
 .ads-lazy.
 .ads-tool.
+.ads.css
 .ads.darla.
 .ads.loader-
 .ads.zones.
@@ -903,6 +904,7 @@
 /ad_agency/*
 /ad_area.
 /ad_art/*
+/Ad_Arub_
 /ad_banner.
 /ad_banner/*
 /ad_banner1.
@@ -2389,6 +2391,7 @@
 /adtype.
 /adtype=
 /adultadworldpop_
+/adultimate.
 /adunit.
 /adunit/*
 /adunits.
@@ -4086,8 +4089,6 @@
 /media/ads/*
 /media/adv/*
 /media_ads/*
-/mediaboxAdv-
-/mediaboxAdvWhite.
 /megaad.
 /meme_ad.
 /metaad.
@@ -6632,6 +6633,7 @@ _popunder+$popup
 ||ad-flow.com^$third-party
 ||ad-gbn.com^$third-party
 ||ad-indicator.com^$third-party
+||ad-maven.com^$third-party
 ||ad-media.org^$third-party
 ||ad-server.co.za^$third-party
 ||ad-serverparc.nl^$third-party
@@ -6642,6 +6644,7 @@ _popunder+$popup
 ||ad.mo.doubleclick.net/dartproxy/$third-party
 ||ad.yieldpartners.com^$third-party
 ||ad120m.com^$third-party
+||ad121m.com^$third-party
 ||ad125m.com^$third-party
 ||ad127m.com^$third-party
 ||ad129m.com^$third-party
@@ -7255,6 +7258,7 @@ _popunder+$popup
 ||booklandonline.info^$third-party
 ||boostclic.com^$third-party
 ||bormoni.ru^$third-party
+||bororas.com^$third-party
 ||boydadvertising.co.uk^$third-party
 ||boylesportsreklame.com^$third-party
 ||bptracking.com^$third-party
@@ -7284,6 +7288,7 @@ _popunder+$popup
 ||buildtrafficx.com^$third-party
 ||bunchofads.com^$third-party
 ||bunny-net.com^$third-party
+||burbanked.info^$third-party
 ||burnsoftware.info^$third-party
 ||burstnet.com^$third-party
 ||businesscare.com^$third-party
@@ -7539,6 +7544,7 @@ _popunder+$popup
 ||dipads.net^$~image,third-party
 ||directaclick.com^$third-party
 ||directleads.com^$third-party
+||directoral.info^$third-party
 ||directorym.com^$third-party
 ||directrev.com^$third-party
 ||directtrack.com^$third-party
@@ -8323,6 +8329,7 @@ _popunder+$popup
 ||mobatori.com^$third-party
 ||mobatory.com^$third-party
 ||mobday.com^$third-party
+||mobicont.com^$third-party
 ||mobikano.com^$third-party
 ||mobiright.com^$third-party
 ||mobisla.com^$third-party
@@ -8566,6 +8573,7 @@ _popunder+$popup
 ||pictela.net^$third-party
 ||pinballpublishernetwork.com^$third-party
 ||pivotalmedialabs.com^$third-party
+||pivotrunner.com^$third-party
 ||pixazza.com^$third-party
 ||pixeltrack66.com^$third-party
 ||pixfuture.net^$third-party
@@ -8640,6 +8648,7 @@ _popunder+$popup
 ||promotiontrack.mobi^$third-party
 ||propellerads.com^$third-party
 ||propellerpops.com^$third-party
+||propelplus.com^$third-party
 ||prosperent.com^$third-party
 ||protally.net^$third-party
 ||proximic.com^$third-party
@@ -9165,6 +9174,7 @@ _popunder+$popup
 ||versetime.com^$third-party
 ||vhmnetwork.com^$third-party
 ||vianadserver.com^$third-party
+||vibrant.co^$third-party
 ||vibrantmedia.com^$third-party
 ||video-loader.com^$third-party
 ||videoclick.ru^$third-party
@@ -10661,6 +10671,7 @@ _popunder+$popup
 ||centralscotlandjoinery.co.uk/images/csj-125.gif$third-party
 ||cerebral.typn.com^
 ||cex.io/img/b/
+||cex.io/informer/$third-party
 ||cgmlab.com/tools/geotarget/custombanner.js
 ||chacsystems.com/gk_add.html$third-party
 ||challies.com^*/wtsbooks5.png$third-party
@@ -10692,6 +10703,7 @@ _popunder+$popup
 ||comx-computers.co.za/banners/$third-party
 ||conduit.com//banners/$third-party
 ||connect.summit.co.uk^
+||connectok.com/brightcove/?$domain=newsok.com
 ||consolpub.com/weatherwindow/
 ||content.livesportmedia.eu^
 ||content.secondspace.com^$~image,third-party
@@ -10990,6 +11002,7 @@ _popunder+$popup
 ||gateway.fortunelounge.com^
 ||gateways.s3.amazonaws.com^
 ||gawkerassets.com/assets/marquee/$object,third-party
+||ge.tt/api/$domain=mhktricks.net
 ||generic4all.com^*?refid=$third-party
 ||geo.connexionsecure.com^
 ||geobanner.friendfinder.com^
@@ -12054,6 +12067,7 @@ _popunder+$popup
 ||feeds.videosz.com^
 ||femjoy.com/bnrs/$third-party
 ||ff.nsg.org.ua^
+||firestormmedia.tv^*?affid=
 ||fleshlight.com/images/banners/
 ||fleshlight.com/images/peel/
 ||freebbw.com/webcams.html$third-party
@@ -12273,6 +12287,7 @@ _popunder+$popup
 ||vodconcepts.com^*/banners/
 ||vserv.bc.cdn.bitgravity.com^$third-party
 ||vzzk.com/uploads/banners/$third-party
+||wafflegirl.com/galleries/banner/
 ||watchmygf.com/preview/$third-party
 ||webcams.com/js/im_popup.php?
 ||webcams.com/misc/iframes_new/
@@ -12389,6 +12404,7 @@ _popunder+$popup
 /com.js$domain=kinox.to
 /get/path/.banners.$image,third-party
 /market.php?$domain=adf.ly|u.bb
+/nexp/dok2v=*/cloudflare/rocket.js$script,domain=ubuntugeek.com
 /static/js/pop*.js$script,domain=baymirror.com|getpirate.com|livepirate.com|mypiratebay.cl|noncensuram.info|pirateproxy.net|pirateproxy.se|proxicity.info|thepiratebay.se.coevoet.nl|tpb.chezber.org|tpb.ipredator.se|tpb.piraten.lu|tpb.pirateparty.ca|tpb.pirates.ie
 /vendors/*$domain=rzrforums.net
 ?random=$script,domain=allmyvideos.net|mediafire.com|mooshare.biz|muchshare.net|tvmuse.com|tvmuse.eu|vidspot.net
@@ -12975,6 +12991,7 @@ _popunder+$popup
 ||channelstv.com^*/mtn_wp.png
 ||chapagain.com.np^*_125x125_
 ||chapala.com/wwwboard/webboardtop.htm
+||checkpagerank.net/banners/
 ||checkwebsiteprice.com/images/bitcoin.jpg
 ||chelsey.co.nz/uploads/Takeovers/
 ||chicagodefender.com/images/banners/
@@ -15135,6 +15152,7 @@ _popunder+$popup
 ||rsbuddy.com/campaign/
 ||rss2search.com/delivery/
 ||rt.com/banner/
+||rt.com/static/img/banners/
 ||rtcc.org/systems/sponsors/
 ||rugbyweek.com^*/sponsors/
 ||runt-of-the-web.com/wrap1.jpg
@@ -15508,6 +15526,7 @@ _popunder+$popup
 ||theattractionforums.com/images/rbsbanners/
 ||thebay.co.uk/banners/
 ||thebeat99.com/cmsadmin/banner/
+||theblaze.com^*-background2-
 ||thebull.com.au/admin/uploads/banners/
 ||thebulls.co.za^*/sponsors/
 ||theburningplatform.com/wp-content/uploads/*_180x150.gif
@@ -15765,6 +15784,8 @@ _popunder+$popup
 ||uberhumor.com/*btf.html$subdocument
 ||uberhumor.com/iframe$subdocument
 ||ubuntugeek.com/images/dnsstock.png
+||ubuntugeek.com/images/od.jpg
+||ubuntugeek.com/images/ubuntu1.png
 ||ufonts.com/gfx/uFonts_Banner5.png
 ||ugo.com/takeover/
 ||uimserv.net^
@@ -16397,7 +16418,6 @@ _popunder+$popup
 ||adult-sex-games.com/images/promo/
 ||adultfilmdatabase.com/graphics/banners/
 ||adultfyi.com/images/banners/
-||adultimate.crocotube.com^
 ||affiliates.goodvibes.com^
 ||alladultnetwork.tv/main/videoadroll.xml
 ||alotporn.com/media/banners/
@@ -16422,6 +16442,7 @@ _popunder+$popup
 ||asspoint.com/images/banners/
 ||avn.com/templates/avnav/skins/
 ||axatube.com/dos.html
+||babblesex.com/js/misc.js
 ||babedrop.com/babelogger_images/
 ||babesandstars.com/images/a/
 ||babesandstars.com/thumbs/paysites/
@@ -16549,6 +16570,7 @@ _popunder+$popup
 ||fuckmetube.org/popdown.js
 ||fuckuh.com/pr_ad.swf
 ||funny-games.biz/banners/
+||galleries-pornstar.com/thumb_top/
 ||gals4free.net/images/banners/
 ||gamesofdesire.com/images/banners/
 ||gapeandfist.com/uploads/thumbs/
@@ -16661,6 +16683,8 @@ _popunder+$popup
 ||imgbabes.com/ja.html
 ||imgbabes.com/splash.php
 ||imgchili.com/js/showa.js
+||imgflare.com/actop.html
+||imgflare.com/exo.html
 ||indexxx.com^*/banners/
 ||iseekgirls.com/g/pandoracash/
 ||iseekgirls.com/js/fabulous.js
@@ -17115,6 +17139,8 @@ _popunder+$popup
 ||yourdarkdesires.com/3.html
 ||yourlust.com/im/onpause.html
 ||yourlust.com/im/postroll.html
+||youtubelike.com/ftt2/toplists/
+||youx.xxx/thumb_top/
 ||yporn.tv/uploads/flv_player/commercials/
 ||yporn.tv/uploads/flv_player/midroll_images/
 ||yumymilf.com^*/banners/
@@ -17124,7 +17150,12 @@ _popunder+$popup
 &referrerUrl=$popup,third-party,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
 &refUrl=$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
 .engine?$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
+=async&$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
+=async|$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
+?referrerUrl=$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
+?refUrl=$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
 ^utm_medium=pops^$popup,domain=ratedporntube.com|sextuberate.com
+|http://*?*^id^$popup,third-party,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
 |http://*?id=$popup,domain=extremetube.com|pornhub.com|redtube.com|spankwire.com|tube8.com|youporn.com|youporngay.com
 ||ad.userporn.com^$popup
 ||eporner.com/pop.php$popup
@@ -17860,7 +17891,6 @@ _popunder+$popup
 @@||flashgames247.com/advertising/ima-vast-preroll.swf$object,domain=flashgames247.com
 @@||flipboard.com/media/uploads/adv_$image,~third-party
 @@||flipkart.com/affiliate/displayWidget?$subdocument,domain=affrity.com
-@@||florestia.free.fr^*/mediaboxAdv$script,stylesheet
 @@||flossmanuals.net/site_static/xinha/plugins/DoubleClick/$~third-party
 @@||flyerservices.com/cached_banner_pages/*bannerid=
 @@||flysaa.com^*/jquery.adserver.js
@@ -18120,7 +18150,6 @@ _popunder+$popup
 @@||ltassrv.com/yume.swf$domain=animecrazy.net|gamedorm.org|gamepro.com|satsukai.com|sparknotes.com|yourupload.com
 @@||ltassrv.com/yume/yume_$object-subrequest,domain=animecrazy.net|gamedorm.org|gamepro.com|satsukai.com|sparknotes.com|yourupload.com
 @@||luceosolutions.com/recruit/advert_details.php?id=$subdocument
-@@||lugano.ch^*/mediaboxAdvWhite.css
 @@||lycos.com/catman/init.js$domain=video.lycos.com
 @@||lyngsat-logo.com/icon/flag/az/ad.gif
 @@||mac-sports.com/ads2/508128.swf
@@ -18283,6 +18312,7 @@ _popunder+$popup
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object-subrequest,domain=mydamnchannel.com
 @@||ocp.com.com/adfunctions.js?
 @@||offerpalads.com^*/opmbanner.js$domain=farmville.com
+@@||okta.com/js/app/sso/interstitial.js$~third-party
 @@||oldergames.com/adlib/
 @@||omgili.com/ads.search?
 @@||omgubuntu.co.uk^*/banner.js
@@ -18713,7 +18743,7 @@ _popunder+$popup
 @@||utdallas.edu^*/banner.js
 @@||uuuploads.com/ads-on-buildings/$image,domain=boredpanda.com
 @@||v.fwmrm.net/*/AdManager.swf$domain=marthastewart.com
-@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|cc.com|channel5.com|cmt.com|colbertnation.com|comedycentral.com|eonline.com|espn.go.com|gametrailers.com|ign.com|logotv.com|mlb.mlb.com|mtv.com|mtvnservices.com|nascar.com|nbc.com|nbcnews.com|nbcsports.com|nick.com|player.theplatform.com|sky.com|southpark.nl|southparkstudios.com|spike.com|teamcoco.com|teennick.com|thedailyshow.com|thingx.tv|tv3play.se|tvland.com|uverseonline.att.net|vevo.com|vh1.com|video.cnbc.com|vod.fxnetworks.com
+@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=abc.go.com|abcfamily.go.com|abcnews.go.com|adultswim.com|cartoonnetwork.com|cc.com|channel5.com|cmt.com|colbertnation.com|comedycentral.com|eonline.com|espn.go.com|gametrailers.com|ign.com|logotv.com|mlb.mlb.com|mtv.com|mtvnservices.com|nascar.com|nbc.com|nbcnews.com|nbcsports.com|nick.com|player.theplatform.com|simpsonsworld.com|sky.com|southpark.nl|southparkstudios.com|spike.com|teamcoco.com|teennick.com|thedailyshow.com|thingx.tv|tv3play.se|tvland.com|uverseonline.att.net|vevo.com|vh1.com|video.cnbc.com|vod.fxnetworks.com
 @@||v.fwmrm.net/crossdomain.xml$object-subrequest
 @@||v.fwmrm.net/p/espn_live/$object-subrequest
 @@||v.fwmrm.net/|$object-subrequest,domain=tv10play.se|tv3play.se|tv6play.se|tv8play.se
@@ -18822,6 +18852,7 @@ _popunder+$popup
 @@||yimg.com/zz/combo?*&*.js
 @@||yimg.com^*&yat/js/ads_
 @@||yimg.com^*/adplugin_*.swf$object,domain=games.yahoo.com
+@@||yimg.com^*/ads-min.css$domain=yahoo.com
 @@||yimg.com^*/java/promotions/js/ad_eo_1.1.js
 @@||ykhandler.com/adframe.js
 @@||yokosonews.com/files/cache/
@@ -18862,7 +18893,7 @@ _popunder+$popup
 @@.jpg#$domain=desionlinetheater.com|lag10.net|livrosdoexilado.org|mac2sell.net|movie1k.net|play-old-pc-games.com|uploadlw.com
 @@.jpg|$object-subrequest,domain=cbs.com
 @@.min.js$domain=ftlauderdalewebcam.com|nyharborwebcam.com|portcanaveralwebcam.com|portevergladeswebcam.com|portmiamiwebcam.com
-@@.png#$domain=300mblink.com|amigosdelamili.com|android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|debridit.com|hostyd.com|ilive.to|lordpyrak.net|marketmilitia.org|mastertoons.com|minecraft-forum.net|myksn.net|portalzuca.net|puromarketing.com|realidadscans.org|stream2watch.me|turkdown.com|url4u.org|vencko.net|wowhq.eu
+@@.png#$domain=300mblink.com|amigosdelamili.com|android-zone.org|anime2enjoy.com|anizm.com|anonytext.tk|backin.net|better-explorer.com|chrissmoove.com|debridit.com|hostyd.com|ilive.to|lordpyrak.net|marketmilitia.org|mastertoons.com|minecraft-forum.net|myksn.net|pes-patch.com|portalzuca.net|puromarketing.com|realidadscans.org|stream2watch.me|turkdown.com|url4u.org|vencko.net|wowhq.eu
 @@.png?*#$domain=mypapercraft.net|xlocker.net
 @@.png?ad_banner=$domain=majorleaguegaming.com
 @@.png?advertisement_$domain=majorleaguegaming.com
@@ -18885,6 +18916,7 @@ _popunder+$popup
 @@|http://$image,third-party,domain=seekingalpha.com
 @@|http://$script,third-party,domain=eventhubs.com
 @@|http://$subdocument,domain=uptobox.com
+@@|http://*.jpg?$image,domain=cbs.com
 @@|http://*.net^*.bmp|$object-subrequest,domain=cbs.com
 @@|http://*.pw^$script,third-party,domain=cbs.com
 @@|http://*.tk^$script,domain=ilive.to
@@ -19094,6 +19126,7 @@ _popunder+$popup
 @@||filmovizija.net^$elemhide
 @@||filmovizija.net^*#$image
 @@||filmux.net/ads/banner.jpg?
+@@||filmweb.pl/adbanner/$script
 @@||fitshr.net^$script,stylesheet
 @@||fragflix.com^*.png?*=$image,domain=majorleaguegaming.com
 @@||free.smsmarkaz.urdupoint.com^$elemhide
@@ -19207,6 +19240,7 @@ _popunder+$popup
 @@||mgcash.com/common/adblock.js
 @@||mgcashgate.com/cpalocker/$script,domain=movieleaks.co|videodepot.org
 @@||minecraft-forum.net^$elemhide
+@@||miniclipcdn.com/js/advertisement.js
 @@||mix.dj/jscripts/jquery/mdj_adverts.js
 @@||mix.dj^*/advertisement.js
 @@||mma-core.com/Scripts/adscript.js
@@ -19264,6 +19298,7 @@ _popunder+$popup
 @@||pandora.com/static/ads/
 @@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=baseball-reference.com|basketball-reference.com|hockey-reference.com|pro-football-reference.com|sports-reference.com
 @@||perkuinternete.lt/modules/mod_jpayday/js/advertisement.js
+@@||pes-patch.com^$elemhide
 @@||pipocas.tv/js/advertisement.js
 @@||pirlotv.tv^$elemhide
 @@||play-old-pc-games.com^$elemhide
@@ -19282,6 +19317,7 @@ _popunder+$popup
 @@||puromarketing.com/js/advertisement.js
 @@||puromarketing.com^$elemhide
 @@||qrrro.com^*/adhandler/
+@@||racedepartment.com^*/advertisement.js
 @@||rackcdn.com^$image,object-subrequest,script,domain=cbs.com
 @@||rad.msn.com/ADSAdClient31.dll?GetAd=$xmlhttprequest,domain=jump-in.com.au
 @@||radioaficion.com/HamNews/*/ad$image
@@ -19379,6 +19415,7 @@ _popunder+$popup
 @@||uptobox.com^*.js?
 @@||urdupoint.com/js/advertisement.js
 @@||urdupoint.googlecode.com/files/advertisement.js$domain=free.smsmarkaz.urdupoint.com
+@@||ureoal.com^$script,domain=cbs.com
 @@||url4u.org^$elemhide
 @@||urlgalleries.net^*/adhandler/$subdocument
 @@||usaupload.net/ads.js
@@ -19394,6 +19431,7 @@ _popunder+$popup
 @@||videomega.tv/pub/interstitial.css
 @@||videomega.tv^*/ads.php?$script
 @@||videomega.tv^*/advertising.$script
+@@||videomega.tv^*/popads.$script
 @@||videoplaza.tv/contrib/*/advertisement.js$domain=tv4play.se
 @@||vidup.me^*/adlayer.js
 @@||vietvbb.vn/up/clientscript/google_ads.js

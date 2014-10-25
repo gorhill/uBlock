@@ -2453,6 +2453,7 @@
 127.0.0.1	admized.com
 127.0.0.1	admngronline.com
 127.0.0.1	admob.com
+127.0.0.1	admobtube.com
 127.0.0.1	admonitor.com
 127.0.0.1	admonkey.dapper.net
 127.0.0.1	admontest1.2cnt.net
@@ -6049,6 +6050,7 @@
 127.0.0.1	be.nedstat.net
 127.0.0.1	be.sitestat.com
 127.0.0.1	bea4.v.fwmrm.net
+127.0.0.1	beacon-1.newrelic.com
 127.0.0.1	beacon-6.newrelic.com
 127.0.0.1	beacon.guim.co.uk
 127.0.0.1	beacon.heliumnetwork.com
@@ -11515,6 +11517,7 @@
 127.0.0.1	h.zeroredirect1.com
 127.0.0.1	h.zeroredirect2.com
 127.0.0.1	h1.flashvortex.com
+127.0.0.1	hab3n.trackvoluum.com
 127.0.0.1	hal9000.redintelligence.net
 127.0.0.1	hale-bopp.cometsystems.com
 127.0.0.1	haley-seeber.us
@@ -12656,6 +12659,7 @@
 127.0.0.1	jvz8.com
 127.0.0.1	jvz9.com
 127.0.0.1	jvzoo.com
+127.0.0.1	jwpsrv.com
 127.0.0.1	k.collective-media.net
 127.0.0.1	k.zeroredirect.com
 127.0.0.1	k.zeroredirect1.com
@@ -18288,6 +18292,7 @@
 127.0.0.1	track.strife.com
 127.0.0.1	track.td3x.com
 127.0.0.1	track.tesiteca.it
+127.0.0.1	track.trademail.fr
 127.0.0.1	track.untd.com
 127.0.0.1	track.v2.secdls.com
 127.0.0.1	track.v2.sslsecure1.com
@@ -19287,6 +19292,7 @@
 127.0.0.1	visit.mobot.net
 127.0.0.1	visit.webhosting.yahoo.com
 127.0.0.1	visitor.benchmarkemail.com
+127.0.0.1	visitorbarscript.com
 127.0.0.1	visitorpath.com
 127.0.0.1	visitorprofiler.com
 127.0.0.1	visitors.dooyoo.co.uk
@@ -21040,6 +21046,7 @@
 127.0.0.1	www.gspxtny93b.com
 127.0.0.1	www.guestbook.superstats.com
 127.0.0.1	www.guid.org
+127.0.0.1	www.hab3n.trackvoluum.com
 127.0.0.1	www.haley-seeber.us
 127.0.0.1	www.handyseek.com
 127.0.0.1	www.hardcoretraffic.com
@@ -21256,6 +21263,7 @@
 127.0.0.1	www.jvz8.com
 127.0.0.1	www.jvz9.com
 127.0.0.1	www.jvzoo.com
+127.0.0.1	www.jwpsrv.com
 127.0.0.1	www.kacey-sheilds.us
 127.0.0.1	www.kailyn-hacker.us
 127.0.0.1	www.kala-mazzariello.us
@@ -22196,6 +22204,7 @@
 127.0.0.1	www.tracklead.net
 127.0.0.1	www.tracknewsletter.com
 127.0.0.1	www.trackoffclick.com
+127.0.0.1	www.trackvoluum.com
 127.0.0.1	www.trackyourstats.com
 127.0.0.1	www.tracy-hatley.us
 127.0.0.1	www.tradetraffic.com
@@ -22288,6 +22297,7 @@
 127.0.0.1	www.vipadshares.com
 127.0.0.1	www.virads.com
 127.0.0.1	www.virtual-person.com
+127.0.0.1	www.visitorbarscript.com
 127.0.0.1	www.visitorpath.com
 127.0.0.1	www.visitorprofiler.com
 127.0.0.1	www.visitweb.com
@@ -22837,4 +22847,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22832
+# Hosts: 22842

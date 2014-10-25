@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 21:56:38 GMT
-# entries:        2474
+# entries:        2471
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -107,7 +107,6 @@
 127.0.0.1 ad.foxnetworks.com
 127.0.0.1 ad.freecity.de
 127.0.0.1 ad.gate24.ch
-127.0.0.1 ad.gdmexchange.com
 127.0.0.1 ad.globe7.com
 127.0.0.1 ad.grafika.cz
 127.0.0.1 ad.harmony-central.com
@@ -1707,7 +1706,6 @@
 127.0.0.1 logua.com
 127.0.0.1 lop.com
 127.0.0.1 lucidmedia.com
-127.0.0.1 lv.boost-my-pr.com
 127.0.0.1 lynxtrack.com
 127.0.0.1 lzjl.com
 127.0.0.1 m.webtrends.com
@@ -2264,7 +2262,6 @@
 127.0.0.1 top90.ro
 127.0.0.1 topbarh.box.sk
 127.0.0.1 topblogarea.se
-127.0.0.1 topbloglists.com
 127.0.0.1 topbucks.com
 127.0.0.1 topforall.com
 127.0.0.1 topgamesites.net

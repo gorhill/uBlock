@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: l3ASWR+gUw807U53Iq/vfg
+! Checksum: Fz8VzEIeZLiBmO4T7kw7hw
 ! Title: ABPindo
-! Last modified: 18 Oktober 2014, 12:20:25 WIB
+! Last modified: 24 Oktober 2014, 09:24:18 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -22,6 +22,7 @@
 ||adsbingo.com^$third-party
 ||adsense-id.com^$third-party
 ||adsensemu.com^$third-party
+||adskom.com^$third-party
 ||adsrelease.com^$third-party
 ||ajangiklangratis.com^$third-party
 ||anekaiklan.com^$third-party
@@ -408,7 +409,6 @@ blogspot.com##img[alt="ads"]
 ||harakah.net.my/images/stories/iklan/
 ||harianjogja.com/banner/
 ||harianjogja.com/img/bnr/
-||hentai2read.com/ios/swf/
 ||id.hao123.com/resource/id/banner/
 ||iklanbaris.detik.com/
 ||image-tmart.com/cpc/affiliate/
@@ -417,6 +417,10 @@ blogspot.com##img[alt="ads"]
 ||img.banggood.com/deals/affiliate_member_banner/
 ||indobokepz.com/images/banner/
 ||indochanger.com/banner/
+||indotelko.com/images/banner/$image
+||indotelko.com/images/banner/$object
+||indotelko.com/inc/banner.css
+||indotelko.com/inc/c_banner.js
 ||jagatreview.com/wp-content/uploads/*-SKIN-
 ||kad.kaskus.co.id/banner/$subdocument
 ||kad.kaskus.com/banner/$subdocument
@@ -758,7 +762,6 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||master138.net^$popup,third-party
 ||mesiniklan.andipublisher.com^$third-party
 ||modifikasi.com/images/banner/$third-party
-||mpnrs.com^$third-party
 ||mybannermaker.com^$third-party
 ||numpanglewat.com^$third-party
 ||octafx.com^$popup,third-party

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: jA5s7XOJlEjGlN7p7EWgSg
-! Version: 201410201350
-! Last modified: 20 Oct 2014 13:50 UTC
+! Checksum: 6uhhAWRzGVBrbJWeENY0aw
+! Version: 201410251420
+! Last modified: 25 Oct 2014 14:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -213,6 +213,7 @@
 ###gaminator
 ###girlsBar
 ###h_24x4
+###limonads_body
 ###magnaInformer
 ###marketgid
 ###mmmBanner
@@ -939,6 +940,7 @@ _tizers.
 ||flapoint.ru^
 ||fleshlight-russia.com/fbn/
 ||flirchi.ru^$third-party,~popup,popup
+||fluence-club.ru/forum/images/banners/
 ||fo.ru^*/affilate/
 ||fooder.ru^$third-party
 ||forex-i-love-you.ru/files/
@@ -2317,6 +2319,7 @@ _tizers.
 ||liendans.com^
 ||likondok.com^
 ||limon.biz^
+||limonadsources.ru^
 ||linicom.com^$third-party
 ||linkerfast.ru^
 ||linkerlink.ru^
@@ -3005,6 +3008,7 @@ programmersforum.ru###pagenav_menu + center
 riotpixels.com###playo-article
 fototeens.lifeforums.ru###popup
 wmforum.2bb.ru###pun-announcement
+delfi.ee###right
 magtimes.info###s\(1\)
 evrl.to###smile_container ~ div[style*="z-index:"]
 rebill.me###space + a[target="_blank"]
@@ -3065,6 +3069,7 @@ nur.kz##.mmc-holder-top
 macosworld.ru##.morefoot_back
 forum.soft4dle.com##.navbar > center
 moya-planeta.ru##.nofs_banner_html_item
+sandero.ru##.notices_img_ad
 magtimes.info##.owl-carousel
 afisha.ru##.page_banner_top_container
 afisha.ru##.page_block_content_adv-header
@@ -3105,10 +3110,12 @@ ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
 alogvinov.com,compulenta.ru,computerra.ru,f1news.ru,fishki.net,gamemag.ru,gismeteo.ru,gotps3.ru,sovsport.ru,sportbox.ru,tapochek.net,thg.ru##a[href^="http://ad.adriver."]
+delfi.ee##a[href^="http://ap.delfi.ee/b?"]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
 tapochek.net,unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 unionpeer.org##a[href^="http://filesboom.ru/download?"],a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
+riper.am##a[href^="http://gomakemerich.com/"]
 fishki.net##a[href^="http://li.ru/go?"]
 cwer.ws##a[href^="http://orbitum."][rel="nofollow"]
 epravda.com.ua##a[href^="http://ua.hit.gemius.pl/hitredir/id="]
@@ -4549,6 +4556,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||antimaydan.info/js/rot
 ||antistarforce.com^$object
 ||ap.by/up/banner/
+||ap.delfi.ee^
 ||ap.delfi.ua^
 ||appstudio.org/banners/
 ||aquafanat.com.ua/forum/iUshki/
@@ -4653,6 +4661,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||d.free-torrent.org^
 ||data.videonow.ru^$domain=kinonews.ru|playground.ru
 ||datalock.ru^*player.swf|$domain=seasonvar.ru
+||delfi.ee/misc/$subdocument
 ||delfi.lv/misc/xml_infoblocks/
 ||delovoigorod.ru/images/loader$object
 ||delphi.lv/wd/*.180x400.
@@ -5271,6 +5280,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||s5o.ru/common/css/i/promo/
 ||samforum.ws^$subdocument
 ||samru.ru/images/pic/gifs/
+||sandero.ru/flash/
 ||sat-digest.com/bac/
 ||sc2tv.ru:8080/show/$subdocument
 ||sc2tv.ru^*/bg-global-
@@ -6115,6 +6125,7 @@ mygames.com.ua#@#.big-ads
 skodarapidclub.ru#@#.headerad
 kinoclub.org.ua#@#.item-ads
 sellua.info#@#.lastads
+leanforum.ru#@#.sponsor_block
 mts.ru#@#.wide-ad
 bestpersons.ru#@#.ya-partner_ads-up
 !#detect.bookmark
@@ -6148,7 +6159,7 @@ planetaua.net#@##rightinfoad
 free-send.ru#@##sideABlock
 free-send.ru#@##top_adv_728
 debilizator.tv#@#.adsbygoogle
-popmech.ru#@#.afs_ads
+nulled.cc,popmech.ru#@#.afs_ads
 chatovod.ru#@#.withAds
 @@#-page-peel/-text-ads.$image,domain=free-send.ru
 @@.jpg#$domain=modfiles.ru
@@ -6160,6 +6171,7 @@ chatovod.ru#@#.withAds
 @@/crossdomain.xml|$domain=megogo.net
 @@/getCode?$object-subrequest,domain=megogo.net
 @@||ads.adfox.ru/crossdomain.xml$domain=molodejj.tv
+@@||adv.gpm-digital.com^$domain=rutube.ru
 @@||am10.ru/code.$domain=tv-serial.org
 @@||am15.net/bn$script,domain=tv-serial.org
 @@||bluesystem.ru/GoWeb/advert.js$domain=bluesystem.ru
