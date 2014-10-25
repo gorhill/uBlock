@@ -408,9 +408,6 @@ var onMessage = function(request, sender, callback) {
         case 'getLists':
             return getLists(callback);
 
-        case 'getLists':
-            return getLists(callback);
-
         case 'purgeAllCaches':
             return µb.assets.purgeAll(callback);
 
