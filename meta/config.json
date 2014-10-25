@@ -4,7 +4,6 @@
 	"url": "https://github.com/gorhill/uBlock",
 	"author": "Raymond Hill",
 	"author_email": "rhill@raymondhill.net",
-	"author_www": "http://raymondhill.net/",
 	"version": "0.7.0.7",
 	"def_lang": "en",
 	"vendors": {
@@ -17,13 +16,9 @@
 		},
 		"safariextz": {
 			"app_id": "net.gorhill.uBlock",
-			"dir": "uBlock.safariextension",
-			"manifest": {
-				"Info": "Info.plist",
-				"Settings": "Settings.plist"
-			},
+			"manifest": "Info.plist",
 			"file_ext": ".safariextz",
-			"developer_identifier": "T7HSFKB9M5",
+			"developer_identifier": "",
 			"cert_dir": "../meta/safariextz/certs/",
 			"cert_key": "../meta/safariextz/certs/key.pem"
 		}

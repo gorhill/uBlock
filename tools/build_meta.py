@@ -97,3 +97,13 @@ with open(pj(src_dir, vendors['crx']['manifest']), 'wt', encoding='utf-8', newli
     f.write(
         re.sub(r"\{(?=\W)|(?<=\W)\}", r'\g<0>\g<0>', cf_content).format(**config)
     )
+
+
+with open(pj(src_dir, vendors['safariextz']['manifest']), 'wt', encoding='utf-8', newline='\n') as f:
+    config['app_id'] = vendors['safariextz']['app_id']
+    config['description'] = descriptions[config['def_lang']]
+
+    with open(pj(meta_dir, 'safariextz', vendors['safariextz']['manifest']), 'r') as cf:
+        cf_content = cf.read()
+
+    f.write(cf_content.format(**config))
