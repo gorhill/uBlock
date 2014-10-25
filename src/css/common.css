@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+    font-family: 'FontAwesome';
+    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
 .fa {
     font-family: FontAwesome;
     font-style: normal;
@@ -63,4 +63,10 @@ body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
       0% { opacity: 0; }
      85% { opacity: 0; }
     100% { opacity: 1; }
+    }
+
+.hiddenFileInput {
+    visibility: hidden;
+    width: 0;
+    height: 0;
     }
