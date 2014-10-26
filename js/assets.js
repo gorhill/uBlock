@@ -226,11 +226,18 @@ var cachedAssetsManager = (function() {
 /******************************************************************************/
 
 var getTextFileFromURL = function(url, onLoad, onError) {
+    // https://github.com/gorhill/uMatrix/issues/15
+    var onResponseReceived = function() {
+        if ( typeof this.status === 'number' && this.status >= 200 && this.status < 300 ) {
+            return onLoad.call(this);
+        }
+        return onError.call(this);
+    };
     // console.log('µBlock> getTextFileFromURL("%s"):', url);
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'text';
     xhr.timeout = 15000;
-    xhr.onload = onLoad;
+    xhr.onload = onResponseReceived;
     xhr.onerror = onError;
     xhr.ontimeout = onError;
     xhr.open('get', url, true);
