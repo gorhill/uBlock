@@ -125,6 +125,9 @@ google.*###center_col > #tads
 # EasyList/EasyPrivacy fixes
 # To fix `target.com`
 @@||target.122.2o7.net^$domain=target.com
+# To counter Fanboy Social's `/twitter-bootstrap/*`
+# Ref: http://forums.lanik.us/viewtopic.php?f=64&t=19202
+@@||cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap^
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
