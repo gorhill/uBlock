@@ -92,7 +92,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Estä elementti",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -120,15 +120,15 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Päivitä suodatinlista automaattisesti.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Päivitä",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Tyhjennä välimuisti",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -188,7 +188,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"Uusi versio saatavilla",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -220,7 +220,7 @@
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"Vie",
     "description":"English: Export"
   },
   "whitelistApply":{
@@ -284,11 +284,11 @@
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Palauta tiedostosta...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"Aloita alusta...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
@@ -296,11 +296,11 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Kaikki tallennetut asetuksesi poistetaan ja µBlock käynnistyy uudelleen. \n\nPalauta oletusasetukset?",
     "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Yhteyttä ei voitu muodostaa osoitteeseen: {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

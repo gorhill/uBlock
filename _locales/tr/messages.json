@@ -60,7 +60,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Eleman seçme moduna girin",
+    "message":"Öğe seçme moduna gir",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -100,7 +100,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Engellenmiş reklam sayısını ikon üstünde göster",
+    "message":"Engellenmiş reklam sayısını simge üzerinde göster",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -112,11 +112,11 @@
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ağ filtreleri ＋ {{cosmeticFilterCount}} kozmetik filtreler :",
+    "message":"{{netFilterCount}} ağ filtresi ＋ {{cosmeticFilterCount}} kozmetik filtre:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{total}} ın {{used}} ı kullanıldı",
+    "message":"{{total}} süzgecin {{used}} adedi kullanıldı",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -124,7 +124,7 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Şimdi Güncelleştir",
+    "message":"Şimdi güncelle",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
@@ -132,11 +132,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Ayrıştır ve AdblockPlus element gizleme filtreleri uygula",
+    "message":"Öğe gizleme filtrelerini işle ve uygula.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>, Ayrıştırma ve <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus uyumlu \"öğe gizleme\" filtre<\/a> uygulayan bu seçeneği sağlar. Bu filtreler aslında kozmetik vardır, bir web sayfasında hangi görsel sikmaya kabul ve hangi tarafından net istek tabanlı filtreleme motoru bloke edemezsin öğeleri gizlemek için hizmet.<\/p><p>Bu özellik etkinleştirildiğinde, <i>µBlock<\/i> ' nın bellek ayak izi artırır.<\/p>",
+    "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öğe gizleme&rdquo; filtrelerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu filtreler aslında kozmetiktir, bir web sayfasında istek-tabanlı filtreleme motoru tarafından engellenemeyecek olan ve görsel keyif amacıyla sayfadaki öğelerin gizlenmesine yardım eder.<\/p><p>Bu özellik etkinleştirildiğinde, <i>µBlock<\/i>'un bellek ayak izi artar.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -176,7 +176,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Satır başına bir URL. Satırları öneki ile '!' göz ardı edilir. Geçersiz URL sessizce yoksayılır.",
+    "message":"Satır başına bir URL. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir. Geçersiz URL'ler sessizce yoksayılır.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -184,11 +184,11 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"Önbelleği Temizle",
+    "message":"önbelleği temizle",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Yeni sürüm mevcut",
+    "message":"yeni sürüm mevcut",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -196,15 +196,15 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Her satır bir süzgeç. Filtre host adı veya Adblock Plus uyumlu filtre olabilir. Satırları öneki ile '!' olursa göz ardı edilir.",
+    "message":"Satır başına bir süzgeç. Filtre host adı veya Adblock Plus-uyumlu filtre olabilir. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"İçe aktar ve ekle",
+    "message":"İçe aktar ve sonuna ekle",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Çıkart",
+    "message":"Dışa aktar",
     "description":"English: Export"
   },
   "1pApplyChanges":{
@@ -212,11 +212,11 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Listenizdeki host adları µBlock listesi devredışı olacak. Satır başına bir giriş. Geçersiz host adlarını sessizce yoksayılır.",
+    "message":"Hangi alan adları için µBlock'un devre dışı olacağını belirten listeniz. Satır başına bir girdi. Geçersiz alan adları sessizce yok sayılır.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"İçe aktar ve ekle",
+    "message":"İçe aktar ve sonuna ekle",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -260,11 +260,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Bu sayfa için engelleme isteği yok",
+    "message":"Bu sayfa için kayıtlı engellenmiş istek yok",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Bu sayfa için engelleme isteği yok",
+    "message":"Bu sayfa için kayıtlı engellenmemiş istek yok",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
@@ -272,7 +272,7 @@
     "description":"English: Change log"
   },
   "aboutCode":{
-    "message":"Kaynka kodu (GPLv3)",
+    "message":"Kaynak kodu (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -288,7 +288,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Baştan başlat...",
+    "message":"Tüm ayarları sıfırla...",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
