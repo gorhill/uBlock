@@ -53,7 +53,16 @@ var syncDynamicFilter = function(scope, i, result) {
     var matches = reResultParser.exec(result) || [];
     var blocked = matches.length !== 0 && matches[1] !== '@@';
     el.toggleClass('blocked', blocked);
-    var ownFilter = matches[3] !== undefined && matches[3] === stats.pageHostname;
+
+    // https://github.com/gorhill/uBlock/issues/340
+    // Use dark shade visual cue if the filter is specific to the page hostname
+    // or one of the ancestor hostname.
+    var ownFilter = false;
+    var filterHostname = matches[3] || '*';
+    if ( stats.pageHostname.slice(0 - filterHostname.length) === filterHostname ) {
+        ownFilter = (stats.pageHostname.length === filterHostname.length) ||
+                    (stats.pageHostname.substr(0 - filterHostname.length - 1, 1) === '.');
+    }
     el.toggleClass('ownFilter', ownFilter);
 };
 
