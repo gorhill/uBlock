@@ -123,8 +123,8 @@ google.*###center_col > #tads
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
 # EasyList/EasyPrivacy fixes
-# To fix `target.com`
 @@||target.122.2o7.net^$domain=target.com
+@@||web.localytics.com/latest/localytics.min.js$domain=citymapper.com
 # To counter Fanboy Social's `/twitter-bootstrap/*`
 # Ref: http://forums.lanik.us/viewtopic.php?f=64&t=19202
 @@||cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap^
