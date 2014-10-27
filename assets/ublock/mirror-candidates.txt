@@ -9,6 +9,8 @@ www.googletagservices.com
     ^www\.googletagservices\.com\/tag\/js\/gpt\.js
 fonts.gstatic.com
     ^fonts\.gstatic\.com
+cdn.jsdelivr.net
+    ^cdn\.jsdelivr\.net\/
 cdnjs.cloudflare.com
     ^cdnjs\.cloudflare\.com\/ajax\/libs\/
 code.jquery.com
