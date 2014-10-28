@@ -58,10 +58,14 @@ var syncDynamicFilter = function(scope, i, result) {
     // Use dark shade visual cue if the filter is specific to the page hostname
     // or one of the ancestor hostname.
     var ownFilter = false;
-    var filterHostname = matches[3] || '*';
-    if ( stats.pageHostname.slice(0 - filterHostname.length) === filterHostname ) {
-        ownFilter = (stats.pageHostname.length === filterHostname.length) ||
-                    (stats.pageHostname.substr(0 - filterHostname.length - 1, 1) === '.');
+    // There might be no page hostname on pages where uBlock can't be active,
+    // like on browser's built-in pages, etc.
+    if ( stats.pageHostname ) {
+        var filterHostname = matches[3] || '*';
+        if ( stats.pageHostname.slice(0 - filterHostname.length) === filterHostname ) {
+            ownFilter = (stats.pageHostname.length === filterHostname.length) ||
+                        (stats.pageHostname.substr(0 - filterHostname.length - 1, 1) === '.');
+        }
     }
     el.toggleClass('ownFilter', ownFilter);
 };
