@@ -6,7 +6,7 @@ body {
     background-color: white;
     min-width: 180px;
     overflow: hidden;
-    display: inline-block;
+    float: left;
     }
 h1,h2,h3,h4 {
     margin:  0;
