@@ -718,6 +718,11 @@ if (window.chrome) {
                         e.stopPropagation();
                     }
 
+                    if (e.message.middleClickURL) {
+                        vAPI.lastMiddleClick = e.message;
+                        return;
+                    }
+
                     // blocking unwanted pop-ups
                     if (e.message.type === 'popup') {
                         if (typeof vAPI.tabs.onPopup === 'function') {
@@ -769,6 +774,20 @@ if (window.chrome) {
                 safari.application.addEventListener('beforeNavigate', function(e) {
                     // e.url is not present for local files or data URIs
                     if (e.url) {
+                        // beforeNavigate fires twice when opening a link with
+                        // middle click. Once with the same tab, second time with
+                        // the new tab. This hack tries to ignore the first one.
+                        if (vAPI.lastMiddleClick) {
+                            if (e.target === safari.application.activeBrowserWindow.activeTab
+                                && e.timeStamp - vAPI.lastMiddleClick.timeStamp <= 500
+                                && e.url === vAPI.lastMiddleClick.middleClickURL) {
+                                vAPI.lastMiddleClick = null;
+                                return;
+                            }
+
+                            vAPI.lastMiddleClick = null;
+                        }
+
                         vAPI.net.onBeforeRequest.callback({
                             name: 'canLoad',
                             target: e.target,

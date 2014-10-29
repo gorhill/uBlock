@@ -187,6 +187,9 @@ if (window.chrome) {
         return;
     }
 
+    var beforeLoadEvent = document.createEvent('Event');
+    beforeLoadEvent.initEvent('beforeload');
+
     var linkHelper = document.createElement('a');
     var onBeforeLoad = function(e, details) {
         if (e.url && e.url.slice(0, 5) === 'data:') {
@@ -274,8 +277,6 @@ if (window.chrome) {
         document.removeEventListener('DOMSubtreeModified', firstMutation, true);
         firstMutation = null;
         var randomEventName = parseInt(Math.random() * 1e15, 10).toString(36);
-        var beforeLoadEvent = document.createEvent('Event');
-        beforeLoadEvent.initEvent('beforeload');
 
         window.addEventListener(randomEventName, function(e) {
             var result = onBeforeLoad(beforeLoadEvent, e.detail);
@@ -342,6 +343,21 @@ if (window.chrome) {
     };
 
     window.addEventListener('contextmenu', onContextMenu, true);
+
+    window.addEventListener('mouseup', function(e) {
+        if (e.button !== 1) {
+            return;
+        }
+
+        e = document.evaluate('ancestor-or-self::a[@href]', e.target, null, 9, null).singleNodeValue;
+
+        if (e && /^https?:$/.test(e.protocol)) {
+            safari.self.tab.canLoad(beforeLoadEvent, {
+                middleClickURL: e.href,
+                timeStamp: Date.now()
+            });
+        }
+    }, true);
 }
 
 })();
