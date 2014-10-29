@@ -418,13 +418,18 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     }
 
     if (!window.MutationObserver) {
-        // DOMSubtreeModified?
-        if (!window.WebKitMutationObserver) {
-            return;
-        }
+        window.MutationObserver = window.WebKitMutationObserver || window.MozMutationObserver;
 
-        // Safari
-        window.MutationObserver = window.WebKitMutationObserver;
+        // dummy shim for older browsers
+        if (!window.MutationObserver) {
+            window.MutationObserver = function(handler) {
+                this.observe = function(target) {
+                    target.addEventListener('DOMNodeInserted', function(e) {
+                        handler([{addedNodes: [e.target]}]);
+                    }, true);
+                };
+            }
+        }
     }
 
     var ignoreTags = {
