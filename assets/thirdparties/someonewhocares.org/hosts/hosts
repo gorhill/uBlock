@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Oct 23rd, 2014 at 13:30
+# Last updated: Oct 28th, 2014 at 10:25
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -976,7 +976,7 @@ fe80::1%lo0	localhost
 127.0.0.1 nextgenstats.com
 127.0.0.1 nht-2.extreme-dm.com
 127.0.0.1 nl.nedstatbasic.net
-127.0.0.1 nl.sitestat.com
+#127.0.0.1 nl.sitestat.com	# may interfere with duo.nl
 127.0.0.1 o.addthis.com
 127.0.0.1 objects.tremormedia.com
 127.0.0.1 okcounter.com
@@ -1493,7 +1493,6 @@ fe80::1%lo0	localhost
 127.0.0.1 www.counter.superstats.com
 127.0.0.1 www.c.thecounter.de
 127.0.0.1 www.cw.nu
-127.0.0.1 www.datatables.net
 127.0.0.1 www.directgrowthhormone.com
 127.0.0.1 www.dpbolvw.net
 127.0.0.1 www.dwclick.com

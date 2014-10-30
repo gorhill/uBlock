@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: xnLRsxZrTaFpYT0UDfpXUw
-! Version: 201410251421
+! Checksum: ThEdGl5bzRDEE/FMimNauA
+! Version: 201410301451
 ! Title: EasyPrivacy
-! Last modified: 25 Oct 2014 14:21 UTC
+! Last modified: 30 Oct 2014 14:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -222,6 +222,7 @@
 /aggbug.aspx?
 /agof/iam-
 /ajax-hits-counter/*
+/ajax_store_analytics?
 /ajaxClicktrack.
 /ajaxlog?
 /ajaxservice.svc/registersession?session_id=
@@ -682,6 +683,7 @@
 /eftracking.
 /eheat.js
 /elex.track.
+/eloqua_
 /elqcfg-$script
 /elqcfg.js
 /elqcfg.min.js
@@ -1952,6 +1954,7 @@
 /v52.js
 /v53.js
 /v53nse.js
+/v60.js
 /valueclickbrands/*
 /vanillastats/*
 /vblntpagetag.
@@ -3368,6 +3371,7 @@ http://utm.
 ||res-x.com^$third-party
 ||research-tool.com^$third-party
 ||researchnow.co.uk^$third-party
+||reson8.com^$third-party
 ||responsetap.com^$third-party
 ||retags.us^$third-party
 ||revenuepilot.com^$third-party
@@ -5221,6 +5225,7 @@ http://utm.
 ||metaffiliation.com^*^mclic=
 ||metering.pagesuite.com^$third-party
 ||metric.nwsource.com^
+||metrics-api.librato.com^
 ||metrics.brightcove.com^
 ||metrics.chmedia.com^
 ||metrics.ctvdigital.net^
@@ -5388,7 +5393,7 @@ http://utm.
 ||rackcdn.com/1x1.gif?
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|metrolyrics.com|rotoworld.com|thesun.co.uk|thetimes.co.uk
+||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|metrolyrics.com|rotoworld.com|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||realplayer.com^*/pixel?
@@ -8844,6 +8849,7 @@ http://utm.
 ||irib.ir/count.php?
 ||irib.ir/counter/stat.js
 ! Polish
+|http://x.o2.pl^
 ||analytics.gazeta.pl^
 ||dot.wp.pl^
 ||kropka.onet.pl^
@@ -9132,6 +9138,7 @@ http://utm.
 @@||live.indiatimes.com/trackjs.cms
 @@||lloydstsb.com/it/xslt/touchclarity/omtr_tc.js
 @@||loadus.exelator.com/load/?p=$script,domain=rrstar.com
+@@||localytics.com/latest/localytics.min.js$domain=citymapper.com
 @@||logging.apache.org^
 @@||lp.longtailvideo.com/5/yourlytics/yourlytics-1.js$domain=indiedb.com|indieroyale.com|moddb.com
 @@||lsi.com^*/google-analytics.js
@@ -9233,10 +9240,12 @@ http://utm.
 @@||reinvigorate.net/re_.js$domain=thenounproject.com
 @@||remodelista.com/media/js/libs/ga_social_tracking.js
 @@||res-x.com^*/Resonance.aspx?
+@@||rfdcontent.com^*/utag.loader.js$domain=forums.redflagdeals.com
 @@||s.youtube.com/api/stats/playback?$object-subrequest
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?
 @@||scorecardresearch.com/beacon.js$domain=agame.com|allrecipes.com|apl.tv|babycenter.com|calgaryherald.com|canada.com|cbc.ca|dailymail.co.uk|deviantart.com|discovery.com|edmontonjournal.com|fastcompany.com|financialpost.com|firstwefeast.com|hitfix.com|huffingtonpost.com|landandfarm.com|laptopmag.com|last.fm|leaderpost.com|linkinpark.com|mainstreet.com|montrealgazette.com|nationalpost.com|newsday.com|ning.com|ottawacitizen.com|ouramazingplanet.com|outsideonline.com|plixi.com|radaronline.com|salon.com|sci2.tv|thedailybeast.com|theprovince.com|thestar.com|thestarphoenix.com|thinkatheist.com|vancouversun.com|windsorstar.com
+@@||scorecardresearch.com/crossdomain.xml$domain=rte.ie
 @@||scripts.demandmedia.com/wm.js$domain=ehow.com
 @@||sears.com^*/analytics.sitecatalyst.js
 @@||sellpoint.net/smart_button/$script,domain=walmart.com
@@ -9319,6 +9328,7 @@ http://utm.
 @@||westelm.com^*/bloomreach.js
 @@||westjet.com/js/webstats.js
 @@||whirlpool.com/foresee/foresee-trigger.js
+@@||whoson.com/include.js?$script,domain=hotelchocolat.com
 @@||widgets.outbrain.com^*/comScore/comScore.htm
 @@||wikia.nocookie.net^*/AnalyticsEngine/js/analytics_prod.js
 @@||wikimedia.org^*/trackClick.js
@@ -9498,7 +9508,7 @@ http://utm.
 @@||webcenter.tiscali.it/distribuzione/_script/audience_science.js$domain=mail.tiscali.it
 ! Latvian
 @@/webtracking/*$domain=pasts.lv
-@@||google-analytics.com/analytics.js$domain=tvplay.lv
+@@||google-analytics.com/analytics.js$domain=tv3play.lt|tvplay.lv
 ! Polish
 @@||gemius.pl/gstream.js
 @@||kropka.onet.pl^*/onet.js$domain=tvnwarszawa.pl
@@ -9524,6 +9534,7 @@ http://utm.
 ! Anti-Adblock
 @@|http://r.i.ua/s?*&p*&l$image,domain=swordmaster.org
 ! Swedish
+@@||picsearch.com/js/comscore.js$domain=dn.se
 @@||reseguiden.se^*.siteCatalyst.js
 ! Turkey
 @@||google-analytics.com/analytics.js$domain=ligtv.com.tr

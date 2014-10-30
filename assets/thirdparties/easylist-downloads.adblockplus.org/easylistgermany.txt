@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ie8JfTwCbZAWsR6lwv9bFQ
-! Version: 201410251421
+! Checksum: BRAkexNA1HDaZiCcWZ5a9w
+! Version: 201410301501
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 25 Oct 2014 14:21 UTC
+! Last modified: 30 Oct 2014 15:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1610,6 +1610,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block.txt ***
 /?placement=$domain=movie-blog.org
 /oase_banner.jpg$domain=mysummit.wordpress.com
+^what=zone^$domain=ww3.cad.de
 |http://$subdocument,third-party,domain=bonimail.de
 |http://*.pw^$script,domain=byte.to
 |http://byte.to^$script
@@ -2019,6 +2020,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-warez.in/images/hoster_logos/
 ||ddl-warez.in/images/hosterlogos/
 ||ddl-warez.in/images/och/
+||ddl-warez.in/images/och_infobuttons/
 ||ddl-warez.in/images/och_logos/
 ||ddl-warez.in^*.php|$script
 ||ddl-warez.in^*_js.js
@@ -3642,6 +3644,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ww-kurier.de/images/benderheader.gif
 ||ww-kurier.de/images/ferdihombach.gif
 ||ww-kurier.de/pic/dbeyer_250_200.swf
+||ww4.cad.de^*.php?*^what=zone:
 ||ww4.cad.de^*/view.php?what=zone:
 ||wz-newsline.de/polopoly_fs/*-900x120.
 ||xbox-newz.de/portal/images/brandings/
@@ -3911,7 +3914,6 @@ fussball.de###TArtikel2 > img[height="95"][width="302"]:first-child
 mobile.de###TBANNER_SPACER
 nachbarn.cc###TB_load[style="display: block;"]
 nachbarn.cc###TB_overlay
-de.msn.com###TOnlineMagazin
 n-roms.de###Tabelle2[width="129"][cellspacing="3"][cellpadding="1"][border="1"]
 unterwasserwelt.de###Tabelle671
 unterwasserwelt.de###Tabelle673
@@ -3961,7 +3963,7 @@ androidnext.de###amazon_headline
 crackajack.de###amazon_list
 chip.de###anchorSuperBanner
 tagesspiegel.de###anzeige_schnippsel
-de.msn.com,neue-braunschweiger.de###anzeigen
+neue-braunschweiger.de###anzeigen
 justpay.de###anzeigen_left
 wuppertaler-rundschau.de###anzeigen_oben
 apomio.de###anzeigen_wrapper
@@ -4078,7 +4080,6 @@ looki.de###cad
 90elf.de###carousel
 hostessen-meile.com###cent99
 browsergames.de###chromebar
-de.msn.com###ciao
 holstein-kiel.de###cittiBanner
 deutsche-wirtschafts-nachrichten.de###clickable-top
 pixelio.de###clipdealer
@@ -4146,8 +4147,6 @@ kayak.de###crossSaleBody
 kicker.de###ctl00_ControlNavi_presenterCtrl
 gbase.ch,gbase.de###ctl00_MainContent_radrMetaboli
 hardware-experten.de###dailybanner
-at.msn.com,de.msn.com###dating
-ch.msn.com###datingflash
 wetter.com###db_banner
 abacho.de###depart_tbl_main
 handballforum-dormagen.de###derkapitaen
@@ -4172,7 +4171,6 @@ abnehmen-forum.com###dropinboxv3cover
 drehscheibe-foren.de,drehscheibe-online.de###dsBanner
 800gs.de###duonix
 onlinewebservice4.de###dwindow
-de.msn.com###ebay
 billiger.de###ebay_footer_widget_ajax
 focus.de###ecs-snippet
 boerse.bz###edit10093682 + div[id^="edit"][style="padding:0px 0px 6px 0px"]
@@ -4308,7 +4306,6 @@ internetcologne.de###kopfbanner
 immonet.de###kuechenlink
 bigbrother11hd.in,bigbrother11live.info###l93b850
 nibelungenkurier.de###large_banner_top
-de.msn.com###launchpromobanner
 laut.de###laut-box-ad
 anime-stream24.com,beamtentalk.de,byte.to,dug-portal.com,gesichtskirmes.net,movie-blog.org,pornofilme24.info,sdx.cc,wichsfleck.com###layer
 ingame.de###layer-overlay
@@ -4344,7 +4341,6 @@ ensuite.ch###linkzeile
 lama-power.com###load-scene-1-figur-ads
 lama-power.com###load-scene-1-figur-ads-2
 lama-power.com###load-scene-1-figur-ads-3
-ch.msn.com###localch
 lokalisten.de###logOutCon3
 wetter.de###loginboxXDOT
 lesben.org###logo
@@ -4387,7 +4383,6 @@ klicktel.de###mediaBanner
 comprano.de###mediumRectangle
 cosmiq.de###medium_rectangle_container
 pollenflug.de###mega-banner
-de.msn.com###meineservices
 wlz-fz.de###meinprospekt_header
 dnblog.in###meteor-slideshow
 handball-neuhausen.de###middleWrapper > #cols3Right[style="height: 1062px;"]
@@ -4413,7 +4408,6 @@ morgenpost.de###mrect02
 hornoxe.com###mside > .navigation + div[align="center"] + .box-new
 hornoxe.com###mside > .navigation + div[align="center"] + h2 + center
 hornoxe.com###mside > a[href^="http://www.amazon.de/"][href*="?tag=hornoxecom-21"] > img
-de.msn.com,msn.de###msnpromo
 meinestadt.de###mt-banner
 funnybilder.net,lachfails.net,vipbilder.net###mt_right
 mov-world.net###mw_layer
@@ -4477,7 +4471,6 @@ versicherungsjournal.at,versicherungsjournal.de###norm-skyscraper-box
 versicherungsjournal.de###oben-skyscraper-box
 yasni.de###offer
 mixeryrawdeluxe.tv###outerBanner
-de.msn.com###ov24_imageteaser
 schiffsansagedienst-cuxhaven.de###overlay
 schiffsansagedienst-cuxhaven.de###overlay + #lightBox
 4forums.de###p
@@ -4492,13 +4485,10 @@ amateurchess.com###pagenav_menu + .tborder[width="100%"][cellspacing="1"][cellpa
 amateurchess.com###pagenav_menu + .tborder[width="100%"][cellspacing="1"][cellpadding="7"][border="0"][align="center"] + br + table[border="1"] + br + table[border="1"]
 rheinforum.com###pagenav_menu + table[width="100%"][border="0"]
 climbing.de###pane-werbung
-byte.to,de.msn.com,nh24.de###partner
-de.msn.com###partner2
-de.msn.com###partner3
+byte.to,nh24.de###partner
 borussia.de###partnerBottom
 wirtschaftslexikon.gabler.de###partnerContainer
 360magazin.de,cheats.de,spielechat.de,spieleportal.de###partner_box
-de.msn.com###partnerangebote3
 byte.to###partnerbar
 schoener-fernsehen.com###partnerbottom
 schoener-fernsehen.com###partnerright
@@ -4795,7 +4785,6 @@ wirtschaftslexikon.gabler.de###textBannerContainer
 fundanalyzer.de,fundresearch.de###ticker
 vfl-gummersbach.de###ticketmaster
 t-online.de###tl_anz-pos1
-de.msn.com###tonline
 chip.de###top-banner
 fnweb.de###top-bannerrow
 awardfabrik.de###top2
@@ -4831,8 +4820,6 @@ home.1und1.de,web.de###uimTopPosition
 immonet.de###umzugsauktionslink
 fireball.de###url[style="width: 100%;margin-left:5px;margin-top:5px;"]
 mov-world.net###usenet_flip
-de.msn.com###v12_anz
-de.msn.com###v12_partner
 dwdl.de###viad_canvas
 androidpit.de###videoTakeOver
 androidpit.de###videoTakeOverBackground
@@ -5533,8 +5520,6 @@ gmx.net,web.de##.offers
 readmore.de##.ofhidden > div[style="width:520px; height:50px;"]
 heise.de##.online-markt
 hsc-bad-neustadt.de##.onlinepartner
-de.msn.com##.opennew[href^="http://ad2.adfarm1.adition.com/redi?sid="]
-de.msn.com##.opennew[href^="http://rover.ebay.com/"]
 rp-online.de##.orange
 woerterbuch.info##.ov
 kredit.com##.ovt_box
@@ -5663,6 +5648,7 @@ informelles.de##.side2
 allround-pc.com##.side_banner
 downloadstube.net##.side_frame
 fernsehlounge.de##.sidebanner
+tarnkappe.info##.sidebar > #text-6
 ploetzblog.de##.sidebar > .imglinks
 hc-empor.de##.sidebar > ul > #text-6 + #text-13 + #text-9
 berriesandpassion.com,kreativfieber.de##.sidebar-right > #text-11
@@ -6242,7 +6228,7 @@ bild.de##a[href^="http://www.erotik1.de/"]
 maerkischeallgemeine.de##a[href^="http://www.etracker.de/lnkcnt.php?"]
 5vor12.de##a[href^="http://www.exnzg.de/go.cgi?pid="]
 maclife.de##a[href^="http://www.falkemedia-shop.de/"][target="_blank"] > img
-manager-magazin.de##a[href^="http://www.finanztreff.de/adclick.htn?b="]
+finanztreff.de,manager-magazin.de##a[href^="http://www.finanztreff.de/adclick.htn?b="]
 lesen.to,torrent.to##a[href^="http://www.firstload.com/?uniq="]
 torrent.to##a[href^="http://www.firstload.net/affiliate/"]
 movie-blog.org##a[href^="http://www.fixurl.de/"]
@@ -7585,6 +7571,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||betreut-wohnen.de/adserver/ad.js
 @@||blick.ch^*/advertisement.js
 @@||boardking.de^*/adframe.js
+@@||bobodise.com^$object-subrequest,domain=rtlnitronow.de
 @@||brasilienfreunde.net^$elemhide
 @@||buffed.de^$image
 @@||bullhost.de^$elemhide
@@ -7771,7 +7758,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||rene-neuweiler.ch^$elemhide
 @@||rentenbote.de^$elemhide
 @@||revsci.net/pql?placementIdList=*&cb=$script,domain=gamestar.de
-@@||schneevonmorgen.com^$object-subrequest,domain=gmx.net|golem.de|homerj.de|pcgames.de|spiegel.tv|sueddeutsche.de|t-online.de|web.de
+@@||schneevonmorgen.com^$object-subrequest,domain=gmx.net|golem.de|homerj.de|pcgames.de|rtlnitronow.de|spiegel.tv|sueddeutsche.de|t-online.de|web.de
 @@||schuetzenrecht.de^$elemhide
 @@||schulzeux.de/js/show_ads.js
 @@||schweizer-abgeltungssteuer.ch^$elemhide

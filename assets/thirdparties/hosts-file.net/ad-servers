@@ -908,7 +908,6 @@
 127.0.0.1	a.consumer.net
 127.0.0.1	a.ctasnet.com
 127.0.0.1	a.eporner.com
-127.0.0.1	a.facdn.net
 127.0.0.1	a.fandango.com
 127.0.0.1	a.fortumo.com
 127.0.0.1	a.glcdn.co
@@ -6775,6 +6774,7 @@
 127.0.0.1	cdn.buysellads.com
 127.0.0.1	cdn.callrail.com
 127.0.0.1	cdn.cdnco.us
+127.0.0.1	cdn.cdncomputer.com
 127.0.0.1	cdn.celtra.com
 127.0.0.1	cdn.chuknu.sokrati.com
 127.0.0.1	cdn.clickigniter.io
@@ -11599,6 +11599,7 @@
 127.0.0.1	hide.io
 127.0.0.1	hideaway.com
 127.0.0.1	hig.com
+127.0.0.1	highcpms.com
 127.0.0.1	highspeed.duckcrypt.info
 127.0.0.1	hightrafficads.com
 127.0.0.1	hilary-conn.us
@@ -11838,6 +11839,7 @@
 127.0.0.1	i1.createsend4.com
 127.0.0.1	i1.createsend5.com
 127.0.0.1	i1.likes-media.com
+127.0.0.1	i1.putags.com
 127.0.0.1	i18n.adition.com
 127.0.0.1	i2.cmail1.com
 127.0.0.1	i2.cmail2.com
@@ -11848,6 +11850,7 @@
 127.0.0.1	i2.current.com
 127.0.0.1	i2.gatewayinterface.com
 127.0.0.1	i2.likes-media.com
+127.0.0.1	i2.putags.com
 127.0.0.1	i3.cmail1.com
 127.0.0.1	i3.cmail2.com
 127.0.0.1	i3.cmail5.com
@@ -11855,8 +11858,10 @@
 127.0.0.1	i3.createsend3.com
 127.0.0.1	i3.createsend4.com
 127.0.0.1	i3.createsend5.com
+127.0.0.1	i3.putags.com
 127.0.0.1	i4.cmail1.com
 127.0.0.1	i4.createsend4.com
+127.0.0.1	i4.putags.com
 127.0.0.1	i5.cmail2.com
 127.0.0.1	i5.cmail5.com
 127.0.0.1	i5.createsend1.com
@@ -21066,6 +21071,7 @@
 127.0.0.1	www.herbalaffiliateprogram.com
 127.0.0.1	www.hide.io
 127.0.0.1	www.highcharts.com
+127.0.0.1	www.highcpms.com
 127.0.0.1	www.hilary-caddell.us
 127.0.0.1	www.hillary-daughtery.us
 127.0.0.1	www.hillary-paugh.us
@@ -22847,4 +22853,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22842
+# Hosts: 22848

@@ -5256,27 +5256,30 @@ gop.pk
 gos.pk
 info.pk
 
-// pl : http://www.dns.pl/english/
+// pl http://www.dns.pl/english/index.html
+// confirmed on 26.09.2014 from Bogna Tchórzewska <partner@dns.pl>
 pl
-// NASK functional domains (nask.pl / dns.pl) : http://www.dns.pl/english/dns-funk.html
+com.pl
+net.pl
+org.pl
+info.pl
+waw.pl
+gov.pl
+// pl functional domains (http://www.dns.pl/english/index.html)
 aid.pl
 agro.pl
 atm.pl
 auto.pl
 biz.pl
-com.pl
 edu.pl
 gmina.pl
 gsm.pl
-info.pl
 mail.pl
 miasta.pl
 media.pl
 mil.pl
-net.pl
 nieruchomosci.pl
 nom.pl
-org.pl
 pc.pl
 powiat.pl
 priv.pl
@@ -5292,12 +5295,7 @@ tm.pl
 tourism.pl
 travel.pl
 turystyka.pl
-// ICM functional domains (icm.edu.pl)
-6bone.pl
-art.pl
-mbone.pl
 // Government domains (administred by ippt.gov.pl)
-gov.pl
 uw.gov.pl
 um.gov.pl
 ug.gov.pl
@@ -5307,11 +5305,7 @@ so.gov.pl
 sr.gov.pl
 po.gov.pl
 pa.gov.pl
-// other functional domains
-ngo.pl
-irc.pl
-usenet.pl
-// NASK geographical domains : http://www.dns.pl/english/dns-regiony.html
+// pl regional domains (http://www.dns.pl/english/index.html)
 augustow.pl
 babia-gora.pl
 bedzin.pl
@@ -5397,7 +5391,6 @@ rybnik.pl
 rzeszow.pl
 sanok.pl
 sejny.pl
-siedlce.pl
 slask.pl
 slupsk.pl
 sosnowiec.pl
@@ -5419,7 +5412,6 @@ ustka.pl
 walbrzych.pl
 warmia.pl
 warszawa.pl
-waw.pl
 wegrow.pl
 wielun.pl
 wlocl.pl
@@ -5432,18 +5424,6 @@ zagan.pl
 zarow.pl
 zgora.pl
 zgorzelec.pl
-// TASK geographical domains (www.task.gda.pl/uslugi/dns)
-gda.pl
-gdansk.pl
-gdynia.pl
-med.pl
-sopot.pl
-// other geographical domains
-gliwice.pl
-krakow.pl
-poznan.pl
-wroc.pl
-zakopane.pl
 
 // pm : http://www.afnic.fr/medias/documents/AFNIC-naming-policy2012.pdf
 pm
@@ -8703,6 +8683,7 @@ ro.com
 // Google, Inc.
 // Submitted by Eduardo Vela <evn@google.com> 2012-10-24
 appspot.com
+blogspot.ae
 blogspot.be
 blogspot.bj
 blogspot.ca
@@ -8717,6 +8698,7 @@ blogspot.com.ar
 blogspot.com.au
 blogspot.com.br
 blogspot.com.es
+blogspot.com.tr
 blogspot.cv
 blogspot.cz
 blogspot.de
@@ -8738,6 +8720,7 @@ blogspot.no
 blogspot.pt
 blogspot.re
 blogspot.ro
+blogspot.ru
 blogspot.se
 blogspot.sg
 blogspot.sk
@@ -8790,6 +8773,14 @@ operaunite.com
 // Submitted by Duarte Santos <domain-admin@outsystemscloud.com> 2014-03-11
 outsystemscloud.com
 
+// .pl domains (grandfathered)
+art.pl
+gliwice.pl
+krakow.pl
+poznan.pl
+wroc.pl
+zakopane.pl
+
 // Red Hat, Inc. OpenShift : https://openshift.redhat.com/
 // Submitted by Tim Kramer <tkramer@rhcloud.com> 2012-10-24
 rhcloud.com
@@ -8801,6 +8792,13 @@ service.gov.uk
 // priv.at : http://www.nic.priv.at/
 // Submitted by registry <lendl@nic.at> 2008-06-09
 priv.at
+
+// TASK geographical domains (www.task.gda.pl/uslugi/dns)
+gda.pl
+gdansk.pl
+gdynia.pl
+med.pl
+sopot.pl
 
 // Yola : https://www.yola.com/
 // Submitted by Stefano Rivera <stefano@yola.com> 2014-07-09

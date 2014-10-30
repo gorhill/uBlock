@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: fDdCkV85HKhvI7D23bpo6A
-! Version: 201410251421
+! Checksum: G7jcWRPISGj6LbVcGKVizA
+! Version: 201410301501
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 25 Oct 2014 14:21 UTC
+! Ultima modifica: 30 Oct 2014 15:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -128,6 +128,7 @@ _sito/adv/
 ##.adv-iframe-sx
 ##.adv300eni
 ##.advPostLibri
+##.adv_articolo
 ##.adv_esterno
 ##.adv_oriz
 ##.adv_vert
@@ -337,10 +338,12 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ciaotour.com/it/client/hotels/inline.htm?*&promo=$subdocument
 ||cinetrailer.tv/skin/
 ||classificaporno.com/image/incontri*.gif
+||clubmetroshop.it/banner/
 ||clubshop.com/banners/
 ||cmstorage.it/public/skin/
 ||connect24.it/fot468.gif
 ||contactlab.it^*/Banner/
+||d1a6pzosbglc5p.cloudfront.net^
 ||d1n2y2eq1wbato.cloudfront.net^*/sponsor-$domain=atalanta.it
 ||d1oaxhr280l1ho.cloudfront.net^
 ||delosstore.it/banner/
@@ -437,6 +440,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||scambiobanner.aruba.it^$third-party
 ||scambiobanner.net-parade.it^$third-party
 ||scimmiablu.altervista.org/cpm/
+||sda.quinews.net^
 ||secureholiday.net/moteur/v3/camperonline/min_form.aspx?$third-party
 ||sereni.net/images/banner/
 ||serverplan.com/affiliati/$third-party
@@ -1010,6 +1014,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilsole24ore.com^*/spot_include.shtml
 ||ilsole24ore.com^*_pubb.jpg
 ||iltaccoditalia.info/banner/
+||iltempo.it^*/enel.swf
 ||iltempo.it^*/unicusano.jpg
 ||ilvelino.it^*/banner/
 ||ilvolo.it/images/banners/
@@ -1191,6 +1196,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||milanofinanza.it/common/home/mf/img/xtb-IT-METATRADER_ACADEMY-197x55.gif
 ||milanofinanza.it/common/home/mf/img/xtb-IT-METATRADER_ACADEMY-2-197x55.gif
 ||milanofinanza.it/common/home/mf/img/xtbxtradebrokers.gif
+||milanofinanza.it/img/logo_zurich-connect.gif
+||milanofinanza.it/img/speciali/
 ||milanofinanza.it^*/promo/
 ||milanoweb.com/flash/imagerotator.swf
 ||militariforum.it/forum/italy.swf
@@ -1237,6 +1244,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||nyc-site.com/newyork/hotel/
 ||oas.repubblica.it^
 ||occhiodisalerno.com/images/banners/
+||oggiroma.it/public/banner/
 ||oggitreviso.it/files/fascevittoriofilm.jpg
 ||oilproject.org/static/images/logotimhome.png
 ||oilproject.org/static/images/studiacontim.png
@@ -1378,6 +1386,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||redaweb.it/images/bannershoppingeventialto.gif
 ||regginacalcio.com/images/banners/
 ||reggio2000.it/bnrs/
+||reggiotv.it/immagini/banner/
 ||regionelombardia.info/banners/
 ||reportmotori.it/banner/
 ||reportnet.it/images/banners/
@@ -1793,6 +1802,7 @@ quattroruote.it###bannerrcl
 cwi.it###banners
 siracusanews.it###banners-top
 si24.it###banners_middle
+cmnews.it###bannersdx
 telefonino.net###bannerstrip
 senigallianotizie.it###bbitalia_banner
 altalex.com,primopianomolise.it,sentenze.net###bglink
@@ -2141,7 +2151,7 @@ outcast.it##.banner250250
 ilcapoluogo.com##.banner3
 firstonline.info,mediapason.it##.banner300
 outcast.it##.banner300250
-hwupgrade.it,italiaoggi.it,milanofinanza.it##.banner300x250
+askanews.it,hwupgrade.it,italiaoggi.it,milanofinanza.it##.banner300x250
 ildesk.it##.banner385x198
 ilcapoluogo.com##.banner4
 ildesk.it##.banner468x60
@@ -2385,6 +2395,7 @@ pmi.it##.special-widget
 ciao.it##.specialOfferMod
 europages.it,gazzetta.it,ilgiornale.it,pubblicitaitalia.it,repubblica.it,stickmangames.altervista.org,violanews.com##.sponsor
 fcparma.com##.sponsor-group
+milanofinanza.it##.sponsor-red
 erbanotizie.com,lecconotizie.com##.sponsor-rubrica
 treccani.it##.sponsorLogo
 tuttosport.com##.sponsor_peroni
@@ -2511,6 +2522,7 @@ techassistance.it##div[style="height:90px; width:980px;display:block; text-align
 iphoneitalia.com##div[style="height:90px;display:block;width:1045px;"]
 iphoneitalia.com##div[style="height:90px;display:block;width:1045px;margin-top:40px;"]
 pronostici-scommesse.info##div[style="height:90px;width:728px;position:relative;left:136px;"]
+tmnews.it##div[style="margin-top: 10px; margin-bottom: 10px; margin-left: auto; margin-right: auto; width: 728px; height: 90px;"]
 adagio.it##div[style="margin-top: 4px; width: 468px; height: 60px;"]
 calciomercato.napoli.it##div[style="margin-top:-25px; margin-bottom:20px; height:90px;width:728px; margin-left:110px;"]
 affaritaliani.it##div[style="margin-top:10px;height:90px"]
@@ -2618,6 +2630,7 @@ wmia.it##div[style="width:350px; height:300px; float:left"]
 radiotime.it##div[style="width:360px; margin-top:10px; margin-bottom:5px;"]
 pornoitalico.com##div[style="width:380px; height:480px; _position:absolute; _right: 0px; text-align:center; float:right; margin-top:51px;margin-bottom: 50px; margin-left: 5px; background-color:#FCFAFA; border: 1px solid #BCBCBC;; padding-left:10px; padding-right:10px; padding-top:30px; padding-bottom:100px; margin-right: 10px; border-radius: 0px;"]
 milanlive.it##div[style="width:468px; float:left; height:60px; margin-bottom:3px;"]
+reggiotv.it##div[style="width:468px; height:60px; border:1px solid #DDD; margin:10px; margin-left:60px; overflow:hidden; text-align:center"]
 lafucina.it##div[style="width:468px; height:60px;"]
 beppegrillo.it##div[style="width:475px; height:60px; display:none;"]
 asroma24.com,ilmilanista.it,interistaweb.it##div[style="width:480px; height:72px; padding: 6px; margin-left:auto; margin-right:auto;"]
@@ -2798,6 +2811,7 @@ termometropolitico.it##[id^="bsa"]
 @@||static.fanpage.it^*/adsense.swf?$object-subrequest
 @@||static.youreporter.it/adv/jwplayer.js
 @@||static.youreporter.it/adv/player.swf$object
+@@||tag.reachadv.it/player|$script,domain=tzetze.it
 @@||terradidelizie.s3.amazonaws.com/banners/$image,domain=terradidelizie.it
 @@||tiscali.ad.dotandad.com/crossdomain.xml$object-subrequest,domain=ansa.it|tiscali.it
 @@||tiscali.ad.dotandad.com/tiscali.jsp?mpo=vast2&mpt=$object-subrequest,domain=ansa.it|tiscali.it
@@ -2827,6 +2841,7 @@ termometropolitico.it##[id^="bsa"]
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_dimensions.txt ***
 @@||barillagroup.com/pic/media/uploads/*.300x250_$domain=piccolini.it
 @@||fantagazzetta.com/App_Resources/Images/Articoli/300x250/300x250_
+@@||oggiroma.it/public/news_foto/300x250_
 @@||widget.traderlink.it/modules/marketmap/*=300x250&
 @@||zeusnews.it/thumbs/1/300x250/300x250-
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_popup.txt ***

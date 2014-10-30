@@ -152,6 +152,7 @@
 ||asalahpal.com/vb/$subdocument,domain=a7lahmsa.com
 ||awtad.com/www/
 ||b8cdn.com^*/affiliate-
+||babal.net/tools/home.php?$third-party
 ||banathi.com/banathi*.
 ||bayt.com/referred?
 ||bayt.com/scripts/associates_latest_jobs.js
@@ -162,6 +163,7 @@
 ||blogspot.com^*/al3abo.png$domain=th3professional.com
 ||bothemes.com^*/popup.js
 ||casasky.com/bannerslider/
+||cnbcarabia.com/top_banner.php
 ||cs-proton.tv/images/banner-*.
 ||ctn-abbas.com/*_ads.
 ||d3oyytf0n6db9a.cloudfront.net^
@@ -991,7 +993,7 @@ souq.com##.ad1
 souq.com##.ad2
 egy4up.net,gornalak.com##.ad_left
 egy4up.net,gornalak.com##.ad_right
-add-anime.net,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,souqa3mal.com##.ads
+add-anime.net,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,skynewsarabia.com,souqa3mal.com##.ads
 rjeem.com##.ads1
 toptwitt.com##.ads2
 elraaed.com##.ads_1
@@ -1049,6 +1051,7 @@ alarab.net##.mbAdImg
 mediamasr.tv##.mediumbanner
 hawaaweb.com##.middle-banner
 ech-chaab.net##.module.mod-line.color-black.deepest
+skynewsarabia.com##.mpu
 abotlal.com##.nannr
 rassoulallah.info##.narrow_column
 brooonzyah.net##.navbar_notice

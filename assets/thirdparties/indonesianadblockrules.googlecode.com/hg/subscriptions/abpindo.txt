@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Fz8VzEIeZLiBmO4T7kw7hw
+! Checksum: FN2ivjdK3GTNoVH/rmew1w
 ! Title: ABPindo
-! Last modified: 24 Oktober 2014, 09:24:18 WIB
+! Last modified: 26 Oktober 2014, 16:37:11 WIB
 ! Expires: 4 days (update frequency)
 ! Homepage: http://abpindo.blogspot.com/
 ! Licence: http://indonesianadblockrules.googlecode.com/hg/subscriptions/COPYING
@@ -183,6 +183,7 @@
 ||doremibet.com^$third-party
 ||duitbux.com^$third-party
 ||duitmu.com^$third-party
+||fadly168.ga^$third-party
 ||fairbet88.com^$popup,third-party
 ||galaxybola.com^$third-party
 ||galaxytoto.com^$third-party
@@ -483,7 +484,7 @@ lihat.co.id###SidebarIklan-wrapper
 chip.co.id###TopBannerBg
 krucil.net###ad_floating_bottom
 krucil.net###ad_floating_top
-forumbokep.com,idfl.biz,idfl.info,idfl.me,idfl.my.id,idfl.us,indofiles.web.id,sodasusu.com,vocland.com###ad_global_below_navbar
+173.199.189.86,forumbokep.com,idfl.biz,idfl.info,idfl.me,idfl.my.id,idfl.us,indofiles.web.id,sodasusu.com,vocland.com###ad_global_below_navbar
 harianjogja.com,solopos.com###ads-float
 dapurpacu.com###ads-mid
 downloadfilmbaru.com###ads-stack
@@ -509,7 +510,7 @@ bioskop21.us###fadeinbox
 r-l.me###fancybox-overlay
 r-l.me,teknoup.com###fancybox-wrap
 teknoup.com###fancybox_ajax
-forumbokep.com,krucil.net,vocland.com###floating_banner_bottom
+173.199.189.86,forumbokep.com,krucil.net,vocland.com###floating_banner_bottom
 ganool.com###floating_banner_top2
 populerkan.com###flowads
 untukku.com###footer-adcont
@@ -555,13 +556,12 @@ harianjogja.com,solopos.com###solopos_float
 downloadfilmbaru.com###sticky-ads
 detik.com###sto_banner
 cinema81.com,unduhfilm21.net###teaser1
-17gratis.com,cinema81.com,downloadfilmbaru.com,galaxymaya.com,unduhfilm21.net,unikgaul.com###teaser2
-172.245.177.74,cinema81.com,downloadfilmbaru.com,galaxymaya.com,movie76.com,unduhfilm21.net,unikgaul.com###teaser3
+cinema81.com,downloadfilmbaru.com,galaxymaya.com,unduhfilm21.net###teaser2
+172.245.177.74,cinema81.com,downloadfilmbaru.com,duniasex.ws,galaxymaya.com,movie76.com,unduhfilm21.net###teaser3
 172.245.177.74,cinema81.com,sodasusu.com###teaser4
 movie76.com###teaser5
 movie76.com###teaser6
 movie76.com###teaser7
-17gratis.com###teaser8
 detik.com###top_banner
 bioskopkita.com###topbanner
 jurigjarian.com###topbar
@@ -687,6 +687,7 @@ tabloidbintang.com##div[style="position:absolute; top:20px; left:45px; width:70p
 bokepgratiz.info##div[style="width:100%;text-align:center;"]
 widih.modifikasi.com##img[alt="Pasang iklan di widih.com"]
 komikbaru.com##img[alt="Pemasangan Iklan"]
+173.199.189.86##img[alt="agen bola"]
 zonamuda.com##img[alt="iklan"]
 bokepgratiz.info##img[alt="smart-forex-system.com"]
 movie76.com##img[src="http://2.bp.blogspot.com/-2afHigsbpYY/UguQyTqs5SI/AAAAAAAAAcg/8E4df8rMZMU/s1600/Download+noww.jpg'"]
@@ -755,6 +756,7 @@ zonamuda.com##td[valign="top"][height="56px"][align="center"]
 ||javapic.com^$third-party
 ||jingkrak.com^$third-party
 ||jollywallet.com^$third-party
+||lapak-online.net/$popup,third-party
 ||lytogame.com/images/partner/$third-party
 ||lytogame.com/partner/$third-party
 ||manasuka.com/gbr_banner_link/$third-party

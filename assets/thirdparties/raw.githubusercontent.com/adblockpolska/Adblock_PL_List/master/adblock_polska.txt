@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
 ! Title: Adblock Polska
-! Last modified: 25 Oct 2014`
+! Last modified: 27 Oct 2014 23:10 UTC
 ! Expires: 2 days (update frequency)
 ! List maintainers: adblockpl, tomasko126, MonztA
 ! Homepage: http://fb.com/adblockpl
@@ -12,6 +12,7 @@
 ! For even better ad blocking, make sure to install Anti-Adblock Killer by Reek: https://github.com/reek/anti-adblock-killer
 !
 !-----------------------General advert blocking filters-----------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_general_block.txt ***
 ! * - General Blocking Rules - * !
 -lokazje.
 -reklama.gif
@@ -75,6 +76,7 @@ bannerad.png
 pl/adsys2
 pl/img/wybory2014/
 washa_reklama
+! *** adblockpolska:adblockpolska/adblockpolska_general_block_dimensions.txt ***
 /300x700_
 /300x750_
 1100x200_
@@ -82,8 +84,10 @@ _1100x200
 _300x700
 _750x200
 _750x700
+! *** adblockpolska:adblockpolska/adblockpolska_general_block_popup.txt ***
 /popupredir/*$popup
 !------------------------General element hiding rules-------------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_general_hide.txt ***
 ! * - General Element Hiding Rules - * !
 ###ad-bg-transparent
 ###adsenseLeft
@@ -144,6 +148,7 @@ _750x700
 ##.main-tbaner
 ##.moduletable_reklama
 ##.moduletable_reklama_banner
+##.ncwAd1
 ##.ncwAdCommon.ncwAd1
 ##.nsg_ad_box
 ##.peeloverlay
@@ -205,7 +210,9 @@ _750x700
 ##[id^="rlband."]
 ##[id^="sponsors-"]
 ##[src^="reklama"]
+! *** adblockpolska:adblockpolska/adblockpolska_whitelist_general_hide.txt ***
 !---------------------------Third-party advertisers---------------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_adservers.txt ***
 ! * - 1st Party Blocking Rules & Ad-servers - * !
 ||18hd.pl^$third-party
 ||abc7.pl
@@ -229,6 +236,8 @@ _750x700
 ||e-okazje.com
 ||facebookspy.com.pl
 ||fakty-wiadomosci.pl
+||filefolder.pl
+||freebiz.pl
 ||fullhd.pl
 ||glossymedia.pl^$third-party
 ||hdplayer.pl
@@ -250,16 +259,20 @@ _750x700
 ||pocketads.pl
 ||realmoney.pl
 ||rekimg.stopklatka.pl
+||savemoney.pl
 ||stat24.com$third-party
 ||streamy.pl
 ||superwiadomosci24.pl
+||wiadomosc-dnia.pl
 ||wiadomosci-fakty.pl
 ||wiadomosci-kraj.pl
 ||wiadomosci-net.pl
 ||xxxxxxx.pl
 ||zasiltelefon.com.pl
+! *** adblockpolska:adblockpolska/adblockpolska_adservers_popup.txt ***
 ||admailtiser.com^$popup,third-party
 !-----------------------------Third-party adverts-----------------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_thirdparty.txt ***
 ! * - 3rd Party Blocking Rules - * !
 ||adfreestyle.pl$third-party
 ||goodmoney.pl$third-party
@@ -268,9 +281,11 @@ _750x700
 ||ppwidget.skapiec.pl$third-party
 ||spot.o2.pl$third-party
 ||vivuspartner.pl$third-party
+! *** adblockpolska:adblockpolska/adblockpolska_thirdparty_popup.txt ***
 ||badanie.pollster.pl$popup
 ||gemius.pl$popup,third-party
 !----------------------Specific advert blocking filters-----------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_specific_block.txt ***
 ||a.techmaniak.pl/www/images/
 ||activepl.tv/rek/
 ||ad.filmweb.pl
@@ -296,6 +311,7 @@ _750x700
 ||dot.wp.pl
 ||ec.bankier.pl/file/
 ||ecache*.cdn.onet.pl/suso/?host=rtvnmw52e.mm.onet.pl
+||eonline.pl
 ||eurotax.pl/img/*.swf
 ||extra-plonsk.pl/images/banners/
 ||filmweb.pl/welcomeScreenJS?
@@ -303,6 +319,7 @@ _750x700
 ||freehd.pl
 ||fwcdn.pl/adv/
 ||gry-online.pl/im/zmieniarka/
+||hdstream.pl
 ||hub.com.pl
 ||img.wiocha.pl/img/gry
 ||j.o2.pl
@@ -341,13 +358,17 @@ _750x700
 ||static.fakt.pl
 ||supernowosci24.pl/openx/www/delivery/
 ||supernowosci24.pl/wp-content/uploads/pliki/*swf
+||targeo.pl/_i/
+||targeo.pl/i/cache/a/
 ||video.vid4u.org
 ||wrzuta.pl/ads
 ||x.interia.pl/*.ad.
 ||x.o2.pl
 ||zambrow.org/firmy/grafika/banner
 ||zycie-pleszewa.pl/images/banners
+! *** adblockpolska:adblockpolska/adblockpolska_specific_block_popup.txt ***
 !------------------------Specific element hiding rules------------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_specific_hide.txt ***
 ! * - Site-specific Element Hiding Rules - * !
 newsweek.pl###ARTICLE_CONTENT_INNER_2
 iv.pl###FlyingLayer
@@ -357,6 +378,7 @@ wirtualnemedia.pl###article_promo
 napisy24.pl###baner_300_250
 lubin.pl###banner
 appmaniak.pl###bannerTop
+targeo.pl###bblbrd_outer
 pl###boxEcommerce
 pl###comment-captcha
 7dni.pila.pl###content-left
@@ -370,6 +392,7 @@ jestbeka.pl###ips-popup-wrapper
 tvn24.pl###jHotInfosC
 komputerswiat.pl###ks_bezpieczenstwo_podaj_dalej_1048x100
 proline.pl###layer_top
+polmedia.pl###makingdifferentpopup
 epoznan.pl###news-gallery-overlay
 supernowosci24.pl###notificationbar
 supernowosci24.pl###ocena
@@ -381,16 +404,21 @@ bochnianin.pl###slideText
 nocoty.pl###slider300Wrapper
 groupon.pl###spotlight
 groupon.pl###sub_dlg
+polmedia.pl###text-3
 press.pl###topBanner
 bankier.pl###underArtAdv
 optyczne.pl###warning
 zombiak.pl###welcomescreen_background
 supernowosci24.pl###wideSidebar
 macrumors.com##.ad
+egospodarka.pl##.ad750
+reportal.pl##.adblock
 fotosik.pl,wp.pl,zambrow.org##.adv
+reportal.pl##.advertisement2
 money.pl##.b300.box.ad.ad2
 telepolis.pl##.b_750
 wiocha.pl##.babanner
+gry-online.pl##.ban-fp-970x200
 serwislokalny.com##.banner
 zambrow.org##.bannerRotator
 moszczenica.info##.bannergroup
@@ -438,6 +466,7 @@ komputerswiat.pl##.smart_baner.billboard
 bezuzyteczna.pl##.special
 mpolska24.pl##.tplAds
 spidersweb.pl##.twelve.columns.hide-for-small.text-center
+forbes.pl##.twoElHeader
 spidersweb.pl##.viking_intro
 telepolis.pl##.wiadomosci_lista_div
 gazeta-wiesci.pl##.widget.widget_text
@@ -479,6 +508,7 @@ kryptokursy.pl##[style="width: 200px; height: 200px; margin: 2px 0px 2px -7px; d
 gry-online.poszkole.pl##footer
 sadistic.pl/pics/c57d81558fed.jpg
 !---------------------------------Whitelists----------------------------------!
+! *** adblockpolska:adblockpolska/adblockpolska_whitelist.txt ***
 ! * - Whitelist - * !
 @@/advertisingmodule.$domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@/player/vidAS=pre_roll
@@ -502,3 +532,5 @@ sadistic.pl/pics/c57d81558fed.jpg
 @@||static.wirtualnemedia.pl/media/advs/
 @@||tvn.adocean.pl^$script,domain=ekstraklasa.tv|itvn.pl|player.pl|ttv.pl|tvn.pl|tvn24.pl|tvn24bis.pl|tvn7.pl|tvnplayer.pl|tvnstyle.pl|tvnturbo.pl
 @@||wp.tv/adv.js$domain=tosiewytnie.pl
+! *** adblockpolska:adblockpolska/adblockpolska_whitelist_dimensions.txt ***
+! *** adblockpolska:adblockpolska/adblockpolska_whitelist_popup.txt ***

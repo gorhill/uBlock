@@ -527,6 +527,7 @@ ad.gr.doubleclick.net
 ||contra.gr/*/BINARY/original/adidas*.js
 ||koutipandoras.gr/sites/default/files/*banner*.swf
 ||enikos.gr/data/photos/e28a0cdc2d54f49d2a697d9fe83066d7.gif
+||in.gr/Themes/1/Default/Media/logo-bp-ingr-95x20.gif
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
@@ -866,6 +867,12 @@ popaganda.gr##.banner
 gossip-tv.gr###textlinks
 sport-fm.gr##.textlinks
 meteo.gr##.cityAdv
+in.gr##.stamps
+sports.in.gr###RightBanner3
+sports.in.gr###RightBanner7
+sports.in.gr###middlebanner3
+in.gr###RightBanner6
+in.gr###RightBanner8
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

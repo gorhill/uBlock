@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: vWYE3Ct95Jfb3xmci8BtMQ
-! Version: 201410251421
+! Checksum: I9uaR5NQmOypzGCc4d2yTA
+! Version: 201410301501
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
