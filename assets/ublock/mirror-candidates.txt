@@ -18,8 +18,9 @@ code.jquery.com
 maxcdn.bootstrapcdn.com
     ^maxcdn\.bootstrapcdn\.com\/font-awesome\/
 netdna.bootstrapcdn.com
-    [^\\]+\.bootstrapcdn\.com\/bootstrap\/
-    [^\\]+\.bootstrapcdn\.com\/font-awesome\/
+    ^netdna\.bootstrapcdn\.com\/bootstrap\/
+    ^netdna\.bootstrapcdn\.com\/font-awesome\/
+    ^netdna\.bootstrapcdn\.com\/twitter-bootstrap\/
 platform.twitter.com
     ^platform\.twitter\.com\/widgets\.js
 

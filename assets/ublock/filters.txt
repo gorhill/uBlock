@@ -132,7 +132,8 @@ google.*###center_col > #tads
 @@||web.localytics.com/latest/localytics.min.js$domain=citymapper.com
 # To counter Fanboy Social's `/twitter-bootstrap/*`
 # Ref: http://forums.lanik.us/viewtopic.php?f=64&t=19202
-@@||cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap^
+# Example: http://www.curriculet.com/
+@@/twitter-bootstrap/*
 
 # To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
 @@||adm.fwmrm.net^$domain=go.com
