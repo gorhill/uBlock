@@ -6,7 +6,7 @@ ajax.googleapis.com
 fonts.googleapis.com
     ^fonts\.googleapis\.com
 www.googletagservices.com
-    ^www\.googletagservices\.com\/tag\/js\/gpt\.js
+    ^(www\.googletagservices\.com\/tag\/js\/gpt\.js)
 fonts.gstatic.com
     ^fonts\.gstatic\.com
 cdn.jsdelivr.net
