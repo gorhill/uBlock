@@ -306,7 +306,7 @@ if (window.chrome) {
                 "return block(u, 'xmlhttprequest') ? null : xo.apply(this, [].slice.call(arguments));",
             "};",
         "})();"].join('');
-        document.head.removeChild(document.head.appendChild(tmpJS));
+        document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
     };
 
     document.addEventListener('DOMSubtreeModified', firstMutation, true);
