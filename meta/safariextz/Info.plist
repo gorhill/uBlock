@@ -41,7 +41,7 @@
 				<key>Identifier</key>
 				<string>toolbarItem</string>
 				<key>Image</key>
-				<string>img/icon_16.png</string>
+				<string>img/icon16.png</string>
 				<key>Label</key>
 				<string>{name}</string>
 				<key>Popover</key>
