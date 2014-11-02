@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-window.vAPI = window.vAPI || {};
+self.vAPI = self.vAPI || {};
 
 // http://www.w3.org/International/questions/qa-scripts#directions
 var setScriptDirection = function(langugae) {
@@ -38,8 +38,8 @@ vAPI.download = function(details) {
     }
 };
 
-if (window.chrome) {
-    var chrome = window.chrome;
+if (self.chrome) {
+    var chrome = self.chrome;
 
     vAPI.getURL = function(path) {
         return chrome.runtime.getURL(path);
@@ -50,7 +50,7 @@ if (window.chrome) {
     };
 
     setScriptDirection(vAPI.i18n('@@ui_locale'));
-} else if (window.safari) {
+} else if (self.safari) {
     vAPI.getURL = function(path) {
         return safari.extension.baseURI + path;
     };

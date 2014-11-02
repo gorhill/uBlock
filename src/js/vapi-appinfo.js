@@ -1,7 +1,7 @@
 // can be included anywhere if it's needed
 'use strict';
 
-window.vAPI = window.vAPI || {};
+self.vAPI = self.vAPI || {};
 
 vAPI.app = {
     /**/name: 'µBlock',

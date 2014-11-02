@@ -4,7 +4,7 @@
 (function() {
 'use strict';
 
-window.vAPI = window.vAPI || {};
+self.vAPI = self.vAPI || {};
 
 // since this is common across vendors
 var messagingConnector = function(response) {
@@ -48,7 +48,7 @@ var messagingConnector = function(response) {
     }
 };
 
-if (window.chrome) {
+if (self.chrome) {
     vAPI.chrome = true;
     vAPI.messaging = {
         port: null,
@@ -102,7 +102,7 @@ if (window.chrome) {
             return this.channels[name];
         }
     };
-} else if (window.safari) {
+} else if (self.safari) {
     vAPI.safari = true;
 
     // relevant?
@@ -121,7 +121,7 @@ if (window.chrome) {
             this.channels['vAPI'] = {
                 listener: function(msg) {
                     if (msg.cmd === 'runScript' && msg.details.code) {
-                        Function(msg.details.code).call(window);
+                        Function(msg.details.code).call(self);
                     }
                 }
             };
@@ -272,13 +272,13 @@ if (window.chrome) {
 
     document.addEventListener('beforeload', onBeforeLoad, true);
 
-    // blocking pop-ups and intercepting xhr requests
+    // block pop-ups, intercept xhr requests, and apply site patches
     var firstMutation = function() {
         document.removeEventListener('DOMSubtreeModified', firstMutation, true);
         firstMutation = null;
-        var randomEventName = parseInt(Math.random() * 1e15, 10).toString(36);
+        var randEventName = parseInt(Math.random() * 1e15, 10).toString(36);
 
-        window.addEventListener(randomEventName, function(e) {
+        window.addEventListener(randEventName, function(e) {
             var result = onBeforeLoad(beforeLoadEvent, e.detail);
 
             if (result === false) {
@@ -289,13 +289,11 @@ if (window.chrome) {
         // the extension context is unable to reach the page context,
         // also this only works when Content Security Policy allows inline scripts
         var tmpJS = document.createElement('script');
-        tmpJS.textContent = ["(function() {",
+        var tmpScript = ["(function() {",
             "var block = function(u, t) {",
                 "var e = document.createEvent('CustomEvent'),",
                     "d = {url: u, type: t};",
-                "e.initCustomEvent(",
-                    "'" + randomEventName + "', !1, !1, d",
-                ");",
+                "e.initCustomEvent('" + randEventName + "', !1, !1, d);",
                 "dispatchEvent(e);",
                 "return d.url === !1;",
             "}, wo = open, xo = XMLHttpRequest.prototype.open;",
@@ -304,8 +302,16 @@ if (window.chrome) {
             "};",
             "XMLHttpRequest.prototype.open = function(m, u) {",
                 "return block(u, 'xmlhttprequest') ? null : xo.apply(this, [].slice.call(arguments));",
-            "};",
-        "})();"].join('');
+            "};"
+        ];
+
+        if (vAPI.sitePatch
+            && !safari.self.tab.canLoad(beforeLoadEvent, {isWhiteListed: location.href})) {
+            tmpScript.push('(' + vAPI.sitePatch + ')();');
+        }
+
+        tmpScript.push("})();");
+        tmpJS.textContent = tmpScript.join('');
         document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
     };
 
@@ -342,9 +348,9 @@ if (window.chrome) {
         safari.self.tab.setContextMenuEventUserInfo(e, details);
     };
 
-    window.addEventListener('contextmenu', onContextMenu, true);
+    self.addEventListener('contextmenu', onContextMenu, true);
 
-    window.addEventListener('mouseup', function(e) {
+    self.addEventListener('mouseup', function(e) {
         if (e.button !== 1) {
             return;
         }

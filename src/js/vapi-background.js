@@ -4,10 +4,10 @@
 (function() {
 'use strict';
 
-window.vAPI = window.vAPI || {};
+self.vAPI = self.vAPI || {};
 
-if (window.chrome) {
-    var chrome = window.chrome;
+if (self.chrome) {
+    var chrome = self.chrome;
 
     vAPI.chrome = true;
 
@@ -272,8 +272,21 @@ if (window.chrome) {
             chrome.contextMenus.remove(this.menuId);
         }
     };
-} else if (window.safari) {
+} else if (self.safari) {
     vAPI.safari = true;
+
+    // addContentScriptFromURL allows whitelisting,
+    // so load sitepaching this way, instead of adding it to the Info.plist
+    safari.extension.addContentScriptFromURL(
+        safari.extension.baseURI + 'js/sitepatch-safari.js',
+        [
+            'http://www.youtube.com/*',
+            'https://www.youtube.com/*',
+            'http://www.youtube-nocookie.com/*',
+            'https://www.youtube-nocookie.com/*'
+        ]
+    );
+
 
     vAPI.storage = {
         _storage: safari.extension.settings,
@@ -709,6 +722,8 @@ if (window.chrome) {
 
                 onBeforeRequest = onBeforeRequest.callback;
                 this.onBeforeRequest.callback = function(e) {
+                    var block;
+
                     if (e.name !== 'canLoad') {
                         return;
                     }
@@ -716,6 +731,13 @@ if (window.chrome) {
                     // no stopPropagation if it was called from beforeNavigate event
                     if (e.stopPropagation) {
                         e.stopPropagation();
+                    }
+
+                    if (e.message.isWhiteListed) {
+                        block = µBlock.URI.hostnameFromURI(e.message.isWhiteListed);
+                        block = µBlock.URI.domainFromHostname(block) || block;
+                        e.message = !!µBlock.netWhitelist[block];
+                        return e.message;
                     }
 
                     if (e.message.middleClickURL) {
@@ -739,7 +761,7 @@ if (window.chrome) {
                         return;
                     }
 
-                    var block = vAPI.net.onBeforeRequest;
+                    block = vAPI.net.onBeforeRequest;
 
                     if (block.types.indexOf(e.message.type) < 0) {
                         return true;
@@ -897,7 +919,7 @@ if (window.chrome) {
     };
 }
 
-if (!window.chrome) {
-    window.chrome = { runtime: { lastError: null } };
+if (!self.chrome) {
+    self.chrome = { runtime: { lastError: null } };
 }
 })();
