@@ -123,6 +123,8 @@ google.*###center_col > #tads
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
 # EasyList/EasyPrivacy fixes
+# To counter `http://utm.` in EasyPrivacy
+@@||utm.aliexpress.com/*/recommendEntry.do$~third-party
 # https://twitter.com/ethanveres/status/527122036649639936
 # Fortunately, further connections to `mxpnl.com` are blocked
 @@||cdn.vurb.com/*/mixpanel.
