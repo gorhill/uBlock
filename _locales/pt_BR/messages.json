@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Painel de opções",
+    "message":"µBlock — Painel",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -56,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clique para abrir o painel de opções",
+    "message":"Clique para abrir o painel",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
