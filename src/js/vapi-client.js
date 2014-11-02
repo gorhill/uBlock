@@ -256,7 +256,13 @@ if (self.chrome) {
         var response = safari.self.tab.canLoad(e, details);
 
         if (!response) {
-            e.preventDefault();
+            if (details.type === 'main_frame') {
+                window.stop();
+                throw Error;
+            }
+            else {
+                e.preventDefault();
+            }
             return false;
         }
         // local mirroring, response is a data: URL here
@@ -350,20 +356,11 @@ if (self.chrome) {
 
     self.addEventListener('contextmenu', onContextMenu, true);
 
-    self.addEventListener('mouseup', function(e) {
-        if (e.button !== 1) {
-            return;
-        }
-
-        e = document.evaluate('ancestor-or-self::a[@href]', e.target, null, 9, null).singleNodeValue;
-
-        if (e && /^https?:$/.test(e.protocol)) {
-            safari.self.tab.canLoad(beforeLoadEvent, {
-                middleClickURL: e.href,
-                timeStamp: Date.now()
-            });
-        }
-    }, true);
+    // 'main_frame' simulation
+    onBeforeLoad(beforeLoadEvent, {
+        url: window.location.href,
+        type: 'main_frame'
+    });
 }
 
 })();

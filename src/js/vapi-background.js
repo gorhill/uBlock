@@ -390,7 +390,8 @@ if (self.chrome) {
 
             if (typeof onNavigation === 'function') {
                 this.onNavigation = function(e) {
-                    // e.url is not present for local files or data URIs
+                    // e.url is not present for local files or data URIs,
+                    // or probably for those URLs which we don't have access to
                     if (!e.target || !e.target.url) {
                         return;
                     }
@@ -740,11 +741,6 @@ if (self.chrome) {
                         return e.message;
                     }
 
-                    if (e.message.middleClickURL) {
-                        vAPI.lastMiddleClick = e.message;
-                        return;
-                    }
-
                     // blocking unwanted pop-ups
                     if (e.message.type === 'popup') {
                         if (typeof vAPI.tabs.onPopup === 'function') {
@@ -790,39 +786,8 @@ if (self.chrome) {
 
                     return e.message;
                 };
+
                 safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
-
-                // 'main_frame' simulation, since this isn't available in beforeload
-                safari.application.addEventListener('beforeNavigate', function(e) {
-                    // e.url is not present for local files or data URIs
-                    if (e.url) {
-                        // beforeNavigate fires twice when opening a link with
-                        // middle click. Once with the same tab, second time with
-                        // the new tab. This hack tries to ignore the first one.
-                        if (vAPI.lastMiddleClick) {
-                            if (e.target === safari.application.activeBrowserWindow.activeTab
-                                && e.timeStamp - vAPI.lastMiddleClick.timeStamp <= 500
-                                && e.url === vAPI.lastMiddleClick.middleClickURL) {
-                                vAPI.lastMiddleClick = null;
-                                return;
-                            }
-
-                            vAPI.lastMiddleClick = null;
-                        }
-
-                        vAPI.net.onBeforeRequest.callback({
-                            name: 'canLoad',
-                            target: e.target,
-                            message: {
-                                url: e.url,
-                                type: 'main_frame',
-                                frameId: 0,
-                                parentFrameId: -1,
-                                timeStamp: e.timeStamp
-                            }
-                        }) || e.preventDefault();
-                    }
-                }, true);
             }
         }
     };
