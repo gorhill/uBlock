@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Estatística",
+    "message":"Estadística",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
@@ -284,7 +284,7 @@
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restaurar de una copia de seguridad...",
+    "message":"Restaurar desde archivo...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
