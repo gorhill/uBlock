@@ -311,9 +311,11 @@ uptobox.com#@#.ad-leader > div[id]
 dailybitcoins.org#@#.ad-img
 ! freebitco.in
 @@/ad_pages/1386307785/left_sky_out.html|$domain=freebitco.in
+@@||freebitco.in/adsbygoogle.js$script
 ! freedoge.co.in
 freedoge.co.in#@#.ad-img
 freedoge.co.in#@#.adsbygoogle
+@@||freedoge.co.in/adsbygoogle.js$script
 ! 2unlimited.info
 @@||2unlimited.info/js/adsense.js
 ! anime-shinden.info
@@ -539,6 +541,8 @@ redtube.com##.add-blocker-msg
 ||mackproject.com/tara.php$subdocument
 ! apkmirror.com
 @@||apkmirror.com/wp-content/themes/APKMirror/js/*$script
+! latesthackingnews.com
+latesthackingnews.com#@#.afs_ads
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -656,6 +660,9 @@ kat.ph,kickass.to,katproxy.com,proxykat.me##.partner1Button
 /poptest.js|$popup,domain=thepiratebay.sx|pirateproxy.se|unblocked.co|piratesniper.net|pirateproxy.net|piratebaybyproxy.com|proxybay.eu|tpbunion.com|quluxingba.info|tpb.ducke.co|piratebayunion.com|tpb.piraten.lu|tpb.ipredator.se|tpb.pirati.cz|theproxybay.biz|51tsj.com|bay.alanaktion.net|tpbpirate.tk
 ! extratorrent.com
 extratorrent.com,extratorrent.cc,extratorrent.ws,extramirror.com,195.144.21.228##table > tbody > tr:nth-of-type(3) > td > table > tbody > tr > td > div:nth-of-type(3)
+||projekt95.net^$popup,script,third-party
+||go.onhitads.net^$popup,script,third-party
+||go.oclasrv.com^$popup,script,third-party
 ! fenopy.se
 fenopy.se##[rel="nofollow external"][href^="/ddl/"]
 ! seedpeer.me

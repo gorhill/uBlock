@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: QT6M21/hZaLGFy6vH6n6gw
-! Version: 201410301501
+! Checksum: VXZY0BUfwSLfnAEl/qhVKw
+! Version: 201411031321
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 30 Oct 2014 15:01 UTC
+! Last modified: 03 Nov 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -396,7 +396,7 @@ _advertentieleaderboardhome.
 ||gamesquare.nl/doc/game/ad_
 ||gay.nl/takeover/
 ||geilefotoverhalen.nl/banners/
-||genemuidenactueel.nl/data/banners/
+||genemuidenactueel.nl^*banner
 ||girlsgogames.nl/vda/
 ||goamerika.nl/pictures/site_banner
 ||goedbegin.com/linkex/
@@ -1147,6 +1147,7 @@ dichtbij.nl##.widgetbanner
 smulweb.nl##.winestein
 haarlemsdagblad.nl,leidschdagblad.nl,noordhollandsdagblad.nl##.x728x222.headerRow
 vinden.nl##.yhads
+genemuidenactueel.nl##:not(.left) > .wpx_bannerize
 nsmbl.nl##A[rel^="ADVERTORIAL:"]
 hababam.nl##[id^="yui-gen"].postcontainer
 cartweet.com,viva.nl##a[href*="&utm_medium=banner&"]

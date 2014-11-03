@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: CbbpBIFWB5HxloUuDTN39A
+! Checksum: ZIp2W4ptQO6tRG8Y56WWAA
 ! Title: EasyList Hebrew
-! Last modified: 24/10/14  12:35
+! Last modified: 03/11/14  12:35
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -54,7 +54,7 @@
 ||ha-deal.co.il^$popup
 ||hizoq.com^$popup,third-party
 ||horserace.co.il^$popup,third-party
-||ilikethis.info/il^$popup
+||ilikethis.info^$popup,third-party
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
 ||jdate.co.il^$third-party
@@ -70,6 +70,7 @@
 ||newclio.co.il/sep$popup,third-party
 ||oceanmedia.co.il/landingpages/$popup
 ||onclickads.net^$popup
+||onlineproxyfree.com^$popup,third-party
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
 ||rateonclick.com^$popup,third-party
@@ -373,7 +374,7 @@ feeder.co.il,rest.co.il###banner
 rateonclick.com,view-movies.co.il###connect
 bhol-forums.co.il,bhol.co.il###divBanner_Plazma
 ladaat.info,tapuz.co.il###divTopBanner
-sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws###extra
+sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws###extra
 ori-diamonds.co.il,popcorate.co.il###hoverConnect
 bhol-forums.co.il,bhol.co.il###sdera.width100pc
 nana10.co.il,nrg.co.il,wallashops.co.il###topBanner
@@ -386,14 +387,14 @@ globes.co.il,onlife.co.il,sport5.co.il##.banner
 haaretz.co.il,themarker.com##.border-box.bottomStripBanners
 bhol-forums.co.il,bhol.co.il##.centered.padt10 > .clear
 globes.co.il,nrg.co.il##.sekindo
-sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##.side
+sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##.side
 haaretz.co.il,themarker.com##.topBanners
 haaretz.co.il,themarker.com##.topSectionBanners
-sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
+sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
 ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
-sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
-sdarot.li,sdarot.pl,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
+sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
+sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
 almadar.co.il,marmar.co.il##IMG[src^="VIRARTICLES/shadv/"]
 aiwa.co.il,bladna.co.il,karmelna.net##[class*="banner"]
 hwzone.co.il,shoofoo.co.il##[class^="banner"]

@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2471
+# entries:        2466
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -315,7 +315,6 @@
 127.0.0.1 adnews.maddog2000.de
 127.0.0.1 adocean.pl
 127.0.0.1 adonspot.com
-127.0.0.1 adoperator.com
 127.0.0.1 adorigin.com
 127.0.0.1 adpepper.dk
 127.0.0.1 adpepper.nl
@@ -791,7 +790,6 @@
 127.0.0.1 adserver.kyoceramita-europe.com
 127.0.0.1 adserver.libero.it
 127.0.0.1 adserver.motorpresse.de
-127.0.0.1 adserver.n9nedegrees.com
 127.0.0.1 adserver.news.com.au
 127.0.0.1 adserver.ngz-network.de
 127.0.0.1 adserver.nydailynews.com
@@ -1546,6 +1544,7 @@
 127.0.0.1 hightrafficads.com
 127.0.0.1 histats.com
 127.0.0.1 hit-parade.com
+127.0.0.1 hit-ranking.de
 127.0.0.1 hit.bg
 127.0.0.1 hit.ua
 127.0.0.1 hit.webcentre.lycos.co.uk
@@ -1753,7 +1752,6 @@
 127.0.0.1 mediax.angloinfo.com
 127.0.0.1 mediaz.angloinfo.com
 127.0.0.1 medleyads.com
-127.0.0.1 megacash.de
 127.0.0.1 megago.com
 127.0.0.1 megastats.com
 127.0.0.1 megawerbung.de
@@ -1913,9 +1911,7 @@
 127.0.0.1 partners.priceline.com
 127.0.0.1 passion-4.net
 127.0.0.1 pay-ads.com
-127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com
-127.0.0.1 paydayasap.com
 127.0.0.1 paypopup.com
 127.0.0.1 payserve.com
 127.0.0.1 pbnet.ru
@@ -1957,7 +1953,6 @@
 127.0.0.1 popuptraffic.com
 127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
-127.0.0.1 postmasterbannernet.com
 127.0.0.1 postrelease.com
 127.0.0.1 potenza.cz
 127.0.0.1 pr-star.de
@@ -2017,6 +2012,7 @@
 127.0.0.1 radiate.com
 127.0.0.1 rampidads.com
 127.0.0.1 rank-master.com
+127.0.0.1 rank-master.de
 127.0.0.1 rank8.de
 127.0.0.1 rankchamp.de
 127.0.0.1 ranking-charts.de
@@ -2027,7 +2023,6 @@
 127.0.0.1 ranking-street.de
 127.0.0.1 rankingchart.de
 127.0.0.1 rankingscout.com
-127.0.0.1 rankingscout.org
 127.0.0.1 rankyou.com
 127.0.0.1 rapidcounter.com
 127.0.0.1 rate.ru

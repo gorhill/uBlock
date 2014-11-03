@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: ThEdGl5bzRDEE/FMimNauA
-! Version: 201410301451
+! Checksum: 8xA8SzPudeOoylw2JOltXA
+! Version: 201411031311
 ! Title: EasyPrivacy
-! Last modified: 30 Oct 2014 14:51 UTC
+! Last modified: 03 Nov 2014 13:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -991,6 +991,7 @@
 /in.getclicky.com/*
 /include/js/ga-
 /includes/tracker/*
+/increment_page_counter.
 /index.php?_m=livesupport*&referrer=
 /index.track?
 /indextools.js
@@ -1059,6 +1060,7 @@
 /jstats/js/*
 /jtracking/*
 /kaizentrack/*
+/keen.min.js
 /kejobscounter.
 /Kelkooid?
 /kelkooSponsoredLinks.
@@ -3434,6 +3436,7 @@ http://utm.
 ||segment.io^$third-party
 ||selaris.com^$third-party
 ||sellpoints.com^$third-party
+||semanticverses.com^$third-party
 ||semasio.net^$third-party
 ||sendtraffic.com^$third-party
 ||seomonitor.ro^$third-party
@@ -4451,6 +4454,7 @@ http://utm.
 ||webserviceaward.com^$third-party
 ||webstat.se^$third-party
 ! Thai
+||d-stats.com^$third-party
 ||tracker.stats.in.th^$third-party
 ||truehits.in.th^$third-party
 ||truehits.net^$third-party
@@ -5625,6 +5629,7 @@ http://utm.
 ||track.vscash.com^
 ||track.yieldsoftware.com^
 ||tracker.beezup.com^
+||tracker.downdetector.com^
 ||tracker.everestnutrition.com^
 ||tracker.financialcontent.com^
 ||tracker.icerocket.com^
@@ -5739,7 +5744,7 @@ http://utm.
 ||videoplaza.tv/proxy/tracker^$object-subrequest
 ||videopress.com/plugins/stats/
 ||viglink.com/api/ping$third-party
-||viglink.com/images/pixel.gif?
+||viglink.com^*/pixel.gif?
 ||vindicosuite.com/track/
 ||vindicosuite.com/tracking/
 ||vindicosuite.com/xumo/swf/$third-party
@@ -5961,6 +5966,7 @@ http://utm.
 ||traffic.brand-wall.net^
 ||uni-duesseldorf.de/cgi-bin/nph-count?
 ||uni-leipzig.de^*/stats/
+||veeseo.com^*/url.gif?
 ||vertical-n.de/scripts/*/immer_oben.js
 ||verticalnetwork.de/scripts/*/immer_oben.js
 ||vtrtl.de^
@@ -6026,6 +6032,7 @@ http://utm.
 ||baidu.com/js/o.js
 ||bokecc.com/flash/playlog?
 ||bokecc.com/flash/timerecorder?
+||bzclk.baidu.com^
 ||cbsi.com.cn/js/dw.js
 ||cdn.hiido.cn^$third-party
 ||cdnmaster.com/sitemaster/sm360.js
@@ -7215,7 +7222,7 @@ http://utm.
 ||live.com/handlers/watson.mvc?
 ||live.philips.com^
 ||livedoor.com/counter/
-||livejournal.com/ljcounter?
+||livejournal.com/ljcounter/?
 ||liveperson.net/hc/*/?visitor=
 ||livestation.com^*/akamaimediaanalytics.swf
 ||livestation.com^*/statistics.swf
@@ -7925,6 +7932,7 @@ http://utm.
 ||track.hubspot.com^
 ||track.netzero.net^
 ||track.ning.com^
+||track.pushbullet.com^
 ||track.slideshare.net^
 ||track.websiteceo.com^
 ||track.wildblue.com^
@@ -8939,6 +8947,7 @@ http://utm.
 @@||adobetag.com^*s_code.js$domain=fnac.com
 @@||aflac.com/js/wt_capi.js
 @@||akamai.net^*/omniture.jsp$script,domain=walmart.com
+@@||aliexpress.com/home/recommendEntry.do?$script
 @@||aliunicorn.com^*/click-stat.js
 @@||aliunicorn.com^*/click_stat/
 @@||analytics.atomiconline.com/services/jquery.js
@@ -9122,6 +9131,7 @@ http://utm.
 @@||jeevansathi.com/minify.php?files=$script,stylesheet
 @@||js.dmtry.com/channel.js$domain=zillow.com
 @@||js.vpro.nl/vpro/*/statcounter.js?
+@@||k2s.cc/ext/evercookie/$script
 @@||kaltura.com/content/*/comscorePlugin.swf
 @@||keep2s.cc/ext/evercookie/$script
 @@||kentucky.com/mistats/finalizestats.js
@@ -9241,6 +9251,7 @@ http://utm.
 @@||remodelista.com/media/js/libs/ga_social_tracking.js
 @@||res-x.com^*/Resonance.aspx?
 @@||rfdcontent.com^*/utag.loader.js$domain=forums.redflagdeals.com
+@@||rockingsoccer.com/js/match_stats.js
 @@||s.youtube.com/api/stats/playback?$object-subrequest
 @@||safelinkwireless.com/enrollment/*/GoogleAnalytics.js
 @@||samepage.io/assets/lib/google-analytics/GoogleAnalytics.js?

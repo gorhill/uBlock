@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: I9uaR5NQmOypzGCc4d2yTA
-! Version: 201410301501
+! Checksum: qfmaE1/I53XVxkRk7YyTDw
+! Version: 201411031321
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -3331,6 +3331,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||moov.mg/images/offres/push_240x170_v2.01.jpg
 @@||moov.mg/images/offres/push_adsl_bt_v2.jpg
 @@||mozfr.org/custom/img/*_300x250.png
+@@||msf.fr/sites/all/modules/contrib/ad/$~third-party
 @@||naruto-one.com/images/bannieres/$domain=otaku-attitude.net
 @@||netavenir.com^$domain=zap-tele.com
 @@||network.aufeminin.com/a/diff/$object-subrequest,domain=aufeminin.com
@@ -3931,6 +3932,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 !
 !----------------------- Exceptions d'éléments -----------------------!
 !
+msf.fr#@##ad-7
 radio-canada.ca#@##ad-header
 e-monsite.com#@##ad_link
 fichier.net#@##contentAd
@@ -3964,6 +3966,7 @@ reseauforum.org#@#.block-ad
 vente-a-domicile.fr#@#.btn-ad
 latribune-online.com#@#.header_ads
 reseauforum.org#@#.html-advertisement
+msf.fr#@#.image-advertisement
 bfmtv.com#@#.ligatus
 leboncoin.fr#@#.list-ads
 pharmasite.fr#@#.pub300

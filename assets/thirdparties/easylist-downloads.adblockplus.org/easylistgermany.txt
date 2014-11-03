@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: BRAkexNA1HDaZiCcWZ5a9w
-! Version: 201410301501
+! Checksum: VaTbpw0Tbudt+mG7adacAg
+! Version: 201411031311
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 30 Oct 2014 15:01 UTC
+! Last modified: 03 Nov 2014 13:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -440,7 +440,6 @@ jagsttaltipp.de#@##werbeleiste
 anime-loads.org,nicht-lustig.de,studentenwerk-aachen.de,vegaklub.net,youthweb.net#@##werbung
 anzeigen-kostenlos.com#@#.AdBox
 egofm.de#@#.WerbungLinksRechts
-ebay.de#@#.ad-active
 zeitleser.de#@#.ad-bottom
 siemens-home.de#@#.ad-item
 willhaben.at#@#.ad-text
@@ -501,7 +500,7 @@ blesius.de#@#.text_werbung
 brandworkgroup.com,christophhubrich.blogspot.co.uk,christophhubrich.blogspot.de,delamar.de,ews-markt.de,mediamarkt.de,paolo-film.de#@#.werbung
 ebay.de#@#a[href^="http://ad-emea.doubleclick.net/"]
 zdnet.de#@#a[href^="http://ad.doubleclick.net/"]
-berlin.de,watchever.de#@#a[href^="http://adfarm.mediaplex.com/"]
+berlin.de#@#a[href^="http://adfarm.mediaplex.com/"]
 schnittberichte.com#@#a[href^="http://bs.serving-sys.com/"]
 onvista.de#@#a[href^="http://track.adform.net/"]
 hbf-info.de,rakuten.at,rakuten.de#@#div[id^="div-gpt-ad-"]
@@ -1224,6 +1223,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||kunden-bonus.de/?sh=*&tr=*&s=$third-party
 ||kundwerk.de^*/kv_banner_$third-party
 ||lavire.de/layer.php
+||lechuck.otogami.de/assets/*/OtogamiWidget.js$third-party
 ||lieferando.de/widgets/$subdocument,third-party
 ||ligaportal.at/images/promo/$third-party
 ||linkbase.in/banner.png
@@ -3720,6 +3720,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||img1.auto-motor-und-sport.de/i*10$image
 ||img1.auto-motor-und-sport.de/i/*.jpg
 ||img1.auto-motor-und-sport.de/img/*.jpg
+||img1.auto-motor-und-sport.de/j/$image
+||img1.auto-motor-und-sport.de/k/$image
 ||ip-ads.de^$domain=rtl-now.rtl.de|rtl2now.rtl2.de
 ||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||media.epochtimes.de/img/
@@ -4264,6 +4266,7 @@ gamers.at###header > a[target="_blank"]
 triff-chemnitz.de###header > a[target="_blank"][href^="/redirect.php?cid="]
 winload.de###header-link-loadblog
 macnews.de###header-teaser
+agriaffaires.de###header_ban
 radio-teddy.de###header_banner
 falk.de###header_banner_wrapper
 falk.de###header_bservice_wrapper
@@ -6196,8 +6199,7 @@ aktuell.ru##a[href^="http://www.aktuell.ru/inc/banners.php?"]
 livestreamfussball.org##a[href^="http://www.amazon.de/"]
 beichthaus.com##a[href^="http://www.amazon.de/"][href*="&tag="] > img
 gamefront.de##a[href^="http://www.amazon.de/"][href*="&tag=gamefrontde-21"]
-gamestar.de##a[href^="http://www.amazon.de/"][href*="tag=gamestarq-21"]
-gamestar.de##a[href^="http://www.amazon.de/"][href*="tag=gscon-21"]
+gamestar.de##a[href^="http://www.amazon.de/"][href*="tag="]
 unmoralische.de##a[href^="http://www.amazon.de/exec/obidos/redirect-home?tag=dieunmoralisc-21&"] > img
 deutscher-hip-hop.com##a[href^="http://www.amazon.de/gp/"][href$="&tag=deuhiphop0e-21"] > img
 gamepro.de##a[href^="http://www.amazon.de/gp/"][href*="&tag="]
@@ -7821,6 +7823,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||videoplaza.tv/proxy/distributor^$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de|www.rtl.de|www.vox.de
 @@||vorsorgebote.de^$elemhide
 @@||werbeblocker-erkennen.webconrad.com/adframe.js
+@@||wetteronline.de^$elemhide
 @@||wintotal-forum.de^$elemhide
 @@||wirtschaft-recht-aktuell.de^$elemhide
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist_dimensions.txt ***

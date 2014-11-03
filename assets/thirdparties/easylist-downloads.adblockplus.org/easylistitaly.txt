@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: G7jcWRPISGj6LbVcGKVizA
-! Version: 201410301501
+! Checksum: KYw0gVCQlZl1dbpq2jcA+Q
+! Version: 201411031311
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 30 Oct 2014 15:01 UTC
+! Ultima modifica: 03 Nov 2014 13:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -421,6 +421,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||plug.it/oas/
 ||pop.virgilio.us^
 ||popspace.virgilio.us^
+||pornerbros.com^$subdocument,domain=phica.net
 ||pornotizie.com/image/banner/
 ||prodigiweb.it/hpsponsor/
 ||promo.easy-dating.org^
@@ -1675,6 +1676,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||wintersport-news.it/banners/
 ||worldweb.it/images/banners/
 ||worldweb.it/images/stories/registrazionemotoridiricerca.jpg
+||xvideomature.com/images/u_player2.jpg
+||xvideomature.com^*/rotate.php
 ||yachtonline.it/be/servizi/ajax_banner.php?
 ||you-ng.it/images/skin_
 ||youreporter.it/partner/
@@ -1898,6 +1901,7 @@ rinnovabili.it###header-bottom
 marigliano.net###header-top
 lavoripubblici.it,tempoitalia.it###headerBanner
 cani.com###headerBoard-box
+agriaffaires.it###header_ban
 lascommessasportiva.it###header_banner
 megalab.it###header_leaderboard
 meteowebcam.it###header_top
