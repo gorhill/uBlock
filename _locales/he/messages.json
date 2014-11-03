@@ -140,7 +140,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"רשימה של מארחים חסומים",
+    "message":"רשימה של דומיינים חסומים",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -196,7 +196,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"מסנן אחד לכל שורה. מסנן יכול להכיל שמות מארחים, או מסננים המותאמים ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
+    "message":"מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -212,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"רשימת שמות המארחים (host names) שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מארחים לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
+    "message":"רשימת שמות המתחם שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -292,7 +292,7 @@
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"כל ההגדרות שלך יוחלף תוך שימוש בנתונים שגובו ב {{time}}, ו µBlock יופיל מחדש.\n\nהאם להחליף את כל ההגדרות הקיימות בנתונים המגובים?",
+    "message":"כל ההגדרות שלך יוחלפו בנתונים שגובו ב {{time}}, ו µBlock יופעל מחדש.\n\nהאם להחליף את כל ההגדרות הקיימות בנתונים המגובים?",
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{

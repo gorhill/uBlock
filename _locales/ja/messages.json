@@ -1,14 +1,14 @@
 {
   "extName":{
-    "message":"ユーブロック",
+    "message":"μブロック",
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"終に、とても使いやすいグーグルクローム専用のインターネット広告ぶろっかー。",
+    "message":"Chromiumベースブラウザー向けの高効率なブロッカーが遂に登場。CPUとメモリーの負担を抑えます。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"μBlock — ダッシュボード",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"貴方のフィルター",
+    "message":"あなたのフィルター",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
@@ -56,15 +56,15 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"クリックしてダッシュボードを開く",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"エレメント選択モードに移行",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"リクエストログへ移動",
     "description":"English: Go to request log"
   },
   "pickerCreate":{
@@ -88,11 +88,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"クリック、Ctrl+クリック",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"エレメントをブロック",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -104,11 +104,11 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"コンテキストメニューを適切な場合使用",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features",
+    "message":"実験的な機能を有効にする",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -120,15 +120,15 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"フィルターリストを自動更新する",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"今すぐ更新",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"全キャッシュを削除",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -172,7 +172,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"カスタム",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -180,19 +180,19 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Apply",
+    "message":"適用",
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"キャッシュを削除",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"新しいバージョンが使用可能です",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"outdated",
+    "message":"古いバージョンです",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -228,11 +228,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"ネットワークリクエストのログ収集を有効にする",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"このオプションを有効にすることで、ネットワークリクエストの詳細を調べられます。ネットワークリクエストのログ収集は使用メモリーを増やすので、大半のユーザーはこの機能を使いません。よって、初期設定では無効になっています。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -276,31 +276,31 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"貢献者達",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file...",
+    "message":"ファイルにバックアップ...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"ファイルからの復元...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Start from scratch...",
+    "message":"最初から",
     "description":"English: Start from scratch..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"{{time}}のバックアップデータを使用して全ての設定を上書きした後、μBlockが再起動します。\n\nバックアップデータを使用して既存の全ての設定の上書きを実行しますか？",
     "description":"Message asking user to confirm restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"全ての設定が消去された後、μBlockが再起動します。\n\n初期設定にリセットしますか？",
     "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"{{url}}に接続できません",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

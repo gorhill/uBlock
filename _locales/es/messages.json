@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con un uso ligero del procesador y memoria.",
+    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con un uso ligero de procesador y memoria.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Sus filtros",
+    "message":"Filtros de usuario",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"Estadística",
+    "message":"Estadísticas",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
@@ -48,7 +48,7 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"desde la instalación",
+    "message":"desde que se instaló",
     "description":"English: since install"
   },
   "popupOr":{
@@ -56,7 +56,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Haga clic para abrir el panel de configuración",
+    "message":"Clic para abrir el panel de configuración",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -104,7 +104,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Hacer uso del menú contextual cuando \tcorresponde",
+    "message":"Hacer uso del menú contextual cuando sea posible",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
@@ -128,7 +128,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purgar todas las cachés",
+    "message":"Vaciar todas las memorias caché",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -136,7 +136,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\"> filtros de ocultación de elementos de Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos y sirven para ocultar elementos en una página web que se consideran una molestia visual y que no se puede bloquear con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta la huella de la memoria de <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\">&ldquo;filtros de ocultación de elementos&rdquo; compatibles con Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos, sirven para ocultar elementos que se consideran una molestia visual en una página web, no siendo posible su eliminación con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta el consumo de memoria de <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -176,7 +176,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Una URL por línea. Las líneas que empiezan con '!' serán ignoradas. Se omitirán las URL no válidas.",
+    "message":"Una URL por línea. Las líneas que empiezan con &lsquo;!&rsquo; serán ignoradas. Se omitirán las URL no válidas.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -184,7 +184,7 @@
     "description":"English: Apply"
   },
   "3pExternalListPurge":{
-    "message":"purgar la caché",
+    "message":"vaciar caché",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -196,7 +196,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Un filtro por línea. Un filtro puede ser el nombre del servidor, o un filtro compatible con Adblock Plus. Líneas que empiezan con '!' serán ignoradas.",
+    "message":"Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con &lsquo;!&rsquo; serán ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -212,7 +212,7 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"La lista de nombres de servidores para los cuales se deshabilitará µBlock. Una entrada por línea. Se omitirán los nombres de servidores no válidos .",
+    "message":"Su lista de nombres de servidores para los cuales se deshabilitará µBlock. Una entrada por línea. Se omitirán los nombres de servidores no válidos.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -232,7 +232,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Se puede inspeccionar los detalles de las peticiones bloqueadas habilitando esta opción. El registro de peticiones bloqueadas aumenta la huella de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
+    "message":"Se pueden inspeccionar los detalles de las peticiones bloqueadas habilitando esta opción. El registro de peticiones bloqueadas aumenta el consumo de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -280,7 +280,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Hacer una copia de seguridad...",
+    "message":"Respaldar en archivo...",
     "description":"English: Backup to file..."
   },
   "aboutRestoreDataButton":{
