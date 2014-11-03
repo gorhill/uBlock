@@ -107,7 +107,7 @@
 		};
 	}
 
-}(self));
+}(window));
 
 /******************************************************************************/
 /******************************************************************************/
@@ -242,8 +242,6 @@ var targetElements = [];
 var svgWidth = 0;
 var svgHeight = 0;
 
-var rectVolatile = { x: 0, y: 0, w: 0, h: 0 };
-
 /******************************************************************************/
 
 var pickerPaused = function() {
@@ -278,24 +276,6 @@ var pickerRootDistance = function(elem) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/210
-
-// HTMLElement.getBoundingClientRect() is unreliable (or I misunderstand what
-// it does). I will just compute it myself.
-
-var getBoundingClientRect = function(elem, r) {
-    r.w = elem.offsetWidth;
-    r.h = elem.offsetHeight;
-    r.x = elem.offsetLeft - elem.scrollLeft;
-    r.y = elem.offsetTop - elem.scrollTop;
-    while ( elem = elem.offsetParent ) {
-        r.x += elem.offsetLeft - elem.scrollLeft;
-        r.y += elem.offsetTop - elem.scrollTop;
-    }
-};
-
-/******************************************************************************/
-
 var highlightElements = function(elems, force) {
     // To make mouse move handler more efficient
     if ( !force && elems.length === targetElements.length ) {
@@ -317,11 +297,18 @@ var highlightElements = function(elems, force) {
     var offy = window.pageYOffset;
     var islands = [];
     // To avoid memory churning, reuse object
-    var r = rectVolatile;
-    var poly;
+    var elem, rect, poly;
     for ( var i = 0; i < elems.length; i++ ) {
-        getBoundingClientRect(elems[i], r);
-        poly = 'M' + (r.x + offx) + ' ' + (r.y + offy) + 'h' + r.w + 'v' + r.h + 'h-' + r.w + 'z';
+        elem = elems[i];
+        if ( typeof elem.getBoundingClientRect !== 'function' ) {
+            continue;
+        }
+        rect = elem.getBoundingClientRect();
+        poly = 'M' + (rect.left + offx) + ' ' + (rect.top + offy) +
+               'h' + rect.width +
+               'v' + rect.height +
+               'h-' + rect.width +
+               'z';
         ocean.push(poly);
         islands.push(poly);
     }
@@ -755,7 +742,7 @@ var stopPicker = function() {
         divDialog.removeEventListener('click', onDialogClicked);
         svgRoot.removeEventListener('mousemove', onSvgHovered);
         svgRoot.removeEventListener('click', onSvgClicked);
-        document.body.removeChild(pickerRoot);
+        document.documentElement.removeChild(pickerRoot);
         pickerRoot = 
         divDialog = 
         svgRoot = svgOcean = svgIslands = 
@@ -979,7 +966,9 @@ var startPicker = function() {
     ].join('');
     pickerRoot.appendChild(divDialog);
 
-    document.body.appendChild(pickerRoot);
+	// https://github.com/gorhill/uBlock/issues/344#issuecomment-60775958
+    // Insert in `html` tag, not `body` tag.
+    document.documentElement.appendChild(pickerRoot);
     svgRoot.addEventListener('click', onSvgClicked);
     svgRoot.addEventListener('mousemove', onSvgHovered);
     divDialog.addEventListener('click', onDialogClicked);
