@@ -158,7 +158,6 @@
         "off": true,
         "title": "LTU: Adblock Plus Lithuania",
         "group": "regions",
-        "old": "margevicius.lt/AdBlockPlusLithuania.txt",
         "homeURL": "http://margevicius.lt/easylistlithuania.txt"
         },
     "stanev.org/abp/adblock_bg.txt": {
