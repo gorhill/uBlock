@@ -37,7 +37,7 @@ cp ~/Downloads/crowdin/ar/description.txt    ./dist/description/description-ar.t
 cp ~/Downloads/crowdin/cs/description.txt    ./dist/description/description-cs.txt
 cp ~/Downloads/crowdin/da/description.txt    ./dist/description/description-da.txt
 #cp ~/Downloads/crowdin/el/description.txt    ./dist/description/description-el.txt
-#cp ~/Downloads/crowdin/es-ES/description.txt ./dist/description/description-es.txt
+cp ~/Downloads/crowdin/es-ES/description.txt ./dist/description/description-es.txt
 cp ~/Downloads/crowdin/et/description.txt    ./dist/description/description-et.txt
 cp ~/Downloads/crowdin/fi/description.txt    ./dist/description/description-fi.txt
 cp ~/Downloads/crowdin/he/description.txt    ./dist/description/description-he.txt
