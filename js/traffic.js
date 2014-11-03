@@ -99,7 +99,9 @@ var onBeforeRequest = function(details) {
             pageStore.addFrame(frameId, requestURL);
         }
 
-        if ( µb.userSettings.experimentalEnabled ) {
+        // https://github.com/gorhill/uBlock/issues/351
+        // Bypass experimental features when disabled for a site
+        if ( µb.userSettings.experimentalEnabled && pageStore.getNetFilteringSwitch() ) {
             // https://code.google.com/p/chromium/issues/detail?id=387198
             // Not all redirects will succeed, until bug above is fixed.
             var redirectURL = µb.mirrors.toURL(requestURL, true);
