@@ -177,8 +177,8 @@ if (self.chrome) {
     vAPI.messaging = {
         ports: {},
         listeners: {},
-        listen: function(name, callback) {
-            this.listeners[name] = callback;
+        listen: function(listenerName, callback) {
+            this.listeners[listenerName] = callback;
         },
         setup: function(connector) {
             if (this.connector) {
@@ -654,8 +654,8 @@ if (self.chrome) {
 
     vAPI.messaging = {
         listeners: {},
-        listen: function(name, callback) {
-            this.listeners[name] = callback;
+        listen: function(listenerName, callback) {
+            this.listeners[listenerName] = callback;
         },
         setup: function(connector) {
             if (this.connector) {
@@ -666,7 +666,7 @@ if (self.chrome) {
                 var callback = function(response) {
                     if (request.message.requestId && response !== undefined) {
                         request.target.page.dispatchMessage(
-                            'message',
+                            request.name,
                             {
                                 requestId: request.message.requestId,
                                 portName: request.message.portName,

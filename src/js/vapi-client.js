@@ -48,37 +48,40 @@ var messagingConnector = function(response) {
     }
 };
 
+var uniqueId = function() {
+    return parseInt(Math.random() * 1e10, 10).toString(36);
+};
+
 if (self.chrome) {
     vAPI.chrome = true;
     vAPI.messaging = {
         port: null,
         requestId: 0,
-        listenerId: null,
+        connectorId: uniqueId(),
         listeners: {},
         channels: {},
         connector: messagingConnector,
         setup: function() {
-            this.listenerId = 'uBlock:' + name + ':' + parseInt(Math.random() * 1e10, 10).toString(36);
-            this.port = chrome.runtime.connect({name: this.listenerId});
+            this.port = chrome.runtime.connect({name: this.connectorId});
             this.port.onMessage.addListener(this.connector);
         },
         close: function() {
             if (this.port) {
                 this.port.disconnect();
                 this.port.onMessage.removeListener(this.connector);
-                this.channels = this.listeners = this.port = this.listenerId = null;
+                this.port = this.channels = this.listeners = this.connectorId = null;
             }
         },
-        channel: function(name, callback) {
-            if (!name) {
+        channel: function(channelName, callback) {
+            if (!channelName) {
                 return;
             }
 
-            this.channels[name] = {
-                portName: name,
+            this.channels[channelName] = {
+                portName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
-                    if (!vAPI.messaging.listenerId) {
+                    if (!vAPI.messaging.port) {
                         vAPI.messaging.setup();
                     }
 
@@ -99,7 +102,7 @@ if (self.chrome) {
                 }
             };
 
-            return this.channels[name];
+            return this.channels[channelName];
         }
     };
 } else if (self.safari) {
@@ -108,13 +111,19 @@ if (self.chrome) {
     // relevant?
     // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
     vAPI.messaging = {
+        connectorId: uniqueId(),
         requestId: 0,
         listeners: {},
         channels: {},
         connector: messagingConnector,
         setup: function() {
             this._connector = function(msg) {
-                vAPI.messaging.connector(msg.message);
+                // messages from the background script are sent to every frame,
+                // so we need to check the connectorId to accept only
+                // what is meant for the current context
+                if (msg.name === vAPI.messaging.connectorId) {
+                    vAPI.messaging.connector(msg.message);
+                }
             };
             safari.self.addEventListener('message', this._connector, false);
 
@@ -132,13 +141,13 @@ if (self.chrome) {
                 this.channels = this.listeners = null;
             }
         },
-        channel: function(name, callback) {
-            if (!name) {
+        channel: function(channelName, callback) {
+            if (!channelName) {
                 return;
             }
 
-            this.channels[name] = {
-                portName: name,
+            this.channels[channelName] = {
+                portName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
                     if (!vAPI.messaging._connector) {
@@ -159,7 +168,7 @@ if (self.chrome) {
                         // popover content doesn't know messaging...
                         safari.extension.globalPage.contentWindow
                             .vAPI.messaging.connector({
-                                name: 'message',
+                                name: vAPI.messaging.connectorId,
                                 message: message,
                                 target: {
                                     page: {
@@ -171,7 +180,7 @@ if (self.chrome) {
                             });
                     }
                     else {
-                        safari.self.tab.dispatchMessage('message', message);
+                        safari.self.tab.dispatchMessage(vAPI.messaging.connectorId, message);
                     }
                 },
                 close: function() {
@@ -179,7 +188,7 @@ if (self.chrome) {
                 }
             };
 
-            return this.channels[name];
+            return this.channels[channelName];
         }
     };
 
@@ -258,7 +267,7 @@ if (self.chrome) {
         if (!response) {
             if (details.type === 'main_frame') {
                 window.stop();
-                throw Error;
+                throw new Error;
             }
             else {
                 e.preventDefault();
