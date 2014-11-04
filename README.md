@@ -14,7 +14,7 @@ _EasyList_, _Peter Lowe's Adservers_ , _EasyPrivacy_ and _Fanboy's Social Block 
 
 Ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
 
-My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads, "unintrusive" or not, are just the visible portion) for users who do not want to deal with more technical means like [HTTP Switchboard](https://github.com/gorhill/httpswitchboard#http-switchboard-for-chromium).
+My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads, "unintrusive" or not, are just the visible portion) for users who do not want to deal with more technical means like [µMatrix](https://github.com/gorhill/uMatrix).
 
 <p align="center">
 µBlock: page loaded. ABP: page still loading.<br>
