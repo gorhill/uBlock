@@ -9,7 +9,7 @@ self.vAPI = self.vAPI || {};
 
 if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
     vAPI.sitePatch = function() {
-        window.addEventListener('load', function onWindowLoad() {
+        var onWindowLoad = function() {
             this.removeEventListener('load', onWindowLoad, true);
             var spf = this._spf_state;
 
@@ -19,7 +19,8 @@ if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
                     window.location.href = url;
                 };
             }
-        }, true);
+        };
+        window.addEventListener('load', onWindowLoad, true);
 
 
         // based on ExtendTube's ad removing solution

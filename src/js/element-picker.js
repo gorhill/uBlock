@@ -120,6 +120,11 @@
 
 /******************************************************************************/
 
+// don't run in frames
+if (window.top !== window) {
+    return;
+}
+
 // https://github.com/gorhill/uBlock/issues/314#issuecomment-58878112
 // Using an id makes uBlock's CSS rules more specific, thus prevents
 // surrounding external rules from winning over own rules.
@@ -874,7 +879,7 @@ var startPicker = function(details) {
     ].join('');
     pickerRoot.appendChild(divDialog);
 
-	// https://github.com/gorhill/uBlock/issues/344#issuecomment-60775958
+    // https://github.com/gorhill/uBlock/issues/344#issuecomment-60775958
     // Insert in `html` tag, not `body` tag.
     document.documentElement.appendChild(pickerRoot);
     svgRoot.addEventListener('click', onSvgClicked);

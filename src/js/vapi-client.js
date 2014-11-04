@@ -74,14 +74,14 @@ if (self.chrome) {
                 return;
             }
 
-            if (!this.listenerId) {
-                this.setup();
-            }
-
             this.channels[name] = {
                 portName: name,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
+                    if (!vAPI.messaging.listenerId) {
+                        vAPI.messaging.setup();
+                    }
+
                     message = {
                         portName: this.portName,
                         msg: message
@@ -137,14 +137,14 @@ if (self.chrome) {
                 return;
             }
 
-            if (!this._connector) {
-                this.setup();
-            }
-
             this.channels[name] = {
                 portName: name,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
+                    if (!vAPI.messaging._connector) {
+                        vAPI.messaging.setup();
+                    }
+
                     message = {
                         portName: this.portName,
                         msg: message

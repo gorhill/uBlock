@@ -4,7 +4,7 @@
 	"url": "https://github.com/gorhill/uBlock",
 	"author": "Raymond Hill",
 	"author_email": "rhill@raymondhill.net",
-	"version": "0.7.0.7",
+	"version": "0.7.0.9",
 	"def_lang": "en",
 	"vendors": {
 		"crx": {

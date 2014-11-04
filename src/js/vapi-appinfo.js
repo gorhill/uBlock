@@ -5,6 +5,6 @@ self.vAPI = self.vAPI || {};
 
 vAPI.app = {
     /**/name: 'µBlock',
-    /**/version: '0.7.0.7',
+    /**/version: '0.7.0.9',
     /**/url: 'https://github.com/gorhill/uBlock',
 };
