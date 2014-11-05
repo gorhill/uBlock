@@ -5,7 +5,7 @@ import re
 import json
 from time import strftime
 from datetime import datetime
-from shutil import rmtree as rmt
+from shutil import rmtree as rmt, copy
 from collections import OrderedDict
 from xml.sax.saxutils import escape
 
@@ -99,11 +99,13 @@ with open(pj(src_dir, vendors['crx']['manifest']), 'wt', encoding='utf-8', newli
     )
 
 
-with open(pj(src_dir, vendors['safariextz']['manifest']), 'wt', encoding='utf-8', newline='\n') as f:
+with open(pj(src_dir, vendors['safariextz']['manifest']['Info']), 'wt', encoding='utf-8', newline='\n') as f:
     config['app_id'] = vendors['safariextz']['app_id']
     config['description'] = descriptions[config['def_lang']]
 
-    with open(pj(meta_dir, 'safariextz', vendors['safariextz']['manifest']), 'r') as cf:
+    with open(pj(meta_dir, 'safariextz', vendors['safariextz']['manifest']['Info']), 'r') as cf:
         cf_content = cf.read()
 
     f.write(cf_content.format(**config))
+
+copy(pj(meta_dir, 'safariextz', vendors['safariextz']['manifest']['Settings']), pj(src_dir, vendors['safariextz']['manifest']['Settings']))

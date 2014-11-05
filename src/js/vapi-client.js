@@ -56,10 +56,10 @@ if (self.chrome) {
     vAPI.chrome = true;
     vAPI.messaging = {
         port: null,
+        channels: {},
+        listeners: {},
         requestId: 0,
         connectorId: uniqueId(),
-        listeners: {},
-        channels: {},
         connector: messagingConnector,
         setup: function() {
             this.port = chrome.runtime.connect({name: this.connectorId});
@@ -111,10 +111,10 @@ if (self.chrome) {
     // relevant?
     // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
     vAPI.messaging = {
-        connectorId: uniqueId(),
-        requestId: 0,
-        listeners: {},
         channels: {},
+        listeners: {},
+        requestId: 0,
+        connectorId: uniqueId(),
         connector: messagingConnector,
         setup: function() {
             this._connector = function(msg) {

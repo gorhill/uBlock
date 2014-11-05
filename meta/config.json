@@ -16,7 +16,10 @@
 		},
 		"safariextz": {
 			"app_id": "net.gorhill.uBlock",
-			"manifest": "Info.plist",
+			"manifest": {
+				"Info": "Info.plist",
+				"Settings": "Settings.plist"
+			},
 			"file_ext": ".safariextz",
 			"developer_identifier": "",
 			"cert_dir": "../meta/safariextz/certs/",

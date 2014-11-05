@@ -287,6 +287,12 @@ if (self.chrome) {
         ]
     );
 
+    safari.extension.settings.addEventListener('change', function(e) {
+        if (e.key === 'open_prefs') {
+            vAPI.tabs.open({url: 'dashboard.html', active: true});
+        }
+    }, false);
+
 
     vAPI.storage = {
         _storage: safari.extension.settings,
