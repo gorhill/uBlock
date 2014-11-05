@@ -479,27 +479,12 @@ var uBlockMessaging = (function(name){
         var i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
-            if ( node.nodeType !== 1 ) { continue; }
-            // class
-            v = nodes[i].className;
-            // it could be an SVGAnimatedString...
-            if ( typeof v !== 'string' ) { continue; }
-            v = v.trim();
-            if ( v === '' ) { continue; }
-            // one class
-            if ( v.indexOf(' ') < 0 ) {
-                v = '.' + v;
-                if ( qq[v] ) { continue; }
-                cc[v] = true;
-                qq[v] = true;
-                continue;
-            }
-            // many classes
-            vv = v.trim().split(' ');
-            j = vv.length;
+            vv = node.classList;
+            if ( typeof vv !== 'object' ) { continue; }
+            j = vv.length || 0;
             while ( j-- ) {
-                v = vv[j].trim();
-                if ( v === '' ) { continue; }
+                v = vv[j];
+                if ( typeof v !== 'string' ) { continue; }
                 v = '.' + v;
                 if ( qq[v] ) { continue; }
                 cc[v] = true;
