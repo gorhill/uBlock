@@ -1,0 +1,310 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"अंत में, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। CPU और स्मृति पर आसान।",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "dashboardName":{
+    "message":"µBlock — डैशबोर्ड",
+    "description":"English: µBlock — Dashboard"
+  },
+  "settingsPageName":{
+    "message":"सेटिंग्स",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"तृतीय-पक्ष फ़िल्टर",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"आपकी फिल्टर",
+    "description":"appears as tab name in dashboard."
+  },
+  "whitelistPageName":{
+    "message":"Whitelist",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"आंकड़े",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"जानकारी",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"requests blocked",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"इस पृष्ठ पर",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"since install",
+    "description":"English: since install"
+  },
+  "popupOr":{
+    "message":"या",
+    "description":"English: or"
+  },
+  "popupTipDashboard":{
+    "message":"डैशबोर्ड को खोलने के लिए क्लिक करें",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Enter element picker mode",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Go to request log",
+    "description":"English: Go to request log"
+  },
+  "pickerCreate":{
+    "message":"बनाएँ",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Pick",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Quit",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Net filters",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Cosmetic filters",
+    "description":"English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint":{
+    "message":"Click, Ctrl-click",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Block element",
+    "description":"English: Block element"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Hide placeholders of blocked elements",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Show the number of blocked requests on the icon",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Make use of context menu where appropriate",
+    "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"Enable experimental features",
+    "description":"English: Enable experimental features"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{used}} used out of {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pAutoUpdatePrompt1":{
+    "message":"Auto-update filter lists.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"अभी अपडेट करें",
+    "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Purge all caches",
+    "description":"English: Purge all caches"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Parse and enforce cosmetic filters.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Lists of blocked hosts",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"परिवर्तन लागू करें",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"विज्ञापन",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"गोपनीयता",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"मैलवेयर डोमेन",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"सामाजिक",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"बहुउद्देशीय",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regions, languages",
+    "description":"English: Regions, languages"
+  },
+  "3pGroupCustom":{
+    "message":"Custom",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"लागू करें",
+    "description":"English: Apply"
+  },
+  "3pExternalListPurge":{
+    "message":"purge cache",
+    "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"नया संस्करण उपलब्ध है",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"पुरानी",
+    "description":"English: outdated"
+  },
+  "1pFormatHint":{
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Import and append",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Export",
+    "description":"English: Export"
+  },
+  "1pApplyChanges":{
+    "message":"Apply changes",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"Import and append",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"Export",
+    "description":"English: Export"
+  },
+  "whitelistApply":{
+    "message":"Apply changes",
+    "description":"English: Apply changes"
+  },
+  "logNetRequestsPrompt":{
+    "message":"Enable the logging of network requests",
+    "description":"English: Enable the logging of network requests"
+  },
+  "logNetRequestsHelp":{
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Blocked requests",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Allowed requests",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Type",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Domain",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"URL",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Filter",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"No blocked requests logged for this page",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"No non-blocked requests logged for this page",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"Change log",
+    "description":"English: Change log"
+  },
+  "aboutCode":{
+    "message":"Source code (GPLv3)",
+    "description":"English: Source code (GPLv3)"
+  },
+  "aboutContributors":{
+    "message":"Contributors",
+    "description":"English: Contributors"
+  },
+  "aboutBackupDataButton":{
+    "message":"Backup to file...",
+    "description":"English: Backup to file..."
+  },
+  "aboutRestoreDataButton":{
+    "message":"Restore from file...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Start from scratch...",
+    "description":"English: Start from scratch..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"All your settings will be erased, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "description":"Message asking user to confirm restore"
+  },
+  "errorCantConnectTo":{
+    "message":"Unable to connect to {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}
