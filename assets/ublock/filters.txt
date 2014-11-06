@@ -123,11 +123,20 @@ google.*###center_col > #tads
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
 # EasyList/EasyPrivacy fixes
+
+# To counter `/b/ss/*&aqe=` and `||scorecardresearch.com^$third-party` in
+# EasyPrivacy: "cant click on next picture on this adreess ... "
+# "... http://www.expansion.com/albumes/2014/10/30/casa_bruce_willis_bedford/index.html?cid=SIN8901"
+@@||b.scorecardresearch.com^$domain=www.expansion.com
+@@||metrics.el-mundo.net^$domain=www.expansion.com
+
 # To counter `http://utm.` in EasyPrivacy
 @@||utm.aliexpress.com/*/recommendEntry.do$~third-party
+
 # https://twitter.com/ethanveres/status/527122036649639936
 # Fortunately, further connections to `mxpnl.com` are blocked
 @@||cdn.vurb.com/*/mixpanel.
+
 # https://adblockplus.org/forum/viewtopic.php?f=2&t=25772
 @@||target.122.2o7.net^$domain=target.com
 
