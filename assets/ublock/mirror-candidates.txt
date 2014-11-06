@@ -17,7 +17,7 @@ code.jquery.com
     # https://github.com/gorhill/uBlock/issues/357
     # Avoid CSS-based themes, because relative URLs won't work from
     # within a data: URI
-    ^code\.jquery\.com\/(?!.*\/themes\/.*\.css$)
+    ^code\.jquery\.com\/(?!.*\/themes\/.+\.css)
 maxcdn.bootstrapcdn.com
     ^maxcdn\.bootstrapcdn\.com\/font-awesome\/
 netdna.bootstrapcdn.com
