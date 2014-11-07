@@ -323,7 +323,7 @@ var updateWidgets = function() {
 /******************************************************************************/
 
 var onListCheckboxChanged = function() {
-    var href = uDom(this).parent().find('a').first().attr('href');
+    var href = uDom(this).parent().descendants('a').first().attr('href');
     if ( typeof href !== 'string' ) {
         return;
     }
@@ -349,13 +349,13 @@ var onListLinkClicked = function(ev) {
 var onPurgeClicked = function() {
     var button = uDom(this);
     var li = button.parent();
-    var href = li.find('a').first().attr('href');
+    var href = li.descendants('a').first().attr('href');
     if ( !href ) {
         return;
     }
     messaging.tell({ what: 'purgeCache', path: href });
     button.remove();
-    if ( li.find('input').first().prop('checked') ) {
+    if ( li.descendants('input').first().prop('checked') ) {
         cacheWasPurged = true;
         updateWidgets();
     }
@@ -377,16 +377,16 @@ var reloadAll = function(update) {
     // Reload blacklists
     var switches = [];
     var lis = uDom('#lists .listDetails');
-    var i = lis.length();
+    var i = lis.length;
     var path;
     while ( i-- ) {
         path = lis
-            .subset(i)
-            .find('a')
+            .subset(i, 1)
+            .descendants('a')
             .attr('href');
         switches.push({
             location: path,
-            off: lis.subset(i).find('input').prop('checked') === false
+            off: lis.subset(i, 1).descendants('input').prop('checked') === false
         });
     }
     messaging.tell({

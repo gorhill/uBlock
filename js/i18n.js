@@ -22,19 +22,19 @@
 // Helper to deal with the i18n'ing of HTML files.
 
 uDom.onLoad(function() {
-    uDom('[data-i18n]').forEach(function() {
-        this.innerHTML = chrome.i18n.getMessage(this.getAttribute('data-i18n'));
+    uDom('[data-i18n]').forEach(function(elem) {
+        elem.html(chrome.i18n.getMessage(elem.attr('data-i18n')));
     });
-    uDom('[title]').forEach(function() {
-        var title = chrome.i18n.getMessage(this.getAttribute('title'));
+    uDom('[title]').forEach(function(elem) {
+        var title = chrome.i18n.getMessage(elem.attr('title'));
         if ( title ) {
-            this.setAttribute('title', title);
+            elem.attr('title', title);
         }
     });
-    uDom('[data-i18n-tip]').forEach(function() {
-        this.setAttribute(
+    uDom('[data-i18n-tip]').forEach(function(elem) {
+        elem.attr(
             'data-tip', 
-            chrome.i18n.getMessage(this.getAttribute('data-i18n-tip')).replace(/<br>/g, '')
+            chrome.i18n.getMessage(elem.attr('data-i18n-tip')).replace(/<br>/g, '')
         );
     });
 });

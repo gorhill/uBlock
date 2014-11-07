@@ -28,7 +28,7 @@ uDom.onLoad(function() {
     uDom('.whatisthis').on('click', function() {
         uDom(this)
             .parent()
-            .find('.whatisthis-expandable')
+            .descendants('.whatisthis-expandable')
             .toggleClass('whatisthis-expanded');
     });
 });

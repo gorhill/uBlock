@@ -38,6 +38,18 @@ var DOMList = function() {
 
 /******************************************************************************/
 
+Object.defineProperty(
+    DOMList.prototype,
+    'length',
+    {
+        get: function() {
+            return this.nodes.length;
+        }
+    }
+);
+
+/******************************************************************************/
+
 var DOMListFactory = function(selector, context) {
     var r = new DOMList();
     if ( typeof selector === 'string' ) {
@@ -100,8 +112,8 @@ var addListToList = function(list, other) {
 var addSelectorToList = function(list, selector, context) {
     var p = context || document;
     var r = p.querySelectorAll(selector);
-    var i = r.length;
-    while ( i-- ) {
+    var n = r.length;
+    for ( var i = 0; i < n; i++ ) {
         list.nodes.push(r[i]);
     }
     return list;
@@ -113,6 +125,8 @@ var pTagOfChildTag = {
     'tr': 'table',
     'option': 'select'
 };
+
+// TODO: documentFragment
 
 var addHTMLToList = function(list, html) {
     var matches = html.match(/^<([a-z]+)/);
@@ -134,15 +148,99 @@ var addHTMLToList = function(list, html) {
 
 /******************************************************************************/
 
+var isChildOf = function(child, parent) {
+    return child !== null && parent !== null && child.parentNode === parent;
+};
+
+/******************************************************************************/
+
+var isDescendantOf = function(descendant, ancestor) {
+    while ( descendant.parentNode !== null ) {
+        if ( descendant.parentNode === ancestor ) {
+            return true;
+        }
+        descendant = descendant.parentNode;
+    }
+    return false;
+};
+
+/******************************************************************************/
+
+var nodeInNodeList = function(node, nodeList) {
+    var i = nodeList.length;
+    while ( i-- ) {
+        if ( nodeList[i] === node ) {
+            return true;
+        }
+    }
+    return false;
+};
+
+/******************************************************************************/
+
+var doesMatchSelector = function(node, selector) {
+    if ( !node ) {
+        return false;
+    }
+    if ( node.nodeType !== 1 ) {
+        return false;
+    }
+    if ( selector === undefined ) {
+        return true;
+    }
+    var parentNode = node.parentNode;
+    if ( !parentNode || !parentNode.setAttribute ) {
+        return false;
+    }
+    var doesMatch = false;
+    parentNode.setAttribute('uDom-32kXc6xEZA7o73AMB8vLbLct1RZOkeoO', '');
+    var grandpaNode = parentNode.parentNode || document;
+    var nl = grandpaNode.querySelectorAll('[uDom-32kXc6xEZA7o73AMB8vLbLct1RZOkeoO] > ' + selector);
+    var i = nl.length;
+    while ( doesMatch === false && i-- ) {
+        doesMatch = nl[i] === node;
+    }
+    parentNode.removeAttribute('uDom-32kXc6xEZA7o73AMB8vLbLct1RZOkeoO');
+    return doesMatch;
+};
+
+/******************************************************************************/
+
 DOMList.prototype.length = function() {
     return this.nodes.length;
 };
 
 /******************************************************************************/
 
+DOMList.prototype.nodeAt = function(i) {
+    return this.nodes[i];
+};
+
+DOMList.prototype.at = function(i) {
+    return addNodeToList(new DOMList(), this.nodes[i]);
+};
+
+/******************************************************************************/
+
+DOMList.prototype.toArray = function() {
+    return this.nodes.slice();
+};
+
+/******************************************************************************/
+
+DOMList.prototype.forEach = function(fn) {
+    var n = this.nodes.length;
+    for ( var i = 0; i < n; i++ ) {
+        fn(this.at(i), i);
+    }
+    return this;
+};
+
+/******************************************************************************/
+
 DOMList.prototype.subset = function(i, l) {
     var r = new DOMList();
-    var n = l !== undefined ? l : 1;
+    var n = l !== undefined ? l : this.nodes.length;
     var j = Math.min(i + n, this.nodes.length);
     if ( i < j ) {
         r.nodes = this.nodes.slice(i, j);
@@ -153,13 +251,30 @@ DOMList.prototype.subset = function(i, l) {
 /******************************************************************************/
 
 DOMList.prototype.first = function() {
-    return this.subset(0);
+    return this.subset(0, 1);
 };
 
 /******************************************************************************/
 
-DOMList.prototype.node = function(i) {
-    return this.nodes[i];
+DOMList.prototype.next = function(selector) {
+    var r = new DOMList();
+    var n = this.nodes.length;
+    var node;
+    for ( var i = 0; i < n; i++ ) {
+        node = this.nodes[i];
+        while ( node.nextSibling !== null ) {
+            node = node.nextSibling;
+            if ( node.nodeType !== 1 ) {
+                continue;
+            }
+            if ( doesMatchSelector(node, selector) === false ) {
+                continue;
+            }
+            addNodeToList(r, node);
+            break;
+        }
+    }
+    return r;
 };
 
 /******************************************************************************/
@@ -174,7 +289,54 @@ DOMList.prototype.parent = function() {
 
 /******************************************************************************/
 
-DOMList.prototype.find = function(selector) {
+DOMList.prototype.filter = function(filter) {
+    var r = new DOMList();
+    var filterFunc;
+    if ( typeof filter === 'string' ) {
+        filterFunc = function() {
+            return doesMatchSelector(this, filter);
+        };
+    } else if ( typeof filter === 'function' ) {
+        filterFunc = filter;
+    } else {
+        filterFunc = function(){
+            return true;
+        };
+    }
+    var n = this.nodes.length;
+    var node;
+    for ( var i = 0; i < n; i++ ) {
+        node = this.nodes[i];
+        if ( filterFunc.apply(node) ) {
+            addNodeToList(r, node);
+        }
+    }
+    return r;
+};
+
+/******************************************************************************/
+
+// TODO: Avoid possible duplicates
+
+DOMList.prototype.ancestors = function(selector) {
+    var r = new DOMList();
+    var n = this.nodes.length;
+    var node;
+    for ( var i = 0; i < n; i++ ) {
+        node = this.nodes[i].parentNode;
+        while ( node ) {
+            if ( doesMatchSelector(node, selector) ) {
+                addNodeToList(r, node);
+            }
+            node = node.parentNode;
+        }
+    }
+    return r;
+};
+
+/******************************************************************************/
+
+DOMList.prototype.descendants = function(selector) {
     var r = new DOMList();
     var n = this.nodes.length;
     var nl;
@@ -187,27 +349,35 @@ DOMList.prototype.find = function(selector) {
 
 /******************************************************************************/
 
-DOMList.prototype.forEach = function(callback) {
+DOMList.prototype.contents = function() {
+    var r = new DOMList();
+    var cnodes, cn, ci;
     var n = this.nodes.length;
     for ( var i = 0; i < n; i++ ) {
-        callback.bind(this.nodes[i]).call();
+        cnodes = this.nodes[i].childNodes;
+        cn = cnodes.length;
+        for ( ci = 0; ci < cn; ci++ ) {
+            addNodeToList(r, cnodes.item(ci));
+        }
     }
-    return this;
+    return r;
 };
 
 /******************************************************************************/
 
 DOMList.prototype.remove = function() {
-    var n = this.nodes.length;
-    var c, p;
-    for ( var i = 0; i < n; i++ ) {
-        c = this.nodes[i];
-        if ( p = c.parentNode ) {
-            p.removeChild(c);
+    var cn, p;
+    var i = this.nodes.length;
+    while ( i-- ) {
+        cn = this.nodes[i];
+        if ( p = cn.parentNode ) {
+            p.removeChild(cn);
         }
      }
     return this;
 };
+
+DOMList.prototype.detach = DOMList.prototype.remove;
 
 /******************************************************************************/
 
@@ -254,12 +424,10 @@ DOMList.prototype.prepend = function(selector, context) {
 /******************************************************************************/
 
 DOMList.prototype.appendTo = function(selector, context) {
-    var p = DOMListFactory(selector, context);
-    if ( p.length ) {
-        var n = this.nodes.length;
-        for ( var i = 0; i < n; i++ ) {
-            p.nodes[0].appendChild(this.nodes[i]);
-        }
+    var p = selector instanceof DOMListFactory ? selector : DOMListFactory(selector, context);
+    var n = p.length;
+    for ( var i = 0; i < n; i++ ) {
+        p.nodes[0].appendChild(this.nodes[i]);
     }
     return this;
 };
@@ -278,6 +446,28 @@ DOMList.prototype.insertAfter = function(selector, context) {
     var n = c.nodes.length;
     for ( var i = 0; i < n; i++ ) {
         p.appendChild(c.nodes[i]);
+    }
+    return this;
+};
+
+/******************************************************************************/
+
+DOMList.prototype.insertBefore = function(selector, context) {
+    if ( this.nodes.length === 0 ) {
+        return this;
+    }
+    var referenceNodes = DOMListFactory(selector, context);
+    if ( referenceNodes.nodes.length === 0 ) {
+        return this;
+    }
+    var referenceNode = referenceNodes.nodes[0];
+    var parentNode = referenceNode.parentNode;
+    if ( !parentNode ) {
+        return this;
+    }
+    var n = this.nodes.length;
+    for ( var i = 0; i < n; i++ ) {
+        parentNode.insertBefore(this.nodes[i], referenceNode);
     }
     return this;
 };
@@ -324,7 +514,7 @@ DOMList.prototype.attr = function(attr, value) {
 DOMList.prototype.prop = function(prop, value) {
     var i = this.nodes.length;
     if ( value === undefined ) {
-        return i ? this.nodes[0][prop] : undefined;
+        return i !== 0 ? this.nodes[0][prop] : undefined;
     }
     while ( i-- ) {
         this.nodes[i][prop] = value;
@@ -379,13 +569,33 @@ DOMList.prototype.text = function(text) {
 
 /******************************************************************************/
 
-DOMList.prototype.hasClassName = function(className) {
+var toggleClass = function(node, className, targetState) {
+    var tokenList = node.classList;
+    if ( tokenList instanceof DOMTokenList === false ) {
+        return;
+    }
+    var currentState = tokenList.contains(className);
+    var newState = targetState;
+    if ( newState === undefined ) {
+        newState = !currentState;
+    }
+    if ( newState === currentState ) {
+        return;
+    }
+    tokenList.toggle(className, newState)
+};
+
+/******************************************************************************/
+
+DOMList.prototype.hasClass = function(className) {
     if ( !this.nodes.length ) {
         return false;
     }
-    var re = new RegExp('(^| )' + className + '( |$)');
-    return re.test(this.nodes[0].className);
+    var tokenList = this.nodes[0].classList;
+    return tokenList instanceof DOMTokenList &&
+           tokenList.contains(className);
 };
+DOMList.prototype.hasClassName = DOMList.prototype.hasClass;
 
 DOMList.prototype.addClass = function(className) {
     return this.toggleClass(className, true);
@@ -402,49 +612,46 @@ DOMList.prototype.removeClass = function(className) {
     return this;
 };
 
+/******************************************************************************/
+
 DOMList.prototype.toggleClass = function(className, targetState) {
-    var re = new RegExp('(^| )' + className + '( |$)');
-    var n = this.nodes.length;
-    var node, currentState, newState, newClassName;
-    for ( var i = 0; i < n; i++ ) {
-        node = this.nodes[i];
-        currentState = re.test(node.className);
-        newState = targetState;
-        if ( newState === undefined ) {
-            newState = !currentState;
-        }
-        if ( newState === currentState ) {
-            continue;
-        }
-        newClassName = node.className;
-        if ( newState ) {
-            newClassName += ' ' + className;
-        } else {
-            newClassName = newClassName.replace(re, ' ');
-        }
-        node.className = newClassName.trim();
+    if ( className.indexOf(' ') !== -1 ) {
+        return this.toggleClasses(className, true);
+    }
+    var i = this.nodes.length;
+    while ( i-- ) {
+        toggleClass(this.nodes[i], className, targetState);
     }
     return this;
 };
 
 /******************************************************************************/
 
-var makeEventHandler = function(context, selector, callback) {
+DOMList.prototype.toggleClasses = function(classNames, targetState) {
+    var tokens = classNames.split(/\s+/);
+    var i = this.nodes.length;
+    var node, j;
+    while ( i-- ) {
+        node = this.nodes[i];
+        j = tokens.length;
+        while ( j-- ) {
+            toggleClass(node, tokens[j], targetState);
+        }
+    }
+    return this;
+};
+
+/******************************************************************************/
+
+var makeEventHandler = function(selector, callback) {
     return function(event) {
-        var candidates = context.querySelectorAll(selector);
-        if ( !candidates.length ) {
+        var dispatcher = event.currentTarget;
+        if ( !dispatcher || typeof dispatcher.querySelectorAll !== 'function' ) {
             return;
         }
-        var node = event.target;
-        var i;
-        while ( node && node !== context ) {
-            i = candidates.length;
-            while ( i-- ) {
-                if ( candidates[i] === node ) {
-                    return callback.call(node, event);
-                }
-            }
-            node = node.parentNode;
+        var receiver = event.target;
+        if ( nodeInNodeList(receiver, dispatcher.querySelectorAll(selector)) ) {
+            callback.call(receiver, event);
         }
     };
 };
@@ -453,14 +660,13 @@ DOMList.prototype.on = function(etype, selector, callback) {
     if ( typeof selector === 'function' ) {
         callback = selector;
         selector = undefined;
+    } else {
+        callback = makeEventHandler(selector, callback);
     }
+
     var i = this.nodes.length;
     while ( i-- ) {
-        if ( selector !== undefined ) {
-            this.nodes[i].addEventListener(etype, makeEventHandler(this.nodes[i], selector, callback), true);
-        } else {
-            this.nodes[i].addEventListener(etype, callback);
-        }
+        this.nodes[i].addEventListener(etype, callback, selector !== undefined);
     }
     return this;
 };
