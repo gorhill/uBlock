@@ -582,7 +582,7 @@ var toggleClass = function(node, className, targetState) {
     if ( newState === currentState ) {
         return;
     }
-    tokenList.toggle(className, newState)
+    tokenList.toggle(className, newState);
 };
 
 /******************************************************************************/
@@ -616,7 +616,7 @@ DOMList.prototype.removeClass = function(className) {
 
 DOMList.prototype.toggleClass = function(className, targetState) {
     if ( className.indexOf(' ') !== -1 ) {
-        return this.toggleClasses(className, true);
+        return this.toggleClasses(className, targetState);
     }
     var i = this.nodes.length;
     while ( i-- ) {
