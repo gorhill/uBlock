@@ -210,6 +210,7 @@ var highlightElements = function(elems, force) {
     var offx = window.pageXOffset;
     var offy = window.pageYOffset;
     var islands = [];
+
     var elem, rect, poly;
     for ( var i = 0; i < elems.length; i++ ) {
         elem = elems[i];

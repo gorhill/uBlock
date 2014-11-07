@@ -121,7 +121,8 @@ if (self.chrome) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the connectorId to accept only
                 // what is meant for the current context
-                if (msg.name === vAPI.messaging.connectorId) {
+                if (msg.name === vAPI.messaging.connectorId
+                    || msg.name === 'broadcast') {
                     vAPI.messaging.connector(msg.message);
                 }
             };

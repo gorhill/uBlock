@@ -9,19 +9,9 @@ self.vAPI = self.vAPI || {};
 
 if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
     vAPI.sitePatch = function() {
-        var onWindowLoad = function() {
-            this.removeEventListener('load', onWindowLoad, true);
-            var spf = this._spf_state;
-
-            if (spf && (spf = spf.config)) {
-                spf['navigate-limit'] = 0;
-                spf['navigate-part-received-callback'] = function(url) {
-                    window.location.href = url;
-                };
-            }
-        };
-        window.addEventListener('load', onWindowLoad, true);
-
+        // disable spf
+        window.ytspf = {};
+        Object.defineProperty(ytspf, 'enabled', {'value': false});
 
         // based on ExtendTube's ad removing solution
         var p, yt = {}, config_ = {}, ytplayer = {}, playerConfig = { args: {} };

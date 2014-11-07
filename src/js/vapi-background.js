@@ -531,7 +531,7 @@ if (self.chrome) {
                 details.code = xhr.responseText;
             }
 
-            tab.page.dispatchMessage('message', {
+            tab.page.dispatchMessage('broadcast', {
                 portName: 'vAPI',
                 msg: {
                     cmd: 'runScript',
@@ -713,7 +713,7 @@ if (self.chrome) {
             };
 
             for (var tabId in vAPI.tabs.stack) {
-                vAPI.tabs.stack[tabId].page.dispatchMessage('message', message);
+                vAPI.tabs.stack[tabId].page.dispatchMessage('broadcast', message);
             }
         }
     };

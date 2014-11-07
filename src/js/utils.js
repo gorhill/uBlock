@@ -32,66 +32,6 @@
 
 var exports = {};
 
-
-/******************************************************************************/
-
-/*exports.gotoExtensionURL = function(url) {
-
-    var hasQuery = function(url) {
-        return url.indexOf('?') >= 0;
-    };
-
-    var removeQuery = function(url) {
-        var pos = url.indexOf('?');
-        if ( pos < 0 ) {
-            return url;
-        }
-        return url.slice(0, pos);
-    };
-    var removeFragment = function(url) {
-        var pos = url.indexOf('#');
-        if ( pos < 0 ) {
-            return url;
-        }
-        return url.slice(0, pos);
-    };
-
-    var tabIndex = 9999;
-    var targetUrl = vAPI.getURL(url);
-
-    var currentWindow = function(tabs) {
-        var updateProperties = { active: true };
-        var i = tabs.length;
-        while ( i-- ) {
-            if ( removeQuery(tabs[i].url) !== removeQuery(targetUrl) ) {
-                continue;
-            }
-            // If current tab in dashboard is different, force the new one, if
-            // there is one, to be activated.
-            if ( tabs[i].url !== targetUrl ) {
-                updateProperties.url = targetUrl;
-            }
-            chrome.tabs.update(tabs[i].id, updateProperties);
-            return;
-        }
-        chrome.tabs.create({ 'url': targetUrl, index: tabIndex + 1 });
-    };
-
-    var currentTab = function(tabs) {
-        if ( tabs.length ) {
-            tabIndex = tabs[0].index;
-        }
-        chrome.tabs.query({ currentWindow: true }, currentWindow);
-    };
-
-    // https://github.com/gorhill/httpswitchboard/issues/150
-    // Logic:
-    // - If URL is already opened in a tab, just activate tab
-    // - Otherwise find the current active tab and open in a tab immediately
-    //   to the right of the active tab
-    chrome.tabs.query({ active: true }, currentTab);
-};*/
-
 /******************************************************************************/
 
 exports.formatCount = function(count) {
