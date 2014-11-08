@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201410170956
+! Version: 201411041857
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 17-10-2014
+! Last modified: 04-11-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -86,7 +86,7 @@ cam4.com/images/468x60*
 cam4.com/images/banners/*
 classifichemusica.com/wp-content/plugins/wp-popup-scheduler/*
 content.codelnet.com/*ad*
-doubleclick.*$domain=~emea.doubleclick.com|~unita.it|~console-tribe.com|~tiscali.it|~bbc.co.uk|~ilmeteo.it|~imdb.com|~ft.com|~serviziopubblico.it
+doubleclick.*$domain=~emea.doubleclick.com|~unita.it|~console-tribe.com|~tiscali.it|~bbc.co.uk|~ilmeteo.it|~imdb.com|~ft.com|~serviziopubblico.it|~reachadv.it
 http://*.187.it/*bannerImpression.do*
 http://*.2mdn.net/viewad
 http://*.adbard.net/
@@ -355,7 +355,7 @@ http://ad*.adecn.com/
 http://ad*.adfarm*.adition.com
 http://ad*.banners.phoneaccess.com
 http://ad*.emediate.dk/
-http://ad*.liverail.com/
+http://ad*.liverail.com/$domain=~reachadv.it
 http://ad*.neodatagroup.com$domain=~rai.tv|~rai.it
 http://ad-catgeo.paginegialle.it
 http://ad-catgeo.virgilio.it
@@ -1317,7 +1317,7 @@ http://forums.novell.com/*/banners/
 http://*.chicchedicala.it/banner/
 http://*.calciomercato.com/*/banners/
 http://*.criteo.com/delivery/ajs.php$domain=~tzetze.it
-http://*.liverail.com/*/admanager.swf
+http://*.liverail.com/*/admanager.swf$domain=~reachadv.it
 http://*.calciomercato.com/images/back.driveilfilm.*.jpg
 http://*.neobux.com/*/banner*
 http://*.friendfinder.com/banners/
@@ -1505,7 +1505,7 @@ http://techcrunch.com/*/adpage.html
 http://*.kbalertz.com/*/ads/
 http://*.google.com/uds/afs?
 http://adserver.t21.eu/
-http://*.simply.com/play.html
+http://*.simply.com/play.html$domain=~reachadv.it
 ||pixhost.me/avaxhome/1a/8d/*
 http://*.105.net/images/promo/vodafone/
 http://*.pornobanner.com/userbanners/
@@ -1705,6 +1705,8 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://*.artribune.com/wp-content/uploads/*/*SKIN*
 |http://*.artribune.com/wp-content/uploads/*/*LEADERBOARD*
 |http://sport-gadgets.net/wp-content/plugins/facebook-page-promoter-lightbox/
+|http://*.concorezzo.org/*/bgmax/
+|http://*.concorezzo.org/*/banners/
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3214,6 +3216,30 @@ nolabnoparty.com##.adsbygoogle
 nolabnoparty.com##.ad-cell
 tzetze.it###publyAdsOverlay
 tzetze.it##[id^="div-gpt-ad-"]
+calabria.weboggi.it##[id^="ads-r"]
+calabria.weboggi.it##[id^="ads-p"]
+calabria.weboggi.it###ads-mn
+infiltrato.it###\5f _msth
+infiltrato.it###fb-root
+infiltrato.it##.__adnt1
+marcellobarenghi.com##.adsbygoogle
+motori.excite.it###ligatus_populis_excite_smartbox_all
+alguer.it##[id^="div-gpt-ad"]
+alguer.it##.box_adv_728
+alguer.it##.adv_160x600
+alguer.it##.adv_120x240
+videonews24.it##.adsbygoogle
+eurogamer.it##[id^="google_ads_iframe"]
+incredibilia.it##.adsbygoogle
+incredibilia.it##.single-post-ad
+unawave.de##.am
+unawave.de###googlebanner
+letsplaysnes.com##.adsbygoogle
+m.diretta.it##.lsadvert
+m.diretta.it##[class^="advert-"]
+m.diretta.it##.lsadvert_caption
+multiplayer.it###personalization_ads
+piratestreaming.co##[style="display:block !important;"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3234,6 +3260,7 @@ runtastic.com###add_ad_space
 |http://*.cineblog01.tv/ads_rot/
 windows8blog.it##.cmampos2-content-widget
 realtimetv.it###mpu
+mobile.tgcom24.it###spaceBanner_rn_*
 dataok4.altervista.org###nf37
 laltranotizia.net###Blog1
 wowcast.tv###video_ads_overdiv
@@ -3260,6 +3287,7 @@ instantshift.com###content-top-banner
 instantshift.com##.sidebar_bsa_mid01
 instantshift.com##[class^="banner-280x250"]
 instantshift.com##.bsa_banner_ad
+internazionale.it##.sponsor_oroscopo
 dataok4.altervista.org###ad_overlay
 q.gs##iframe[id="rf"]
 trakt.tv##DIV[id="small-banner-ad"]

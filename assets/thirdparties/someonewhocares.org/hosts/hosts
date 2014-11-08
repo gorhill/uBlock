@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Oct 28th, 2014 at 10:25
+# Last updated: Nov 6th, 2014 at 10:41
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1506,7 +1506,7 @@ fe80::1%lo0	localhost
 127.0.0.1 www.fxcounters.com
 127.0.0.1 www.gator.com
 127.0.0.1 www.googkle.com
-127.0.0.1 www.googletagservices.com
+#127.0.0.1 www.googletagservices.com		#interferes with techrepublic
 127.0.0.1 www.hitstats.co.uk
 127.0.0.1 www.iccee.com
 127.0.0.1 www.iesnare.com	# See http://www.codingthewheel.com/archives/online-gambling-privacy-iesnare
@@ -5542,7 +5542,7 @@ fe80::1%lo0	localhost
 127.0.0.1 d.adserve.com
 127.0.0.1 dads.new.digg.com
 127.0.0.1 d.ads.readwriteweb.com
-127.0.0.1 da.feedsportal.com
+#127.0.0.1 da.feedsportal.com	# interferes with TechRepublic email newsletters
 127.0.0.1 d.agkn.com
 127.0.0.1 daily-saver.com
 127.0.0.1 darmowe-liczniki.info

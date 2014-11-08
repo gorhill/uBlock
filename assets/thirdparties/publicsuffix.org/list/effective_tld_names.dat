@@ -6780,7 +6780,10 @@ xxx
 *.zw
 
 
-// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2014-10-04T06:02:06Z
+// List of new gTLDs imported from https://newgtlds.icann.org/newgtlds.csv on 2014-11-03T18:02:06Z
+
+// abb : 2014-10-24 ABB Ltd
+abb
 
 // abbott : 2014-07-24 Abbott Laboratories, Inc.
 abbott
@@ -6803,6 +6806,9 @@ active
 // actor : 2013-12-12 United TLD Holdco Ltd.
 actor
 
+// adult : 2014-10-16 ICM Registry AD LLC
+adult
+
 // afl : 2014-10-02 Australian Football League
 afl
 
@@ -6814,6 +6820,9 @@ agency
 
 // airforce : 2014-03-06 United TLD Holdco Ltd.
 airforce
+
+// airtel : 2014-10-24 Bharti Airtel Limited
+airtel
 
 // allfinanz : 2014-07-03 Allfinanz Deutsche Vermögensberatung Aktiengesellschaft
 allfinanz
@@ -6839,10 +6848,10 @@ army
 // associates : 2014-03-06 Baxter Hill, LLC
 associates
 
-// attorney : 2014-03-20
+// attorney : 2014-03-20 
 attorney
 
-// auction : 2014-03-20
+// auction : 2014-03-20 
 auction
 
 // audio : 2014-03-20 Uniregistry, Corp.
@@ -6854,7 +6863,7 @@ autos
 // axa : 2013-12-19 AXA SA
 axa
 
-// band : 2014-06-12
+// band : 2014-06-12 
 band
 
 // bank : 2014-09-25 fTLD Registry Services LLC
@@ -6917,6 +6926,9 @@ bloomberg
 // blue : 2013-11-07 Afilias Limited
 blue
 
+// bms : 2014-10-30 Bristol-Myers Squibb Company
+bms
+
 // bmw : 2014-01-09 Bayerische Motoren Werke Aktiengesellschaft
 bmw
 
@@ -6925,6 +6937,9 @@ bnl
 
 // bnpparibas : 2014-05-29 BNP Paribas
 bnpparibas
+
+// bom : 2014-10-16 Núcleo de Informação e Coordenação do Ponto BR - NIC.br
+bom
 
 // bond : 2014-06-05 Bond University Limited
 bond
@@ -7031,6 +7046,9 @@ channel
 // cheap : 2013-11-14 Sand Cover, LLC
 cheap
 
+// chloe : 2014-10-16 Richemont DNS Inc.
+chloe
+
 // christmas : 2013-11-21 Uniregistry, Corp.
 christmas
 
@@ -7064,6 +7082,9 @@ clothing
 // club : 2013-11-08 .CLUB DOMAINS, LLC
 club
 
+// coach : 2014-10-09 Koko Island, LLC
+coach
+
 // codes : 2013-10-31 Puff Willow, LLC
 codes
 
@@ -7094,7 +7115,7 @@ condos
 // construction : 2013-09-16 Fox Dynamite, LLC
 construction
 
-// consulting : 2013-12-05
+// consulting : 2013-12-05 
 consulting
 
 // contractors : 2013-09-10 Magic Woods, LLC
@@ -7117,6 +7138,12 @@ credit
 
 // creditcard : 2014-03-20 Binky Frostbite, LLC
 creditcard
+
+// cricket : 2014-10-09 dot Cricket Limited
+cricket
+
+// crown : 2014-10-24 Crown Equipment Corporation
+crown
 
 // crs : 2014-04-03 Federated Co-operatives Limited
 crs
@@ -7154,11 +7181,14 @@ day
 // deals : 2014-05-22 Sand Sunset, LLC
 deals
 
-// degree : 2014-03-06
+// degree : 2014-03-06 
 degree
 
 // delivery : 2014-09-11 Steel Station, LLC
 delivery
+
+// dell : 2014-10-24 Dell Inc.
+dell
 
 // democrat : 2013-10-24 United TLD Holdco Ltd.
 democrat
@@ -7166,11 +7196,14 @@ democrat
 // dental : 2014-03-20 Tin Birch, LLC
 dental
 
-// dentist : 2014-03-20
+// dentist : 2014-03-20 
 dentist
 
 // desi : 2013-11-14 Desi Networks LLC
 desi
+
+// dev : 2014-10-16 Charleston Road Registry Inc.
+dev
 
 // diamonds : 2013-09-22 John Edge, LLC
 diamonds
@@ -7192,6 +7225,9 @@ discount
 
 // dnp : 2013-12-13 Dai Nippon Printing Co., Ltd.
 dnp
+
+// docs : 2014-10-16 Charleston Road Registry Inc.
+docs
 
 // doha : 2014-09-18 Communications Regulatory Authority (CRA)
 doha
@@ -7268,7 +7304,7 @@ exposed
 // fail : 2014-03-06 Atomic Pipe, LLC
 fail
 
-// fan : 2014-03-06
+// fan : 2014-03-06 
 fan
 
 // farm : 2013-11-07 Just Maple, LLC
@@ -7279,6 +7315,9 @@ fashion
 
 // feedback : 2013-12-19 Top Level Spectrum, Inc.
 feedback
+
+// final : 2014-10-16 Núcleo de Informação e Coordenação do Ponto BR - NIC.br
+final
 
 // finance : 2014-03-20 Cotton Cypress, LLC
 finance
@@ -7304,6 +7343,9 @@ flights
 // florist : 2013-11-07 Half Cypress, LLC
 florist
 
+// flowers : 2014-10-09 Uniregistry, Corp.
+flowers
+
 // flsmidth : 2014-07-24 FLSmidth A/S
 flsmidth
 
@@ -7313,7 +7355,7 @@ fly
 // foo : 2014-01-23 Charleston Road Registry Inc.
 foo
 
-// forsale : 2014-05-22
+// forsale : 2014-05-22 
 forsale
 
 // foundation : 2013-12-05 John Dale, LLC
@@ -7331,7 +7373,7 @@ fund
 // furniture : 2014-03-20 Lone Fields, LLC
 furniture
 
-// futbol : 2013-09-20
+// futbol : 2013-09-20 
 futbol
 
 // gal : 2013-11-07 Asociación puntoGAL
@@ -7421,7 +7463,7 @@ guru
 // hamburg : 2014-02-20 Hamburg Top-Level-Domain GmbH
 hamburg
 
-// haus : 2013-12-05
+// haus : 2013-12-05 
 haus
 
 // healthcare : 2014-06-12 Silver Glen, LLC
@@ -7438,6 +7480,9 @@ hermes
 
 // hiphop : 2014-03-06 Uniregistry, Corp.
 hiphop
+
+// hitachi : 2014-10-31 Hitachi, Ltd.
+hitachi
 
 // hiv : 2014-03-13 dotHIV gemeinnuetziger e.V.
 hiv
@@ -7466,8 +7511,14 @@ house
 // how : 2014-01-23 Charleston Road Registry Inc.
 how
 
+// hsbc : 2014-10-24 HSBC Holdings PLC
+hsbc
+
 // ibm : 2014-07-31 International Business Machines Corporation
 ibm
+
+// ice : 2014-10-30 IntercontinentalExchange, Inc.
+ice
 
 // ifm : 2014-01-30 ifm electronic gmbh
 ifm
@@ -7568,10 +7619,13 @@ lacaixa
 // land : 2013-09-10 Pine Moon, LLC
 land
 
+// lat : 2014-10-16 ECOM-LAC Federaciòn de Latinoamèrica y el Caribe para Internet y el Comercio Electrònico
+lat
+
 // latrobe : 2014-06-16 La Trobe University
 latrobe
 
-// lawyer : 2014-03-20
+// lawyer : 2014-03-20 
 lawyer
 
 // lds : 2014-03-20 IRI Domain Management, LLC (\
@@ -7582,6 +7636,9 @@ lease
 
 // leclerc : 2014-08-07 A.C.D. LEC Association des Centres Distributeurs Edouard Leclerc
 leclerc
+
+// legal : 2014-10-16 Blue Falls, LLC
+legal
 
 // lgbt : 2014-05-08 Afilias Limited
 lgbt
@@ -7643,11 +7700,14 @@ management
 // mango : 2013-10-24 PUNTO FA S.L.
 mango
 
-// market : 2014-03-06
+// market : 2014-03-06 
 market
 
 // marketing : 2013-11-07 Fern Pass, LLC
 marketing
+
+// marriott : 2014-10-09 Marriott Worldwide Corporation
+marriott
 
 // media : 2014-03-06 Grand Glen, LLC
 media
@@ -7660,6 +7720,9 @@ melbourne
 
 // meme : 2014-01-30 Charleston Road Registry Inc.
 meme
+
+// memorial : 2014-10-16 Dog Beach, LLC
+memorial
 
 // menu : 2013-09-11 Wedding TLD2, LLC
 menu
@@ -7679,13 +7742,16 @@ moe
 // monash : 2013-09-30 Monash University
 monash
 
+// money : 2014-10-16 Outer McCook, LLC
+money
+
 // montblanc : 2014-06-23 Richemont DNS Inc.
 montblanc
 
 // mormon : 2013-12-05 IRI Domain Management, LLC (\
 mormon
 
-// mortgage : 2014-03-20
+// mortgage : 2014-03-20 
 mortgage
 
 // moscow : 2013-12-19 Foundation for Assistance for Internet Technologies and Infrastructure Development (FAITID)
@@ -7696,6 +7762,9 @@ motorcycles
 
 // mov : 2014-01-30 Charleston Road Registry Inc.
 mov
+
+// movistar : 2014-10-16 Telefónica S.A.
+movistar
 
 // nagoya : 2013-10-24 GMO Registry, Inc.
 nagoya
@@ -7738,6 +7807,9 @@ nra
 
 // nrw : 2013-11-21 Minds + Machines GmbH
 nrw
+
+// ntt : 2014-10-31 NIPPON TELEGRAPH AND TELEPHONE CORPORATION
+ntt
 
 // nyc : 2014-01-23 The City of New York by and through the New York City Department of Information Technology & Telecommunications
 nyc
@@ -7802,6 +7874,9 @@ photos
 // physio : 2014-05-01 PhysBiz Pty Ltd
 physio
 
+// piaget : 2014-10-16 Richemont DNS Inc.
+piaget
+
 // pics : 2013-11-14 Uniregistry, Corp.
 pics
 
@@ -7828,6 +7903,9 @@ pohl
 
 // poker : 2014-07-03 Afilias Domains No. 5 Limited
 poker
+
+// porn : 2014-10-16 ICM Registry PN LLC
+porn
 
 // praxi : 2013-12-05 Praxi S.p.A.
 praxi
@@ -7868,6 +7946,9 @@ recipes
 // red : 2013-11-07 Afilias Limited
 red
 
+// redstone : 2014-10-31 Redstone Haute Couture Co., Ltd.
+redstone
+
 // rehab : 2014-03-06 United TLD Holdco Ltd.
 rehab
 
@@ -7901,7 +7982,7 @@ rest
 // restaurant : 2014-07-03 Snow Avenue, LLC
 restaurant
 
-// reviews : 2013-09-13
+// reviews : 2013-09-13 
 reviews
 
 // rich : 2013-11-21 I-Registry Ltd.
@@ -7913,7 +7994,7 @@ rio
 // rip : 2014-07-10 United TLD Holdco Ltd.
 rip
 
-// rocks : 2013-11-14
+// rocks : 2013-11-14 
 rocks
 
 // rodeo : 2013-12-19 Top Level Domain Holdings Limited
@@ -7931,14 +8012,23 @@ ryukyu
 // saarland : 2013-12-12 dotSaarland GmbH
 saarland
 
+// sale : 2014-10-16 Half Bloom, LLC
+sale
+
 // samsung : 2014-04-03 SAMSUNG SDS CO., LTD
 samsung
+
+// sanofi : 2014-10-09 Sanofi
+sanofi
 
 // sap : 2014-03-27 SAP AG
 sap
 
 // sarl : 2014-07-03 Delta Orchard, LLC
 sarl
+
+// saxo : 2014-10-31 Saxo Bank A/S
+saxo
 
 // sca : 2014-03-13 SVENSKA CELLULOSA AKTIEBOLAGET SCA (publ)
 sca
@@ -7961,11 +8051,17 @@ schwarz
 // science : 2014-09-11 dot Science Limited
 science
 
+// scor : 2014-10-31 SCOR SE
+scor
+
 // scot : 2014-01-23 Dot Scot Registry Limited
 scot
 
 // seat : 2014-05-22 SEAT, S.A. (Sociedad Unipersonal)
 seat
+
+// sener : 2014-10-24 Sener Ingeniería y Sistemas, S.A.
+sener
 
 // services : 2014-02-27 Fox Castle, LLC
 services
@@ -8000,7 +8096,7 @@ sky
 // social : 2013-11-07 United TLD Holdco Ltd.
 social
 
-// software : 2014-03-20
+// software : 2014-03-20 
 software
 
 // sohu : 2013-12-19 Sohu.com Limited
@@ -8021,6 +8117,12 @@ space
 // spiegel : 2014-02-05 SPIEGEL-Verlag Rudolf Augstein GmbH & Co. KG
 spiegel
 
+// stc : 2014-10-09 Saudi Telecom Company
+stc
+
+// stcgroup : 2014-10-09 Saudi Telecom Company
+stcgroup
+
 // supplies : 2013-12-19 Atomic Fields, LLC
 supplies
 
@@ -8038,6 +8140,9 @@ surgery
 
 // suzuki : 2014-02-20 SUZUKI MOTOR CORPORATION
 suzuki
+
+// swiss : 2014-10-16 Swiss Confederation
+swiss
 
 // sydney : 2014-09-18 State of New South Wales, Department of Premier and Cabinet
 sydney
@@ -8062,6 +8167,9 @@ tci
 
 // technology : 2013-09-13 Auburn Falls
 technology
+
+// telefonica : 2014-10-16 Telefónica S.A.
+telefonica
 
 // temasek : 2014-08-07 Temasek Holdings (Private) Limited
 temasek
@@ -8102,6 +8210,9 @@ trade
 // training : 2013-11-07 Wild Willow, LLC
 training
 
+// trust : 2014-10-16 
+trust
+
 // tui : 2014-07-03 TUI AG
 tui
 
@@ -8126,11 +8237,14 @@ ventures
 // versicherung : 2014-03-20 dotversicherung-registry GmbH
 versicherung
 
-// vet : 2014-03-06
+// vet : 2014-03-06 
 vet
 
 // viajes : 2013-10-17 Black Madison, LLC
 viajes
+
+// video : 2014-10-16 Lone Tigers, LLC
+video
 
 // villas : 2013-12-05 New Sky, LLC
 villas
@@ -8215,6 +8329,9 @@ wtc
 
 // wtf : 2014-03-06 Hidden Way, LLC
 wtf
+
+// xerox : 2014-10-24 Xerox DNHC LLC
+xerox
 
 // xn--1qqw23a : 2014-01-09 Guangzhou YU Wei Information Technology Co., Ltd.
 佛山
@@ -8350,6 +8467,9 @@ vermögensberatung
 
 // xn--vhquv : 2013-08-27 Dash McCook, LLC
 企业
+
+// xn--vuq861b : 2014-10-16 Beijing Tele-info Network Technology Co., Ltd.
+信息
 
 // xn--xhq521b : 2013-11-14 Guangzhou YU Wei Information Technology Co., Ltd.
 广东

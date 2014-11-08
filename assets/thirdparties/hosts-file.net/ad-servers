@@ -238,6 +238,7 @@
 127.0.0.1	1212.bitterstrawberry.com
 127.0.0.1	122.6.87.194.dynamic.dol.ru
 127.0.0.1	1221.bitterstrawberry.com
+127.0.0.1	1223.xg4ken.com
 127.0.0.1	122807155757.c.mystat-in.net
 127.0.0.1	123.6.87.194.dynamic.dol.ru
 127.0.0.1	123.duba.net
@@ -2285,6 +2286,7 @@
 127.0.0.1	adfootprints.com
 127.0.0.1	adforce.adtech.fr
 127.0.0.1	adforce.com
+127.0.0.1	adforce.ru
 127.0.0.1	adforgames.com
 127.0.0.1	adfpaces.ero-advertising.com
 127.0.0.1	adframesrc.com
@@ -4416,6 +4418,7 @@
 127.0.0.1	afs.googleusercontent.com
 127.0.0.1	afterdawn.us.intellitxt.com
 127.0.0.1	afterdownload.com
+127.0.0.1	afterview.ru
 127.0.0.1	aftp.linksynergy.com
 127.0.0.1	aftrk.com
 127.0.0.1	ag.travelocity.com.edgesuite.net
@@ -4511,6 +4514,7 @@
 127.0.0.1	allosponsor.com
 127.0.0.1	alloydigital.com
 127.0.0.1	allsolutionsnetwork.com
+127.0.0.1	alltereg0.ru
 127.0.0.1	alltraff.ru
 127.0.0.1	allyes.com
 127.0.0.1	alog.umeng.co
@@ -6448,6 +6452,7 @@
 127.0.0.1	c.chango.com
 127.0.0.1	c.chartboost.com
 127.0.0.1	c.cnzz.com
+127.0.0.1	c.commtimize.com
 127.0.0.1	c.computerbild.de
 127.0.0.1	c.cpa6.ru
 127.0.0.1	c.dr.cyberwing.co.jp
@@ -9006,6 +9011,7 @@
 127.0.0.1	d.recomendedsite.com
 127.0.0.1	d.rmgserving.com
 127.0.0.1	d.skimresources.com
+127.0.0.1	d.tds.adlabs.ru
 127.0.0.1	d.thanksearch.com
 127.0.0.1	d.thelocal.com
 127.0.0.1	d.turn.com
@@ -13587,6 +13593,7 @@
 127.0.0.1	madeline-pridgen.us
 127.0.0.1	madison-cabot.us
 127.0.0.1	madisonlogic.com
+127.0.0.1	madmax53.stellar.cpa.clicksure.com
 127.0.0.1	madmimi.com
 127.0.0.1	mads.at.atwola.com
 127.0.0.1	mads.cnet.com
@@ -14104,7 +14111,6 @@
 127.0.0.1	misti-smythe.us
 127.0.0.1	misti-weigel.us
 127.0.0.1	mitel.marketbright.com
-127.0.0.1	miva.com
 127.0.0.1	mixpanel.com
 127.0.0.1	mixrank.go2cloud.org
 127.0.0.1	mjx.ads.nwsource.com
@@ -15349,6 +15355,7 @@
 127.0.0.1	pixel.33across.com
 127.0.0.1	pixel.adbuyer.com
 127.0.0.1	pixel.adsafeprotected.com
+127.0.0.1	pixel.adsniper.ru
 127.0.0.1	pixel.alexametrics.com
 127.0.0.1	pixel.bild.de
 127.0.0.1	pixel.colorupmedia.com
@@ -16164,6 +16171,7 @@
 127.0.0.1	resultonline.com
 127.0.0.1	retail-affiliates.com
 127.0.0.1	retaildirect.realmedia.com
+127.0.0.1	retarget.ssl-services.com
 127.0.0.1	retargetpro.net
 127.0.0.1	retrostats.com
 127.0.0.1	return.to
@@ -17407,7 +17415,6 @@
 127.0.0.1	static.itrack.it
 127.0.0.1	static.kameleoon.com
 127.0.0.1	static.kinghost.com
-127.0.0.1	static.linkbucks.com
 127.0.0.1	static.livejasmin.com
 127.0.0.1	static.mailchimp.com
 127.0.0.1	static.manwin.doublepimp.com
@@ -17805,6 +17812,7 @@
 127.0.0.1	sync.adap.tv
 127.0.0.1	sync.livejasmin.com
 127.0.0.1	sync.mathtag.com
+127.0.0.1	sync.smarttds.ru
 127.0.0.1	syndicate.payloadz.com
 127.0.0.1	syndication.adlandmark.com
 127.0.0.1	syndication.exoclick.com
@@ -17876,11 +17884,21 @@
 127.0.0.1	t0.formalyzer.com
 127.0.0.1	t0.leadlander.com
 127.0.0.1	t0.trackalyzer.com
+127.0.0.1	t01.rbnt.org
+127.0.0.1	t02.rbnt.org
+127.0.0.1	t03.rbnt.org
+127.0.0.1	t04.rbnt.org
+127.0.0.1	t05.rbnt.org
+127.0.0.1	t06.rbnt.org
+127.0.0.1	t07.rbnt.org
+127.0.0.1	t08.rbnt.org
+127.0.0.1	t09.rbnt.org
 127.0.0.1	t1.extreme-dm.com
 127.0.0.1	t1.formalyzer.com
 127.0.0.1	t1.leadlander.com
 127.0.0.1	t1.trackalyzer.com
 127.0.0.1	t1.visualrevenue.com
+127.0.0.1	t10.rbnt.org
 127.0.0.1	t1395671984.yupiromo.ru
 127.0.0.1	t2.formalyzer.com
 127.0.0.1	t2.hulu.com
@@ -20156,6 +20174,7 @@
 127.0.0.1	www.adfest.com
 127.0.0.1	www.adfluence.net
 127.0.0.1	www.adfoc.us
+127.0.0.1	www.adforce.ru
 127.0.0.1	www.adfusion.com
 127.0.0.1	www.adgalax.com
 127.0.0.1	www.adgatemedia.com
@@ -20304,6 +20323,7 @@
 127.0.0.1	www.afftrackr.com
 127.0.0.1	www.afiliati.ro
 127.0.0.1	www.afterdownload.com
+127.0.0.1	www.afterview.ru
 127.0.0.1	www.agata-lillard.us
 127.0.0.1	www.agata-wadlington.us
 127.0.0.1	www.agmtrk.com
@@ -20331,6 +20351,7 @@
 127.0.0.1	www.allosponsor.com
 127.0.0.1	www.alloydigital.com
 127.0.0.1	www.allsolutionsnetwork.com
+127.0.0.1	www.alltereg0.ru
 127.0.0.1	www.alltraff.ru
 127.0.0.1	www.allyson-stratton.us
 127.0.0.1	www.alphagirlz.mobi
@@ -21456,6 +21477,7 @@
 127.0.0.1	www.link.ac
 127.0.0.1	www.link4link.com
 127.0.0.1	www.linkads.de
+127.0.0.1	www.linkbucksmedia.com
 127.0.0.1	www.linkconnector.com
 127.0.0.1	www.linkcounter.com
 127.0.0.1	www.linkexchange.nl
@@ -21532,6 +21554,7 @@
 127.0.0.1	www.macaddictads.snv.futurenet.nl
 127.0.0.1	www.madblast.com
 127.0.0.1	www.madisonlogic.com
+127.0.0.1	www.madmax53.stellar.cpa.clicksure.com
 127.0.0.1	www.madmimi.com
 127.0.0.1	www.maegan-abad.us
 127.0.0.1	www.magentanews.com
@@ -22944,4 +22967,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22939
+# Hosts: 22962

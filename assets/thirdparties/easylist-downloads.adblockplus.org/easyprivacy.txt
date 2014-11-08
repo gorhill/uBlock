@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 8xA8SzPudeOoylw2JOltXA
-! Version: 201411031311
+! Checksum: 81hxmEc45EQSuSZz7swhNA
+! Version: 201411081321
 ! Title: EasyPrivacy
-! Last modified: 03 Nov 2014 13:11 UTC
+! Last modified: 08 Nov 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -565,6 +565,7 @@
 /cookie/visitor/*
 /cookie?affiliate
 /cookie_ga.
+/CookieSetterAS3.
 /coretracking.php?
 /CorporatePageTracking.
 /count.cfm?
@@ -2468,6 +2469,7 @@ http://utm.
 ||burstbeacon.com^$third-party
 ||burt.io^$third-party
 ||bux1le001.com^$third-party
+||buzzdeck.com^$third-party
 ||bytemgdd.com^$third-party
 ||c-o-u-n-t.com^$third-party
 ||c-webstats.de^$third-party
@@ -5306,6 +5308,7 @@ http://utm.
 ||ophan.co.uk/t.gif?
 ||optimizely.appspot.com^$third-party
 ||orts.wixawin.com^$third-party
+||outbrain.com^*/widgetStatistics.js
 ||p.delivery.net^$third-party
 ||p.dsero.net^
 ||p.po.st/p?pub=
@@ -5456,7 +5459,6 @@ http://utm.
 ||sig.gamerdna.com^$third-party
 ||sightmaxondemand.com/wreal/sightmaxagentinterface/monitor.smjs
 ||signup.advance.net^*affiliate
-||sitedelux.com/svcs/increment_page_counter.jsp?
 ||sitereports.officelive.com^
 ||skysa.com/tracker/
 ||sli-spark.com/b.png$third-party
@@ -5612,6 +5614,7 @@ http://utm.
 ||track.gridlockparadise.com^
 ||track.juno.com^
 ||track.mybloglog.com^
+||track.mycliplister.com^
 ||track.omg2.com^
 ||track.parse.ly^
 ||track.propelplus.com^
@@ -5640,6 +5643,7 @@ http://utm.
 ||tracker.mgnetwork.com^
 ||tracker.mtrax.net^
 ||tracker.myseofriend.net^$third-party
+||tracker.neon-images.com^
 ||tracker.roitesting.com^
 ||tracker.seoboost.net^$third-party
 ||tracker.timesgroup.com^
@@ -5677,6 +5681,7 @@ http://utm.
 ||tracking.practicefusion.com^$third-party
 ||tracking.quillion.com^
 ||tracking.quisma.com^
+||tracking.rapidape.com^
 ||tracking.searchmarketing.com^
 ||tracking.sembox.it^$third-party
 ||tracking.skyword.com^$third-party
@@ -6093,6 +6098,7 @@ http://utm.
 ||sestatic.fi^*/zig.js
 ! Georgian
 ||counter.top.ge^$third-party
+||links.boom.ge^
 ! Greek
 ||stats.e-go.gr^
 ! Hungarian
@@ -6715,7 +6721,6 @@ http://utm.
 ||collector.shopstream.co^
 ||collector.statowl.com^
 ||collector.tescocompare.com^
-||collector.viki.io^
 ||collegehumor.com/track.php?
 ||commentarymagazine.com^*/track.asp?
 ||commercialappeal.com/metrics/
@@ -7179,6 +7184,7 @@ http://utm.
 ||justanswer.com/browsercheck/
 ||justanswer.com/ja_services/processes/log.asmx/
 ||kalahari.net/includes/swatag.js
+||kayak.com/k/redirect/tracking?
 ||kelkoo.co.uk/kk_track?
 ||kelkoo.co.uk^*/tracker/
 ||kelkoo.com/kk_track?
@@ -7749,6 +7755,7 @@ http://utm.
 ||spotlight.accuweather.com^
 ||sprint.com/assets/scripts/analytics/
 ||squidoo.com/track/
+||srt.pch.com^
 ||ssl-stats.wordpress.com^
 ||st.fanatics.com^
 ||st.mirror.co.uk^
@@ -7894,6 +7901,7 @@ http://utm.
 ||thinkgeek.com/js/rts.js
 ||thiswebsiterules.com^*/log/log.php?
 ||thrillist.com/track
+||ti.com/assets/js/headerfooter/$script
 ||tiaa-cref.org^*/js_tiaacref_analytics.
 ||tickco.com/track.js
 ||tidaltv.com/Ping.aspx
@@ -8029,6 +8037,7 @@ http://utm.
 ||u.tv/utvplayer/everywhere/tracking.aspx?
 ||ucoz.com/stat/
 ||ui-portal.com/1and1/mailcom/s?
+||ultimedia.com/deliver/statistiques/
 ||ultra-gamerz-zone.cz.cc/b/stats?
 ||unicornapp.com^*/Metrics/
 ||unionleader.com/js/ul/ga.js
@@ -8861,8 +8870,10 @@ http://utm.
 ||analytics.gazeta.pl^
 ||dot.wp.pl^
 ||kropka.onet.pl^
+||mklik.gazeta.pl^
 ||nasza-klasa.pl^*/pp_gemius
 ||rek.www.wp.pl^
+||squid.gazeta.pl^
 ||stats.teledyski.info^
 ! Portuguese
 ||dejavu.mercadolivre.com.br^
@@ -9110,6 +9121,7 @@ http://utm.
 @@||guim.co.uk/flash/video/embedded/player-$object,domain=thedailywh.at
 @@||healthcare.gov/marketplace/*/clear.gif?
 @@||hhgregg.com/wcsstore/MadisonsStorefrontAssetStore/javascript/Analytics/AnalyticsTagDataObject.js
+@@||highcharts.com/modules/heatmap.js
 @@||hj.flxpxl.com^*.js?r=*&m=*&a=$domain=twitch.tv
 @@||homedepot.com/static/scripts/resxclsa.js
 @@||hostlogr.com/etc/geo.php?
@@ -9373,6 +9385,7 @@ http://utm.
 @@||metrics.brooksbrothers.com/b/ss/$image
 @@||metrics.nationwide.co.uk/b/ss/$image
 @@||metrics.target.com/b/ss/$image
+@@||metrics.thetrainline.com/b/ss/$image
 @@||metrics.ticketmaster.com/b/ss/$image
 @@||oms.dowjoneson.com/b/ss/$image,domain=wsj.com
 @@||scorecardresearch.com/r2?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com

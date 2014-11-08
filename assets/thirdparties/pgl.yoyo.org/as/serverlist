@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2466
+# entries:        2468
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -315,6 +315,7 @@
 127.0.0.1 adnews.maddog2000.de
 127.0.0.1 adocean.pl
 127.0.0.1 adonspot.com
+127.0.0.1 adoperator.com
 127.0.0.1 adorigin.com
 127.0.0.1 adpepper.dk
 127.0.0.1 adpepper.nl
@@ -790,6 +791,7 @@
 127.0.0.1 adserver.kyoceramita-europe.com
 127.0.0.1 adserver.libero.it
 127.0.0.1 adserver.motorpresse.de
+127.0.0.1 adserver.n9nedegrees.com
 127.0.0.1 adserver.news.com.au
 127.0.0.1 adserver.ngz-network.de
 127.0.0.1 adserver.nydailynews.com
@@ -867,7 +869,6 @@
 127.0.0.1 adtiger.de
 127.0.0.1 adtoll.com
 127.0.0.1 adtology.com
-127.0.0.1 adtology3.com
 127.0.0.1 adtoma.com
 127.0.0.1 adtrade.net
 127.0.0.1 adtrading.de
@@ -1245,6 +1246,7 @@
 127.0.0.1 clickcompare.co.uk
 127.0.0.1 clickdensity.com
 127.0.0.1 clickedyclick.com
+127.0.0.1 clickforwebmasters.com
 127.0.0.1 clickhereforcellphones.com
 127.0.0.1 clickhouse.com
 127.0.0.1 clickhype.com

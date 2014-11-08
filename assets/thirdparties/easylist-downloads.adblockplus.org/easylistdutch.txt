@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: VXZY0BUfwSLfnAEl/qhVKw
-! Version: 201411031321
+! Checksum: AGRse3SiZrd54LY/+/LMhQ
+! Version: 201411081321
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 03 Nov 2014 13:21 UTC
+! Last modified: 08 Nov 2014 13:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -144,6 +144,7 @@ _advertentieleaderboardhome.
 ||109.70.1.61/bannersystem/
 ||actiecode.nl/dynamics/modules/spub$third-party
 ||adslwinkel.nl/templates/adslwinkel/images/adslnl.gif$domain=htforum.nl
+||amz01.plzcdn.com/a/
 ||antares.fm/banners/
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
@@ -1075,6 +1076,7 @@ speeleiland.nl##.game-side-banner-wrap
 dumpert.nl##.geldbakje
 rijnmond.nl##.half_banner
 zoover.nl##.header-banner
+flexnieuws.nl##.header__banner
 onemorething.nl##.headertakeover
 pathe.nl##.homepageBanner
 voetbalzone.nl##.info-col > .block
@@ -1241,7 +1243,7 @@ koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal1
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal1_no_border
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2
 koopjes.marktplaats.nl,verkopen.marktplaats.nl#@#.ad_list_row_normal2_no_border
-drenthemobiel.nl,flevolandmobiel.nl,gelderlandmobiel.nl,gratisaftehalen.org,gratisoptehalen.org,gratistehalen.nl,groningenmobiel.nl,limburgmobiel.nl,marktplaza.nl,nederlandmobiel.nl,noord-brabantmobiel.nl,noord-hollandmobiel.nl,overijsselmobiel.nl,paginamarkt.nl,utrechtmobiel.nl,zeelandmobiel.nl,zuid-hollandmobiel.nl#@#.advertentie
+drenthemobiel.nl,flevolandmobiel.nl,gelderlandmobiel.nl,gratisaftehalen.org,gratisoptehalen.org,gratistehalen.nl,groningenmobiel.nl,limburgmobiel.nl,marktplaza.nl,moorslede.be,nederlandmobiel.nl,noord-brabantmobiel.nl,noord-hollandmobiel.nl,overijsselmobiel.nl,paginamarkt.nl,utrechtmobiel.nl,zeelandmobiel.nl,zuid-hollandmobiel.nl#@#.advertentie
 haven.nl,zeelandnet.nl#@#.advertenties
 blikopnieuws.nl,computeridee.nl#@#.reclame
 ! Uitzonderingen voor EasyList

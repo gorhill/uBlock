@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: KYw0gVCQlZl1dbpq2jcA+Q
-! Version: 201411031311
+! Checksum: NObfD/qZ9eRLwT3UmIQQhw
+! Version: 201411081321
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 03 Nov 2014 13:11 UTC
+! Ultima modifica: 08 Nov 2014 13:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -154,6 +154,7 @@ _sito/adv/
 ##.pubblicita
 ##.pubblicitaGoogle
 ##.pubblicitaSlider
+##.pubblicita_728x90
 ##.pubblicita_col1
 ##.pubblicitapremium
 ##.pubblitalocaleaddADV
@@ -173,6 +174,7 @@ _sito/adv/
 ##a[href^="http://edintorni.net/related/service/sponsor/redirect/?"]
 ##a[href^="http://tracking.crazylead.com/"]
 ##a[href^="http://www.linkwelove.it/urls/"]
+##a[href^="https://www.linkwelove.it/urls/"]
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_general_hide.txt ***
 bancavalle.it,bancodibrescia.it,bpa.it,bpb.it,bpci.it,brebanca.it,carime.it,quiubi.it,ubibancapi.it#@##ad_box
 techinfos.it#@##adblock
@@ -603,6 +605,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||autoinserzioni.it/css/images/banner_
 ||autoline-eu.it/atlads/
 ||automania.it^*-238x60-anim.gif
+||autoscout24.ch/content/startpage/
 ||autoseller.it/banner%5c
 ||autoseller.it/banner/
 ||autosottocosto.com/files/banner/
@@ -675,6 +678,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||centrosuonosport.com/images/banners/
 ||cercocamion.com/banner/
 ||cheauto.it/asset/img/prestitionline.gif
+||chiamarsibomber.com^*/img_banner/
 ||chievocalcio.tv^*/full-sponsor.png
 ||ciaocomo.it/box-assicurazioni/
 ||ciaocomo.it/images/banners/
@@ -988,6 +992,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilmessaggero.it/img/magiclandlight.gif
 ||ilmessaggero.it/img/rainbow_magicland.gif
 ||ilmessaggero.it/imgmol/
+||ilmioip.it/UPLD/BN/
 ||ilmitte.com^*/banner_
 ||ilmonferrato.it/banners/
 ||ilmonferrato.it/media/generalauto_
@@ -1039,7 +1044,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||internapoli.it/public/spot/
 ||internazionale.it/assets/img/wideskin-
 ||iobloggo.com^*/banner/
-||iovivoaroma.it/public/banners/
+||iovivoaroma.org/images/new/bg.jpg
+||iovivoaroma.org/public/banners/
 ||iphoneitalia.com.s3.amazonaws.com/skin-
 ||iphoneitalia.com^*/skin/
 ||ispazio.net^*/ispazio-skin-
@@ -1133,6 +1139,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||leggo.it/imgmol/
 ||leonardo.it/images_for_css/skin-
 ||leradio.com/ebay-
+||lettera43.it/banner_
 ||libero.it/_ad/
 ||libero.it/static/generated_external/shopping/
 ||libero.it/static/upll/234x/
@@ -1265,6 +1272,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||padovanews.it/images/banners/
 ||paeimprese.it^*/downloadfilebanner.php?
 ||palermomania.com/images/banner/
+||palermomania.it/images/banner_
 ||palermomania.it/public/banner/
 ||panorama.it^*-promobox/
 ||parmasera.it^*/img_banner/
@@ -1559,6 +1567,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||therockblog.net^*/banner-
 ||ticinofinanza.ch/banner/
 ||ticinolive.ch/files/banners/
+||ticketcrociere.gazzettadelsud.it^
 ||ticketcrociere.lagazzettadelmezzogiorno.it^
 ||ticketcrociere.lasicilia.it^
 ||tio.ch/img/2013/iframe/postfinance.jpg
@@ -1693,6 +1702,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||mammevacche.com/out?$popup
 !--------------Regole specifiche per le pubblicità da nascondere--------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_specific_hide.txt ***
+ilmioip.it###ADS
 hostingtalk.it###BannerBottom
 hostingtalk.it###BannerTop
 comingsoon.it###BnrRight1
@@ -1785,6 +1795,7 @@ si24.it###banner_branciforte
 contosulconto.it###banner_content
 tuttobasket.net###banner_head
 laprovinciadicomo.it###banner_header
+palermomania.it###banner_header2
 tuttosport.com###banner_leaderboard
 lastampa.it###banner_maxticker
 html.it###banner_piede_articolo
@@ -1989,14 +2000,15 @@ radiomanamana.it###skin-right
 cellulare-magazine.it,cellularemagazine.it###skin-top-container
 dragonballgt.it###skinClick
 omnifurgone.it,omnimoto.it###skin_link
-iovivoaroma.it###skin_link_dx
-iovivoaroma.it###skin_link_sx
+iovivoaroma.org###skin_link_dx
+iovivoaroma.org###skin_link_sx
 cronachemaceratesi.it###skinabove
 rockit.it###skinbanner
 catanzaroinforma.it,filmtv.it,ilcorrieredabruzzo.it,lazionews24.com,salernonotizie.it###skinlink
 ebay.it###skyscrape
 eurogamer.it###skyscraper
 casateonline.it,merateonline.it###sottotestata
+tgcom24.it###spaceBanner_rn_u
 primissima.it###space_banner
 mediaset.it###spalla-banner
 gazzetta.it,html.it,studionews24.com###sponsor
@@ -2112,7 +2124,7 @@ addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it#
 loradellacalabria.it##.advertise
 loradellacalabria.it##.advertise2
 internimagazine.it##.advertisement
-cubovision.it,fastweb.it,gazzetta.it##.advertising
+cubovision.it,fastweb.it,gazzetta.it,lettera43.it##.advertising
 loggiap2.com##.advs
 quotidianodigela.it##.advs-title
 filodiritto.com##.altro_box_banner_dx
@@ -2136,7 +2148,7 @@ piacenzanight.com##.back_style
 avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
-advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
@@ -2251,6 +2263,7 @@ businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilr
 businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="font-size:small;font-style:normal;font-weight:normal;margin-top:3px;margin-bottom:3px"]
 edilportale.com##.click-Skin
 tripadvisor.it##.commerce
+gazzettavvisionline.it##.cont_Leaderboard
 leccesette.it##.cont_banner
 gazzetta.it##.contain-sisal-magicup
 borsaitaliana.it##.container_banner_top
@@ -2350,6 +2363,7 @@ asca.it##.personalized_background
 rai.tv##.placeholder300x250
 gazzetta.it##.poker
 videohifi.com##.portlet-static-sponsor
+lastampa.it##.ppn
 film.it##.ppn_h
 html.it##.premium-links-container-home-ms
 ciao.it##.priceComp2
@@ -2390,7 +2404,7 @@ youreporter.it##.sidebar_menu_virgilio
 newnotizie.it##.single_sidebar300x250
 omnicorse.it##.skin
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_left
-iovivoaroma.it##.skin_link_top
+iovivoaroma.org##.skin_link_top
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_right
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_top
 soldionline.it##.sm_widget_contenitore

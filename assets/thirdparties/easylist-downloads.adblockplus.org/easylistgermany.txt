@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: VaTbpw0Tbudt+mG7adacAg
-! Version: 201411031311
+! Checksum: zao36XERCKR2TCuuQnpUig
+! Version: 201411081321
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 03 Nov 2014 13:11 UTC
+! Last modified: 08 Nov 2014 13:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -384,6 +384,7 @@ _woz_banner_vote.
 ##a[href^="http://www.top-of-software.de/"]
 ##a[href^="https://click.plista.com/pets"]
 ##a[href^="https://farm.plista.com/pets"]
+##a[href^="https://www.tipico.com/?affiliateId="]
 ##input[onclick^="window.open('http://www.firstload.de/affiliate/"]
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist_general_hide.txt ***
 ferienhaus-hagge.de#@##AdServer
@@ -1773,6 +1774,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||autoline-eu.at/atlads/
 ||autoline-eu.ch/atlads/
 ||autoline.de/atlads/
+||autoscout24.ch/content/startpage/
 ||auxilium-online.net/images/banner_
 ||awardfabrik.de/images/banners/
 ||az.com.na/img/banner/
@@ -1827,6 +1829,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||bizipic.de/images/gross.png
 ||blackbeats.fm/defshopbanner.swf
 ||blankrefer.com^$subdocument,domain=anime-loads.org
+||blaue-blume.tv^*/banner/
 ||blickpunkt-brandenburg.de/typo3conf/ext/sbbanner/
 ||blockbusters.cc/partner/
 ||blockbusters.to^$script,domain=byte.to
@@ -2034,8 +2037,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||deejayforum.de^*/ebay_logo.gif
 ||deinesms.com/landing/$third-party
 ||delamar.de/wp-content/themes/delamar_v4/iframes/
-||deluxetelevision.com/img/banner/
-||deluxetelevision.com^*/dsp_bannerrotator.php
 ||deluxetools.net/dlx_out.js
 ||deraktionaer.de/upload/Marktberichte-Aktionaer_15401.gif
 ||deraktionaer.de/xist4c/web/aktionaer/02/img/flatexBuySellBar/icons_all.png
@@ -2407,6 +2408,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||goastro.de/popup_chat/
 ||goettgen.de/g-a-s/www/images/
 ||gofeminin.de/home4/skin/*_*/home.css|
+||goldstar-tv.de^/banner/
 ||golem.de/_img/microcity.jpg
 ||golem.de^*_afc1.js
 ||golem.de^*_afc2.js
@@ -3127,6 +3129,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||rollertuningpage.de^*/skz_minibanner_
 ||rollingplanet.net/wp-content/uploads/*/BANNER-
 ||rollingplanet.net/wp-content/uploads/*/Banner_
+||romance-tv.de^*/banner/
 ||rostock.de/bilder/_werbekunden/
 ||rot-weiss-erfurt.de/marketing/img_content/images/banner_wechsel/
 ||rot-weiss-essen.de/uploads/tx_macinabanners/
@@ -3722,6 +3725,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||img1.auto-motor-und-sport.de/img/*.jpg
 ||img1.auto-motor-und-sport.de/j/$image
 ||img1.auto-motor-und-sport.de/k/$image
+||img1.auto-motor-und-sport.de^*/*.jpg
 ||ip-ads.de^$domain=rtl-now.rtl.de|rtl2now.rtl2.de
 ||kabeleins.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||media.epochtimes.de/img/
@@ -4903,6 +4907,7 @@ fremdwort.de##.RahmenRundrum[width="560"] > tbody > tr > td[colspan="2"]:first-c
 onvista.de##.SKYSCRAPER
 aol.de##.SLL
 fcbayern.telekom.de##.SectionPresenting
+charivari.de##.Skyscraper_Slot
 derstandard.at##.SponsorCFrame
 buerschgens.de##.SponsorFuss
 t-online.de##.TFlashPlayer[style="height:200px; width:300px;"]
@@ -4921,6 +4926,7 @@ t-online.de##.Tssshopst
 t-online.de##.Ttsc.Ttsh65.Tmc4a
 aol.de##.WOL
 gullipics.com##.a-zone
+winfuture.de##.a_box
 4cheaters.de##.aab-box
 blogg.de##.ab-item[tabindex="10"]
 diaware.de##.abcde_link
@@ -5476,7 +5482,7 @@ aol.de##.mnid-marketplace3-2line-ad_evergreen
 aol.de##.mnid-qnav-quick-nav-amazon_quick-nav-global
 aol.de##.mnid-qnav-quick-nav-ebay_quick-nav-global
 myvideo.de##.mobLiveHeaderLogo
-kremser-sc.at##.mod_banner
+blaue-blume.tv,goldstar-tv.de,kremser-sc.at,romance-tv.de##.mod_banner
 3dl.tv##.mod_banner_td
 braunschweiger-zeitung.de##.mod_deal
 sportal.de##.moduleArticleAnzeigeTnt
@@ -7089,6 +7095,7 @@ shoplenaro.com##body > #hoch > form[method="post"][action="http://shoplenaro.com
 shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http://shoplenaro.com/go"]
 !------------------Ausnahmeregeln zum Beheben von Problemen-------------------!
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist.txt ***
+@@/adverts.js$domain=tape.tv
 @@|http://byte.to/js/javascript.js|
 @@|http://byte.to/js/wz_tooltip.js|
 @@||0815sms.com/img/pagepeel.php?$image

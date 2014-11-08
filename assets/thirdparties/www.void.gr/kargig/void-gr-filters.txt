@@ -528,6 +528,7 @@ ad.gr.doubleclick.net
 ||koutipandoras.gr/sites/default/files/*banner*.swf
 ||enikos.gr/data/photos/e28a0cdc2d54f49d2a697d9fe83066d7.gif
 ||in.gr/Themes/1/Default/Media/logo-bp-ingr-95x20.gif
+||luben.tv/wp-content/uploads/2014/11/output_cVZG2g.gif
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 3XoaV14lUVHU/9M2QFwf0A
-! Version: 201411031320
-! Last modified: 03 Nov 2014 13:20 UTC
+! Checksum: xQctiYzg6q7y6wtMsCUb2A
+! Version: 201411081320
+! Last modified: 08 Nov 2014 13:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -1001,7 +1001,6 @@ _tizers.
 ||grifiins.ru^
 ||grt01.com^
 ||grt02.com^
-||gsmonitor.ru^
 ||gzonline.ru//upload/iblock/
 ||hata.nikolaev.ua^$third-party
 ||hd-tube.ru^$third-party
@@ -1972,6 +1971,7 @@ _tizers.
 ||baryekhi.ru^
 ||basttabillie65.uk.to^
 ||bathroom-schoolr.biz^
+||bbtyup.com^
 ||beatwaretranscribing.in^
 ||beeblebroks.ru^
 ||beriche.ru^
@@ -2031,6 +2031,7 @@ _tizers.
 ||clierets.com^
 ||clievise.com^
 ||clkmon.com^$third-party
+||cllckdomain.com^
 ||clme.biz^
 ||clme.net^
 ||clo.lv^
@@ -2525,6 +2526,7 @@ _tizers.
 ||piroji.com^
 ||plomihy.com^
 ||plus-2launch.biz^
+||pointrtb.com^
 ||pokitom.com^
 ||polimadv.com^
 ||pomtiy.com^
@@ -2825,6 +2827,7 @@ _tizers.
 ||wregf.biz^
 ||wts-rotator.com^$~popup,popup
 ||www.rt-ns.ru^
+||x-ip-adv.com^
 ||xaogi.com^
 ||xfnvb.biz^
 ||xiss.ru^
@@ -2940,7 +2943,7 @@ _vodkov.net
 !
 ! TeaserNET.com
 !#teasernet.generic
-||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|best-xxx.net|bestcamsxxx.com|bestrepack.net|bigtorrent.org|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|fotooplata.ru|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|pics-money.ru|politland.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
+||com/s/$script,subdocument,domain=24warez.ru|artero.ru|babestar.ru|best-xxx.net|bestcamsxxx.com|bestrepack.net|bigtorrent.org|bookitut.ru|demotivators.to|drochunov.net|eroox.ru|exoticvideo.net|fotooplata.ru|free-torrents.org|freebie.net.ua|huyandex.com|i-pic.ru|iarex.ru|kino-zal.kz|kinohost.nov.ru|kinoonlain.org|kritka.net|leporno.org|leporno.ws|mnogohlama.ru|ontracker.ru|palevo.com|pic4you.ru|pic5you.ru|pics-money.ru|politland.ru|porno-gid.info|porno-torrent.biz|porno-torrents.ru|pornoboss.tv|pornoero.com|pornomage.net|pornorun.com|pornovizion.com|prisnilos.su|privsex.ru|promotevid.ru|raketa-tv.com|rosporn.com|ru-admin.net|suero.tv|uptube.su|uvideos.ru|v-chulkahh.ru|video-magnet.com|vodkov.net|vodvore.net|vserisunki.ru|vzale.tv|x-zona.org|xxlbunny.com|xxx-russian.ru|xyu.tv
 !#teasernet.other
 ||a.suero.tv^
 ||a.xyu.tv^
@@ -3052,6 +3055,7 @@ allmoldova.com##.banner_main
 online.anidub.com##.bgb
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
 livejournal.com##.brand
+4pda.ru##.brand-mobile
 4pda.ru##.brand-page
 101.ru,tfilm.tv##.branding
 zaycev.net##.branding-link
@@ -3149,6 +3153,7 @@ chesalka.com##a[rel="nofollow"] > img[src^="/"]
 allesuper.ru##a[target="_blank"][href^="/go?"] > img[src^="/uploads/"]
 magtimes.info##aside img[src^="http://magtimes.info/wp-content/uploads/"]
 riotpixels.com##body > a
+4pda.ru##body > a[href*="/www/delivery/"]
 hdkinoklub.ru##body > a[target="_blank"]
 zakon.kz##body > div[onclick^="window.open"]
 programmersforum.ru##body > form + br + center
@@ -4527,9 +4532,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||3mp3.ru/dhtml/adv.
 ||3mv.ru/oboi
 ||4allforum.com/banner/
-||4pda.to/css/brandpage/
-||4pda.to/forum/style_images/dl/*_$image
-||4pda.to/img/brand/
+||4pda.to/css/*/$stylesheet
 ||5ka.ru/js/banners.
 ||5ka.ru/jscr/
 ||5terka.com^*/img/bg
