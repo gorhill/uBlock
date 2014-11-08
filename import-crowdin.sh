@@ -19,6 +19,7 @@ cp ~/Downloads/crowdin/hu/messages.json    ./_locales/hu/messages.json
 cp ~/Downloads/crowdin/id/messages.json    ./_locales/id/messages.json
 cp ~/Downloads/crowdin/it/messages.json    ./_locales/it/messages.json
 cp ~/Downloads/crowdin/ja/messages.json    ./_locales/ja/messages.json
+cp ~/Downloads/crowdin/mr/messages.json    ./_locales/mr/messages.json
 cp ~/Downloads/crowdin/no/messages.json    ./_locales/nb/messages.json
 cp ~/Downloads/crowdin/nl/messages.json    ./_locales/nl/messages.json
 cp ~/Downloads/crowdin/pl/messages.json    ./_locales/pl/messages.json

@@ -279,32 +279,32 @@
     "message":"सहभागी",
     "description":"English: Contributors"
   },
-  "aboutBackupDataButton" : {
-    "message": "फाइल वर बॅकअप करा...",
-    "description": "English: Backup to file..."
+  "aboutBackupDataButton":{
+    "message":"फाइल वर बॅकअप करा...",
+    "description":"English: Backup to file..."
   },
-  "aboutRestoreDataButton" : {
-    "message": "फाइल पासून पुनर्संचयित करा...",
-    "description": "English: Restore from file..."
+  "aboutRestoreDataButton":{
+    "message":"फाइल पासून पुनर्संचयित करा...",
+    "description":"English: Restore from file..."
   },
-  "aboutResetDataButton" : {
-    "message": "मुळापासून सुरू करा...",
-    "description": "English: Start from scratch..."
+  "aboutResetDataButton":{
+    "message":"मुळापासून सुरू करा...",
+    "description":"English: Start from scratch..."
   },
-  "aboutRestoreDataConfirm" : {
-    "message": "आपले सर्व सेटिंग्ज ना खोडून {{time}} चा बॅकअप डेटा वापरला जाईल, आणि म्यूब्लॉक रीस्टार्ट होईल.\n\nसर्व विद्यमान सेटिंग्ज ना खोडून बॅकअप डेटा वापरावे का?",
-    "description": "Message asking user to confirm restore"
+  "aboutRestoreDataConfirm":{
+    "message":"आपले सर्व सेटिंग्ज ना खोडून {{time}} चा बॅकअप डेटा वापरला जाईल, आणि म्यूब्लॉक रीस्टार्ट होईल.\n\nसर्व विद्यमान सेटिंग्ज ना खोडून बॅकअप डेटा वापरावे का?",
+    "description":"Message asking user to confirm restore"
   },
-  "aboutResetDataConfirm" : {
-    "message": "आपले सर्व सेटिंग्ज पुसले जातील, आणि म्यूब्लॉक रीस्टार्ट होईल .\n\nम्यूब्लॉक ला फॉक्टोरी सेटिंग्ज ला रीसेट करावे का?",
-    "description": "Message asking user to confirm restore"
+  "aboutResetDataConfirm":{
+    "message":"आपले सर्व सेटिंग्ज पुसले जातील, आणि म्यूब्लॉक रीस्टार्ट होईल .\n\nम्यूब्लॉक ला फॉक्टोरी सेटिंग्ज ला रीसेट करावे का?",
+    "description":"Message asking user to confirm restore"
   },
   "errorCantConnectTo":{
     "message":"{{url}} ला कनेक्ट करण्यात अक्षम",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"हे नोंद अंतिम असले पाहिजे",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }
