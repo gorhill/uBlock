@@ -3,5 +3,5 @@
 # This script assumes a linux environment
 
 echo "*** uBlock: Cleaning."
-rm -R ../dist/ublock/*
+rm -R dist/ublock/*
 echo "*** uBlock: Cleaned."

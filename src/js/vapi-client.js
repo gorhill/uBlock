@@ -1,3 +1,4 @@
+// » header
 /* global addMessageListener, removeMessageListener, sendAsyncMessage */
 // for non background pages
 
@@ -51,8 +52,10 @@ var messagingConnector = function(response) {
 var uniqueId = function() {
     return parseInt(Math.random() * 1e10, 10).toString(36);
 };
+// «
 
 if (self.chrome) {
+    // » crx
     vAPI.chrome = true;
     vAPI.messaging = {
         port: null,
@@ -60,15 +63,14 @@ if (self.chrome) {
         listeners: {},
         requestId: 0,
         connectorId: uniqueId(),
-        connector: messagingConnector,
         setup: function() {
             this.port = chrome.runtime.connect({name: this.connectorId});
-            this.port.onMessage.addListener(this.connector);
+            this.port.onMessage.addListener(messagingConnector);
         },
         close: function() {
             if (this.port) {
                 this.port.disconnect();
-                this.port.onMessage.removeListener(this.connector);
+                this.port.onMessage.removeListener(messagingConnector);
                 this.port = this.channels = this.listeners = this.connectorId = null;
             }
         },
@@ -105,7 +107,9 @@ if (self.chrome) {
             return this.channels[channelName];
         }
     };
+    // «
 } else if (self.safari) {
+    // » safariextz
     vAPI.safari = true;
 
     // relevant?
@@ -115,7 +119,6 @@ if (self.chrome) {
         listeners: {},
         requestId: 0,
         connectorId: uniqueId(),
-        connector: messagingConnector,
         setup: function() {
             this._connector = function(msg) {
                 // messages from the background script are sent to every frame,
@@ -123,7 +126,7 @@ if (self.chrome) {
                 // what is meant for the current context
                 if (msg.name === vAPI.messaging.connectorId
                     || msg.name === 'broadcast') {
-                    vAPI.messaging.connector(msg.message);
+                    messagingConnector(msg.message);
                 }
             };
             safari.self.addEventListener('message', this._connector, false);
@@ -174,7 +177,7 @@ if (self.chrome) {
                                 target: {
                                     page: {
                                         dispatchMessage: function(name, msg) {
-                                            vAPI.messaging.connector(msg);
+                                            messagingConnector(msg);
                                         }
                                     }
                                 }
@@ -371,6 +374,8 @@ if (self.chrome) {
         url: window.location.href,
         type: 'main_frame'
     });
+    // «
 }
-
+// » footer
 })();
+// «

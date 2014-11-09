@@ -58,10 +58,6 @@ exports.restart = function() {
     if (vAPI.chrome) {
         chrome.runtime.reload();
     }
-
-    // TODO? for cross-browser solution:
-    // window.location.reload();
-    // plus close all extension tabs
 };
 
 /******************************************************************************/

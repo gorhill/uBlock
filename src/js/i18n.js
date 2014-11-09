@@ -28,10 +28,10 @@
 
 uDom.onLoad(function() {
     uDom('[data-i18n]').forEach(function(elem) {
-        elem.html(vAPI.i18n.getMessage(elem.attr('data-i18n')));
+        elem.html(vAPI.i18n(elem.attr('data-i18n')));
     });
     uDom('[title]').forEach(function(elem) {
-        var title = vAPI.i18n.getMessage(elem.attr('title'));
+        var title = vAPI.i18n(elem.attr('title'));
         if ( title ) {
             elem.attr('title', title);
         }
@@ -39,7 +39,7 @@ uDom.onLoad(function() {
     uDom('[data-i18n-tip]').forEach(function(elem) {
         elem.attr(
             'data-tip',
-            vAPI.i18n.getMessage(elem.attr('data-i18n-tip')).replace(/<br>/g, '')
+            vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '')
         );
     });
 });

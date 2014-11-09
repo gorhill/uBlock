@@ -1,10 +1,10 @@
 {
 	"name": "µBlock",
-	"clean_name": "ublock",
+	"clean_name": "uBlock",
 	"url": "https://github.com/gorhill/uBlock",
 	"author": "Raymond Hill",
 	"author_email": "rhill@raymondhill.net",
-	"version": "0.7.0.9",
+	"version": "0.7.0.10",
 	"def_lang": "en",
 	"vendors": {
 		"crx": {
@@ -12,7 +12,7 @@
 			"manifest": "manifest.json",
 			"locales": "_locales",
 			"file_ext": ".crx",
-			"cert_key": "../meta/crx/key.pem"
+			"private_key": "./meta/crx/key.pem"
 		},
 		"safariextz": {
 			"app_id": "net.gorhill.uBlock",
@@ -22,8 +22,8 @@
 			},
 			"file_ext": ".safariextz",
 			"developer_identifier": "",
-			"cert_dir": "../meta/safariextz/certs/",
-			"cert_key": "../meta/safariextz/certs/key.pem"
+			"cert_dir": "./meta/safariextz/certs/",
+			"private_key": "./meta/safariextz/key.pem"
 		}
 	}
 }

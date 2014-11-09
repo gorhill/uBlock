@@ -8,7 +8,7 @@ div > p:last-child {
     font-size: smaller;
     width: 48em;
     height: 40em;
-    white-space: nowrap;
+    white-space: pre;
 	text-align: left;
     }
 #whitelist.bad {

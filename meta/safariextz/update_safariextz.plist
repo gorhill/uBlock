@@ -14,7 +14,7 @@
 				<key>CFBundleVersion</key>
 				<string>{build_number}</string>
 				<key>URL</key>
-				<string>{url}{name}.safariextz</string>
+				<string>{url}/{name}.safariextz</string>
 			</dict>
 		</array>
 	</dict>

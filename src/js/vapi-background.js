@@ -1,3 +1,4 @@
+// » header
 /* global SafariBrowserTab, Services, XPCOMUtils */
 // for background page only
 
@@ -5,8 +6,10 @@
 'use strict';
 
 self.vAPI = self.vAPI || {};
+// «
 
 if (self.chrome) {
+    // » crx
     var chrome = self.chrome;
 
     vAPI.chrome = true;
@@ -272,7 +275,9 @@ if (self.chrome) {
             chrome.contextMenus.remove(this.menuId);
         }
     };
+    // «
 } else if (self.safari) {
+    // » safariextz
     vAPI.safari = true;
 
     // addContentScriptFromURL allows whitelisting,
@@ -888,9 +893,13 @@ if (self.chrome) {
             this.onContextMenuCommand = null;
         }
     };
+    // «
 }
+
+// » footer
 
 if (!self.chrome) {
     self.chrome = { runtime: { lastError: null } };
 }
 })();
+// «

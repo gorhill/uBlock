@@ -1,3 +1,4 @@
+// » header
 // could be used for background and other extension pages
 
 (function() {
@@ -37,8 +38,10 @@ vAPI.download = function(details) {
         messager.close();
     }
 };
+// «
 
 if (self.chrome) {
+    // » crx
     var chrome = self.chrome;
 
     vAPI.getURL = function(path) {
@@ -50,7 +53,9 @@ if (self.chrome) {
     };
 
     setScriptDirection(vAPI.i18n('@@ui_locale'));
+    // «
 } else if (self.safari) {
+    // » safariextz
     vAPI.getURL = function(path) {
         return safari.extension.baseURI + path;
     };
@@ -119,6 +124,8 @@ if (self.chrome) {
             }
         });
     }
+    // «
 }
-
+// » footer
 })();
+// «
