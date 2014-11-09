@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
 /* exported uDom */
 'use strict';
 
@@ -39,18 +37,6 @@ var uDom = (function() {
 var DOMList = function() {
     this.nodes = [];
 };
-
-/******************************************************************************/
-
-Object.defineProperty(
-    DOMList.prototype,
-    'length',
-    {
-        get: function() {
-            return this.nodes.length;
-        }
-    }
-);
 
 /******************************************************************************/
 
