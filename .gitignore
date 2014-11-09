@@ -1,0 +1,6 @@
+*.bak
+*.pem
+*.safariextension/
+/meta/safariextz/certs/
+/dist/build/
+/tmp/
