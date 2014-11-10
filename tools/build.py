@@ -236,7 +236,13 @@ else:
 if not iscmd('xar'):
     print('Cannot build for Safari: `xar` command not found.')
 elif osp.exists(vendors['safariextz']['cert_dir']):
-    vendor_files = ['_locales', 'Info.plist', 'Settings.plist', pj('js', 'sitepatch-safari.js')]
+    vendor_files = [
+        '_locales',
+        'locales.json',
+        'Info.plist',
+        'Settings.plist',
+        pj('js', 'sitepatch-safari.js')
+    ]
 
     move_vendor_specific_js('safariextz')
     copy_vendor_files(vendor_files)
