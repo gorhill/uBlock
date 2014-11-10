@@ -40,6 +40,18 @@ var DOMList = function() {
 
 /******************************************************************************/
 
+Object.defineProperty(
+    DOMList.prototype,
+    'length',
+    {
+        get: function() {
+            return this.nodes.length;
+        }
+    }
+);
+
+/******************************************************************************/
+
 var DOMListFactory = function(selector, context) {
     var r = new DOMList();
     if ( typeof selector === 'string' ) {
@@ -192,12 +204,6 @@ var doesMatchSelector = function(node, selector) {
     }
     parentNode.removeAttribute('uDom-32kXc6xEZA7o73AMB8vLbLct1RZOkeoO');
     return doesMatch;
-};
-
-/******************************************************************************/
-
-DOMList.prototype.length = function() {
-    return this.nodes.length;
 };
 
 /******************************************************************************/
