@@ -317,8 +317,8 @@ if (self.chrome) {
             "open = function(u) {",
                 "return block(u, 'popup') ? null : wo.apply(this, [].slice.call(arguments));",
             "};",
-            "XMLHttpRequest.prototype.open = function(m, u) {",
-                "return block(u, 'xmlhttprequest') ? null : xo.apply(this, [].slice.call(arguments));",
+            "XMLHttpRequest.prototype.open = function(m, u, s) {",
+                "return xo.apply(this, block(u, 'xmlhttprequest') ? ['HEAD', u, s] : [].slice.call(arguments));",
             "};"
         ];
 
