@@ -282,8 +282,19 @@ if (self.chrome) {
             e.preventDefault();
             details = document.createElement('script');
             details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
-            e.target.parentNode.insertBefore(details, e.target);
-            details.parentNode.removeChild(details);
+
+            if (e.target.hasAttribute('defer') && document.readyState === 'loading') {
+                var jsOnLoad = function(ev) {
+                    this.removeEventListener(ev.type, jsOnLoad, true);
+                    this.body.removeChild(this.body.appendChild(details));
+                };
+
+                document.addEventListener('DOMContentLoaded', jsOnLoad, true);
+            }
+            else {
+                e.target.parentNode.insertBefore(details, e.target);
+                details.parentNode.removeChild(details);
+            }
         }
     };
 
