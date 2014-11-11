@@ -30,7 +30,7 @@
 
 if (vAPI.safari) {
     if (!/^https?:/.test(location.protocol)) {
-        throw "uBlock> contentscript-end.js > Skipping page: " + location.protocol + location.host;
+        throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
     }
 }
 
@@ -416,21 +416,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // - there is at least one `script` tag
     if ( !document.body || !document.querySelector('script') ) {
         return;
-    }
-
-    if (!window.MutationObserver) {
-        window.MutationObserver = window.WebKitMutationObserver || window.MozMutationObserver;
-
-        // dummy shim for older browsers
-        if (!window.MutationObserver) {
-            window.MutationObserver = function(handler) {
-                this.observe = function(target) {
-                    target.addEventListener('DOMNodeInserted', function(e) {
-                        handler([{addedNodes: [e.target]}]);
-                    }, true);
-                };
-            }
-        }
     }
 
     var ignoreTags = {

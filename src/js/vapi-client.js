@@ -197,6 +197,20 @@ if (self.chrome) {
         return;
     }
 
+    window.MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+    if (!window.MutationObserver) {
+        // dummy, minimalistic shim for older versions (<6)
+        // only supports node insertions, but currently we don't use it for anything else
+        window.MutationObserver = function(handler) {
+            this.observe = function(target) {
+                target.addEventListener('DOMNodeInserted', function(e) {
+                    handler([{addedNodes: [e.target]}]);
+                }, true);
+            };
+        }
+    }
+
     var beforeLoadEvent = document.createEvent('Event');
     beforeLoadEvent.initEvent('beforeload');
 
