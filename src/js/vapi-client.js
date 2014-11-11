@@ -65,7 +65,7 @@ if (self.chrome) {
             if (this.port) {
                 this.port.disconnect();
                 this.port.onMessage.removeListener(messagingConnector);
-                this.port = this.channels = this.listeners = this.connectorId = null;
+                this.port = this.channels = this.listeners = null;
             }
         },
         channel: function(channelName, callback) {
@@ -114,7 +114,7 @@ if (self.chrome) {
         requestId: 0,
         connectorId: uniqueId(),
         setup: function() {
-            this._connector = function(msg) {
+            this.connector = function(msg) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the connectorId to accept only
                 // what is meant for the current context
@@ -123,7 +123,7 @@ if (self.chrome) {
                     messagingConnector(msg.message);
                 }
             };
-            safari.self.addEventListener('message', this._connector, false);
+            safari.self.addEventListener('message', this.connector, false);
 
             this.channels['vAPI'] = {
                 listener: function(msg) {
@@ -134,9 +134,9 @@ if (self.chrome) {
             };
         },
         close: function() {
-            if (this._connector) {
-                safari.self.removeEventListener('message', this._connector, false);
-                this.channels = this.listeners = null;
+            if (this.connector) {
+                safari.self.removeEventListener('message', this.connector, false);
+                this.connector = this.channels = this.listeners = null;
             }
         },
         channel: function(channelName, callback) {
@@ -148,7 +148,7 @@ if (self.chrome) {
                 portName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
-                    if (!vAPI.messaging._connector) {
+                    if (!vAPI.messaging.connector) {
                         vAPI.messaging.setup();
                     }
 
@@ -178,7 +178,10 @@ if (self.chrome) {
                             });
                     }
                     else {
-                        safari.self.tab.dispatchMessage(vAPI.messaging.connectorId, message);
+                        safari.self.tab.dispatchMessage(
+                            vAPI.messaging.connectorId,
+                            message
+                        );
                     }
                 },
                 close: function() {
@@ -197,6 +200,7 @@ if (self.chrome) {
     var beforeLoadEvent = document.createEvent('Event');
     beforeLoadEvent.initEvent('beforeload');
 
+    var frameId = window === window.top ? 0 : Date.now() % 1E5;
     var linkHelper = document.createElement('a');
     var onBeforeLoad = function(e, details) {
         if (e.url && e.url.slice(0, 5) === 'data:') {
@@ -256,8 +260,8 @@ if (self.chrome) {
 
         // tabId is determined in the background script
         // details.tabId = null;
-        details.frameId = 0;
-        details.parentFrameId = window === window.top ? -1 : 0;
+        details.frameId = frameId;
+        details.parentFrameId = frameId ? 0 : -1;
         details.timeStamp = Date.now();
 
         var response = safari.self.tab.canLoad(e, details);
@@ -265,11 +269,11 @@ if (self.chrome) {
         if (!response) {
             if (details.type === 'main_frame') {
                 window.stop();
-                throw new Error;
             }
             else {
                 e.preventDefault();
             }
+
             return false;
         }
         // local mirroring, response is a data: URL here
@@ -333,8 +337,8 @@ if (self.chrome) {
     var onContextMenu = function(e) {
         var details = {
             tagName: e.target.tagName.toLowerCase(),
-            pageUrl: window.location.href,
-            insideFrame: window.top !== window
+            pageUrl: location.href,
+            insideFrame: window !== window.top
         };
 
         details.editable = details.tagName === 'textarea' || details.tagName === 'input';
@@ -364,10 +368,12 @@ if (self.chrome) {
     self.addEventListener('contextmenu', onContextMenu, true);
 
     // 'main_frame' simulation
-    onBeforeLoad(beforeLoadEvent, {
-        url: window.location.href,
-        type: 'main_frame'
-    });
+    if (frameId === 0) {
+        onBeforeLoad(beforeLoadEvent, {
+            url: location.href,
+            type: 'main_frame'
+        });
+    }
     // «
 }
 // » footer

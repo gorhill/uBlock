@@ -675,7 +675,7 @@ if (self.chrome) {
 
             this.connector = function(request) {
                 var callback = function(response) {
-                    if (request.message.requestId && response !== undefined) {
+                    if (response !== undefined) {
                         request.target.page.dispatchMessage(
                             request.name,
                             {

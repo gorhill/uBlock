@@ -28,9 +28,10 @@
 
 /******************************************************************************/
 
-// because Safari
-if (location.protocol !== "http:" && location.protocol !== "https:") {
-    throw "uBlock> contentscript-end.js > Skipping page... " + location.protocol + location.host;
+if (vAPI.safari) {
+    if (!/^https?:/.test(location.protocol)) {
+        throw "uBlock> contentscript-end.js > Skipping page: " + location.protocol + location.host;
+    }
 }
 
 /******************************************************************************/
