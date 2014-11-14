@@ -1,0 +1,170 @@
+# Needed to unbreak sites affected by out of the box lists
+
+# https://github.com/gorhill/uBlock/issues/20
+# => blocking counterpart in Peter Lowe's Ad Server
+@@||www.google-analytics.com/ga.js^$domain=xda-developers.com
+
+# https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate#barfin-bob-chrome-store-24-june-2014
+# => blocking counterpart in EasyPrivacy
+@@||media.star-telegram.com/mistats/sites/dfw/startelegram.js^$domain=star-telegram.com
+
+# https://github.com/gorhill/uBlock/issues/17
+# => blocking counterpart in hpHosts Ad Server: `l.yimg.com`
+@@||l.yimg.com^$stylesheet,domain=yahoo.com
+
+# https://github.com/gorhill/uBlock/issues/17
+# => blocking counterpart in hpHosts Ad Server: `use.typekit.net`
+@@||use.typekit.net^
+
+# To fix tweetdeck
+# => blocking counterpart in EasyPrivacy & Fanboy Annoyance: `||twitter.com/i/jot`
+@@||twitter.com/i/jot^$domain=tweetdeck.twitter.com
+
+# Zerohedge: ref: http://forums.lanik.us/viewtopic.php?f=62&t=17307
+www.zerohedge.com##.similar-box
+
+# https://github.com/gorhill/uBlock/issues/57
+# https://github.com/gorhill/uBlock/issues/98
+# New filter class: entity filters, where
+# entity = domain minus public suffix
+# The following filters were taken out of EasyList and given an entity name,
+# which makes them candidates to be injected early in the page.
+# Last updated: 2014-11-14
+google.*###center_col > #resultStats + #tads
+google.*###center_col > #resultStats + #tads + #res + #tads
+google.*###center_col > #resultStats + div + #res + #tads
+google.*###center_col > #resultStats + div[style="border:1px solid #dedede;margin-bottom:11px;padding:5px 7px 5px 6px"]
+google.*###center_col > #taw > #tvcap > .rscontainer
+google.*###center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"]
+google.*###cnt #center_col > #res > #topstuff > .ts
+google.*###main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"]
+google.*###mbEnd[cellspacing="0"][cellpadding="0"]
+google.*###mclip_container:last-child
+google.*###mn #center_col > div > h2.spon:first-child
+google.*###mn #center_col > div > h2.spon:first-child + ol:last-child
+google.*###resultspanel > #topads
+google.*###rhs_block > #mbEnd
+google.*###rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"]
+google.*###rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"]
+google.*###ssmiwdiv[jsdisplay]
+google.*###tads + div + .c
+google.*###tads.c
+google.*###tadsb.c
+google.*###tadsto.c
+google.*###topstuff > #tads
+google.*##.GB3L-QEDGY .GB3L-QEDF- > .GB3L-QEDE-
+google.*##.GFYY1SVD2 > .GFYY1SVC2 > .GFYY1SVF5
+google.*##.GFYY1SVE2 > .GFYY1SVD2 > .GFYY1SVG5
+google.*##.GHOFUQ5BG2 > .GHOFUQ5BF2 > .GHOFUQ5BG5
+google.*##.GJJKPX2N1 > .GJJKPX2M1 > .GJJKPX2P4
+google.*##.GKJYXHBF2 > .GKJYXHBE2 > .GKJYXHBH5
+google.*##.GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB
+google.*##.ch[onclick="ga(this,event)"]
+google.*##.commercial-unit-desktop-rhs
+google.*##.commercial-unit-desktop-top
+google.*##.lads[width="100%"][style="background:#FFF8DD"]
+google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
+google.*##.mw > #rcnt > #center_col > #taw > .c
+google.*##.ra[align="left"][width="30%"]
+google.*##.ra[align="right"][width="30%"]
+google.*##.ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"]
+google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"]
+
+# For when javascript is disabled
+google.*###center_col > #tads
+
+# https://github.com/gorhill/uBlock/issues/63
+@@||adf.ly^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/69
+@@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
+
+# https://github.com/gorhill/uBlock/issues/85
+||playhd.eu^$popup
+
+# https://github.com/gorhill/uBlock/issues/109#issuecomment-50298618
+# To counter `opf.ooyala.com` in hpHosts
+@@||opf.ooyala.com^
+
+# https://github.com/gorhill/uBlock/issues/119
+# To counter `google-analytics.com` in Peter Lowe's list
+@@||google-analytics.com^$domain=avianca.com
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-50770224
+# To counter `c.brightcove.com` in hpHosts
+@@||c.brightcove.com^
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-50818163
+# To counter `s.imwx.com` in hpHosts
+@@||s.imwx.com^
+
+# https://github.com/gorhill/uBlock/issues/141
+# To counter `tags.tiqcdn.com` in  MVPS
+@@||tags.tiqcdn.com^$domain=cnet.com
+
+# https://github.com/gorhill/uBlock/issues/17#issuecomment-51625306
+# To counter `extras.mnginteractive.com` in hpHosts
+@@||extras.mnginteractive.com^$domain=mercurynews.com|denverpost.com|twincities.com
+
+# http://forums.lanik.us/viewtopic.php?f=64&t=17842&sid=46bd7065193153fe46efe816b7cd32c9&start=30#p59663
+# To counter `statcounter.com` in Peter Lowe's, MVPS, Dan Pollock's and hpHosts
+@@||statcounter.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/166
+# To counter `liverail.com` in Peter Lowe's, MVPS, and hpHosts
+@@||cdn-static.liverail.com^$object-subrequest
+
+# cnet.com needs this for video players
+# https://github.com/gorhill/uBlock/issues/227
+# To counter `2mdn.net` in Peter Lowe's
+# To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
+@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com
+
+# https://github.com/gorhill/uBlock/issues/243
+# To counter `cdn-i.dmdentertainment.com` in hpHosts
+@@||cdn-i.dmdentertainment.com^$domain=cracked.com
+
+# EasyList/EasyPrivacy fixes
+
+# To counter `/b/ss/*&aqe=` and `||scorecardresearch.com^$third-party` in
+# EasyPrivacy: "cant click on next picture on this adreess ... "
+# "... http://www.expansion.com/albumes/2014/10/30/casa_bruce_willis_bedford/index.html?cid=SIN8901"
+@@||b.scorecardresearch.com^$domain=www.expansion.com
+@@||metrics.el-mundo.net^$domain=www.expansion.com
+
+# To counter `http://utm.` in EasyPrivacy
+@@||utm.aliexpress.com/*/recommendEntry.do$~third-party
+
+# https://twitter.com/ethanveres/status/527122036649639936
+# Fortunately, further connections to `mxpnl.com` are blocked
+@@||cdn.vurb.com/*/mixpanel.
+
+# https://adblockplus.org/forum/viewtopic.php?f=2&t=25772
+@@||target.122.2o7.net^$domain=target.com
+
+# To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
+@@||adm.fwmrm.net^$domain=go.com
+
+# https://github.com/gorhill/uBlock/issues/274
+# To counter `mopub.com` in Peter Lowe's
+@@||mopub.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/293
+# To counter `safelinking.net` in hpHosts
+@@||safelinking.net^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/302
+# To counter `outbrain.com` in hpHosts
+@@||outbrain.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/316
+# To counter `inc.com` in Peter Lowe's, hpHosts
+@@||inc.com^$~third-party
+
+# Chrome store feedback
+# To counter Peter Lowe's `intergi.com`
+@@||intergi.com^$domain=tvgolo.com
+
+# https://github.com/gorhill/uBlock/issues/336
+# To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
+@@||flurry.com^$~third-party
