@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>µBlock — Ubiquitous rules</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/3p-filters.css">
+</head>
+
+<body>
+
+<button id="buttonApply" class="custom reloadAll disabled" data-i18n="3pApplyChanges"></button>
+<ul id="options">
+    <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>
+        <button class="custom reloadAll disabled" id="buttonUpdate" data-i18n="3pUpdateNow"></button>
+        <button id="buttonPurgeAll" class="custom disabled" data-i18n="3pPurgeAll"></button>
+    <li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label>
+    <button class="whatisthis"></button>
+    <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
+    <li><p id="listsOfBlockedHostsPrompt"></p>
+</ul>
+<ul id="lists">
+</ul>
+
+<div id="externalListsDiv">
+<p data-i18n="3pExternalListsHint" style="margin: 0 0 0.25em 0; font-size: 13px;"></p>
+<textarea id="externalLists" dir="ltr" spellcheck="false"></textarea>
+<p style="margin: 0.25em 0 0 0"><button id="externalListsApply" disabled="true" data-i18n="3pExternalListsApply"></button></p>
+</div>
+
+<div id="busyOverlay"></div>
+
+<script src="lib/publicsuffixlist.min.js"></script>
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/uritools.js"></script>
+<script src="js/dashboard-common.js"></script>
+<script src="js/3p-filters.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+.fa {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    }
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
+[data-tip] {
+    cursor: pointer;
+    position: relative;
+    }
+[data-tip]:hover:after {
+    background-color: #ffffee;
+    border: 1px solid gray;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px gray;
+    color: black;
+    content: attr(data-tip);
+    font: 11px sans-serif;
+    left: 0;
+    line-height: 130%;
+    min-width: 55%;
+    padding: 4px 6px;
+    position: absolute;
+    text-align: left;
+    top: 110%;
+    white-space: pre-line;
+    z-index: 20;
+    animation: tooltip 0.8s;
+    -webkit-animation: tooltip 0.8s;
+    }
+body[dir=rtl] [data-tip]:hover:after {
+    text-align: right;
+    }
+
+[data-tip][data-tip-anchor="top"]:hover:after {
+    bottom: 105%;
+    top: auto;
+    left: auto;
+    right: -10%;
+    }
+
+body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
+    left: -10%;
+    right: auto;
+    }
+
+@keyframes tooltip {
+      0% { opacity: 0; }
+     85% { opacity: 0; }
+    100% { opacity: 1; }
+    }
+@-webkit-keyframes tooltip {
+      0% { opacity: 0; }
+     85% { opacity: 0; }
+    100% { opacity: 1; }
+    }
+
+.hiddenFileInput {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    }

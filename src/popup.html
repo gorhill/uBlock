@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/common.css" type="text/css">
+<link rel="stylesheet" href="css/popup.css" type="text/css">
+<title>µBlock</title>
+</head>
+
+<body>
+<h4 title="popupTipDashboard">v<span id="version"></span></h4>
+<div>
+<p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
+<p id="switch-hint"></p>
+<p style="font-size: 16px;" data-i18n="popupBlockedRequestPrompt"></p>
+<p id="stats">
+    <span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;
+    <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
+    <span id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</span>
+    </p>
+<p id="page-blocked">?</p>
+<p id="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
+<p id="total-blocked">?</p>
+</div>
+
+<div id="dynamicFilteringToggler" class="fa on">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering" target="_blank">?</a>
+</div>
+
+<div id="dynamicFilteringContainer">
+<div class="dynamicFiltering local" data-scope=".">
+    <div data-first-party data-type="inline-script"></div>
+    <div data-first-party data-type="script"></div>
+    <div data-type="script"></div>
+    <div data-first-party data-type="sub_frame"></div>
+    <div data-type="sub_frame"></div>
+    <div class="label">&lt;script&gt;</div>
+    <div class="label">&lt;iframe&gt;</div>
+</div>
+<div class="dynamicFiltering global" data-scope="/">
+    <div data-first-party data-type="inline-script"></div>
+    <div data-first-party data-type="script"></div>
+    <div data-type="script"></div>
+    <div data-first-party data-type="sub_frame"></div>
+    <div data-type="sub_frame"></div>
+    <div class="label">&lt;script&gt;</div>
+    <div class="label">&lt;iframe&gt;</div>
+</div>
+</div>
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/vapi-appinfo.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/popup.js"></script>
+
+</body>
+
+</html>
