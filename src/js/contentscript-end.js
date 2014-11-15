@@ -28,10 +28,8 @@
 
 /******************************************************************************/
 
-if (vAPI.safari) {
-    if (!/^https?:/.test(location.protocol)) {
-        throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
-    }
+if ( vAPI.canExecuteContentScript() !== true ) {
+    throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
 }
 
 /******************************************************************************/

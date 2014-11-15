@@ -20,6 +20,7 @@
 */
 
 /* global µBlock, YaMD5 */
+
 'use strict';
 
 /*******************************************************************************
@@ -51,7 +52,8 @@ var oneDay = 24 * oneHour;
 
 /******************************************************************************/
 
-var repositoryRoot = µBlock.projectServerRoot;
+var projectRepositoryRoot = µBlock.projectServerRoot;
+var thirdpartiesRepositoryRoot = 'https://raw.githubusercontent.com/gorhill/uAssets/master/src';
 var nullFunc = function() {};
 var reIsExternalPath = /^https?:\/\/[a-z0-9]/;
 var reIsUserPath = /^assets\/user\//;
@@ -111,10 +113,11 @@ var cachedAssetsManager = (function() {
             // Maybe the index was requested multiple times and already
             // fetched by one of the occurrences.
             if ( entries === null ) {
-                if ( chrome.runtime.lastError ) {
+                var lastError = vAPI.lastError;
+                if ( lastError ) {
                     console.error(
                         'µBlock> cachedAssetsManager> getEntries():',
-                        chrome.runtime.lastError.message
+                        lastError.message
                     );
                 }
                 entries = bin.cached_asset_entries || {};
@@ -134,8 +137,9 @@ var cachedAssetsManager = (function() {
         };
         var cachedContentPath = cachedAssetPathPrefix + path;
         var onLoaded = function(bin) {
-            if ( chrome.runtime.lastError ) {
-                details.error = 'Error: ' + chrome.runtime.lastError.message;
+            var lastError = vAPI.lastError;
+            if ( lastError ) {
+                details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.load():', details.error);
                 cbError(details);
             } else {
@@ -165,8 +169,9 @@ var cachedAssetsManager = (function() {
         var bin = {};
         bin[cachedContentPath] = content;
         var onSaved = function() {
-            if ( chrome.runtime.lastError ) {
-                details.error = 'Error: ' + chrome.runtime.lastError.message;
+            var lastError = vAPI.lastError;
+            if ( lastError ) {
+                details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.save():', details.error);
                 cbError(details);
             } else {
@@ -452,7 +457,7 @@ var readRepoFile = function(path, callback) {
         callback(details);
     };
 
-    var repositoryURL = repositoryRoot + path;
+    var repositoryURL = projectRepositoryRoot + path;
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
@@ -531,7 +536,7 @@ var readRepoCopyAsset = function(path, callback) {
         getTextFileFromURL(vAPI.getURL(details.path), onInstallFileLoaded, onInstallFileError);
     };
 
-    var repositoryURL = repositoryRoot + path;
+    var repositoryURL = projectRepositoryRoot + path;
     var repositoryURLSkipCache = repositoryURL + '?ublock=' + Date.now();
 
     var onRepoFileLoaded = function() {
@@ -680,7 +685,7 @@ var readRepoOnlyAsset = function(path, callback) {
         getTextFileFromURL(vAPI.getURL(path), onInstallFileLoaded, onInstallFileError);
     };
 
-    var repositoryURL = repositoryRoot + path + '?ublock=' + Date.now();
+    var repositoryURL = projectRepositoryRoot + path + '?ublock=' + Date.now();
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;

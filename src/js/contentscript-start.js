@@ -29,20 +29,18 @@
 
 /******************************************************************************/
 
-// OK, I keep changing my mind whether a closure should be used or not. This
-// will be the rule: if there are any variables directly accessed on a regular
-// basis, use a closure so that they are cached. Otherwise I don't think the
-// overhead of a closure is worth it. That's my understanding.
-
 (function() {
 
+/******************************************************************************/
+
 // because Safari
-if (location.protocol !== "http:" && location.protocol !== "https:") {
+if ( vAPI.canExecuteContentScript() !== true ) {
     return;
 }
 
-var localMessager = vAPI.messaging.channel('contentscript-start.js');
+/******************************************************************************/
 
+var localMessager = vAPI.messaging.channel('contentscript-start.js');
 
 /******************************************************************************/
 /******************************************************************************/

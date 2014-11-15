@@ -29,7 +29,7 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-# Last updated: 2014-09-24
+# Last updated: 2014-11-14
 google.*###center_col > #resultStats + #tads
 google.*###center_col > #resultStats + #tads + #res + #tads
 google.*###center_col > #resultStats + div + #res + #tads
@@ -54,8 +54,10 @@ google.*###tadsto.c
 google.*###topstuff > #tads
 google.*##.GB3L-QEDGY .GB3L-QEDF- > .GB3L-QEDE-
 google.*##.GFYY1SVD2 > .GFYY1SVC2 > .GFYY1SVF5
+google.*##.GFYY1SVE2 > .GFYY1SVD2 > .GFYY1SVG5
 google.*##.GHOFUQ5BG2 > .GHOFUQ5BF2 > .GHOFUQ5BG5
 google.*##.GJJKPX2N1 > .GJJKPX2M1 > .GJJKPX2P4
+google.*##.GKJYXHBF2 > .GKJYXHBE2 > .GKJYXHBH5
 google.*##.GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB
 google.*##.ch[onclick="ga(this,event)"]
 google.*##.commercial-unit-desktop-rhs

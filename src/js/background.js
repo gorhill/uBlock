@@ -78,7 +78,7 @@ return {
     // EasyList, EasyPrivacy and many others have an 4-day update period,
     // as per list headers.
     updateAssetsEvery: 75 * oneHour + 23 * oneMinute + 53 * oneSecond + 605,
-    projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
+    projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/src',
     userFiltersPath: 'assets/user/filters.txt',
     pslPath: 'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
 
