@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: NObfD/qZ9eRLwT3UmIQQhw
-! Version: 201411081321
+! Checksum: VyLOMwKjhqJWB0wmVN+Yhw
+! Version: 201411141341
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 08 Nov 2014 13:21 UTC
+! Ultima modifica: 14 Nov 2014 13:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -664,6 +664,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||camperonline.it/b-top/
 ||camperonline.it/b/
 ||camperonline.it/sfondo/
+||campioni.cn^*/300x110_
+||campioni.cn^*/670x60_
 ||canali16.altervista.org/calcio.html
 ||casaeclima.com/images/banners/
 ||casaportale.com/public/uploads/
@@ -774,6 +776,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||earone.it/themes/banner/
 ||earone.it/themes/images/btn_itunes.png
 ||eccolanotiziaquotidiana.it/banners/
+||ecodallecitta.it/immagini/banners/
+||ecodallecitta.it/video/menorifiuti_120x120.swf
 ||ecoseven.net/img/banner/
 ||ecostiera.it^*/banner/
 ||ehgoo.com/banner/
@@ -1327,6 +1331,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||quattroruote.it^*_280x75.gif
 ||quelliche.net^*/file_banner/
 ||quellidellelica.com/images/banners/
+||questotrentino.it/sponsor/
 ||quibrescia.it^*/wp-banners/
 ||quiceditutto.it/flash/*.swf
 ||quicomo.it/qc-ad/
@@ -1613,6 +1618,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||tuttobasket.net^*/banner_
 ||tuttogratis.it/imgbanner/
 ||tuttogratis.it/js/tgsense_
+||tuttosport.com/dinamiche/serviziXml/bwin.jsp?
 ||tuttosport.com/res/swf/ova-jw.swf$object-subrequest
 ||tuttosport.com/res/swf/ova.swf$object-subrequest
 ||tuttosport.com^*/label_williamhill.png
@@ -2160,17 +2166,18 @@ telesud3.com##.banner-sidebar
 panorama.it##.banner-spalla-dx
 farevela.net,forum-macchine.it,milanofinanza.it##.banner-top
 ilcapoluogo.com,latinaoggi.net##.banner1
-ilcapoluogo.com,latinaoggi.net,pianetacellulare.it##.banner2
+ecodallecitta.it,ilcapoluogo.com,latinaoggi.net,pianetacellulare.it##.banner2
 erbanotizie.com,lecconotizie.com##.banner234x60-right
 iljournal.it##.banner250
 outcast.it##.banner250250
-ilcapoluogo.com##.banner3
+ecodallecitta.it,ilcapoluogo.com##.banner3
 firstonline.info,mediapason.it##.banner300
 outcast.it##.banner300250
 askanews.it,hwupgrade.it,italiaoggi.it,milanofinanza.it##.banner300x250
 ildesk.it##.banner385x198
-ilcapoluogo.com##.banner4
+ecodallecitta.it,ilcapoluogo.com##.banner4
 ildesk.it##.banner468x60
+ecodallecitta.it##.banner6
 ilsecoloxix.it##.banner650x60
 ilcalciocatania.it##.bannerArea
 zoover.ch,zoover.it##.bannerContainer
@@ -2390,6 +2397,7 @@ film.it##.rightBoxAmazon
 megasesso.com##.rightPubHome
 cinquegiorni.it##.rightbanner
 gazzettadasti.it##.rotate-banner
+ecodallecitta.it##.rotobanner
 nonsolocap.it##.ru
 ivg.it##.sb-banner
 areanapoli.it##.sdoo_cnt

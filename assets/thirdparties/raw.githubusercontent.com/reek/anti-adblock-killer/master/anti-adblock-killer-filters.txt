@@ -55,15 +55,6 @@
 @@/\/advertisement([0-9]+|[\-._][a-z0-9]+)\.js/$script,domain=~example.com
 ! Min
 @@/advert.js$script,domain=~example.com
-! hellsmedia.com
-@@||hellsmedia.com/js/advert.js$script
-! writing.com
-@@||anywriters.com/main/js/advert.js$script
-@@||1stwrites.com/main/js/ads-adv.js$script
-! teknogods.com
-@@||teknogods.com/advert.js$script
-! siamfishing.com
-@@||siamfishing.com/_js/advert.js$script
 ! FFBS Ad Blocker (to see)
 ! http://static.graddit.com/js/advertisement.js
 ! jQuery Adblock Detector
@@ -141,6 +132,17 @@
 /adblock.js|$script,domain=mgcash.com
 ! Google Syndication
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=360haven.com|afreesms.com|agame.com|bbc.com|bitcoiner.net|carsfromitaly.info|codeasily.com|drivearabia.com|dsero.com|everythingon.tv|ffiles.com|file4go.com|freewaregenius.com|ftlauderdalewebcam.com|full-ngage-games.blogspot.com|gamespowerita.com|gifmagic.com|ilix.in|kingofgames.net|korean-candy.com|megaallday.com|misheel.net|moviemistakes.com|ninjaraider.com|numberempire.com|nyharborwebcam.com|oldversion.com|omegadrivers.net|photos.essence.com|portcanaveralwebcam.com|portevergladeswebcam.com|priva.us|readersdigest.com.au|rotoinfo.com|seeingwithsound.com|tech-blog.net|techydoor.com|tipstank.com|trutower.com|tv-kino.net|upfordown.com|urlink.at|warp2search.net|preemlinks.com|risiko-gesundheit.de|skincodesgiveaway.com|ffa-hosting.com
+! hellsmedia.com
+@@||hellsmedia.com/js/advert.js$script
+! writing.com
+!@@||anywriters.com/main/js/advert.js$script
+!@@||1stwrites.com/main/js/ads-adv.js$script
+!@@||writingaids.com/main/js/ads-adv.js$script
+@@/main/js/ads-adv.js$script,third-party,domain=writing.com
+! teknogods.com
+@@||teknogods.com/advert.js$script
+! siamfishing.com
+@@||siamfishing.com/_js/advert.js$script
 ! gamespowerita.com
 forum.gamespowerita.com#@##ad_block
 ! backin.net
@@ -560,6 +562,10 @@ knowlet3389.blogspot.com#@##gAds
 ! gtaxscripting.blogspot.com
 gtaxscripting.blogspot.com#@##AdSense2
 @@||pagead2.googlesyndication.com/pagead/$script,domain=gtaxscripting.blogspot.com
+! turkdown.com
+||tekproxy.com/$popup,domain=turkdown.com
+! onvasortir.com
+@@||onvasortir.com/advertisements.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

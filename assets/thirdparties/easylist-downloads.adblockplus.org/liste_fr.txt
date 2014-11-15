@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 3zt8rTIpzED+21InrlwpoQ
-! Version: 201411081321
+! Checksum: DjobBS3f+EObFFd+QnQbXA
+! Version: 201411141341
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -93,6 +93,7 @@ _regiepub/
 ||affilinks.fr^$third-party
 ||affilipub.com^$third-party
 ||affility.com^$third-party
+||affilizr.com^$third-party
 ||affpx.com^$third-party
 ||ajoutezvotresite.com^$third-party
 ||allo-audience.fr^$third-party
@@ -127,6 +128,7 @@ _regiepub/
 ||double6affiliation.com^third-party
 ||doubleclick.net^$domain=basketusa.com|cinefil.com|essentielle.be|gameone.net|rds.ca|videos.tmc.tv
 ||duporno.biz^$third-party
+||e-mailit.com^$third-party
 ||ebuzzing.fr^$third-party
 ||edi7.lu^$third-party
 ||edintorni.net^$third-party
@@ -277,6 +279,7 @@ _regiepub/
 ||11footballclub.com^*/indexcolonne.php?
 ||123megaupload.com/site_media/pub/
 ||18etplus.com^
+||1et2.org/sora/$image
 ||20dollars2surf.com/par_46860_
 ||6fun.fr/api.php
 ||78.41.233.99/~fhv3/slidein.php
@@ -467,6 +470,7 @@ _regiepub/
 ||le1er.net/promo/
 ||lebaiseur.com/ban/$third-party
 ||lebest.fr/banniere-externe/$domain=xvid-fr.com
+||leguide.com/ogpe/*/blacklist-me/banners/
 ||lenetremunere.eu/img/ban
 ||leplan.biz/images/bannieres/
 ||librarything.fr/jswidget.php?
@@ -601,6 +605,7 @@ _regiepub/
 ||soft-66.net/open.js
 ||solutionsadultes.com^
 ||sos-trique.com/ban/$third-party
+||sousstube.net/pub/
 ||speedtest.net/images/$domain=infostar.e-monsite.com
 ||sponsorboost.com/banniere-rotative.
 ||sponsoweb.com/htdocs/templates/banners/
@@ -963,6 +968,9 @@ _regiepub/
 ||forum-windows.com/open/www/delivre/
 ||forum308.com/images/lavageautomoto-5.jpg
 ||forumactif.com/admgt/
+||forumconstruire.com/img/*/bandeau_
+||forumconstruire.com/img/*/promoto/
+||forumconstruire.com/img/pubs/
 ||forumconstruire.com/img/torm2/
 ||forumconstruire.com/torm2/
 ||forumdz.com/pub/
@@ -1126,6 +1134,7 @@ _regiepub/
 ||lacanausurfinfo.com/ressources/pub/
 ||lachainemeteo.com/blocspartenaires/
 ||lafermeduweb.net/images/promote/
+||langochat.net/partenaires/
 ||lanutrition.fr/images/banners/
 ||laposte.net^*/scripts/pub_
 ||laptopspirit.fr/js/su.js
@@ -1309,6 +1318,7 @@ _regiepub/
 ||neezzmail.com/js/box.js
 ||neomag.fr/e-pubs/
 ||netiris.fr/imgs/wengo/
+||nextinpact.com/kvgc3/
 ||nofrag.com/v2k7/s/*.jpg
 ||nokenny.com/mechouga|
 ||nouvelobs.com//img_DP_
@@ -1348,7 +1358,6 @@ _regiepub/
 ||parlonspiscine.com/pubs/
 ||passeportsante.net^*/controls/pub/
 ||pc-overware.be/index/images/banners/
-||pcinpact.com/kvgc3/
 ||petit-bulletin.fr/images/habillage.jpg
 ||petit-bulletin.fr/pub.php?
 ||petite-annonce-gratuite.com/encarts/bannieres/
@@ -1576,6 +1585,7 @@ _regiepub/
 ||tubehentaigratuit.com/under.js
 ||tunibox.com/images/sponsors/
 ||tuto-fr.com/pub/
+||tutoriels-video.fr/wp-content/uploads/*/o2switch.png
 ||tv8montblanc.fr/docs/pub/pave1.jpg
 ||tv8montblanc.fr/photo/toorrisime.jpg
 ||tvcom.be/images/stories/bannierespub/
@@ -1902,6 +1912,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###pubtop
 ###rightpubbox
 ###roundPub
+###sidebar_pub_top
 ###slidepub
 ###spaceForPub
 ###tag_pub_footer
@@ -1930,10 +1941,12 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.bloc_pub_left
 ##.bloc_rightcol_pub
 ##.block-pubimage
+##.block_adtop
 ##.block_pub
 ##.blocpub
 ##.cadre-pub-google
 ##.cadrepub
+##.captchme_show_ad_link_close
 ##.carre_pub
 ##.carrepub
 ##.container-pubcarre
@@ -2024,6 +2037,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.pub_carre
 ##.pub_club
 ##.pub_droite
+##.pub_encart_content
 ##.pub_forum
 ##.pub_head
 ##.pub_header
@@ -2416,6 +2430,7 @@ ecranlarge.com,lacanausurfinfo.com###promo
 extremepc.fr###promoHead + hr + .center
 streamnolimit.com###pscroller1
 allstreamz.com,annuaire-streaming.com,blogs.allocine.fr,centerblog.net,emule-island.ru,extremepc.fr,japan-expo.be,jeux-2-filles.com,jeuxonline.info,letudiant.fr,levraigabroy.com,nrj.be,nrj.fr,nuked-klan.org,olivierdauvers.fr,orange.fr,planet-casio.com,science-et-vie.com,solutions-logiciels.com,sortir47.fr,toutpratique.com,virtuoflash.com,wareziens.net###pub
+nextinpact.com###pub-bot
 francebleu.fr,franceinfo.fr###pub-ftv-top
 jeu.info###pub0
 ledemondujeu.com,matchendirect.mobi###pub1
@@ -2571,7 +2586,7 @@ reverso.net##.adcontent
 gmx.fr##.add
 beaute-test.com##.addictbloc
 01net.com##.adnl_zone
-actustar.com,cvya.dz,do-tube.org,fairytailmx.com,floriankarmen.com,footespagnol.fr,mercato365.com,metronews.fr,obturations.com,oujdacity.net,raje.fr,replay.fr,rugby365.fr,rugby365.fr.fr,scan-mx.com,sortiesdvd.com,sport365.fr,streaming-video3x.com,t411.me,telesatellite.com,uzinagaz.com,webstar-auto.com,yourporno.fr##.ads
+actustar.com,cvya.dz,do-tube.org,fairytailmx.com,floriankarmen.com,footespagnol.fr,freedom-ip.com,mercato365.com,metronews.fr,obturations.com,oujdacity.net,raje.fr,replay.fr,rugby365.fr,rugby365.fr.fr,scan-mx.com,sortiesdvd.com,sport365.fr,streaming-video3x.com,t411.me,telesatellite.com,uzinagaz.com,webstar-auto.com,yourporno.fr##.ads
 artdeseduire.com##.ads-books
 artdeseduire.com##.ads-information
 cvya.dz##.ads-vert
@@ -2617,6 +2632,7 @@ iladit.com##.bg-pub-interne
 des-amours.com##.big-button
 01net.com##.bilboard
 k-streaming.com,seriestreaming.org,streamingfilms.fr##.bireklam
+mobilealgerie.com##.blc_300x250_blanc
 francefootball.fr##.bloc-autopromo
 nouvelobs.com##.bloc-partners
 leparisien.fr##.bloc-pratique
@@ -2624,6 +2640,7 @@ logitheque.com##.bloc-pub-center-left
 programme-tv.net##.blocLeguide
 leparisien.fr##.blocPartenaire
 lachainemeteo.com##.bloc_1_col_middle[style="height:160px;"]
+mobilealgerie.com##.bloc_728x90_brd
 psychologies.com##.bloc_abo
 jeuxvideo24.com##.bloc_article_300px
 generation-nt.com##.bloc_boutique
@@ -2789,6 +2806,7 @@ lesechos.fr##.nosparts
 generation-nt.com##.ntSponsored
 challenges.fr##.obs-block.cab-right > .obs-blockcontent.obs-bloc-media
 tempsreel.nouvelobs.com##.obs-pub + .obs-block.cab-right > .obs-blockcontent.obs-bloc-media
+galaxynote.fr##.offre
 wamiz.com##.orange
 nautiljon.com##.pad
 priceminister.com##.panel_pub
@@ -2886,6 +2904,7 @@ bakchich.info##.scpe-pub
 journaldugeek.com##.sdcBox
 jeuxetcompagnie.fr##.sg-formulaire
 cmonjour.com##.shadowed336
+nextinpact.com##.side_content_pub
 gmx.fr##.sideadd
 voyage-economique.fr##.sideaff-container
 journaldugeek.com##.sidebanner
@@ -2906,6 +2925,8 @@ slappyto.net##.sonicprice
 nouvelobs.com##.spectacles
 spi0n.com##.spion_single_pub
 lagazettedescommunes.com##.spons
+forumconstruire.com##.sponso_box
+forumconstruire.com##.sponso_contener
 yahoo.com##.sponsor-dd
 lokan.fr,moto85.com##.sponsors
 msn.com##.sponsorship
@@ -2990,6 +3011,7 @@ tadpu.com##a[href^="//fr.ulule.com/insidezecube/?utm_campaign="]
 ophtalmo.tv,prorussia.tv,rewmi.com,senioractu.com,zinfos974.com##a[href^="/ads/"]
 tunisie-news.com##a[href^="/artpublic/banniere/click3.php?"]
 marianne.net##a[href^="/blogsecretdefense/ads/"]
+omgtorrent.com##a[href^="/clic_dl.php?url="]
 unchartedatolls.com##a[href^="/file.php?"]
 mayottehebdo.com##a[href^="/index.php?option=com_banners"]
 trictrac.net##a[href^="/partenaire/"]
@@ -3028,6 +3050,7 @@ ouedkniss.com##a[href^="http://www.autobip.com/news/details/?id="]
 usbfix.net##a[href^="http://www.bitdefender.fr/media/"]
 centre-audition.com##a[href^="http://www.centre-audition.com/catalog/redirect.php?action=banner&"]
 gizmodo.fr##a[href^="http://www.ebuyclub.com/operations/gizmodo/entreeGizmodo.jsp?"]
+forumconstruire.com##a[href^="http://www.forumconstruire.com/torm3/click.php?"]
 9rayti.com##a[href^="http://www.ilycee.com/?utm_source="]
 zetorrents.com##a[href^="http://www.insta-cash.net/"]
 jds.fr##a[href^="http://www.jds.fr/scripts/pub_clic.php?"]
@@ -3042,6 +3065,7 @@ zetorrents.com##a[href^="http://www.pokerstars.com/fr/?source="]
 laptopspirit.fr##a[href^="http://www.prix-portables.fr/pub/"]
 topj.net##a[href^="http://www.rpjf.com/asp/lien.asp?"]
 torrentfrancais.cc##a[href^="http://www.singulardownload.com/"]
+lcouple2-2m.blogspot.com##a[href^="http://www.ta3arof.net/ads/"]
 ticketac.com##a[href^="http://www.ticketac.com/redirect_pub.php?"]
 webrankinfo.com##a[href^="http://www.webrankinfo.com/partenaires/"]
 planet-series.tv##a[href^="http://www.yourfilezone.com/"]

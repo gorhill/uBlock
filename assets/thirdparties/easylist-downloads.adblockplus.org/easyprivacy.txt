@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 81hxmEc45EQSuSZz7swhNA
-! Version: 201411081321
+! Checksum: x4Q35ZSMolDqinXZC5WHyg
+! Version: 201411141341
 ! Title: EasyPrivacy
-! Last modified: 08 Nov 2014 13:21 UTC
+! Last modified: 14 Nov 2014 13:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -358,6 +358,7 @@
 /beacon.gif?
 /beacon.js
 /beacon/b.ashx?
+/beacon/vtn_loader.gif?
 /beacon?
 /beacon_async.
 /beaconimg.php?
@@ -1145,6 +1146,7 @@
 /logpv.aspx?
 /LogRecorder.
 /logreferrer.php?*&referrer=
+/logserver-
 /logstat.
 /logstat?
 /logStatistic?
@@ -4533,6 +4535,11 @@ http://utm.
 ||activecommerce.net/collector.gif
 ||activetracker.activehotels.com^$third-party
 ||activities.niagara.comedycentral.com^
+||ad.atdmt.com/c/
+||ad.atdmt.com/e/
+||ad.atdmt.com/i/img/
+||ad.atdmt.com/m/
+||ad.atdmt.com/s/
 ||adchemy-content.com^*/tracking.js
 ||addthis.com/at/
 ||addthis.com/live/
@@ -4660,6 +4667,9 @@ http://utm.
 ||ask.com^*/i.gif?
 ||assoc-amazon.*^e/ir?t=$image
 ||asterpix.com/tagcloudview/
+||atdmt.com/action/
+||atdmt.com/iaction/
+||atdmt.com/jaction/
 ||atgsvcs.com/js/atgsvcs.js
 ||attributiontrackingga.googlecode.com^
 ||auctiva.com/Default.aspx?query
@@ -4851,6 +4861,7 @@ http://utm.
 ||cts.vresp.com^
 ||curate.nestedmedia.com^
 ||customerlobby.com/ctrack-
+||cx.atdmt.com^
 ||d.shareaholic.com^
 ||d1447tq2m68ekg.cloudfront.net^
 ||d1af033869koo7.cloudfront.net^
@@ -4998,6 +5009,7 @@ http://utm.
 ||flex.msn.com/mstag/
 ||fliqz.com/metrics/$~object-subrequest
 ||flixster.com^*/analytics.
+||fls-na.amazon.com^$third-party
 ||flux.com/geo.html?
 ||followistic.com/widget/stat/
 ||fonts.com/t/trackingCode.js
@@ -5336,6 +5348,7 @@ http://utm.
 ||ping.hellobar.com^
 ||ping.rasset.ie^
 ||pings.conviva.com^
+||pix.impdesk.com^
 ||pix.speedbit.com^$third-party
 ||pixel.colorupmedia.com^
 ||pixel.fanbridge.com^
@@ -5726,6 +5739,7 @@ http://utm.
 ||twitvid.com^*/tracker.swf$third-party
 ||txn.grabnetworks.com^
 ||typepad.com^*/stats?$third-party
+||ucounter.ucoz.net^
 ||ui-portal.com^*;ns_referrer=
 ||uim.tifbs.net^
 ||uknetguide.co.uk/user.js?
@@ -8115,6 +8129,7 @@ http://utm.
 ||vstat.vidigy.com^
 ||vty.dailymotion.com^
 ||vulture.com/eiilmu/pixel.gif?
+||w88.go.com^
 ||wa.metro.co.uk^
 ||wa.ui-portal.de^
 ||wachovia.com^*/stats.js
@@ -8291,6 +8306,7 @@ http://utm.
 ||michaelkors.com/common/js/extern/omniture/s_code.js
 ||mnginteractive.com/live/js/omniture/SiteCatalystCode_H_22_1_NC.js
 ||mnginteractive.com/live/omniture/custom_scripts/omnicore-blogs.js$domain=mercurynews.com
+||mnginteractive.com/live/omniture/sccore.js$domain=denverpost.com
 ||mnginteractive.com/live/omniture/sccore_NEW_JRC.js$domain=delcotimes.com
 ||nwsource.com/shared/js/s_code.js?$domain=seattletimes.com
 ||nyteknik.se/ver02/javascript/2012_s_code_global.js
@@ -8594,6 +8610,7 @@ http://utm.
 ||sport365.fr/ea.js
 ||stats1x1.kapaza.be^
 ||surace-jujitsu.fr/outils/compteur_php/
+||tracker-id.cdiscount.com^
 ||tracker.cds-tracking.com^
 ||tracking.cdiscount.com^
 ||tracking.ha.rueducommerce.fr^
@@ -8617,7 +8634,6 @@ http://utm.
 ||analytics.zhihu.com^
 ||baidu.com/pv.gif?
 ||baidu.com/tb/pms/img/st.gif?
-||beacon.sina.com.cn^
 ||btrace.qq.com^
 ||cast.ra.icast.cn^
 ||cdn.baidupcs.com/monitor.jpg?
@@ -8977,6 +8993,8 @@ http://utm.
 @@||arkadiumhosted.com^*/google-analytics-logger.swf$object-subrequest
 @@||arstechnica.com/services/incr.php?*=interactions.adblock-annoy.click$xmlhttprequest
 @@||assets.espn.go.com/espn360/builds/nielsen/ggce*.swf$object-subrequest
+@@||atdmt.com/ds/yusptsprtspr/
+@@||atdmt.com^*/direct*01$domain=sprint.com
 @@||autoscout24.net/unifiedtracking/ivw.js
 @@||barclays.co.uk/touchclarity/mbox.js
 @@||barclays.touchclarity.com^$domain=barclaycard.co.uk
@@ -9064,6 +9082,7 @@ http://utm.
 @@||dw.cbsi.com/anonc.js$domain=cnet.com
 @@||dw.cbsi.com/js/dw.js$domain=cnet.com
 @@||dw.com.com/js/dw.js$domain=cbsnews.com|cnet.com|gamespot.com|tv.com
+@@||ec.atdmt.com/b/$domain=starwoodhotels.com
 @@||ecostream.tv/js/ecos.js
 @@||edgesuite.net/crossdomain.xml$object-subrequest,domain=sbs.com.au
 @@||egencia.com/pubspec/scripts/include/siteanalytics_include.js
@@ -9297,6 +9316,7 @@ http://utm.
 @@||sundaysky.com/sundaysky.js?$domain=lenovo.com
 @@||sundaysky.com^*/default/sundaysky.js$domain=lenovo.com
 @@||support.thesslstore.com/visitor/index.php
+@@||switch.atdmt.com/iaction/$subdocument,domain=bestbuy.com
 @@||tablespoon.com/library/js/TBSP_ntpagetag.js
 @@||tag.perfectaudience.com/serve/*.js$domain=asana.com
 @@||tags.bluekai.com/site/*?ret=$subdocument,domain=zillow.com
@@ -9330,6 +9350,8 @@ http://utm.
 @@||vice.com^*/vmp_analytics.js
 @@||videos.nbcolympics.com/beacon?$object-subrequest,domain=nbcolympics.com
 @@||vidtech.cbsinteractive.com^*/AkamaiAnalytics.swf$domain=kuathletics.com|mutigers.com|okstate.com
+@@||view.atdmt.com^*/iview/$domain=starwoodhotels.com
+@@||view.atdmt.com^*/view/$domain=starwoodhotels.com
 @@||virtualearth.net^*/LoggingService.svc/Log?$script,domain=bing.com
 @@||visa.com^*/vendor/unica.js
 @@||visiblemeasures.com/crossdomain.xml$object-subrequest,domain=espn.go.com|live.indiatimes.com

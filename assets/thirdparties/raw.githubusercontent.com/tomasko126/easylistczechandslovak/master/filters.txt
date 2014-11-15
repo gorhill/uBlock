@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
-! Title: Easylist Czech and Slovak filter list for AdBlock and Adblock Plus
-! Last change: 26/10/2014
+! Title: Easylist Czech and Slovak filter list
+! Last change: 13/11/2014
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! License: GNU GPL v3
 ! Email: tomastaro@adblock.sk
@@ -116,6 +116,7 @@ exashare.com###player_img
 ||idnes.cz^*/body-$image
 ||idnes.cz^*/main-$image
 ||im9.cz/*aukro
+||img.blesk.cz/static/data/blesk/*bg.jpg
 ||img.mimiaukce.cz/h/ac/b/
 ||img14.imageshack.us/img14/7953/lineage2a.gif$domain=warforum.cz
 ||itnetwork.cz/images/banners/
@@ -205,6 +206,7 @@ exashare.com###player_img
 ||warforum.cz/x2014/
 ||warzoneforum.eu/images/*banner.gif
 ||wesa.cz/banner/
+||youradio.cz/api/triton/preroll
 ||zbynekmlcoch.cz/info/images/banners/*.swf
 ||zbynekmlcoch.cz/info/images/banners/banner_
 ||zvraceny.cz/data/upload/
@@ -231,6 +233,7 @@ exashare.com###player_img
 ||fileframe.sector.sk/banners/
 ||filmy.kinotip.in/pup.js
 ||fony.sk/content/banners/
+||fs5.mojevideo.sk/securevd/siet.mp4
 ||gamesite.sk/templates/gamesite_sk/images/background/
 ||hnonline.sk/*hn_lekaren_extra_blok.png
 ||hojko.com/images/banner*.gif
@@ -289,6 +292,7 @@ exashare.com###player_img
 !
 ! ---------- Czech 3rd party blocking rules ----------!
 !
+||*.livebox.cz/TA3_VOD_COM$third-party
 ||001shop.cz$third-party
 ||10.im.cz$third-party
 ||a.stats.cz$third-party
@@ -379,6 +383,8 @@ exashare.com###player_img
 @@||alfacomp.cz/reklama/
 @@||autotube.cz/ui/player/ad.php
 @@||bbelements.com/crossdomain.xml$domain=idnes.cz
+@@||blesk.cz/js/*adocean.js*$domain=synotliga.isport.blesk.cz
+@@||blesk.cz/js/*/player/videoad.swf*$domain=synotliga.isport.blesk.cz
 @@||cars.cz^$third-party,domain=autocartichy.cz
 @@||cz.adocean.pl/files/js/ado.js$domain=blesk.cz
 @@||fastshare.cz/banner/site_logo.jpg
@@ -573,6 +579,7 @@ ct24.cz##.commercialBox
 cyklotoulkytv.cz##.advert_vert_cs.advert_745x100
 cztorrent.net###banner_header
 cztorrent.net###banner_skyscraper_right
+cztorrent.net###bnr_middle
 cztorrent.net###hracky
 dama.cz###adframe-shell
 denik.cz##.rkl-top
@@ -805,6 +812,7 @@ stesti.cz##[style="width:960px;margin:0 auto;text-align:left"]
 stream.cz###img_link
 stream.cz###user_head
 superhry.cz##.video-doporucujeme
+synotliga.isport.blesk.cz##.leaderboard
 t-mobile.cz##.advttl
 tipcars.com###loading
 tipcars.com##IFRAME[id*="TC"]

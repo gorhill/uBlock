@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: zao36XERCKR2TCuuQnpUig
-! Version: 201411081321
+! Checksum: 1gyX213t2OUS0EWzy1snLg
+! Version: 201411141341
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 08 Nov 2014 13:21 UTC
+! Last modified: 14 Nov 2014 13:41 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -250,6 +250,8 @@ _woz_banner_vote.
 ###werbung_mitte
 ###werbung_rechts
 ###werbung_right
+###werbung_skyscraper_bottom
+###werbung_skyscraper_top
 ###werbung_top
 ###werbunglink
 ###werbunglinks
@@ -1628,6 +1630,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||20min.ch/werbung/
 ||2concert.de/banner/
 ||2download.de/js/jquery.simplemodal.*.min.js
+||2mdn.net/videoplayback/$object-subrequest,domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
 ||320k.in/jscript/layer.js
 ||360hacks.de^*/partner/
 ||3d-area.in/out.js
@@ -3703,6 +3706,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||auto-motor-und-sport.de/img/*MR_
 ||auto-motor-und-sport.de/img/*SKY
 ||csgo.99damage.de/wp-content/$image
+||d1.stern.de^*LB_$image
+||d1.stern.de^*MR_$image
+||d1.stern.de^*SKY$image
 ||doubleclick.net^$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|www.rtl.de|www.vox.de
 ||epochtimes.de/js/chkba.js
 ||gamona.de/assets/*.swf
@@ -3762,6 +3768,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||adsfac.eu/link.asp?$popup,domain=iamgamer.de
 ||alturl.com^$popup,domain=byte.to
 ||amazon.de/?tag=bluray18-21$popup,domain=bluray-disc.de
+||amazon.de/s/*&tag=$popup,domain=bluray-disc.de
 ||amazon.de^*&tag=$popup,domain=gamona.de
 ||amazon.de^*&tag=bluray18-21&$popup,domain=bluray-disc.de
 ||amazon.de^*^tag=$popup,domain=wetteronline.de
@@ -3845,6 +3852,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||usenext.de^$popup,domain=5vor12.de
 ||vampirediaries.in/popin.php$popup
 ||vibeo.tv^$popup,domain=movie-blog.org
+||videoplaza.tv^$popup,domain=clipfish.de
 ||williamhill.com^$popup,domain=trailerzone.info
 ||williamhillcasino.com^$popup,domain=trailerzone.info
 ||xerdus.com^$popup,domain=gamestar.de
@@ -4037,6 +4045,7 @@ handball-world.com###bannersky
 maerkischeallgemeine.de,saz-aktuell.com,webfail.at###bannertop
 report-k.de###bantabelle
 music-clips.net###bar > div:first-child:last-child
+bluray-disc.de###bd-p160x600-adv
 winload.de###beforedownload
 boerse.de###big
 gizmodo.de###big-mega
@@ -5972,6 +5981,7 @@ downloadstube.net##a[href^="/download-file.php?type="]
 titanic-magazin.de##a[href^="/fileadmin/core/scripts/link_external.php?url="][target="_blank"] > img
 bild.de##a[href^="/gewinnspiele/movieman/"]
 speedlounge.in##a[href^="/go/"]
+berlinertageszeitung.de##a[href^="/index.php/component/banners/click/"]
 pctipp.ch##a[href^="/index.php?eID=idgprintad&data="]
 smsgott.de##a[href^="/o2freikarte.php"]
 golyr.de##a[href^="/out/klingelton/"]
@@ -7541,10 +7551,10 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||ad-emea.doubleclick.net/pfadx/spiegel.tv.smartclip/;sz=*;dcmt=*;ord=$object-subrequest,domain=spiegel.tv
 @@||ad.71i.de/global_js/*/adplayer.min.js$domain=gamestar.de
 @@||ad.71i.de/global_js/AdScripts/standard.js$domain=gamestar.de
-@@||ad.71i.de/global_js/globalV6.js$domain=kabeleins.de|sat1.de|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
-@@||ad.71i.de/global_js/Sites/$domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
-@@||ad.71i.de/global_js/Sites/pro7.js$domain=the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
-@@||ad.71i.de/images/*Opener$object-subrequest,domain=the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||ad.71i.de/global_js/globalV6.js$domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||ad.71i.de/global_js/Sites/$domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||ad.71i.de/global_js/Sites/pro7.js$domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||ad.71i.de/images/*Opener$object-subrequest,domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
 @@||ad.adnet.de/adj.php?$script,domain=schoener-fernsehen.com
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=homerj.de
 @@||ad4mat.de/ads/js/adtrust-min.php?*&w=468&h=60&$script,domain=mufa.de
@@ -7625,8 +7635,8 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||doubleclick.net^*/nntv.de/*^sz=120x600^$script,domain=n-tv.de
 @@||doubleclick.net^*/nntv.de/*^sz=468x61^$script,domain=n-tv.de
 @@||doubleclick.net^*/nntv.de/*^sz=600x500^$script,domain=n-tv.de
-@@||doubleclick.net^*/pfadx/*;zz=10x1;$object-subrequest,domain=kabeleins.de|prosieben.de|sat1.de|sixx.de
-@@||doubleclick.net^*/RP_Sat1/other;dcmt=*;showroom=abp;$domain=prosieben.at|prosieben.ch|prosieben.de|sat1.at|sat1.ch|sat1.de|the-voice-of-germany.de
+@@||doubleclick.net^*/pfadx/*;zz=10x1;$object-subrequest,domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||doubleclick.net^*/RP_Sat1/other;dcmt=*;showroom=abp;$domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
 @@||doubleclick.net^*/teleboerse.de/*^sz=120x600^$script,domain=teleboerse.de
 @@||doubleclick.net^*/teleboerse.de/*^sz=468x61^$script,domain=teleboerse.de
 @@||doubleclick.net^*/teleboerse.de/*^sz=600x500^$script,domain=teleboerse.de
@@ -7664,7 +7674,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||fruited.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||fruited.de^$script,domain=gamona.de|lustich.de
 @@||g.doubleclick.net/activity;*/DE-AudiencePixel/Gamestar;dc_seg=$image,domain=gamestar.de
-@@||g.doubleclick.net/gampad/ads?$script,domain=wetteronline.de
 @@||g.doubleclick.net/gampad/ads?*&callback=googletag.impl.pubads.setAdContentsBySlotForSync&$script,domain=gamona.de
 @@||g.doubleclick.net/gampad/ads?sz=320x240&iu=/4444/pcgames_video.de_fx_sdm/Rest&ciu_szs&$object-subrequest,domain=pcgames.de
 @@||g.doubleclick.net/pagead/adview?ai=$object-subrequest,domain=clipfish.de
@@ -7679,8 +7688,8 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||gearwom.de^$script,domain=gamona.de|lustich.de
 @@||gerichtsboulevard.de^$elemhide
 @@||gesehen.es^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
-@@||gmads.net/crossdomain.xml$object-subrequest,domain=kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.de|sixx.de
-@@||gmads.net/r?$object-subrequest,domain=kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.de|sixx.de
+@@||gmads.net/crossdomain.xml$object-subrequest,domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
+@@||gmads.net/r?$object-subrequest,domain=kabeleins.at|kabeleins.ch|kabeleins.de|prosieben.at|prosieben.ch|prosieben.de|sat1.ch|sat1.de|sixx.at|sixx.ch|sixx.de|the-voice-of-germany.at|the-voice-of-germany.ch|the-voice-of-germany.de
 @@||goolive.de^*.js|
 @@||green-24.de^$elemhide
 @@||grundrechteschutz.de^$elemhide

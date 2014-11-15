@@ -4,7 +4,8 @@
 ! Version: 20140909
 ! Title: cjxlist
 ! Expires: 4 days (update frequency)
-! Homepage: http://bbs.kafan.cn/thread-1674209-1-1.html
+! Redirect: https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt
+! Homepage: http://abpchina.org/
 &ad_type=
 &ad_url=
 &ad_zones=

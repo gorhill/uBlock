@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2468
+# entries:        2466
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -791,7 +791,6 @@
 127.0.0.1 adserver.kyoceramita-europe.com
 127.0.0.1 adserver.libero.it
 127.0.0.1 adserver.motorpresse.de
-127.0.0.1 adserver.n9nedegrees.com
 127.0.0.1 adserver.news.com.au
 127.0.0.1 adserver.ngz-network.de
 127.0.0.1 adserver.nydailynews.com
@@ -1184,7 +1183,6 @@
 127.0.0.1 c.compete.com
 127.0.0.1 c1.nowlinux.com
 127.0.0.1 campaign.bharatmatrimony.com
-127.0.0.1 canadatop.com
 127.0.0.1 caniamedia.com
 127.0.0.1 carbonads.com
 127.0.0.1 carbonads.net
@@ -1742,7 +1740,6 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
-127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com
@@ -1913,6 +1910,7 @@
 127.0.0.1 partners.priceline.com
 127.0.0.1 passion-4.net
 127.0.0.1 pay-ads.com
+127.0.0.1 pay-to-promote.com
 127.0.0.1 paycounter.com
 127.0.0.1 paypopup.com
 127.0.0.1 payserve.com
@@ -2223,6 +2221,7 @@
 127.0.0.1 tdsearchware.com
 127.0.0.1 techclicks.net
 127.0.0.1 teenrevenue.com
+127.0.0.1 teknosurf3.com
 127.0.0.1 teliad.de
 127.0.0.1 test.com
 127.0.0.1 text-link-ads.com
@@ -2338,7 +2337,6 @@
 127.0.0.1 unanimis.co.uk
 127.0.0.1 untd.com
 127.0.0.1 updated.com
-127.0.0.1 upspiral.com
 127.0.0.1 urlcash.net
 127.0.0.1 us.a1.yimg.com
 127.0.0.1 usapromotravel.com

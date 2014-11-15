@@ -65,6 +65,7 @@
 ||cdxndirect.com^$third-party
 ||cdxndirectopt.com^$third-party
 ||cdxnopt.com^$third-party
+||citenkomedia.com^$third-party
 ||ck-cdn.com^$third-party
 ||clickmena.com^$third-party
 ||clients-ads.panet.co.il^
@@ -140,6 +141,7 @@
 ||anota-des.com/vb/$subdocument,domain=a7lahmsa.com
 ||arabdvd.net/banner/
 ||arabearpiece.com/big.png
+||arabiawin.com^$popup
 ||arabic-developers.com^*/bnr/
 ||arabs-up.com/adv.jpg
 ||arabseed.com/1st/deserts*.js

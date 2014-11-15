@@ -4823,6 +4823,7 @@
 127.0.0.1	app.bronto.com
 127.0.0.1	app.cocolog-nifty.com
 127.0.0.1	app.compete.com
+127.0.0.1	app.cookieassistant.com
 127.0.0.1	app.cooleremail.com
 127.0.0.1	app.crittercism.com
 127.0.0.1	app.crowdscience.com
@@ -15474,6 +15475,7 @@
 127.0.0.1	pops.freeze.com
 127.0.0.1	popspace.virgilio.us
 127.0.0.1	popstats.com.br
+127.0.0.1	popstrap.com
 127.0.0.1	popunder.adtrgt.com
 127.0.0.1	popunder.net
 127.0.0.1	popunder.ru
@@ -21882,6 +21884,7 @@
 127.0.0.1	www.popads.ero-advertising.com
 127.0.0.1	www.popadscdn.net
 127.0.0.1	www.poponclick.com
+127.0.0.1	www.popstrap.com
 127.0.0.1	www.popunder.net
 127.0.0.1	www.popunder.ru
 127.0.0.1	www.pornlist.mobi
@@ -22967,4 +22970,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 22962
+# Hosts: 22965

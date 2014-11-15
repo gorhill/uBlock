@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: /6m9ltiu7fsnPHAlMZ0L2w
+! Checksum: PEu8JXdoU4BiCfoCEFtMBA
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-10-25
+! Paskutinis atnaujinimas: 2014-11-10
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -67,6 +67,7 @@
 @@||tavovaikams.lt//images/goods/*$domain=~tavovaikams.lt
 @@||teatras.lt/uploads/img/banners/
 @@||technologijos.lt/iframe_komentarai
+@@||telikas.biz/wp-content/uploads/2014/10/logo1.png
 @@||v.fwmrm.net$domain=tv3play.lt
 @@||vaikutis.lt/image/cache/data/baneriai/*
 @@||vaikutis.lt/image/data/baneriai/*
@@ -1079,3 +1080,13 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||ziurimtv.eu/images/hostingas.png
 ||ziurimtv.eu/images/iv.png
 ||zvejokliai.lt/images/banners/
+~telikaz.biz#@##ad
+~telikaz.biz#@##ad-cube-top
+~telikaz.biz#@##ad-space-2
+~telikaz.biz#@##ad_body
+~telikaz.biz#@##ad_haha_4
+~telikaz.biz#@##ads
+~telikaz.biz#@##ads_mads_r1
+~telikaz.biz#@##adsense
+~telikaz.biz#@##adv_network
+~telikaz.biz#@##advert1

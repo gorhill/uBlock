@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201411041857
+! Version: 201411121053
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 04-11-2014
+! Last modified: 12-11-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -3240,6 +3240,11 @@ m.diretta.it##[class^="advert-"]
 m.diretta.it##.lsadvert_caption
 multiplayer.it###personalization_ads
 piratestreaming.co##[style="display:block !important;"]
+winscp.net##.adsbygoogle
+winscp.net##.ad_label
+helpdeskgeek.com##.adsbygoogle
+wordreference.com###ad1
+mobile.tgcom24.it##.spaceBanner
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3252,6 +3257,22 @@ it.xhamster.com##.adVideo
 it.xhamster.com###adBottom
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB
+eurosport.yahoo.com##DIV[class^="yom-ad"]
+ow.ly##.adbox
+computers.tutsplus.com##.ad.view
+ilsoftware.it##.adsbygoogle
+techhive.com##[id^="google_ads_iframe"]
+polygon.com##.m-ad
+multiplayer.it###personalization_ads
+|http://aff.camplace.com/uploads/banners/
+franchiseherald.com##[id^="google_ads_iframe"]
+latinospost.com##[id^="google_ads_iframe"]
+breathecast.com##[id^="google_ads_iframe_"]
+ansa.it##OBJECT[data^="http://timeseeker.thebelab.it/banner"]
+uk.businessinsider.com##.subnav-container
+uk.businessinsider.com##[id^="google_ads_iframe"]
+uk.businessinsider.com##.right-ad
+es.assassinscreed.wikia.com##.adsbygoogle
 emuparadise.me##[class^="box ad"]
 emuparadise.me##[class^="ad_"]
 emuparadise.me##[class^="mctable"]
