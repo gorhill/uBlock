@@ -287,7 +287,7 @@ vAPI.messaging.setup = function(defaultHandler) {
     }
 
     if ( typeof defaultHandler !== 'function' ) {
-        defaultHandler = function(){ return null; };
+        defaultHandler = function(){ return vAPI.messaging.UNHANDLED; };
     }
     this.defaultHandler = defaultHandler;
 
