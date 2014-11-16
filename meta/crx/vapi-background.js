@@ -157,7 +157,7 @@ vAPI.tabs.open = function(details) {
                 }
             });
 
-            if ( selected.length === 0 ) {
+            if ( !selected ) {
                 wrapper();
             }
         });
