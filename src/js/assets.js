@@ -113,7 +113,7 @@ var cachedAssetsManager = (function() {
             // Maybe the index was requested multiple times and already
             // fetched by one of the occurrences.
             if ( entries === null ) {
-                var lastError = vAPI.lastError;
+                var lastError = vAPI.lastError();
                 if ( lastError ) {
                     console.error(
                         'µBlock> cachedAssetsManager> getEntries():',
@@ -137,7 +137,7 @@ var cachedAssetsManager = (function() {
         };
         var cachedContentPath = cachedAssetPathPrefix + path;
         var onLoaded = function(bin) {
-            var lastError = vAPI.lastError;
+            var lastError = vAPI.lastError();
             if ( lastError ) {
                 details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.load():', details.error);
@@ -169,7 +169,7 @@ var cachedAssetsManager = (function() {
         var bin = {};
         bin[cachedContentPath] = content;
         var onSaved = function() {
-            var lastError = vAPI.lastError;
+            var lastError = vAPI.lastError();
             if ( lastError ) {
                 details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.save():', details.error);

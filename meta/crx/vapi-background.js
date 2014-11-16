@@ -111,10 +111,9 @@ vAPI.tabs = {
                     // update doesn't accept index, must use move
                     chrome.tabs.update(details.tabId, _details, function(tab) {
                         // if the tab doesn't exist
-                        if (chrome.runtime.lastError) {
+                        if ( vAPI.lastError() ) {
                             chrome.tabs.create(_details);
-                        }
-                        else if (details.index !== undefined) {
+                        } else if ( details.index !== undefined ) {
                             chrome.tabs.move(tab.id, {index: details.index});
                         }
                     });
@@ -195,7 +194,7 @@ vAPI.tabs = {
 
 vAPI.setIcon = function(tabId, img, badge) {
     var onIconReady = function() {
-        if ( chrome.runtime.lastError ) {
+        if ( vAPI.lastError() ) {
             return;
         }
 
@@ -213,6 +212,7 @@ vAPI.setIcon = function(tabId, img, badge) {
 vAPI.messaging = {
     ports: {},
     listeners: {},
+    connector: null,
 
     listen: function(listenerName, callback) {
         this.listeners[listenerName] = callback;
@@ -226,11 +226,11 @@ vAPI.messaging = {
         this.connector = function(port) {
             var onMessage = function(request) {
                 var callback = function(response) {
-                    if (chrome.runtime.lastError || response === undefined) {
+                    if ( vAPI.lastError() || response === undefined ) {
                         return;
                     }
 
-                    if (request.requestId) {
+                    if ( request.requestId ) {
                         port.postMessage({
                             requestId: request.requestId,
                             portName: request.portName,
@@ -239,16 +239,18 @@ vAPI.messaging = {
                     }
                 };
 
+                // Default handler
                 var listener = connector(request.msg, port.sender, callback);
+                if ( listener !== null ) {
+                    return;
+                }
 
-                if ( listener === null ) {
-                    listener = vAPI.messaging.listeners[request.portName];
-
-                    if (typeof listener === 'function') {
-                        listener(request.msg, port.sender, callback);
-                    } else {
-                        console.error('µBlock> messaging > unknown request: %o', request);
-                    }
+                // Specific handler
+                listener = vAPI.messaging.listeners[request.portName];
+                if ( typeof listener === 'function' ) {
+                    listener(request.msg, port.sender, callback);
+                } else {
+                    console.error('µBlock> messaging > unknown request: %o', request);
                 }
             };
 

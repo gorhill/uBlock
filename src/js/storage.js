@@ -594,13 +594,13 @@
     var onAllDone = function() {
         if (vAPI.chrome) {
             // http://code.google.com/p/chromium/issues/detail?id=410868#c11
-            // Need to be sure to access `vAPI.lastError` to prevent
+            // Need to be sure to access `vAPI.lastError()` to prevent
             // spurious warnings in the console.
             var scriptDone = function() {
-                vAPI.lastError;
+                vAPI.lastError();
             };
             var scriptEnd = function(tabId) {
-                if ( vAPI.lastError ) {
+                if ( vAPI.lastError() ) {
                     return;
                 }
                 vAPI.tabs.injectScript(tabId, {
