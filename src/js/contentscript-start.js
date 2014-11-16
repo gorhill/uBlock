@@ -21,6 +21,7 @@
 
 /* jshint multistr: true */
 /* global vAPI */
+
 'use strict';
 
 /******************************************************************************/
@@ -54,6 +55,7 @@ var cosmeticFilters = function(details) {
     if ( style !== null ) {
         return;
     }
+    var injectedCosmeticFilters = {};
     style = document.createElement('style');
     style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
@@ -61,20 +63,22 @@ var cosmeticFilters = function(details) {
     if ( donthide.length !== 0 ) {
         donthide = donthide.length !== 1 ? donthide.join(',\n') : donthide[0];
         donthide = donthide.split(',\n');
-        style.setAttribute('data-ublock-exceptions', JSON.stringify(donthide));
+        var i = donthide.length;
+        while ( i-- ) {
+            injectedCosmeticFilters[donthide[i]] = true;
+        }
         // https://github.com/gorhill/uBlock/issues/143
         if ( hide.length !== 0 ) {
-            // I chose to use Array.indexOf() instead of converting the array to
-            // a map, then deleting whitelisted selectors, and then converting
-            // back the map into an array, because there are typically very few
-            // exception filters, if any.
             hide = hide.length !== 1 ? hide.join(',\n') : hide[0];
             hide = hide.split(',\n');
-            var i = donthide.length, j;
+            i = hide.length;
+            var selector;
             while ( i-- ) {
-                j = hide.indexOf(donthide[i]);
-                if ( j !== -1 ) {
-                    hide.splice(j, 1);
+                selector = hide[i];
+                if ( injectedCosmeticFilters[selector] ) {
+                    hide.splice(i, 1);
+                } else {
+                    injectedCosmeticFilters[selector] = true;
                 }
             }
         }
@@ -90,6 +94,7 @@ var cosmeticFilters = function(details) {
     if ( parent ) {
         parent.appendChild(style);
     }
+    vAPI.injectedCosmeticFilters = injectedCosmeticFilters;
 };
 
 var netFilters = function(details) {

@@ -20,6 +20,7 @@
 */
 
 /* global vAPI */
+
 'use strict';
 
 /******************************************************************************/
@@ -42,7 +43,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 (function() {
     var queriedSelectors = {};
-    var injectedSelectors = {};
+    var injectedSelectors = vAPI.injectedCosmeticFilters || {};
     var classSelectors = null;
     var idSelectors = null;
     var highGenerics = null;
@@ -50,55 +51,16 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var nullArray = { push: function(){} };
 
     var domLoaded = function() {
-        var style = document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-        if ( style ) {
-            // https://github.com/gorhill/uBlock/issues/14
-            // Treat any existing domain-specific exception selectors as if
-            // they had been injected already.
-            var selectors, i;
-            var exceptions = style.getAttribute('data-ublock-exceptions');
-            if ( exceptions ) {
-                selectors = JSON.parse(exceptions);
-                i = selectors.length;
-                while ( i-- ) {
-                    injectedSelectors[selectors[i]] = true;
-                }
-            }
-            // Avoid re-injecting already injected CSS rules.
-            selectors = selectorsFromStyles(style);
-            i = selectors.length;
-            while ( i-- ) {
-                injectedSelectors[selectors[i]] = true;
-            }
-            // https://github.com/gorhill/uBlock/issues/158
-            // Ensure injected styles are enforced
-            hideElements(selectors.join(','));
+        // https://github.com/gorhill/uBlock/issues/158
+        // Ensure injected styles are enforced
+        // rhill 2014-11-16: not sure this is needed anymore. Test case in
+        //  above issue was fine without the line below..
+        if ( vAPI.injectedCosmeticFilters ) {
+            hideElements(Object.keys(vAPI.injectedCosmeticFilters).join(','));
         }
         idsFromNodeList(document.querySelectorAll('[id]'));
         classesFromNodeList(document.querySelectorAll('[class]'));
         retrieveGenericSelectors();
-    };
-
-    var selectorsFromStyles = function(styleRef) {
-        var selectors = [];
-        var styles = typeof styleRef === 'string' ?
-            document.querySelectorAll(styleRef):
-            [styleRef];
-        var i = styles.length;
-        var style, subset, lastSelector, pos;
-        while ( i-- ) {
-            style = styles[i];
-            subset = style.textContent.split(',\n');
-            lastSelector = subset.pop();
-            if ( lastSelector ) {
-                pos = lastSelector.indexOf('\n');
-                if ( pos !== -1 ) {
-                    subset.push(lastSelector.slice(0, pos));
-                }
-            }
-            selectors = selectors.concat(subset);
-        }
-        return selectors;
     };
 
     var retrieveGenericSelectors = function() {
