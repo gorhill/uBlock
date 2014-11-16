@@ -150,7 +150,7 @@
         },
     "adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt": {
         "off": true,
-        "title": "JPN: ABP Japanese filters (の日本用フィルタ)",
+        "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
         "homeURL": "https://adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt"
         },
