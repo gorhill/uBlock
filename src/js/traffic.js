@@ -207,7 +207,7 @@ var onBeforeSendHeaders = function(details) {
 
     // It is a popup, block and remove the tab.
     µb.unbindTabFromPageStats(tabId);
-    µb.XAL.destroyTab(tabId);
+    vAPI.tabs.remove(tabId);
 
     return { 'cancel': true };
 };

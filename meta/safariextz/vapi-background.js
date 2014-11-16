@@ -471,7 +471,7 @@ vAPI.messaging = {
 
             var listener = connector(request.message.msg, sender, callback);
 
-            if (listener === null) {
+            if (listener === vAPI.messaging.UNHANDLED) {
                 listener = vAPI.messaging.listeners[request.message.portName];
 
                 if (typeof listener === 'function') {

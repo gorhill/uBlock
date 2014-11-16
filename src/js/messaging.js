@@ -19,13 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, YaMD5 */
+/* global µBlock, vAPI, YaMD5 */
 
 'use strict';
 
 /******************************************************************************/
+/******************************************************************************/
 
-// message router and default handler
+// Message router and default handler
+
 vAPI.messaging.setup(function(request, sender, callback) {
     var µb = µBlock;
 
@@ -45,10 +47,6 @@ vAPI.messaging.setup(function(request, sender, callback) {
             µb.contextMenuClientY = request.clientY;
             break;
 
-        /*case 'forceReloadTab':
-            µb.forceReload(request.pageURL);
-            break;*/
-
         case 'getUserSettings':
             callback(µb.userSettings);
             break;
@@ -66,11 +64,9 @@ vAPI.messaging.setup(function(request, sender, callback) {
             break;
 
         default:
-            // if none of the above, then check the channel listeners
-            return null;
+            return vAPI.messaging.UNHANDLED;
     }
 });
-
 
 /******************************************************************************/
 /******************************************************************************/
@@ -169,6 +165,9 @@ var onMessage = function(request, sender, callback) {
                 response['.'] = getDynamicFilterResults(request.pageHostname);
             }
             break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -214,6 +213,9 @@ var onMessage = function(request, sender, callback) {
                 response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
             }
             break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -340,6 +342,9 @@ var onMessage = function(details, sender, callback) {
                 response = filterRequest(pageStore, details);
             }
             break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -399,6 +404,8 @@ var onMessage = function(request, sender, callback) {
             µb.appendUserFilters(request.filters);
             break;
 
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -471,6 +478,8 @@ var onMessage = function(request, sender, callback) {
             µb.assets.purge(request.path);
             break;
 
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -512,6 +521,8 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -556,6 +567,8 @@ var onMessage = function(request, sender, callback) {
             µb.saveWhitelist();
             break;
 
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -631,6 +644,10 @@ var getPageDetails = function(µb, tabId) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+        case 'getTabForStats':
+            vAPI.tabs.get(request.tabId, callback);
+            return;
+
         default:
             break;
     }
@@ -647,9 +664,8 @@ var onMessage = function(request, sender, callback) {
             response = getPageDetails(µb, request.tabId);
             break;
 
-        case 'getTabForStats':
-            vAPI.tabs.get(request.tabId, callback);
-            return;
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -745,6 +761,9 @@ var onMessage = function(request, sender, callback) {
         case 'resetUserData':
             resetUserData();
             break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);

@@ -81,13 +81,14 @@ vAPI.tabs.onPopup = function(details) {
     // Blocked
 
     // Safari blocks before the pop-up opens, so there is no window to remove.
-    if (vAPI.safari) {
+    // TODO: Can't this test be done within the platform-specific code?
+    if ( vAPI.safari ) {
         return true;
     }
 
     // It is a popup, block and remove the tab.
     µBlock.unbindTabFromPageStats(details.tabId);
-    µBlock.XAL.destroyTab(details.tabId);
+    vAPI.tabs.remove(details.tabId);
 };
 
 vAPI.tabs.registerListeners();

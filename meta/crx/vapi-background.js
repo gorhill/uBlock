@@ -19,9 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// For background page
+/* global self */
 
-/* global SafariBrowserTab, Services, XPCOMUtils */
+// For background page
 
 /******************************************************************************/
 
@@ -44,142 +44,150 @@ vAPI.storage = chrome.storage.local;
 
 /******************************************************************************/
 
-vAPI.tabs = {
-    registerListeners: function() {
-        if (typeof this.onNavigation === 'function') {
-            chrome.webNavigation.onCommitted.addListener(this.onNavigation);
+vAPI.tabs = {};
+
+/******************************************************************************/
+
+vAPI.tabs.registerListeners = function() {
+    if ( typeof this.onNavigation === 'function' ) {
+        chrome.webNavigation.onCommitted.addListener(this.onNavigation);
+    }
+
+    if ( typeof this.onUpdated === 'function' ) {
+        chrome.tabs.onUpdated.addListener(this.onUpdated);
+    }
+
+    if ( typeof this.onClosed === 'function' ) {
+        chrome.tabs.onRemoved.addListener(this.onClosed);
+    }
+
+    if ( typeof this.onPopup === 'function' ) {
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(this.onPopup);
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.get = function(tabId, callback) {
+    if ( tabId !== null ) {
+        chrome.tabs.get(tabId, callback);
+        return;
+    }
+    var onTabReceived = function(tabs) {
+        callback(tabs[0]);
+    };
+    chrome.tabs.query({ active: true, currentWindow: true }, onTabReceived);
+};
+
+/******************************************************************************/
+
+// properties of the details object:
+//   url: 'URL', // the address that will be opened
+//   tabId: 1, // the tab is used if set, instead of creating a new one
+//   index: -1, // undefined: end of the list, -1: following tab, or after index
+//   active: false, // opens the tab in background - true and undefined: foreground
+//   select: true // if a tab is already opened with that url, then select it instead of opening a new one
+
+vAPI.tabs.open = function(details) {
+    var url = details.url;
+    if ( typeof url !== 'string' || url === '' ) {
+        return null;
+    }
+    // extension pages
+    if ( /^[\w-]{2,}:/.test(url) !== true ) {
+        url = vAPI.getURL(url);
+    }
+
+    // dealing with Chrome's asynchronous API
+    var wrapper = function() {
+        if ( details.active === undefined ) {
+            details.active = true;
         }
 
-        if (typeof this.onUpdated === 'function') {
-            chrome.tabs.onUpdated.addListener(this.onUpdated);
-        }
-
-        if (typeof this.onClosed === 'function') {
-            chrome.tabs.onRemoved.addListener(this.onClosed);
-        }
-
-        if (typeof this.onPopup === 'function') {
-            chrome.webNavigation.onCreatedNavigationTarget.addListener(this.onPopup);
-        }
-    },
-
-    get: function(tabId, callback) {
-        if (tabId === null) {
-            chrome.tabs.query(
-                {
-                    active: true,
-                    currentWindow: true
-                },
-                function(tabs) {
-                    callback(tabs[0]);
-                }
-            );
-        }
-        else {
-            chrome.tabs.get(tabId, callback);
-        }
-    },
-    /*open: function(details) {
-        // to keep incognito context?
-        chrome.windows.getCurrent(function(win) {
-            details.windowId = win.windowId;
-            chrome.tabs.create(details);
-        });
-    },*/
-    open: function(details) {
-        if (!details.url) {
-            return null;
-        }
-        // extension pages
-        else if (!details.url.match(/^\w{2,20}:/)) {
-            details.url = vAPI.getURL(details.url);
-        }
-
-        // dealing with Chrome's asynhronous API
-        var wrapper = function() {
-            if (details.active === undefined) {
-                details.active = true;
-            }
-
-            var subWrapper = function() {
-                var _details = {
-                    url: details.url,
-                    active: !!details.active
-                };
-
-                if (details.tabId) {
-                    // update doesn't accept index, must use move
-                    chrome.tabs.update(details.tabId, _details, function(tab) {
-                        // if the tab doesn't exist
-                        if ( vAPI.lastError() ) {
-                            chrome.tabs.create(_details);
-                        } else if ( details.index !== undefined ) {
-                            chrome.tabs.move(tab.id, {index: details.index});
-                        }
-                    });
-                }
-                else {
-                    if (details.index !== undefined) {
-                        _details.index = details.index;
-                    }
-
-                    chrome.tabs.create(_details);
-                }
+        var subWrapper = function() {
+            var _details = {
+                url: details.url,
+                active: !!details.active
             };
 
-            if (details.index === -1) {
-                vAPI.tabs.get(null, function(tab) {
-                    if (tab) {
-                        details.index = tab.index + 1;
+            if ( details.tabId ) {
+                // update doesn't accept index, must use move
+                chrome.tabs.update(details.tabId, _details, function(tab) {
+                    // if the tab doesn't exist
+                    if ( vAPI.lastError() ) {
+                        chrome.tabs.create(_details);
+                    } else if ( details.index !== undefined ) {
+                        chrome.tabs.move(tab.id, {index: details.index});
                     }
-                    else {
-                        delete details.index;
-                    }
-
-                    subWrapper();
                 });
-            }
-            else {
-                subWrapper();
+            } else {
+                if ( details.index !== undefined ) {
+                    _details.index = details.index;
+                }
+
+                chrome.tabs.create(_details);
             }
         };
 
-        if (details.select) {
-            // note that currentWindow may be even the window of Developer Tools
-            // so, test with setTimeout...
-            chrome.tabs.query({currentWindow: true}, function(tabs) {
-                var url = details.url.replace(rgxHash, '');
-                // this is questionable
-                var rgxHash = /#.*/;
-
-                tabs = tabs.some(function(tab) {
-                    if (tab.url.replace(rgxHash, '') === url) {
-                        chrome.tabs.update(tab.id, {active: true});
-                        return true;
-                    }
-                });
-
-                if (!tabs) {
-                    wrapper();
+        if ( details.index === -1 ) {
+            vAPI.tabs.get(null, function(tab) {
+                if ( tab ) {
+                    details.index = tab.index + 1;
+                } else {
+                    delete details.index;
                 }
+
+                subWrapper();
             });
         }
         else {
-            wrapper();
+            subWrapper();
         }
-    },
-    close: chrome.tabs.remove.bind(chrome.tabs),
-    injectScript: function(tabId, details, callback) {
-        if (!callback) {
-            callback = function(){};
-        }
+    };
 
-        if (tabId) {
-            chrome.tabs.executeScript(tabId, details, callback);
+    if ( details.select ) {
+        chrome.tabs.query({ currentWindow: true }, function(tabs) {
+            var url = details.url.replace(rgxHash, '');
+            // this is questionable
+            var rgxHash = /#.*/;
+            var selected = tabs.some(function(tab) {
+                if ( tab.url.replace(rgxHash, '') === url ) {
+                    chrome.tabs.update(tab.id, { active: true });
+                    return true;
+                }
+            });
+
+            if ( selected.length === 0 ) {
+                wrapper();
+            }
+        });
+    }
+    else {
+        wrapper();
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.remove = function(tabId) {
+    var onTabRemoved = function() {
+        if ( vAPI.lastError() ) {
         }
-        else {
-            chrome.tabs.executeScript(details, callback);
-        }
+    };
+    chrome.tabs.remove(tabId, onTabRemoved);
+};
+
+/******************************************************************************/
+
+vAPI.tabs.injectScript = function(tabId, details, callback) {
+    if ( typeof callback !== 'function' ) {
+        callback = function(){};
+    }
+
+    if ( tabId ) {
+        chrome.tabs.executeScript(tabId, details, callback);
+    } else {
+        chrome.tabs.executeScript(details, callback);
     }
 };
 
@@ -197,9 +205,7 @@ vAPI.setIcon = function(tabId, img, badge) {
         if ( vAPI.lastError() ) {
             return;
         }
-
         chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
-
         if ( badge !== '' ) {
             chrome.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: '#666' });
         }
@@ -212,71 +218,93 @@ vAPI.setIcon = function(tabId, img, badge) {
 vAPI.messaging = {
     ports: {},
     listeners: {},
-    connector: null,
+    defaultHandler: null,
+    UNHANDLED: 'vAPI.messaging.notHandled'
+};
 
-    listen: function(listenerName, callback) {
-        this.listeners[listenerName] = callback;
-    },
+/******************************************************************************/
 
-    setup: function(connector) {
-        if ( this.connector ) {
+vAPI.messaging.listen = function(listenerName, callback) {
+    this.listeners[listenerName] = callback;
+};
+
+/******************************************************************************/
+
+vAPI.messaging.onConnect = function(port) {
+    var onMessage = function(request) {
+        var callback = function(response) {
+            if ( vAPI.lastError() || response === undefined ) {
+                return;
+            }
+
+            if ( request.requestId ) {
+                port.postMessage({
+                    requestId: request.requestId,
+                    portName: request.portName,
+                    msg: response
+                });
+            }
+        };
+
+        // Specific handler
+        var r;
+        var listener = vAPI.messaging.listeners[request.portName];
+        if ( typeof listener === 'function' ) {
+            r = listener(request.msg, port.sender, callback);
+        }
+        if ( r !== vAPI.messaging.UNHANDLED ) {
             return;
         }
 
-        this.connector = function(port) {
-            var onMessage = function(request) {
-                var callback = function(response) {
-                    if ( vAPI.lastError() || response === undefined ) {
-                        return;
-                    }
-
-                    if ( request.requestId ) {
-                        port.postMessage({
-                            requestId: request.requestId,
-                            portName: request.portName,
-                            msg: response
-                        });
-                    }
-                };
-
-                // Default handler
-                var listener = connector(request.msg, port.sender, callback);
-                if ( listener !== null ) {
-                    return;
-                }
-
-                // Specific handler
-                listener = vAPI.messaging.listeners[request.portName];
-                if ( typeof listener === 'function' ) {
-                    listener(request.msg, port.sender, callback);
-                } else {
-                    console.error('µBlock> messaging > unknown request: %o', request);
-                }
-            };
-
-            var onDisconnect = function(port) {
-                port.onDisconnect.removeListener(onDisconnect);
-                port.onMessage.removeListener(onMessage);
-                delete vAPI.messaging.ports[port.name];
-            };
-
-            port.onDisconnect.addListener(onDisconnect);
-            port.onMessage.addListener(onMessage);
-            vAPI.messaging.ports[port.name] = port;
-        };
-
-        chrome.runtime.onConnect.addListener(this.connector);
-    },
-
-    broadcast: function(message) {
-        message = {
-            broadcast: true,
-            msg: message
-        };
-
-        for ( var portName in this.ports ) {
-            this.ports[portName].postMessage(message);
+        // Default handler
+        r = vAPI.messaging.defaultHandler(request.msg, port.sender, callback);
+        if ( r !== vAPI.messaging.UNHANDLED ) {
+            return;
         }
+
+        console.error('µBlock> messaging > unknown request: %o', request);
+    };
+
+    var onDisconnect = function(port) {
+        port.onDisconnect.removeListener(onDisconnect);
+        port.onMessage.removeListener(onMessage);
+        delete vAPI.messaging.ports[port.name];
+    };
+
+    port.onDisconnect.addListener(onDisconnect);
+    port.onMessage.addListener(onMessage);
+    vAPI.messaging.ports[port.name] = port;
+};
+
+/******************************************************************************/
+
+vAPI.messaging.setup = function(defaultHandler) {
+    // Already setup?
+    if ( this.defaultHandler !== null ) {
+        return;
+    }
+
+    if ( typeof defaultHandler !== 'function' ) {
+        defaultHandler = function(){ return null; };
+    };
+    this.defaultHandler = defaultHandler;
+
+    chrome.runtime.onConnect.addListener(this.onConnect);
+};
+
+/******************************************************************************/
+
+vAPI.messaging.broadcast = function(message) {
+    var messageWrapper = {
+        broadcast: true,
+        msg: message
+    };
+
+    for ( var portName in this.ports ) {
+        if ( this.ports.hasOwnProperty(portName) === false ) {
+            continue;
+        }
+        this.ports[portName].postMessage(messageWrapper);
     }
 };
 
