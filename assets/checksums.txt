@@ -4,6 +4,7 @@
 1a1e5dcffc5e1494e88fbfdbc78309fb assets/ublock/mirror-candidates.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 d8c58f5bb8072907ae361bc14dbbd28f assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
+132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 92c58e409ec83e8ced7585926107a6e9 assets/thirdparties/margevicius.lt/easylistlithuania.txt
 067470524601341099c78a847f3726aa assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 a4a6263c8de2d83ae1a421a9078bbbf4 assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt
