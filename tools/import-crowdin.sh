@@ -3,65 +3,70 @@
 # This script assumes a linux environment
 
 echo "*** uBlock: Importing from Crowdin archive"
-rm -r ~/Downloads/crowdin
-unzip -q ~/Downloads/ublock.zip -d ~/Downloads/crowdin
-cp ~/Downloads/crowdin/ar/messages.json    ./_locales/ar/messages.json
-cp ~/Downloads/crowdin/cs/messages.json    ./_locales/cs/messages.json
-cp ~/Downloads/crowdin/da/messages.json    ./_locales/da/messages.json
-cp ~/Downloads/crowdin/el/messages.json    ./_locales/el/messages.json
-cp ~/Downloads/crowdin/es-ES/messages.json ./_locales/es/messages.json
-cp ~/Downloads/crowdin/et/messages.json    ./_locales/et/messages.json
-cp ~/Downloads/crowdin/fi/messages.json    ./_locales/fi/messages.json
-cp ~/Downloads/crowdin/he/messages.json    ./_locales/he/messages.json
-cp ~/Downloads/crowdin/hi/messages.json    ./_locales/hi/messages.json
-cp ~/Downloads/crowdin/hr/messages.json    ./_locales/hr/messages.json
-cp ~/Downloads/crowdin/hu/messages.json    ./_locales/hu/messages.json
-cp ~/Downloads/crowdin/id/messages.json    ./_locales/id/messages.json
-cp ~/Downloads/crowdin/it/messages.json    ./_locales/it/messages.json
-cp ~/Downloads/crowdin/ja/messages.json    ./_locales/ja/messages.json
-cp ~/Downloads/crowdin/mr/messages.json    ./_locales/mr/messages.json
-cp ~/Downloads/crowdin/no/messages.json    ./_locales/nb/messages.json
-cp ~/Downloads/crowdin/nl/messages.json    ./_locales/nl/messages.json
-cp ~/Downloads/crowdin/pl/messages.json    ./_locales/pl/messages.json
-cp ~/Downloads/crowdin/pt-BR/messages.json ./_locales/pt_BR/messages.json
-cp ~/Downloads/crowdin/pt-PT/messages.json ./_locales/pt_PT/messages.json
-cp ~/Downloads/crowdin/ro/messages.json    ./_locales/ro/messages.json
-cp ~/Downloads/crowdin/ru/messages.json    ./_locales/ru/messages.json
-cp ~/Downloads/crowdin/sv-SE/messages.json ./_locales/sv/messages.json
-cp ~/Downloads/crowdin/tr/messages.json    ./_locales/tr/messages.json
-cp ~/Downloads/crowdin/uk/messages.json    ./_locales/uk/messages.json
-cp ~/Downloads/crowdin/vi/messages.json    ./_locales/vi/messages.json
-cp ~/Downloads/crowdin/zh-CN/messages.json ./_locales/zh_CN/messages.json
+
+SRC=~/Downloads/crowdin
+rm -r $SRC
+unzip -q ~/Downloads/ublock.zip -d $SRC
+
+DES=./src/_locales
+cp $SRC/ar/messages.json    $DES/ar/messages.json
+cp $SRC/cs/messages.json    $DES/cs/messages.json
+cp $SRC/da/messages.json    $DES/da/messages.json
+cp $SRC/el/messages.json    $DES/el/messages.json
+cp $SRC/es-ES/messages.json $DES/es/messages.json
+cp $SRC/et/messages.json    $DES/et/messages.json
+cp $SRC/fi/messages.json    $DES/fi/messages.json
+cp $SRC/he/messages.json    $DES/he/messages.json
+cp $SRC/hi/messages.json    $DES/hi/messages.json
+cp $SRC/hr/messages.json    $DES/hr/messages.json
+cp $SRC/hu/messages.json    $DES/hu/messages.json
+cp $SRC/id/messages.json    $DES/id/messages.json
+cp $SRC/it/messages.json    $DES/it/messages.json
+cp $SRC/ja/messages.json    $DES/ja/messages.json
+cp $SRC/mr/messages.json    $DES/mr/messages.json
+cp $SRC/no/messages.json    $DES/nb/messages.json
+cp $SRC/nl/messages.json    $DES/nl/messages.json
+cp $SRC/pl/messages.json    $DES/pl/messages.json
+cp $SRC/pt-BR/messages.json $DES/pt_BR/messages.json
+cp $SRC/pt-PT/messages.json $DES/pt_PT/messages.json
+cp $SRC/ro/messages.json    $DES/ro/messages.json
+cp $SRC/ru/messages.json    $DES/ru/messages.json
+cp $SRC/sv-SE/messages.json $DES/sv/messages.json
+cp $SRC/tr/messages.json    $DES/tr/messages.json
+cp $SRC/uk/messages.json    $DES/uk/messages.json
+cp $SRC/vi/messages.json    $DES/vi/messages.json
+cp $SRC/zh-CN/messages.json $DES/zh_CN/messages.json
 
 #
 
-cp ~/Downloads/crowdin/ar/description.txt    ./dist/description/description-ar.txt
-cp ~/Downloads/crowdin/cs/description.txt    ./dist/description/description-cs.txt
-cp ~/Downloads/crowdin/da/description.txt    ./dist/description/description-da.txt
-#cp ~/Downloads/crowdin/el/description.txt    ./dist/description/description-el.txt
-cp ~/Downloads/crowdin/es-ES/description.txt ./dist/description/description-es.txt
-cp ~/Downloads/crowdin/et/description.txt    ./dist/description/description-et.txt
-cp ~/Downloads/crowdin/fi/description.txt    ./dist/description/description-fi.txt
-cp ~/Downloads/crowdin/he/description.txt    ./dist/description/description-he.txt
-cp ~/Downloads/crowdin/hr/description.txt    ./dist/description/description-hr.txt
-cp ~/Downloads/crowdin/hu/description.txt    ./dist/description/description-hu.txt
-cp ~/Downloads/crowdin/id/description.txt    ./dist/description/description-id.txt
-cp ~/Downloads/crowdin/it/description.txt    ./dist/description/description-it.txt
-#cp ~/Downloads/crowdin/ja/description.txt    ./dist/description/description-ja.txt
-cp ~/Downloads/crowdin/no/description.txt    ./dist/description/description-no.txt
-cp ~/Downloads/crowdin/nl/description.txt    ./dist/description/description-nl.txt
-cp ~/Downloads/crowdin/pl/description.txt    ./dist/description/description-pl.txt
-cp ~/Downloads/crowdin/pt-BR/description.txt ./dist/description/description-pt_BR.txt
-cp ~/Downloads/crowdin/pt-PT/description.txt ./dist/description/description-pt_PT.txt
-cp ~/Downloads/crowdin/ro/description.txt    ./dist/description/description-ro.txt
-cp ~/Downloads/crowdin/ru/description.txt    ./dist/description/description-ru.txt
-cp ~/Downloads/crowdin/sv-SE/description.txt ./dist/description/description-sv.txt
-cp ~/Downloads/crowdin/tr/description.txt    ./dist/description/description-tr.txt
-cp ~/Downloads/crowdin/uk/description.txt    ./dist/description/description-uk.txt
-#cp ~/Downloads/crowdin/vi/description.txt    ./dist/description/description-vi.txt
-cp ~/Downloads/crowdin/zh-CN/description.txt ./dist/description/description-zh_CN.txt
+DES=./dist/description
+cp $SRC/ar/description.txt    $DES/description-ar.txt
+cp $SRC/cs/description.txt    $DES/description-cs.txt
+cp $SRC/da/description.txt    $DES/description-da.txt
+#cp $SRC/el/description.txt    $DES/description-el.txt
+cp $SRC/es-ES/description.txt $DES/description-es.txt
+cp $SRC/et/description.txt    $DES/description-et.txt
+cp $SRC/fi/description.txt    $DES/description-fi.txt
+cp $SRC/he/description.txt    $DES/description-he.txt
+cp $SRC/hr/description.txt    $DES/description-hr.txt
+cp $SRC/hu/description.txt    $DES/description-hu.txt
+cp $SRC/id/description.txt    $DES/description-id.txt
+cp $SRC/it/description.txt    $DES/description-it.txt
+#cp $SRC/ja/description.txt    $DES/description-ja.txt
+cp $SRC/no/description.txt    $DES/description-no.txt
+cp $SRC/nl/description.txt    $DES/description-nl.txt
+cp $SRC/pl/description.txt    $DES/description-pl.txt
+cp $SRC/pt-BR/description.txt $DES/description-pt_BR.txt
+cp $SRC/pt-PT/description.txt $DES/description-pt_PT.txt
+cp $SRC/ro/description.txt    $DES/description-ro.txt
+cp $SRC/ru/description.txt    $DES/description-ru.txt
+cp $SRC/sv-SE/description.txt $DES/description-sv.txt
+cp $SRC/tr/description.txt    $DES/description-tr.txt
+cp $SRC/uk/description.txt    $DES/description-uk.txt
+#cp $SRC/vi/description.txt    $DES/description-vi.txt
+cp $SRC/zh-CN/description.txt $DES/description-zh_CN.txt
 
 #
 
-rm -r ~/Downloads/crowdin
+rm -r $SRC
 echo "*** uBlock: Import done."
