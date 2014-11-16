@@ -26,13 +26,17 @@
 /******************************************************************************/
 /******************************************************************************/
 
-// Message router and default handler
+// Default handler
 
-vAPI.messaging.setup(function(request, sender, callback) {
+(function() {
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     var µb = µBlock;
 
+    // Async
     switch ( request.what ) {
-        // Async
         case 'getAssetContent':
             µb.assets.getLocal(request.url, callback);
             return;
@@ -41,14 +45,21 @@ vAPI.messaging.setup(function(request, sender, callback) {
             µb.loadUbiquitousWhitelists();
             return;
 
-        // Sync
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
         case 'contextMenuEvent':
             µb.contextMenuClientX = request.clientX;
             µb.contextMenuClientY = request.clientY;
             break;
 
         case 'getUserSettings':
-            callback(µb.userSettings);
+            response = µb.userSettings;
             break;
 
         case 'gotoURL':
@@ -60,13 +71,21 @@ vAPI.messaging.setup(function(request, sender, callback) {
             break;
 
         case 'userSettings':
-            callback(µb.changeUserSettings(request.name, request.value));
+            response = µb.changeUserSettings(request.name, request.value);
             break;
 
         default:
             return vAPI.messaging.UNHANDLED;
     }
-});
+
+    callback(response);
+};
+
+vAPI.messaging.setup(onMessage);
+
+/******************************************************************************/
+
+})();
 
 /******************************************************************************/
 /******************************************************************************/

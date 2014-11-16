@@ -219,6 +219,7 @@ vAPI.messaging = {
     ports: {},
     listeners: {},
     defaultHandler: null,
+    NOOPFUNC: function(){},
     UNHANDLED: 'vAPI.messaging.notHandled'
 };
 
@@ -230,49 +231,50 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 /******************************************************************************/
 
-vAPI.messaging.onConnect = function(port) {
-    var onMessage = function(request) {
-        var callback = function(response) {
-            if ( vAPI.lastError() || response === undefined ) {
-                return;
-            }
-
-            if ( request.requestId ) {
-                port.postMessage({
-                    requestId: request.requestId,
-                    portName: request.portName,
-                    msg: response
-                });
-            }
+vAPI.messaging.onPortMessage = function(request, port) {
+    var callback = vAPI.messaging.NOOPFUNC;
+    if ( request.requestId !== undefined ) {
+        callback = function(response) {
+            port.postMessage({
+                requestId: request.requestId,
+                portName: request.portName,
+                msg: response !== undefined ? response : null
+            });
         };
+    }
 
-        // Specific handler
-        var r;
-        var listener = vAPI.messaging.listeners[request.portName];
-        if ( typeof listener === 'function' ) {
-            r = listener(request.msg, port.sender, callback);
-        }
-        if ( r !== vAPI.messaging.UNHANDLED ) {
-            return;
-        }
+    // Specific handler
+    var r;
+    var listener = vAPI.messaging.listeners[request.portName];
+    if ( typeof listener === 'function' ) {
+        r = listener(request.msg, port.sender, callback);
+    }
+    if ( r !== vAPI.messaging.UNHANDLED ) {
+        return;
+    }
 
-        // Default handler
-        r = vAPI.messaging.defaultHandler(request.msg, port.sender, callback);
-        if ( r !== vAPI.messaging.UNHANDLED ) {
-            return;
-        }
+    // Default handler
+    r = vAPI.messaging.defaultHandler(request.msg, port.sender, callback);
+    if ( r !== vAPI.messaging.UNHANDLED ) {
+        return;
+    }
 
-        console.error('µBlock> messaging > unknown request: %o', request);
-    };
+    console.error('µBlock> messaging > unknown request: %o', request);
+};
 
-    var onDisconnect = function(port) {
-        port.onDisconnect.removeListener(onDisconnect);
-        port.onMessage.removeListener(onMessage);
-        delete vAPI.messaging.ports[port.name];
-    };
+/******************************************************************************/
 
-    port.onDisconnect.addListener(onDisconnect);
-    port.onMessage.addListener(onMessage);
+vAPI.messaging.onDisconnect = function(port) {
+    port.onDisconnect.removeListener(vAPI.messaging.onDisconnect);
+    port.onMessage.removeListener(vAPI.messaging.onPortMessage);
+    delete vAPI.messaging.ports[port.name];
+};
+
+/******************************************************************************/
+
+vAPI.messaging.onConnect = function(port) {
+    port.onDisconnect.addListener(vAPI.messaging.onDisconnect);
+    port.onMessage.addListener(vAPI.messaging.onPortMessage);
     vAPI.messaging.ports[port.name] = port;
 };
 
@@ -286,7 +288,7 @@ vAPI.messaging.setup = function(defaultHandler) {
 
     if ( typeof defaultHandler !== 'function' ) {
         defaultHandler = function(){ return null; };
-    };
+    }
     this.defaultHandler = defaultHandler;
 
     chrome.runtime.onConnect.addListener(this.onConnect);
