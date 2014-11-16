@@ -89,13 +89,13 @@ vAPI.tabs.get = function(tabId, callback) {
 //   select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 vAPI.tabs.open = function(details) {
-    var url = details.url;
-    if ( typeof url !== 'string' || url === '' ) {
+    var targetURL = details.url;
+    if ( typeof targetURL !== 'string' || targetURL === '' ) {
         return null;
     }
     // extension pages
-    if ( /^[\w-]{2,}:/.test(url) !== true ) {
-        url = vAPI.getURL(url);
+    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+        targetURL = vAPI.getURL(targetURL);
     }
 
     // dealing with Chrome's asynchronous API
@@ -106,7 +106,7 @@ vAPI.tabs.open = function(details) {
 
         var subWrapper = function() {
             var _details = {
-                url: details.url,
+                url: targetURL,
                 active: !!details.active
             };
 
@@ -147,7 +147,7 @@ vAPI.tabs.open = function(details) {
 
     if ( details.select ) {
         chrome.tabs.query({ currentWindow: true }, function(tabs) {
-            var url = details.url.replace(rgxHash, '');
+            var url = targetURL.replace(rgxHash, '');
             // this is questionable
             var rgxHash = /#.*/;
             var selected = tabs.some(function(tab) {
