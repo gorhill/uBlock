@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, punycode, publicSuffixList */
+/* global µBlock, vAPI, punycode, publicSuffixList */
+
 'use strict';
 
 /******************************************************************************/
@@ -173,25 +174,22 @@
 
 µBlock.getAvailableLists = function(callback) {
     var availableLists = {};
-    var redirections = {};
 
     // selected lists
     var onSelectedListsLoaded = function(store) {
         var µb = µBlock;
         var lists = store.remoteBlacklists;
         var locations = Object.keys(lists);
-        var oldLocation, newLocation;
-        var availableEntry, storedEntry;
+        var location, availableEntry, storedEntry;
 
-        while ( oldLocation = locations.pop() ) {
-            newLocation = redirections[oldLocation] || oldLocation;
-            availableEntry = availableLists[newLocation];
+        while ( location = locations.pop() ) {
+            availableEntry = availableLists[location];
             if ( availableEntry === undefined ) {
                 continue;
             }
-            storedEntry = lists[oldLocation];
+            storedEntry = lists[location];
             availableEntry.off = storedEntry.off || false;
-            µb.assets.setHomeURL(newLocation, availableEntry.homeURL);
+            µb.assets.setHomeURL(location, availableEntry.homeURL);
             if ( storedEntry.entryCount !== undefined ) {
                 availableEntry.entryCount = storedEntry.entryCount;
             }
@@ -220,11 +218,8 @@
                 continue;
             }
             entry = locations[location];
-            availableLists['assets/thirdparties/' + location] = entry;
-            if ( entry.old !== undefined ) {
-                redirections[entry.old] = location;
-                delete entry.old;
-            }
+            location = 'assets/thirdparties/' + location;
+            availableLists[location] = entry;
         }
 
         // Now get user's selection of lists
