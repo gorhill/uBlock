@@ -148,6 +148,12 @@
         "group": "regions",
         "homeURL": "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt"
         },
+    "adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt": {
+        "off": true,
+        "title": "JPN: ABP Japanese filters (obsolete: to be removed)",
+        "group": "regions",
+        "homeURL": "https://adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt"
+        },
     "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt": {
         "off": true,
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
