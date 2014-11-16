@@ -33,6 +33,7 @@ bcf5b80a544d42c0ddc05bea142911bd assets/thirdparties/www.hufilter.hu/hufilter.tx
 1da7664601ca18f3806ca0af3d9cf123 assets/thirdparties/someonewhocares.org/hosts/hosts
 6a81c9870feba977186aa272c4fda61d assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 9ff3d32dee480ddb132e9659b5683eb6 assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt
+d0efc28f5a17d6c270b9808ae58d5adf assets/thirdparties/raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt
 54f7032c0e7ef73feb32d3c5437b8694 assets/thirdparties/raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt
 0102ded26ea496c96aa78406fdce1784 assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
 635779fb2454573444fdc8e1e116adb2 assets/thirdparties/raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt

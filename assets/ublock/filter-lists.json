@@ -148,11 +148,12 @@
         "group": "regions",
         "homeURL": "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt"
         },
-    "adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt": {
+    "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt": {
         "off": true,
-        "title": "JPN: ABP Japanese filters (の日本用フィルタ)",
+        "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
-        "homeURL": "https://adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt"
+        "homeURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt",
+        "old": "adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt"
         },
     "margevicius.lt/easylistlithuania.txt": {
         "off": true,
