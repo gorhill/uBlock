@@ -1,8 +1,8 @@
-Um bloqueador eficiente: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. Mais do que outros bloqueadores populares lá fora.
+Um bloqueador eficaz: Com baixo consumo de  memória e CPU e ainda pode carregar e aplicar milhares de filtros. Mais do que outros bloqueadores populares lá fora.
 
 Visão geral ilustrada de sua eficiência: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
 
-Como usar: O botão grande no popup serve para ativar/desativar o µBlock para o site atual. Aplica-se somente ao site atual, não é um botão global.
+Como usar: O botão grande no popup serve para desativar/ativar o µBlock para o site atual. Aplica-se somente ao site atual, não é um botão global.
 
 ***
 
@@ -41,12 +41,12 @@ Gratuito
 Código aberto com licença pública (GPLv3)
 De usuários para usuários.
 
-Contribuidores @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Contribuidores @ Crowdin: https://crowdin.net/project/ublock
+Colaboradores @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Colaboradores @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
 Essa é uma versão inicial, tenha isso em mente quando você avaliar.
 
-Log de alterações de projeto:
+Log de alterações do projeto:
 https://github.com/gorhill/uBlock/wiki/Change-log
