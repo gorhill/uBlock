@@ -31,3 +31,10 @@ platform.twitter.com
 # Ref: http://www.asp.net/ajax/cdn
 ajax.aspnetcdn.com
     ^ajax\.aspnetcdn\.com\/ajax\/[^?#]+
+
+yastatic.net
+    ^yastatic\.net\/
+    
+yandex.st
+    #same as yastatic, deprecated but still widely used
+    ^yandex\.st\/
