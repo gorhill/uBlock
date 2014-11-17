@@ -212,14 +212,11 @@
         } catch (e) {
             locations = {};
         }
-        var entry;
         for ( location in locations ) {
             if ( locations.hasOwnProperty(location) === false ) {
                 continue;
             }
-            entry = locations[location];
-            location = 'assets/thirdparties/' + location;
-            availableLists[location] = entry;
+            availableLists['assets/thirdparties/' + location] = locations[location];
         }
 
         // Now get user's selection of lists
