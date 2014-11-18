@@ -260,6 +260,11 @@ vAPI.messaging.onPortMessage = function(request, port) {
     }
 
     console.error('µBlock> messaging > unknown request: %o', request);
+
+    // Unhandled:
+    // Need to callback anyways in case caller expected an answer, or
+    // else there is a memory leak on caller's side
+    callback();
 };
 
 /******************************************************************************/
