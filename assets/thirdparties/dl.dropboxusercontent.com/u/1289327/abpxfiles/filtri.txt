@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201411121053
+! Version: 201411170932
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 12-11-2014
+! Last modified: 17-11-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1707,6 +1707,9 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://sport-gadgets.net/wp-content/plugins/facebook-page-promoter-lightbox/
 |http://*.concorezzo.org/*/bgmax/
 |http://*.concorezzo.org/*/banners/
+||advplace.com/i/*$popup
+|http://cdn.livesicilia.it/upload/assets/files/*.gif
+|http://*.avvocati.it/*/banner/*
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3245,6 +3248,14 @@ winscp.net##.ad_label
 helpdeskgeek.com##.adsbygoogle
 wordreference.com###ad1
 mobile.tgcom24.it##.spaceBanner
+tmag.it##.top-ad
+livesicilia.it##.banner_leaderboard
+livesicilia.it##.wes_div
+livesicilia.it###plavidAdsFormat
+livesicilia.it##[class^="flash-box-a-sponsor"]
+kotaku.co.uk##.commercial.commercial--leaderboard
+kotaku.co.uk##[id^="google_ads_iframe"]
+avvocati.it##.rightbanner
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3309,6 +3320,24 @@ instantshift.com##.sidebar_bsa_mid01
 instantshift.com##[class^="banner-280x250"]
 instantshift.com##.bsa_banner_ad
 internazionale.it##.sponsor_oroscopo
+|http://*.solocpm.com/*/728.aspx
+|http://*.solocpm.com/FooterIN-1.aspx
+|http://mediafireads.com/www/delivery/afr.php
+|http://*.usayhealthsolutions.com/news/stay-healthy/
+speedtest.net##.lower-cta
+livinginterior.it###ADVleaderboard
+livinginterior.it###ADVrettangolo
+livinginterior.it###ADVleaderpiede
+livinginterior.it###ADVrettangolopiede
+androidworld.it##[id^="google_ads_iframe"]
+androidworld.it##[id^="div-gpt-ad-"]
+androidworld.it###ligatus_content_ad
+diritto24.ilsole24ore.com##.advHeader
+universomamma.it##[class^="ad m_bot"]
+universomamma.it##[class^="__adnt"]
+videoboxs1.dnshosting.it###spu-bg
+videoboxs1.dnshosting.it###spu-body
+answers.yahoo.com###ya-darla-LREC
 dataok4.altervista.org###ad_overlay
 q.gs##iframe[id="rf"]
 trakt.tv##DIV[id="small-banner-ad"]

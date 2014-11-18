@@ -30,12 +30,14 @@
 ##[href*="ad2games.com/"]
 ##a[href*="/ads/ad_link.php?"]
 ##a[href*="adintop.com/outgoing/click.php?"]
+##a[href*="booraq.org"]
 ##a[href*="dubizzle.com/ar/?utm_source="]
 ##a[href^="ads.php?id="]
 ##a[href^="http://adserver.adtech.de/?adlink|"]
 ##a[href^="http://booraq.org"]
 ##a[href^="http://deals.souq.com/"]
 ##a[href^="http://drivercardusa.info/"]
+##a[href^="http://go.redirectingat.com"]
 ##a[href^="http://share.payoneer-affiliates.com/"]
 ##a[href^="http://www.fusebux.com/index.php?r="] > img
 ##a[href^="http://www.probux.com/?rh="] > img
@@ -331,6 +333,7 @@
 ||0zz0.com/e/$image
 ||0zz0.com/e/luna20120131_2.swf
 ||0zz0.com/js.php
+||202020.net/abahi/
 ||202020.net/ratteb/asd/
 ||24caratksa.com^$popup,domain=syrcafe.com
 ||33sh8.com/up/styles/default2//images/adds.gif
@@ -369,7 +372,7 @@
 ||a7lahmsa.com/vb/open/
 ||actionha.net/stylesheets/takeover-rani/$stylesheet
 ||adf.ly^$popup,domain=nassamat.com
-||adslgate.com/upload/mini-android-banner
+||adslgate.com/upload/*banner
 ||adv.mmnon.com^
 ||aflamex.com/adv2012/
 ||aflamex.com/forum/download-icon.jpg
@@ -564,6 +567,7 @@
 ||egypt.com/gui/images/banner.gif
 ||egyptwindow.net/Uploadedimage/dar-elbenaagdeed.gif
 ||egyptwindow.net/Uploadedimage/ren2t.gif
+||egyrace.com^$popup,domain=ya3ale.com
 ||egyup.com/adv.
 ||egyup.com/popup.js
 ||egyup.com^*/banner
@@ -591,6 +595,8 @@
 ||elmihwar.com^*/banners/
 ||elmokhalestv.com/banner_images/
 ||elraaed.com^*/banners/
+||elso9.biz/$subdocument,domain=ya3ale.com
+||elso9.com/$subdocument,domain=ya3ale.com
 ||emaratalyoum.com^*/banners/
 ||eqla3.com/adv3/
 ||eqla3.com/if/code*.htm
@@ -629,6 +635,7 @@
 ||glwan.com/adv/
 ||goo.gl^$popup,domain=abotlal.com|arabseed.com|mazika2day.com
 ||goo.gl^$subdocument,domain=lmseh.com
+||google.com/url?^$popup,domain=ya3ale.com
 ||googleusercontent.com^*/mastercard.gif$domain=myalge.net
 ||googlna.com^*/bnar.swf
 ||gornalak.com/alexa.gif
@@ -641,6 +648,7 @@
 ||hakchouf.net/image%20site/aff.jpg
 ||hakchouf.net/images/Banner3.png
 ||hawanaajd.com/img/b/$image
+||hi10.net^$popup,domain=arablionz.com
 ||hibapress.com/Hanya90.jpg
 ||hibasport.com/pubip/
 ||hoolmiz.com/tvd/
@@ -882,6 +890,7 @@
 ||xdahk.bihax.com^$popup,domain=bihax.com
 ||xtratube.net/player/*/codes.html
 ||y4yy.com/la3bty.gif
+||ya3ale.com/aerowindow/
 ||yakamar.com/vb/open.js
 ||yalladrama.tv/js.php
 ||yalladrama.tv/player/Download-icon.gif
@@ -1148,6 +1157,7 @@ almosafr.com##a[href^="http://www.booking.com/index.html?aid="]
 lakii.com##a[href^="http://www.deraah.com.sa/default.aspx?"]
 djelfa.info##a[href^="http://www.djelfa.info/ar/click/"]
 sedty.com##a[href^="http://www.drsrv.com/adv/"]
+ya3ale.com##a[href^="http://www.google.com/url?"]
 almosafr.com##a[href^="http://www.hotelscombined.com/?a_aid="]
 abotlal.com##a[href^="http://www.izhra.com/?utm_source="]
 maroc-quran.com##a[href^="http://www.maroc-quran.com/vb/bnnr.php?"]

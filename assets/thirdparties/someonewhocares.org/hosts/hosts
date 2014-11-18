@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Nov 6th, 2014 at 10:41
+# Last updated: Nov 15th, 2014 at 08:58
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -824,7 +824,6 @@ fe80::1%lo0	localhost
 127.0.0.1 jgoyk.cjt1.net
 127.0.0.1 jkearns.freestats.com
 127.0.0.1 journalism.uk.smarttargetting.com
-127.0.0.1 jquery-cdn.com
 127.0.0.1 js.cybermonitor.com
 127.0.0.1 jsonlinecollect.247realmedia.com
 127.0.0.1 js.revsci.net

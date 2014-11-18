@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: x4Q35ZSMolDqinXZC5WHyg
-! Version: 201411141341
+! Checksum: hCU89LXdBF9OOwYhQPj6eQ
+! Version: 201411181011
 ! Title: EasyPrivacy
-! Last modified: 14 Nov 2014 13:41 UTC
+! Last modified: 18 Nov 2014 10:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -264,6 +264,7 @@
 /analytics/tracker.
 /analytics/trackers?
 /Analytics/Tracking.
+/analytics/tracking/*
 /analytics?http_referer
 /analytics_embed.
 /analytics_frame.
@@ -1875,6 +1876,8 @@
 /trackingScript1.
 /trackingScript2.
 /TrackingService.js
+/trackingService.min.js
+/trackingService/*
 /trackIt.js
 /trackit.php?
 /trackit.pl?
@@ -2718,6 +2721,7 @@ http://utm.
 ||estara.com^$third-party
 ||estrack.net^$third-party
 ||etahub.com^$third-party
+||etherealhakai.com^$third-party
 ||ethn.io^$third-party
 ||ethnio.com^$third-party
 ||etracker.com^$third-party
@@ -3794,6 +3798,7 @@ http://utm.
 ||wtstats.com^$third-party
 ||wundercounter.com^$third-party
 ||wunderloop.net^$third-party
+||www-path.com^$third-party
 ||wwwstats.info^$third-party
 ||wzrk.co^$third-party
 ||wzrkt.com^$third-party
@@ -4882,6 +4887,7 @@ http://utm.
 ||d23p9gffjvre9v.cloudfront.net^
 ||d27s92d8z1yatv.cloudfront.net/js/jquery.jw.analitycs.js
 ||d2gfi8ctn6kki7.cloudfront.net^
+||d2kmrmwhq7wkvs.cloudfront.net^
 ||d2oh4tlt9mrke9.cloudfront.net^
 ||d2ry9vue95px0b.cloudfront.net^
 ||d2so4705rl485y.cloudfront.net^
@@ -4942,6 +4948,7 @@ http://utm.
 ||dufue2m4sondk.cloudfront.net^
 ||dw.cbsi.com^
 ||dw.com.com^
+||dzxxxg6ij9u99.cloudfront.net^
 ||e-activist.com^*/broadcast.record.message.open.do?
 ||e-merchant.com/^*/edr.js$third-party
 ||ebay.northernhost.com^
@@ -5177,6 +5184,7 @@ http://utm.
 ||linkedin.com/emimp/$image
 ||linkwithin.com/pixel.png
 ||list-manage.com/track/
+||list.fightforthefuture.org/mpss/o/*/o.gif
 ||live2support.com^*/js_lstrk.
 ||livechatinc.com^*/control.cgi?
 ||livefyre.com/libs/tracker/
@@ -5439,6 +5447,7 @@ http://utm.
 ||richrelevance.com/rrserver/tracking?
 ||rodalenl.com/imp?$third-party
 ||roitrack.addlvr.com^
+||rokt.com/pixel/
 ||royalecms.com/statistics.php?
 ||rtt.campanja.com^
 ||s.clickability.com^
@@ -5639,6 +5648,7 @@ http://utm.
 ||track.shop2market.com^
 ||track.sigfig.com^
 ||track.sitetag.us^
+||track.social.com^
 ||track.strife.com^
 ||track.td3x.com^
 ||track.untd.com^
@@ -6937,6 +6947,7 @@ http://utm.
 ||fncstatic.com/static/all/js/geo.js
 ||foodcouture.net/public_html/ra/script.php$script
 ||foodnavigator.com/tracker/
+||fool.com/tracking/
 ||forbes.com/fps/cookie_backup.php?
 ||forbes.com^*/track.php?
 ||ford.com/ngtemplates/ngassets/com/forddirect/ng/newMetrics.js
@@ -8168,6 +8179,7 @@ http://utm.
 ||whatcar.com/Client/Stats/
 ||whoson.smcorp.com^
 ||whstatic.com^*/ga.js?
+||wikimedia.org/wiki/Special:RecordImpression?
 ||wikinvest.com/plugin/api.php?*=metricld&
 ||wikio.com/shopping/tracking/hit.jsp?
 ||windowsphone.com/scripts/siteTracking.js
@@ -9004,6 +9016,7 @@ http://utm.
 @@||behanceserved.com/stats/stats.js?
 @@||benswann.com/decor/javascript/magnify_stats.js?
 @@||beplb01.nexus.hewitt.com/analytics?$~third-party
+@@||bestofmedia.com/sfp/js/minified/testedJs/xtClick.min.js?$domain=tomshardware.com
 @@||bettycrocker.com/Shared/Javascript/ntpagetag.js
 @@||bettycrocker.com/Shared/Javascript/UnicaTag.js
 @@||bhg.com/web/js-min/common/js/dwr/RemoteTargetingService.js
@@ -9197,6 +9210,7 @@ http://utm.
 @@||media.ft.com/j/optimost-$domain=ft.com
 @@||media.ticketmaster.*/click_track.js
 @@||mediaite.com/decor/javascript/magnify_stats.js$domain=videos.mediaite.com
+@@||metrics-api.librato.com/v1/metrics$xmlhttprequest,domain=virginamerica.com
 @@||metrics.ctvdigital.net/global/CtvAd.js
 @@||metrics.howstuffworks.com/b/ss/*&ot=$image
 @@||metrics.mozilla.com^$~third-party
@@ -9566,6 +9580,7 @@ http://utm.
 @@||dfdbz2tdq3k01.cloudfront.net/js/2.1.0/IbtRealTimeSJ/IbtRealTimeSJCore.js?$domain=social.economico.pt
 @@||dfdbz2tdq3k01.cloudfront.net/js/2.1.0/ortc.js$domain=social.economico.pt
 @@||google-analytics.com/urchin.js$domain=record.xl.pt
+@@||laredoute.pt/js/byside_webcare.js
 ! Russian
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
 @@||dict.rambler.ru/fcgi-bin/$xmlhttprequest,domain=rambler.ru

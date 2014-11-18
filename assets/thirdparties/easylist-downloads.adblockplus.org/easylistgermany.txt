@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1gyX213t2OUS0EWzy1snLg
-! Version: 201411141341
+! Checksum: 1J/fgeKqXygbgMSt40RXKw
+! Version: 201411181011
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 14 Nov 2014 13:41 UTC
+! Last modified: 18 Nov 2014 10:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -236,6 +236,8 @@ _woz_banner_vote.
 ###werbung-banner
 ###werbung-left
 ###werbung-map-top
+###werbung-rectangle1
+###werbung-rectangle2
 ###werbung-skyscraper
 ###werbung125_links
 ###werbung125_rechts
@@ -354,6 +356,7 @@ _woz_banner_vote.
 ##.werbung-inline
 ##.werbung-label
 ##.werbung-leiste
+##.werbung-rec-below-list
 ##.werbung-rectangle
 ##.werbung-skyscraper
 ##.werbung-skyscraper2
@@ -1122,6 +1125,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||farm.plista.com/iframewidget.php?*&widgetname=i$subdocument
 ||farm.plista.com/tiny/$third-party
 ||farm.plista.com/widgetdata.php?*%22pictureads%22%7D
+||fastad.beepworld.de^
 ||fc-moto.com/bild/$domain=offroadforen.de
 ||festivalfick.com/banner/$third-party
 ||fettverbrennen.net/bilder/banner/
@@ -1403,6 +1407,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||saarland-deals.de/*-widget/$subdocument,third-party
 ||safeterms.de/images/public/banner/$third-party
 ||sandra-messer.info/wp-content/uploads/*/video-newsletter.gif$third-party
+||sat-bay.de/Shop/$domain=sat-erotik.de|satindex.de
 ||sat1.de/ran/clsponsor_opener_short_$object-subrequest
 ||satchef.de/banner/$third-party
 ||satking.de/images/banners/$third-party
@@ -1659,6 +1664,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||abc-sms.de/frame1.php
 ||abg-net.de/uploads/tx_macinabanners/
 ||abload.de/deals/teaser.php
+||abnehmen.com^*/ebay_logo.gif
 ||access-im-unternehmen.de/fileadmin/php/layer.js
 ||achtzehn99.de/assets/banner/*x526
 ||achtzehn99.de/themes/hoffenheim/images/banner_
@@ -1907,6 +1913,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||center.tv/cms/fileadmin/site/flash/anzeigen/
 ||center.tv^*_pimpmyleasing.jpg
 ||centertv.de/upload/anzeigen/
+||chillmo.com/wp-content/uploads/*/fc4ks.jpg
 ||chillmo.com/wp-content/uploads/*/mariokart81.jpg
 ||chillmo.com/wp-content/uploads/*/thelastofusremastered.jpg
 ||chillmo.com/wp-content/uploads/2014/05/watchdogs.jpg
@@ -2344,6 +2351,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamersglobal.de/b.js
 ||gamersglobal.de/GAMERS-ps4-exp_v2_statisch.jpg
 ||gamersglobal.de/inc/w/$image
+||gamersglobal.de^*_skin_
 ||gamersplus.de/fileadmin/user_upload/website/brandings/
 ||gamersplus.de/images/branding/
 ||gamersplus.de/uploads/tx_consolmedia/bg_*.jpg
@@ -3769,6 +3777,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||alturl.com^$popup,domain=byte.to
 ||amazon.de/?tag=bluray18-21$popup,domain=bluray-disc.de
 ||amazon.de/s/*&tag=$popup,domain=bluray-disc.de
+||amazon.de/s/?*&tag=$popup,domain=chillmo.com
 ||amazon.de^*&tag=$popup,domain=gamona.de
 ||amazon.de^*&tag=bluray18-21&$popup,domain=bluray-disc.de
 ||amazon.de^*^tag=$popup,domain=wetteronline.de
@@ -3842,6 +3851,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||teen-blog.us/out_to_trade.php$popup
 ||teltarif.de/click/*:*.a=$popup
 ||thepornlist.net^$popup,domain=sexuria.com
+||tinyurl.com^$popup,domain=gamersglobal.de
 ||tipico.com^$popup,domain=yabeat.com
 ||tradedoubler.com/click?$popup,domain=smsform.de
 ||tubefuck.tv^$popup,domain=movie-blog.org
@@ -4056,6 +4066,7 @@ tikonline.de###bigsize
 magistrix.de###bigsize-top
 pcpraxis.de,rund-magazin.de###bigsizebanner
 volksfreund.de###billboard
+4players.de###billiger-charts
 geizkragen.de###bl_top
 holzwerken.net###bla
 sms-box.de###blackmeout
@@ -4684,7 +4695,7 @@ arabische-küche.de###sidebar > #text-9
 omfg.to###sidebar > .ad
 stopadblock.org###sidebar > div[id][style="text-align:center"]
 stopadblock.org###sidebar > div[style] + div[id][style]
-aquariumforum.de,pferd.de,radforum.de###sidebar > li > .ffwidget_sidebar
+abnehmen.com,aquariumforum.de,pferd.de,radforum.de###sidebar > li > .ffwidget_sidebar
 tgs-pforzheim.de###sidebar > ul > #aioslideshow-widget-2
 mikrocontroller.net###sidebar-right > div[style]:last-child > div[id]:last-child > div[style]
 mikrocontroller.net###sidebar-right > div[style]:last-child > script + div[style]:last-child
@@ -5263,8 +5274,8 @@ downloadstube.net##.download_hoster
 vip.de##.eTeaser
 mtg-forum.de##.ebay_banner
 camidos.de##.ebay_hits
-amerika-forum.de,aquariumforum.de,campen.de,deejayforum.de,linux-forum.de,pferd.de,rechnungswesenforum.de,reitforum.de,sat-ulc.eu##.ebayitems
-amerika-forum.de,aquariumforum.de,pferd.de,rechnungswesenforum.de##.ebayitems3
+abnehmen.com,amerika-forum.de,aquariumforum.de,campen.de,deejayforum.de,linux-forum.de,pferd.de,rechnungswesenforum.de,reitforum.de,sat-ulc.eu##.ebayitems
+abnehmen.com,amerika-forum.de,aquariumforum.de,pferd.de,rechnungswesenforum.de##.ebayitems3
 sinn-frei.com##.ebp
 abacho.de##.econa_editorial_tips
 abacho.de##.econa_editorial_tips_header
@@ -5873,6 +5884,7 @@ npage.at,npage.ch,npage.de,~www.npage.at,~www.npage.ch,~www.npage.de##[class] > 
 npage.at,npage.ch,npage.de,~www.npage.at,~www.npage.ch,~www.npage.de##[id] > a[target="_blank"][href^="/"][href$=".html"]
 forum-sachsen.com##[width="425"][height="600"][style="position: absolute; top: 100px; left: 550px; empty-cells: hide;"]
 ebook-hell.to##[width="620"][bordercolor="#808080"] td[height="60"][align="CENTER"] > a > img
+sat-erotik.de##[width="800"][cellspacing="0"][cellpadding="4"][border="0"]
 hsc-bad-neustadt.de##a[class*="sponsor"]
 xxx-blog.to##a[height="600"][width="120"]
 cine24.tv##a[href$=".gu.ma"]
@@ -5884,6 +5896,7 @@ metager.de##a[href*=".overture.com/"][href$="?plmg=1"]
 3dl.tv##a[href*=".php?q="]
 bild.de##a[href*=".smartadserver.com/"]
 htwk-leipzig.de##a[href*="/adclick.php?"]
+satindex.de##a[href*="/extern.php?"]
 3dl.tv##a[href*="/folder/"] + a[href*=" "]
 serienjunkies.org##a[href*="/mirror."]
 bild.de##a[href*="/partner/"]
@@ -6212,7 +6225,7 @@ tvtv.de##a[href^="http://www.TwinPlan.de/AF_"]
 mobilfunk-talk.de##a[href^="http://www.active-tracking.de/"]
 smsform.de##a[href^="http://www.adscads.de/sites/"]
 aktuell.ru##a[href^="http://www.aktuell.ru/inc/banners.php?"]
-livestreamfussball.org##a[href^="http://www.amazon.de/"]
+livestreamfussball.org,sat-erotik.de##a[href^="http://www.amazon.de/"]
 beichthaus.com##a[href^="http://www.amazon.de/"][href*="&tag="] > img
 gamefront.de##a[href^="http://www.amazon.de/"][href*="&tag=gamefrontde-21"]
 gamestar.de##a[href^="http://www.amazon.de/"][href*="tag="]
@@ -6941,6 +6954,7 @@ lesen.to##table[cellpadding="0"][bgcolor="#FFFFFF"][style="width: 750px;"] > tbo
 ksta.de##table[cellspacing="0"][cellpadding="0"][border="0"][style="background-color: #76003d; width: 300px; height: 100px;"]
 cine24.tv##table[cellspacing="0"][cellpadding="0"][border="0"][width] > tbody > tr > td[style^="text-align:center"]
 loadsieben.org##table[cellspacing="0"][cellpadding="5"][border="0"] > tbody > tr:first-child:last-child > td:first-child + td + td[align="right"]:last-child
+satindex.de##table[cellspacing="1"][cellpadding="4"][border="0"][bgcolor="000000"]
 adhs-zentrum.de##table[cellspacing="2"][cellpadding="4"][border="0"][width="200"]:first-child:last-child
 bildderfrau.de##table[class^="sas_FormatID_"]
 biokurs.de##table[height="100"][width="850"][cellspacing="0"][cellpadding="0"][border="0"]:first-child
@@ -7459,6 +7473,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||stadtlist.de/images/advert-$image,domain=stadtlist.de
 @@||static-fra.de/ip/js/adcontrol/adcontrol.min.js$domain=n-tv.de
 @@||static-fra.de^*/admeta.xml?$object-subrequest
+@@||static.criteo.net/js/ld/ld.js$domain=kleinanzeigen.ebay.de
 @@||static.freenet.de/adserver/introductio.js$domain=vid.buffed.de|videos.gamesaktuell.de|videos.pcgames.de|videos.videogameszone.de
 @@||static.liverail.com/libas3/$object-subrequest,domain=autoplenum.de
 @@||storm-chasing.de^*/ad-gallery/$image,~third-party

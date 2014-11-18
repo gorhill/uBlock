@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: DjobBS3f+EObFFd+QnQbXA
-! Version: 201411141341
+! Checksum: SDueLhQxMM6EbacReHdTIw
+! Version: 201411181011
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -628,6 +628,7 @@ _regiepub/
 ||tour.reelvidz.com/movie_player_dps/$popup,third-party
 ||toutsurlesabdos.com/images/bannieres_$domain=europeplusnet.info
 ||track.bloglog.com^$third-party
+||tripadvisor.com/*/partner/$third-party
 ||tripadvisor.com/WidgetEmbed-$domain=leparisien.fr
 ||tripadvisor.ru/WidgetEmbed-tcphoto?$domain=larussiedaujourdhui.fr
 ||tv-live.fr/ban/
@@ -1146,7 +1147,7 @@ _regiepub/
 ||lc2international.tv/images/banners/
 ||lc2international.tv/video/pub-
 ||lcd-compare.com/images/bup/
-||ldlc.com^*/#a_aid=*^$popup,domain=configspc.com
+||ldlc.com^*/#a_aid=$popup,domain=configspc.com
 ||le1er.net/pub-
 ||lebest.fr/banniere.php?
 ||lebest.fr/pub/
@@ -1338,6 +1339,7 @@ _regiepub/
 ||onvasortir.com/pub/
 ||orientation-chabab.com/img/pub.jpg
 ||otaku-attitude.net^*/okazu-manga.gif
+||ouedkniss.com/*/pubs/
 ||ouedkniss.com/habillage/
 ||ouedkniss.com/images/ptipana/
 ||ouedkniss.com/images/store-logo/
@@ -1391,6 +1393,7 @@ _regiepub/
 ||presse-citron.net/wordpress_prod/wp-content/uploads/habillagePresseCitron_
 ||presse-citron.net^*/chicklets_pub/
 ||pret-immobilier.nouvelobs.com/bloc_devis.php
+||prm.cpasbien.pe^
 ||promo-perso.com/Scripts/App/KelkooBottom.js
 ||protect-stream.com/films-streaming.php
 ||protect-stream.com/series-streaming.php
@@ -1885,6 +1888,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###pub_right
 ###pub_square
 ###pub_top
+###pub_voyage
 ###pubbas
 ###pubcarre
 ###pubcoldroite
@@ -2058,6 +2062,10 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.pub_topright
 ##.pub_vertical
 ##.pub_video
+##.pub_voyage_2
+##.pub_voyage_award
+##.pub_voyage_image
+##.pub_voyage_text
 ##.pubaccueildroite1
 ##.pubaccueilgauche1
 ##.pubadsense
@@ -2165,7 +2173,7 @@ click-fr.com###baner
 blogger-au-bout-du-doigt.blogspot.com,boursier.com,cdmail.fr,danslescoulisses.com,htmlforums.com,lesaffaires.com,maliweb.net###banner
 football.fr,sports.fr###banner-full
 welovetennis.fr###banner-top
-hitradio.ma###banner2
+cpasbien.pe,hitradio.ma###banner2
 rtbf.be###bannerLeaderboard
 clubpoker.net###bannerTopWrapper
 infobebes.com###banner_container
@@ -2682,6 +2690,7 @@ orange.fr##.campagnePUBcoldroite
 psychologies.com##.carrousel_partenaires
 a18ans.com,jamaisjouis.com,liste2cul.com,vidule.com##.catcher
 porn-video-hd.com##.catcher-videos
+korben.info##.category-sponsor
 girlsgogames.fr##.categoryBanner
 akelys.com##.cellulePUB
 clubic.com##.centre_selections_shopping
@@ -2884,6 +2893,7 @@ orangeinfo.fr##.pubside
 iphoneaddict.fr##.pubsidebar
 iphoneaddict.fr##.pubsoustag
 web-tricheur.net##.pubtexte
+souk.ma##.rbanner-wrap
 imobie.fr##.rec_download
 jeux-e.com##.rek_ban
 frandroid.com##.relatedviatopic
@@ -2947,6 +2957,7 @@ omgtorrent.com##.tuyau
 clubic.com##.ui-layout-header
 forum-windows.com##.uniblue
 excel-pratique.com##.vba_300
+souk.ma##.vbanner-wrap
 aujourdhui-en-france.fr,leparisien.fr##.venteprivee
 leparisien.fr##.vestiairecollective
 canalplus.fr##.video-preroll
@@ -2977,6 +2988,7 @@ tomsguide.fr##.zoneTriple
 tsa-algerie.com##.zone_annonceurs
 lepetiteconomiste.com##.zoom
 dpstream.net##[class$="_plugin_top"]
+meilleur-vpn.biz##[href^="http://meilleur-vpn.biz/visit/"]
 allocine.fr##[id^="adClickCommand"]
 touslesdrivers.com##a.seo
 free-reseau.fr##a[href*="&tag=freereseaufr-"]
@@ -3013,6 +3025,7 @@ tunisie-news.com##a[href^="/artpublic/banniere/click3.php?"]
 marianne.net##a[href^="/blogsecretdefense/ads/"]
 omgtorrent.com##a[href^="/clic_dl.php?url="]
 unchartedatolls.com##a[href^="/file.php?"]
+rue-hardware.com,rue-montgallet.com##a[href^="/go/"]
 mayottehebdo.com##a[href^="/index.php?option=com_banners"]
 trictrac.net##a[href^="/partenaire/"]
 estrepublicain.fr,matchendirect.fr##a[href^="/pub/"]
@@ -3625,6 +3638,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.negeriau.net/$third-party,xmlhttprequest
 |http://*.nhachot.info/$third-party,xmlhttprequest
 |http://*.nnc.ro/$third-party,xmlhttprequest
+|http://*.openoffcampus.com/$third-party,xmlhttprequest
 |http://*.opensrc.mx/$third-party,xmlhttprequest
 |http://*.pirat3.com/$third-party,xmlhttprequest
 |http://*.port0.org/$third-party,xmlhttprequest
@@ -3652,6 +3666,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ||cifqr.69.mu^$third-party
 ||cvhyx.vr.lt^$third-party
 ||ebogh.mm.my^$third-party
+||eozys.openoffcampus.com^$third-party
 ||fcwsk.ro.lt^$third-party
 ||fsvuc.qq.my^$third-party
 ||hjglq.ax.lt^$third-party

@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: IScVbktENELG0OPvVZlS9g
-! Version: 201411141341
+! Checksum: 2lFb3oH1GSK7fWBZcsHF+w
+! Version: 201411181011
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 14 Nov 2014 13:41 UTC
+! Last modified: 18 Nov 2014 10:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -144,6 +144,7 @@ _advertentieleaderboardhome.
 ||109.70.1.61/bannersystem/
 ||actiecode.nl/dynamics/modules/spub$third-party
 ||adslwinkel.nl/templates/adslwinkel/images/adslnl.gif$domain=htforum.nl
+||ahead-it.be/banners/
 ||amz01.plzcdn.com/a/
 ||antares.fm/banners/
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
@@ -181,6 +182,7 @@ _advertentieleaderboardhome.
 ||goedbegin.nl/ad/
 ||goedkoop.info/lastminutebanner.php
 ||goldenpalaceaffiliates.com/marketing_tools/
+||gtagames.nl^*bnnr
 ||hetsportmagazine.nl^*/externelinks/banner_
 ||honig.nl/extern/honig-commercial-videobanner-
 ||images-speurders.nl/content_erectipillen
@@ -360,6 +362,7 @@ _advertentieleaderboardhome.
 ||dekrantvanmiddendrenthe.nl^*/banners/
 ||devegetarier.nl^*/vegapolis_banner.
 ||dierenbescherming.nl/afdimg/banners/
+||dierennieuws.nl^*_webbanner_
 ||digitaalburg.com^*/promotion-slider/js/promoslider.js?
 ||digitaalburg.com^*Adver
 ||digitaalburg.com^*banner
@@ -437,6 +440,7 @@ _advertentieleaderboardhome.
 ||informatique.nl^*/promos/*-takeover.
 ||ishotmyself.nl/include/xhtml/promo/
 ||israeltoday.nl/_static/israeltoday.nl/img/banners/
+||janlul.com/wizi2.png
 ||janvissersweer.nl/images/banners/
 ||janvissersweer.nl^*/banner-
 ||jooble.co.nl/banner/
@@ -684,7 +688,7 @@ _advertentieleaderboardhome.
 @@||adform.net/Banners/scripts/rmb/Adform.RMB.js?$domain=spel.nl
 @@||adhese.be/tag/tagv1.js$domain=nieuwsblad.be
 @@||admatcher.videostrip.com/?format=mp4,$object-subrequest,domain=herhaling.nl|myradio.nl|radioveronica.nl|tvgids.tv|voetbalprimeur.nl
-@@||admatcher.videostrip.com/?format=mp4,$xmlhttprequest,domain=ongein.nl|radioluisteren.fm|twentefans.nl
+@@||admatcher.videostrip.com/?format=mp4,$xmlhttprequest,domain=nederland.fm|ongein.nl|radio10.nl|radioluisteren.fm|twentefans.nl
 @@||admatcher.videostrip.com/crossdomain.xml$object-subrequest,domain=herhaling.nl|myradio.nl|radioveronica.nl|tvgids.tv|voetbalprimeur.nl
 @@||ads.spilgames.com/ad/pb/1/*/*?$script,domain=spel.nl|spelletjes.nl
 @@||adserver.adtech.de/addyn/3.0/$script,domain=girlsgogames.nl|spel.nl|spelletjes.nl
@@ -995,6 +999,7 @@ opwindend.net##.MN[style="Color: Red; Font-Weight: Bold;"]
 bokt.be##.PopupDiv
 bokt.be##.PopupScreen
 marktnet.nl##.ThumbGoogle
+gtaforum.nl##.__xXadvertentie
 checkcams.com##.ab
 androidplanet.nl,dewereldmorgen.be,ipadclub.nl,iphoneclub.nl,metronieuws.nl,nu.nl,stemwijzer.nl,tvgids.nl,vkmag.com,z24.nl##.ad
 israeltoday.nl##.ad-hor

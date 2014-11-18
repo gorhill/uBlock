@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: VyLOMwKjhqJWB0wmVN+Yhw
-! Version: 201411141341
+! Checksum: 6/ZUIsC61nAjsBNUt1QKRg
+! Version: 201411181011
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 14 Nov 2014 13:41 UTC
+! Ultima modifica: 18 Nov 2014 10:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -705,6 +705,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||clandestinoweb.com^*/banner_
 ||clandestinoweb.com^*/banners/
 ||clandestinoweb.com^*/skin_
+||classmeteo.it^*/logo-zurich-connect.png
 ||click.html.it^
 ||climateobserver.it^*/banner-
 ||climateobserver.it^*/banner_
@@ -2179,6 +2180,7 @@ ecodallecitta.it,ilcapoluogo.com##.banner4
 ildesk.it##.banner468x60
 ecodallecitta.it##.banner6
 ilsecoloxix.it##.banner650x60
+ilfattonisseno.it##.banner6x3
 ilcalciocatania.it##.bannerArea
 zoover.ch,zoover.it##.bannerContainer
 ilmessaggero.it,ravennanotizie.it##.bannerH
@@ -2188,6 +2190,7 @@ key4biz.it##.bannerRight
 corriereirpinia.it##.bannerTd
 avvenire.it,borsaitaliana.it,ilmessaggero.it##.bannerTop
 ilquotidianodellacalabria.it##.banner_186x290
+ilfattonisseno.it##.banner_200
 ilquotidianodellacalabria.it##.banner_234x90
 spaziofilm.it##.banner_300
 gazzettadiparma.it##.banner_300x170
@@ -2198,6 +2201,7 @@ ottopagine.net##.banner_990_90
 ottopagine.net##.banner_990_90_mid
 ilmattinodifoggia.it##.banner_990x30
 rsvn.it##.banner_BodyTop
+ilfattonisseno.it##.banner_H600
 nqnews.it##.banner_Leaderboard
 professionecalcio.net,professionemotori.it##.banner_after_feat
 lanuovaprimapagina.it,liberoquotidiano.it##.banner_apertura
@@ -2208,6 +2212,7 @@ voceditalia.it##.banner_casino2
 digital-sat.it##.banner_centrale
 parmasera.it,piacenzasera.it##.banner_doc_bottom_foto
 digital-sat.it,finanza.com,ilgiornaledireggio.it,motori24.ilsole24ore.com##.banner_dx
+ilfattonisseno.it##.banner_flusso
 ecodibergamo.it,ilcittadinomb.it,laprovinciadicomo.it,laprovinciadivarese.it##.banner_footer
 parmasera.it,piacenzasera.it##.banner_globaltop
 smtvsanmarino.sm##.banner_head
@@ -2341,7 +2346,7 @@ myword.it##.login-container[style="height:92px;border:0px solid red;text-align:c
 julienews.it##.long_banner_row
 rietilife.it##.lshowcase-logos
 ilfriuli.it##.main-header__banner
-cremonaoggi.it,opinione.it##.manchette
+cremonaoggi.it,ilfattonisseno.it,opinione.it##.manchette
 erbanotizie.com,lecconotizie.com##.manchette-dx
 livesicilia.it##.manchette-l
 livesicilia.it##.manchette-r
@@ -2449,6 +2454,7 @@ quattroruote.it##.telecamera-address
 ansa.it##.text-link
 ilfattoquotidiano.it##.textlink
 excite.it##.textlink_content
+ilfattonisseno.it##.top
 allsongs.tv,dica33.it,radionbc.it##.top-banner
 gazzettadasti.it##.top-left-ban
 gazzettadasti.it##.top-right-ban
@@ -2748,7 +2754,7 @@ termometropolitico.it##[id^="bsa"]
 @@||ad.smartclip.net/crossdomain.xml$object-subrequest,domain=serviziopubblico.it
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=serviziopubblico.it
 @@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv|rainews.it
-@@||ad49.neodatagroup.com/ad/sipra.jsp?$script,domain=rai.it|rai.tv|rainews.it
+@@||ad49.neodatagroup.com/ad/sipra.jsp?$script,xmlhttprequest,domain=rai.it|rai.tv|rainews.it
 @@||adimg.matrixspa.it/cookie_script/read_crt.html$domain=webmail.virgilio.it
 @@||adimg.matrixspa.it/jsc/advManage.js$domain=webmail.virgilio.it
 @@||adnkronos.com/ign/mediacenter/fotogallery/data_01/img/ad_
