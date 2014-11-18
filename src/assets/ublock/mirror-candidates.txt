@@ -31,3 +31,11 @@ platform.twitter.com
 # Ref: http://www.asp.net/ajax/cdn
 ajax.aspnetcdn.com
     ^ajax\.aspnetcdn\.com\/ajax\/[^?#]+
+
+# Ref: https://tech.yandex.ru/jslibs/
+yastatic.net
+    ^yastatic\.net\/(?:angularjs|backbone|bootstrap|d3|dojo|ext-core|highlightjs|json2|jquery|jquery-ui|mochikit|modernizr|mootools|prototype|raphael|righjs|scriptaculous|swfobject|underscore|lodash)\/
+    
+yandex.st
+    #same as yastatic, deprecated domain but still widely used
+    ^yandex\.st\/(?:angularjs|backbone|bootstrap|d3|dojo|ext-core|highlightjs|json2|jquery|jquery-ui|mochikit|modernizr|mootools|prototype|raphael|righjs|scriptaculous|swfobject|underscore|lodash)\/
