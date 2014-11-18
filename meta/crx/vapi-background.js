@@ -244,7 +244,7 @@ vAPI.messaging.onPortMessage = function(request, port) {
     }
 
     // Specific handler
-    var r;
+    var r = vAPI.messaging.UNHANDLED;
     var listener = vAPI.messaging.listeners[request.portName];
     if ( typeof listener === 'function' ) {
         r = listener(request.msg, port.sender, callback);
@@ -264,16 +264,16 @@ vAPI.messaging.onPortMessage = function(request, port) {
 
 /******************************************************************************/
 
-vAPI.messaging.onDisconnect = function(port) {
-    port.onDisconnect.removeListener(vAPI.messaging.onDisconnect);
+vAPI.messaging.onPortDisconnect = function(port) {
+    port.onDisconnect.removeListener(vAPI.messaging.onPortDisconnect);
     port.onMessage.removeListener(vAPI.messaging.onPortMessage);
     delete vAPI.messaging.ports[port.name];
 };
 
 /******************************************************************************/
 
-vAPI.messaging.onConnect = function(port) {
-    port.onDisconnect.addListener(vAPI.messaging.onDisconnect);
+vAPI.messaging.onPortConnect = function(port) {
+    port.onDisconnect.addListener(vAPI.messaging.onPortDisconnect);
     port.onMessage.addListener(vAPI.messaging.onPortMessage);
     vAPI.messaging.ports[port.name] = port;
 };
@@ -291,7 +291,7 @@ vAPI.messaging.setup = function(defaultHandler) {
     }
     this.defaultHandler = defaultHandler;
 
-    chrome.runtime.onConnect.addListener(this.onConnect);
+    chrome.runtime.onConnect.addListener(this.onPortConnect);
 };
 
 /******************************************************************************/
