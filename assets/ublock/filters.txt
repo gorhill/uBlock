@@ -125,7 +125,8 @@ google.*###center_col > #tads
 @@||cdn-i.dmdentertainment.com^$domain=cracked.com
 
 # EasyList/EasyPrivacy fixes
-
+# https://github.com/gorhill/uBlock/issues/373
+@@||omtrdc.net^$domain=www.amazon.com
 # To counter `/b/ss/*&aqe=` and `||scorecardresearch.com^$third-party` in
 # EasyPrivacy: "cant click on next picture on this adreess ... "
 # "... http://www.expansion.com/albumes/2014/10/30/casa_bruce_willis_bedford/index.html?cid=SIN8901"
