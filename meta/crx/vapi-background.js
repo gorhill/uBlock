@@ -190,7 +190,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         }
     };
     if ( tabId ) {
-        chrome.tabs.executeScript(tabId, details, onScriptExecuteds);
+        chrome.tabs.executeScript(tabId, details, onScriptExecuted);
     } else {
         chrome.tabs.executeScript(details, onScriptExecuted);
     }
