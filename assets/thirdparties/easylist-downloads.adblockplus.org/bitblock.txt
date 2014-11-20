@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 2tVDSwBVFOcl/Y/0udpvXg
-! Version: 201411181010
-! Last modified: 18 Nov 2014 10:10 UTC
+! Checksum: jKND+FSin/YFCg3iJZFlQA
+! Version: 201411201620
+! Last modified: 20 Nov 2014 16:20 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -1441,6 +1441,7 @@ _vkontakte.png
 /shareWidgetBackgrounds.
 /sharing-buttons.
 /sharing/sprites/*
+/SharingBar/*
 /sharrre.$~stylesheet,~xmlhttprequest
 /sharrre_
 /shr_btn_
@@ -4140,6 +4141,7 @@ _youtube_social_
 ##.addthis_button_pinterest_share
 ##.addthis_button_reddit
 ##.addthis_button_stumbleupon
+##.addthis_button_stumbleupon_badge
 ##.addthis_button_tweet
 ##.addthis_button_twitter
 ##.addthis_button_twitter_follow
@@ -4300,6 +4302,7 @@ _youtube_social_
 ##.bottom-share-wrapper
 ##.bottom-sharethis
 ##.bottom-social
+##.bottom-social-buttons
 ##.bottom-top-social
 ##.bottom_share_panel
 ##.bottom_shares
@@ -4539,6 +4542,7 @@ _youtube_social_
 ##.fa-pinterest
 ##.fa-pinterest-square
 ##.fa-reddit
+##.fa-reddit-square
 ##.fa-share-alt
 ##.fa-share-square-o
 ##.fa-soundcloud
@@ -4610,8 +4614,10 @@ _youtube_social_
 ##.facebookActivity
 ##.facebookBloc_png
 ##.facebookBtn
+##.facebookButtonDiv
 ##.facebookConnect
 ##.facebookContainer
+##.facebookCountDiv
 ##.facebookFanBox
 ##.facebookFrame
 ##.facebookGroup
@@ -4794,6 +4800,7 @@ _youtube_social_
 ##.featureSocial
 ##.featured-author-info-social
 ##.featuredPagesSocial
+##.feedburnerFlareBlock
 ##.feedly_24
 ##.fi-icon-facebook
 ##.fi-icon-twitter
@@ -4842,6 +4849,7 @@ _youtube_social_
 ##.follow-facebook
 ##.follow-fb
 ##.follow-google-plus
+##.follow-huffpost
 ##.follow-ico
 ##.follow-icon
 ##.follow-icons
@@ -5100,7 +5108,9 @@ _youtube_social_
 ##.google-plus_icn
 ##.google-sharetool
 ##.googlePlus
+##.googlePlusButtonDiv
 ##.googlePlusConnect
+##.googlePlusCountDiv
 ##.googleShare
 ##.googleShareButton
 ##.google_btn
@@ -5128,6 +5138,7 @@ _youtube_social_
 ##.gplus-icon
 ##.gplus-icon-small
 ##.gplus-link
+##.gplus-share
 ##.gplusShare
 ##.gplus_bar
 ##.gplus_button
@@ -5779,6 +5790,8 @@ _youtube_social_
 ##.pintshare
 ##.place-share
 ##.plg_socialshare
+##.pluckButtonDiv
+##.pluckCountDiv
 ##.plus-one-top-button
 ##.plus-share-container
 ##.plusone
@@ -6338,6 +6351,7 @@ _youtube_social_
 ##.side-pinterest
 ##.side-post-social
 ##.side-social
+##.side-social-buttons
 ##.side-socials
 ##.side-twitter
 ##.sideBarShare
@@ -7283,8 +7297,10 @@ _youtube_social_
 ##.twitterBox
 ##.twitterBtn
 ##.twitterButton
+##.twitterButtonDiv
 ##.twitterConnect
 ##.twitterContainer
+##.twitterCountDiv
 ##.twitterFeed
 ##.twitterFeedReader
 ##.twitterFeeds
@@ -10607,6 +10623,7 @@ _eu_cookie_
 ||rutv.ru/index/iframe/*/mini/isPlay/true/
 ||shop.warforge.ru/rotation/
 ||smdoctors.ru/images/stories/modules/header.jpg
+||smotri.com/xml/channels_
 ||snippets.mozilla.com^
 ||static.newsru.*/img/bg.gif
 ||ukranekdot.com/logo/
@@ -10818,6 +10835,7 @@ babblr.me#@#mc_embed_signup
 @@||outbrain.com/outbrain.js$domain=damnyouautocorrect.com
 @@||redditarchive.com^
 @@||rentalsystems.com/advert_price_imbed.asp
+@@||s-bol.com/nl/static/js/dev/widgets/cookie_notification-
 @@||sail-horizon.com/scout/*.js?$domain=theblaze.com
 @@||static.bbci.co.uk/modules/*/sharetools.js$domain=bbc.co.uk
 @@||statictapcdn-a.akamaihd.net^$domain=tapiture.com
@@ -10920,7 +10938,7 @@ comicbook.com,gleam.io,lockerdome.com,squidoo.com#@#.icon-twitter
 dailymail.co.uk,thisismoney.co.uk#@#.img-share
 instagram.com#@#.instagram-follow
 sap.com#@#.j-social-actions
-katproxy.com,kickass.to,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
+katproxy.com,kickass.so,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
 ~pinterest.com##.pin-it-button
 llbean.com#@#.pinit-overlay
 ~pinterest.com##.pinit_btn
@@ -10931,7 +10949,7 @@ privatecore.com#@#.post-fb
 ~facebook.com##.post-fb-like
 vk.com#@#.post_share
 ~reddit.com##.reddit_button
-bitly.com#@#.share-btn
+bitly.com,grooveshark.com#@#.share-btn
 vimeo.com#@#.share-button
 bleacherreport.com#@#.share-buttons
 popsugar.com.au#@#.share-container
@@ -10942,6 +10960,7 @@ baidu.com#@#.share-link
 disqus.com,google.com#@#.share-menu
 flickr.com#@#.share-options
 imgur.com,tobii.com,youtube.com#@#.share-panel
+mediafire.com#@#.share-popup
 simpletax.ca#@#.share-section
 linkedin.com#@#.share-title
 ~mediafire.com##.share-twitter
@@ -11034,7 +11053,7 @@ mail.google.com,wikipedia.org#@#a[title="Pinterest"]
 mail.google.com,twitter.com,wikipedia.org#@#a[title="Twitter"]
 mail.google.com,wikipedia.org#@#a[title="Youtube"]
 ~digg.com##div[id^="digg-widget-"]
-incgamers.com,t3n.de#@#img[alt="Facebook"]
+facebook.com,incgamers.com,t3n.de#@#img[alt="Facebook"]
 youtube.com#@#img[alt="Google+"]
 linkedin.com#@#img[alt="LinkedIn"]
 facebook.com#@#img[alt="Pinterest"]

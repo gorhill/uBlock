@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 6/ZUIsC61nAjsBNUt1QKRg
-! Version: 201411181011
+! Checksum: ZGWn+JMWHFi8VYNFVhG0NQ
+! Version: 201411201621
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 18 Nov 2014 10:11 UTC
+! Ultima modifica: 20 Nov 2014 16:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -480,6 +480,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||trilud.com/highlight_300X280.php?
 ||tripadvisor.ru/WidgetEmbed-tcphoto?$domain=russiaoggi.it
 ||trivago.it/external_rpc.php?
+||tstore.it/banner.
 ||tuoporno.com/images/banner/
 ||tuttogratis.it/hl_mfa/DXLARGE_v7num.php?
 ||unibr.altervista.org/pub.html
@@ -1158,6 +1159,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||lindro.it/banner/
 ||lineaedp.it^*/downloadfilebanner.php?
 ||lipari.biz/banners/
+||livescore.it/logos/icons/bookmakers/
+||livescore.it/upload/william-100-5casino.jpg
 ||livesicilia.it/upload/assets/files/1323,-1,729/1170-att.jpg
 ||lolasesso.com/js/messaggio.js
 ||lolasesso.com^*/pene.gif
@@ -1166,6 +1169,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||lospiffero.com/banner/
 ||losportivo.sm/img/banner/
 ||luccaindiretta.it/images/banners/
+||lultimaribattuta.it^*banner
 ||lunico.eu/images/banners/
 ||macexchange.it/included/banner*.bfr
 ||maidireborsa.it/banners/
@@ -1695,6 +1699,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||xvideomature.com/images/u_player2.jpg
 ||xvideomature.com^*/rotate.php
 ||yachtonline.it/be/servizi/ajax_banner.php?
+||yimg.com^*/Expedia-Dubai-YahooIT-$domain=yahoo.com
 ||you-ng.it/images/skin_
 ||youreporter.it/partner/
 ||zabriskiepoint.net^*/banner/
@@ -2155,7 +2160,7 @@ piacenzanight.com##.back_style
 avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
-advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,diretta.it,finanzaonline.com,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
@@ -2268,6 +2273,7 @@ gazzettadiparma.it##.box_preview_column_promo_article
 35mm.it##.box_rightcol_banner1
 35mm.it##.box_rightcol_banner2
 subito.it##.box_sponsor
+livescore.it##.box_top_books
 tgcom24.mediaset.it##.boxspeciale
 tiscali.it##.c1c6.f12
 quotidiano.net##.category-SPONSOR
@@ -2446,6 +2452,7 @@ agichina24.it,trend-online.com##.strip
 loradellacalabria.it##.strisciane1
 style.it##.style_promo
 wired.it##.supported
+livescore.it##.table-odds
 ciao.it##.tableSponsLinks
 genova24.it,ivg.it##.takeover
 panorama.it##.teaser-immobiliare
@@ -2652,6 +2659,7 @@ strettoweb.com##div[style="width:307px; height:250px; text-align:left; margin:0 
 film-review.it,fullhd.it##div[style="width:308px; margin-left: 4px; height:260px;text-align: center;display:block;margin-top:10px;margin-bottom:10px;"]
 film-review.it##div[style="width:308px;height:260px;text-align: center;display:block;margin-top:10px;margin-bottom:10px;margin-left:3px;"]
 leggioggi.it##div[style="width:310px;overflow:hidden;height:130px;margin-left:-8px;"]
+lultimaribattuta.it##div[style="width:320px;height:250px;"]
 articolotre.com##div[style="width:320px;overflow:none;padding:0;margin:0;"]
 articolotre.com##div[style="width:320px;overflow:none;padding:0;margin:20px 0px 0px 0px;"]
 beppegrillo.it,corrieredellacalabria.it##div[style="width:336px; height:280px;"]
@@ -2868,6 +2876,7 @@ termometropolitico.it##[id^="bsa"]
 @@||tvgratis.altervista.org^$elemhide
 @@||tvgratis.altervista.org^*#$image
 @@||tvgratis.altervista.org^*/advertisement.js
+@@||vvvvid.it/img/advertisement.jpg?
 @@||zeb89.altervista.org^$elemhide
 @@||zeb89.altervista.org^*#$image
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_dimensions.txt ***

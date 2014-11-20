@@ -642,8 +642,9 @@
 ||gornalak.com/pop.js
 ||goud.ma/photo/250250_
 ||gulfup.com/BATot.gif
-||gulfup.com/styles/gulfup2/np/$image
-||gulfup.com/styles/gulfup2/p/$image
+||gulfup.com/styles/*/loop/
+||gulfup.com/styles/*/np/
+||gulfup.com/styles/*/p/$image
 ||hakchouf.net/hakchouf%20affiche.swf
 ||hakchouf.net/image%20site/aff.jpg
 ||hakchouf.net/images/Banner3.png

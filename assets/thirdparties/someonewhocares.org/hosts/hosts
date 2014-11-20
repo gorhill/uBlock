@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Nov 15th, 2014 at 08:58
+# Last updated: Nov 19th, 2014 at 11:04
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -6059,6 +6059,7 @@ fe80::1%lo0	localhost
 127.0.0.1 img.directtrack.com
 127.0.0.1 imgg.dt00.net
 127.0.0.1 imgg.marketgid.com
+127.0.0.1 imgg.mgid.com
 127.0.0.1 img.layer-ads.de
 127.0.0.1 img.marketgid.com
 127.0.0.1 imgn.dt00.net

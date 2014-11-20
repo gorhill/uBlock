@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: EnHsRHtIY0Chab0QSLogoQ
-! Version: 201411181010
-! Last modified: 18 Nov 2014 10:10 UTC
+! Checksum: H4MpbQbj2sOFkHT9A0JGgA
+! Version: 201411201620
+! Last modified: 20 Nov 2014 16:20 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -231,6 +231,7 @@ ru,ua##.adv
 ##.ammblock
 ##.b-banner
 ##.b-media-banner
+##.b-offers_type_extra
 by,ru,ua##.banner_box
 ##.base-page_center > .banerBottom
 ##.base-page_center > .banerTop
@@ -2088,6 +2089,7 @@ _tizers.
 ||derploime.com^
 ||designedy.com^
 ||detaires.com^
+||detdove.ru^
 ||dev4enki.com^
 ||devaxi.org^
 ||devilclicks.com^
@@ -3068,6 +3070,10 @@ livejournal.com,sonikelf.ru,tvernews.ru,yznal.ru##.banner
 popmech.ru##.banner-label
 allmoldova.com##.banner_main
 online.anidub.com##.bgb
+letitbit.net##.block-about
+letitbit.net##.block-menu
+letitbit.net##.block-top
+letitbit.net##.block-top ~ p > .btn
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
 riotpixels.com##.br-new
 livejournal.com##.brand
@@ -3082,7 +3088,8 @@ knigi-chitaty.ru##.button[href^="/download.php?q="]
 vgtimes.ru##.click
 lostpic.net##.content > a[target="_blank"]
 sexytales.org##.contentBox > noindex
-overclockers.ru##.decoblock[style$="-16px;"], .decoblock[style$="-16px;"] + .decoblock-content
+overclockers.ru##.decoblock[style$="-16px;"]
+overclockers.ru##.decoblock[style$="-16px;"] + .decoblock-content
 mediametrics.ru##.deposit-btn
 sivator.com##.edina > a[href="http://monstro-beats.com/"]
 vgtimes.ru##.fixed_panel > a[style^="display"]
@@ -3108,7 +3115,7 @@ torrent-pirat.com##.logo + div
 glav.su##.ma_block
 gorod.cn.ua##.main > div[class$="-block"]
 sc2tv.ru##.main-frame > a[target="_blank"]
-overclockers.ru##.menu img, .menu br
+overclockers.ru##.menu img
 allmoldova.com##.middle_banner
 nur.kz##.mmc-holder-top
 macosworld.ru##.morefoot_back
@@ -3138,6 +3145,7 @@ map.cn.ua##.sModuleContent
 rupier.com##.sb > a > img[src^="http://rupier.com/forum/"]
 fast-torrent.ru,unionpeer.org##.site-brand
 2ip.ru##.speed_banner
+letitbit.net##.sub-header
 pics-money.ru##.t_bg > center
 wmforum.2bb.ru##.tclcon > noindex
 wmforum.2bb.ru##.tclcon > table[height="31"]
@@ -3156,7 +3164,12 @@ opensharing.org##:not(#index) > table > tbody > .backgr ~ tr
 gamer-info.com##[class^="br-"]
 focus.ua##a.branding
 kinoafisha.ua##a.brandup
-pornolab.net##a[href*="//128.68.74.41"],a[href*="//89.108.109.12"],a[href*="//89.108.121.205"],a[href*="//89.178.20.156"],a[href*="/store/"],a[href*="?partner="]
+pornolab.net##a[href*="//128.68.74.41"]
+pornolab.net##a[href*="//89.108.109.12"]
+pornolab.net##a[href*="//89.108.121.205"]
+pornolab.net##a[href*="//89.178.20.156"]
+pornolab.net##a[href*="/store/"]
+pornolab.net##a[href*="?partner="]
 ikinokz.net##a[href="http://hdserial.com"]
 zaycev.net##a[href="http://www.admiralmarkets.ru/webinars"]
 pornoboss.tv##a[href^="/go.php?id="]
@@ -3165,7 +3178,8 @@ delfi.ee##a[href^="http://ap.delfi.ee/b?"]
 drochunov.net##a[href^="http://chtoumenja.biz/in.htm?wm="]
 tapochek.net,unionpeer.org##a[href^="http://download.mediaplay.ru/"]
 samodelkyn.ucoz.ru##a[href^="http://evsembu.com/in.htm?wm="]
-unionpeer.org##a[href^="http://filesboom.ru/download?"],a[href^="http://forces.loading-master.ru/"]
+unionpeer.org##a[href^="http://filesboom.ru/download?"]
+unionpeer.org##a[href^="http://forces.loading-master.ru/"]
 game-10.ru##a[href^="http://game-10.ru/i.php?url=http://www.adcash.com/"]
 kachni-ka.ru##a[href^="http://get-wn.net/"]
 riper.am##a[href^="http://gomakemerich.com/"]
@@ -4161,9 +4175,10 @@ z-music.org##a[href^="http://i100.ru"]
 mainspy.ru##a[href^="http://mainspy.ru/banner/"]
 cwer.ws##a[href^="http://mediaget.com/torrent.php"]
 kaddr.com##a[href^="http://photo.stylus.com.ua/"]
+tapochek.net##a[href^="http://pleasedirect.me/"]
 delfi.lv##a[href^="http://prodai.delfi.lv/adv/"]
 adult-torrent.com,leporno.org##a[href^="http://putanapartners.com/go.php?p="]
-tapochek.net##a[href^="http://re-directme.com/"],a[href^="http://pleasedirect.me/"]
+tapochek.net##a[href^="http://re-directme.com/"]
 newstudio.tv##a[href^="http://ru.avxcore.com"]
 coop-land.ru##a[href^="http://sell-accs.ru"]
 rus-torrents.com,rus-torrents.ru##a[href^="http://sex-v-"]
@@ -4425,6 +4440,7 @@ rutracker.org###bn-idx-2
 rutracker.org###bn-tio-1
 rutracker.org###crn-1
 novosti.dn.ua###infobar_2
+noteru.com###lenta > .wt
 seonews.ru###main_tags_block + div[style^="width: 200px;"]
 free-torrents.org###page_header + center
 pirat.ca###sidebar2
@@ -4471,6 +4487,8 @@ comss.ru##.links ~ .box
 forum.soft4dle.com##.navbar > br
 rentv-smolensk.ru##.promo
 medikforum.ru##.r_banner
+noteru.com##.reklama_my
+noteru.com##.reklama_my2
 medvesti.com##.rew-block
 softobase.com##.rkl-horizontal
 cheboksary.ws##.ru200200
@@ -5135,6 +5153,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||muzoff.ru/html/
 ||muzoff.ru/rek/
 ||muzofon.com/banner/
+||muzofon.com/bg/
 ||my-cinema.net/branding/
 ||my-hit.ru/*/banner/
 ||my-hit.ru/branding/
@@ -5303,6 +5322,7 @@ _advideo/$object-subrequest,domain=megogo.net
 ||rekportal.ru/wp-content/uploads/$object
 ||relinka.net/banner
 ||remoteshaman.com^*/gcheck.js
+||ren.tv/sites/default/files/*_banner_
 ||restoclub.ru/pic/iblocks/
 ||restotv.ru/promo/$domain=restoclub.ru
 ||rf-cheats.ru/img/$object
@@ -6122,7 +6142,6 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||promo.leadia.ru^$domain=zakonrf.info
 @@||promo.static.gamexp.ru^
 @@||propellerads.com/ajs.php?zoneid=$domain=goclips.tv|letitbit.net
-@@||pub.tvigle.ru/swf/new_ad_wrapper.swf$domain=ren-tv.com
 @@||renault.ru/_beta/banner_system/banner.php$domain=renault.ru
 @@||rf-mods.ru/uploads/banners/
 @@||rock-online.ru/thema/rock/images/baner_$~third-party

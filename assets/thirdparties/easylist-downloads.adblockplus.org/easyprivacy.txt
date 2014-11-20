@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: hCU89LXdBF9OOwYhQPj6eQ
-! Version: 201411181011
+! Checksum: w3+aL9DQYlZCXgqpSJXwaQ
+! Version: 201411201621
 ! Title: EasyPrivacy
-! Last modified: 18 Nov 2014 10:11 UTC
+! Last modified: 20 Nov 2014 16:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1840,6 +1840,7 @@
 /tracking/addview/*
 /tracking/beacon/?
 /tracking/clicks
+/tracking/create?
 /tracking/epixels.
 /tracking/index.
 /tracking/pixel.
@@ -2711,6 +2712,7 @@ http://utm.
 ||ensighten.com^$third-party
 ||enticelabs.com^$third-party
 ||eperfectdata.com^$third-party
+||epilot.com^$third-party
 ||epitrack.com^$third-party
 ||eproof.com^$third-party
 ||eps-analyzer.de^$third-party
@@ -9424,6 +9426,7 @@ http://utm.
 @@||metrics.thetrainline.com/b/ss/$image
 @@||metrics.ticketmaster.com/b/ss/$image
 @@||oms.dowjoneson.com/b/ss/$image,domain=wsj.com
+@@||omtrdc.net/b/ss/$image,domain=amazon.com
 @@||scorecardresearch.com/r2?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
 @@||scorecardresearch.com/r?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
 @@||simyo.de/b/ss/$image
@@ -9467,6 +9470,7 @@ http://utm.
 @@||ivwextern.prosieben.de^*/ivw_flashscript.php?$script
 @@||jetztspielen.de^*/EventTracker.js
 @@||js.revsci.net/gateway/gw.js?$domain=t-online.de
+@@||levexis.com/clients/planetsports/1.js$domain=planet-sports.de
 @@||longtailvideo.com/5/googlytics/googlytics-1.js$domain=arte.tv
 @@||maxmind.com^*/geoip.js$domain=automatensuche.de
 @@||musicstore.de^*/emos2.js

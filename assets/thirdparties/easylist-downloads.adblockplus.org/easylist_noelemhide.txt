@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 9t04LfJITdeVEC+UZC0XHQ
-! Version: 201411181010
+! Checksum: ImJa3ZhuF8zq9wttGjlpEQ
+! Version: 201411201620
 ! Title: EasyList without element hiding rules
-! Last modified: 18 Nov 2014 10:10 UTC
+! Last modified: 20 Nov 2014 16:20 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -3356,6 +3356,7 @@
 /eas?camp=*;cre=
 /eas?cu=*;cre=
 /eas?cu=*;ord=
+/eas_fif.
 /eas_tag.1.0.js
 /easyads.
 /easyads/*
@@ -4683,6 +4684,7 @@
 /scripts/feedmeCaf.php?q=*&d=*&ron=$script
 /scripts/zanox-
 /scrollads/*
+/scrpads.
 /search-ads?
 /search.php?uid=*.*&src=
 /search/ad/*
@@ -7047,6 +7049,7 @@ _popunder+$popup
 ||adworkmedia.com^$third-party
 ||adworldmedia.com^$third-party
 ||adworldmedia.net^$third-party
+||adxcore.com^$third-party
 ||adxion.com^$third-party
 ||adxpose.com^$third-party
 ||adxpower.com^$third-party
@@ -7811,6 +7814,7 @@ _popunder+$popup
 ||eyewond.hs.llnwd.net^$third-party
 ||eyewonder.com^$third-party
 ||ezadserver.net^$third-party
+||ezmob.com^$third-party
 ||ezoic.net^$third-party
 ||fairadsnetwork.com^$third-party
 ||falkag.net^$third-party
@@ -9475,6 +9479,7 @@ _popunder+$popup
 ||entru.co^$third-party
 ||ergers.net^$third-party
 ||ershgrst.com^$third-party
+||exernala.com^$third-party
 ||flaudnrs.me^$third-party
 ||flaurse.net^$third-party
 ||fowar.net^$third-party
@@ -12599,7 +12604,7 @@ _popunder+$popup
 ||9news.com/promo/
 ||a.giantrealm.com^
 ||a.kat.ph^
-||a.kickass.to^
+||a.kickass.so^
 ||a.kickasstorrent.me^
 ||a.kickassunblock.info^
 ||a.kickassunblock.net^
@@ -12663,6 +12668,7 @@ _popunder+$popup
 ||adpost.com/skyserver.g.
 ||adpost.com^*.g.html
 ||ads-*.hulu.com^
+||ads-grooveshark.com^
 ||ads-rolandgarros.com^
 ||ads.pof.com^
 ||ads.zynga.com^
@@ -13603,7 +13609,8 @@ _popunder+$popup
 ||fileflyer.com/img/dap_banner_
 ||filefront.com/linkto/
 ||filegaga.com/ot/fast.php?
-||filenuke.com/a/img/watch-now.gif
+||filenuke.com/a/img/wnow.gif
+||filenuke.com/xapu.php?
 ||fileom.com/img/downloadnow.png
 ||fileom.com/img/instadownload2.png
 ||fileplanet.com/fileblog/sub-no-ad.shtml
@@ -13819,6 +13826,7 @@ _popunder+$popup
 ||gestetnerupdates.com^*/eagle-sewer.gif
 ||gestetnerupdates.com^*/Gestetner-Miles.gif
 ||gestetnerupdates.com^*/perfect-auto-collision_banner.gif
+||get.thefile.me^
 ||getfoxyproxy.org/images/abine/
 ||getoffmyinternets.net/code/long0.jpg
 ||getoffmyinternets.net/code/square0.png
@@ -15481,6 +15489,7 @@ _popunder+$popup
 ||sootoday.com/uploads/banners/
 ||sorcerers.net/images/aff/
 ||soundcloud.com/audio-ad?
+||soundcloud.com/promoted/
 ||soundspheremag.com/images/banners/
 ||soundtracklyrics.net^*_az.js
 ||sourcefed.com/wp-content/uploads/*/netflix4.jpg
@@ -15493,6 +15502,7 @@ _popunder+$popup
 ||speedtv.com.edgesuite.net/img/monthly/takeovers/
 ||speedtv.com/js/interstitial.js
 ||speedtv.com^*/tissot-logo.png
+||speedvid.net/ad.htm
 ||speedvideo.net/img/playerFk.gif
 ||speroforum.com/images/sponsor_
 ||spicegrenada.com/images/banners/
@@ -16992,6 +17002,7 @@ _popunder+$popup
 ||pornfanplace.com/js/pops.
 ||pornfanplace.com/rec/
 ||pornhub.com/album/$xmlhttprequest
+||pornhub.com/catagories/costume/
 ||pornhub.com/front/alternative/
 ||pornhub.com^$script,domain=pornhub.com
 ||pornhub.com^$subdocument,~third-party
@@ -17326,7 +17337,7 @@ _popunder+$popup
 @@||24ur.com/adserver/adall.
 @@||24ur.com/static/*/banners.js
 @@||2mdn.net/crossdomain.xml$domain=rte.ie
-@@||2mdn.net/instream/*/adsapi_$object-subrequest,domain=3news.co.nz|49ers.com|atlantafalcons.com|azcardinals.com|baltimoreravens.com|buccaneers.com|buffalobills.com|chargers.com|chicagobears.com|clevelandbrowns.com|colts.com|dallascowboys.com|denverbroncos.com|detroitlions.com|giants.com|globaltv.com|houstontexans.com|jaguars.com|kcchiefs.com|miamidolphins.com|neworleanssaints.com|newyorkjets.com|packers.com|panthers.com|patriots.com|philadelphiaeagles.com|raiders.com|redskins.com|rte.ie|seahawks.com|steelers.com|stlouisrams.com|titansonline.com|vikings.com
+@@||2mdn.net/instream/*/adsapi_$object-subrequest,domain=3news.co.nz|49ers.com|atlantafalcons.com|azcardinals.com|baltimoreravens.com|buccaneers.com|buffalobills.com|chargers.com|chicagobears.com|clevelandbrowns.com|colts.com|dallascowboys.com|denverbroncos.com|detroitlions.com|giants.com|globaltv.com|houstontexans.com|jaguars.com|kcchiefs.com|miamidolphins.com|neworleanssaints.com|newyorkjets.com|packers.com|panthers.com|patriots.com|philadelphiaeagles.com|raiders.com|redskins.com|rte.ie|seahawks.com|steelers.com|stlouisrams.com|titansonline.com|vikings.com|wpcomwidgets.com
 @@||2mdn.net/instream/html5/ima3.js
 @@||2mdn.net/viewad/*/B*_$image,domain=jabong.com
 @@||2mdn.net^*/jwplayer.js$domain=doubleclick.net
@@ -19082,7 +19093,6 @@ _popunder+$popup
 @@||adm.fwmrm.net/p/MTG_Live/Video2AdRenderer.swf$object-subrequest,domain=tv3play.se
 @@||admeld.com/ad/iframe/1122/pixfuture/300x250/$subdocument,domain=fileover.net
 @@||admeld.com/meld128.js$domain=fileover.net
-@@||admin.brightcove.com/viewer/*/AdvertisingModule.swf$object-subrequest,domain=player.stv.tv
 @@||admin.brightcove.com^$object-subrequest,domain=tvn.pl|tvn24.pl
 @@||adnxs.com^$script,domain=kissanime.com
 @@||adocean.pl^*/ad.js?id=$script,domain=tvn24.pl
@@ -19155,7 +19165,7 @@ _popunder+$popup
 @@||blogspot.com^*#-$image,domain=pirlotv.tv
 @@||boincstats.com/js/adframe.js
 @@||boxxod.net/advertisement.js
-@@||brightcove.com^*/AdvertisingModule.swf$object-subrequest,domain=channel5.com
+@@||brightcove.com^*/AdvertisingModule.swf$object-subrequest,domain=channel5.com|dave.uktv.co.uk|player.stv.tv
 @@||btspread.com/eroex.js
 @@||buysellads.com/ac/bsa.js$domain=jc-mp.com
 @@||bwriters.com^$script,domain=writing.com
@@ -19574,6 +19584,7 @@ _popunder+$popup
 @@||urlgalleries.net^*/adhandler/$subdocument
 @@||usaupload.net/ads.js
 @@||v.fwmrm.net/ad/p/1$xmlhttprequest,domain=uktv.co.uk
+@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=dave.uktv.co.uk
 @@||vencko.net^$elemhide
 @@||veohb.net/js/advertisement.js$domain=veohb.net
 @@||ver-flv.com^$elemhide

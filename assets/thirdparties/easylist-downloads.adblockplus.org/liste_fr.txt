@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: SDueLhQxMM6EbacReHdTIw
-! Version: 201411181011
+! Checksum: P+H7irDJZkQBddnq3hvk6g
+! Version: 201411201621
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -43,6 +43,7 @@
 /regie_pub/*
 /regiepub/*
 =publicite&
+?clickTag=
 @publicite@
 _pub_728.
 _publicitaire/
@@ -65,6 +66,7 @@ _regiepub/
 ||ad.prismamediadigital.com^$third-party
 ||ad4you.org^$third-party
 ||ad6media.fr^$popup,third-party
+||adaccess.fr^$third-party
 ||adecolo.com^$third-party
 ||adfever.com^$third-party
 ||adikteev.com^$third-party
@@ -84,7 +86,6 @@ _regiepub/
 ||advertsponsor.com^$third-party
 ||adwidecenter.com^$third-party
 ||adxcore.com^$popup,third-party
-||adxcore.com^$third-party
 ||affidate.com^$third-party
 ||affidirect.com^$third-party
 ||affiliation-france.com^$popup,third-party
@@ -203,6 +204,7 @@ _regiepub/
 ||partner.uncadeau.com^$third-party
 ||payglad.com^$third-party
 ||piximedia.fr^$third-party
+||plusservicepartners.com^$third-party
 ||pornstreet.com^$popup,third-party
 ||pourmajeurs.com^$third-party
 ||promo.alienbiz.com^$third-party
@@ -219,6 +221,7 @@ _regiepub/
 ||pub2.cotatel.net^$third-party
 ||publike.fr^$third-party
 ||puboclic.com^$third-party
+||quaelead.com^$third-party
 ||reactivpub.fr^$third-party
 ||regie.audioprint.fr^$third-party
 ||regiedepub.com^$third-party
@@ -809,6 +812,8 @@ _regiepub/
 ||chronopost.fr^*/public/visuels/partenaires/
 ||cinemay.com/bannier/
 ||clubic.com/06010586-photo-bg.jpg
+||clubic.com^*/img/content/*-300x150.
+||clubic.com^*/img/home/300x150-
 ||clubpoker.net/medias/images/club-poker/habillages/
 ||coco.fr/chat/bigban
 ||commeaucinema.com/ads/
@@ -1017,6 +1022,7 @@ _regiepub/
 ||gizmodo.fr/banners/
 ||goelovb.com^*/armortv.png
 ||goelovb.com^*/fps.gif
+||goldenboys.fr/images/klops-promo-goldenboys-180x180-v5.jpg
 ||goole.fr/images/pub.jpg
 ||goziga.com/ban/
 ||goziga.com^*/banangela.gif
@@ -1154,6 +1160,7 @@ _regiepub/
 ||leboncoin.fr^*@Middle,
 ||leboncoin.fr^*@Top,
 ||leboncoin.fr^*@Top1?
+||leboncoin.fr^*@x01,
 ||lebuteur.com/danone/
 ||lebuteur.com/data/dzauto.swf
 ||lebuteur.com/data/gilette.jpg
@@ -1337,6 +1344,7 @@ _regiepub/
 ||onvasortir.com/fondnivea.jpg
 ||onvasortir.com/habillage_$image
 ||onvasortir.com/pub/
+||opex360.com/pub/
 ||orientation-chabab.com/img/pub.jpg
 ||otaku-attitude.net^*/okazu-manga.gif
 ||ouedkniss.com/*/pubs/
@@ -1976,6 +1984,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.header_pub
 ##.home_pub
 ##.iframe_pub
+##.kadmer-ad
 ##.leftmenupub
 ##.little_pub
 ##.logo_pub
@@ -2084,6 +2093,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.row_pub
 ##.sqrpub
 ##.srcPub
+##.srcPubZone
 ##.texte_ads
 ##.texte_ads_plug
 ##.texte_pub
@@ -2940,7 +2950,6 @@ forumconstruire.com##.sponso_contener
 yahoo.com##.sponsor-dd
 lokan.fr,moto85.com##.sponsors
 msn.com##.sponsorship
-espace.mu##.srcPubZone
 blogs.lesinrocks.com##.sub_headline.top
 imobie.fr##.support_guide_download_upper
 walfoot.be##.take-banner
@@ -4024,6 +4033,7 @@ debrideurstream.fr#@##pubdirecte
 fairytailmx.com#@##sponsored-ad
 forum.virtualdjing.com#@#.adFrame
 gamingroom.tv,vide-greniers.org#@#.adsbygoogle
+goldenboys.fr#@#.afs_ads
 freedom-ip.com#@#.pub_vertical
 fr.audiofanzine.com#@#div[id^="div-gpt-ad-"]
 eclypsia.com#@#img[width="728"][height="90"]

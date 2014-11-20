@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1J/fgeKqXygbgMSt40RXKw
-! Version: 201411181011
+! Checksum: gmdFmjy6AFFFdtRx0vaqeQ
+! Version: 201411201621
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 18 Nov 2014 10:11 UTC
+! Last modified: 20 Nov 2014 16:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -228,6 +228,8 @@ _woz_banner_vote.
 ###werbeblock_rechts
 ###werbebox
 ###werbeflaeche
+###werbeflaeche-3
+###werbeflaeche-billboard-big
 ###werbeflaeche-mpu-big
 ###werbekasten
 ###werbeleiste
@@ -1626,6 +1628,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||0815sms.com/doku/$script
 ||0nk.de/banner/
 ||1000hp.net/banner/
+||149.13.77.20^$domain=ww3.cad.de
 ||193.107.16.142/f.php
 ||1jux.net/js/1l.js
 ||1jux.net/js/4p.js
@@ -1913,7 +1916,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||center.tv/cms/fileadmin/site/flash/anzeigen/
 ||center.tv^*_pimpmyleasing.jpg
 ||centertv.de/upload/anzeigen/
+||chillmo.com/wp-content/uploads/*/acunitywp.jpg
 ||chillmo.com/wp-content/uploads/*/fc4ks.jpg
+||chillmo.com/wp-content/uploads/*/gtavchillmo.jpg
 ||chillmo.com/wp-content/uploads/*/mariokart81.jpg
 ||chillmo.com/wp-content/uploads/*/thelastofusremastered.jpg
 ||chillmo.com/wp-content/uploads/2014/05/watchdogs.jpg
@@ -3659,6 +3664,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ww-kurier.de/images/ferdihombach.gif
 ||ww-kurier.de/pic/dbeyer_250_200.swf
 ||ww4.cad.de^*.php?*^what=zone:
+||ww4.cad.de^*/axjs.php
 ||ww4.cad.de^*/view.php?what=zone:
 ||wz-newsline.de/polopoly_fs/*-900x120.
 ||xbox-newz.de/portal/images/brandings/
@@ -3776,6 +3782,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||adsfac.eu/link.asp?$popup,domain=iamgamer.de
 ||alturl.com^$popup,domain=byte.to
 ||amazon.de/?tag=bluray18-21$popup,domain=bluray-disc.de
+||amazon.de/gp/*&tag=$popup,domain=chillmo.com
 ||amazon.de/s/*&tag=$popup,domain=bluray-disc.de
 ||amazon.de/s/?*&tag=$popup,domain=chillmo.com
 ||amazon.de^*&tag=$popup,domain=gamona.de
@@ -3862,7 +3869,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||usenext.de^$popup,domain=5vor12.de
 ||vampirediaries.in/popin.php$popup
 ||vibeo.tv^$popup,domain=movie-blog.org
-||videoplaza.tv^$popup,domain=clipfish.de
+||videoplaza.tv^$popup,domain=clipfish.de|rtlnitronow.de
 ||williamhill.com^$popup,domain=trailerzone.info
 ||williamhillcasino.com^$popup,domain=trailerzone.info
 ||xerdus.com^$popup,domain=gamestar.de
@@ -4066,6 +4073,7 @@ tikonline.de###bigsize
 magistrix.de###bigsize-top
 pcpraxis.de,rund-magazin.de###bigsizebanner
 volksfreund.de###billboard
+prad.de###billboardbig
 4players.de###billiger-charts
 geizkragen.de###bl_top
 holzwerken.net###bla
@@ -4632,7 +4640,7 @@ chefkoch.de###recipe-com-user-banner
 chefkoch.de###recipe_com_user_banner
 clipfish.de###rect
 kicker.de,kidszone.de,os-informer.de,pcgames.de,pcgameshardware.de,smartphone-daily.de,videogameszone.de,widescreen-online.de###rect_anz
-cineman.de,macprime.ch,moonwalk.ch,neue-braunschweiger.de,xboxone-forum.net###rectangle
+cineman.de,macprime.ch,moonwalk.ch,neue-braunschweiger.de,prad.de,xboxone-forum.net###rectangle
 laut.de###rectangleSpace
 autobild.de###rectanglemodul
 abacho.de###reisemarkt-sidebar
@@ -5973,6 +5981,7 @@ immonet.de##a[href="http://www.immonet.de/service/toom-baumarkt.html"]:first-chi
 querverweis.net##a[href="http://www.intimvideos.com"]
 5-jahres-wertung.de##a[href="http://www.kostenloses-konto24.de/girokonto-vergleich.html"]
 movie-blog.org##a[href="http://www.movie-blog.org/2007/FD"]
+movie-blog.org##a[href="http://www.movie-blog.org/2011/FD"]
 mysummit.wordpress.com##a[href="http://www.prontocafe.eu/de/"] > img
 soft-ware.net##a[href="http://www.soft-ware.net/pics/gewinnspiel.jpg"]
 5-jahres-wertung.de##a[href="http://www.tagesgeld-direktbank.de/tagesgeld-vergleich.html"]
@@ -7010,6 +7019,7 @@ wetterbote.de##table[width="738"][height="90"]
 erlanger-nachrichten.de,nz-online.de##table[width="770"]
 hat-gar-keine-homepage.de##table[width="800"][align="center"] > tbody:first-child:last-child > tr:last-child > td
 forum-speditionen.de##table[width="846"][style="background-color:#E0E0E0;height:75px;text-align:center;"]
+ww3.cad.de##table[width="95%"][cellspacing="1"][border="0"] > tbody > tr > td[valign="top"]:first-child + td[style="vertical-align: top;"]:last-child
 gamefront.de##table[width="950"][bgcolor][align="center"]
 gamefront.de##table[width="950"][cellspacing="1"][cellpadding="0"][border="0"][bgcolor="#ffffff"][align="left"]
 dforum.net##table[width="983"][cellspacing="5"][style="border:1px solid #505A53;border-top:none;background:#ADB088;"]

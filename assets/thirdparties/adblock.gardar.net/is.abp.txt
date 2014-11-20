@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! [Icelandic ABP List]
 ! Adblock Plus listi fyrir íslenskar vefsíður / Adblock Plus list for icelandic websites
-! Síðast uppfærður / Last updated 4 Október/Oktober 2014
+! Síðast uppfærður / Last updated 19 Nóvember/November 2014
 ! Listinn er í þróun, láttu vita ef þú finnur villur eða vefi sem vantar í listann / The list is under development, please let me know if you find any errors or webs missing from the list
 ! adblock@gardar.net
 ! http://adblock.gardar.net
@@ -136,3 +136,5 @@ gaflari.is##div[class*="auglysingaplass"]
 ||hjartalif.is/banners/
 ||islenska.is/digital/graenmetisbaendur/safabanner/
 ||kjarninn.is/auglysingar123/
+kjarni.is##.ad
+||vefbordar.jl.is/

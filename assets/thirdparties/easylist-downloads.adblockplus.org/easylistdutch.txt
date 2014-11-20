@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: 2lFb3oH1GSK7fWBZcsHF+w
-! Version: 201411181011
+! Checksum: 0G0cQPCmP9iRctbZHqFk+A
+! Version: 201411201621
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 18 Nov 2014 10:11 UTC
+! Last modified: 20 Nov 2014 16:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -54,6 +54,7 @@ _advertentieleaderboardhome.
 ||2mdn.net^$domain=autoweek.nl|eredivisielive.nl|focus-wtv.tv|garagetv.be|l1.nl
 ||ad-prod.ster.nl^$third-party
 ||ad-skills-copy.nl^$third-party
+||admatcher.videostrip.com^$domain=q-music.nl|radioveronica.nl|skoften.net|sport1.nl|vi.nl
 ||admerize.be^$third-party
 ||adrcdn.com^$third-party
 ||affiliatepartners.com^$third-party
@@ -115,6 +116,7 @@ _advertentieleaderboardhome.
 ||system.adquick.nl^$third-party
 ||tel.adversitement.nl^$third-party
 ||ti.tradetracker.nl^$third-party
+||tools.islive.nl^$third-party
 ||topsiteguide.com^$third-party
 ||topzorgverzekeringvergelijken.nl^$third-party
 ||ttbe.be^$third-party
@@ -257,7 +259,6 @@ _advertentieleaderboardhome.
 ||thisislive.com/promo/
 ||tienerorgies.be/promo/
 ||tienertube.nl/banners/
-||tools.islive.nl^*/promo_
 ||totaalwijzer.nl/widget/$third-party
 ||triple-it.nl/itbizzer/
 ||trivago.nl/nl/srv/destination/js/$domain=popinstituut.nl
@@ -271,7 +272,7 @@ _advertentieleaderboardhome.
 ||vegadates.com^*468x60wb7x.gif
 ||versio.nl/banners/
 ||videostrip.com/adsets/
-||videostrip.com/serve_cad.php?$domain=classicfm.nl|hitradioveronica.nl|myradio.nl|skyradio.nl|zuka.nl
+||videostrip.com/serve_cad.php?$domain=classicfm.nl|hitradioveronica.nl|myradio.nl|www.skyradio.nl|zuka.nl
 ||voetbalshop.nl/banner_
 ||voetbalshop.nl/upload/image/voorpagina/vi_banners/
 ||w247.nl/v/64.js
@@ -678,6 +679,7 @@ _advertentieleaderboardhome.
 !--------Uitzonderingen (derden)--------!
 ! *** easylistdutch/block_third_party_whitelist.txt ***
 @@||advertentieplanet.nl/public/advertenties/
+@@||ds1.nl/c/?$domain=opproef.nl
 @@||media.rtl.nl/web/components/service/streamspots/*.mp4$object-subrequest,domain=538.nl|rtl7darts.nl
 @@||staticfinancereview.nl/advertenties/$image,domain=rente.nl
 ! Uitzonderingen voor EasyList
@@ -1061,6 +1063,7 @@ vitesse.org##.center_banner
 tripadvisor.nl##.commerce
 bnr.nl##.commercialLinks
 moviemeter.nl##.compare_banner_outer
+xmissy.nl##.container-aanraders
 ie-forum.nl##.containersponsored
 uitburo.nl##.cultural-add-frontpage
 html-site.nl##.cursus
@@ -1130,6 +1133,7 @@ engineeringnet.be##.sponslinks
 europages.nl,utopiatv.nl,vcmw-sigma.nl##.sponsor
 afspraakjes.be,boekmeter.nl,gamesmeter.nl,moviemeter.nl,musicmeter.nl,tvgids.nl##.sponsored
 zeelandnet.nl##.spotlight-list-item._left
+nos.nl##.ster-banner
 voetbalkrant.com##.take-banner
 z24.nl##.teaser
 metronieuws.nl##.teaser-component-inner
