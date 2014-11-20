@@ -180,14 +180,19 @@ vAPI.tabs.remove = function(tabId) {
 /******************************************************************************/
 
 vAPI.tabs.injectScript = function(tabId, details, callback) {
-    if ( typeof callback !== 'function' ) {
-        callback = function(){};
-    }
-
+    var onScriptExecuted = function() {
+        // Must check `lastError` or else this may happen in the console:
+        //  Unchecked runtime.lastError while running tabs.executeScript: The tab was closed.
+        if ( chrome.runtime.lastError ) {
+        }
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
     if ( tabId ) {
-        chrome.tabs.executeScript(tabId, details, callback);
+        chrome.tabs.executeScript(tabId, details, onScriptExecuteds);
     } else {
-        chrome.tabs.executeScript(details, callback);
+        chrome.tabs.executeScript(details, onScriptExecuted);
     }
 };
 
