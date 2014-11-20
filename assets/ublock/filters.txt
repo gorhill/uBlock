@@ -169,3 +169,7 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/336
 # To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
 @@||flurry.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/374
+# To counter `2mdn.net` in Peter Lowe's, `s0.2mdn.net` in hpHosts
+@@||s0.2mdn.net/instream/*$object,script
