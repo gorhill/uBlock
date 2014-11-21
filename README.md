@@ -45,7 +45,7 @@ Being lean doesn't mean blocking less.<br>
 
 ## Installation
 
-From the [Chrome store](https://chrome.google.com/webstore/) (search for "ublock" -- the store page crashes if I link directly to the extension...),
+From the [Chrome store](https://chrome.google.com/webstore/category/apps?utm_source=chrome-ntp-icon) (search for "ublock"),
 the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
 
 To benefit from the higher efficiency, it is of course not advised to use an
