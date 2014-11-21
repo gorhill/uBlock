@@ -69,11 +69,22 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 vAPI.tabs.get = function(tabId, callback) {
+    var onTabReady = function(tab) {
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
+        if ( chrome.runtime.lastError ) {
+            return;
+        }
+        callback(tab);
+    }
     if ( tabId !== null ) {
-        chrome.tabs.get(tabId, callback);
+        chrome.tabs.get(tabId, onTabReady);
         return;
     }
     var onTabReceived = function(tabs) {
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
+        if ( chrome.runtime.lastError ) {
+            return;
+        }
         callback(tabs[0]);
     };
     chrome.tabs.query({ active: true, currentWindow: true }, onTabReceived);
@@ -181,8 +192,7 @@ vAPI.tabs.remove = function(tabId) {
 
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
-        // Must check `lastError` or else this may happen in the console:
-        //  Unchecked runtime.lastError while running tabs.executeScript: The tab was closed.
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
         }
         if ( typeof callback === 'function' ) {
