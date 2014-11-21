@@ -21,6 +21,7 @@
 
 /* jshint bitwise: false */
 /* global µBlock, YaMD5 */
+
 'use strict';
 
 /******************************************************************************/
@@ -202,23 +203,43 @@ var toUrlKey = function(url) {
 
 // Ref: http://www.iana.org/assignments/media-types/media-types.xhtml
 
+// https://github.com/gorhill/uBlock/issues/362
+// 
+// Using http://dev.w3.org/2006/webapi/FileAPI/#enctype logic, at least it's
+// something... It looks like this is what the browser should be doing with
+// `data:` URI, but it's not happening, so i will do it manually for now.
+// 
+// ...
+// 5. If the "getting an encoding" steps above return failure, then set 
+//    encoding to null.
+// 6. If encoding is null, then set encoding to utf-8.
+
 var extractMimeType = function(ctin) {
     var pos = ctin.indexOf(';');
-    return pos === -1 ? ctin.trim() : ctin.slice(0, pos).trim();
+    var type = pos === -1 ? ctin.trim() : ctin.slice(0, pos).trim();
+    var charset = pos === -1 ? '' : ctin.slice(pos).trim();
+    if ( charset !== '' ) {
+        return type + ';' + charset;
+    }
+    // http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
+    if ( type.slice(0, 4) === 'text' || /^application\/[a-z-]+script$/.test(type) ) {
+        return type + ';charset=utf-8';
+    }
+    return type;
 };
 
 /******************************************************************************/
 
 var metadataExists = function(urlKey) {
     return typeof urlKey === 'string' &&
-           metadata.urlKeyToHashMap.hasOwnProperty(urlKey);
+            metadata.urlKeyToHashMap.hasOwnProperty(urlKey);
 };
 
 /******************************************************************************/
 
 var contentExists = function(hash) {
     return typeof hash === 'string' &&
-           hashToContentMap.hasOwnProperty(hash);
+            hashToContentMap.hasOwnProperty(hash);
 };
 
 /******************************************************************************/
@@ -362,6 +383,7 @@ var cacheAsset = function(url) {
         if ( this.status !== 200 ) {
             return;
         }
+        //console.log('headers for "%s" = %o', url, this.getAllResponseHeaders());
         var mimeType = extractMimeType(this.getResponseHeader('Content-Type'));
         var uint8Buffer = new Uint8Array(this.response);
         var yamd5 = new YaMD5();
