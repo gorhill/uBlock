@@ -1,7 +1,7 @@
 2d0a4786a7175bf73b788436cf65bc5a assets/ublock/filter-lists.json
 6572a7bce5f1747fee597cb170bd3b98 assets/ublock/privacy.txt
 6fdc6f9d056ebb56b6fe1a1db1173a94 assets/ublock/filters.txt
-306e54c080ce68afe7ae7cef9a2541e8 assets/ublock/mirror-candidates.txt
+4d9e52dd0f2fa7b4ff3c80043096e542 assets/ublock/mirror-candidates.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 d8c58f5bb8072907ae361bc14dbbd28f assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt

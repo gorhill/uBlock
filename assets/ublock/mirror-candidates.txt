@@ -30,7 +30,9 @@ platform.twitter.com
 # https://github.com/gorhill/uBlock/issues/270#issuecomment-57913228
 # Ref: http://www.asp.net/ajax/cdn
 ajax.aspnetcdn.com
-    ^ajax\.aspnetcdn\.com\/ajax\/[^?#]+
+    # Avoid CSS-based themes, because relative URLs won't work from
+    # within a data: URI
+    ^ajax\.aspnetcdn\.com\/ajax\/(?!.*\/themes\/.+\.css)[^?#]+
 
 # Ref: https://tech.yandex.ru/jslibs/
 yastatic.net
