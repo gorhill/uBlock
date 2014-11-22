@@ -75,7 +75,7 @@ vAPI.getURL = function(path) {
 };
 
 vAPI.i18n = function(s) {
-    return chrome.i18n.getMessage(s) || s;
+    return chrome.i18n.getMessage(s);
 };
 
 setScriptDirection(vAPI.i18n('@@ui_locale'));
