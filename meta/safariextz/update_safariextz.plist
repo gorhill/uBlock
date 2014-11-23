@@ -6,15 +6,15 @@
 		<array>
 			<dict>
 				<key>CFBundleIdentifier</key>
-				<string>{app_id}</string>
+				<string>net.gorhill.uBlock</string>
 				<key>Developer Identifier</key>
-				<string>{developer_identifier}</string>
+				<string></string>
 				<key>CFBundleShortVersionString</key>
-				<string>{version}</string>
+				<string>0.7.0.10</string>
 				<key>CFBundleVersion</key>
-				<string>{build_number}</string>
+				<string>1456132</string>
 				<key>URL</key>
-				<string>{url}/{name}.safariextz</string>
+				<string>https://.../uBlock.safariextz</string>
 			</dict>
 		</array>
 	</dict>
