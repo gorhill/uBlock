@@ -158,9 +158,9 @@ vAPI.tabs.open = function(details) {
 
     if ( details.select ) {
         chrome.tabs.query({ currentWindow: true }, function(tabs) {
-            var url = targetURL.replace(rgxHash, '');
-            // this is questionable
             var rgxHash = /#.*/;
+            // this is questionable
+            var url = targetURL.replace(rgxHash, '');
             var selected = tabs.some(function(tab) {
                 if ( tab.url.replace(rgxHash, '') === url ) {
                     chrome.tabs.update(tab.id, { active: true });

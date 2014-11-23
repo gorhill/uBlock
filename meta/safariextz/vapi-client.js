@@ -21,8 +21,6 @@
 
 // For non background pages
 
-/* global addMessageListener, removeMessageListener, sendAsyncMessage */
-
 /******************************************************************************/
 
 (function() {
@@ -36,41 +34,40 @@ self.vAPI.safari = true;
 
 /******************************************************************************/
 
-// since this is common across vendors
 var messagingConnector = function(response) {
-    var channel, listener;
-
-    if (!response) {
+    if ( !response ) {
         return;
     }
 
-    if (response.broadcast === true) {
-        for (channel in vAPI.messaging.channels) {
-            listener = vAPI.messaging.channels[channel].listener;
+    var channel, listener;
 
-            if (typeof listener === 'function') {
+    if ( response.broadcast === true ) {
+        for ( channel in vAPI.messaging.channels ) {
+            listener = vAPI.messaging.channels[channel].listener;
+            if ( typeof listener === 'function' ) {
                 listener(response.msg);
             }
         }
-
         return;
     }
 
-    if (response.requestId) {
+    if ( response.requestId ) {
         listener = vAPI.messaging.listeners[response.requestId];
         delete vAPI.messaging.listeners[response.requestId];
         delete response.requestId;
     }
 
-    if (!listener) {
+    if ( !listener ) {
         channel = vAPI.messaging.channels[response.portName];
         listener = channel && channel.listener;
     }
 
-    if (typeof listener === 'function') {
+    if ( typeof listener === 'function' ) {
         listener(response.msg);
     }
 };
+
+/******************************************************************************/
 
 var uniqueId = function() {
     return parseInt(Math.random() * 1e10, 10).toString(36);
@@ -83,8 +80,9 @@ var uniqueId = function() {
 vAPI.messaging = {
     channels: {},
     listeners: {},
-    requestId: 0,
+    requestId: 1,
     connectorId: uniqueId(),
+
     setup: function() {
         this.connector = function(msg) {
             // messages from the background script are sent to every frame,
@@ -108,11 +106,13 @@ vAPI.messaging = {
     close: function() {
         if (this.connector) {
             safari.self.removeEventListener('message', this.connector, false);
-            this.connector = this.channels = this.listeners = null;
+            this.connector = null;
+            this.channels = {};
+            this.listeners = {};
         }
     },
     channel: function(channelName, callback) {
-        if (!channelName) {
+        if ( !channelName ) {
             return;
         }
 
@@ -129,15 +129,19 @@ vAPI.messaging = {
                     msg: message
                 };
 
-                if (callback) {
-                    message.requestId = ++vAPI.messaging.requestId;
+                if ( callback ) {
+                    message.requestId = vAPI.messaging.requestId++;
                     vAPI.messaging.listeners[message.requestId] = callback;
                 }
 
+                // popover content doesn't know messaging...
                 if (safari.extension.globalPage) {
-                    // popover content doesn't know messaging...
+                    if (!safari.self.visible) {
+                        return;
+                    }
+
                     safari.extension.globalPage.contentWindow
-                        .vAPI.messaging.connector({
+                        .vAPI.messaging.onMessage({
                             name: vAPI.messaging.connectorId,
                             message: message,
                             target: {
@@ -167,6 +171,8 @@ vAPI.messaging = {
 
 /******************************************************************************/
 
+// content scripts are loaded into extension pages by default, but they shouldn't
+
 if (location.protocol === "safari-extension:") {
     return;
 }
@@ -184,7 +190,7 @@ if (!window.MutationObserver) {
                 handler([{addedNodes: [e.target]}]);
             }, true);
         };
-    }
+    };
 }
 
 /******************************************************************************/

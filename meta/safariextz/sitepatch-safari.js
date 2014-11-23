@@ -1,4 +1,3 @@
-// Only for Safari
 // Adding new URL requires to whitelist it in the background script too (addContentScriptFromURL)
 // Note that the sitePach function will be converted to a string, and injected
 // into the web-page in order to run in that scope. Because of this, variables

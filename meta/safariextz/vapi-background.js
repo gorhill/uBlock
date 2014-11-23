@@ -19,9 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global µBlock, SafariBrowserTab */
 // For background page
-
-/* global SafariBrowserTab, Services, XPCOMUtils */
 
 /******************************************************************************/
 
@@ -158,158 +157,182 @@ vAPI.storage = {
 
 vAPI.tabs = {
     stack: {},
-    stackID: 1,
-    registerListeners: function() {
-        var onNavigation = this.onNavigation;
+    stackID: 1
+};
 
-        if (typeof onNavigation === 'function') {
-            this.onNavigation = function(e) {
-                // e.url is not present for local files or data URIs,
-                // or probably for those URLs which we don't have access to
-                if (!e.target || !e.target.url) {
-                    return;
-                }
+/******************************************************************************/
 
-                onNavigation({
-                    frameId: 0,
-                    tabId: vAPI.tabs.getTabId(e.target),
-                    url: e.target.url
-                });
-            };
+vAPI.tabs.registerListeners = function() {
+    var onNavigation = this.onNavigation;
 
-            safari.application.addEventListener('navigate', this.onNavigation, true);
-        }
-
-        // ??
-        /* if (typeof this.onUpdated === 'function') { } */
-
-        // onClosed handled in the main tab-close event
-        // onPopup is handled in window.open on web-pages?
-        /* if (typeof onPopup === 'function') { } */
-    },
-    getTabId: function(tab) {
-        for (var i in vAPI.tabs.stack) {
-            if (vAPI.tabs.stack[i] === tab) {
-                return +i;
-            }
-        }
-
-        return -1;
-    },
-    get: function(tabId, callback) {
-        var tab;
-
-        if (tabId === null) {
-            tab = safari.application.activeBrowserWindow.activeTab;
-            tabId = this.getTabId(tab);
-        }
-        else {
-            tab = this.stack[tabId];
-        }
-
-        if (!tab) {
-            callback();
-            return;
-        }
-
-        callback({
-            id: tabId,
-            index: tab.browserWindow.tabs.indexOf(tab),
-            windowId: safari.application.browserWindows.indexOf(tab.browserWindow),
-            active: tab === tab.browserWindow.activeTab,
-            url: tab.url,
-            title: tab.title
-        });
-    },
-    open: function(details) {
-        if (!details.url) {
-            return null;
-        }
-        // extension pages
-        else if (!details.url.match(/^\w{2,20}:/)) {
-            details.url = vAPI.getURL(details.url);
-        }
-
-        // properties of the details object:
-            // url: 'URL', // the address that will be opened
-            // tabId: 1, // the tab is used if set, instead of creating a new one
-            // index: -1, // undefined: end of the list, -1: following tab, or after index
-            // active: false, // opens the tab in background - true and undefined: foreground
-            // select: true // if a tab is already opened with that url, then select it instead of opening a new one
-
-        var curWin, tab;
-
-        if (details.select) {
-            tab = safari.application.browserWindows.some(function(win) {
-                var rgxHash = /#.*/;
-                // this is questionable
-                var url = details.url.replace(rgxHash, '');
-
-                for (var i = 0; i < win.tabs.length; ++i) {
-                    if (win.tabs[i].url.replace(rgxHash, '') === url) {
-                        win.tabs[i].activate();
-                        return true;
-                    }
-                }
-            });
-
-            if (tab) {
+    if (typeof onNavigation === 'function') {
+        this.onNavigation = function(e) {
+            // e.url is not present for local files or data URIs,
+            // or probably for those URLs which we don't have access to
+            if (!e.target || !e.target.url) {
                 return;
             }
+
+            onNavigation({
+                frameId: 0,
+                tabId: vAPI.tabs.getTabId(e.target),
+                url: e.target.url
+            });
+        };
+
+        safari.application.addEventListener('navigate', this.onNavigation, true);
+    }
+
+    // ??
+    /* if (typeof this.onUpdated === 'function') { } */
+
+    // onClosed handled in the main tab-close event
+    // onPopup is handled in window.open on web-pages?
+    /* if (typeof onPopup === 'function') { } */
+};
+
+/******************************************************************************/
+
+vAPI.tabs.getTabId = function(tab) {
+    for (var i in vAPI.tabs.stack) {
+        if (vAPI.tabs.stack[i] === tab) {
+            return +i;
         }
+    }
 
-        if (details.active === undefined) {
-            details.active = true;
-        }
+    return -1;
+};
 
-        curWin = safari.application.activeBrowserWindow;
+/******************************************************************************/
 
-        // it must be calculated before opening a new tab,
-        // otherwise the new tab will be the active tab here
-        if (details.index === -1) {
-            details.index = curWin.tabs.indexOf(curWin.activeTab) + 1;
-        }
+vAPI.tabs.get = function(tabId, callback) {
+    var tab;
 
-        tab = details.tabId && this.stack[details.tabId]
-            || curWin.openTab(details.active ? 'foreground' : 'background');
+    if (tabId === null) {
+        tab = safari.application.activeBrowserWindow.activeTab;
+        tabId = this.getTabId(tab);
+    }
+    else {
+        tab = this.stack[tabId];
+    }
 
-        if (details.index !== undefined) {
-            curWin.insertTab(tab, details.index);
-        }
+    if (!tab) {
+        callback();
+        return;
+    }
 
-        tab.url = details.url;
-    },
-    close: function(tab) {
-        if (!(tab instanceof SafariBrowserTab)) {
-            tab = this.stack[tab];
-        }
+    callback({
+        id: tabId,
+        index: tab.browserWindow.tabs.indexOf(tab),
+        windowId: safari.application.browserWindows.indexOf(tab.browserWindow),
+        active: tab === tab.browserWindow.activeTab,
+        url: tab.url,
+        title: tab.title
+    });
+};
+// properties of the details object:
+// url: 'URL', // the address that will be opened
+// tabId: 1, // the tab is used if set, instead of creating a new one
+// index: -1, // undefined: end of the list, -1: following tab, or after index
+// active: false, // opens the tab in background - true and undefined: foreground
+// select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
-        if (tab) {
-            tab.close();
-        }
-    },
-    injectScript: function(tabId, details, callback) {
-        var tab = tabId ? this.stack[tabId] : safari.application.activeBrowserWindow.activeTab;
+/******************************************************************************/
 
-        if (details.file) {
-            var xhr = new XMLHttpRequest;
-            xhr.overrideMimeType('application/x-javascript;charset=utf-8');
-            xhr.open('GET', details.file, false);
-            xhr.send();
-            details.code = xhr.responseText;
-        }
+vAPI.tabs.open = function(details) {
+    if (!details.url) {
+        return null;
+    }
+    // extension pages
+    if (!/^[\w-]{2,}:/.test(details.url)) {
+        details.url = vAPI.getURL(details.url);
+    }
 
-        tab.page.dispatchMessage('broadcast', {
-            portName: 'vAPI',
-            msg: {
-                cmd: 'runScript',
-                details: details
+    var curWin, tab;
+
+    if (details.select) {
+        tab = safari.application.browserWindows.some(function(win) {
+            var rgxHash = /#.*/;
+            // this is questionable
+            var url = details.url.replace(rgxHash, '');
+
+            for (var i = 0; i < win.tabs.length; ++i) {
+                if (win.tabs[i].url.replace(rgxHash, '') === url) {
+                    win.tabs[i].activate();
+                    return true;
+                }
             }
         });
 
-        if (typeof callback === 'function') {
-            setTimeout(callback, 13);
+        if (tab) {
+            return;
         }
+    }
+
+    if (details.active === undefined) {
+        details.active = true;
+    }
+
+    curWin = safari.application.activeBrowserWindow;
+
+    // it must be calculated before opening a new tab,
+    // otherwise the new tab will be the active tab here
+    if (details.index === -1) {
+        details.index = curWin.tabs.indexOf(curWin.activeTab) + 1;
+    }
+
+    tab = details.tabId && this.stack[details.tabId]
+        || curWin.openTab(details.active ? 'foreground' : 'background');
+
+    if (details.index !== undefined) {
+        curWin.insertTab(tab, details.index);
+    }
+
+    tab.url = details.url;
+};
+
+/******************************************************************************/
+
+vAPI.tabs.close = function(tab) {
+    if (!(tab instanceof SafariBrowserTab)) {
+        tab = this.stack[tab];
+    }
+
+    if (tab) {
+        tab.close();
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.injectScript = function(tabId, details, callback) {
+    var tab;
+
+    if (tabId) {
+        tab = this.stack[tabId];
+    }
+    else {
+        tab = safari.application.activeBrowserWindow.activeTab;
+    }
+
+    if (details.file) {
+        var xhr = new XMLHttpRequest;
+        xhr.overrideMimeType('application/x-javascript;charset=utf-8');
+        xhr.open('GET', details.file, false);
+        xhr.send();
+        details.code = xhr.responseText;
+    }
+
+    tab.page.dispatchMessage('broadcast', {
+        portName: 'vAPI',
+        msg: {
+            cmd: 'runScript',
+            details: details
+        }
+    });
+
+    if (typeof callback === 'function') {
+        setTimeout(callback, 13);
     }
 };
 
@@ -403,7 +426,9 @@ safari.application.addEventListener('popover', function(e) {
 
 vAPI.tabIcons = { /*tabId: {badge: 0, img: dict}*/ };
 vAPI.setIcon = function(tabId, img, badge) {
-    var curTabId = vAPI.tabs.getTabId(safari.application.activeBrowserWindow.activeTab);
+    var curTabId = vAPI.tabs.getTabId(
+        safari.application.activeBrowserWindow.activeTab
+    );
 
     // from 'activate' event
     if (tabId === undefined) {
@@ -416,23 +441,25 @@ vAPI.setIcon = function(tabId, img, badge) {
         };
     }
 
+    if (tabId !== curTabId) {
+        return;
+    }
+
     // if the selected tab has the same ID, then update the badge too,
     // or always update it when changing tabs ('activate' event)
-    if (tabId === curTabId) {
-        var items = safari.extension.toolbarItems, i = items.length;
+    var items = safari.extension.toolbarItems, i = items.length;
 
-        while (i--) {
-            if (items[i].browserWindow === safari.application.activeBrowserWindow) {
-                if (vAPI.tabIcons[tabId]) {
-                    items[i].badge = vAPI.tabIcons[tabId].badge;
-                    // items[i].img = vAPI.tabIcons[tabId].img;
-                }
-                else {
-                    items[i].badge = 0;
-                }
-
-                return;
+    while (i--) {
+        if (items[i].browserWindow === safari.application.activeBrowserWindow) {
+            if (vAPI.tabIcons[tabId]) {
+                items[i].badge = vAPI.tabIcons[tabId].badge;
+                // items[i].img = vAPI.tabIcons[tabId].img;
             }
+            else {
+                items[i].badge = 0;
+            }
+
+            return;
         }
     }
 };
@@ -441,242 +468,283 @@ vAPI.setIcon = function(tabId, img, badge) {
 
 vAPI.messaging = {
     listeners: {},
-    listen: function(listenerName, callback) {
-        this.listeners[listenerName] = callback;
-    },
-    setup: function(connector) {
-        if (this.connector) {
-            return;
-        }
+    defaultHandler: null,
+    NOOPFUNC: function(){},
+    UNHANDLED: 'vAPI.messaging.notHandled'
+};
 
-        this.connector = function(request) {
-            var callback = function(response) {
-                if (response !== undefined) {
-                    request.target.page.dispatchMessage(
-                        request.name,
-                        {
-                            requestId: request.message.requestId,
-                            portName: request.message.portName,
-                            msg: response
-                        }
-                    );
+/******************************************************************************/
+
+vAPI.messaging.listen = function(listenerName, callback) {
+    this.listeners[listenerName] = callback;
+};
+
+/******************************************************************************/
+
+vAPI.messaging.onMessage = function(request) {
+    var callback = vAPI.messaging.NOOPFUNC;
+    if ( request.message.requestId !== undefined ) {
+        callback = function(response) {
+            request.target.page.dispatchMessage(
+                request.name,
+                {
+                    requestId: request.message.requestId,
+                    portName: request.message.portName,
+                    msg: response !== undefined ? response : null
                 }
-            };
-
-            var sender = {
-                tab: {
-                    id: vAPI.tabs.getTabId(request.target)
-                }
-            };
-
-            var listener = connector(request.message.msg, sender, callback);
-
-            if (listener === vAPI.messaging.UNHANDLED) {
-                listener = vAPI.messaging.listeners[request.message.portName];
-
-                if (typeof listener === 'function') {
-                    listener(request.message.msg, sender, callback);
-                } else {
-                    console.error('µBlock> messaging > unknown request: %o', request.message);
-                }
-            }
+            );
         };
+    }
 
-        // the third parameter must stay false (bubbling), so later
-        // onBeforeRequest will use true (capturing), where we can invoke
-        // stopPropagation() (this way this.connector won't be fired)
-        safari.application.addEventListener('message', this.connector, false);
-    },
-    broadcast: function(message) {
-        message = {
-            broadcast: true,
-            msg: message
-        };
-
-        for (var tabId in vAPI.tabs.stack) {
-            vAPI.tabs.stack[tabId].page.dispatchMessage('broadcast', message);
+    var sender = {
+        tab: {
+            id: vAPI.tabs.getTabId(request.target)
         }
+    };
+
+    // Specific handler
+    var r = vAPI.messaging.UNHANDLED;
+    var listener = vAPI.messaging.listeners[request.message.portName];
+    if ( typeof listener === 'function' ) {
+        r = listener(request.message.msg, sender, callback);
+    }
+    if ( r !== vAPI.messaging.UNHANDLED ) {
+        return;
+    }
+
+    // Default handler
+    r = vAPI.messaging.defaultHandler(request.message.msg, sender, callback);
+    if ( r !== vAPI.messaging.UNHANDLED ) {
+        return;
+    }
+
+    console.error('µBlock> messaging > unknown request: %o', request.message);
+
+    // Unhandled:
+    // Need to callback anyways in case caller expected an answer, or
+    // else there is a memory leak on caller's side
+    callback();
+};
+
+/******************************************************************************/
+
+vAPI.messaging.setup = function(defaultHandler) {
+    // Already setup?
+    if ( this.defaultHandler !== null ) {
+        return;
+    }
+
+    if ( typeof defaultHandler !== 'function' ) {
+        defaultHandler = function(){ return vAPI.messaging.UNHANDLED; };
+    }
+    this.defaultHandler = defaultHandler;
+
+    // the third parameter must stay false (bubbling), so later
+    // onBeforeRequest will use true (capturing), where we can invoke
+    // stopPropagation() (this way this.onMessage won't be fired)
+    safari.application.addEventListener('message', this.onMessage, false);
+};
+
+/******************************************************************************/
+
+vAPI.messaging.broadcast = function(message) {
+    message = {
+        broadcast: true,
+        msg: message
+    };
+
+    for (var tabId in vAPI.tabs.stack) {
+        vAPI.tabs.stack[tabId].page.dispatchMessage('broadcast', message);
     }
 };
 
 /******************************************************************************/
 
-vAPI.net = {
-    registerListeners: function() {
-        var onBeforeRequest = this.onBeforeRequest;
+vAPI.net = {}
 
-        if (typeof onBeforeRequest.callback === 'function') {
-            if (!Array.isArray(onBeforeRequest.types)) {
-                onBeforeRequest.types = [];
+/******************************************************************************/
+
+vAPI.net.registerListeners = function() {
+    var onBeforeRequest = this.onBeforeRequest;
+
+    if (typeof onBeforeRequest.callback === 'function') {
+        if (!Array.isArray(onBeforeRequest.types)) {
+            onBeforeRequest.types = [];
+        }
+
+        onBeforeRequest = onBeforeRequest.callback;
+        this.onBeforeRequest.callback = function(e) {
+            var block;
+
+            if (e.name !== 'canLoad') {
+                return;
             }
 
-            onBeforeRequest = onBeforeRequest.callback;
-            this.onBeforeRequest.callback = function(e) {
-                var block;
+            // no stopPropagation if it was called from beforeNavigate event
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
 
-                if (e.name !== 'canLoad') {
-                    return;
-                }
-
-                // no stopPropagation if it was called from beforeNavigate event
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                }
-
-                if (e.message.isWhiteListed) {
-                    block = µBlock.URI.hostnameFromURI(e.message.isWhiteListed);
-                    block = µBlock.URI.domainFromHostname(block) || block;
-                    e.message = !!µBlock.netWhitelist[block];
-                    return e.message;
-                }
-
-                // blocking unwanted pop-ups
-                if (e.message.type === 'popup') {
-                    if (typeof vAPI.tabs.onPopup === 'function') {
-                        e.message.type = 'main_frame';
-                        e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
-
-                        if (vAPI.tabs.onPopup(e.message)) {
-                            e.message = false;
-                            return;
-                        }
-                    }
-
-                    e.message = true;
-                    return;
-                }
-
-                block = vAPI.net.onBeforeRequest;
-
-                if (block.types.indexOf(e.message.type) < 0) {
-                    return true;
-                }
-
-                e.message.tabId = vAPI.tabs.getTabId(e.target);
-                block = onBeforeRequest(e.message);
-
-                // truthy return value will allow the request,
-                // except when redirectUrl is present
-                if (block && typeof block === 'object') {
-                    if (block.cancel) {
-                        e.message = false;
-                    }
-                    else if (e.message.type === 'script'
-                        && typeof block.redirectUrl === "string") {
-                        e.message = block.redirectUrl;
-                    }
-                    else {
-                        e.message = true;
-                    }
-                }
-                else {
-                    e.message = true;
-                }
-
+            if (e.message.isWhiteListed) {
+                block = µBlock.URI.hostnameFromURI(e.message.isWhiteListed);
+                block = µBlock.URI.domainFromHostname(block) || block;
+                e.message = !!µBlock.netWhitelist[block];
                 return e.message;
-            };
+            }
 
-            safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
-        }
-    }
-};
+            // blocking unwanted pop-ups
+            if (e.message.type === 'popup') {
+                if (typeof vAPI.tabs.onPopup === 'function') {
+                    e.message.type = 'main_frame';
+                    e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
 
-/******************************************************************************/
-
-vAPI.contextMenu = {
-    create: function(details, callback) {
-        var contexts = details.contexts;
-        var menuItemId = details.id;
-        var menuTitle = details.title;
-
-        if (Array.isArray(contexts) && contexts.length) {
-            contexts = contexts.indexOf('all') === -1 ? contexts : null;
-        }
-        else {
-            // default in Chrome
-            contexts = ['page'];
-        }
-
-        this.onContextMenu = function(e) {
-            var uI = e.userInfo;
-
-            if (uI && /^https?:\/\//i.test(uI.pageUrl)) {
-                if (contexts) {
-                    var invalidContext = true;
-
-                    for (var i = 0; i < contexts.length; ++i) {
-                        if (contexts[i] === 'frame') {
-                            if (uI.insideFrame) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                        else if (contexts[i] === 'link') {
-                            if (uI.linkHref) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                        else if (contexts[i] === 'image') {
-                            if (uI.srcUrl) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                        else if (contexts[i] === 'audio' || contexts[i] === 'video') {
-                            if (uI.srcUrl && uI.tagName === contexts[i]) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                        else if (contexts[i] === 'editable') {
-                            if (uI.editable) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                        else if (contexts[i] === 'page') {
-                            if (!(uI.insideFrame || uI.linkHref || uI.mediaType || uI.editable)) {
-                                invalidContext = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (invalidContext) {
+                    if (vAPI.tabs.onPopup(e.message)) {
+                        e.message = false;
                         return;
                     }
                 }
 
-                e.contextMenu.appendContextMenuItem(menuItemId, menuTitle);
+                e.message = true;
+                return;
             }
+
+            block = vAPI.net.onBeforeRequest;
+
+            if (block.types.indexOf(e.message.type) < 0) {
+                return true;
+            }
+
+            e.message.tabId = vAPI.tabs.getTabId(e.target);
+            block = onBeforeRequest(e.message);
+
+            // truthy return value will allow the request,
+            // except when redirectUrl is present
+            if (block && typeof block === 'object') {
+                if (block.cancel) {
+                    e.message = false;
+                }
+                else if (e.message.type === 'script'
+                    && typeof block.redirectUrl === "string") {
+                    e.message = block.redirectUrl;
+                }
+                else {
+                    e.message = true;
+                }
+            }
+            else {
+                e.message = true;
+            }
+
+            return e.message;
         };
 
-        this.onContextMenuCommand = function(e) {
-            if (e.command === menuItemId) {
-                var tab = e.currentTarget.activeBrowserWindow.activeTab;
-                e.userInfo.menuItemId = menuItemId;
-                callback(e.userInfo, tab ? {
-                    id: vAPI.tabs.getTabId(tab),
-                    url: tab.url
-                } : undefined);
-            }
-        };
-
-        safari.application.addEventListener('contextmenu', this.onContextMenu);
-        safari.application.addEventListener("command", this.onContextMenuCommand);
-    },
-    remove: function() {
-        safari.application.removeEventListener('contextmenu', this.onContextMenu);
-        safari.application.removeEventListener("command", this.onContextMenuCommand);
-        this.onContextMenu = null;
-        this.onContextMenuCommand = null;
+        safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
     }
 };
 
 /******************************************************************************/
 
-vAPI.lastError = {
+vAPI.contextMenu = {};
+
+/******************************************************************************/
+
+vAPI.contextMenu.create = function(details, callback) {
+    var contexts = details.contexts;
+    var menuItemId = details.id;
+    var menuTitle = details.title;
+
+    if (Array.isArray(contexts) && contexts.length) {
+        contexts = contexts.indexOf('all') === -1 ? contexts : null;
+    }
+    else {
+        // default in Chrome
+        contexts = ['page'];
+    }
+
+    this.onContextMenu = function(e) {
+        var uI = e.userInfo;
+
+        if (uI && /^https?:\/\//i.test(uI.pageUrl)) {
+            if (contexts) {
+                var invalidContext = true;
+
+                for (var i = 0; i < contexts.length; ++i) {
+                    if (contexts[i] === 'frame') {
+                        if (uI.insideFrame) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                    else if (contexts[i] === 'link') {
+                        if (uI.linkHref) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                    else if (contexts[i] === 'image') {
+                        if (uI.srcUrl) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                    else if (contexts[i] === 'audio'
+                        || contexts[i] === 'video') {
+                        if (uI.srcUrl && uI.tagName === contexts[i]) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                    else if (contexts[i] === 'editable') {
+                        if (uI.editable) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                    else if (contexts[i] === 'page') {
+                        if (!(uI.insideFrame || uI.linkHref
+                            || uI.mediaType || uI.editable)) {
+                            invalidContext = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (invalidContext) {
+                    return;
+                }
+            }
+
+            e.contextMenu.appendContextMenuItem(menuItemId, menuTitle);
+        }
+    };
+
+    this.onContextMenuCmd = function(e) {
+        if (e.command === menuItemId) {
+            var tab = e.currentTarget.activeBrowserWindow.activeTab;
+            e.userInfo.menuItemId = menuItemId;
+            callback(e.userInfo, tab ? {
+                id: vAPI.tabs.getTabId(tab),
+                url: tab.url
+            } : undefined);
+        }
+    };
+
+    safari.application.addEventListener('contextmenu', this.onContextMenu);
+    safari.application.addEventListener("command", this.onContextMenuCmd);
+};
+
+/******************************************************************************/
+
+vAPI.contextMenu.remove = function() {
+    safari.application.removeEventListener('contextmenu', this.onContextMenu);
+    safari.application.removeEventListener("command", this.onContextMenuCmd);
+    this.onContextMenu = null;
+    this.onContextMenuCmd = null;
+};
+
+/******************************************************************************/
+
+vAPI.lastError = function() {
     return null;
 };
 

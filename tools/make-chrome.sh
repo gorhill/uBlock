@@ -12,12 +12,10 @@ rm $DES/assets/*.sh
 cp -R src/css $DES/
 cp -R src/img $DES/
 cp -R src/js $DES/
-rm $DES/js/vapi-background.js
-rm $DES/js/vapi-client.js
-rm $DES/js/vapi-common.js
 cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
+cp meta/vapi-appinfo.js $DES/js/
 cp meta/crx/*.js $DES/js/
 cp meta/crx/manifest.json $DES/
 echo "*** uBlock.chromium: Package done."
