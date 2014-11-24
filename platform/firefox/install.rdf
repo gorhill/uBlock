@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
+	<r:Description about="urn:mozilla:install-manifest">
+		<id>{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}</id>
+		<version>0.7.0.11</version>
+		<name>µBlock</name>
+		<description>Finally, an efficient blocker. Easy on CPU and memory.</description>
+		<homepageURL>https://github.com/gorhill/uBlock</homepageURL>
+		<creator>Raymond Hill</creator>
+		<type>2</type>
+		<bootstrap>true</bootstrap>
+		<multiprocessCompatible>true</multiprocessCompatible>
+		<optionsType>3</optionsType>
+		<optionsURL>chrome://ublock/content/dashboard.html</optionsURL>
+
+		<!-- Firefox -->
+		<targetApplication>
+			<r:Description>
+				<id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</id>
+				<minVersion>24.0</minVersion>
+				<maxVersion>37.0</maxVersion>
+			</r:Description>
+		</targetApplication>
+
+		<!-- SeaMonkey -->
+		<targetApplication>
+			<r:Description>
+				<id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</id>
+				<minVersion>2.21</minVersion>
+				<maxVersion>2.34</maxVersion>
+			</r:Description>
+		</targetApplication>
+	</r:Description>
+</r:RDF>
