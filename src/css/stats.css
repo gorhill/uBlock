@@ -61,6 +61,10 @@ tr.requestEntry td:nth-of-type(1) {
 tr.requestEntry td:nth-of-type(2) {
     text-align: right;
     }
+tr.requestEntry td:nth-of-type(3),
+tr.requestEntry td:nth-of-type(4) {
+    direction: ltr;
+    }
 tr.logBlocked {
     background-color: #fff8f8;
     }
