@@ -21,6 +21,8 @@
 
 // For non background pages
 
+/* global self, chrome, vAPI */
+
 /******************************************************************************/
 
 (function() {
@@ -39,11 +41,15 @@ var messagingConnector = function(response) {
         return;
     }
 
+    var channels = vAPI.messaging.channels;
     var channel, listener;
 
     if ( response.broadcast === true ) {
-        for ( channel in vAPI.messaging.channels ) {
-            listener = vAPI.messaging.channels[channel].listener;
+        for ( channel in channels ) {
+            if ( channels.hasOwnProperty(channel) === false ) {
+                continue;
+            }
+            listener = channels[channel].listener;
             if ( typeof listener === 'function' ) {
                 listener(response.msg);
             }
@@ -58,7 +64,7 @@ var messagingConnector = function(response) {
     }
 
     if ( !listener ) {
-        channel = vAPI.messaging.channels[response.portName];
+        channel = channels[response.portName];
         listener = channel && channel.listener;
     }
 
