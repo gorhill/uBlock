@@ -16,6 +16,6 @@ cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
 cp meta/vapi-appinfo.js $DES/js/
-cp meta/crx/*.js $DES/js/
-cp meta/crx/manifest.json $DES/
+cp platform/chromium/*.js $DES/js/
+cp platform/chromium/manifest.json $DES/
 echo "*** uBlock.chromium: Package done."
