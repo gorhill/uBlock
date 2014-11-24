@@ -75,7 +75,7 @@ vAPI.tabs.get = function(tabId, callback) {
             return;
         }
         callback(tab);
-    }
+    };
     if ( tabId !== null ) {
         chrome.tabs.get(tabId, onTabReady);
         return;

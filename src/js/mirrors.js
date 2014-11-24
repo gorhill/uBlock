@@ -20,15 +20,15 @@
 */
 
 /* jshint bitwise: false */
-/* global µBlock, YaMD5 */
-
-'use strict';
+/* global vAPI, µBlock, YaMD5 */
 
 /******************************************************************************/
 
 // Low-level asset files manager
 
 µBlock.mirrors = (function() {
+
+'use strict';
 
 /******************************************************************************/
 

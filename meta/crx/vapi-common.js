@@ -21,6 +21,8 @@
 
 // For background page or non-background pages
 
+/* global self, vAPI */
+
 /******************************************************************************/
 
 (function() {
@@ -36,7 +38,7 @@ self.vAPI = self.vAPI || {};
 var setScriptDirection = function(language) {
     document.body.setAttribute(
         'dir',
-        ~['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) ? 'rtl' : 'ltr'
+        ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) !== -1 ? 'rtl' : 'ltr'
     );
 };
 
