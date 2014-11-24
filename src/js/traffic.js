@@ -19,14 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock */
-'use strict';
+/* global µBlock, vAPI */
 
 /******************************************************************************/
 
 // Start isolation from global scope
 
 µBlock.webRequest = (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -334,7 +335,7 @@ vAPI.net.onHeadersReceived = {
 
 vAPI.net.registerListeners();
 
-console.log('µBlock> Beginning to intercept net requests at %s', (new Date()).toISOString());
+//console.log('µBlock> Beginning to intercept net requests at %s', (new Date()).toISOString());
 
 /******************************************************************************/
 

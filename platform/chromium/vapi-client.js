@@ -21,7 +21,7 @@
 
 // For non background pages
 
-/* global self, chrome, vAPI */
+/* global self */
 
 /******************************************************************************/
 
@@ -32,7 +32,11 @@
 /******************************************************************************/
 
 self.vAPI = self.vAPI || {};
-self.vAPI.chrome = true;
+
+var chrome = self.chrome;
+var vAPI = self.vAPI;
+
+vAPI.chrome = true;
 
 /******************************************************************************/
 
@@ -81,7 +85,7 @@ var uniqueId = function() {
 
 /******************************************************************************/
 
-self.vAPI.messaging = {
+vAPI.messaging = {
     port: null,
     channels: {},
     listeners: {},
@@ -140,7 +144,7 @@ self.vAPI.messaging = {
 
 /******************************************************************************/
 
-self.vAPI.canExecuteContentScript = function() {
+vAPI.canExecuteContentScript = function() {
     return true;
 };
 

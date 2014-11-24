@@ -21,7 +21,7 @@
 
 // For background page or non-background pages
 
-/* global self, vAPI */
+/* global self */
 
 /******************************************************************************/
 
@@ -30,6 +30,9 @@
 'use strict';
 
 self.vAPI = self.vAPI || {};
+
+var chrome = self.chrome;
+var vAPI = self.vAPI;
 
 /******************************************************************************/
 
@@ -69,8 +72,6 @@ vAPI.download = function(details) {
 };
 
 /******************************************************************************/
-
-var chrome = self.chrome;
 
 vAPI.getURL = function(path) {
     return chrome.runtime.getURL(path);
