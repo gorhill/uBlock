@@ -2,7 +2,7 @@ Wydajny bloker: małe zużycie pamięci i CPU, możliwość załadowania i egzek
 
 Ilustrowany przegląd jego skuteczności: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-Efficiency-Compared
 
-Sposób użycia: Przycisk zasilania w popup służy do włączyć/wyłączyć µBlock dla bieżącej witryny sieci web. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
+Sposób użycia: Przycisk zasilania w popup służy aby włączyć/wyłączyć µBlocka dla bieżącej witryny sieci web. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
 
 ***
 
@@ -11,42 +11,42 @@ Elastyczny, to coś więcej niż "ad blocker": może także czytać i tworzyć f
 Po zainstalowaniu te listy filtrów są ładowane i egzekwowane:
 
 - EasyList
-- Peter Lowe serwer listy reklam
+- Serwer listy reklam Peter Lowe'a
 - EasyPrivacy
-- Społecznie blokowane listy Fanboy'ów 
-- Malware domen
-- Długotrwałe malware domen
-- Lista domen Malware
+- Lista blokowania społeczności dla fanboy'ów
+- Domeny malware
+- Długotrwałe domeny malware
+- Lista domen malware
 
 Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:
 
-- Fanboy's ulepszone śledzenie listy
-- Plik hosts Dan Pollock
-- hpHosts reklam i śledzenie serwerów
+- Ulepszone śledzenie listy dla fanboy'ów
+- Plik hosts Dan Pollocka
+- Serwery reklam i śledzenia hpHosts
 - MVPS HOSTS
 - Spam404
 - Itp.
 
-Oczywiście więcej filtrów włączone to wyższe zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów od fanów, hpHosts Ad i śledzenie serwerów, µBlock ma ciągle niższe zużycie pamięci niż inne bardzo popularne blokery.
+Oczywiście, jeśli więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów od fanów, hpHosts Ad i śledzenie serwerów, µBlock ma ciągle niższe zużycie pamięci niż inne bardzo popularne blokery.
 
 Należy również pamiętać, że niektóre z tych dodatkowych list wyboru mogą prowadzić do większego prawdopodobieństwa uszkodzenia witryny sieci web - zwłaszcza te listy, które są zwykle używane jako plik hosts.
 
 ***
 
-Bez zaprogramowanej listy filtrów to rozszerzenie jest niczym. Więc jeśli kiedykolwiek naprawdę chcesz wnieść coś, pomyśl o osobach, które ciężko pracują, aby utrzymać listy filtrów, którego używasz, zostały one udostępnione do wykorzystania przez wszystkich za darmo.
+Bez zaprogramowanej listy filtrów to rozszerzenie jest niczym. Więc jeśli kiedykolwiek naprawdę chcesz wnieść coś, pomyśl o osobach, które ciężko pracują, aby utrzymać listy filtrów, które używasz, aby zostały one udostępnione do wykorzystania przez wszystkich za darmo.
 
 ***
 
 Darmowe rozszerzenie.
-Open source w licencji publicznej (GPLv3)
+Otwarte źródło z licencją publiczną (GPLv3)
 Dla użytkowników przez użytkowników.
 
-Autorzy @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Autorzy @ Crowdin: https://crowdin.net/project/ublock
+Współtwórcy rozszerzenia na GitHub: https://github.com/gorhill/uBlock/graphs/contributors
+Współtwórcy tłumaczeń na Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Jest to dość wczesna wersja, należy o tym pamiętać podczas użytkowania.
+Jest to dość wczesna wersja, należy o tym pamiętać podczas oceniania.
 
-Dziennik zmian projektu:
+Lista zmian projektu:
 https://github.com/gorhill/uBlock/wiki/Change-log

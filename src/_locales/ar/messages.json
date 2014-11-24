@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"وأخيراً, مانع اعلانات بكفاءه جداً عاليه على متصفحات مبنيه على نظام كروميوم. خفيف على الذاكره والمعالج",
+    "message":"وأخيراً, مانع اعلانات كفوء خصيصا للمتصفحات المبنية على نظام كروميوم. خفيف على المعالج و الذاكرة.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -12,7 +12,7 @@
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"الاعدادات",
+    "message":"الإعدادات",
     "description":"appears as tab name in dashboard."
   },
   "3pPageName":{
@@ -20,15 +20,15 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"فلاترك الشخصيه",
+    "message":"الفلاتر الخاصة بك",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"المواقع المسموحه",
+    "message":"القائمة البيضاء",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
-    "message":"احصائيات",
+    "message":"الإحصائيات",
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{

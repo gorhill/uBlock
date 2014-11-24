@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficiente para navegadores baseados no Chromium. Leve no processador e memória.",
+    "message":"Finalmente, um bloqueador eficiente para os navegadores baseados no Chromium. Suave na CPU e memória.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard."
   },
   "1pPageName":{
-    "message":"Filtros pessoais",
+    "message":"Os seus filtros",
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Lista de permissões",
+    "message":"Lista Branca",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -32,11 +32,11 @@
     "description":"appears as tab name in dashboard."
   },
   "aboutPageName":{
-    "message":"Acerca",
+    "message":"Sobre",
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desactivar\/activar o µBlock para este site.\n\nCtrl+clique: desactivar o µBlock apenas nesta página.",
+    "message":"Clique: desativar\/ativar o µBlock para este site.\n\nCtrl+clique: só desativar o µBlock nesta página.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -60,7 +60,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Entrar no modo de seleccionador de elemento",
+    "message":"Entrar no modo de seleção do elemento",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -72,7 +72,7 @@
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Seleccionar",
+    "message":"Selecionar",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -96,7 +96,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar espaços ocupados por elementos bloqueados",
+    "message":"Ocultar espaços ocupados dos elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -104,11 +104,11 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Fazer uso do menu de contexto quando for apropriado",
+    "message":"Utilizar o menu de contexto quando apropriado",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Activar recursos experimentais",
+    "message":"Ativar funções experimentais",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
