@@ -74,8 +74,9 @@ var syncDynamicFilter = function(scope, i, result) {
 /******************************************************************************/
 
 var syncAllDynamicFilters = function() {
+    var hasBlock = false;
     var scopes = ['.', '/'];
-    var scope, results, i;
+    var scope, results, i, result;
     while ( scope = scopes.pop() ) {
         if ( stats.dynamicFilterResults.hasOwnProperty(scope) === false ) {
             continue;
@@ -83,9 +84,14 @@ var syncAllDynamicFilters = function() {
         results = stats.dynamicFilterResults[scope];
         i = 5;
         while ( i-- ) {
-            syncDynamicFilter(scope, i + 1, results[i]);
+            result = results[i];
+            syncDynamicFilter(scope, i + 1, result);
+            if ( scope === '.' && result.length !== 0 && result.slice(0, 2) !== '@@' ) {
+                hasBlock = true;
+            }
         }
     }
+    uDom('#dynamicFilteringToggler').toggleClass('hasBlock', hasBlock);
 };
 
 /******************************************************************************/

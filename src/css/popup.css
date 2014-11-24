@@ -88,6 +88,9 @@ p {
     cursor: pointer;
     position: relative;
     }
+#dynamicFilteringToggler.hasBlock:not(.on) {
+    background-color: #fbb;
+    }
 #dynamicFilteringToggler > div {
     font-size: 9px;
     line-height: 100%;
