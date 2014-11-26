@@ -52,7 +52,7 @@ cp $SRC/hr/description.txt    $DES/description-hr.txt
 cp $SRC/hu/description.txt    $DES/description-hu.txt
 cp $SRC/id/description.txt    $DES/description-id.txt
 cp $SRC/it/description.txt    $DES/description-it.txt
-#cp $SRC/ja/description.txt    $DES/description-ja.txt
+cp $SRC/ja/description.txt    $DES/description-ja.txt
 cp $SRC/no/description.txt    $DES/description-no.txt
 cp $SRC/nl/description.txt    $DES/description-nl.txt
 cp $SRC/pl/description.txt    $DES/description-pl.txt
