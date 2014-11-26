@@ -20,7 +20,6 @@
 */
 
 /* global µBlock, publicSuffixList */
-'use strict';
 
 /*******************************************************************************
 
@@ -32,11 +31,9 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 
 /******************************************************************************/
 
-// This will inserted as a module in the µBlock object.
-
-var µBlock = typeof µBlock === "undefined" ? {} : µBlock;
-
 µBlock.URI = (function() {
+
+'use strict';
 
 /******************************************************************************/
 
