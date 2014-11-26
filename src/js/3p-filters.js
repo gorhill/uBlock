@@ -36,8 +36,7 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var re3rdPartyExternalAsset = /^https?:\/\/[a-z0-9]+/;
-var re3rdPartyRepoAsset = /^assets\/thirdparties\/([^\/]+)/;
+var re3rdPartyExternalAsset = /^https?:\/\/([a-z0-9.-]+)/;
 
 /******************************************************************************/
 
@@ -81,24 +80,15 @@ var renderBlacklists = function() {
     };
 
     // Assemble a pretty blacklist name if possible
-    var htmlFromHomeURL = function(blacklistHref) {
-        if ( blacklistHref.indexOf('assets/thirdparties/') !== 0 ) {
-            return '';
-        }
-        var matches = re3rdPartyRepoAsset.exec(blacklistHref);
-        if ( matches === null || matches.length !== 2 ) {
-            return '';
-        }
-        var hostname = matches[1];
-        var domain = µBlock.URI.domainFromHostname(hostname);
-        if ( domain === '' ) {
+    var htmlFromHomeURL = function(entry) {
+        if ( !entry.homeDomain ) {
             return '';
         }
         var html = [
             ' <a href="http://',
-            hostname,
+            entry.homeHostname,
             '" target="_blank">(',
-            domain,
+            entry.homeDomain,
             ')</a>'
         ];
         return html.join('');
@@ -128,7 +118,7 @@ var renderBlacklists = function() {
             .replace('{{checked}}', list.off ? '' : 'checked')
             .replace('{{URL}}', encodeURI(listKey))
             .replace('{{name}}', listNameFromListKey(listKey))
-            .replace('{{homeURL}}', htmlFromHomeURL(listKey))
+            .replace('{{homeURL}}', htmlFromHomeURL(list))
             .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
             .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
         html.push(li);

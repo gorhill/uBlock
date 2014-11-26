@@ -449,6 +449,23 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var prepEntries = function(entries) {
+    var µburi = µb.URI;
+    var entry;
+    for ( var k in entries ) {
+        if ( entries.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        entry = entries[k];
+        if ( typeof entry.homeURL === 'string' ) {
+            entry.homeHostname = µburi.hostnameFromURI(entry.homeURL);
+            entry.homeDomain = µburi.domainFromHostname(entry.homeHostname);
+        }
+    }
+};
+
+/******************************************************************************/
+
 var getLists = function(callback) {
     var r = {
         available: null,
@@ -462,10 +479,12 @@ var getLists = function(callback) {
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
+        prepEntries(r.cache);
         callback(r);
     };
     var onLists = function(lists) {
         r.available = lists;
+        prepEntries(r.available);
         µb.assets.metadata(onMetadataReady);
     };
     µb.getAvailableLists(onLists);
