@@ -19,12 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, uDom */
-'use strict';
+/* global vAPI, uDom */
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -36,7 +37,7 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var re3rdPartyExternalAsset = /^https?:\/\/([a-z0-9.-]+)/;
+var re3rdPartyExternalAsset = /^https?:\/\/[a-z0-9]+/;
 
 /******************************************************************************/
 
@@ -84,14 +85,13 @@ var renderBlacklists = function() {
         if ( !entry.homeDomain ) {
             return '';
         }
-        var html = [
+        return [
             ' <a href="http://',
             entry.homeHostname,
             '" target="_blank">(',
             entry.homeDomain,
             ')</a>'
-        ];
-        return html.join('');
+        ].join('');
     };
 
     var purgeButtontext = vAPI.i18n('3pExternalListPurge');
