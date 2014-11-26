@@ -22,8 +22,6 @@
 /* jshint multistr: true */
 /* global vAPI */
 
-'use strict';
-
 /******************************************************************************/
 
 // Injected into content pages
@@ -31,6 +29,8 @@
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -55,7 +55,8 @@ var cosmeticFilters = function(details) {
     if ( style !== null ) {
         return;
     }
-    var injectedCosmeticFilters = {};
+    var donthideCosmeticFilters = {};
+    var hideCosmeticFilters = {};
     style = document.createElement('style');
     style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
@@ -65,7 +66,7 @@ var cosmeticFilters = function(details) {
         donthide = donthide.split(',\n');
         var i = donthide.length;
         while ( i-- ) {
-            injectedCosmeticFilters[donthide[i]] = true;
+            donthideCosmeticFilters[donthide[i]] = true;
         }
         // https://github.com/gorhill/uBlock/issues/143
         if ( hide.length !== 0 ) {
@@ -75,10 +76,10 @@ var cosmeticFilters = function(details) {
             var selector;
             while ( i-- ) {
                 selector = hide[i];
-                if ( injectedCosmeticFilters[selector] ) {
+                if ( donthideCosmeticFilters[selector] ) {
                     hide.splice(i, 1);
                 } else {
-                    injectedCosmeticFilters[selector] = true;
+                    hideCosmeticFilters[selector] = true;
                 }
             }
         }
@@ -94,7 +95,8 @@ var cosmeticFilters = function(details) {
     if ( parent ) {
         parent.appendChild(style);
     }
-    vAPI.injectedCosmeticFilters = injectedCosmeticFilters;
+    vAPI.donthideCosmeticFilters = donthideCosmeticFilters;
+    vAPI.hideCosmeticFilters = hideCosmeticFilters;
 };
 
 var netFilters = function(details) {

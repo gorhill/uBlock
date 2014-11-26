@@ -43,7 +43,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 (function() {
     var queriedSelectors = {};
-    var injectedSelectors = vAPI.injectedCosmeticFilters || {};
+    var injectedSelectors = vAPI.hideCosmeticFilters || {};
     var classSelectors = null;
     var idSelectors = null;
     var highGenerics = null;
@@ -55,9 +55,19 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         // Ensure injected styles are enforced
         // rhill 2014-11-16: not sure this is needed anymore. Test case in
         //  above issue was fine without the line below..
-        if ( vAPI.injectedCosmeticFilters ) {
-            hideElements(Object.keys(vAPI.injectedCosmeticFilters).join(','));
+        if ( vAPI.hideCosmeticFilters ) {
+            hideElements(Object.keys(vAPI.hideCosmeticFilters).join(','));
         }
+        // Add exception filters into injected filters collection, in order
+        // to force them to be seen as "already injected".
+        var donthideCosmeticFilters = vAPI.donthideCosmeticFilters;
+        for ( var selector in donthideCosmeticFilters ) {
+            if ( donthideCosmeticFilters.hasOwnProperty(selector) === false ) {
+                continue;
+            }
+            injectedSelectors[selector] = true;
+        }
+        // Now scan content of page
         idsFromNodeList(document.querySelectorAll('[id]'));
         classesFromNodeList(document.querySelectorAll('[class]'));
         retrieveGenericSelectors();
