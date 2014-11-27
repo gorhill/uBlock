@@ -55,17 +55,19 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         // Ensure injected styles are enforced
         // rhill 2014-11-16: not sure this is needed anymore. Test case in
         //  above issue was fine without the line below..
-        if ( vAPI.hideCosmeticFilters ) {
-            hideElements(Object.keys(vAPI.hideCosmeticFilters).join(','));
+        var selectors = vAPI.hideCosmeticFilters;
+        if ( typeof selectors === 'object' ) {
+            hideElements(Object.keys(selectors).join(','));
         }
         // Add exception filters into injected filters collection, in order
         // to force them to be seen as "already injected".
-        var donthideCosmeticFilters = vAPI.donthideCosmeticFilters;
-        for ( var selector in donthideCosmeticFilters ) {
-            if ( donthideCosmeticFilters.hasOwnProperty(selector) === false ) {
-                continue;
+        selectors = vAPI.donthideCosmeticFilters;
+        if ( typeof selectors === 'object' ) {
+            for ( var selector in selectors ) {
+                if ( selectors.hasOwnProperty(selector) ) {
+                    injectedSelectors[selector] = true;
+                }
             }
-            injectedSelectors[selector] = true;
         }
         // Now scan content of page
         idsFromNodeList(document.querySelectorAll('[id]'));
