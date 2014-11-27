@@ -43,6 +43,180 @@ vAPI.firefox = true;
 
 /******************************************************************************/
 
+var SQLite = {
+    open: function() {
+        var path = Services.dirsvc.get('ProfD', Ci.nsIFile);
+        path.append('extension-data');
+
+        if (!path.exists()) {
+            path.create(Ci.nsIFile.DIRECTORY_TYPE, parseInt('0774', 8));
+        }
+
+        if (!path.isDirectory()) {
+            throw Error('Should be a directory...');
+        }
+
+        path.append('uBlock.sqlite');
+        this.db = Services.storage.openDatabase(path);
+        this.db.executeSimpleSQL(
+            'CREATE TABLE IF NOT EXISTS settings' +
+            '(name TEXT PRIMARY KEY NOT NULL, value TEXT);'
+        );
+    },
+    close: function() {
+        this.run('VACUUM');
+        this.db.asyncClose();
+    },
+    run: function(query, values, callback) {
+        if (!this.db) {
+            this.open();
+        }
+
+        var result = {};
+
+        query = this.db.createAsyncStatement(query);
+
+        if (Array.isArray(values) && values.length) {
+            var i = values.length;
+
+            while (i--) {
+                query.bindByIndex(i, values[i]);
+            }
+        }
+
+        query.executeAsync({
+            handleResult: function(rows) {
+                if (!rows || typeof callback !== 'function') {
+                    return;
+                }
+
+                var row;
+
+                while (row = rows.getNextRow()) {
+                    // we assume that there will be two columns, since we're
+                    // using it only for preferences
+                    result[row.getResultByIndex(0)] = row.getResultByIndex(1);
+                }
+            },
+            handleCompletion: function(reason) {
+                if (typeof callback === 'function' && reason === 0) {
+                    callback(result);
+                }
+            },
+            handleError: function(error) {
+                console.error('SQLite error ', error.result, error.message);
+            }
+        });
+    }
+};
+
+/******************************************************************************/
+
+vAPI.storage = {
+    QUOTA_BYTES: 100 * 1024 * 1024,
+    sqlWhere: function(col, valNum) {
+        if (valNum > 0) {
+            valNum = Array(valNum + 1).join('?, ').slice(0, -2);
+            return ' WHERE ' + col + ' IN (' + valNum + ')';
+        }
+
+        return '';
+    },
+    get: function(details, callback) {
+        if (typeof callback !== 'function') {
+            return;
+        }
+
+        var values = [], defaults = false;
+
+        if (details !== null) {
+            if (Array.isArray(details)) {
+                values = details;
+            }
+            else if (typeof details === 'object') {
+                defaults = true;
+                values = Object.keys(details);
+            }
+            else {
+                values = [details.toString()];
+            }
+        }
+
+        SQLite.run(
+            'SELECT * FROM settings' + this.sqlWhere('name', values.length),
+            values,
+            function(result) {
+                var key;
+
+                for (key in result) {
+                    result[key] = JSON.parse(result[key]);
+                }
+
+                if (defaults) {
+                    for (key in details) {
+                        if (!result[key]) {
+                            result[key] = details[key];
+                        }
+                    }
+                }
+
+                callback(result);
+            }
+        );
+    },
+    set: function(details, callback) {
+        var key, values = [], questionmarks = [];
+
+        for (key in details) {
+            values.push(key);
+            values.push(JSON.stringify(details[key]));
+            questionmarks.push('?, ?');
+        }
+
+        if (!values.length) {
+            return;
+        }
+
+        SQLite.run(
+            'INSERT OR REPLACE INTO settings (name, value) SELECT ' +
+                questionmarks.join(' UNION SELECT '),
+            values,
+            callback
+        );
+    },
+    remove: function(keys, callback) {
+        if (typeof keys === 'string') {
+            keys = [keys];
+        }
+
+        SQLite.run(
+            'DELETE FROM settings' + this.sqlWhere('name', keys.length),
+            keys,
+            callback
+        );
+    },
+    clear: function(callback) {
+        SQLite.run('DELETE FROM settings', null, callback);
+        SQLite.run('VACUUM');
+    },
+    getBytesInUse: function(keys, callback) {
+        if (typeof callback !== 'function') {
+            return;
+        }
+
+        SQLite.run(
+            "SELECT 'size' AS size, SUM(LENGTH(value)) FROM settings" +
+                this.sqlWhere('name', Array.isArray(keys) ? keys.length : 0),
+            keys,
+            function(result) {
+                callback(result.size);
+            }
+        );
+    }
+};
+
+/******************************************************************************/
+
 vAPI.messaging = {
     gmm: Cc['@mozilla.org/globalmessagemanager;1'].getService(Ci.nsIMessageListenerManager),
     frameScript: 'chrome://ublock/content/frameScript.js',
@@ -133,8 +307,11 @@ vAPI.messaging.setup = function(defaultHandler) {
 
 /******************************************************************************/
 
-vAPI.messaging.broadcast = function(msg) {
-    this.gmm.broadcastAsyncMessage(vAPI.app.name + ':broadcast', msg);
+vAPI.messaging.broadcast = function(message) {
+    this.gmm.broadcastAsyncMessage(
+        vAPI.app.name + ':broadcast',
+        JSON.stringify({broadcast: true, msg: message})
+    );
 };
 
 /******************************************************************************/
@@ -148,8 +325,9 @@ vAPI.lastError = function() {
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
+    SQLite.close();
     vAPI.messaging.gmm.removeMessageListener(
-        app.name + ':background',
+        vAPI.app.name + ':background',
         vAPI.messaging.postMessage
     );
     vAPI.messaging.gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);

@@ -4,7 +4,7 @@
 
 'use strict';
 
-var
+let
 	appName = 'ublock',
 	contentBaseURI = 'chrome://' + appName + '/content/js/',
 	listeners = {},
@@ -25,7 +25,7 @@ var
 
 addMessageListener('µBlock:broadcast', function(msg) {
 	for (var id in listeners) {
-		listeners[id](msg.data);
+		listeners[id](msg);
 	}
 });
 
