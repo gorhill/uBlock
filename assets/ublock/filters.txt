@@ -173,3 +173,7 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/374
 # To counter `2mdn.net` in Peter Lowe's, `s0.2mdn.net` in hpHosts
 @@||s0.2mdn.net/instream/*$object,script
+
+# https://github.com/gorhill/uBlock/issues/380#issuecomment-64916258
+# Let's see how long this works
+@@/static/ad_$domain=prosieben.de
