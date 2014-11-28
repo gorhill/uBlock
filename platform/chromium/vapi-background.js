@@ -250,6 +250,10 @@ vAPI.messaging.onPortMessage = function(request, port) {
     var callback = vAPI.messaging.NOOPFUNC;
     if ( request.requestId !== undefined ) {
         callback = function(response) {
+            // https://github.com/gorhill/uBlock/issues/383
+            if ( port.disconnected === true ) {
+                return;
+            }
             port.postMessage({
                 requestId: request.requestId,
                 portName: request.portName,
@@ -288,6 +292,8 @@ vAPI.messaging.onPortDisconnect = function(port) {
     port.onDisconnect.removeListener(vAPI.messaging.onPortDisconnect);
     port.onMessage.removeListener(vAPI.messaging.onPortMessage);
     delete vAPI.messaging.ports[port.name];
+    // https://github.com/gorhill/uBlock/issues/383
+    port.disconnected = true;
 };
 
 /******************************************************************************/
