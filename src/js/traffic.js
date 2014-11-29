@@ -102,19 +102,28 @@ var onBeforeRequest = function(details) {
         }
 
         // https://github.com/gorhill/uBlock/issues/351
-        // Bypass experimental features when disabled for a site
-        if ( µb.userSettings.experimentalEnabled && pageStore.getNetFilteringSwitch() ) {
-            // https://code.google.com/p/chromium/issues/detail?id=387198
-            // Not all redirects will succeed, until bug above is fixed.
-            var redirectURL = µb.mirrors.toURL(requestURL, true);
-            if ( redirectURL !== '' ) {
-                pageStore.setRequestFlags(requestURL, 0x01, 0x01);
-                //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
-                return { redirectUrl: redirectURL };
-            }
+        // Bypass experimental features when uBlock is disabled for a site
+        if ( !pageStore.getNetFilteringSwitch() ) {
+            return;
         }
 
-        //console.debug('µBlock> onBeforeRequest()> ALLOW "%s" (%o)', details.url, details);
+        if ( !µb.userSettings.experimentalEnabled ) {
+            return;
+        }
+
+        if ( pageStore.skipLocalMirroring ) {
+            return;
+        }
+
+        // https://code.google.com/p/chromium/issues/detail?id=387198
+        // Not all redirects will succeed, until bug above is fixed.
+        var redirectURL = µb.mirrors.toURL(requestURL, true);
+        if ( redirectURL !== '' ) {
+            pageStore.setRequestFlags(requestURL, 0x01, 0x01);
+            //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
+            return { redirectUrl: redirectURL };
+        }
+
         return;
     }
 
@@ -235,6 +244,9 @@ var onHeadersReceived = function(details) {
     if ( !pageStore ) {
         return;
     }
+
+    // https://github.com/gorhill/uBlock/issues/384
+    pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
 
     var result = '';
     if ( pageStore.getNetFilteringSwitch() ) {

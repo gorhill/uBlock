@@ -308,6 +308,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.netFilteringReadTime = 0;
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
+    this.skipLocalMirroring = false;
 
     this.netFilteringCache = NetFilteringResultCache.factory();
     if ( µb.userSettings.logRequests ) {
