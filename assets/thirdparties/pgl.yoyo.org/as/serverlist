@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2466
+# entries:        2460
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -216,7 +216,6 @@
 127.0.0.1 adcentriconline.com
 127.0.0.1 adcept.net
 127.0.0.1 adclick.com
-127.0.0.1 adclient.rottentomatoes.com
 127.0.0.1 adclient.uimserv.net
 127.0.0.1 adclient1.tucows.com
 127.0.0.1 adcloud.net
@@ -679,7 +678,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -884,7 +882,6 @@
 127.0.0.1 adv.webmd.com
 127.0.0.1 adv.wp.pl
 127.0.0.1 adv.yo.cz
-127.0.0.1 adv08.edintorni.net
 127.0.0.1 advariant.com
 127.0.0.1 adventory.com
 127.0.0.1 advert.bayarea.com
@@ -1095,7 +1092,6 @@
 127.0.0.1 banners.directnic.com
 127.0.0.1 banners.easydns.com
 127.0.0.1 banners.ebay.com
-127.0.0.1 banners.expressindia.com
 127.0.0.1 banners.freett.com
 127.0.0.1 banners.friendfinder.com
 127.0.0.1 banners.getiton.com
@@ -1268,7 +1264,6 @@
 127.0.0.1 clickxchange.com
 127.0.0.1 clickz.com
 127.0.0.1 clicmanager.fr
-127.0.0.1 clictrafic.com
 127.0.0.1 clients.tbo.com
 127.0.0.1 clixgalore.com
 127.0.0.1 clkads.com
@@ -1300,7 +1295,6 @@
 127.0.0.1 counted.com
 127.0.0.1 counter.avtoindex.com
 127.0.0.1 counter.bloke.com
-127.0.0.1 counter.cgiworld.net
 127.0.0.1 counter.cnw.cz
 127.0.0.1 counter.cz
 127.0.0.1 counter.dreamhost.com
@@ -1476,7 +1470,6 @@
 127.0.0.1 fonecta.leiki.com
 127.0.0.1 foo.cosmocode.de
 127.0.0.1 forex-affiliate.net
-127.0.0.1 forrestersurveys.com
 127.0.0.1 fpctraffic.com
 127.0.0.1 fpctraffic2.com
 127.0.0.1 fragmentserv.iac-online.de
@@ -1575,6 +1568,7 @@
 127.0.0.1 hyperbanner.net
 127.0.0.1 hypertracker.com
 127.0.0.1 i-clicks.net
+127.0.0.1 i-lookup.com
 127.0.0.1 i.xx.openx.com
 127.0.0.1 i1img.com
 127.0.0.1 i1media.no
@@ -1620,6 +1614,7 @@
 127.0.0.1 infolinks.com
 127.0.0.1 information.com
 127.0.0.1 infra-ad.com
+127.0.0.1 initgroup.com
 127.0.0.1 inringtone.com
 127.0.0.1 insightexpress.com
 127.0.0.1 insightexpressai.com
@@ -1740,6 +1735,7 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
+127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com
@@ -1857,7 +1853,6 @@
 127.0.0.1 oewabox.at
 127.0.0.1 offerforge.com
 127.0.0.1 offermatica.com
-127.0.0.1 oinadserver.com
 127.0.0.1 olivebrandresponse.com
 127.0.0.1 omniture.com
 127.0.0.1 onclickads.com
@@ -2289,7 +2284,6 @@
 127.0.0.1 tracker.icerocket.com
 127.0.0.1 tracking.gajmp.com
 127.0.0.1 tracking.koego.com
-127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
 127.0.0.1 trackingsoft.com
 127.0.0.1 trackmysales.com

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: KRCh5a6+87FA27Gh+h+NQw
+! Checksum: 5u51Xf0Z4RULW3upsCmSHg
 ! Title: EasyList Hebrew
-! Last modified: 04/11/14  10:14
+! Last modified: 26/11/14  23:17
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -54,6 +54,7 @@
 ||ha-deal.co.il^$popup
 ||hizoq.com^$popup,third-party
 ||horserace.co.il^$popup,third-party
+||iforex.co.il/landing_pages^$popup,third-party
 ||ilikethis.info^$popup,third-party
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
@@ -393,6 +394,7 @@ haaretz.co.il,themarker.com##.topSectionBanners
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
 ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
+sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="overflow: hidden;"]
 sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
 sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: relative; height: 0; right: 450px; top: 155px; z-index: 99;"]
 almadar.co.il,marmar.co.il##IMG[src^="VIRARTICLES/shadv/"]
@@ -525,6 +527,7 @@ haaretz.co.il###comments_banner_wrapper
 haaretz.co.il##DIV[style="font-size:19px; font-weight:bold;margin-bottom:10px;"]
 haaretz.co.il##div[id^="dclk_objects_"]
 haaretz.co.il##div[style="background: url(/htz/images/bg/Ad_bg.gif) repeat; padding:10px 0; text-align:center;"]
+haaretz.co.il##.ad
 hashekel.co.il###block-13
 hashekel.co.il###block-14
 homeless.co.il###board_middle_advert
@@ -762,6 +765,7 @@ tapuz.co.il###googleSide
 tapuz.co.il###googleTop
 tapuz.co.il###monsterMain
 tapuz.co.il###popDiv
+tapuz.co.il###smbMainPromotedMessage
 tapuz.co.il##.Partners_Ctrl
 tapuz.co.il##.advContainer
 tapuz.co.il##.areaBanner
@@ -857,6 +861,7 @@ ynet.co.il##.CAATVcompAdvertiseTv
 ynet.co.il##.HTcompData
 ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
 ynet.co.il##.MRec_main
+ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite

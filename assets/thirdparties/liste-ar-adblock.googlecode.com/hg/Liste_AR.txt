@@ -23,6 +23,7 @@
 !
 !----------------------- Éléments génériques -----------------!
 ###pub-730x90
+##.adv-header
 ##.ban-728
 ##.inside_adv_section
 ##.pub-730x90
@@ -224,6 +225,7 @@
 ||islamiy.com^$subdocument,domain=wadilarab.com
 ||jazora.com/banner/
 ||jo-sharing.com^*/bnnr.
+||jscsportlive.com/bzaf.php
 ||jscsportlive.com/bzf.php
 ||kalemaro.com/open*.js
 ||karizmo.net/vb/karix.gif
@@ -319,6 +321,7 @@
 ||xuscacamusca.se/js/adsj.js
 ||yellowpages.com.ps/search_bricks/ps_search_bricks_300X130.php
 ||ymoviez.com/yallamoviez.js
+||yourjavascript.com/16635201220/add-url.js
 ||yourjavascript.com^*/pp-kora.js
 ||z4ar.com/banner/bsh.gif
 ||zimabdk.com/uploads/13739105611.gif
@@ -738,6 +741,7 @@
 ||misryh.com/open.js
 ||misryh.com/open/
 ||mob4me.com/adv/
+||mobihall.com/data/adv/
 ||mobtada.com/files/banners_days/
 ||montadaphp.net/e3lan.png
 ||montadaphp.net/hamada_banner.png
@@ -844,6 +848,7 @@
 ||servimg.com/u/f42/16/22/48/64/34637510.gif
 ||sfari-s.com^$subdocument,domain=r-khleeg.net
 ||shatelarab.com^*/banners/
+||shattalarab.net/*/images/avd.png
 ||shofonline.org/megapop.js
 ||site.elkhabar.com^
 ||skauu.com^$subdocument,domain=3mri-qtr.com
@@ -1256,6 +1261,8 @@ arbface.co##table[width="800"][height="200"][bgcolor="#FFFFCC"]
 7hob.com##td[style="border:2px #EA8336 dotted ; width:336px;height:280px;"]
 forums.7hob.com##td[style="border:2px #EA8610 dotted ; width:750px;height:280px;"]
 traidnt.net##td[width="160px"]
+! Anti-Adblock
+@@||coolkora.com^$elemhide
 !
 !----------------------- Exceptions -----------------------!
 !

@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: cCNFfO5ot/rNGK3VCbE/Cg
+! Checksum: vn267AiseEaywFOCpdzHdQ
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 17 Nov 2014
+! Updated: 26 Nov 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -506,6 +506,7 @@ wolframalpha.com###subpod_zoom
 ||googletagmanager.com/gtm.js$third-party
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||mark.reevoo.com^$third-party
+||mcafeesecure.com/meter/$third-party
 ||my.leadpages.net^$third-party
 ||ooyala.com/3rdparty/visible_measures_
 ||preferences.truste.com^$third-party
@@ -637,6 +638,7 @@ wolframalpha.com###subpod_zoom
 @@||arstechnica.net/wp-content/themes/*/omniture/
 @@||arvest.com/common/urchin/urchin.js
 @@||assets.pinterest.com/js/pinit.js$domain=mandatory.com
+@@||automotive.com^*/omniture/
 @@||bankaholic.com/omniture/$script
 @@||bankofamerica.com/pa/components/*/TouchClarity.js
 @@||bbci.co.uk/bbcdotcom/*/omniture/siteCatalyst.js$domain=bbc.co.uk|bbc.com
@@ -777,6 +779,7 @@ wolframalpha.com###subpod_zoom
 @@||rightnow.com/javascript/omniture_variable_
 @@||s.xe.com/*/js/webtrends.1.js
 @@||screenname.aol.com/auth/getToken?*&referer$domain=reader.aol.com
+@@||script.ioam.de/iam.js$domain=snacktv.de
 @@||sears.com/etc/clientlibs/foundation/sitecatalyst/sitecatalyst.min.js
 @@||seeingwithsound.com/ga.js
 @@||shld.net^*/mbox_09.js$domain=sears.com

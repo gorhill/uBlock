@@ -80,7 +80,7 @@
 ! http://codecanyon.net/item/anti-adblock-aadb-anti-ads-blocker-script/5367731
 /aadb/script.js|$script
 ! Better Stop Adblock
-||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3|
+||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3$media
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
 ! StopAdBlock
@@ -484,6 +484,8 @@ paidverts.com#@#.afs_ads
 firstrowfr.eu###adblockplus
 ! spaste.com
 ||spaste.com/adblock-detector.htm$subdocument
+! safelinking.biz
+||safelinking.biz/adblock-detector.htm$subdocument
 ! linkshrink.net
 linkshrink.net#@#.overlay_ad
 linkshrink.net#@##overlay_ad
@@ -496,8 +498,9 @@ eclypsia.com#@##adv_tester
 !@@||adverts.eclypsia.com/www/images/*.jpg$image
 !@@||eclypsia.com/advertisement_fr.js$script
 ! coolkora.com
-coolkora.com#@##advertise
-cast.coolkora.com###co_holder
+!coolkora.com#@#iframe[id^="advertise"]
+!cast.coolkora.com###co_holder
+@@||coolkora.com^$elemhide
 ! videomega.tv
 @@||videomega.tv/JWJFfELSbJ/*$script
 ||goo.gl^$popup,domain=videomega.tv
@@ -569,6 +572,7 @@ gtaxscripting.blogspot.com#@##AdSense2
 ||tekproxy.com/$popup,domain=turkdown.com
 ! onvasortir.com
 @@||onvasortir.com/advertisements.js$script
+@@||onvasortir.com/smartadserver.com.js$script
 ! pogocheats.net
 @@||pagead2.googlesyndication.com/pagead/js/*$domain=pogocheats.net
 pogocheats.net#@#.adsbygoogle
@@ -576,6 +580,28 @@ pogocheats.net#@#.adsbygoogle
 @@||advert.popunder.ru/banners/advert.php$image,subdocument,document=torrent-rutor.org
 ||activepr.ru^$domain=torrent-rutor.org
 ||stats.tadic.tk^$domain=torrent-rutor.org
+! rutube.ru
+@@||yast.rutube.ru/crossdomain.xml$object-subrequest
+@@||rutube.ru/dbg/player_stat?*$object-subrequest
+! porn-blog.me
+@@||porn-blog.me/ads/banner.jpg$image
+@@||porn-blog.me/?pr_api=true&/ad_holder/$subdocument
+! adultkino.org
+@@||adultkino.org/ads/banner.jpg$image
+@@||adultkino.org/?pr_api=true&/adframe/$subdocument
+porn-blog.me###dbx_light
+! goldenboys.fr
+goldenboys.fr#@#.afs_ads
+! bywarrior.com
+@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=bywarrior.com
+! filecore.co.nz
+filecore.co.nz#@#.adsense
+@@||enrondev.net/ads/server/www/delivery/*$domain=filecore.co.nz,subdocument
+! streaming-foot.info
+||foot-live.info/images/adblok.mp3$media
+||streaming-foot.info/images/adblok.mp3$media
+! gratisbitco.in
+@@||gratisbitco.in/scripts/ads.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -691,11 +717,6 @@ pogocheats.net#@#.adsbygoogle
 kat.ph,kickass.to,katproxy.com,proxykat.me##.partner1Button
 ! thepiratebay
 /poptest.js|$popup,domain=thepiratebay.sx|pirateproxy.se|unblocked.co|piratesniper.net|pirateproxy.net|piratebaybyproxy.com|proxybay.eu|tpbunion.com|quluxingba.info|tpb.ducke.co|piratebayunion.com|tpb.piraten.lu|tpb.ipredator.se|tpb.pirati.cz|theproxybay.biz|51tsj.com|bay.alanaktion.net|tpbpirate.tk
-! extratorrent.cc
-||projekt95.net^$popup,script,third-party
-||go.onhitads.net^$popup,script,third-party
-||go.oclasrv.com^$popup,script,third-party
-||go.wsockd.com^$other,script,third-party
 ! fenopy.se
 fenopy.se##[rel="nofollow external"][href^="/ddl/"]
 ! seedpeer.me
@@ -782,7 +803,7 @@ planet-series.tv##IMG[src="http://www.planet-series.tv/images/250-1.png"]
 planet-series.tv##IMG[src="http://www.planet-series.tv/images/728-2.png"]
 ! Streaming --------------------------------------------------------------------------------------
 ! floatLayer
-tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv##*[id^="floatLayer"]
+tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv,micast.tv##*[id^="floatLayer"]
 ! livesoccerhq
 s.m2pub.com###adk2_img
 ! tvportugalhd
@@ -943,6 +964,13 @@ aovivoagora.com##div[id^="anuncio"]
 liguendirect.com##div[id^="bannerfloat"]
 ! biggestplayer.me
 biggestplayer.me##.cuadrado.rmv
+! playerhd1.pw
+playerhd1.pw###total
+playerhd1.pw###total_banner 
+playerhd1.pw##.ad
+streaming-foot.info###timer1
+streaming-foot.info###timer2
+streaming-foot.info###timer3
 ! Others ---------------------------------------------------------------------------------------
 ! tvi
 tvi24.iol.pt##iframe[id=barraIOL]

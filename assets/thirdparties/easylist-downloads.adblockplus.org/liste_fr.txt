@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: P+H7irDJZkQBddnq3hvk6g
-! Version: 201411201621
+! Checksum: mbAvkd2QovJIsyufF+xsxg
+! Version: 201411291301
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -19,12 +19,14 @@
 .fr/ads/
 .pubdirecte.
 .publicite.
+/adUnblock.
 /aff_pub_
 /bandeaupublicite/*
 /banners-pub/*
 /banniere728x90_
 /banniere_pub.
 /bannieres_pub/*
+/doubleclick_dmm/*
 /miniads/*
 /pub300-250.
 /pub468x60.
@@ -101,6 +103,7 @@ _regiepub/
 ||alloclick.com^$third-party
 ||allovisiteur.com^$third-party
 ||appsfire.com^$third-party
+||archaicgenusklebsiella.info^$third-party
 ||atedra.com^$third-party
 ||avenir-affiliation.fr^$third-party
 ||b117f8da23446a91387efea0e428392a.pl^$third-party
@@ -117,6 +120,7 @@ _regiepub/
 ||click-fr.com^$third-party
 ||clicmanager.fr^$third-party
 ||comandclick.com^$third-party
+||compensateanopheles.org^$third-party
 ||cougar-rencontre.net^$third-party
 ||danstonfion.com^$popup,third-party
 ||danstonfion.com^$third-party
@@ -152,6 +156,7 @@ _regiepub/
 ||gdfspfg.com^$third-party
 ||genhit.com^$third-party
 ||gestionpub.com^$popup,third-party
+||globalisenailer.com^$third-party
 ||goodaction.com^$third-party
 ||goracash.com^$third-party
 ||greatregie.com^$third-party
@@ -164,6 +169,7 @@ _regiepub/
 ||illyx.com^$popup,third-party
 ||illyx.com^$third-party
 ||imgpromo.easyrencontre.com^$third-party
+||indignantonstage.com^$third-party
 ||kadserver.com^$third-party
 ||koocash.com$popup,third-party
 ||koodoo.net^$third-party
@@ -200,6 +206,7 @@ _regiepub/
 ||oneinstaller.com^$third-party
 ||orangepublicite.fr^$third-party
 ||overlays.next-targeting.com^$third-party
+||pandad.eu^$third-party
 ||papycash.com$third-party
 ||partner.uncadeau.com^$third-party
 ||payglad.com^$third-party
@@ -232,6 +239,8 @@ _regiepub/
 ||rotabann4x.com^$third-party
 ||say.fr^$third-party
 ||script.banstex.com^$third-party
+||secretaryofstateblackness.net^$third-party
+||secretmedia.com^$third-party
 ||sex-affiliation.com^$third-party
 ||sextapes2stars.com^$third-party
 ||shoppytab.com^$third-party
@@ -245,6 +254,7 @@ _regiepub/
 ||superadsoffers.com^$third-party
 ||supersmsoffers.com^$third-party
 ||surfactif.fr^$third-party
+||susanbrownellanthonysabotage.net^$third-party
 ||teads.fr^$third-party
 ||the-adult-company.com^$popup,third-party
 ||tnx.net^$third-party
@@ -295,6 +305,7 @@ _regiepub/
 ||achatventepagefan.com/images/AVPF_
 ||achatventepagefan.com^*/banachat*.gif$third-party
 ||achetezfacile.com/co/widgets/widget.js.php$third-party
+||aff.bstatic.com^
 ||affiliationcommando.com/bannieres/
 ||ajoutezvotrelien.com/visuel46.png
 ||algeriemobiles.com/pub/
@@ -372,6 +383,7 @@ _regiepub/
 ||diagnostic-expertise.com^*-popunder.php?$popup
 ||dir-fr.com/banners/$domain=la-musique-rai.com
 ||disco-sexe.com/ban/$third-party
+||download.viamichelin.com^
 ||dracouilla.com/ban/$third-party
 ||drague.net/pubs/
 ||dukppplb.info^
@@ -524,6 +536,7 @@ _regiepub/
 ||on-veut-du-cul.com/promo/
 ||onlyanimes.info/avatar/banpub.gif
 ||onvillanuit.com^$domain=chartsinfrance.net
+||over-blog-kiwi.com^*/*_ban-300x250.
 ||oxiads.fr/www/images/
 ||oxyka.com/er/od.php?
 ||p0rno.com/banners/
@@ -764,6 +777,7 @@ _regiepub/
 ||bienpublic.com/fr/images/blocHTML/logoOffre.jpg
 ||bienpublic.com/images/pub/
 ||billionuploads.com/js/pub.js
+||binnews.in/_images/pub/
 ||bittovore.com/popup.php$popup
 ||blague.info/pub/
 ||blog-nouvelles-technologies.fr/wp-content/annonceurs/
@@ -772,6 +786,7 @@ _regiepub/
 ||blogduwebdesign.com/images/BannierePrintBox728x90_1.gif
 ||blogduwebdesign.com/images/Pave300x250_1.gif
 ||blogsbd.fr/pub/
+||blogsbd.fr/public/bbd-pooble.jpg
 ||boiteajeux.net/img/pub/
 ||boursier.com/ui/js/docs-partenaires.js
 ||brain-magazine.com/images/_habillages/
@@ -843,6 +858,7 @@ _regiepub/
 ||cyclisme-mag.com/includes/*/habillage/
 ||days-media.fr^*/disclaimers.js
 ||dayzguide.fr/images/partenaire/
+||decerto.fr/adblock/
 ||degourdi.com/ban/
 ||degroupnews.com/css/commun/pub-
 ||degroupnews.com/images/banniere
@@ -1225,6 +1241,7 @@ _regiepub/
 ||libre.eu/homepage/relooking/
 ||lien-torrent.com^$subdocument
 ||liens-de-telechargement.com/popmodal/
+||links.fhsarl.com^$popup,third-party
 ||linternaute.com/*@*,position$script
 ||linternaute.com^*/0_pub/
 ||linux62.org/html_css/pub_
@@ -1622,6 +1639,7 @@ _regiepub/
 ||vbulletin-ressources.com/forum/planethoster/
 ||velotaf.com/_themes/velotaf/habillage/
 ||viacredit.net/pub/
+||viamichelin.com/img/ihm/carRent/
 ||video-2-cul.com/javascript/functions.js
 ||videos-de-celebrites.com/pub/
 ||vidule.com^*/u.js
@@ -1695,9 +1713,8 @@ _regiepub/
 ||zoom-algerie.com/images/amazigh-united-250.jpg
 ||zoomdici.fr/media/pub/
 ! MacGeneration
-igen.fr,macg.co###habil
-igen.fr,macg.co###habil11
 ~forums.macg.co,igen.fr,macg.co##a[href="http://goo.gl/kp5svN"]
+igen.fr,macg.co##a[id^="habil"]
 igen.fr,macg.co##img[onload^="_gaq.push(['_trackEvent', 'Habillage "]
 igen.fr,macg.co##img[width="1440"][height="1622"]
 ||files.macg.co/macgupload/
@@ -1967,6 +1984,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.conteneur_pub_footer
 ##.conteneur_pub_horiz
 ##.conteneur_pub_vertical
+##.divAdsBottom
 ##.encart_pub
 ##.entete-pub
 ##.entete_pub
@@ -1995,12 +2013,14 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.pave_pub
 ##.pave_pub2
 ##.position_pub
+##.pub-300
 ##.pub-300x250
 ##.pub-728
 ##.pub-728x90
 ##.pub-banner
 ##.pub-block
 ##.pub-carre
+##.pub-demipage
 ##.pub-gigaban
 ##.pub-haut
 ##.pub-img
@@ -2041,6 +2061,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.pub_2_728
 ##.pub_300
 ##.pub_300_250
+##.pub_468
 ##.pub_468x60
 ##.pub_468x60_bas
 ##.pub_468x60_haut
@@ -2249,6 +2270,7 @@ canalturf.com###content > div[style="width:100%; z-index: 100; margin-bottom:10p
 01net.com###custom_header
 beaute-test.com###devtribu_sb
 lareclame.fr###dfp-top
+viamichelin.com###diaporama
 only-stream.com###disclaimer
 channelbiz.fr,itespresso.fr,silicon.fr###div-gpt-mega-1
 silicon.fr###div-gpt-mega-2
@@ -2299,7 +2321,7 @@ gameblog.fr###gbPub728bas
 gameblog.fr###gb_home_sponsor
 gameblog.fr###gba300
 viamichelin.be###gdhMegaBan
-viamichelin.be###gdhMegaBanBottom
+viamichelin.be,viamichelin.com###gdhMegaBanBottom
 numerama.com###general_dec
 mediamass.net###google
 zero-complexe.com###google.post.bg1.online
@@ -2339,7 +2361,7 @@ confidentielles.com###hunt
 01net.com###ic-ad-movie
 viamichelin.be###idAFSRoadsheetTop
 viamichelin.be###idAdvertPubLeMonde
-viamichelin.fr###idHeaderGDH
+viamichelin.com,viamichelin.fr###idHeaderGDH
 viamichelin.be###idTopAdvertCol2
 lesnumeriques.com###ifr_pub
 wawacity.su###img_1_300x250
@@ -2447,7 +2469,7 @@ fluvore.com###prom
 ecranlarge.com,lacanausurfinfo.com###promo
 extremepc.fr###promoHead + hr + .center
 streamnolimit.com###pscroller1
-allstreamz.com,annuaire-streaming.com,blogs.allocine.fr,centerblog.net,emule-island.ru,extremepc.fr,japan-expo.be,jeux-2-filles.com,jeuxonline.info,letudiant.fr,levraigabroy.com,nrj.be,nrj.fr,nuked-klan.org,olivierdauvers.fr,orange.fr,planet-casio.com,science-et-vie.com,solutions-logiciels.com,sortir47.fr,toutpratique.com,virtuoflash.com,wareziens.net###pub
+allstreamz.com,annuaire-streaming.com,blogs.allocine.fr,centerblog.net,emule-island.ru,extremepc.fr,japan-expo.be,jeux-2-filles.com,jeuxonline.info,letudiant.fr,levraigabroy.com,nrj.be,nrj.fr,nuked-klan.org,olivierdauvers.fr,orange.fr,planet-casio.com,science-et-vie.com,service-public.fr,solutions-logiciels.com,sortir47.fr,toutpratique.com,virtuoflash.com,wareziens.net###pub
 nextinpact.com###pub-bot
 francebleu.fr,franceinfo.fr###pub-ftv-top
 jeu.info###pub0
@@ -2493,6 +2515,7 @@ matchendirect.fr###pubtetiere
 flights-results.liligo.fr###pulledbanner
 flights-results.liligo.fr###pulledbanner-right-top
 zdnet.fr###pwcBox
+amazon.fr###raw-search-desktop-advertising-tower-1
 parolesmania.com###rectangle > .thinbox div[style="height: 250px;"]
 lexpress.mu###region-user-second
 radio-monaco.com###responsive-banner-slider
@@ -2595,7 +2618,7 @@ aufeminin.com##.OffresSpe_cadre
 afrokanlife.com##.PubAdAI
 lagazettedescommunes.com##.actus-case-pub
 lagazettedescommunes.com##.actus-home-right-pub
-covoiturage.fr,e-sante.fr,gizmodo.fr,lematin.ch,maps.google.fr,p-nintendo.com,photo.fr,tetu.com,tripadvisor.fr,zapiks.fr##.ad
+covoiturage.fr,e-sante.fr,fabriquer-des-meubles.fr,gizmodo.fr,lematin.ch,maps.google.fr,p-nintendo.com,photo.fr,tetu.com,tripadvisor.fr,zapiks.fr##.ad
 sudouest.fr##.ad-box
 pafpaf.com##.adBlocTop
 macg.co##.adBottom
@@ -2853,6 +2876,7 @@ strastv.com##.post_pub
 audiofanzine.com##.price
 nouvelobs.com##.promo-bottom-art
 frandroid.com##.promo-sony
+lemonde.fr##.promo.michelin
 pornojeune.net##.promo_texte2
 pornofrance.org##.promomenu
 cdiscount.com##.ptnlnk_table
@@ -3034,7 +3058,6 @@ tunisie-news.com##a[href^="/artpublic/banniere/click3.php?"]
 marianne.net##a[href^="/blogsecretdefense/ads/"]
 omgtorrent.com##a[href^="/clic_dl.php?url="]
 unchartedatolls.com##a[href^="/file.php?"]
-rue-hardware.com,rue-montgallet.com##a[href^="/go/"]
 mayottehebdo.com##a[href^="/index.php?option=com_banners"]
 trictrac.net##a[href^="/partenaire/"]
 estrepublicain.fr,matchendirect.fr##a[href^="/pub/"]
@@ -3671,11 +3694,11 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 |http://*.whynotad.com/$third-party,xmlhttprequest
 |http://*.with-linux.com/$third-party,xmlhttprequest
 |http://*.wtf.im/$third-party,xmlhttprequest
+|http://*.zanity.net/$third-party,xmlhttprequest
 ||axlnp.us.to^$third-party
 ||cifqr.69.mu^$third-party
 ||cvhyx.vr.lt^$third-party
 ||ebogh.mm.my^$third-party
-||eozys.openoffcampus.com^$third-party
 ||fcwsk.ro.lt^$third-party
 ||fsvuc.qq.my^$third-party
 ||hjglq.ax.lt^$third-party
@@ -3687,6 +3710,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ||nagcs.ax.lt^$third-party
 ||nslpg.us.to^$third-party
 ||omqdu.cr.rs^$third-party
+||openoffcampus.com^$third-party
 ||pfrns.us.to^$third-party
 ||pxunl.mm.my^$third-party
 ||pyjmc.cc.st^$third-party
@@ -3702,6 +3726,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 ||ycibh.gw.lt^$third-party
 ||ydfbg.us.to^$third-party
 ||ytrhu.us.to^$third-party
+||zanity.net^$third-party
 !
 #@##bannerAdContainer1_1
 #@##bannerAdFrame
@@ -3996,7 +4021,6 @@ maxdebrideur.com#@##pubdirecte
 openedition.org#@##publicite
 ratus13.com#@#.ad-block
 jeuxjeuxjeux.fr,vente-a-domicile.fr#@#.ad-left
-vente-a-domicile.fr#@#.ad-right
 rue-hardware.com,rue-montgallet.com#@#.adText
 pointvente.fr#@#.ad_line
 toyama.fr#@#.ad_panel

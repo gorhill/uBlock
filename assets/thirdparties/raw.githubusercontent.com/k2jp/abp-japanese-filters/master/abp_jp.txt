@@ -1,11 +1,12 @@
 [Adblock Plus 2.3.1]
-! Checksum: EovKYyjoLJYWrFiDpp0fag
+! Checksum: R7sP3OQkLXcgv5VXTwiGJw
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY for Japanese: see Support Policy)
 ! Expires: 6 hours
-! Version: 201411202200
+! Version: 201411250631
+! Redirect: http://bit.ly/11QrCfx
 
-! Last modified: 2014-11-20 22:00 JST(UTC+0900)
+! Last modified: 2014-11-25 06:31 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons 3.0 BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
@@ -872,17 +873,29 @@
 -impression_id^
 -impression_id_
 -landing-$popup
+-landing-$third-party
 -landing.$popup
+-landing.$third-party
 -landing^$popup
+-landing^$third-party
 -landing_$popup
+-landing_$third-party
 -landingpage-$popup
+-landingpage-$third-party
 -landingpage.$popup
+-landingpage.$third-party
 -landingpage^$popup
+-landingpage^$third-party
 -landingpage_$popup
+-landingpage_$third-party
 -landingpages-$popup
+-landingpages-$third-party
 -landingpages.$popup
+-landingpages.$third-party
 -landingpages^$popup
+-landingpages^$third-party
 -landingpages_$popup
+-landingpages_$third-party
 -linkad-
 -linkad.
 -linkad^
@@ -1510,17 +1523,29 @@
 .jeuxofferts.
 .kissinsights.com/
 .landing-$popup
+.landing-$third-party
 .landing.$popup
+.landing.$third-party
 .landing^$popup
+.landing^$third-party
 .landing_$popup
+.landing_$third-party
 .landingpage-$popup
+.landingpage-$third-party
 .landingpage.$popup
+.landingpage.$third-party
 .landingpage^$popup
+.landingpage^$third-party
 .landingpage_$popup
+.landingpage_$third-party
 .landingpages-$popup
+.landingpages-$third-party
 .landingpages.$popup
+.landingpages.$third-party
 .landingpages^$popup
+.landingpages^$third-party
 .landingpages_$popup
+.landingpages_$third-party
 .megavod.
 .metrics-
 .metrics.
@@ -2059,7 +2084,7 @@
 /gsrs^$script,third-party
 /header_bnr_
 /headline.$script,domain=gizmodo.jp|kotaku.jp|lifehacker.jp
-/hist_count.$~image
+/hist_count.
 /hserver/*
 /html.ng/*
 /html/click/*
@@ -2125,8 +2150,8 @@
 /logwrite.$image,object
 |http:*/lp/$popup
 |https:*/lp/$popup
-|http:*/lp/$subdocument,third-party
-|https:*/lp/$subdocument,third-party
+|http:*/lp/$third-party
+|https:*/lp/$third-party
 /lpresources/js/*
 /makePCookie_
 /marquee/*$domain=live.nicovideo.jp|www.nicovideo.jp
@@ -2299,7 +2324,7 @@
 ! /stat.$domain=~ameblo.jp|~ameba.jp
 ! /stat^
 ! /stat_
-/statcounter.$~image
+/statcounter.
 /statisticsPlugin.
 /storage.$object,third-party
 /sujqori.
@@ -3902,17 +3927,29 @@
 ^koukoku^
 ^koukoku_
 ^landing-$popup
+^landing-$third-party
 ^landing.$popup
+^landing.$third-party
 ^landing^$popup
+^landing^$third-party
 ^landing_$popup
+^landing_$third-party
 ^landingpage-$popup
+^landingpage-$third-party
 ^landingpage.$popup
+^landingpage.$third-party
 ^landingpage^$popup
+^landingpage^$third-party
 ^landingpage_$popup
+^landingpage_$third-party
 ^landingpages-$popup
+^landingpages-$third-party
 ^landingpages.$popup
+^landingpages.$third-party
 ^landingpages^$popup
+^landingpages^$third-party
 ^landingpages_$popup
+^landingpages_$third-party
 ^liadsuite-
 ^liadsuite.
 ^liadsuite^
@@ -4842,17 +4879,29 @@ _impression_id^
 _impression_id_
 _jack.$image,object,domain=4gamer.net
 _landing-$popup
+_landing-$third-party
 _landing.$popup
+_landing.$third-party
 _landing^$popup
+_landing^$third-party
 _landing_$popup
+_landing_$third-party
 _landingpage-$popup
+_landingpage-$third-party
 _landingpage.$popup
+_landingpage.$third-party
 _landingpage^$popup
+_landingpage^$third-party
 _landingpage_$popup
+_landingpage_$third-party
 _landingpages-$popup
+_landingpages-$third-party
 _landingpages.$popup
+_landingpages.$third-party
 _landingpages^$popup
+_landingpages^$third-party
 _landingpages_$popup
+_landingpages_$third-party
 _metrics-
 _metrics.
 _metrics^
@@ -5066,12 +5115,13 @@ _yahooads_
 ||kanasoku.*/thumb/
 ||krxd.
 ||landing.$popup
+||landing.$third-party
 ||log.$third-party
 ||log0.
 |http://lp.$popup
 |https://lp.$popup
-|http://lp.$subdocument,third-party
-|https://lp.$subdocument,third-party
+|http://lp.$third-party
+|https://lp.$third-party
 ||mads.
 ||maxymiser.$third-party
 ||metrics.
@@ -5222,7 +5272,7 @@ _yahooads_
 ||29bca6cb72a665c8.se^
 ||29bca6cb72a665c8.se^$popup
 ||2ch.io/getf.cgi?
-||count.2ch.net^$~image
+||count.2ch.net^
 ||find.2ch.net/*_banner_
 ||2leep.com^$third-party
 ||2mdn.net^$popup
@@ -5297,6 +5347,7 @@ _yahooads_
 ||abcd-porno-video.biz^
 ||ableday.com^
 ||about.co.kr^$third-party
+||abtasty.com^$third-party
 ||abusieux.com^
 ||acads.net^
 ||accanalyze.com^$third-party
@@ -5668,6 +5719,8 @@ _yahooads_
 ||hdapp1003-a.akamaihd.net^
 ||hdapp1008-a.akamaihd.net^
 ||hdsrc-a.akamaihd.net^
+||serviceama-a.akamaihd.net^
+||akibablog.net/lilbox/
 ||akmega.ru^
 ||aknod.com^$third-party
 ||alc.co.jp/content/js/alcom/
@@ -5706,6 +5759,7 @@ _yahooads_
 ||am15.net^
 ||amalily.com^
 ||amaprop.net^$third-party
+||amasvc.com^
 ||amazon-adsystem.com^
 ||amazon.*/aan/$domain=amazon.ca|amazon.cn|amazon.co.jp|amazon.co.uk|amazon.com|amazon.de|amazon.es|amazon.fr|amazon.it
 ||amazon.*?*=*-22^$third-party
@@ -5725,6 +5779,7 @@ _yahooads_
 ||amazonaws.com/lps
 ||amazonaws.com/opbanditcdn/
 ||amazonaws.com/opentag/
+||amazonaws.com/p10DrIj/
 ||amazonaws.com/saaspulse-cdn/
 ||amazonaws.com/sniffer/
 ||amazonaws.com/totango-cdn/
@@ -6183,6 +6238,7 @@ _yahooads_
 ||cloudcnd.com^
 ||ajax.cloudflare.com^
 ||cloudfront.net^$popup
+||d1447tq2m68ekg.cloudfront.net^
 ||d1798l6lhp8h4d.cloudfront.net^
 ||d1bzh9wdftmzm0.cloudfront.net^
 ||d1c299r1rms8s6.cloudfront.net^
@@ -6223,9 +6279,11 @@ _yahooads_
 ||d8rk54i4mohrb.cloudfront.net^
 ||dc8na2hxrj29i.cloudfront.net^
 ||dd6zx4ibq538k.cloudfront.net^
+||ddrn6tjst80qg.cloudfront.net^
 ||ddts0bzupd01y.cloudfront.net^
 ||df09rp0cm6rp6.cloudfront.net^
 ||dgy6rx5roq02d.cloudfront.net^
+||djtkh1hova1ix.cloudfront.net^
 ||dnn506yrbagrg.cloudfront.net^
 ||doug1izaerwt3.cloudfront.net^
 ||dpp750yjcl65g.cloudfront.net^
@@ -6423,6 +6481,7 @@ _yahooads_
 ||daum.net^$subdocument,third-party
 ||davarello.com^
 ||ddestiny.ru^$third-party
+||dealally.com^$popup
 ||dealply.$third-party
 ||deals-way.com^$third-party
 ||dealswired.com^$popup
@@ -6735,7 +6794,7 @@ _yahooads_
 ||aimg.fc2.com^
 ||analyzer*.fc2.com*/ana/
 ||analyzer*.fc2.com/analyzercook.
-||counter*.fc2.com^$~image
+||counter*.fc2.com^
 ||media.fc2.com^
 ||media3.fc2.com^
 ||fc2web.com^$third-party
@@ -6919,6 +6978,7 @@ _yahooads_
 ||x5.goo.ne.jp^
 ||goodadvert.ru^$third-party
 ||goodgamestudios.com^$popup
+||goodpic.com^$third-party
 ||goodsbrowser.com^
 ! False positive: No google custom search result. 2011-08-18
 ! ||google.*/afsonline/
@@ -7185,6 +7245,7 @@ _yahooads_
 ||innityserve.net^
 ||inskinmedia.com^$third-party
 ||installerdatauk.info^
+||instashareonline.com^$third-party
 ||insurance24online.net^
 ||intensedebate.com^$third-party
 ||intergi.com^$third-party
@@ -7507,6 +7568,7 @@ _yahooads_
 ||livedoor.jp/plugin/popular_articles_with_image_plugin.$script
 ||blog.livedoor.jp/*/settings/header.$script
 ||blog.livedoor.jp/adt7777/$third-party
+||blog.livedoor.jp/geek/$subdocument
 ||blog.livedoor.jp/sleepy0130/$third-party
 ||t.blog.livedoor.jp^
 ||livejasmin.com^$popup
@@ -7721,7 +7783,7 @@ _yahooads_
 ||c1.microsoft.com^
 ||midlemee.ru^
 ||mieuxchoisir.com^
-||millioncounter.com^$~image
+||millioncounter.com^
 ||miniinthebox.com^$popup
 ||minisalopes.com^
 ||ministerial5.com^$third-party
@@ -7835,6 +7897,7 @@ _yahooads_
 ||multicam-dating.com^
 ||multirdv.com^
 ||mummysoft.com^
+||musclelight.com^
 ||musen-lan.com/speed/banner/
 ||mwbxxjpi3r.com^
 ||mxcdn.net^
@@ -7907,6 +7970,8 @@ _yahooads_
 ||netdna.com^$third-party
 ! Moved to the Paranoid subscription to avoid false positives, Feb 1, 2014
 ! ||netdna-cdn.com^$third-party
+||netdna-cdn.com/scores/
+||adperformance.netdna-cdn.com
 ||s2hd-plugincom-maynemyltf.netdna-ssl.com^
 ||netgy.com^$third-party
 ||netmng.com^$third-party
@@ -7940,6 +8005,7 @@ _yahooads_
 ||nicovideo.jp/Uads$script,domain=~uad.nicovideo.jp
 ||ad.nicovideo.jp^
 ! ||ads.nicovideo.jp^
+||enquete.nicovideo.jp^$domain=~enquete.nicovideo.jp
 ||ichiba.nicovideo.jp/img/bnrIchiba
 ! Commented out to avoid closing connection 2011-10-23
 ! ||ow.live.nicovideo.jp^
@@ -8286,7 +8352,7 @@ _yahooads_
 ||r1fclick.com^
 ! Commented out a vague filter to avoid false positives, reported via Issue Repoort, Mar 11, 2014
 ! ||rackcdn.com^$third-party
-||radarurl.com^$~image,domain=~radarurl.com
+||radarurl.com^,domain=~radarurl.com
 ||radeant.com^$popup
 ||radeant.com^$third-party
 ||radikal.ru^$third-party
@@ -8573,15 +8639,15 @@ _yahooads_
 ||dumbo.shinobi.jp^
 ||nsm.shinobi.jp^
 ||axad.shinobi.jp^
-||ba1.shinobi.jp^$~image
-||ba2.shinobi.jp^$~image
-||ba3.shinobi.jp^$~image
-||ba4.shinobi.jp^$~image
-||ba5.shinobi.jp^$~image
-||ba6.shinobi.jp^$~image
-||ba7.shinobi.jp^$~image
-||ba8.shinobi.jp^$~image
-||ba9.shinobi.jp^$~image
+||ba1.shinobi.jp^
+||ba2.shinobi.jp^
+||ba3.shinobi.jp^
+||ba4.shinobi.jp^
+||ba5.shinobi.jp^
+||ba6.shinobi.jp^
+||ba7.shinobi.jp^
+||ba8.shinobi.jp^
+||ba9.shinobi.jp^
 ||bar1.shinobi.jp^
 ||bar2.shinobi.jp^
 ||bar3.shinobi.jp^
@@ -8591,29 +8657,29 @@ _yahooads_
 ||bar7.shinobi.jp^
 ||bar8.shinobi.jp^
 ||bar9.shinobi.jp^
-||ct1.shinobi.jp^$~image
-||ct2.shinobi.jp^$~image
-||ct3.shinobi.jp^$~image
-||ct4.shinobi.jp^$~image
-||ct5.shinobi.jp^$~image
-||ct6.shinobi.jp^$~image
-||ct7.shinobi.jp^$~image
-||ct8.shinobi.jp^$~image
-||ct9.shinobi.jp^$~image
+||ct1.shinobi.jp^
+||ct2.shinobi.jp^
+||ct3.shinobi.jp^
+||ct4.shinobi.jp^
+||ct5.shinobi.jp^
+||ct6.shinobi.jp^
+||ct7.shinobi.jp^
+||ct8.shinobi.jp^
+||ct9.shinobi.jp^
 ||omt.shinobi.jp^
 ||rcm.shinobi.jp^
 ||samurai.shinobi.jp^
 ||st.shinobi.jp^
-||vis1.shinobi.jp^$~image
-||vis2.shinobi.jp^$~image
-||vis3.shinobi.jp^$~image
-||vis4.shinobi.jp^$~image
-||vis5.shinobi.jp^$~image
-||vis6.shinobi.jp^$~image
-||vis7.shinobi.jp^$~image
-||vis8.shinobi.jp^$~image
-||vis9.shinobi.jp^$~image
-||shinystat.com^$~image
+||vis1.shinobi.jp^
+||vis2.shinobi.jp^
+||vis3.shinobi.jp^
+||vis4.shinobi.jp^
+||vis5.shinobi.jp^
+||vis6.shinobi.jp^
+||vis7.shinobi.jp^
+||vis8.shinobi.jp^
+||vis9.shinobi.jp^
+||shinystat.com^
 ||shop-japan.com^$third-party
 ||shopping-search.jp^$third-party
 ||shorte.st^$third-party
@@ -8732,6 +8798,8 @@ _yahooads_
 ||spylog.ru^
 ||srdrvp.com^
 ||srshql.com^
+||srstrkr.com^
+||srstrkr.com^$popup
 ||ssassets.com^
 ||ssfiles.com^
 ||ssl-services.com^
@@ -8984,6 +9052,7 @@ _yahooads_
 ||tynt.com^$third-party
 ||typekit.net/p.$image
 ||typiol.com^
+||tyrellsys.com^$third-party
 ||tytbydettraff.ru^
 ||uchmuk.com^
 ||uclead.com^
@@ -9151,6 +9220,7 @@ _yahooads_
 ||votre-devis-credit.com^
 ||voyeurparadize.com^
 ||voyeurszone.com^
+||vq1015entry.com^$third-party
 ||vs.com^$third-party
 ||vsp-online.com^
 ||vtkea.net^

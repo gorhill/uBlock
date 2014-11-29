@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Nov 19th, 2014 at 11:04
+# Last updated: Nov 24th, 2014 at 02:55
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -756,6 +756,7 @@ fe80::1%lo0	localhost
 127.0.0.1 gator.com
 127.0.0.1 gcounter.hosting4u.net
 127.0.0.1 gd.mlb.com
+127.0.0.1 gemius.pl
 127.0.0.1 geocounter.net
 127.0.0.1 gkkzngresullts.com
 127.0.0.1 go-in-search.net
@@ -5098,6 +5099,7 @@ fe80::1%lo0	localhost
 127.0.0.1 bbcdn.go.ihned.bbelements.com
 127.0.0.1 bbcdn.go.pl.bbelements.com
 127.0.0.1 bb.crwdcntrl.net
+127.0.0.1 bbelements.com
 127.0.0.1 bbnaut.bbelements.com
 127.0.0.1 bc685d37-266c-488e-824e-dd95d1c0e98b.statcamp.net
 127.0.0.1 bcp.crwdcntrl.net
@@ -5506,6 +5508,7 @@ fe80::1%lo0	localhost
 127.0.0.1 cstatic.weborama.fr
 127.0.0.1 ctbdev.net
 127.0.0.1 c.th.msn.com
+127.0.0.1 ctnsnet.com
 127.0.0.1 c.tr.msn.com
 127.0.0.1 cts.channelintelligence.com
 127.0.0.1 c.tw.msn.com
@@ -6291,6 +6294,7 @@ fe80::1%lo0	localhost
 127.0.0.1 load.focalex.com
 127.0.0.1 loading321.com
 127.0.0.1 loadm.exelator.com
+127.0.0.1 load.sumome.com
 127.0.0.1 local.promoisland.net
 127.0.0.1 logc252.xiti.com
 127.0.0.1 log.feedjit.com
@@ -6589,6 +6593,7 @@ fe80::1%lo0	localhost
 127.0.0.1 openx.adfactor.nl
 127.0.0.1 openx.coolconcepts.nl
 127.0.0.1 openx.shinyads.com
+127.0.0.1 openx.xenium.pl
 127.0.0.1 openxxx.viragemedia.com
 #127.0.0.1 optimized-by.rubiconproject.com
 127.0.0.1 optimized.by.vitalads.net
@@ -7168,6 +7173,7 @@ fe80::1%lo0	localhost
 127.0.0.1 su.addthis.com
 127.0.0.1 subtracts.userplane.com
 127.0.0.1 sudokuwhiz.com
+127.0.0.1 sumome.com
 127.0.0.1 sunmaker.com
 127.0.0.1 superbrewards.com
 127.0.0.1 support.sweepstakes.com

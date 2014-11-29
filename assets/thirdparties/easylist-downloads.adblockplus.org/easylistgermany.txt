@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: gmdFmjy6AFFFdtRx0vaqeQ
-! Version: 201411201621
+! Checksum: rt/VQ5W45tCtkawGsgwu0g
+! Version: 201411291301
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 20 Nov 2014 16:21 UTC
+! Last modified: 29 Nov 2014 13:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1322,6 +1322,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||partner.zooplus.de^$third-party
 ||partnerprogramm.e-wie-einfach.de^$third-party
 ||partners.eatsmarter.de^
+||partnervermittlung.elitepartner.de^*^emnad_id^$third-party
 ||partyfans.de/145x300.gif
 ||partyschnaps.com/banner/$third-party
 ||pass.ch/wp-content/uploads/*/PASS-Banner-
@@ -1382,6 +1383,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||prospekt38.de^*/widget.php?anbieter_id=$subdocument,third-party
 ||psw.net/banner.gif$third-party
 ||psychologe.de/partner/$third-party
+||publisher.spoods.de^
 ||pvnsolutions.com/brand/hoh/file/*/schottenland/$domain=hoh.de
 ||px24.com/promotion/$third-party
 ||pytalhost.de/images/wpmhome.gif
@@ -1576,6 +1578,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||xxx-4-free.net/banner/
 ||xxx-hitz.org^$third-party
 ||xxxporn.to/banner/
+||yourdealz.de/yourdealz.gif
+||yourdealz.de/yourdealz2.gif
 ||zeiss.de^*/containertitel/*/*file/$third-party
 ||zock4help.de/banner/
 ||zweitfondsmarkt.de/banner/$third-party
@@ -3736,9 +3740,12 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||gamona.de/wp-content/66
 ||gamona.de/wp-content/67
 ||gamona.de/wp-content/up/
+||image.gala.de/231c6c37bac04376a3091538b5ccd3b8/v2/
 ||image.gala.de^*/img/*.jpg
 ||image.gala.de^*/img/*.png
 ||image.gala.de^*/v1/*.jpg
+||image.gala.de^*LB*.jpg$image
+||image.gala.de^*MR*.jpg$image
 ||img.lokalisten.de^$image
 ||img1.auto-motor-und-sport.de/i*10$image
 ||img1.auto-motor-und-sport.de/i/*.jpg
@@ -3751,10 +3758,23 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||media.epochtimes.de/img/
 ||mv-spion.de/ajax/lc?content=qwert
 ||mv-spion.de/ajax/lc|
+||p5.focus.de/img/fotos/*MR$image
+||p5.focus.de/img/fotos/crop28923423/1624877250-cv21_9-w324-h244-oc-q75-p5/
+||p5.focus.de/img/fotos/crop4240801/1624877250-cv21_9-w324-h244-oc-q75-p5/
+||p5.focus.de/img/fotos/crop78990801/1624877250-cv21_9-w324-h244-oc-q75-p5/
 ||prosieben.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
+||prosieben.de/static/*LB_$image
+||prosieben.de/static/*MR_$image
+||prosieben.de/static/*SKY$image
 ||sat1.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
+||sat1.de/static/*LB_$image
+||sat1.de/static/*MR_$image
+||sat1.de/static/*SKY$image
 ||sixx.de/secure-static/videoplayer/config/adXML.xml?$object-subrequest
 ||st.wetteronline.de^$stylesheet
+||the-voice-of-germany.de/static/*LB_$image
+||the-voice-of-germany.de/static/*MR_$image
+||the-voice-of-germany.de/static/*SKY$image
 ||video.spiegel.de/flash/*.mp4$object-subrequest,domain=spiegel.tv
 ||videoplaza.tv/creatives/assets/$object-subrequest,domain=clipfish.de|gmx.net|n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de|web.de|www.rtl.de
 ! *** easylistgermany:easylistgermany/easylistgermany_specific_block_popup.txt ***
@@ -4072,7 +4092,7 @@ benm.at,berliner-rundfunk.de,buchmarkt.de###bigbanner
 tikonline.de###bigsize
 magistrix.de###bigsize-top
 pcpraxis.de,rund-magazin.de###bigsizebanner
-volksfreund.de###billboard
+prad.de,volksfreund.de###billboard
 prad.de###billboardbig
 4players.de###billiger-charts
 geizkragen.de###bl_top
@@ -5945,6 +5965,7 @@ bild.de##a[href="http://finanzservice.bild.de/banken/kredite-vergleich/"]
 bild.de##a[href="http://finanzservice.bild.de/banken/tagesgeld-vergleich/"]
 bild.de##a[href="http://finanzservice.bild.de/versicherungen"]
 bild.de##a[href="http://gutscheine.bild.de"]
+prad.de##a[href="http://links.prad.de/lgcurved"]
 livestreamfussball.org##a[href="http://livetv.ru/de/allupcomingsports/1/"]
 bild.de##a[href="http://magine.bild.de"]
 movie-blog.org##a[href="http://movie-blog.org/2007"]
@@ -6235,6 +6256,7 @@ mobilfunk-talk.de##a[href^="http://www.active-tracking.de/"]
 smsform.de##a[href^="http://www.adscads.de/sites/"]
 aktuell.ru##a[href^="http://www.aktuell.ru/inc/banners.php?"]
 livestreamfussball.org,sat-erotik.de##a[href^="http://www.amazon.de/"]
+gamestar.de##a[href^="http://www.amazon.de/"][href*="%26tag%"]
 beichthaus.com##a[href^="http://www.amazon.de/"][href*="&tag="] > img
 gamefront.de##a[href^="http://www.amazon.de/"][href*="&tag=gamefrontde-21"]
 gamestar.de##a[href^="http://www.amazon.de/"][href*="tag="]
@@ -6632,6 +6654,7 @@ gamestar.de##div[style="border-bottom: 1px solid #c9c9c9; padding: 10px 19px; po
 123recht.net##div[style="border: 1px solid #E6E6E6; width:340px; height:290px; padding: 5px; margin:0px 15px 15px 0px; float:left;"]
 programmieren-optimieren.de##div[style="border: 1px solid #ccc; padding: 15px; margin: 15px 0; background: url(http://www.programmieren-optimieren.de/wp-content/plugins/amazonsimpleadmin/img/amazon_DE_small.gif) right bottom no-repeat #ffffff;"]
 2kino.net##div[style="border: 1px solid rgb(223, 223, 223);"]
+goolive.de##div[style="border: dotted #808080; float: right; position: relative; overflow: hidden;"]
 petitionen24.com##div[style="border: solid #95bce2 1px;  padding: 1em 0; margin: 0; margin-right: 6px; width: 200px; height: 600px; background-color: #fff; text-align: center; margin-bottom: 1em;"]
 chriszim.com##div[style="border:1px #8c8c8c solid; font-size:80%; margin:5px auto; text-align:center; width:640px;"]
 html-world.de##div[style="border:1px solid #8EC1CF; padding:3px; margin:0px; background-color:white;"]
@@ -6681,6 +6704,7 @@ meintomtom.de##div[style="height:600px;padding:6px 0 6px 0;border: 1px solid #b4
 spektrumdirekt.de##div[style="height:90px;"]:first-child:last-child
 computerbase.de##div[style="height:92px;margin:15px 0;text-align:center"]
 gamepro.de##div[style="margin-bottom: 5px; margin-top: 20px; "] + .teaserRight[style="padding-bottom:0px"]
+goolive.de##div[style="margin-bottom: 5px; position: absolute; top: 8px; border: dotted #808080; overflow: visible"]
 wg.tvb1898.de##div[style="margin-bottom:10px; position:relative; top:0px; left:0px; height:105px; width:810px;"]
 schnelle-online.info##div[style="margin-bottom:10px;cursor:pointer;background:white url(/pictures/banner/lastminute-flughafen-3.png);width:760px;height:65px;"]
 supportnet.de##div[style="margin-left:0px; width:860px; background-color:#FFFFFF; height:100px;"]
@@ -6941,6 +6965,7 @@ goldesel.to##li[url^="http://bit.ly/"]
 goldesel.to##li[url^="http://goo.gl/"]
 playnation.de##noscript + script + script + #al
 teltarif.de##p + .tetable + .tetable[width="100%"][cellspacing="0"][cellpadding="0"][border="0"][bgcolor="#E3D470"]
+prad.de##p > a > img[width="614"][height="249"]
 englische-briefe.de##p > table[width="769"][cellpadding="4"]
 byte.to##p[style="color: #FFFFFF;"] > a > big
 titanic-magazin.de##p[style="font-size: 7pt; color: grey; text-align: left; margin: 0; padding: 0;"]
@@ -7500,6 +7525,7 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||toggo.de/js/advertise.js
 @@||toggo.de/xml/admeta.xml?$object-subrequest
 @@||track.adform.net/C/?$subdocument,domain=abosgratis.de
+@@||track.adform.net/serving/scripts/trackpoint/$script,domain=mazda.de
 @@||tradedoubler.com/click?$subdocument,domain=eule.de|gutscheindoktor.de|preismafia.com
 @@||tradedoubler.com/file/$image,domain=sunsteps.org
 @@||tradedoubler.com/redirect/*^affID^$subdocument,domain=gutscheindoktor.de
@@ -7836,7 +7862,6 @@ shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http
 @@||steuerschmiede-aktuell.de^$elemhide
 @@||streamit.ws^$elemhide
 @@||sudoku-space.de^$script
-@@||t-online.de/tv$elemhide
 @@||tape.tv/js/adblockdetection.js
 @@||tape.tv^$elemhide
 @@||teamspeak-ts.com^$elemhide

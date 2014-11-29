@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ZGWn+JMWHFi8VYNFVhG0NQ
-! Version: 201411201621
+! Checksum: Suj+kDSRLqKhv/aR095Giw
+! Version: 201411291301
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 20 Nov 2014 16:21 UTC
+! Ultima modifica: 29 Nov 2014 13:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -345,6 +345,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||cmstorage.it/public/skin/
 ||connect24.it/fot468.gif
 ||contactlab.it^*/Banner/
+||creativita.gsf.rcs.it^
 ||d1a6pzosbglc5p.cloudfront.net^
 ||d1n2y2eq1wbato.cloudfront.net^*/sponsor-$domain=atalanta.it
 ||d1oaxhr280l1ho.cloudfront.net^
@@ -748,6 +749,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||corriereobjects.it^*/adv/
 ||corriereobjects.it^*/banner_dizionario_iphone.gif
 ||corriereobjects.it^*/icon_csnai_shared.png
+||corriereobjects.it^*/logo_snai_
 ||corriereromagna.it/upload/
 ||corrierinocampaniasport.it^*/banner_
 ||corrierinocampaniasport.it^*/menna.jpg
@@ -1775,6 +1777,8 @@ telefonino.net###banner300x100Pos2
 telefonino.net###banner300x100Pos3
 telefonino.net###banner300x100Pos4
 telefonino.net###banner300x100Pos5
+telefonino.net###banner300x100Pos6
+telefonino.net###banner300x100Pos7
 telefonino.net###banner300x100TimPos1
 paginegialle.it###banner300x250_1
 sardegna24.net,tiscali.it###banner300x250c20
