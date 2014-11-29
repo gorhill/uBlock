@@ -15,7 +15,7 @@ cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
 cp src/img/icon_128.png $DES/Icon.png
-cp meta/vapi-appinfo.js $DES/js/
+cp platform/vapi-appinfo.js $DES/js/
 cp meta/safariextz/*.js $DES/js/
 cp meta/safariextz/Info.plist $DES/
 cp meta/safariextz/Settings.plist $DES/
