@@ -19,12 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, uDom */
-'use strict';
+/* global vAPI, uDom */
 
 /******************************************************************************/
 
 uDom.onLoad(function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -37,10 +38,10 @@ var exportToFile = function() {
         if (!userData) {
             return;
         }
-
+        var now = new Date();
         vAPI.download({
             'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData)),
-            'filename': 'ublock-backup.txt'
+            'filename': 'ublock-backup_' + now.toLocaleString().replace(/ +/g, '_') + '.txt'
         });
     };
 

@@ -20,11 +20,12 @@
 */
 
 /* global vAPI, uDom */
-'use strict';
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -94,13 +95,14 @@ var startImportFilePicker = function() {
 
 var exportWhitelistToFile = function() {
     var val = uDom('#whitelist').val().trim();
-
-    if (val) {
-        vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
-            'filename': 'my-ublock-whitelist.txt'
-        });
+    if ( val === '' ) {
+        return;
     }
+    var now = new Date();
+    vAPI.download({
+        'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
+        'filename': 'ublock-whitelist_' + now.toLocaleString().replace(/ +/g, '_') + '.txt'
+    });
 };
 
 /******************************************************************************/

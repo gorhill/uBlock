@@ -20,11 +20,12 @@
 */
 
 /* global vAPI, uDom */
-'use strict';
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -67,7 +68,7 @@ function allFiltersApplyHandler() {
 
 /******************************************************************************/
 
-function handleImportFilePicker() {
+var handleImportFilePicker = function() {
     var fileReaderOnLoadHandler = function() {
         var textarea = uDom('#userFilters');
         textarea.val([textarea.val(), this.result].join('\n').trim());
@@ -83,7 +84,7 @@ function handleImportFilePicker() {
     var fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
-}
+};
 
 /******************************************************************************/
 
@@ -98,20 +99,21 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-function exportUserFiltersToFile() {
+var exportUserFiltersToFile = function() {
     var val = uDom('#userFilters').val().trim();
-
-    if (val) {
-        vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
-            'filename': 'my-ublock-filters.txt'
-        });
+    if ( val === '' ) {
+        return;
     }
-}
+    var now = new Date();
+    vAPI.download({
+        'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
+        'filename': 'ublock-filters_' + now.toLocaleString().replace(/ +/g, '_') + '.txt'
+    });
+};
 
 /******************************************************************************/
 
-function userFiltersApplyHandler() {
+var userFiltersApplyHandler = function() {
     var onWritten = function(details) {
         if ( details.error ) {
             return;
@@ -125,7 +127,7 @@ function userFiltersApplyHandler() {
         content: uDom('#userFilters').val()
     };
     messager.send(request, onWritten);
-}
+};
 
 /******************************************************************************/
 
