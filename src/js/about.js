@@ -39,9 +39,12 @@ var exportToFile = function() {
             return;
         }
         var now = new Date();
+        var filename = vAPI.i18n('aboutBackupFilename')
+            .replace('{{datetime}}', now.toLocaleString())
+            .replace(/ +/g, '_');
         vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData)),
-            'filename': 'ublock-backup_' + now.toLocaleString().replace(/ +/g, '_') + '.txt'
+            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
+            'filename': filename
         });
     };
 
@@ -55,10 +58,24 @@ var handleImportFilePicker = function() {
         var userData;
         try {
             userData = JSON.parse(this.result);
+            if ( typeof userData !== 'object' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.userSettings !== 'object' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.netWhitelist !== 'string' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.filterLists !== 'object' ) {
+                throw 'Invalid';
+            }
         }
         catch (e) {
+            userData = undefined;
         }
         if ( userData === undefined ) {
+            window.alert(vAPI.i18n('aboutRestoreDataError'));
             return;
         }
         var time = new Date(userData.timeStamp);

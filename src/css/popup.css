@@ -79,6 +79,30 @@ p {
     color: #444;
     }
 
+.dynamicFiltering div > .tip {
+    background-color: #fffff4;
+    border: 1px solid #888;
+    border-radius: 7px;
+    bottom: 20vh;
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.8);
+    display: none;
+    font-size: small;
+    left: 8vw;
+    padding: 0.25em;
+    position: fixed;
+    right: 8vw;
+    }
+.dynamicFiltering div:not(.blocked):hover > .tip:nth-of-type(1) {
+    display: block;
+    }
+.dynamicFiltering div.blocked:hover > .tip:nth-of-type(2) {
+    display: block;
+    }
+.dynamicFiltering div > .tip code {
+    background-color: #eee;
+    font: normal monospace;
+    padding: 1px 0;
+    }
 #dynamicFilteringToggler {
     margin: 0;
     border: 0;

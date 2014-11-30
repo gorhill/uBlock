@@ -99,9 +99,12 @@ var exportWhitelistToFile = function() {
         return;
     }
     var now = new Date();
+    var filename = vAPI.i18n('whitelistExportFilename')
+        .replace('{{datetime}}', now.toLocaleString())
+        .replace(/ +/g, '_');
     vAPI.download({
         'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val),
-        'filename': 'ublock-whitelist_' + now.toLocaleString().replace(/ +/g, '_') + '.txt'
+        'filename': filename
     });
 };
 
