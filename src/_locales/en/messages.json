@@ -68,83 +68,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script</code> tags are <b>enabled</b> for this site",
+    "message":"Inline <code>script</code> tags are <b>allowed</b> on this site",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script</code> tags are <b>disabled</b> for this site",
+    "message":"Inline <code>script</code> tags are <b>blocked</b> on this site",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>enabled</b> for this site",
+    "message":"1st-party scripts are <b>allowed</b> on this site",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>disabled</b> for this site",
+    "message":"1st-party scripts are <b>blocked</b> on this site",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>enabled</b> for this site",
+    "message":"3rd-party scripts are <b>allowed</b> on this site",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>disabled</b> for this site",
+    "message":"3rd-party scripts are <b>blocked</b> on this site",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>enabled</b> for this site",
+    "message":"1st-party frames are <b>allowed</b> on this site",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>disabled</b> for this site",
+    "message":"1st-party frames are <b>blocked</b> on this site",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>enabled</b> for this site",
+    "message":"3rd-party frames are <b>allowed</b> on this site",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>disabled</b> for this site",
+    "message":"3rd-party frames are <b>blocked</b> on this site",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script</code> tags are <b>enabled</b> everywhere by default",
+    "message":"Inline <code>script</code> tags are <b>allowed</b> everywhere by default",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script</code> tags are <b>disabled</b> everywhere by default",
+    "message":"Inline <code>script</code> tags are <b>blocked</b> everywhere by default",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>enabled</b> everywhere by default",
+    "message":"1st-party scripts are <b>allowed</b> everywhere by default",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>disabled</b> everywhere by default",
+    "message":"1st-party scripts are <b>blocked</b> everywhere by default",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>enabled</b> everywhere by default",
+    "message":"3rd-party scripts are <b>allowed</b> everywhere by default",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>disabled</b> everywhere by default",
+    "message":"3rd-party scripts are <b>blocked</b> everywhere by default",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>enabled</b> everywhere by default",
+    "message":"1st-party frames are <b>allowed</b> everywhere by default",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>disabled</b> everywhere by default",
+    "message":"1st-party frames are <b>blocked</b> everywhere by default",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>enabled</b> everywhere by default",
+    "message":"3rd-party frames are <b>allowed</b> everywhere by default",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>disabled</b> everywhere by default",
+    "message":"3rd-party frames are <b>blocked</b> everywhere by default",
     "description":""
   },
   "pickerCreate":{
