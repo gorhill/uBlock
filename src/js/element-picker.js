@@ -867,16 +867,15 @@ var startPicker = function(details) {
         '<div>',
         '<textarea dir="ltr" spellcheck="false"></textarea>',
         '<div>',
-        '<button id="create" type="button" disabled>.</button>',
+        '<button id="create" type="button" disabled="disabled">.</button>',
         '<button id="pick" type="button">.</button>',
         '<button id="quit" type="button">.</button>',
         '</div>',
         '</div>',
         '<ul>',
-        '<li id="netFilters"><span>.</span><ul></ul>',
-        '<li id="cosmeticFilters"><span>.</span>&ensp;<span>.</span><ul></ul>',
-        '</ul>',
-        ''
+        '<li id="netFilters"><span>.</span><ul></ul></li>',
+        '<li id="cosmeticFilters"><span>.</span> <span>.</span><ul></ul></li>',
+        '</ul>'
     ].join('');
     pickerRoot.appendChild(divDialog);
 
