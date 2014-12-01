@@ -295,7 +295,7 @@ vAPI.tabs.open = function(details) {
 
 /******************************************************************************/
 
-vAPI.tabs.close = function(tabIds) {
+vAPI.tabs.remove = function(tabIds) {
     if (tabIds instanceof SafariBrowserTab) {
         tabIds = this.getTabId(tabIds);
     }
