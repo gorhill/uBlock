@@ -68,83 +68,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"תגיות <code>script<\/code> מוטמעות <b>מאופשרות<\/b> באתר זה",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"תגיות <code>script<\/code> מוטמעות <b>חסומות<\/b> באתר זה",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"סקריפטים צד-1 <b>מאופשרים<\/b> באתר זה",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"סקריפטים צד-1 <b>חסומים<\/b> באתר זה",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"סקריפטים צד-3 <b>מאופשרים<\/b> באתר זה",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"סקריפטים צד-3 <b>חסומים<\/b> באתר זה",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"מסגרות צד-1 <b>מאופשרות<\/b> באתר זה",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"מסגרות צד-1 <b>חסומות<\/b> באתר זה",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"מסגרות צד-3 <b>מאופשרות<\/b> באתר זה",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"מסגרות צד-3 <b>חסומות<\/b> באתר זה",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"תגיות <code>script<\/code> מוטמעות <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"תגיות <code>script<\/code> מוטמעות <b>חסומות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"סקריפטים צד-1 <b>מאופשרים<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"סקריפטים צד-1 <b>חסומים<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"סקריפטים צד-3 <b>מאופשרים<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"סקריפטים צד-3 <b>חסומים<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"מסגרות צד-1 <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"מסגרות צד-1 <b>חסומות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"מסגרות צד-3 <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"מסגרות צד-3 <b>חסומות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
   "pickerCreate":{
@@ -360,7 +360,7 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"ויקי",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
@@ -392,7 +392,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"לא הוצלח לקרוא את המידע או שהוא פגום",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
