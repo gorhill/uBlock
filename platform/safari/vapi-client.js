@@ -330,28 +330,51 @@ var firstMutation = function() {
     // the extension context is unable to reach the page context,
     // also this only works when Content Security Policy allows inline scripts
     var tmpJS = document.createElement('script');
-    var tmpScript = ["(function() {",
-        "var block = function(u, t) {",
-            "var e = document.createEvent('CustomEvent'),",
-                "d = {url: u, type: t};",
-            "e.initCustomEvent('" + randEventName + "', !1, !1, d);",
-            "dispatchEvent(e);",
-            "return d.url === !1;",
-        "}, wo = open, xo = XMLHttpRequest.prototype.open;",
-        "open = function(u) {",
-            "return block(u, 'popup') ? null : wo.apply(this, [].slice.call(arguments));",
-        "};",
-        "XMLHttpRequest.prototype.open = function(m, u, s) {",
-            "return xo.apply(this, block(u, 'xmlhttprequest') ? ['HEAD', u, s] : [].slice.call(arguments));",
-        "};"
+    var tmpScript = ['(function() {',
+        'var block = function(u, t) {',
+            'var e = document.createEvent("CustomEvent"),',
+                'd = {url: u, type: t};',
+            'e.initCustomEvent("' + randEventName + '", !1, !1, d);',
+            'dispatchEvent(e);',
+            'return d.url === !1;',
+        '}, wo = open, xo = XMLHttpRequest.prototype.open;',
+        'open = function(u) {',
+            'return block(u, "popup") ? null : wo.apply(this, arguments);',
+        '};',
+        'XMLHttpRequest.prototype.open = function(m, u, s) {',
+            'return xo.apply(this, block(u, "xmlhttprequest") ? ["HEAD", u, s] : arguments);',
+        '};'
     ];
 
-    if (vAPI.sitePatch
-        && !safari.self.tab.canLoad(beforeLoadEvent, {isWhiteListed: location.href})) {
+    if (frameId === 0) {
+        tmpScript.push(
+            'var pS = history.pushState, rS = history.replaceState,',
+            'onpopstate = function(e) {',
+                'if (!e || e.state !== null) block(location.href, "popstate");',
+            '};',
+            'window.addEventListener("popstate", onpopstate, true);',
+            'history.pushState = function() {',
+                'var r = pS.apply(this, arguments);',
+                'onpopstate();',
+                'return r;',
+            '};',
+            'history.replaceState = function() {',
+                'var r = pR.apply(this, arguments);',
+                'onpopstate();',
+                'return r;',
+            '};'
+        );
+    }
+
+    var block = safari.self.tab.canLoad(beforeLoadEvent, {
+        isWhiteListed: location.href
+    });
+
+    if (vAPI.sitePatch && !block) {
         tmpScript.push('(' + vAPI.sitePatch + ')();');
     }
 
-    tmpScript.push("})();");
+    tmpScript.push('})();');
     tmpJS.textContent = tmpScript.join('');
     document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
 };

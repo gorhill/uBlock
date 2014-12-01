@@ -187,12 +187,9 @@ vAPI.tabs.registerListeners = function() {
         safari.application.addEventListener('navigate', this.onNavigation, true);
     }
 
-    // ??
-    /* if (typeof this.onUpdated === 'function') { } */
-
     // onClosed handled in the main tab-close event
-    // onPopup is handled in window.open on web-pages?
-    /* if (typeof onPopup === 'function') { } */
+    // onUpdated handled via monitoring the history.pushState on web-pages
+    // onPopup is handled in window.open on web-pages
 };
 
 /******************************************************************************/
@@ -603,8 +600,17 @@ vAPI.net.registerListeners = function() {
                 return e.message;
             }
 
+            // when the URL changes, but the document doesn't
+            if (e.message.type === 'popstate') {
+                vAPI.tabs.onUpdated(
+                    vAPI.tabs.getTabId(e.target),
+                    {url: e.message.url},
+                    {url: e.message.url}
+                );
+                return;
+            }
             // blocking unwanted pop-ups
-            if (e.message.type === 'popup') {
+            else if (e.message.type === 'popup') {
                 if (typeof vAPI.tabs.onPopup === 'function') {
                     e.message.type = 'main_frame';
                     e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
