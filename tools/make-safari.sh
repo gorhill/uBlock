@@ -15,8 +15,7 @@ cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
 cp src/img/icon_128.png $DES/Icon.png
-cp platform/vapi-appinfo.js $DES/js/
-cp platform/safariextz/*.js $DES/js/
-cp platform/safariextz/Info.plist $DES/
-cp platform/safariextz/Settings.plist $DES/
+cp platform/safari/*.js $DES/js/
+cp platform/safari/Info.plist $DES/
+cp platform/safari/Settings.plist $DES/
 echo "*** uBlock.safariextension: Package done."

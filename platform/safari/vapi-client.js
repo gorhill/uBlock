@@ -220,7 +220,7 @@ var onBeforeLoad = function(e, details) {
 
     linkHelper.href = details ? details.url : e.url;
 
-    if (!/^https?:/.test(linkHelper.protocol)) {
+    if (!(/^https?:/.test(linkHelper.protocol) || (details && details.type === 'popup'))) {
         return;
     }
 

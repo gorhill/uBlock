@@ -36,6 +36,13 @@ vAPI.safari = true;
 
 /******************************************************************************/
 
+vAPI.app = {
+    name: 'µBlock',
+    version: '0.7.2.0'
+};
+
+/******************************************************************************/
+
 // addContentScriptFromURL allows whitelisting,
 // so load sitepaching this way, instead of adding it to the Info.plist
 
@@ -568,9 +575,31 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.net = {}
+safari.application.addEventListener('beforeNavigate', function(e) {
+    if (!vAPI.tabs.expectPopUpFrom || e.url === 'about:blank') {
+        return;
+    }
+
+    var details = {
+        url: e.url,
+        tabId: vAPI.tabs.getTabId(e.target),
+        sourceTabId: vAPI.tabs.expectPopUpFrom
+    };
+
+    vAPI.tabs.expectPopUpFrom = null;
+
+    if (vAPI.tabs.onPopup(details)) {
+        e.preventDefault();
+
+        if (vAPI.tabs.stack[details.sourceTabId]) {
+            vAPI.tabs.stack[details.sourceTabId].activate();
+        }
+    }
+}, true);
 
 /******************************************************************************/
+
+vAPI.net = {}
 
 vAPI.net.registerListeners = function() {
     var onBeforeRequest = this.onBeforeRequest;
@@ -611,17 +640,17 @@ vAPI.net.registerListeners = function() {
             }
             // blocking unwanted pop-ups
             else if (e.message.type === 'popup') {
-                if (typeof vAPI.tabs.onPopup === 'function') {
-                    e.message.type = 'main_frame';
-                    e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
-
-                    if (vAPI.tabs.onPopup(e.message)) {
-                        e.message = false;
-                        return;
-                    }
+                if (e.message.url === 'about:blank') {
+                    vAPI.tabs.expectPopUpFrom = vAPI.tabs.getTabId(e.target);
+                    e.message = true;
+                    return;
                 }
 
-                e.message = true;
+                e.message = !vAPI.tabs.onPopup({
+                    url: e.message.url,
+                    tabId: 0,
+                    sourceTabId: vAPI.tabs.getTabId(e.target)
+                });
                 return;
             }
 
@@ -637,7 +666,7 @@ vAPI.net.registerListeners = function() {
             // truthy return value will allow the request,
             // except when redirectUrl is present
             if (block && typeof block === 'object') {
-                if (block.cancel) {
+                if (block.cancel === true) {
                     e.message = false;
                 }
                 else if (e.message.type === 'script'
