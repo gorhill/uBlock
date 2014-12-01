@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+    <dict>
+        <key>DefaultValue</key>
+        <false/>
+        <key>FalseValue</key>
+        <false/>
+        <key>Key</key>
+        <string>open_prefs</string>
+        <key>Secure</key>
+        <false/>
+        <key>Title</key>
+        <string>Click to see the Preferences</string>
+        <key>TrueValue</key>
+        <true/>
+        <key>Type</key>
+        <string>CheckBox</string>
+    </dict>
+</array>
+</plist>

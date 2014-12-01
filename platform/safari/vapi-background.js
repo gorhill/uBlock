@@ -36,6 +36,13 @@ vAPI.safari = true;
 
 /******************************************************************************/
 
+vAPI.app = {
+    name: 'µBlock',
+    version: '0.7.2.0'
+};
+
+/******************************************************************************/
+
 // addContentScriptFromURL allows whitelisting,
 // so load sitepaching this way, instead of adding it to the Info.plist
 
@@ -132,6 +139,10 @@ vAPI.storage = {
         callback();
     },
     getBytesInUse: function(keys, callback) {
+        if (typeof callback !== 'function') {
+            return;
+        }
+
         var key, size = 0;
 
         if (keys === null) {
@@ -183,12 +194,9 @@ vAPI.tabs.registerListeners = function() {
         safari.application.addEventListener('navigate', this.onNavigation, true);
     }
 
-    // ??
-    /* if (typeof this.onUpdated === 'function') { } */
-
     // onClosed handled in the main tab-close event
-    // onPopup is handled in window.open on web-pages?
-    /* if (typeof onPopup === 'function') { } */
+    // onUpdated handled via monitoring the history.pushState on web-pages
+    // onPopup is handled in window.open on web-pages
 };
 
 /******************************************************************************/
@@ -230,14 +238,15 @@ vAPI.tabs.get = function(tabId, callback) {
         title: tab.title
     });
 };
-// properties of the details object:
-// url: 'URL', // the address that will be opened
-// tabId: 1, // the tab is used if set, instead of creating a new one
-// index: -1, // undefined: end of the list, -1: following tab, or after index
-// active: false, // opens the tab in background - true and undefined: foreground
-// select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 /******************************************************************************/
+
+// properties of the details object:
+//   url: 'URL', // the address that will be opened
+//   tabId: 1, // the tab is used if set, instead of creating a new one
+//   index: -1, // undefined: end of the list, -1: following tab, or after index
+//   active: false, // opens the tab in background - true and undefined: foreground
+//   select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 vAPI.tabs.open = function(details) {
     if (!details.url) {
@@ -293,13 +302,19 @@ vAPI.tabs.open = function(details) {
 
 /******************************************************************************/
 
-vAPI.tabs.close = function(tab) {
-    if (!(tab instanceof SafariBrowserTab)) {
-        tab = this.stack[tab];
+vAPI.tabs.remove = function(tabIds) {
+    if (tabIds instanceof SafariBrowserTab) {
+        tabIds = this.getTabId(tabIds);
     }
 
-    if (tab) {
-        tab.close();
+    if (!Array.isArray(tabIds)) {
+        tabIds = [tabIds];
+    }
+
+    for (var i = 0; i < tabIds.length; i++) {
+        if (this.stack[tabIds[i]]) {
+            this.stack[tabIds[i]].close();
+        }
     }
 };
 
@@ -560,9 +575,31 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.net = {}
+safari.application.addEventListener('beforeNavigate', function(e) {
+    if (!vAPI.tabs.expectPopUpFrom || e.url === 'about:blank') {
+        return;
+    }
+
+    var details = {
+        url: e.url,
+        tabId: vAPI.tabs.getTabId(e.target),
+        sourceTabId: vAPI.tabs.expectPopUpFrom
+    };
+
+    vAPI.tabs.expectPopUpFrom = null;
+
+    if (vAPI.tabs.onPopup(details)) {
+        e.preventDefault();
+
+        if (vAPI.tabs.stack[details.sourceTabId]) {
+            vAPI.tabs.stack[details.sourceTabId].activate();
+        }
+    }
+}, true);
 
 /******************************************************************************/
+
+vAPI.net = {}
 
 vAPI.net.registerListeners = function() {
     var onBeforeRequest = this.onBeforeRequest;
@@ -592,19 +629,28 @@ vAPI.net.registerListeners = function() {
                 return e.message;
             }
 
+            // when the URL changes, but the document doesn't
+            if (e.message.type === 'popstate') {
+                vAPI.tabs.onUpdated(
+                    vAPI.tabs.getTabId(e.target),
+                    {url: e.message.url},
+                    {url: e.message.url}
+                );
+                return;
+            }
             // blocking unwanted pop-ups
-            if (e.message.type === 'popup') {
-                if (typeof vAPI.tabs.onPopup === 'function') {
-                    e.message.type = 'main_frame';
-                    e.message.sourceTabId = vAPI.tabs.getTabId(e.target);
-
-                    if (vAPI.tabs.onPopup(e.message)) {
-                        e.message = false;
-                        return;
-                    }
+            else if (e.message.type === 'popup') {
+                if (e.message.url === 'about:blank') {
+                    vAPI.tabs.expectPopUpFrom = vAPI.tabs.getTabId(e.target);
+                    e.message = true;
+                    return;
                 }
 
-                e.message = true;
+                e.message = !vAPI.tabs.onPopup({
+                    url: e.message.url,
+                    tabId: 0,
+                    sourceTabId: vAPI.tabs.getTabId(e.target)
+                });
                 return;
             }
 
@@ -620,7 +666,7 @@ vAPI.net.registerListeners = function() {
             // truthy return value will allow the request,
             // except when redirectUrl is present
             if (block && typeof block === 'object') {
-                if (block.cancel) {
+                if (block.cancel === true) {
                     e.message = false;
                 }
                 else if (e.message.type === 'script'
@@ -638,7 +684,11 @@ vAPI.net.registerListeners = function() {
             return e.message;
         };
 
-        safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
+        safari.application.addEventListener(
+            'message',
+            this.onBeforeRequest.callback,
+            true
+        );
     }
 };
 

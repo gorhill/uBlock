@@ -30,7 +30,7 @@
 /******************************************************************************/
 
 self.vAPI = self.vAPI || {};
-self.vAPI.safari = true;
+vAPI.safari = true;
 
 /******************************************************************************/
 
@@ -39,11 +39,15 @@ var messagingConnector = function(response) {
         return;
     }
 
+    var channels = vAPI.messaging.channels;
     var channel, listener;
 
     if ( response.broadcast === true ) {
-        for ( channel in vAPI.messaging.channels ) {
-            listener = vAPI.messaging.channels[channel].listener;
+        for ( channel in channels ) {
+            if ( channels.hasOwnProperty(channel) === false ) {
+                continue;
+            }
+            listener = channels[channel].listener;
             if ( typeof listener === 'function' ) {
                 listener(response.msg);
             }
@@ -58,7 +62,7 @@ var messagingConnector = function(response) {
     }
 
     if ( !listener ) {
-        channel = vAPI.messaging.channels[response.portName];
+        channel = channels[response.portName];
         listener = channel && channel.listener;
     }
 
@@ -171,9 +175,16 @@ vAPI.messaging = {
 
 /******************************************************************************/
 
-// content scripts are loaded into extension pages by default, but they shouldn't
+vAPI.canExecuteContentScript = function() {
+    return /^https?:/.test(location.protocol);
+};
 
-if (location.protocol === "safari-extension:") {
+/******************************************************************************/
+
+// This file can be included into extensin pages,
+// but the following code should run only in content pages.
+
+if (location.protocol === 'safari-extension:') {
     return;
 }
 
@@ -209,7 +220,7 @@ var onBeforeLoad = function(e, details) {
 
     linkHelper.href = details ? details.url : e.url;
 
-    if (!/^https?:/.test(linkHelper.protocol)) {
+    if (!(/^https?:/.test(linkHelper.protocol) || (details && details.type === 'popup'))) {
         return;
     }
 
@@ -319,28 +330,51 @@ var firstMutation = function() {
     // the extension context is unable to reach the page context,
     // also this only works when Content Security Policy allows inline scripts
     var tmpJS = document.createElement('script');
-    var tmpScript = ["(function() {",
-        "var block = function(u, t) {",
-            "var e = document.createEvent('CustomEvent'),",
-                "d = {url: u, type: t};",
-            "e.initCustomEvent('" + randEventName + "', !1, !1, d);",
-            "dispatchEvent(e);",
-            "return d.url === !1;",
-        "}, wo = open, xo = XMLHttpRequest.prototype.open;",
-        "open = function(u) {",
-            "return block(u, 'popup') ? null : wo.apply(this, [].slice.call(arguments));",
-        "};",
-        "XMLHttpRequest.prototype.open = function(m, u, s) {",
-            "return xo.apply(this, block(u, 'xmlhttprequest') ? ['HEAD', u, s] : [].slice.call(arguments));",
-        "};"
+    var tmpScript = ['(function() {',
+        'var block = function(u, t) {',
+            'var e = document.createEvent("CustomEvent"),',
+                'd = {url: u, type: t};',
+            'e.initCustomEvent("' + randEventName + '", !1, !1, d);',
+            'dispatchEvent(e);',
+            'return d.url === !1;',
+        '}, wo = open, xo = XMLHttpRequest.prototype.open;',
+        'open = function(u) {',
+            'return block(u, "popup") ? null : wo.apply(this, arguments);',
+        '};',
+        'XMLHttpRequest.prototype.open = function(m, u, s) {',
+            'return xo.apply(this, block(u, "xmlhttprequest") ? ["HEAD", u, s] : arguments);',
+        '};'
     ];
 
-    if (vAPI.sitePatch
-        && !safari.self.tab.canLoad(beforeLoadEvent, {isWhiteListed: location.href})) {
+    if (frameId === 0) {
+        tmpScript.push(
+            'var pS = history.pushState, rS = history.replaceState,',
+            'onpopstate = function(e) {',
+                'if (!e || e.state !== null) block(location.href, "popstate");',
+            '};',
+            'window.addEventListener("popstate", onpopstate, true);',
+            'history.pushState = function() {',
+                'var r = pS.apply(this, arguments);',
+                'onpopstate();',
+                'return r;',
+            '};',
+            'history.replaceState = function() {',
+                'var r = pR.apply(this, arguments);',
+                'onpopstate();',
+                'return r;',
+            '};'
+        );
+    }
+
+    var block = safari.self.tab.canLoad(beforeLoadEvent, {
+        isWhiteListed: location.href
+    });
+
+    if (vAPI.sitePatch && !block) {
         tmpScript.push('(' + vAPI.sitePatch + ')();');
     }
 
-    tmpScript.push("})();");
+    tmpScript.push('})();');
     tmpJS.textContent = tmpScript.join('');
     document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
 };
@@ -358,7 +392,7 @@ var onContextMenu = function(e) {
 
     details.editable = details.tagName === 'textarea' || details.tagName === 'input';
 
-    if ('checked' in e.target) {
+    if (e.target.hasOwnProperty('checked')) {
         details.checked = e.target.checked;
     }
 
@@ -366,7 +400,7 @@ var onContextMenu = function(e) {
         details.linkUrl = e.target.href;
     }
 
-    if ('src' in e.target) {
+    if (e.target.hasOwnProperty('src')) {
         details.srcUrl = e.target.src;
 
         if (details.tagName === 'img') {
@@ -391,12 +425,6 @@ if (frameId === 0) {
         type: 'main_frame'
     });
 }
-
-/******************************************************************************/
-
-self.vAPI.canExecuteContentScript = function() {
-    return /^https?:/.test(location.protocol);
-};
 
 /******************************************************************************/
 
