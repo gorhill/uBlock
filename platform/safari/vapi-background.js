@@ -132,6 +132,10 @@ vAPI.storage = {
         callback();
     },
     getBytesInUse: function(keys, callback) {
+        if (typeof callback !== 'function') {
+            return;
+        }
+
         var key, size = 0;
 
         if (keys === null) {
@@ -230,14 +234,15 @@ vAPI.tabs.get = function(tabId, callback) {
         title: tab.title
     });
 };
-// properties of the details object:
-// url: 'URL', // the address that will be opened
-// tabId: 1, // the tab is used if set, instead of creating a new one
-// index: -1, // undefined: end of the list, -1: following tab, or after index
-// active: false, // opens the tab in background - true and undefined: foreground
-// select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 /******************************************************************************/
+
+// properties of the details object:
+//   url: 'URL', // the address that will be opened
+//   tabId: 1, // the tab is used if set, instead of creating a new one
+//   index: -1, // undefined: end of the list, -1: following tab, or after index
+//   active: false, // opens the tab in background - true and undefined: foreground
+//   select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 vAPI.tabs.open = function(details) {
     if (!details.url) {
@@ -293,13 +298,19 @@ vAPI.tabs.open = function(details) {
 
 /******************************************************************************/
 
-vAPI.tabs.close = function(tab) {
-    if (!(tab instanceof SafariBrowserTab)) {
-        tab = this.stack[tab];
+vAPI.tabs.close = function(tabIds) {
+    if (tabIds instanceof SafariBrowserTab) {
+        tabIds = this.getTabId(tabIds);
     }
 
-    if (tab) {
-        tab.close();
+    if (!Array.isArray(tabIds)) {
+        tabIds = [tabIds];
+    }
+
+    for (var i = 0; i < tabIds.length; i++) {
+        if (this.stack[tabIds[i]]) {
+            this.stack[tabIds[i]].close();
+        }
     }
 };
 
@@ -638,7 +649,11 @@ vAPI.net.registerListeners = function() {
             return e.message;
         };
 
-        safari.application.addEventListener('message', this.onBeforeRequest.callback, true);
+        safari.application.addEventListener(
+            'message',
+            this.onBeforeRequest.callback,
+            true
+        );
     }
 };
 

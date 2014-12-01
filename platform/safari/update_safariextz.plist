@@ -10,9 +10,9 @@
 				<key>Developer Identifier</key>
 				<string></string>
 				<key>CFBundleShortVersionString</key>
-				<string>0.7.0.10</string>
+				<string>0.7.0.11</string>
 				<key>CFBundleVersion</key>
-				<string>1456132</string>
+				<string>1</string>
 				<key>URL</key>
 				<string>https://.../uBlock.safariextz</string>
 			</dict>

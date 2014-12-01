@@ -55,7 +55,6 @@ vAPI.download = function(details) {
         a.dispatchEvent(new MouseEvent('click'));
         return;
     }
-
     var messager = vAPI.messaging.channel('_download');
     messager.send({
         what: 'gotoURL',
