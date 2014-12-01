@@ -76,35 +76,35 @@
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"Основні скрипти <b>дозволені<\/b> на цьому сайті",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"Основні скрипти <b>заблоковані<\/b> на цьому сайті",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"Сторонні скрипти <b>дозволені<\/b> на цьому сайті",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"Сторонні скрипти <b>заблоковані<\/b> на цьому сайті",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"Основні фрейми <b>дозволені<\/b> на цьому сайті",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"Основні фрейми <b>заблоковані<\/b> на цьому сайті",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Сторонні фрейми <b>дозволені<\/b> на цьому сайті",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Сторонні фрейми <b>заблоковані<\/b> на цьому сайті",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
@@ -116,35 +116,35 @@
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Основні скрипти <b>дозволені<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Основні скрипти <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Сторонні скрипти <b>дозволені<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Сторонні скрипти <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Основні фрейми <b>дозволені<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Основні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Сторонні фрейми <b>дозволені<\/b> будь-де за замовчанням",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Сторонні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
   },
   "pickerCreate":{
@@ -188,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Увімкнути експериментальні функції",
+    "message":"Ввімкнути експериментальні функції (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Детальніше тут<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -260,7 +260,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Застосувати",
+    "message":"Проаналізувати",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -384,7 +384,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Почати з нуля...",
+    "message":"Відновити параметри за промовчанням...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

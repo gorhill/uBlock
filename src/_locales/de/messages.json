@@ -37,10 +37,10 @@
   },
   "popupPowerSwitchInfo":{
     "message":"klicke das An-\/ Ausschalt-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die aktuell geöffnete Seite.",
-    "description":"English: Click: permanently disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockierte Anfragen",
+    "message":"blockierte Anforderungen",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -67,6 +67,86 @@
     "message":"Gehe zu den protokollierten Anfragen",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"Skripte von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"Skripte von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"Frames von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"Frames von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"Skripte von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"Skripte von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"Frames von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"Frames von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Erzeugen",
     "description":"English: Create"
@@ -80,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netzwerkfilter",
+    "message":"Netzwerk Filter",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -100,7 +180,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
+    "message":"Zeige die Zahl der blockierten Anforderungen auf dem Icon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -112,7 +192,7 @@
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} Netzwerkfilter ＋ {{cosmeticFilterCount}} kosmetische Filter von:",
+    "message":"{{netFilterCount}} Netzwerk Filter + {{cosmeticFilterCount}} kosmetische Filter von:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -132,11 +212,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Adblock-Plus-Filter zum Verstecken von Elementen analysieren und anwenden.",
-    "description":"English: Parse and enforce cosmetic filters."
+    "message":"Kosmetische Filter zum Verstecken von Elementen analysieren und anwenden.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock-Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -152,7 +232,7 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privatsphäre",
+    "message":"Datenschutz",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
@@ -160,11 +240,11 @@
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Soziale Medien",
+    "message":"Soziale Netzwerke",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Verschiedenes",
+    "message":"Verschiedene Zwecke",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"Anwenden",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"Leere den Cache",
@@ -192,11 +272,11 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"möglicherweise veraltet",
-    "description":"English: may be obsolete"
+    "message":"veraltet",
+    "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock-Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
+    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -206,6 +286,10 @@
   "1pExport":{
     "message":"Exportieren",
     "description":"English: Export"
+  },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Änderungen anwenden",
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Exportieren",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Änderungen anwenden",
@@ -240,7 +328,7 @@
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Erlaubte Anfragen",
+    "message":"Zugelassene Anfragen",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -264,12 +352,16 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine erlaubten Anfragen für diese Seite",
+    "message":"Keine blockierten Anfragen für diese Seite gefunden",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
     "message":"Änderungsprotokoll",
     "description":"English: Change log"
+  },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
   },
   "aboutCode":{
     "message":"Quellcode (GPLv3)",
@@ -279,25 +371,33 @@
     "message":"Mitwirkende",
     "description":"English: Contributors"
   },
-  "aboutBackupDataButton" : {
-    "message": "Backup in eine Datei...",
-    "description": "English: Backup to file..."
+  "aboutBackupDataButton":{
+    "message":"Backup in eine Datei...",
+    "description":"English: Backup to file"
   },
-  "aboutRestoreDataButton" : {
-    "message": "Aus einer Datei wiederherstellen...",
-    "description": "English: Restore from file..."
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
-  "aboutResetDataButton" : {
-    "message": "Fange von ganz vorne an...",
-    "description": "English: Start from scratch..."
+  "aboutRestoreDataButton":{
+    "message":"Aus einer Datei wiederherstellen...",
+    "description":"English: Restore from file..."
   },
-  "aboutRestoreDataConfirm" : {
-    "message": "Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird µBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch das Backup ersetzt werden?",
-    "description": "Message asking user to confirm restore"
+  "aboutResetDataButton":{
+    "message":"Fange von ganz vorne an...",
+    "description":"English: Reset to default settings..."
   },
-  "aboutResetDataConfirm" : {
-    "message": "Alle Einstellungen werden gelöscht und µBlock neu gestartet.\n\nSoll µBlock auf Werkseinstellungen zurückgesetzt werden?",
-    "description": "Message asking user to confirm restore"
+  "aboutRestoreDataConfirm":{
+    "message":"Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird µBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch das Backup ersetzt werden?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError":{
+    "message":"Die Daten konnten nicht gelesen werden oder waren ungültig",
+    "description":"Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Alle Einstellungen werden gelöscht und µBlock neu gestartet.\n\nSoll µBlock auf Werkseinstellungen zurückgesetzt werden?",
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Netzwerkfehler: Verbindung zu {{url}} nicht möglich",

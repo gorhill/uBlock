@@ -6,15 +6,16 @@ Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum
 
 ***
 
-µBlock ist flexibel, denn es ist mehr als ein bloßer "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+Block ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
 
 Standardmäßig werden folgende Filterlisten geladen und angewandt:
 
 - EasyList
+- Peter Lowe’s Ad server list
 - EasyPrivacy
+- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Peter Lowe’s Ad server list
 - Malware Domains List
 
 Auf Wunsch können zusätzliche Listen ausgewählt werden:
@@ -24,11 +25,11 @@ Auf Wunsch können zusätzliche Listen ausgewählt werden:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- etc.
+- Etc.
 
-Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von "Fanboy" und "hpHosts’s Ad and tracking servers" ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
+Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
 
-Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten möglicherweise nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
+Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
 
 ***
 
@@ -40,7 +41,8 @@ Kostenlos.
 Open source mit Public License (GPLv3)
 Für Benutzer von Benutzern.
 
-Mitwirkende: https://github.com/gorhill/uBlock/graphs/contributors
+Mitwirkende @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Mitwirkende @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 

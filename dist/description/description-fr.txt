@@ -1,4 +1,4 @@
-µBlock est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire et en utilisation du processeur et qui est pourtant capable de charger et de traiter des milliers de filtres de plus que la plupart des autres bloqueurs !
+µBlock est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire et en utilisation du processeur et qui  pourtant, est capable d'utiliser et de traiter des milliers de filtres de plus que la plupart des autres bloqueurs.
 
 Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
@@ -11,10 +11,11 @@ Flexible, µBlock ne prend pas en charge que les filtres de type Adblock, elle p
 Par défaut, ces listes de filtrage sont chargées et traitées :
 
 - EasyList (Liste anti-publicités maintenue fréquemment à jour par la communauté)
+- Peter Lowe’s Ad server list (Liste de serveurs publicitaires maintenue à jour par Peter Lowe)
 - EasyPrivacy (Liste anti-pisteurs maintenue fréquemment à jour par la communauté)
+- Fanboy’s Social Blocking List‎ (Liste bloquant le pistage des utilisateurs par les réseaux sociaux)
 - Malware domains (Liste de protection contre des domaines malveillants)
 - Long-lived malware domains (Liste de protection contre des domaines malveillants existant depuis longtemps)
-- Peter Lowe’s Ad server list (Liste de serveurs publicitaires maintenue à jour par Peter Lowe)
 - Malware Domains List (Autre liste de protection contre des domaines malveillants)
 
 Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
@@ -41,7 +42,8 @@ GRATUIT.
 Source libre avec une licence publique GPLv3
 Fait par des utilisateurs pour des utilisateurs.
 
-Contributeurs : https://github.com/gorhill/uBlock/graphs/contributors
+Contributeurs @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contributeurs @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
