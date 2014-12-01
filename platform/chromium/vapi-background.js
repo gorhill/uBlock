@@ -35,8 +35,16 @@ self.vAPI = self.vAPI || {};
 
 var vAPI = self.vAPI;
 var chrome = self.chrome;
+var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
+
+/******************************************************************************/
+
+vAPI.app = {
+    name: manifest.name,
+    version: manifest.version
+};
 
 /******************************************************************************/
 

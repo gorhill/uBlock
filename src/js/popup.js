@@ -97,7 +97,7 @@ var syncAllDynamicFilters = function() {
 
 /******************************************************************************/
 
-var renderStats = function(details) {
+var renderPopup = function(details) {
     if ( details ) {
         stats = details;
     }
@@ -105,6 +105,10 @@ var renderStats = function(details) {
     if ( !stats ) {
         return;
     }
+
+    var hdr = uDom('#version');
+    hdr.nodes[0].previousSibling.textContent = details.appName;
+    hdr.html(hdr.html() + 'v' + details.appVersion);
 
     var isHTTP = /^https?:\/\/[0-9a-z]/.test(stats.pageURL);
 
@@ -164,10 +168,6 @@ var renderStats = function(details) {
     uDom('#dynamicFilteringToggler').toggleClass('on', stats.dynamicFilteringEnabled);
 };
 
-messager.send( {
-    what: 'activeTabStats'
-}, renderStats );
-
 /******************************************************************************/
 
 var toggleNetFilteringSwitch = function(ev) {
@@ -182,14 +182,6 @@ var toggleNetFilteringSwitch = function(ev) {
         state: !off,
         tabId: stats.tabId
     });
-};
-
-/******************************************************************************/
-
-var renderHeader = function() {
-    var hdr = uDom('#version');
-    hdr.nodes[0].previousSibling.textContent = vAPI.app.name;
-    hdr.html(hdr.html() + 'v' + vAPI.app.version);
 };
 
 /******************************************************************************/
@@ -301,8 +293,7 @@ var installEventHandlers = function() {
 // Make menu only when popup html is fully loaded
 
 uDom.onLoad(function() {
-    renderHeader();
-    renderStats();
+    messager.send({ what: 'activeTabStats' }, renderPopup);
     installEventHandlers();
 });
 

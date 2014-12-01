@@ -122,11 +122,15 @@ var resetUserData = function() {
 
 /******************************************************************************/
 
-uDom('#export').on('click', exportToFile);
-uDom('#import').on('click', startImportFilePicker);
-uDom('#reset').on('click', resetUserData);
-uDom('#restoreFilePicker').on('change', handleImportFilePicker);
-uDom('#aboutNameVer').html(vAPI.app.name + ' v' + vAPI.app.version);
+var onAppDataReady = function(appData) {
+    uDom('#aboutNameVer').html(appData.name + ' v' + appData.version);
+    uDom('#export').on('click', exportToFile);
+    uDom('#import').on('click', startImportFilePicker);
+    uDom('#reset').on('click', resetUserData);
+    uDom('#restoreFilePicker').on('change', handleImportFilePicker);
+};
+
+messager.send({ what: 'getAppData' }, onAppDataReady);
 
 /******************************************************************************/
 

@@ -58,6 +58,10 @@ var onMessage = function(request, sender, callback) {
             µb.contextMenuClientY = request.clientY;
             break;
 
+        case 'getAppData':
+            response = vAPI.app;
+            break;
+
         case 'getUserSettings':
             response = µb.userSettings;
             break;
@@ -114,9 +118,11 @@ var getDynamicFilterResults = function(scope) {
 
 var getStats = function(tab) {
     var r = {
+        appName: vAPI.app.name,
+        appVersion: vAPI.app.version,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
-        tabId: tab.id,
+        tabId: 0,
         pageURL: '',
         pageBlockedRequestCount: 0,
         pageAllowedRequestCount: 0,
@@ -128,8 +134,9 @@ var getStats = function(tab) {
             '/': getDynamicFilterResults('*')
         }
     };
-    var pageStore = µb.pageStoreFromTabId(tab.id);
+    var pageStore = tab && µb.pageStoreFromTabId(tab.id);
     if ( pageStore ) {
+        r.tabId = tab.id;
         r.pageURL = pageStore.pageURL;
         r.pageHostname = pageStore.pageHostname;
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
@@ -146,11 +153,7 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'activeTabStats':
-            vAPI.tabs.get(null, function(tab) {
-                if ( tab ) {
-                    callback(getStats(tab));
-                }
-            });
+            vAPI.tabs.get(null, function(tab) { callback(getStats(tab)); });
             return;
 
         default:
