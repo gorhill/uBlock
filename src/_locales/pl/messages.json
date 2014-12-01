@@ -67,6 +67,86 @@
     "message":"Przejdź do dziennika żądań",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Utwórz",
     "description":"English: Create"
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"Zastosuj",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"wyczyść pamięć podręczną",
@@ -207,6 +287,10 @@
     "message":"Eksportuj",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Eksportuj",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Zastosuj zmiany",
@@ -271,6 +359,10 @@
     "message":"Dziennik zmian",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Kod źródłowy (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -281,7 +373,11 @@
   },
   "aboutBackupDataButton":{
     "message":"Stwórz kopię zapasową do pliku...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Przywróć z pliku...",
@@ -289,15 +385,19 @@
   },
   "aboutResetDataButton":{
     "message":"Zresetuj ustawienia...",
-    "description":"English: Start from scratch..."
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Wszystkie twoje ustawienia zostaną nadpisane przez kopię stworzoną {{time}}. µBlock zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"The data could not be read or is invalid",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Wszystkie twoje ustawienia zostaną usunięte, µBlock uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Nie można połączyć się z {{url}}",

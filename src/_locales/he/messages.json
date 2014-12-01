@@ -67,6 +67,86 @@
     "message":"עבור למתעד הבקשות",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
   "pickerCreate":{
     "message":"צור",
     "description":"English: Create"
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"החל",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"נקה זיכרון מטמון",
@@ -207,6 +287,10 @@
     "message":"ייצוא",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"החל שינויים",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"ייצוא",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"החל שינויים",
@@ -271,6 +359,10 @@
     "message":"רשימת שינויים",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"קוד מקור (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -281,7 +373,11 @@
   },
   "aboutBackupDataButton":{
     "message":"גבה לקובץ...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"שחזר מקובץ...",
@@ -289,15 +385,19 @@
   },
   "aboutResetDataButton":{
     "message":"התחל מאפס...",
-    "description":"English: Start from scratch..."
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"כל ההגדרות שלך יוחלפו בנתונים שגובו ב {{time}}, ו µBlock יופעל מחדש.\n\nהאם להחליף את כל ההגדרות הקיימות בנתונים המגובים?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"The data could not be read or is invalid",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"כל ההגדרות שלך יימחקו, ו µBlock יופעל מחדש.\n\nלאפס את µBlock להגדרות ברירת מחדל?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"אין אפשרות להתחבר ל {{url}}",

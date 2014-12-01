@@ -67,6 +67,86 @@
     "message":"Перейти до журналу запитів",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Вбудовані теґи <code>script<\/code> <b>дозволені<\/b> на цьому сайті",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Вбудовані теґи <code>script<\/code> <b>блокуються<\/b> на цьому сайті",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Вбудовані теґи <code>script<\/code> <b>дозволені<\/b> будь-де за замовченням",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Вбудовані теґи <code>script<\/code> <b>блокуються<\/b> будь-де за замовченням",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Створити",
     "description":"English: Create"
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"Застосувати",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"очистити кеш",
@@ -207,6 +287,10 @@
     "message":"Експортувати",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"Застосувати зміни",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Експортувати",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Застосувати зміни",
@@ -271,6 +359,10 @@
     "message":"Журнал змін",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Вікі",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Джерельний код (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -281,7 +373,11 @@
   },
   "aboutBackupDataButton":{
     "message":"Зберегти резервну копію у файл...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Відновити з файлу...",
@@ -289,15 +385,19 @@
   },
   "aboutResetDataButton":{
     "message":"Почати з нуля...",
-    "description":"English: Start from scratch..."
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Всі ваші налаштування будуть перезаписані з резервної копії від {{time}} та µBlock буде перезапущено.\n\nПерезаписати всі налаштування використовуючи резервну копію?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Дані помилкові або не можуть бути прочитані",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Ваші налаштування буде знищено та µBlock буде перезапущено.\n\nПовернути µBlock до заводських налаштувань?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Не вдалося підключитися до {{url}}",

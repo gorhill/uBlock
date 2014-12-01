@@ -48,5 +48,5 @@ Colaboradores @ Crowdin: https://crowdin.net/project/ublock
 
 Essa é uma versão inicial, tenha isso em mente quando você avaliar.
 
-Log de alterações do projeto:
+Registro de alterações do projeto:
 https://github.com/gorhill/uBlock/wiki/Change-log

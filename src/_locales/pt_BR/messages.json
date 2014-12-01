@@ -67,6 +67,86 @@
     "message":"Ir para o registro de solicitações",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags está <b>permitido<\/b> neste site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags está <b>bloqueado<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts está <b>permitido<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts está <b>bloqueado<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts está <b>permitido<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts está <b>bloqueado<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames está <b>permitido<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames está <b>bloqueado<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames está <b>permitido<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames está <b>bloqueado<\/b> neste site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags está <b>permitido<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags está <b>bloqueado<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts está <b>permitido<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts está <b>bloqueado<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts está <b>permitido<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts está <b>bloqueado<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames está <b>permitido<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames está <b>bloqueado<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames está <b>permitido<\/b> em todos os lugares por padrão",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames está <b>bloqueado<\/b> em todos os lugares por padrão",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Criar",
     "description":"English: Create"
@@ -88,7 +168,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Clique, Ctrl-Clique",
+    "message":"Clique, Ctrl-clique",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -108,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Ativar recursos experimentais",
+    "message":"Ativar recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -144,7 +224,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Salvar e aplicar",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -180,11 +260,11 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Salvar e aplicar",
-    "description":"English: Apply"
+    "message":"Analisar e aplicar",
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Limpar cache",
+    "message":"limpar cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -207,8 +287,12 @@
     "message":"Exportar",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
-    "message":"Salvar e aplicar",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
@@ -223,8 +307,12 @@
     "message":"Exportar",
     "description":"English: Export"
   },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
+  },
   "whitelistApply":{
-    "message":"Salvar e aplicar",
+    "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
@@ -271,6 +359,10 @@
     "message":"Registro de alterações",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Código-fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -280,24 +372,32 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup de arquivo...",
-    "description":"English: Backup to file..."
+    "message":"Backup do arquivo",
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Restaurar do arquivo...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Começar do zero...",
-    "description":"English: Start from scratch..."
+    "message":"Restaurar as configurações padrão...",
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Todas as suas configurações serão substituídas pelos dados do backup salvo em {{time}}, e o μBlock será reiniciado. \n\nDeseja substituir todas as configurações existentes usando os dados do backup?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Os dados não podem ser lidos ou são inválidos",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Todas as suas configurações serão apagadas, e o μBlock será reiniciado. \n\nDeseja redefinir as configurações de fábrica do μBlock?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Não foi possível conectar a {{url}}",

@@ -67,6 +67,86 @@
     "message":"リクエストログへ移動",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
   "pickerCreate":{
     "message":"作成",
     "description":"English: Create"
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"適用",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"キャッシュを削除",
@@ -207,6 +287,10 @@
     "message":"エクスポート",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"変更を適用",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"エクスポート",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"変更を適用",
@@ -271,6 +359,10 @@
     "message":"の変更履歴",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"根源コード（GPLバージョン３）",
     "description":"English: Source code (GPLv3)"
@@ -281,7 +373,11 @@
   },
   "aboutBackupDataButton":{
     "message":"ファイルにバックアップ...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"ファイルからの復元...",
@@ -289,15 +385,19 @@
   },
   "aboutResetDataButton":{
     "message":"最初から",
-    "description":"English: Start from scratch..."
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"{{time}}のバックアップデータを使用して全ての設定を上書きした後、μBlockが再起動します。\n\nバックアップデータを使用して既存の全ての設定の上書きを実行しますか？",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"The data could not be read or is invalid",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"全ての設定が消去された後、μBlockが再起動します。\n\n初期設定にリセットしますか？",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"{{url}}に接続できません",

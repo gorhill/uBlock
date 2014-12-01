@@ -67,6 +67,86 @@
     "message":"Перейти к списку запросов",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"Пользовательские скрипты <b>включены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"Пользовательские скрипты <b>отключены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"Сторонние скрипты <b>включены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"Сторонние скрипты <b>отключены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"Пользовательские фреймы <b>включены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"Пользовательские фреймы <b>отключены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"Сторонние фреймы <b>включены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"Сторонние фреймы <b>отключены<\/b> для этого сайта",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"Пользовательские скрипты <b>включены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"Пользовательские скрипты <b>отключены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"Сторонние скрипты <b>включены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"Сторонние скрипты <b>отключены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"Пользовательские фреймы <b>включены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"Пользовательские фреймы <b>отключены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"Сторонние фреймы <b>включены<\/b> везде по умолчанию",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"Сторонние фреймы <b>отключены<\/b> везде по умолчанию",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Создать",
     "description":"English: Create"
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"Применить",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"очистить кэш",
@@ -207,6 +287,10 @@
     "message":"Экспортировать",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"Применить изменения",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Экспортировать",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Применить изменения",
@@ -271,6 +359,10 @@
     "message":"Список изменений",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Вики",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Исходный код (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -281,7 +373,11 @@
   },
   "aboutBackupDataButton":{
     "message":"Резервное копирование в файл...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Восстановление из файла...",
@@ -289,15 +385,19 @@
   },
   "aboutResetDataButton":{
     "message":"Начать с нуля...",
-    "description":"English: Start from scratch..."
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Все Ваши настройки будут заменены данными от {{time}}, и µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Данные ошибочны или не могут быть прочитаны",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Все Ваши настройки будут удалены, и µBlock будет перезапущен. \n\nВернуться к заводским настройкам?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Не удается подключиться к {{url}}",

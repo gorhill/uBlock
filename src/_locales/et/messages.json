@@ -67,6 +67,86 @@
     "message":"Mine taotluste logisse",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Sellel saidil on <b>lubatud<\/b> tekstisisesed <code>skriptid<\/code>",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Sellel saidil on tekstisisesed <code>skriptid<\/code> <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"Sellel saidil on esimese osapoole skriptid <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"Sellel saidil on esimese osapoole skriptid <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"Sellel saidil on kolmanda osapoole skriptid <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"Sellel saidil on kolmanda osapoole skriptid <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"Sellel saidil on esimese osapoole raamid <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"Sellel saidil on esimese osapoole raamid <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"Sellel saidil on kolmanda osapoole raamid <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"Sellel saidil on kolmanda osapoole raamid <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Tekstisisese <code>skripti<\/code> märksõnad on kõikjal vaikimisi <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Tekstisisese <code>skripti<\/code> märksõnad on kõikjal vaikimisi <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"Esimese osapoole skriptid on kõikjal vaikimisi <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"Esimese osapoole skriptid on kõikjal vaikimisi <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"Kolmanda osapoole skriptid on kõikjal vaikimisi <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"Kolmanda osapoole skriptid on kõikjal vaikimisi <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"Esimese osapoole raamid on kõikjal vaikimisi <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"Esimese osapoole raamid on kõikjal vaikimisi <b>keelatud<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"Kolmanda osapoole raamid on kõikjal vaikimisi <b>lubatud<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"Kolmanda osapoole raamid on kõikjal vaikimisi <b>keelatud<\/b>",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Loo",
     "description":"English: Create"
@@ -108,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Luba katselised funktsioonid",
+    "message":"Luba katselised funktsioonid (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>teave<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -180,8 +260,8 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Kinnita",
-    "description":"English: Apply"
+    "message":"Rakenda",
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"tühjenda vahemälu",
@@ -207,6 +287,10 @@
     "message":"Ekspordi",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublocki-kohandatud-filtrid_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"Kinnita muudatused",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Ekspordi",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublocki-valgeloend_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Kinnita muudatused",
@@ -271,6 +359,10 @@
     "message":"Muudatuste logi",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Viki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Lähtekood (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -280,24 +372,32 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Varunda faili...",
-    "description":"English: Backup to file..."
+    "message":"Varunda faili",
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-varundus_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Taasta failist...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Alusta nullist...",
-    "description":"English: Start from scratch..."
+    "message":"Taasta vaikeseadetele...",
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning µBlock taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Andmeid ei suudetud lugeda või on vigased",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Kõik seaded kustutatakse ning µBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Ei suudetud ühenduda aadressiga {{url}}",

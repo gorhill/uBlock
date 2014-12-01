@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficiente para os navegadores baseados no Chromium. Suave na CPU e memória.",
+    "message":"Finalmente, um bloqueador eficiente para os navegadores baseados no Chromium. Leve na CPU e memória.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -67,6 +67,86 @@
     "message":"Ir para o registo de pedidos",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Etiquetas de <code>script<\/code> em linha são <b>permitidas<\/b> neste site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Etiquetas de <code>script<\/code> em linha são <b>bloqueadas<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"Scripts de primeiros são <b>permitidos<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"Scripts de primeiros são <b>bloqueados<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"Scripts de terceiros são <b>permitidos<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"Scripts de terceiros são <b>bloqueados<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"Frames de primeiros são <b>permitidos<\/b> neste site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"Frames de primeiros são <b>bloqueados<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"Frames de terceiros são <b>permitidos<\/b> neste site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"Frames de terceiros são <b>bloqueados<\/b> neste site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Etiquetas de <code>script<\/code> em linha são <b>permitidas<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Etiquetas de <code>script<\/code> em linha são <b>bloqueadas<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"Scripts de primeiros são <b>permitidos<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"Scripts de primeiros são <b>bloqueados<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"Scripts de terceiros são <b>permitidos<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"Scripts de terceiros são <b>bloqueados<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"Frames de primeiros são <b>permitidos<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"Frames de primeiros são <b>bloqueados<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"Frames de terceiros são <b>permitidos<\/b> em todo o lado por predefinição",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"Frames de terceiros são <b>bloqueados<\/b> em todo o lado por predefinição",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Criar",
     "description":"English: Create"
@@ -96,7 +176,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar espaços ocupados dos elementos bloqueados",
+    "message":"Ocultar espaços ocupados de elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -108,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Ativar funções experimentais",
+    "message":"Ativar as funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -124,7 +204,7 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Actualizar agora",
+    "message":"Atualizar agora",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
@@ -180,8 +260,8 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Aplicar",
-    "description":"English: Apply"
+    "message":"Analisar",
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"limpar cache",
@@ -192,7 +272,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"desactualizado",
+    "message":"desatualizado",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -206,6 +286,10 @@
   "1pExport":{
     "message":"Exportar",
     "description":"English: Export"
+  },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Aplicar alterações",
@@ -223,16 +307,20 @@
     "message":"Exportar",
     "description":"English: Export"
   },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
+  },
   "whitelistApply":{
     "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Activar o registo de pedidos de rede",
+    "message":"Ativar o registo de pedidos de rede",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Poderá analisar os detalhes dos pedidos de rede se activar esta opção. O registo de pedidos de rede aumenta a memória utilizada pelo µBlock. Sendo que muitos utilizadores não utilizarão esta opção, ela estará desactivada por predefinição.",
+    "message":"Poderá analisar os detalhes dos pedidos de rede se ativar esta opção. O registo de pedidos de rede aumenta a memória utilizada pelo µBlock. Sendo que muitos utilizadores não utilizarão esta opção, ela estará desativada por predefinição.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -271,6 +359,10 @@
     "message":"Registo de alterações",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Código fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -280,24 +372,32 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup para ficheiro...",
-    "description":"English: Backup to file..."
+    "message":"Cópia para ficheiro",
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restaurar de ficheiro...",
+    "message":"Restaurar a partir de ficheiro...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Começar do zero...",
-    "description":"English: Start from scratch..."
+    "message":"Redefinir para as definições predefinidas...",
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Todas as suas configurações serão substituídas usando o backup de dados de {{time}}, e µBlock irá reiniciar.  Substituir todas as configurações existentes usando o backup de dados?",
+    "message":"Todas as suas definições serão substituídas utilizando os dados da cópia de segurança de {{time}}, e µBlock irá reiniciar.\n\nSubstituir todas as definições existentes utilizando os dados da cópia de segurança?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Os dados não puderam ser lidos ou são inválidos",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
-    "message":"Todas as suas configurações serão apagadas, e µBlock irá reiniciar.  Redefinir µBlock para as configurações de fábrica?",
-    "description":"Message asking user to confirm restore"
+    "message":"Todas as suas definições serão removidas e µBlock irá reiniciar. \n\nRedefinir µBlock para as definições de fábrica?",
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Não é possível conectar a {{url}}",

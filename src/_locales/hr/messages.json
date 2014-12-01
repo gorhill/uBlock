@@ -67,6 +67,86 @@
     "message":"Odlazak na zapisnik zahtjeva",
     "description":"English: Go to request log"
   },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>omogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>onemogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"Skripte prve strane su <b>omogućene<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"Skripte prve strane su <b>onemogućene<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"Skripte trećih strana su <b>onemogućene<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"Skripte trećih strana su <b>onemogućene<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"Okviri prve strane su <b>omogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"Okviri prve strane su <b>onemogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"Okviri trećih strana su <b>omogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"Okviri trećih strana su <b>onemogućeni<\/b> za ovu stranicu",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>omogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>onemogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"Skripte prve strane su <b>omogućene<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"Skripte prve strane su <b>onemogućene<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"Skripte trećih strana su <b>omogućene<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"Skripte trećih strana su <b>onemogućene<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"Okviri prve strane su <b>omogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"Okviri prve strane su <b>onemogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"Okviri trećih strana su <b>omogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"Okviri trećih strana su <b>onemogućeni<\/b> posvuda po zadanom",
+    "description":""
+  },
   "pickerCreate":{
     "message":"Stvaranje",
     "description":"English: Create"
@@ -108,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Omogućiti eksperimentalne mogućnosti",
+    "message":"Omogućiti eksperimentalne mogućnosti  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>O mogućnostima<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -181,7 +261,7 @@
   },
   "3pExternalListsApply":{
     "message":"Primijeni",
-    "description":"English: Apply"
+    "description":"English: Parse"
   },
   "3pExternalListPurge":{
     "message":"čišćenje predmemorije",
@@ -207,6 +287,10 @@
     "message":"Izvoz",
     "description":"English: Export"
   },
+  "1pExportFilename":{
+    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
   "1pApplyChanges":{
     "message":"Primijeni promjene",
     "description":"English: Apply changes"
@@ -222,6 +306,10 @@
   "whitelistExport":{
     "message":"Izvoz",
     "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-whitelist_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Primijeni promjene",
@@ -271,6 +359,10 @@
     "message":"Popis promjena",
     "description":"English: Change log"
   },
+  "aboutWiki":{
+    "message":"Wiki",
+    "description":"English: project' wiki on Github"
+  },
   "aboutCode":{
     "message":"Izvorni kôd (GPLv3)",
     "description":"English: Source code (GPLv3)"
@@ -281,23 +373,31 @@
   },
   "aboutBackupDataButton":{
     "message":"Sigurnosno kopiranje u datoteku...",
-    "description":"English: Backup to file..."
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock-backup_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Vraćanje iz datoteke...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Početi od nule...",
-    "description":"English: Start from scratch..."
+    "message":"Vraćanje izvornih zadanih postavki...",
+    "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
     "message":"Sve vaše postavke prebrisat će se sa postavkama spremljenim {{time}}, i µBlock će se ponovno pokrenuti. \n\nPrepisati sve postojeće postavke pomoću sigurnosne kopije postavki?",
     "description":"Message asking user to confirm restore"
   },
+  "aboutRestoreDataError":{
+    "message":"Podatke nije moguće učitati ili su neispravni",
+    "description":"Message to display when an error occurred during restore"
+  },
   "aboutResetDataConfirm":{
     "message":"Sve vaše postavke će biti obrisane i µBlock će se ponovno pokrenuti.  \n\nVraćanje µBlock tvorničkih postavki?",
-    "description":"Message asking user to confirm restore"
+    "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Nemoguće se povezati sa {{url}}",
