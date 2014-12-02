@@ -68,83 +68,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>omogućeni<\/b> za ovu stranicu",
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>dozvoljeni<\/b> za ovu stranicu",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>onemogućeni<\/b> za ovu stranicu",
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>blokirani<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Skripte prve strane su <b>omogućene<\/b> za ovu stranicu",
+    "message":"Skripte prve strane su <b>dozvoljene<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Skripte prve strane su <b>onemogućene<\/b> za ovu stranicu",
+    "message":"Skripte prve strane su <b>blokirane<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Skripte trećih strana su <b>onemogućene<\/b> za ovu stranicu",
+    "message":"Skripte trećih strana su <b>dozvoljene<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Skripte trećih strana su <b>onemogućene<\/b> za ovu stranicu",
+    "message":"Skripte trećih strana su <b>blokirane<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Okviri prve strane su <b>omogućeni<\/b> za ovu stranicu",
+    "message":"Okviri prve strane su <b>dozvoljeni<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Okviri prve strane su <b>onemogućeni<\/b> za ovu stranicu",
+    "message":"Okviri prve strane su <b>blokirani<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Okviri trećih strana su <b>omogućeni<\/b> za ovu stranicu",
+    "message":"Okviri trećih strana su <b>dozvoljeni<\/b> za ovu stranicu",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Okviri trećih strana su <b>onemogućeni<\/b> za ovu stranicu",
+    "message":"Okviri trećih strana su <b>blokirani<\/b> za ovu stranicu",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>omogućeni<\/b> posvuda po zadanom",
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>dozvoljeni<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>onemogućeni<\/b> posvuda po zadanom",
+    "message":"Tagovi <code>skripte<\/code> u liniji su <b>blokirani<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Skripte prve strane su <b>omogućene<\/b> posvuda po zadanom",
+    "message":"Skripte prve strane su <b>dozvoljene<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Skripte prve strane su <b>onemogućene<\/b> posvuda po zadanom",
+    "message":"Skripte prve strane su <b>blokirane<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Skripte trećih strana su <b>omogućene<\/b> posvuda po zadanom",
+    "message":"Skripte trećih strana su <b>dozvoljene<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Skripte trećih strana su <b>onemogućene<\/b> posvuda po zadanom",
+    "message":"Skripte trećih strana su <b>blokirane<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Okviri prve strane su <b>omogućeni<\/b> posvuda po zadanom",
+    "message":"Okviri prve strane su <b>dozvoljeni<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Okviri prve strane su <b>onemogućeni<\/b> posvuda po zadanom",
+    "message":"Okviri prve strane su <b>blokirani<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Okviri trećih strana su <b>omogućeni<\/b> posvuda po zadanom",
+    "message":"Okviri trećih strana su <b>dozvoljeni<\/b> posvuda po zadanom",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Okviri trećih strana su <b>onemogućeni<\/b> posvuda po zadanom",
+    "message":"Okviri trećih strana su <b>blokirani<\/b> posvuda po zadanom",
     "description":""
   },
   "pickerCreate":{
