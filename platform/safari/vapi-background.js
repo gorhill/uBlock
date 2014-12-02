@@ -43,6 +43,11 @@ vAPI.app = {
 
 /******************************************************************************/
 
+vAPI.app.restart = function() {
+};
+
+/******************************************************************************/
+
 // addContentScriptFromURL allows whitelisting,
 // so load sitepaching this way, instead of adding it to the Info.plist
 

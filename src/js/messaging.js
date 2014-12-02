@@ -752,7 +752,7 @@ var restoreUserData = function(userData) {
     var onCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
-            µb.XAL.restart();
+            vAPI.app.restart();
         }
     };
 
@@ -776,7 +776,7 @@ var resetUserData = function() {
     µb.XAL.keyvalRemoveAll();
     // Keep global counts, people can become quite attached to numbers
     µBlock.saveLocalSettings();
-    µb.XAL.restart();
+    vAPI.app.restart();
 };
 
 /******************************************************************************/
