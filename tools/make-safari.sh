@@ -18,4 +18,8 @@ cp src/img/icon_128.png $DES/Icon.png
 cp platform/safari/*.js $DES/js/
 cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
+
+echo "*** uBlock_xpi: Generating locales"
+python tools/make-locale-safari.py $DES/
+
 echo "*** uBlock.safariextension: Package done."
