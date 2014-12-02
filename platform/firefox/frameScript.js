@@ -4,96 +4,95 @@
 
 'use strict';
 
-let
-	appName = 'ublock',
-	contentBaseURI = 'chrome://' + appName + '/content/js/',
-	listeners = {},
-	_addMessageListener = function(id, fn) {
-		_removeMessageListener(id);
-		listeners[id] = function(msg) {
-			fn(msg.data);
-		};
-		addMessageListener(id, listeners[id]);
-	},
-	_removeMessageListener = function(id) {
-		if (listeners[id]) {
-			removeMessageListener(id, listeners[id]);
-		}
+let appName = 'ublock';
+let contentBaseURI = 'chrome://' + appName + '/content/js/';
+let listeners = {};
 
-		delete listeners[id];
-	};
+let _addMessageListener = function(id, fn) {
+    _removeMessageListener(id);
+    listeners[id] = function(msg) {
+        fn(msg.data);
+    };
+    addMessageListener(id, listeners[id]);
+};
+
+let _removeMessageListener = function(id) {
+    if (listeners[id]) {
+        removeMessageListener(id, listeners[id]);
+    }
+
+    delete listeners[id];
+};
 
 addMessageListener('µBlock:broadcast', function(msg) {
-	for (var id in listeners) {
-		listeners[id](msg);
-	}
+    for (let id in listeners) {
+        listeners[id](msg);
+    }
 });
 
-var observer = {
-	unload: function(e) {
-		Services.obs.removeObserver(observer, 'content-document-global-created');
-		observer = listeners = null;
-	},
-	onDOMReady: function(e) {
-		var win = e.target.defaultView;
+let initContext = function(win, sandbox) {
+    if (sandbox) {
+        win = Components.utils.Sandbox([win], {
+            sandboxPrototype: win,
+            wantComponents: false,
+            wantXHRConstructor: false
+        });
+    }
 
-		if (win.location.protocol === 'chrome:' && win.location.host === appName) {
-			win.sendAsyncMessage = sendAsyncMessage;
-			win.addMessageListener = _addMessageListener;
-			win.removeMessageListener = _removeMessageListener;
-		}
-	},
-	observe: function(win) {
-		if (!win || win.top !== content) {
-			return;
-		}
+    win.sendAsyncMessage = sendAsyncMessage;
+    win.addMessageListener = _addMessageListener;
+    win.removeMessageListener = _removeMessageListener;
 
-		// baseURI is more reliable
-		var location = Services.io.newURI(
-			win.location.protocol === 'data:' ? 'data:text/plain,' : win.document.baseURI,
-			null,
-			null
-		);
+    return win;
+};
 
-		if (!(win.document instanceof win.HTMLDocument
-				&& (/^https?$/.test(location.scheme)))) {
-			return;
-		}
+let observer = {
+    observe: function(win) {
+        if (!win || win.top !== content) {
+            return;
+        }
 
-		win = Components.utils.Sandbox([win], {
-			sandboxPrototype: win,
-			wantComponents: false,
-			wantXHRConstructor: false
-		});
+        if (!(win.document instanceof win.HTMLDocument
+            && (/^https?:$/.test(win.location.protocol)))) {
+            return;
+        }
 
-		win.sendAsyncMessage = sendAsyncMessage;
-		win.addMessageListener = _addMessageListener;
-		win.removeMessageListener = _removeMessageListener;
+        let lss = Services.scriptloader.loadSubScript;
+        win = initContext(win, true);
 
-		var lss = Services.scriptloader.loadSubScript;
+        lss(contentBaseURI + 'vapi-client.js', win);
+        lss(contentBaseURI + 'contentscript-start.js', win);
 
-		lss(contentBaseURI + 'vapi-client.js', win);
-		lss(contentBaseURI + 'contentscript-start.js', win);
+        if (win.document.readyState === 'loading') {
+            let docReady = function(e) {
+                this.removeEventListener(e.type, docReady, true);
+                lss(contentBaseURI + 'contentscript-end.js', win);
+            };
 
-		if (win.document.readyState === 'loading') {
-			let docReady = function(e) {
-				this.removeEventListener(e.type, docReady, true);
-				lss(contentBaseURI + 'contentscript-end.js', win);
-			};
-
-			win.document.addEventListener('DOMContentLoaded', docReady, true);
-		}
-		else {
-			lss(contentBaseURI + 'contentscript-end.js', win);
-		}
-	}
+            win.document.addEventListener('DOMContentLoaded', docReady, true);
+        }
+        else {
+            lss(contentBaseURI + 'contentscript-end.js', win);
+        }
+    }
 };
 
 Services.obs.addObserver(observer, 'content-document-global-created', false);
 
-addEventListener('unload', observer.unload, false);
+let DOMReady = function(e) {
+    let win = e.target.defaultView;
 
-// for the Options page
-addEventListener('DOMContentLoaded', observer.onDOMReady, true);
+    // inject the message handlers for the options page
+    if (win.location.protocol === 'chrome:' && win.location.host === appName) {
+        initContext(win);
+    }
+};
+
+addEventListener('DOMContentLoaded', DOMReady, true);
+
+addEventListener('unload', function() {
+    Services.obs.removeObserver(observer, 'content-document-global-created');
+    observer = listeners = null;
+}, false);
 
 })();

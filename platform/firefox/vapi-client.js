@@ -84,6 +84,7 @@ vAPI.messaging = {
     listeners: {},
     requestId: 1,
     connectorId: uniqueId(),
+    bgMessageName: 'µBlock:background',
 
     setup: function() {
         this.connector = function(msg) {
@@ -124,7 +125,7 @@ vAPI.messaging = {
                     vAPI.messaging.listeners[message.requestId] = callback;
                 }
 
-                sendAsyncMessage('µBlock:background', message);
+                sendAsyncMessage(vAPI.messaging.bgMessageName, message);
             },
             close: function() {
                 delete vAPI.messaging.channels[this.portName];

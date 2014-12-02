@@ -16,13 +16,13 @@ cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
 cp src/img/icon_128.png $DES/icon.png
-cp platform/vapi-appinfo.js $DES/js/
 cp platform/firefox/vapi-*.js $DES/js/
 cp platform/firefox/bootstrap.js $DES/
 cp platform/firefox/frameScript.js $DES/
 cp platform/firefox/chrome.manifest $DES/
 cp platform/firefox/install.rdf $DES/
 
-python tools/xpi-convert-locale.py $DES/
+echo "*** uBlock_xpi: Generating locales"
+python tools/make-locale-firefox.py $DES/
 
 echo "*** uBlock_xpi: Package done."

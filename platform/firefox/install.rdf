@@ -2,7 +2,7 @@
 <r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
     <r:Description about="urn:mozilla:install-manifest">
         <id>{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}</id>
-        <version>0.7.0.11</version>
+        <version>0.7.2.0</version>
         <name>µBlock</name>
         <description>Finally, an efficient blocker. Easy on CPU and memory.</description>
         <homepageURL>https://github.com/gorhill/uBlock</homepageURL>

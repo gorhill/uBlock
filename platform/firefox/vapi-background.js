@@ -43,6 +43,13 @@ vAPI.firefox = true;
 
 /******************************************************************************/
 
+vAPI.app = {
+    name: 'µBlock',
+    version: '0.7.2.0'
+};
+
+/******************************************************************************/
+
 var SQLite = {
     open: function() {
         var path = Services.dirsvc.get('ProfD', Ci.nsIFile);
@@ -114,10 +121,10 @@ var SQLite = {
 
 vAPI.storage = {
     QUOTA_BYTES: 100 * 1024 * 1024,
-    sqlWhere: function(col, valNum) {
-        if (valNum > 0) {
-            valNum = Array(valNum + 1).join('?, ').slice(0, -2);
-            return ' WHERE ' + col + ' IN (' + valNum + ')';
+    sqlWhere: function(col, params) {
+        if (params > 0) {
+            params = Array(params + 1).join('?, ').slice(0, -2);
+            return ' WHERE ' + col + ' IN (' + params + ')';
         }
 
         return '';
@@ -165,12 +172,12 @@ vAPI.storage = {
         );
     },
     set: function(details, callback) {
-        var key, values = [], questionmarks = [];
+        var key, values = [], placeholders = [];
 
         for (key in details) {
             values.push(key);
             values.push(JSON.stringify(details[key]));
-            questionmarks.push('?, ?');
+            placeholders.push('?, ?');
         }
 
         if (!values.length) {
@@ -179,7 +186,7 @@ vAPI.storage = {
 
         SQLite.run(
             'INSERT OR REPLACE INTO settings (name, value) SELECT ' +
-                questionmarks.join(' UNION SELECT '),
+                placeholders.join(' UNION SELECT '),
             values,
             callback
         );
@@ -205,7 +212,7 @@ vAPI.storage = {
         }
 
         SQLite.run(
-            "SELECT 'size' AS size, SUM(LENGTH(value)) FROM settings" +
+            'SELECT "size" AS size, SUM(LENGTH(value)) FROM settings' +
                 this.sqlWhere('name', Array.isArray(keys) ? keys.length : 0),
             keys,
             function(result) {
@@ -214,6 +221,295 @@ vAPI.storage = {
         );
     }
 };
+
+/******************************************************************************/
+
+var windowWatcher = {
+    onTabClose: function(e) {
+        vAPI.tabs.onClosed(vAPI.tabs.getTabId(e.target));
+    },
+    onTabSelect: function(e) {
+        console.log(vAPI.tabs.getTabId(e.target));
+        // vAPI.setIcon();
+    },
+    onLoad: function(e) {
+        if (e) {
+            this.removeEventListener('load', windowWatcher.onLoad);
+        }
+
+        var docElement = this.document.documentElement;
+
+        if (docElement.getAttribute('windowtype') !== 'navigator:browser') {
+            return;
+        }
+
+        if (!this.gBrowser || this.gBrowser.tabContainer) {
+            return;
+        }
+
+        var tC = this.gBrowser.tabContainer;
+
+        this.gBrowser.addTabsProgressListener(tabsProgressListener);
+        tC.addEventListener('TabClose', windowWatcher.onTabClose);
+        tC.addEventListener('TabSelect', windowWatcher.onTabSelect);
+
+        // when new window is opened TabSelect doesn't run on the selected tab?
+    },
+    unregister: function() {
+        Services.ww.unregisterNotification(this);
+
+        for (var win of vAPI.tabs.getWindows()) {
+            win.removeEventListener('load', this.onLoad);
+            win.gBrowser.removeTabsProgressListener(tabsProgressListener);
+
+            var tC = win.gBrowser.tabContainer;
+            tC.removeEventListener('TabClose', this.onTabClose);
+            tC.removeEventListener('TabSelect', this.onTabSelect);
+        }
+    },
+    observe: function(win, topic) {
+        if (topic === 'domwindowopened') {
+            win.addEventListener('load', this.onLoad);
+        }
+    }
+};
+
+/******************************************************************************/
+
+var tabsProgressListener = {
+    onLocationChange: function(browser, webProgress, request, location, flags) {
+        if (!webProgress.isTopLevel) {
+            return;
+        }
+
+        var tabId = vAPI.tabs.getTabId(browser);
+
+        if (flags & 1) {
+            vAPI.tabs.onUpdated(tabId, {url: location.spec}, {
+                frameId: 0,
+                tabId: tabId,
+                url: browser.currentURI.spec
+            });
+        }
+        else {
+            vAPI.tabs.onNavigation({
+                frameId: 0,
+                tabId: tabId,
+                url: location.spec
+            });
+        }
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs = {};
+
+/******************************************************************************/
+
+vAPI.tabs.registerListeners = function() {
+    // onNavigation and onUpdated handled with tabsProgressListener
+    // onClosed - handled in windowWatcher.onTabClose
+    // onPopup ?
+
+    Services.ww.registerNotification(windowWatcher);
+
+    // already opened windows
+    for (var win of this.getWindows()) {
+        windowWatcher.onLoad.call(win);
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.getTabId = function(target) {
+    if (target.linkedPanel) {
+        return target.linkedPanel.slice(6);
+    }
+
+    var gBrowser = target.ownerDocument.defaultView.gBrowser;
+    var i = gBrowser.browsers.indexOf(target);
+
+    if (i !== -1) {
+        i = this.getTabId(gBrowser.tabs[i]);
+    }
+
+    return i;
+};
+
+/******************************************************************************/
+
+vAPI.tabs.get = function(tabId, callback) {
+    var tab, windows;
+
+    if (tabId === null) {
+        tab = Services.wm.getMostRecentWindow('navigator:browser').gBrowser.selectedTab;
+        tabId = vAPI.tabs.getTabId(tab);
+    }
+    else {
+        windows = this.getWindows();
+
+        for (var win of windows) {
+            tab = win.gBrowser.tabContainer.querySelector(
+                'tab[linkedpanel="panel-' + tabId + '"]'
+            );
+
+            if (tab) {
+                break;
+            }
+        }
+    }
+
+    if (!tab) {
+        callback();
+        return;
+    }
+
+    var browser = tab.linkedBrowser;
+    var gBrowser = browser.ownerDocument.defaultView.gBrowser;
+
+    if (!windows) {
+        windows = this.getWindows();
+    }
+
+    callback({
+        id: tabId,
+        index: gBrowser.browsers.indexOf(browser),
+        windowId: windows.indexOf(browser.ownerDocument.defaultView),
+        active: tab === gBrowser.selectedTab,
+        url: browser.currentURI.spec,
+        title: tab.label
+    });
+};
+
+/******************************************************************************/
+
+vAPI.tabs.getAll = function(window) {
+    var tabs = [];
+
+    for (var win of this.getWindows()) {
+        if (window && window !== win) {
+            continue;
+        }
+
+        for (var tab of win.gBrowser.tabs) {
+            tabs.push(tab);
+        }
+    }
+
+    return tabs;
+};
+
+/******************************************************************************/
+
+vAPI.tabs.getWindows = function() {
+    var winumerator = Services.wm.getEnumerator('navigator:browser');
+    var windows = [];
+
+    while (winumerator.hasMoreElements()) {
+        var win = winumerator.getNext();
+
+        if (!win.closed) {
+            windows.push(win);
+        }
+    }
+
+    return windows;
+};
+
+/******************************************************************************/
+
+// properties of the details object:
+//   url: 'URL', // the address that will be opened
+//   tabId: 1, // the tab is used if set, instead of creating a new one
+//   index: -1, // undefined: end of the list, -1: following tab, or after index
+//   active: false, // opens the tab in background - true and undefined: foreground
+//   select: true // if a tab is already opened with that url, then select it instead of opening a new one
+
+vAPI.tabs.open = function(details) {
+    if (!details.url) {
+        return null;
+    }
+    // extension pages
+    if (!/^[\w-]{2,}:/.test(details.url)) {
+        details.url = vAPI.getURL(details.url);
+    }
+
+    var tab, tabs;
+
+    if (details.select) {
+        var rgxHash = /#.*/;
+        // this is questionable
+        var url = details.url.replace(rgxHash, '');
+        tabs = this.getAll();
+
+        for (tab of tabs) {
+            var browser = tab.linkedBrowser;
+
+            if (browser.currentURI.spec.replace(rgxHash, '') === url) {
+                browser.ownerDocument.defaultView.gBrowser.selectedTab = tab;
+                return;
+            }
+        }
+    }
+
+    if (details.active === undefined) {
+        details.active = true;
+    }
+
+    var gBrowser = Services.wm.getMostRecentWindow('navigator:browser').gBrowser;
+
+    if (details.index === -1) {
+        details.index = gBrowser.browsers.indexOf(gBrowser.selectedBrowser) + 1;
+    }
+
+    if (details.tabId) {
+        tabs = tabs || this.getAll();
+
+        for (tab of tabs) {
+            if (vAPI.tabs.getTabId(tab) === details.tabId) {
+                tab.linkedBrowser.loadURI(details.url);
+                return;
+            }
+        }
+    }
+
+    tab = gBrowser.loadOneTab(details.url, {inBackground: !details.active});
+
+    if (details.index !== undefined) {
+        gBrowser.moveTabTo(tab, details.index);
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.close = function(tabIds) {
+    if (!Array.isArray(tabIds)) {
+        tabIds = [tabIds];
+    }
+
+    tabIds = tabIds.map(function(tabId) {
+        return 'tab[linkedpanel="panel-' + tabId + '"]';
+    }).join(',');
+
+    for (var win of this.getWindows()) {
+        var tabs = win.gBrowser.tabContainer.querySelectorAll(tabIds);
+
+        if (!tabs) {
+            continue;
+        }
+
+        for (var tab of tabs) {
+            win.gBrowser.removeTab(tab);
+        }
+    }
+};
+
+/******************************************************************************/
+
+/*vAPI.tabs.injectScript = function(tabId, details, callback) {
+
+};*/
 
 /******************************************************************************/
 
@@ -241,16 +537,17 @@ vAPI.messaging.listen = function(listenerName, callback) {
 vAPI.messaging.onMessage = function(request) {
     var messageManager = request.target.messageManager;
     var listenerId = request.data.portName.split('|');
+    var requestId = request.data.requestId;
     var portName = listenerId[1];
     listenerId = listenerId[0];
 
     var callback = vAPI.messaging.NOOPFUNC;
-    if ( request.data.requestId !== undefined ) {
+    if ( requestId !== undefined ) {
         callback = function(response) {
             messageManager.sendAsyncMessage(
                 listenerId,
                 JSON.stringify({
-                    requestId: request.data.requestId,
+                    requestId: requestId,
                     portName: portName,
                     msg: response !== undefined ? response : null
                 })
@@ -258,10 +555,9 @@ vAPI.messaging.onMessage = function(request) {
         };
     }
 
-    // TODO:
     var sender = {
         tab: {
-            id: 0
+            id: vAPI.tabs.getTabId(request.target)
         }
     };
 
@@ -316,6 +612,16 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
+vAPI.messaging.unload = function() {
+    this.gmm.removeMessageListener(
+        vAPI.app.name + ':background',
+        this.onMessage
+    );
+    this.gmm.removeDelayedFrameScript(this.frameScript);
+};
+
+/******************************************************************************/
+
 vAPI.lastError = function() {
     return null;
 };
@@ -326,27 +632,18 @@ vAPI.lastError = function() {
 
 window.addEventListener('unload', function() {
     SQLite.close();
-    vAPI.messaging.gmm.removeMessageListener(
-        vAPI.app.name + ':background',
-        vAPI.messaging.postMessage
-    );
-    vAPI.messaging.gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);
+    windowWatcher.unregister();
+    vAPI.messaging.unload();
 
     // close extension tabs
-    var enumerator = Services.wm.getEnumerator('navigator:browser');
-    var host = 'ublock';
-    var gBrowser, tabs, i, extURI;
+    var extURI, win, tab, host = 'ublock';
 
-    while (enumerator.hasMoreElements()) {
-        gBrowser = enumerator.getNext().gBrowser;
-        tabs = gBrowser.tabs;
-        i = tabs.length;
-
-        while (i--) {
-            extURI = tabs[i].linkedBrowser.currentURI;
+    for (win of vAPI.tabs.getWindows()) {
+        for (tab of win.gBrowser.tabs) {
+            extURI = tab.linkedBrowser.currentURI;
 
             if (extURI.scheme === 'chrome' && extURI.host === host) {
-                gBrowser.removeTab(tabs[i]);
+                win.gBrowser.removeTab(tab);
             }
         }
     }

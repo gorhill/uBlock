@@ -44,7 +44,14 @@ if ( !matches || matches.length !== 2 ) {
     return;
 }
 
-messager.send({ what : 'getAssetContent', url: matches[1] }, onAssetContentReceived);
+uDom.onLoad(function() {
+    messager.send({
+            what: 'getAssetContent',
+            url: matches[1]
+        },
+        onAssetContentReceived
+    );
+});
 
 /******************************************************************************/
 
