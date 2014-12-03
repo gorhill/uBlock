@@ -188,7 +188,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"אפשר תכונות ניסיוניות",
+    "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -372,7 +372,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"גבה לקובץ...",
+    "message":"גבה לקובץ",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -384,7 +384,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"התחל מאפס...",
+    "message":"אפס להגדרות ברירת מחדל...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

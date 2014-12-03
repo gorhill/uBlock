@@ -40,7 +40,7 @@
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockierte Anforderungen",
+    "message":"blockierte Anfragen",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -160,7 +160,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netzwerk Filter",
+    "message":"Netzwerkfilter",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -180,7 +180,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anforderungen auf dem Icon",
+    "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -188,11 +188,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktiviere experimentelle Features",
+    "message":"Aktiviere experimentelle Features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} Netzwerk Filter + {{cosmeticFilterCount}} kosmetische Filter von:",
+    "message":"{{netFilterCount}} Netzwerkfilter ＋ {{cosmeticFilterCount}} kosmetische Filter von:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -232,7 +232,7 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Datenschutz",
+    "message":"Privatsphäre",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
