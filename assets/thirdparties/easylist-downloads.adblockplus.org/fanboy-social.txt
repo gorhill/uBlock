@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: JMmUcoI8oshPD0h2v3JUKQ
-! Version: 201411291301
+! Checksum: X8JGvl1e66eHa1YjLaYEIw
+! Version: 201412031511
 ! Title: Fanboy's Social Blocking List
-! Last modified: 29 Nov 2014 13:01 UTC
+! Last modified: 03 Dec 2014 15:11 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -2336,6 +2336,7 @@ _youtube_social_
 ###article_social
 ###article_tools_share
 ###article_tools_share_li
+###article_twitter
 ###as-share-window
 ###as_facebook_mem_likebox_widgets
 ###as_facebook_recommend
@@ -2738,7 +2739,9 @@ _youtube_social_
 ###follow_us_block
 ###followbigbutton
 ###followbtn2
+###followface
 ###followlinks
+###followtwit
 ###followus
 ###followwrap
 ###foot-social
@@ -3576,6 +3579,7 @@ _youtube_social_
 ###socialNav
 ###socialNetworkBox
 ###socialNetworkIcons
+###socialNetworking
 ###socialNetworkingBar
 ###socialNetworks
 ###socialNlBloc
@@ -3946,20 +3950,24 @@ _youtube_social_
 ##.EE-social
 ##.Entry_Sharer_Buttons
 ##.FBLikeBox
+##.FacebookFollowButton
 ##.FacebookICN
 ##.FacebookLike
 ##.FacebookShare
 ##.FacebookTwitter
 ##.Facebook_like
+##.FollowButton
 ##.FollowByEmail
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
+##.GoogleFollowButton
 ##.IconSocialMedia
 ##.LR-connect-share-links
 ##.LayoutSocialTools
 ##.LikeBox
 ##.LikeContainer
+##.LinkedinFollowButton
 ##.Links-Social
 ##.MR_Social_Sharing_Toolkit_Widget
 ##.NYshareit
@@ -3996,6 +4004,7 @@ _youtube_social_
 ##.SocialBookmark
 ##.SocialButton
 ##.SocialButtons
+##.SocialFollow
 ##.SocialGoogle
 ##.SocialIcon
 ##.SocialIconsBlock
@@ -4022,6 +4031,7 @@ _youtube_social_
 ##.TwitterArea
 ##.TwitterButton
 ##.TwitterDiv
+##.TwitterFollowButton
 ##.TwitterFollowUs
 ##.TwitterICN
 ##.Twitter_Widget
@@ -4798,6 +4808,7 @@ _youtube_social_
 ##.fodicon-google-plus
 ##.fodicon-tumblr
 ##.fodicon-twitter
+##.follow-appeal-container
 ##.follow-bar
 ##.follow-btn
 ##.follow-button-gplus
@@ -5844,6 +5855,7 @@ _youtube_social_
 ##.report-process-share
 ##.reporter-social-buttons
 ##.resultShare
+##.retweet
 ##.review-social-icons2
 ##.review_sharebar_vertical
 ##.rfd-sharetools
@@ -7217,6 +7229,7 @@ _youtube_social_
 ##.tumblr-icon
 ##.tumblr-share
 ##.tumblrlink
+##.tunein_widget
 ##.tw-b
 ##.tw-share
 ##.tw_black
@@ -8493,7 +8506,7 @@ quora.com##.FooterSignupForm
 socialblade.com##.GoogleButton
 ehow.com##.RightRailPromo
 scan.co.uk##.ShareWith
-avon.com,designboom.com,highstakesdb.com##.Social
+avon.com,designboom.com,highstakesdb.com,hurriyetdailynews.com##.Social
 tasteofhome.com##.TOH-follow-us
 abc.go.com##.abc-facebook-like
 slideshare.net##.action-btns-container
@@ -9151,6 +9164,7 @@ soychile.cl###facebook
 yamaha-motor.com.br##.barra-midias
 starmedia.com##.fbk
 crea-mexico.com##.redes
+tn.com.ar##.shares
 diarioti.com##.social
 starmedia.com##.twt
 publicar.com##img[style="margin: 0px 10px; float: left; width: 26px;"]
@@ -9302,7 +9316,7 @@ privatecore.com#@#.post-fb
 ~facebook.com##.post-fb-like
 vk.com#@#.post_share
 ~reddit.com##.reddit_button
-bitly.com,grooveshark.com#@#.share-btn
+bitly.com,framestr.com,grooveshark.com#@#.share-btn
 vimeo.com#@#.share-button
 bleacherreport.com#@#.share-buttons
 popsugar.com.au#@#.share-container
@@ -9331,6 +9345,7 @@ india.com#@#.sharethis-wrapper
 nytimes.com#@#.sharetools
 slate.com#@#.sharing-buttons
 nextinpact.com#@#.sharrre
+squidbikes.com#@#.show-social-icons
 500px.com#@#.show_social
 golem.de#@#.social-bar
 golem.de#@#.social-bottom

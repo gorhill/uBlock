@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: bshk9XOa8BE7TmceOkOS2Q
-! Version: 201411291301
+! Checksum: s6nOnh8EqaDsqvvQvq7/aA
+! Version: 201412031511
 ! Title: EasyPrivacy
-! Last modified: 29 Nov 2014 13:01 UTC
+! Last modified: 03 Dec 2014 15:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -266,6 +266,7 @@
 /analytics/trackers?
 /Analytics/Tracking.
 /analytics/tracking/*
+/Analytics/Visitor.
 /analytics?http_referer
 /analytics_embed.
 /analytics_frame.
@@ -2827,6 +2828,7 @@ http://utm.
 ||freshplum.com^$third-party
 ||fruitflan.com^$third-party
 ||fshka.com^$third-party
+||fueldeck.com^$third-party
 ||funneld.com^$third-party
 ||funstage.com^$third-party
 ||fusestats.com^$third-party
@@ -2978,6 +2980,7 @@ http://utm.
 ||intermundomedia.com^$third-party
 ||intervigil.com^$third-party
 ||invitemedia.com^$third-party
+||invoc.us^$third-party
 ||invodo.com^$third-party
 ||ip-adress.com^$third-party
 ||ip-api.com^$third-party
@@ -3226,6 +3229,7 @@ http://utm.
 ||ojrq.net^$third-party
 ||omeda.com^$third-party
 ||ometria.com^$third-party
+||omkt.co^$third-party
 ||omnitagjs.com^$third-party
 ||omtrdc.net^$third-party
 ||onefeed.co.uk^$third-party
@@ -5082,6 +5086,7 @@ http://utm.
 ||googlecode.com^*/tracker.js
 ||googlesyndication.com/safeframe/$third-party
 ||googleusercontent.com/tracker/
+||goroost.com/api/pageview?
 ||gotdns.com/track/blank.aspx?
 ||grabnetworks.com/beacons/
 ||grabnetworks.com/ping?
@@ -6034,6 +6039,7 @@ http://utm.
 ||blogrankings.com/img_$third-party
 ||btstats.devtribu.fr^
 ||calotag.com^$third-party
+||cdn-analytics.ladmedia.fr^
 ||da-kolkoz.com/da-top/track/
 ||devtribu.fr/t.php?
 ||e-pagerank.fr/bouton.gif?$third-party
@@ -6393,6 +6399,7 @@ http://utm.
 ||3dcartstores.com/3droi/monstertrack.asp
 ||4hds.com/js/camstats.js
 ||4info.com/alert/listeners/
+||5.153.4.92^$domain=spreaker.com
 ||5min.com/PSRq?
 ||5min.com/PSRs?
 ||69.25.121.67/page_load?$domain=theverge.com
@@ -6727,6 +6734,7 @@ http://utm.
 ||click.mmosite.com^
 ||click.news.imdb.com/open.aspx?
 ||click2.cafepress.com^
+||clicks.hurriyet.com.tr^
 ||clicks.traffictrader.net^
 ||climatedesk.org*/pixel.gif
 ||clk.about.com^
@@ -8438,6 +8446,7 @@ http://utm.
 ||ef-magazin.de/adtrk/
 ||elektromobil-dresden.de/tinc?
 ||elitepartner.de/km/tcnt.do?
+||event.dkb.de^
 ||express.de/analytics/
 ||extszm.web.de^
 ||fanfiktion.de^*/s.js

@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: +ZQV+D9wa+QtDspSHQPjRg
-! Version: 201411291301
+! Checksum: QoBaZgxahA6tMxpHdFxEBg
+! Version: 201412031511
 ! Title: Fanboy's Annoyance List
-! Last modified: 29 Nov 2014 13:01 UTC
+! Last modified: 03 Dec 2014 15:11 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -2580,6 +2580,7 @@ _youtube_social_
 ###ViperBar_main
 ###alrp-slidebox
 ###ams_circ_mar_overlay
+###aol-newsletter
 ###aptureD
 ###article-newsletter-side-module
 ###article-promo-newsletter
@@ -3101,6 +3102,7 @@ _youtube_social_
 ##.om-has-email
 ##.omniWidget-article-signup-large
 ##.oo_tab_right
+##.optin-monster-overlay
 ##.outbrain
 ##.outbrain-ads
 ##.outbrain-group
@@ -3217,6 +3219,7 @@ _youtube_social_
 ##.td-more-articles-box
 ##.techbeat-widget-wide-container
 ##.term-rss
+##.tl-newsletter-widget
 ##.toasterAd
 ##.track-action-RSS
 ##.trb_bnn
@@ -3865,6 +3868,7 @@ _youtube_social_
 ###backtotopbutton
 ###backtotoplink
 ###bktotopbtn
+###bt-scroll-top
 ###btn-scroll-up
 ###cb-to-top
 ###dynamic-to-top
@@ -4074,6 +4078,7 @@ _youtube_social_
 ###article_social
 ###article_tools_share
 ###article_tools_share_li
+###article_twitter
 ###as-share-window
 ###as_facebook_mem_likebox_widgets
 ###as_facebook_recommend
@@ -4476,7 +4481,9 @@ _youtube_social_
 ###follow_us_block
 ###followbigbutton
 ###followbtn2
+###followface
 ###followlinks
+###followtwit
 ###followus
 ###followwrap
 ###foot-social
@@ -5314,6 +5321,7 @@ _youtube_social_
 ###socialNav
 ###socialNetworkBox
 ###socialNetworkIcons
+###socialNetworking
 ###socialNetworkingBar
 ###socialNetworks
 ###socialNlBloc
@@ -5684,20 +5692,24 @@ _youtube_social_
 ##.EE-social
 ##.Entry_Sharer_Buttons
 ##.FBLikeBox
+##.FacebookFollowButton
 ##.FacebookICN
 ##.FacebookLike
 ##.FacebookShare
 ##.FacebookTwitter
 ##.Facebook_like
+##.FollowButton
 ##.FollowByEmail
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
+##.GoogleFollowButton
 ##.IconSocialMedia
 ##.LR-connect-share-links
 ##.LayoutSocialTools
 ##.LikeBox
 ##.LikeContainer
+##.LinkedinFollowButton
 ##.Links-Social
 ##.MR_Social_Sharing_Toolkit_Widget
 ##.NYshareit
@@ -5734,6 +5746,7 @@ _youtube_social_
 ##.SocialBookmark
 ##.SocialButton
 ##.SocialButtons
+##.SocialFollow
 ##.SocialGoogle
 ##.SocialIcon
 ##.SocialIconsBlock
@@ -5760,6 +5773,7 @@ _youtube_social_
 ##.TwitterArea
 ##.TwitterButton
 ##.TwitterDiv
+##.TwitterFollowButton
 ##.TwitterFollowUs
 ##.TwitterICN
 ##.Twitter_Widget
@@ -6536,6 +6550,7 @@ _youtube_social_
 ##.fodicon-google-plus
 ##.fodicon-tumblr
 ##.fodicon-twitter
+##.follow-appeal-container
 ##.follow-bar
 ##.follow-btn
 ##.follow-button-gplus
@@ -7582,6 +7597,7 @@ _youtube_social_
 ##.report-process-share
 ##.reporter-social-buttons
 ##.resultShare
+##.retweet
 ##.review-social-icons2
 ##.review_sharebar_vertical
 ##.rfd-sharetools
@@ -8955,6 +8971,7 @@ _youtube_social_
 ##.tumblr-icon
 ##.tumblr-share
 ##.tumblrlink
+##.tunein_widget
 ##.tw-b
 ##.tw-share
 ##.tw_black
@@ -9725,6 +9742,7 @@ _youtube_social_
 ||cookiereports.com^$third-party
 ||curiyo.com^$third-party
 ||cursors-4u.net^$third-party
+||d1uh1a7az90pt0.cloudfront.net^
 ||digsby.com^$third-party
 ||diigo.com/images/diigo-icon/$third-party
 ||disqus.com/api/*/listRelated.json?
@@ -9765,7 +9783,6 @@ _youtube_social_
 ||hnbutton.appspot.com^$third-party
 ||hnlike.com^$third-party
 ||honcode.ch^$third-party
-||icopyright.net^$third-party
 ||identi.ca/js/identica-badge.js$third-party
 ||images.hitwise.co.uk^$third-party
 ||img.fark.net/pub/$third-party
@@ -11920,6 +11937,7 @@ legacy.com##.MyMemorialAd
 juxtapoz.com##.NewFollowBox
 theatlanticwire.com##.NewsletterForm
 priceme.co.nz##.PrettyBreadCrumbRightDiv
+inc.com##.SectionUpDown
 hothardware.com##.SubscribeEmail
 bornrich.com##.Ticker
 hurriyetdailynews.com##.TopBanner
@@ -12626,6 +12644,7 @@ starpulse.com##.msFullBar
 nzherald.co.nz##.msn
 motortrend.com##.mt-fb
 motortrend.com##.mt-subscribe
+soundcloud.com##.multiSounds__teaser
 techvert.com##.mwp-quick-feedback-form
 fightthesmears.com##.myspace
 worldofgnome.org##.mywell-blue
@@ -12689,6 +12708,7 @@ forbes.com##.next_article_button
 forbes.com##.next_control
 disclose.tv##.next_page
 hulkshare.com##.nhsTpBanner
+framestr.com##.nivo-lightbox-overlay
 webpronews.com##.nl-promotion
 dallasobserver.com,villagevoice.com,westword.com##.nl_widget
 blogher.com##.node-bubbles
@@ -12968,6 +12988,7 @@ huffingtonpost.com##.sidebar_header_text_floating
 sitepoint.com##.sidebar_list
 infowars.com##.sidebar_newsletter_sign_up
 chriskresser.com##.sidebar_opt_in
+shoutmeloud.com##.sidebar_optinoutter
 politicususa.com##.sidebar_right
 justjaredjr.com##.sidebarbutton
 twistedsifter.com##.sifter-post-nav
@@ -13080,7 +13101,7 @@ rugby365.com##.subs-block
 medianama.com##.subs-news
 reviversoft.com##.subs_wrapper
 haaretz.com##.subscrOptWide
-alternet.org,android.gs,bizjournals.com,catonmat.net,cnet.com,devicemag.com,ebayinkblog.com,ehow.com,foxnews.com,fromthegrapevine.com,intomobile.com,labnol.org,list25.com,messynessychic.com,mygaming.co.za,nymag.com,pando.com,pandodaily.com,parentherald.com,pedestrian.tv,people.com,petapixel.com,phonearena.com,propertyobserver.com.au,readwriteweb.com,savedelete.com,searchengineland.com,seroundtable.com,skiptomylou.org,techeye.net,ted.com,teenchatdecoder.com,therichest.org,thinq.co.uk,tv.com,twice.com,udreview.com,usatoday.com,usnews.com,variety.com,wackymania.com,windows7news.com,winhelponline.com,wired.co.uk##.subscribe
+alternet.org,android.gs,bizjournals.com,catonmat.net,cnet.com,dailycaller.com,devicemag.com,ebayinkblog.com,ehow.com,foxnews.com,fromthegrapevine.com,intomobile.com,labnol.org,list25.com,messynessychic.com,mygaming.co.za,nymag.com,pando.com,pandodaily.com,parentherald.com,pedestrian.tv,people.com,petapixel.com,phonearena.com,propertyobserver.com.au,readwriteweb.com,savedelete.com,searchengineland.com,seroundtable.com,skiptomylou.org,techeye.net,ted.com,teenchatdecoder.com,therichest.org,thinq.co.uk,tv.com,twice.com,udreview.com,usatoday.com,usnews.com,variety.com,wackymania.com,windows7news.com,winhelponline.com,wired.co.uk##.subscribe
 news-journalonline.com##.subscribe-blurb
 financialbuzz.com,maclife.com##.subscribe-form
 pangeatoday.com##.subscribe-link
@@ -13232,6 +13253,7 @@ citeworld.com##.welcome_mod
 tvfanatic.com##.well-small
 mylifetime.com##.wfmo-sn-block
 designntrend.com,fashionnstyle.com,kdramastars.com,kpopstarz.com##.wh_transf
+infoworld.com##.whitepaper
 pcworld.com##.whitepapers
 grist.org,netbooknews.com##.widget
 libertyunyielding.com##.widget-around-the-web
@@ -13585,6 +13607,7 @@ claireperry.org.uk###blanket
 mercedes-benz.com###cLayer
 nationwideinternational.com,thederbyshire.co.uk###cn
 msn.com###conditionalbanner
+decathlon.co.uk###container-screen
 atom42.co.uk,bbvonline.net,boxnation.com,community-options.org.uk,fasthosts.co.uk,fremantlemedia.com,mdx.ac.uk,opportunitypeterborough.co.uk,out-law.com,wheatley-group.com###cookie
 anpost.ie,barbican.org.uk,co-operative.coop,fulltilt.com,homecinemachoice.com,pokernews.com,volvocars.com###cookies
 tesco.com###cp
@@ -13922,7 +13945,7 @@ quora.com##.FooterSignupForm
 socialblade.com##.GoogleButton
 ehow.com##.RightRailPromo
 scan.co.uk##.ShareWith
-avon.com,designboom.com,highstakesdb.com##.Social
+avon.com,designboom.com,highstakesdb.com,hurriyetdailynews.com##.Social
 tasteofhome.com##.TOH-follow-us
 abc.go.com##.abc-facebook-like
 slideshare.net##.action-btns-container
@@ -14845,6 +14868,7 @@ soychile.cl###facebook
 yamaha-motor.com.br##.barra-midias
 starmedia.com##.fbk
 crea-mexico.com##.redes
+tn.com.ar##.shares
 diarioti.com##.social
 starmedia.com##.twt
 publicar.com##img[style="margin: 0px 10px; float: left; width: 26px;"]
@@ -15040,7 +15064,7 @@ privatecore.com#@#.post-fb
 ~facebook.com##.post-fb-like
 vk.com#@#.post_share
 ~reddit.com##.reddit_button
-bitly.com,grooveshark.com#@#.share-btn
+bitly.com,framestr.com,grooveshark.com#@#.share-btn
 vimeo.com#@#.share-button
 bleacherreport.com#@#.share-buttons
 popsugar.com.au#@#.share-container
@@ -15069,6 +15093,7 @@ india.com#@#.sharethis-wrapper
 nytimes.com#@#.sharetools
 slate.com#@#.sharing-buttons
 nextinpact.com#@#.sharrre
+squidbikes.com#@#.show-social-icons
 500px.com#@#.show_social
 golem.de#@#.social-bar
 golem.de#@#.social-bottom

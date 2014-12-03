@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 5u51Xf0Z4RULW3upsCmSHg
+! Checksum: +/hjeDlJ6ifSPGB9ptiUPA
 ! Title: EasyList Hebrew
-! Last modified: 26/11/14  23:17
+! Last modified: 01/12/14  10:40
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -10,10 +10,7 @@
 ! Fork of: IsraelList http://code.google.com/p/israellist/
 ! Fork of: Fanboy IsraelList https://secure.fanboy.co.nz/israelilist/IsraelList.txt
 ! License:
-!          CC-BY-SA 3.0 - http://creativecommons.org/licenses/by-sa/3.0/
-!          GFDL 1.3 or later - http://www.gnu.org/licenses/fdl.html
-!          GPL 2.0 or later - http://www.gnu.org/licenses/gpl-2.0.html
-!          (at your option)
+!          GPL 3.0 - http://www.gnu.org/copyleft/gpl.html
 !
 !---------------------------Generic Blocking Rules----------------------------!
 !
@@ -40,6 +37,7 @@
 ||booking.com/index.html^$popup,domain=daka90.co.il
 ||campaign.alpha.co.il/?campaign^$popup,third-party
 ||campaign.chevrolet.co.il/$popup,third-party
+||campaign.nissan.co.il^$popup,third-party
 ||clickcenter.net^$third-party
 ||clickon.co.il^$popup,third-party
 ||clickon.co.il^$third-party
@@ -64,6 +62,7 @@
 ||mapi.co.il/free_pu.php^$popup
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
+||mizrahi-tefahot.co.il/minisites/giyus$popup,third-party
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
@@ -74,6 +73,7 @@
 ||onlineproxyfree.com^$popup,third-party
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
+||pigment-adv.co.il/campaign^$popup,third-party
 ||rateonclick.com^$popup,third-party
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup,third-party
@@ -283,11 +283,11 @@
 !--------------Whitelists Rules (caused by EasyList / EasyPrivacy )-----------!
 !
 @@||adnxs.com^$object-subrequest,domain=mako.co.il
-@@||ads.one.co.il/images/Ads/2014/05/22/1500/51x20.gif
-@@||ads.one.co.il/images/MSites/2014/05/22/1530/cremahadash.png
 @@||ads.one.co.il/images/ads/2014/01/21/1400/home.png
+@@||ads.one.co.il/images/Ads/2014/05/22/1500/51x20.gif
 @@||ads.one.co.il/images/ads/2014/06/02/1415/*
 @@||ads.one.co.il/images/ads/2014/06/02/1430/444.png
+@@||ads.one.co.il/images/MSites/2014/05/22/1530/cremahadash.png
 @@||adserver.adtech.de/?advideo/$object-subrequest,domain=mako.co.il
 @@||adserver.adtech.de/rmevent/$object-subrequest,domain=mako.co.il,media
 @@||advertising.themarker.com^$~third-party
@@ -298,11 +298,13 @@
 @@||banners.hosting-il.com^$domain=cinema-city.co.il
 @@||bhol.co.il/imagebank/400x250
 @@||bipbip.co.il/Images/Ads/$~third-party
+@@||blogspot.com$image,domain=goalim4u.org
 @@||bs.serving-sys.com/BurstingPipe/adServer.bs?cn=is&c=*VAST$object-subrequest
 @@||bs.serving-sys.com/crossdomain.xml$object-subrequest
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
+@@||goalim4u.org$elemhide
 @@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
 @@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
 @@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
@@ -596,6 +598,12 @@ likudnik.co.il##DIV[style="text-align: center;"]
 link4u.co.il###link_banner
 link4u.co.il##.banner_300x224
 link4u.co.il##.banner_main
+maariv.co.il##.article-bottom-banner
+maariv.co.il##.article-box-banner-wrap
+maariv.co.il##.box-banner-wrap
+maariv.co.il##.horizontal-banner-wrap
+maariv.co.il##.level-6-horizontal-banner-wrap
+maariv.co.il##.xl-banner-wrap
 maariv.co.il##TABLE[width="748"][height="110"][style="background-color:#e8e8e8"]
 madas.co.il##.AdsContainer
 madas.co.il##.LeftColumn_container.Floater

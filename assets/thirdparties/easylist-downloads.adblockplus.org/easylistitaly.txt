@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Suj+kDSRLqKhv/aR095Giw
-! Version: 201411291301
+! Checksum: 8bVo5bhsABoBauPpL+2i7g
+! Version: 201412031511
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 29 Nov 2014 13:01 UTC
+! Ultima modifica: 03 Dec 2014 15:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -333,6 +333,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||booking.com/general.html?$subdocument,domain=quattroruote.it|tuttobaviera.it
 ||booking.fioccovacanze.it^$third-party
 ||bt.rcs.it^
+||caniaddestrati.org^$third-party
 ||careerjet.it/partners/
 ||casa.it/cobrand/
 ||casinotop10.it/swf/$third-party
@@ -400,6 +401,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||keepersport.it^*/banner728x90.jpg
 ||kuko.it/banner.
 ||lacasadiriposo.it/images/banner/
+||laricettadellostudente.it^$third-party
 ||libreriadelsanto.it/banners/$third-party
 ||linearadio.it/bnrs/
 ||locandinebest.net/locandina/$subdocument,third-party
@@ -407,6 +409,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||macrolibrarsi.org/banner/
 ||mediaon.it/objects/deal_list/
 ||mmvid.s3.amazonaws.com^
+||mondojuventus.it^$third-party
 ||neonisi.com^*/items.external?$third-party
 ||net-expire.tccstatic.com^*/banner.js
 ||netweek.it/ban_
@@ -458,6 +461,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||smartclip.net^$~object-subrequest,third-party
 ||smscellulari.it/pic/banner/$third-party
 ||solonapoli88.altervista.org/ban$subdocument
+||spazioautomobile.it^$third-party
 ||spingitori.it/spnadv/
 ||static.plista.com^*/resized/$third-party
 ||staticroot.com/nl/affiliati/
@@ -485,12 +489,14 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||tuoporno.com/images/banner/
 ||tuttogratis.it/hl_mfa/DXLARGE_v7num.php?
 ||unibr.altervista.org/pub.html
+||universosmartphone.it^$third-party
 ||upcom.it^*/banner/
 ||uplink.aruba.it^$third-party
 ||vantaggiando.it/banners/
 ||vhf.tbiz.it^
 ||viagogo.it/feeds/widget.ashx?*&affiliateid=$subdocument
 ||virginpoker.it/pub/
+||vitaquotidiana.com^$third-party
 ||webalice.it/blackberry_09/trovadeal/
 ||webalice.it/ivo.gervasoni/$third-party
 ||webself.it/banners/
@@ -1116,6 +1122,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||latinaoggi.net/public/img/bannerino-
 ||latitudeslife.com/magazine/adv/
 ||latitudeslife.com^*/banners/
+||lavocedeltrentino.it/images/banners/
 ||lavocedinewyork.com^*/52DBA386-71AE-11.jpg
 ||lavocedinewyork.com^*/5303FE28-71AE-11.jpg
 ||lavocedivenezia.it/player/banner/
@@ -1729,7 +1736,9 @@ eunews.it###HeaderBanner
 rai.it###Leaderboard
 liberatv.ch###Minisky
 ininsubria.it###PopUp_Under
+tio.ch###Promotion
 tio.ch###PromotionInterna
+tio.ch###RectangleHome
 tio.ch###RectangleInterna
 tripadvisor.it###SPONSORED_TOP_10
 liberatv.ch###Sky2
@@ -2059,6 +2068,13 @@ genova24.it###takeover_left
 genova24.it###takeover_right
 tomshw.it###testata_giu
 alessandrianews.it###testata_tkv-bg
+lavocedelpopolo.net###text-19
+lavocedelpopolo.net###text-20
+lavocedelpopolo.net###text-26
+lavocedelpopolo.net###text-28
+lavocedelpopolo.net###text-33
+lavocedelpopolo.net###text-35
+lavocedelpopolo.net###text-41
 studioconsulenzaromano.net###text-561964208
 farevela.net###text-7
 ilmonferrato.it###thin_banners_container
@@ -2200,12 +2216,14 @@ corriereirpinia.it##.bannerTd
 avvenire.it,borsaitaliana.it,ilmessaggero.it##.bannerTop
 ilquotidianodellacalabria.it##.banner_186x290
 ilfattonisseno.it##.banner_200
+lavocedelpopolo.net##.banner_210
 ilquotidianodellacalabria.it##.banner_234x90
 spaziofilm.it##.banner_300
 gazzettadiparma.it##.banner_300x170
 ilmattinodifoggia.it##.banner_300x250_3
 liberoquotidiano.it##.banner_300x250_colonna_6
 everyeye.it##.banner_600_new
+lavocedelpopolo.net##.banner_728
 ottopagine.net##.banner_990_90
 ottopagine.net##.banner_990_90_mid
 ilmattinodifoggia.it##.banner_990x30
@@ -2867,8 +2885,6 @@ termometropolitico.it##[id^="bsa"]
 @@||videosynd.kataweb.it/advertising/$xmlhttprequest,domain=videosynd.kataweb.it
 @@||webcenter.tiscali.it/distribuzione/_script/TiscaliADV_315.js$domain=mail.tiscali.it
 @@||webmail.virgilio.it/cp/bannervirgilio/$subdocument
-@@||youreporter.it/adv/ova-matrix-yrn.xml.php?$object-subrequest,domain=youreporternews.it
-@@||youreporter.it/adv/ova-matrix.xml.php?$object-subrequest
 ! Anti-Adblock
 @@.png#$domain=codeclan.altervista.org|italiatv.org|naturaselvaggia2.altervista.org
 @@||blogspot.com^*#$image,domain=dataok.altervista.org

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 7kzbrnJOSTKTyfWHJFqPkw
-! Version: 201411291300
-! Last modified: 29 Nov 2014 13:00 UTC
+! Checksum: OAd7RrIB+wNhoq3NnTiUhQ
+! Version: 201412031510
+! Last modified: 03 Dec 2014 15:10 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -2417,6 +2417,7 @@ _youtube_social_
 ###article_social
 ###article_tools_share
 ###article_tools_share_li
+###article_twitter
 ###as-share-window
 ###as_facebook_mem_likebox_widgets
 ###as_facebook_recommend
@@ -2819,7 +2820,9 @@ _youtube_social_
 ###follow_us_block
 ###followbigbutton
 ###followbtn2
+###followface
 ###followlinks
+###followtwit
 ###followus
 ###followwrap
 ###foot-social
@@ -3657,6 +3660,7 @@ _youtube_social_
 ###socialNav
 ###socialNetworkBox
 ###socialNetworkIcons
+###socialNetworking
 ###socialNetworkingBar
 ###socialNetworks
 ###socialNlBloc
@@ -4027,20 +4031,24 @@ _youtube_social_
 ##.EE-social
 ##.Entry_Sharer_Buttons
 ##.FBLikeBox
+##.FacebookFollowButton
 ##.FacebookICN
 ##.FacebookLike
 ##.FacebookShare
 ##.FacebookTwitter
 ##.Facebook_like
+##.FollowButton
 ##.FollowByEmail
 ##.FollowUs
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
+##.GoogleFollowButton
 ##.IconSocialMedia
 ##.LR-connect-share-links
 ##.LayoutSocialTools
 ##.LikeBox
 ##.LikeContainer
+##.LinkedinFollowButton
 ##.Links-Social
 ##.MR_Social_Sharing_Toolkit_Widget
 ##.NYshareit
@@ -4077,6 +4085,7 @@ _youtube_social_
 ##.SocialBookmark
 ##.SocialButton
 ##.SocialButtons
+##.SocialFollow
 ##.SocialGoogle
 ##.SocialIcon
 ##.SocialIconsBlock
@@ -4103,6 +4112,7 @@ _youtube_social_
 ##.TwitterArea
 ##.TwitterButton
 ##.TwitterDiv
+##.TwitterFollowButton
 ##.TwitterFollowUs
 ##.TwitterICN
 ##.Twitter_Widget
@@ -4879,6 +4889,7 @@ _youtube_social_
 ##.fodicon-google-plus
 ##.fodicon-tumblr
 ##.fodicon-twitter
+##.follow-appeal-container
 ##.follow-bar
 ##.follow-btn
 ##.follow-button-gplus
@@ -5925,6 +5936,7 @@ _youtube_social_
 ##.report-process-share
 ##.reporter-social-buttons
 ##.resultShare
+##.retweet
 ##.review-social-icons2
 ##.review_sharebar_vertical
 ##.rfd-sharetools
@@ -7298,6 +7310,7 @@ _youtube_social_
 ##.tumblr-icon
 ##.tumblr-share
 ##.tumblrlink
+##.tunein_widget
 ##.tw-b
 ##.tw-share
 ##.tw_black
@@ -8896,6 +8909,7 @@ _eu_cookie_
 ###ViperBar_main
 ###alrp-slidebox
 ###ams_circ_mar_overlay
+###aol-newsletter
 ###aptureD
 ###article-newsletter-side-module
 ###article-promo-newsletter
@@ -9417,6 +9431,7 @@ _eu_cookie_
 ##.om-has-email
 ##.omniWidget-article-signup-large
 ##.oo_tab_right
+##.optin-monster-overlay
 ##.outbrain
 ##.outbrain-ads
 ##.outbrain-group
@@ -9533,6 +9548,7 @@ _eu_cookie_
 ##.td-more-articles-box
 ##.techbeat-widget-wide-container
 ##.term-rss
+##.tl-newsletter-widget
 ##.toasterAd
 ##.track-action-RSS
 ##.trb_bnn
@@ -10181,6 +10197,7 @@ _eu_cookie_
 ###backtotopbutton
 ###backtotoplink
 ###bktotopbtn
+###bt-scroll-top
 ###btn-scroll-up
 ###cb-to-top
 ###dynamic-to-top
@@ -10527,6 +10544,7 @@ _eu_cookie_
 ||cookiereports.com^$third-party
 ||curiyo.com^$third-party
 ||cursors-4u.net^$third-party
+||d1uh1a7az90pt0.cloudfront.net^
 ||digsby.com^$third-party
 ||diigo.com/images/diigo-icon/$third-party
 ||disqus.com/api/*/listRelated.json?
@@ -10567,7 +10585,6 @@ _eu_cookie_
 ||hnbutton.appspot.com^$third-party
 ||hnlike.com^$third-party
 ||honcode.ch^$third-party
-||icopyright.net^$third-party
 ||identi.ca/js/identica-badge.js$third-party
 ||images.hitwise.co.uk^$third-party
 ||img.fark.net/pub/$third-party
@@ -11081,7 +11098,7 @@ privatecore.com#@#.post-fb
 ~facebook.com##.post-fb-like
 vk.com#@#.post_share
 ~reddit.com##.reddit_button
-bitly.com,grooveshark.com#@#.share-btn
+bitly.com,framestr.com,grooveshark.com#@#.share-btn
 vimeo.com#@#.share-button
 bleacherreport.com#@#.share-buttons
 popsugar.com.au#@#.share-container
@@ -11110,6 +11127,7 @@ india.com#@#.sharethis-wrapper
 nytimes.com#@#.sharetools
 slate.com#@#.sharing-buttons
 nextinpact.com#@#.sharrre
+squidbikes.com#@#.show-social-icons
 500px.com#@#.show_social
 golem.de#@#.social-bar
 golem.de#@#.social-bottom

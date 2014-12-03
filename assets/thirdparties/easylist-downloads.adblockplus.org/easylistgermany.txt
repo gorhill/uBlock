@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: rt/VQ5W45tCtkawGsgwu0g
-! Version: 201411291301
+! Checksum: FmExz+NUICmHP+xWHbCgMQ
+! Version: 201412031511
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 29 Nov 2014 13:01 UTC
+! Last modified: 03 Dec 2014 15:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2615,6 +2615,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ircfaq.de/banner/
 ||ishare.to/images/banners/
 ||islam.de/images/other/banner/
+||israelheute.com^*/promo/
 ||israelnetz.com/uploads/tx_templavoila/
 ||it-sa.de/uploads/tx_macinabanners/
 ||itseccity.de/banner/
@@ -4937,6 +4938,11 @@ ksta.de##.ContainerContentKalaydoSmall
 mactechnews.de##.DfpNewsO
 mactechnews.de##.DfpPanel336
 fr-online.de##.DigiAnz
+israelheute.com##.DnnModule-726
+israelheute.com##.DnnModule-887
+israelheute.com##.DnnModule-888
+israelheute.com##.DnnModule-891
+israelheute.com##.DnnModule-900
 pafnet.de##.FlyerRahmen1[width="125"]
 kimeta.de##.GoogleColSpan
 computerwoche.de##.HeadLeaderBoard
@@ -5720,6 +5726,8 @@ fettspielen.de##.similar-games > .unblock
 fck.de##.site_ovlerlay
 dokus4.me##.siyl
 indeed.ch##.sjlast
+my-homo.net##.sksc160
+my-homo.net##.sksc300
 stadtbranchenbuch.at,stadtbranchenbuch.com##.sky
 lokalisten.de##.skyScraper
 t-online.de##.skybannerWrapper

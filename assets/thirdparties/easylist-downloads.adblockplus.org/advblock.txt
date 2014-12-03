@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: grlv9EHBrOVhuHesL+9yqw
-! Version: 201411291300
-! Last modified: 29 Nov 2014 13:00 UTC
+! Checksum: Qv6IsDIU+JfWpC4rfGDDMA
+! Version: 201412031510
+! Last modified: 03 Dec 2014 15:10 UTC
 ! Homepage: http://ruadlist.googlecode.com/
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -581,6 +581,7 @@ _tizers.
 ||info/vk2/
 ||madbanner.$~object-subrequest
 ||net/banners/
+||net/forum?t=$subdocument
 ||ru/ads/
 ||ru/ban/
 ||ru/banner.
@@ -642,6 +643,7 @@ _tizers.
 @@||oplata.info^$third-party,script
 @@||stells.info^$third-party,script
 @@||wikiroutes.info^$third-party,script
+@@||wowroad.info^$third-party,script
 ! -----------------------------------------------------------------------------
 ! *** advblock/thirdparty.txt ***
 |http://u.to/$third-party,script,subdocument
@@ -2302,6 +2304,7 @@ _tizers.
 ||jxrhjcb.biz^
 ||kadam.ru^$third-party
 ||kadavara.com^
+||kimus.ru^
 ||kinoget.tv^
 ||kinopromobase.ru^
 ||kinopromobase2.ru^
@@ -3123,6 +3126,7 @@ letitbit.net##.block-menu
 letitbit.net##.block-top
 letitbit.net##.block-top ~ p > .btn
 staforceteam.ru##.boardlistInner[style="background-image: url(/logo/Standart/TemaLine2.png); background-repeat: repeat-y"]
+appstudio.org##.box-categories img[onclick^="yaCounter"]
 riotpixels.com##.br-new
 livejournal.com##.brand
 4pda.ru##.brand-mobile
@@ -6145,12 +6149,13 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||amazonaws.com/c.swf?path=http
 @@||asg.vidigital.ru^$domain=ivi.ru|rutube.ru
 @@||atlant-m.in.ua/uploads/banners/$domain=atlant-m.in.ua
+@@||awaps.yandex.$domain=market.yandex.by|market.yandex.kz|market.yandex.ru|market.yandex.ua
 @@||awaps.yandex.ru^*_video_$script,domain=kinopoisk.ru
 @@||bash.im/webmaster|$elemhide
 @@||beeline.ru/ban/$domain=beeline.ru
 @@||beeline.ru/media/banners/$domain=beeline.ru
-@@||begun.ru/video.jsp?$domain=vidin.ru
-@@||begun.ru/vpaid_lib.swf|$domain=vidin.ru
+@@||begun.ru/video.jsp?$domain=smotri.com|vidin.ru
+@@||begun.ru/vpaid_lib.swf|$domain=smotri.com|vidin.ru
 @@||changecopyright.ru/bannersout/
 @@||com/banners/$domain=akprior.com|eurobank-ua.com|maingear.com
 @@||content.videoclick.ru/crossdomain.xml|$object-subrequest,domain=~vefire.ru
@@ -6252,6 +6257,7 @@ izvestia.ru##div[style*="/popup-banner/"]
 @@||yandex.ru/page/$domain=bestpersons.ru
 @@||yandex.ru/resource/$domain=bestpersons.ru
 @@||yandex.ru/system/context.js$domain=bestpersons.ru
+@@||yastatic.net/market-export/*/adv/advert.js|
 !#unhiding.bookmark
 stepashka.com#@##ad_header
 devicesearch.ru#@##ad_top

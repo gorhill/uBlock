@@ -602,6 +602,8 @@ filecore.co.nz#@#.adsense
 ||streaming-foot.info/images/adblok.mp3$media
 ! gratisbitco.in
 @@||gratisbitco.in/scripts/ads.js$script
+! labnol.org
+||img.labnol.org/di/support.png$image
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

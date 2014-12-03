@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: mbAvkd2QovJIsyufF+xsxg
-! Version: 201411291301
+! Checksum: BeCZ311j1NW5jtbfT+3OgA
+! Version: 201412031511
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -111,6 +111,7 @@ _regiepub/
 ||bizhentai.com^$third-party
 ||biznolimit.com^$third-party
 ||blogbang.com^$third-party
+||botaalleghenymountainspurge.info^$third-party
 ||box.shopoon.fr^$third-party
 ||camsympa.com^$third-party,domain=~camsympa.fr
 ||carpediem.fr^$third-party
@@ -138,6 +139,7 @@ _regiepub/
 ||edi7.lu^$third-party
 ||edintorni.net^$third-party
 ||effiliation.com^$third-party
+||emmyballade.org^
 ||esoterweb.com^$third-party
 ||espace-plus.net^$popup,third-party
 ||espace-plus.net^$third-party
@@ -164,11 +166,13 @@ _regiepub/
 ||hits-exchange.me^$third-party
 ||hopdream.com^$popup,third-party
 ||hopdream.com^$third-party
+||hypophysectomisearisarumvulgare.com^$third-party
 ||i-promotion.net^$third-party
 ||illyx.co^$third-party
 ||illyx.com^$popup,third-party
 ||illyx.com^$third-party
 ||imgpromo.easyrencontre.com^$third-party
+||impertinencebradypodidae.net^$third-party
 ||indignantonstage.com^$third-party
 ||kadserver.com^$third-party
 ||koocash.com$popup,third-party
@@ -181,6 +185,8 @@ _regiepub/
 ||livechatdates.com^$popup,third-party
 ||liveparadise.com^$third-party
 ||livewithbinaryoptions.com^$third-party
+||macrocephalouspokerface.com^$third-party
+||madison-ads.net^$third-party
 ||manga-exchange.com^$third-party
 ||master-ptp.com^$third-party
 ||media-clic.com^$third-party
@@ -191,6 +197,7 @@ _regiepub/
 ||misterbell.com^$third-party
 ||monetize-me.com^$third-party
 ||moneytize.fr^$third-party
+||moonworshipchapatti.net^$third-party
 ||myspot.fr^$third-party
 ||myxpub.com^$third-party
 ||n1.webedia.fr^$third-party
@@ -200,6 +207,7 @@ _regiepub/
 ||netclickstats.com^$third-party
 ||netmediaeurope.com^$third-party
 ||netmediaeurope.fr^$third-party
+||ninetysixhypothalamic.net^$third-party
 ||nols-pub.fr^$third-party
 ||nturveev.com^$third-party
 ||omnitagjs.com^$third-party
@@ -243,6 +251,7 @@ _regiepub/
 ||secretmedia.com^$third-party
 ||sex-affiliation.com^$third-party
 ||sextapes2stars.com^$third-party
+||shapeupobliteration.org^
 ||shoppytab.com^$third-party
 ||smart.allocine.fr^$~object-subrequest,~subdocument
 ||smart2.allocine.fr^$~object-subrequest,~subdocument
@@ -268,6 +277,8 @@ _regiepub/
 ||traficmax.com^$third-party
 ||videos-x.me^$third-party
 ||videostep.com^$third-party
+||wbsadsdel2.com^$popup,third-party
+||wbsadsdel2.com^$third-party
 ||wbusiness.fr^$third-party
 ||webprod.cybertesteurs.com^$popup,third-party,domain=~iss.net
 ||wedoo.com^$third-party
@@ -275,6 +286,7 @@ _regiepub/
 ||widgetbooster.com^$third-party
 ||wineuroptp.fr^$third-party
 ||wslinx.com^$third-party
+||wsockd.com^$third-party
 ||x.porn.fr^$third-party
 ||xaxa.in^$third-party
 ||xponsor.com^$third-party
@@ -293,6 +305,7 @@ _regiepub/
 ||123megaupload.com/site_media/pub/
 ||18etplus.com^
 ||1et2.org/sora/$image
+||1x12.net^
 ||20dollars2surf.com/par_46860_
 ||6fun.fr/api.php
 ||78.41.233.99/~fhv3/slidein.php
@@ -326,6 +339,7 @@ _regiepub/
 ||annuaire-web-france.com/images/logo-annuaire-web-france.gif
 ||as-salat.fr/images/banners/
 ||asia-passion.fr/annuaire/ban/$third-party
+||assurance-auto.nouvelobs.com/widgets/
 ||astroportail.com/images/pubastro4.gif
 ||atoowin.com/images/diffusion/
 ||atoshonetwork.com/atosho.js
@@ -379,6 +393,8 @@ _regiepub/
 ||crm-pour-pme.fr/images/copie%20de%20728-90.png
 ||crocastuce.fr/images/Boutons/
 ||d34eoj4l97gwgh.cloudfront.net/img/geoloc/$domain=france-examen.com
+||devisprox-media.s3-website-eu-west-1.amazonaws.com^
+||devisprox.com/ld.js
 ||dhtml.pornravage.com^
 ||diagnostic-expertise.com^*-popunder.php?$popup
 ||dir-fr.com/banners/$domain=la-musique-rai.com
@@ -529,6 +545,7 @@ _regiepub/
 ||netcomvad.com/shop-promo/
 ||netmediaeurope.fr/images/btn_
 ||noogle.fr/banner/
+||nouvelobs.s3-website-eu-west-1.amazonaws.com^
 ||noviya.free.fr/bannieres/
 ||nuit-torride.com/ban/
 ||nyu-nyu.com/banieres/
@@ -1810,6 +1827,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###iframesidebarpub
 ###imagePubPave
 ###innerpub
+###j_ads
 ###module_publicite
 ###news-droite-publicite
 ###news_pub_centre
@@ -2709,7 +2727,7 @@ trocdestrains.com##.boite-partenaire-v
 20minutes.fr##.bons-plans
 hentai-3x.com##.boost
 hamachifrance.com##.box-1.deepest[style="min-height: 250px;"]
-challenges.fr##.box-simulation-immo
+challenges.fr,nouvelobs.com##.box-simulation-immo
 ibuzzyou.fr##.box-sous-titre-gauche
 20min.ch##.box.left.x44
 israel7.com##.box2[style="background-color:rgb(0,0,0);height:250px;"]
@@ -4057,7 +4075,7 @@ debrideurstream.fr#@##pubdirecte
 fairytailmx.com#@##sponsored-ad
 forum.virtualdjing.com#@#.adFrame
 gamingroom.tv,vide-greniers.org#@#.adsbygoogle
-goldenboys.fr#@#.afs_ads
+goldenboys.fr,radiocockpit.fr#@#.afs_ads
 freedom-ip.com#@#.pub_vertical
 fr.audiofanzine.com#@#div[id^="div-gpt-ad-"]
 eclypsia.com#@#img[width="728"][height="90"]

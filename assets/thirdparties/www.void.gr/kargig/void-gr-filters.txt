@@ -530,6 +530,7 @@ ad.gr.doubleclick.net
 ||in.gr/Themes/1/Default/Media/logo-bp-ingr-95x20.gif
 ||luben.tv/wp-content/uploads/2014/11/output_cVZG2g.gif
 ||mothersblog.gr/media/com_skins/skins/79/*
+||thepressproject.gr/build/1.jpg
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
