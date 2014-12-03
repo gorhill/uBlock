@@ -180,3 +180,6 @@ google.*###center_col > #tads
 # https://github.com/gorhill/uBlock/issues/380#issuecomment-64916258
 # Let's see how long this works
 @@/static/ad_$domain=prosieben.de
+
+# https://twitter.com/JarkkoRytkonen/status/540052376015888385
+@@||google-analytics.com^$domain=jackbox.tv
