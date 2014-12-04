@@ -135,7 +135,6 @@ google.*###center_col > #tads
 # "... http://www.expansion.com/albumes/2014/10/30/casa_bruce_willis_bedford/index.html?cid=SIN8901"
 @@||b.scorecardresearch.com^$domain=www.expansion.com
 @@||metrics.el-mundo.net^$domain=www.expansion.com
-
 # To counter `http://utm.` in EasyPrivacy
 @@||utm.aliexpress.com/*/recommendEntry.do$~third-party
 
@@ -182,4 +181,5 @@ google.*###center_col > #tads
 @@/static/ad_$domain=prosieben.de
 
 # https://twitter.com/JarkkoRytkonen/status/540052376015888385
+# To counter `google-analytics.com` in Peter Lowe's
 @@||google-analytics.com^$domain=jackbox.tv
