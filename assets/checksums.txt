@@ -1,6 +1,6 @@
 2d0a4786a7175bf73b788436cf65bc5a assets/ublock/filter-lists.json
 6572a7bce5f1747fee597cb170bd3b98 assets/ublock/privacy.txt
-0419ab7e907eefe07dbb3319ebbe227f assets/ublock/filters.txt
+bf1520314a1734ee5965eee191898aeb assets/ublock/filters.txt
 4d9e52dd0f2fa7b4ff3c80043096e542 assets/ublock/mirror-candidates.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 d8c58f5bb8072907ae361bc14dbbd28f assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
