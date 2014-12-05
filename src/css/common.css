@@ -43,15 +43,16 @@ body[dir=rtl] [data-tip]:hover:after {
     }
 
 [data-tip][data-tip-anchor="top"]:hover:after {
-    bottom: 105%;
+    bottom: 140%;
     top: auto;
-    left: auto;
-    right: -10%;
     }
-
+body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
+    left: -500%;
+    right: 0;
+    }
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
-    left: -10%;
-    right: auto;
+    left: 0;
+    right: -500%;
     }
 
 @keyframes tooltip {
