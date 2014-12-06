@@ -51,4 +51,4 @@ Contribuitori pe Crowdin: https://crowdin.net/project/ublock
 Este încă o aplicație recentă, gândiți-vă la acest lucru când lăsați un comentariu.
 
 Lista de schimbări a proiectului:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

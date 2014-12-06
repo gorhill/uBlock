@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Dashbord",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -68,83 +68,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Integrerte <code>skript<\/code>-koder er <b>tillatt<\/b> på dette nettstedet",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkerte<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"Førsteparts skript er <b>tillatt<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"Førsteparts skript er <b>blokkert<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"Tredjeparts skript er <b>tillatt<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"Tredjeparts skript er <b>blokkert<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"Førsteparts iframe-koder er <b>tillatt<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"Førsteparts iframe-koder er <b>blokkert<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Tredjeparts iframe-koder er <b>tillatt<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Tredjeparts iframe-koder er <b>blokkert<\/b> på dette nettstedet",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Integrerte <code>skript<\/code>-koder er <b>tillatt<\/b> overalt som standard",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkert<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Førsteparts skript er <b>tillatt<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Førsteparts skript er <b>blokkert<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Tredjeparts skript er <b>tillatt<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Tredjeparts skript er <b>blokkert<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Førsteparts iframe-koder er <b>tillatt<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Førsteparts iframe-koder er <b>blokkert<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Tredjeparts iframe-koder er <b>tillatt<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Tredjeparts iframe-koder er <b>blokkert<\/b> overalt som standard",
     "description":""
   },
   "pickerCreate":{
@@ -184,7 +184,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Gjør bruk av høyreklikkmeny der det er hensiktsmessig",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
@@ -288,7 +288,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "message":"ublock-egendefinerte-filtre_{{datetime}}.txt",
     "description":"English: ublock-custom-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -308,7 +308,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"ublock-hviteliste_{{datetime}}.txt",
     "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -316,11 +316,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Aktiver logging av nettverksforespørsler",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Du kan inspisere detaljer om nettverksforespørsler ved å aktivere dette alternativet. Logging av nettverksforespørsler øker minnebruken til µBlock. Siden mange brukere aldri vil bruke denne funksjonen er den deaktivert som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -396,11 +396,11 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Alle dine innstillinger blir fjernet, og µBlock vil starte på nytt.\n\nTilbakestille µBlock til opprinnelige innstillinger?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Kan ikke koble til {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

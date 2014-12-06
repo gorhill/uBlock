@@ -49,4 +49,4 @@ Współtwórcy tłumaczeń na Crowdin: https://crowdin.net/project/ublock
 Jest to dość wczesna wersja, należy o tym pamiętać podczas oceniania.
 
 Lista zmian projektu:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

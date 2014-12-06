@@ -49,4 +49,4 @@ Kontributor @ Crowdin: https://crowdin.net/project/ublock
 Ini masih dalam versi yang amat awal, harap diperhatikan ketika Anda meninjau.
 
 Daftar perubahan proyek:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

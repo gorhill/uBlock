@@ -25,7 +25,7 @@ Flere lister er tilgjengelige om du ønsker:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- Og mange andre
 
 Jo flere filtere som er aktivert, jo høyere minnebruk. Men selv etter å ha lagt til "Fanboy's" to ekstra lister, "hpHosts’s Ad and tracking servers", har µBlock fortsatt lavere minnebruk enn andre populære reklameblokkere.
 
@@ -49,4 +49,4 @@ Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 Dette er en tidlig versjon, ha det i tankene når du anmelder.
 
 Prosjektendringer:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

@@ -49,4 +49,4 @@ Bidragydere @ Crowdin: https://crowdin.net/project/ublock
 Det er ganske en tidlig version, holde dette i tankerne, når du gennemser.
 
 Projekt Ændringslog:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

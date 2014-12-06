@@ -49,4 +49,4 @@
 Це ще дуже дочасна версія, тому майте на увазі, коли робите огляд.
 
 Журнал змін проекту:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

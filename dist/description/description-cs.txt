@@ -49,4 +49,4 @@ Přispěvatelé na Crowdinu: https://crowdin.net/project/ublock
 Jde o poměrně ranou verzi, mějte to na paměti při recenzování.
 
 Change log projektu:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

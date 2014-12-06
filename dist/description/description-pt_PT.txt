@@ -50,4 +50,4 @@ Contribuidores @ Crowdin: https://crowdin.net/project/ublock
 Esta é uma versão inicial, tenha isso em mente quando avaliar.
 
 Registo de alterações no projecto:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

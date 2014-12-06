@@ -51,4 +51,4 @@ https://github.com/gorhill/uBlock/graphs/contributors
 الإضافة في قيد الإنجاز، خذ هذا في عين الإعتبار عندما تستعرضها.
 
 سجل التغييرات للمشروع:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

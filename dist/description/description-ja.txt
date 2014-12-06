@@ -50,4 +50,4 @@
 これは割と初期のバージョンですので、それを念頭にレビューをお願いします。
 
 プロジェクト変更ログ：
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

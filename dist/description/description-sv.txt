@@ -50,4 +50,4 @@ Bidragsgivare @ Crowdin: https://crowdin.net/project/ublock
 Det är en ganska tidig version, tänk på detta när du skriver en recension.
 
 Projektets ändringslogg:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

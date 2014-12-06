@@ -51,4 +51,4 @@ Mga nag-aambag @ Crowdin: https://crowdin.net/project/ublock
 Kakalabas lang nito kaya't pag-isipan ang mga komentaryo bago magbigay ng review.
 
 Mga pagbabago sa proyekto:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

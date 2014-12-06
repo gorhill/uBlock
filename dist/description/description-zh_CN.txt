@@ -52,4 +52,4 @@ https://crowdin.net/project/ublock
 它是一个非常早期的版本，当你评论的时候记住这一点。
 
 项目更改日志：
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

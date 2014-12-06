@@ -49,4 +49,4 @@ Közreműködők a Crowdin-en: https://crowdin.net/project/ublock
 A kiegészítő még gyerekcipőben jár, amit illik szem előtt tartani vélemény nyilvánításakor.
 
 Változások listája:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

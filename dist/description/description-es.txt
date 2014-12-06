@@ -49,4 +49,4 @@ Colaboradores @ Crowdin (en inglés): https://crowdin.net/project/ublock
 Esta es una versión en desarrollo, por favor tómelo en cuenta a la hora de dar su evaluación.
 
 Registro de cambios del proyecto:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

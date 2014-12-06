@@ -25,7 +25,6 @@ Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 - hpHosts’s Ad and tracking servers (Fichier Hosts bloquant des serveurs publicitaires et des serveurs pistant, maintenue à jour par hpHosts)
 - MVPS HOSTS (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue à jour par MVPS)
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
-- Des listes de protection locale, permettant de bloquer des publicités en fonction de votre pays
 - Etc
 
 Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier Hosts d'hpHosts, µBlock utilise moins de mémoire vive que tous les autres bloqueurs de pubs populaires.
@@ -50,4 +49,4 @@ Contributeurs @ Crowdin: https://crowdin.net/project/ublock
 Il s'agit d'une version relativement préliminaire, veuillez garder ça à l'esprit lors de votre évaluation de l'extension.
 
 Consultez ici en Anglais le Journal des changements concernant le projet :
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

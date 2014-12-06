@@ -49,4 +49,4 @@
 Это ещё очень ранняя версия, имейте это в виду, оценивая программу.
 
 Список изменений:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases

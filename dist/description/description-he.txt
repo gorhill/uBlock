@@ -25,7 +25,7 @@
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- ועוד רבים אחרים
 
 כמובן שככל שכמות מסננים גדולה יותר מופעלת, ככה גם חתימת הזיכרון גדולה יותר. ובכל זאת, אפילו לאחר הוספת שתי הרשימות הנוספות של Fanboy ו hpHosts’s Ad and tracking servers, ל µBlock עדיין יש חתימת זיכרון נמוכה יותר מלחוסמים פופולריים אחרים שם בחוץ.
 
@@ -49,4 +49,4 @@
 קח בחשבון שזוהי גרסה מוקדמת בזמן הסקירה שלך.
 
 רשימת השינויים של הפרויקט:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases
