@@ -168,11 +168,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Klikk, Ctrl-klikk",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Blokker element",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -188,11 +188,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} nettverksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -208,7 +208,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Tøm alle hurtigbuffere",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -260,7 +260,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Bruke",
+    "message":"Bruk",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -372,27 +372,27 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
+    "message":"Sikkerhetskopi til fil",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
+    "message":"ublock-sikkerhetskopi_{{datetime}}.txt",
     "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Gjenopprett fra fil...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Reset to default settings...",
+    "message":"Tilbakestill til standardinnstillinger...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Alle dine innstillinger vil bli overskrevet med data sikkerhetskopiert {{time}}, og µBlock vil starte på nytt.\n\nOverskrive alle eksisterende innstillinger med sikkerhetskopierte data?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Dataene kunne ikke leses eller er ugyldige",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
