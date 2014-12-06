@@ -49,4 +49,4 @@ Contributors @ Crowdin: https://crowdin.net/project/ublock
 It's quite an early version, keep this in mind when you review.
 
 Project change log:
-https://github.com/gorhill/uBlock/wiki/Change-log
+https://github.com/gorhill/uBlock/releases
