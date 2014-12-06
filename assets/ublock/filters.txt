@@ -103,7 +103,7 @@ google.*###center_col > #tads
 
 # https://github.com/gorhill/uBlock/issues/141
 # To counter `tags.tiqcdn.com` in  MVPS
-@@||tags.tiqcdn.com^$domain=cnet.com
+@@||tags.tiqcdn.com/utag/*.js$script,domain=cnet.com,weather.com
 
 # https://github.com/gorhill/uBlock/issues/17#issuecomment-51625306
 # To counter `extras.mnginteractive.com` in hpHosts
