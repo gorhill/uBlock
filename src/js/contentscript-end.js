@@ -501,11 +501,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             // If `!important` is not there, going back using history will
             // likely cause the hidden element to re-appear.
             if ( details.collapse ) {
-                if ( target.parentNode ) {
-                    target.parentNode.removeChild(target);
-                } else {
-                    target.style.setProperty('display', 'none', 'important');
-                }
+                // https://github.com/gorhill/uBlock/issues/399
+                // Never remove elements from the DOM, just hide them
+                target.style.setProperty('display', 'none', 'important');
             } else {
                 target.style.setProperty('visibility', 'hidden', 'important');
             }
@@ -570,11 +568,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             request = requests[i];
             elem = elements[request.index];
             if ( collapse ) {
-                if ( elem.parentNode ) {
-                    elem.parentNode.removeChild(elem);
-                } else {
-                    elem.style.setProperty('display', 'none', 'important');
-                }
+                // https://github.com/gorhill/uBlock/issues/399
+                // Never remove elements from the DOM, just hide them
+                elem.style.setProperty('display', 'none', 'important');
             } else {
                 elem.style.setProperty('visibility', 'hidden', 'important');
             }
