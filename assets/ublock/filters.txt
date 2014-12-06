@@ -102,6 +102,7 @@ google.*###center_col > #tads
 @@||s.imwx.com^
 
 # https://github.com/gorhill/uBlock/issues/141
+# Videos broken on weather.com
 # To counter `tags.tiqcdn.com` in  MVPS
 @@||tags.tiqcdn.com/utag/*.js$script,domain=cnet.com|weather.com
 
@@ -186,3 +187,7 @@ google.*###center_col > #tads
 
 # To counter `m.bestofmedia.com` in hpHosts
 @@||m.bestofmedia.com^
+
+# Videos broken on weather.com
+# To counter `www.googletagservices.com` in MVPS, hpHosts, Dan Pollock's
+@@||www.googletagservices.com/tag/js/gpt.js^$script,domain=weather.com
