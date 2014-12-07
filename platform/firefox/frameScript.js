@@ -24,7 +24,7 @@ let _removeMessageListener = function(id) {
     delete listeners[id];
 };
 
-addMessageListener('µBlock:broadcast', function(msg) {
+addMessageListener(appName + ':broadcast', function(msg) {
     for (let id in listeners) {
         listeners[id](msg);
     }
@@ -63,16 +63,18 @@ let observer = {
         lss(contentBaseURI + 'vapi-client.js', win);
         lss(contentBaseURI + 'contentscript-start.js', win);
 
-        if (win.document.readyState === 'loading') {
+        let readyState = win.document.readyState;
+
+		if (readyState === "interactive" || readyState === "complete") {
+            lss(contentBaseURI + 'contentscript-end.js', win);
+        }
+        else {
             let docReady = function(e) {
                 this.removeEventListener(e.type, docReady, true);
                 lss(contentBaseURI + 'contentscript-end.js', win);
             };
 
             win.document.addEventListener('DOMContentLoaded', docReady, true);
-        }
-        else {
-            lss(contentBaseURI + 'contentscript-end.js', win);
         }
     }
 };

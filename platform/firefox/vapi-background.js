@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services */
+/* global Services, XPCOMUtils */
 
 // For background page
 
@@ -34,6 +34,7 @@
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 Cu['import']('resource://gre/modules/Services.jsm');
+Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
 
 /******************************************************************************/
 
@@ -45,7 +46,14 @@ vAPI.firefox = true;
 
 vAPI.app = {
     name: 'µBlock',
+    cleanName: 'ublock',
     version: '0.7.2.0'
+};
+
+/******************************************************************************/
+
+vAPI.app.restart = function() {
+
 };
 
 /******************************************************************************/
@@ -63,7 +71,7 @@ var SQLite = {
             throw Error('Should be a directory...');
         }
 
-        path.append('uBlock.sqlite');
+        path.append(vAPI.app.cleanName + '.sqlite');
         this.db = Services.storage.openDatabase(path);
         this.db.executeSimpleSQL(
             'CREATE TABLE IF NOT EXISTS settings' +
@@ -229,7 +237,6 @@ var windowWatcher = {
         vAPI.tabs.onClosed(vAPI.tabs.getTabId(e.target));
     },
     onTabSelect: function(e) {
-        console.log(vAPI.tabs.getTabId(e.target));
         // vAPI.setIcon();
     },
     onLoad: function(e) {
@@ -243,7 +250,7 @@ var windowWatcher = {
             return;
         }
 
-        if (!this.gBrowser || this.gBrowser.tabContainer) {
+        if (!this.gBrowser || !this.gBrowser.tabContainer) {
             return;
         }
 
@@ -513,9 +520,15 @@ vAPI.tabs.close = function(tabIds) {
 
 /******************************************************************************/
 
+vAPI.setIcon = function() {
+
+};
+
+/******************************************************************************/
+
 vAPI.messaging = {
     gmm: Cc['@mozilla.org/globalmessagemanager;1'].getService(Ci.nsIMessageListenerManager),
-    frameScript: 'chrome://ublock/content/frameScript.js',
+    frameScript: 'chrome://' + vAPI.app.cleanName + '/content/frameScript.js',
     listeners: {},
     defaultHandler: null,
     NOOPFUNC: function(){},
@@ -598,14 +611,17 @@ vAPI.messaging.setup = function(defaultHandler) {
     }
     this.defaultHandler = defaultHandler;
 
-    this.gmm.addMessageListener(vAPI.app.name + ':background', this.onMessage);
+    this.gmm.addMessageListener(
+        vAPI.app.cleanName + ':background',
+        this.onMessage
+    );
 };
 
 /******************************************************************************/
 
 vAPI.messaging.broadcast = function(message) {
     this.gmm.broadcastAsyncMessage(
-        vAPI.app.name + ':broadcast',
+        vAPI.app.cleanName + ':broadcast',
         JSON.stringify({broadcast: true, msg: message})
     );
 };
@@ -614,7 +630,7 @@ vAPI.messaging.broadcast = function(message) {
 
 vAPI.messaging.unload = function() {
     this.gmm.removeMessageListener(
-        vAPI.app.name + ':background',
+        vAPI.app.cleanName + ':background',
         this.onMessage
     );
     this.gmm.removeDelayedFrameScript(this.frameScript);
@@ -628,15 +644,137 @@ vAPI.lastError = function() {
 
 /******************************************************************************/
 
+var conentPolicy = {
+    classDescription: vAPI.app.name + ' ContentPolicy',
+    classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
+    contractID: '@' + vAPI.app.cleanName + '/content-policy;1',
+    ACCEPT: Ci.nsIContentPolicy.ACCEPT,
+    REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
+    types: {
+        7: 'sub_frame',
+        4: 'stylesheet',
+        2: 'script',
+        3: 'image',
+        5: 'object',
+        11: 'xmlhttprequest'
+    },
+    get registrar() {
+        return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
+    },
+    get catManager() {
+        return Cc['@mozilla.org/categorymanager;1']
+                .getService(Ci.nsICategoryManager);
+    },
+    QueryInterface: XPCOMUtils.generateQI([
+        Ci.nsIFactory,
+        Ci.nsIContentPolicy,
+        Ci.nsISupportsWeakReference
+    ]),
+    createInstance: function(outer, iid) {
+        if (outer) {
+            throw Components.results.NS_ERROR_NO_AGGREGATION;
+        }
+
+        return this.QueryInterface(iid);
+    },
+    shouldLoad: function(type, location, origin, context) {
+        if (type === 6 || !context || !/^https?$/.test(location.scheme)) {
+            return this.ACCEPT;
+        }
+
+        var win = (context.ownerDocument || context).defaultView;
+
+        if (!win) {
+            return this.ACCEPT;
+        }
+
+        var block = vAPI.net.onBeforeRequest;
+
+        type = this.types[type] || 'other';
+
+        if (block.types.indexOf(type) === -1) {
+            return this.ACCEPT;
+        }
+
+        var browser = win.top.QueryInterface(Ci.nsIInterfaceRequestor)
+                        .getInterface(Ci.nsIWebNavigation)
+                        .QueryInterface(Ci.nsIDocShell)
+                        .chromeEventHandler;
+
+        if (!browser) {
+            return this.ACCEPT;
+        }
+
+        block = block.callback({
+            url: location.spec,
+            type: type,
+            tabId: vAPI.tabs.getTabId(browser),
+            frameId: win === win.top ? 0 : 1,
+            parentFrameId: win === win.top ? -1 : 0
+        });
+
+        if (block && typeof block === 'object') {
+            if (block.cancel === true) {
+                return this.REJECT;
+            }
+            else if (block.redirectURL) {
+                location.spec = block.redirectURL;
+                return this.REJECT;
+            }
+        }
+
+        return this.ACCEPT;
+    },/*
+    shouldProcess: function() {
+        return this.ACCEPT;
+    }*/
+};
+
+/******************************************************************************/
+
+vAPI.net = {};
+
+/******************************************************************************/
+
+vAPI.net.registerListeners = function() {
+    conentPolicy.registrar.registerFactory(
+        conentPolicy.classID,
+        conentPolicy.classDescription,
+        conentPolicy.contractID,
+        conentPolicy
+    );
+    conentPolicy.catManager.addCategoryEntry(
+        'content-policy',
+        conentPolicy.contractID,
+        conentPolicy.contractID,
+        false,
+        true
+    );
+};
+
+/******************************************************************************/
+
+vAPI.net.unregisterListeners = function() {
+    conentPolicy.registrar.unregisterFactory(conentPolicy.classID, conentPolicy);
+    conentPolicy.catManager.deleteCategoryEntry(
+        'content-policy',
+        conentPolicy.contractID,
+        false
+    );
+};
+
+/******************************************************************************/
+
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
     SQLite.close();
     windowWatcher.unregister();
     vAPI.messaging.unload();
+    vAPI.net.unregisterListeners();
 
     // close extension tabs
-    var extURI, win, tab, host = 'ublock';
+    var extURI, win, tab, host = vAPI.app.cleanName;
 
     for (win of vAPI.tabs.getWindows()) {
         for (tab of win.gBrowser.tabs) {

@@ -610,7 +610,9 @@ safari.application.addEventListener('beforeNavigate', function(e) {
 
 /******************************************************************************/
 
-vAPI.net = {}
+vAPI.net = {};
+
+/******************************************************************************/
 
 vAPI.net.registerListeners = function() {
     var onBeforeRequest = this.onBeforeRequest;
