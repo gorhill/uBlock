@@ -333,6 +333,11 @@ PageStore.prototype.reuse = function(pageURL, context) {
         this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
         this.rootHostname = this.pageHostname;
         this.rootDomain = this.pageDomain;
+
+        // As part of https://github.com/gorhill/uBlock/issues/405
+        // URL changed, force a re-evaluation of filtering switch
+        this.netFilteringReadTime = 0;
+
         return this;
     }
     // A new page is completely reloaded from scratch, reset all.

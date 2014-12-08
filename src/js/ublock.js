@@ -47,19 +47,9 @@
     }
 
     var i = exceptions.length;
-    var exception;
     while ( i-- ) {
-        exception = exceptions[i];
-        if ( exception.indexOf('/') !== -1 ) {
-            if ( exception.slice(-1) === '*' ) {
-                exception = exception.slice(0, -1);
-                if ( keyURL.slice(0, exception.length) === exception ) {
-                    return false;
-                }
-            } else if ( keyURL === exception ) {
-                return false;
-            }
-        } else if ( keyHostname.slice(-exception.length) === exception ) {
+        if ( this.matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
+            // console.log('"%s" matche url "%s"', exceptions[i], keyURL);
             return false;
         }
     }
@@ -105,21 +95,10 @@
         return true;
     }
 
-    // Remove from exception list
+    // Remove from exception list whatever causes current URL to be whitelisted
     var i = exceptions.length;
-    var exception;
     while ( i-- ) {
-        exception = exceptions[i];
-        if ( exception.indexOf('/') !== -1 ) {
-            if ( exception.slice(-1) === '*' ) {
-                exception = exception.slice(0, -1);
-                if ( keyURL.slice(0, exception.length) === exception ) {
-                    exceptions.splice(i, 1);
-                }
-            } else if ( keyURL === exception ) {
-                exceptions.splice(i, 1);
-            }
-        } else if ( keyHostname.slice(-exception.length) === exception ) {
+        if ( this.matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
             exceptions.splice(i, 1);
         }
     }
@@ -129,6 +108,38 @@
     this.saveWhitelist();
     return true;
 };
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/405
+// Be more flexible with whitelist syntax
+
+// TODO: Need to harden it against edge cases, like when an asterisk is used in
+// place of protocol.
+
+µBlock.matchWhitelistException = function(url, hostname, exception) {
+    // Exception is a plain hostname
+    if ( exception.indexOf('/') === -1 ) {
+        return hostname.slice(-exception.length) === exception;
+    }
+    // Match URL exactly
+    if ( exception.indexOf('*') === -1 ) {
+        return url === exception;
+    }
+    // Regex escape code inspired from:
+    //   "Is there a RegExp.escape function in Javascript?"
+    //   http://stackoverflow.com/a/3561711
+    var reStr = exception.replace(this.whitelistExceptionEscape, '\\$&')
+                         .replace(this.whitelistExceptionEscapeAsterisk, '.*');
+    var re = new RegExp(reStr);
+    return re.test(url);
+};
+
+// Any special regexp char will be escaped
+µBlock.whitelistExceptionEscape = /[-\/\\^$+?.()|[\]{}]/g;
+
+// All `*` will be expanded into `.*`
+µBlock.whitelistExceptionEscapeAsterisk = /\*/g;
 
 /******************************************************************************/
 
