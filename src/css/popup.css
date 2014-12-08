@@ -84,14 +84,14 @@ p {
     background-color: #fffff4;
     border: 1px solid #888;
     border-radius: 5px;
-    bottom: 20vh;
+    bottom: 20%;
     box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.8);
     display: none;
     font-size: small;
-    left: 8vw;
+    left: 8%;
     padding: 0.25em;
     position: fixed;
-    right: 8vw;
+    right: 8%;
     text-align: center;
     }
 .dynamicFiltering div:not(.blocked):hover > .tip:nth-of-type(1) {
