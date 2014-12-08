@@ -36,9 +36,15 @@ vAPI.safari = true;
 
 /******************************************************************************/
 
+var xhr = new XMLHttpRequest;
+xhr.overrideMimeType('application/x-javascript;charset=utf-8');
+xhr.open('GET', 'Info.plist', false);
+xhr.send();
+xhr = xhr.responseText;
+
 vAPI.app = {
-    name: 'µBlock',
-    version: '0.7.2.0'
+    name: xhr.match(/DisplayName<\S+[^>]+>([^<]+)/)[1],
+    version: xhr.match(/ShortVersionString<\S+[^>]+>([^<]+)/)[1]
 };
 
 /******************************************************************************/
