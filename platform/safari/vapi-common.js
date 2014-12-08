@@ -36,7 +36,7 @@ self.vAPI = self.vAPI || {};
 var setScriptDirection = function(language) {
     document.body.setAttribute(
         'dir',
-        ~['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) ? 'rtl' : 'ltr'
+        ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) !== -1 ? 'rtl' : 'ltr'
     );
 };
 
@@ -77,12 +77,12 @@ vAPI.getURL = function(path) {
 // supported languages
 // first language is the default
 vAPI.i18nData = [
-    "en", "ar", "cs", "da", "de", "el", "es", "et", "fi", "fr", "he", "hi",
-    "hr", "hu", "id", "it", "ja", "mr", "nb", "nl", "pl", "pt_BR", "pt_PT",
-    "ro", "ru", "sv", "tr", "uk", "vi", "zh_CN"
+    'en', 'ar', 'cs', 'da', 'de', 'el', 'es', 'et', 'fi', 'fil', 'fr', 'he',
+    'hi', 'hr', 'hu', 'id', 'it', 'ja', 'mr', 'nb', 'nl', 'pl', 'pt-BR',
+    'pt-PT', 'ro', 'ru', 'sv', 'tr', 'uk', 'vi', 'zh-CN'
 ];
 
-vAPI.i18n = navigator.language.replace('-', '_');
+vAPI.i18n = navigator.language;
 
 if (vAPI.i18nData.indexOf(vAPI.i18n) === -1) {
     vAPI.i18n = vAPI.i18n.slice(0, 2);
@@ -96,13 +96,9 @@ setScriptDirection(vAPI.i18n);
 
 var xhr = new XMLHttpRequest;
 xhr.overrideMimeType('application/json;charset=utf-8');
-xhr.open('GET', './_locales/' + vAPI.i18n + '/messages.json', false);
+xhr.open('GET', './_locales/' + vAPI.i18n + '.json', false);
 xhr.send();
 vAPI.i18nData = JSON.parse(xhr.responseText);
-
-for (var i18nKey in vAPI.i18nData) {
-    vAPI.i18nData[i18nKey] = vAPI.i18nData[i18nKey].message;
-}
 
 vAPI.i18n = function(s) {
     return this.i18nData[s] || s;
