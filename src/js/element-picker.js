@@ -679,7 +679,6 @@ var startPicker = function(details) {
 
     var pickerStyle = document.createElement('style');
     pickerStyle.setAttribute('scoped', '');
-    pickerStyle.style.setProperty('display', 'none', 'important');
     pickerStyle.textContent = [
         '#µBlock, #µBlock * {',
             'background: transparent;',
@@ -709,6 +708,9 @@ var startPicker = function(details) {
             'position: absolute;',
             'top: 0;',
             'left: 0;',
+        '}',
+        '#µBlock style, #µBlock script {',
+            'display: none;',
         '}',
         '#µBlock ul, #µBlock li, #µBlock div {',
             'display: block;',
