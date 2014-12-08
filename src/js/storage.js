@@ -636,22 +636,32 @@
         µb.updater.restart(nextUpdate);
     };
 
-    // https://github.com/gorhill/uBlock/issues/226
-    // Whitelist in memory.
-    // Whitelist parser needs PSL to be ready.
-    var onWhitelistReady = function() {
-        onAllDone();
-    };
+    var filtersReady = false;
+    var whitelistReady = false;
 
     // Filters are in memory.
     // Filter engines need PSL to be ready.
     var onFiltersReady = function() {
-        µb.loadWhitelist(onWhitelistReady);
+        filtersReady = true;
+        if ( whitelistReady ) {
+            onAllDone();
+        }
+    };
+
+    // https://github.com/gorhill/uBlock/issues/226
+    // Whitelist in memory.
+    // Whitelist parser needs PSL to be ready.
+    var onWhitelistReady = function() {
+        whitelistReady = true;
+        if ( filtersReady ) {
+            onAllDone();
+        }
     };
 
     // Load order because dependencies:
     // User settings -> PSL -> [filter lists, user whitelist]
     var onPSLReady = function() {
+        µb.loadWhitelist(onWhitelistReady);
         µb.loadFilterLists(onFiltersReady);
     };
 

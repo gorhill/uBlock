@@ -142,10 +142,21 @@ var cachedAssetsManager = (function() {
                 details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.load():', details.error);
                 cbError(details);
-            } else {
-                details.content = bin[cachedContentPath];
-                cbSuccess(details);
+                return;
             }
+            // Not sure how this can happen, but I've seen it happen. It could
+            // be because the save occurred while I was stepping in the code
+            // though, which means it would not occur during normal operation.
+            // Still, just to be safe.
+            if ( bin[cachedContentPath] === undefined ) {
+                details.error = 'Error: not found';
+                delete entries[path];
+                vAPI.storage.set({ 'cached_asset_entries': entries });
+                cbError(details);
+                return;
+            }
+            details.content = bin[cachedContentPath];
+            cbSuccess(details);
         };
         var onEntries = function(entries) {
             if ( entries[path] === undefined ) {
