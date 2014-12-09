@@ -140,6 +140,8 @@ vAPI.tabs.open = function(details) {
             };
 
             if ( details.tabId ) {
+                details.tabId = parseInt(tabId, 10);
+
                 // update doesn't accept index, must use move
                 chrome.tabs.update(details.tabId, _details, function(tab) {
                     // if the tab doesn't exist
@@ -203,7 +205,7 @@ vAPI.tabs.remove = function(tabId) {
         if ( vAPI.lastError() ) {
         }
     };
-    chrome.tabs.remove(tabId, onTabRemoved);
+    chrome.tabs.remove(parseInt(tabId, 10), onTabRemoved);
 };
 
 /******************************************************************************/
@@ -227,6 +229,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         }
     };
     if ( tabId ) {
+        tabid = parseInt(tabId, 10);
         chrome.tabs.executeScript(tabId, details, onScriptExecuted);
     } else {
         chrome.tabs.executeScript(details, onScriptExecuted);
@@ -243,6 +246,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // anymore, so this ensures it does still exist.
 
 vAPI.setIcon = function(tabId, img, badge) {
+    tabId = parseInt(tabId, 10);
     var onIconReady = function() {
         if ( vAPI.lastError() ) {
             return;

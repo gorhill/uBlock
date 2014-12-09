@@ -179,7 +179,7 @@ vAPI.storage = {
 
 vAPI.tabs = {
     stack: {},
-    stackID: 1
+    stackId: 1
 };
 
 /******************************************************************************/
@@ -374,21 +374,17 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         j = wins[i].tabs.length;
 
         while (j--) {
-            tabs.push(wins[i].tabs[j]);
+            vAPI.tabs.stack[vAPI.tabs.stackId++] = wins[i].tabs[j];
         }
     }
-
-    return tabs;
-})().forEach(function(tab) {
-    vAPI.tabs.stack[vAPI.tabs.stackID++] = tab;
-});
+})();
 
 /******************************************************************************/
 
 safari.application.addEventListener('open', function(e) {
     // ignore windows
     if (e.target instanceof SafariBrowserTab) {
-        vAPI.tabs.stack[vAPI.tabs.stackID++] = e.target;
+        vAPI.tabs.stack[vAPI.tabs.stackId++] = e.target;
     }
 }, true);
 
@@ -402,7 +398,7 @@ safari.application.addEventListener('close', function(e) {
 
     var tabId = vAPI.tabs.getTabId(e.target);
 
-    if (tabId > -1) {
+    if (tabId !== -1) {
         // to not add another listener, put this here
         // instead of vAPI.tabs.registerListeners
         if (typeof vAPI.tabs.onClosed === 'function') {

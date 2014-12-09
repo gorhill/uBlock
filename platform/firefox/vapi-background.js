@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, XPCOMUtils */
+/* global Services */
 
 // For background page
 
@@ -34,7 +34,6 @@
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 Cu['import']('resource://gre/modules/Services.jsm');
-Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
 
 /******************************************************************************/
 
@@ -236,7 +235,7 @@ var windowWatcher = {
     onTabClose: function(e) {
         vAPI.tabs.onClosed(vAPI.tabs.getTabId(e.target));
     },
-    onTabSelect: function(e) {
+    onTabSelect: function() {
         // vAPI.setIcon();
     },
     onLoad: function(e) {
@@ -338,7 +337,7 @@ vAPI.tabs.getTabId = function(target) {
     var i = gBrowser.browsers.indexOf(target);
 
     if (i !== -1) {
-        i = this.getTabId(gBrowser.tabs[i]);
+        i = gBrowser.tabs[i].linkedPanel.slice(6);
     }
 
     return i;
@@ -638,129 +637,65 @@ vAPI.messaging.unload = function() {
 
 /******************************************************************************/
 
-vAPI.lastError = function() {
-    return null;
-};
-
-/******************************************************************************/
-
-var conentPolicy = {
-    classDescription: vAPI.app.name + ' ContentPolicy',
-    classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
-    contractID: '@' + vAPI.app.cleanName + '/content-policy;1',
-    ACCEPT: Ci.nsIContentPolicy.ACCEPT,
-    REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
-    types: {
-        7: 'sub_frame',
-        4: 'stylesheet',
-        2: 'script',
-        3: 'image',
-        5: 'object',
-        11: 'xmlhttprequest'
-    },
-    get registrar() {
-        return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
-    },
-    get catManager() {
-        return Cc['@mozilla.org/categorymanager;1']
-                .getService(Ci.nsICategoryManager);
-    },
-    QueryInterface: XPCOMUtils.generateQI([
-        Ci.nsIFactory,
-        Ci.nsIContentPolicy,
-        Ci.nsISupportsWeakReference
-    ]),
-    createInstance: function(outer, iid) {
-        if (outer) {
-            throw Components.results.NS_ERROR_NO_AGGREGATION;
-        }
-
-        return this.QueryInterface(iid);
-    },
-    shouldLoad: function(type, location, origin, context) {
-        if (type === 6 || !context || !/^https?$/.test(location.scheme)) {
-            return this.ACCEPT;
-        }
-
-        var win = (context.ownerDocument || context).defaultView;
-
-        if (!win) {
-            return this.ACCEPT;
-        }
-
-        var block = vAPI.net.onBeforeRequest;
-
-        type = this.types[type] || 'other';
-
-        if (block.types.indexOf(type) === -1) {
-            return this.ACCEPT;
-        }
-
-        var browser = win.top.QueryInterface(Ci.nsIInterfaceRequestor)
-                        .getInterface(Ci.nsIWebNavigation)
-                        .QueryInterface(Ci.nsIDocShell)
-                        .chromeEventHandler;
-
-        if (!browser) {
-            return this.ACCEPT;
-        }
-
-        block = block.callback({
-            url: location.spec,
-            type: type,
-            tabId: vAPI.tabs.getTabId(browser),
-            frameId: win === win.top ? 0 : 1,
-            parentFrameId: win === win.top ? -1 : 0
-        });
-
-        if (block && typeof block === 'object') {
-            if (block.cancel === true) {
-                return this.REJECT;
-            }
-            else if (block.redirectURL) {
-                location.spec = block.redirectURL;
-                return this.REJECT;
-            }
-        }
-
-        return this.ACCEPT;
-    },/*
-    shouldProcess: function() {
-        return this.ACCEPT;
-    }*/
-};
-
-/******************************************************************************/
-
 vAPI.net = {};
 
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
-    conentPolicy.registrar.registerFactory(
-        conentPolicy.classID,
-        conentPolicy.classDescription,
-        conentPolicy.contractID,
-        conentPolicy
-    );
-    conentPolicy.catManager.addCategoryEntry(
-        'content-policy',
-        conentPolicy.contractID,
-        conentPolicy.contractID,
-        false,
-        true
+    var types = {
+         2: 'script',
+         3: 'image',
+         4: 'stylesheet',
+         5: 'object',
+         7: 'sub_frame',
+        11: 'xmlhttprequest'
+    };
+
+    var onBeforeRequest = this.onBeforeRequest;
+
+    this.onBeforeRequest = function(e) {
+        var details = e.data;
+
+        details.type = types[details.type] || 'other';
+        details.tabId = vAPI.tabs.getTabId(e.target);
+
+        if (onBeforeRequest.types.indexOf(details.type) === -1) {
+            return false;
+        }
+
+        var block = onBeforeRequest.callback(details);
+
+        if (block && typeof block === 'object') {
+            if (block.cancel === true) {
+                return true;
+            }
+            else if (block.redirectURL) {
+                return block.redirectURL;
+            }
+        }
+
+        return false;
+    };
+
+    vAPI.messaging.gmm.addMessageListener(
+        vAPI.app.cleanName + ':onBeforeRequest',
+        this.onBeforeRequest
     );
 };
 
 /******************************************************************************/
 
 vAPI.net.unregisterListeners = function() {
-    conentPolicy.registrar.unregisterFactory(conentPolicy.classID, conentPolicy);
-    conentPolicy.catManager.deleteCategoryEntry(
-        'content-policy',
-        conentPolicy.contractID,
-        false
+    vAPI.messaging.gmm.removeMessageListener(
+        vAPI.app.cleanName + ':onBeforeRequest',
+        this.onBeforeRequest
     );
+};
+
+/******************************************************************************/
+
+vAPI.lastError = function() {
+    return null;
 };
 
 /******************************************************************************/
@@ -773,14 +708,21 @@ window.addEventListener('unload', function() {
     vAPI.messaging.unload();
     vAPI.net.unregisterListeners();
 
+    var URI = vAPI.messaging.frameScript.replace('Script.', 'Module.');
+    var frameModule = {};
+    Cu['import'](URI, frameModule);
+    frameModule.contentPolicy.unregister();
+    frameModule.docObserver.unregister();
+    Cu.unload(URI);
+
     // close extension tabs
-    var extURI, win, tab, host = vAPI.app.cleanName;
+    var win, tab, host = vAPI.app.cleanName;
 
     for (win of vAPI.tabs.getWindows()) {
         for (tab of win.gBrowser.tabs) {
-            extURI = tab.linkedBrowser.currentURI;
+            URI = tab.linkedBrowser.currentURI;
 
-            if (extURI.scheme === 'chrome' && extURI.host === host) {
+            if (URI.scheme === 'chrome' && URI.host === host) {
                 win.gBrowser.removeTab(tab);
             }
         }

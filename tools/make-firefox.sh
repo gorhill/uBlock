@@ -19,6 +19,7 @@ cp src/img/icon_128.png $DES/icon.png
 cp platform/firefox/vapi-*.js $DES/js/
 cp platform/firefox/bootstrap.js $DES/
 cp platform/firefox/frameScript.js $DES/
+cp platform/firefox/frameModule.js $DES/
 cp platform/firefox/chrome.manifest $DES/
 cp platform/firefox/install.rdf $DES/
 
