@@ -191,3 +191,6 @@ google.*###center_col > #tads
 # Videos broken on weather.com
 # To counter `www.googletagservices.com` in MVPS, hpHosts, Dan Pollock's
 @@||www.googletagservices.com/tag/js/gpt.js^$script,domain=weather.com
+
+# https://github.com/gorhill/uBlock/issues/409
+@@||c.speedtest.net^$~third-party
