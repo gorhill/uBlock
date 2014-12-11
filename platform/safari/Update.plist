@@ -8,11 +8,11 @@
 				<key>CFBundleIdentifier</key>
 				<string>net.gorhill.uBlock</string>
 				<key>Developer Identifier</key>
-				<string></string>
+				<string>...</string>
 				<key>CFBundleShortVersionString</key>
-				<string>0.8.1.2</string>
+				<string>{version}</string>
 				<key>CFBundleVersion</key>
-				<string>1</string>
+				<string>{buildNumber}</string>
 				<key>URL</key>
 				<string>https://.../uBlock.safariextz</string>
 			</dict>
