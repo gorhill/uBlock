@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
     <key>Author</key>
-    <string>Raymond Hill</string>
+    <string>{author}</string>
     <key>Builder Version</key>
     <string>534.57.2</string>
     <key>CFBundleDisplayName</key>
-    <string>µBlock</string>
+    <string>{name}</string>
     <key>CFBundleIdentifier</key>
     <string>net.gorhill.uBlock</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.8.1.2</string>
+    <string>{version}</string>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>{buildNumber}</string>
     <key>Chrome</key>
     <dict>
         <key>Database Quota</key>
@@ -43,7 +43,7 @@
                 <key>Image</key>
                 <string>img/icon16.png</string>
                 <key>Label</key>
-                <string>µBlock</string>
+                <string>{name}</string>
                 <key>Popover</key>
                 <string>popover</string>
             </dict>
@@ -70,7 +70,7 @@
         </array>
     </dict>
     <key>Description</key>
-    <string>Finally, an efficient blocker. Easy on CPU and memory.</string>
+    <string>{description}</string>
     <key>ExtensionInfoDictionaryVersion</key>
     <string>1.0</string>
     <key>Permissions</key>
@@ -84,7 +84,7 @@
         </dict>
     </dict>
     <!-- <key>Update Manifest URL</key>
-    <string>https://github.com/gorhill/uBlockupdate_safariextz.plist</string> -->
+    <string>https://github.com/gorhill/uBlock/Safari/Update.plist</string> -->
     <key>Website</key>
     <string>https://github.com/gorhill/uBlock</string>
 </dict>
