@@ -19,7 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock */
+/* global vAPI, µBlock */
+
+/******************************************************************************/
+
+(function(){
+
 'use strict';
 
 /******************************************************************************/
@@ -48,7 +53,7 @@
 
     var i = exceptions.length;
     while ( i-- ) {
-        if ( this.matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
+        if ( matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
             // console.log('"%s" matche url "%s"', exceptions[i], keyURL);
             return false;
         }
@@ -98,7 +103,7 @@
     // Remove from exception list whatever causes current URL to be whitelisted
     var i = exceptions.length;
     while ( i-- ) {
-        if ( this.matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
+        if ( matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
             exceptions.splice(i, 1);
         }
     }
@@ -117,7 +122,7 @@
 // TODO: Need to harden it against edge cases, like when an asterisk is used in
 // place of protocol.
 
-µBlock.matchWhitelistException = function(url, hostname, exception) {
+var matchWhitelistException = function(url, hostname, exception) {
     // Exception is a plain hostname
     if ( exception.indexOf('/') === -1 ) {
         return hostname.slice(-exception.length) === exception;
@@ -129,17 +134,17 @@
     // Regex escape code inspired from:
     //   "Is there a RegExp.escape function in Javascript?"
     //   http://stackoverflow.com/a/3561711
-    var reStr = exception.replace(this.whitelistExceptionEscape, '\\$&')
-                         .replace(this.whitelistExceptionEscapeAsterisk, '.*');
+    var reStr = exception.replace(whitelistExceptionEscape, '\\$&')
+                         .replace(whitelistExceptionEscapeAsterisk, '.*');
     var re = new RegExp(reStr);
     return re.test(url);
 };
 
 // Any special regexp char will be escaped
-µBlock.whitelistExceptionEscape = /[-\/\\^$+?.()|[\]{}]/g;
+var whitelistExceptionEscape = /[-\/\\^$+?.()|[\]{}]/g;
 
 // All `*` will be expanded into `.*`
-µBlock.whitelistExceptionEscapeAsterisk = /\*/g;
+var whitelistExceptionEscapeAsterisk = /\*/g;
 
 /******************************************************************************/
 
@@ -280,3 +285,7 @@
         this.XAL.keyvalSetOne('dynamicFilteringSelfie', this.userSettings.dynamicFilteringSelfie);
     }
 };
+
+/******************************************************************************/
+
+})();
