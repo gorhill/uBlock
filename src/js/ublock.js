@@ -29,103 +29,17 @@
 
 /******************************************************************************/
 
-µBlock.getNetFilteringSwitch = function(url, domain) {
-    var keyHostname = this.URI.hostnameFromURI(url);
-    var pos = url.indexOf('#');
-    var keyURL = pos !== -1 ? url.slice(0, pos) : url;
-
-    // The caller may provide an already known domain -- convenient to reduce
-    // overhead of extracting a domain from the url
-    if ( typeof domain !== 'string' ) {
-        domain = this.URI.domainFromHostname(keyHostname);
-    }
-
-    // https://github.com/gorhill/uBlock/issues/185
-    // Use hostname if no domain can be extracted
-    if ( domain === '' ) {
-        domain = keyHostname;
-    }
-
-    var exceptions = this.netWhitelist[domain];
-    if ( !exceptions ) {
-        return true;
-    }
-
-    var i = exceptions.length;
-    while ( i-- ) {
-        if ( matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
-            // console.log('"%s" matche url "%s"', exceptions[i], keyURL);
-            return false;
-        }
-    }
-    return true;
-};
-
-/******************************************************************************/
-
-µBlock.toggleNetFilteringSwitch = function(url, scope, newState) {
-    var keyHostname = this.URI.hostnameFromURI(url);
-    var pos = url.indexOf('#');
-    var keyURL = pos !== -1 ? url.slice(0, pos) : url;
-    var key = scope === 'page' ? keyURL : keyHostname;
-
-    // The caller may provide an already known domain -- convenient to reduce
-    // overhead of extracting a domain from `key`
-    var domain = this.URI.domainFromHostname(keyHostname);
-
-    // https://github.com/gorhill/uBlock/issues/185
-    // Use hostname if no domain can be extracted
-    if ( domain === '' ) {
-        domain = keyHostname;
-    }
-
-    var currentState = this.getNetFilteringSwitch(url, domain);
-    if ( newState === undefined ) {
-        newState = !currentState;
-    }
-    if ( newState === currentState ) {
-        return currentState;
-    }
-
-    var netWhitelist = this.netWhitelist;
-    var exceptions = netWhitelist[domain];
-    if ( !exceptions ) {
-        exceptions = netWhitelist[domain] = [];
-    }
-
-    // Add to exception list
-    if ( !newState ) {
-        exceptions.push(key);
-        this.saveWhitelist();
-        return true;
-    }
-
-    // Remove from exception list whatever causes current URL to be whitelisted
-    var i = exceptions.length;
-    while ( i-- ) {
-        if ( matchWhitelistException(keyURL, keyHostname, exceptions[i]) ) {
-            exceptions.splice(i, 1);
-        }
-    }
-    if ( exceptions.length === 0 ) {
-        delete netWhitelist[domain];
-    }
-    this.saveWhitelist();
-    return true;
-};
+var µb = µBlock;
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/405
 // Be more flexible with whitelist syntax
 
-// TODO: Need to harden it against edge cases, like when an asterisk is used in
-// place of protocol.
-
-var matchWhitelistException = function(url, hostname, exception) {
+var matchWhitelistException = function(url, exception) {
     // Exception is a plain hostname
     if ( exception.indexOf('/') === -1 ) {
-        return hostname.slice(-exception.length) === exception;
+        return µb.URI.hostnameFromURI(url).slice(-exception.length) === exception;
     }
     // Match URL exactly
     if ( exception.indexOf('*') === -1 ) {
@@ -134,17 +48,115 @@ var matchWhitelistException = function(url, hostname, exception) {
     // Regex escape code inspired from:
     //   "Is there a RegExp.escape function in Javascript?"
     //   http://stackoverflow.com/a/3561711
-    var reStr = exception.replace(whitelistExceptionEscape, '\\$&')
-                         .replace(whitelistExceptionEscapeAsterisk, '.*');
+    var reStr = exception.replace(whitelistDirectiveEscape, '\\$&')
+                         .replace(whitelistDirectiveEscapeAsterisk, '.*');
     var re = new RegExp(reStr);
     return re.test(url);
 };
 
 // Any special regexp char will be escaped
-var whitelistExceptionEscape = /[-\/\\^$+?.()|[\]{}]/g;
+var whitelistDirectiveEscape = /[-\/\\^$+?.()|[\]{}]/g;
 
 // All `*` will be expanded into `.*`
-var whitelistExceptionEscapeAsterisk = /\*/g;
+var whitelistDirectiveEscapeAsterisk = /\*/g;
+
+// Probably manually entered whitelist directive
+var isHandcraftedWhitelistDirective = function(directive) {
+    if ( directive.indexOf('/') === -1 ) {
+        return false;
+    }
+    return directive.indexOf('*') !== -1 || directive.slice(0, 4) !== 'http';
+};
+
+/******************************************************************************/
+
+µBlock.getNetFilteringSwitch = function(url) {
+    var buckets, i;
+    var hostname = this.URI.hostnameFromURI(url);
+    var pos = url.indexOf('#');
+    url = pos !== -1 ? url.slice(0, pos) : url;
+    var netWhitelist = this.netWhitelist;
+    for (;;) {
+        if ( netWhitelist.hasOwnProperty(hostname) ) {
+            buckets = netWhitelist[hostname];
+            i = buckets.length;
+            while ( i-- ) {
+                if ( matchWhitelistException(url, buckets[i]) ) {
+                    // console.log('"%s" matche url "%s"', buckets[i], keyURL);
+                    return false;
+                }
+            }
+        }
+        pos = hostname.indexOf('.');
+        if ( pos === -1 ) {
+            break;
+        }
+        hostname = hostname.slice(pos + 1);
+    }
+    return true;
+};
+
+/******************************************************************************/
+
+µBlock.toggleNetFilteringSwitch = function(url, scope, newState) {
+    var currentState = this.getNetFilteringSwitch(url);
+    if ( newState === undefined ) {
+        newState = !currentState;
+    }
+    if ( newState === currentState ) {
+        return currentState;
+    }
+
+    var hostname = this.URI.hostnameFromURI(url);
+    var pos = url.indexOf('#');
+    url = pos !== -1 ? url.slice(0, pos) : url;
+
+    var directive = scope === 'page' ? url : hostname;
+    var netWhitelist = this.netWhitelist;
+    var buckets;
+
+    // Add to exception list
+    if ( newState === false ) {
+        if ( netWhitelist.hasOwnProperty(hostname) === false ) {
+            buckets = netWhitelist[hostname] = [];
+        }
+        buckets.push(directive);
+        this.saveWhitelist();
+        return true;
+    }
+
+    // Remove from exception list whatever causes current URL to be whitelisted
+    var i;
+    for (;;) {
+        if ( netWhitelist.hasOwnProperty(hostname) ) {
+            buckets = netWhitelist[hostname];
+            i = buckets.length;
+            while ( i-- ) {
+                directive = buckets[i];
+                if ( !matchWhitelistException(url, directive) ) {
+                    continue;
+                }
+                buckets.splice(i, 1);
+                // If it is a directive which can't be created easily through
+                // the user interface, keep it around as a commented out
+                // directive
+                if ( isHandcraftedWhitelistDirective(directive) ) {
+                    netWhitelist['#'].push('# ' + directive);
+                }
+            }
+            if ( buckets.length === 0 ) {
+                delete netWhitelist[hostname];
+            }
+        }
+        pos = hostname.indexOf('.');
+        if ( pos === -1 ) {
+            break;
+        }
+        hostname = hostname.slice(pos + 1);
+    }
+    this.saveWhitelist();
+    return true;
+};
 
 /******************************************************************************/
 
@@ -156,15 +168,16 @@ var whitelistExceptionEscapeAsterisk = /\*/g;
 
 /******************************************************************************/
 
-µBlock.stringFromWhitelist = function(exceptions) {
+µBlock.stringFromWhitelist = function(whitelist) {
     var r = {};
     var i, bucket;
-    for ( var domain in exceptions ) {
-        if ( exceptions.hasOwnProperty(domain) === false ) {
+    for ( var key in whitelist ) {
+        if ( whitelist.hasOwnProperty(key) === false ) {
             continue;
         }
-        bucket = exceptions[domain];
-        for ( i = 0; i < bucket.length; i++ ) {
+        bucket = whitelist[key];
+        i = bucket.length;
+        while ( i-- ) {
             r[bucket[i]] = true;
         }
     }
@@ -174,26 +187,52 @@ var whitelistExceptionEscapeAsterisk = /\*/g;
 /******************************************************************************/
 
 µBlock.whitelistFromString = function(s) {
-    var exceptions = {};
+    var whitelist = {
+        '#': []
+    };
+    var reInvalidHostname = /[^a-z0-9.\-\[\]:]/;
+    var reHostnameExtractor = /([a-z0-9\[][a-z0-9.\-:]*[a-z0-9\]])\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
     var lines = s.split(/[\n\r]+/);
-    var line, hostname, domain, bucket;
+    var line, matches, key, directive;
     for ( var i = 0; i < lines.length; i++ ) {
         line = lines[i].trim();
-        hostname = line.indexOf('/') !== -1 ? this.URI.hostnameFromURI(line) : line;
-        domain = this.URI.domainFromHostname(hostname);
+        // Don't throw out commented out lines: user might want to fix them
+        if ( line.charAt(0) === '#' ) {
+            key = '#';
+            directive = line;
+        }
+        // Plain hostname
+        else if ( line.indexOf('/') === -1 ) {
+            if ( reInvalidHostname.test(line) ) {
+                key = '#';
+                directive = '# ' + line;
+            } else {
+                key = directive = line;
+            }
+        }
+        // URL, possibly wildcarded: there MUST be at least one hostname
+        // label (or else it would be just impossible to make an efficient
+        // dict.
+        else {
+            matches = reHostnameExtractor.exec(line);
+            if ( !matches || matches.length !== 2 ) {
+                key = '#';
+                directive = '# ' + line;
+            } else {
+                key = matches[1];
+                directive = line;
+            }
+        }
+
+        // Be sure this stays fixed:
         // https://github.com/gorhill/uBlock/issues/185
-        // Use hostname if no domain can be extracted
-        if ( domain === '' ) {
-            domain = hostname;
+
+        if ( whitelist.hasOwnProperty(key) === false ) {
+            whitelist[key] = [];
         }
-        bucket = exceptions[domain];
-        if ( bucket === undefined ) {
-            exceptions[domain] = [line];
-        } else {
-            bucket.push(line);
-        }
+        whitelist[key].push(directive);
     }
-    return exceptions;
+    return whitelist;
 };
 
 /******************************************************************************/
