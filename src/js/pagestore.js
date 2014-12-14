@@ -405,7 +405,7 @@ PageStore.prototype.getFrame = function(frameId) {
 
 PageStore.prototype.getNetFilteringSwitch = function() {
     if ( this.netFilteringReadTime < µb.netWhitelistModifyTime ) {
-        this.netFiltering = µb.getNetFilteringSwitch(this.pageURL, this.pageDomain);
+        this.netFiltering = µb.getNetFilteringSwitch(this.pageURL);
         this.netFilteringReadTime = Date.now();
     }
     return this.netFiltering;

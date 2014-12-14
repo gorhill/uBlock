@@ -29,30 +29,8 @@
 
 /******************************************************************************/
 
-var µb = µBlock;
-
-/******************************************************************************/
-
 // https://github.com/gorhill/uBlock/issues/405
 // Be more flexible with whitelist syntax
-
-var matchWhitelistException = function(url, exception) {
-    // Exception is a plain hostname
-    if ( exception.indexOf('/') === -1 ) {
-        return µb.URI.hostnameFromURI(url).slice(-exception.length) === exception;
-    }
-    // Match URL exactly
-    if ( exception.indexOf('*') === -1 ) {
-        return url === exception;
-    }
-    // Regex escape code inspired from:
-    //   "Is there a RegExp.escape function in Javascript?"
-    //   http://stackoverflow.com/a/3561711
-    var reStr = exception.replace(whitelistDirectiveEscape, '\\$&')
-                         .replace(whitelistDirectiveEscapeAsterisk, '.*');
-    var re = new RegExp(reStr);
-    return re.test(url);
-};
 
 // Any special regexp char will be escaped
 var whitelistDirectiveEscape = /[-\/\\^$+?.()|[\]{}]/g;
@@ -62,36 +40,53 @@ var whitelistDirectiveEscapeAsterisk = /\*/g;
 
 // Probably manually entered whitelist directive
 var isHandcraftedWhitelistDirective = function(directive) {
+    return directive.indexOf('/') !== -1 &&
+           directive.indexOf('*') !== -1;
+};
+
+var matchWhitelistDirective = function(url, hostname, directive) {
+    // Directive is a plain hostname
     if ( directive.indexOf('/') === -1 ) {
-        return false;
+        return hostname.slice(-directive.length) === directive;
     }
-    return directive.indexOf('*') !== -1 || directive.slice(0, 4) !== 'http';
+    // Match URL exactly
+    if ( directive.indexOf('*') === -1 ) {
+        return url === directive;
+    }
+    // Regex escape code inspired from:
+    //   "Is there a RegExp.escape function in Javascript?"
+    //   http://stackoverflow.com/a/3561711
+    var reStr = directive.replace(whitelistDirectiveEscape, '\\$&')
+                         .replace(whitelistDirectiveEscapeAsterisk, '.*');
+    var re = new RegExp(reStr);
+    return re.test(url);
 };
 
 /******************************************************************************/
 
 µBlock.getNetFilteringSwitch = function(url) {
-    var buckets, i;
-    var hostname = this.URI.hostnameFromURI(url);
-    var pos = url.indexOf('#');
-    url = pos !== -1 ? url.slice(0, pos) : url;
     var netWhitelist = this.netWhitelist;
+    var buckets, i;
+    var pos = url.indexOf('#');
+    var targetURL = pos !== -1 ? url.slice(0, pos) : url;
+    var targetHostname = this.URI.hostnameFromURI(targetURL);
+    var key = targetHostname;
     for (;;) {
-        if ( netWhitelist.hasOwnProperty(hostname) ) {
-            buckets = netWhitelist[hostname];
+        if ( netWhitelist.hasOwnProperty(key) ) {
+            buckets = netWhitelist[key];
             i = buckets.length;
             while ( i-- ) {
-                if ( matchWhitelistException(url, buckets[i]) ) {
-                    // console.log('"%s" matche url "%s"', buckets[i], keyURL);
+                if ( matchWhitelistDirective(targetURL, targetHostname, buckets[i]) ) {
+                    // console.log('"%s" matche url "%s"', buckets[i], targetURL);
                     return false;
                 }
             }
         }
-        pos = hostname.indexOf('.');
+        pos = key.indexOf('.');
         if ( pos === -1 ) {
             break;
         }
-        hostname = hostname.slice(pos + 1);
+        key = key.slice(pos + 1);
     }
     return true;
 };
@@ -107,33 +102,33 @@ var isHandcraftedWhitelistDirective = function(directive) {
         return currentState;
     }
 
-    var hostname = this.URI.hostnameFromURI(url);
-    var pos = url.indexOf('#');
-    url = pos !== -1 ? url.slice(0, pos) : url;
-
-    var directive = scope === 'page' ? url : hostname;
     var netWhitelist = this.netWhitelist;
+    var pos = url.indexOf('#');
+    var targetURL = pos !== -1 ? url.slice(0, pos) : url;
+    var targetHostname = this.URI.hostnameFromURI(targetURL);
+    var key = targetHostname;
+    var directive = scope === 'page' ? targetURL : targetHostname;
     var buckets;
 
-    // Add to exception list
+    // Add to directive list
     if ( newState === false ) {
-        if ( netWhitelist.hasOwnProperty(hostname) === false ) {
-            buckets = netWhitelist[hostname] = [];
+        if ( netWhitelist.hasOwnProperty(key) === false ) {
+            buckets = netWhitelist[key] = [];
         }
         buckets.push(directive);
         this.saveWhitelist();
         return true;
     }
 
-    // Remove from exception list whatever causes current URL to be whitelisted
+    // Remove from directive list whatever causes current URL to be whitelisted
     var i;
     for (;;) {
-        if ( netWhitelist.hasOwnProperty(hostname) ) {
-            buckets = netWhitelist[hostname];
+        if ( netWhitelist.hasOwnProperty(key) ) {
+            buckets = netWhitelist[key];
             i = buckets.length;
             while ( i-- ) {
                 directive = buckets[i];
-                if ( !matchWhitelistException(url, directive) ) {
+                if ( !matchWhitelistDirective(targetURL, targetHostname, directive) ) {
                     continue;
                 }
                 buckets.splice(i, 1);
@@ -145,14 +140,14 @@ var isHandcraftedWhitelistDirective = function(directive) {
                 }
             }
             if ( buckets.length === 0 ) {
-                delete netWhitelist[hostname];
+                delete netWhitelist[key];
             }
         }
-        pos = hostname.indexOf('.');
+        pos = key.indexOf('.');
         if ( pos === -1 ) {
             break;
         }
-        hostname = hostname.slice(pos + 1);
+        key = key.slice(pos + 1);
     }
     this.saveWhitelist();
     return true;
@@ -160,10 +155,10 @@ var isHandcraftedWhitelistDirective = function(directive) {
 
 /******************************************************************************/
 
-// For now we will use the net exception list
+// For now we will use the net whitelist
 
-µBlock.getCosmeticFilteringSwitch = function(url, domain) {
-    return this.getNetFilteringSwitch(url, domain);
+µBlock.getCosmeticFilteringSwitch = function(url) {
+    return this.getNetFilteringSwitch(url);
 };
 
 /******************************************************************************/
