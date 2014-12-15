@@ -58,6 +58,7 @@ var renderWhitelist = function() {
         uDom('#whitelist').val(cachedWhitelist);
     };
     messager.send({ what: 'getWhitelist' }, onRead);
+    whitelistChanged();
 };
 
 /******************************************************************************/
@@ -116,8 +117,7 @@ var whitelistApplyHandler = function() {
         what: 'setWhitelist',
         whitelist: cachedWhitelist
     };
-    messager.send(request);
-    whitelistChanged();
+    messager.send(request, renderWhitelist);
 };
 
 /******************************************************************************/
