@@ -651,6 +651,7 @@
     // https://github.com/gorhill/uBlock/issues/226
     // Whitelist in memory.
     // Whitelist parser needs PSL to be ready.
+    // gorhill 2014-12-15: not anymore
     var onWhitelistReady = function() {
         whitelistReady = true;
         if ( filtersReady ) {
@@ -659,9 +660,8 @@
     };
 
     // Load order because dependencies:
-    // User settings -> PSL -> [filter lists, user whitelist]
+    // User settings -> PSL -> [filter lists]
     var onPSLReady = function() {
-        µb.loadWhitelist(onWhitelistReady);
         µb.loadFilterLists(onFiltersReady);
     };
 
@@ -670,7 +670,7 @@
     var onSelfieReady = function(success) {
         if ( success === true ) {
             fromSelfie = true;
-            µb.loadWhitelist(onWhitelistReady);
+            onFiltersReady();
             return;
         }
         µb.loadPublicSuffixList(onPSLReady);
@@ -686,6 +686,7 @@
     };
 
     this.loadUserSettings(onUserSettingsReady);
+    this.loadWhitelist(onWhitelistReady);
     this.loadLocalSettings();
     this.getBytesInUse();
 };
