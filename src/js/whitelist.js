@@ -36,7 +36,7 @@ var messager = vAPI.messaging.channel('whitelist.js');
 var cachedWhitelist = '';
 
 // Could make it more fancy if needed. But speed... It's a compromise.
-var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"#$'()<>{}|\\^\[\]`~]/;
+var reUnwantedChars = /[\x00-\x09\x0b\x0c\x0e-\x1f!"$'()<>{}|\\^\[\]`~]/;
 
 /******************************************************************************/
 
