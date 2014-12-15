@@ -676,6 +676,7 @@ var stopPicker = function() {
 var startPicker = function(details) {
     pickerRoot = document.createElement('div');
     pickerRoot.id = µBlockId;
+    pickerRoot.setAttribute('lang', navigator.language);
 
     var pickerStyle = document.createElement('style');
     pickerStyle.setAttribute('scoped', '');
@@ -873,7 +874,7 @@ var startPicker = function(details) {
     divDialog = document.createElement('div');
     divDialog.innerHTML = [
         '<div>',
-        '<textarea dir="ltr" spellcheck="false"></textarea>',
+        '<textarea lang="en" dir="ltr" spellcheck="false"></textarea>',
         '<div>',
         '<button id="create" type="button" disabled="disabled">.</button>',
         '<button id="pick" type="button">.</button>',
@@ -881,8 +882,8 @@ var startPicker = function(details) {
         '</div>',
         '</div>',
         '<ul>',
-        '<li id="netFilters"><span>.</span><ul></ul></li>',
-        '<li id="cosmeticFilters"><span>.</span> <span>.</span><ul></ul></li>',
+        '<li id="netFilters"><span>.</span><ul lang="en"></ul></li>',
+        '<li id="cosmeticFilters"><span>.</span> <span>.</span><ul lang="en"></ul></li>',
         '</ul>'
     ].join('');
     pickerRoot.appendChild(divDialog);
