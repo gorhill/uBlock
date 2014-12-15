@@ -200,7 +200,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Actualizar automaticamente as listas dos filtros.",
+    "message":"Atualizar automaticamente as listas dos filtros.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{

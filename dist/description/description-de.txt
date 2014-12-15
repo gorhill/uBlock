@@ -6,7 +6,7 @@ Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum
 
 ***
 
-Block ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+µBlock ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
 
 Standardmäßig werden folgende Filterlisten geladen und angewandt:
 
@@ -25,7 +25,7 @@ Auf Wunsch können zusätzliche Listen ausgewählt werden:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- etc.
 
 Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
 

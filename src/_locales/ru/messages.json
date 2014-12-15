@@ -68,19 +68,19 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> для этого сайта",
+    "message":"Встроенные теги<code>скрипты<\/code> <b>доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> для этого сайта",
+    "message":"Встроенные теги-<code>скрипты<\/code> <b>не доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>включены<\/b> для этого сайта",
+    "message":"Пользовательские скрипты <b>доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>отключены<\/b> для этого сайта",
+    "message":"Пользовательские скрипты <b>не доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSite3pScriptEnabled":{
@@ -384,7 +384,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Начать с нуля...",
+    "message":"Восстановить настройки по умолчанию...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -396,7 +396,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Все Ваши настройки будут удалены, и µBlock будет перезапущен. \n\nВернуться к заводским настройкам?",
+    "message":"Все Ваши настройки будут сброшены, и µBlock будет перезапущен. \n\nВосстановить заводские настройки?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
