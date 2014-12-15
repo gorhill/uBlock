@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 8bVo5bhsABoBauPpL+2i7g
-! Version: 201412031511
+! Checksum: 52OCVc/2ho3GTuIYDtY8Qg
+! Version: 201412151751
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 03 Dec 2014 15:11 UTC
+! Ultima modifica: 15 Dec 2014 17:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -200,6 +200,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 !---------------------Server pubblicitari di terze parti----------------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_adservers.txt ***
 ||178.32.140.64^$third-party,domain=~pirchio.ip
+||24network.it^$third-party
 ||2mdn.net^$object-subrequest,third-party,domain=beppegrillo.it|calciomercato.com|corriereadriatico.it|corrieredellosport.it|forbiciate.com|foxsports.it|ilgazzettino.it|ilmattino.it|ilmessaggero.it|ilmeteo.it|italiaoggi.it|lapresse.it|lastampa.it|leggo.it|mediapason.it|mffashion.com|milanofinanza.it|pianetadonna.it|quotidianodipuglia.it|tiscali.it|tripadvisor.it|tuttomercatoweb.com|violachannel.tv|youreporter.it|youreporternews.it
 ||ad4mat.it^$third-party
 ||adagionet.com^$third-party
@@ -243,6 +244,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||erosadv.com^$third-party
 ||firebanner.com^$third-party
 ||gambling-italia.com^$third-party
+||inaffiliago.it^$third-party
 ||ioladv.it^$third-party
 ||iperbanner.com^$third-party
 ||leaderaffiliation.com^$third-party
@@ -331,6 +333,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||blogspot.com^*/downloadnow_it_468.png
 ||blogspot.com^*/Streaming.png$domain=internapoli-city.org
 ||booking.com/general.html?$subdocument,domain=quattroruote.it|tuttobaviera.it
+||booking.com^*;tmpl=banners;$subdocument,domain=trombodromo.com
 ||booking.fioccovacanze.it^$third-party
 ||bt.rcs.it^
 ||caniaddestrati.org^$third-party
@@ -564,6 +567,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||agichina24.it^*-banner-google-
 ||agichina24.it^*/459x27.jpg
 ||agienergia.it^*/banner/
+||agrigentoflash.it/_inserzionisti/
+||agrigentoflash.it/nobile.gif
 ||agrigentonotizie.it/images/skin/
 ||alatest.it/banner/
 ||alessandrianews.it/banner/
@@ -744,6 +749,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||corriereadriatico.it/box_tuttomercato052011/
 ||corrierecomo.it/images/banners/
 ||corrieredellacalabria.it^*/adv/
+||corrieredellosport.it/dinamiche/serviziXml/bwin.jsp?
 ||corrieredellosport.it/res/swf/ova-jw.swf$object-subrequest
 ||corrieredellosport.it/res/swf/ova.swf$object-subrequest
 ||corrieredicomo.it/images/banners/
@@ -799,6 +805,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||eunews.it^*/BANNER-375x100_
 ||eusebiano.it/banners/
 ||eventiesagre.it/images/banner/
+||everyeye.it/amazon/
 ||everyeye.it/topskin/
 ||everyeye.it/topskin_2012/
 ||exxun.com/adi/
@@ -878,6 +885,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||gds.it^*-300x251-
 ||gdsannunci.it/images/bannerpub/
 ||geekissimo.com/images/5sms.gif
+||ggpht.com^*/asus_pc_lffl.jpg$domain=lffl.org
+||ggpht.com^*/prezzoverde.jpg$domain=lffl.org
 ||giallozafferano.it/images/banner/
 ||gianlucadimarzio.com^*_skin_
 ||giardinaggio.it/@/servizi/dueverticali.asp
@@ -1700,6 +1709,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||wallstreetitalia.com/img/skin_
 ||waterpoloitaly.com/banner/
 ||webmarketingforum.it/images/banners/
+||weboggi.it/banners/
 ||webpartner.mrcrawler.it^
 ||widget.blogosfere.it/assicurazione/
 ||wintersport-news.it/banners/
@@ -2012,6 +2022,7 @@ sapere.it###s24square
 gelocal.it###s3slider
 sampdoria.it###samppromorow
 samp.tv###samptvsponsor
+trombodromo.com###searchboxInc
 hdblog.it###shopping_kelkoo
 lonelyplanetitalia.it###side_banner
 lonelyplanetitalia.it###side_banner_300_100
@@ -2723,6 +2734,7 @@ winmagazine.it##div[style="width:980px; height:90px; margin: 0 auto;text-align:c
 wintricks.it##div[style="width:980px;height:90px;margin: 0 auto"]
 wintricks.it##div[style="width:980px;height:90px;margin: 0 auto;background:none"]
 metronews.it##div[style="width:990px; margin-left:10px; float:left; margin-bottom:10px; background-color:#FFD302"]
+calcioweb.eu##div[style="width:auto; min-width:300px; height:auto; height:250px; margin: 0 0 15px 15px; float:right;"]
 meteoweb.eu##div[style="width:auto; min-width:300px; height:auto; min-height:250px; margin:0 0 3px 3px; float:right;"]
 calcioweb.eu##div[style="width:auto; min-width:300px; height:auto; min-height:250px; margin:0 2px 2px 0; float:left;"]
 si24.it##div[style="width:auto;height:70px;text-align:center;clear:both;"]

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: +/hjeDlJ6ifSPGB9ptiUPA
+! Checksum: d5hELx+lsaDK0YHdJK8nIQ
 ! Title: EasyList Hebrew
-! Last modified: 01/12/14  10:40
+! Last modified: 14/12/14  09:43
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -10,7 +10,7 @@
 ! Fork of: IsraelList http://code.google.com/p/israellist/
 ! Fork of: Fanboy IsraelList https://secure.fanboy.co.nz/israelilist/IsraelList.txt
 ! License:
-!          GPL 3.0 - http://www.gnu.org/copyleft/gpl.html
+!          https://easylist-downloads.adblockplus.org/COPYING
 !
 !---------------------------Generic Blocking Rules----------------------------!
 !
@@ -42,6 +42,7 @@
 ||clickon.co.il^$popup,third-party
 ||clickon.co.il^$third-party
 ||dcampaigns.mitsubishi-israel.co.il^$popup,third-party
+||dcampaigns.hyundaimotors.co.il^$popup,third-party
 ||descreti.co.il^$popup
 ||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
@@ -181,6 +182,7 @@
 ||games-il.org.uk^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
 ||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
+||salamtak.org.uk^$domain=fxp.co.il
 ||shaoli-the-king.xyz^$domain=fxp.co.il
 ||why-love-fifa.me.uk^$domain=fxp.co.il
 !
@@ -298,13 +300,14 @@
 @@||banners.hosting-il.com^$domain=cinema-city.co.il
 @@||bhol.co.il/imagebank/400x250
 @@||bipbip.co.il/Images/Ads/$~third-party
-@@||blogspot.com$image,domain=goalim4u.org
+@@||blogspot.com$image,domain=goalim4u.org|goalim4u.pw
 @@||bs.serving-sys.com/BurstingPipe/adServer.bs?cn=is&c=*VAST$object-subrequest
 @@||bs.serving-sys.com/crossdomain.xml$object-subrequest
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
 @@||goalim4u.org$elemhide
+@@||goalim4u.pw^$elemhide
 @@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
 @@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
 @@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
@@ -497,6 +500,7 @@ fxp.co.il##.captain
 fxp.co.il##.condition
 fxp.co.il##.hungry
 fxp.co.il##A[href*="ofofof.info"]
+fxp.co.il##A[href*="salamtak.org.uk"]
 fxp.co.il##A[href^="http://fcdn.co.il"]
 fxp.co.il##A[href^="http://video.shaoli-the-king.xyz"]
 fxp.co.il##[src="http://tpc.googlesyndication.com/safeframe/1-0-0/html/container.html"] + *
@@ -547,9 +551,10 @@ i.start.co.il###boxes
 ice.co.il##.top_pirsomet
 ilimudim.co.il##.mp-hd-banner
 infomed.co.il##.ad_01
-inn.co.il###MadLargeInf
+infomed.co.il##OL[anc="adclass"]
 inn.co.il###div160Info
 inn.co.il###div180Info
+inn.co.il###MadLargeInf
 inn.co.il###div300
 inn.co.il###div300ILPict
 inn.co.il###divContentRightInf
@@ -603,6 +608,7 @@ maariv.co.il##.article-box-banner-wrap
 maariv.co.il##.box-banner-wrap
 maariv.co.il##.horizontal-banner-wrap
 maariv.co.il##.level-6-horizontal-banner-wrap
+maariv.co.il##.news-feed-banner
 maariv.co.il##.xl-banner-wrap
 maariv.co.il##TABLE[width="748"][height="110"][style="background-color:#e8e8e8"]
 madas.co.il##.AdsContainer
@@ -612,6 +618,7 @@ maka.co.il##.leftBanner
 maka.co.il##.midBanner
 maka.co.il##.rightBanner
 mako.co.il###googleLinkUnits
+mako.co.il###hp_bottom_strip
 mako.co.il###mysupermarketcontainer
 mako.co.il###neoTopStrip
 mako.co.il###rAdContainer

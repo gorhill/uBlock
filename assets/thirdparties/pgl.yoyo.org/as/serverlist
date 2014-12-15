@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2460
+# entries:        2458
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -909,7 +909,6 @@
 127.0.0.1 advideo.uimserv.net
 127.0.0.1 adview.ppro.de
 127.0.0.1 advisormedia.cz
-127.0.0.1 adviva.com
 127.0.0.1 adviva.net
 127.0.0.1 advnt.com
 127.0.0.1 advprotraffic.com
@@ -1256,7 +1255,6 @@
 127.0.0.1 clickthrucash.com
 127.0.0.1 clickthruserver.com
 127.0.0.1 clickthrutraffic.com
-127.0.0.1 clicktorrent.info
 127.0.0.1 clicktrace.info
 127.0.0.1 clicktrack.ziyu.net
 127.0.0.1 clicktracks.com
@@ -1735,7 +1733,6 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
-127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com
@@ -2018,6 +2015,7 @@
 127.0.0.1 ranking-street.de
 127.0.0.1 rankingchart.de
 127.0.0.1 rankingscout.com
+127.0.0.1 rankingscout.org
 127.0.0.1 rankyou.com
 127.0.0.1 rapidcounter.com
 127.0.0.1 rate.ru
@@ -2278,12 +2276,12 @@
 127.0.0.1 tpnads.com
 127.0.0.1 track.adform.net
 127.0.0.1 track.anchorfree.com
-127.0.0.1 track.collegehumor.com
 127.0.0.1 track.gawker.com
 127.0.0.1 trackalyzer.com
 127.0.0.1 tracker.icerocket.com
 127.0.0.1 tracking.gajmp.com
 127.0.0.1 tracking.koego.com
+127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
 127.0.0.1 trackingsoft.com
 127.0.0.1 trackmysales.com

@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: /ugE8T6MY0mVcoozkdXC2A
-! Version: 201412031511
+! Checksum: lpq0nDWOY0tIG7D4cXnVPg
+! Version: 201412151751
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 03 Dec 2014 15:11 UTC
+! Last modified: 15 Dec 2014 17:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -15,6 +15,7 @@
 !
 !--------Algemene blokkeerregels--------!
 ! *** easylistdutch/block_general.txt ***
+-reclameplaatjes/
 .be/ads/
 /adbron.
 /adtwee/*
@@ -272,7 +273,7 @@ _advertentieleaderboardhome.
 ||vegadates.com^*468x60wb7x.gif
 ||versio.nl/banners/
 ||videostrip.com/adsets/
-||videostrip.com/serve_cad.php?$domain=classicfm.nl|hitradioveronica.nl|myradio.nl|www.skyradio.nl|zuka.nl
+||videostrip.com/serve_cad.php?$domain=classicfm.nl|hitradioveronica.nl|myradio.nl|zuka.nl
 ||voetbalshop.nl/banner_
 ||voetbalshop.nl/upload/image/voorpagina/vi_banners/
 ||w247.nl/v/64.js
@@ -809,6 +810,7 @@ _advertentieleaderboardhome.
 @@||autoblog.nl/javascript/advertisement2.js
 @@||dumpert.nl^*/admatcher.doubleclick.net
 @@||motor-forum.nl/motorshopper/json/advertenties/$xmlhttprequest
+@@||tijd.be/s2014/js/site/advertisement.js?
 !--------Algemene verbergregels--------!
 ! *** easylistdutch/hide_general.txt ***
 ###adRechts
@@ -976,6 +978,7 @@ fok.nl,koopplein.nl,mokkels.nl,vakantiebellen.com###skyscraper
 blikopnieuws.nl###spaar
 waarbenjij.nu###spanEbookersContainer
 uu.nl###sponsor_rotating_block
+112brabantnieuws.nl###stUI12
 engineeringnet.be###standaardbanner_2
 meteovista.be,weeronline.nl###suppliersContainer
 vmma.be###syndicatedPlayer_staybehind

@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4667
-! Last modified: 2 Dec 2014
+! Version: 4695
+! Last modified: 12 Dec 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -138,6 +138,7 @@
 ##[href^="http://yourfreemediadownloads.com/"]
 ##[href^="http://myfreedownloadsnow.com/"]
 ##[href^="http://edgydownload.com/"]
+##[href^="http://grabfile.co/"]
 !
 !
 !
@@ -4662,6 +4663,33 @@ shortz.so##[onclick="awaiting();"]
 ||amazingoffer.biz^
 ||hay-day-hacks.com^
 ||sims4downloadx.com^
+||psnboss.com^
+||shhort.com^
+||itunesboss.com^
+||xboxboss.com^
+||newpsncodegenerator.com^
+||ksw-stream.pl^
+||appscracker.com^
+||grabfile.co^
+||mamoapps.com^
+||trendingnewstv.com^
+||codesxblfree.com^
+||gmter.com^
+||cpafornoob.com^
+||viral-videos.xyz^
+||watch-now.us^
+||pacap.us^
+||boxinghd.net^
+||boombeachhacks.net^
+||titanfallhacked.com^
+||lessims4crack.com^
+||vaingloryhack.net^
+||gameshq.nl^
+||haydayhacks.org^
+||movieleaks.co^
+||breakingleaks.com^
+||livestream2014.com^
+||multigiftcards.com^
 !
 !
 !

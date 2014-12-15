@@ -311,6 +311,7 @@ uptobox.com#@#.ad-leader
 uptobox.com#@#.ad-leader > div[id]
 ! dailybitcoins.org
 dailybitcoins.org#@#.ad-img
+@@||dailybitcoins.org/banners/*$image
 ! freebitco.in
 freebitco.in#@#.ad-img
 freebitco.in#@#.adsbygoogle
@@ -604,6 +605,20 @@ filecore.co.nz#@#.adsense
 @@||gratisbitco.in/scripts/ads.js$script
 ! labnol.org
 ||img.labnol.org/di/support.png$image
+! totaldebrid.org / referencemega.com
+totaldebrid.org,referencemega.com#@#.afs_ads
+! quickbitco.in
+@@||quickbitco.in/js/ads.js$script
+! pencurimovie.cc
+pencurimovie.cc##.adb_overlay
+! onemanga.me
+onemanga.me#@#.adblock
+@@||optimized-by.rubiconproject.com/a/10926/26000/*$subdocument,domain=onemanga.me
+@@||ads.rubiconproject.com/ad/*$script,domain=onemanga.me
+! tyrant.40in.net
+@@||pagead2.googlesyndication.com/pagead/*$domain=tyrant.40in.net,script
+! iphones.ru
+iphones.ru##DIV[style="background-color: rgb(222, 71, 0); margin-bottom: 20px; padding: 60px 0px;"]
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -619,6 +634,7 @@ filecore.co.nz#@#.adsense
 !----------------------------------------------------------------------------------------------------!
 ||js.sapo.pt/SAPOWebAnalytics/
 ||flash.banners-service.info^
+||compteur-visite.com^$script,third-party
 !----------------------------------------------------------------------------------------------------!
 ! Ads
 !----------------------------------------------------------------------------------------------------!
@@ -1091,8 +1107,12 @@ ojogo.pt###moldura_ojogo
 ||flash.banners-service.info/demo.swf?*
 ! 
 ||europacash.com^$third-party,script
-!
+! rencontreshard.com
 ||media.rencontreshard.com^$third-party,script
-! 
+! cpatrendreklam.com
+||cpatrendreklam.com^$third-party,script
+! go4up.com
 go4up.com##[href^="http://liversely.com/g4u?q="]
 go4up.com##[href^="http://go.ad2up.com/afu.php?id="] 
+! coindushopping.fr
+||coindushopping.fr/public/$popup,script,third-party

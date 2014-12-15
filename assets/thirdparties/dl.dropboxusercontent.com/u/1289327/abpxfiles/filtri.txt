@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201411170932
+! Version: 201412101734
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 17-11-2014
+! Last modified: 10-12-2014
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1710,6 +1710,14 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 ||advplace.com/i/*$popup
 |http://cdn.livesicilia.it/upload/assets/files/*.gif
 |http://*.avvocati.it/*/banner/*
+|http://webmail-static.libero.it/mail/advWallpaper_728*
+|http://*.webmail.libero.it/mail/advWallpaper.jsp
+|http://giornaledicalabria.it/banner/
+|http://*.dailygreen.it/images/banners/toyota/
+|http://*.ebz.io/*/swfIframe.html
+|http://*.ebz.io/*/visionnagePub.htm
+|http://*.ebz.io/*/buzzplayer/
+|http://*.cn24tv.it/*/banners/teletopi.png
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3256,6 +3264,38 @@ livesicilia.it##[class^="flash-box-a-sponsor"]
 kotaku.co.uk##.commercial.commercial--leaderboard
 kotaku.co.uk##[id^="google_ads_iframe"]
 avvocati.it##.rightbanner
+headadmin.net##.content-ad
+thewindowsclub.com##.adsbygoogle
+thewindowsclub.com##[class^="ad ad-"]
+imageshack.com##.promo-right
+wikihow.com##.wh_ad
+wikihow.com##[class^="wh_ad_inner adunit"]
+wikihow.com##.ad_label.ad_label
+forbes.com##[id^="google_ads_iframe"]
+webmail-static.libero.it##[id^="google_ads_iframe"]
+mail23a.webmail.libero.it##.advCnt
+pubblicitaitalia.it##.box.adsense
+pubblicitaitalia.it##.banner
+pubblicitaitalia.it##.banner_over_footer
+vanityfair.it##[id^="google_ads_iframe"]
+vanityfair.it##.sdbadv
+webnews.it##.adv_300_top.sidebar_widget
+ondemand.mtv.it###advTop
+ebay.it###rtm_html_825
+my.ebay.it###rtm_div_210
+mobile.sportmediaset.it##[id^="spaceBanner_rn_"]
+m.fcinternews.it##[id^="div-gpt-ad-"]
+pianetamotori.liquida.it###advTopWrapper
+vg247.com##.leaderboards
+vg247.com##.ad
+vg247.com##.low-leader-container
+vg247.com###recommendations
+###taboola-below-main-column
+dailygreen.it###link_skin
+iphoneitalia.com##.wes_main.wes_footer
+cn24tv.it###fancybox-overlay
+cn24tv.it##.modPubblicita.clickableBanner
+cn24tv.it##.modPubblicita
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3299,6 +3339,22 @@ wowcast.tv###video_ads_overdiv
 peperoncinipiccanti.com##.adsbygoogle
 motogp.com##.bcklink
 motogp.com##.ads
+|http://urbanpost.it/wp-content/themes/uptheme/images/1px.png
+|http://urbanpost.it/*/skin*
+||adplxmd.com^$popup
+||mbtrx.com^$popup
+||bet365.it^$popup
+||lmebxwbsno.com^$popup
+||binaryinstructor.com^$popup
+||warthunder.com^$popup
+||ad-center.com^$popup
+||adk2x.com^
+||directsports247.tv^$popup
+||videowood.tv^$popup
+||wccftech.com/pubgalaxy/*
+||loading-delivery1.com^$popup
+||xlovecam.com^$popup
+||gpone.com/adserver/www/delivery/*
 eurosport.yahoo.com##.yom-ad
 eurosport.yahoo.com###sponsor
 cultofmac.com##[id^="google_ads_iframe"]
@@ -3348,6 +3404,22 @@ varesenews.it##DIV[id="banner_sfondo"]
 videopremium.me##DIV[style="z-index: 100; position: fixed; top: 0; left: 0; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80); opacity: 0.8; width: 100%; height: 100%; zoom: 1; background:#ffffff;"]
 videopremium.me##DIV[style="display: block; margin: 0px auto; padding: 0px; height: 100%; width: 800px; z-index: 99102; background-color: transparent;"]
 videopremium.me##DIV[style="height: 440px; width: 100%; position: fixed; top: 226px; left: 0px; background-color: transparent; z-index: 99101;"]
+urbanpost.it##.adsbygoogle
+urbanpost.it##.wes_div
+urbanpost.it###skinlink
+urbanpost.it##[id^="ligatus_speweb_"]
+games.hdblog.it##.ads_container_top
+games.hdblog.it##.ads.square
+sordum.org##.adsbygoogle
+swzone.it###banner728x90
+swzone.it###boxhome-adv
+digitalgamesprices.com##.adsbygoogle
+nowdownload.at##.span4.top20
+neogaf.com##.goodie728
+wccftech.com##.wpInsert.wpInsertInPostAd
+wccftech.com##.adsbygoogle
+wccftech.com##DIV[style="margin:12px auto; width:728px; height:90px; "]
+gpone.com##.ebzNative
 channel4.com###c4ad-Top
 m2.feiwei.tv##[class^="zanox_tripleban_"]
 it.opinionspost.com##[class^="main_ad_"]

@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: PEu8JXdoU4BiCfoCEFtMBA
+! Checksum: 2NJeKKdvnVfWxlrziwRAWw
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2014-11-10
+! Paskutinis atnaujinimas: 2014-12-15
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -36,9 +36,11 @@
 15min.lt##.ar-item.bg-border-greywhite.ar-row-29
 15min.lt##.df-auto-container
 15min.lt##.footer_note
+15min.lt##.fs-banner
 15min.lt##.kainos_box
 15min.lt##.most_read_ads
 15min.lt##.outer-links
+15min.lt##.top-banner
 15min.lt##A[href="http://www.vistienakitaip.lt/fiesta"] > IMG
 15min.lt##DIV[class^="pi_base_box pi_base_"]
 15min.lt##IMG[alt="Klasikinės muzikos gerbėjams dovana – „Vivace Vilnius“ festivalio koncertai"]
@@ -47,6 +49,7 @@
 7min.lt##A[href="http://1920x1080wallpapers.eu/"]
 7min.lt##A[href="http://www.tvlietuviskai.eu/"]
 @@|http://skelbimai.one.lt/uploads/modules/ads/
+@@||15minlt.adocean.pl^$third-party
 @@||9menesiai.lt/image/cache/data/Baneriai/
 @@||apatinukai.lt/image/cache/data/baneriai/
 @@||banners.adnet.lt/i/euro_1_490x270_3.swf
@@ -64,13 +67,13 @@
 @@||pildyk.lt/uploads/files/BANERIS_pildyk.jpg
 @@||post.lt/bin/banners/
 @@||post.lt/files/resized/*x*/banners/
-@@||tavovaikams.lt//images/goods/*$domain=~tavovaikams.lt
+@@||tavovaikams.lt//images/goods/$domain=~tavovaikams.lt
 @@||teatras.lt/uploads/img/banners/
 @@||technologijos.lt/iframe_komentarai
 @@||telikas.biz/wp-content/uploads/2014/10/logo1.png
 @@||v.fwmrm.net$domain=tv3play.lt
-@@||vaikutis.lt/image/cache/data/baneriai/*
-@@||vaikutis.lt/image/data/baneriai/*
+@@||vaikutis.lt/image/cache/data/baneriai/
+@@||vaikutis.lt/image/data/baneriai/
 aciu.lt###adrotate_2
 aciu.lt##.parama
 aciu.lt,gydomasismasazas.lt###adrotate_1
@@ -189,6 +192,7 @@ dimexpro.eu,press-report.lt,buypcgame.eu,apiereklama.lt,pokernews.com##.ads
 diskusijos.darnipora.lt##.post.bg3
 diskusijos.darnipora.lt##IMG[onclick="Set_Cookie( 'popunder31254', 'true', 3, '/', '', '' );document.getElementById('myBtn').style.display='none';"]
 donoryste.eu##[alt="Klipas Donorystė"]
+dovanos.lt##.middle[style="border:none;padding:5px 0px;"] *
 dratas.lt##IMG[title="Poko.lt = (lietuviški blogai + socialiniai tinklai) * vienas kitas algoritmas"]
 draugas.lt##.row.dr-ad-top
 drauge.org##.side-body > TABLE[bgcolor="#87B6D9"]
@@ -258,7 +262,7 @@ hardas.lt###v1b13546c9f
 hdpaveiksliukai.lt##.partners_right *
 igloro.info,alio.lt##.margint10
 imunitetas.lt,mesmoterys.lt##.ad
-inbox.lt##DIV[id="inxAds-imr"]
+inbox.lt###inxAds-imr
 info.lt###Reklama
 infoma.lt##.baneriai
 infrost.lt##IMG[alt="inFROST - CS 1.6 Serveriai"]
@@ -492,6 +496,7 @@ technologijos.lt##.lygiuoti_centras[style="padding: 1.5em 0em 1.25em 0em;"]
 technologijos.lt##.visualPadding.lygiuoti_centras
 technorama.lt##.leasing-info
 techpill.lt##.cufon.cufon-canvas[alt="Reklama"]
+teisescentras.lt##.boxcontent.bannersr
 tevu-darzelis.lt##.td_ads_item
 tic.siauliai.lt##.orai
 tic.siauliai.lt##A[href^="/ad/goto/"] > IMG
@@ -505,6 +510,7 @@ torrent.ai###top_banner_torrent_details
 traders.lt##DIV[style="padding-top:4px;padding-bottom:4px;text-align:center;"]
 trakai.lt##TD[style="PADDING-BOTTOM: 15px; PADDING-LEFT: 12px; PADDING-RIGHT: 10px; BACKGROUND: url(/trakai/m/m_images/wfiles/igxbdh5338.jpg) repeat-y left top; PADDING-TOP: 15px"]
 trakai.lt##TD[style="PADDING-BOTTOM: 15px; PADDING-LEFT: 22px; BACKGROUND: url(/trakai/m/m_images/wfiles/ipxjgy5347.jpg) repeat-y left top; PADDING-TOP: 16px"]
+treneris.net##.banneritem
 trolinukitus.lt##IMG[alt="Lankytinos vietos Lietuvoje"]
 tv1.lnkgo.lt##.videoBanner > *
 tv3play.lt#@#.ad-banner
@@ -637,6 +643,8 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||dcdn.lt/pr/i/gruzija-top.jpg
 ||dcdn.lt/wd/x/4948/r/079d346cdd9c7d833a017b2bc1143d85.q88.trim.250x250.jpeg
 ||delfi.lt/misc/ebooks.php
+||delfi.lt/newsfeed/?p=
+||delfi.lt/video/sporto-tv/widgets/250px/
 ||depiliacija.eu/wp-content/uploads/2011/12/fotoepiliacija-namuose.png
 ||depiliacija.eu/wp-content/uploads/2012/06/fotoepiliatorius-silkn-flashngo.png
 ||depiliacija.eu/wp-content/uploads/2013/09/HF-depiliacija-baneris180x500.jpg

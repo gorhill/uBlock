@@ -531,6 +531,7 @@ ad.gr.doubleclick.net
 ||luben.tv/wp-content/uploads/2014/11/output_cVZG2g.gif
 ||mothersblog.gr/media/com_skins/skins/79/*
 ||thepressproject.gr/build/1.jpg
+||stokokkino.gr/photos/gsk.jpg
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
@@ -876,6 +877,7 @@ sports.in.gr###RightBanner7
 sports.in.gr###middlebanner3
 in.gr###RightBanner6
 in.gr###RightBanner8
+gazzetta.gr###block-wblocks-wblocks_companies
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

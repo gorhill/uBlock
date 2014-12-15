@@ -1,7 +1,7 @@
 [Adblock Plus 1.2]
-! Checksum: JLjnrIAQWNI0pVdBY/Th6Q
+! Checksum: bHDjYmc1Xa4F+3A4dp7ccA
 ! Title: Latvian List
-! Last modified: 2014-09-23 15:51 UTC
+! Last modified: 2014-12-09 18:14 UTC
 ! Expires: 2 days (update frequency)
 ! Homepage: http://latvian-list.site11.com/
 ! Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
@@ -94,6 +94,7 @@
 ||tavacena.lv/images/ltc/
 ||tele2.lv^*_popup_
 ||tours.lv/images/misc/
+||vgk.lv/adv/
 ||viastream.viasat.tv/Commercials/
 ||xp.lv/res/banners/
 ||zip.lv/kasjauns.swf
@@ -137,6 +138,7 @@
 ||goaff.com^$third-party
 ||ifrype.com/ad_v/
 ||ifrype.com/adv/
+||ifrype.com/miniads
 ||ifrype.com^*/ad_v.
 ||ifrype.com^*/ads.
 ||imd.petit.lv^
@@ -333,6 +335,7 @@ tvnet.lv##[id^="ad120x600"]
 tvnet.lv##a[style="text-decoration: underline; cursor: pointer; padding-right: 17px; background: url('/assets/images/title_link.gif') right center no-repeat;"]
 tvnet.lv##div[style="height:53px; width:100%; position:fixed; bottom:0px; left:0px; background-color:white; z-index:999999; background-position:center center; background-image: url('http://b.itvnet.lv/_sa_alkohols.jpg'); background-repeat:no-repeat;"]
 uzkartes.lv###sz
+vgk.lv##.infobox
 zeltazivtina.lv###banner
 zip.lv###perkam_group_banner
 zip.lv##.zip_spotlight.main_td

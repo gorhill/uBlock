@@ -12,12 +12,14 @@
 ! ou par e-mail : liste.ar.adblock at gmail point com
 !
 !----------------------- Filtres génériques -----------------!
+##.adv_cont
 .eg/ads/
 .ma/ads/
 /ads468x60.
 /ads_90_728.
 /advStatLib.js
 /advStatSettings.js
+/antiadblockmsg.
 /ar/ads/*
 /ara/ads/*
 !
@@ -27,6 +29,7 @@
 ##.adv-header
 ##.ban-728
 ##.inside_adv_section
+##.leftSideAds
 ##.pub-730x90
 ##.sidbar-ad1
 ##[href*="ad2games.com/"]
@@ -144,6 +147,7 @@
 ||amalh.net/images/amalh2.jpg
 ||amalh.net/images/monjz.gif
 ||amazonaws.com/*/KSA-Footer/images_leader_souq/
+||amazonaws.com/email/fatakat/
 ||amazonaws.com/irgames/bnrs/
 ||anbagate.com/adv/
 ||anota-des.com/vb/$subdocument,domain=a7lahmsa.com
@@ -177,6 +181,7 @@
 ||cs-proton.tv/images/banner-*.
 ||ctn-abbas.com/*_ads.
 ||d3oyytf0n6db9a.cloudfront.net^
+||daralakhbar.com/widgetgen/$third-party
 ||darendeal.com/widgets/recommendation_box?
 ||diwanee.net/?ref=
 ||dohaup.com/up/2010-05-07/dohaup_206097194.gif
@@ -576,6 +581,7 @@
 ||educ40.net/hotcourses.swf
 ||educ40.net/images/hotcourses.gif
 ||educ40.net/images/kotobdz.gif
+||egfire.com/O.js
 ||egy2day.com^$popup,domain=mazika2day.com
 ||egynn.net/media/Vodafone_wap_push_banner.gif
 ||egypt.com/gui/images/banner.gif
@@ -622,6 +628,7 @@
 ||farep.org/styles/helion/espace1.jpg
 ||farep.org/styles/helion/pener-2.png
 ||fatafeeet.com^$popup,domain=egyptladies.net
+||fatakat.com/ads/
 ||fbrka.net/open*.js
 ||fbrka.net/style/banner72890.gif
 ||felmedan.com/images/banners/
@@ -934,6 +941,7 @@ arabnet5.com###GoogleDivUnderNews
 ounousa.com###LeftBannerContainer
 jeddahbikers.com###Main_MPU
 ounousa.com###TopBanner
+fatakat.com###ad1
 mbc.net###adSlot-inPage-300x250-left
 agarcom.com,s-oman.net###ad_global_below_navbar
 echoroukonline.com###add
@@ -1025,7 +1033,7 @@ souq.com##.ad1
 souq.com##.ad2
 egy4up.net,gornalak.com##.ad_left
 egy4up.net,gornalak.com##.ad_right
-add-anime.net,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,skynewsarabia.com,souqa3mal.com##.ads
+add-anime.net,cairodar.com,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,skynewsarabia.com,souqa3mal.com##.ads
 rjeem.com##.ads1
 toptwitt.com##.ads2
 elraaed.com##.ads_1
@@ -1074,6 +1082,7 @@ bramj.co,qwled.com##.headerbanner
 filgoal.com##.inner_leaderboard
 mbc.net##.killerbanner
 n4hr.com##.ladv
+arabia.com##.leaderBoard
 masrawy.com##.leaderbg
 ounousa.com,z4ar.com##.leaderboard
 filbalad.com##.leaderbord

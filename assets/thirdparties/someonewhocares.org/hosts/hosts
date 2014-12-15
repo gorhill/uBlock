@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Nov 24th, 2014 at 02:55
+# Last updated: Dec 14th, 2014 at 11:12
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -72,7 +72,7 @@
 255.255.255.255	broadcasthost
 ::1		localhost
 127.0.0.1	local
-fe80::1%lo0	localhost
+#fe80::1%lo0	localhost
 #</localhost>
 
 #<shock-sites>
@@ -5447,6 +5447,7 @@ fe80::1%lo0	localhost
 127.0.0.1 content.yieldmanager.edgesuite.net
 127.0.0.1 context3.kanoodle.com
 127.0.0.1 context5.kanoodle.com
+127.0.0.1 contextad.pl
 127.0.0.1 context.adshadow.net
 127.0.0.1 contextweb.com
 127.0.0.1 conv.adengage.com
@@ -7303,6 +7304,7 @@ fe80::1%lo0	localhost
 127.0.0.1 travelncs.com
 127.0.0.1 trekmedia.net
 127.0.0.1 trendnews.com
+127.0.0.1 triangle.dealsaver.com
 127.0.0.1 trk.alskeip.com
 127.0.0.1 trk.etrigue.com
 127.0.0.1 trk.yadomedia.com

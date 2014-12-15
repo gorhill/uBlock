@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: YoQlAz8GsNtyNE5ACYhlRA
+! Checksum: hXdsyUlNM/xkVg3o1jYDXg
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 30 Nov 2014
+! Updated: 15 Dec 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -390,6 +390,7 @@ jsonline.com##.blockPage
 arstechnica.com##a[href="/subscriptions/"]
 drugs.com##div[style="left: 0px; position: fixed; top: auto; bottom: 48px;"]
 fark.com##.top_right_container
+flightradar24.com###bottomRightPanel
 imagebam.com###viroll
 imagebam.com###viroll-header
 kpopstarz.com##.ad
@@ -405,6 +406,7 @@ wolframalpha.com###subpod_zoom
 ||53.com/resources/js/wt.js
 ||aarp.net/etc/aarp/statics/global/js/mbox.
 ||addthis.com/static/r07/core130.js
+||adziff.com/mostclicked/
 ||akamai.net/*/includes/iv_footer.js
 ||akamai.net/*/includes/iv_header.js
 ||akamai.net/cache.lego.com/Stats/
@@ -495,7 +497,6 @@ wolframalpha.com###subpod_zoom
 ||cloudharmony.net^$third-party
 ||consent-st.truste.com^$third-party
 ||consent.truste.com^$third-party
-||disqus.com/count-data.js
 ||doubleclick.net^$third-party
 ||dsr.livefyre.com/livecountping/
 ||geo.query.yahoo.com^$third-party
@@ -508,6 +509,7 @@ wolframalpha.com###subpod_zoom
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||mark.reevoo.com^$third-party
 ||mcafeesecure.com/meter/$third-party
+||medals.bizrate.com^$third-party
 ||my.leadpages.net^$third-party
 ||ooyala.com/3rdparty/visible_measures_
 ||preferences.truste.com^$third-party
@@ -522,7 +524,9 @@ wolframalpha.com###subpod_zoom
 ||stats.computecmedia.de^
 ||syncaccess.net^$third-party
 ||tags.tiqcdn.com/utag/*/utag.v.js
+||trustlogo.com^$third-party
 ||ubertags.com^$third-party
+||verify.authorize.net^$third-party
 ||webengage.com^$third-party
 ||websecurity.norton.com^$third-party
 ||webutation.net^$third-party
@@ -621,9 +625,10 @@ wolframalpha.com###subpod_zoom
 @@/mbox.js$domain=dominos.com|aol.com|hrblock.com|live.com|movieweb.com|rd.com|skypeassets.com|superpages.com|wdpromedia.com
 @@/omniture.js$domain=apple.com|mlb.com|newyorker.com|ae.com|couponcabin.com|corbisimages.com|delvenetworks.com|shop.puma.com|gq.com|healthgrades.com|pogo.com|nfl.com|slacker.com|teenvogue.com|veer.com|zdnet.com
 @@/ots_omniture_code.js
-@@/s_code.js$domain=bodybuilding.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|app.qz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com
-@@/s_code_$domain=lg.com|adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com|abc.go.com
+@@/s_code.js$domain=bodybuilding.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|app.qz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com
+@@/s_code_$domain=lg.com|adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com|abc.go.com|forbes.com
 @@/thePlatform-omniture-core.js
+@@/webtrends.js$domain=usps.com|canon.com|horizon-bcbsnj.com|logitech.com|reuters.com|telegraph.co.uk
 @@||aarp.net/etc/aarp/statics/global/js/omniture*.js
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
 @@||actiris.be/urchin.js
@@ -631,6 +636,7 @@ wolframalpha.com###subpod_zoom
 @@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com
 @@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com
 @@||akamai.net/*/www-origin.walmart.com/webanalytics/$domain=walmart.com
+@@||akamai.net^*/hints.netflame.cc/$domain=annualcreditreport.com
 @@||amd.com/*/scode_global.js
 @@||amd.com/us/as/scode_$script
 @@||apple.com/pages/omniture/js/util.js?
@@ -652,7 +658,6 @@ wolframalpha.com###subpod_zoom
 @@||canadiantire.ca/content/canadian-tire/*.sitecatalyst.
 @@||canadiantire.ca/etc/clientlibs/foundation/sitecatalyst/
 @@||canadiantire.ca/etc/cloudservices/*/mbox.js
-@@||canon.com/sys/js/webtrends.js
 @@||cartoonnetwork.com.au/include/omniture/s_code.php
 @@||cartoonnetworkasia.com/include/omniture/s_code.php
 @@||cbsistatic.com/fly/bundles/flyjs/js/libs/omniture.s-code*.js$domain=cbsnews.com
@@ -661,7 +666,7 @@ wolframalpha.com###subpod_zoom
 @@||cdnbrm.com/images/*/TouchClarity/images/
 @@||chron.com^*/omniture/$script
 @@||cigna.com^*/webtrends/
-@@||cineworld.co.uk/assets/js/specialist/webtrends.
+@@||cineworld.co.uk/cw/assets/javascript/webtrends*.js
 @@||consumerist.com/mt.js
 @@||content.idine.com^*/cmdatatagutils.js$domain=rewardsnetwork.com
 @@||converse.com/handler/OmnitureHandler.ashx
@@ -687,7 +692,7 @@ wolframalpha.com###subpod_zoom
 @@||foxnews.com/js/omtr_code.js$domain=foxbusiness.com|foxnews.com
 @@||foxtel.com.au/shop/packages-and-deals/static/js/os-omniture.js
 @@||google-analytics.com/cx/api.js$domain=boingboing.net
-@@||google-analytics.com/ga.js$domain=cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|games.latimes.com|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com
+@@||google-analytics.com/ga.js$domain=foxsports.com.au|cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|games.latimes.com|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com
 @@||google-analytics.com/plugins/ua/ecommerce.js
 @@||google-analytics.com/urchin.js$domain=expresspcparts.com.au|roblox.com
 @@||google.com/coop/cse/brand?form=searchbox_$script,domain=wellness.com
@@ -699,7 +704,6 @@ wolframalpha.com###subpod_zoom
 @@||guim.co.uk/static/*/scripts/omniture-
 @@||healthgrades.com/Consumer/scripts/omniture_settings.js
 @@||hewitt.com^*/js/analytics/
-@@||horizon-bcbsnj.com/pd_njh/ssi/webtrends.js
 @@||hsbc.co.uk^*/html/hsbcukcommon/touchclarity/
 @@||hsn.com/coremetrics/cmcustom.js
 @@||hulu.com/site-player/*?referrer=
@@ -720,7 +724,6 @@ wolframalpha.com###subpod_zoom
 @@||kentucky.com/mistats/products/pubsys_s_code.js
 @@||libs.coremetrics.com^$domain=boscovs.com
 @@||lloydstsb.com/it/xslt/touchclarity/omtr_tc.js
-@@||logitech.com/javascript/*/webtrends.js
 @@||marilyn.ca/jsHandler.aspx?*omniture
 @@||microsoft.com/Areas/Global/Content/Omniture/
 @@||microsoft.com/Combined.js?*/Omniture/
@@ -775,8 +778,6 @@ wolframalpha.com###subpod_zoom
 @@||rentals.com/javascripts/primedia-webtrends-
 @@||rentals.com/javascripts/webtrends-bindings.js
 @@||reseguiden.se^*.siteCatalyst.js
-@@||reuters.com/resources_v2/js/webtrends.js
-@@||reutersmedia.net/resources_v2/js/webtrends.js$domain=reuters.com
 @@||rightnow.com/javascript/omniture_variable_
 @@||s.xe.com/*/js/webtrends.1.js
 @@||screenname.aol.com/auth/getToken?*&referer$domain=reader.aol.com
@@ -801,7 +802,6 @@ wolframalpha.com###subpod_zoom
 @@||tampabay.com/universal/scripts/omniture/tb_code.js
 @@||targetimg3.com^*/omniture/omniture_minified.js$domain=target.com
 @@||telegraph.co.uk/template/*/webtrends/LIVE/WTID.js
-@@||telegraph.co.uk/template/*/webtrends/Webtrends.js
 @@||thecomedynetwork.ca/jsHandler.ashx
 @@||thepiratebay.se^*/jquery.min.js
 @@||thestar.com^*/sitecatalyst/
@@ -812,7 +812,6 @@ wolframalpha.com###subpod_zoom
 @@||unionbank.com/coremetrics/*/eluminate.js
 @@||unionbank.com/coremetrics/cmdatatagutils.js
 @@||usairways.com/en-US/Resources/javascript/omniture*.js
-@@||usps.com/ContentTemplates/common/scripts/webtrends.js
 @@||verizon.com/content/contactus/includes/javascript/hbx.js
 @@||victoriassecret.com/app/coremetrics/eluminate.js
 @@||video.nbcuni.com/core/*/omniture_
