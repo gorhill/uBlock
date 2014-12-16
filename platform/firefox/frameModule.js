@@ -90,7 +90,7 @@ let contentPolicy = {
         }
 
         let win = type === 6
-            ? context.contentWindow
+            ? context.contentWindow || context
             : (context.ownerDocument || context).defaultView;
 
         if (!win) {
