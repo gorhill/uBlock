@@ -20,6 +20,6 @@ cp src/*.html $DES/
 cp platform/chromium/*.js $DES/js/
 cp platform/chromium/manifest.json $DES/
 
-rm -r dist/ublock/_locales/el
-rm -r dist/ublock/_locales/vi
+rm -r $DES/_locales/el
+rm -r $DES/_locales/vi
 echo "*** uBlock.opera: Package done."
