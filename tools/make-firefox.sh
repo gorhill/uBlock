@@ -24,6 +24,6 @@ cp platform/firefox/chrome.manifest $DES/
 cp platform/firefox/install.rdf $DES/
 
 echo "*** uBlock_xpi: Generating locales"
-python tools/make-locale-firefox.py $DES/
+python tools/make-firefox-meta.py $DES/
 
 echo "*** uBlock_xpi: Package done."
