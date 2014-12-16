@@ -6,6 +6,7 @@ this.EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
 
 Components.utils['import']('resource://gre/modules/Services.jsm');
 Components.utils['import']('resource://gre/modules/XPCOMUtils.jsm');
+// Components.utils['import']('resource://gre/modules/devtools/Console.jsm');
 
 const Ci = Components.interfaces;
 let appName;

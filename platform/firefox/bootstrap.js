@@ -10,7 +10,7 @@ var bgProcess;
 function startup(data, reason) {
     bgProcess = function(ev) {
         if (ev) {
-            this.removeEventListener('load', bgProcess);
+            this.removeEventListener(ev.type, bgProcess);
         }
 
         bgProcess = Services.appShell.hiddenDOMWindow.document;
@@ -22,9 +22,9 @@ function startup(data, reason) {
 
     if (reason === APP_STARTUP) {
         Services.ww.registerNotification({
-            observe: function(subject) {
+            observe: function(win) {
                 Services.ww.unregisterNotification(this);
-                subject.addEventListener('load', bgProcess);
+                win.addEventListener('DOMContentLoaded', bgProcess);
             }
         });
     }

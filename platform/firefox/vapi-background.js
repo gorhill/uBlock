@@ -248,9 +248,9 @@ var windowWatcher = {
             e.target.ownerDocument.defaultView
         );
     },
-    onLoad: function(e) {
+    onReady: function(e) {
         if (e) {
-            this.removeEventListener('load', windowWatcher.onLoad);
+            this.removeEventListener(e.type, windowWatcher.onReady);
         }
 
         var docElement = this.document.documentElement;
@@ -275,7 +275,7 @@ var windowWatcher = {
     },
     observe: function(win, topic) {
         if (topic === 'domwindowopened') {
-            win.addEventListener('load', this.onLoad);
+            win.addEventListener('DOMContentLoaded', this.onReady);
         }
     }
 };
@@ -318,12 +318,11 @@ vAPI.tabs.registerListeners = function() {
     // onClosed - handled in windowWatcher.onTabClose
     // onPopup ?
 
-    Services.ww.registerNotification(windowWatcher);
-
     for (var win of this.getWindows()) {
-        windowWatcher.onLoad.call(win);
+        windowWatcher.onReady.call(win);
     }
 
+    Services.ww.registerNotification(windowWatcher);
     vAPI.toolbarButton.init();
 
     vAPI.unload.push(function() {
@@ -332,7 +331,7 @@ vAPI.tabs.registerListeners = function() {
         for (var win of vAPI.tabs.getWindows()) {
             vAPI.toolbarButton.remove(win.document);
 
-            win.removeEventListener('load', windowWatcher.onLoad);
+            win.removeEventListener('load', windowWatcher.onReady);
             win.gBrowser.removeTabsProgressListener(tabsProgressListener);
 
             var tC = win.gBrowser.tabContainer;
