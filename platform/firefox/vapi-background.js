@@ -595,31 +595,9 @@ vAPI.toolbarButton.init = function() {
         }
     });
 
-    var doc = Services.wm.getMostRecentWindow('navigator:browser').document;
-
-    var button = doc.getElementById(this.widgetId);
-    button.style.listStyleImage = 'url(' + vAPI.getURL('img/icon16.svg') + ')';
-
-    if (!this.styleURI) {
-        var css = encodeURIComponent([
-            '#' + this.widgetId + '[badge]:not([badge=""])::after {',
-                'position: absolute; color: #fff; background: #666;',
-                'content: attr(badge); font-size: 9px; font-weight: bold;',
-                'padding: 1px 2px; margin-left: -16px; margin-top: 3px }'
-        ].join(''));
-
-        this.styleURI = Services.io.newURI('data:text/css,' + css, null, null);
-    }
-
-    var sss = Cc['@mozilla.org/content/style-sheet-service;1']
-                .getService(Ci.nsIStyleSheetService);
-
-    sss.loadAndRegisterSheet(this.styleURI, sss.USER_SHEET);
-
     vAPI.unload.push(function() {
-        sss.unregisterSheet(this.styleURI, sss.USER_SHEET);
-        CustomizableUI.createWidget(this.widgetId);
-    }.bind(this));
+        CustomizableUI.destroyWidget(vAPI.toolbarButton.widgetId);
+    });
 };
 
 /******************************************************************************/
@@ -635,7 +613,7 @@ vAPI.toolbarButton.add = function(doc) {
     iframe.setAttribute('type', 'content');
 
     panel.style.cssText = iframe.style.cssText
-        = 'width: 180px; height: 310px; transition: width .1s, height .1s';
+        = 'width: 180px; height: 310px; transition: width .1s, height .1s; overflow: hidden';
 
     doc.getElementById('PanelUI-multiView')
         .appendChild(panel)
@@ -677,6 +655,32 @@ vAPI.toolbarButton.add = function(doc) {
     };
 
     iframe.addEventListener('load', onPopupReady, true);
+
+    if (!this.styleURI) {
+        this.styleURI = 'data:text/css,' + encodeURIComponent([
+            '#' + this.widgetId + ' {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16-off.svg'),
+                ');',
+            '}',
+            '#' + this.widgetId + '[badge]:not([badge=""])::after {',
+                'position: absolute;',
+                'margin-left: -16px;',
+                'margin-top: 3px;',
+                'padding: 1px 2px;',
+                'font-size: 9px;',
+                'font-weight: bold;',
+                'color: #fff;',
+                'background: #666;',
+                'content: attr(badge);',
+            '}'
+        ].join(''));
+
+        this.styleURI = Services.io.newURI(this.styleURI, null, null);
+    }
+
+    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor).
+        getInterface(Ci.nsIDOMWindowUtils).loadSheet(this.styleURI, 1);
 };
 
 /******************************************************************************/

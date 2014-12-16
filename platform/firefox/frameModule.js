@@ -8,7 +8,7 @@ Components.utils['import']('resource://gre/modules/Services.jsm');
 Components.utils['import']('resource://gre/modules/XPCOMUtils.jsm');
 
 const Ci = Components.interfaces;
-var appName;
+let appName;
 
 try { throw new Error; } catch (ex) {
     appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
