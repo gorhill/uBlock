@@ -42,7 +42,7 @@ var messagingConnector = function(response) {
     var channels = vAPI.messaging.channels;
     var channel, listener;
 
-    if ( response.broadcast === true ) {
+    if ( response.broadcast === true && !response.portName ) {
         for ( channel in channels ) {
             if ( channels.hasOwnProperty(channel) === false ) {
                 continue;
@@ -101,7 +101,7 @@ vAPI.messaging = {
 
         this.channels['vAPI'] = {
             listener: function(msg) {
-                if (msg.cmd === 'runScript' && msg.details.code) {
+                if (msg.cmd === 'injectScript' && msg.details.code) {
                     Function(msg.details.code).call(self);
                 }
             }

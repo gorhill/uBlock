@@ -352,7 +352,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     tab.page.dispatchMessage('broadcast', {
         portName: 'vAPI',
         msg: {
-            cmd: 'runScript',
+            cmd: 'injectScript',
             details: details
         }
     });

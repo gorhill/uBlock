@@ -113,7 +113,18 @@ let contentPolicy = {
 };
 
 let docObserver = {
-    contentBaseURI: 'chrome://' + appName + '/content/js/',
+    contentBaseURI: 'chrome://' + appName + '/content/',
+    injectScript: function(script, evalCode) {
+        if (evalCode) {
+            Components.utils.evalInSandbox(script, this);
+            return;
+        }
+
+        Services.scriptloader.loadSubScript(
+            docObserver.contentBaseURI + script,
+            this
+        );
+    },
     initContext: function(win, sandbox) {
         let messager = getMessager(win);
 
@@ -125,6 +136,12 @@ let docObserver = {
             });
 
             win.self = win;
+
+            Components.utils.exportFunction(
+                this.injectScript,
+                win,
+                {defineAs: 'injectScript'}
+            );
         }
 
         win.sendAsyncMessage = messager.sendAsyncMessage;
@@ -158,12 +175,12 @@ let docObserver = {
         let lss = Services.scriptloader.loadSubScript;
         win = this.initContext(win, true);
 
-        lss(this.contentBaseURI + 'vapi-client.js', win);
-        lss(this.contentBaseURI + 'contentscript-start.js', win);
+        lss(this.contentBaseURI + 'js/vapi-client.js', win);
+        lss(this.contentBaseURI + 'js/contentscript-start.js', win);
 
         let docReady = function(e) {
             this.removeEventListener(e.type, docReady, true);
-            lss(docObserver.contentBaseURI + 'contentscript-end.js', win);
+            lss(docObserver.contentBaseURI + 'js/contentscript-end.js', win);
         };
 
         doc.addEventListener('DOMContentLoaded', docReady, true);

@@ -23,7 +23,7 @@ cp platform/firefox/frameModule.js $DES/
 cp platform/firefox/chrome.manifest $DES/
 cp platform/firefox/install.rdf $DES/
 
-echo "*** uBlock_xpi: Generating locales"
+echo "*** uBlock_xpi: Generating meta..."
 python tools/make-firefox-meta.py $DES/
 
 echo "*** uBlock_xpi: Package done."

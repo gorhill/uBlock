@@ -44,7 +44,7 @@ var messagingConnector = function(response) {
     var channels = vAPI.messaging.channels;
     var channel, listener;
 
-    if ( response.broadcast === true ) {
+    if ( response.broadcast === true && !response.portName ) {
         for ( channel in channels ) {
             if ( channels.hasOwnProperty(channel) === false ) {
                 continue;
@@ -92,6 +92,19 @@ vAPI.messaging = {
             messagingConnector(JSON.parse(msg));
         };
         addMessageListener(this.connectorId, this.connector);
+
+        this.channels['vAPI'] = {};
+        this.channels['vAPI'].listener = function(msg) {
+            if (msg.cmd === 'injectScript') {
+                var details = msg.details;
+
+                if (!details.allFrames && window !== window.top) {
+                    return;
+                }
+
+                self.injectScript(details.file || details.code, !details.file);
+            }
+        };
     },
 
     close: function() {

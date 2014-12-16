@@ -390,6 +390,11 @@ vAPI.tabs.get = function(tabId, callback) {
         }
     }
 
+    // for internal use
+    if (tab && callback === undefined) {
+        return tab;
+    }
+
     if (!tab) {
         callback();
         return;
@@ -538,7 +543,27 @@ vAPI.tabs.close = function(tabIds) {
 /******************************************************************************/
 
 vAPI.tabs.injectScript = function(tabId, details, callback) {
+    var tab = vAPI.tabs.get(tabId);
 
+    if (!tab) {
+        return;
+    }
+
+    tab.linkedBrowser.messageManager.sendAsyncMessage(
+        vAPI.app.cleanName + ':broadcast',
+        JSON.stringify({
+            broadcast: true,
+            portName: 'vAPI',
+            msg: {
+                cmd: 'injectScript',
+                details: details
+            }
+        })
+    );
+
+    if (typeof callback === 'function') {
+        setTimeout(callback, 13);
+    }
 };
 
 /******************************************************************************/
@@ -566,7 +591,8 @@ vAPI.setIcon = function(tabId, img, badge) {
     var button = curWin.document.getElementById(vAPI.toolbarButton.widgetId);
     var icon = vAPI.tabIcons[tabId];
     button.setAttribute('badge', icon && icon.badge || '');
-    button.style.listStyleImage = 'url(' + vAPI.getURL(icon && icon.img || 'img/browsericons/icon16-off.svg') + ')';
+    icon = vAPI.getURL(icon && icon.img || 'img/browsericons/icon16-off.svg');
+    button.style.listStyleImage = 'url(' + icon + ')';
 };
 
 /******************************************************************************/

@@ -55,7 +55,7 @@ var messagingConnector = function(response) {
     var channels = vAPI.messaging.channels;
     var channel, listener;
 
-    if ( response.broadcast === true ) {
+    if ( response.broadcast === true && !response.portName ) {
         for ( channel in channels ) {
             if ( channels.hasOwnProperty(channel) === false ) {
                 continue;

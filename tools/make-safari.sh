@@ -19,7 +19,7 @@ cp platform/safari/*.js $DES/js/
 cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
 
-echo "*** uBlock_xpi: Generating locales"
+echo "*** uBlock_xpi: Generating meta..."
 python tools/make-safari-meta.py $DES/
 
 echo "*** uBlock.safariextension: Package done."
