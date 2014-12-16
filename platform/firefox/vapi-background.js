@@ -832,6 +832,7 @@ vAPI.net.registerListeners = function() {
          3: 'image',
          4: 'stylesheet',
          5: 'object',
+         6: 'main_frame',
          7: 'sub_frame',
         11: 'xmlhttprequest'
     };

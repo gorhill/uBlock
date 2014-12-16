@@ -84,11 +84,13 @@ let contentPolicy = {
         );
     },
     shouldLoad: function(type, location, origin, context) {
-        if (type === 6 || !context || !/^https?$/.test(location.scheme)) {
+        if (!context || !/^https?$/.test(location.scheme)) {
             return this.ACCEPT;
         }
 
-        let win = (context.ownerDocument || context).defaultView;
+        let win = type === 6
+            ? context.contentWindow
+            : (context.ownerDocument || context).defaultView;
 
         if (!win) {
             return this.ACCEPT;
@@ -98,7 +100,7 @@ let contentPolicy = {
             url: location.spec,
             type: type,
             tabId: -1,
-            frameId: win === win.top ? 0 : 1,
+            frameId: type === 6 ? -1 : (win === win.top ? 0 : 1),
             parentFrameId: win === win.top ? -1 : 0
         })[0];
 
