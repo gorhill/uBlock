@@ -74,7 +74,7 @@ var messagingConnector = function(response) {
 /******************************************************************************/
 
 var uniqueId = function() {
-    return parseInt(Math.random() * 1e10, 10).toString(36);
+    return Math.random().toString(36).slice(2);
 };
 
 /******************************************************************************/
@@ -359,7 +359,7 @@ var firstMutation = function() {
                 'return r;',
             '};',
             'history.replaceState = function() {',
-                'var r = pR.apply(this, arguments);',
+                'var r = rS.apply(this, arguments);',
                 'onpopstate();',
                 'return r;',
             '};'

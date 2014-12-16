@@ -39,9 +39,7 @@ function shutdown(data, reason) {
     }
 }
 
-function install() {
-    // https://bugzil.la/719376
-    Services.strings.flushBundles();
-}
+// https://bugzil.la/719376
+function install() Services.strings.flushBundles();
 
 function uninstall() {}

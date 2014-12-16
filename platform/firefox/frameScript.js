@@ -1,20 +1,27 @@
 /* globals Services, sendAsyncMessage, addMessageListener, removeMessageListener */
 
+(function(frameScriptContext) {
+
 'use strict';
 
-let appName = 'ublock';
+let appName;
 let listeners = {};
-let frameModule = Components.utils['import']('chrome://' + appName + '/content/frameModule.js', {});
 
-this.ublock_addMessageListener = function(id, fn) {
-    ublock_removeMessageListener(id);
+try { throw new Error; } catch (ex) {
+    appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
+}
+
+Components.utils['import']('chrome://' + appName + '/content/frameModule.js', {});
+
+frameScriptContext[appName + '_addMessageListener'] = function(id, fn) {
+    frameScriptContext[appName + '_removeMessageListener'](id);
     listeners[id] = function(msg) {
         fn(msg.data);
     };
     addMessageListener(id, listeners[id]);
 };
 
-this.ublock_removeMessageListener = function(id) {
+frameScriptContext[appName + '_removeMessageListener'] = function(id) {
     if (listeners[id]) {
         removeMessageListener(id, listeners[id]);
     }
@@ -27,3 +34,5 @@ addMessageListener(appName + ':broadcast', function(msg) {
         listeners[id](msg);
     }
 });
+
+})(this);

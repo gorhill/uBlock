@@ -1,14 +1,18 @@
 /* global Services, Components, XPCOMUtils */
-/* exported EXPORTED_SYMBOLS, isTabbed */
 
 'use strict';
 
-var EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
+this.EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
 
 Components.utils['import']('resource://gre/modules/Services.jsm');
 Components.utils['import']('resource://gre/modules/XPCOMUtils.jsm');
 
-const Ci = Components.interfaces, appName = 'ublock';
+const Ci = Components.interfaces;
+var appName;
+
+try { throw new Error; } catch (ex) {
+    appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
+}
 
 let getMessager = function(win) {
     try {
@@ -33,9 +37,10 @@ let getMessager = function(win) {
 let contentPolicy = {
     classDescription: 'ContentPolicy implementation',
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
-    contractID: '@ublock/content-policy;1',
+    contractID: '@' + appName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
     REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
+    requestMessageName: appName + ':onBeforeRequest',
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
     },
@@ -89,7 +94,7 @@ let contentPolicy = {
             return this.ACCEPT;
         }
 
-        let result = getMessager(win).sendSyncMessage('ublock:onBeforeRequest', {
+        let result = getMessager(win).sendSyncMessage(this.requestMessageName, {
             url: location.spec,
             type: type,
             tabId: -1,
@@ -105,7 +110,7 @@ let contentPolicy = {
 };
 
 let docObserver = {
-    contentBaseURI: 'chrome://ublock/content/js/',
+    contentBaseURI: 'chrome://' + appName + '/content/js/',
     initContext: function(win, sandbox) {
         let messager = getMessager(win);
 
@@ -115,6 +120,8 @@ let docObserver = {
                 wantComponents: false,
                 wantXHRConstructor: false
             });
+
+            win.self = win;
         }
 
         win.sendAsyncMessage = messager.sendAsyncMessage;
@@ -151,17 +158,12 @@ let docObserver = {
         lss(this.contentBaseURI + 'vapi-client.js', win);
         lss(this.contentBaseURI + 'contentscript-start.js', win);
 
-        if (doc.readyState === 'interactive' || doc.readyState === 'complete') {
-            lss(this.contentBaseURI + 'contentscript-end.js', win);
-        }
-        else {
-            let docReady = function(e) {
-                this.removeEventListener(e.type, docReady, true);
-                lss(docObserver.contentBaseURI + 'contentscript-end.js', win);
-            };
+        let docReady = function(e) {
+            this.removeEventListener(e.type, docReady, true);
+            lss(docObserver.contentBaseURI + 'contentscript-end.js', win);
+        };
 
-            doc.addEventListener('DOMContentLoaded', docReady, true);
-        }
+        doc.addEventListener('DOMContentLoaded', docReady, true);
     }
 };
 

@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global addMessageListener, removeMessageListener, sendAsyncMessage */
+
 // For non background pages
 
 /******************************************************************************/
@@ -74,7 +76,7 @@ var messagingConnector = function(response) {
 /******************************************************************************/
 
 var uniqueId = function() {
-    return parseInt(Math.random() * 1e10, 10).toString(36);
+    return Math.random().toString(36).slice(2);
 };
 
 /******************************************************************************/

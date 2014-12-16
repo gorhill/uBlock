@@ -69,13 +69,15 @@ vAPI.download = function(details) {
 /******************************************************************************/
 
 vAPI.getURL = function(path) {
-    return 'chrome://ublock/content/' + path.replace(/^\/+/, '');
+    return 'chrome://' + location.host + '/content/' + path.replace(/^\/+/, '');
 };
+
+/******************************************************************************/
 
 vAPI.i18n = (function() {
     var stringBundle = Components.classes['@mozilla.org/intl/stringbundle;1']
         .getService(Components.interfaces.nsIStringBundleService)
-        .createBundle('chrome://ublock/locale/messages.properties');
+        .createBundle('chrome://' + location.host + '/locale/messages.properties');
 
     return function(s) {
         try {
