@@ -314,9 +314,16 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     } else {
         changed = this.netFilteringEngine.dynamicFilterUnblock(details.hostname, details.requestType, details.firstParty);
     }
-    if ( changed ) {
-        this.userSettings.dynamicFilteringSelfie = this.netFilteringEngine.selfieFromDynamicFilters();
-        this.XAL.keyvalSetOne('dynamicFilteringSelfie', this.userSettings.dynamicFilteringSelfie);
+    if ( !changed ) {
+        return;
+    }
+
+    this.userSettings.dynamicFilteringSelfie = this.netFilteringEngine.selfieFromDynamicFilters();
+    this.XAL.keyvalSetOne('dynamicFilteringSelfie', this.userSettings.dynamicFilteringSelfie);
+
+    // https://github.com/gorhill/uBlock/issues/420
+    if ( details.requestType === 'sub_frame' && !details.block ) {
+        this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageHostname, 'net');
     }
 };
 

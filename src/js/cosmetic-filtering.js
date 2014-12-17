@@ -363,6 +363,17 @@ SelectorCacheEntry.prototype.add = function(selectors, type) {
     }
 };
 
+// https://github.com/gorhill/uBlock/issues/420
+SelectorCacheEntry.prototype.remove = function(type) {
+    this.lastAccessTime = Date.now();
+    if ( type === 'cosmetic' ) {
+        this.cosmetic = {};
+    } else {
+        this.net = {};
+        this.netCount = 0;
+    }
+};
+
 SelectorCacheEntry.prototype.retrieve = function(type, out) {
     this.lastAccessTime = Date.now();
     var dict = type === 'cosmetic' ? this.cosmetic : this.net;
@@ -914,6 +925,16 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
         }
     }
     entry.add(selectors, details.type);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.removeFromSelectorCache = function(hostname, type) {
+    var entry = this.selectorCache[hostname];
+    if ( entry === undefined ) {
+        return;
+    }
+    entry.remove(type);
 };
 
 /******************************************************************************/
