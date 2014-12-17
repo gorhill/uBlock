@@ -1,19 +1,45 @@
+/*******************************************************************************
+
+    µBlock - a browser extension to block requests.
+    Copyright (C) 2014 The µBlock authors
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see {http://www.gnu.org/licenses/}.
+
+    Home: https://github.com/gorhill/uBlock
+*/
+
 /* global Services, Components, XPCOMUtils */
 
 'use strict';
 
+/******************************************************************************/
+
 this.EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
 
-Components.utils['import']('resource://gre/modules/Services.jsm');
-Components.utils['import']('resource://gre/modules/XPCOMUtils.jsm');
-// Components.utils['import']('resource://gre/modules/devtools/Console.jsm');
+const {interfaces: Ci, utils: Cu} = Components;
 
-const Ci = Components.interfaces;
 let appName;
 
 try { throw new Error; } catch (ex) {
     appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
 }
+
+Cu['import']('resource://gre/modules/Services.jsm');
+Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
+// Cu['import']('resource://gre/modules/devtools/Console.jsm');
+
+/******************************************************************************/
 
 let getMessager = function(win) {
     try {
@@ -34,6 +60,8 @@ let getMessager = function(win) {
             .getInterface(Ci.nsIContentFrameMessageManager);
     }
 };
+
+/******************************************************************************/
 
 let contentPolicy = {
     classDescription: 'content-policy implementation for ' + appName,
@@ -100,7 +128,7 @@ let contentPolicy = {
         let result = getMessager(win).sendSyncMessage(this.requestMessageName, {
             url: location.spec,
             type: type,
-            tabId: -1,
+            tabId: -1, // determined in background script
             frameId: type === 6 ? -1 : (win === win.top ? 0 : 1),
             parentFrameId: win === win.top ? -1 : 0
         })[0];
@@ -112,13 +140,15 @@ let contentPolicy = {
     }*/
 };
 
+/******************************************************************************/
+
 let docObserver = {
     contentBaseURI: 'chrome://' + appName + '/content/',
     initContext: function(win, sandbox) {
         let messager = getMessager(win);
 
         if (sandbox) {
-            win = Components.utils.Sandbox([win], {
+            win = Cu.Sandbox([win], {
                 sandboxPrototype: win,
                 wantComponents: false,
                 wantXHRConstructor: false
@@ -127,10 +157,10 @@ let docObserver = {
             win.self = win;
 
             // anonymous function needs to be used here
-            win.injectScript = Components.utils.exportFunction(
+            win.injectScript = Cu.exportFunction(
                 function(script, evalCode) {
                     if (evalCode) {
-                        Components.utils.evalInSandbox(script, win);
+                        Cu.evalInSandbox(script, win);
                         return;
                     }
 
@@ -186,5 +216,9 @@ let docObserver = {
     }
 };
 
+/******************************************************************************/
+
 contentPolicy.register();
 docObserver.register();
+
+/******************************************************************************/

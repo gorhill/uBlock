@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 The µBlock authors
 
     This program is free software: you can redistribute it and/or modify
@@ -56,6 +56,7 @@ vAPI.app.restart = function() {};
 /******************************************************************************/
 
 // list of things that needs to be destroyed when disabling the extension
+// only functions should be added to it
 
 vAPI.unload = [];
 
