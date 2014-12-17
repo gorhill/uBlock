@@ -21,14 +21,14 @@
 
 /* global µBlock, vAPI, YaMD5 */
 
-'use strict';
-
 /******************************************************************************/
 /******************************************************************************/
 
 // Default handler
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -38,7 +38,8 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
-            µb.assets.getLocal(request.url, callback);
+            // https://github.com/gorhill/uBlock/issues/417
+            µb.assets.get(request.url, callback);
             return;
 
         case 'loadUbiquitousAllowRules':
@@ -97,6 +98,8 @@ vAPI.messaging.setup(onMessage);
 // popup.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -208,6 +211,8 @@ vAPI.messaging.listen('popup.js', onMessage);
 
 (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var µb = µBlock;
@@ -255,6 +260,8 @@ vAPI.messaging.listen('contentscript-start.js', onMessage);
 // contentscript-end.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -385,6 +392,8 @@ vAPI.messaging.listen('contentscript-end.js', onMessage);
 
 (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var µb = µBlock;
@@ -445,6 +454,8 @@ vAPI.messaging.listen('element-picker.js', onMessage);
 // 3p-filters.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -539,6 +550,8 @@ vAPI.messaging.listen('3p-filters.js', onMessage);
 
 (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var µb = µBlock;
@@ -581,6 +594,8 @@ vAPI.messaging.listen('1p-filters.js', onMessage);
 // whitelist.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -627,6 +642,8 @@ vAPI.messaging.listen('whitelist.js', onMessage);
 // stats.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -724,6 +741,8 @@ vAPI.messaging.listen('stats.js', onMessage);
 // about.js
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
