@@ -929,12 +929,16 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.removeFromSelectorCache = function(hostname, type) {
-    var entry = this.selectorCache[hostname];
-    if ( entry === undefined ) {
-        return;
+FilterContainer.prototype.removeFromSelectorCache = function(targetHostname, type) {
+    for ( var hostname in this.selectorCache ) {
+        if ( this.selectorCache.hasOwnProperty(hostname) === false ) {
+            continue;
+        }
+        if ( targetHostname !== '*' && hostname !== targetHostname ) {
+            continue;
+        }
+        this.selectorCache[hostname].remove(type);
     }
-    entry.remove(type);
 };
 
 /******************************************************************************/

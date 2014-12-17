@@ -323,7 +323,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // https://github.com/gorhill/uBlock/issues/420
     if ( details.requestType === 'sub_frame' && !details.block ) {
-        this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageHostname, 'net');
+        this.cosmeticFilteringEngine.removeFromSelectorCache(details.hostname, 'net');
     }
 };
 
