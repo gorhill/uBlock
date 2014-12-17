@@ -212,11 +212,18 @@
         } catch (e) {
             locations = {};
         }
+        var entry;
         for ( location in locations ) {
             if ( locations.hasOwnProperty(location) === false ) {
                 continue;
             }
-            availableLists['assets/thirdparties/' + location] = locations[location];
+            entry = locations[location];
+            // https://github.com/gorhill/uBlock/issues/418
+            // We now support built-in external filter lists
+            if ( /^https?:/.test(location) === false ) {
+                location = 'assets/thirdparties/' + location;
+            }
+            availableLists[location] = entry;
         }
 
         // Now get user's selection of lists
@@ -584,48 +591,7 @@
     // - Initialize internal state with maybe already existing tabs.
     // - Schedule next update operation.
     var onAllDone = function() {
-        if (vAPI.chrome) {
-            // http://code.google.com/p/chromium/issues/detail?id=410868#c11
-            // Need to be sure to access `vAPI.lastError()` to prevent
-            // spurious warnings in the console.
-            var scriptDone = function() {
-                vAPI.lastError();
-            };
-            var scriptEnd = function(tabId) {
-                if ( vAPI.lastError() ) {
-                    return;
-                }
-                vAPI.tabs.injectScript(tabId, {
-                    file: 'js/contentscript-end.js',
-                    allFrames: true,
-                    runAt: 'document_idle'
-                }, scriptDone);
-            };
-            var scriptStart = function(tabId) {
-                vAPI.tabs.injectScript(tabId, {
-                    file: 'js/vapi-client.js',
-                    allFrames: true,
-                    runAt: 'document_start'
-                }, function(){ });
-                vAPI.tabs.injectScript(tabId, {
-                    file: 'js/contentscript-start.js',
-                    allFrames: true,
-                    runAt: 'document_idle'
-                }, function(){ scriptEnd(tabId); });
-            };
-            var bindToTabs = function(tabs) {
-                var i = tabs.length, tab;
-                while ( i-- ) {
-                    tab = tabs[i];
-                    µb.bindTabToPageStats(tab.id, tab.url);
-                    // https://github.com/gorhill/uBlock/issues/129
-                    scriptStart(tab.id);
-                }
-            };
-
-            chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
-            chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
-        }
+        vAPI.onLoadAllCompleted();
 
         // https://github.com/gorhill/uBlock/issues/184
         // If we restored a selfie, check for updates not too far

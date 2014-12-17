@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global self */
+/* global self, µBlock */
 
 // For background page
 
@@ -390,6 +390,57 @@ vAPI.contextMenu = {
 
 vAPI.lastError = function() {
     return chrome.runtime.lastError;
+};
+
+/******************************************************************************/
+
+// This is called only once, when everything has been loaded in memory after
+// the extension was launched. It can be used to inject content scripts
+// in already opened web pages, to remove whatever nuisance could make it to
+// the web pages before uBlock was ready.
+
+vAPI.onLoadAllCompleted = function() {
+    // http://code.google.com/p/chromium/issues/detail?id=410868#c11
+    // Need to be sure to access `vAPI.lastError()` to prevent
+    // spurious warnings in the console.
+    var scriptDone = function() {
+        vAPI.lastError();
+    };
+    var scriptEnd = function(tabId) {
+        if ( vAPI.lastError() ) {
+            return;
+        }
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/contentscript-end.js',
+            allFrames: true,
+            runAt: 'document_idle'
+        }, scriptDone);
+    };
+    var scriptStart = function(tabId) {
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/vapi-client.js',
+            allFrames: true,
+            runAt: 'document_start'
+        }, function(){ });
+        vAPI.tabs.injectScript(tabId, {
+            file: 'js/contentscript-start.js',
+            allFrames: true,
+            runAt: 'document_idle'
+        }, function(){ scriptEnd(tabId); });
+    };
+    var bindToTabs = function(tabs) {
+        var µb = µBlock;
+        var i = tabs.length, tab;
+        while ( i-- ) {
+            tab = tabs[i];
+            µb.bindTabToPageStats(tab.id, tab.url);
+            // https://github.com/gorhill/uBlock/issues/129
+            scriptStart(tab.id);
+        }
+    };
+
+    chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
+    chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
 };
 
 /******************************************************************************/
