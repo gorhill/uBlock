@@ -253,9 +253,9 @@ var windowWatcher = {
             this.removeEventListener(e.type, windowWatcher.onReady);
         }
 
-        var docElement = this.document.documentElement;
+        var wintype = this.document.documentElement.getAttribute('windowtype');
 
-        if (docElement.getAttribute('windowtype') !== 'navigator:browser') {
+        if (wintype !== 'navigator:browser') {
             return;
         }
 
@@ -637,8 +637,7 @@ vAPI.toolbarButton.add = function(doc) {
     var iframe = panel.appendChild(doc.createElement('iframe'));
     iframe.setAttribute('type', 'content');
 
-    panel.style.cssText = iframe.style.cssText
-        = 'width: 180px; height: 310px; transition: width .1s, height .1s; overflow: hidden';
+    panel.style.overflow = iframe.style.overflow = 'hidden';
 
     doc.getElementById('PanelUI-multiView')
         .appendChild(panel)
@@ -698,6 +697,11 @@ vAPI.toolbarButton.add = function(doc) {
                 'color: #fff;',
                 'background: #666;',
                 'content: attr(badge);',
+            '}',
+            '#' + this.panelId + ', #' + this.panelId + ' > iframe {',
+                'width: 180px;',
+                'height: 310px;',
+                'transition: width .1s, height .1s;',
             '}'
         ].join(''));
 

@@ -36,7 +36,7 @@ let getMessager = function(win) {
 };
 
 let contentPolicy = {
-    classDescription: 'ContentPolicy implementation',
+    classDescription: 'content-policy implementation for ' + appName,
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
     contractID: '@' + appName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
