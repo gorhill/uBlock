@@ -114,17 +114,6 @@ let contentPolicy = {
 
 let docObserver = {
     contentBaseURI: 'chrome://' + appName + '/content/',
-    injectScript: function(script, evalCode) {
-        if (evalCode) {
-            Components.utils.evalInSandbox(script, this);
-            return;
-        }
-
-        Services.scriptloader.loadSubScript(
-            docObserver.contentBaseURI + script,
-            this
-        );
-    },
     initContext: function(win, sandbox) {
         let messager = getMessager(win);
 
@@ -137,10 +126,20 @@ let docObserver = {
 
             win.self = win;
 
-            Components.utils.exportFunction(
-                this.injectScript,
-                win,
-                {defineAs: 'injectScript'}
+            // anonymous function needs to be used here
+            win.injectScript = Components.utils.exportFunction(
+                function(script, evalCode) {
+                    if (evalCode) {
+                        Components.utils.evalInSandbox(script, win);
+                        return;
+                    }
+
+                    Services.scriptloader.loadSubScript(
+                        docObserver.contentBaseURI + script,
+                        win
+                    );
+                },
+                win
             );
         }
 
