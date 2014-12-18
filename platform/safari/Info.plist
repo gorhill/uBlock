@@ -21,7 +21,7 @@
         <key>Database Quota</key>
         <real>52428800</real>
         <key>Global Page</key>
-        <string>background.html</string>
+        <string>background.html#{appInfo}</string>
         <key>Popovers</key>
         <array>
             <dict>

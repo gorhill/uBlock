@@ -5,6 +5,7 @@ import json
 import sys
 import codecs
 from time import time
+from urllib import parse
 from shutil import rmtree
 from collections import OrderedDict
 
@@ -57,6 +58,14 @@ with codecs.open(chromium_manifest, encoding='utf8') as m:
 
 manifest['buildNumber'] = int(time())
 manifest['description'] = description
+
+# pass "#name,version" as the fragment in the URL of the background script
+manifest['appInfo'] = ','.join([
+    parse.quote(manifest['name']),
+    manifest['version']
+])
+
+info_plist = pj(build_dir, 'Info.plist')
 
 with codecs.open(pj(build_dir, 'Info.plist'), 'r+', encoding='utf8') as f:
     info_plist = f.read()

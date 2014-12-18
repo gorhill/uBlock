@@ -19,43 +19,37 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, APP_STARTUP, APP_SHUTDOWN */
+/* global APP_SHUTDOWN */
 /* exported startup, shutdown, install, uninstall */
 
 'use strict';
 
 /******************************************************************************/
 
-var bgProcess;
-
-Components.utils['import']('resource://gre/modules/Services.jsm');
+let bgProcess;
 
 /******************************************************************************/
 
-function startup(data, reason) {
-    bgProcess = function(ev) {
-        if (ev) {
-            this.removeEventListener(ev.type, bgProcess);
-        }
+function startup(data) {
+    let {AddonManager} = Components.utils['import'](
+        'resource://gre/modules/AddonManager.jsm',
+        null
+    );
 
-        bgProcess = Services.appShell.hiddenDOMWindow.document;
-        bgProcess = bgProcess.documentElement.appendChild(
-            bgProcess.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+    AddonManager.getAddonByID(data.id, addon => {
+        let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
+            .getService(Components.interfaces.nsIAppShellService)
+            .hiddenDOMWindow.document;
+
+        bgProcess = hDoc.documentElement.appendChild(
+            hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
-        bgProcess.setAttribute('src', 'chrome://ublock/content/background.html');
-    };
 
-    if (reason === APP_STARTUP) {
-        Services.ww.registerNotification({
-            observe: function(win) {
-                Services.ww.unregisterNotification(this);
-                win.addEventListener('DOMContentLoaded', bgProcess);
-            }
-        });
-    }
-    else {
-        bgProcess();
-    }
+        let bgURI = 'chrome://ublock/content/background.html';
+
+        // send addon data synchronously to the background script
+        bgProcess.src = bgURI + '#' + [addon.name, addon.version];
+    });
 }
 
 /******************************************************************************/
@@ -70,7 +64,8 @@ function shutdown(data, reason) {
 
 function install() {
     // https://bugzil.la/719376
-    Services.strings.flushBundles();
+    Components.classes['@mozilla.org/intl/stringbundle;1']
+        .getService(Components.interfaces.nsIStringBundleService).flushBundles();
 }
 
 /******************************************************************************/

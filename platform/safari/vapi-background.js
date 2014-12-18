@@ -32,20 +32,14 @@
 /******************************************************************************/
 
 self.vAPI = self.vAPI || {};
-
 vAPI.safari = true;
 
 /******************************************************************************/
 
-var xhr = new XMLHttpRequest;
-xhr.overrideMimeType('application/x-javascript;charset=utf-8');
-xhr.open('GET', 'Info.plist', false);
-xhr.send();
-xhr = xhr.responseText;
-
+vAPI.app = location.hash.slice(1).split(',');
 vAPI.app = {
-    name: xhr.match(/DisplayName<\S+[^>]+>([^<]+)/)[1],
-    version: xhr.match(/ShortVersionString<\S+[^>]+>([^<]+)/)[1]
+    name: decodeURIComponent(vAPI.app[0]),
+    version: vAPI.app[1]
 };
 
 /******************************************************************************/
