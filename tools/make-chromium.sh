@@ -4,9 +4,11 @@
 
 echo "*** uBlock.chromium: Creating web store package"
 echo "*** uBlock.chromium: Copying files"
+
 DES=dist/build/uBlock.chromium
 rm -r $DES
 mkdir -p $DES
+
 cp -R assets $DES/
 rm $DES/assets/*.sh
 cp -R src/css $DES/
@@ -18,4 +20,6 @@ cp -R $DES/_locales/nb $DES/_locales/no
 cp src/*.html $DES/
 cp platform/chromium/*.js $DES/js/
 cp platform/chromium/manifest.json $DES/
+cp LICENSE.txt $DES/
+
 echo "*** uBlock.chromium: Package done."
