@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global APP_SHUTDOWN */
+/* global APP_SHUTDOWN, APP_STARTUP */
 /* exported startup, shutdown, install, uninstall */
 
 'use strict';
@@ -30,13 +30,12 @@ let bgProcess;
 
 /******************************************************************************/
 
-function startup(data) {
-    let {AddonManager} = Components.utils['import'](
-        'resource://gre/modules/AddonManager.jsm',
-        null
-    );
+function startup(data, reason) {
+    bgProcess = function(e) {
+        if (e) {
+            this.removeEventListener('DOMContentLoaded', bgProcess);
+        }
 
-    AddonManager.getAddonByID(data.id, addon => {
         let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
             .getService(Components.interfaces.nsIAppShellService)
             .hiddenDOMWindow.document;
@@ -44,12 +43,23 @@ function startup(data) {
         bgProcess = hDoc.documentElement.appendChild(
             hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
+        bgProcess.setAttribute('src', 'chrome://ublock/content/background.html');
+    };
 
-        let bgURI = 'chrome://ublock/content/background.html';
+    if (reason === APP_STARTUP) {
+        let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
+                    .getService(Components.interfaces.nsIWindowWatcher);
 
-        // send addon data synchronously to the background script
-        bgProcess.src = bgURI + '#' + [addon.name, addon.version];
-    });
+        ww.registerNotification({
+            observe: function(win) {
+                ww.unregisterNotification(this);
+                win.addEventListener('DOMContentLoaded', bgProcess);
+            }
+        });
+    }
+    else {
+        bgProcess();
+    }
 }
 
 /******************************************************************************/

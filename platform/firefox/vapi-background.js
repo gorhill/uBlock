@@ -43,10 +43,10 @@ vAPI.firefox = true;
 
 /******************************************************************************/
 
-vAPI.app = location.hash.slice(1).split(',');
+// TODO: read these data from somewhere...
 vAPI.app = {
-    name: vAPI.app[0],
-    version: vAPI.app[1]
+    name: 'µBlock',
+    version: '0.8.2.0'
 };
 
 /******************************************************************************/
