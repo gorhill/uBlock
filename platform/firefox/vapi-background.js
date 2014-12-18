@@ -45,8 +45,7 @@ vAPI.firefox = true;
 
 vAPI.app = {
     name: 'µBlock',
-    version: '0.7.2.0',
-    cleanName: location.host
+    version: '0.8.2.0'
 };
 
 /******************************************************************************/
@@ -75,7 +74,7 @@ var SQLite = {
             throw Error('Should be a directory...');
         }
 
-        path.append(vAPI.app.cleanName + '.sqlite');
+        path.append(location.host + '.sqlite');
         this.db = Services.storage.openDatabase(path);
         this.db.executeSimpleSQL(
             'CREATE TABLE IF NOT EXISTS settings' +
@@ -83,6 +82,7 @@ var SQLite = {
         );
 
         vAPI.unload.push(function() {
+            // VACUUM somewhere else, instead on unload?
             SQLite.run('VACUUM');
             SQLite.db.asyncClose();
         });
@@ -343,7 +343,7 @@ vAPI.tabs.registerListeners = function() {
             for (var tab of win.gBrowser.tabs) {
                 var URI = tab.linkedBrowser.currentURI;
 
-                if (URI.scheme === 'chrome' && URI.host === vAPI.app.cleanName) {
+                if (URI.scheme === 'chrome' && URI.host === location.host) {
                     win.gBrowser.removeTab(tab);
                 }
             }
@@ -551,7 +551,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     }
 
     tab.linkedBrowser.messageManager.sendAsyncMessage(
-        vAPI.app.cleanName + ':broadcast',
+        location.host + ':broadcast',
         JSON.stringify({
             broadcast: true,
             portName: 'vAPI',
@@ -599,8 +599,8 @@ vAPI.setIcon = function(tabId, img, badge) {
 /******************************************************************************/
 
 vAPI.toolbarButton = {
-    widgetId: vAPI.app.cleanName + '-button',
-    panelId: vAPI.app.cleanName + '-panel'
+    widgetId: location.host + '-button',
+    panelId: location.host + '-panel'
 };
 
 /******************************************************************************/
@@ -663,7 +663,7 @@ vAPI.toolbarButton.add = function(doc) {
 
     var onPopupReady = function() {
         if (!this.contentWindow
-            || this.contentWindow.location.host !== vAPI.app.cleanName) {
+            || this.contentWindow.location.host !== location.host) {
             return;
         }
 
@@ -822,7 +822,7 @@ vAPI.messaging.setup = function(defaultHandler) {
     this.defaultHandler = defaultHandler;
 
     this.globalMessageManager.addMessageListener(
-        vAPI.app.cleanName + ':background',
+        location.host + ':background',
         this.onMessage
     );
 
@@ -833,7 +833,7 @@ vAPI.messaging.setup = function(defaultHandler) {
 
         gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);
         gmm.removeMessageListener(
-            vAPI.app.cleanName + ':background',
+            location.host + ':background',
             vAPI.messaging.onMessage
         );
     });
@@ -843,7 +843,7 @@ vAPI.messaging.setup = function(defaultHandler) {
 
 vAPI.messaging.broadcast = function(message) {
     this.globalMessageManager.broadcastAsyncMessage(
-        vAPI.app.cleanName + ':broadcast',
+        location.host + ':broadcast',
         JSON.stringify({broadcast: true, msg: message})
     );
 };
@@ -851,7 +851,7 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 
 vAPI.net = {
-    beforeRequestMessageName: vAPI.app.cleanName + ':onBeforeRequest'
+    beforeRequestMessageName: location.host + ':onBeforeRequest'
 };
 
 /******************************************************************************/
