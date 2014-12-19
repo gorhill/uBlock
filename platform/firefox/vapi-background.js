@@ -360,8 +360,15 @@ vAPI.tabs.getTabId = function(target) {
         return target.linkedPanel.slice(6);
     }
 
-    var gBrowser = target.ownerDocument.defaultView.gBrowser;
-    var i = gBrowser.browsers.indexOf(target);
+    var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
+
+    // This should be more efficient from version 35
+    if (gBrowser.getTabForBrowser) {
+        i = gBrowser.getTabForBrowser(target);
+        return i ? i.linkedPanel.slice(6) : -1;
+    }
+
+    i = gBrowser.browsers.indexOf(target);
 
     if (i !== -1) {
         i = gBrowser.tabs[i].linkedPanel.slice(6);
