@@ -34,13 +34,13 @@
 
 /******************************************************************************/
 
-// Because Safari
-if ( vAPI.canExecuteContentScript() !== true ) {
+// Because in case
+if ( !vAPI ) {
     return;
 }
 
-// Because in case
-if ( !vAPI ) {
+// Because Safari
+if ( vAPI.canExecuteContentScript() !== true ) {
     return;
 }
 
