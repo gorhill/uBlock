@@ -363,7 +363,6 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 (function() {
     var wins = safari.application.browserWindows, i = wins.length, j;
-    var tabs = [];
 
     while (i--) {
         j = wins[i].tabs.length;
@@ -698,7 +697,14 @@ vAPI.net.registerListeners = function() {
 
 /******************************************************************************/
 
-vAPI.contextMenu = {};
+vAPI.contextMenu = {
+    contextMap: {
+        frame: 'insideFrame',
+        link: 'linkHref',
+        image: 'srcUrl',
+        editable: 'editable'
+    }
+};
 
 /******************************************************************************/
 
@@ -721,40 +727,22 @@ vAPI.contextMenu.create = function(details, callback) {
         if (uI && /^https?:\/\//i.test(uI.pageUrl)) {
             if (contexts) {
                 var invalidContext = true;
+                var ctxMap = vAPI.contextMenu.contextMap;
 
                 for (var i = 0; i < contexts.length; ++i) {
-                    if (contexts[i] === 'frame') {
-                        if (uI.insideFrame) {
+                    var ctx = contexts[i];
+
+                    if (ctx === 'audio' || ctx === 'video') {
+                        if (uI[ctxMap['image']] && uI.tagName === ctx) {
                             invalidContext = false;
                             break;
                         }
                     }
-                    else if (contexts[i] === 'link') {
-                        if (uI.linkHref) {
-                            invalidContext = false;
-                            break;
-                        }
+                    else if (uI[ctxMap[ctx]]) {
+                        invalidContext = false;
+                        break;
                     }
-                    else if (contexts[i] === 'image') {
-                        if (uI.srcUrl) {
-                            invalidContext = false;
-                            break;
-                        }
-                    }
-                    else if (contexts[i] === 'audio'
-                        || contexts[i] === 'video') {
-                        if (uI.srcUrl && uI.tagName === contexts[i]) {
-                            invalidContext = false;
-                            break;
-                        }
-                    }
-                    else if (contexts[i] === 'editable') {
-                        if (uI.editable) {
-                            invalidContext = false;
-                            break;
-                        }
-                    }
-                    else if (contexts[i] === 'page') {
+                    else if (ctx === 'page') {
                         if (!(uI.insideFrame || uI.linkHref
                             || uI.mediaType || uI.editable)) {
                             invalidContext = false;

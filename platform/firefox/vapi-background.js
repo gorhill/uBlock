@@ -271,7 +271,8 @@ var windowWatcher = {
         tC.addEventListener('TabClose', windowWatcher.onTabClose);
         tC.addEventListener('TabSelect', windowWatcher.onTabSelect);
 
-        vAPI.toolbarButton.add(this.document);
+        vAPI.toolbarButton.register(this.document);
+        vAPI.contextMenu.register(this.document);
 
         // when new window is opened TabSelect doesn't run on the selected tab?
     },
@@ -331,7 +332,7 @@ vAPI.tabs.registerListeners = function() {
         Services.ww.unregisterNotification(windowWatcher);
 
         for (var win of vAPI.tabs.getWindows()) {
-            vAPI.toolbarButton.remove(win.document);
+            vAPI.toolbarButton.unregister(win.document);
 
             win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
             win.gBrowser.removeTabsProgressListener(tabsProgressListener);
@@ -632,9 +633,9 @@ vAPI.toolbarButton.init = function() {
 // it runs with windowWatcher when a window is opened
 // vAPI.tabs.registerListeners initializes it
 
-vAPI.toolbarButton.add = function(doc) {
+vAPI.toolbarButton.register = function(doc) {
     var panel = doc.createElement('panelview');
-    panel.id = this.panelId;
+    panel.setAttribute('id', this.panelId);
 
     var iframe = panel.appendChild(doc.createElement('iframe'));
     iframe.setAttribute('type', 'content');
@@ -716,7 +717,7 @@ vAPI.toolbarButton.add = function(doc) {
 
 /******************************************************************************/
 
-vAPI.toolbarButton.remove = function(doc) {
+vAPI.toolbarButton.unregister = function(doc) {
     var panel = doc.getElementById(this.panelId);
     panel.parentNode.removeChild(panel);
     doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor).
@@ -909,15 +910,148 @@ vAPI.net.registerListeners = function() {
 
 /******************************************************************************/
 
-vAPI.contextMenu = {};
+vAPI.contextMenu = {
+    contextMap: {
+        frame: 'inFrame',
+        link: 'onLink',
+        image: 'onImage',
+        audio: 'onAudio',
+        video: 'onVideo',
+        editable: 'onEditableArea'
+    }
+};
 
 /******************************************************************************/
 
-vAPI.contextMenu.create = function(details, callback) {};
+vAPI.contextMenu.displayMenuItem = function(e) {
+    var doc = e.target.ownerDocument;
+    var gContextMenu = doc.defaultView.gContextMenu;
+    var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
+
+    if (!/^https?$/.test(gContextMenu.browser.currentURI.scheme)) {
+        menuitem.hidden = true;
+        return;
+    }
+
+    var ctx = vAPI.contextMenu.contexts;
+
+    if (!ctx) {
+        menuitem.hidden = false;
+        return;
+    }
+
+    var ctxMap = vAPI.contextMenu.contextMap;
+
+    for (var context of ctx) {
+        if (context === 'page' && !gContextMenu.onLink && !gContextMenu.onImage
+            && !gContextMenu.onEditableArea && !gContextMenu.inFrame
+            && !gContextMenu.onVideo && !gContextMenu.onAudio) {
+            menuitem.hidden = false;
+            return;
+        }
+
+        if (gContextMenu[ctxMap[context]]) {
+            menuitem.hidden = false;
+            return;
+        }
+    }
+
+    menuitem.hidden = true;
+};
 
 /******************************************************************************/
 
-vAPI.contextMenu.remove = function() {};
+vAPI.contextMenu.register = function(doc) {
+    if (!this.menuItemId) {
+        return;
+    }
+
+    var contextMenu = doc.getElementById('contentAreaContextMenu');
+    var menuitem = doc.createElement('menuitem');
+
+    menuitem.setAttribute('id', this.menuItemId);
+    menuitem.setAttribute('label', this.menuLabel);
+    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+    menuitem.setAttribute('class', 'menuitem-iconic');
+
+    menuitem.addEventListener('command', this.onCommand);
+    contextMenu.addEventListener('popupshowing', this.displayMenuItem);
+
+    contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+};
+
+/******************************************************************************/
+
+vAPI.contextMenu.unregister = function(doc) {
+    if (!this.menuItemId) {
+        return;
+    }
+
+    var menuitem = doc.getElementById(this.menuItemId);
+    var contextMenu = menuitem.parentNode;
+
+    menuitem.removeEventListener('command', this.onCommand);
+    contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
+    contextMenu.removeChild(menuitem);
+};
+
+/******************************************************************************/
+
+vAPI.contextMenu.create = function(details, callback) {
+    this.menuItemId = details.id;
+    this.menuLabel = details.title;
+    this.contexts = details.contexts;
+
+    if (Array.isArray(this.contexts) && this.contexts.length) {
+        this.contexts = this.contexts.indexOf('all') === -1 ? this.contexts : null;
+    }
+    else {
+        // default in Chrome
+        this.contexts = ['page'];
+    }
+
+    this.onCommand = function() {
+        var gContextMenu = this.ownerDocument.defaultView.gContextMenu;
+        var details = {
+            menuItemId: this.id,
+            tagName: gContextMenu.target.tagName.toLowerCase()
+        };
+
+        if (gContextMenu.inFrame) {
+            details.frameUrl = gContextMenu.focusedWindow.location.href;
+        }
+        else if (gContextMenu.onImage
+            || gContextMenu.onAudio
+            || gContextMenu.onVideo) {
+            details.srcUrl = gContextMenu.mediaURL;
+        }
+        else if (gContextMenu.onLink) {
+            details.linkUrl = gContextMenu.linkURL;
+        }
+
+        callback(details, {
+            id: vAPI.tabs.getTabId(gContextMenu.browser),
+            url: gContextMenu.browser.currentURI.spec
+        });
+    };
+
+    for (var win of vAPI.tabs.getWindows()) {
+        this.register(win.document);
+    }
+};
+
+/******************************************************************************/
+
+vAPI.contextMenu.remove = function() {
+    for (var win of vAPI.tabs.getWindows()) {
+        this.unregister(win.document);
+    }
+
+    this.menuItemId = null;
+    this.menuLabel = null;
+    this.contexts = null;
+    this.onCommand = null;
+};
 
 /******************************************************************************/
 
