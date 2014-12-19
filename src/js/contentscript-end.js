@@ -42,6 +42,11 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 // ABP cosmetic filters
 
 (function() {
+    if ( vAPI.skipCosmeticFiltering ) {
+        // console.debug('Abort cosmetic filtering');
+        return;
+    }
+
     var queriedSelectors = {};
     var injectedSelectors = vAPI.hideCosmeticFilters || {};
     var classSelectors = null;

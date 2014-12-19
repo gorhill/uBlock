@@ -969,7 +969,7 @@ FilterContainer.prototype.pruneSelectorCache = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveGenericSelectors = function(request) {
-    if ( µb.userSettings.parseAllABPHideFilters !== true ) {
+    if ( this.acceptedCount !== 0 ) {
         return;
     }
     if ( !request.selectors ) {
@@ -1031,9 +1031,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveDomainSelectors = function(request) {
-    if ( µb.userSettings.parseAllABPHideFilters !== true ) {
-        return;
-    }
     if ( !request.locationURL ) {
         return;
     }
@@ -1047,6 +1044,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     var r = {
         domain: domain,
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
+        skipCosmeticFiltering: this.acceptedCount === 0,
         cosmeticHide: [],
         cosmeticDonthide: [],
         netHide: [],

@@ -34,8 +34,13 @@
 
 /******************************************************************************/
 
-// because Safari
+// Because Safari
 if ( vAPI.canExecuteContentScript() !== true ) {
+    return;
+}
+
+// Because in case
+if ( !vAPI ) {
     return;
 }
 
@@ -116,6 +121,7 @@ var netFilters = function(details) {
 };
 
 var filteringHandler = function(details) {
+    vAPI.skipCosmeticFiltering = !details || details.skipCosmeticFiltering;
     if ( details ) {
         if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
             cosmeticFilters(details);
