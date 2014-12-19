@@ -3,11 +3,12 @@
 import os
 import json
 import sys
+from io import open
 from shutil import rmtree
 from collections import OrderedDict
 
-if not sys.argv[1]:
-	raise SystemExit('Build dir missing.')
+if len(sys.argv) == 1 or not sys.argv[1]:
+    raise SystemExit('Build dir missing.')
 
 
 def mkdirs(path):
