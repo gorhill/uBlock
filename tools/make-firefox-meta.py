@@ -50,10 +50,11 @@ for alpha2 in os.listdir(source_locale_dir):
 chrome_manifest = pj(build_dir, 'chrome.manifest')
 
 with open(chrome_manifest, 'at', encoding='utf-8', newline='\n') as f:
-    f.write('\n')
+    f.write('\nlocale ublock en ./locale/en/\n')
 
     for alpha2 in language_codes:
-        f.write('locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
+        if alpha2 != 'en':
+            f.write('locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
 
 rmtree(source_locale_dir)
 
