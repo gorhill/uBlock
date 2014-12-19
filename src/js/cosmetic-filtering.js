@@ -969,7 +969,7 @@ FilterContainer.prototype.pruneSelectorCache = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.retrieveGenericSelectors = function(request) {
-    if ( this.acceptedCount !== 0 ) {
+    if ( this.acceptedCount === 0 ) {
         return;
     }
     if ( !request.selectors ) {
