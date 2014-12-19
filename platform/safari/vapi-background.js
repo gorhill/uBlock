@@ -674,7 +674,7 @@ vAPI.net.registerListeners = function() {
                     e.message = false;
                 }
                 else if (e.message.type === 'script'
-                    && typeof block.redirectUrl === "string") {
+                    && typeof block.redirectUrl === 'string') {
                     e.message = block.redirectUrl;
                 }
                 else {
@@ -784,14 +784,14 @@ vAPI.contextMenu.create = function(details, callback) {
     };
 
     safari.application.addEventListener('contextmenu', this.onContextMenu);
-    safari.application.addEventListener("command", this.onContextMenuCmd);
+    safari.application.addEventListener('command', this.onContextMenuCmd);
 };
 
 /******************************************************************************/
 
 vAPI.contextMenu.remove = function() {
     safari.application.removeEventListener('contextmenu', this.onContextMenu);
-    safari.application.removeEventListener("command", this.onContextMenuCmd);
+    safari.application.removeEventListener('command', this.onContextMenuCmd);
     this.onContextMenu = null;
     this.onContextMenuCmd = null;
 };
