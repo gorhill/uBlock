@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Нажмите кнопку питания, чтобы <br>навсегда отключить\\включить <br>µBlock для текущего сайта",
+    "message":"Нажмите кнопку питания, чтобы <br>навсегда отключить\/включить <br>µBlock для текущего сайта",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{

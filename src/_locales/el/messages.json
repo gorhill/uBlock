@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
+    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του µBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν τη σελίδα.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -60,11 +60,11 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Είσοδος στη λειτουργία επιλογής στοιχείων",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Πηγαίνετε στο αρχείο καταγραφής αιτήσεων",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -176,19 +176,19 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Hide placeholders of blocked elements",
+    "message":"Απόκρυψη κρατημένων πεδίων από αποκλεισμένα στοιχεία",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Εμφάνιση του αριθμού αποκλεισμένων αιτήσεων στο εικονίδιο",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Να γίνεται χρήση του αναδυόμενου μενού, όπου ενδείκνυται",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Ενεργοποιήσε πειραματικά χαρακτηριστικά",
+    "message":"Ενεργοποιήση πειραματικών χαρακτηριστικών (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Πληροφορίες<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -204,19 +204,19 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Ενημέρωση τώρα",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Εκκαθάριση προσωρινής μνήμης κάθε λίστας",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Ανάλυση και επιβολή κοσμητικών φίλτρων.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">συμβατών με τα &ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Αυτά τα φίλτρα είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήσεις δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -232,11 +232,11 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Ιδιωτικό απόρρητο",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Τομείς κακόβουλου λογισμικού",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -244,7 +244,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Πολλαπλών χρήσεων",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -256,19 +256,19 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"Ένα URL ανά γραμμή. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται. Άκυρα URL θα παρακάμπτονται σιωπηλά.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Parse",
+    "message":"Ανάλυση",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"Εκκαθάριση προσωρινής μνήμης",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"new version available",
+    "message":"νέα έκδοση διαθέσιμη",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -284,7 +284,7 @@
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"Εξαγωγή",
     "description":"English: Export"
   },
   "1pExportFilename":{
@@ -292,15 +292,15 @@
     "description":"English: ublock-custom-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Εφαρμογή αλλαγών",
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Η λίστα με τα ονόματα κόμβων στα οποία το µBlock θα είναι απενεργοποιημένο. Μια καταχώρηση ανά γραμμή. Άκυρα ονόματα κόμβων θα παρακάμπτονται σιωπηλά.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"Εισαγωγή και προσάρτηση",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -312,7 +312,7 @@
     "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"Εφαρμογή αλλαγών",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
@@ -324,19 +324,19 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"Αποκλεισμένες αιτήσεις",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"Επιτρεπόμενες αιτήσεις",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Τύπος",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Τομέας",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -400,7 +400,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Αδυναμία σύνδεσης με {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
