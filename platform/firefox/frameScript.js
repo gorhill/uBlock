@@ -21,8 +21,6 @@
 
 /* globals Services, sendAsyncMessage, addMessageListener, removeMessageListener */
 
-'use strict';
-
 /******************************************************************************/
 
 (function(frameScriptContext) {
