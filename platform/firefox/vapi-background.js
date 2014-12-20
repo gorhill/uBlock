@@ -333,6 +333,7 @@ vAPI.tabs.registerListeners = function() {
 
         for (var win of vAPI.tabs.getWindows()) {
             vAPI.toolbarButton.unregister(win.document);
+            vAPI.contextMenu.unregister(win.document);
 
             win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
             win.gBrowser.removeTabsProgressListener(tabsProgressListener);
