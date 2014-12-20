@@ -28,12 +28,7 @@
 this.EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
 
 const {interfaces: Ci, utils: Cu} = Components;
-
-let appName;
-
-try { throw new Error; } catch (ex) {
-    appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
-}
+const appName = __URI__.match(/:\/\/([^\/]+)/)[1];
 
 Cu['import']('resource://gre/modules/Services.jsm');
 Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
@@ -41,25 +36,11 @@ Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
 
 /******************************************************************************/
 
-let getMessager = function(win) {
-    try {
-        // e10s
-        return win
-            .QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsIWebNavigation)
-            .QueryInterface(Ci.nsIDocShellTreeItem)
-            .rootTreeItem
-            .QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsIContentFrameMessageManager);
-    } catch (ex) {
-        return win
-            .QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsIWebNavigation)
-            .QueryInterface(Ci.nsIDocShell)
-            .QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsIContentFrameMessageManager);
-    }
-};
+const getMessager = win =>
+    win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDocShell)
+        .sameTypeRootTreeItem.QueryInterface(Ci.nsIDocShell)
+        .QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIContentFrameMessageManager);
 
 /******************************************************************************/
 
