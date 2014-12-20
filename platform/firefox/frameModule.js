@@ -44,7 +44,7 @@ const getMessager = win =>
 
 /******************************************************************************/
 
-let contentPolicy = {
+const contentPolicy = {
     classDescription: 'content-policy implementation for ' + appName,
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
     contractID: '@' + appName + '/content-policy;1',
@@ -123,7 +123,7 @@ let contentPolicy = {
 
 /******************************************************************************/
 
-let docObserver = {
+const docObserver = {
     contentBaseURI: 'chrome://' + appName + '/content/',
     initContext: function(win, sandbox) {
         let messager = getMessager(win);
