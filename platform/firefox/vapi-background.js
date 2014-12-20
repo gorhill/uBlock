@@ -1068,6 +1068,15 @@ vAPI.lastError = function() {
 
 /******************************************************************************/
 
+// This is called only once, when everything has been loaded in memory after
+// the extension was launched. It can be used to inject content scripts
+// in already opened web pages, to remove whatever nuisance could make it to
+// the web pages before uBlock was ready.
+
+vAPI.onLoadAllCompleted = function() {};
+
+/******************************************************************************/
+
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
