@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Επιτέλους, ένας αποτελεσματικός blocker για τους περιηγητής βασισμένους στο Chromium. Ελαφρύ για τον επεξεργαστή και την μνήμη.",
+    "message":"Επιτέλους, ένας αποτελεσματικός blocker για τους περιηγητές βασισμένους στο Chromium. Ελαφρύς για τον επεξεργαστή και την μνήμη.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard."
   },
   "whitelistPageName":{
-    "message":"Λευκή λίστα",
+    "message":"Λίστα επιτρεπόμενων",
     "description":"appears as tab name in dashboard."
   },
   "statsPageName":{
@@ -40,11 +40,11 @@
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"μπλοκαρισμένες αιτήσεις",
+    "message":"αποκλεισμένες αιτήσεις",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"σε αυτή τη σελίδα",
+    "message":"σε αυτήν τη σελίδα",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">συμβατών με τα &ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Αυτά τα φίλτρα είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήσεις δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Αυτά τα φίλτρα είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήσεις δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -348,11 +348,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No blocked requests logged for this page",
+    "message":"Δεν καταγράφηκαν αποκλεισμένες αιτήσεις για αυτήν τη σελίδα",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"Δεν καταγράφηκαν μη-αποκλεισμένες αιτήσεις για αυτήν τη σελίδα",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
@@ -380,11 +380,11 @@
     "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Επαναφορά από αρχείο...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Reset to default settings...",
+    "message":"Επαναφορά στις προεπιλεγμένες ρυθμίσεις...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -404,7 +404,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Αυτή η καταχώρηση θα πρέπει να είναι τελευταία",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

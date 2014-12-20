@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blokker for Chromium-baserte nettlesere. Lett på CPU og minne.",
+    "message":"Endelig et effektivt blokkeringsprogram for Chromium-baserte nettlesere. Lavt CPU- og minnebruk.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: permanent deaktivere\/aktivere µBlock for dette området. \nCtrl+klikk: deaktivere µBlock bare på denne siden.",
+    "message":"Klikk: Deaktiver\/aktiver µBlock for dette nettstedet.\n\nCtrl+klikk: Deaktiver µBlock bare på denne siden.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -60,11 +60,11 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Elementvelger modus",
+    "message":"Åpne elementvelgermodus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til loggen",
+    "message":"Gå til forespørselslogg",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -160,11 +160,11 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Nettfiltere",
+    "message":"Nettfiltre",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetisk filtre",
+    "message":"Kosmetiske filtre",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -176,7 +176,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Skjul plassholdere av blokkerte elementer",
+    "message":"Skjul blokkerte elementers plassholdere",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -212,15 +212,15 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analysere og håndheve kosmetisk filtre.",
+    "message":"Analyser og bruk kosmetiske filtre.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Dette alternativet aktiverer analyse og håndheve <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-kompatible &ldquo;elementet skjuler&rdquo;  filtre<\/a>. Disse filtrene er hovedsakelig kosmetisk, men skjuler også elementer på en webside som anses for å være en visuell ordensforstyrrelser, og som ikke blokkeres av den&ldquo; forespørsel-basert Filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker <i>µBlock<\/i> minne fotavtrykk.<\/p>",
+    "message":"<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener til å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørsel-baserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Liste over blokkerte verter",
+    "message":"Lister over blokkerte verter",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -228,7 +228,7 @@
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Annonser",
+    "message":"Reklame",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
@@ -236,15 +236,15 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Ondsinnede domener",
+    "message":"Domener med skadelig programvare",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Sosiale",
+    "message":"Sosiale nettverk",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Flerformåls",
+    "message":"Multi-formål",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -256,7 +256,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En URL-adresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige URL-adresser ignoreres stille.",
+    "message":"En nettadresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige nettadresser ignoreres stille.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -272,7 +272,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan være foreldet",
+    "message":"utdatert",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -280,7 +280,7 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importer og tilføy",
+    "message":"Importer og legg til",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -296,11 +296,11 @@
     "description":"English: Apply changes"
   },
   "whitelistPrompt":{
-    "message":"Listen over vertsnavn som µBlock vil bli deaktivert. Én oppføring per linje. Ugyldig vertsnavn ignorert uten advarsel.",
+    "message":"Din liste over vertsnavn hvor µBlock blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importer og tilføy",
+    "message":"Importer og legg til",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -340,7 +340,7 @@
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"URL",
+    "message":"Nettadresse",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
@@ -348,7 +348,7 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Ingen blokkerte forespørsler har blitt logget for denne siden",
+    "message":"Ingen blokkerte forespørsler logget for denne siden",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
@@ -404,7 +404,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Denne oppføringen må være den siste",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

@@ -1,8 +1,8 @@
-En effektiv blokker: lett på minnet og CPU, men kan likevel laste og bruke tusenvis av flere filtre enn andre populære reklameblokkere.
+Et effektivt blokkeringsprogram: lavt CPU- og minnebruk, og kan likevel laste og bruke tusenvis av flere filtre enn andre populære reklameblokkere.
 
 Illustrert oversikt over dens effektivitet: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Anvendelse: Den store strømknappen i popup-vinduet er for å permanent deaktivere/aktivere µBlock for den aktuelle nettsiden. Dette gjelder bare for den aktuelle nettsiden, det er ikke en global strømknapp.
+Anvendelse: Den store av/på-knappen i oppsprettsvinduet er for å permanent deaktivere/aktivere µBlock for det aktuelle nettstedet. Dette gjelder bare for det aktuelle nettstedet, det er ikke en global av/på-knapp.
 
 ***
 
@@ -16,7 +16,7 @@ Som standard er disse filterlistene lastet og i bruk:
 - Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
-- Malware Domains lst
+- Malware Domains List
 
 Flere lister er tilgjengelige om du ønsker:
 
@@ -27,13 +27,13 @@ Flere lister er tilgjengelige om du ønsker:
 - Spam404
 - Og mange andre
 
-Jo flere filtere som er aktivert, jo høyere minnebruk. Men selv etter å ha lagt til "Fanboy's" to ekstra lister, "hpHosts’s Ad and tracking servers", har µBlock fortsatt lavere minnebruk enn andre populære reklameblokkere.
+Jo flere filtre som er aktivert, jo høyere minnebruk. Men selv etter å ha lagt til Fanboys to ekstra lister og "hpHosts’s Ad and tracking servers", har µBlock fortsatt lavere minnebruk enn andre populære reklameblokkere.
 
-Vær også oppmerksom på at noen av disse ekstra listene kan lede til høyere sannsynlighet for brudd på nettsider -- spesielt listene som vanligvis brukes som vertsfil.
+Vær også oppmerksom på at å velge noen av disse ekstra listene kan lede til høyere sannsynlighet for at nettsider ikke lastes riktig -- spesielt de listene som normalt brukes som vertsfil.
 
 ***
 
-Uten forhåndsinnstilte lister over filtre er denne utvidelsen ubrukelig. Så hvis du ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som ble gjort tilgjengelig for alle - helt gratis.
+Uten de forhåndsgitte filterlistene er denne utvidelsen ubrukelig. Så hvis du ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som ble gjort tilgjengelig for alle - helt gratis.
 
 ***
 
