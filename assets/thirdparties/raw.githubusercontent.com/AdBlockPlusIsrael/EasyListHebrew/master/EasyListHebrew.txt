@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: d5hELx+lsaDK0YHdJK8nIQ
+! Checksum: tdGWTHDL9gJ/WGwbrRLKyA
 ! Title: EasyList Hebrew
-! Last modified: 14/12/14  09:43
+! Last modified: 17/12/14  13:37
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -60,7 +60,7 @@
 ||jdate.co.il^$third-party
 ||layer.co.il^$popup
 ||mako.buy2.co.il^$third-party
-||mapi.co.il/free_pu.php^$popup
+||mapi.co.il^$popup,third-party
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
 ||mizrahi-tefahot.co.il/minisites/giyus$popup,third-party
@@ -85,6 +85,7 @@
 ||talkahead.com^$third-party
 ||tbuy.co.il^$popup
 ||tinyurl.com^$popup,domain=daka90.co.il
+||totalmedia.co.il^$third-party
 ||trendsonline.me/?id$popup,third-party
 ||trtmm.info^$third-party
 ||unbouncepages.com^$popup
@@ -215,6 +216,7 @@
 ||dimpact.co.il/Live/Banner/
 ||gear.co.il/Content/MediaItems/Campaigns/
 ||globusmax.co.il/images/950x171leumi_diners(5).swf
+||googleusercontent.com^$domain=trusted-software.com
 ||gozlan.be/st_j.js
 //gozlan.be/st_j.js|
 ||haflla.com/download/banners/
@@ -235,6 +237,7 @@
 ||local.co.il/banners/
 ||moreshet.co.il/banners/
 ||my.yad2.co.il/Banner/
+||myvod.me^
 ||nanafiles.co.il//Upload/92011/File/File_*swf
 ||news-israel.net/images/topAd
 ||pc.co.il/ajaxfilemanager/uploaded/$object
@@ -252,14 +255,11 @@
 ||sport5.co.il/banners2/
 ||static.vgames.co.il/cdn/css/global.bg_comm.css?v=
 ||tgspot.co.il/wp-content/cache/minify/000000/yygpKbDS18_JzMtMzs_VS87Xy8wB8bKL9ZPz88pSi0riTS31sooB.js
-||view-movies.co.il/980Banner.jpg
-||view-movies.co.il/allencar.jpg
-||view-movies.co.il/images/sideSticky.png
-||view-movies.co.il/malabi/
-||view-movies.co.il/winner.jpg
-||view-movies.co.il^$popup
-||vodmovies.co.il/images/connect.jpg
-||vodmovies.co.il/tasia.jpg
+||uply.co.il^$domain=myvod.me
+||view-movies.co.il^
+||viewz.us^
+||vodmovies.co.il^
+||vodx.co.il^
 ||wcdn.co.il/banners/
 !
 !----------------------------------Whitelists---------------------------------!
@@ -309,6 +309,7 @@
 @@||goalim4u.org$elemhide
 @@||goalim4u.pw^$elemhide
 @@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
+@@||googleapis.com/flash$object-subrequest,domain=globes.co.il
 @@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
 @@||googletagservices.com/tag/js/gpt_mobile.js$domain=m.ynet.co.il
 @@||gplanet.co.il/js/adx.js
@@ -334,7 +335,7 @@
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il|mako.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -397,7 +398,6 @@ sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##.side
 haaretz.co.il,themarker.com##.topBanners
 haaretz.co.il,themarker.com##.topSectionBanners
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##A[href^="http://cellebrate.mobi/il/heb"]
-ori-diamonds.co.il,vodmovies.co.il##A[href^="http://www.view-movies.co.il/"]
 gamex.co.il,linicom.co.il##A[target="_blank"]
 sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="overflow: hidden;"]
 sdarot.li,sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws##DIV[style="position: fixed; z-index: 999; top: 0px; left: 0px; display: block;"]
@@ -630,6 +630,7 @@ mako.co.il##div[id^="dclk_overlay_"]
 mako.co.il##[href^="http://apps.mako.co.il/common/Advert"]
 mako.co.il##[href^="http://styleriver.mako.co.il/"]
 mako.co.il##[href^="http://www.mysupermarket.co.il/?banner"]
+mapa.co.il###adSenseOnMap
 mapa.co.il###headerContenetBanner
 mapa.co.il##.bannerPlace
 mapa.co.il##.cls_bannerRight_sideCubeInner
@@ -652,7 +653,6 @@ mouse.co.il##.ads
 mouse.co.il##.noprint + .inline-box-text_new.noprint
 mouse.co.il##div.inline-box-text
 mynet.co.il##DIV[style="padding-top:10px;padding-bottom:10px;padding-right:10px"]
-myvod.me###colourButton99[width="1002"][height="612"]
 nadlan.com##.middlebannerFlash
 nadlan.com##.wrapBoxSmall
 nadlan.com##.wrapshedbox
@@ -805,15 +805,6 @@ themarker.com##.slideShowBannerGroup
 themarker.com##IFRAME[id^="google"]
 themarker.com##[name="txtlnk"] + .border-box
 upf.co.il##.bgbanner
-view-movies.co.il##A[href="http://www.view-movies.co.il/minisite.php"]
-view-movies.co.il##DIV[itemtype="http://data-vocabulary.org/Breadcrumb"]
-vodmovies.co.il###wrapper6
-vodmovies.co.il##.classtop_img
-vodmovies.co.il##.ulp-content
-vodmovies.co.il##.ulp-overlay
-vodmovies.co.il##.ulp-window
-vodmovies.co.il##.youtube
-vodx.co.il##.top-banner
 walla.co.il###ARKIA_CONTAINER
 walla.co.il###navbar
 walla.co.il###sec_jobcity_906
@@ -872,21 +863,22 @@ ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
 ynet.co.il###ww6s_Main
 ynet.co.il###ynet_lightbox_content_top
-ynet.co.il##.CAATVcompAdvertiseTv
-ynet.co.il##.HTcompData
-ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
-ynet.co.il##.MRec_main
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
+ynet.co.il##.CAATVcompAdvertiseTv
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
 ynet.co.il##.ghciPromoLightbox1
+ynet.co.il##.google_ads_t4590B_wrapper
+ynet.co.il##.HTcompData
+ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
 ynet.co.il##.leshonitMain.leshonitBorderRectangle
+ynet.co.il##.MRec_main
 ynet.co.il##DIV[style="width:256px;height:66px;background-color:#FFFFFF;"]
-ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
 ynet.co.il##iframe[style="width:770px;height:191px;"]
+ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
 zap.co.il##.Martef

@@ -52,7 +52,7 @@
 ! Default
 @@/advertisement.js$script,domain=~example.com
 ! Suffix
-@@/\/advertisement([0-9]+|[\-._][a-z0-9]+)\.js/$script,domain=~example.com
+@@/\/advertisement([0-9]+|[\-._][a-z0-9]+)\.js/$script
 ! Min
 @@/advert.js$script,domain=~example.com
 ! FFBS Ad Blocker (to see)
@@ -69,6 +69,10 @@
 ! http://www.sitexw.fr/fuckadblock/
 ! https://github.com/sitexw/FuckAdBlock
 /fuckadblock.js|$script
+! AdBlock Alerter
+! https://github.com/wp-plugins/adblock-alerter
+! +rules on aakscript
+#@##div-gpt-ad-1-0
 ! Adbuddy
 ! http://xenodesystems.appspot.com/adbuddy.html
 /js/adbuddy.min.js|$script
@@ -98,9 +102,6 @@
 ! http://www.bukssaayman.co.za/anti-block/
 /plugins/anti-block/*
 /anti-block-modal.js$script
-! AdBlock Alerter
-! https://github.com/wp-plugins/adblock-alerter
-#@##div-gpt-ad-1-0
 ! BlockAlyzer - Adblock counter
 ! https://wordpress.org/plugins/blockalyzer-adblock-counter/
 @@/plugins/blockalyzer-adblock-counter/img/ads/*$image
@@ -161,6 +162,7 @@ file4go.com#@#.afs_ads
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=file4go.com
 ! afreesms.com
 @@||afreesms.com/js/adblock.js
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=afreesms.com
 ! receive-sms.com
 @@||cpalead.com/mygateway.php?*$domain=receive-sms.com
 ! gamecopyworld domains
@@ -463,7 +465,7 @@ online.dramacafe.tv#@#.afs_ads
 @@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
 @@||pubads.g.doubleclick.net/gampad/ads?*$domain=syndication.vmma.be,object-subrequest
 ! tvn24.pl
-@@||admin.brightcove.com^$object-subrequest
+@@||admin.brightcove.com^$object-subrequest,domain=tvn24.pl
 ! clubedohardware.com.br
 clubedohardware.com.br#@#.nexusad
 clubedohardware.com.br#@##banner
@@ -609,16 +611,27 @@ filecore.co.nz#@#.adsense
 totaldebrid.org,referencemega.com#@#.afs_ads
 ! quickbitco.in
 @@||quickbitco.in/js/ads.js$script
-! pencurimovie.cc
-pencurimovie.cc##.adb_overlay
 ! onemanga.me
 onemanga.me#@#.adblock
 @@||optimized-by.rubiconproject.com/a/10926/26000/*$subdocument,domain=onemanga.me
-@@||ads.rubiconproject.com/ad/*$script,domain=onemanga.me
+@@||ads.rubiconproject.com/ad/$script,domain=onemanga.me
 ! tyrant.40in.net
-@@||pagead2.googlesyndication.com/pagead/*$domain=tyrant.40in.net,script
+@@||pagead2.googlesyndication.com/pagead/$domain=tyrant.40in.net,script
 ! iphones.ru
 iphones.ru##DIV[style="background-color: rgb(222, 71, 0); margin-bottom: 20px; padding: 60px 0px;"]
+! lien-torrent.com
+||lien-torrent.com/eticilbup/$image,subdocument,script
+||141.105.69.88/eticilbup/$image,subdocument,script
+lien-torrent.com###ad_divr
+lien-torrent.com###ad_divl
+! miniup.com
+@@||miniup.com/ads/ads.png
+! hackintosh.zone
+@@hackintosh.zone/adblock/advertisement.js$script
+! call-share.ddns.net
+@@||googleads.g.doubleclick.net/favicon.ico$domain=call-share.ddns.net
+! culo.sourceforge.net
+@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=culo.sourceforge.net
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -627,8 +640,6 @@ iphones.ru##DIV[style="background-color: rgb(222, 71, 0); margin-bottom: 20px; p
 /plugins/main/js/jquery.simplemodal.js$script
 /plugins/social-traffic-pop/stp.js$script
 /social-traffic-pop/jquery.stp.js$script
-/plugins/advanced-facebook-content-locker/
-/plugins/social-locker/
 !----------------------------------------------------------------------------------------------------!
 ! Tracking
 !----------------------------------------------------------------------------------------------------!
@@ -725,8 +736,6 @@ iphones.ru##DIV[style="background-color: rgb(222, 71, 0); margin-bottom: 20px; p
 ||cdn.q.gs/js/display.js$script,third-party
 ! shorte.st
 ||cdn.shorte.st/link-converter.min.js
-! link.tl
-||$domain=link.tl,subdocument,third-party
 ! Torrent --------------------------------------------------------------------------------------
 ! torrentz.eu
 ||torrentz.eu/p/$popup
@@ -744,6 +753,8 @@ mininova.org###content > #adspot-a + .maintable
 ! zetorrents.com
 zetorrents.com##A[href^="http://acces.directionplaisir.com/a.php?"]
 zetorrents.com##A[href^="http://www.insta-cash.net/tds/?"]
+! cpasbien.pe
+||prm.cpasbien.pe/js/ec_connectorDelivery.js$script
 ! rarbg.com
 rarbg.com##A[href^="/download_direct.php"]
 ! emule-island.ru##

@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Dec 14th, 2014 at 11:12
+# Last updated: Dec 18th, 2014 at 20:37
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1954,6 +1954,7 @@
 127.0.0.1 xfotosx01.fromru.su
 127.0.0.1 xponlinescanner.com
 127.0.0.1 xvrxyzba253.hotmail.ru
+127.0.0.1 ymail-activate1.bugs3.com
 127.0.0.1 yrwap.cn
 127.0.0.1 zarozinski.info
 127.0.0.1 zettapetta.com
@@ -3094,6 +3095,7 @@
 127.0.0.1 ad11.focalink.com
 127.0.0.1 ad12.bannerbank.ru
 127.0.0.1 ad12.focalink.com
+127.0.0.1 ad131m.adk2.co
 127.0.0.1 ad13.focalink.com
 127.0.0.1 ad14.focalink.com
 127.0.0.1 ad15.focalink.com
@@ -3127,6 +3129,7 @@
 127.0.0.1 ad2.ip.ro
 127.0.0.1 ad2.lbn.ru
 127.0.0.1 ad2.nationalreview.com
+127.0.0.1 ad2.neodatagroup.com
 127.0.0.1 ad2.pamedia.com
 127.0.0.1 ad2.parom.hu
 127.0.0.1 ad2.peel.com
@@ -5221,6 +5224,7 @@
 127.0.0.1 car-truck-boat-premiumblvd.com
 127.0.0.1 casalemedia.com
 127.0.0.1 cas.clickability.com
+127.0.0.1 cas.criteo.com
 127.0.0.1 cashback.co.uk
 127.0.0.1 cashbackwow.co.uk
 127.0.0.1 cashflowmarketing.com
@@ -5658,6 +5662,7 @@
 127.0.0.1 engine.carbonads.com
 127.0.0.1 engine.espace.netavenir.com
 127.0.0.1 engine.influads.com
+127.0.0.1 engine.phn.doublepimp.com
 127.0.0.1 engine.rorer.ru
 127.0.0.1 enirocode.adtlgc.com
 127.0.0.1 enirodk.adtlgc.com
@@ -6896,6 +6901,7 @@
 127.0.0.1 s3.buysellads.com
 127.0.0.1 s5.addthis.com
 127.0.0.1 s7.addthis.com
+127.0.0.1 s.ad131m.com
 127.0.0.1 s.admulti.com
 127.0.0.1 sad.sharethis.com
 127.0.0.1 safe.hyperpaysys.com
@@ -7135,7 +7141,9 @@
 127.0.0.1 static.carbonads.com
 127.0.0.1 static.clicktorrent.info
 127.0.0.1 static.creatives.livejasmin.com
+127.0.0.1 static.criteo.net
 127.0.0.1 static.doubleclick.net
+127.0.0.1 static.eu.criteo.net
 127.0.0.1 static.everyone.net
 127.0.0.1 static.exoclick.com
 127.0.0.1 static.fastpic.ru
@@ -7202,6 +7210,7 @@
 127.0.0.1 sysadmin.map24.com
 127.0.0.1 t1.adserver.com
 127.0.0.1 t4.liverail.com
+127.0.0.1 t.adonly.com
 127.0.0.1 t-ads.adap.tv
 127.0.0.1 tag1.webabacus.com
 127.0.0.1 tag.admeld.com

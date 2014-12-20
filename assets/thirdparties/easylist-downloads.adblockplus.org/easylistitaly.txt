@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 52OCVc/2ho3GTuIYDtY8Qg
-! Version: 201412151751
+! Checksum: pCCcxowlaEJE4iCmotuPew
+! Version: 201412202021
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 15 Dec 2014 17:51 UTC
+! Ultima modifica: 20 Dec 2014 20:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -114,6 +114,7 @@ _sito/adv/
 ###pubbli-alto
 ###pubbli_top
 ###pubblicita
+###pubblicita-libero-top
 ###pubblicita-menu
 ###pubblicita_blog_post_testa
 ###quattrownet_468x60
@@ -236,7 +237,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||delosnetwork.it^$third-party
 ||divascam.com^$third-party
 ||doubleclick.net/adx/liberotv.$third-party
-||doubleclick.net^$object-subrequest,third-party,domain=adnkronos.com|ansa.it|corrieredellosport.it|digital.it|fanpage.it|gamesnation.it|giallozafferano.it|lastampa.it|mtv.it|nicktv.it|pmi.it|tiscali.it|tuttosport.com|webnews.it
+||doubleclick.net^$object-subrequest,third-party,domain=adnkronos.com|ansa.it|corrieredellosport.it|digital.it|fanpage.it|gamesnation.it|giallozafferano.it|lastampa.it|mtv.it|nicktv.it|pmi.it|rtl.it|tiscali.it|tuttosport.com|webnews.it
 ||doubleclick.net^*;sz=$object-subrequest,third-party,domain=ilmeteo.it|unita.it
 ||eadv.it^$third-party
 ||easymarketcrs.it^$third-party
@@ -1459,6 +1460,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||romatoday.it/images/skin/
 ||rosalio.it^*/adv/
 ||rovigooggi.it/files/miele/
+||rtl-4me.weebo.it/static/*.mp4?$object-subrequest,domain=rtl.it
 ||rtl.it^*/ico_iTunes-Download-
 ||rtl.it^*/itunes_btn_
 ||rtl.it^*_ban_
@@ -1971,6 +1973,7 @@ lecconotizie.com###left-domination
 mailbeta.libero.it###leftBoxIFrame
 veronica.it###leftSkin
 megalab.it###left_skyscraper
+funweek.it###libero_col_dx
 telesud3.com###linkamici
 asroma.it###logos
 eurogamer.it###low-leaderboard
@@ -2146,6 +2149,7 @@ dizionariosinonimi.com##.Sponsor300x250Dx
 ricettepercucinare.com##.UAP_3to1_Rectangle
 ricettepercucinare.com##.UAP_Medium_Rectangle
 ricettepercucinare.com##.UAP_Wide_Skyscraper
+rietinvetrina.it##.a-single
 4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,tripadvisor.it##.ad
 trustpilot.it##.adblock
 america24.com,gianlucadimarzio.com##.adbox
@@ -2282,6 +2286,7 @@ romagiornoenotte.it##.basebannerBox
 wallstreetitalia.com##.bestbuybiz
 losportivo.sm##.bg_blocchi
 corriereromagna.it,ilmattinodifoggia.it,lanuovaprimapagina.it##.bgbanner
+libero.it##.big
 youreporter.it##.bigrectangle600
 ilgiornale.it##.block-ilg-adsense
 ilcapoluogo.com##.block-view-bannerSlide
@@ -2345,6 +2350,7 @@ socialchannel.it##.footer2-wrapper
 violachannel.tv##.footer_home
 liberatv.ch##.front_orrizzontale
 quattroruote.it##.fullBanner
+rietinvetrina.it##.g
 spaziogames.it##.g_adv
 gazzetta.it##.gazzasconti
 iammepress.it,italia-news.it##.gcon_banners

@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4695
-! Last modified: 12 Dec 2014
+! Version: 4710
+! Last modified: 17 Dec 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -139,6 +139,7 @@
 ##[href^="http://myfreedownloadsnow.com/"]
 ##[href^="http://edgydownload.com/"]
 ##[href^="http://grabfile.co/"]
+##[href^="http://seizefile.co/"]
 !
 !
 !
@@ -4690,6 +4691,20 @@ shortz.so##[onclick="awaiting();"]
 ||breakingleaks.com^
 ||livestream2014.com^
 ||multigiftcards.com^
+||kikmessengerforpcwindows.com^
+||seizefile.co^
+||monsterlegendscheat.com^
+||instagramdeliver.com^
+||todayinfos.us^
+||filefirst.net^
+||recovery-facebook.ws^
+||give-aways.net^
+||gamecheattools.com^
+||snaphack.net^
+||freeamazongift.net^
+||clashofclanshack.io^
+||fbhack.info^
+||facebookaccounthack.com^
 !
 !
 !

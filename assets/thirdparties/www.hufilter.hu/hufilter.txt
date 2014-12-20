@@ -4,7 +4,7 @@
 !Homepage: http://www.hufilter.hu/hufilter.html
 !Title: hufilter
 !Expires: 14 days
-!Version: 20141214
+!Version: 20141216
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Magyar Adblock Plus szurolista
 ! 
@@ -103,7 +103,7 @@ chat.hu##[id*="banner"]
 hvg.hu##DIV[class="boxcontainer pr-article"]
 hvg.hu##[class*="banner"]
 hvg.hu##[class*="adcloud"]
-hvg.hu##[class*="ad_"]
+!hvg.hu##[class*="ad_"]
 hvg.hu##[class="ad"]
 hvg.hu##TABLE[class*="monocle"]
 hvg.hu##DIV[id="debugMode"]

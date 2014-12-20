@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: idbZOgSzEunHKcokqsKmng
-! Version: 201412151751
+! Checksum: 1mbQy0cpApwFFvhvGCqF+Q
+! Version: 201412202021
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 15 Dec 2014 17:51 UTC
+! Last modified: 20 Dec 2014 20:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -5754,7 +5754,7 @@ serienjunkies.org##.streams + #content > .post:first-child > .post-title:first-c
 fernsehserien.de##.stroeer-container
 fuw.ch##.suche_sponsor
 sdx.cc##.suggestionList > a[href^="http://www.sdx.cc/file="]
-frankenpost.de,freies-wort.de,gentleman-blog.de,itopnews.de,neon.de,np-coburg.de,radiopsr.de,schlagerhoelle.de,stz-online.de,volksfreund.de##.superbanner
+frankenpost.de,freies-wort.de,gentleman-blog.de,horizont.net,itopnews.de,neon.de,np-coburg.de,radiopsr.de,schlagerhoelle.de,stz-online.de,volksfreund.de##.superbanner
 gamestar.de##.sushibar
 kochbar.de##.tTraffic
 berlin.de##.t_a_vert
@@ -6034,6 +6034,7 @@ n-tv.de##a[href^="http://ad.doubleclick.net/clk;"] + *
 gamers.at##a[href^="http://ad.perfectworld.eu/"]
 mainpost.de##a[href^="http://ad.sol.de/"]
 queer.de##a[href^="http://ad.zanox.com"]
+serienjunkies.de##a[href^="http://ad.zanox.com/ppc/"]
 seaofsin.info##a[href^="http://ad.zanox.com/ppc/?"]
 oe24.at##a[href^="http://ad1.adfarm1.adition.com/redi?sid="]
 finanzen100.de,ps3-talk.de##a[href^="http://ad3.adfarm1.adition.com/"]
