@@ -175,7 +175,7 @@ vAPI.storage = {
 
                 if (defaults) {
                     for (key in details) {
-                        if (!result[key]) {
+                        if (result[key] === undefined) {
                             result[key] = details[key];
                         }
                     }
