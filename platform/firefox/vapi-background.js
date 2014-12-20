@@ -217,8 +217,8 @@ vAPI.storage = {
         );
     },
     clear: function(callback) {
-        SQLite.run('DELETE FROM settings', null, callback);
-        SQLite.run('VACUUM');
+        SQLite.run('DELETE FROM settings');
+        SQLite.run('VACUUM', null, callback);
     },
     getBytesInUse: function(keys, callback) {
         if (typeof callback !== 'function') {
