@@ -19,9 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, YaMD5 */
-
-'use strict';
+/* global vAPI, µBlock, YaMD5 */
 
 /*******************************************************************************
 
@@ -43,6 +41,8 @@ File system structure:
 
 µBlock.assets = (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var oneSecond = 1000;
@@ -58,14 +58,16 @@ var nullFunc = function() {};
 var reIsExternalPath = /^https?:\/\/[a-z0-9]/;
 var reIsUserPath = /^assets\/user\//;
 var lastRepoMetaTimestamp = 0;
+var lastRepoMetaIsRemote = false;
 var refreshRepoMetaPeriod = 5 * oneHour;
-
-// TODO: move vAPI.i18n to XAL
 var errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
 
 var exports = {
     autoUpdate: true,
-    autoUpdateDelay: 4 * oneDay
+    autoUpdateDelay: 4 * oneDay,
+
+    // https://github.com/gorhill/uBlock/issues/426
+    allowRemoteFetch: true
 };
 
 /******************************************************************************/
@@ -83,6 +85,18 @@ var RepoMetadata = function() {
 };
 
 var repoMetadata = null;
+
+/******************************************************************************/
+
+var stringIsNotEmpty = function(s) {
+    return typeof s === 'string' && s !== '';
+};
+
+/******************************************************************************/
+
+var cacheIsObsolete = function(t) {
+    return typeof t !== 'number' || (Date.now() - t) >= exports.autoUpdateDelay;
+};
 
 /******************************************************************************/
 
@@ -148,10 +162,9 @@ var cachedAssetsManager = (function() {
             // be because the save occurred while I was stepping in the code
             // though, which means it would not occur during normal operation.
             // Still, just to be safe.
-            if ( bin[cachedContentPath] === undefined ) {
+            if ( stringIsNotEmpty(bin[cachedContentPath]) === false ) {
+                exports.remove(path);
                 details.error = 'Error: not found';
-                delete entries[path];
-                vAPI.storage.set({ 'cached_asset_entries': entries });
                 cbError(details);
                 return;
             }
@@ -176,6 +189,11 @@ var cachedAssetsManager = (function() {
             path: path,
             content: content
         };
+        if ( content === '' ) {
+            exports.remove(path);
+            cbSuccess(details);
+            return;
+        }
         var cachedContentPath = cachedAssetPathPrefix + path;
         var bin = {};
         bin[cachedContentPath] = content;
@@ -246,8 +264,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
         // xhr for local files gives status 0, but actually succeeds
-        if ( this.status >= 200 && this.status < 300
-            || this.status === 0 && this.responseText ) {
+        if ( (this.status >= 200 && this.status < 300) || (this.status === 0 && this.responseText) ) {
             return onLoad.call(this);
         }
         return onError.call(this);
@@ -288,6 +305,9 @@ var updateLocalChecksums = function() {
 var getRepoMetadata = function(callback) {
     callback = callback || nullFunc;
 
+    if ( exports.allowRemoteFetch && lastRepoMetaIsRemote === false ) {
+        lastRepoMetaTimestamp = 0;
+    }
     if ( (Date.now() - lastRepoMetaTimestamp) >= refreshRepoMetaPeriod ) {
         repoMetadata = null;
     }
@@ -301,6 +321,7 @@ var getRepoMetadata = function(callback) {
     }
 
     lastRepoMetaTimestamp = Date.now();
+    lastRepoMetaIsRemote = exports.allowRemoteFetch;
 
     var localChecksums;
     var repoChecksums;
@@ -459,6 +480,12 @@ var readLocalFile = function(path, callback) {
 // Get the repository copy of a built-in asset.
 
 var readRepoFile = function(path, callback) {
+    // https://github.com/gorhill/uBlock/issues/426
+    if ( exports.allowRemoteFetch === false ) {
+        readLocalFile(path, callback);
+        return;
+    }
+
     var reportBack = function(content, err) {
         var details = {
             'path': path,
@@ -552,7 +579,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         this.onload = this.onerror = null;
-        if ( typeof this.responseText !== 'string' || this.responseText === '' ) {
+        if ( stringIsNotEmpty(this.responseText) === false ) {
             console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
@@ -570,7 +597,7 @@ var readRepoCopyAsset = function(path, callback) {
 
     var onHomeFileLoaded = function() {
         this.onload = this.onerror = null;
-        if ( typeof this.responseText !== 'string' || this.responseText === '' ) {
+        if ( stringIsNotEmpty(this.responseText) === false ) {
             console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, assetEntry.homeURL);
             // Fetch from repo only if obsolescence was due to repo checksum
             if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
@@ -600,18 +627,17 @@ var readRepoCopyAsset = function(path, callback) {
         // Fetch from remote if:
         // - Auto-update enabled AND (not in cache OR in cache but obsolete)
         var timestamp = entries[path];
-        var homeURL = assetEntry.homeURL;
-        if ( exports.autoUpdate && typeof homeURL === 'string' && homeURL !== '' ) {
-            var obsolete = Date.now() - exports.autoUpdateDelay;
-            if ( typeof timestamp !== 'number' || timestamp <= obsolete ) {
+        var inCache = typeof timestamp === 'number';
+        if ( exports.allowRemoteFetch && exports.autoUpdate && stringIsNotEmpty(assetEntry.homeURL) ) {
+            if ( inCache === false || cacheIsObsolete(timestamp) ) {
                 //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
-                getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
+                getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
                 return;
             }
         }
 
         // In cache
-        if ( typeof timestamp === 'number' ) {
+        if ( inCache ) {
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }
@@ -630,10 +656,10 @@ var readRepoCopyAsset = function(path, callback) {
         }
 
         // Repo copy changed: fetch from home URL
-        if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+        if ( exports.allowRemoteFetch && exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
             //console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             var homeURL = assetEntry.homeURL;
-            if ( typeof homeURL === 'string' && homeURL !== '' ) {
+            if ( stringIsNotEmpty(homeURL) ) {
                 getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
             } else {
                 getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
@@ -732,7 +758,7 @@ var readRepoOnlyAsset = function(path, callback) {
         }
 
         // Asset added or changed: load from repo URL and then cache result
-        if ( exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+        if ( exports.allowRemoteFetch && exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
             //console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
             return;
@@ -805,8 +831,9 @@ var readExternalAsset = function(path, callback) {
         //
         // - Auto-update enabled AND in cache but obsolete
         var timestamp = entries[path];
-        var obsolete = Date.now() - exports.autoUpdateDelay;
-        if ( typeof timestamp !== 'number' || (exports.autoUpdate && timestamp <= obsolete) ) {
+        var notInCache = typeof timestamp !== 'number';
+        var updateCache = exports.allowRemoteFetch && exports.autoUpdate && cacheIsObsolete(timestamp);
+        if ( notInCache || updateCache ) {
             getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError);
             return;
         }
@@ -930,17 +957,14 @@ exports.metadata = function(callback) {
     // We need to check cache obsolescence when both cache and repo meta data
     // has been gathered.
     var checkCacheObsolescence = function() {
-        var obsolete = Date.now() - exports.autoUpdateDelay;
         var entry;
         for ( var path in out ) {
             if ( out.hasOwnProperty(path) === false ) {
                 continue;
             }
             entry = out[path];
-            entry.cacheObsolete =
-                typeof entry.homeURL === 'string' &&
-                entry.homeURL !== '' &&
-                (typeof entry.lastModified !== 'number' || entry.lastModified <= obsolete);
+            entry.cacheObsolete = stringIsNotEmpty(entry.homeURL) &&
+                                  cacheIsObsolete(entry.lastModified);
         }
         callback(out);
     };

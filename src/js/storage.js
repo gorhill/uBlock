@@ -591,15 +591,16 @@
     // - Initialize internal state with maybe already existing tabs.
     // - Schedule next update operation.
     var onAllDone = function() {
+        // https://github.com/gorhill/uBlock/issues/426
+        // Important: remove barrier to remote fetching, this was useful only
+        // for launch time.
+        µb.assets.allowRemoteFetch = true;
+
         vAPI.onLoadAllCompleted();
 
         // https://github.com/gorhill/uBlock/issues/184
-        // If we restored a selfie, check for updates not too far
-        // in the future.
-        var nextUpdate = fromSelfie === false && µb.userSettings.autoUpdate ?
-            µb.nextUpdateAfter :
-            µb.firstUpdateAfter;
-        µb.updater.restart(nextUpdate);
+        // Check for updates not too far in the future.
+        µb.updater.restart(µb.firstUpdateAfter);
     };
 
     var filtersReady = false;
@@ -644,6 +645,11 @@
 
     // User settings are in memory
     var onUserSettingsReady = function(settings) {
+        // https://github.com/gorhill/uBlock/issues/426
+        // Important: block remote fetching for when loading assets at launch
+        // time.
+        µb.assets.allowRemoteFetch = false;
+
         µb.assets.autoUpdate = settings.autoUpdate;
         µb.netFilteringEngine.dynamicFiltersFromSelfie(settings.dynamicFilteringSelfie);
         µb.fromSelfie(onSelfieReady);
