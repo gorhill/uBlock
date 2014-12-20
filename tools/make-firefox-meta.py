@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 import os
 import json
@@ -43,19 +43,19 @@ for alpha2 in os.listdir(source_locale_dir):
     with open(locale_path, 'wt', encoding='utf-8', newline='\n') as f:
         for string_name in string_data:
             f.write(string_name)
-            f.write('=')
+            f.write(u'=')
             f.write(string_data[string_name]['message'].replace('\n', r'\n'))
-            f.write('\n')
+            f.write(u'\n')
 
 # generate chrome.manifest file
 chrome_manifest = pj(build_dir, 'chrome.manifest')
 
 with open(chrome_manifest, 'at', encoding='utf-8', newline='\n') as f:
-    f.write('\nlocale ublock en ./locale/en/\n')
+    f.write(u'\nlocale ublock en ./locale/en/\n')
 
     for alpha2 in language_codes:
         if alpha2 != 'en':
-            f.write('locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
+            f.write(u'locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
 
 rmtree(source_locale_dir)
 
