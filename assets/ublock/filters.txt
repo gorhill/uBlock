@@ -141,6 +141,13 @@ google.*###center_col > #tads
 # http://forums.whatthetech.com/index.php?showtopic=129096
 @@||googleusercontent.com/*_social_icons.css$stylesheet,domain=whatthetech.com
 
+# Report at: http://sigmundsims.tumblr.com/post/105738323480/so-some-changes-tsr-is-making-to-their-download
+# Problem at: http://www.thesimsresource.com/downloads/download/itemId/1275968/format/zip/sess/1419175209
+@@||googleadservices.com^$domain=www.thesimsresource.com
+@@||pubads.g.doubleclick.net^$domain=www.thesimsresource.com
+www.thesimsresource.com##.ad-topleader
+
+
 # https://twitter.com/ethanveres/status/527122036649639936
 # Fortunately, further connections to `mxpnl.com` are blocked
 @@||cdn.vurb.com/*/mixpanel.
