@@ -76,7 +76,6 @@ var AssetEntry = function() {
     this.localChecksum = '';
     this.repoChecksum = '';
     this.expireTimestamp = 0;
-    this.homeURL = '';
 };
 
 var RepoMetadata = function() {
@@ -85,6 +84,9 @@ var RepoMetadata = function() {
 };
 
 var repoMetadata = null;
+
+// We need these to persist beyond repoMetaData
+var homeURLs = {};
 
 /******************************************************************************/
 
@@ -412,14 +414,7 @@ var getRepoMetadata = function(callback) {
 /******************************************************************************/
 
 exports.setHomeURL = function(path, homeURL) {
-    var onRepoMetadataReady = function(metadata) {
-        var entry = metadata.entries[path];
-        if ( entry === undefined ) {
-            entry = metadata.entries[path] = new AssetEntry();
-        }
-        entry.homeURL = homeURL;
-    };
-    getRepoMetadata(onRepoMetadataReady);
+    homeURLs[path] = homeURL;
 };
 
 /******************************************************************************/
@@ -533,6 +528,7 @@ var readRepoFile = function(path, callback) {
 
 var readRepoCopyAsset = function(path, callback) {
     var assetEntry;
+    var homeURL = homeURLs[path];
 
     var reportBack = function(content, err) {
         var details = {
@@ -598,7 +594,7 @@ var readRepoCopyAsset = function(path, callback) {
     var onHomeFileLoaded = function() {
         this.onload = this.onerror = null;
         if ( stringIsNotEmpty(this.responseText) === false ) {
-            console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, assetEntry.homeURL);
+            console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
             // Fetch from repo only if obsolescence was due to repo checksum
             if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
                 getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
@@ -607,14 +603,14 @@ var readRepoCopyAsset = function(path, callback) {
             }
             return;
         }
-        //console.log('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s")', path, assetEntry.homeURL);
+        //console.log('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s")', path, homeURL);
         updateChecksum();
         cachedAssetsManager.save(path, this.responseText, callback);
     };
 
     var onHomeFileError = function() {
         this.onload = this.onerror = null;
-        console.error(errorCantConnectTo.replace('{{url}}', assetEntry.homeURL));
+        console.error(errorCantConnectTo.replace('{{url}}', homeURL));
         // Fetch from repo only if obsolescence was due to repo checksum
         if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
             getTextFileFromURL(repositoryURLSkipCache, onRepoFileLoaded, onRepoFileError);
@@ -628,10 +624,10 @@ var readRepoCopyAsset = function(path, callback) {
         // - Auto-update enabled AND (not in cache OR in cache but obsolete)
         var timestamp = entries[path];
         var inCache = typeof timestamp === 'number';
-        if ( exports.allowRemoteFetch && exports.autoUpdate && stringIsNotEmpty(assetEntry.homeURL) ) {
+        if ( exports.allowRemoteFetch && exports.autoUpdate && stringIsNotEmpty(homeURL) ) {
             if ( inCache === false || cacheIsObsolete(timestamp) ) {
                 //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
-                getTextFileFromURL(assetEntry.homeURL, onHomeFileLoaded, onHomeFileError);
+                getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
                 return;
             }
         }
@@ -658,7 +654,6 @@ var readRepoCopyAsset = function(path, callback) {
         // Repo copy changed: fetch from home URL
         if ( exports.allowRemoteFetch && exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
             //console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
-            var homeURL = assetEntry.homeURL;
             if ( stringIsNotEmpty(homeURL) ) {
                 getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
             } else {
@@ -924,7 +919,7 @@ exports.get = function(path, callback) {
         }
 
         // Asset is repo copy of external content
-        if ( assetEntry.homeURL !== '' ) {
+        if ( stringIsNotEmpty(homeURLs[path]) ) {
             readRepoCopyAsset(path, callback);
             return;
         }
@@ -963,7 +958,7 @@ exports.metadata = function(callback) {
                 continue;
             }
             entry = out[path];
-            entry.cacheObsolete = stringIsNotEmpty(entry.homeURL) &&
+            entry.cacheObsolete = stringIsNotEmpty(homeURLs[path]) &&
                                   cacheIsObsolete(entry.lastModified);
         }
         callback(out);
@@ -983,7 +978,7 @@ exports.metadata = function(callback) {
             }
             entryOut.localChecksum = entryRepo.localChecksum;
             entryOut.repoChecksum = entryRepo.repoChecksum;
-            entryOut.homeURL = entryRepo.homeURL;
+            entryOut.homeURL = homeURLs[path] || '';
             entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
         }
         checkCacheObsolescence();
