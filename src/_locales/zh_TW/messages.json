@@ -1,0 +1,410 @@
+{
+  "extName":{
+    "message":"μBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"一款基於Chromium瀏覽器的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "dashboardName":{
+    "message":"μBlock 控制台",
+    "description":"English: μBlock — Dashboard"
+  },
+  "settingsPageName":{
+    "message":"設定",
+    "description":"appears as tab name in dashboard."
+  },
+  "3pPageName":{
+    "message":"過濾清單",
+    "description":"appears as tab name in dashboard."
+  },
+  "1pPageName":{
+    "message":"自訂過濾",
+    "description":"appears as tab name in dashboard."
+  },
+  "whitelistPageName":{
+    "message":"白名單",
+    "description":"appears as tab name in dashboard."
+  },
+  "statsPageName":{
+    "message":"統計",
+    "description":"appears as tab name in dashboard."
+  },
+  "aboutPageName":{
+    "message":"關於",
+    "description":"appears as tab name in dashboard."
+  },
+  "popupPowerSwitchInfo":{
+    "message":"點選: μBlock 對此網站 停用\/啟用。Ctrl + 按一下：僅在此頁面停用μBlock。",
+    "description":"English: Click: disable\/enable μBlock for this site.\n\nCtrl+click: disable μBlock only on this page."
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"已封鎖廣告",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"本頁",
+    "description":"English: on this page"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"總計",
+    "description":"English: since install"
+  },
+  "popupOr":{
+    "message":"或",
+    "description":"English: or"
+  },
+  "popupTipDashboard":{
+    "message":"按一下打開控制台",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"進入元素選擇器模式",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"查看請求日誌",
+    "description":"English: Go to request log"
+  },
+  "popupSiteInlineScriptEnabled":{
+    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>封鎖<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"目前網頁的第一方腳本將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"目前網頁的第一方腳本將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"目前網頁的協力廠商腳本將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"目前網頁的協力廠商腳本將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"目前網頁的第一方框架將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"目前網頁的第一方框架將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"目前網頁的協力廠商框架將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"目前網頁的協力廠商框架將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"任何第一方腳本在預設情況下都將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"任何第一方腳本在預設情況下都將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"任何協力廠商腳本在預設情況下都將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"任何協力廠商腳本在預設情況下都將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"任何第一方框架在預設情況下都將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"任何第一方框架在預設情況下都將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"任何協力廠商框架在預設情況下都將被 <b>允許<\/b>",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"任何協力廠商框架在預設情況下都將被 <b>隱藏<\/b>",
+    "description":""
+  },
+  "pickerCreate":{
+    "message":"建立",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"選擇",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"離開",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"網址過濾",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"元素過濾",
+    "description":"English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint":{
+    "message":"按一下，按住 Ctrl 鍵按一下",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"隱藏元素",
+    "description":"English: Block element"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"隱藏已隱藏元素的預留位置",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"在圖示上顯示封鎖廣告數量",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"加入右鍵選單",
+    "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsExperimentalPrompt":{
+    "message":"啟用實驗性功能",
+    "description":"English: Enable experimental features"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"目前使用{{netFilterCount}} 網址過濾和{{cosmeticFilterCount}} 元素過濾規則:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"{{total}}中使用{{used}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pAutoUpdatePrompt1":{
+    "message":"自動更新過濾規則",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"立即更新",
+    "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"清除所有暫存檔",
+    "description":"English: Purge all caches"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"解析並套用Adblock+元素隱藏過濾規則。",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>這項選項啟用了對<a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">Adblock Plus相相容的“元素隱藏”過濾規則<\/a>。這些過濾規則本質上只是裝飾，它們被用於隱藏一個網頁上被認為礙眼的元素，並且這些元素不能被矩陣過濾或ABP過濾引擎所隱藏。<\/p><p>啟用這項功能將增加<i>μBlock<\/i>的記憶體使用量。<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"被隱藏網站列表",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"套用變更",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"廣告",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"隱私",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"惡意軟體",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"社交",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"多用途",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"地區語言",
+    "description":"English: Regions, languages"
+  },
+  "3pGroupCustom":{
+    "message":"自訂",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"每行一個 URL。以“!”開頭的行將被忽略。無效的 URL 將被忽略。",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"解析",
+    "description":"English: Parse"
+  },
+  "3pExternalListPurge":{
+    "message":"清除暫存檔",
+    "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"有新版本",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"過期",
+    "description":"English: outdated"
+  },
+  "1pFormatHint":{
+    "message":"每行一個規則。一條規則可以是一個平凡的網站名或者是一條Adblock Plus的相容過濾規則。以“!”開頭的行將被忽略。",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"導入並加入規則",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"匯出規則",
+    "description":"English: Export"
+  },
+  "1pExportFilename":{
+    "message":"ublock-自訂過濾_{{datetime}}.txt",
+    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+  },
+  "1pApplyChanges":{
+    "message":"套用變更",
+    "description":"English: Apply changes"
+  },
+  "whitelistPrompt":{
+    "message":"列表裡的主機名稱將被 μBlock 停用。每行一個規則。無效的主機名稱將被忽略掉。",
+    "description":"English: Your list of host names for which μBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"導入並附加規則",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"匯出規則",
+    "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"ublock-白名單_{{datetime}}.txt",
+    "description":"English: ublock-whitelist_{{datetime}}.txt"
+  },
+  "whitelistApply":{
+    "message":"套用變更",
+    "description":"English: Apply changes"
+  },
+  "logNetRequestsPrompt":{
+    "message":"啟用網路請求記錄",
+    "description":"English: Enable the logging of network requests"
+  },
+  "logNetRequestsHelp":{
+    "message":"開啟此選項，將可以查看網路請求的詳細資訊。這個功能會增加μBlock的記憶體使用量。由於多數使用者不需要此功能，它預設是停用的。",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"封鎖請求",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"允許請求",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"類型",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"功能變數名稱",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"網址",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"過濾",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"該頁面沒有封鎖記錄",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"該頁面沒有未封鎖記錄",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "aboutChangelog":{
+    "message":"更新日誌",
+    "description":"English: Change log"
+  },
+  "aboutWiki":{
+    "message":"維基百科",
+    "description":"English: project' wiki on Github"
+  },
+  "aboutCode":{
+    "message":"原始程式碼 (GPLv3)",
+    "description":"English: Source code (GPLv3)"
+  },
+  "aboutContributors":{
+    "message":"貢獻者",
+    "description":"English: Contributors"
+  },
+  "aboutBackupDataButton":{
+    "message":"備份到檔案...",
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"ublock 備份_{{datetime}}.txt",
+    "description":"English: ublock-backup_{{datetime}}.txt"
+  },
+  "aboutRestoreDataButton":{
+    "message":"從檔案還原...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"重設為預設值",
+    "description":"English: Reset to default settings..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"所有設定將被備份資料覆蓋在， μBlock 將重新啟動。\n確定用備份的資料覆蓋現有的設定嗎？",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError":{
+    "message":"資料無法讀取或無效",
+    "description":"Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"您的設定將被清除，μBlock 將重新啟動。\n確定將 μBlock 重設？",
+    "description":"Message asking user to confirm reset"
+  },
+  "errorCantConnectTo":{
+    "message":"無法連接到 {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "dummy":{
+    "message":"此項目必須擺在最後面",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}

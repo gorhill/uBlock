@@ -1,0 +1,75 @@
+一款高效率的廣告攔截工具：只使用超低的記憶體和CPU使用量，和其他常見的廣告攔截工具相比，可以載入並執行上千條過濾規則。
+
+
+效率概述說明： 
+https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+
+用法：點選快顯視窗中的電源按鈕，μBlock將對於當前網頁永久停用/啟用廣告攔截功能。 它只適用於目前正在瀏覽的網頁，而不是全域按鈕。
+
+
+***
+
+
+這不只是一個廣告攔截工具，它還可以非常有彈性的從hosts檔裡讀取和建立過濾規則。
+
+
+初始預設載入和執行下列過濾規則：
+
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Fanboy’s Social Blocking List?
+- Malware domains
+- Long-lived malware domains
+- Malware Domains List
+
+
+這裡還擁有更多的過濾規則供你選擇：
+
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- 其他
+
+
+啟用越多的過濾規則就會佔用越多的記憶體。 然而，即使在加入 Fanboy 額外的兩個規則和 hpHosts’s Ad and tracking servers，μBlock 的記憶體佔用依然比其他常見的過濾工具要小的多。
+
+
+另外，請注意選擇的一些額外的清單可能會導致網頁破損可能性增高 — — 尤其是那些通常用來當作hosts檔案的清單。
+
+
+***
+
+
+沒有這些過濾規則清單，這個擴充套件就沒有了意義。 所以如果你真的想要做些貢獻，試著想想那些努力維護廣告過濾規則清單的人們，至少他們讓大家可以免費使用這一切。
+
+
+***
+
+
+自由、免費。
+開放原始程式碼與公共許可證 (GPLv3)
+一切都是為了使用者。
+
+
+貢獻者@ Github： 
+https://github.com/gorhill/uBlock/graphs/contributors
+貢獻者 @ Crowdin： 
+https://crowdin.net/project/ublock
+
+
+***
+
+
+這還只是一個非常初期的版本，當您留下建議的時候請手下留情。
+
+
+專案更新日誌：
+https://github.com/gorhill/uBlock/releases
+
+
