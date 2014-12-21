@@ -72,7 +72,7 @@
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkerte<\/b> på dette nettstedet",
+    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkert<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pScriptEnabled":{
@@ -372,7 +372,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Sikkerhetskopi til fil",
+    "message":"Sikkerhetskopier til fil",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{

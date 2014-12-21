@@ -48,5 +48,5 @@ Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 
 Dette er en tidlig versjon, ha det i tankene når du anmelder.
 
-Prosjektendringer:
+Endringslogg for prosjektet:
 https://github.com/gorhill/uBlock/releases
