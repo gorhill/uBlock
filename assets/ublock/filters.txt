@@ -138,6 +138,8 @@ google.*###center_col > #tads
 @@||metrics.el-mundo.net^$domain=www.expansion.com
 # To counter `http://utm.` in EasyPrivacy
 @@||utm.aliexpress.com/*/recommendEntry.do$~third-party
+# http://forums.whatthetech.com/index.php?showtopic=129096
+@@||googleusercontent.com/*_social_icons.css$stylesheet,domain=whatthetech.com
 
 # https://twitter.com/ethanveres/status/527122036649639936
 # Fortunately, further connections to `mxpnl.com` are blocked
