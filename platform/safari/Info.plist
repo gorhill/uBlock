@@ -21,7 +21,7 @@
         <key>Database Quota</key>
         <real>52428800</real>
         <key>Global Page</key>
-        <string>background.html#{appInfo}</string>
+        <string>background.html</string>
         <key>Popovers</key>
         <array>
             <dict>
@@ -40,8 +40,12 @@
                 <string>img/browsericons/icon16.png</string>
                 <key>Label</key>
                 <string>{name}</string>
+                <key>Palette Label</key>
+                <string>{name}</string>
                 <key>Popover</key>
                 <string>popover</string>
+                <key>Tool Tip</key>
+                <string>{name} {version}</string>
             </dict>
         </array>
     </dict>

@@ -36,9 +36,9 @@ vAPI.safari = true;
 
 /******************************************************************************/
 
-vAPI.app = location.hash.slice(1).split(',');
+vAPI.app = safari.extension.toolbarItems[0].toolTip.split(' ');
 vAPI.app = {
-    name: decodeURIComponent(vAPI.app[0]),
+    name: vAPI.app[0],
     version: vAPI.app[1]
 };
 
