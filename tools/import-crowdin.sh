@@ -39,6 +39,7 @@ cp $SRC/tr/messages.json    $DES/tr/messages.json
 cp $SRC/uk/messages.json    $DES/uk/messages.json
 cp $SRC/vi/messages.json    $DES/vi/messages.json
 cp $SRC/zh-CN/messages.json $DES/zh_CN/messages.json
+cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 
 #
 
@@ -71,6 +72,7 @@ cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
 #cp $SRC/vi/description.txt    $DES/description-vi.txt
 cp $SRC/zh-CN/description.txt $DES/description-zh_CN.txt
+cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
 #
 
