@@ -93,6 +93,8 @@ var onBeforeRequest = function(details) {
 
     // Not blocked
     if ( pageStore.boolFromResult(result) === false ) {
+        //console.debug('onBeforeRequest()> ALLOW "%s" (%o) because "%s"', details.url, details, result);
+
         pageStore.perLoadAllowedRequestCount++;
         µb.localSettings.allowedRequestCount++;
 
@@ -128,6 +130,8 @@ var onBeforeRequest = function(details) {
     }
 
     // Blocked
+    //console.debug('onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
+
     pageStore.perLoadBlockedRequestCount++;
     µb.localSettings.blockedRequestCount++;
     µb.updateBadgeAsync(tabId);
@@ -136,7 +140,6 @@ var onBeforeRequest = function(details) {
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
 
-    // console.debug('µBlock> onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
     return { 'cancel': true };
 };
 
@@ -149,6 +152,7 @@ var onBeforeSendHeaders = function(details) {
     // the tab id could be -1, despite the request not really being a
     // behind-the-scene request. If true, the test below would prevent
     // the popup blocker from working. Need to check this.
+    //console.debug('onBeforeSendHeaders()> "%s" (%o) because "%s"', details.url, details, result);
 
     // Do not block behind the scene requests.
     var tabId = details.tabId;
