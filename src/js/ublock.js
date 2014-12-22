@@ -108,20 +108,19 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     var targetHostname = this.URI.hostnameFromURI(targetURL);
     var key = targetHostname;
     var directive = scope === 'page' ? targetURL : targetHostname;
-    var buckets;
 
     // Add to directive list
     if ( newState === false ) {
         if ( netWhitelist.hasOwnProperty(key) === false ) {
-            buckets = netWhitelist[key] = [];
+            netWhitelist[key] = [];
         }
-        buckets.push(directive);
+        netWhitelist[key].push(directive);
         this.saveWhitelist();
         return true;
     }
 
     // Remove from directive list whatever causes current URL to be whitelisted
-    var i;
+    var buckets, i;
     for (;;) {
         if ( netWhitelist.hasOwnProperty(key) ) {
             buckets = netWhitelist[key];
