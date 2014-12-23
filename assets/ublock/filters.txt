@@ -146,7 +146,9 @@ google.*###center_col > #tads
 @@||googleadservices.com^$domain=www.thesimsresource.com
 @@||pubads.g.doubleclick.net^$domain=www.thesimsresource.com
 www.thesimsresource.com##.ad-topleader
-
+# http://www.reddit.com/r/chromeos/comments/2q4q3s/im_not_sure_if_this_belongs_here_but_adblock/
+# Following needed for http://putlocker.is/
+||vprmnwbskk.com^$popup
 
 # https://twitter.com/ethanveres/status/527122036649639936
 # Fortunately, further connections to `mxpnl.com` are blocked
