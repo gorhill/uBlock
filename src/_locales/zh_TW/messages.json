@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"一款基於Chromium瀏覽器的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
+    "message":"一款為了基於Chromium的瀏覽器所設計的的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -36,7 +36,7 @@
     "description":"appears as tab name in dashboard."
   },
   "popupPowerSwitchInfo":{
-    "message":"點選: μBlock 對此網站 停用\/啟用。Ctrl + 按一下：僅在此頁面停用μBlock。",
+    "message":"點選電源按鈕：在此網站 停用\/啟用μBlock ；Ctrl + 按一下電源按鈕：僅在此頁面停用μBlock。",
     "description":"English: Click: disable\/enable μBlock for this site.\n\nCtrl+click: disable μBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
