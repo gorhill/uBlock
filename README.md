@@ -23,7 +23,7 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 </p>
 
 <p align="center">
-Chromium on Linux 64-bit<br>
+µBlock: on average, it <b>really</b> does make your browser run leaner<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
