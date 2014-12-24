@@ -24,16 +24,8 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 
 <p align="center">
 Chromium on Linux 64-bit<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/ss-chromium-2.png" /><br><br>
-<sup>The screenshots above were taken after visiting links in
-<a href="https://github.com/gorhill/uBlock/wiki/Reference-benchmark">reference benchmark</a>
-plus a bit of random browsing. All blockers were active at the same time,
-thus they had to deal with exactly the same workload. Before the screenshots were
-taken, I left the browser idle for many minutes so as to let the browser's
-garbage collector kicks in. Also, after a while idling, it's good to open the dev
-console for each extension and force a garbage collection cycle by clicking a couple of times
-the trashcan icon in the _Timeline_ tab (this caused a ~15MB drop for µBlock and Adguard in Opera)
-as garbage collectors sometimes work in a very lazy way, so I did this for each extension.</sup>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
+<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
 <p align="center">
