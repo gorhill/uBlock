@@ -23,20 +23,18 @@
 
 /******************************************************************************/
 
+// https://bugzil.la/673569
+
 (function(frameScriptContext) {
 
 'use strict';
 
 /******************************************************************************/
 
-let appName;
+let appName = Components.stack.filename.match(/:\/\/([^\/]+)/)[1];
 let listeners = {};
 
-try { throw new Error; } catch (ex) {
-    appName = ex.fileName.match(/:\/\/([^\/]+)/)[1];
-}
-
-Components.utils['import']('chrome://' + appName + '/content/frameModule.js', {});
+Components.utils['import'](Components.stack.filename.replace('Script', 'Module'), {});
 
 /******************************************************************************/
 

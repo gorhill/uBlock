@@ -95,10 +95,10 @@ vAPI.messaging = {
 
         this.channels['vAPI'] = {};
         this.channels['vAPI'].listener = function(msg) {
-            if (msg.cmd === 'injectScript') {
+            if ( msg.cmd === 'injectScript' ) {
                 var details = msg.details;
 
-                if (!details.allFrames && window !== window.top) {
+                if ( !details.allFrames && window !== window.top ) {
                     return;
                 }
 
@@ -108,12 +108,14 @@ vAPI.messaging = {
     },
 
     close: function() {
-        if (this.connector) {
-            removeMessageListener(this.connectorId, this.connector);
-            this.connector = null;
-            this.channels = {};
-            this.listeners = {};
+        if ( !this.connector ) {
+            return;
         }
+
+        removeMessageListener(this.connectorId, this.connector);
+        this.connector = null;
+        this.channels = {};
+        this.listeners = {};
     },
 
     channel: function(channelName, callback) {

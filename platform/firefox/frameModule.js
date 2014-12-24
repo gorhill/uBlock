@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, Components, XPCOMUtils */
+/* global Services, Components, XPCOMUtils, __URI__ */
 
 'use strict';
 
@@ -36,11 +36,15 @@ Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
 
 /******************************************************************************/
 
-const getMessager = win =>
-    win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDocShell)
-        .sameTypeRootTreeItem.QueryInterface(Ci.nsIDocShell)
+const getMessageManager = function(context) {
+    return context
+        .QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIDocShell)
+        .sameTypeRootTreeItem
+        .QueryInterface(Ci.nsIDocShell)
         .QueryInterface(Ci.nsIInterfaceRequestor)
         .getInterface(Ci.nsIContentFrameMessageManager);
+};
 
 /******************************************************************************/
 
@@ -49,8 +53,7 @@ const contentPolicy = {
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
     contractID: '@' + appName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
-    REJECT: Ci.nsIContentPolicy.REJECT_REQUEST,
-    requestMessageName: appName + ':onBeforeRequest',
+    messageName: appName + ':shouldLoad',
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
     },
@@ -93,6 +96,7 @@ const contentPolicy = {
             false
         );
     },
+    // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
         if (!context || !/^https?$/.test(location.scheme)) {
             return this.ACCEPT;
@@ -102,23 +106,17 @@ const contentPolicy = {
             ? context.contentWindow || context
             : (context.ownerDocument || context).defaultView;
 
-        if (!win) {
-            return this.ACCEPT;
+        if (win) {
+            getMessageManager(win).sendSyncMessage(this.messageName, {
+                url: location.spec,
+                type: type,
+                frameId: type === 6 ? -1 : (win === win.top ? 0 : 1),
+                parentFrameId: win === win.top ? -1 : 0
+            });
         }
 
-        let result = getMessager(win).sendSyncMessage(this.requestMessageName, {
-            url: location.spec,
-            type: type,
-            tabId: -1, // determined in background script
-            frameId: type === 6 ? -1 : (win === win.top ? 0 : 1),
-            parentFrameId: win === win.top ? -1 : 0
-        })[0];
-
-        return result === true ? this.REJECT : this.ACCEPT;
-    }/*,
-    shouldProcess: function() {
         return this.ACCEPT;
-    }*/
+    }
 };
 
 /******************************************************************************/
@@ -126,7 +124,7 @@ const contentPolicy = {
 const docObserver = {
     contentBaseURI: 'chrome://' + appName + '/content/',
     initContext: function(win, sandbox) {
-        let messager = getMessager(win);
+        let messager = getMessageManager(win);
 
         if (sandbox) {
             win = Cu.Sandbox([win], {

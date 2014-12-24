@@ -321,6 +321,7 @@ vAPI.tabs.registerListeners = function() {
     // onClosed - handled in windowWatcher.onTabClose
     // onPopup ?
 
+
     for (var win of this.getWindows()) {
         windowWatcher.onReady.call(win);
     }
@@ -600,10 +601,21 @@ vAPI.setIcon = function(tabId, img, badge) {
     }
 
     var button = curWin.document.getElementById(vAPI.toolbarButton.widgetId);
+
+    if (!button) {
+        return;
+    }
+
+    /*if (!button.classList.contains('badged-button')) {
+        button.classList.add('badged-button');
+    }*/
+
     var icon = vAPI.tabIcons[tabId];
+
     button.setAttribute('badge', icon && icon.badge || '');
-    icon = vAPI.getURL(icon && icon.img || 'img/browsericons/icon16-off.svg');
-    button.style.listStyleImage = 'url(' + icon + ')';
+    button.image = vAPI.getURL(
+        button.image && icon && icon.img || 'img/browsericons/icon16-off.svg'
+    );
 };
 
 /******************************************************************************/
@@ -623,11 +635,11 @@ vAPI.toolbarButton.init = function() {
         defaultArea: CustomizableUI.AREA_NAVBAR,
         label: vAPI.app.name,
         tooltiptext: vAPI.app.name,
-        onViewShowing: function(e) {
-            e.target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
+        onViewShowing: function({target}) {
+            target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
         },
-        onViewHiding: function(e) {
-            e.target.firstChild.setAttribute('src', 'about:blank');
+        onViewHiding: function({target}) {
+            target.firstChild.setAttribute('src', 'about:blank');
         }
     });
 
@@ -645,10 +657,8 @@ vAPI.toolbarButton.register = function(doc) {
     var panel = doc.createElement('panelview');
     panel.setAttribute('id', this.panelId);
 
-    var iframe = panel.appendChild(doc.createElement('iframe'));
+    var iframe = doc.createElement('iframe');
     iframe.setAttribute('type', 'content');
-
-    panel.style.overflow = iframe.style.overflow = 'hidden';
 
     doc.getElementById('PanelUI-multiView')
         .appendChild(panel)
@@ -672,14 +682,13 @@ vAPI.toolbarButton.register = function(doc) {
     };
 
     var onPopupReady = function() {
-        if (!this.contentWindow
-            || this.contentWindow.location.host !== location.host) {
+        var win = this.contentWindow;
+
+        if (!win || win.location.host !== location.host) {
             return;
         }
 
-        var mutObs = this.contentWindow.MutationObserver;
-
-        (new mutObs(delayedResize)).observe(this.contentDocument, {
+        new win.MutationObserver(delayedResize).observe(win.document, {
             childList: true,
             attributes: true,
             characterData: true,
@@ -712,7 +721,7 @@ vAPI.toolbarButton.register = function(doc) {
             '#' + this.panelId + ', #' + this.panelId + ' > iframe {',
                 'width: 180px;',
                 'height: 310px;',
-                'transition: width .1s, height .1s;',
+                'overflow: hidden !important;',
             '}'
         ].join(''));
 
@@ -860,14 +869,127 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.net = {
-    beforeRequestMessageName: location.host + ':onBeforeRequest'
+vAPI.net = {};
+
+/******************************************************************************/
+
+var httpObserver = {
+    ABORT: Components.results.NS_BINDING_ABORTED,
+    lastRequest: {
+        url: null,
+        type: null,
+        tabId: null,
+        frameId: null,
+        parentFrameId: null
+    },
+    observe: function(httpChannel, topic) {
+        if (!(httpChannel instanceof Ci.nsIHttpChannel)) {
+            return;
+        }
+
+        httpChannel = httpChannel.QueryInterface(Ci.nsIHttpChannel);
+        var URI = httpChannel.URI, tabId, result;
+
+        // the first distinct character
+        topic = topic.charAt(8);
+
+        // http-on-modify-request
+        if (topic === 'm') {
+            // var onHeadersReceived = vAPI.net.onHeadersReceived;
+
+            return;
+        }
+
+        // http-on-examine-request
+        if (topic === 'e') {
+            try {
+                tabId = httpChannel.getProperty('tabId');
+            } catch (ex) {
+                return;
+            }
+
+            if (!tabId) {
+                return;
+            }
+
+            var header = 'Content-Security-Policy';
+
+            try {
+                result = httpChannel.getResponseHeader(header);
+            } catch (ex) {
+                result = null;
+            }
+
+            result = vAPI.net.onHeadersReceived.callback({
+                url: URI.spec,
+                tabId: tabId,
+                parentFrameId: -1,
+                responseHeaders: result ? [{name: header, value: result}] : []
+            });
+
+            if (result) {
+                httpChannel.setResponseHeader(
+                    header,
+                    result.responseHeaders[0].value,
+                    true
+                );
+            }
+
+            return;
+        }
+
+        // http-on-opening-request
+
+        var lastRequest = this.lastRequest;
+
+        if (!lastRequest.url || lastRequest.url !== URI.spec) {
+            lastRequest.url = null;
+            return;
+        }
+
+        // Important! When loading file via XHR for mirroring,
+        // the URL will be the same, so it could fall into an infinite loop
+        lastRequest.url = null;
+
+        if (lastRequest.type === 'main_frame'
+            && httpChannel instanceof Ci.nsIWritablePropertyBag) {
+            httpChannel.setProperty('tabId', lastRequest.tabId);
+        }
+
+        var onBeforeRequest = vAPI.net.onBeforeRequest;
+
+        if (!onBeforeRequest.types.has(lastRequest.type)) {
+            return;
+        }
+
+        result = onBeforeRequest.callback({
+            url: URI.spec,
+            type: lastRequest.type,
+            tabId: lastRequest.tabId,
+            frameId: lastRequest.frameId,
+            parentFrameId: lastRequest.parentFrameId
+        });
+
+        if (!result || typeof result !== 'object') {
+            return;
+        }
+
+        if (result.cancel === true) {
+            httpChannel.cancel(this.ABORT);
+        }
+        else if (result.redirectUrl) {
+            httpChannel.redirectionLimit = 1;
+            httpChannel.redirectTo(
+                Services.io.newURI(result.redirectUrl, null, null)
+            );
+        }
+    }
 };
 
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
-    var types = {
+    var typeMap = {
          2: 'script',
          3: 'image',
          4: 'stylesheet',
@@ -877,42 +999,36 @@ vAPI.net.registerListeners = function() {
         11: 'xmlhttprequest'
     };
 
-    var onBeforeRequest = this.onBeforeRequest;
+    this.onBeforeRequest.types = new Set(this.onBeforeRequest.types);
 
-    this.onBeforeRequest = function(e) {
-        var details = e.data;
-
-        details.type = types[details.type] || 'other';
-        details.tabId = vAPI.tabs.getTabId(e.target);
-
-        if (onBeforeRequest.types.indexOf(details.type) === -1) {
-            return false;
-        }
-
-        var block = onBeforeRequest.callback(details);
-
-        if (block && typeof block === 'object') {
-            if (block.cancel === true) {
-                return true;
-            }
-            else if (block.redirectURL) {
-                return block.redirectURL;
-            }
-        }
-
-        return false;
+    var shouldLoadListenerMessageName = location.host + ':shouldLoad';
+    var shouldLoadListener = function(e) {
+        var lastRequest = httpObserver.lastRequest;
+        lastRequest.url = e.data.url;
+        lastRequest.type = typeMap[e.data.type] || 'other';
+        lastRequest.tabId = vAPI.tabs.getTabId(e.target);
+        lastRequest.frameId = e.data.frameId;
+        lastRequest.parentFrameId = e.data.parentFrameId;
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
-        this.beforeRequestMessageName,
-        this.onBeforeRequest
+        shouldLoadListenerMessageName,
+        shouldLoadListener
     );
+
+    Services.obs.addObserver(httpObserver, 'http-on-opening-request', false);
+    // Services.obs.addObserver(httpObserver, 'http-on-modify-request', false);
+    Services.obs.addObserver(httpObserver, 'http-on-examine-response', false);
 
     vAPI.unload.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
-            vAPI.net.beforeRequestMessageName,
-            vAPI.net.onBeforeRequest
+            shouldLoadListenerMessageName,
+            shouldLoadListener
         );
+
+        Services.obs.removeObserver(httpObserver, 'http-on-opening-request');
+        // Services.obs.removeObserver(httpObserver, 'http-on-modify-request');
+        Services.obs.removeObserver(httpObserver, 'http-on-examine-response');
     });
 };
 
