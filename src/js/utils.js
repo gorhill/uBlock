@@ -41,11 +41,11 @@ exports.formatCount = function(count) {
     var s = count.toFixed(0);
     if ( count >= 1000 ) {
         if ( count < 10000 ) {
-            s = '>' + s.slice(0,1) + 'K';
+            s = '>' + s.slice(0,1) + 'k';
         } else if ( count < 100000 ) {
-            s = s.slice(0,2) + 'K';
+            s = s.slice(0,2) + 'k';
         } else if ( count < 1000000 ) {
-            s = s.slice(0,3) + 'K';
+            s = s.slice(0,3) + 'k';
         } else if ( count < 10000000 ) {
             s = s.slice(0,1) + 'M';
         } else {
