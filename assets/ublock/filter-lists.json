@@ -147,6 +147,12 @@
         "group": "regions",
         "homeURL": "http://abp.mozilla-hispano.org/nauscopio/filtros.txt"
         },
+    "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": {
+        "off": true,
+        "title": "EU: Prebake - Filter Obtrusive Cookie Notices",
+        "group": "regions",
+        "homeURL": "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
+        },
     "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt": {
         "off": true,
         "title": "FIN: Wiltteri",
