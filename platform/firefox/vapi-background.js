@@ -432,14 +432,14 @@ vAPI.tabs.get = function(tabId, callback) {
 /******************************************************************************/
 
 vAPI.tabs.getAll = function(window) {
-    var tabs = [];
+    var win, tab, tabs = [];
 
-    for (var win of this.getWindows()) {
+    for (win of this.getWindows()) {
         if (window && window !== win) {
             continue;
         }
 
-        for (var tab of win.gBrowser.tabs) {
+        for (tab of win.gBrowser.tabs) {
             tabs.push(tab);
         }
     }
@@ -643,8 +643,23 @@ vAPI.toolbarButton.init = function() {
         }
     });
 
+    this.closePopup = function({target}) {
+        CustomizableUI.hidePanelForNode(
+            target.ownerDocument.getElementById(vAPI.toolbarButton.panelId)
+        );
+    };
+
+    vAPI.messaging.globalMessageManager.addMessageListener(
+        location.host + ':closePopup',
+        this.closePopup
+    );
+
     vAPI.unload.push(function() {
         CustomizableUI.destroyWidget(vAPI.toolbarButton.widgetId);
+        vAPI.messaging.globalMessageManager.addMessageListener(
+            location.host + ':closePopup',
+            vAPI.toolbarButton.closePopup
+        );
     });
 };
 
@@ -763,19 +778,19 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 /******************************************************************************/
 
-vAPI.messaging.onMessage = function(request) {
-    var messageManager = request.target.messageManager;
+vAPI.messaging.onMessage = function({target, data}) {
+    var messageManager = target.messageManager;
 
     if (!messageManager) {
         // Message came from a popup, and its message manager is not usable.
         // So instead we broadcast to the parent window.
-        messageManager = request.target
+        messageManager = target
             .webNavigation.QueryInterface(Ci.nsIDocShell)
             .chromeEventHandler.ownerDocument.defaultView.messageManager;
     }
 
-    var listenerId = request.data.portName.split('|');
-    var requestId = request.data.requestId;
+    var listenerId = data.portName.split('|');
+    var requestId = data.requestId;
     var portName = listenerId[1];
     listenerId = listenerId[0];
 
@@ -799,7 +814,7 @@ vAPI.messaging.onMessage = function(request) {
 
     var sender = {
         tab: {
-            id: vAPI.tabs.getTabId(request.target)
+            id: vAPI.tabs.getTabId(target)
         }
     };
 
@@ -807,19 +822,19 @@ vAPI.messaging.onMessage = function(request) {
     var r = vAPI.messaging.UNHANDLED;
     var listener = vAPI.messaging.listeners[portName];
     if ( typeof listener === 'function' ) {
-        r = listener(request.data.msg, sender, callback);
+        r = listener(data.msg, sender, callback);
     }
     if ( r !== vAPI.messaging.UNHANDLED ) {
         return;
     }
 
     // Default handler
-    r = vAPI.messaging.defaultHandler(request.data.msg, sender, callback);
+    r = vAPI.messaging.defaultHandler(data.msg, sender, callback);
     if ( r !== vAPI.messaging.UNHANDLED ) {
         return;
     }
 
-    console.error('µBlock> messaging > unknown request: %o', request.data);
+    console.error('µBlock> messaging > unknown request: %o', data);
 
     // Unhandled:
     // Need to callback anyways in case caller expected an answer, or
@@ -883,11 +898,11 @@ var httpObserver = {
         parentFrameId: null
     },
     observe: function(httpChannel, topic) {
+        // if this check is performed, it doesn't need to be QueryInterfaced?
         if (!(httpChannel instanceof Ci.nsIHttpChannel)) {
             return;
         }
 
-        httpChannel = httpChannel.QueryInterface(Ci.nsIHttpChannel);
         var URI = httpChannel.URI, tabId, result;
 
         // the first distinct character
@@ -912,10 +927,10 @@ var httpObserver = {
                 return;
             }
 
-            var header = 'Content-Security-Policy';
+            var CSPHeader = 'Content-Security-Policy';
 
             try {
-                result = httpChannel.getResponseHeader(header);
+                result = httpChannel.getResponseHeader(CSPHeader);
             } catch (ex) {
                 result = null;
             }
@@ -924,12 +939,12 @@ var httpObserver = {
                 url: URI.spec,
                 tabId: tabId,
                 parentFrameId: -1,
-                responseHeaders: result ? [{name: header, value: result}] : []
+                responseHeaders: result ? [{name: CSPHeader, value: result}] : []
             });
 
             if (result) {
                 httpChannel.setResponseHeader(
-                    header,
+                    CSPHeader,
                     result.responseHeaders[0].value,
                     true
                 );

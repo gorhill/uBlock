@@ -64,7 +64,7 @@ var cachePopupData = function(data) {
 
     if ( typeof data !== 'object' ) {
         return popupData;
-    } 
+    }
     popupData = data;
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
     var hostnameDict = popupData.hostnameDict;
@@ -163,8 +163,8 @@ var addDynamicFilterRow = function(des) {
 
     // Hacky? I couldn't figure a CSS recipe for this problem.
     // I do not want the left pane -- optional and hidden by defaut -- to
-    // dictate the height of the popup. The right pane dictates the height 
-    // of the popup, and the left pane will have a scrollbar if ever its 
+    // dictate the height of the popup. The right pane dictates the height
+    // of the popup, and the left pane will have a scrollbar if ever its
     // height is larger than what is available.
     if ( popupHeight === undefined ) {
         popupHeight = uDom('#panes > div:nth-of-type(1)').nodeAt(0).offsetHeight;
@@ -310,6 +310,7 @@ var renderPopup = function() {
     // Conditions for request log:
     // - `http` or `https` scheme
     uDom('#gotoLog').toggleClass('enabled', isHTTP);
+    uDom('#gotoLog').attr('href', 'devtools.html?tabId=' + popupData.tabId);
 
     // Conditions for element picker:
     // - `http` or `https` scheme
@@ -381,44 +382,19 @@ var toggleNetFilteringSwitch = function(ev) {
 
 /******************************************************************************/
 
-var gotoDashboard = function() {
-    messager.send({
-        what: 'gotoURL',
-        details: {
-            url: 'dashboard.html',
-            select: true,
-            index: -1
-        }
-    });
-};
-
-/******************************************************************************/
-
-var gotoDevTools = function() {
-    messager.send({
-        what: 'gotoURL',
-        details: {
-            url: 'devtools.html?tabId=' + popupData.tabId,
-            select: true,
-            index: -1
-        }
-    });
-};
-
-/******************************************************************************/
-
 var gotoPick = function() {
     messager.send({
         what: 'gotoPick',
         tabId: popupData.tabId
     });
-    window.open('','_self').close();
+
+    vAPI.closePopup();
 };
 
 /******************************************************************************/
 
-var gotoLink = function(ev) {
-    if (!ev.target.href) {
+var gotoURL = function(ev) {
+    if (!this.hasAttribute('href')) {
         return;
     }
 
@@ -427,11 +403,13 @@ var gotoLink = function(ev) {
     messager.send({
         what: 'gotoURL',
         details: {
-            url: ev.target.href,
+            url: this.getAttribute('href'),
             select: true,
             index: -1
         }
     });
+
+    vAPI.closePopup();
 };
 
 /******************************************************************************/
@@ -546,14 +524,14 @@ var reloadTab = function() {
 // from the main extension process to a specific auxiliary extension process:
 //
 // - broadcasting() is not an option given there could be a lot of tabs opened,
-//   and maybe even many frames within these tabs, i.e. unacceptable overhead 
+//   and maybe even many frames within these tabs, i.e. unacceptable overhead
 //   regardless of whether the popup is opened or not.
 //
 // - Modifying the messaging API is not an option, as this would require
 //   revisiting all platform-specific code to support targeted broadcasting,
 //   which who knows could be not so trivial for some platforms.
 //
-// A well done polling is a better anyways IMO, I prefer that data is pulled 
+// A well done polling is a better anyways IMO, I prefer that data is pulled
 // on demand rather than forcing the main process to assume a client may need
 // it and thus having to push it all the time unconditionally.
 
@@ -608,11 +586,9 @@ var getPopupData = function() {
 
 uDom.onLoad(function() {
     getPopupData();
-    uDom('h1,h2,h3,h4').on('click', gotoDashboard);
     uDom('#switch').on('click', toggleNetFilteringSwitch);
-    uDom('#gotoLog').on('click', gotoDevTools);
     uDom('#gotoPick').on('click', gotoPick);
-    uDom('a[href^=http]').on('click', gotoLink);
+    uDom('a[href]').on('click', gotoURL);
     uDom('#dfToggler').on('click', toggleDynamicFiltering);
     uDom('#refresh').on('click', reloadTab);
 });

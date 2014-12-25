@@ -35,8 +35,13 @@ body:not(.advancedUser) [data-tip]:hover:after {
     top: 110%;
     white-space: pre-line;
     z-index: 20;
-    animation: tooltip 0.8s;
-    -webkit-animation: tooltip 0.8s;
+    pointer-events: none;
+    opacity: 0;
+    }
+[data-tip]:hover::after {
+    opacity: 1;
+    -webkit-transition: opacity 0.2s 0.2s;
+    transition: opacity 0.2s 0.2s;
     }
 body[dir=rtl] [data-tip]:hover:after {
     text-align: right;
@@ -53,17 +58,6 @@ body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
     right: -500%;
-    }
-
-@keyframes tooltip {
-      0% { opacity: 0; }
-     85% { opacity: 0; }
-    100% { opacity: 1; }
-    }
-@-webkit-keyframes tooltip {
-      0% { opacity: 0; }
-     85% { opacity: 0; }
-    100% { opacity: 1; }
     }
 
 .hiddenFileInput {

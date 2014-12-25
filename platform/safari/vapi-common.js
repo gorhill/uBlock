@@ -106,6 +106,23 @@ vAPI.i18n = function(s) {
 
 /******************************************************************************/
 
+vAPI.closePopup = function() {
+    var safr = safari.extension.globalPage.contentWindow.safari;
+    var items = safr.extension.toolbarItems;
+
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].browserWindow !== safr.application.activeBrowserWindow) {
+            continue;
+        }
+
+        if (items[i].popover && items[i].popover.visible) {
+            items[i].popover.hide();
+        }
+    }
+};
+
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/

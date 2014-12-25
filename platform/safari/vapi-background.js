@@ -408,19 +408,6 @@ safari.application.addEventListener('close', function(e) {
 
 // update badge when tab is activated
 safari.application.addEventListener('activate', function(e) {
-    // hide popover, since in some cases won't close by itself
-    var items = safari.extension.toolbarItems;
-
-    for (var i = 0; i < items.length; ++i) {
-        if (items[i].browserWindow === safari.application.activeBrowserWindow) {
-            if (items[i].popover) {
-                items[i].popover.hide();
-            }
-
-            break;
-        }
-    }
-
     // ignore windows
     if (!(e.target instanceof SafariBrowserTab)) {
         return;

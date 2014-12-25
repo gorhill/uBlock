@@ -73,15 +73,19 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.getURL = function(path) {
-    return chrome.runtime.getURL(path);
-};
+vAPI.getURL = chrome.runtime.getURL;
 
-vAPI.i18n = function(s) {
-    return chrome.i18n.getMessage(s);
-};
+/******************************************************************************/
+
+vAPI.i18n = chrome.i18n.getMessage;
 
 setScriptDirection(vAPI.i18n('@@ui_locale'));
+
+/******************************************************************************/
+
+vAPI.closePopup = function() {
+    window.open('','_self').close();
+};
 
 /******************************************************************************/
 

@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global sendAsyncMessage */
+
 // For background page or non-background pages
 
 /******************************************************************************/
@@ -89,6 +91,12 @@ vAPI.i18n = (function() {
 })();
 
 setScriptDirection(navigator.language);
+
+/******************************************************************************/
+
+vAPI.closePopup = function() {
+    sendAsyncMessage(location.host + ':closePopup');
+};
 
 /******************************************************************************/
 

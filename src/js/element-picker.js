@@ -986,9 +986,6 @@ var startPicker = function(details) {
 
 localMessager.send({ what: 'elementPickerArguments' }, startPicker);
 
-// This triggers the hiding of the popover in Safari
-window.focus();
-
 /******************************************************************************/
 
 // https://www.youtube.com/watch?v=sociXdKnyr8
