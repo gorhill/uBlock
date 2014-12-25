@@ -25,7 +25,7 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 <p align="center">
 µBlock: on average, it <b>really</b> does make your browser run leaner<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
-<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.<br>Also, not shown in the chart above, but Adguard/AdBlock/ABP are <a href="https://github.com/gorhill/uBlock/wiki/Own-memory-usage:-benchmarks-over-time#23-december-2014"><b>significantly</b> more CPU intensive</a> then µBlock</sup>
+<sup>Also, not shown in the chart above, but Adguard/AdBlock/ABP are <a href="https://github.com/gorhill/uBlock/wiki/Own-memory-usage:-benchmarks-over-time#23-december-2014"><b>significantly</b> more CPU intensive</a> then µBlock<br>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
 <p align="center">
