@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: qXQJ26Wv+PCZov1q+sodOg
-! Version: 201412202020
-! Last modified: 20 Dec 2014 20:20 UTC
+! Checksum: w1qiTbEL118fJT+UgGy9sQ
+! Version: 201412251220
+! Last modified: 25 Dec 2014 12:20 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -781,6 +781,7 @@ _vkontakte.png
 /ico-linkedin.
 /ico-pinterest-
 /ico-reddit.
+/ico-scoopit.
 /ico-share-
 /ico-share.
 /ico-social-
@@ -1022,7 +1023,7 @@ _vkontakte.png
 /images/gplus-
 /images/instagram-
 /images/instagram_
-/images/linkedin_
+/Images/linkedin
 /images/pinterest-
 /images/Pinterest_
 /images/reddit-
@@ -2458,6 +2459,10 @@ _youtube_social_
 ###badges-share-block
 ###band_social
 ###banner-social
+###base64-share-facebook
+###base64-share-google
+###base64-share-twitter
+###base64-share-vk
 ###be-social
 ###beesocial
 ###belowpost-like
@@ -2836,6 +2841,7 @@ _youtube_social_
 ###follow_box
 ###follow_btns
 ###follow_buttons
+###follow_dui
 ###follow_facebook
 ###follow_facebook_icon
 ###follow_ftr
@@ -2944,6 +2950,7 @@ _youtube_social_
 ###hdrSocialPromo
 ###hdr_social_row
 ###headSnsBtn
+###head_share
 ###header-bebo
 ###header-facebook-social-link
 ###header-follow
@@ -3391,6 +3398,7 @@ _youtube_social_
 ###share_social_sidebar
 ###share_spot
 ###share_this
+###share_to
 ###share_tools
 ###share_top
 ###share_twitter
@@ -3788,6 +3796,7 @@ _youtube_social_
 ###social_mobile
 ###social_module
 ###social_more
+###social_nav
 ###social_net
 ###social_network_links
 ###social_new
@@ -4430,6 +4439,7 @@ _youtube_social_
 ##.btn-linkedin
 ##.btn-pinterest
 ##.btn-share
+##.btn-social-share
 ##.btn-tw
 ##.btn-twitter
 ##.btn-youtube
@@ -4536,6 +4546,7 @@ _youtube_social_
 ##.cq-footer-social
 ##.crafty-social-buttons
 ##.csc_social_counter
+##.cshare
 ##.css-social-sidebar
 ##.ct-sharing
 ##.ct-top-sharing
@@ -4995,6 +5006,7 @@ _youtube_social_
 ##.follow-share
 ##.follow-sharer-icon
 ##.follow-social
+##.follow-sprite
 ##.follow-the-atlantic
 ##.follow-tumblr
 ##.follow-twitter
@@ -5502,6 +5514,7 @@ _youtube_social_
 ##.icon-linkedin-circled
 ##.icon-linkedin-sign
 ##.icon-linkedin-square
+##.icon-linkedin_box
 ##.icon-logo-facebook
 ##.icon-logo-linkedin
 ##.icon-logo-twitter-bird
@@ -5520,6 +5533,7 @@ _youtube_social_
 ##.icon-plusone
 ##.icon-plusone-mini
 ##.icon-reddit
+##.icon-share
 ##.icon-share-linkedin
 ##.icon-share-twitter
 ##.icon-social
@@ -5808,6 +5822,7 @@ _youtube_social_
 ##.mf-social-item
 ##.mf-social-list
 ##.microcontent-shares
+##.minds-social
 ##.mini-social-share-list
 ##.minimal-nav__social
 ##.minimalshare
@@ -5874,6 +5889,8 @@ _youtube_social_
 ##.navSocial-list-item
 ##.nav__item--social
 ##.nav_menu_social
+##.navbar-item-gplus-icon
+##.navbar-item-social-icon
 ##.navbar-social
 ##.navsocial
 ##.netPost_socialProfiles
@@ -5977,6 +5994,7 @@ _youtube_social_
 ##.post-on-social-media
 ##.post-share
 ##.post-share-block
+##.post-share-box-circle
 ##.post-share-buttons
 ##.post-share-container
 ##.post-share-element
@@ -6025,6 +6043,8 @@ _youtube_social_
 ##.pw-share-tools
 ##.pw-twitter
 ##.pwebfblikebox
+##.pxFacebook
+##.pxTwitter
 ##.ql-facebook
 ##.ql-twitter
 ##.qlsocialicons
@@ -6421,6 +6441,7 @@ _youtube_social_
 ##.shareaholic-ui
 ##.sharebar
 ##.sharebar-shareicon
+##.sharebarWrapper
 ##.sharebar_mainsites
 ##.sharebarbtn
 ##.sharebg
@@ -6631,6 +6652,7 @@ _youtube_social_
 ##.so_instagram
 ##.so_linkedin
 ##.so_twitter
+##.soc-block
 ##.soc-facebook
 ##.soc-fb
 ##.soc-google
@@ -8182,7 +8204,6 @@ _youtube_social_
 ! - Скрипты и фремы с посторонних сайтов --------------------------------------
 ! *** bitblock/social_thirdparty.txt ***
 ||bobrdobr.ru/images/buttons/$third-party
-||bogi.ru/comments_widget.
 ||boom.mail.ru^
 ||clix.ru^$third-party
 ||connect.mail.ru^$third-party
@@ -8376,6 +8397,7 @@ _youtube_social_
 ||redditstatic.s3.amazonaws.com^$third-party,domain=~reddit.com
 ||rp-api.com/rjs/repostus.js
 ||saywidgets.awe.sm^$third-party
+||scoop.it^$third-party
 ||search.twitter.com^$third-party
 ||share.loginradius.com^$third-party
 ||share.pluso.ru^$third-party
@@ -8759,8 +8781,10 @@ _userbar_$image
 /icn-rss-
 /ico-rss.
 /ico-subscribe-
+/ico_dailymotion.
 /ico_livedoor.
 /ico_meneame.
+/ico_rss.
 /ico_share_
 /icon-blog-
 /icon-bm-32-
@@ -9041,6 +9065,7 @@ _cookie_compliance.
 _cookie_policy.
 _cookie_policy_
 _cookieMsgBox/
+_cookiewarn.
 _eu_cookie_
 !
 ! - Общие правила скрытия -----------------------------------------------------
@@ -9507,6 +9532,7 @@ _eu_cookie_
 ##.genericon-feed
 ##.hellobar-signup
 ##.home-twitterfeed
+##.hz-newsletter
 ##.i-rss
 ##.i_big_rss
 ##.ibbsub
@@ -9551,6 +9577,7 @@ _eu_cookie_
 ##.mod-newsletters
 ##.mod-sharing-margin
 ##.mod-simplyhired
+##.module-newsletter
 ##.module-zerg
 ##.module_newsletter
 ##.moduletable_icons
@@ -9755,6 +9782,7 @@ _eu_cookie_
 ##.widget-newsletter
 ##.widget-subscribe
 ##.widget_al2fb
+##.widget_am_taboola_main_widget
 ##.widget_bb_mailchimp_custom_signup_widget
 ##.widget_blog_subscription
 ##.widget_cbs_newsletter_widget
@@ -10287,7 +10315,9 @@ _eu_cookie_
 ##.cookieDisclaimer
 ##.cookieDisclaimerContainer
 ##.cookieDisclaimerContainerWrapper
+##.cookieInformation
 ##.cookieLaw
+##.cookieLegal
 ##.cookieMaster
 ##.cookieMessage
 ##.cookieMessageDiv
@@ -10612,6 +10642,7 @@ _eu_cookie_
 ||calendar.rodim.ru^
 ||card.mmos.com^
 ||card.psnprofiles.com^$third-party
+||cartprotector.com^$third-party
 ||catlover.m-sk.ru/lin/
 ||centrfan.ru^$third-party
 ||chasikov.net.ru^$third-party
@@ -10886,6 +10917,7 @@ _eu_cookie_
 ||readability.com/embed.js$third-party
 ||recommendedbookies.co.uk^$third-party
 ||repost.us^$third-party
+||research.net^$third-party
 ||rokt.com^$third-party
 ||roost.me^$third-party
 ||rsspump.com^$third-party
@@ -11344,6 +11376,7 @@ dailymail.co.uk,thisismoney.co.uk#@#.img-share
 instagram.com#@#.instagram-follow
 sap.com#@#.j-social-actions
 katproxy.com,kickass.so,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
+renren.com#@#.photo-share
 ~pinterest.com##.pin-it-button
 llbean.com#@#.pinit-overlay
 ~pinterest.com##.pinit_btn
@@ -11489,6 +11522,7 @@ twitter.com#@#img[alt="Vine"]
 @@||alkoblog.de/wp-content/plugins/StickySocialBar/js/sharefront.js?
 @@||allfacebook.de/wp-content/uploads/*/nl-allfacebook.png
 @@||alternativefuer.de/wp-content/plugins/2-click-socialmedia-buttons/js/social_bookmarks-min.js?
+@@||amazonaws.com/assets.makerstudios.com/fpf/logos/YouTube-logo-light.png$domain=makerstudios.com
 @@||amazonaws.com/etc/designs/slate/images/social/$domain=slate.com
 @@||amazonaws.com/images/$image,domain=wordsquared.com
 @@||amctv.com^*/social-buttons.js
@@ -11568,6 +11602,7 @@ twitter.com#@#img[alt="Vine"]
 @@||googleapis.com/hiveweb/img/icon_facebook.svg$domain=hive.im
 @@||googleapis.com/hiveweb/img/icon_google.svg$domain=hive.im
 @@||googlecode.com/hg/icons/$image,domain=enjoyfreeware.org
+@@||googleusercontent.com^*_social_icons.css$domain=forums.whatthetech.com
 @@||gstatic.com/*/notifications/logo/google-plus-$image,domain=google.com
 @@||gstatic.com/chrome/webstore/images/share_$domain=google.com
 @@||gstatic.com/productsearch/static/social/$domain=google.com
@@ -11674,6 +11709,7 @@ twitter.com#@#img[alt="Vine"]
 @@||syndication.twitter.com/tweets.json?*&callback=$script
 @@||t3n.de/news/wp-content/uploads/*/social_media_
 @@||telia.se/tse/js/socialmedia/
+@@||theinterview-movie.com/images/btn_youtube.png
 @@||thenextweb.com/socialmedia/*?cf_action=$script
 @@||timecatcher.github.io/img/facebook.png
 @@||triangleoffense.com^*/triangle-offense-header-social-sprites.png
@@ -11717,6 +11753,7 @@ twitter.com#@#img[alt="Vine"]
 @@||xkcd.com/comics/$image,~third-party
 @@||xmarks.com/share/share_$~third-party
 @@||yandex.st/share/share.js$domain=66.ru
+@@||yimg.com^*/combo?*/followus.$domain=yahoo.com
 @@||yimg.com^*/combo?*/share-buttons-$script,domain=yahoo.com
 @@||yougetsignal.com/img/*_igoogle.gif
 @@||yukons.net/share.js$domain=zuuk.net

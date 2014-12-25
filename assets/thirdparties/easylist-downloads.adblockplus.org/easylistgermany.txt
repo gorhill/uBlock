@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 1mbQy0cpApwFFvhvGCqF+Q
-! Version: 201412202021
+! Checksum: s9BAdGNCOgI5GedDTdn1ww
+! Version: 201412251221
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 20 Dec 2014 20:21 UTC
+! Last modified: 25 Dec 2014 12:21 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1637,9 +1637,11 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||3min.de/media/featured_sites/featured_bg_$image
 ||4-seasons.tv^*/FsProducts.swf
 ||4memes.net/rec$subdocument
+||4pcdn.de/premium/GameAccessories/*/310x120mifcom_battlebox.jpg$domain=4players.de
 ||4players.de/4pl/wallpaper/
 ||4players.de/javascript/4players/billiger.de.js
 ||4players.de/sourcen/portal/4players/utraforce/
+||4players.de^*/vast.js
 ||4taktershop.de^$subdocument,domain=rollertuningpage.de
 ||5-jahres-wertung.de/apd/online/5-jahres-wertung-dateien/image*.gif
 ||5-jahres-wertung.de/apd/online/5-jahres-wertung-dateien/image*.jpg
@@ -1971,6 +1973,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||connect.quoka.de^
 ||consol.at/fileadmin/templates/images/bg_
 ||consol.at/uploads/tx_consolmedia/*_branding.jpg
+||contilla-cdn.s3-eu-west-1.amazonaws.com/js/adblock.min.js$domain=wetteronline.de
 ||coretime.fm/banner/
 ||crackajack.de^*/_banner/$image
 ||crawli.net/com/
@@ -4372,6 +4375,7 @@ hornoxe.com###lside > center > a[target="_blank"] > img
 chili-warez.net,mov-world.net,xxx-4-free.net###lyr
 filmz.de###m > div[style="left:16px;width:468px;overflow:hidden"] + .p[style="left:4px;width:492px;height:262px"]:last-child
 crackajack.de###madcowdesease_premium
+gmx.net,web.de###mail-list .new.nma
 mov-world.net###main > #lblock + [style*="width: 180px"]
 emergency-forum.de###main > .border > .container-1[style="text-align: center"]:first-child:last-child
 abendblatt.de###main > .column-1 > .widget > #lt_Wrap
@@ -7213,6 +7217,7 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||adserver2.clipkit.de/www/delivery/ajs.php?$script,domain=jam.fm|paradiso.de
 @@||adsett.de/templates/ads/$~third-party
 @@||adshot.de/click/view.php$image,domain=dateibrowser.de|filebroker.de|thisload.de
+@@||adstyle.com^$~third-party
 @@||adtech.de/?adrawdata/$object-subrequest,domain=cineman.de|login.audimark.de|player.nowonscreen.com
 @@||adtech.de/addyn/*/ADTECH;$script,domain=girlsgogames.de|jetztspielen.de|spielen.com
 @@||adtech.de/adperf/$script,domain=jetztspielen.de|spielen.com
@@ -7252,6 +7257,7 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||banner.t-online.de/addyn/*/ADTECH;loc=100;target=_blank;misc=$script,domain=sportdaten.t-online.de
 @@||banner.t-online.de/crossdomain.xml$object-subrequest,domain=mahjonggwelt.de
 @@||banners.webmasterplan.com/view.asp?ref=$image,domain=sms-box.de
+@@||banners.webmasterplan.com/view.asp?ref=91339&site=10830&type=html&hnb=9&js=1&th=D1E4EF&tro=F4F4F4&tre=EEEEEE&abg=CF0000$script,domain=onlinekosten.de
 @@||bauer-plus.de^*?advertiser=$subdocument,domain=abosgratis.de
 @@||belboon.de/adtracking/$subdocument,domain=gutscheindoktor.de|preis-vergleich.tv|preismafia.com
 @@||belboon.de/clickout.php?$subdocument,domain=preis-vergleich.tv
@@ -7656,12 +7662,15 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||cuiron.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||cuiron.de^$image,domain=gamona.de|lustich.de
 @@||cuiron.de^$script,domain=gamona.de|lustich.de
+@@||dastandard.at^$elemhide
 @@||data-ero-advertising.com/impopup/layer.js$domain=berlin-nutten.com
 @@||david-forum.de/advertisement.css
 @@||ddl-search.biz/js/advertisement.js
 @@||ddl-search.biz/js/advertisements.js
 @@||derlacher.de/static/lib/advertisement.js
+@@||derstandard.at^$elemhide
 @@||dhads.net/kamp/rot.php?art=leaderboardview&uid=*&sid=$script,domain=uploaded-premium.ru
+@@||diestandard.at^$elemhide
 @@||digentu.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||digentu.de^$script,domain=gamona.de|lustich.de
 @@||dokumente-online.com^*/adframe.js
@@ -7843,6 +7852,7 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||st.wetteronline.de/css/ipad.css?
 @@||st.wetteronline.de/css/nonpaid.css?
 @@||st.wetteronline.de/css/p_*.css?
+@@||st.wetteronline.de/css/p_wxsearch.css?
 @@||st.wetteronline.de/css/pc_*.css?
 @@||st.wetteronline.de/css/print.css?
 @@||st.wetteronline.de/css/reset.css?

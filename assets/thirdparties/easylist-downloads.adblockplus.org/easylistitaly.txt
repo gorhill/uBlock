@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: pCCcxowlaEJE4iCmotuPew
-! Version: 201412202021
+! Checksum: EdVgvBOn7W083XAw/lSgUA
+! Version: 201412251221
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 20 Dec 2014 20:21 UTC
+! Ultima modifica: 25 Dec 2014 12:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -2374,6 +2374,7 @@ autoline-eu.it##.index-main-banners
 gazzetta.it##.info-quote
 sardegnareporter.it##.innerfade[style="margin-bottom: 10px; position: relative; height: 295px;"]
 motousate.it##.item.link
+mtv.it##.itunes
 rtl.it##.itunes-btn
 jacktech.it##.jk_banner
 vivastreet.it##.kiwii-box-300x250
@@ -2799,6 +2800,7 @@ tomshw.it###notifica_adcont
 termometropolitico.it##[id^="bsa"]
 !----------------Regole di esclusione per risolvere i problemi----------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist.txt ***
+@@||ad.doubleclick.net/adj/mtv.ita/$script,domain=mtv.it
 @@||ad.smartclip.net/crossdomain.xml$object-subrequest,domain=serviziopubblico.it
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=serviziopubblico.it
 @@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv|rainews.it
@@ -2813,8 +2815,6 @@ termometropolitico.it##[id^="bsa"]
 @@||adv.alice.it/crossdomain.xml$object-subrequest,domain=webtv.cubovision.it
 @@||adv.alice.it/html.ng/site=cubow$object-subrequest,domain=webtv.cubovision.it
 @@||adv.ilsole24ore.it/crossdomain.xml$object-subrequest,domain=sky.it
-@@||adv.ilsole24ore.it^*/empty.flv$object-subrequest,domain=sky.it
-@@||adv.ilsole24ore.it^*@preroll|$object-subrequest,domain=sky.it
 @@||adv.rtl.it/crossdomain.xml$object-subrequest
 @@||adv.rtl.it/www/delivery/fc.php?*&zones=pre-roll$object-subrequest
 @@||adv.tre.it/www/$image,script,$~third-party
@@ -2823,7 +2823,6 @@ termometropolitico.it##[id^="bsa"]
 @@||antonioranesi.it/cache/Lavori/Pubblicita/$~third-party
 @@||areanapoli.it/adv/fb-fan-box.html?$subdocument
 @@||banneradmin.rai.it/crossdomain.xml$object-subrequest
-@@||bs.serving-sys.com/crossdomain.xml$object-subrequest,domain=sky.it
 @@||cdn-wx.rainbowtgx.com/*/adaptive-content/js/speweb-001.js$domain=quotidiano.net
 @@||centrosangiorgio.com^*_pubblicita.
 @@||centrosangiorgio.com^*_pubblicita/
@@ -2837,7 +2836,7 @@ termometropolitico.it##[id^="bsa"]
 @@||doubleclick.net/adj/tuttosport.home/home;sz=336x600,300x250,300x600;=$script,domain=tuttosport.com
 @@||download.deejay.it/adv/podcast/$object-subrequest
 @@||eyewonder.com^*/video/$object-subrequest,domain=serviziopubblico.it
-@@||files.adform.net/banners/stream/$object-subrequest,domain=liberoquotidiano.it|sky.it
+@@||files.adform.net/banners/stream/$object-subrequest,domain=liberoquotidiano.it
 @@||foolbite.com/foolbite/*_pubblicita_$~third-party
 @@||forebase.com/plugin/*/images/ads/$image
 @@||forebase.com/plugin/ads.htm?$subdocument
@@ -2879,7 +2878,6 @@ termometropolitico.it##[id^="bsa"]
 @@||rampower.it/flash/rp_player_rtmp.swf?*&videourl=http://www.rampower.it/advertising/$object
 @@||repubblica.it/adimages/
 @@||rtax.criteo.com/delivery/rta/rta.js?$script,domain=webmail.virgilio.it
-@@||serving-sys.com/BurstingPipe/adServer.bs?$object-subrequest,domain=sky.it
 @@||servizi-media-js.tiscali.it/cp/javascript/default/it/main/revsci.js$domain=mail.tiscali.it
 @@||serviziopubblico.it/media/js/init_f4m_doubleclick.js
 @@||smartadserver.com/a/diff/*/show42.asp?$object-subrequest,domain=popcorntv.it
@@ -2895,8 +2893,6 @@ termometropolitico.it##[id^="bsa"]
 @@||terradidelizie.s3.amazonaws.com/banners/$image,domain=terradidelizie.it
 @@||tiscali.ad.dotandad.com/crossdomain.xml$object-subrequest,domain=ansa.it|tiscali.it
 @@||tiscali.ad.dotandad.com/tiscali.jsp?mpo=vast2&mpt=$object-subrequest,domain=ansa.it|tiscali.it
-@@||track.adform.net/crossdomain.xml$object-subrequest,domain=sky.it
-@@||track.adform.net/serving/videoad/?$object-subrequest,domain=sky.it
 @@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=mtv.it
 @@||video1.italiaoggi.it/movie/movie/adserver_$object,object-subrequest
 @@||video1.milanofinanza.it/movie/movie/adserver_$object,object-subrequest

@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 5KXDpwx/XPXFF5bMjeE87g
-! Version: 201412202021
+! Checksum: dPFe6H+KIh7LhhAb9Zr9ZA
+! Version: 201412251221
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -109,6 +109,7 @@ _regiepub/
 ||amygdaluscommunisschematization.info^$third-party
 ||antonymprurience.com^$third-party
 ||appsfire.com^$third-party
+||arcedgorkiy.net^$third-party
 ||archaicgenusklebsiella.info^$third-party
 ||ariledsixtyfour.info^$third-party
 ||atedra.com^$third-party
@@ -128,6 +129,7 @@ _regiepub/
 ||brachycephalismotterhound.net^$third-party
 ||bragibriefness.com^$third-party
 ||breastfeedingramjet.org^$third-party
+||bullheadcatfishtortuousness.net^$third-party
 ||camsympa.com^$third-party,domain=~camsympa.fr
 ||captiousmagnoliasoulangiana.org^$third-party
 ||carpediem.fr^$third-party
@@ -186,10 +188,12 @@ _regiepub/
 ||every.com^$third-party
 ||exchange.gouik.com^$third-party
 ||f5biz.biz^$third-party
+||familyperipatidaegenusacrocomia.info^$third-party
 ||femme-cougar.tv^$popup,third-party
 ||firstoffersfinder.com^$third-party
 ||floretnonvolatilisable.org^$third-party
 ||foodelevatororbignya.com^$third-party
+||foodstamprhyacotritonolympicus.org^$third-party
 ||forgerhineland.com^$third-party
 ||fruitfulnessmechanicalmixture.com^$third-party
 ||gagner-une-console.com^$third-party
@@ -197,6 +201,7 @@ _regiepub/
 ||gdfspfg.com^$third-party
 ||genhit.com^$third-party
 ||genrepaintingimproving.info^$third-party
+||genushimantoglossumsultanofswat.com^$third-party
 ||genusopisthocomusbuccaneering.info^$third-party
 ||genusscindapsusketeleeria.com^$third-party
 ||georgesandsorb.net^$third-party
@@ -236,9 +241,11 @@ _regiepub/
 ||intermittenceairconditioner.info^$third-party
 ||kadserver.com^$third-party
 ||keynesianpieris.org^$third-party
+||kontestapp.com^$third-party
 ||koocash.com$popup,third-party
 ||koodoo.net^$third-party
 ||kreaffiliation.com^$third-party
+||lavendermalvinahoffman.org^$third-party
 ||leaderpub.fr^$third-party
 ||lendoneselflepidopterist.info^$third-party
 ||lien-amateur.org^$third-party
@@ -268,6 +275,7 @@ _regiepub/
 ||moneytize.fr^$third-party
 ||moonworshipchapatti.net^$third-party
 ||murinebloomeriacrocea.org^$third-party
+||muscadomesticadownheartedness.net^$third-party
 ||muskatabieslasiocarpa.net^$third-party
 ||myspot.fr^$third-party
 ||mysteriousfallwebworm.net^$third-party
@@ -336,6 +344,7 @@ _regiepub/
 ||saintfrancisclaw.org^$third-party
 ||saulbellowrigel.org^$third-party
 ||say.fr^$third-party
+||scalablemothertongue.net^$third-party
 ||schismaticallydaybyday.info^$third-party
 ||script.banstex.com^$third-party
 ||secretaryofstateblackness.net^$third-party
@@ -366,6 +375,7 @@ _regiepub/
 ||surfactif.fr^$third-party
 ||susanbrownellanthonysabotage.net^$third-party
 ||tamarauallatonce.com^$third-party
+||taziyehhenpeck.com^$third-party
 ||teads.fr^$third-party
 ||the-adult-company.com^$popup,third-party
 ||theatreofwarsailorboy.net^$third-party
@@ -498,6 +508,7 @@ _regiepub/
 ||cliquojeux.com/pub/
 ||club-salopes.com/partenaires/
 ||compteur-blog.net/img/pub_
+||contest-bscia0.xg1.li^
 ||coquinissime.com/promo/
 ||coteblog.com/_logo/$third-party
 ||countryclic.com/ban.gif
@@ -976,6 +987,7 @@ _regiepub/
 ||conseils-courseapied.com/images/boutique-marathon/
 ||conseils-courseapied.com/images/overstims/
 ||conseils-courseapied.com/images/partenaire/
+||coques-iphone.com/modules/blockPub
 ||courrierlaval.com/images/wallpaper/
 ||crash-aerien.aero/www/images/myfreemagz468.swf
 ||crash-aerien.aero/www/images/papillons.jpg
@@ -1170,6 +1182,7 @@ _regiepub/
 ||generation-nt.com/img/habillages/
 ||gigacu.com/jquery.js
 ||gigatopsexe.com/550x100.gif
+||givemefile.fr/images/banners/
 ||gizmodo.fr/banners/
 ||goelovb.com^*/armortv.png
 ||goelovb.com^*/fps.gif
@@ -1283,9 +1296,11 @@ _regiepub/
 ||korben.info/wp-content/uploads/*/banniere-650x120
 ||korben.info/wp-content/uploads/*/mrf*.
 ||korben.info^*/adv/
+||korben.info^*/bandeau_colonne_
 ||korben.info^*/bangoogle.jpg
 ||korben.info^*/logoagarik2010officiel.png
 ||korben.info^*/textmaster
+||korben.info^*/vignette_article_
 ||l.liberation.fr/img/promo/
 ||la-musique-rai.com/images/banner_
 ||la-musique-rai.com/images/news3.gif
@@ -4103,6 +4118,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@.gif#$domain=automobile-sportive.com
 @@.jpg#$domain=dpstream.cc
 @@.png#$domain=dpstream.cc|dpstream.tv|ebookdz.com|leetgamerz.net|rapidebrideur.com|total-sport.tv|tout-gratuit.be
+@@||1max2sms.com/blogads.css
 @@||ad.advertstream.com/adjs_r.php?$script,domain=forum.virtualdjing.com
 @@||adspub.net/javascript/advertisement-AdBlock.js
 @@||anime-story.com/css/advertise.css

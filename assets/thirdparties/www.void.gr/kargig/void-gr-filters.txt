@@ -62,6 +62,7 @@ scdn.gr/images/helmet/promo_material/*
 ||megatv.com/webtv/newsbeast.asp?*
 ||insurer.gr/widgets/calc/insuCalc.html?*
 ||static.reembed.com/data/logos/*
+||argiro.gr/Images/Promotions/*
 ant1online.gr/SiteCollectionImages/SiteImages/betonet.gif
 zougla.gr/news/data/upimages/image.php?image=ororotot9018231.jpg
 cosmopolitan.gr/images/vod_logo_100x70.jpg

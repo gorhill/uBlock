@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: SkezOo2/YpZV+TOAbCROdA
+! Checksum: M88dzAV6pdEDXPJ226E7OA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 20 Dec 2014
+! Updated: 25 Dec 2014
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -142,6 +142,7 @@
 /mbox_rc.
 /mbox_v1_
 /metricspar_
+/mod_pagespeed_beacon?
 /NBCUComScore.
 /NBCUOmnitureTracking.
 /omn_global_
@@ -493,11 +494,14 @@ wolframalpha.com###subpod_zoom
 ||5min.com/Handlers/FiveminCookieCache.ashx
 ||adobedtm.com^$third-party
 ||avgthreatlabs.com^$third-party
+||bbb.org/seals/$third-party
 ||browser-update.org^$third-party
+||bunsen.wapolabs.com^
 ||buzzbytes.net^$third-party
 ||cloudharmony.net^$third-party
 ||consent-st.truste.com^$third-party
 ||consent.truste.com^$third-party
+||content.webcollage.net^$third-party
 ||doubleclick.net^$third-party
 ||dsr.livefyre.com/livecountping/
 ||fwmrm.net^*/SurveyExtension.swf
@@ -511,10 +515,12 @@ wolframalpha.com###subpod_zoom
 ||googlecommerce.com/trustedstores/$third-party,domain=~google.com
 ||googletagmanager.com/gtm.js$third-party
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
+||images.dmca.com^$third-party
 ||images.scanalert.com^$third-party
 ||lockerdome.com^$third-party
 ||mark.reevoo.com^$third-party
 ||mcafeesecure.com/meter/$third-party
+||mcafeesecure.com/verify-float?$third-party
 ||medals.bizrate.com^$third-party
 ||my.leadpages.net^$third-party
 ||ooyala.com/3rdparty/visible_measures_
@@ -529,7 +535,9 @@ wolframalpha.com###subpod_zoom
 ||seal.stellaservice.com^$third-party
 ||seal.verisign.com^$third-party
 ||sealserver.trustwave.com^$third-party
+||sellpoint.net^$third-party
 ||services.disqus.com/event.js?$third-party
+||shoprunner.com^$third-party
 ||stats.computecmedia.de^
 ||syncaccess.net^$third-party
 ||tags.tiqcdn.com/utag/*/utag.v.js
@@ -538,8 +546,11 @@ wolframalpha.com###subpod_zoom
 ||verify.authorize.net^$third-party
 ||webengage.com^$third-party
 ||websecurity.norton.com^$third-party
+||websitealive.com^$third-party
+||websitealive5.com^$third-party
 ||webutation.net^$third-party
 ||widget.prnewswire.com^$third-party
+||ywxi.net^$third-party,domain=~mcafee.com
 !
 !
 !--------- Unsorted Rules --------
@@ -639,13 +650,14 @@ wolframalpha.com###subpod_zoom
 @@/mbox.js$domain=dominos.com|aol.com|hrblock.com|live.com|movieweb.com|rd.com|skypeassets.com|superpages.com|wdpromedia.com
 @@/omniture.js$domain=apple.com|mlb.com|newyorker.com|ae.com|couponcabin.com|corbisimages.com|delvenetworks.com|shop.puma.com|gq.com|healthgrades.com|pogo.com|nfl.com|slacker.com|teenvogue.com|veer.com|zdnet.com
 @@/ots_omniture_code.js
-@@/s_code.js$domain=bodybuilding.com|gatesnotes.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|app.qz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com
+@@/s_code.js$domain=bodybuilding.com|gatesnotes.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|app.qz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com|experian.com|sonypictures.com
 @@/s_code_$domain=lg.com|adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com|abc.go.com|forbes.com
 @@/thePlatform-omniture-core.js
 @@/webtrends.js$domain=usps.com|canon.com|horizon-bcbsnj.com|logitech.com|reuters.com|telegraph.co.uk
 @@||aarp.net/etc/aarp/statics/global/js/omniture*.js
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
 @@||actiris.be/urchin.js
+@@||adobe.com/uber/js/omniture_s_code_rm.js
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
 @@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com
 @@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com
@@ -741,6 +753,7 @@ wolframalpha.com###subpod_zoom
 @@||marilyn.ca/jsHandler.aspx?*omniture
 @@||microsoft.com/Areas/Global/Content/Omniture/
 @@||microsoft.com/Combined.js?*/Omniture/
+@@||microsofttranslator.com^*/SiteCatalyst.js$domain=bing.com
 @@||miniusa.com/js/dcs_tag.js
 @@||mlb.mlb.com/shared/flash/tracking/bamnet_omniture_as3.swf
 @@||mnginteractive.com/live/js/omniture/OmnitureHelper.js

@@ -68,6 +68,7 @@
 ||arab-ads.com^$third-party
 ||ato.mx^$third-party
 ||awsclic.com^$third-party
+||bntags.com^$third-party
 ||booraq.org^$third-party
 ||bursttraffic.net^$third-party
 ||cdxndirect.com^$third-party
@@ -131,6 +132,7 @@
 ||ads-bubble.snseonetwork.com/zone?
 ||agarcom.com/up/uploads/1375263039741.gif
 ||al-ghla.net/vb/$subdocument,domain=a7lahmsa.com
+||al3ab2014.com^$popup,third-party
 ||al3abcooking.com/al3abcooking.gif
 ||alal3ab.net^$popup,third-party
 ||aldam3h.com/vb/$subdocument,domain=s-ajfan.com
@@ -1033,6 +1035,7 @@ souq.com##.ad1
 souq.com##.ad2
 egy4up.net,gornalak.com##.ad_left
 egy4up.net,gornalak.com##.ad_right
+add-anime.net##.adblock
 add-anime.net,cairodar.com,elmedan.com,fll2.com,igli5.com,jeddahbikers.com,l3bh.com,mc-doualiya.com,onothty.net,q8yatnews.com,skynewsarabia.com,souqa3mal.com##.ads
 rjeem.com##.ads1
 toptwitt.com##.ads2

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: tdGWTHDL9gJ/WGwbrRLKyA
+! Checksum: PPuKgB1cxpI/PH8LIl3cjg
 ! Title: EasyList Hebrew
-! Last modified: 17/12/14  13:37
+! Last modified: 21/12/14  22:40
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -863,22 +863,22 @@ ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
 ynet.co.il###ww6s_Main
 ynet.co.il###ynet_lightbox_content_top
+ynet.co.il##.CAATVcompAdvertiseTv
+ynet.co.il##.HTcompData
+ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
+ynet.co.il##.MRec_main
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
-ynet.co.il##.CAATVcompAdvertiseTv
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
 ynet.co.il##.ghciPromoLightbox1
 ynet.co.il##.google_ads_t4590B_wrapper
-ynet.co.il##.HTcompData
-ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
 ynet.co.il##.leshonitMain.leshonitBorderRectangle
-ynet.co.il##.MRec_main
 ynet.co.il##DIV[style="width:256px;height:66px;background-color:#FFFFFF;"]
-ynet.co.il##iframe[style="width:770px;height:191px;"]
 ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
+ynet.co.il##iframe[style="width:770px;height:191px;"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
 zap.co.il##.Martef

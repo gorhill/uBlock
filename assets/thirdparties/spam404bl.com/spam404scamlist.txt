@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4710
-! Last modified: 17 Dec 2014
+! Version: 4731
+! Last modified: 25 Dec 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4705,6 +4705,27 @@ shortz.so##[onclick="awaiting();"]
 ||clashofclanshack.io^
 ||fbhack.info^
 ||facebookaccounthack.com^
+||facebook-hacks.com^
+||clashoflords2hack.net^
+||cocfreegems.net^
+||fbhacktool.net^
+||commentpiraterunfb.com^
+||coccheats.org^
+||dragonageinquisitioncheats.com^
+||pes15cheats.com^
+||libergaming.com^
+||diamondores.com^
+||freeweeworldvip.com^
+||minecraftpremiumgratis.net^
+||p90xfury.com^
+||sparkcodes.com^
+||gripmedia.co^
+||cocgemtool.com^
+||dmzgames.com^
+||gratuitfile.com^
+||icodecrypt.com^
+||alqbyte.com^
+||fifa15gen.com^
 !
 !
 !

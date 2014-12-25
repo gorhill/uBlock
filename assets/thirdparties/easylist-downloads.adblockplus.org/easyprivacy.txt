@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: cq82s+5y7/dN4IhVy2ZNgA
-! Version: 201412202021
+! Checksum: DGY2f79B9pRnFRXOxiB0LQ
+! Version: 201412251221
 ! Title: EasyPrivacy
-! Last modified: 20 Dec 2014 20:21 UTC
+! Last modified: 25 Dec 2014 12:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -39,6 +39,7 @@
 .au/t.ashx?
 .au/t.gif?
 .beacon.min.js
+.cc/s.gif?
 .cn/1.gif?
 .cn/a.gif?
 .cn/b.gif?
@@ -219,6 +220,7 @@
 /affiliatetracking/*
 /affl.cgi?
 /afftrack.
+/aflog.gif?
 /afrpt.gif?
 /aftrack.
 /aftrackingplugin.swf
@@ -2414,6 +2416,7 @@ http://utm.
 ||avazudsp.net^$third-party
 ||avmws.com^$third-party
 ||awasete.com^$third-party
+||awesomelytics.com^$third-party
 ||axf8.net^$third-party
 ||baptisttop1000.com^$third-party
 ||barilliance.net^$third-party
@@ -2709,7 +2712,6 @@ http://utm.
 ||ecommstats.com^$third-party
 ||ecustomeropinions.com^$third-party
 ||edgeadx.net^$third-party
-||effectivemeasure.net^$third-party
 ||ekmpinpoint.co.uk^$third-party
 ||ekmpinpoint.com^$third-party
 ||elitics.com^$third-party
@@ -3507,6 +3509,7 @@ http://utm.
 ||sitetracker.com^$third-party
 ||sitetraq.nl^$third-party
 ||skyglue.com^$third-party
+||sli-spark.com^$third-party
 ||slingpic.com^$third-party
 ||smallseotools.com^$third-party
 ||smart-ip.net^$third-party
@@ -4199,6 +4202,7 @@ http://utm.
 ||cnzz.net^$third-party
 ||datamaster.com.cn^$third-party
 ||eyeota.net^$third-party
+||gostats.cn^$third-party
 ||gridsum.com^$third-party
 ||hotrank.com.tw^$third-party
 ||irs01.$third-party
@@ -4853,6 +4857,7 @@ http://utm.
 ||cmmeglobal.com/evt?
 ||cmmeglobal.com^*/page-view?
 ||cms-pixel.crowdreport.com^
+||cnetcontent.com/log?
 ||cnevids.com/metrics/
 ||cnt.mastorage.net^
 ||coinbase.com/assets/application-*.js$third-party
@@ -4935,6 +4940,7 @@ http://utm.
 ||d33im0067v833a.cloudfront.net^
 ||d34ko97cxuv4p7.cloudfront.net^
 ||d36lvucg9kzous.cloudfront.net^
+||d36wtdrdo22bqa.cloudfront.net^
 ||d396ihyrqc81w.cloudfront.net^
 ||d3a2okcloueqyx.cloudfront.net^
 ||d3cxv97fi8q177.cloudfront.net^
@@ -5059,7 +5065,7 @@ http://utm.
 ||flex.msn.com/mstag/
 ||fliqz.com/metrics/$~object-subrequest
 ||flixster.com^*/analytics.
-||fls-na.amazon.com^$third-party
+||fls-na.amazon.com^
 ||flux.com/geo.html?
 ||followistic.com/widget/stat/
 ||fonts.com/t/trackingCode.js
@@ -5467,6 +5473,7 @@ http://utm.
 ||r.ypcdn.com^*/rtd?ptid$image
 ||ra.ripple6.com^
 ||rackcdn.com/1x1.gif?
+||rackcdn.com/easie.js
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
 ||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
@@ -5815,11 +5822,13 @@ http://utm.
 ||vanilladev.com/analytics.
 ||vapedia.com^*/largebanner.
 ||vast.com/vimpressions.js$third-party
+||vds_dyn.rightster.com/v/*?rand=
 ||veeseo.com/tracking/
 ||ventunotech.com/beacon/
 ||vertical-stats.huffpost.com^
 ||verticalacuity.com/varw/sendEvent?
 ||verticalacuity.com/vat/
+||video-ad-stats.googlesyndication.com^
 ||video.google.com/api/stats/
 ||video.msn.com/report.aspx?
 ||videoplaza.com/proxy/distributor/$object-subrequest
@@ -6665,6 +6674,7 @@ http://utm.
 ||binaries4all.nl/misc/misc.php?*&url=http
 ||bing.com/fd/ls/
 ||bing.com/partner/primedns
+||bing.com/widget/metrics.js
 ||bing.com^*/GLinkPing.aspx
 ||biosphoto.com^*/stats/
 ||birthvillage.com/watcher/
@@ -7591,6 +7601,7 @@ http://utm.
 ||petersons.com^*/trackFunctionsBeta.asp
 ||petplanet.co.uk^*/js/ga.js
 ||petri.co.il/akit/?
+||phonedog.com/geo.php
 ||phonepower.com/entry/pixel.gif?
 ||photobucket.com/ss/open.php?
 ||photobucket.com/track/
@@ -7897,6 +7908,7 @@ http://utm.
 ||stats.propublica.org^
 ||stats.pusher.com^
 ||stats.radiostreamlive.com^
+||stats.searchftps.org^
 ||stats.searchsight.com^
 ||stats.sharenet.co.za^
 ||stats.shoppydoo.com^
@@ -9628,7 +9640,7 @@ http://utm.
 ! Dutch
 @@||bundol.nl/skin/*/js/prototype/prototype.js,*/GoogleAnalyticsPlus/
 @@||globecharge.com/images/ping.gif?
-@@||kapaza.be/nl/js/xtcore_$script,domain=kapaza.be
+@@||kapaza.be^*/xtcore_$script,domain=kapaza.be
 @@||rtl.nl/system/s4m/xldata/get_comscore.js?
 @@||sitestat.com/abp/abp/s?$object-subrequest,domain=abp.nl
 @@||sitestat.com/crossdomain.xml$object-subrequest,domain=abp.nl
@@ -9643,7 +9655,7 @@ http://utm.
 @@||stats.e-go.gr/rx.asp?$object-subrequest,domain=megatv.com
 ! Hebrew
 @@||amazonaws.com/static.madlan.co.il/*/heatmap.json?$xmlhttprequest
-@@||googletagmanager.com/gtm.js?$domain=reshet.tv
+@@||googletagmanager.com/gtm.js?$domain=feex.co.il|reshet.tv
 @@||haaretz.co.il/logger/p.gif?$image,xmlhttprequest
 @@||haaretz.com/logger/p.gif?$image,xmlhttprequest
 @@||stats.g.doubleclick.net/dc.js$domain=reshet.tv
