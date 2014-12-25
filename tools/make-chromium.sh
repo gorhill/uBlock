@@ -14,7 +14,7 @@ cp -R src/img $DES/
 cp -R src/js $DES/
 cp -R src/lib $DES/
 cp -R src/_locales $DES/
-mv $DES/_locales/nb $DES/_locales/no
+cp -R $DES/_locales/nb $DES/_locales/no
 cp src/*.html $DES/
 cp platform/chromium/*.js $DES/js/
 cp platform/chromium/manifest.json $DES/
