@@ -21,12 +21,12 @@
 
 /* jshint bitwise: false */
 /* global µBlock */
-'use strict';
 
 /******************************************************************************/
 
 µBlock.cosmeticFilteringEngine = (function(){
 
+'use strict';
 
 /******************************************************************************/
 
@@ -294,14 +294,46 @@ FilterParser.prototype.parse = function(s) {
 /******************************************************************************/
 
 var SelectorCacheEntry = function() {
+    this.reset();
+};
+
+/******************************************************************************/
+
+SelectorCacheEntry.junkyard = [];
+
+SelectorCacheEntry.factory = function() {
+    var entry = SelectorCacheEntry.junkyard.pop();
+    if ( entry ) {
+        return entry.reset();
+    }
+    return new SelectorCacheEntry();
+};
+
+/******************************************************************************/
+
+SelectorCacheEntry.prototype.netLowWaterMark = 20;
+SelectorCacheEntry.prototype.netHighWaterMark = 30;
+
+/******************************************************************************/
+
+SelectorCacheEntry.prototype.reset = function() {
     this.cosmetic = {};
     this.net = {};
     this.netCount = 0;
     this.lastAccessTime = Date.now();
+    return this;
 };
 
-SelectorCacheEntry.prototype.netLowWaterMark = 20;
-SelectorCacheEntry.prototype.netHighWaterMark = 30;
+/******************************************************************************/
+
+SelectorCacheEntry.prototype.dispose = function() {
+    this.cosmetic = this.net = null;
+    if ( SelectorCacheEntry.junkyard.length < 25 ) {
+        SelectorCacheEntry.junkyard.push(this);
+    }
+};
+
+/******************************************************************************/
 
 SelectorCacheEntry.prototype.addCosmetic = function(selectors) {
     var dict = this.cosmetic;
@@ -310,6 +342,8 @@ SelectorCacheEntry.prototype.addCosmetic = function(selectors) {
         dict[selectors[i]] = true;
     }
 };
+
+/******************************************************************************/
 
 SelectorCacheEntry.prototype.addNet = function(selectors) {
     if ( typeof selectors === 'string' ) {
@@ -333,6 +367,8 @@ SelectorCacheEntry.prototype.addNet = function(selectors) {
     }
 };
 
+/******************************************************************************/
+
 SelectorCacheEntry.prototype.addNetOne = function(selector, now) {
     var dict = this.net;
     if ( dict[selector] === undefined ) {
@@ -340,6 +376,8 @@ SelectorCacheEntry.prototype.addNetOne = function(selector, now) {
     }
     dict[selector] = now;
 };
+
+/******************************************************************************/
 
 SelectorCacheEntry.prototype.addNetMany = function(selectors, now) {
     var dict = this.net;
@@ -354,6 +392,8 @@ SelectorCacheEntry.prototype.addNetMany = function(selectors, now) {
     }
 };
 
+/******************************************************************************/
+
 SelectorCacheEntry.prototype.add = function(selectors, type) {
     this.lastAccessTime = Date.now();
     if ( type === 'cosmetic' ) {
@@ -362,6 +402,8 @@ SelectorCacheEntry.prototype.add = function(selectors, type) {
         this.addNet(selectors);
     }
 };
+
+/******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/420
 SelectorCacheEntry.prototype.remove = function(type) {
@@ -373,6 +415,8 @@ SelectorCacheEntry.prototype.remove = function(type) {
         this.netCount = 0;
     }
 };
+
+/******************************************************************************/
 
 SelectorCacheEntry.prototype.retrieve = function(type, out) {
     this.lastAccessTime = Date.now();
@@ -463,6 +507,10 @@ var FilterContainer = function() {
     this.type0NoDomainHash = 'type0NoDomain';
     this.type1NoDomainHash = 'type1NoDomain';
     this.parser = new FilterParser();
+    this.selectorCachePruneDelay = 5 * 60 * 1000; // 5 minutes
+    this.selectorCacheAgeMax = 20 * 60 * 1000; // 20 minutes
+    this.selectorCacheCountMin = 10;
+    this.selectorCacheTimer = null;
     this.reset();
 };
 
@@ -478,8 +526,6 @@ FilterContainer.prototype.reset = function() {
 
     this.selectorCache = {};
     this.selectorCacheCount = 0;
-    this.selectorCacheLowWaterMark = 75;
-    this.selectorCacheHighWaterMark = 100;
 
     // temporary (at parse time)
     this.lowGenericHide = {};
@@ -907,6 +953,23 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.triggerSelectorCachePruner = function() {
+    if ( this.selectorCacheTimer !== null ) {
+        return;
+    }
+    if ( this.selectorCacheCount <= this.selectorCacheCountMin ) {
+        return;
+    }
+    // Of interest: http://fitzgeraldnick.com/weblog/40/
+    // http://googlecode.blogspot.ca/2009/07/gmail-for-mobile-html5-series-using.html
+    this.selectorCacheTimer = setTimeout(
+        this.pruneSelectorCacheAsync.bind(this),
+        this.selectorCachePruneDelay
+    );
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.addToSelectorCache = function(details) {
     var hostname = details.hostname;
     if ( typeof hostname !== 'string' || hostname === '' ) {
@@ -918,11 +981,9 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
     }
     var entry = this.selectorCache[hostname];
     if ( entry === undefined ) {
-        entry = this.selectorCache[hostname] = new SelectorCacheEntry();
+        entry = this.selectorCache[hostname] = SelectorCacheEntry.factory();
         this.selectorCacheCount += 1;
-        if ( this.selectorCacheCount > this.selectorCacheHighWaterMark ) {
-            this.pruneSelectorCache();
-        }
+        this.triggerSelectorCachePruner();
     }
     entry.add(selectors, details.type);
 };
@@ -953,17 +1014,33 @@ FilterContainer.prototype.retrieveFromSelectorCache = function(hostname, type, o
 
 /******************************************************************************/
 
-FilterContainer.prototype.pruneSelectorCache = function() {
-    var cache = this.selectorCache;
-    var hostnames = Object.keys(cache).sort(function(a ,b) {
-        return cache[b].lastAccessTime - cache[a].lastAccessTime;
-    });
-    var toRemove = hostnames.slice(this.selectorCacheLowWaterMark);
-    var i = toRemove.length;
-    while ( i-- ) {
-        delete cache[toRemove[i]];
+FilterContainer.prototype.pruneSelectorCacheAsync = function() {
+    this.selectorCacheTimer = null;
+    if ( this.selectorCacheCount <= this.selectorCacheCountMin ) {
+        return;
     }
-    this.selectorCacheCount -= toRemove.length;
+    var cache = this.selectorCache;
+    // Sorted from most-recently-used to least-recently-used, because
+    //   we loop beginning at the end below.
+    // We can't avoid sorting because we have to keep a minimum number of
+    //   entries, and these entries should always be the most-recently-used.
+    var hostnames = Object.keys(cache)
+        .sort(function(a, b) { return cache[b].lastAccessTime - cache[a].lastAccessTime; })
+        .slice(this.selectorCacheCountMin);
+    var obsolete = Date.now() - this.selectorCacheAgeMax;
+    var hostname, entry;
+    var i = hostnames.length;
+    while ( i-- ) {
+        hostname = hostnames[i];
+        entry = cache[hostname];
+        if ( entry.lastAccessTime > obsolete ) {
+            break;
+        }
+        // console.debug('pruneSelectorCacheAsync: flushing "%s"', hostname);
+        entry.dispose();
+        delete cache[hostname];
+    }
+    this.triggerSelectorCachePruner();
 };
 
 /******************************************************************************/
