@@ -25,7 +25,7 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 <p align="center">
 µBlock: it is also easy on the CPU<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
-<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
+<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.<br>CPU usage samples collated during two consecutive executions of reference benchmark.</sup>
 </p>
 
 <p align="center">
