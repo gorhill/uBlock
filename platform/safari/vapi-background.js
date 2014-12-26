@@ -428,7 +428,7 @@ safari.application.addEventListener('popover', function(e) {
 /******************************************************************************/
 
 vAPI.tabIcons = { /*tabId: {badge: 0, img: dict}*/ };
-vAPI.setIcon = function(tabId, img, badge) {
+vAPI.setIcon = function(tabId, iconStatus, badge) {
     var curTabId = vAPI.tabs.getTabId(
         safari.application.activeBrowserWindow.activeTab
     );
@@ -438,9 +438,13 @@ vAPI.setIcon = function(tabId, img, badge) {
         tabId = curTabId;
     }
     else {
+        if (badge && typeof badge !== 'number') {
+            badge = 999;
+        }
+
         vAPI.tabIcons[tabId] = {
-            badge: badge || 0/*,
-            img: img*/
+            badge: badge || 0,
+            img: iconStatus === 'on' ? '' : '-off'
         };
     }
 
@@ -450,18 +454,15 @@ vAPI.setIcon = function(tabId, img, badge) {
 
     // if the selected tab has the same ID, then update the badge too,
     // or always update it when changing tabs ('activate' event)
-    var items = safari.extension.toolbarItems, i = items.length;
+    var items = safari.extension.toolbarItems
+    var i = items.length;
 
     while (i--) {
         if (items[i].browserWindow === safari.application.activeBrowserWindow) {
-            if (vAPI.tabIcons[tabId]) {
-                items[i].badge = vAPI.tabIcons[tabId].badge;
-                // items[i].img = vAPI.tabIcons[tabId].img;
-            }
-            else {
-                items[i].badge = 0;
-            }
-
+            var icon = vAPI.tabIcons[tabId];
+            items[i].badge = icon && icon.badge || 0;
+            // TODO: a disabled icon for Safari
+            // items[i].img = vAPI.getURL(icon.img);
             return;
         }
     }

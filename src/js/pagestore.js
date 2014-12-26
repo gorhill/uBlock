@@ -686,21 +686,11 @@ PageStore.prototype.boolFromResult = function(result) {
 
 PageStore.prototype.updateBadge = function() {
     var netFiltering = this.getNetFilteringSwitch();
-    var iconPaths = netFiltering ?
-        { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
-        { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-
-    var iconStr = '';
+    var badge = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
-        // Safari can't show formatted strings, only integers.
-        if ( vAPI.safari ) {
-            iconStr = this.perLoadBlockedRequestCount;
-        }
-        else {
-            iconStr = µb.utils.formatCount(this.perLoadBlockedRequestCount);
-        }
+        badge = µb.utils.formatCount(this.perLoadBlockedRequestCount);
     }
-    vAPI.setIcon(this.tabId, iconPaths, iconStr);
+    vAPI.setIcon(this.tabId, netFiltering ? 'on' : 'off', badge);
 };
 
 // https://www.youtube.com/watch?v=drW8p_dTLD4

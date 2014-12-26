@@ -183,11 +183,7 @@ return asyncJobManager;
             pageStore.updateBadge();
             return;
         }
-        vAPI.setIcon(
-            tabId,
-            { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' },
-            ''
-        );
+        vAPI.setIcon(tabId, 'off', '');
     };
 
     var updateBadgeAsync = function(tabId) {

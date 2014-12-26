@@ -46,7 +46,7 @@ vAPI.firefox = true;
 // TODO: read these data from somewhere...
 vAPI.app = {
     name: 'µBlock',
-    version: '0.8.2.0'
+    version: '0.8.2.3'
 };
 
 /******************************************************************************/
@@ -580,9 +580,12 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 /******************************************************************************/
 
-vAPI.tabIcons = { /*tabId: {badge: 0, img: dict}*/ };
-vAPI.setIcon = function(tabId, img, badge) {
-    var curWin = badge === undefined ? img : Services.wm.getMostRecentWindow('navigator:browser');
+vAPI.tabIcons = { /*tabId: {badge: 0, img: ''}*/ };
+vAPI.setIcon = function(tabId, iconStatus, badge) {
+    // If badge is undefined, then setIcon was called from the TabSelect event
+    var curWin = badge === undefined
+        ? iconStatus
+        : Services.wm.getMostRecentWindow('navigator:browser');
     var curTabId = vAPI.tabs.getTabId(curWin.gBrowser.selectedTab);
 
     // from 'TabSelect' event
@@ -591,8 +594,8 @@ vAPI.setIcon = function(tabId, img, badge) {
     }
     else if (badge !== undefined) {
         vAPI.tabIcons[tabId] = {
-            badge: badge === '>1K' ? '1k+' : badge,
-            img: img && img[19] && img[19].replace(/19(-off)?\.png$/, '16$1.svg')
+            badge: badge,
+            img: iconStatus === 'on'
         };
     }
 
@@ -611,11 +614,9 @@ vAPI.setIcon = function(tabId, img, badge) {
     }*/
 
     var icon = vAPI.tabIcons[tabId];
-
     button.setAttribute('badge', icon && icon.badge || '');
-    button.image = vAPI.getURL(
-        button.image && icon && icon.img || 'img/browsericons/icon16-off.svg'
-    );
+    iconStatus = !button.image || !icon || !icon.img ? '-off' : '';
+    button.image = vAPI.getURL('img/browsericons/icon16' + iconStatus + '.svg');
 };
 
 /******************************************************************************/
@@ -717,11 +718,6 @@ vAPI.toolbarButton.register = function(doc) {
 
     if (!this.styleURI) {
         this.styleURI = 'data:text/css,' + encodeURIComponent([
-            '#' + this.widgetId + ' {',
-                'list-style-image: url(',
-                    vAPI.getURL('img/browsericons/icon16-off.svg'),
-                ');',
-            '}',
             '#' + this.widgetId + '[badge]:not([badge=""])::after {',
                 'position: absolute;',
                 'margin-left: -16px;',
@@ -898,25 +894,20 @@ var httpObserver = {
         parentFrameId: null
     },
     observe: function(httpChannel, topic) {
-        // if this check is performed, it doesn't need to be QueryInterfaced?
+        // No need for QueryInterface if this check is performed?
         if (!(httpChannel instanceof Ci.nsIHttpChannel)) {
             return;
         }
 
         var URI = httpChannel.URI, tabId, result;
 
-        // the first distinct character
-        topic = topic.charAt(8);
-
-        // http-on-modify-request
-        if (topic === 'm') {
+        if (topic === 'http-on-modify-request') {
             // var onHeadersReceived = vAPI.net.onHeadersReceived;
 
             return;
         }
 
-        // http-on-examine-request
-        if (topic === 'e') {
+        if (topic === 'http-on-examine-request') {
             try {
                 tabId = httpChannel.getProperty('tabId');
             } catch (ex) {
@@ -927,10 +918,10 @@ var httpObserver = {
                 return;
             }
 
-            var CSPHeader = 'Content-Security-Policy';
+            topic = 'Content-Security-Policy';
 
             try {
-                result = httpChannel.getResponseHeader(CSPHeader);
+                result = httpChannel.getResponseHeader(topic);
             } catch (ex) {
                 result = null;
             }
@@ -939,13 +930,13 @@ var httpObserver = {
                 url: URI.spec,
                 tabId: tabId,
                 parentFrameId: -1,
-                responseHeaders: result ? [{name: CSPHeader, value: result}] : []
+                responseHeaders: result ? [{name: topic, value: result}] : []
             });
 
             if (result) {
                 httpChannel.setResponseHeader(
-                    CSPHeader,
-                    result.responseHeaders[0].value,
+                    topic,
+                    result.responseHeaders.pop().value,
                     true
                 );
             }
