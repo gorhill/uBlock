@@ -14,12 +14,11 @@ Execute tesseract custom script:
 
     ./tessall
 
-Then
+`all.txt` contains a csv of the results.
+Paste in spreadsheet. Etc.
 
-    cat out.txt | perl -p -000 -e 's/(\d)\n/\1,/g' | perl -p -e 's/,\n$//'
 
-
-tessal script:
+`tessal` script:
 
     #!/bin/sh
     rm all.txt
