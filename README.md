@@ -17,15 +17,15 @@ Ads are just the visible portions of privacy-invading apparatus entering your br
 My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads, "unintrusive" or not, are just the visible portion) for users who do not want to deal with more technical means like [µMatrix](https://github.com/gorhill/uMatrix).
 
 <p align="center">
-µBlock: page loaded. ABP: page still loading.<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/abp-vs-ublock-page-1.png" /><br>
-<sup>Image excerpted from https://www.youtube.com/watch?v=SzJr4hmPlgQ.</sup>
+µBlock: on average, it <b>really</b> does make your browser run leaner<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
+<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
 <p align="center">
-µBlock: on average, it <b>really</b> does make your browser run leaner<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
-<sup>Also, not shown in the chart above, but Adguard/AdBlock/ABP are <a href="https://github.com/gorhill/uBlock/wiki/Own-memory-usage:-benchmarks-over-time#23-december-2014"><b>significantly</b> more CPU intensive</a> then µBlock<br>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
+µBlock: it is also easy on the CPU<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
+<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
 <p align="center">
