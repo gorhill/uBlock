@@ -22,6 +22,8 @@ My main goal with µBlock is to help users neutralize as much as can be privacy-
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
+[**Important note re memory usage**: there is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. Just so you are informed memory figures won't be too reliable as soon as you opened even only once the popup UI of an extension. (In all my benchmarks I of course avoided to do this).]
+
 <p align="center">
 µBlock: it is also easy on the CPU<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
