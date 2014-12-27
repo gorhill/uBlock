@@ -1039,6 +1039,7 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
         // console.debug('pruneSelectorCacheAsync: flushing "%s"', hostname);
         entry.dispose();
         delete cache[hostname];
+        this.selectorCacheCount -= 1;
     }
     this.triggerSelectorCachePruner();
 };
