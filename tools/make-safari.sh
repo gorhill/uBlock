@@ -22,7 +22,7 @@ cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt $DES/
 
-echo "*** uBlock_xpi: Generating meta..."
+echo "*** uBlock.safariextension: Generating meta..."
 python tools/make-safari-meta.py $DES/
 
 echo "*** uBlock.safariextension: Package done."

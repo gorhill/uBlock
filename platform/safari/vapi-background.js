@@ -427,7 +427,7 @@ safari.application.addEventListener('popover', function(e) {
 
 /******************************************************************************/
 
-vAPI.tabIcons = { /*tabId: {badge: 0, img: dict}*/ };
+vAPI.tabIcons = { /*tabId: {badge: 0, img: suffix}*/ };
 vAPI.setIcon = function(tabId, iconStatus, badge) {
     var curTabId = vAPI.tabs.getTabId(
         safari.application.activeBrowserWindow.activeTab

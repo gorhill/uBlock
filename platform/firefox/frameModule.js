@@ -98,7 +98,12 @@ const contentPolicy = {
     },
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
-        if (!context || !/^https?$/.test(location.scheme)) {
+        // If we don't know what initiated the request, probably it's not a tab
+        if ( !context ) {
+            return this.ACCEPT;
+        }
+
+        if ( location.scheme !== 'http' && location.scheme !== 'https' ) {
             return this.ACCEPT;
         }
 
@@ -106,7 +111,7 @@ const contentPolicy = {
             ? context.contentWindow || context
             : (context.ownerDocument || context).defaultView;
 
-        if (win) {
+        if ( win ) {
             getMessageManager(win).sendSyncMessage(this.messageName, {
                 url: location.spec,
                 type: type,
@@ -122,7 +127,11 @@ const contentPolicy = {
 /******************************************************************************/
 
 const docObserver = {
-    contentBaseURI: 'chrome://' + appName + '/content/',
+    contentBaseURI: 'chrome://' + appName + '/content/js/',
+    QueryInterface: XPCOMUtils.generateQI([
+        Ci.nsIObserver,
+        Ci.nsISupportsWeakReference
+    ]),
     initContext: function(win, sandbox) {
         let messager = getMessageManager(win);
 
@@ -143,10 +152,7 @@ const docObserver = {
                         return;
                     }
 
-                    Services.scriptloader.loadSubScript(
-                        docObserver.contentBaseURI + script,
-                        win
-                    );
+                    Services.scriptloader.loadSubScript(script, win);
                 },
                 win
             );
@@ -159,7 +165,7 @@ const docObserver = {
         return win;
     },
     register: function() {
-        Services.obs.addObserver(this, 'document-element-inserted', false);
+        Services.obs.addObserver(this, 'document-element-inserted', true);
     },
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
@@ -171,9 +177,10 @@ const docObserver = {
             return;
         }
 
-        if (!/^https?:$/.test(win.location.protocol)) {
-            if (win.location.protocol === 'chrome:'
-                && win.location.host === appName) {
+        let loc = win.location;
+
+        if (loc.protocol !== 'http:' && loc.protocol !== 'https:') {
+            if (loc.protocol === 'chrome:' && loc.host === appName) {
                 this.initContext(win);
             }
 
@@ -183,15 +190,15 @@ const docObserver = {
         let lss = Services.scriptloader.loadSubScript;
         win = this.initContext(win, true);
 
-        lss(this.contentBaseURI + 'js/vapi-client.js', win);
-        lss(this.contentBaseURI + 'js/contentscript-start.js', win);
+        lss(this.contentBaseURI + 'vapi-client.js', win);
+        lss(this.contentBaseURI + 'contentscript-start.js', win);
 
         let docReady = function(e) {
             this.removeEventListener(e.type, docReady, true);
-            lss(docObserver.contentBaseURI + 'js/contentscript-end.js', win);
+            lss(docObserver.contentBaseURI + 'contentscript-end.js', win);
         };
 
-        doc.addEventListener('DOMContentLoaded', docReady, true);
+        win.document.addEventListener('DOMContentLoaded', docReady, true);
     }
 };
 

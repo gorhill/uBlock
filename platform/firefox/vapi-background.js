@@ -321,7 +321,6 @@ vAPI.tabs.registerListeners = function() {
     // onClosed - handled in windowWatcher.onTabClose
     // onPopup ?
 
-
     for (var win of this.getWindows()) {
         windowWatcher.onReady.call(win);
     }
@@ -561,6 +560,10 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         return;
     }
 
+    if (details.file) {
+        details.file = vAPI.getURL(details.file);
+    }
+
     tab.linkedBrowser.messageManager.sendAsyncMessage(
         location.host + ':broadcast',
         JSON.stringify({
@@ -580,7 +583,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 /******************************************************************************/
 
-vAPI.tabIcons = { /*tabId: {badge: 0, img: ''}*/ };
+vAPI.tabIcons = { /*tabId: {badge: 0, img: boolean}*/ };
 vAPI.setIcon = function(tabId, iconStatus, badge) {
     // If badge is undefined, then setIcon was called from the TabSelect event
     var curWin = badge === undefined
@@ -718,6 +721,11 @@ vAPI.toolbarButton.register = function(doc) {
 
     if (!this.styleURI) {
         this.styleURI = 'data:text/css,' + encodeURIComponent([
+            '#' + this.widgetId + ' {',
+                'list-style-image: url(',
+                    vAPI.getURL('img/browsericons/icon16-off.svg'),
+                ');',
+            '}',
             '#' + this.widgetId + '[badge]:not([badge=""])::after {',
                 'position: absolute;',
                 'margin-left: -16px;',
@@ -856,7 +864,7 @@ vAPI.messaging.setup = function(defaultHandler) {
         this.onMessage
     );
 
-    this.globalMessageManager.loadFrameScript(vAPI.messaging.frameScript, true);
+    this.globalMessageManager.loadFrameScript(this.frameScript, true);
 
     vAPI.unload.push(function() {
         var gmm = vAPI.messaging.globalMessageManager;
@@ -880,10 +888,6 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.net = {};
-
-/******************************************************************************/
-
 var httpObserver = {
     ABORT: Components.results.NS_BINDING_ABORTED,
     lastRequest: {
@@ -892,6 +896,23 @@ var httpObserver = {
         tabId: null,
         frameId: null,
         parentFrameId: null
+    },
+    QueryInterface: (function() {
+        var {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
+        return XPCOMUtils.generateQI([
+            Ci.nsIObserver,
+            Ci.nsISupportsWeakReference
+        ]);
+    })(),
+    register: function() {
+        Services.obs.addObserver(httpObserver, 'http-on-opening-request', true);
+        // Services.obs.addObserver(httpObserver, 'http-on-modify-request', true);
+        Services.obs.addObserver(httpObserver, 'http-on-examine-response', true);
+    },
+    unregister: function() {
+        Services.obs.removeObserver(httpObserver, 'http-on-opening-request');
+        // Services.obs.removeObserver(httpObserver, 'http-on-modify-request');
+        Services.obs.removeObserver(httpObserver, 'http-on-examine-response');
     },
     observe: function(httpChannel, topic) {
         // No need for QueryInterface if this check is performed?
@@ -994,14 +1015,18 @@ var httpObserver = {
 
 /******************************************************************************/
 
+vAPI.net = {};
+
+/******************************************************************************/
+
 vAPI.net.registerListeners = function() {
     var typeMap = {
-         2: 'script',
-         3: 'image',
-         4: 'stylesheet',
-         5: 'object',
-         6: 'main_frame',
-         7: 'sub_frame',
+        2: 'script',
+        3: 'image',
+        4: 'stylesheet',
+        5: 'object',
+        6: 'main_frame',
+        7: 'sub_frame',
         11: 'xmlhttprequest'
     };
 
@@ -1022,9 +1047,7 @@ vAPI.net.registerListeners = function() {
         shouldLoadListener
     );
 
-    Services.obs.addObserver(httpObserver, 'http-on-opening-request', false);
-    // Services.obs.addObserver(httpObserver, 'http-on-modify-request', false);
-    Services.obs.addObserver(httpObserver, 'http-on-examine-response', false);
+    httpObserver.register();
 
     vAPI.unload.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
@@ -1032,9 +1055,7 @@ vAPI.net.registerListeners = function() {
             shouldLoadListener
         );
 
-        Services.obs.removeObserver(httpObserver, 'http-on-opening-request');
-        // Services.obs.removeObserver(httpObserver, 'http-on-modify-request');
-        Services.obs.removeObserver(httpObserver, 'http-on-examine-response');
+        httpObserver.unregister();
     });
 };
 
