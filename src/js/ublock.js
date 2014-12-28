@@ -371,20 +371,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         if ( df.mustBlockOrAllow() ) {
             return df.toFilterString();
         }
-    }
-
-    if ( requestType === 'sub_frame' ) {
+    } else if ( requestType === 'sub_frame' ) {
         if ( this.isFirstParty(rootHostname, requestHostname) === false ) {
             df.evaluateCellZY(rootHostname, requestHostname, '3p-frame');
             if ( df.mustBlockOrAllow() ) {
                 return df.toFilterString();
             }
         }
-    }
-
-    df.evaluateCellZY(rootHostname, requestHostname, requestType);
-    if ( df.mustBlockOrAllow() ) {
-        return df.toFilterString();
+    } else {
+        df.evaluateCellZY(rootHostname, requestHostname, requestType);
+        if ( df.mustBlockOrAllow() ) {
+            return df.toFilterString();
+        }
     }
 
     // 5. Static filtering never override dynamic filtering

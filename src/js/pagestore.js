@@ -296,7 +296,7 @@ PageStore.factory = function(tabId, pageURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.bitFromRequestType = {
+PageStore.prototype.bitFromResult = {
       '':  1,
     'sb':  2,
     'sa':  4,
@@ -320,8 +320,8 @@ PageStore.prototype.init = function(tabId, pageURL) {
 
     // This is part of the filtering evaluation context
     this.requestURL = this.requestHostname = this.requestType = '';
-    this.requestHostnames = {};
 
+    this.requestHostnames = {};
     this.frames = {};
     this.netFiltering = true;
     this.netFilteringReadTime = 0;
@@ -452,9 +452,9 @@ PageStore.prototype.filterRequest = function(context) {
 
     var requestHostname = context.requestHostname;
     if ( this.requestHostnames.hasOwnProperty(requestHostname) ) {
-        this.requestHostnames[requestHostname] |= this.bitFromRequestType[result.slice(0, 2)];
+        this.requestHostnames[requestHostname] |= this.bitFromResult[result.slice(0, 2)];
     } else {
-        this.requestHostnames[requestHostname] = this.bitFromRequestType[result.slice(0, 2)];
+        this.requestHostnames[requestHostname] = this.bitFromResult[result.slice(0, 2)];
     }
 
     return result;
