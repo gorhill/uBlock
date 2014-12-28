@@ -44,7 +44,7 @@ var messagingConnector = function(response) {
     var channels = vAPI.messaging.channels;
     var channel, listener;
 
-    if ( response.broadcast === true && !response.portName ) {
+    if ( response.broadcast === true && !response.channelName ) {
         for ( channel in channels ) {
             if ( channels.hasOwnProperty(channel) === false ) {
                 continue;
@@ -64,7 +64,7 @@ var messagingConnector = function(response) {
     }
 
     if ( !listener ) {
-        channel = channels[response.portName];
+        channel = channels[response.channelName];
         listener = channel && channel.listener;
     }
 
@@ -124,7 +124,7 @@ vAPI.messaging = {
         }
 
         this.channels[channelName] = {
-            portName: channelName,
+            channelName: channelName,
             listener: typeof callback === 'function' ? callback : null,
             send: function(message, callback) {
                 if ( !vAPI.messaging.connector ) {
@@ -132,7 +132,7 @@ vAPI.messaging = {
                 }
 
                 message = {
-                    portName: vAPI.messaging.connectorId + '|' + this.portName,
+                    channelName: vAPI.messaging.connectorId + '|' + this.channelName,
                     msg: message
                 };
 
@@ -144,7 +144,7 @@ vAPI.messaging = {
                 sendAsyncMessage('ublock:background', message);
             },
             close: function() {
-                delete vAPI.messaging.channels[this.portName];
+                delete vAPI.messaging.channels[this.channelName];
             }
         };
 

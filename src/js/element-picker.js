@@ -121,7 +121,7 @@
 /******************************************************************************/
 
 // don't run in frames
-if (window.top !== window) {
+if ( window.top !== window ) {
     return;
 }
 
@@ -912,7 +912,7 @@ var startPicker = function(details) {
         'ul > li#cosmeticFilters > span:nth-of-type(2)': 'cosmeticFiltersHint'
     };
 
-    if (details.i18n['@@bidi_dir']) {
+    if ( details.i18n['@@bidi_dir'] ) {
         divDialog.style.direction = details.i18n['@@bidi_dir'];
         delete i18nMap['#µBlock > div'];
     }

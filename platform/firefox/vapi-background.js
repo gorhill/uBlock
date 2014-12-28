@@ -55,8 +55,8 @@ vAPI.app.restart = function() {};
 
 /******************************************************************************/
 
-// list of things that needs to be destroyed when disabling the extension
-// only functions should be added to it
+// List of things that needs to be destroyed when disabling the extension
+// Only functions should be added to it
 
 vAPI.unload = [];
 
@@ -67,11 +67,11 @@ var SQLite = {
         var path = Services.dirsvc.get('ProfD', Ci.nsIFile);
         path.append('extension-data');
 
-        if (!path.exists()) {
+        if ( !path.exists() ) {
             path.create(Ci.nsIFile.DIRECTORY_TYPE, parseInt('0774', 8));
         }
 
-        if (!path.isDirectory()) {
+        if ( !path.isDirectory() ) {
             throw Error('Should be a directory...');
         }
 
@@ -88,8 +88,9 @@ var SQLite = {
             SQLite.db.asyncClose();
         });
     },
+
     run: function(query, values, callback) {
-        if (!this.db) {
+        if ( !this.db ) {
             this.open();
         }
 
@@ -97,30 +98,30 @@ var SQLite = {
 
         query = this.db.createAsyncStatement(query);
 
-        if (Array.isArray(values) && values.length) {
+        if ( Array.isArray(values) && values.length ) {
             var i = values.length;
 
-            while (i--) {
+            while ( i-- ) {
                 query.bindByIndex(i, values[i]);
             }
         }
 
         query.executeAsync({
             handleResult: function(rows) {
-                if (!rows || typeof callback !== 'function') {
+                if ( !rows || typeof callback !== 'function' ) {
                     return;
                 }
 
                 var row;
 
-                while (row = rows.getNextRow()) {
+                while ( row = rows.getNextRow() ) {
                     // we assume that there will be two columns, since we're
                     // using it only for preferences
                     result[row.getResultByIndex(0)] = row.getResultByIndex(1);
                 }
             },
             handleCompletion: function(reason) {
-                if (typeof callback === 'function' && reason === 0) {
+                if ( typeof callback === 'function' && reason === 0 ) {
                     callback(result);
                 }
             },
@@ -135,30 +136,30 @@ var SQLite = {
 
 vAPI.storage = {
     QUOTA_BYTES: 100 * 1024 * 1024,
+
     sqlWhere: function(col, params) {
-        if (params > 0) {
+        if ( params > 0 ) {
             params = Array(params + 1).join('?, ').slice(0, -2);
             return ' WHERE ' + col + ' IN (' + params + ')';
         }
 
         return '';
     },
+
     get: function(details, callback) {
-        if (typeof callback !== 'function') {
+        if ( typeof callback !== 'function' ) {
             return;
         }
 
         var values = [], defaults = false;
 
-        if (details !== null) {
-            if (Array.isArray(details)) {
+        if ( details !== null ) {
+            if ( Array.isArray(details) ) {
                 values = details;
-            }
-            else if (typeof details === 'object') {
+            } else if ( typeof details === 'object' ) {
                 defaults = true;
                 values = Object.keys(details);
-            }
-            else {
+            } else {
                 values = [details.toString()];
             }
         }
@@ -169,13 +170,13 @@ vAPI.storage = {
             function(result) {
                 var key;
 
-                for (key in result) {
+                for ( key in result ) {
                     result[key] = JSON.parse(result[key]);
                 }
 
-                if (defaults) {
-                    for (key in details) {
-                        if (result[key] === undefined) {
+                if ( defaults ) {
+                    for ( key in details ) {
+                        if ( result[key] === undefined ) {
                             result[key] = details[key];
                         }
                     }
@@ -185,16 +186,17 @@ vAPI.storage = {
             }
         );
     },
+
     set: function(details, callback) {
         var key, values = [], placeholders = [];
 
-        for (key in details) {
+        for ( key in details ) {
             values.push(key);
             values.push(JSON.stringify(details[key]));
             placeholders.push('?, ?');
         }
 
-        if (!values.length) {
+        if ( !values.length ) {
             return;
         }
 
@@ -205,8 +207,9 @@ vAPI.storage = {
             callback
         );
     },
+
     remove: function(keys, callback) {
-        if (typeof keys === 'string') {
+        if ( typeof keys === 'string' ) {
             keys = [keys];
         }
 
@@ -216,12 +219,14 @@ vAPI.storage = {
             callback
         );
     },
+
     clear: function(callback) {
         SQLite.run('DELETE FROM settings');
         SQLite.run('VACUUM', null, callback);
     },
+
     getBytesInUse: function(keys, callback) {
-        if (typeof callback !== 'function') {
+        if ( typeof callback !== 'function' ) {
             return;
         }
 
@@ -244,24 +249,26 @@ var windowWatcher = {
         vAPI.tabs.onClosed(tabId);
         delete vAPI.tabIcons[tabId];
     },
+
     onTabSelect: function(e) {
         vAPI.setIcon(
             vAPI.tabs.getTabId(e.target),
             e.target.ownerDocument.defaultView
         );
     },
+
     onReady: function(e) {
-        if (e) {
+        if ( e ) {
             this.removeEventListener(e.type, windowWatcher.onReady);
         }
 
         var wintype = this.document.documentElement.getAttribute('windowtype');
 
-        if (wintype !== 'navigator:browser') {
+        if ( wintype !== 'navigator:browser' ) {
             return;
         }
 
-        if (!this.gBrowser || !this.gBrowser.tabContainer) {
+        if ( !this.gBrowser || !this.gBrowser.tabContainer ) {
             return;
         }
 
@@ -276,8 +283,9 @@ var windowWatcher = {
 
         // when new window is opened TabSelect doesn't run on the selected tab?
     },
+
     observe: function(win, topic) {
-        if (topic === 'domwindowopened') {
+        if ( topic === 'domwindowopened' ) {
             win.addEventListener('DOMContentLoaded', this.onReady);
         }
     }
@@ -287,20 +295,19 @@ var windowWatcher = {
 
 var tabsProgressListener = {
     onLocationChange: function(browser, webProgress, request, location, flags) {
-        if (!webProgress.isTopLevel) {
+        if ( !webProgress.isTopLevel ) {
             return;
         }
 
         var tabId = vAPI.tabs.getTabId(browser);
 
-        if (flags & 1) {
+        if ( flags & 1 ) {
             vAPI.tabs.onUpdated(tabId, {url: location.spec}, {
                 frameId: 0,
                 tabId: tabId,
                 url: browser.currentURI.spec
             });
-        }
-        else {
+        } else {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: tabId,
@@ -321,7 +328,7 @@ vAPI.tabs.registerListeners = function() {
     // onClosed - handled in windowWatcher.onTabClose
     // onPopup ?
 
-    for (var win of this.getWindows()) {
+    for ( var win of this.getWindows() ) {
         windowWatcher.onReady.call(win);
     }
 
@@ -331,7 +338,7 @@ vAPI.tabs.registerListeners = function() {
     vAPI.unload.push(function() {
         Services.ww.unregisterNotification(windowWatcher);
 
-        for (var win of vAPI.tabs.getWindows()) {
+        for ( var win of vAPI.tabs.getWindows() ) {
             vAPI.toolbarButton.unregister(win.document);
             vAPI.contextMenu.unregister(win.document);
 
@@ -343,10 +350,10 @@ vAPI.tabs.registerListeners = function() {
             tC.removeEventListener('TabSelect', windowWatcher.onTabSelect);
 
             // close extension tabs
-            for (var tab of win.gBrowser.tabs) {
+            for ( var tab of win.gBrowser.tabs ) {
                 var URI = tab.linkedBrowser.currentURI;
 
-                if (URI.scheme === 'chrome' && URI.host === location.host) {
+                if ( URI.scheme === 'chrome' && URI.host === location.host ) {
                     win.gBrowser.removeTab(tab);
                 }
             }
@@ -357,21 +364,21 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 vAPI.tabs.getTabId = function(target) {
-    if (target.linkedPanel) {
+    if ( target.linkedPanel ) {
         return target.linkedPanel.slice(6);
     }
 
     var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
 
     // This should be more efficient from version 35
-    if (gBrowser.getTabForBrowser) {
+    if ( gBrowser.getTabForBrowser ) {
         i = gBrowser.getTabForBrowser(target);
         return i ? i.linkedPanel.slice(6) : -1;
     }
 
     i = gBrowser.browsers.indexOf(target);
 
-    if (i !== -1) {
+    if ( i !== -1 ) {
         i = gBrowser.tabs[i].linkedPanel.slice(6);
     }
 
@@ -383,30 +390,29 @@ vAPI.tabs.getTabId = function(target) {
 vAPI.tabs.get = function(tabId, callback) {
     var tab, windows;
 
-    if (tabId === null) {
+    if ( tabId === null ) {
         tab = Services.wm.getMostRecentWindow('navigator:browser').gBrowser.selectedTab;
         tabId = vAPI.tabs.getTabId(tab);
-    }
-    else {
+    } else {
         windows = this.getWindows();
 
-        for (var win of windows) {
+        for ( var win of windows ) {
             tab = win.gBrowser.tabContainer.querySelector(
                 'tab[linkedpanel="panel-' + tabId + '"]'
             );
 
-            if (tab) {
+            if ( tab ) {
                 break;
             }
         }
     }
 
     // for internal use
-    if (tab && callback === undefined) {
+    if ( tab && typeof callback !== 'function' ) {
         return tab;
     }
 
-    if (!tab) {
+    if ( !tab ) {
         callback();
         return;
     }
@@ -414,7 +420,7 @@ vAPI.tabs.get = function(tabId, callback) {
     var browser = tab.linkedBrowser;
     var gBrowser = browser.ownerDocument.defaultView.gBrowser;
 
-    if (!windows) {
+    if ( !windows ) {
         windows = this.getWindows();
     }
 
@@ -433,12 +439,12 @@ vAPI.tabs.get = function(tabId, callback) {
 vAPI.tabs.getAll = function(window) {
     var win, tab, tabs = [];
 
-    for (win of this.getWindows()) {
-        if (window && window !== win) {
+    for ( win of this.getWindows() ) {
+        if ( window && window !== win ) {
             continue;
         }
 
-        for (tab of win.gBrowser.tabs) {
+        for ( tab of win.gBrowser.tabs ) {
             tabs.push(tab);
         }
     }
@@ -452,10 +458,10 @@ vAPI.tabs.getWindows = function() {
     var winumerator = Services.wm.getEnumerator('navigator:browser');
     var windows = [];
 
-    while (winumerator.hasMoreElements()) {
+    while ( winumerator.hasMoreElements() ) {
         var win = winumerator.getNext();
 
-        if (!win.closed) {
+        if ( !win.closed ) {
             windows.push(win);
         }
     }
@@ -473,47 +479,47 @@ vAPI.tabs.getWindows = function() {
 //   select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 vAPI.tabs.open = function(details) {
-    if (!details.url) {
+    if ( !details.url ) {
         return null;
     }
     // extension pages
-    if (!/^[\w-]{2,}:/.test(details.url)) {
+    if ( /^[\w-]{2,}:/.test(details.url) === false ) {
         details.url = vAPI.getURL(details.url);
     }
 
     var tab, tabs;
 
-    if (details.select) {
+    if ( details.select ) {
         var rgxHash = /#.*/;
         // this is questionable
         var url = details.url.replace(rgxHash, '');
         tabs = this.getAll();
 
-        for (tab of tabs) {
+        for ( tab of tabs ) {
             var browser = tab.linkedBrowser;
 
-            if (browser.currentURI.spec.replace(rgxHash, '') === url) {
+            if ( browser.currentURI.spec.replace(rgxHash, '') === url ) {
                 browser.ownerDocument.defaultView.gBrowser.selectedTab = tab;
                 return;
             }
         }
     }
 
-    if (details.active === undefined) {
+    if ( details.active === undefined ) {
         details.active = true;
     }
 
     var gBrowser = Services.wm.getMostRecentWindow('navigator:browser').gBrowser;
 
-    if (details.index === -1) {
+    if ( details.index === -1 ) {
         details.index = gBrowser.browsers.indexOf(gBrowser.selectedBrowser) + 1;
     }
 
-    if (details.tabId) {
+    if ( details.tabId ) {
         tabs = tabs || this.getAll();
 
-        for (tab of tabs) {
-            if (vAPI.tabs.getTabId(tab) === details.tabId) {
+        for ( tab of tabs ) {
+            if ( vAPI.tabs.getTabId(tab) === details.tabId ) {
                 tab.linkedBrowser.loadURI(details.url);
                 return;
             }
@@ -522,7 +528,7 @@ vAPI.tabs.open = function(details) {
 
     tab = gBrowser.loadOneTab(details.url, {inBackground: !details.active});
 
-    if (details.index !== undefined) {
+    if ( details.index !== undefined ) {
         gBrowser.moveTabTo(tab, details.index);
     }
 };
@@ -530,7 +536,7 @@ vAPI.tabs.open = function(details) {
 /******************************************************************************/
 
 vAPI.tabs.close = function(tabIds) {
-    if (!Array.isArray(tabIds)) {
+    if ( !Array.isArray(tabIds) ) {
         tabIds = [tabIds];
     }
 
@@ -538,14 +544,14 @@ vAPI.tabs.close = function(tabIds) {
         return 'tab[linkedpanel="panel-' + tabId + '"]';
     }).join(',');
 
-    for (var win of this.getWindows()) {
+    for ( var win of this.getWindows() ) {
         var tabs = win.gBrowser.tabContainer.querySelectorAll(tabIds);
 
-        if (!tabs) {
+        if ( !tabs ) {
             continue;
         }
 
-        for (var tab of tabs) {
+        for ( var tab of tabs ) {
             win.gBrowser.removeTab(tab);
         }
     }
@@ -556,11 +562,11 @@ vAPI.tabs.close = function(tabIds) {
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var tab = vAPI.tabs.get(tabId);
 
-    if (!tab) {
+    if ( !tab ) {
         return;
     }
 
-    if (details.file) {
+    if ( details.file ) {
         details.file = vAPI.getURL(details.file);
     }
 
@@ -568,7 +574,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         location.host + ':broadcast',
         JSON.stringify({
             broadcast: true,
-            portName: 'vAPI',
+            channelName: 'vAPI',
             msg: {
                 cmd: 'injectScript',
                 details: details
@@ -576,7 +582,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         })
     );
 
-    if (typeof callback === 'function') {
+    if ( typeof callback === 'function' ) {
         setTimeout(callback, 13);
     }
 };
@@ -592,27 +598,26 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     var curTabId = vAPI.tabs.getTabId(curWin.gBrowser.selectedTab);
 
     // from 'TabSelect' event
-    if (tabId === undefined) {
+    if ( tabId === undefined ) {
         tabId = curTabId;
-    }
-    else if (badge !== undefined) {
+    } else if ( badge !== undefined ) {
         vAPI.tabIcons[tabId] = {
             badge: badge,
             img: iconStatus === 'on'
         };
     }
 
-    if (tabId !== curTabId) {
+    if ( tabId !== curTabId ) {
         return;
     }
 
     var button = curWin.document.getElementById(vAPI.toolbarButton.widgetId);
 
-    if (!button) {
+    if ( !button ) {
         return;
     }
 
-    /*if (!button.classList.contains('badged-button')) {
+    /*if ( !button.classList.contains('badged-button') ) {
         button.classList.add('badged-button');
     }*/
 
@@ -685,7 +690,7 @@ vAPI.toolbarButton.register = function(doc) {
 
     var updateTimer = null;
     var delayedResize = function() {
-        if (updateTimer) {
+        if ( updateTimer ) {
             return;
         }
 
@@ -703,7 +708,7 @@ vAPI.toolbarButton.register = function(doc) {
     var onPopupReady = function() {
         var win = this.contentWindow;
 
-        if (!win || win.location.host !== location.host) {
+        if ( !win || win.location.host !== location.host ) {
             return;
         }
 
@@ -719,7 +724,7 @@ vAPI.toolbarButton.register = function(doc) {
 
     iframe.addEventListener('load', onPopupReady, true);
 
-    if (!this.styleURI) {
+    if ( !this.styleURI ) {
         this.styleURI = 'data:text/css,' + encodeURIComponent([
             '#' + this.widgetId + ' {',
                 'list-style-image: url(',
@@ -785,7 +790,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 vAPI.messaging.onMessage = function({target, data}) {
     var messageManager = target.messageManager;
 
-    if (!messageManager) {
+    if ( !messageManager ) {
         // Message came from a popup, and its message manager is not usable.
         // So instead we broadcast to the parent window.
         messageManager = target
@@ -793,9 +798,9 @@ vAPI.messaging.onMessage = function({target, data}) {
             .chromeEventHandler.ownerDocument.defaultView.messageManager;
     }
 
-    var listenerId = data.portName.split('|');
+    var listenerId = data.channelName.split('|');
     var requestId = data.requestId;
-    var portName = listenerId[1];
+    var channelName = listenerId[1];
     listenerId = listenerId[0];
 
     var callback = vAPI.messaging.NOOPFUNC;
@@ -803,14 +808,13 @@ vAPI.messaging.onMessage = function({target, data}) {
         callback = function(response) {
             var message = JSON.stringify({
                 requestId: requestId,
-                portName: portName,
+                channelName: channelName,
                 msg: response !== undefined ? response : null
             });
 
-            if (messageManager.sendAsyncMessage) {
+            if ( messageManager.sendAsyncMessage ) {
                 messageManager.sendAsyncMessage(listenerId, message);
-            }
-            else {
+            } else {
                 messageManager.broadcastAsyncMessage(listenerId, message);
             }
         };
@@ -824,7 +828,7 @@ vAPI.messaging.onMessage = function({target, data}) {
 
     // Specific handler
     var r = vAPI.messaging.UNHANDLED;
-    var listener = vAPI.messaging.listeners[portName];
+    var listener = vAPI.messaging.listeners[channelName];
     if ( typeof listener === 'function' ) {
         r = listener(data.msg, sender, callback);
     }
@@ -897,6 +901,7 @@ var httpObserver = {
         frameId: null,
         parentFrameId: null
     },
+
     QueryInterface: (function() {
         var {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
         return XPCOMUtils.generateQI([
@@ -904,38 +909,41 @@ var httpObserver = {
             Ci.nsISupportsWeakReference
         ]);
     })(),
+
     register: function() {
         Services.obs.addObserver(httpObserver, 'http-on-opening-request', true);
         // Services.obs.addObserver(httpObserver, 'http-on-modify-request', true);
         Services.obs.addObserver(httpObserver, 'http-on-examine-response', true);
     },
+
     unregister: function() {
         Services.obs.removeObserver(httpObserver, 'http-on-opening-request');
         // Services.obs.removeObserver(httpObserver, 'http-on-modify-request');
         Services.obs.removeObserver(httpObserver, 'http-on-examine-response');
     },
+
     observe: function(httpChannel, topic) {
         // No need for QueryInterface if this check is performed?
-        if (!(httpChannel instanceof Ci.nsIHttpChannel)) {
+        if ( !(httpChannel instanceof Ci.nsIHttpChannel) ) {
             return;
         }
 
         var URI = httpChannel.URI, tabId, result;
 
-        if (topic === 'http-on-modify-request') {
+        if ( topic === 'http-on-modify-request' ) {
             // var onHeadersReceived = vAPI.net.onHeadersReceived;
 
             return;
         }
 
-        if (topic === 'http-on-examine-request') {
+        if ( topic === 'http-on-examine-request' ) {
             try {
                 tabId = httpChannel.getProperty('tabId');
             } catch (ex) {
                 return;
             }
 
-            if (!tabId) {
+            if ( !tabId ) {
                 return;
             }
 
@@ -954,7 +962,7 @@ var httpObserver = {
                 responseHeaders: result ? [{name: topic, value: result}] : []
             });
 
-            if (result) {
+            if ( result ) {
                 httpChannel.setResponseHeader(
                     topic,
                     result.responseHeaders.pop().value,
@@ -969,7 +977,7 @@ var httpObserver = {
 
         var lastRequest = this.lastRequest;
 
-        if (!lastRequest.url || lastRequest.url !== URI.spec) {
+        if ( !lastRequest.url || lastRequest.url !== URI.spec ) {
             lastRequest.url = null;
             return;
         }
@@ -978,14 +986,14 @@ var httpObserver = {
         // the URL will be the same, so it could fall into an infinite loop
         lastRequest.url = null;
 
-        if (lastRequest.type === 'main_frame'
-            && httpChannel instanceof Ci.nsIWritablePropertyBag) {
+        if ( lastRequest.type === 'main_frame'
+            && httpChannel instanceof Ci.nsIWritablePropertyBag ) {
             httpChannel.setProperty('tabId', lastRequest.tabId);
         }
 
         var onBeforeRequest = vAPI.net.onBeforeRequest;
 
-        if (!onBeforeRequest.types.has(lastRequest.type)) {
+        if ( !onBeforeRequest.types.has(lastRequest.type) ) {
             return;
         }
 
@@ -997,14 +1005,13 @@ var httpObserver = {
             parentFrameId: lastRequest.parentFrameId
         });
 
-        if (!result || typeof result !== 'object') {
+        if ( !result || typeof result !== 'object' ) {
             return;
         }
 
-        if (result.cancel === true) {
+        if ( result.cancel === true ) {
             httpChannel.cancel(this.ABORT);
-        }
-        else if (result.redirectUrl) {
+        } else if ( result.redirectUrl ) {
             httpChannel.redirectionLimit = 1;
             httpChannel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
@@ -1079,29 +1086,29 @@ vAPI.contextMenu.displayMenuItem = function(e) {
     var gContextMenu = doc.defaultView.gContextMenu;
     var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
 
-    if (!/^https?$/.test(gContextMenu.browser.currentURI.scheme)) {
+    if ( /^https?$/.test(gContextMenu.browser.currentURI.scheme) === false) {
         menuitem.hidden = true;
         return;
     }
 
     var ctx = vAPI.contextMenu.contexts;
 
-    if (!ctx) {
+    if ( !ctx ) {
         menuitem.hidden = false;
         return;
     }
 
     var ctxMap = vAPI.contextMenu.contextMap;
 
-    for (var context of ctx) {
-        if (context === 'page' && !gContextMenu.onLink && !gContextMenu.onImage
+    for ( var context of ctx ) {
+        if ( context === 'page' && !gContextMenu.onLink && !gContextMenu.onImage
             && !gContextMenu.onEditableArea && !gContextMenu.inFrame
-            && !gContextMenu.onVideo && !gContextMenu.onAudio) {
+            && !gContextMenu.onVideo && !gContextMenu.onAudio ) {
             menuitem.hidden = false;
             return;
         }
 
-        if (gContextMenu[ctxMap[context]]) {
+        if ( gContextMenu[ctxMap[context]] ) {
             menuitem.hidden = false;
             return;
         }
@@ -1113,7 +1120,7 @@ vAPI.contextMenu.displayMenuItem = function(e) {
 /******************************************************************************/
 
 vAPI.contextMenu.register = function(doc) {
-    if (!this.menuItemId) {
+    if ( !this.menuItemId ) {
         return;
     }
 
@@ -1134,7 +1141,7 @@ vAPI.contextMenu.register = function(doc) {
 /******************************************************************************/
 
 vAPI.contextMenu.unregister = function(doc) {
-    if (!this.menuItemId) {
+    if ( !this.menuItemId ) {
         return;
     }
 
@@ -1153,10 +1160,9 @@ vAPI.contextMenu.create = function(details, callback) {
     this.menuLabel = details.title;
     this.contexts = details.contexts;
 
-    if (Array.isArray(this.contexts) && this.contexts.length) {
+    if ( Array.isArray(this.contexts) && this.contexts.length ) {
         this.contexts = this.contexts.indexOf('all') === -1 ? this.contexts : null;
-    }
-    else {
+    } else {
         // default in Chrome
         this.contexts = ['page'];
     }
@@ -1168,15 +1174,11 @@ vAPI.contextMenu.create = function(details, callback) {
             tagName: gContextMenu.target.tagName.toLowerCase()
         };
 
-        if (gContextMenu.inFrame) {
+        if ( gContextMenu.inFrame ) {
             details.frameUrl = gContextMenu.focusedWindow.location.href;
-        }
-        else if (gContextMenu.onImage
-            || gContextMenu.onAudio
-            || gContextMenu.onVideo) {
+        } else if ( gContextMenu.onImage || gContextMenu.onAudio || gContextMenu.onVideo ) {
             details.srcUrl = gContextMenu.mediaURL;
-        }
-        else if (gContextMenu.onLink) {
+        } else if ( gContextMenu.onLink ) {
             details.linkUrl = gContextMenu.linkURL;
         }
 
@@ -1186,7 +1188,7 @@ vAPI.contextMenu.create = function(details, callback) {
         });
     };
 
-    for (var win of vAPI.tabs.getWindows()) {
+    for ( var win of vAPI.tabs.getWindows() ) {
         this.register(win.document);
     }
 };
@@ -1194,7 +1196,7 @@ vAPI.contextMenu.create = function(details, callback) {
 /******************************************************************************/
 
 vAPI.contextMenu.remove = function() {
-    for (var win of vAPI.tabs.getWindows()) {
+    for ( var win of vAPI.tabs.getWindows() ) {
         this.unregister(win.document);
     }
 
@@ -1224,7 +1226,7 @@ vAPI.onLoadAllCompleted = function() {};
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
-    for (var unload of vAPI.unload) {
+    for ( var unload of vAPI.unload ) {
         unload();
     }
 

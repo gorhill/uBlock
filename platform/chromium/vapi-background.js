@@ -295,7 +295,7 @@ vAPI.messaging.onPortMessage = function(request, port) {
             }
             port.postMessage({
                 requestId: request.requestId,
-                portName: request.portName,
+                channelName: request.channelName,
                 msg: response !== undefined ? response : null
             });
         };
@@ -303,7 +303,7 @@ vAPI.messaging.onPortMessage = function(request, port) {
 
     // Specific handler
     var r = vAPI.messaging.UNHANDLED;
-    var listener = vAPI.messaging.listeners[request.portName];
+    var listener = vAPI.messaging.listeners[request.channelName];
     if ( typeof listener === 'function' ) {
         r = listener(request.msg, port.sender, callback);
     }
@@ -383,7 +383,7 @@ vAPI.net = {
             'onHeadersReceived'
         ];
 
-        for (var i = 0; i < listeners.length; ++i) {
+        for ( var i = 0; i < listeners.length; i++ ) {
             chrome.webRequest[listeners[i]].addListener(
                 this[listeners[i]].callback,
                 {

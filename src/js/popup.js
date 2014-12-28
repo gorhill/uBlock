@@ -394,7 +394,7 @@ var gotoPick = function() {
 /******************************************************************************/
 
 var gotoURL = function(ev) {
-    if (!this.hasAttribute('href')) {
+    if ( this.hasAttribute('href') === false) {
         return;
     }
 

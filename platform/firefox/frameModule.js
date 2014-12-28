@@ -54,20 +54,24 @@ const contentPolicy = {
     contractID: '@' + appName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
     messageName: appName + ':shouldLoad',
+
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
     },
+
     get categoryManager() {
         return Components.classes['@mozilla.org/categorymanager;1']
                 .getService(Ci.nsICategoryManager);
     },
+
     QueryInterface: XPCOMUtils.generateQI([
         Ci.nsIFactory,
         Ci.nsIContentPolicy,
         Ci.nsISupportsWeakReference
     ]),
+
     createInstance: function(outer, iid) {
-        if (outer) {
+        if ( outer ) {
             throw Components.results.NS_ERROR_NO_AGGREGATION;
         }
 
@@ -88,6 +92,7 @@ const contentPolicy = {
             true
         );
     },
+
     unregister: function() {
         this.componentRegistrar.unregisterFactory(this.classID, this);
         this.categoryManager.deleteCategoryEntry(
@@ -96,6 +101,7 @@ const contentPolicy = {
             false
         );
     },
+
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
         // If we don't know what initiated the request, probably it's not a tab
@@ -128,14 +134,16 @@ const contentPolicy = {
 
 const docObserver = {
     contentBaseURI: 'chrome://' + appName + '/content/js/',
+
     QueryInterface: XPCOMUtils.generateQI([
         Ci.nsIObserver,
         Ci.nsISupportsWeakReference
     ]),
+
     initContext: function(win, sandbox) {
         let messager = getMessageManager(win);
 
-        if (sandbox) {
+        if ( sandbox ) {
             win = Cu.Sandbox([win], {
                 sandboxPrototype: win,
                 wantComponents: false,
@@ -147,7 +155,7 @@ const docObserver = {
             // anonymous function needs to be used here
             win.injectScript = Cu.exportFunction(
                 function(script, evalCode) {
-                    if (evalCode) {
+                    if ( evalCode ) {
                         Cu.evalInSandbox(script, win);
                         return;
                     }
@@ -164,23 +172,26 @@ const docObserver = {
 
         return win;
     },
+
     register: function() {
         Services.obs.addObserver(this, 'document-element-inserted', true);
     },
+
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
     },
+
     observe: function(doc) {
         let win = doc.defaultView;
 
-        if (!win) {
+        if ( !win ) {
             return;
         }
 
         let loc = win.location;
 
-        if (loc.protocol !== 'http:' && loc.protocol !== 'https:') {
-            if (loc.protocol === 'chrome:' && loc.host === appName) {
+        if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' ) {
+            if ( loc.protocol === 'chrome:' && loc.host === appName ) {
                 this.initContext(win);
             }
 

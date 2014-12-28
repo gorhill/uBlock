@@ -26,48 +26,48 @@
 
 /******************************************************************************/
 
-let bgProcess;
+let bgProcess = function(e) {
+    if ( e ) {
+        this.removeEventListener('DOMContentLoaded', bgProcess);
+    }
+
+    let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
+        .getService(Components.interfaces.nsIAppShellService)
+        .hiddenDOMWindow.document;
+
+    bgProcess = hDoc.documentElement.appendChild(
+        hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+    );
+    bgProcess.setAttribute('src', 'chrome://ublock/content/background.html');
+};
 
 /******************************************************************************/
 
 function startup(data, reason) {
-    bgProcess = function(e) {
-        if (e) {
-            this.removeEventListener('DOMContentLoaded', bgProcess);
-        }
-
-        let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
-            .getService(Components.interfaces.nsIAppShellService)
-            .hiddenDOMWindow.document;
-
-        bgProcess = hDoc.documentElement.appendChild(
-            hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
-        );
-        bgProcess.setAttribute('src', 'chrome://ublock/content/background.html');
-    };
-
-    if (reason === APP_STARTUP) {
-        let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
-                    .getService(Components.interfaces.nsIWindowWatcher);
-
-        ww.registerNotification({
-            observe: function(win) {
-                ww.unregisterNotification(this);
-                win.addEventListener('DOMContentLoaded', bgProcess);
-            }
-        });
-    }
-    else {
+    if ( reason !== APP_STARTUP ) {
         bgProcess();
+        return;
     }
+
+    let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
+                .getService(Components.interfaces.nsIWindowWatcher);
+
+    ww.registerNotification({
+        observe: function(win) {
+            ww.unregisterNotification(this);
+            win.addEventListener('DOMContentLoaded', bgProcess);
+        }
+    });
 }
 
 /******************************************************************************/
 
 function shutdown(data, reason) {
-    if (reason !== APP_SHUTDOWN) {
-        bgProcess.parentNode.removeChild(bgProcess);
+    if ( reason === APP_SHUTDOWN ) {
+        return;
     }
+
+    bgProcess.parentNode.removeChild(bgProcess);
 }
 
 /******************************************************************************/

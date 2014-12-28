@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global ytspf */
 'use strict';
 
 /******************************************************************************/
@@ -31,25 +32,29 @@
 
 self.vAPI = self.vAPI || {};
 
-if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
+if ( /^www\.youtube(-nocookie)?\.com/.test(location.host) ) {
     vAPI.sitePatch = function() {
         // disable spf
         window.ytspf = {};
         Object.defineProperty(ytspf, 'enabled', {'value': false});
 
-        // based on ExtendTube's ad removing solution
-        var p, yt = {}, config_ = {}, ytplayer = {}, playerConfig = { args: {} };
+        // Based on ExtendTube's ad removing solution
+        var p;
+        var yt = {};
+        var config_ = {};
+        var ytplayer = {};
+        var playerConfig = { args: {} };
 
         Object.defineProperties(yt, {
             'playerConfig': {
                 get: function() { return playerConfig; },
                 set: function(data) {
-                    if (data && typeof data === 'object'
-                        && data.args && typeof data.args === 'object') {
+                    if ( data && typeof data === 'object'
+                        && data.args && typeof data.args === 'object' ) {
                         var nope = /ad\d?_|afv|watermark|adsense|xfp/;
 
-                        for (var prop in data.args) {
-                            if (nope.test(prop) && !/policy/.test(prop)) {
+                        for ( var prop in data.args ) {
+                            if ( nope.test(prop) && !/policy/.test(prop) ) {
                                 delete data.args[prop];
                             }
                         }
@@ -59,7 +64,7 @@ if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
 
                     var playerRoot = document.querySelector('[data-swf-config]');
 
-                    if (playerRoot) {
+                    if ( playerRoot ) {
                         playerRoot.dataset.swfConfig = JSON.stringify(yt.playerConfig);
                     }
                 }
@@ -80,8 +85,8 @@ if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
             set: function(value) { yt.playerConfig = value; }
         });
 
-        if (window.yt) {
-            for (p in window.yt) { yt[p] = window.yt[p]; }
+        if ( window.yt ) {
+            for ( p in window.yt ) { yt[p] = window.yt[p]; }
             window.yt = yt;
         }
         else {
@@ -91,8 +96,8 @@ if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
             });
         }
 
-        if (window.ytplayer) {
-            for (p in window.ytplayer) { ytplayer[p] = window.ytplayer[p]; }
+        if ( window.ytplayer ) {
+            for ( p in window.ytplayer ) { ytplayer[p] = window.ytplayer[p]; }
             window.ytplayer = ytplayer;
         }
         else {
@@ -103,6 +108,6 @@ if (/^www\.youtube(-nocookie)?\.com/.test(location.host)) {
         }
     };
 }
-/*else if (check url) {
+/*else if ( check url ) {
     vAPI.sitePatch do something
 }*/

@@ -48,7 +48,7 @@ var onContextMenuClicked = function(details, tab) {
     var tagName = details.tagName || '';
     var src = details.frameUrl || details.srcUrl || details.linkUrl || '';
 
-    if (!tagName) {
+    if ( !tagName ) {
         if ( typeof details.frameUrl === 'string' ) {
             tagName = 'iframe';
         } else if ( typeof details.srcUrl === 'string' ) {

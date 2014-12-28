@@ -42,7 +42,7 @@ var messagingConnector = function(response) {
     var channels = vAPI.messaging.channels;
     var channel, listener;
 
-    if ( response.broadcast === true && !response.portName ) {
+    if ( response.broadcast === true && !response.channelName ) {
         for ( channel in channels ) {
             if ( channels.hasOwnProperty(channel) === false ) {
                 continue;
@@ -62,7 +62,7 @@ var messagingConnector = function(response) {
     }
 
     if ( !listener ) {
-        channel = channels[response.portName];
+        channel = channels[response.channelName];
         listener = channel && channel.listener;
     }
 
@@ -79,7 +79,7 @@ var uniqueId = function() {
 
 /******************************************************************************/
 
-// relevant?
+// Relevant?
 // https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/MessagesandProxies/MessagesandProxies.html#//apple_ref/doc/uid/TP40009977-CH14-SW12
 vAPI.messaging = {
     channels: {},
@@ -92,8 +92,8 @@ vAPI.messaging = {
             // messages from the background script are sent to every frame,
             // so we need to check the connectorId to accept only
             // what is meant for the current context
-            if (msg.name === vAPI.messaging.connectorId
-                || msg.name === 'broadcast') {
+            if ( msg.name === vAPI.messaging.connectorId
+                || msg.name === 'broadcast' ) {
                 messagingConnector(msg.message);
             }
         };
@@ -101,35 +101,37 @@ vAPI.messaging = {
 
         this.channels['vAPI'] = {
             listener: function(msg) {
-                if (msg.cmd === 'injectScript' && msg.details.code) {
+                if ( msg.cmd === 'injectScript' && msg.details.code ) {
                     Function(msg.details.code).call(self);
                 }
             }
         };
     },
+
     close: function() {
-        if (this.connector) {
+        if ( this.connector ) {
             safari.self.removeEventListener('message', this.connector, false);
             this.connector = null;
             this.channels = {};
             this.listeners = {};
         }
     },
+
     channel: function(channelName, callback) {
         if ( !channelName ) {
             return;
         }
 
         this.channels[channelName] = {
-            portName: channelName,
+            channelName: channelName,
             listener: typeof callback === 'function' ? callback : null,
             send: function(message, callback) {
-                if (!vAPI.messaging.connector) {
+                if ( !vAPI.messaging.connector ) {
                     vAPI.messaging.setup();
                 }
 
                 message = {
-                    portName: this.portName,
+                    channelName: this.channelName,
                     msg: message
                 };
 
@@ -139,8 +141,8 @@ vAPI.messaging = {
                 }
 
                 // popover content doesn't know messaging...
-                if (safari.extension.globalPage) {
-                    if (!safari.self.visible) {
+                if ( safari.extension.globalPage ) {
+                    if ( !safari.self.visible ) {
                         return;
                     }
 
@@ -156,8 +158,7 @@ vAPI.messaging = {
                                 }
                             }
                         });
-                }
-                else {
+                } else {
                     safari.self.tab.dispatchMessage(
                         vAPI.messaging.connectorId,
                         message
@@ -165,7 +166,7 @@ vAPI.messaging = {
                 }
             },
             close: function() {
-                delete vAPI.messaging.channels[this.portName];
+                delete vAPI.messaging.channels[this.channelName];
             }
         };
 
@@ -184,7 +185,7 @@ vAPI.canExecuteContentScript = function() {
 // This file can be included into extensin pages,
 // but the following code should run only in content pages.
 
-if (location.protocol === 'safari-extension:') {
+if ( location.protocol === 'safari-extension:' ) {
     return;
 }
 
@@ -192,13 +193,13 @@ if (location.protocol === 'safari-extension:') {
 
 window.MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-if (!window.MutationObserver) {
-    // dummy, minimalistic shim for older versions (<6)
+if ( !window.MutationObserver ) {
+    // Dummy, minimalistic shim for older versions (<6)
     // only supports node insertions, but currently we don't use it for anything else
     window.MutationObserver = function(handler) {
         this.observe = function(target) {
             target.addEventListener('DOMNodeInserted', function(e) {
-                handler([{addedNodes: [e.target]}]);
+                handler([{ addedNodes: [e.target] }]);
             }, true);
         };
     };
@@ -214,25 +215,26 @@ beforeLoadEvent.initEvent('beforeload');
 var frameId = window === window.top ? 0 : Date.now() % 1E5;
 var linkHelper = document.createElement('a');
 var onBeforeLoad = function(e, details) {
-    if (e.url && e.url.slice(0, 5) === 'data:') {
+    if ( e.url && e.url.slice(0, 5) === 'data:' ) {
         return;
     }
 
     linkHelper.href = details ? details.url : e.url;
 
-    if (!(/^https?:/.test(linkHelper.protocol) || (details && details.type === 'popup'))) {
-        return;
+    if ( linkHelper.protocol !== 'http:' && linkHelper.protocol !== 'https:' ) {
+        if ( !(details && details.type === 'popup') ) {
+            return;
+        }
     }
 
-    if (details) {
+    if ( details ) {
         details.url = linkHelper.href;
-    }
-    else {
+    } else {
         details = {
             url: linkHelper.href
         };
 
-        switch (e.target.nodeName.toLowerCase()) {
+        switch ( e.target.nodeName.toLowerCase() ) {
             case 'frame':
             case 'iframe':
                 details.type = 'sub_frame';
@@ -251,11 +253,10 @@ var onBeforeLoad = function(e, details) {
             case 'link':
                 var rel = e.target.rel.trim().toLowerCase();
 
-                if (rel.indexOf('icon') > -1) {
+                if ( rel.indexOf('icon') !== -1 ) {
                     details.type = 'image';
                     break;
-                }
-                else if (rel === 'stylesheet') {
+                } else if ( rel === 'stylesheet' ) {
                     details.type = 'stylesheet';
                     break;
                 }
@@ -263,10 +264,11 @@ var onBeforeLoad = function(e, details) {
                 details.type = 'other';
         }
 
-        // This can run even before the first DOMSubtreeModified event fired
-        if (firstMutation) {
-            firstMutation();
-        }
+    }
+
+    // This can run even before the first DOMSubtreeModified event fired
+    if ( firstMutation ) {
+        firstMutation();
     }
 
     // tabId is determined in the background script
@@ -277,35 +279,36 @@ var onBeforeLoad = function(e, details) {
 
     var response = safari.self.tab.canLoad(e, details);
 
-    if (!response) {
-        if (details.type === 'main_frame') {
+    if ( !response ) {
+        if ( details.type === 'main_frame' ) {
             window.stop();
-        }
-        else {
+        } else {
             e.preventDefault();
         }
 
         return false;
     }
-    // local mirroring, response is a data: URL here
-    else if (typeof response === 'string' && details.type === 'script') {
-        // Content Security Policy with disallowed inline scripts may break things
-        e.preventDefault();
-        details = document.createElement('script');
-        details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
 
-        if (e.target.hasAttribute('defer') && document.readyState === 'loading') {
-            var jsOnLoad = function(ev) {
-                this.removeEventListener(ev.type, jsOnLoad, true);
-                this.body.removeChild(this.body.appendChild(details));
-            };
+    // Local mirroring, response should be a data: URL here
+    if ( typeof response !== 'string' || details.type !== 'script' ) {
+        return;
+    }
 
-            document.addEventListener('DOMContentLoaded', jsOnLoad, true);
-        }
-        else {
-            e.target.parentNode.insertBefore(details, e.target);
-            details.parentNode.removeChild(details);
-        }
+    // Content Security Policy with disallowed inline scripts may break things
+    e.preventDefault();
+    details = document.createElement('script');
+    details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
+
+    if ( e.target.hasAttribute('defer') && document.readyState === 'loading' ) {
+        var jsOnLoad = function(ev) {
+            this.removeEventListener(ev.type, jsOnLoad, true);
+            this.body.removeChild(this.body.appendChild(details));
+        };
+
+        document.addEventListener('DOMContentLoaded', jsOnLoad, true);
+    } else {
+        e.target.parentNode.insertBefore(details, e.target);
+        details.parentNode.removeChild(details);
     }
 };
 
@@ -317,12 +320,13 @@ document.addEventListener('beforeload', onBeforeLoad, true);
 var firstMutation = function() {
     document.removeEventListener('DOMSubtreeModified', firstMutation, true);
     firstMutation = null;
-    var randEventName = parseInt(Math.random() * 1e15, 10).toString(36);
+
+    var randEventName = uniqueId();
 
     window.addEventListener(randEventName, function(e) {
         var result = onBeforeLoad(beforeLoadEvent, e.detail);
 
-        if (result === false) {
+        if ( result === false ) {
             e.detail.url = false;
         }
     }, true);
@@ -334,19 +338,22 @@ var firstMutation = function() {
         'var block = function(u, t) {',
             'var e = document.createEvent("CustomEvent"),',
                 'd = {url: u, type: t};',
-            'e.initCustomEvent("' + randEventName + '", !1, !1, d);',
+            'e.initCustomEvent("' + randEventName + '", false, false, d);',
             'dispatchEvent(e);',
-            'return d.url === !1;',
+            'return d.url === false;',
         '}, wo = open, xo = XMLHttpRequest.prototype.open;',
         'open = function(u) {',
             'return block(u, "popup") ? null : wo.apply(this, arguments);',
         '};',
         'XMLHttpRequest.prototype.open = function(m, u, s) {',
-            'return xo.apply(this, block(u, "xmlhttprequest") ? ["HEAD", u, s] : arguments);',
+            'return xo.apply(',
+                'this,',
+                'block(u, "xmlhttprequest") ? ["HEAD", u, s] : arguments',
+            ');',
         '};'
     ];
 
-    if (frameId === 0) {
+    if ( frameId === 0 ) {
         tmpScript.push(
             'var pS = history.pushState, rS = history.replaceState,',
             'onpopstate = function(e) {',
@@ -367,16 +374,18 @@ var firstMutation = function() {
     }
 
     var block = safari.self.tab.canLoad(beforeLoadEvent, {
-        isWhiteListed: location.href
+        isURLWhiteListed: location.href
     });
 
-    if (vAPI.sitePatch && !block) {
+    if ( vAPI.sitePatch && !block ) {
         tmpScript.push('(' + vAPI.sitePatch + ')();');
     }
 
     tmpScript.push('})();');
     tmpJS.textContent = tmpScript.join('');
-    document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
+    document.documentElement.removeChild(
+        document.documentElement.appendChild(tmpJS)
+    );
 };
 
 document.addEventListener('DOMSubtreeModified', firstMutation, true);
@@ -384,29 +393,29 @@ document.addEventListener('DOMSubtreeModified', firstMutation, true);
 /******************************************************************************/
 
 var onContextMenu = function(e) {
+    var target = e.target;
     var details = {
-        tagName: e.target.tagName.toLowerCase(),
+        tagName: target.tagName.toLowerCase(),
         pageUrl: location.href,
         insideFrame: window !== window.top
     };
 
     details.editable = details.tagName === 'textarea' || details.tagName === 'input';
 
-    if (e.target.hasOwnProperty('checked')) {
-        details.checked = e.target.checked;
+    if ( target.hasOwnProperty('checked') ) {
+        details.checked = target.checked;
     }
 
-    if (details.tagName === 'a') {
-        details.linkUrl = e.target.href;
+    if ( details.tagName === 'a' ) {
+        details.linkUrl = target.href;
     }
 
-    if (e.target.hasOwnProperty('src')) {
-        details.srcUrl = e.target.src;
+    if ( target.hasOwnProperty('src') ) {
+        details.srcUrl = target.src;
 
-        if (details.tagName === 'img') {
+        if ( details.tagName === 'img' ) {
             details.mediaType = 'image';
-        }
-        else if (details.tagName === 'video' || details.tagName === 'audio') {
+        } else if ( details.tagName === 'video' || details.tagName === 'audio' ) {
             details.mediaType = details.tagName;
         }
     }
@@ -419,7 +428,7 @@ self.addEventListener('contextmenu', onContextMenu, true);
 /******************************************************************************/
 
 // 'main_frame' simulation
-if (frameId === 0) {
+if ( frameId === 0 ) {
     onBeforeLoad(beforeLoadEvent, {
         url: location.href,
         type: 'main_frame'

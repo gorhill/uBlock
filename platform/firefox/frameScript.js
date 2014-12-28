@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals Services, sendAsyncMessage, addMessageListener, removeMessageListener */
+/* globals addMessageListener, removeMessageListener */
 
 /******************************************************************************/
 
@@ -47,7 +47,7 @@ frameScriptContext[appName + '_addMessageListener'] = function(id, fn) {
 };
 
 frameScriptContext[appName + '_removeMessageListener'] = function(id) {
-    if (listeners[id]) {
+    if ( listeners[id] ) {
         removeMessageListener(id, listeners[id]);
     }
 
@@ -57,7 +57,7 @@ frameScriptContext[appName + '_removeMessageListener'] = function(id) {
 /******************************************************************************/
 
 addMessageListener(appName + ':broadcast', function(msg) {
-    for (let id in listeners) {
+    for ( let id in listeners ) {
         listeners[id](msg);
     }
 });

@@ -65,8 +65,11 @@ safari.extension.addContentScriptFromURL(
 /******************************************************************************/
 
 safari.extension.settings.addEventListener('change', function(e) {
-    if (e.key === 'open_prefs') {
-        vAPI.tabs.open({url: 'dashboard.html', active: true});
+    if ( e.key === 'open_prefs' ) {
+        vAPI.tabs.open({
+            url: 'dashboard.html',
+            active: true
+        });
     }
 }, false);
 
@@ -75,46 +78,43 @@ safari.extension.settings.addEventListener('change', function(e) {
 vAPI.storage = {
     _storage: safari.extension.settings,
     QUOTA_BYTES: 52428800, // copied from Info.plist
+
     get: function(keys, callback) {
-        if (typeof callback !== 'function') {
+        if ( typeof callback !== 'function' ) {
             return;
         }
 
         var i, value, result = {};
 
-        if (keys === null) {
-            for (i in this._storage) {
+        if ( keys === null ) {
+            for ( i in this._storage ) {
                 value = this._storage[i];
 
-                if (typeof value === 'string') {
+                if ( typeof value === 'string' ) {
                     result[i] = JSON.parse(value);
                 }
             }
-        }
-        else if (typeof keys === 'string') {
+        } else if ( typeof keys === 'string' ) {
             value = this._storage[keys];
 
-            if (typeof value === 'string') {
+            if ( typeof value === 'string' ) {
                 result[keys] = JSON.parse(value);
             }
-        }
-        else if (Array.isArray(keys)) {
-            for ( i = 0; i < keys.length; ++i) {
+        } else if ( Array.isArray(keys) ) {
+            for ( i = 0; i < keys.length; i++ ) {
                 value = this._storage[i];
 
-                if (typeof value === 'string') {
+                if ( typeof value === 'string' ) {
                     result[keys[i]] = JSON.parse(value);
                 }
             }
-        }
-        else if (typeof keys === 'object') {
-            for (i in keys) {
+        } else if ( typeof keys === 'object' ) {
+            for ( i in keys ) {
                 value = this._storage[i];
 
-                if (typeof value === 'string') {
+                if ( typeof value === 'string' ) {
                     result[i] = JSON.parse(value);
-                }
-                else {
+                } else {
                     result[i] = keys[i];
                 }
             }
@@ -122,46 +122,49 @@ vAPI.storage = {
 
         callback(result);
     },
+
     set: function(details, callback) {
-        for (var key in details) {
+        for ( var key in details ) {
             this._storage.setItem(key, JSON.stringify(details[key]));
         }
 
-        if (typeof callback === 'function') {
+        if ( typeof callback === 'function' ) {
             callback();
         }
     },
+
     remove: function(keys) {
-        if (typeof keys === 'string') {
+        if ( typeof keys === 'string' ) {
             keys = [keys];
         }
 
-        for (var i = 0; i < keys.length; ++i) {
+        for ( var i = 0; i < keys.length; i++ ) {
             this._storage.removeItem(keys[i]);
         }
     },
+
     clear: function(callback) {
         this._storage.clear();
         callback();
     },
+
     getBytesInUse: function(keys, callback) {
-        if (typeof callback !== 'function') {
+        if ( typeof callback !== 'function' ) {
             return;
         }
 
         var key, size = 0;
 
-        if (keys === null) {
-            for (key in this._storage) {
+        if ( keys === null ) {
+            for ( key in this._storage ) {
                 size += (this._storage[key] || '').length;
             }
-        }
-        else {
-            if (typeof keys === 'string') {
+        } else {
+            if ( typeof keys === 'string' ) {
                 keys = [keys];
             }
 
-            for (key = 0; key < keys.length; ++key) {
+            for ( key = 0; key < keys.length; key++ ) {
                 size += (this._storage[keys[key]] || '').length;
             }
         }
@@ -182,23 +185,21 @@ vAPI.tabs = {
 vAPI.tabs.registerListeners = function() {
     var onNavigation = this.onNavigation;
 
-    if (typeof onNavigation === 'function') {
-        this.onNavigation = function(e) {
-            // e.url is not present for local files or data URIs,
-            // or probably for those URLs which we don't have access to
-            if (!e.target || !e.target.url) {
-                return;
-            }
+    this.onNavigation = function(e) {
+        // e.url is not present for local files or data URIs,
+        // or probably for those URLs which we don't have access to
+        if ( !e.target || !e.target.url ) {
+            return;
+        }
 
-            onNavigation({
-                frameId: 0,
-                tabId: vAPI.tabs.getTabId(e.target),
-                url: e.target.url
-            });
-        };
+        onNavigation({
+            frameId: 0,
+            tabId: vAPI.tabs.getTabId(e.target),
+            url: e.target.url
+        });
+    };
 
-        safari.application.addEventListener('navigate', this.onNavigation, true);
-    }
+    safari.application.addEventListener('navigate', this.onNavigation, true);
 
     // onClosed handled in the main tab-close event
     // onUpdated handled via monitoring the history.pushState on web-pages
@@ -208,8 +209,8 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 vAPI.tabs.getTabId = function(tab) {
-    for (var i in vAPI.tabs.stack) {
-        if (vAPI.tabs.stack[i] === tab) {
+    for ( var i in vAPI.tabs.stack ) {
+        if ( vAPI.tabs.stack[i] === tab ) {
             return +i;
         }
     }
@@ -222,15 +223,14 @@ vAPI.tabs.getTabId = function(tab) {
 vAPI.tabs.get = function(tabId, callback) {
     var tab;
 
-    if (tabId === null) {
+    if ( tabId === null ) {
         tab = safari.application.activeBrowserWindow.activeTab;
         tabId = this.getTabId(tab);
-    }
-    else {
+    } else {
         tab = this.stack[tabId];
     }
 
-    if (!tab) {
+    if ( !tab ) {
         callback();
         return;
     }
@@ -255,36 +255,36 @@ vAPI.tabs.get = function(tabId, callback) {
 //   select: true // if a tab is already opened with that url, then select it instead of opening a new one
 
 vAPI.tabs.open = function(details) {
-    if (!details.url) {
+    if ( !details.url ) {
         return null;
     }
     // extension pages
-    if (!/^[\w-]{2,}:/.test(details.url)) {
+    if ( /^[\w-]{2,}:/.test(details.url) === false ) {
         details.url = vAPI.getURL(details.url);
     }
 
     var curWin, tab;
 
-    if (details.select) {
+    if ( details.select ) {
         tab = safari.application.browserWindows.some(function(win) {
             var rgxHash = /#.*/;
             // this is questionable
             var url = details.url.replace(rgxHash, '');
 
-            for (var i = 0; i < win.tabs.length; ++i) {
-                if (win.tabs[i].url.replace(rgxHash, '') === url) {
+            for ( var i = 0; i < win.tabs.length; i++ ) {
+                if ( win.tabs[i].url.replace(rgxHash, '') === url ) {
                     win.tabs[i].activate();
                     return true;
                 }
             }
         });
 
-        if (tab) {
+        if ( tab ) {
             return;
         }
     }
 
-    if (details.active === undefined) {
+    if ( details.active === undefined ) {
         details.active = true;
     }
 
@@ -292,14 +292,14 @@ vAPI.tabs.open = function(details) {
 
     // it must be calculated before opening a new tab,
     // otherwise the new tab will be the active tab here
-    if (details.index === -1) {
+    if ( details.index === -1 ) {
         details.index = curWin.tabs.indexOf(curWin.activeTab) + 1;
     }
 
     tab = details.tabId && this.stack[details.tabId]
         || curWin.openTab(details.active ? 'foreground' : 'background');
 
-    if (details.index !== undefined) {
+    if ( details.index !== undefined ) {
         curWin.insertTab(tab, details.index);
     }
 
@@ -309,16 +309,16 @@ vAPI.tabs.open = function(details) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabIds) {
-    if (tabIds instanceof SafariBrowserTab) {
+    if ( tabIds instanceof SafariBrowserTab ) {
         tabIds = this.getTabId(tabIds);
     }
 
-    if (!Array.isArray(tabIds)) {
+    if ( !Array.isArray(tabIds) ) {
         tabIds = [tabIds];
     }
 
-    for (var i = 0; i < tabIds.length; i++) {
-        if (this.stack[tabIds[i]]) {
+    for ( var i = 0; i < tabIds.length; i++ ) {
+        if ( this.stack[tabIds[i]] ) {
             this.stack[tabIds[i]].close();
         }
     }
@@ -329,14 +329,13 @@ vAPI.tabs.remove = function(tabIds) {
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var tab;
 
-    if (tabId) {
+    if ( tabId ) {
         tab = this.stack[tabId];
-    }
-    else {
+    } else {
         tab = safari.application.activeBrowserWindow.activeTab;
     }
 
-    if (details.file) {
+    if ( details.file ) {
         var xhr = new XMLHttpRequest;
         xhr.overrideMimeType('application/x-javascript;charset=utf-8');
         xhr.open('GET', details.file, false);
@@ -345,14 +344,14 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     }
 
     tab.page.dispatchMessage('broadcast', {
-        portName: 'vAPI',
+        channelName: 'vAPI',
         msg: {
             cmd: 'injectScript',
             details: details
         }
     });
 
-    if (typeof callback === 'function') {
+    if ( typeof callback === 'function' ) {
         setTimeout(callback, 13);
     }
 };
@@ -364,10 +363,10 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 (function() {
     var wins = safari.application.browserWindows, i = wins.length, j;
 
-    while (i--) {
+    while ( i-- ) {
         j = wins[i].tabs.length;
 
-        while (j--) {
+        while ( j-- ) {
             vAPI.tabs.stack[vAPI.tabs.stackId++] = wins[i].tabs[j];
         }
     }
@@ -377,7 +376,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 safari.application.addEventListener('open', function(e) {
     // ignore windows
-    if (e.target instanceof SafariBrowserTab) {
+    if ( e.target instanceof SafariBrowserTab ) {
         vAPI.tabs.stack[vAPI.tabs.stackId++] = e.target;
     }
 }, true);
@@ -386,16 +385,16 @@ safari.application.addEventListener('open', function(e) {
 
 safari.application.addEventListener('close', function(e) {
     // ignore windows
-    if (!(e.target instanceof SafariBrowserTab)) {
+    if ( !(e.target instanceof SafariBrowserTab) ) {
         return;
     }
 
     var tabId = vAPI.tabs.getTabId(e.target);
 
-    if (tabId !== -1) {
+    if ( tabId !== -1 ) {
         // to not add another listener, put this here
         // instead of vAPI.tabs.registerListeners
-        if (typeof vAPI.tabs.onClosed === 'function') {
+        if ( typeof vAPI.tabs.onClosed === 'function' ) {
             vAPI.tabs.onClosed(tabId);
         }
 
@@ -409,7 +408,7 @@ safari.application.addEventListener('close', function(e) {
 // update badge when tab is activated
 safari.application.addEventListener('activate', function(e) {
     // ignore windows
-    if (!(e.target instanceof SafariBrowserTab)) {
+    if ( !(e.target instanceof SafariBrowserTab) ) {
         return;
     }
 
@@ -434,11 +433,10 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     );
 
     // from 'activate' event
-    if (tabId === undefined) {
+    if ( tabId === undefined ) {
         tabId = curTabId;
-    }
-    else {
-        if (badge && typeof badge !== 'number') {
+    } else {
+        if ( badge && /\D/.test(badge) ) {
             badge = 999;
         }
 
@@ -448,17 +446,17 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         };
     }
 
-    if (tabId !== curTabId) {
+    if ( tabId !== curTabId ) {
         return;
     }
 
     // if the selected tab has the same ID, then update the badge too,
     // or always update it when changing tabs ('activate' event)
-    var items = safari.extension.toolbarItems
+    var items = safari.extension.toolbarItems;
     var i = items.length;
 
-    while (i--) {
-        if (items[i].browserWindow === safari.application.activeBrowserWindow) {
+    while ( i-- ) {
+        if ( items[i].browserWindow === safari.application.activeBrowserWindow ) {
             var icon = vAPI.tabIcons[tabId];
             items[i].badge = icon && icon.badge || 0;
             // TODO: a disabled icon for Safari
@@ -493,7 +491,7 @@ vAPI.messaging.onMessage = function(request) {
                 request.name,
                 {
                     requestId: request.message.requestId,
-                    portName: request.message.portName,
+                    channelName: request.message.channelName,
                     msg: response !== undefined ? response : null
                 }
             );
@@ -508,7 +506,7 @@ vAPI.messaging.onMessage = function(request) {
 
     // Specific handler
     var r = vAPI.messaging.UNHANDLED;
-    var listener = vAPI.messaging.listeners[request.message.portName];
+    var listener = vAPI.messaging.listeners[request.message.channelName];
     if ( typeof listener === 'function' ) {
         r = listener(request.message.msg, sender, callback);
     }
@@ -557,7 +555,7 @@ vAPI.messaging.broadcast = function(message) {
         msg: message
     };
 
-    for (var tabId in vAPI.tabs.stack) {
+    for ( var tabId in vAPI.tabs.stack ) {
         vAPI.tabs.stack[tabId].page.dispatchMessage('broadcast', message);
     }
 };
@@ -565,22 +563,22 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 
 safari.application.addEventListener('beforeNavigate', function(e) {
-    if (!vAPI.tabs.expectPopUpFrom || e.url === 'about:blank') {
+    if ( !vAPI.tabs.popupCandidate || e.url === 'about:blank' ) {
         return;
     }
 
     var details = {
         url: e.url,
         tabId: vAPI.tabs.getTabId(e.target),
-        sourceTabId: vAPI.tabs.expectPopUpFrom
+        sourceTabId: vAPI.tabs.popupCandidate
     };
 
-    vAPI.tabs.expectPopUpFrom = null;
+    vAPI.tabs.popupCandidate = null;
 
-    if (vAPI.tabs.onPopup(details)) {
+    if ( vAPI.tabs.onPopup(details) ) {
         e.preventDefault();
 
-        if (vAPI.tabs.stack[details.sourceTabId]) {
+        if ( vAPI.tabs.stack[details.sourceTabId] ) {
             vAPI.tabs.stack[details.sourceTabId].activate();
         }
     }
@@ -595,92 +593,86 @@ vAPI.net = {};
 vAPI.net.registerListeners = function() {
     var onBeforeRequest = this.onBeforeRequest;
 
-    if (typeof onBeforeRequest.callback === 'function') {
-        if (!Array.isArray(onBeforeRequest.types)) {
-            onBeforeRequest.types = [];
+    if ( !Array.isArray(onBeforeRequest.types) ) {
+        onBeforeRequest.types = [];
+    }
+
+    onBeforeRequest = onBeforeRequest.callback;
+    this.onBeforeRequest.callback = function(e) {
+        var block;
+
+        if ( e.name !== 'canLoad' ) {
+            return;
         }
 
-        onBeforeRequest = onBeforeRequest.callback;
-        this.onBeforeRequest.callback = function(e) {
-            var block;
+        // No stopPropagation if it was called from beforeNavigate event
+        if ( e.stopPropagation ) {
+            e.stopPropagation();
+        }
 
-            if (e.name !== 'canLoad') {
-                return;
-            }
+        if ( e.message.isURLWhiteListed ) {
+            block = µBlock.URI.hostnameFromURI(e.message.isURLWhiteListed);
+            block = µBlock.URI.domainFromHostname(block) || block;
+            e.message = !!µBlock.netWhitelist[block];
+            return e.message;
+        }
 
-            // no stopPropagation if it was called from beforeNavigate event
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-
-            if (e.message.isWhiteListed) {
-                block = µBlock.URI.hostnameFromURI(e.message.isWhiteListed);
-                block = µBlock.URI.domainFromHostname(block) || block;
-                e.message = !!µBlock.netWhitelist[block];
-                return e.message;
-            }
-
-            // when the URL changes, but the document doesn't
-            if (e.message.type === 'popstate') {
-                vAPI.tabs.onUpdated(
-                    vAPI.tabs.getTabId(e.target),
-                    {url: e.message.url},
-                    {url: e.message.url}
-                );
-                return;
-            }
+        // When the URL changes, but the document doesn't
+        if ( e.message.type === 'popstate' ) {
+            vAPI.tabs.onUpdated(
+                vAPI.tabs.getTabId(e.target),
+                {url: e.message.url},
+                {url: e.message.url}
+            );
+            return;
+        } else if ( e.message.type === 'popup' ) {
             // blocking unwanted pop-ups
-            else if (e.message.type === 'popup') {
-                if (e.message.url === 'about:blank') {
-                    vAPI.tabs.expectPopUpFrom = vAPI.tabs.getTabId(e.target);
-                    e.message = true;
-                    return;
-                }
-
-                e.message = !vAPI.tabs.onPopup({
-                    url: e.message.url,
-                    tabId: 0,
-                    sourceTabId: vAPI.tabs.getTabId(e.target)
-                });
+            if ( e.message.url === 'about:blank' ) {
+                vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
+                e.message = true;
                 return;
             }
 
-            block = vAPI.net.onBeforeRequest;
+            e.message = !vAPI.tabs.onPopup({
+                url: e.message.url,
+                tabId: 0,
+                sourceTabId: vAPI.tabs.getTabId(e.target)
+            });
+            return;
+        }
 
-            if (block.types.indexOf(e.message.type) < 0) {
-                return true;
-            }
+        block = vAPI.net.onBeforeRequest;
 
-            e.message.tabId = vAPI.tabs.getTabId(e.target);
-            block = onBeforeRequest(e.message);
+        if ( block.types.indexOf(e.message.type) === -1 ) {
+            return true;
+        }
 
-            // truthy return value will allow the request,
-            // except when redirectUrl is present
-            if (block && typeof block === 'object') {
-                if (block.cancel === true) {
-                    e.message = false;
-                }
-                else if (e.message.type === 'script'
-                    && typeof block.redirectUrl === 'string') {
-                    e.message = block.redirectUrl;
-                }
-                else {
-                    e.message = true;
-                }
-            }
-            else {
+        e.message.tabId = vAPI.tabs.getTabId(e.target);
+        block = onBeforeRequest(e.message);
+
+        // Truthy return value will allow the request,
+        // except when redirectUrl is present
+        if ( block && typeof block === 'object' ) {
+            if ( block.cancel === true ) {
+                e.message = false;
+            } else if ( e.message.type === 'script'
+                && typeof block.redirectUrl === 'string' ) {
+                e.message = block.redirectUrl;
+            } else {
                 e.message = true;
             }
+        } else {
+            e.message = true;
+        }
 
-            return e.message;
-        };
+        return e.message;
+    };
 
-        safari.application.addEventListener(
-            'message',
-            this.onBeforeRequest.callback,
-            true
-        );
-    }
+    safari.application.addEventListener(
+        'message',
+        this.onBeforeRequest.callback,
+        true
+    );
 };
 
 /******************************************************************************/
@@ -701,10 +693,9 @@ vAPI.contextMenu.create = function(details, callback) {
     var menuItemId = details.id;
     var menuTitle = details.title;
 
-    if (Array.isArray(contexts) && contexts.length) {
+    if ( Array.isArray(contexts) && contexts.length ) {
         contexts = contexts.indexOf('all') === -1 ? contexts : null;
-    }
-    else {
+    } else {
         // default in Chrome
         contexts = ['page'];
     }
@@ -712,44 +703,44 @@ vAPI.contextMenu.create = function(details, callback) {
     this.onContextMenu = function(e) {
         var uI = e.userInfo;
 
-        if (uI && /^https?:\/\//i.test(uI.pageUrl)) {
-            if (contexts) {
-                var invalidContext = true;
-                var ctxMap = vAPI.contextMenu.contextMap;
+        if ( !uI || /^https?:\/\//i.test(uI.pageUrl) === false ) {
+            return;
+        }
 
-                for (var i = 0; i < contexts.length; ++i) {
-                    var ctx = contexts[i];
+        if ( contexts ) {
+            var invalidContext = true;
+            var ctxMap = vAPI.contextMenu.contextMap;
 
-                    if (ctx === 'audio' || ctx === 'video') {
-                        if (uI[ctxMap['image']] && uI.tagName === ctx) {
-                            invalidContext = false;
-                            break;
-                        }
-                    }
-                    else if (uI[ctxMap[ctx]]) {
+            for ( var i = 0; i < contexts.length; i++ ) {
+                var ctx = contexts[i];
+
+                if ( ctx === 'audio' || ctx === 'video' ) {
+                    if ( uI[ctxMap['image']] && uI.tagName === ctx ) {
                         invalidContext = false;
                         break;
                     }
-                    else if (ctx === 'page') {
-                        if (!(uI.insideFrame || uI.linkHref
-                            || uI.mediaType || uI.editable)) {
-                            invalidContext = false;
-                            break;
-                        }
+                } else if ( uI[ctxMap[ctx]] ) {
+                    invalidContext = false;
+                    break;
+                } else if ( ctx === 'page' ) {
+                    if ( !(uI.insideFrame || uI.linkHref
+                        || uI.mediaType || uI.editable) ) {
+                        invalidContext = false;
+                        break;
                     }
-                }
-
-                if (invalidContext) {
-                    return;
                 }
             }
 
-            e.contextMenu.appendContextMenuItem(menuItemId, menuTitle);
+            if ( invalidContext ) {
+                return;
+            }
         }
+
+        e.contextMenu.appendContextMenuItem(menuItemId, menuTitle);
     };
 
     this.onContextMenuCmd = function(e) {
-        if (e.command === menuItemId) {
+        if ( e.command === menuItemId ) {
             var tab = e.currentTarget.activeBrowserWindow.activeTab;
             e.userInfo.menuItemId = menuItemId;
             callback(e.userInfo, tab ? {
