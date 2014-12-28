@@ -55,6 +55,7 @@ return {
         autoUpdate: true,
         collapseBlocked: true,
         contextMenuEnabled: true,
+        dynamicFilteringString: '',
         dynamicFilteringSelfie: '',
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
@@ -106,7 +107,7 @@ return {
     firstUpdateAfter: 5 * oneMinute,
     nextUpdateAfter: 7 * oneHour,
 
-    selfieMagic: 'odyxfmbsqllh',
+    selfieMagic: 'qidcglrwobsm',
     selfieAfter: 7 * oneMinute,
 
     pageStores: {},

@@ -21,11 +21,12 @@
 
 /* jshint bitwise: false */
 /* global uDom */
-'use strict';
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -77,8 +78,8 @@ var renderURL = function(url, filter) {
     if ( pos > 0 ) {
         reText = reText.slice(0, pos);
     }
-    if ( reText.slice(0, 2) === '@@' ) {
-        reText = reText.slice(2);
+    if ( reText.charAt(0) === 's' ) {
+        reText = reText.slice(3);
     }
     if ( reText === '*' ) {
         reText = '\\*';

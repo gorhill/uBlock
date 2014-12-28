@@ -216,7 +216,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         var selector;
         while ( i-- ) {
             selector = generics[i];
-            if ( injectedSelectors[selector] !== undefined ) {
+            if ( injectedSelectors.hasOwnProperty(selector) ) {
                 continue;
             }
             injectedSelectors[selector] = true;
@@ -241,14 +241,14 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 if ( !attrValue ) { continue; }
                 selector = '[' + attr + '="' + attrValue + '"]';
                 if ( generics[selector] ) {
-                    if ( injectedSelectors[selector] === undefined ) {
+                    if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);
                     }
                 }
                 selector = node.tagName.toLowerCase() + selector;
                 if ( generics[selector] ) {
-                    if ( injectedSelectors[selector] === undefined ) {
+                    if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);
                     }
@@ -277,7 +277,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             iSelector = selectors.length;
             while ( iSelector-- ) {
                 selector = selectors[iSelector];
-                if ( injectedSelectors[selector] === undefined ) {
+                if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                     injectedSelectors[selector] = true;
                     out.push(selector);
                 }
@@ -293,7 +293,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
     var processHighHighGenerics = function() {
         processHighHighGenericsTimer = null;
-        if ( injectedSelectors['{{highHighGenerics}}'] !== undefined ) { return; }
+        if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) { return; }
         if ( document.querySelector(highGenerics.hideHigh) === null ) { return; }
         injectedSelectors['{{highHighGenerics}}'] = true;
         // We need to filter out possible exception cosmetic filters from
@@ -443,10 +443,10 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             }
         }
         if ( addedNodeListsTimer === null ) {
-            // I arbitrarily chose 50 ms for now:
+            // I arbitrarily chose 100 ms for now:
             // I have to compromise between the overhead of processing too few
             // nodes too often and the delay of many nodes less often.
-            addedNodeListsTimer = setTimeout(mutationObservedHandler, 75);
+            addedNodeListsTimer = setTimeout(mutationObservedHandler, 100);
         }
     };
 

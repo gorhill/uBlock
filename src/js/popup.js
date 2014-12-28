@@ -30,7 +30,6 @@
 /******************************************************************************/
 
 var stats;
-var reResultParser = /^(@@)?(\*|\|\|([^$^]+)\^)\$(.+)$/;
 
 /******************************************************************************/
 
@@ -50,23 +49,23 @@ var formatNumber = function(count) {
 
 /******************************************************************************/
 
-var syncDynamicFilter = function(scope, i, result) {
-    var el = uDom('[data-scope="' + scope + '"] > div:nth-of-type(' + i + ')');
-    var matches = reResultParser.exec(result) || [];
-    var blocked = matches.length !== 0 && matches[1] !== '@@';
+var syncDynamicFilter = function(scope, des, type, result) {
+    var el = uDom('span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]');
+    var blocked = result.charAt(1) === 'b';
     el.toggleClass('blocked', blocked);
 
     // https://github.com/gorhill/uBlock/issues/340
     // Use dark shade visual cue if the filter is specific to the page hostname
     // or one of the ancestor hostname.
     var ownFilter = false;
-    // There might be no page hostname on pages where uBlock can't be active,
-    // like on browser's built-in pages, etc.
-    if ( stats.pageHostname ) {
-        var filterHostname = matches[3] || '*';
-        if ( stats.pageHostname.slice(0 - filterHostname.length) === filterHostname ) {
-            ownFilter = (stats.pageHostname.length === filterHostname.length) ||
-                        (stats.pageHostname.substr(0 - filterHostname.length - 1, 1) === '.');
+    var matches = /^d[abn]:([^ ]+)/.exec(result);
+    if ( matches !== null ) {
+        var thisSrc = scope === 'local' ? stats.pageHostname : '*';
+        var otherSrc = matches[1];
+        ownFilter = thisSrc.slice(0 - otherSrc.length) === thisSrc;
+        if ( ownFilter && thisSrc.length !== otherSrc.length ) {
+            var c = thisSrc.substr(0 - otherSrc.length - 1, 1);
+            ownFilter = c === '' || c === '.';
         }
     }
     el.toggleClass('ownFilter', ownFilter);
@@ -76,23 +75,25 @@ var syncDynamicFilter = function(scope, i, result) {
 
 var syncAllDynamicFilters = function() {
     var hasBlock = false;
-    var scopes = ['.', '/'];
+    var scopes = ['*', 'local'];
     var scope, results, i, result;
     while ( scope = scopes.pop() ) {
         if ( stats.dynamicFilterResults.hasOwnProperty(scope) === false ) {
             continue;
         }
         results = stats.dynamicFilterResults[scope];
-        i = 5;
-        while ( i-- ) {
-            result = results[i];
-            syncDynamicFilter(scope, i + 1, result);
-            if ( scope === '.' && result.length !== 0 && result.slice(0, 2) !== '@@' ) {
+        for ( var type in results ) {
+            if ( results.hasOwnProperty(type) === false ) {
+                continue;
+            }
+            result = results[type];
+            syncDynamicFilter(scope, '*', type, result);
+            if ( scope === 'local' && result.charAt(1) === 'b' ) {
                 hasBlock = true;
             }
         }
     }
-    uDom('#dynamicFilteringToggler').toggleClass('hasBlock', hasBlock);
+    uDom('body').toggleClass('hasDynamicBlock', hasBlock);
 };
 
 /******************************************************************************/
@@ -165,7 +166,7 @@ var renderPopup = function(details) {
 
     uDom('#total-blocked').html(html.join(''));
     uDom('#switch .fa').toggleClass('off', stats.pageURL === '' || !stats.netFilteringSwitch);
-    uDom('#dynamicFilteringToggler').toggleClass('on', stats.dynamicFilteringEnabled);
+    uDom('body').toggleClass('dynamicFilteringEnabled', stats.dynamicFilteringEnabled);
 };
 
 /******************************************************************************/
@@ -174,12 +175,11 @@ var toggleNetFilteringSwitch = function(ev) {
     if ( !stats || !stats.pageURL ) {
         return;
     }
-    var off = uDom(this).toggleClass('off').hasClassName('off');
     messager.send({
         what: 'toggleNetFiltering',
         url: stats.pageURL,
         scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
-        state: !off,
+        state: !uDom(this).toggleClass('off').hasClass('off'),
         tabId: stats.tabId
     });
 };
@@ -242,37 +242,35 @@ var gotoLink = function(ev) {
 /******************************************************************************/
 
 var onDynamicFilterClicked = function(ev) {
-    var elScope = uDom(ev.currentTarget);
-    var scope = elScope.attr('data-scope') === '/' ? '*' : stats.pageHostname;
+    // This can happen on pages where uBlock does not work
+    if ( typeof stats.pageHostname !== 'string' || stats.pageHostname === '' ) {
+        return;
+    }
     var elFilter = uDom(ev.target);
+    var scope = elFilter.attr('data-src') === '*' ? '*' : stats.pageHostname;
     var onDynamicFilterChanged = function(details) {
         stats.dynamicFilterResults = details;
         syncAllDynamicFilters();
     };
     messager.send({
         what: 'toggleDynamicFilter',
-        hostname: scope,
+        pageHostname: stats.pageHostname,
+        srcHostname: scope,
+        desHostname: elFilter.attr('data-des'),
         requestType: elFilter.attr('data-type'),
-        firstParty: elFilter.attr('data-first-party') !== null,
-        block: elFilter.hasClassName('blocked') === false,
-        pageHostname: stats.pageHostname
+        block: elFilter.hasClassName('blocked') === false
     }, onDynamicFilterChanged);
-
 };
 
 /******************************************************************************/
 
 var toggleDynamicFiltering = function(ev) {
-    // Discard events destined to child elements.
-    if ( ev !== undefined && ev.target !== this ) {
-        return;
-    }
-    var el = uDom('#dynamicFilteringToggler');
-    el.toggleClass('on');
+    var el = uDom('body');
+    el.toggleClass('dynamicFilteringEnabled');
     messager.send({
         what: 'userSettings',
         name: 'dynamicFilteringEnabled',
-        value: el.hasClassName('on')
+        value: el.hasClassName('dynamicFilteringEnabled')
     });
 };
 
@@ -285,7 +283,7 @@ var installEventHandlers = function() {
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href^=http]').on('click', gotoLink);
     uDom('#dynamicFilteringToggler').on('click', toggleDynamicFiltering);
-    uDom('.dynamicFiltering').on('click', 'div', onDynamicFilterClicked);
+    uDom('#dynamicFilteringContainer').on('click', 'span[data-type]', onDynamicFilterClicked);
 };
 
 /******************************************************************************/

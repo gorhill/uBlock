@@ -48,6 +48,12 @@ exports.keyvalSetMany = function(dict, callback) {
 
 /******************************************************************************/
 
+exports.keyvalRemoveOne = function(key, callback) {
+    vAPI.storage.remove(key, callback || noopFunc);
+};
+
+/******************************************************************************/
+
 exports.keyvalRemoveAll = function(callback) {
     vAPI.storage.clear(callback || noopFunc);
 };

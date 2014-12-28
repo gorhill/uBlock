@@ -55,6 +55,8 @@ vAPI.tabs.onClosed = function(tabId) {
 
 // https://github.com/gorhill/uBlock/issues/297
 vAPI.tabs.onPopup = function(details) {
+    //console.debug('vAPI.tabs.onPopup: url="%s"', details.url);
+
     var pageStore = µBlock.pageStoreFromTabId(details.sourceTabId);
     if ( !pageStore ) {
         return;
@@ -65,7 +67,7 @@ vAPI.tabs.onPopup = function(details) {
     // https://github.com/gorhill/uBlock/issues/323
     // If popup URL is whitelisted, do not block it
     if ( µBlock.getNetFilteringSwitch(requestURL) ) {
-        result = µBlock.netFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+        result = µBlock.staticNetFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
     }
 
     // https://github.com/gorhill/uBlock/issues/91

@@ -245,6 +245,9 @@ FrameStore.prototype.init = function(rootHostname, frameURL) {
     this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
     this.rootHostname = rootHostname;
     this.rootDomain = µburi.domainFromHostname(rootHostname) || rootHostname;
+    // This is part of the filtering evaluation context
+    this.requestURL = this.requestHostname = this.requestType = '';
+
     return this;
 };
 
@@ -252,7 +255,8 @@ FrameStore.prototype.init = function(rootHostname, frameURL) {
 
 FrameStore.prototype.dispose = function() {
     this.pageHostname = this.pageDomain =
-    this.rootHostname = this.rootDomain = '';
+    this.rootHostname = this.rootDomain =
+    this.requestURL = this.requestHostname = this.requestType = '';
     if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
         frameStoreJunkyard.push(this);
     }
@@ -292,6 +296,16 @@ PageStore.factory = function(tabId, pageURL) {
 
 /******************************************************************************/
 
+PageStore.prototype.bitFromRequestType = {
+      '':  1,
+    'sb':  2,
+    'sa':  4,
+    'db':  8,
+    'da': 16
+};
+
+/******************************************************************************/
+
 PageStore.prototype.init = function(tabId, pageURL) {
     this.tabId = tabId;
     this.previousPageURL = '';
@@ -303,6 +317,10 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
     this.rootHostname = this.pageHostname;
     this.rootDomain = this.pageDomain;
+
+    // This is part of the filtering evaluation context
+    this.requestURL = this.requestHostname = this.requestType = '';
+    this.requestHostnames = {};
 
     this.frames = {};
     this.netFiltering = true;
@@ -361,7 +379,9 @@ PageStore.prototype.dispose = function() {
     // used as a key).
     this.pageURL = this.previousPageURL =
     this.pageHostname = this.pageDomain =
-    this.rootHostname = this.rootDomain = '';
+    this.rootHostname = this.rootDomain =
+    this.requestURL = this.requestHostname = this.requestType = '';
+    this.requestHostnames = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
@@ -374,11 +394,8 @@ PageStore.prototype.dispose = function() {
 
 PageStore.prototype.disposeFrameStores = function() {
     var frames = this.frames;
-    if ( typeof frames === 'object' ) {
-        for ( var k in frames ) {
-            if ( frames.hasOwnProperty(k) === false ) {
-                continue;
-            }
+    for ( var k in frames ) {
+        if ( frames.hasOwnProperty(k) ) {
             frames[k].dispose();
         }
     }
@@ -414,20 +431,32 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 
 /******************************************************************************/
 
-PageStore.prototype.filterRequest = function(context, requestType, requestURL) {
-    var result = '';
-    if ( this.getNetFilteringSwitch() ) {
-        var entry = this.netFilteringCache.lookup(requestURL);
-        if ( entry !== undefined ) {
-            //console.debug(' cache HIT: PageStore.filterRequest("%s")', requestURL);
-            return entry.result;
-        }
-        //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
-        result = µb.netFilteringEngine.matchString(context, requestURL, requestType);
+PageStore.prototype.filterRequest = function(context) {
+    var requestURL = context.requestURL;
+
+    if ( this.getNetFilteringSwitch() === false ) {
+        this.recordResult(context.requestType, requestURL, '');
+        return '';
     }
-    if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
-        this.netFilteringCache.add(requestURL, result, requestType, 0);
+
+    var entry = this.netFilteringCache.lookup(requestURL);
+    if ( entry !== undefined ) {
+        //console.debug('cache HIT: PageStore.filterRequest("%s")', requestURL);
+        return entry.result;
     }
+
+    var result = µb.filterRequest(context);
+
+    //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
+    this.recordResult(context.requestType, requestURL, result);
+
+    var requestHostname = context.requestHostname;
+    if ( this.requestHostnames.hasOwnProperty(requestHostname) ) {
+        this.requestHostnames[requestHostname] |= this.bitFromRequestType[result.slice(0, 2)];
+    } else {
+        this.requestHostnames[requestHostname] = this.bitFromRequestType[result.slice(0, 2)];
+    }
+
     return result;
 };
 
@@ -454,7 +483,7 @@ PageStore.prototype.recordResult = function(requestType, requestURL, result) {
 // true: blocked
 
 PageStore.prototype.boolFromResult = function(result) {
-    return typeof result === 'string' && result !== '' && result.slice(0, 2) !== '@@';
+    return typeof result === 'string' && result.charAt(1) === 'b';
 };
 
 /******************************************************************************/

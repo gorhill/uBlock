@@ -42,10 +42,6 @@ var onMessage = function(request, sender, callback) {
             µb.assets.get(request.url, callback);
             return;
 
-        case 'loadUbiquitousAllowRules':
-            µb.loadUbiquitousWhitelists();
-            return;
-
         default:
             break;
     }
@@ -108,13 +104,14 @@ var µb = µBlock;
 /******************************************************************************/
 
 var getDynamicFilterResults = function(scope) {
-    return [
-        µb.netFilteringEngine.matchDynamicFilters(scope, 'inline-script', true),
-        µb.netFilteringEngine.matchDynamicFilters(scope, 'script', true),
-        µb.netFilteringEngine.matchDynamicFilters(scope, 'script', false),
-        µb.netFilteringEngine.matchDynamicFilters(scope, 'sub_frame', true),
-        µb.netFilteringEngine.matchDynamicFilters(scope, 'sub_frame', false)
-    ];
+    var r = {};
+    var dFiltering = µb.dynamicNetFilteringEngine;
+    r['image'] = dFiltering.evaluateCellZY(scope, '*', 'image').toFilterString();
+    r['inline-script'] = dFiltering.evaluateCellZY(scope, '*', 'inline-script').toFilterString();
+    r['1p-script'] = dFiltering.evaluateCellZY(scope, '*', '1p-script').toFilterString();
+    r['3p-script'] = dFiltering.evaluateCellZY(scope, '*', '3p-script').toFilterString();
+    r['3p-frame'] = dFiltering.evaluateCellZY(scope, '*', '3p-frame').toFilterString();
+    return r;
 };
 
 /******************************************************************************/
@@ -134,7 +131,7 @@ var getStats = function(tab) {
         logRequests: µb.userSettings.logRequests,
         dynamicFilteringEnabled: µb.userSettings.dynamicFilteringEnabled,
         dynamicFilterResults: {
-            '/': getDynamicFilterResults('*')
+            '*': getDynamicFilterResults('*')
         }
     };
     var pageStore = tab && µb.pageStoreFromTabId(tab.id);
@@ -145,7 +142,7 @@ var getStats = function(tab) {
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
-        r.dynamicFilterResults['.'] = getDynamicFilterResults(r.pageHostname);
+        r.dynamicFilterResults['local'] = getDynamicFilterResults(r.pageHostname);
     }
     return r;
 };
@@ -185,9 +182,9 @@ var onMessage = function(request, sender, callback) {
 
         case 'toggleDynamicFilter':
             µb.toggleDynamicFilter(request);
-            response = { '/': getDynamicFilterResults('*') };
+            response = { '*': getDynamicFilterResults('*') };
             if ( request.pageHostname ) {
-                response['.'] = getDynamicFilterResults(request.pageHostname);
+                response['local'] = getDynamicFilterResults(request.pageHostname);
             }
             break;
 
@@ -281,9 +278,13 @@ var tagNameToRequestTypeMap = {
 // Evaluate many requests
 
 var filterRequests = function(pageStore, details) {
-    details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+    var µburi = µb.URI;
+
+    // Create evaluation context
+    details.pageDomain = µburi.domainFromHostname(details.pageHostname);
     details.rootHostname = pageStore.rootHostname;
     details.rootDomain = pageStore.rootDomain;
+    details.requestHostname = '';
 
     var inRequests = details.requests;
     var outRequests = [];
@@ -294,11 +295,10 @@ var filterRequests = function(pageStore, details) {
         if ( tagNameToRequestTypeMap.hasOwnProperty(request.tagName) === false ) {
             continue;
         }
-        result = pageStore.filterRequest(
-            details,
-            tagNameToRequestTypeMap[request.tagName],
-            request.url
-        );
+        details.requestURL = request.url;
+        details.requestHostname = µburi.hostnameFromURI(request.url);
+        details.requestType = tagNameToRequestTypeMap[request.tagName];
+        result = pageStore.filterRequest(details);
         if ( pageStore.boolFromResult(result) ) {
             outRequests.push(request);
         }
@@ -317,14 +317,13 @@ var filterRequest = function(pageStore, details) {
     if ( tagNameToRequestTypeMap.hasOwnProperty(details.tagName) === false ) {
         return;
     }
-    details.pageDomain = µb.URI.domainFromHostname(details.pageHostname);
+    var µburi = µb.URI;
+    details.pageDomain = µburi.domainFromHostname(details.pageHostname);
     details.rootHostname = pageStore.rootHostname;
     details.rootDomain = pageStore.rootDomain;
-    var result = pageStore.filterRequest(
-        details,
-        tagNameToRequestTypeMap[details.tagName],
-        details.requestURL
-    );
+    details.requestHostname = µburi.hostnameFromURI(details.requestURL);
+    details.requestType = tagNameToRequestTypeMap[details.tagName];
+    var result = pageStore.filterRequest(details);
     if ( pageStore.boolFromResult(result) ) {
         return { collapse: µb.userSettings.collapseBlocked };
     }
@@ -485,7 +484,7 @@ var getLists = function(callback) {
         available: null,
         current: µb.remoteBlacklists,
         cosmetic: µb.userSettings.parseAllABPHideFilters,
-        netFilterCount: µb.netFilteringEngine.getFilterCount(),
+        netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         autoUpdate: µb.userSettings.autoUpdate,
         userFiltersPath: µb.userFiltersPath,

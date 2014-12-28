@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false */
+/* jshint bitwise: false, esnext: true */
 /* global µBlock */
 
 // Older Safari throws an exception for const when it's used with 'use strict'.
@@ -27,7 +27,7 @@
 
 /******************************************************************************/
 
-µBlock.netFilteringEngine = (function(){
+µBlock.staticNetFilteringEngine = (function(){
 
 /******************************************************************************/
 
@@ -1284,7 +1284,6 @@ var FilterContainer = function() {
     this.buckets = new Array(4);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
-    this.dynamicFilters = {};
     this.filterParser = new FilterParser();
     this.reset();
 };
@@ -1642,193 +1641,6 @@ FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
 
 /******************************************************************************/
 
-// Dynamic filters
-
-// Bits:
-//  0: inline script blocked
-//  1: inline script allowed
-//  2: first-party script blocked
-//  3: first-party script allowed
-//  4: third-party script blocked
-//  5: third-party script allowed
-//  6: first-party frame blocked
-//  7: first-party frame allowed
-//  8: third-party frame blocked
-//  9: third-party frame allowed
-//
-// I chose separate bits for blocked/unblocked as I want to have an "undefined"
-// state, which will be used to inherit from wider-scoped filters.
-//
-// undefined: 0x00
-//   blocked: 0x01
-//   allowed: 0x02
-//    unused: 0x03
-
-FilterContainer.prototype.dynamicFilterBitOffsets = {};
-FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty | typeNameToTypeValue['inline-script']] = 0;
-FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty |           typeNameToTypeValue.script] = 2;
-FilterContainer.prototype.dynamicFilterBitOffsets[ThirdParty |           typeNameToTypeValue.script] = 4;
-FilterContainer.prototype.dynamicFilterBitOffsets[FirstParty |        typeNameToTypeValue.sub_frame] = 6;
-FilterContainer.prototype.dynamicFilterBitOffsets[ThirdParty |        typeNameToTypeValue.sub_frame] = 8;
-FilterContainer.prototype.dynamicFiltersMagicId = 'numrebvoacir';
-
-/******************************************************************************/
-
-FilterContainer.prototype.dynamicFilterSet = function(hostname, requestType, firstParty, value) {
-    if ( typeNameToTypeValue.hasOwnProperty(requestType) === false ) {
-        return false;
-    }
-    var party = firstParty ? FirstParty : ThirdParty;
-    var categoryKey = party | typeNameToTypeValue[requestType];
-    if ( this.dynamicFilterBitOffsets.hasOwnProperty(categoryKey) === false ) {
-        return false;
-    }
-    var bitOffset = this.dynamicFilterBitOffsets[categoryKey];
-    var oldFilter = this.dynamicFilters[hostname] || 0;
-    var newFilter = (oldFilter & ~(0x0003 << bitOffset)) | (value << bitOffset);
-    if ( newFilter === oldFilter ) {
-        return false;
-    }
-    if ( newFilter === 0 ) {
-        delete this.dynamicFilters[hostname];
-    } else {
-        this.dynamicFilters[hostname] = newFilter;
-    }
-    return true;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.dynamicFilterBlock = function(hostname, requestType, firstParty) {
-    if ( typeof hostname !== 'string' || hostname === '' ) {
-        return false;
-    }
-    var result = this.matchDynamicFilters(hostname, requestType, firstParty);
-    if ( result !== '' && result.slice(0, 2) !== '@@' ) {
-        return false;
-    }
-    this.dynamicFilterSet(hostname, requestType, firstParty, 0x00);
-    result = this.matchDynamicFilters(hostname, requestType, firstParty);
-    if ( result !== '' && result.slice(0, 2) !== '@@' ) {
-        return true;
-    }
-    this.dynamicFilterSet(hostname, requestType, firstParty, 0x01);
-    return true;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.dynamicFilterUnblock = function(hostname, requestType, firstParty) {
-    if ( typeof hostname !== 'string' || hostname === '' ) {
-        return false;
-    }
-    var result = this.matchDynamicFilters(hostname, requestType, firstParty);
-    if ( result === '' || result.slice(0, 2) === '@@' ) {
-        return false;
-    }
-    this.dynamicFilterSet(hostname, requestType, firstParty, 0x00);
-    result = this.matchDynamicFilters(hostname, requestType, firstParty);
-    if ( result === '' || result.slice(0, 2) === '@@' ) {
-        return true;
-    }
-    this.dynamicFilterSet(hostname, requestType, firstParty, 0x02);
-    return true;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.dynamicFilterStateToType = {
-    0x0001: '',
-    0x0002: '@@',
-    0x0004: '',
-    0x0008: '@@',
-    0x0010: '',
-    0x0020: '@@',
-    0x0040: '',
-    0x0080: '@@',
-    0x0100: '',
-    0x0200: '@@'
-};
-
-FilterContainer.prototype.dynamicFilterStateToOption = {
-    0x0001: '$inline-script,important',
-    0x0002: '$inline-script',
-    0x0004: '$~third-party,script,important',
-    0x0008: '$~third-party,script',
-    0x0010: '$third-party,script,important',
-    0x0020: '$third-party,script',
-    0x0040: '$~third-party,subdocument,important',
-    0x0080: '$~third-party,subdocument',
-    0x0100: '$third-party,subdocument,important',
-    0x0200: '$third-party,subdocument'
-};
-
-FilterContainer.prototype.matchDynamicFilters = function(hostname, requestType, firstParty) {
-    if ( typeof hostname !== 'string' || hostname === '' ) {
-        return '';
-    }
-    var party = firstParty ? FirstParty : ThirdParty;
-    if ( typeNameToTypeValue.hasOwnProperty(requestType) === false ) {
-        return '';
-    }
-    var categoryKey = party | typeNameToTypeValue[requestType];
-    if ( this.dynamicFilterBitOffsets.hasOwnProperty(categoryKey) === false ) {
-        return '';
-    }
-    var bitOffset = this.dynamicFilterBitOffsets[categoryKey];
-    var bitMask = 0x0003 << bitOffset;
-    var bitState, pos;
-    for ( ;; ) {
-        if ( this.dynamicFilters.hasOwnProperty(hostname) !== false ) {
-            bitState = this.dynamicFilters[hostname] & bitMask;
-            if ( bitState !== 0 ) {
-                if ( hostname !== '*' ) {
-                    hostname = '||' + hostname + '^';
-                }
-                return this.dynamicFilterStateToType[bitState] +
-                       hostname +
-                       this.dynamicFilterStateToOption[bitState];
-            }
-        }
-        pos = hostname.indexOf('.');
-        if ( pos === -1 ) {
-            if ( hostname === '*' ) {
-                return '';
-            }
-            hostname = '*';
-        } else {
-            hostname = hostname.slice(pos + 1);
-        }
-    }
-    // unreachable
-};
-
-/******************************************************************************/
-
-
-FilterContainer.prototype.selfieFromDynamicFilters = function() {
-    var bin = {
-        magicId: this.dynamicFiltersMagicId,
-        filters: this.dynamicFilters
-    };
-    return JSON.stringify(bin);
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.dynamicFiltersFromSelfie = function(selfie) {
-    if ( selfie === '' ) {
-        return;
-    }
-    var bin = JSON.parse(selfie);
-    if ( bin.magicId !== this.dynamicFiltersMagicId ) {
-        return;
-    }
-    this.dynamicFilters = bin.filters;
-};
-
-/******************************************************************************/
-
 // Since the addition of the `important` evaluation, this means it is now
 // likely that the url will have to be scanned more than once. So this is
 // to ensure we do it once only, and reuse results.
@@ -1858,15 +1670,9 @@ FilterContainer.prototype.tokenize = function(url) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchTokens = function(url) {
-    var buckets = this.buckets;
-    var bucket0 = buckets[0];
-    var bucket1 = buckets[1];
-    var bucket2 = buckets[2];
-    var bucket3 = buckets[3];
-
+FilterContainer.prototype.matchTokens = function(bucket, url) {
     var tokens = this.tokens;
-    var tokenEntry, beg, token, f;
+    var tokenEntry, token, f;
     var i = 0;
     for (;;) {
         tokenEntry = tokens[i++];
@@ -1874,30 +1680,9 @@ FilterContainer.prototype.matchTokens = function(url) {
         if ( token === '' ) {
             break;
         }
-        beg = tokenEntry.beg;
-        if ( bucket0 !== undefined ) {
-            f = bucket0[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket1 !== undefined ) {
-            f = bucket1[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket2 !== undefined ) {
-            f = bucket2[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f;
-            }
-        }
-        if ( bucket3 !== undefined ) {
-            f = bucket3[token];
-            if ( f !== undefined && f.match(url, beg) !== false ) {
-                return f;
-            }
+        f = bucket[token];
+        if ( f !== undefined && f.match(url, tokenEntry.beg) !== false ) {
+            return f;
         }
     }
     return false;
@@ -1955,73 +1740,77 @@ FilterContainer.prototype.match3rdPartyHostname = function(requestHostname) {
 // Some type of requests are exceptional, they need custom handling,
 // not the generic handling.
 
-FilterContainer.prototype.matchStringExactType = function(pageDetails, requestURL, requestType) {
+FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
     var url = requestURL.toLowerCase();
     var requestHostname = µb.URI.hostnameFromURI(requestURL);
-
-    // Evaluate dynamic filters first. "Block" dynamic filters are always
-    // "important", they override everything else.
-    var bf = this.matchDynamicFilters(
-        pageDetails.rootHostname,
-        requestType,
-        isFirstParty(pageDetails.rootDomain, requestHostname)
-    );
-    if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
-        return bf;
-    }
-
-    var party = isFirstParty(pageDetails.pageDomain, requestHostname) ? FirstParty : ThirdParty;
+    var party = isFirstParty(context.pageDomain, requestHostname) ? FirstParty : ThirdParty;
 
     // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
+    pageHostname = context.pageHostname || '';
 
     var type = typeNameToTypeValue[requestType];
     var categories = this.categories;
-    var buckets = this.buckets;
+    var bucket;
 
     // Tokenize only once
     this.tokenize(url);
 
-    // We are testing for a specific type, skip "any type" buckets
-    buckets[0] = buckets[1] = undefined;
-
     // https://github.com/gorhill/uBlock/issues/139
     // Test against important block filters
-    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
-    buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    bf = this.matchTokens(url);
-    if ( bf !== false ) {
-        return bf.toString();
+    if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString();
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString();
+        }
     }
 
     // Test against block filters
+    bf = false;
+    if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | type)] ) {
+        bf = this.matchTokens(bucket, url);
+    }
+    if ( bf === false ) {
+        if ( bucket = categories[this.makeCategoryKey(BlockAction | type | party)] ) {
+            bf = this.matchTokens(bucket, url);
+        }
+    }
     // If there is no block filter, no need to test against allow filters
-    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | type)];
-    buckets[3] = categories[this.makeCategoryKey(BlockAction | type | party)];
-    bf = this.matchTokens(url);
     if ( bf === false ) {
         return '';
     }
 
     // Test against allow filters
-    buckets[2] = categories[this.makeCategoryKey(AllowAnyParty | type)];
-    buckets[3] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    var af = this.matchTokens(url);
-    if ( af !== false ) {
-        return '@@' + af.toString();
+    var af;
+    if ( bucket = categories[this.makeCategoryKey(AllowAnyParty | type)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(AllowAction | type | party)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
     }
 
-    return bf.toString();
+    return 'sb:' + bf.toString();
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchString = function(pageDetails, requestURL, requestType) {
+FilterContainer.prototype.matchString = function(context) {
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
     //     `match-case` option not supported, but then, I saw only one
     //     occurrence of it in all the supported lists (bulgaria list).
-    var url = requestURL.toLowerCase();
+    var url = context.requestURL.toLowerCase();
 
     // The logic here is simple:
     //
@@ -2044,27 +1833,15 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // filters are tested *only* if there is a (unlikely) hit on a block
     // filter.
 
-    var requestHostname = µb.URI.hostnameFromURI(requestURL);
-
-    // Evaluate dynamic filters first. "Block" dynamic filters are always
-    // "important", they override everything else.
-    var bf = this.matchDynamicFilters(
-        pageDetails.rootHostname,
-        requestType,
-        isFirstParty(pageDetails.rootDomain, requestHostname)
-    );
-    if ( bf !== '' && bf.slice(0, 2) !== '@@' ) {
-        return bf;
-    }
-
-    var party = isFirstParty(pageDetails.pageDomain, requestHostname) ? FirstParty : ThirdParty ;
+    var requestHostname = context.requestHostname;
+    var party = isFirstParty(context.pageDomain, requestHostname) ? FirstParty : ThirdParty;
 
     // This will be used by hostname-based filters
-    pageHostname = pageDetails.pageHostname || '';
+    pageHostname = context.pageHostname || '';
 
-    var type = typeNameToTypeValue[requestType];
+    var type = typeNameToTypeValue[context.requestType];
     var categories = this.categories;
-    var buckets = this.buckets;
+    var bucket;
 
     // Tokenize only once
     this.tokenize(url);
@@ -2074,13 +1851,29 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     // The purpose of the `important` option is to reverse the order of
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
-    buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)];
-    buckets[1] = categories[this.makeCategoryKey(BlockAnyType | Important | party)];
-    buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | Important | type)];
-    buckets[3] = categories[this.makeCategoryKey(BlockAction | Important | type | party)];
-    bf = this.matchTokens(url);
-    if ( bf !== false ) {
-        return bf.toString() + '$important';
+    if ( bucket = categories[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString() + '$important';
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(BlockAnyType | Important | party)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString() + '$important';
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString() + '$important';
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
+        bf = this.matchTokens(bucket, url);
+        if ( bf !== false ) {
+            return 'sb:' + bf.toString() + '$important';
+        }
     }
 
     // Test hostname-based block filters
@@ -2091,11 +1884,24 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
 
     // Test against block filters
     if ( bf === false ) {
-        buckets[0] = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)];
-        buckets[1] = categories[this.makeCategoryKey(BlockAnyType | party)];
-        buckets[2] = categories[this.makeCategoryKey(BlockAnyParty | type)];
-        buckets[3] = categories[this.makeCategoryKey(BlockAction | type | party)];
-        bf = this.matchTokens(url);
+        if ( bucket = categories[this.makeCategoryKey(BlockAnyTypeAnyParty)] ) {
+            bf = this.matchTokens(bucket, url);
+        }
+    }
+    if ( bf === false ) {
+        if ( bucket = categories[this.makeCategoryKey(BlockAnyType | party)] ) {
+            bf = this.matchTokens(bucket, url);
+        }
+    }
+    if ( bf === false ) {
+        if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | type)] ) {
+            bf = this.matchTokens(bucket, url);
+        }
+    }
+    if ( bf === false ) {
+        if ( bucket = categories[this.makeCategoryKey(BlockAction | type | party)] ) {
+            bf = this.matchTokens(bucket, url);
+        }
     }
 
     // If there is no block filter, no need to test against allow filters
@@ -2104,16 +1910,33 @@ FilterContainer.prototype.matchString = function(pageDetails, requestURL, reques
     }
 
     // Test against allow filters
-    buckets[0] = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)];
-    buckets[1] = categories[this.makeCategoryKey(AllowAnyType | party)];
-    buckets[2] = categories[this.makeCategoryKey(AllowAnyParty | type)];
-    buckets[3] = categories[this.makeCategoryKey(AllowAction | type | party)];
-    var af = this.matchTokens(url);
-    if ( af !== false ) {
-        return '@@' + af.toString();
+    var af;
+    if ( bucket = categories[this.makeCategoryKey(AllowAnyTypeAnyParty)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(AllowAnyType | party)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(AllowAnyParty | type)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
+    }
+    if ( bucket = categories[this.makeCategoryKey(AllowAction | type | party)] ) {
+        af = this.matchTokens(bucket, url);
+        if ( af !== false ) {
+            return 'sa:' + af.toString();
+        }
     }
 
-    return bf.toString();
+    return 'sb:' + bf.toString();
 };
 
 /******************************************************************************/

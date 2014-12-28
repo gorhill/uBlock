@@ -11,9 +11,17 @@
 <body>
 <h4 title="popupTipDashboard">v<span id="version"></span></h4>
 <div>
+    <div id="dynamicFilteringContainer">
+        <div><span>images</span><span data-src="*" data-des="*" data-type="image"></span><span data-src="local" data-des="*" data-type="image"></span></div>
+        <div><span>inline scripts</span><span data-src="*" data-des="*" data-type="inline-script"></span><span data-src="local" data-des="*" data-type="inline-script"></span></div>
+        <div><span>1st-party scripts</span><span data-src="*" data-des="*" data-type="1p-script"></span><span data-src="local" data-des="*" data-type="1p-script"></span></div>
+        <div><span>3rd-party scripts</span><span data-src="*" data-des="*" data-type="3p-script"></span><span data-src="local" data-des="*" data-type="3p-script"></span></div>
+        <div><span>3rd-party frames</span><span data-src="*" data-des="*" data-type="3p-frame"></span><span data-src="local" data-des="*" data-type="3p-frame"></span></div>
+        </div>
+</div><!-- DO NOT REMOVE --><div>
     <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
     <p id="switch-hint"></p>
-    <p style="font-size: 16px;" data-i18n="popupBlockedRequestPrompt"></p>
+    <p id="dynamicFilteringToggler" data-i18n="popupBlockedRequestPrompt"></p>
     <p id="stats">
         <span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;
         <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
@@ -24,65 +32,6 @@
     <p id="total-blocked">?</p>
     </div>
 
-<div id="dynamicFilteringToggler" class="fa">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering" target="_blank">?</a>
-    </div>
-
-
-<div id="dynamicFilteringContainer">
-    <div class="dynamicFiltering local" data-scope=".">
-        <div data-first-party data-type="inline-script">
-            <div class="tip" data-i18n="popupSiteInlineScriptEnabled"></div>
-            <div class="tip" data-i18n="popupSiteInlineScriptDisabled"></div>
-            </div>
-        <div data-first-party data-type="script">
-            <div class="tip" data-i18n="popupSite1pScriptEnabled"></div>
-            <div class="tip" data-i18n="popupSite1pScriptDisabled"></div>
-            </div>
-        <div data-type="script">
-            <div class="tip" data-i18n="popupSite3pScriptEnabled"></div>
-            <div class="tip" data-i18n="popupSite3pScriptDisabled"></div>
-            </div>
-        <div data-first-party data-type="sub_frame">
-            <div class="tip" data-i18n="popupSite1pFrameEnabled"></div>
-            <div class="tip" data-i18n="popupSite1pFrameDisabled"></div>
-            </div>
-        <div data-type="sub_frame">
-            <div class="tip" data-i18n="popupSite3pFrameEnabled"></div>
-            <div class="tip" data-i18n="popupSite3pFrameDisabled"></div>
-            </div>
-        <div class="label">&lt;script&gt;</div>
-        <div class="label">&lt;iframe&gt;</div>
-        </div>
-    <div class="dynamicFiltering global" data-scope="/">
-        <div data-first-party data-type="inline-script">
-            <div class="tip" data-i18n="popupDefaultInlineScriptEnabled"></div>
-            <div class="tip" data-i18n="popupDefaultInlineScriptDisabled"></div>
-            </div>
-        <div data-first-party data-type="script">
-            <div class="tip" data-i18n="popupDefault1pScriptEnabled"></div>
-            <div class="tip" data-i18n="popupDefault1pScriptDisabled"></div>
-            </div>
-        <div data-type="script">
-            <div class="tip" data-i18n="popupDefault3pScriptEnabled"></div>
-            <div class="tip" data-i18n="popupDefault3pScriptDisabled"></div>
-            </div>
-        <div data-first-party data-type="sub_frame">
-            <div class="tip" data-i18n="popupDefault1pFrameEnabled"></div>
-            <div class="tip" data-i18n="popupDefault1pFrameDisabled"></div>
-            </div>
-        <div data-type="sub_frame">
-            <div class="tip" data-i18n="popupDefault3pFrameEnabled"></div>
-            <div class="tip" data-i18n="popupDefault3pFrameDisabled"></div>
-            </div>
-        <div class="label">&lt;script&gt;</div>
-        <div class="label">&lt;iframe&gt;</div>
-        </div>
-    </div>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
 <script src="js/udom.js"></script>

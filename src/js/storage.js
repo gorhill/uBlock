@@ -149,7 +149,7 @@
             return;
         }
         µb.mergeFilterText(content);
-        µb.netFilteringEngine.freeze();
+        µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
         µb.destroySelfie();
         µb.toSelfieAsync();
@@ -278,7 +278,7 @@
     }
 
     var loadBlacklistsEnd = function() {
-        µb.netFilteringEngine.freeze();
+        µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
         vAPI.messaging.broadcast({ what: 'loadUbiquitousBlacklistCompleted' });
@@ -296,7 +296,7 @@
 
     var loadBlacklistsStart = function(lists) {
         µb.remoteBlacklists = lists;
-        µb.netFilteringEngine.reset();
+        µb.staticNetFilteringEngine.reset();
         µb.cosmeticFilteringEngine.reset();
         µb.destroySelfie();
         var locations = Object.keys(lists);
@@ -328,17 +328,17 @@
 µBlock.mergeFilterList = function(details) {
     // console.log('µBlock > mergeFilterList from "%s": "%s..."', details.path, details.content.slice(0, 40));
 
-    var netFilteringEngine = this.netFilteringEngine;
+    var staticNetFilteringEngine = this.staticNetFilteringEngine;
     var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
-    var duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
-    var acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
+    var duplicateCount = staticNetFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
+    var acceptedCount = staticNetFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
 
     this.mergeFilterText(details.content);
 
     // For convenience, store the number of entries for this
     // blacklist, user might be happy to know this information.
-    duplicateCount = netFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
-    acceptedCount = netFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
+    duplicateCount = staticNetFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
+    acceptedCount = staticNetFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
 
     var filterListMeta = this.remoteBlacklists[details.path];
 
@@ -363,7 +363,7 @@
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
-    var netFilteringEngine = this.netFilteringEngine;
+    var staticNetFilteringEngine = this.staticNetFilteringEngine;
     var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
     var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
 
@@ -433,7 +433,7 @@
             continue;
         }
 
-        netFilteringEngine.add(matches[0]);
+        staticNetFilteringEngine.add(matches[0]);
     }
 };
 
@@ -520,7 +520,7 @@
         magic: this.selfieMagic,
         publicSuffixList: publicSuffixList.toSelfie(),
         filterLists: this.remoteBlacklists,
-        netFilteringEngine: this.netFilteringEngine.toSelfie(),
+        staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
         cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
     };
     vAPI.storage.set({ selfie: selfie });
@@ -565,7 +565,7 @@
         }
         // console.log('µBlock.fromSelfie> selfie looks good');
         µb.remoteBlacklists = selfie.filterLists;
-        µb.netFilteringEngine.fromSelfie(selfie.netFilteringEngine);
+        µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
         µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
         callback(true);
     };
@@ -649,12 +649,21 @@
         // Important: block remote fetching for when loading assets at launch
         // time.
         µb.assets.allowRemoteFetch = false;
-
         µb.assets.autoUpdate = settings.autoUpdate;
-        µb.netFilteringEngine.dynamicFiltersFromSelfie(settings.dynamicFilteringSelfie);
         µb.fromSelfie(onSelfieReady);
         µb.mirrors.toggle(settings.experimentalEnabled);
         µb.contextMenu.toggle(settings.contextMenuEnabled);
+
+        if ( typeof settings.dynamicFilteringSelfie === 'string' ) {
+            if ( settings.dynamicFilteringString === '' && settings.dynamicFilteringSelfie !== '' ) {
+                µb.dynamicNetFilteringEngine.fromObsoleteSelfie(settings.dynamicFilteringSelfie);
+                µb.userSettings.dynamicFilteringString = µb.dynamicNetFilteringEngine.toString();
+                µb.XAL.keyvalSetOne('dynamicFilteringString', µb.userSettings.dynamicFilteringString);
+            }
+            delete µb.userSettings.dynamicFilteringSelfie;
+            µb.XAL.keyvalRemoveOne('dynamicFilteringSelfie');
+        }
+        µb.dynamicNetFilteringEngine.fromString(µb.userSettings.dynamicFilteringString);
     };
 
     this.loadUserSettings(onUserSettingsReady);

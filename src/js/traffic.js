@@ -80,7 +80,6 @@ var onBeforeRequest = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/114
     var requestContext = pageStore;
-
     var frameStore;
     var frameId = details.frameId;
     if ( frameId > 0 ) {
@@ -89,7 +88,12 @@ var onBeforeRequest = function(details) {
         }
     }
 
-    var result = pageStore.filterRequest(requestContext, requestType, requestURL);
+    // Setup context and evaluate
+    requestContext.requestURL = requestURL;
+    requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
+    requestContext.requestType = requestType;
+
+    var result = pageStore.filterRequest(requestContext);
 
     // Not blocked
     if ( pageStore.boolFromResult(result) === false ) {
@@ -208,11 +212,12 @@ var onBeforeSendHeaders = function(details) {
     var pageDetails = {
         pageHostname: referrerHostname,
         pageDomain: µburi.domainFromHostname(referrerHostname),
+        firstParty: false
     };
     pageDetails.rootHostname = pageDetails.pageHostname;
     pageDetails.rootDomain = pageDetails.pageDomain;
     //console.debug('Referrer="%s"', referrer);
-    var result = µb.netFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
+    var result = µb.staticNetFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
 
     // Not blocked?
     if ( result === '' || result.slice(0, 2) === '@@' ) {
@@ -251,20 +256,12 @@ var onHeadersReceived = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/384
     pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
-
-    var result = '';
-    if ( pageStore.getNetFilteringSwitch() ) {
-        result = µb.netFilteringEngine.matchStringExactType(pageStore, details.url, 'inline-script');
-    }
-
-    // Not blocked?
-    if ( result === '' || result.slice(0, 2) === '@@' ) {
+    pageStore.requestURL = details.url;
+    pageStore.requestHostname = µb.URI.hostnameFromURI(details.url);
+    pageStore.requestType = 'inline-script';
+    var result = pageStore.filterRequest(pageStore);
+    if ( result === '' ) {
         return;
-    }
-
-    // Record request
-    if ( result !== '' ) {
-        pageStore.recordResult('script', details.url, result);
     }
 
     // Blocked
