@@ -290,12 +290,13 @@ var onBeforeLoad = function(e, details) {
     }
 
     // Local mirroring, response should be a data: URL here
-    if ( typeof response !== 'string' || details.type !== 'script' ) {
+    if ( typeof response !== 'string' ) {
         return;
     }
 
-    // Content Security Policy with disallowed inline scripts may break things
     e.preventDefault();
+
+    // Content Security Policy with disallowed inline scripts may break things
     details = document.createElement('script');
     details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
 
@@ -394,29 +395,30 @@ document.addEventListener('DOMSubtreeModified', firstMutation, true);
 
 var onContextMenu = function(e) {
     var target = e.target;
+    var tagName = target.tagName.toLowerCase();
     var details = {
-        tagName: target.tagName.toLowerCase(),
+        tagName: tagName,
         pageUrl: location.href,
         insideFrame: window !== window.top
     };
 
-    details.editable = details.tagName === 'textarea' || details.tagName === 'input';
+    details.editable = tagName === 'textarea' || tagName === 'input';
 
     if ( target.hasOwnProperty('checked') ) {
         details.checked = target.checked;
     }
 
-    if ( details.tagName === 'a' ) {
+    if ( tagName === 'a' ) {
         details.linkUrl = target.href;
     }
 
     if ( target.hasOwnProperty('src') ) {
         details.srcUrl = target.src;
 
-        if ( details.tagName === 'img' ) {
+        if ( tagName === 'img' ) {
             details.mediaType = 'image';
-        } else if ( details.tagName === 'video' || details.tagName === 'audio' ) {
-            details.mediaType = details.tagName;
+        } else if ( tagName === 'video' || tagName === 'audio' ) {
+            details.mediaType = tagName;
         }
     }
 

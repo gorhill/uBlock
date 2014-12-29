@@ -153,19 +153,20 @@ vAPI.storage = {
             return;
         }
 
-        var key, size = 0;
+        var i;
+        var size = 0;
 
         if ( keys === null ) {
-            for ( key in this._storage ) {
-                size += (this._storage[key] || '').length;
+            for ( i in this._storage ) {
+                size += (this._storage[i] || '').length;
             }
         } else {
             if ( typeof keys === 'string' ) {
                 keys = [keys];
             }
 
-            for ( key = 0; key < keys.length; key++ ) {
-                size += (this._storage[keys[key]] || '').length;
+            for ( i = 0; i < keys.length; i++ ) {
+                size += (this._storage[keys[i]] || '').length;
             }
         }
 
@@ -630,14 +631,14 @@ vAPI.net.registerListeners = function() {
             if ( e.message.url === 'about:blank' ) {
                 vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
                 e.message = true;
-                return;
+            } else {
+                e.message = !vAPI.tabs.onPopup({
+                    url: e.message.url,
+                    tabId: 0,
+                    sourceTabId: vAPI.tabs.getTabId(e.target)
+                });
             }
 
-            e.message = !vAPI.tabs.onPopup({
-                url: e.message.url,
-                tabId: 0,
-                sourceTabId: vAPI.tabs.getTabId(e.target)
-            });
             return;
         }
 
