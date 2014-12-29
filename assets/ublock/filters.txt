@@ -208,3 +208,6 @@ www.thesimsresource.com##.ad-topleader
 
 # https://github.com/gorhill/uBlock/issues/409
 @@||c.speedtest.net^$~third-party
+
+# To counter Peter Lowe's, hpHosts
+@@||boldchat.com^$~third-party
