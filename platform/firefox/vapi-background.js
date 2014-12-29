@@ -51,7 +51,10 @@ vAPI.app = {
 
 /******************************************************************************/
 
-vAPI.app.restart = function() {};
+vAPI.app.restart = function() {
+    // Observing in bootstrap.js
+    Services.obs.notifyObservers(null, location.host + '-restart', null);
+};
 
 /******************************************************************************/
 

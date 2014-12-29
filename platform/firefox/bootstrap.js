@@ -26,36 +26,72 @@
 
 /******************************************************************************/
 
-let bgProcess = function(e) {
-    if ( e ) {
-        this.removeEventListener('DOMContentLoaded', bgProcess);
+let bgProcess;
+const hostName = 'ublock';
+const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+const restartObserver = {
+    get observer() {
+        return Cc["@mozilla.org/observer-service;1"]
+            .getService(Ci.nsIObserverService);
+    },
+
+    QueryInterface: (function() {
+        let {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
+
+        return XPCOMUtils.generateQI([
+            Ci.nsIObserver,
+            Ci.nsISupportsWeakReference
+        ]);
+    })(),
+
+    register: function() {
+        this.observer.addObserver(this, hostName + '-restart', true);
+    },
+
+    unregister: function() {
+        this.observer.removeObserver(this, hostName + '-restart');
+    },
+
+    observe: function() {
+        shutdown();
+        startup();
     }
-
-    let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
-        .getService(Components.interfaces.nsIAppShellService)
-        .hiddenDOMWindow.document;
-
-    bgProcess = hDoc.documentElement.appendChild(
-        hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
-    );
-    bgProcess.setAttribute('src', 'chrome://ublock/content/background.html');
 };
 
 /******************************************************************************/
 
 function startup(data, reason) {
+    let onReady = function(e) {
+        if ( e ) {
+            this.removeEventListener(e.type, onReady);
+        }
+
+        let hDoc = Cc['@mozilla.org/appshell/appShellService;1']
+            .getService(Ci.nsIAppShellService)
+            .hiddenDOMWindow.document;
+
+        bgProcess = hDoc.documentElement.appendChild(
+            hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+        );
+        bgProcess.setAttribute(
+            'src',
+            'chrome://' + hostName + '/content/background.html'
+        );
+        restartObserver.register();
+    };
+
     if ( reason !== APP_STARTUP ) {
-        bgProcess();
+        onReady();
         return;
     }
 
-    let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
-                .getService(Components.interfaces.nsIWindowWatcher);
+    let ww = Cc['@mozilla.org/embedcomp/window-watcher;1']
+                .getService(Ci.nsIWindowWatcher);
 
     ww.registerNotification({
         observe: function(win) {
             ww.unregisterNotification(this);
-            win.addEventListener('DOMContentLoaded', bgProcess);
+            win.addEventListener('DOMContentLoaded', onReady);
         }
     });
 }
@@ -68,14 +104,19 @@ function shutdown(data, reason) {
     }
 
     bgProcess.parentNode.removeChild(bgProcess);
+
+    // remove the restartObserver only when the extension is being disabled
+    if ( data !== undefined ) {
+        restartObserver.unregister();
+    }
 }
 
 /******************************************************************************/
 
 function install() {
     // https://bugzil.la/719376
-    Components.classes['@mozilla.org/intl/stringbundle;1']
-        .getService(Components.interfaces.nsIStringBundleService).flushBundles();
+    Cc['@mozilla.org/intl/stringbundle;1']
+        .getService(Ci.nsIStringBundleService).flushBundles();
 }
 
 /******************************************************************************/
