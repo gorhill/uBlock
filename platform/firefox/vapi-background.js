@@ -668,7 +668,7 @@ vAPI.toolbarButton.init = function() {
 
     vAPI.unload.push(function() {
         CustomizableUI.destroyWidget(vAPI.toolbarButton.widgetId);
-        vAPI.messaging.globalMessageManager.addMessageListener(
+        vAPI.messaging.globalMessageManager.removeMessageListener(
             location.host + ':closePopup',
             vAPI.toolbarButton.closePopup
         );
