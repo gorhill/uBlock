@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Dec 18th, 2014 at 20:37
+# Last updated: Dec 29th, 2014 at 13:41
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1772,6 +1772,7 @@
 127.0.0.1 products-gold.net
 127.0.0.1 proflashdata.com			# Facebook trojan
 127.0.0.1 protectionupdatecenter.com
+127.0.0.1 puush.in
 127.0.0.1 pv.wantsfly.com
 127.0.0.1 qip.ru
 127.0.0.1 qy.corrmedic.ru
@@ -1922,6 +1923,7 @@
 127.0.0.1 www.portaldimensional.com
 127.0.0.1 www.poxudeli.ru
 127.0.0.1 www.proflashdata.com			# Facebook trojan
+127.0.0.1 www.puush.in
 127.0.0.1 www.rickrolling.com
 127.0.0.1 www.russian-sex.com
 127.0.0.1 www.scotiaonline.scotiabank.salferreras.com
@@ -3155,6 +3157,7 @@
 127.0.0.1 ad5.lbn.ru
 127.0.0.1 ad6.bannerbank.ru
 127.0.0.1 ad6.horvitznewspapers.net
+127.0.0.1 ad6media.fr
 127.0.0.1 ad.71i.de
 127.0.0.1 ad7.bannerbank.ru
 127.0.0.1 ad8.bannerbank.ru
@@ -5567,6 +5570,7 @@
 127.0.0.1 delb.mspaceads.com
 127.0.0.1 delivery.adyea.com
 127.0.0.1 delivery.clickonometrics.pl
+127.0.0.1 delivery.myswitchads.com
 127.0.0.1 delivery.trafficjunky.net
 127.0.0.1 delivery.w00tads.com
 127.0.0.1 delivery.way2traffic.com
@@ -7653,6 +7657,7 @@
 127.0.0.1 www.abrogatesdv.info
 127.0.0.1 www.actiondesk.com
 127.0.0.1 www.action.ientry.net
+127.0.0.1 www.ad6media.fr
 127.0.0.1 www.adbanner.gr
 127.0.0.1 www.adbrite.com
 127.0.0.1 www.adcanadian.com

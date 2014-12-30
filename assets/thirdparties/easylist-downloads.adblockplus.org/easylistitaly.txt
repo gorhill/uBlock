@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: EdVgvBOn7W083XAw/lSgUA
-! Version: 201412251221
+! Checksum: VS7a7XxeBz8h+RKx0UoVXA
+! Version: 201412301311
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 25 Dec 2014 12:21 UTC
+! Ultima modifica: 30 Dec 2014 13:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1698,6 +1698,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||virgilio.it/bottomchat/bottom234x60.html
 ||virgilio.it/sg/boxis_
 ||virgilio.it/src_tag_sponsor_
+||viterbonews24.it/gesBanner/
 ||vivafm.it^*/banners/
 ||vivereancona.it/images/banners_
 ||viverejesi.it/images/banners_
@@ -2137,6 +2138,7 @@ liberoquotidiano.it##.BannerHead
 metropolisweb.it##.BannerMezzoNotizia
 primopianomolise.it##.Banner_Modulabile
 nqnews.it##.Banner_box
+viterbonews24.it##.CON-fascia-alto-banner
 ciao.it##.CWContainerComparePrice
 iltempo.it##.DCLS4
 meteo.it##.ImmobiliareIt
@@ -2145,12 +2147,13 @@ novara.com##.MainBanner
 foxsports.it##.Mpu
 alfemminile.com##.OffresSpe_cadre
 search.aol.it##.SLL
+viterbonews24.it##.SepBanner
 dizionariosinonimi.com##.Sponsor300x250Dx
 ricettepercucinare.com##.UAP_3to1_Rectangle
 ricettepercucinare.com##.UAP_Medium_Rectangle
 ricettepercucinare.com##.UAP_Wide_Skyscraper
 rietinvetrina.it##.a-single
-4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,tripadvisor.it##.ad
+4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,servizioallerta.it,tripadvisor.it##.ad
 trustpilot.it##.adblock
 america24.com,gianlucadimarzio.com##.adbox
 loradellacalabria.it##.add768int

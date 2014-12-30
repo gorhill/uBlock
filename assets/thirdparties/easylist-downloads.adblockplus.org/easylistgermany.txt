@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: s9BAdGNCOgI5GedDTdn1ww
-! Version: 201412251221
+! Checksum: +lZkgumHtx7BLRUs+oFa+A
+! Version: 201412301311
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 25 Dec 2014 12:21 UTC
+! Last modified: 30 Dec 2014 13:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2022,16 +2022,12 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-scene.com/usenext.php
 ||ddl-search.biz/banner/
 ||ddl-search.biz^$image,popup,domain=w3-warez.cc
-||ddl-warez.in/.$script
-||ddl-warez.in/.*.js..php
-||ddl-warez.in/.*.js.php
-||ddl-warez.in/.affiliate_
-||ddl-warez.in/_*.php$script
-||ddl-warez.in/_.js
+||ddl-warez.in/_$script
 ||ddl-warez.in/images/hoster/
 ||ddl-warez.in/images/hoster_logos/
 ||ddl-warez.in/images/hosterlogos/
 ||ddl-warez.in/images/och/
+||ddl-warez.in/images/och_buttons/
 ||ddl-warez.in/images/och_infobuttons/
 ||ddl-warez.in/images/och_logos/
 ||ddl-warez.in^*.php|$script
@@ -2251,6 +2247,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||fhcdn.net^*/ebay_logo.gif
 ||fhz-forum.de/banner_$image
 ||file-upload.net^*/popup.js
+||filecrypt.cc/a/
 ||files.putpat.tv/misc/*.xml|$object-subrequest
 ||files.putpat.tv/putpat_player/*/top_banner/
 ||files.putpat.tv^*/umusic_*.xml|$object-subrequest
@@ -3659,6 +3656,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ww-kurier.de/images/ferdihombach.gif
 ||ww-kurier.de/pic/dbeyer_250_200.swf
 ||ww4.cad.de^*.php?*^what=zone:
+||ww4.cad.de^*.php?what=*:*&n=
 ||ww4.cad.de^*/axjs.php
 ||ww4.cad.de^*/view.php?what=zone:
 ||wz-newsline.de/polopoly_fs/*-900x120.
@@ -6350,11 +6348,13 @@ hd-world.org,movie-blog.org##a[href^="http://zip5.de/"]
 livestreamfussball.org##a[href^="http://zolanis.com/landingpage"]
 movie-blog.org##a[href^="http://zzb.bz/"]
 gamepro.de,gamestar.de##a[href^="https://itunes.apple.com/"][href*="&affId="]
+ddl-warez.in##a[href^="https://share-online.biz/affiliate/"]
+ddl-warez.in##a[href^="https://uploaded.net/ref/"]
 gamiano.de##a[href^="https://www.amazon.de/"][href*="?tag=gamiano-21&"]
 livestreamfussball.org##a[href^="https://www.bwin.com/de/registration?wm="]
 ebook-hell.to##a[href^="https://www.filemonkey.in/ref/"]
 boerse.bz##a[href^="https://www.hide.io/?"] > img
-atomload.at##a[href^="https://www.oboom.com/ref/"]
+atomload.at,atomload.to##a[href^="https://www.oboom.com/ref/"]
 g-stream.in##a[href^="mirror/?"]
 angesagter.de##a[href^="out.php?bid="]
 sinn-frei.com##a[href^="out2_"]
@@ -6430,6 +6430,7 @@ sms-elite.de##a[target="_blank"][href^="http://versand.sms-elite.de/www/../weite
 gamepro.de##a[target="_blank"][href^="http://www.gamepro.de/_misc/linkforward/linkforward.cfm?linkid="]
 spotlight-wissen.de##a[target="_blank"][href^="http://www.gratissoftware.de"]
 ichspiele.cc##a[target="_blank"][href^="http://www.ichspiele.cc/rotator/klick.php?id="]
+prad.de##a[target="_blank"][href^="http://www.mobilerproduktberater.de/"]
 sachsen-fernsehen.de##a[target="_blank"][href^="http://www.sachsen-fernsehen.de/loadBanner.aspx?id="]
 schwaebische.de##a[target="_blank"][href^="http://www.schwaebische.de/click.php?id="]
 lintorfer.eu##a[target="_blank"][href^="https://bankingportal.sparkasse-hrv.de"] > img
@@ -6488,6 +6489,7 @@ schoener-fernsehen.com##body[msallowfullscreen="true"][webkitallowfullscreen="tr
 schoener-fernsehen.com##body[msallowfullscreen="true"][webkitallowfullscreen="true"][mozallowfullscreen="true"][allowfullscreen="true"][data-twttr-rendered="true"][style] > iframe[id][class][frameborder="0"][allowtransparency="true"][scrolling="auto"][src^="http://schoener-fernsehen.com/"] + div[id][class]
 rtl.de##button[onclick^="verivox_go("]
 rsd-store.com##button[onclick^="visitPartner("]
+filecrypt.cc##button[onclick^="window.open('http://abc.filecrypt.cc"]
 g-stream.in##button[onclick^="window.open('http://g-stream.in/mirror/"]
 g-stream.in##button[onclick^="window.open('http://www.g-stream.in/mirror"]
 hornoxe.com##center > a[target="_blank"][href^="http://amzn.to/"] > img
@@ -7663,14 +7665,17 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||cuiron.de^$image,domain=gamona.de|lustich.de
 @@||cuiron.de^$script,domain=gamona.de|lustich.de
 @@||dastandard.at^$elemhide
+@@||dastandard.at^$image
 @@||data-ero-advertising.com/impopup/layer.js$domain=berlin-nutten.com
 @@||david-forum.de/advertisement.css
 @@||ddl-search.biz/js/advertisement.js
 @@||ddl-search.biz/js/advertisements.js
 @@||derlacher.de/static/lib/advertisement.js
 @@||derstandard.at^$elemhide
+@@||derstandard.at^$image
 @@||dhads.net/kamp/rot.php?art=leaderboardview&uid=*&sid=$script,domain=uploaded-premium.ru
 @@||diestandard.at^$elemhide
+@@||diestandard.at^$image
 @@||digentu.de^$document,subdocument,domain=audio.de|colorfoto.de|connect.de|connected-home.de|gamona.de|lustich.de|pc-magazin.de|video-magazin.de
 @@||digentu.de^$script,domain=gamona.de|lustich.de
 @@||dokumente-online.com^*/adframe.js

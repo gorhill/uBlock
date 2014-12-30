@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: PPuKgB1cxpI/PH8LIl3cjg
+! Checksum: tJ1pxt/GHEjF2R9x626zTQ
 ! Title: EasyList Hebrew
-! Last modified: 21/12/14  22:40
+! Last modified: 28/12/14  11:09
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -359,6 +359,7 @@ foodsdictionary.co.il#@#.adSense
 homeless.co.il#@#.postad
 junkyard.co.il#@#.ad-body
 kml.co.il#@#div[id^="div-gpt-ad-"]
+lavender.co.il#@##topAds
 one.co.il#@#a[href^="http://xads.zedo.com/"]
 !
 !---------------------------------Mobile Ads----------------------------------!

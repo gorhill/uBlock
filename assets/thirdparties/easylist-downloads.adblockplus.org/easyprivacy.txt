@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: DGY2f79B9pRnFRXOxiB0LQ
-! Version: 201412251221
+! Checksum: OmPLToQKnTxo/zHZwT0FTQ
+! Version: 201412301311
 ! Title: EasyPrivacy
-! Last modified: 25 Dec 2014 12:21 UTC
+! Last modified: 30 Dec 2014 13:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -190,6 +190,7 @@
 /addLinkerEvents.js
 /addlog/?
 /addlogdetails.
+/addpageview/*
 /addTrackingScripts.
 /adimppixel/*
 /adinteraction/*
@@ -405,6 +406,7 @@
 /br-trk-
 /br-trk.
 /br_imps/add_item?
+/brandAnalytics.js
 /brightcove/tracking/*
 /brightcoveGoogleAnalytics.
 /brightedge.js
@@ -686,6 +688,7 @@
 /ecos_surveycode_
 /ecossurvey.
 /eCustomerSurvey.
+/edAnalyticsWrapper.
 /edata.js
 /edateAdTrack?
 /eDigitalSurvey.
@@ -771,6 +774,7 @@
 /ga-affiliates.
 /ga-async-
 /ga-custom-tracking.
+/ga-custom-vars.
 /ga-event-tracking.
 /ga-explorations.
 /ga-links.js
@@ -1118,6 +1122,7 @@
 /log2.php?
 /Log?entry=
 /log?id=
+/log?type=
 /log_agent.
 /log_e.php?id=
 /log_hit.
@@ -1156,6 +1161,7 @@
 /logLoad/?
 /LogMediaClick?
 /LogPage.aspx?
+/logpstatus.
 /logpv.aspx?
 /LogRecorder.
 /logreferrer.php?*&referrer=
@@ -1510,6 +1516,7 @@
 /refererRecord.
 /referral_tracker.
 /referral_tracking.
+/referrer.php?*http
 /RefinedAdsTracker.swf
 /refstats.asp?
 /reg_stat.php?
@@ -1692,6 +1699,7 @@
 /stats/counter.
 /stats/dlcount_
 /stats/et_track.asp?
+/stats/impression
 /stats/log.
 /stats/mark?
 /stats/mixpanel-
@@ -1807,6 +1815,7 @@
 /trackad.
 /trackAdHit.
 /TrackClick.
+/trackClickEvent.js
 /trackContentViews.
 /tracker-r1.js
 /tracker.js.php?
@@ -1980,6 +1989,7 @@
 /v60.js
 /valueclickbrands/*
 /vanillastats/*
+/vastlog.txt?
 /vblntpagetag.
 /vecapture.js
 /vertical-stats.
@@ -1998,6 +2008,7 @@
 /viglink_
 /viperbar/stats.php?
 /visci-interface.
+/visit-tracker.js
 /visit.gif?
 /visit/record.gif?
 /visit_pixel?
@@ -2151,6 +2162,7 @@
 /zag.gif?
 /zagcookie.
 /ZagUser.js
+/zdgurgler.min.js
 /zemtracker.
 /zonapixel.
 /zone-log.
@@ -2768,6 +2780,7 @@ http://utm.
 ||exacttarget.com^$third-party
 ||exclusiveclicks.com^$third-party
 ||exelator.com^$third-party
+||exitintel.com^$third-party
 ||exitmonitor.com^$third-party
 ||explore-123.com^$third-party
 ||extole.com^$third-party
@@ -2958,6 +2971,7 @@ http://utm.
 ||illumenix.com^$third-party
 ||ilogbox.com^$third-party
 ||imanginatium.com^$third-party
+||immanalytics.com^$third-party
 ||impcounter.com^$third-party
 ||imrtrack.com^$third-party
 ||imrworldwide.com^$third-party
@@ -3280,6 +3294,7 @@ http://utm.
 ||p0.raasnet.com^$third-party
 ||pa-oa.com^$third-party
 ||pagefair.com^$third-party
+||pagefair.net^$third-party
 ||pages05.net^$third-party
 ||paidstats.com^$third-party
 ||pardot.com^$third-party
@@ -3489,6 +3504,7 @@ http://utm.
 ||siftscience.com^$third-party
 ||signup-way.com^$third-party
 ||silverpop.com^$third-party
+||silverpush.co^$third-party
 ||simplehitcounter.com^$third-party
 ||simplereach.com^$third-party
 ||simpli.fi^$third-party
@@ -3509,7 +3525,6 @@ http://utm.
 ||sitetracker.com^$third-party
 ||sitetraq.nl^$third-party
 ||skyglue.com^$third-party
-||sli-spark.com^$third-party
 ||slingpic.com^$third-party
 ||smallseotools.com^$third-party
 ||smart-ip.net^$third-party
@@ -5330,6 +5345,7 @@ http://utm.
 ||mtv.com^*spacer.gif?
 ||mtvnservices.com/aria/uuid.html
 ||mtvnservices.com/metrics/
+||muses.org/tracker/
 ||musesradioplayer.com/tracker/
 ||museter.com/track.php?
 ||mxmfb.com/rsps/img/
@@ -6415,7 +6431,6 @@ http://utm.
 ||contadores.miarroba.es^
 ||leadzu.com^$third-party
 ||maik.ff-bt.net^
-||prisacom.com/TrackingService/
 ||stats.lnol.com.ar^
 ||stats.miarroba.info^
 ||track.bluecompany.cl^
@@ -7265,6 +7280,7 @@ http://utm.
 ||itp.net/ga.js
 ||itv.com/_app/cmn/js/bcm.js
 ||ixs1.net/s/
+||jack.allday.com^
 ||jakpost.net/jptracker/
 ||jal.co.jp/common_rn/js/rtam.js
 ||jalopnik.com/at.js.php
@@ -7401,12 +7417,14 @@ http://utm.
 ||metrics.bustle.com^
 ||metrics.dailymotion.com^
 ||metrics.ee.co.uk^
+||metrics.extremetech.com^
 ||metrics.tbliab.net^
 ||metrics.ted.com^
 ||metrics.washingtonpost.com^
 ||metro.us/api/trackPage/
 ||metroweekly.com/tools/blog_add_visitor/
 ||mf2fm.com/php/stats.php?
+||microreporting.metro.us^
 ||microsoft.com/blankpixel.gif
 ||microsoft.com/getsilverlight/scripts/silverlight/SilverlightAtlas-MSCOM-Tracking.js
 ||microsoft.com/getsilverlight/scripts/Tracker.js
@@ -8239,6 +8257,7 @@ http://utm.
 ||warp.prnewswire.co.uk^
 ||washingtonpost.com/rw/sites/twpweb/js/init/init.track-header-1.0.0.js
 ||washingtonpost.com/wp-srv/javascript/placeSiteMetrix.
+||washingtonpost.com^*/one.gif?
 ||watchmouse.com^*/jsrum/
 ||watson.live.com^
 ||wavescape.mobi/rest/track/
@@ -8809,7 +8828,6 @@ http://utm.
 ||stat.hudong.com^
 ||stat.iteye.com^
 ||stat.ku6.com^
-||stat.ku6.com^$object-subrequest
 ||stat.ppstream.com^
 ||stat.pptv.com^
 ||stat.tianya.cn^
@@ -9135,7 +9153,7 @@ http://utm.
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
-@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch|techrepublic.com
+@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch|techrepublic.com|zdnet.com
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script
 @@||chartbeat.com/*/chartbeat/$~third-party
@@ -9429,6 +9447,7 @@ http://utm.
 @@||tablespoon.com/library/js/TBSP_ntpagetag.js
 @@||tag.perfectaudience.com/serve/*.js$domain=asana.com
 @@||tags.bluekai.com/site/*?ret=$subdocument,domain=zillow.com
+@@||tags.crwdcntrl.net^$script,domain=weather.com
 @@||tags.w55c.net/rs?*&t=marketing$image
 @@||tc.bankofamerica.com/c?
 @@||teenvogue.com/js/eventTracker.js
@@ -9615,7 +9634,6 @@ http://utm.
 @@||stat.prsmedia.fr/tag/stat.js$domain=bienpublic.com
 @@||tv5.org/cms/javascript/*/sitestat.js
 ! Arabic
-@@||turner.com/analytics/cnn_arabic/jsmd.min.js$domain=arabic.cnn.com
 ! Bulgarian
 @@||google-analytics.com/analytics.js$domain=novatv.bg
 ! Chinese
