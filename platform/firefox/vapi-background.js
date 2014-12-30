@@ -648,7 +648,13 @@ vAPI.toolbarButton.init = function() {
         label: vAPI.app.name,
         tooltiptext: vAPI.app.name,
         onViewShowing: function({target}) {
-            target.firstChild.setAttribute('src', vAPI.getURL('popup.html'));
+            var hash = CustomizableUI.getWidget(vAPI.toolbarButton.widgetId)
+                .areaType === CustomizableUI.TYPE_TOOLBAR ? '' : '#body';
+
+            target.firstChild.setAttribute(
+                'src',
+                vAPI.getURL('popup.html' + hash)
+            );
         },
         onViewHiding: function({target}) {
             target.firstChild.setAttribute('src', 'about:blank');

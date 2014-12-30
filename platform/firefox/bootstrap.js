@@ -105,7 +105,7 @@ function shutdown(data, reason) {
 
     bgProcess.parentNode.removeChild(bgProcess);
 
-    // remove the restartObserver only when the extension is being disabled
+    // Remove the restartObserver only when the extension is being disabled
     if ( data !== undefined ) {
         restartObserver.unregister();
     }

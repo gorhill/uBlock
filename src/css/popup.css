@@ -7,6 +7,9 @@ body {
     padding: 0;
     white-space: nowrap;
     }
+#body:target {
+    float: none;
+    }
 h1,h2,h3,h4 {
     background-color: #444;
     border: 0;
