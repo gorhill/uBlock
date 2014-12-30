@@ -8337,7 +8337,6 @@
 127.0.0.1	cdn.inskinmedia.com
 127.0.0.1	cdn.inspectlet.com
 127.0.0.1	cdn.interactivemedia.net
-127.0.0.1	cdn.jsdelivr.net
 127.0.0.1	cdn.justonecookbook.com
 127.0.0.1	cdn.kikuzip.com
 127.0.0.1	cdn.lfstmedia.com
@@ -19403,7 +19402,6 @@
 127.0.0.1	sad1.adriver.ru
 127.0.0.1	sadie-dimick.us
 127.0.0.1	sadie-gwaltney.us
-127.0.0.1	sadmin.brightcove.com
 127.0.0.1	sadv.dadapro.com
 127.0.0.1	safelinking.net
 127.0.0.1	safelinktracker.com
@@ -19630,7 +19628,6 @@
 127.0.0.1	secure.applifier.com
 127.0.0.1	secure.avangate.com
 127.0.0.1	secure.bidvertiser.com
-127.0.0.1	secure.brightcove.com
 127.0.0.1	secure.cpaempire.com
 127.0.0.1	secure.download-sponsor.de
 127.0.0.1	secure.eloqua.com
@@ -26564,4 +26561,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 26559
+# Hosts: 26556

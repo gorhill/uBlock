@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4731
-! Last modified: 25 Dec 2014
+! Version: 4745
+! Last modified: 30 Dec 2014
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -121,7 +121,6 @@
 ##[href^="http://qwiklnk.com/"]
 ##[href^="http://reliablefiles.com/"]
 ##[href^="http://www.generaldownload.com/"]
-##[href^="http://j.mp/"]
 ##[href^="http://files.cat/"]
 ##[href^="http://yourdigitalsearcher.com/"]
 ##[href^="http://smartmediasearcher.com/"]
@@ -4726,6 +4725,21 @@ shortz.so##[onclick="awaiting();"]
 ||icodecrypt.com^
 ||alqbyte.com^
 ||fifa15gen.com^
+||livedirsetsoftware.org^
+||g4mehacks.com^
+||dragxon.com^
+||comptefacebookpirater.fr^
+||gamesemulated.com^
+||gamehackstudios.com^
+||fifaultimateteampiecesinfini.com^
+||piratageface.com^
+||hackfacebookpass.net^
+||freemaddencoins.com^
+||freenhlpucks.com^
+||madden15cheats.net^
+||jailbreakios8forfree.com^
+||gta5moneycheat.org^
+||nba2k15vcgenerator.com^
 !
 !
 !
