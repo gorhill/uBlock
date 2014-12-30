@@ -12,11 +12,12 @@
 <h4 title="popupTipDashboard">v<span id="version"></span></h4>
 <div>
     <div id="dynamicFilteringContainer">
-        <div><span>images</span><span data-src="*" data-des="*" data-type="image"></span><span data-src="local" data-des="*" data-type="image"></span></div>
-        <div><span>inline scripts</span><span data-src="*" data-des="*" data-type="inline-script"></span><span data-src="local" data-des="*" data-type="inline-script"></span></div>
-        <div><span>1st-party scripts</span><span data-src="*" data-des="*" data-type="1p-script"></span><span data-src="local" data-des="*" data-type="1p-script"></span></div>
-        <div><span>3rd-party scripts</span><span data-src="*" data-des="*" data-type="3p-script"></span><span data-src="local" data-des="*" data-type="3p-script"></span></div>
-        <div><span>3rd-party frames</span><span data-src="*" data-des="*" data-type="3p-frame"></span><span data-src="local" data-des="*" data-type="3p-frame"></span></div>
+        <div><span>images</span><span data-src="/" data-des="*" data-type="image"></span><span data-src="." data-des="*" data-type="image"></span></div>
+        <div><span>inline scripts</span><span data-src="/" data-des="*" data-type="inline-script"></span><span data-src="." data-des="*" data-type="inline-script"></span></div>
+        <div><span>1st-party scripts</span><span data-src="/" data-des="*" data-type="1p-script"></span><span data-src="." data-des="*" data-type="1p-script"></span></div>
+        <div><span>3rd-party scripts</span><span data-src="/" data-des="*" data-type="3p-script"></span><span data-src="." data-des="*" data-type="3p-script"></span></div>
+        <div><span>3rd-party frames</span><span data-src="/" data-des="*" data-type="3p-frame"></span><span data-src="." data-des="*" data-type="3p-frame"></span></div>
+        <div id="privacyInfo"><b>?</b> distinct domains touched</div>
         </div>
 </div><!-- DO NOT REMOVE --><div>
     <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
@@ -31,6 +32,10 @@
     <p id="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
     <p id="total-blocked">?</p>
     </div>
+
+<div id="templates" style="display: none">
+    <div><span></span><span data-src="/" data-des="" data-type="*"></span><span data-src="." data-des="" data-type="*"></span></div>
+    <div>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

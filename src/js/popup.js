@@ -30,6 +30,24 @@
 /******************************************************************************/
 
 var stats;
+var dynaTypes = [
+    'image',
+    'inline-script',
+    '1p-script',
+    '3p-script',
+    '3p-frame'
+];
+var popupHeight;
+var reIP = /^\d+(?:\.\d+){1,3}$/;
+var reSrcHostnameFromResult = /^d[abn]:([^ ]+) ([^ ]+)/;
+var touchedDomains = {};
+var scopeToSrcHostnameMap = {
+    '/': '*',
+    '.': ''
+};
+var threePlus = '+++';
+var threeMinus = '\u2012\u2012\u2012';
+var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
 
 /******************************************************************************/
 
@@ -37,6 +55,15 @@ var stats;
 
 var messager = vAPI.messaging.channel('popup.js');
 
+/******************************************************************************/
+
+var cachePopupData = function(data) {
+    if ( data ) {
+        stats = data;
+        scopeToSrcHostnameMap['.'] = data.pageHostname || '';
+    }
+    return data;
+};
 
 /******************************************************************************/
 
@@ -49,61 +76,126 @@ var formatNumber = function(count) {
 
 /******************************************************************************/
 
-var syncDynamicFilter = function(scope, des, type, result) {
-    var el = uDom('span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]');
-    var blocked = result.charAt(1) === 'b';
-    el.toggleClass('blocked', blocked);
-
-    // https://github.com/gorhill/uBlock/issues/340
-    // Use dark shade visual cue if the filter is specific to the page hostname
-    // or one of the ancestor hostname.
-    var ownFilter = false;
-    var matches = /^d[abn]:([^ ]+)/.exec(result);
-    if ( matches !== null ) {
-        var thisSrc = scope === 'local' ? stats.pageHostname : '*';
-        var otherSrc = matches[1];
-        ownFilter = thisSrc.slice(0 - otherSrc.length) === thisSrc;
-        if ( ownFilter && thisSrc.length !== otherSrc.length ) {
-            var c = thisSrc.substr(0 - otherSrc.length - 1, 1);
-            ownFilter = c === '' || c === '.';
-        }
+var rulekeyCompare = function(a, b) {
+    var ha = a.slice(2, a.indexOf(' ', 2));
+    if ( !reIP.test(ha) ) {
+        ha = ha.split('.').reverse().join('.').replace(reRulekeyCompareNoise, '~');
     }
-    el.toggleClass('ownFilter', ownFilter);
+    var hb = b.slice(2, b.indexOf(' ', 2));
+    if ( !reIP.test(hb) ) {
+        hb = hb.split('.').reverse().join('.').replace(reRulekeyCompareNoise, '~');
+    }
+    return ha.localeCompare(hb);
+};
+
+var reRulekeyCompareNoise = /[^a-z0-9.]/g;
+
+/******************************************************************************/
+
+var addDynamicFilterRow = function(des) {
+    var row = uDom('#templates > div:nth-of-type(1)').clone();
+    row.descendants('[data-des]').attr('data-des', des);
+    row.descendants('div > span:nth-of-type(1)').text(des);
+
+    var hnDetails = stats.hostnameDict[des] || {};
+    var isDomain = des === hnDetails.domain;
+    row.toggleClass('isDomain', isDomain);
+    if ( hnDetails.allowCount !== 0 ) {
+        touchedDomains[hnDetails.domain] = true;
+    }
+
+    row.appendTo('#dynamicFilteringContainer');
+
+    // Hacky? I couldn't figure a CSS recipe for this problem.
+    // I do not want the left pane -- optional and hidden by defaut -- to
+    // dictate the height of the popup. The right pane dictates the height 
+    // of the popup, and the left pane will have a scrollbar if ever its 
+    // height is larger than what is available.
+    if ( popupHeight === undefined ) {
+        popupHeight = uDom('body > div:nth-of-type(2)').nodeAt(0).offsetHeight;
+        uDom('body > div:nth-of-type(1)').css('height', popupHeight + 'px');
+    }
+    return row;
+};
+
+/******************************************************************************/
+
+var syncDynamicFilter = function(scope, des, type, result) {
+    var selector = '#dynamicFilteringContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
+    var cell = uDom(selector);
+
+    // Create the row?
+    if ( cell.length === 0 ) {
+        cell = addDynamicFilterRow(des).descendants(selector);
+    }
+
+    var blocked = result.charAt(1) === 'b';
+    cell.toggleClass('blocked', blocked);
+
+    // Use dark shade visual cue if the filter is specific to the cell.
+    var ownFilter = false;
+    var matches = reSrcHostnameFromResult.exec(result);
+    if ( matches !== null ) {
+        ownFilter =  matches[2] === des &&
+                     matches[1] === scopeToSrcHostnameMap[scope];
+    }
+    cell.toggleClass('ownFilter', ownFilter);
+
+    if ( scope !== '.' || type !== '*' ) {
+        return;
+    }
+    if ( stats.hostnameDict.hasOwnProperty(des) === false ) {
+        return;
+    }
+    var hnDetails = stats.hostnameDict[des];
+    var aCount = Math.min(Math.ceil(Math.log10(hnDetails.allowCount + 1)), 3);
+    var bCount = Math.min(Math.ceil(Math.log10(hnDetails.blockCount + 1)), 3);
+    cell.text(
+        threePlus.slice(0, aCount) +
+        sixSpace.slice(aCount + bCount) +
+        threeMinus.slice(0, bCount)
+    );
 };
 
 /******************************************************************************/
 
 var syncAllDynamicFilters = function() {
     var hasBlock = false;
-    var scopes = ['*', 'local'];
-    var scope, results, i, result;
-    while ( scope = scopes.pop() ) {
-        if ( stats.dynamicFilterResults.hasOwnProperty(scope) === false ) {
+    var rules = stats.dynamicFilterRules;
+    var type, result;
+    var types = dynaTypes;
+    var i = types.length;
+    while ( i-- ) {
+        type = types[i];
+        syncDynamicFilter('/', '*', type, rules['/ * ' + type] || '');
+        result = rules['. * ' + type] || '';
+        if ( result.charAt(1) === 'b' ) {
+            hasBlock = true;
+        }
+        syncDynamicFilter('.', '*', type, result);
+    }
+
+    // Sort hostnames. First-party hostnames must always appear at the top
+    // of the list.
+    var keys = Object.keys(rules).sort(rulekeyCompare);
+    var key;
+    for ( var i = 0; i < keys.length; i++ ) {
+        key = keys[i];
+        // Specific-type rules -- they were processed above
+        if ( key.slice(-1) !== '*' ) {
             continue;
         }
-        results = stats.dynamicFilterResults[scope];
-        for ( var type in results ) {
-            if ( results.hasOwnProperty(type) === false ) {
-                continue;
-            }
-            result = results[type];
-            syncDynamicFilter(scope, '*', type, result);
-            if ( scope === 'local' && result.charAt(1) === 'b' ) {
-                hasBlock = true;
-            }
-        }
+        syncDynamicFilter(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
     }
+
     uDom('body').toggleClass('hasDynamicBlock', hasBlock);
+    uDom('#privacyInfo > b').text(Object.keys(touchedDomains).length);
 };
 
 /******************************************************************************/
 
 var renderPopup = function(details) {
-    if ( details ) {
-        stats = details;
-    }
-
-    if ( !stats ) {
+    if ( !cachePopupData(details) ) {
         return;
     }
 
@@ -246,19 +338,20 @@ var onDynamicFilterClicked = function(ev) {
     if ( typeof stats.pageHostname !== 'string' || stats.pageHostname === '' ) {
         return;
     }
-    var elFilter = uDom(ev.target);
-    var scope = elFilter.attr('data-src') === '*' ? '*' : stats.pageHostname;
+    var cell = uDom(ev.target);
+    var scope = cell.attr('data-src') === '/' ? '*' : stats.pageHostname;
     var onDynamicFilterChanged = function(details) {
-        stats.dynamicFilterResults = details;
+        cachePopupData(details);
         syncAllDynamicFilters();
     };
     messager.send({
         what: 'toggleDynamicFilter',
+        tabId: stats.tabId,
         pageHostname: stats.pageHostname,
         srcHostname: scope,
-        desHostname: elFilter.attr('data-des'),
-        requestType: elFilter.attr('data-type'),
-        block: elFilter.hasClassName('blocked') === false
+        desHostname: cell.attr('data-des'),
+        requestType: cell.attr('data-type'),
+        block: cell.hasClass('blocked') === false
     }, onDynamicFilterChanged);
 };
 
@@ -270,7 +363,7 @@ var toggleDynamicFiltering = function(ev) {
     messager.send({
         what: 'userSettings',
         name: 'dynamicFilteringEnabled',
-        value: el.hasClassName('dynamicFilteringEnabled')
+        value: el.hasClass('dynamicFilteringEnabled')
     });
 };
 

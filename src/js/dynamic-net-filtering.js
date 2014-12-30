@@ -264,6 +264,12 @@ Matrix.prototype.mustBlockOrAllow = function() {
 
 /******************************************************************************/
 
+Matrix.prototype.mustAbort = function() {
+    return this.r === 3;
+};
+
+/******************************************************************************/
+
 Matrix.prototype.toFilterString = function() {
     if ( this.type === '' ) {
         return '';

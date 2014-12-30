@@ -4,7 +4,6 @@ body {
     float: left;
     font: 13px sans-serif;
     margin: 0;
-    overflow: hidden;
     padding: 0;
     white-space: nowrap;
     }
@@ -32,11 +31,19 @@ a {
 body > div {
     background-color: transparent;
     display: inline-block;
+    position: relative;
     vertical-align: top;
+    }
+body > div:nth-of-type(1) {
+    direction: rtl; /* scroll bar to the left */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    }
+body.dynamicFilteringEnabled > div:nth-of-type(1) {
+    overflow-y: auto;
     }
 body > div:nth-of-type(2) {
     padding: 4px 12px 0 5px;
-    position: relative;
     }
 p {
     margin: 16px 0;
@@ -131,39 +138,51 @@ body.dynamicFilteringEnabled #dynamicFilteringToggler::before {
 
 #dynamicFilteringContainer {
     border: 0;
-    direction: rtl;
     font-size: 12px;
     margin: 0;
-    overflow: hidden;
     padding: 0;
     text-align: right;
     width: 7px;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer {
     display: block;
-    width: 200px;
+    width: 280px;
     }
 #dynamicFilteringContainer > div {
+    background-color: transparent;
     border: 0;
     direction: ltr;
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 280px;
+    }
+body.dynamicFilteringEnabled #dynamicFilteringContainer > div {
+    background-color: #e6e6e6;
+    }
+body.dynamicFilteringEnabled #dynamicFilteringContainer > div:hover {
+    background-color: #f0f0f0;
+    }
+#dynamicFilteringContainer > div#privacyInfo {
+    background-color: white;
+    color: gray;
+    padding: 4px 0;
+    text-align: center;
     }
 #dynamicFilteringContainer > div > span {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid white;
     box-sizing: border-box;
-    color: gray;
+    color: transparent;
     display: inline-block;
-    height: 2em;
-    line-height: 2em;
+    height: 24px;
+    line-height: 28px;
     pointer-events: none;
     vertical-align: top;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
-    background-color: #e6e6e6;
+    color: #000;
+    overflow: hidden;
     pointer-events: auto;
     }
 #dynamicFilteringContainer > div > span:nth-of-type(1) {
@@ -178,9 +197,14 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer > div > span:nth-of-type(3) {
     border-left: 1px solid white;
     cursor: pointer;
+    text-align: center;    
     width: 16%;
     }
+#dynamicFilteringContainer > div.isDomain > span:nth-of-type(1) {
+    font-weight: bold;
+    }
 body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span:nth-of-type(3) {
+    color: #444;
     pointer-events: auto;
     }
 #dynamicFilteringContainer span.blocked[data-src] {
@@ -188,7 +212,9 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span:nth-of-type
     }
 #dynamicFilteringContainer span.ownFilter[data-src] {
     background-color: #bbb;
+    color: white;
     }
 #dynamicFilteringContainer span.blocked.ownFilter[data-src] {
     background-color: #f66;
+    color: white;
     }

@@ -296,16 +296,6 @@ PageStore.factory = function(tabId, pageURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.bitFromResult = {
-      '':  1,
-    'sb':  2,
-    'sa':  4,
-    'db':  8,
-    'da': 16
-};
-
-/******************************************************************************/
-
 PageStore.prototype.init = function(tabId, pageURL) {
     this.tabId = tabId;
     this.previousPageURL = '';
@@ -321,7 +311,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     // This is part of the filtering evaluation context
     this.requestURL = this.requestHostname = this.requestType = '';
 
-    this.requestHostnames = {};
+    this.hostnameToCountMap = {};
     this.frames = {};
     this.netFiltering = true;
     this.netFilteringReadTime = 0;
@@ -381,7 +371,7 @@ PageStore.prototype.dispose = function() {
     this.pageHostname = this.pageDomain =
     this.rootHostname = this.rootDomain =
     this.requestURL = this.requestHostname = this.requestType = '';
-    this.requestHostnames = null;
+    this.hostnameToCountMap = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
@@ -451,12 +441,15 @@ PageStore.prototype.filterRequest = function(context) {
     this.recordResult(context.requestType, requestURL, result);
 
     var requestHostname = context.requestHostname;
-    if ( this.requestHostnames.hasOwnProperty(requestHostname) ) {
-        this.requestHostnames[requestHostname] |= this.bitFromResult[result.slice(0, 2)];
-    } else {
-        this.requestHostnames[requestHostname] = this.bitFromResult[result.slice(0, 2)];
+    if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
+        this.hostnameToCountMap[requestHostname] = 0;
     }
-
+    var c = result.charAt(1);
+    if ( c === '' || c === 'a' ) {
+        this.hostnameToCountMap[requestHostname] += 0x00010000;
+    } else /* if ( c === 'b' ) */ {
+        this.hostnameToCountMap[requestHostname] += 0x00000001;
+    }
     return result;
 };
 

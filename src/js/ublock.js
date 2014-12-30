@@ -366,22 +366,24 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     // Dynamic filters:
     // 3. specific source, any destination, specific type, allow/block
     // 4. any source, any destination, specific type, allow/block
-    if ( requestType === 'script' ) {
-        df.evaluateCellZY(rootHostname, requestHostname, this.isFirstParty(rootHostname, requestHostname) ? '1p-script' : '3p-script');
-        if ( df.mustBlockOrAllow() ) {
-            return df.toFilterString();
-        }
-    } else if ( requestType === 'sub_frame' ) {
-        if ( this.isFirstParty(rootHostname, requestHostname) === false ) {
-            df.evaluateCellZY(rootHostname, requestHostname, '3p-frame');
+    if ( df.mustAbort() === false ) {
+        if ( requestType === 'script' ) {
+            df.evaluateCellZY(rootHostname, requestHostname, this.isFirstParty(rootHostname, requestHostname) ? '1p-script' : '3p-script');
             if ( df.mustBlockOrAllow() ) {
                 return df.toFilterString();
             }
-        }
-    } else {
-        df.evaluateCellZY(rootHostname, requestHostname, requestType);
-        if ( df.mustBlockOrAllow() ) {
-            return df.toFilterString();
+        } else if ( requestType === 'sub_frame' ) {
+            if ( this.isFirstParty(rootHostname, requestHostname) === false ) {
+                df.evaluateCellZY(rootHostname, requestHostname, '3p-frame');
+                if ( df.mustBlockOrAllow() ) {
+                    return df.toFilterString();
+                }
+            }
+        } else {
+            df.evaluateCellZY(rootHostname, requestHostname, requestType);
+            if ( df.mustBlockOrAllow() ) {
+                return df.toFilterString();
+            }
         }
     }
 

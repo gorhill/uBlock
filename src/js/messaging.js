@@ -103,46 +103,96 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var getDynamicFilterResults = function(scope) {
+var getHostnameDict = function(hostnameToCountMap) {
     var r = {};
-    var dFiltering = µb.dynamicNetFilteringEngine;
-    r['image'] = dFiltering.evaluateCellZY(scope, '*', 'image').toFilterString();
-    r['inline-script'] = dFiltering.evaluateCellZY(scope, '*', 'inline-script').toFilterString();
-    r['1p-script'] = dFiltering.evaluateCellZY(scope, '*', '1p-script').toFilterString();
-    r['3p-script'] = dFiltering.evaluateCellZY(scope, '*', '3p-script').toFilterString();
-    r['3p-frame'] = dFiltering.evaluateCellZY(scope, '*', '3p-frame').toFilterString();
+    var µburi = µb.URI;
+    var domain, counts;
+    for ( var hostname in hostnameToCountMap ) {
+        if ( hostnameToCountMap.hasOwnProperty(hostname) === false ) {
+            continue;
+        }
+        if ( r.hasOwnProperty(hostname) ) {
+            continue;
+        }
+        domain = µburi.domainFromHostname(hostname);
+        counts = hostnameToCountMap[domain] || 0;
+        r[domain] = {
+            domain: domain,
+            blockCount: counts & 0xFFFF,
+            allowCount: counts >>> 16 & 0xFFFF
+        };
+        if ( hostname === domain ) {
+            continue;
+        }
+        counts = hostnameToCountMap[hostname] || 0;
+        r[hostname] = {
+            domain: domain,
+            blockCount: counts & 0xFFFF,
+            allowCount: counts >>> 16 & 0xFFFF
+        };
+    }
     return r;
 };
 
 /******************************************************************************/
 
-var getStats = function(tab) {
+var getDynamicFilterRules = function(srcHostname, desHostnames) {
+    var r = {};
+    var dFiltering = µb.dynamicNetFilteringEngine;
+    r['/ * image'] = dFiltering.evaluateCellZY('*', '*', 'image').toFilterString();
+    r['/ * inline-script'] = dFiltering.evaluateCellZY('*', '*', 'inline-script').toFilterString();
+    r['/ * 1p-script'] = dFiltering.evaluateCellZY('*', '*', '1p-script').toFilterString();
+    r['/ * 3p-script'] = dFiltering.evaluateCellZY('*', '*', '3p-script').toFilterString();
+    r['/ * 3p-frame'] = dFiltering.evaluateCellZY('*', '*', '3p-frame').toFilterString();
+    if ( typeof srcHostname !== 'string' ) {
+        return r;
+    }
+
+    r['. * image'] = dFiltering.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
+    r['. * inline-script'] = dFiltering.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
+    r['. * 1p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
+    r['. * 3p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
+    r['. * 3p-frame'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
+
+    for ( var desHostname in desHostnames ) {
+        if ( desHostnames.hasOwnProperty(desHostname) ) {
+            r['/ ' + desHostname + ' *'] = dFiltering.evaluateCellZY('*', desHostname, '*').toFilterString();
+            r['. ' + desHostname + ' *'] = dFiltering.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
+        }
+    }
+    return r;
+};
+
+/******************************************************************************/
+
+var getStats = function(tabId) {
     var r = {
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
-        tabId: 0,
+        tabId: tabId,
         pageURL: '',
         pageBlockedRequestCount: 0,
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
         logRequests: µb.userSettings.logRequests,
-        dynamicFilteringEnabled: µb.userSettings.dynamicFilteringEnabled,
-        dynamicFilterResults: {
-            '*': getDynamicFilterResults('*')
-        }
+        dynamicFilteringEnabled: µb.userSettings.dynamicFilteringEnabled
     };
-    var pageStore = tab && µb.pageStoreFromTabId(tab.id);
+    var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
-        r.tabId = tab.id;
         r.pageURL = pageStore.pageURL;
+        r.pageDomain = pageStore.pageDomain;
         r.pageHostname = pageStore.pageHostname;
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
-        r.dynamicFilterResults['local'] = getDynamicFilterResults(r.pageHostname);
+        r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
+        r.dynamicFilterRules = getDynamicFilterRules(pageStore.pageHostname, r.hostnameDict);
+    } else {
+        r.hostnameDict = {};
+        r.dynamicFilterRules = getDynamicFilterRules();
     }
     return r;
 };
@@ -153,7 +203,10 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'activeTabStats':
-            vAPI.tabs.get(null, function(tab) { callback(getStats(tab)); });
+            vAPI.tabs.get(null, function(tab) {
+                var tabId = tab && tab.id;
+                callback(getStats(tabId));
+            });
             return;
 
         default:
@@ -182,10 +235,7 @@ var onMessage = function(request, sender, callback) {
 
         case 'toggleDynamicFilter':
             µb.toggleDynamicFilter(request);
-            response = { '*': getDynamicFilterResults('*') };
-            if ( request.pageHostname ) {
-                response['local'] = getDynamicFilterResults(request.pageHostname);
-            }
+            response = getStats(request.tabId);
             break;
 
         default:
