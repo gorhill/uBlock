@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":"הגדרות",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"מסננים צד שלישי",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"המסננים שלך",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"רשימה לבנה",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"סטטיסטיקה",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"אודות",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"לחיצה: כבה\/הפעל את µBlock לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את µBlock רק בדף זה.",
@@ -146,6 +150,30 @@
   "popupDefault3pFrameDisabled":{
     "message":"מסגרות צד-3 <b>חסומות<\/b> בכל מקום כברירת מחדל",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"צור",
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"החל שינויים",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"רשימת שמות המתחם שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",

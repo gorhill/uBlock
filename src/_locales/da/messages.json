@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":"Indstillinger",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"3-parts filtre",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"Dine filtre",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"Whitelist",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"Statistik",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"Om",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"tryk på power-knappen for at <br>permanent deaktivere eller aktivere <br>µBlock på den nuværende side",
@@ -146,6 +150,30 @@
   "popupDefault3pFrameDisabled":{
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"Opret",
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"Anvend ændringer",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"Din liste over sider hvor µBlock vil være deaktiveret. Kun én adresse pr. linje. Ugyldige værtsnavne ignoreres lydløst.",

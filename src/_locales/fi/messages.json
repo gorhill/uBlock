@@ -8,39 +8,43 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Hallintapaneeli",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Asetukset",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"3-osapuolen suodattimet",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"Sinun suodattimet",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"Ei-blokatut",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"Tilastot",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"Tietoja",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
+    "message":"Painallus: poista käytöstä\/ota käyttöön µBlock tällä sivustolla.\n\nCtrl+painallus: poista µBlock käytöstä vain tällä sivulla.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"requests blocked",
+    "message":"pyyntöjä estetty",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -56,11 +60,11 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Paina avataksesi hallintapaneelin",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Enter element picker mode",
+    "message":"Siirry elementtien valintaan",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -68,11 +72,11 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"<code>skripti<\/code> tagit ovat <b>sallittuja<\/b> tällä sivustolla",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"<code>skripti<\/code> tagit ovat <b>estettyjä<\/b> tällä sivustolla",
     "description":""
   },
   "popupSite1pScriptEnabled":{
@@ -146,6 +150,30 @@
   "popupDefault3pFrameDisabled":{
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"Luo",
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"Vahvista muutokset",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",

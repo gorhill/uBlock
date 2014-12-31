@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":"Налаштування",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"Сторонні фільтри",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"Власні фільтри",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"Білий список",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"Статистика",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"Про програму",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"Натиснення: вимикає\/умикає µBlock для поточного сайту.\n\nCtrl+натиснення: вимикає µBlock тільки для цієї сторінки.",
@@ -146,6 +150,30 @@
   "popupDefault3pFrameDisabled":{
     "message":"Сторонні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"Створити",
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"Застосувати зміни",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"Список тих доменів, для яких µBlock буде вимикатись. Один запис на рядок. Недопустимі назви будуть ігноруватись.",

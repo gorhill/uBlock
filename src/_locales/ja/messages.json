@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":" 設定",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"第三者製フィルター",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"あなたのフィルター",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"ホワイトリスト",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"統計",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"このプロジェクトについて",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"このボタンを押して<br>今のサイトだけに<br>エクステンションを完全にオンかオフにする",
@@ -146,6 +150,30 @@
   "popupDefault3pFrameDisabled":{
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"作成",
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"変更を適用",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"このエクステンションホスト名のリストは無効になります。１ 行につき １ つのエントリ。無効なホスト名はサイレント モードで無視されます。",
