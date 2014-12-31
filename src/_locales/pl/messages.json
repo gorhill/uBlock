@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":"Ustawienia",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"Lista filtrów",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"Twoje filtry",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"Biała lista",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"Statystyki",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"O rozszerzeniu",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"Kliknij, aby na stałe włączyć\/wyłączyć µBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć µBlock tylko dla tej strony.",
@@ -68,84 +72,108 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Wbudowane tagi <code>script<\/code> są <b>dozwolone<\/b> na tej stronie",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Wbudowane tagi <code>script<\/code> są <b>zablokowane<\/b> na tej stronie",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"Skrypty pochodzące bezpośrednio z tej strony są <b>dozwolone<\/b> na tej stronie",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"Skrypty pochodzące bezpośrednio z tej strony są <b>zablokowane<\/b> na tej stronie",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"Skrypty pochodzące ze stron zewnętrznych są <b>dozwolone<\/b> na tej stronie",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"Skrypty pochodzące ze stron zewnętrznych są <b>zablokowane<\/b> na tej stronie",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"Ramki pochodzące bezpośrednio z tej strony są <b>dozwolone<\/b> na tej stronie",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"Ramki pochodzące bezpośrednio z tej strony są <b>zablokowane<\/b> na tej stronie",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Ramki pochodzące ze stron zewnętrznych są <b>dozwolone<\/b> na tej stronie",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Ramki pochodzące ze stron zewnętrznych są <b>zablokowane<\/b> na tej stronie",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Wbudowane tagi <code>script<\/code> są domyślnie wszędzie <b>dozwolone<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Wbudowane tagi <code>script<\/code> są domyślnie wszędzie <b>zablokowane<\/b>",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Skrypty pochodzące bezpośrednio z tej strony są domyślnie <b>dozwolone<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Skrypty pochodzące bezpośrednio z tej strony są domyślnie <b>zablokowane<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Skrypty pochodzące ze stron zewnętrznych są domyślnie <b>dozwolone<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Skrypty pochodzące ze stron zewnętrznych są domyślnie <b>zablokowane<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Ramki pochodzące bezpośrednio z tej strony są domyślnie <b>dozwolone<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Ramki pochodzące bezpośrednio z tej strony są domyślnie <b>zablokowane<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Ramki pochodzące ze stron zewnętrznych są domyślnie <b>dozwolone<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Ramki pochodzące ze stron zewnętrznych są domyślnie <b>zablokowane<\/b>",
     "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
     "message":"Utwórz",
@@ -188,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Włącz funkcje eksperymentalne",
+    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Więcej<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -295,6 +323,30 @@
     "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
   },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
+  },
   "whitelistPrompt":{
     "message":"Twoja lista nazw hostów, na których µBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
@@ -392,7 +444,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Danych nie można odczytać lub są nieprawidłowe",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

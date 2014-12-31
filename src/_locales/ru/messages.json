@@ -13,27 +13,31 @@
   },
   "settingsPageName":{
     "message":"Настройки",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
     "message":"Сторонние фильтры",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
     "message":"Ваши фильтры",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"My rules",
+    "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
     "message":"Белый список",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
     "message":"Статистика",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
     "message":"О расширении",
-    "description":"appears as tab name in dashboard."
+    "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
     "message":"Нажмите кнопку питания, чтобы <br>навсегда отключить\/включить <br>µBlock для текущего сайта",
@@ -68,19 +72,19 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Встроенные теги<code>скрипты<\/code> <b>доступны<\/b> на этом сайте",
+    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> для этого сайта",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Встроенные теги-<code>скрипты<\/code> <b>не доступны<\/b> на этом сайте",
+    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> для этого сайта",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>доступны<\/b> на этом сайте",
+    "message":"Пользовательские скрипты <b>включены<\/b> для этого сайта",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>не доступны<\/b> на этом сайте",
+    "message":"Пользовательские скрипты <b>отключены<\/b> для этого сайта",
     "description":""
   },
   "popupSite3pScriptEnabled":{
@@ -147,6 +151,30 @@
     "message":"Сторонние фреймы <b>отключены<\/b> везде по умолчанию",
     "description":""
   },
+  "popupImageRulePrompt":{
+    "message":"images",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"inline scripts",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1st-party scripts",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3rd-party scripts",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3rd-party frames",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"Connected to {{count}} distinct domain(s)",
+    "description":"appear in dynamic filtering pane"
+  },
   "pickerCreate":{
     "message":"Создать",
     "description":"English: Create"
@@ -188,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Включить экспериментальные возможности",
+    "message":"Включить экспериментальные возможности  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Подробнее<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -260,7 +288,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Применить",
+    "message":"Обработать",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -294,6 +322,30 @@
   "1pApplyChanges":{
     "message":"Применить изменения",
     "description":"English: Apply changes"
+  },
+  "rulesEdit":{
+    "message":"Edit",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Save",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Discard",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Import from file...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Export to file...",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"my-ublock-dynamic-rules.txt",
+    "description":"default file name to use"
   },
   "whitelistPrompt":{
     "message":"Список имён узлов, для которых µBlock будет отключен. Одна запись на строку. Неправильные имена будут тихо проигнорированы.",

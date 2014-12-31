@@ -25,7 +25,7 @@ Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:
 - Serwery reklam i śledzenia hpHosts
 - MVPS HOSTS
 - Spam404
-- Itp.
+- I wiele innych
 
 Oczywiście, jeśli więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów od fanów, hpHosts Ad i śledzenie serwerów, µBlock ma ciągle niższe zużycie pamięci niż inne bardzo popularne blokery.
 
