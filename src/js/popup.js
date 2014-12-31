@@ -49,6 +49,7 @@ var threePlus = '+++';
 var threeMinus = '−−−';
 var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
 var dynaHotspots = null;
+var hostnameToSortableTokenMap = {};
 
 /******************************************************************************/
 
@@ -59,11 +60,30 @@ var messager = vAPI.messaging.channel('popup.js');
 /******************************************************************************/
 
 var cachePopupData = function(data) {
-    if ( data ) {
-        stats = data;
-        scopeToSrcHostnameMap['.'] = data.pageHostname || '';
+    stats = {};
+    scopeToSrcHostnameMap['.'] = '';
+    hostnameToSortableTokenMap = {};
+    if ( typeof data !== 'object' ) {
+        return stats;
+    } 
+    stats = data;
+    scopeToSrcHostnameMap['.'] = stats.pageHostname || '';
+    var hostnameDict = stats.hostnameDict;
+    if ( typeof hostnameDict === 'object' ) {
+        var domain, prefix;
+        for ( var hostname in hostnameDict ) {
+            if ( hostnameDict.hasOwnProperty(hostname) === false ) {
+                continue;
+            }
+            domain = hostnameDict[hostname].domain;
+            if ( domain === stats.pageDomain ) {
+                domain = '\u0020';
+            }
+            prefix = hostname.slice(0, 0 - domain.length);
+            hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
+        }
     }
-    return data;
+    return stats;
 };
 
 /******************************************************************************/
@@ -80,11 +100,11 @@ var formatNumber = function(count) {
 var rulekeyCompare = function(a, b) {
     var ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
-        ha = ha.split('.').reverse().join('.').replace(reRulekeyCompareNoise, '~');
+        ha = hostnameToSortableTokenMap[ha] || '';
     }
     var hb = b.slice(2, b.indexOf(' ', 2));
     if ( !reIP.test(hb) ) {
-        hb = hb.split('.').reverse().join('.').replace(reRulekeyCompareNoise, '~');
+        hb = hostnameToSortableTokenMap[hb] || '';
     }
     return ha.localeCompare(hb);
 };
@@ -142,7 +162,7 @@ var syncDynamicFilterCell = function(scope, des, type, result) {
     var matches = reSrcHostnameFromResult.exec(result);
     if ( matches !== null ) {
         ownRule =  matches[2] === des &&
-                     matches[1] === scopeToSrcHostnameMap[scope];
+                   matches[1] === scopeToSrcHostnameMap[scope];
     }
     cell.toggleClass('ownRule', ownRule);
 
@@ -194,7 +214,7 @@ var syncAllDynamicFilters = function() {
         syncDynamicFilterCell(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
     }
 
-    uDom('#privacyInfo > b').text(Object.keys(touchedDomains).length);
+    uDom('#privacyInfo').text(vAPI.i18n('popupHitDomainCountPrompt').replace('{{count}}', Object.keys(touchedDomains).length));
 };
 
 /******************************************************************************/

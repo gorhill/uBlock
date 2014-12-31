@@ -86,6 +86,13 @@
 
 /******************************************************************************/
 
+µBlock.saveDynamicRules = function() {
+    this.userSettings.dynamicFilteringString = this.dynamicNetFilteringEngine.toString();
+    this.XAL.keyvalSetOne('dynamicFilteringString', this.userSettings.dynamicFilteringString);
+};
+
+/******************************************************************************/
+
 µBlock.saveWhitelist = function() {
     var bin = {
         'netWhitelist': this.stringFromWhitelist(this.netWhitelist)

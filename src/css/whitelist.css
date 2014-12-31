@@ -5,7 +5,7 @@ div > p:last-child {
     margin-bottom: 0;
     }
 #whitelist {
-    font-size: smaller;
+    font-size: small;
     width: 48em;
     height: 40em;
     white-space: pre;

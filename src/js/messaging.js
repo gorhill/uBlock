@@ -640,6 +640,55 @@ vAPI.messaging.listen('1p-filters.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
+// dyna-rules.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'getDynamicRules':
+            response = µb.dynamicNetFilteringEngine.toString();
+            break;
+
+        case 'setDynamicRules':
+            µb.dynamicNetFilteringEngine.fromString(request.rawRules);
+            µb.saveDynamicRules();
+            response = µb.dynamicNetFilteringEngine.toString();
+            break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('dyna-rules.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 // whitelist.js
 
 (function() {

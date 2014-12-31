@@ -168,6 +168,9 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div:hover {
     padding: 4px 0;
     text-align: center;
     }
+#dynamicFilteringContainer > div.isDomain {
+    margin-top: 2px;
+    }
 #dynamicFilteringContainer > div > span {
     background-color: transparent;
     border: none;
@@ -204,28 +207,28 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
     }
-body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span:nth-of-type(3) {
+#dynamicFilteringContainer > div > span:nth-of-type(3) {
     color: #666;
     pointer-events: auto;
     }
-#dynamicFilteringContainer span.aRule {
+#dynamicFilteringContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
-#dynamicFilteringContainer span.bRule {
+#dynamicFilteringContainer > div > span.bRule {
     background-color: rgba(192, 0, 0, 0.3);
     }
-#dynamicFilteringContainer span.nRule {
+#dynamicFilteringContainer > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.3);
     }
-#dynamicFilteringContainer span.aRule.ownRule {
+#dynamicFilteringContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     color: white;
     }
-#dynamicFilteringContainer span.bRule.ownRule {
+#dynamicFilteringContainer > div > span.bRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
     color: white;
     }
-#dynamicFilteringContainer span.nRule.ownRule {
+#dynamicFilteringContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     color: white;
     }

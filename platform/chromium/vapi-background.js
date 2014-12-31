@@ -425,7 +425,7 @@ vAPI.onLoadAllCompleted = function() {
         vAPI.tabs.injectScript(tabId, {
             file: 'js/contentscript-start.js',
             allFrames: true,
-            runAt: 'document_idle'
+            runAt: 'document_start'
         }, function(){ scriptEnd(tabId); });
     };
     var bindToTabs = function(tabs) {

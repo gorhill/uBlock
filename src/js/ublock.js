@@ -350,7 +350,8 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     // evaluation of static filtering.
     // Dynamic filtering evaluation is ordered from most-specific to least-
     // specific.
-    var df = this.dynamicNetFilteringEngine;
+    var df = this.dynamicNetFilteringEngine.clearRegisters();
+
     var rootHostname = context.rootHostname;
     var requestHostname = context.requestHostname;
     var requestType = context.requestType;

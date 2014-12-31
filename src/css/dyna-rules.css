@@ -4,7 +4,7 @@ div > p:first-child {
 div > p:last-child {
     margin-bottom: 0;
     }
-.userFilters {
+#rulesEditor {
     font-size: small;
     width: 48em;
     height: 40em;

@@ -47,13 +47,13 @@ var typeBitOffsets = {
         'image': 10
 };
 
-var stateToNameMap = {
+var actionToNameMap = {
     '1': 'block',
     '2': 'allow',
     '3': 'noop'
 };
 
-var nameToStateMap = {
+var nameToActionMap = {
     'block': 1,
     'allow': 2,
      'noop': 3
@@ -187,6 +187,7 @@ Matrix.prototype.clearRegisters = function() {
     this.type = '';
     this.y = '';
     this.z = '';
+    return this;
 };
 
 /******************************************************************************/
@@ -320,7 +321,7 @@ Matrix.prototype.toString = function() {
                 punycode.toUnicode(srcHostname) + ' ' +
                 punycode.toUnicode(desHostname) + ' ' +
                 type + ' ' +
-                stateToNameMap[val]
+                actionToNameMap[val]
             );
         }
     }
@@ -332,11 +333,12 @@ Matrix.prototype.toString = function() {
 Matrix.prototype.fromString = function(text, append) {
     var textEnd = text.length;
     var lineBeg = 0, lineEnd;
-    var line, pos;
-    var fields, fieldVal;
-    var srcHostname = '';
-    var desHostname = '';
-    var type, state;
+    var line, pos, fields;
+    var srcHostname, desHostname, type, action;
+
+    if ( append !== true ) {
+        this.reset();
+    }
 
     while ( lineBeg < textEnd ) {
         lineEnd = text.indexOf('\n', lineBeg);
@@ -357,59 +359,33 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
-        fields = line.split(/\s+/);
-
-        // Less than 2 fields makes no sense
-        if ( fields.length < 2 ) {
-            continue;
-        }
-
-        fieldVal = fields[0];
-
         // Valid rule syntax:
 
-        // srcHostname desHostname [type [state]]
+        // srcHostname desHostname type state
         //      type = a valid request type
-        //      state = [`block`, `allow`, `inherit`]
-
-        // srcHostname desHostname type
-        //      type = a valid request type
-        //      state = `allow`
-
-        // srcHostname desHostname
-        //      type = `*`
-        //      state = `allow`
+        //      state = [`block`, `allow`, `noop`]
 
         // Lines with invalid syntax silently ignored
+
+        fields = line.split(/\s+/);
+        if ( fields.length !== 4 ) {
+            continue;
+        }
 
         srcHostname = punycode.toASCII(fields[0]);
         desHostname = punycode.toASCII(fields[1]);
 
-        fieldVal = fields[2];
-
-        if ( fieldVal !== undefined ) {
-            type = fieldVal;
-            // Unknown type: reject
-            if ( typeBitOffsets.hasOwnProperty(type) === false ) {
-                continue;
-            }
-        } else {
-            type = '*';
+        type = fields[2];
+        if ( typeBitOffsets.hasOwnProperty(type) === false ) {
+            continue;
         }
 
-        fieldVal = fields[3];
-
-        if ( fieldVal !== undefined ) {
-            // Unknown state: reject
-            if ( nameToStateMap.hasOwnProperty(fieldVal) === false ) {
-                continue;
-            }
-            state = nameToStateMap[fieldVal];
-        } else {
-            state = 2;
+        action = nameToActionMap[fields[3]];
+        if ( typeof action !== 'number' || action < 0 || action > 3 ) {
+            continue;
         }
 
-        this.setCell(srcHostname, desHostname, type, state);
+        this.setCell(srcHostname, desHostname, type, action);
     }
 };
 

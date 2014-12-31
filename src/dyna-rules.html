@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>µMatrix — Dynamic filtering rules</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
+<link rel="stylesheet" type="text/css" href="css/dyna-rules.css">
+</head>
+
+<body>
+
+<div>
+    <p data-i18n="rulesFormatHint"></p>
+    <p><button id="rulesApply" disabled="true" data-i18n="1pApplyChanges"></button></p>
+    <textarea id="rulesEditor" spellcheck="false"></textarea>
+    <p><button id="importButton" type="button" data-i18n="1pImport"></button> &emsp;
+       <button id="exportButton" type="button" data-i18n="1pExport"></button>
+       <input class="hidden" id="importFilePicker" type="file" accept="text/plain" style="display: none;"></p>
+    <span class="hidden" data-i18n="rulesDefaultFileName" style="display: none;"></span>
+</div>
+
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/dashboard-common.js"></script>
+<script src="js/dyna-rules.js"></script>
+
+</body>
+</html>
