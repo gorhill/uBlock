@@ -130,18 +130,35 @@ Matrix.prototype.setCell = function(srcHostname, desHostname, type, state) {
 
 /******************************************************************************/
 
-Matrix.prototype.blockCell = function(srcHostname, desHostname, type) {
+Matrix.prototype.unsetCell = function(srcHostname, desHostname, type) {
     this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 1 ) {
+    if ( this.r === 0 ) {
+        return false;
+    }
+    this.setCell(srcHostname, desHostname, type, 0);
+    return true;
+};
+
+/******************************************************************************/
+
+Matrix.prototype.setCellZ = function(srcHostname, desHostname, type, action) {
+    this.evaluateCellZY(srcHostname, desHostname, type);
+    if ( this.r === action ) {
         return false;
     }
     this.setCell(srcHostname, desHostname, type, 0);
     this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 1 ) {
+    if ( this.r === action ) {
         return true;
     }
-    this.setCell(srcHostname, desHostname, type, 1);
+    this.setCell(srcHostname, desHostname, type, action);
     return true;
+};
+
+/******************************************************************************/
+
+Matrix.prototype.blockCell = function(srcHostname, desHostname, type) {
+    return this.setCellZ(srcHostname, desHostname, type, 1);
 };
 
 // https://www.youtube.com/watch?v=Csewb_eIStY
@@ -149,33 +166,7 @@ Matrix.prototype.blockCell = function(srcHostname, desHostname, type) {
 /******************************************************************************/
 
 Matrix.prototype.allowCell = function(srcHostname, desHostname, type) {
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 2 ) {
-        return false;
-    }
-    this.setCell(srcHostname, desHostname, type, 0);
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 2 ) {
-        return true;
-    }
-    this.setCell(srcHostname, desHostname, type, 2);
-    return true;
-};
-
-/******************************************************************************/
-
-Matrix.prototype.unsetCell = function(srcHostname, desHostname, type) {
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 0 ) {
-        return false;
-    }
-    this.setCell(srcHostname, desHostname, type, 0);
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    if ( this.r === 0 || this.r === 3 ) {
-        return true;
-    }
-    this.setCell(srcHostname, desHostname, type, 3);
-    return true;
+    return this.setCellZ(srcHostname, desHostname, type, 2);
 };
 
 /******************************************************************************/

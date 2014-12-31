@@ -440,6 +440,9 @@ PageStore.prototype.filterRequest = function(context) {
     //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
     this.recordResult(context.requestType, requestURL, result);
 
+    // TODO: send this to a dev-panel tool
+    //console.debug('[%s, %s] = "%s"', context.requestHostname, context.requestType, result);
+
     var requestHostname = context.requestHostname;
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;

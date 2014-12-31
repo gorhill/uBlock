@@ -308,8 +308,8 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 µBlock.toggleDynamicFilter = function(details) {
     var changed = false;
-    if ( details.block ) {
-        changed = this.dynamicNetFilteringEngine.blockCell(details.srcHostname, details.desHostname, details.requestType);
+    if ( details.action !== 0 ) {
+        changed = this.dynamicNetFilteringEngine.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
     } else {
         changed = this.dynamicNetFilteringEngine.unsetCell(details.srcHostname, details.desHostname, details.requestType);
     }

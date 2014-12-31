@@ -8,13 +8,13 @@ body {
     white-space: nowrap;
     }
 h1,h2,h3,h4 {
-    margin:  0;
-    padding: 4px;
+    background-color: #444;
     border: 0;
     color: white;
-    background-color: #444;
-    text-align: center;
     cursor: pointer;
+    margin:  0;
+    padding: 4px;
+    text-align: center;
     }
 a {
     color: inherit;
@@ -24,9 +24,9 @@ a {
     outline: 0;
     }
 #version {
-    margin-left: 1em;
-    font-weight: normal;
     font-size: 11px;
+    font-weight: normal;
+    margin-left: 1em;
     }
 body > div {
     background-color: transparent;
@@ -47,14 +47,14 @@ body > div:nth-of-type(2) {
     }
 p {
     margin: 16px 0;
-    white-space: nowrap;
     text-align: center;
+    white-space: nowrap;
     }
 #switch .fa {
-    margin: 0;
-    font-size: 96px;
     color: green;
     cursor: pointer;
+    font-size: 96px;
+    margin: 0;
     }
 #switch .fa:hover {
     opacity: 0.9;
@@ -63,22 +63,22 @@ p {
     color: #ccc;
     }
 #switch-hint {
-    font-size: 11px;
     color: #888;
+    font-size: 11px;
     }
 [data-i18n="popupBlockedRequestPrompt"] {
     font-size: 16px;
     }
 #page-blocked {
-    margin-top: 4px;
     font-size: 20px;
+    margin-top: 4px;
     }
 #total-blocked {
-    margin-top: 4px;
-    margin-bottom: 8px;
     font-size: 14px;
+    margin-bottom: 8px;
+    margin-top: 4px;
     }
-#stats {
+.stats {
     margin-bottom: 4px;
     text-align: center;
     }
@@ -142,11 +142,11 @@ body.dynamicFilteringEnabled #dynamicFilteringToggler::before {
     margin: 0;
     padding: 0;
     text-align: right;
-    width: 7px;
+    width: 5px;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer {
     display: block;
-    width: 280px;
+    width: auto;
     }
 #dynamicFilteringContainer > div {
     background-color: transparent;
@@ -154,7 +154,7 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer {
     direction: ltr;
     margin: 0;
     padding: 0;
-    width: 280px;
+    width: 320px;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer > div {
     background-color: #e6e6e6;
@@ -176,8 +176,9 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div:hover {
     color: transparent;
     display: inline-block;
     height: 24px;
-    line-height: 28px;
+    line-height: 24px;
     pointer-events: none;
+    position: relative;
     vertical-align: top;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
@@ -188,33 +189,74 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
     padding-right: 4px;
-    width: 75%;
+    width: 70%;
     }
 #dynamicFilteringContainer > div > span:nth-of-type(2) {
     cursor: pointer;
-    width: 9%;
+    width: 15%;
     }
 #dynamicFilteringContainer > div > span:nth-of-type(3) {
     border-left: 1px solid white;
     cursor: pointer;
     text-align: center;    
-    width: 16%;
+    width: 15%;
     }
 #dynamicFilteringContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
     }
 body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span:nth-of-type(3) {
-    color: #444;
+    color: #666;
     pointer-events: auto;
     }
-#dynamicFilteringContainer span.blocked[data-src] {
-    background-color: #fbb;
+#dynamicFilteringContainer span.aRule {
+    background-color: rgba(0, 160, 0, 0.3);
     }
-#dynamicFilteringContainer span.ownFilter[data-src] {
-    background-color: #bbb;
+#dynamicFilteringContainer span.bRule {
+    background-color: rgba(192, 0, 0, 0.3);
+    }
+#dynamicFilteringContainer span.nRule {
+    background-color: rgba(96, 96, 96, 0.3);
+    }
+#dynamicFilteringContainer span.aRule.ownRule {
+    background-color: rgba(0, 160, 0, 1);
     color: white;
     }
-#dynamicFilteringContainer span.blocked.ownFilter[data-src] {
-    background-color: #f66;
+#dynamicFilteringContainer span.bRule.ownRule {
+    background-color: rgba(192, 0, 0, 1);
     color: white;
+    }
+#dynamicFilteringContainer span.nRule.ownRule {
+    background-color: rgba(108, 108, 108, 1);
+    color: white;
+    }
+
+#actionSelector {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+#actionSelector > span {
+    display: inline-block;
+    height: 24px;
+    opacity: 0.2;
+    width: 33.33%;
+    }
+#actionSelector > span:hover {
+    opacity: 0.75;
+    }
+#actionSelector > span:nth-of-type(1) {
+    background-color: rgb(0, 160, 0);
+    }
+#actionSelector > span:nth-of-type(2) {
+    background-color: rgb(108, 108, 108);
+    }
+#actionSelector > span:nth-of-type(3) {
+    background-color: rgb(192, 0, 0);
+    }
+#dynamicFilteringContainer span.aRule #actionSelector > span:nth-of-type(1),
+#dynamicFilteringContainer span.nRule #actionSelector > span:nth-of-type(2),
+#dynamicFilteringContainer span.bRule #actionSelector > span:nth-of-type(3) {
+    visibility: hidden;
     }

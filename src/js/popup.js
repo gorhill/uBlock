@@ -46,8 +46,9 @@ var scopeToSrcHostnameMap = {
     '.': ''
 };
 var threePlus = '+++';
-var threeMinus = '\u2012\u2012\u2012';
+var threeMinus = '−−−';
 var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
+var dynaHotspots = null;
 
 /******************************************************************************/
 
@@ -102,6 +103,7 @@ var addDynamicFilterRow = function(des) {
     row.toggleClass('isDomain', isDomain);
     if ( hnDetails.allowCount !== 0 ) {
         touchedDomains[hnDetails.domain] = true;
+        row.addClass('wasTouched');
     }
 
     row.appendTo('#dynamicFilteringContainer');
@@ -120,7 +122,7 @@ var addDynamicFilterRow = function(des) {
 
 /******************************************************************************/
 
-var syncDynamicFilter = function(scope, des, type, result) {
+var syncDynamicFilterCell = function(scope, des, type, result) {
     var selector = '#dynamicFilteringContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
     var cell = uDom(selector);
 
@@ -129,17 +131,20 @@ var syncDynamicFilter = function(scope, des, type, result) {
         cell = addDynamicFilterRow(des).descendants(selector);
     }
 
-    var blocked = result.charAt(1) === 'b';
-    cell.toggleClass('blocked', blocked);
+    cell.removeClass();
+    var action = result.charAt(1);
+    if ( action !== '' ) {
+        cell.toggleClass(action + 'Rule', true);
+    }
 
     // Use dark shade visual cue if the filter is specific to the cell.
-    var ownFilter = false;
+    var ownRule = false;
     var matches = reSrcHostnameFromResult.exec(result);
     if ( matches !== null ) {
-        ownFilter =  matches[2] === des &&
+        ownRule =  matches[2] === des &&
                      matches[1] === scopeToSrcHostnameMap[scope];
     }
-    cell.toggleClass('ownFilter', ownFilter);
+    cell.toggleClass('ownRule', ownRule);
 
     if ( scope !== '.' || type !== '*' ) {
         return;
@@ -150,29 +155,30 @@ var syncDynamicFilter = function(scope, des, type, result) {
     var hnDetails = stats.hostnameDict[des];
     var aCount = Math.min(Math.ceil(Math.log10(hnDetails.allowCount + 1)), 3);
     var bCount = Math.min(Math.ceil(Math.log10(hnDetails.blockCount + 1)), 3);
-    cell.text(
-        threePlus.slice(0, aCount) +
-        sixSpace.slice(aCount + bCount) +
-        threeMinus.slice(0, bCount)
-    );
+    // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
+    //            ensure this in the HTML file counterpart when you make
+    //            changes
+    cell.nodeAt(0).firstChild.nodeValue = threePlus.slice(0, aCount) +
+                                          sixSpace.slice(aCount + bCount) +
+                                          threeMinus.slice(0, bCount);
 };
 
 /******************************************************************************/
 
 var syncAllDynamicFilters = function() {
-    var hasBlock = false;
+    var hasRule = false;
     var rules = stats.dynamicFilterRules;
     var type, result;
     var types = dynaTypes;
     var i = types.length;
     while ( i-- ) {
         type = types[i];
-        syncDynamicFilter('/', '*', type, rules['/ * ' + type] || '');
+        syncDynamicFilterCell('/', '*', type, rules['/ * ' + type] || '');
         result = rules['. * ' + type] || '';
-        if ( result.charAt(1) === 'b' ) {
-            hasBlock = true;
+        if ( result.charAt(1) !== '' ) {
+            hasRule = true;
         }
-        syncDynamicFilter('.', '*', type, result);
+        syncDynamicFilterCell('.', '*', type, result);
     }
 
     // Sort hostnames. First-party hostnames must always appear at the top
@@ -185,10 +191,9 @@ var syncAllDynamicFilters = function() {
         if ( key.slice(-1) !== '*' ) {
             continue;
         }
-        syncDynamicFilter(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
+        syncDynamicFilterCell(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
     }
 
-    uDom('body').toggleClass('hasDynamicBlock', hasBlock);
     uDom('#privacyInfo > b').text(Object.keys(touchedDomains).length);
 };
 
@@ -333,30 +338,6 @@ var gotoLink = function(ev) {
 
 /******************************************************************************/
 
-var onDynamicFilterClicked = function(ev) {
-    // This can happen on pages where uBlock does not work
-    if ( typeof stats.pageHostname !== 'string' || stats.pageHostname === '' ) {
-        return;
-    }
-    var cell = uDom(ev.target);
-    var scope = cell.attr('data-src') === '/' ? '*' : stats.pageHostname;
-    var onDynamicFilterChanged = function(details) {
-        cachePopupData(details);
-        syncAllDynamicFilters();
-    };
-    messager.send({
-        what: 'toggleDynamicFilter',
-        tabId: stats.tabId,
-        pageHostname: stats.pageHostname,
-        srcHostname: scope,
-        desHostname: cell.attr('data-des'),
-        requestType: cell.attr('data-type'),
-        block: cell.hasClass('blocked') === false
-    }, onDynamicFilterChanged);
-};
-
-/******************************************************************************/
-
 var toggleDynamicFiltering = function(ev) {
     var el = uDom('body');
     el.toggleClass('dynamicFilteringEnabled');
@@ -369,6 +350,79 @@ var toggleDynamicFiltering = function(ev) {
 
 /******************************************************************************/
 
+var mouseenterCellHandler = function() {
+    if ( uDom(this).hasClass('ownRule') === false ) {
+        dynaHotspots.appendTo(this);
+    }
+};
+
+var mouseleaveCellHandler = function() {
+    dynaHotspots.detach();
+};
+
+/******************************************************************************/
+
+var setDynamicFilter = function(src, des, type, action) {
+    // This can happen on pages where uBlock does not work
+    if ( typeof stats.pageHostname !== 'string' || stats.pageHostname === '' ) {
+        return;
+    }
+    var onDynamicFilterChanged = function(details) {
+        cachePopupData(details);
+        syncAllDynamicFilters();
+    };
+    messager.send({
+        what: 'toggleDynamicFilter',
+        tabId: stats.tabId,
+        pageHostname: stats.pageHostname,
+        srcHostname: src,
+        desHostname: des,
+        requestType: type,
+        action: action
+    }, onDynamicFilterChanged);
+};
+
+/******************************************************************************/
+
+var unsetDynamicFilterHandler = function() {
+    var cell = uDom(this);
+    setDynamicFilter(
+        cell.attr('data-src') === '/' ? '*' : stats.pageHostname,
+        cell.attr('data-des'),
+        cell.attr('data-type'),
+        0
+    );
+    dynaHotspots.appendTo(cell);
+};
+
+/******************************************************************************/
+
+var setDynamicFilterHandler = function() {
+    var hotspot = uDom(this);
+    var cell = hotspot.ancestors('[data-src]');
+    if ( cell.length === 0 ) {
+        return;
+    }
+    var action = 0;
+    var hotspotId = hotspot.attr('id');
+    if ( hotspotId === 'dynaAllow' ) {
+        action = 2;
+    } else if ( hotspotId === 'dynaNoop' ) {
+        action = 3
+    } else {
+        action = 1;
+    }
+    setDynamicFilter(
+        cell.attr('data-src') === '/' ? '*' : stats.pageHostname,
+        cell.attr('data-des'),
+        cell.attr('data-type'),
+        action
+    );
+    dynaHotspots.detach();
+};
+
+/******************************************************************************/
+
 var installEventHandlers = function() {
     uDom('h1,h2,h3,h4').on('click', gotoDashboard);
     uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
@@ -376,7 +430,13 @@ var installEventHandlers = function() {
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href^=http]').on('click', gotoLink);
     uDom('#dynamicFilteringToggler').on('click', toggleDynamicFiltering);
-    uDom('#dynamicFilteringContainer').on('click', 'span[data-type]', onDynamicFilterClicked);
+
+    uDom('#dynamicFilteringContainer').on('click', 'span[data-src]', unsetDynamicFilterHandler);
+    uDom('#dynamicFilteringContainer')
+        .on('mouseenter', '[data-src]', mouseenterCellHandler)
+        .on('mouseleave', '[data-src]', mouseleaveCellHandler);
+    dynaHotspots = uDom('#actionSelector');
+    dynaHotspots.on('click', 'span', setDynamicFilterHandler).detach();
 };
 
 /******************************************************************************/
