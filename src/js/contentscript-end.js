@@ -80,7 +80,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         // to force them to be seen as "already injected".
         selectors = vAPI.donthideCosmeticFilters;
         if ( typeof selectors === 'object' ) {
-            for ( selector in selectors ) {
+            for ( var selector in selectors ) {
                 if ( selectors.hasOwnProperty(selector) ) {
                     injectedSelectors[selector] = true;
                 }
