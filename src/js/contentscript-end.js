@@ -79,6 +79,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 },
                 retrieveHandler
             );
+            // https://github.com/gorhill/uBlock/issues/452
+            // There is only one first..
+            retrieveHandler = otherRetrieveHandler;
         } else {
             otherRetrieveHandler(null);
         }
@@ -111,10 +114,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 }
             }
         }
-
-        // There is only one first..
-        retrieveHandler = otherRetrieveHandler;
-
         // Flush dead code from memory (does this work?)
         firstRetrieveHandler = null;
 
