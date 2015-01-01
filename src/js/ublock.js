@@ -394,4 +394,15 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
+µBlock.isBlockResult = function(result) {
+    return typeof result === 'string' && result.charAt(1) === 'b';
+};
+
+/******************************************************************************/
+
+µBlock.isAllowResult = function(result) {
+    return typeof result !== 'string' || result.charAt(1) !== 'b';
+};
+/******************************************************************************/
+
 })();

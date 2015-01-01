@@ -260,7 +260,7 @@ var onHeadersReceived = function(details) {
     pageStore.requestHostname = µb.URI.hostnameFromURI(details.url);
     pageStore.requestType = 'inline-script';
     var result = pageStore.filterRequest(pageStore);
-    if ( result === '' ) {
+    if ( µb.isAllowResult(result) ) {
         return;
     }
 
