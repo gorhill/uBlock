@@ -48,7 +48,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     }
 
     var queriedSelectors = {};
-    var injectedSelectors = vAPI.hideCosmeticFilters || {};
+    var injectedSelectors = {};
     var classSelectors = null;
     var idSelectors = null;
     var highGenerics = null;
@@ -56,28 +56,36 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var nullArray = { push: function(){} };
 
     var domLoaded = function() {
+        idsFromNodeList(document.querySelectorAll('[id]'));
+        classesFromNodeList(document.querySelectorAll('[class]'));
+        retrieveGenericSelectors();
+    };
+
+    // https://github.com/gorhill/uBlock/issues/452
+    // This needs to be executed *after* the response from our query is 
+    // received, not at `DOMContentLoaded` time, or else there is a good
+    // likeliness to outrun contentscript-start.js, which may still be waiting
+    // on a response from its own query.
+    var firstRunHandler = function() {
         // https://github.com/gorhill/uBlock/issues/158
         // Ensure injected styles are enforced
         // rhill 2014-11-16: not sure this is needed anymore. Test case in
         //  above issue was fine without the line below..
         var selectors = vAPI.hideCosmeticFilters;
         if ( typeof selectors === 'object' ) {
+            injectedSelectors = selectors;
             hideElements(Object.keys(selectors).join(','));
         }
         // Add exception filters into injected filters collection, in order
         // to force them to be seen as "already injected".
         selectors = vAPI.donthideCosmeticFilters;
         if ( typeof selectors === 'object' ) {
-            for ( var selector in selectors ) {
+            for ( selector in selectors ) {
                 if ( selectors.hasOwnProperty(selector) ) {
                     injectedSelectors[selector] = true;
                 }
             }
         }
-        // Now scan content of page
-        idsFromNodeList(document.querySelectorAll('[id]'));
-        classesFromNodeList(document.querySelectorAll('[class]'));
-        retrieveGenericSelectors();
     };
 
     var retrieveGenericSelectors = function() {
@@ -103,6 +111,12 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     var retrieveHandler = function(selectors) {
+        // https://github.com/gorhill/uBlock/issues/452
+        // See above.
+        if ( typeof firstRunHandler === 'function' ) {
+            firstRunHandler();
+            firstRunHandler = undefined;
+        }
         //console.debug('µBlock> contextNodes = %o', contextNodes);
         if ( selectors && selectors.highGenerics ) {
             highGenerics = selectors.highGenerics;
