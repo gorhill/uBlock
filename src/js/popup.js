@@ -173,8 +173,13 @@ var syncDynamicFilterCell = function(scope, des, type, result) {
         return;
     }
     var hnDetails = stats.hostnameDict[des];
-    var aCount = Math.min(Math.ceil(Math.log10(hnDetails.allowCount + 1)), 3);
-    var bCount = Math.min(Math.ceil(Math.log10(hnDetails.blockCount + 1)), 3);
+    var aCount = hnDetails.allowCount;
+    var bCount = hnDetails.blockCount;
+    if ( aCount === 0 && bCount === 0 ) {
+        return;
+    }
+    aCount = Math.min(Math.ceil(Math.log10(aCount + 1)), 3);
+    bCount = Math.min(Math.ceil(Math.log10(bCount + 1)), 3);
     // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
     //            ensure this in the HTML file counterpart when you make
     //            changes
@@ -279,7 +284,9 @@ var renderPopup = function(details) {
         );
     }
 
-    syncAllDynamicFilters();
+    //if ( stats.dynamicFilteringEnabled ) {
+        syncAllDynamicFilters();
+    //}
 
     uDom('#total-blocked').html(html.join(''));
     uDom('#switch .fa').toggleClass('off', stats.pageURL === '' || !stats.netFilteringSwitch);
