@@ -59,6 +59,31 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         idsFromNodeList(document.querySelectorAll('[id]'));
         classesFromNodeList(document.querySelectorAll('[class]'));
         retrieveGenericSelectors();
+
+        // Flush dead code from memory (does this work?)
+        domLoaded = null;
+    };
+
+    var retrieveGenericSelectors = function() {
+        var selectors = classSelectors !== null ? Object.keys(classSelectors) : [];
+        if ( idSelectors !== null ) {
+            selectors = selectors.concat(idSelectors);
+        }
+        if ( selectors.length > 0 || highGenerics === null ) {
+            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
+            messager.send({
+                    what: 'retrieveGenericCosmeticSelectors',
+                    pageURL: window.location.href,
+                    selectors: selectors,
+                    highGenerics: highGenerics === null
+                },
+                retrieveHandler
+            );
+        } else {
+            otherRetrieveHandler(null);
+        }
+        idSelectors = null;
+        classSelectors = null;
     };
 
     // https://github.com/gorhill/uBlock/issues/452
@@ -66,7 +91,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // received, not at `DOMContentLoaded` time, or else there is a good
     // likeliness to outrun contentscript-start.js, which may still be waiting
     // on a response from its own query.
-    var firstRunHandler = function() {
+    var firstRetrieveHandler = function(response) {
         // https://github.com/gorhill/uBlock/issues/158
         // Ensure injected styles are enforced
         // rhill 2014-11-16: not sure this is needed anymore. Test case in
@@ -86,37 +111,17 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 }
             }
         }
+
+        // There is only one first..
+        retrieveHandler = otherRetrieveHandler;
+
+        // Flush dead code from memory (does this work?)
+        firstRetrieveHandler = null;
+
+        otherRetrieveHandler(response);
     };
 
-    var retrieveGenericSelectors = function() {
-        var selectors = classSelectors !== null ? Object.keys(classSelectors) : [];
-        if ( idSelectors !== null ) {
-            selectors = selectors.concat(idSelectors);
-        }
-        if ( selectors.length > 0 || highGenerics === null ) {
-            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
-            messager.send({
-                    what: 'retrieveGenericCosmeticSelectors',
-                    pageURL: window.location.href,
-                    selectors: selectors,
-                    highGenerics: highGenerics === null
-                },
-                retrieveHandler
-            );
-        } else {
-            retrieveHandler(null);
-        }
-        idSelectors = null;
-        classSelectors = null;
-    };
-
-    var retrieveHandler = function(selectors) {
-        // https://github.com/gorhill/uBlock/issues/452
-        // See above.
-        if ( typeof firstRunHandler === 'function' ) {
-            firstRunHandler();
-            firstRunHandler = undefined;
-        }
+    var otherRetrieveHandler = function(selectors) {
         //console.debug('µBlock> contextNodes = %o', contextNodes);
         if ( selectors && selectors.highGenerics ) {
             highGenerics = selectors.highGenerics;
@@ -156,6 +161,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         }
         contextNodes.length = 0;
     };
+
+    var retrieveHandler = firstRetrieveHandler;
 
     // Ensure elements matching a set of selectors are visually removed
     // from the page, by:
