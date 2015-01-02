@@ -19,9 +19,20 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock */
+/* global vAPI, µBlock */
+
+/******************************************************************************/
+/******************************************************************************/
+
+(function() {
+
 'use strict';
 
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
 /******************************************************************************/
 
 // When the DOM content of root frame is loaded, this means the tab
@@ -30,7 +41,7 @@ vAPI.tabs.onNavigation = function(details) {
     if ( details.frameId !== 0 ) {
         return;
     }
-    µBlock.bindTabToPageStats(details.tabId, details.url);
+    µb.bindTabToPageStats(details.tabId, details.url);
 };
 
 // It may happen the URL in the tab changes, while the page's document
@@ -43,21 +54,21 @@ vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
     if ( !changeInfo.url ) {
         return;
     }
-    µBlock.bindTabToPageStats(tabId, changeInfo.url, 'tabUpdated');
+    µb.bindTabToPageStats(tabId, changeInfo.url, 'tabUpdated');
 };
 
 vAPI.tabs.onClosed = function(tabId) {
     if ( tabId < 0 ) {
         return;
     }
-    µBlock.unbindTabFromPageStats(tabId);
+    µb.unbindTabFromPageStats(tabId);
 };
 
 // https://github.com/gorhill/uBlock/issues/297
 vAPI.tabs.onPopup = function(details) {
     //console.debug('vAPI.tabs.onPopup: url="%s"', details.url);
 
-    var pageStore = µBlock.pageStoreFromTabId(details.sourceTabId);
+    var pageStore = µb.pageStoreFromTabId(details.sourceTabId);
     if ( !pageStore ) {
         return;
     }
@@ -66,8 +77,8 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/323
     // If popup URL is whitelisted, do not block it
-    if ( µBlock.getNetFilteringSwitch(requestURL) ) {
-        result = µBlock.staticNetFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+    if ( µb.getNetFilteringSwitch(requestURL) ) {
+        result = µb.staticNetFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
     }
 
     // https://github.com/gorhill/uBlock/issues/91
@@ -83,7 +94,7 @@ vAPI.tabs.onPopup = function(details) {
     // Blocked
 
     // It is a popup, block and remove the tab.
-    µBlock.unbindTabFromPageStats(details.tabId);
+    µb.unbindTabFromPageStats(details.tabId);
     vAPI.tabs.remove(details.tabId);
 
     // for Safari
@@ -91,7 +102,6 @@ vAPI.tabs.onPopup = function(details) {
 };
 
 vAPI.tabs.registerListeners();
-
 
 /******************************************************************************/
 /******************************************************************************/
@@ -106,7 +116,7 @@ vAPI.tabs.registerListeners();
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-µBlock.normalizePageURL = function(pageURL) {
+µb.normalizePageURL = function(pageURL) {
     var uri = this.URI.set(pageURL);
     if ( uri.scheme === 'https' || uri.scheme === 'http' ) {
         return uri.normalizedURI();
@@ -118,7 +128,7 @@ vAPI.tabs.registerListeners();
 
 // Create an entry for the tab if it doesn't exist.
 
-µBlock.bindTabToPageStats = function(tabId, pageURL, context) {
+µb.bindTabToPageStats = function(tabId, pageURL, context) {
     this.updateBadgeAsync(tabId);
 
     // https://github.com/gorhill/httpswitchboard/issues/303
@@ -146,7 +156,7 @@ vAPI.tabs.registerListeners();
     return pageStore;
 };
 
-µBlock.unbindTabFromPageStats = function(tabId) {
+µb.unbindTabFromPageStats = function(tabId) {
     //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
     var pageStore = this.pageStores[tabId];
     if ( pageStore !== undefined ) {
@@ -157,27 +167,60 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µBlock.pageUrlFromTabId = function(tabId) {
+µb.pageUrlFromTabId = function(tabId) {
     var pageStore = this.pageStores[tabId];
     return pageStore ? pageStore.pageURL : '';
 };
 
-µBlock.pageUrlFromPageStats = function(pageStats) {
+µb.pageUrlFromPageStats = function(pageStats) {
     if ( pageStats ) {
         return pageStats.pageURL;
     }
     return '';
 };
 
-µBlock.pageStoreFromTabId = function(tabId) {
+µb.pageStoreFromTabId = function(tabId) {
     return this.pageStores[tabId];
 };
 
 /******************************************************************************/
+/******************************************************************************/
 
-// µBlock.forceReload = function(pageURL) {
-//     var tabId = this.tabIdFromPageUrl(pageURL);
-//     if ( tabId ) {
-//         chrome.tabs.reload(tabId, { bypassCache: true });
-//     }
-// };
+// Stale page store entries janitor
+// https://github.com/gorhill/uBlock/issues/455
+
+var pageStoreJanitorPeriod = 15 * 60 * 1000;
+var pageStoreJanitorSampleAt = 0;
+var pageStoreJanitorSampleSize = 10;
+
+var pageStoreJanitor = function() {
+    var vapiTabs = vAPI.tabs;
+    var tabIds = Object.keys(µb.pageStores).sort();
+    var checkTab = function(tabId) {
+        vapiTabs.get(tabId, function(tab) {
+            if ( !tab ) {
+                //console.error('tab.js> pageStoreJanitor(): stale page store found:', µb.pageUrlFromTabId(tabId));
+                µb.unbindTabFromPageStats(tabId);
+            }
+        });
+    };
+    if ( pageStoreJanitorSampleAt >= tabIds.length ) {
+        pageStoreJanitorSampleAt = 0;
+    }
+    var n = Math.min(pageStoreJanitorSampleAt + pageStoreJanitorSampleSize, tabIds.length);
+    for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
+        checkTab(tabIds[i]);
+    }
+    pageStoreJanitorSampleAt = n;
+
+    setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
+};
+
+setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
+
+/******************************************************************************/
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/

@@ -21,17 +21,26 @@
 
 /* global vAPI */
 
-'use strict';
-
 /******************************************************************************/
 
 // Injected into content pages
+
+(function() {
+
+'use strict';
 
 /******************************************************************************/
 
 if ( vAPI.canExecuteContentScript() !== true ) {
     throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
 }
+
+// https://github.com/gorhill/uBlock/issues/456
+// Already injected?
+if ( vAPI.contentscriptEndInjected ) {
+    return;
+}
+vAPI.contentscriptEndInjected = true;
 
 /******************************************************************************/
 
@@ -259,15 +268,20 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 node = nodeList[iNode];
                 attrValue = node.getAttribute(attr);
                 if ( !attrValue ) { continue; }
+                // Candidate 1 = generic form
+                // If generic form is injected, no need to process the specific
+                // form, as the generic will affect all related specific forms
                 selector = '[' + attr + '="' + attrValue + '"]';
-                if ( generics[selector] ) {
+                if ( generics.hasOwnProperty(selector) ) {
                     if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);
+                        continue;
                     }
                 }
+                // Candidate 2 = specific form
                 selector = node.tagName.toLowerCase() + selector;
-                if ( generics[selector] ) {
+                if ( generics.hasOwnProperty(selector) ) {
                     if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);
@@ -669,6 +683,11 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     window.addEventListener('contextmenu', onContextMenu, true);
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/
