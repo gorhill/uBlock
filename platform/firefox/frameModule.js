@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-this.EXPORTED_SYMBOLS = ['contentPolicy', 'docObserver'];
+this.EXPORTED_SYMBOLS = ['contentObserver'];
 
 const {interfaces: Ci, utils: Cu} = Components;
 const appName = __URI__.match(/:\/\/([^\/]+)/)[1];
@@ -48,11 +48,13 @@ const getMessageManager = function(context) {
 
 /******************************************************************************/
 
-const contentPolicy = {
-    classDescription: 'content-policy implementation for ' + appName,
+const contentObserver = {
+    classDescription: 'content-policy for ' + appName,
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
     contractID: '@' + appName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
+    MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
+    contentBaseURI: 'chrome://' + appName + '/content/js/',
     messageName: appName + ':shouldLoad',
 
     get componentRegistrar() {
@@ -66,6 +68,7 @@ const contentPolicy = {
 
     QueryInterface: XPCOMUtils.generateQI([
         Ci.nsIFactory,
+        Ci.nsIObserver,
         Ci.nsIContentPolicy,
         Ci.nsISupportsWeakReference
     ]),
@@ -77,7 +80,10 @@ const contentPolicy = {
 
         return this.QueryInterface(iid);
     },
+
     register: function() {
+        Services.obs.addObserver(this, 'document-element-inserted', true);
+
         this.componentRegistrar.registerFactory(
             this.classID,
             this.classDescription,
@@ -94,6 +100,8 @@ const contentPolicy = {
     },
 
     unregister: function() {
+        Services.obs.removeObserver(this, 'document-element-inserted');
+
         this.componentRegistrar.unregisterFactory(this.classID, this);
         this.categoryManager.deleteCategoryEntry(
             'content-policy',
@@ -109,38 +117,51 @@ const contentPolicy = {
             return this.ACCEPT;
         }
 
+        let opener;
+
         if ( location.scheme !== 'http' && location.scheme !== 'https' ) {
-            return this.ACCEPT;
+            if ( type !== this.MAIN_FRAME ) {
+                return this.ACCEPT;
+            }
+
+            context = context.contentWindow || context;
+
+            try {
+                opener = context.opener.location.href;
+            } catch (ex) {}
+
+            let isPopup = location.spec === 'about:blank' && opener;
+
+            if ( location.scheme !== 'data' && !isPopup ) {
+                return this.ACCEPT;
+            }
+        } else if ( type === this.MAIN_FRAME ) {
+            context = context.contentWindow || context;
+
+            try {
+                opener = context.opener.location.href;
+            } catch (ex) {}
+        } else {
+            context = (context.ownerDocument || context).defaultView;
         }
 
-        let win = type === 6
-            ? context.contentWindow || context
-            : (context.ownerDocument || context).defaultView;
+        // The context for the popups is an iframe element here,
+        // so check context.top instead
 
-        if ( win ) {
-            getMessageManager(win).sendSyncMessage(this.messageName, {
+        if ( context.top && context.location ) {
+            getMessageManager(context).sendSyncMessage(this.messageName, {
+                opener: opener || null,
                 url: location.spec,
                 type: type,
-                frameId: type === 6 ? -1 : (win === win.top ? 0 : 1),
-                parentFrameId: win === win.top ? -1 : 0
+                frameId: type === this.MAIN_FRAME ? -1 : (context === context.top ? 0 : 1),
+                parentFrameId: context === context.top ? -1 : 0
             });
         }
 
         return this.ACCEPT;
-    }
-};
+    },
 
-/******************************************************************************/
-
-const docObserver = {
-    contentBaseURI: 'chrome://' + appName + '/content/js/',
-
-    QueryInterface: XPCOMUtils.generateQI([
-        Ci.nsIObserver,
-        Ci.nsISupportsWeakReference
-    ]),
-
-    initContext: function(win, sandbox) {
+    initContentScripts: function(win, sandbox) {
         let messager = getMessageManager(win);
 
         if ( sandbox ) {
@@ -173,14 +194,6 @@ const docObserver = {
         return win;
     },
 
-    register: function() {
-        Services.obs.addObserver(this, 'document-element-inserted', true);
-    },
-
-    unregister: function() {
-        Services.obs.removeObserver(this, 'document-element-inserted');
-    },
-
     observe: function(doc) {
         let win = doc.defaultView;
 
@@ -192,21 +205,21 @@ const docObserver = {
 
         if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' ) {
             if ( loc.protocol === 'chrome:' && loc.host === appName ) {
-                this.initContext(win);
+                this.initContentScripts(win);
             }
 
             return;
         }
 
         let lss = Services.scriptloader.loadSubScript;
-        win = this.initContext(win, true);
+        win = this.initContentScripts(win, true);
 
         lss(this.contentBaseURI + 'vapi-client.js', win);
         lss(this.contentBaseURI + 'contentscript-start.js', win);
 
         let docReady = function(e) {
             this.removeEventListener(e.type, docReady, true);
-            lss(docObserver.contentBaseURI + 'contentscript-end.js', win);
+            lss(contentObserver.contentBaseURI + 'contentscript-end.js', win);
         };
 
         win.document.addEventListener('DOMContentLoaded', docReady, true);
@@ -215,7 +228,6 @@ const docObserver = {
 
 /******************************************************************************/
 
-contentPolicy.register();
-docObserver.register();
+contentObserver.register();
 
 /******************************************************************************/

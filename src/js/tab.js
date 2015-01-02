@@ -102,7 +102,7 @@ vAPI.tabs.onPopup = function(details) {
     µb.unbindTabFromPageStats(details.tabId);
     vAPI.tabs.remove(details.tabId);
 
-    // for Safari
+    // for Safari and Firefox
     return true;
 };
 

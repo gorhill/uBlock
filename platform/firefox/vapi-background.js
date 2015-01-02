@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, CustomizableUI */
+/* global Services, XPCOMUtils, CustomizableUI */
 
 // For background page
 
@@ -34,6 +34,7 @@
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 Cu['import']('resource://gre/modules/Services.jsm');
+Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
 Cu['import']('resource:///modules/CustomizableUI.jsm');
 
 /******************************************************************************/
@@ -310,7 +311,7 @@ var tabsProgressListener = {
                 tabId: tabId,
                 url: browser.currentURI.spec
             });
-        } else {
+        } else if ( location.scheme === 'http' || location.scheme === 'https' ) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: tabId,
@@ -538,7 +539,7 @@ vAPI.tabs.open = function(details) {
 
 /******************************************************************************/
 
-vAPI.tabs.close = function(tabIds) {
+vAPI.tabs.remove = function(tabIds) {
     if ( !Array.isArray(tabIds) ) {
         tabIds = [tabIds];
     }
@@ -902,77 +903,178 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 
 var httpObserver = {
+    classDescription: 'net-channel-event-sinks for ' + location.host,
+    classID: Components.ID('{dc8d6319-5f6e-4438-999e-53722db99e84}'),
+    contractID: '@' + location.host + '/net-channel-event-sinks;1',
     ABORT: Components.results.NS_BINDING_ABORTED,
+    ACCEPT: Components.results.NS_SUCCEEDED,
+    MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
+    typeMap: {
+        2: 'script',
+        3: 'image',
+        4: 'stylesheet',
+        5: 'object',
+        6: 'main_frame',
+        7: 'sub_frame',
+        11: 'xmlhttprequest'
+    },
     lastRequest: {
         url: null,
         type: null,
         tabId: null,
         frameId: null,
-        parentFrameId: null
+        parentFrameId: null,
+        opener: null
     },
 
-    QueryInterface: (function() {
-        var {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
-        return XPCOMUtils.generateQI([
-            Ci.nsIObserver,
-            Ci.nsISupportsWeakReference
-        ]);
-    })(),
+    get componentRegistrar() {
+        return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
+    },
+
+    get categoryManager() {
+        return Cc['@mozilla.org/categorymanager;1']
+                .getService(Ci.nsICategoryManager);
+    },
+
+    QueryInterface: XPCOMUtils.generateQI([
+        Ci.nsIFactory,
+        Ci.nsIObserver,
+        Ci.nsIChannelEventSink,
+        Ci.nsISupportsWeakReference
+    ]),
+
+    createInstance: function(outer, iid) {
+        if ( outer ) {
+            throw Components.results.NS_ERROR_NO_AGGREGATION;
+        }
+
+        return this.QueryInterface(iid);
+    },
 
     register: function() {
-        Services.obs.addObserver(httpObserver, 'http-on-opening-request', true);
-        // Services.obs.addObserver(httpObserver, 'http-on-modify-request', true);
-        Services.obs.addObserver(httpObserver, 'http-on-examine-response', true);
+        Services.obs.addObserver(this, 'http-on-opening-request', true);
+        Services.obs.addObserver(this, 'http-on-examine-response', true);
+
+        this.componentRegistrar.registerFactory(
+            this.classID,
+            this.classDescription,
+            this.contractID,
+            this
+        );
+        this.categoryManager.addCategoryEntry(
+            'net-channel-event-sinks',
+            this.contractID,
+            this.contractID,
+            false,
+            true
+        );
     },
 
     unregister: function() {
-        Services.obs.removeObserver(httpObserver, 'http-on-opening-request');
-        // Services.obs.removeObserver(httpObserver, 'http-on-modify-request');
-        Services.obs.removeObserver(httpObserver, 'http-on-examine-response');
+        Services.obs.removeObserver(this, 'http-on-opening-request');
+        Services.obs.removeObserver(this, 'http-on-examine-response');
+
+        this.componentRegistrar.unregisterFactory(this.classID, this);
+        this.categoryManager.deleteCategoryEntry(
+            'net-channel-event-sinks',
+            this.contractID,
+            false
+        );
     },
 
-    observe: function(httpChannel, topic) {
-        // No need for QueryInterface if this check is performed?
-        if ( !(httpChannel instanceof Ci.nsIHttpChannel) ) {
+    handlePopup: function(URI, tabId, sourceTabId) {
+        if ( !sourceTabId ) {
+            return false;
+        }
+
+        if ( URI.scheme !== 'http' && URI.scheme !== 'https' ) {
+            return false;
+        }
+
+        var result = vAPI.tabs.onPopup({
+            tabId: tabId,
+            sourceTabId: sourceTabId,
+            url: URI.spec
+        });
+
+        return result === true;
+    },
+
+    handleRequest: function(channel, details) {
+        var onBeforeRequest = vAPI.net.onBeforeRequest;
+        var type = this.typeMap[details.type] || 'other';
+
+        if ( onBeforeRequest.types.has(type) === false ) {
+            return false;
+        }
+
+        var result = onBeforeRequest.callback({
+            url: channel.URI.spec,
+            type: type,
+            tabId: details.tabId,
+            frameId: details.frameId,
+            parentFrameId: details.parentFrameId
+        });
+
+        if ( !result || typeof result !== 'object' ) {
+            return false;
+        }
+
+        if ( result.cancel === true ) {
+            channel.cancel(this.ABORT);
+            return true;
+        } else if ( result.redirectUrl ) {
+            channel.redirectionLimit = 1;
+            channel.redirectTo(
+                Services.io.newURI(result.redirectUrl, null, null)
+            );
+            return true;
+        }
+
+        return false;
+    },
+
+    observe: function(channel, topic) {
+        if ( !(channel instanceof Ci.nsIHttpChannel) ) {
             return;
         }
 
-        var URI = httpChannel.URI, tabId, result;
+        var URI = channel.URI;
+        var channelData, result;
 
-        if ( topic === 'http-on-modify-request' ) {
-            // var onHeadersReceived = vAPI.net.onHeadersReceived;
+        if ( topic === 'http-on-examine-response' ) {
+            if ( !(channel instanceof Ci.nsIWritablePropertyBag) ) {
+                return;
+            }
 
-            return;
-        }
-
-        if ( topic === 'http-on-examine-request' ) {
             try {
-                tabId = httpChannel.getProperty('tabId');
+                channelData = channel.getProperty(location.host + 'reqdata');
             } catch (ex) {
                 return;
             }
 
-            if ( !tabId ) {
+            // [tabId, type, sourceTabId - given if it was a popup]
+            if ( !channelData || channelData[0] !== this.MAIN_FRAME ) {
                 return;
             }
 
             topic = 'Content-Security-Policy';
 
             try {
-                result = httpChannel.getResponseHeader(topic);
+                result = channel.getResponseHeader(topic);
             } catch (ex) {
                 result = null;
             }
 
             result = vAPI.net.onHeadersReceived.callback({
                 url: URI.spec,
-                tabId: tabId,
+                tabId: channelData[1],
                 parentFrameId: -1,
                 responseHeaders: result ? [{name: topic, value: result}] : []
             });
 
             if ( result ) {
-                httpChannel.setResponseHeader(
+                channel.setResponseHeader(
                     topic,
                     result.responseHeaders.pop().value,
                     true
@@ -995,36 +1097,90 @@ var httpObserver = {
         // the URL will be the same, so it could fall into an infinite loop
         lastRequest.url = null;
 
-        if ( lastRequest.type === 'main_frame'
-            && httpChannel instanceof Ci.nsIWritablePropertyBag ) {
-            httpChannel.setProperty('tabId', lastRequest.tabId);
+        var sourceTabId = null;
+
+        // popup candidate (only for main_frame type)
+        if ( lastRequest.opener ) {
+            for ( var tab of vAPI.tabs.getAll() ) {
+                var tabURI = tab.linkedBrowser.currentURI;
+
+                // not the best approach
+                if ( tabURI.spec === this.lastRequest.opener ) {
+                    sourceTabId = vAPI.tabs.getTabId(tab);
+                    break;
+                }
+            }
+
+            if ( this.handlePopup(channel.URI, lastRequest.tabId, sourceTabId) ) {
+                channel.cancel(this.ABORT);
+                return;
+            }
         }
 
-        var onBeforeRequest = vAPI.net.onBeforeRequest;
-
-        if ( !onBeforeRequest.types.has(lastRequest.type) ) {
+        if ( this.handleRequest(channel, lastRequest) ) {
             return;
         }
 
-        result = onBeforeRequest.callback({
-            url: URI.spec,
-            type: lastRequest.type,
-            tabId: lastRequest.tabId,
-            frameId: lastRequest.frameId,
-            parentFrameId: lastRequest.parentFrameId
-        });
-
-        if ( !result || typeof result !== 'object' ) {
-            return;
-        }
-
-        if ( result.cancel === true ) {
-            httpChannel.cancel(this.ABORT);
-        } else if ( result.redirectUrl ) {
-            httpChannel.redirectionLimit = 1;
-            httpChannel.redirectTo(
-                Services.io.newURI(result.redirectUrl, null, null)
+        // if request is not handled we may use the data in on-modify-request
+        if ( channel instanceof Ci.nsIWritablePropertyBag ) {
+            channel.setProperty(
+                location.host + 'reqdata',
+                [lastRequest.type, lastRequest.tabId, sourceTabId]
             );
+        }
+    },
+
+    // contentPolicy.shouldLoad doesn't detect redirects, this needs to be used
+    asyncOnChannelRedirect: function(oldChannel, newChannel, flags, callback) {
+        var result = this.ACCEPT;
+
+        // If error thrown, the redirect will fail
+        try {
+            // skip internal redirects?
+            /*if ( flags & 4 ) {
+                console.log('internal redirect skipped');
+                return;
+            }*/
+
+            var scheme = newChannel.URI.scheme;
+
+            if ( scheme !== 'http' && scheme !== 'https' ) {
+                return;
+            }
+
+            if ( !(oldChannel instanceof Ci.nsIWritablePropertyBag) ) {
+                return;
+            }
+
+            var channelData = oldChannel.getProperty(location.host + 'reqdata');
+            var [type, tabId, sourceTabId] = channelData;
+
+            if ( this.handlePopup(newChannel.URI, tabId, sourceTabId) ) {
+                result = this.ABORT;
+                return;
+            }
+
+            var details = {
+                type: type,
+                tabId: tabId,
+                // well...
+                frameId: type === this.MAIN_FRAME ? -1 : 0,
+                parentFrameId: -1
+            };
+
+            if ( this.handleRequest(newChannel, details) ) {
+                result = this.ABORT;
+                return;
+            }
+
+            // carry the data on in case of multiple redirects
+            if ( newChannel instanceof Ci.nsIWritablePropertyBag ) {
+                newChannel.setProperty(location.host + 'reqdata', channelData);
+            }
+        } catch (ex) {
+            // console.error(ex);
+        } finally {
+            callback.onRedirectVerifyCallback(result);
         }
     }
 };
@@ -1036,26 +1192,31 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
-    var typeMap = {
-        2: 'script',
-        3: 'image',
-        4: 'stylesheet',
-        5: 'object',
-        6: 'main_frame',
-        7: 'sub_frame',
-        11: 'xmlhttprequest'
-    };
-
     this.onBeforeRequest.types = new Set(this.onBeforeRequest.types);
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
+        var details = e.data;
+
+        // data: and about:blank
+        if ( details.url.charAt(0) !== 'h' ) {
+            vAPI.net.onBeforeRequest.callback({
+                url: 'http://' + details.url.slice(0, details.url.indexOf(':')),
+                type: 'main_frame',
+                tabId: vAPI.tabs.getTabId(e.target),
+                frameId: details.frameId,
+                parentFrameId: details.parentFrameId
+            });
+            return;
+        }
+
         var lastRequest = httpObserver.lastRequest;
-        lastRequest.url = e.data.url;
-        lastRequest.type = typeMap[e.data.type] || 'other';
+        lastRequest.url = details.url;
+        lastRequest.type = details.type;
         lastRequest.tabId = vAPI.tabs.getTabId(e.target);
-        lastRequest.frameId = e.data.frameId;
-        lastRequest.parentFrameId = e.data.parentFrameId;
+        lastRequest.frameId = details.frameId;
+        lastRequest.parentFrameId = details.parentFrameId;
+        lastRequest.opener = details.opener;
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
@@ -1242,8 +1403,7 @@ window.addEventListener('unload', function() {
     // frameModule needs to be cleared too
     var frameModule = {};
     Cu['import'](vAPI.getURL('frameModule.js'), frameModule);
-    frameModule.contentPolicy.unregister();
-    frameModule.docObserver.unregister();
+    frameModule.contentObserver.unregister();
     Cu.unload(vAPI.getURL('frameModule.js'));
 });
 
