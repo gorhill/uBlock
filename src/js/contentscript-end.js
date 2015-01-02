@@ -260,7 +260,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 attrValue = node.getAttribute(attr);
                 if ( !attrValue ) { continue; }
                 // Candidate 1 = generic form
-                // If specific form is injected, no need to process specific
+                // If generic form is injected, no need to process the specific
                 // form, as the generic will affect all related specific forms
                 selector = '[' + attr + '="' + attrValue + '"]';
                 if ( generics.hasOwnProperty(selector) ) {
