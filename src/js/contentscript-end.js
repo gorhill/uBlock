@@ -33,6 +33,13 @@ if ( vAPI.canExecuteContentScript() !== true ) {
     throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
 }
 
+// https://github.com/gorhill/uBlock/issues/456
+// Already injected?
+if ( vAPI.contentscriptEnd ) {
+    return;
+}
+vAPI.contentscriptEnd = true;
+
 /******************************************************************************/
 
 var messager = vAPI.messaging.channel('contentscript-end.js');

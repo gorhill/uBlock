@@ -44,6 +44,13 @@ if ( vAPI.canExecuteContentScript() !== true ) {
     return;
 }
 
+// https://github.com/gorhill/uBlock/issues/456
+// Already injected?
+if ( vAPI.contentscriptStart ) {
+    return;
+}
+vAPI.contentscriptStart = true;
+
 /******************************************************************************/
 
 var localMessager = vAPI.messaging.channel('contentscript-start.js');
@@ -55,11 +62,6 @@ var localMessager = vAPI.messaging.channel('contentscript-start.js');
 // These can be inserted before the DOM is loaded.
 
 var cosmeticFilters = function(details) {
-    // Maybe uBlock's style tag was already injected?
-    var style = document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-    if ( style !== null ) {
-        return;
-    }
     var donthideCosmeticFilters = {};
     var hideCosmeticFilters = {};
     style = document.createElement('style');
