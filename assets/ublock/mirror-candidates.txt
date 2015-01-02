@@ -19,7 +19,7 @@ code.jquery.com
     # within a data: URI
     ^code\.jquery\.com\/(?!.*\/themes\/.+\.css)
 maxcdn.bootstrapcdn.com
-    ^maxcdn\.bootstrapcdn\.com\/font-awesome\/
+    ^maxcdn\.bootstrapcdn\.com\/bootstrap\/.+\/.+\.js
 netdna.bootstrapcdn.com
     ^netdna\.bootstrapcdn\.com\/bootstrap\/
     ^netdna\.bootstrapcdn\.com\/font-awesome\/
