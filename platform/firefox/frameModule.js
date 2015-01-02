@@ -147,9 +147,9 @@ const contentObserver = {
 
         // The context for the popups is an iframe element here,
         // so check context.top instead
-
         if ( context.top && context.location ) {
-            getMessageManager(context).sendSyncMessage(this.messageName, {
+            // https://bugzil.la/1092216
+            getMessageManager(context).sendRpcMessage(this.messageName, {
                 opener: opener || null,
                 url: location.spec,
                 type: type,
