@@ -259,15 +259,20 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 node = nodeList[iNode];
                 attrValue = node.getAttribute(attr);
                 if ( !attrValue ) { continue; }
+                // Candidate 1 = generic form
+                // If specific form is injected, no need to process specific
+                // form, as the generic will affect all related specific forms
                 selector = '[' + attr + '="' + attrValue + '"]';
-                if ( generics[selector] ) {
+                if ( generics.hasOwnProperty(selector) ) {
                     if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);
+                        continue;
                     }
                 }
+                // Candidate 2 = specific form
                 selector = node.tagName.toLowerCase() + selector;
-                if ( generics[selector] ) {
+                if ( generics.hasOwnProperty(selector) ) {
                     if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
                         out.push(selector);

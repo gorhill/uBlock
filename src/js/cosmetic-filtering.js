@@ -778,7 +778,9 @@ FilterContainer.prototype.freezeHighGenerics = function(what) {
     }
     var highHighGenericCount = 0;
 
-    var reHighLow = /^[a-z]*(\[(?:alt|title)="[^"]+"\])$/;
+    // https://github.com/gorhill/uBlock/issues/456
+    // Include tag name, it's part of the filter
+    var reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
     var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
     var matches, hash;
 
@@ -788,8 +790,8 @@ FilterContainer.prototype.freezeHighGenerics = function(what) {
         }
         // ["title"] and ["alt"] will go in high-low generic bin.
         matches = reHighLow.exec(selector);
-        if ( matches && matches.length === 2 ) {
-            highLowGeneric[matches[1]] = true;
+        if ( matches && matches.length === 1 ) {
+            highLowGeneric[matches[0]] = true;
             highLowGenericCount += 1;
             continue;
         }
