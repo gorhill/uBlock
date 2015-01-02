@@ -86,18 +86,22 @@ vAPI.tabs.get = function(tabId, callback) {
     var onTabReady = function(tab) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
-            return;
+            ;
         }
+        // Caller must be prepared to deal with nil tab value
         callback(tab);
     };
     if ( tabId !== null ) {
+        if ( typeof tabId === 'string' ) {
+            tabId = parseInt(tabId, 10);
+        }
         chrome.tabs.get(tabId, onTabReady);
         return;
     }
     var onTabReceived = function(tabs) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
-            return;
+            ;
         }
         callback(tabs[0]);
     };
