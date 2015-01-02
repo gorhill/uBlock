@@ -66,6 +66,7 @@
         "homeURL": "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
         },
     "easylist-downloads.adblockplus.org/fanboy-social.txt": {
+        "off": true,
         "title": "Fanboy’s Social Blocking List",
         "group": "social",
         "homeURL": "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
