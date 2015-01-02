@@ -46,10 +46,10 @@ if ( vAPI.canExecuteContentScript() !== true ) {
 
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
-if ( vAPI.contentscriptStart ) {
+if ( vAPI.contentscriptStartInjected ) {
     return;
 }
-vAPI.contentscriptStart = true;
+vAPI.contentscriptStartInjected = true;
 
 /******************************************************************************/
 
@@ -64,7 +64,7 @@ var localMessager = vAPI.messaging.channel('contentscript-start.js');
 var cosmeticFilters = function(details) {
     var donthideCosmeticFilters = {};
     var hideCosmeticFilters = {};
-    style = document.createElement('style');
+    var style = document.createElement('style');
     style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
     var hide = details.cosmeticHide;

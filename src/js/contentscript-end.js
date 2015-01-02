@@ -21,11 +21,13 @@
 
 /* global vAPI */
 
-'use strict';
-
 /******************************************************************************/
 
 // Injected into content pages
+
+(function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -35,10 +37,10 @@ if ( vAPI.canExecuteContentScript() !== true ) {
 
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
-if ( vAPI.contentscriptEnd ) {
+if ( vAPI.contentscriptEndInjected ) {
     return;
 }
-vAPI.contentscriptEnd = true;
+vAPI.contentscriptEndInjected = true;
 
 /******************************************************************************/
 
@@ -681,6 +683,11 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     window.addEventListener('contextmenu', onContextMenu, true);
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/

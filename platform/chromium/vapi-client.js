@@ -33,15 +33,15 @@
 
 self.vAPI = self.vAPI || {};
 
-// https://github.com/gorhill/uBlock/issues/456
-// Already injected?
-if ( vAPI.vapiClient ) {
-    return;
-}
-vAPI.vapiClient = true;
-
 var chrome = self.chrome;
 var vAPI = self.vAPI;
+
+// https://github.com/gorhill/uBlock/issues/456
+// Already injected?
+if ( vAPI.vapiClientInjected ) {
+    return;
+}
+vAPI.vapiClientInjected = true;
 
 vAPI.chrome = true;
 
