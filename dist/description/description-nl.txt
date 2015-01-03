@@ -13,7 +13,6 @@ Standaard worden de volgende filterlijsten geladen en toegepast:
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy's Sociale blokkeerlijst
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List

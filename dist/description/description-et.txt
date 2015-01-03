@@ -13,7 +13,6 @@ Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
 - EasyList
 - Peter Lowe reklaamiserveri loend
 - EasyPrivacy
-- Fanboy sotsiaalvõrkude blokeerimisloend
 - Pahavara levitavad domeenid
 - Aegunud pahavara domeenid
 - Pahavara domeenide loend

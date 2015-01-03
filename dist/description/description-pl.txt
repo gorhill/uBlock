@@ -13,7 +13,6 @@ Po zainstalowaniu te listy filtrów są ładowane i egzekwowane:
 - EasyList
 - Serwer listy reklam Peter Lowe'a
 - EasyPrivacy
-- Lista blokowania społeczności dla fanboy'ów
 - Domeny malware
 - Długotrwałe domeny malware
 - Lista domen malware

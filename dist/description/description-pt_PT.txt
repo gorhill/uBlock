@@ -14,7 +14,6 @@ Por predefinição, estas listas de filtros são carregadas e aplicadas:
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List

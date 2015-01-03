@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Teie filtrid",
+    "message":"Minu filtrid",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Minu reeglid",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -72,43 +72,43 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Sellel saidil on <b>lubatud<\/b> tekstisisesed <code>skriptid<\/code>",
+    "message":"Tekstisisese <code>skripti<\/code> märksõnad on sellel saidil <b>lubatud<\/b>",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Sellel saidil on tekstisisesed <code>skriptid<\/code> <b>keelatud<\/b>",
+    "message":"Tekstisisese <code>skripti<\/code> märksõnad on sellel saidil <b>keelatud<\/b>",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Sellel saidil on esimese osapoole skriptid <b>lubatud<\/b>",
+    "message":"Esimese osapoole skriptid on sellel saidil <b>lubatud<\/b>",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Sellel saidil on esimese osapoole skriptid <b>keelatud<\/b>",
+    "message":"Esimese osapoole skriptid on sellel saidil <b>keelatud<\/b>",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Sellel saidil on kolmanda osapoole skriptid <b>lubatud<\/b>",
+    "message":"Kolmanda osapoole skriptid on sellel saidil <b>lubatud<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Sellel saidil on kolmanda osapoole skriptid <b>keelatud<\/b>",
+    "message":"Kolmanda osapoole skriptid on sellel saidil <b>keelatud<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Sellel saidil on esimese osapoole raamid <b>lubatud<\/b>",
+    "message":"Esimese osapoole raamid on sellel saidil <b>lubatud<\/b>",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Sellel saidil on esimese osapoole raamid <b>keelatud<\/b>",
+    "message":"Esimese osapoole raamid on sellel saidil <b>keelatud<\/b>",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Sellel saidil on kolmanda osapoole raamid <b>lubatud<\/b>",
+    "message":"Kolmanda osapoole raamid on sellel saidil <b>lubatud<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Sellel saidil on kolmanda osapoole raamid <b>keelatud<\/b>",
+    "message":"Kolmanda osapoole raamid on sellel saidil <b>keelatud<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"pildid",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"tekstisisesed skriptid",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"1. osapoole skriptid",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"3. osapoole skriptid",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"3. osapoole raamid",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Ühendatud {{count}} eraldiseisva domeeniga",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -324,27 +324,27 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Muuda",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Salvesta",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Tühista",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Impordi failist...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Ekspordi faili...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"minu-ublocki-dünaamilised-reeglid.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
