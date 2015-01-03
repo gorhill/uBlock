@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con un uso ligero de procesador y memoria.",
+    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con uso ligero de procesador y memoria.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Filtros de usuario",
+    "message":"Mis filtros",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Mis reglas",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -60,7 +60,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clic para abrir el panel de configuración",
+    "message":"Clic para abrir el panel de control",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"imágenes",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"scripts embebidos",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Scripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Scripts de terceros",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Frames de terceros",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Conectado con {{count}} dominios diferentes",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -240,7 +240,7 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analizar y aplicar filtros de ocultación de elementos de Adblock+.",
+    "message":"Analizar y aplicar filtros cosméticos.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -300,7 +300,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"puede ser obsoleto",
+    "message":"desactualizado",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -324,23 +324,23 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Editar",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Guardar",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Descartar",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Importar desde archivo...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Exportar a archivo...",
     "description":""
   },
   "rulesDefaultFileName":{

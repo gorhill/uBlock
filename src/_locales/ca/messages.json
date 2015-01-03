@@ -4,315 +4,315 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endlich ein effizienter Blocker für Chromium-basierte Browser. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
+    "message":"Per fi un bloquejador eficient per a navegadors basats en Chromium, amb un baix consum de memòria i de processador.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Tauler de control",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Einstellungen",
+    "message":"Configuració",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Vorgegebene Filter",
+    "message":"Filtres de tercers",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Meine Filter",
+    "message":"Els vostres filtres",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Meine Regeln",
+    "message":"Les meves regles",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Llista blanca",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Statistiken",
+    "message":"Estadístiques",
     "description":"appears as tab name in dashboard"
   },
   "aboutPageName":{
-    "message":"Über",
+    "message":"Quant a",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"klicke das An-\/ Ausschalt-Symbol, um µBlock für diese Webseite permanent ein- oder auszuschalten.\n\nStrg+Klick: schalte µBlock nicht für die komplette Webseite aus, sondern nur selektiv für die aktuell geöffnete Seite.",
+    "message":"Clic: desactiva\/activa µBlock per a aquest lloc.\n\nCtrl+click: desactiva µBlock només en aquesta pàgina.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockierte Anfragen",
+    "message":"sol·licituds bloquejades",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"auf dieser Seite",
+    "message":"en aquesta pàgina",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"seit Installation",
+    "message":"des de la instal·lació",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"oder",
+    "message":"o",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicke um das Dashboard zu öffnen",
+    "message":"Clic per obrir el tauler de control",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Öffne den Element-Picker-Modus",
+    "message":"Entrar al mode de selecció d'elements",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gehe zu den protokollierten Anfragen",
+    "message":"Anar al registre de peticions",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>erlaubt<\/b>",
+    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>habilitades<\/b> per a aquest lloc",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>blockiert<\/b>",
+    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>deshabilitades<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
+    "message":"Scripts <b>activats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
+    "message":"Scripts <b>desactivats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Skripte von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
+    "message":"Scripts de tercers <b>activats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Skripte von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
+    "message":"Scripts de tercers <b>desactivats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
+    "message":"Marcs <b>activats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
+    "message":"Marcs <b>desactivats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Frames von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
+    "message":"Marcs de tercers <b>activats<\/b> per a aquest lloc",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Frames von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
+    "message":"Marcs de tercers <b>desactivats<\/b> per a aquest lloc",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>erlaubt<\/b>",
+    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>habilitades<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>blockiert<\/b>",
+    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>deshabilitades<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
+    "message":"Scripts <b>activats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
+    "message":"Scripts <b>desactivats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Skripte von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
+    "message":"Scripts de tercers <b>activats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Skripte von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
+    "message":"Scripts de tercers <b>desactivats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
+    "message":"Marcs <b>activats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
+    "message":"Marcs <b>desactivats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Frames von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
+    "message":"Marcs de tercers <b>activats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Frames von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
+    "message":"Marcs de tercers <b>desactivats<\/b> per a qualsevol lloc",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"Bilder",
+    "message":"imatges",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"Inline-Skripte",
+    "message":"scripts incrustats",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Skripte der aktuellen Seite",
+    "message":"scripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Skripte von Drittseiten",
+    "message":"scripts de tercers",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Frames von Drittseiten",
+    "message":"marcs de tercers",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Verbunden mit {{count}} unterschiedlichen Domains",
+    "message":"Connectat amb {{count}} domini(s) diferents",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
-    "message":"Erzeugen",
+    "message":"Crear",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Auswählen",
+    "message":"Escollir",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Beenden",
+    "message":"Sortir",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Netzwerkfilter",
+    "message":"Filtres de xarxa",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetische Filter",
+    "message":"Filtres cosmètics",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klick, Strg-Klick",
+    "message":"Clic, Ctrl+clic",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Element blockieren",
+    "message":"Bloquejar element",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Verstecke die Platzhalter für blockierte Elemente",
+    "message":"Amagar marcardors de posició dels elements bloquejats",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Zeige die Zahl der blockierten Anfragen auf dem Icon",
+    "message":"Mostrar el número de peticions bloquejades a l'icona",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Verwende das Kontextmenü, falls möglich",
+    "message":"Utilitzar el menú contextual quan sigui possible",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktiviere experimentelle Features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Habilitar funcions experimentals (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Quant a<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} Netzwerkfilter ＋ {{cosmeticFilterCount}} kosmetische Filter von:",
+    "message":"{{netFilterCount}} filtres de xarxa ＋ {{cosmeticFilterCount}} filtres cosmètics de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} benutzt aus {{total}}",
+    "message":"{{used}} utilitzats de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Automatische Aktualisierung der Filterlisten",
+    "message":"Actualitzar automàticament la llista de filtres.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Jetzt aktualisieren",
+    "message":"Actualitza ara",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Leere alle Cache-Speicher",
+    "message":"Neteja la memòria caché",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Kosmetische Filter zum Verstecken von Elementen analysieren und anwenden.",
+    "message":"Analitzar i aplicar filtres cosmètics.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https:\/\/adblockplus.org\/de\/faq_internal#elemhide\">Adblock Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo; <\/a>. Diese Filter sind in erster Linie kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.<\/p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb Adblock Plus &ldquo;per a amagar elements&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que no es pode amagar per defecte.<\/p><p>Activant aquesta opció augmenta el consum de memòria del <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listen blockierter Hostnamen",
+    "message":"Llistes de servidors bloquejats",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Änderungen anwenden",
+    "message":"Aplicar canvis",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Werbung",
+    "message":"Anuncis",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privatsphäre",
+    "message":"Privacitat",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Domains mit Schadsoftware",
+    "message":"Dominis de malware",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Soziale Netzwerke",
+    "message":"Social",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Verschiedene Zwecke",
+    "message":"Polivalent",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regionen, Sprachen",
+    "message":"Regions, llengües",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Benutzerdefiniert",
+    "message":"Personalitzat",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Eine URL pro Zeile. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert. Ungültige URLs werden stillschweigend ignoriert.",
+    "message":"Una URL per línia. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran. Adreces URL no vàlides s'ignoraran silenciosament.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Anwenden",
+    "message":"Analitzar",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Leere den Cache",
+    "message":"neteja la memòria",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Neue Version verfügbar",
+    "message":"nova versió disponible",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"veraltet",
+    "message":"antiquat",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock Plus-kompatibler Filter. Zeilen mit vorangestelltem &lsquo;!&rsquo; werden ignoriert.",
+    "message":"Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb Adblock Plus. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importieren und anfügen",
+    "message":"Importar i annexar",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportieren",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "1pExportFilename":{
@@ -320,27 +320,27 @@
     "description":"English: ublock-custom-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Änderungen anwenden",
+    "message":"Aplicar canvis",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Bearbeiten",
+    "message":"Editar",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Speichern",
+    "message":"Desar",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Verwerfen",
+    "message":"Descartar",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Aus Datei importieren...",
+    "message":"Importar des de fitxer...",
     "description":""
   },
   "rulesExport":{
-    "message":"In eine Datei exportieren ...",
+    "message":"Exportar a fitxer...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -348,15 +348,15 @@
     "description":"default file name to use"
   },
   "whitelistPrompt":{
-    "message":"Deine Liste von Hostnamen, für die µBlock deaktiviert ist. Ein Eintrag pro Zeile. Ungültige Hostnamen werden stillschweigend ignoriert.",
+    "message":"La seva llista de noms de servidors per als quals es desactivarà µBlock. Una entrada per línia. Els noms de servidors no vàlids s'ignoraran.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importieren und anfügen",
+    "message":"Imporar i annexar",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exportieren",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
@@ -364,31 +364,31 @@
     "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Änderungen anwenden",
+    "message":"Aplicar canvis",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Protokollieren von Netzwerkanfragen aktivieren",
+    "message":"Habilitar el registre de sol·licituds de xarxa",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Du kannst dir die Details von blockierten Anfragen anschauen, wenn du diese Option aktivierst. Das Protokollieren von blockierten Anfragen erhöht den Speicherbedarf von <i>µBlock<\/i>. Da dieses Feature von vielen Benutzern wohl nicht genutzt werden wird, ist es standardmäßig deaktiviert.",
+    "message":"Es pot inspeccionar els detalls de les peticions bloquejades activant aquesta opció. El registre de peticions bloquejades augmenta el consum de memòria. Ja que molts usuaris mai ho utilitzen, està desactivada per defecte.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blockierte Anfragen",
+    "message":"Sol·licituds bloquejades",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Zugelassene Anfragen",
+    "message":"Sol·licituds permeses",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Typ",
+    "message":"Tipus",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Domini",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -396,19 +396,19 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Filtre",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite",
+    "message":"No hi ha peticions bloquejades per a aquesta pàgina",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Keine blockierten Anfragen für diese Seite gefunden",
+    "message":"No hi ha peticions no bloquejades per a aquesta pàgina",
     "description":"English: No non-blocked requests logged for this page"
   },
   "aboutChangelog":{
-    "message":"Änderungsprotokoll",
+    "message":"Registre de canvis",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -416,15 +416,15 @@
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Quellcode (GPLv3)",
+    "message":"Codi font (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Mitwirkende",
+    "message":"Col·laboradors",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup in eine Datei...",
+    "message":"Còpia de seguretat a un fitxer",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -432,31 +432,31 @@
     "description":"English: ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Aus einer Datei wiederherstellen...",
+    "message":"Restaurar des d'un fitxer...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Fange von ganz vorne an...",
+    "message":"Restaurar als valors de fàbrica...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird µBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch das Backup ersetzt werden?",
+    "message":"Tota la configuració es reescriurà amb la còpia de seguretat del {{time}}, i µBlock es reiniciarà.\n\nRestaurar la configuració amb la còpia de seguretat?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Die Daten konnten nicht gelesen werden oder waren ungültig",
+    "message":"Les dades no es poden llegir o no son vàlides",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alle Einstellungen werden gelöscht und µBlock neu gestartet.\n\nSoll µBlock auf Werkseinstellungen zurückgesetzt werden?",
+    "message":"S'esborrarà tota la configuració i µBlock es reiniciarà.\n\nReiniciar µBlock als valors de fàbrica?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Netzwerkfehler: Verbindung zu {{url}} nicht möglich",
+    "message":"Impossible connectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"Dieser Eintrag muss der letzte sein",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

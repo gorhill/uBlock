@@ -13,7 +13,6 @@ Bunun dışında, aşağıdaki filtre listeleri yüklenmiştir ve uygulanır:
 -EasyList
 -Peter Lowe'uns reklam sunucuları listesi
 -EasyPrivacy
--Fanboy'un sosyal engelleme listesi
 -Zararlı websiteleri
 -Uzun vadeli zararlı alan adları
 - Malware Domains List

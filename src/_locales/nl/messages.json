@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Jouw filters",
+    "message":"Mijn filters",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -72,35 +72,35 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Inline <code>script<\/code>-tags zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Inline <code>script<\/code>-tags zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"1e-partij scripts zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"1e-partij scripts worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"3rd-party scripts zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"3rd-party scripts worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"1e-partij frames zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"1e-partij frames zijn <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite3pFrameEnabled":{

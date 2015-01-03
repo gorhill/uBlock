@@ -13,7 +13,6 @@ Po instalaci jsou načteny a použity tyto filtry:
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List
@@ -25,7 +24,7 @@ Pokud chcete, můžete si vybrat tyto další filtry:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- atd.
+- A mnoho dalších
 
 Čím více filtrů je povoleno, tím je samozřejmě větší stopa v paměti. I přesto má ale µBlock i po přidání dvou dalších seznamů od Fanboye a "hpHosts’s Ad and tracking servers" menší vliv na paměť než mnohé další velmi populární blockery.
 

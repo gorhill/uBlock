@@ -10,6 +10,7 @@ unzip -q ~/Downloads/ublock.zip -d $SRC
 
 DES=./src/_locales
 cp $SRC/ar/messages.json    $DES/ar/messages.json
+cp $SRC/ca/messages.json    $DES/ca/messages.json
 cp $SRC/cs/messages.json    $DES/cs/messages.json
 cp $SRC/da/messages.json    $DES/da/messages.json
 cp $SRC/de/messages.json    $DES/de/messages.json
@@ -45,6 +46,7 @@ cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 
 DES=./dist/description
 cp $SRC/ar/description.txt    $DES/description-ar.txt
+cp $SRC/ca/description.txt    $DES/description-ca.txt
 cp $SRC/cs/description.txt    $DES/description-cs.txt
 cp $SRC/da/description.txt    $DES/description-da.txt
 cp $SRC/de/description.txt    $DES/description-de.txt
@@ -72,7 +74,7 @@ cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
 #cp $SRC/vi/description.txt    $DES/description-vi.txt
 cp $SRC/zh-CN/description.txt $DES/description-zh_CN.txt
-cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
+#cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
 #
 

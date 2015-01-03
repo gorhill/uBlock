@@ -13,7 +13,6 @@ Alapértelmezetten a következő szűrőlisták kerülnek betöltésre és alkal
 - EasyList
 - Peter Lowe hirdetési szerverlistája
 - EasyPrivacy
-- Fanboy közösségi tiltólistája
 - Kártékony domének
 - Hosszúéletű kártékony domének
 - Malware Domains List

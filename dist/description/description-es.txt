@@ -1,4 +1,4 @@
-Un bloqueador eficiente: con un bajo consumo de memoria y CPU, es capaz de cargar y aplicar miles más de filtros en comparación a otros bloqueadores populares.
+Un bloqueador eficiente: con bajo consumo de memoria y CPU, es capaz de cargar y aplicar miles más de filtros en comparación con otros bloqueadores populares.
 
 Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
@@ -13,7 +13,6 @@ Por defecto ya trae configuradas las siguientes listas de filtros:
 - EasyList
 - Lista de servidores de anuncios de Peter Lowe
 - EasyPrivacy
-- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List

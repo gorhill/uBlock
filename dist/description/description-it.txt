@@ -13,7 +13,6 @@ Per default sono attivate queste liste:
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List

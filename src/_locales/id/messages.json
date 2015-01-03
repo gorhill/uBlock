@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Filter Anda",
+    "message":"Filter saya",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Aturan saya",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -72,107 +72,107 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Tag <code>script<\/code> inline <b>diperbolehkan<\/b> pada situs ini",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Tag <code>script<\/code> inline <b>diblokir<\/b> pada situs ini",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"script pihak pertama <b>diperbolehkan<\/b> pada situs ini",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"script pihak pertama <b>diblokir<\/b> pada situs ini",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"skrip pihak ketiga <b>diperbolehkan<\/b> pada situs ini",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"skrip pihak ketiga <b>diblokir<\/b> pada situs ini",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"Frame pihak pertama <b>diperbolehkan<\/b> pada situs ini",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"Frame pihak pertama <b>diblokir<\/b> pada situs ini",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Frame pihak ketiga <b>diperbolehkan<\/b> pada situs ini",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Frame pihak ketiga <b>diblokir<\/b> pada situs ini",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Tag <code>script<\/code> inline <b>diperbolehkan<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Tag <code>script<\/code> inline <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Script pihak pertama <b>diperbolehkan<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Script pihak pertama <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Skrip pihak ketiga <b>diperbolehkan<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Skrip pihak ketiga <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Frame pihak pertama <b>diperbolehkan<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Frame pihak pertama <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Frame pihak ketiga <b>diperbolehkan<\/b> di mana-mana secara default",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Frame pihak ketiga <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"gambar",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"skrip inline",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Skrip pihak pertama",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Skrip pihak ketiga",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Frame pihak ketiga",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Terhubung ke {{count}} domain berbeda",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktifkan fitur eksperimental",
+    "message":"Aktifkan fitur eksperimental (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> Tentang<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -328,19 +328,19 @@
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Simpan",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Buang",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Impor dari file...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Ekspor ke file...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -436,7 +436,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Mulai dari awal...",
+    "message":"Reset ke pengaturan default...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -444,11 +444,11 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Data tidak dapat dibaca atau tidak valid",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Semua setelan Anda akan dihapus dan µBlock akan restart.\n\nReset µBlock ke setelan pabrik ?",
+    "message":"Semua setelan Anda akan dihapus dan µBlock akan restart.\n\nReset µBlock ke setelan awal ?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

@@ -13,7 +13,6 @@ Berikut ini daftar filter yang bisa langsung dipakai:
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy’s Social Blocking List‎
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List

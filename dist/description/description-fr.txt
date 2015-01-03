@@ -13,7 +13,6 @@ Par défaut, ces listes de filtrage sont chargées et traitées :
 - EasyList (Liste anti-publicités maintenue fréquemment à jour par la communauté)
 - Peter Lowe’s Ad server list (Liste de serveurs publicitaires maintenue à jour par Peter Lowe)
 - EasyPrivacy (Liste anti-pisteurs maintenue fréquemment à jour par la communauté)
-- Fanboy’s Social Blocking List‎ (Liste bloquant le pistage des utilisateurs par les réseaux sociaux)
 - Malware domains (Liste de protection contre des domaines malveillants)
 - Long-lived malware domains (Liste de protection contre des domaines malveillants existant depuis longtemps)
 - Malware Domains List (Autre liste de protection contre des domaines malveillants)
@@ -25,7 +24,7 @@ Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 - hpHosts’s Ad and tracking servers (Fichier Hosts bloquant des serveurs publicitaires et des serveurs pistant, maintenue à jour par hpHosts)
 - MVPS HOSTS (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue à jour par MVPS)
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
-- Etc
+- Et plein d'autres
 
 Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier Hosts d'hpHosts, µBlock utilise moins de mémoire vive que tous les autres bloqueurs de pubs populaires.
 

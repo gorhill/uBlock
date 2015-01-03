@@ -14,7 +14,6 @@ https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
-- Fanboy’s Social Blocking List?
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List
