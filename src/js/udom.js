@@ -20,7 +20,6 @@
 */
 
 /* exported uDom */
-'use strict';
 
 /******************************************************************************/
 
@@ -31,6 +30,8 @@
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
 var uDom = (function() {
+
+'use strict';
 
 /******************************************************************************/
 
@@ -639,6 +640,24 @@ DOMList.prototype.toggleClasses = function(classNames, targetState) {
 
 /******************************************************************************/
 
+var listenerEntries = [];
+
+var ListenerEntry = function(target, type, capture, callback) {
+    this.target = target;
+    this.type = type;
+    this.capture = capture;
+    this.callback = callback;
+    target.addEventListener(type, callback, capture);
+};
+
+ListenerEntry.prototype.dispose = function() {
+    this.target.removeEventListener(this.type, this.callback, this.capture);
+    this.target = null;
+    this.callback = null;
+};
+
+/******************************************************************************/
+
 var makeEventHandler = function(selector, callback) {
     return function(event) {
         var dispatcher = event.currentTarget;
@@ -662,7 +681,7 @@ DOMList.prototype.on = function(etype, selector, callback) {
 
     var i = this.nodes.length;
     while ( i-- ) {
-        this.nodes[i].addEventListener(etype, callback, selector !== undefined);
+        listenerEntries.push(new ListenerEntry(this.nodes[i], etype, selector !== undefined, callback));
     }
     return this;
 };
@@ -690,6 +709,20 @@ DOMList.prototype.trigger = function(etype) {
     }
     return this;
 };
+
+/******************************************************************************/
+
+// Cleanup
+
+var onBeforeUnload = function() {
+    var entry;
+    while ( entry = listenerEntries.pop() ) {
+        entry.dispose();
+    }
+    window.removeEventListener('beforeunload', onBeforeUnload);
+};
+
+window.addEventListener('beforeunload', onBeforeUnload);
 
 /******************************************************************************/
 
