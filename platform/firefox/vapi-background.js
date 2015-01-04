@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, XPCOMUtils, CustomizableUI */
-
 // For background page
 
 /******************************************************************************/
@@ -33,9 +31,7 @@
 
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-Cu['import']('resource://gre/modules/Services.jsm');
-Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
-Cu['import']('resource:///modules/CustomizableUI.jsm');
+Cu.import('resource://gre/modules/Services.jsm');
 
 /******************************************************************************/
 
@@ -53,8 +49,10 @@ vAPI.app = {
 /******************************************************************************/
 
 vAPI.app.restart = function() {
-    // Observing in bootstrap.js
-    Services.obs.notifyObservers(null, location.host + '-restart', null);
+    // Listening in bootstrap.js
+    Cc['@mozilla.org/childprocessmessagemanager;1']
+        .getService(Ci.nsIMessageSender)
+        .sendAsyncMessage(location.host + '-restart');
 };
 
 /******************************************************************************/
@@ -641,6 +639,8 @@ vAPI.toolbarButton = {
 /******************************************************************************/
 
 vAPI.toolbarButton.init = function() {
+    const {CustomizableUI} = Cu.import('resource:///modules/CustomizableUI.jsm', {});
+
     CustomizableUI.createWidget({
         id: this.widgetId,
         type: 'view',
@@ -936,12 +936,16 @@ var httpObserver = {
                 .getService(Ci.nsICategoryManager);
     },
 
-    QueryInterface: XPCOMUtils.generateQI([
-        Ci.nsIFactory,
-        Ci.nsIObserver,
-        Ci.nsIChannelEventSink,
-        Ci.nsISupportsWeakReference
-    ]),
+    QueryInterface: (function() {
+        var {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', {});
+
+        return XPCOMUtils.generateQI([
+            Ci.nsIFactory,
+            Ci.nsIObserver,
+            Ci.nsIChannelEventSink,
+            Ci.nsISupportsWeakReference
+        ]);
+    })(),
 
     createInstance: function(outer, iid) {
         if ( outer ) {
@@ -1048,12 +1052,12 @@ var httpObserver = {
             }
 
             try {
+                // [tabId, type, sourceTabId - given if it was a popup]
                 channelData = channel.getProperty(location.host + 'reqdata');
             } catch (ex) {
                 return;
             }
 
-            // [tabId, type, sourceTabId - given if it was a popup]
             if ( !channelData || channelData[0] !== this.MAIN_FRAME ) {
                 return;
             }
@@ -1402,7 +1406,7 @@ window.addEventListener('unload', function() {
 
     // frameModule needs to be cleared too
     var frameModule = {};
-    Cu['import'](vAPI.getURL('frameModule.js'), frameModule);
+    Cu.import(vAPI.getURL('frameModule.js'), frameModule);
     frameModule.contentObserver.unregister();
     Cu.unload(vAPI.getURL('frameModule.js'));
 });

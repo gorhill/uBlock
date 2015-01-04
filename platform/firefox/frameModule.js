@@ -19,20 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global Services, Components, XPCOMUtils, __URI__ */
-
 'use strict';
 
 /******************************************************************************/
 
 this.EXPORTED_SYMBOLS = ['contentObserver'];
 
-const {interfaces: Ci, utils: Cu} = Components;
-const appName = __URI__.match(/:\/\/([^\/]+)/)[1];
+const {interfaces: Ci, utils: Cu} = this.Components;
+const appName = this.__URI__.match(/:\/\/([^\/]+)/)[1];
 
-Cu['import']('resource://gre/modules/Services.jsm');
-Cu['import']('resource://gre/modules/XPCOMUtils.jsm');
-// Cu['import']('resource://gre/modules/devtools/Console.jsm');
+Cu.import('resource://gre/modules/Services.jsm');
+Cu.import('resource://gre/modules/devtools/Console.jsm');
 
 /******************************************************************************/
 
@@ -66,12 +63,16 @@ const contentObserver = {
                 .getService(Ci.nsICategoryManager);
     },
 
-    QueryInterface: XPCOMUtils.generateQI([
-        Ci.nsIFactory,
-        Ci.nsIObserver,
-        Ci.nsIContentPolicy,
-        Ci.nsISupportsWeakReference
-    ]),
+    QueryInterface: (function() {
+        let {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
+
+        return XPCOMUtils.generateQI([
+            Ci.nsIFactory,
+            Ci.nsIObserver,
+            Ci.nsIContentPolicy,
+            Ci.nsISupportsWeakReference
+        ]);
+    })(),
 
     createInstance: function(outer, iid) {
         if ( outer ) {
@@ -117,7 +118,7 @@ const contentObserver = {
             return this.ACCEPT;
         }
 
-        let opener;
+        var opener;
 
         if ( location.scheme !== 'http' && location.scheme !== 'https' ) {
             if ( type !== this.MAIN_FRAME ) {
@@ -208,6 +209,7 @@ const contentObserver = {
                 this.initContentScripts(win);
             }
 
+            // What about data: and about:blank?
             return;
         }
 

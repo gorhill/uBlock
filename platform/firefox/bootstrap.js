@@ -28,31 +28,13 @@
 
 let bgProcess;
 const hostName = 'ublock';
-const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
-const restartObserver = {
-    get observer() {
-        return Cc["@mozilla.org/observer-service;1"]
-            .getService(Ci.nsIObserverService);
+const restartListener = {
+    get messageManager() {
+        return Components.classes['@mozilla.org/parentprocessmessagemanager;1']
+            .getService(Components.interfaces.nsIMessageListenerManager);
     },
 
-    QueryInterface: (function() {
-        let {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
-
-        return XPCOMUtils.generateQI([
-            Ci.nsIObserver,
-            Ci.nsISupportsWeakReference
-        ]);
-    })(),
-
-    register: function() {
-        this.observer.addObserver(this, hostName + '-restart', true);
-    },
-
-    unregister: function() {
-        this.observer.removeObserver(this, hostName + '-restart');
-    },
-
-    observe: function() {
+    receiveMessage: function() {
         shutdown();
         startup();
     }
@@ -66,8 +48,8 @@ function startup(data, reason) {
             this.removeEventListener(e.type, onReady);
         }
 
-        let hDoc = Cc['@mozilla.org/appshell/appShellService;1']
-            .getService(Ci.nsIAppShellService)
+        let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
+            .getService(Components.interfaces.nsIAppShellService)
             .hiddenDOMWindow.document;
 
         bgProcess = hDoc.documentElement.appendChild(
@@ -77,7 +59,11 @@ function startup(data, reason) {
             'src',
             'chrome://' + hostName + '/content/background.html'
         );
-        restartObserver.register();
+
+        restartListener.messageManager.addMessageListener(
+            hostName + '-restart',
+            restartListener
+        );
     };
 
     if ( reason !== APP_STARTUP ) {
@@ -85,8 +71,8 @@ function startup(data, reason) {
         return;
     }
 
-    let ww = Cc['@mozilla.org/embedcomp/window-watcher;1']
-                .getService(Ci.nsIWindowWatcher);
+    let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
+                .getService(Components.interfaces.nsIWindowWatcher);
 
     ww.registerNotification({
         observe: function(win) {
@@ -107,7 +93,10 @@ function shutdown(data, reason) {
 
     // Remove the restartObserver only when the extension is being disabled
     if ( data !== undefined ) {
-        restartObserver.unregister();
+        restartListener.messageManager.removeMessageListener(
+            hostName + '-restart',
+            restartListener
+        );
     }
 }
 
@@ -115,8 +104,8 @@ function shutdown(data, reason) {
 
 function install() {
     // https://bugzil.la/719376
-    Cc['@mozilla.org/intl/stringbundle;1']
-        .getService(Ci.nsIStringBundleService).flushBundles();
+    Components.classes['@mozilla.org/intl/stringbundle;1']
+        .getService(Components.interfaces.nsIStringBundleService).flushBundles();
 }
 
 /******************************************************************************/
