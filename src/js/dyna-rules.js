@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uMatrix
 */
 
-/* global chrome, messaging, uDom */
+/* global vAPI, uDom */
 
 /******************************************************************************/
 
@@ -97,11 +97,9 @@ function handleImportFilePicker() {
         if ( typeof this.result !== 'string' || this.result === '' ) {
             return;
         }
-        var request = {
-            'what': 'setDynamicRules',
-            'rawRules': uDom('#rulesEditor').val()
-        };
-        messager.send(request, processRules);
+        var textarea = uDom('#rulesEditor');
+        textarea.val([textarea.val(), this.result].join('\n').trim());
+        rulesChanged();
     };
     var file = this.files[0];
     if ( file === undefined || file.name === '' ) {
@@ -129,9 +127,13 @@ var startImportFilePicker = function() {
 /******************************************************************************/
 
 function exportUserRulesToFile() {
-    chrome.downloads.download({
-        'url': 'data:text/plain,' + encodeURIComponent(rulesFromHTML('#diff .left li')),
-        'filename': uDom('[data-i18n="userRulesDefaultFileName"]').text(),
+    var now = new Date();
+    var filename = vAPI.i18n('rulesDefaultFileName')
+        .replace('{{datetime}}', now.toLocaleString())
+        .replace(/ +/g, '_');
+    vAPI.download({
+        'url': 'data:text/plain,' + encodeURIComponent(uDom('#rulesEditor').val()),
+        'filename': filename,
         'saveAs': true
     });
 }

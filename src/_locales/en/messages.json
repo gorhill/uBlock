@@ -320,8 +320,8 @@
     "description":"English: Export"
   },
   "1pExportFilename" : {
-    "message": "ublock-custom-filters_{{datetime}}.txt",
-    "description": "English: ublock-custom-filters_{{datetime}}.txt"
+    "message": "my-ublock-static-filters_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Apply changes",
@@ -348,7 +348,7 @@
     "description": ""
   },
   "rulesDefaultFileName": {
-    "message": "my-ublock-dynamic-rules.txt",
+    "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
     "description": "default file name to use"
   },
   "whitelistPrompt":{
@@ -364,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename" : {
-    "message": "ublock-whitelist_{{datetime}}.txt",
-    "description": "English: ublock-whitelist_{{datetime}}.txt"
+    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Apply changes",
@@ -432,8 +432,8 @@
     "description": "English: Backup to file"
   },
   "aboutBackupFilename" : {
-    "message": "ublock-backup_{{datetime}}.txt",
-    "description": "English: ublock-backup_{{datetime}}.txt"
+    "message": "my-ublock-backup_{{datetime}}.txt",
+    "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton" : {
     "message": "Restore from file...",
