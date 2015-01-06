@@ -24,7 +24,7 @@ Ostale liste su dostupne za odabir ako ih želite:
 - hpHosts serveri za reklame i praćenje
 - MVPS HOSTS
 - Spam404
-- Ostalo
+- I mnogi drugi
 
 Naravno, više omogućenih filtera, veći je memorijski otisak. Ipak, čak i nakon dodavanja Fanboyova dva dodatna popisa, hpHosts servera za reklame i praćenje, µBlock još uvijek ima manji memorijski otisak od drugih popularnih blokera.
 
