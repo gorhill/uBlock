@@ -83,7 +83,12 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/91
     if ( result !== '' ) {
-        pageStore.recordResult('popup', requestURL, result);
+        var context = {
+            requestURL: requestURL,
+            requestHostname: µb.URI.hostnameFromURI(requestURL),
+            requestType: 'popup'
+        };
+        pageStore.logBuffer.writeOne(context, result);
     }
 
     // Not blocked

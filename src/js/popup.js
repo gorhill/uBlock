@@ -29,8 +29,9 @@
 
 /******************************************************************************/
 
-var stats;
-var dynaTypes = [
+var popupData;
+var dfPaneBuilt = false;
+var dfTypes = [
     'image',
     'inline-script',
     '1p-script',
@@ -48,7 +49,7 @@ var scopeToSrcHostnameMap = {
 var threePlus = '+++';
 var threeMinus = '−−−';
 var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
-var dynaHotspots = null;
+var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
 
 /******************************************************************************/
@@ -60,15 +61,15 @@ var messager = vAPI.messaging.channel('popup.js');
 /******************************************************************************/
 
 var cachePopupData = function(data) {
-    stats = {};
+    popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
     if ( typeof data !== 'object' ) {
-        return stats;
+        return popupData;
     } 
-    stats = data;
-    scopeToSrcHostnameMap['.'] = stats.pageHostname || '';
-    var hostnameDict = stats.hostnameDict;
+    popupData = data;
+    scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
+    var hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict === 'object' ) {
         var domain, prefix;
         for ( var hostname in hostnameDict ) {
@@ -76,14 +77,14 @@ var cachePopupData = function(data) {
                 continue;
             }
             domain = hostnameDict[hostname].domain;
-            if ( domain === stats.pageDomain ) {
+            if ( domain === popupData.pageDomain ) {
                 domain = '\u0020';
             }
             prefix = hostname.slice(0, 0 - domain.length);
             hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
         }
     }
-    return stats;
+    return popupData;
 };
 
 /******************************************************************************/
@@ -118,12 +119,15 @@ var addDynamicFilterRow = function(des) {
     row.descendants('[data-des]').attr('data-des', des);
     row.descendants('div > span:nth-of-type(1)').text(des);
 
-    var hnDetails = stats.hostnameDict[des] || {};
+    var hnDetails = popupData.hostnameDict[des] || {};
     var isDomain = des === hnDetails.domain;
     row.toggleClass('isDomain', isDomain);
     if ( hnDetails.allowCount !== 0 ) {
         touchedDomains[hnDetails.domain] = true;
-        row.addClass('wasTouched');
+        row.addClass('allowed');
+    }
+    if ( hnDetails.blockCount !== 0 ) {
+        row.addClass('blocked');
     }
 
     row.appendTo('#dynamicFilteringContainer');
@@ -134,8 +138,8 @@ var addDynamicFilterRow = function(des) {
     // of the popup, and the left pane will have a scrollbar if ever its 
     // height is larger than what is available.
     if ( popupHeight === undefined ) {
-        popupHeight = uDom('body > div:nth-of-type(2)').nodeAt(0).offsetHeight;
-        uDom('body > div:nth-of-type(1)').css('height', popupHeight + 'px');
+        popupHeight = uDom('#panes > div:nth-of-type(1)').nodeAt(0).offsetHeight;
+        uDom('#panes > div:nth-of-type(2)').css('height', popupHeight + 'px');
     }
     return row;
 };
@@ -169,10 +173,10 @@ var syncDynamicFilterCell = function(scope, des, type, result) {
     if ( scope !== '.' || type !== '*' ) {
         return;
     }
-    if ( stats.hostnameDict.hasOwnProperty(des) === false ) {
+    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
         return;
     }
-    var hnDetails = stats.hostnameDict[des];
+    var hnDetails = popupData.hostnameDict[des];
     var aCount = hnDetails.allowCount;
     var bCount = hnDetails.blockCount;
     if ( aCount === 0 && bCount === 0 ) {
@@ -192,9 +196,9 @@ var syncDynamicFilterCell = function(scope, des, type, result) {
 
 var syncAllDynamicFilters = function() {
     var hasRule = false;
-    var rules = stats.dynamicFilterRules;
+    var rules = popupData.dynamicFilterRules;
     var type, result;
-    var types = dynaTypes;
+    var types = dfTypes;
     var i = types.length;
     while ( i-- ) {
         type = types[i];
@@ -220,28 +224,30 @@ var syncAllDynamicFilters = function() {
     }
 
     uDom('#privacyInfo').text(vAPI.i18n('popupHitDomainCountPrompt').replace('{{count}}', Object.keys(touchedDomains).length));
+
+    if ( dfPaneBuilt !== true ) {
+        uDom('#dynamicFilteringContainer')
+            .on('click', 'span[data-src]', unsetDynamicFilterHandler)
+            .on('mouseenter', '[data-src]', mouseenterCellHandler)
+            .on('mouseleave', '[data-src]', mouseleaveCellHandler);
+        dfHotspots = uDom('#actionSelector')
+            .on('click', 'span', setDynamicFilterHandler)
+            .detach();
+        dfPaneBuilt = true;
+    }
 };
 
 /******************************************************************************/
 
-var renderPopup = function(details) {
-    if ( !cachePopupData(details) ) {
-        return;
-    }
+var renderPopup = function() {
+    uDom('#appname').text(popupData.appName);
+    uDom('#version').text(popupData.appVersion);
 
-    var hdr = uDom('#version');
-    hdr.nodes[0].previousSibling.textContent = details.appName;
-    hdr.html(hdr.html() + 'v' + details.appVersion);
-
-    var isHTTP = /^https?:\/\/[0-9a-z]/.test(stats.pageURL);
+    var isHTTP = /^https?:\/\/[0-9a-z]/.test(popupData.pageURL);
 
     // Conditions for request log:
     //   - `http` or `https` scheme
-    //   - logging of requests enabled
-    uDom('#gotoLog').toggleClass(
-        'enabled',
-        isHTTP && stats.logRequests
-    );
+    uDom('#gotoLog').toggleClass('enabled', isHTTP);
 
     // Conditions for element picker:
     //   - `http` or `https` scheme
@@ -251,8 +257,8 @@ var renderPopup = function(details) {
     );
 
     var or = vAPI.i18n('popupOr');
-    var blocked = stats.pageBlockedRequestCount;
-    var total = stats.pageAllowedRequestCount + blocked;
+    var blocked = popupData.pageBlockedRequestCount;
+    var total = popupData.pageAllowedRequestCount + blocked;
     var html = [];
     if ( total === 0 ) {
         html.push('0');
@@ -268,8 +274,8 @@ var renderPopup = function(details) {
     }
     uDom('#page-blocked').html(html.join(''));
 
-    blocked = stats.globalBlockedRequestCount;
-    total = stats.globalAllowedRequestCount + blocked;
+    blocked = popupData.globalBlockedRequestCount;
+    total = popupData.globalAllowedRequestCount + blocked;
     html = [];
     if ( total === 0 ) {
         html.push('0');
@@ -284,27 +290,28 @@ var renderPopup = function(details) {
         );
     }
 
-    //if ( stats.dynamicFilteringEnabled ) {
+    // Build dynamic filtering pane only if in use
+    if ( popupData.dfEnabled ) {
         syncAllDynamicFilters();
-    //}
+    }
 
     uDom('#total-blocked').html(html.join(''));
-    uDom('#switch .fa').toggleClass('off', stats.pageURL === '' || !stats.netFilteringSwitch);
-    uDom('body').toggleClass('dynamicFilteringEnabled', stats.dynamicFilteringEnabled);
+    uDom('#switch .fa').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
+    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
 };
 
 /******************************************************************************/
 
 var toggleNetFilteringSwitch = function(ev) {
-    if ( !stats || !stats.pageURL ) {
+    if ( !popupData || !popupData.pageURL ) {
         return;
     }
     messager.send({
         what: 'toggleNetFiltering',
-        url: stats.pageURL,
+        url: popupData.pageURL,
         scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
         state: !uDom(this).toggleClass('off').hasClass('off'),
-        tabId: stats.tabId
+        tabId: popupData.tabId
     });
 };
 
@@ -323,11 +330,11 @@ var gotoDashboard = function() {
 
 /******************************************************************************/
 
-var gotoStats = function() {
+var gotoDevTools = function() {
     messager.send({
         what: 'gotoURL',
         details: {
-            url: 'dashboard.html?tab=stats&which=' + stats.tabId,
+            url: 'devtools.html?tabId=' + popupData.tabId,
             select: true,
             index: -1
         }
@@ -339,7 +346,7 @@ var gotoStats = function() {
 var gotoPick = function() {
     messager.send({
         what: 'gotoPick',
-        tabId: stats.tabId
+        tabId: popupData.tabId
     });
     window.open('','_self').close();
 };
@@ -366,42 +373,42 @@ var gotoLink = function(ev) {
 /******************************************************************************/
 
 var toggleDynamicFiltering = function(ev) {
-    var el = uDom('body');
-    el.toggleClass('dynamicFilteringEnabled');
+    var el = uDom('#panes');
+    popupData.dfEnabled = !popupData.dfEnabled;
     messager.send({
         what: 'userSettings',
         name: 'dynamicFilteringEnabled',
-        value: el.hasClass('dynamicFilteringEnabled')
-    });
+        value: popupData.dfEnabled
+    }, renderPopup);
 };
 
 /******************************************************************************/
 
 var mouseenterCellHandler = function() {
     if ( uDom(this).hasClass('ownRule') === false ) {
-        dynaHotspots.appendTo(this);
+        dfHotspots.appendTo(this);
     }
 };
 
 var mouseleaveCellHandler = function() {
-    dynaHotspots.detach();
+    dfHotspots.detach();
 };
 
 /******************************************************************************/
 
 var setDynamicFilter = function(src, des, type, action) {
     // This can happen on pages where uBlock does not work
-    if ( typeof stats.pageHostname !== 'string' || stats.pageHostname === '' ) {
+    if ( typeof popupData.pageHostname !== 'string' || popupData.pageHostname === '' ) {
         return;
     }
-    var onDynamicFilterChanged = function(details) {
-        cachePopupData(details);
+    var onDynamicFilterChanged = function(response) {
+        cachePopupData(response);
         syncAllDynamicFilters();
     };
     messager.send({
         what: 'toggleDynamicFilter',
-        tabId: stats.tabId,
-        pageHostname: stats.pageHostname,
+        tabId: popupData.tabId,
+        pageHostname: popupData.pageHostname,
         srcHostname: src,
         desHostname: des,
         requestType: type,
@@ -414,12 +421,12 @@ var setDynamicFilter = function(src, des, type, action) {
 var unsetDynamicFilterHandler = function() {
     var cell = uDom(this);
     setDynamicFilter(
-        cell.attr('data-src') === '/' ? '*' : stats.pageHostname,
+        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
         0
     );
-    dynaHotspots.appendTo(cell);
+    dfHotspots.appendTo(cell);
 };
 
 /******************************************************************************/
@@ -440,30 +447,12 @@ var setDynamicFilterHandler = function() {
         action = 1;
     }
     setDynamicFilter(
-        cell.attr('data-src') === '/' ? '*' : stats.pageHostname,
+        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
         action
     );
-    dynaHotspots.detach();
-};
-
-/******************************************************************************/
-
-var installEventHandlers = function() {
-    uDom('h1,h2,h3,h4').on('click', gotoDashboard);
-    uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
-    uDom('#gotoLog').on('click', gotoStats);
-    uDom('#gotoPick').on('click', gotoPick);
-    uDom('a[href^=http]').on('click', gotoLink);
-    uDom('#dynamicFilteringToggler').on('click', toggleDynamicFiltering);
-
-    uDom('#dynamicFilteringContainer').on('click', 'span[data-src]', unsetDynamicFilterHandler);
-    uDom('#dynamicFilteringContainer')
-        .on('mouseenter', '[data-src]', mouseenterCellHandler)
-        .on('mouseleave', '[data-src]', mouseleaveCellHandler);
-    dynaHotspots = uDom('#actionSelector');
-    dynaHotspots.on('click', 'span', setDynamicFilterHandler).detach();
+    dfHotspots.detach();
 };
 
 /******************************************************************************/
@@ -471,8 +460,18 @@ var installEventHandlers = function() {
 // Make menu only when popup html is fully loaded
 
 uDom.onLoad(function() {
-    messager.send({ what: 'activeTabStats' }, renderPopup);
-    installEventHandlers();
+    messager.send({ what: 'activeTabStats' }, function(response) {
+        if ( !cachePopupData(response) ) {
+            return;
+        }
+        renderPopup();
+    });
+    uDom('h1,h2,h3,h4').on('click', gotoDashboard);
+    uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
+    uDom('#gotoLog').on('click', gotoDevTools);
+    uDom('#gotoPick').on('click', gotoPick);
+    uDom('a[href^=http]').on('click', gotoLink);
+    uDom('#dfToggler').on('click', toggleDynamicFiltering);
 });
 
 /******************************************************************************/

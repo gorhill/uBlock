@@ -45,22 +45,194 @@ var µb = µBlock;
 /******************************************************************************/
 /******************************************************************************/
 
+var LogEntry = function(details, result) {
+    this.init(details, result);
+};
+
+/******************************************************************************/
+
+var logEntryFactory = function(details, result) {
+    var entry = logEntryJunkyard.pop();
+    if ( entry ) {
+        return entry.init(details, result);
+    }
+    return new LogEntry(details, result);
+};
+
+var logEntryJunkyard = [];
+var logEntryJunkyardMax = 100;
+
+/******************************************************************************/
+
+LogEntry.prototype.init = function(details, result) {
+    this.tstamp = Date.now();
+    this.url = details.requestURL;
+    this.domain = details.requestDomain;
+    this.hostname = details.requestHostname;
+    this.type = details.requestType;
+    this.result = result;
+    return this;
+};
+
+/******************************************************************************/
+
+LogEntry.prototype.dispose = function() {
+    this.url = this.domain = this.hostname = this.type = this.result = '';
+    if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
+        logEntryJunkyard.push(this);
+    }
+};
+
+/******************************************************************************/
+
+var LogBuffer = function() {
+    this.lastReadTime = 0;
+    this.size = 25;
+    this.buffer = null;
+    this.readPtr = 0;
+    this.writePtr = 0;
+};
+
+/******************************************************************************/
+
+var logBufferFactory = function() {
+    return new LogBuffer();
+};
+
+var liveLogBuffers = [];
+
+/******************************************************************************/
+
+LogBuffer.prototype.dispose = function() {
+    if ( this.buffer === null ) {
+        return null;
+    }
+    var entry;
+    var i = this.buffer.length;
+    while ( i-- ) {
+        entry = this.buffer[i];
+        if ( entry instanceof LogEntry ) {
+            entry.dispose();
+        }
+    }
+    this.buffer = null;
+    return null;
+};
+
+/******************************************************************************/
+
+LogBuffer.prototype.start = function() {
+    if ( this.buffer === null ) {
+        this.buffer = new Array(this.size);
+        this.readPtr = 0;
+        this.writePtr = 0;
+        liveLogBuffers.push(this);
+    }
+};
+
+/******************************************************************************/
+
+LogBuffer.prototype.stop = function() {
+    this.dispose();
+    this.buffer = null;
+    // The janitor will remove us from the live pool eventually.
+};
+
+/******************************************************************************/
+
+LogBuffer.prototype.writeOne = function(details, result) {
+    if ( this.buffer === null ) {
+        return;
+    }
+    // Reusing log entry = less memory churning
+    var entry = this.buffer[this.writePtr];
+    if ( entry instanceof LogEntry === false ) {
+        this.buffer[this.writePtr] = logEntryFactory(details, result);
+    } else {
+        entry.init(details, result);
+    }
+    this.writePtr += 1;
+    if ( this.writePtr === this.size ) {
+        this.writePtr = 0;
+    }
+    // Grow the buffer between 1.5x-2x the current size
+    if ( this.writePtr === this.readPtr ) {
+        var toMove = this.buffer.slice(0, this.writePtr);
+        var minSize = Math.ceil(this.size * 1.5);
+        this.size += this.writePtr;
+        if ( this.size < minSize ) {
+            this.buffer = this.buffer.concat(toMove, new Array(minSize - this.size));
+            this.writePtr = this.size;
+        } else {
+            this.buffer = this.buffer.concat(toMove);
+            this.writePtr = 0;
+        }
+        this.size = this.buffer.length;
+    }
+};
+
+/******************************************************************************/
+
+LogBuffer.prototype.readAll = function() {
+    var out;
+    if ( this.buffer === null ) {
+        this.start();
+        out = [];
+    } else if ( this.readPtr < this.writePtr ) {
+        out = this.buffer.slice(this.readPtr, this.writePtr);
+    } else if ( this.writePtr < this.readPtr ) {
+        out = this.buffer.slice(this.readPtr).concat(this.buffer.slice(0, this.writePtr));
+    } else {
+        out = [];
+    }
+    this.readPtr = this.writePtr;
+    this.lastReadTime = Date.now();
+    return out;
+};
+
+/******************************************************************************/
+
+var logBufferJanitor = function() {
+    var logBuffer;
+    var obsolete = Date.now() - logBufferObsoleteAfter;
+    var i = liveLogBuffers.length;
+    while ( i-- ) {
+        logBuffer = liveLogBuffers[i];
+        if ( logBuffer.lastReadTime < obsolete ) {
+            logBuffer.stop();
+            liveLogBuffers.splice(i, 1);
+        }
+    }
+    setTimeout(logBufferJanitor, logBufferJanitorPeriod);
+};
+
+// The janitor will look for stale log buffer every 2 minutes.
+var logBufferJanitorPeriod = 2 * 60 * 1000;
+
+// After 30 seconds without being read, a buffer will be considered unused, and
+// thus removed from memory.
+var logBufferObsoleteAfter = 30 * 1000;
+
+setTimeout(logBufferJanitor, logBufferJanitorPeriod);
+
+/******************************************************************************/
+/******************************************************************************/
+
 // To mitigate memory churning
 var netFilteringResultCacheEntryJunkyard = [];
 var netFilteringResultCacheEntryJunkyardMax = 200;
 
 /******************************************************************************/
 
-var NetFilteringResultCacheEntry = function(result, type, flags) {
-    this.init(result, type, flags);
+var NetFilteringResultCacheEntry = function(result, type) {
+    this.init(result, type);
 };
 
 /******************************************************************************/
 
-NetFilteringResultCacheEntry.prototype.init = function(result, type, flags) {
+NetFilteringResultCacheEntry.prototype.init = function(result, type) {
     this.result = result;
     this.type = type;
-    this.flags = flags;
     this.time = Date.now();
 };
 
@@ -76,12 +248,12 @@ NetFilteringResultCacheEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCacheEntry.factory = function(result, type, flags) {
+NetFilteringResultCacheEntry.factory = function(result, type) {
     var entry = netFilteringResultCacheEntryJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new NetFilteringResultCacheEntry(result, type, flags);
+        entry = new NetFilteringResultCacheEntry(result, type);
     } else {
-        entry.init(result, type, flags);
+        entry.init(result, type);
     }
     return entry;
 };
@@ -115,10 +287,11 @@ NetFilteringResultCache.factory = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.init = function() {
-    this.uname = 'NetFilteringResultCache:' + uidGenerator++;
     this.urls = {};
     this.count = 0;
     this.shelfLife = 60 * 1000;
+    this.timer = null;
+    this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
 };
 
 /******************************************************************************/
@@ -130,10 +303,12 @@ NetFilteringResultCache.prototype.dispose = function() {
         }
         this.urls[key].dispose();
     }
-    µBlock.asyncJobs.remove(this.uname);
-    this.uname = '';
     this.urls = {};
     this.count = 0;
+    if ( this.timer !== null ) {
+        clearTimeout(this.timer);
+        this.timer = null;
+    }
     if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
         netFilteringCacheJunkyard.push(this);
     }
@@ -142,16 +317,17 @@ NetFilteringResultCache.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.add = function(url, result, type, flags) {
+NetFilteringResultCache.prototype.add = function(context, result) {
+    var url = context.requestURL;
+    var type = context.requestType;
     var entry = this.urls[url];
     if ( entry !== undefined ) {
         entry.result = result;
         entry.type = type;
-        entry.flags = flags;
         entry.time = Date.now();
         return;
     }
-    this.urls[url] = NetFilteringResultCacheEntry.factory(result, type, flags);
+    this.urls[url] = NetFilteringResultCacheEntry.factory(result, type);
     if ( this.count === 0 ) {
         this.pruneAsync();
     }
@@ -197,13 +373,14 @@ NetFilteringResultCache.prototype.prune = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.pruneAsync = function() {
-    µBlock.asyncJobs.add(
-        this.uname,
-        null,
-        this.prune.bind(this),
-        this.shelfLife + 120000,
-        false
-    );
+    if ( this.timer === null ) {
+        this.timer = setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
+    }
+};
+
+NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
+    this.timer = null;
+    this.prune();
 };
 
 /******************************************************************************/
@@ -272,12 +449,6 @@ var pageStoreJunkyardMax = 10;
 
 /******************************************************************************/
 
-// Cache only what is worth it if logging is disabled
-// http://jsperf.com/string-indexof-vs-object
-var collapsibleRequestTypes = 'image sub_frame object';
-
-/******************************************************************************/
-
 var PageStore = function(tabId, pageURL) {
     this.init(tabId, pageURL);
 };
@@ -318,10 +489,12 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.skipLocalMirroring = false;
-
     this.netFilteringCache = NetFilteringResultCache.factory();
-    if ( µb.userSettings.logRequests ) {
-        this.netFilteringCache.shelfLife = 30 * 60 * 1000;
+
+    // Preserve old buffer if there is one already, it may be in use, and
+    // overwritting it would required another read to restart it.
+    if ( this.logBuffer instanceof LogBuffer === false ) {
+        this.logBuffer = logBufferFactory();
     }
 
     return this;
@@ -374,6 +547,7 @@ PageStore.prototype.dispose = function() {
     this.hostnameToCountMap = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
+    this.logBuffer = this.logBuffer.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
         pageStoreJunkyard.push(this);
     }
@@ -422,27 +596,46 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 /******************************************************************************/
 
 PageStore.prototype.filterRequest = function(context) {
-    var requestURL = context.requestURL;
-
     if ( this.getNetFilteringSwitch() === false ) {
-        this.recordResult(context.requestType, requestURL, '');
+        this.cacheResult(context, '');
         return '';
     }
 
-    var entry = this.netFilteringCache.lookup(requestURL);
+    var entry = this.netFilteringCache.lookup(context.requestURL);
     if ( entry !== undefined ) {
-        //console.debug('cache HIT: PageStore.filterRequest("%s")', requestURL);
+        //console.debug('cache HIT: PageStore.filterRequest("%s")', context.requestURL);
         return entry.result;
     }
 
-    var result = µb.filterRequest(context);
+    var result = '';
 
-    //console.debug('cache MISS: PageStore.filterRequest("%s")', requestURL);
-    this.recordResult(context.requestType, requestURL, result);
+    // Given that:
+    // - Dynamic filtering override static filtering
+    // - Evaluating dynamic filtering is much faster than static filtering
+    // We evaluate dynamic filtering first, and hopefully we can skip
+    // evaluation of static filtering.
+    var df = µb.dynamicNetFilteringEngine.clearRegisters();
+    df.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+    if ( df.mustBlockOrAllow() ) {
+        result = df.toFilterString();
+    }
 
-    // TODO: send this to a dev-panel tool
-    //console.debug('[%s, %s] = "%s"', context.requestHostname, context.requestType, result);
+    // Static filtering never override dynamic filtering
+    if ( result === '' ) {
+        result = µb.staticNetFilteringEngine.matchString(context);
+    }
 
+    //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
+    this.cacheResult(context, result);
+
+    // console.debug('[%s, %s] = "%s"', context.requestHostname, context.requestType, result);
+
+    return result;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.cacheResult = function(context, result) {
     var requestHostname = context.requestHostname;
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;
@@ -453,25 +646,14 @@ PageStore.prototype.filterRequest = function(context) {
     } else /* if ( c === 'b' ) */ {
         this.hostnameToCountMap[requestHostname] += 0x00000001;
     }
-    return result;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.setRequestFlags = function(requestURL, targetBits, valueBits) {
-    var entry = this.netFilteringCache.lookup(requestURL);
-    if ( entry !== undefined ) {
-        entry.flags = (entry.flags & ~targetBits) | (valueBits & targetBits);
+    if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
+        this.netFilteringCache.add(context, result);
     }
 };
 
-/******************************************************************************/
-
-PageStore.prototype.recordResult = function(requestType, requestURL, result) {
-    if ( collapsibleRequestTypes.indexOf(requestType) !== -1 || µb.userSettings.logRequests ) {
-        this.netFilteringCache.add(requestURL, result, requestType, 0);
-    }
-};
+// Cache only what is worth it if logging is disabled
+// http://jsperf.com/string-indexof-vs-object
+var collapsibleRequestTypes = 'image sub_frame object';
 
 /******************************************************************************/
 
@@ -493,7 +675,7 @@ PageStore.prototype.updateBadge = function() {
     var iconStr = '';
     if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
         // Safari can't show formatted strings, only integers.
-        if (vAPI.safari) {
+        if ( vAPI.safari ) {
             iconStr = this.perLoadBlockedRequestCount;
         }
         else {

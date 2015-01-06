@@ -71,6 +71,10 @@ var onMessage = function(request, sender, callback) {
             µb.reloadPresetBlacklists(request.switches, request.update);
             break;
 
+        case 'reloadTab':
+            vAPI.tabs.reload(request.tabId);
+            break;
+
         case 'userSettings':
             response = µb.changeUserSettings(request.name, request.value);
             break;
@@ -177,8 +181,7 @@ var getStats = function(tabId) {
         pageAllowedRequestCount: 0,
         netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
-        logRequests: µb.userSettings.logRequests,
-        dynamicFilteringEnabled: µb.userSettings.dynamicFilteringEnabled
+        dfEnabled: µb.userSettings.dynamicFilteringEnabled
     };
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
@@ -749,50 +752,30 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var getPageDetails = function(µb, tabId) {
-    var r = {
-        blockedRequests: [],
-        allowedRequests: [],
-        hash: ''
-    };
-    var pageStore = µb.pageStores[tabId];
-    if ( !pageStore ) {
-        return r;
+var getPageDetails = function(callback) {
+    var out = {};
+    var tabIds = Object.keys(µb.pageStores);
+
+    var countdown = tabIds.length;
+    if ( countdown === 0 ) {
+        callback(out);
+        return;
     }
-    var prepareRequests = function(wantBlocked, hasher) {
-        var µburi = µb.URI;
-        var dict = pageStore.netFilteringCache.fetchAll();
-        var r = [];
-        var details, hostname, domain;
-        for ( var url in dict ) {
-            if ( dict.hasOwnProperty(url) === false ) {
-                continue;
-            }
-            details = dict[url];
-            if ( wantBlocked !== pageStore.boolFromResult(details.result) ) {
-                continue;
-            }
-            hasher.appendStr(url);
-            hasher.appendStr(details.result);
-            hostname = µburi.hostnameFromURI(url);
-            domain = µburi.domainFromHostname(hostname) || hostname;
-            r.push({
-                url: url,
-                domain: domain,
-                reason: details.result,
-                type: details.type,
-                flags: details.flags
-            });
+
+    var onTabDetails = function(tab) {
+        if ( tab ) {
+            out[tab.id] = tab.title;
         }
-        return r;
+        countdown -= 1;
+        if ( countdown === 0 ) {
+            callback(out);
+        }
     };
-    var hasher = new YaMD5();
-    if ( µb.userSettings.logRequests ) {
-        r.blockedRequests = prepareRequests(true, hasher);
-        r.allowedRequests = prepareRequests(false, hasher);
+
+    var i = countdown;
+    while ( i-- ) {
+        vAPI.tabs.get(tabIds[i], onTabDetails);
     }
-    r.hash = hasher.end();
-    return r;
 };
 
 /******************************************************************************/
@@ -800,8 +783,8 @@ var getPageDetails = function(µb, tabId) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'getTabForStats':
-            vAPI.tabs.get(request.tabId, callback);
+        case 'getPageDetails':
+            getPageDetails(callback);
             return;
 
         default:
@@ -812,14 +795,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'getPageSelectors':
-            response = Object.keys(µb.pageStores);
-            break;
-
-        case 'getPageDetails':
-            response = getPageDetails(µb, request.tabId);
-            break;
-
         default:
             return vAPI.messaging.UNHANDLED;
     }
@@ -928,6 +903,52 @@ var onMessage = function(request, sender, callback) {
 };
 
 vAPI.messaging.listen('about.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// devtool-log.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'readLogBuffer':
+            var pageStore = µb.pageStoreFromTabId(request.tabId);
+            if ( pageStore ) {
+                response = pageStore.logBuffer.readAll();
+            }
+            break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('devtool-log.js', onMessage);
 
 /******************************************************************************/
 

@@ -661,6 +661,10 @@
         µb.mirrors.toggle(settings.experimentalEnabled);
         µb.contextMenu.toggle(settings.contextMenuEnabled);
 
+        // Remove obsolete setting
+        delete µb.userSettings.logRequests;
+        µb.XAL.keyvalRemoveOne('logRequests');
+
         if ( typeof settings.dynamicFilteringSelfie === 'string' ) {
             if ( settings.dynamicFilteringString === '' && settings.dynamicFilteringSelfie !== '' ) {
                 µb.dynamicNetFilteringEngine.fromObsoleteSelfie(settings.dynamicFilteringSelfie);

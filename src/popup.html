@@ -9,33 +9,36 @@
 </head>
 
 <body>
-<h4 title="popupTipDashboard">v<span id="version"></span></h4>
-<div>
-    <div id="dynamicFilteringContainer">
-        <div><span data-i18n="popupImageRulePrompt"></span><span data-src="/" data-des="*" data-type="image"> </span><span data-src="." data-des="*" data-type="image"></span></div>
-        <div><span data-i18n="popupInlineScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="inline-script"> </span><span data-src="." data-des="*" data-type="inline-script"> </span></div>
-        <div><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="1p-script"> </span><span data-src="." data-des="*" data-type="1p-script"> </span></div>
-        <div><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-script"> </span><span data-src="." data-des="*" data-type="3p-script"> </span></div>
-        <div><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-frame"> </span><span data-src="." data-des="*" data-type="3p-frame"> </span></div>
-        <div id="privacyInfo"></div>
+<h4 title="popupTipDashboard"><span id="appname"></span><span id="version"></span></h4>
+<div id="panes">
+    <div>
+        <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
+        <p id="switch-hint"></p>
+        <p id="dfToggler" data-i18n="popupBlockedRequestPrompt"></p>
+        <p class="stats">
+            <span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;
+            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
+            <span id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</span>
+            </p>
+        <p id="page-blocked">?</p>
+        <p class="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
+        <p id="total-blocked">?</p>
+        </div><!-- DO NOT REMOVE --><div>
+        <div id="dynamicFilteringContainer">
+            <div><span data-i18n="popupImageRulePrompt"></span><span data-src="/" data-des="*" data-type="image"> </span><span data-src="." data-des="*" data-type="image"></span></div>
+            <div><span data-i18n="popupInlineScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="inline-script"> </span><span data-src="." data-des="*" data-type="inline-script"> </span></div>
+            <div><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="1p-script"> </span><span data-src="." data-des="*" data-type="1p-script"> </span></div>
+            <div><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-script"> </span><span data-src="." data-des="*" data-type="3p-script"> </span></div>
+            <div><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-frame"> </span><span data-src="." data-des="*" data-type="3p-frame"> </span></div>
+            <div id="privacyInfo"></div>
+            </div>
         </div>
-    </div><!-- DO NOT REMOVE --><div>
-    <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
-    <p id="switch-hint"></p>
-    <p id="dynamicFilteringToggler" data-i18n="popupBlockedRequestPrompt"></p>
-    <p class="stats">
-        <span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;
-        <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
-        <span id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</span>
-        </p>
-    <p id="page-blocked">?</p>
-    <p class="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
-    <p id="total-blocked">?</p>
     </div>
 
 <div id="templates" style="display: none">
     <div><span></span><span data-src="/" data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span></div>
     <div id='actionSelector'><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
+    <div id=hotspotTip></div>
     </div>
 
 <script src="js/vapi-common.js"></script>

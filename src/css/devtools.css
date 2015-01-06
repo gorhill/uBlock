@@ -1,0 +1,49 @@
+body {
+    font-size: 13px;
+    margin: 0;
+    overflow-y: hidden;
+    padding: 0;
+    }
+#toolbar {
+    background-color: #eee;
+    border: none;
+    box-sizing: border-box;
+    height: 4em;
+    padding: 1em;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    }
+#toolbar > * {
+    display: inline-block;
+    vertical-align: middle;
+    }
+#toolbar button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2em;
+    margin: 0 0 0 1em;
+    vertical-align: middle;
+    }
+#toolbar #refresh {
+    margin-left: 4px;
+    }
+select {
+    padding: 2px 0;
+    font-size: 14px;
+    min-width: 20em;
+    max-width: 40em;
+    }
+select option {
+    max-width: 40em;
+    }
+#content {
+    border: 0;
+    box-sizing: border-box;
+    height: calc(100vh - 4em);
+    margin-top: 4em;
+    overflow-y: auto;
+    padding: 0;
+    width: 100%;
+    }

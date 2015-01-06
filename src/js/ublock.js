@@ -321,75 +321,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     this.XAL.keyvalSetOne('dynamicFilteringString', this.userSettings.dynamicFilteringString);
 
     // https://github.com/gorhill/uBlock/issues/420
-    if ( details.requestType === '3p-frame' && !details.block ) {
-        this.cosmeticFilteringEngine.removeFromSelectorCache(details.hostname, 'net');
-    }
-};
-
-/******************************************************************************/
-
-µBlock.isFirstParty = function(firstPartyDomain, hostname) {
-    if ( hostname.slice(0 - firstPartyDomain.length) !== firstPartyDomain ) {
-        return false;
-    }
-    // Be sure to not confuse 'example.com' with 'anotherexample.com'
-    var c = hostname.charAt(hostname.length - firstPartyDomain.length - 1);
-    return c === '.' || c === '';
-};
-
-/******************************************************************************/
-
-// The core logic to evaluate requests through dynamic/static filtering
-// is here.
-
-µBlock.filterRequest = function(context) {
-    // Given that:
-    // - Dynamic filtering override static filtering
-    // - Evaluating dynamic filtering is much faster than static filtering
-    // We evaluate dynamic filtering first, and hopefully we can skip
-    // evaluation of static filtering.
-    // Dynamic filtering evaluation is ordered from most-specific to least-
-    // specific.
-    var df = this.dynamicNetFilteringEngine.clearRegisters();
-
-    var rootHostname = context.rootHostname;
-    var requestHostname = context.requestHostname;
-    var requestType = context.requestType;
-
-    // Dynamic filters:
-    // 1. specific source, specific destination, any type, allow/block
-    // 2. any source, specific destination, any type, allow/block
-    df.evaluateCellZY(rootHostname, requestHostname, '*');
-    if ( df.mustBlockOrAllow() ) {
-        return df.toFilterString();
-    }
-
-    // Dynamic filters:
-    // 3. specific source, any destination, specific type, allow/block
-    // 4. any source, any destination, specific type, allow/block
-    if ( df.mustAbort() === false ) {
-        if ( requestType === 'script' ) {
-            df.evaluateCellZY(rootHostname, requestHostname, this.isFirstParty(rootHostname, requestHostname) ? '1p-script' : '3p-script');
-            if ( df.mustBlockOrAllow() ) {
-                return df.toFilterString();
-            }
-        } else if ( requestType === 'sub_frame' ) {
-            if ( this.isFirstParty(rootHostname, requestHostname) === false ) {
-                df.evaluateCellZY(rootHostname, requestHostname, '3p-frame');
-                if ( df.mustBlockOrAllow() ) {
-                    return df.toFilterString();
-                }
-            }
-        } else {
-            df.evaluateCellZY(rootHostname, requestHostname, requestType);
-            if ( df.mustBlockOrAllow() ) {
-                return df.toFilterString();
-            }
-        }
-    }
-
-    // 5. Static filtering never override dynamic filtering
-    return this.staticNetFilteringEngine.matchString(context);
+    this.cosmeticFilteringEngine.removeFromSelectorCache(details.srcHostname, 'net');
 };
 
 /******************************************************************************/
@@ -403,6 +335,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 µBlock.isAllowResult = function(result) {
     return typeof result !== 'string' || result.charAt(1) !== 'b';
 };
+
 /******************************************************************************/
 
 })();

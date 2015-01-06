@@ -60,7 +60,6 @@ return {
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
-        logRequests: false,
         parseAllABPHideFilters: true,
         showIconBadge: true
     },

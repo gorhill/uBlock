@@ -38,13 +38,25 @@ var Matrix = function() {
 
 /******************************************************************************/
 
+var supportedTypes = {
+            '*': true,
+'inline-script': true,
+       'script': true,
+    '1p-script': true,
+    '3p-script': true,
+    'sub_frame': true,
+     '3p-frame': true,
+        'image': true
+};
+
 var typeBitOffsets = {
             '*':  0,
 'inline-script':  2,
     '1p-script':  4,
     '3p-script':  6,
      '3p-frame':  8,
-        'image': 10
+        'image': 10,
+       '3p-any': 12
 };
 
 var actionToNameMap = {
@@ -192,6 +204,19 @@ Matrix.prototype.clearRegisters = function() {
 
 /******************************************************************************/
 
+var isFirstParty = function(srcHostname, desHostname) {
+    if ( desHostname.slice(0 - srcHostname.length) !== srcHostname ) {
+        return false;
+    }
+    // Be sure to not confuse 'example.com' with 'anotherexample.com'
+    if ( desHostname.lenght === srcHostname.lenght ) {
+        return true;
+    }
+    return desHostname.charAt(desHostname.length - srcHostname.length - 1) === '.';
+};
+
+/******************************************************************************/
+
 Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
     var bitOffset = typeBitOffsets[type];
     var s = srcHostname;
@@ -217,32 +242,42 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
 /******************************************************************************/
 
 Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
-    if ( typeBitOffsets.hasOwnProperty(type) === false ) {
+    this.r = 0;
+
+    if ( supportedTypes.hasOwnProperty(type) === false ) {
         this.type = '';
-        this.r = 0;
         return this;
     }
-    this.type = type;
-    // Specific-hostname specific-type cell
+
+    this.type = '*';
+
+    // Specific-destination + any type
     this.y = desHostname;
     this.r = this.evaluateCellZ(srcHostname, desHostname, type);
     if ( this.r !== 0 ) { return this; }
-
     var d = desHostname;
     for (;;) {
         d = toBroaderHostname(d);
         if ( d === '*' ) {
             break;
         }
-        // specific-hostname specific-type cell
         this.y = d;
         this.r = this.evaluateCellZ(srcHostname, d, type);
         if ( this.r !== 0 ) { return this; }
     }
 
-    // Any-hostname specific-type cells
+    // Any destination + specific-type
     this.y = '*';
+
+    if ( type === 'script' ) {
+        type = isFirstParty(srcHostname, desHostname) ? '1p-script' : '3p-script';
+    } else if ( type === 'sub-frame' && isFirstParty(srcHostname, desHostname) === false ) {
+        type = '3p-frame';
+    }
+
+    this.type = type;
     this.r = this.evaluateCellZ(srcHostname, '*', type);
+
     return this;
 };
 
@@ -447,7 +482,7 @@ Matrix.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-return new Matrix;
+return new Matrix();
 
 /******************************************************************************/
 

@@ -997,8 +997,14 @@ FilterContainer.prototype.removeFromSelectorCache = function(targetHostname, typ
         if ( this.selectorCache.hasOwnProperty(hostname) === false ) {
             continue;
         }
-        if ( targetHostname !== '*' && hostname !== targetHostname ) {
-            continue;
+        if ( targetHostname !== '*' ) {
+            if ( hostname.slice(0 - targetHostname.length) !== targetHostname ) {
+                continue;
+            }
+            if ( hostname.length !== targetHostname.length &&
+                 hostname.charAt(0 - targetHostname.length - 1) !== '.' ) {
+                continue;
+            }
         }
         this.selectorCache[hostname].remove(type);
     }

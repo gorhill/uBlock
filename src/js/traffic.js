@@ -95,6 +95,9 @@ var onBeforeRequest = function(details) {
 
     var result = pageStore.filterRequest(requestContext);
 
+    // Log result
+    pageStore.logBuffer.writeOne(requestContext, result);
+
     // Not blocked
     if ( pageStore.boolFromResult(result) === false ) {
         //console.debug('onBeforeRequest()> ALLOW "%s" (%o) because "%s"', details.url, details, result);
@@ -125,7 +128,6 @@ var onBeforeRequest = function(details) {
         // Not all redirects will succeed, until bug above is fixed.
         var redirectURL = µb.mirrors.toURL(requestURL, true);
         if ( redirectURL !== '' ) {
-            pageStore.setRequestFlags(requestURL, 0x01, 0x01);
             //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
             return { redirectUrl: redirectURL };
         }

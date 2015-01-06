@@ -28,22 +28,41 @@ a {
     font-weight: normal;
     margin-left: 1em;
     }
-body > div {
-    background-color: transparent;
+body[dir="ltr"] #panes {
+    direction: rtl;
+    }
+body[dir="rtl"] #panes {
+    direction: ltr;
+    }
+#panes > div {
     display: inline-block;
     position: relative;
     vertical-align: top;
     }
-body > div:nth-of-type(1) {
-    direction: rtl; /* scroll bar to the left */
+body[dir="ltr"] #panes > div {
+    direction: ltr;
+    }
+body[dir="rtl"] #panes > div {
+    direction: rtl;
+    }
+#panes > div:nth-of-type(2) {
     overflow-y: hidden;
     overflow-x: hidden;
+    width: 0;
     }
-body.dynamicFilteringEnabled > div:nth-of-type(1) {
+body[dir="ltr"] #panes > div:nth-of-type(2) {
+    direction: rtl; /* scroll bar to the left */
+    }
+body[dir="rtl"] #panes > div:nth-of-type(2) {
+    direction: ltr; /* scroll bar to the right */
+    }
+#panes.dfEnabled > div:nth-of-type(2) {
     overflow-y: auto;
+    width: 320px;
     }
-body > div:nth-of-type(2) {
-    padding: 4px 12px 0 5px;
+
+#panes > div:nth-of-type(1) {
+    padding: 4px 5px 0 5px;
     }
 p {
     margin: 16px 0;
@@ -96,17 +115,14 @@ p {
     color: #444;
     }
 
-#dynamicFilteringToggler {
-    pointer-events: none;
-    }
-#dynamicFilteringToggler::before {
+#dfToggler::before {
     color: gray;
     content: '+\202F';
     cursor: pointer;
-    font-size: 13px;
-    pointer-events: auto;
+    font-size: 14px;
+    line-height: 14px;
     }
-body.dynamicFilteringEnabled #dynamicFilteringToggler::before {
+#panes.dfEnabled #dfToggler::before {
     content: '\2212\202F';
     }
 
@@ -142,24 +158,16 @@ body.dynamicFilteringEnabled #dynamicFilteringToggler::before {
     margin: 0;
     padding: 0;
     text-align: right;
-    width: 5px;
-    }
-body.dynamicFilteringEnabled #dynamicFilteringContainer {
-    display: block;
-    width: auto;
     }
 #dynamicFilteringContainer > div {
-    background-color: transparent;
+    background-color: #e6e6e6;
     border: 0;
+    border-bottom: 1px solid white;
     direction: ltr;
     margin: 0;
     padding: 0;
-    width: 320px;
     }
-body.dynamicFilteringEnabled #dynamicFilteringContainer > div {
-    background-color: #e6e6e6;
-    }
-body.dynamicFilteringEnabled #dynamicFilteringContainer > div:hover {
+#dynamicFilteringContainer > div:hover {
     background-color: #f0f0f0;
     }
 #dynamicFilteringContainer > div#privacyInfo {
@@ -168,30 +176,21 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div:hover {
     padding: 4px 0;
     text-align: center;
     }
-#dynamicFilteringContainer > div.isDomain {
-    margin-top: 2px;
-    }
 #dynamicFilteringContainer > div > span {
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid white;
     box-sizing: border-box;
-    color: transparent;
+    color: #000;
     display: inline-block;
     height: 24px;
     line-height: 24px;
-    pointer-events: none;
+    overflow: hidden;
     position: relative;
     vertical-align: top;
     }
-body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
-    color: #000;
-    overflow: hidden;
-    pointer-events: auto;
-    }
 #dynamicFilteringContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
-    padding-right: 4px;
+    padding-right: 2px;
     text-overflow: ellipsis;
     width: 70%;
     }
@@ -201,6 +200,7 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
     }
 #dynamicFilteringContainer > div > span:nth-of-type(3) {
     border-left: 1px solid white;
+    color: #444;
     cursor: pointer;
     text-align: center;    
     width: 15%;
@@ -208,9 +208,14 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
     }
-#dynamicFilteringContainer > div > span:nth-of-type(3) {
-    color: #666;
-    pointer-events: auto;
+#dynamicFilteringContainer > div.allowed > span:nth-of-type(1) {
+    background-color: rgba(0, 160, 0, 0.1);
+    }
+#dynamicFilteringContainer > div.blocked > span:nth-of-type(1) {
+    background-color: rgba(192, 0, 0, 0.1);
+    }
+#dynamicFilteringContainer > div.allowed.blocked > span:nth-of-type(1) {
+    background-color: rgba(192, 160, 0, 0.1);
     }
 #dynamicFilteringContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
@@ -221,17 +226,17 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.3);
     }
+#dynamicFilteringContainer > div > span.ownRule {
+    color: white;
+    }
 #dynamicFilteringContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
-    color: white;
     }
 #dynamicFilteringContainer > div > span.bRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
-    color: white;
     }
 #dynamicFilteringContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
-    color: white;
     }
 
 #actionSelector {
@@ -263,4 +268,18 @@ body.dynamicFilteringEnabled #dynamicFilteringContainer > div > span {
 #dynamicFilteringContainer span.nRule #actionSelector > span:nth-of-type(2),
 #dynamicFilteringContainer span.bRule #actionSelector > span:nth-of-type(3) {
     visibility: hidden;
+    }
+#hotspotTip {
+    background-color: #ffe;
+    border: 1px dotted #ddb;
+    border-radius: 5px;
+    height: 50vh;
+    opacity: 1;
+    padding: 4px;
+    position: fixed;
+    right: 10px;
+    text-align: center;
+    top: 25vh;
+    width: 20vw;
+    z-index: 100;
     }

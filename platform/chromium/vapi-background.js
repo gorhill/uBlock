@@ -208,6 +208,15 @@ vAPI.tabs.remove = function(tabId) {
 
 /******************************************************************************/
 
+vAPI.tabs.reload = function(tabId, flags) {
+    if ( typeof tabId === 'string' ) {
+        tabId = parseInt(tabId, 10);
+    }
+    chrome.tabs.reload(tabId);
+};
+
+/******************************************************************************/
+
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
