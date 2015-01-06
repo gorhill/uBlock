@@ -62,6 +62,7 @@ body[dir="rtl"] #panes > div:nth-of-type(2) {
     }
 
 #panes > div:nth-of-type(1) {
+    min-width: 150px;
     padding: 4px 5px 0 5px;
     }
 p {
@@ -115,41 +116,15 @@ p {
     color: #444;
     }
 
-#dfToggler::before {
+body.advancedUser #dfToggler::before {
     color: gray;
     content: '+\202F';
     cursor: pointer;
     font-size: 14px;
     line-height: 14px;
     }
-#panes.dfEnabled #dfToggler::before {
+body.advancedUser #panes.dfEnabled #dfToggler::before {
     content: '\2212\202F';
-    }
-
-.dynamicFiltering div > .tip {
-    background-color: #fffff4;
-    border: 1px solid #888;
-    border-radius: 5px;
-    bottom: 20%;
-    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.8);
-    display: none;
-    font-size: small;
-    left: 8%;
-    padding: 0.25em;
-    position: fixed;
-    right: 8%;
-    text-align: center;
-    }
-.dynamicFiltering div:not(.blocked):hover > .tip:nth-of-type(1) {
-    display: block;
-    }
-.dynamicFiltering div.blocked:hover > .tip:nth-of-type(2) {
-    display: block;
-    }
-.dynamicFiltering div > .tip code {
-    background-color: #f8f8f8;
-    font: normal monospace;
-    padding: 1px 0;
     }
 
 #dynamicFilteringContainer {
@@ -268,18 +243,4 @@ p {
 #dynamicFilteringContainer span.nRule #actionSelector > span:nth-of-type(2),
 #dynamicFilteringContainer span.bRule #actionSelector > span:nth-of-type(3) {
     visibility: hidden;
-    }
-#hotspotTip {
-    background-color: #ffe;
-    border: 1px dotted #ddb;
-    border-radius: 5px;
-    height: 50vh;
-    opacity: 1;
-    padding: 4px;
-    position: fixed;
-    right: 10px;
-    text-align: center;
-    top: 25vh;
-    width: 20vw;
-    z-index: 100;
     }

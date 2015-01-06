@@ -18,14 +18,14 @@
     cursor: pointer;
     position: relative;
     }
-[data-tip]:hover:after {
+body:not(.advancedUser) [data-tip]:hover:after {
     background-color: #ffffee;
     border: 1px solid gray;
     border-radius: 3px;
     box-shadow: 1px 1px 3px gray;
     color: black;
     content: attr(data-tip);
-    font: 11px sans-serif;
+    font: 12px sans-serif;
     left: 0;
     line-height: 130%;
     min-width: 55%;

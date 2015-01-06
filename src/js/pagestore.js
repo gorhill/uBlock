@@ -615,10 +615,12 @@ PageStore.prototype.filterRequest = function(context) {
     // - Evaluating dynamic filtering is much faster than static filtering
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
-    var df = µb.dynamicNetFilteringEngine.clearRegisters();
-    df.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
-    if ( df.mustBlockOrAllow() ) {
-        result = df.toFilterString();
+    if ( µb.userSettings.advancedUserEnabled ) {
+        var df = µb.dynamicNetFilteringEngine.clearRegisters();
+        df.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        if ( df.mustBlockOrAllow() ) {
+            result = df.toFilterString();
+        }
     }
 
     // Static filtering never override dynamic filtering

@@ -52,6 +52,7 @@ var defaultExternalLists = [
 
 return {
     userSettings: {
+        advancedUserEnabled: false,
         autoUpdate: true,
         collapseBlocked: true,
         contextMenuEnabled: true,

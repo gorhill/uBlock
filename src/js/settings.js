@@ -20,15 +20,105 @@
 */
 
 /* global vAPI, uDom */
+
+/******************************************************************************/
+
+(function() {
+
 'use strict';
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
+var messager = vAPI.messaging.channel('settings.js');
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('settings.js');
+var exportToFile = function() {
+    var onUserDataReady = function(userData) {
+        if (!userData) {
+            return;
+        }
+        var now = new Date();
+        var filename = vAPI.i18n('aboutBackupFilename')
+            .replace('{{datetime}}', now.toLocaleString())
+            .replace(/ +/g, '_');
+        vAPI.download({
+            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
+            'filename': filename
+        });
+    };
+
+    messager.send({ what: 'getUserData' }, onUserDataReady);
+};
+
+/******************************************************************************/
+
+var handleImportFilePicker = function() {
+    var fileReaderOnLoadHandler = function() {
+        var userData;
+        try {
+            userData = JSON.parse(this.result);
+            if ( typeof userData !== 'object' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.userSettings !== 'object' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.netWhitelist !== 'string' ) {
+                throw 'Invalid';
+            }
+            if ( typeof userData.filterLists !== 'object' ) {
+                throw 'Invalid';
+            }
+        }
+        catch (e) {
+            userData = undefined;
+        }
+        if ( userData === undefined ) {
+            window.alert(vAPI.i18n('aboutRestoreDataError'));
+            return;
+        }
+        var time = new Date(userData.timeStamp);
+        var msg = vAPI.i18n('aboutRestoreDataConfirm')
+            .replace('{{time}}', time.toLocaleString());
+        var proceed = window.confirm(msg);
+        if ( proceed ) {
+            messager.send({ what: 'restoreUserData', userData: userData });
+        }
+    };
+
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
+    }
+    if ( file.type.indexOf('text') !== 0 ) {
+        return;
+    }
+    var fr = new FileReader();
+    fr.onload = fileReaderOnLoadHandler;
+    fr.readAsText(file);
+};
+
+/******************************************************************************/
+
+var startImportFilePicker = function() {
+    var input = document.getElementById('restoreFilePicker');
+    // Reset to empty string, this will ensure an change event is properly
+    // triggered if the user pick a file, even if it is the same as the last
+    // one picked.
+    input.value = '';
+    input.click();
+};
+
+/******************************************************************************/
+
+var resetUserData = function() {
+    var msg = vAPI.i18n('aboutResetDataConfirm');
+    var proceed = window.confirm(msg);
+    if ( proceed ) {
+        messager.send({ what: 'resetUserData' });
+    }
+};
 
 /******************************************************************************/
 
@@ -63,15 +153,30 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('contextMenuEnabled', this.checked);
         });
 
+    uDom('#advanced-user-enabled')
+        .prop('checked', details.advancedUserEnabled === true)
+        .on('change', function(){
+            changeUserSettings('advancedUserEnabled', this.checked);
+        });
+
     uDom('#experimental-enabled')
         .prop('checked', details.experimentalEnabled === true)
         .on('change', function(){
             changeUserSettings('experimentalEnabled', this.checked);
         });
-};
 
-messager.send({ what: 'userSettings' }, onUserSettingsReceived);
+    uDom('#export').on('click', exportToFile);
+    uDom('#import').on('click', startImportFilePicker);
+    uDom('#reset').on('click', resetUserData);
+    uDom('#restoreFilePicker').on('change', handleImportFilePicker);
+};
 
 /******************************************************************************/
 
+uDom.onLoad(function() {
+    messager.send({ what: 'userSettings' }, onUserSettingsReceived);
 });
+
+/******************************************************************************/
+
+})();

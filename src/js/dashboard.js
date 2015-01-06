@@ -59,7 +59,7 @@ uDom.onLoad(function() {
         }
     }
     if ( !tab ) {
-        tab = '3p-filters';
+        tab = 'settings';
     }
     loadDashboardPanel(tab + '.html', q);
     uDom('.tabButton').on('click', onTabClickHandler);

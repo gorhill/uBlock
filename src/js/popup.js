@@ -117,7 +117,7 @@ var reRulekeyCompareNoise = /[^a-z0-9.]/g;
 var addDynamicFilterRow = function(des) {
     var row = uDom('#templates > div:nth-of-type(1)').clone();
     row.descendants('[data-des]').attr('data-des', des);
-    row.descendants('div > span:nth-of-type(1)').text(des);
+    row.descendants('span:nth-of-type(1)').text(des);
 
     var hnDetails = popupData.hostnameDict[des] || {};
     var isDomain = des === hnDetails.domain;
@@ -245,16 +245,17 @@ var renderPopup = function() {
 
     var isHTTP = /^https?:\/\/[0-9a-z]/.test(popupData.pageURL);
 
+    // Condition for dynamic filtering toggler:
+    // - Advanced user
+    uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
+
     // Conditions for request log:
-    //   - `http` or `https` scheme
+    // - `http` or `https` scheme
     uDom('#gotoLog').toggleClass('enabled', isHTTP);
 
     // Conditions for element picker:
-    //   - `http` or `https` scheme
-    uDom('#gotoPick').toggleClass(
-        'enabled',
-        isHTTP
-    );
+    // - `http` or `https` scheme
+    uDom('#gotoPick').toggleClass('enabled', isHTTP);
 
     var or = vAPI.i18n('popupOr');
     var blocked = popupData.pageBlockedRequestCount;
@@ -289,15 +290,15 @@ var renderPopup = function() {
             '%</span>'
         );
     }
+    uDom('#total-blocked').html(html.join(''));
 
     // Build dynamic filtering pane only if in use
-    if ( popupData.dfEnabled ) {
+    if ( popupData.dfEnabled && popupData.advancedUserEnabled ) {
         syncAllDynamicFilters();
     }
 
-    uDom('#total-blocked').html(html.join(''));
     uDom('#switch .fa').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
-    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
+    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled && popupData.advancedUserEnabled);
 };
 
 /******************************************************************************/
@@ -373,6 +374,9 @@ var gotoLink = function(ev) {
 /******************************************************************************/
 
 var toggleDynamicFiltering = function(ev) {
+    if ( uDom('body').hasClass('advancedUser') === false ) {
+        return;
+    }
     var el = uDom('#panes');
     popupData.dfEnabled = !popupData.dfEnabled;
     messager.send({

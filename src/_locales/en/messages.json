@@ -215,6 +215,10 @@
     "message":"Make use of context menu where appropriate",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>About<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"

@@ -171,17 +171,18 @@ var getDynamicFilterRules = function(srcHostname, desHostnames) {
 
 var getStats = function(tabId) {
     var r = {
+        advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
-        globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
-        globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
-        tabId: tabId,
-        pageURL: '',
-        pageBlockedRequestCount: 0,
-        pageAllowedRequestCount: 0,
-        netFilteringSwitch: false,
         cosmeticFilteringSwitch: false,
-        dfEnabled: µb.userSettings.dynamicFilteringEnabled
+        dfEnabled: µb.userSettings.dynamicFilteringEnabled,
+        globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
+        globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
+        netFilteringSwitch: false,
+        pageURL: '',
+        pageAllowedRequestCount: 0,
+        pageBlockedRequestCount: 0,
+        tabId: tabId
     };
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
@@ -811,7 +812,7 @@ vAPI.messaging.listen('stats.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
-// about.js
+// settings.js
 
 (function() {
 
@@ -902,7 +903,7 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('about.js', onMessage);
+vAPI.messaging.listen('settings.js', onMessage);
 
 /******************************************************************************/
 

@@ -670,11 +670,14 @@
                 µb.dynamicNetFilteringEngine.fromObsoleteSelfie(settings.dynamicFilteringSelfie);
                 µb.userSettings.dynamicFilteringString = µb.dynamicNetFilteringEngine.toString();
                 µb.XAL.keyvalSetOne('dynamicFilteringString', µb.userSettings.dynamicFilteringString);
+
+                // Auto-enable advanced user if there were dynamic rules
+                µb.userSettings.advancedUserEnabled = true;
+                µb.XAL.keyvalSetOne('advancedUserEnabled', true);
             }
             delete µb.userSettings.dynamicFilteringSelfie;
             µb.XAL.keyvalRemoveOne('dynamicFilteringSelfie');
         }
-        µb.dynamicNetFilteringEngine.fromString(µb.userSettings.dynamicFilteringString);
     };
 
     this.loadUserSettings(onUserSettingsReady);
