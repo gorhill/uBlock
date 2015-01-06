@@ -253,7 +253,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
 
     // Specific-destination + any type
     this.y = desHostname;
-    this.r = this.evaluateCellZ(srcHostname, desHostname, type);
+    this.r = this.evaluateCellZ(srcHostname, desHostname, '*');
     if ( this.r !== 0 ) { return this; }
     var d = desHostname;
     for (;;) {
@@ -262,7 +262,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
             break;
         }
         this.y = d;
-        this.r = this.evaluateCellZ(srcHostname, d, type);
+        this.r = this.evaluateCellZ(srcHostname, d, '*');
         if ( this.r !== 0 ) { return this; }
     }
 
