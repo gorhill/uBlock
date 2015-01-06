@@ -211,3 +211,7 @@ www.thesimsresource.com##.ad-topleader
 
 # To counter Peter Lowe's, hpHosts
 @@||boldchat.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/463
+# To counter Peter Lowe's, hpHosts
+@@||mixpanel.com^$~third-party
