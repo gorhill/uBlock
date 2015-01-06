@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Vaši filteri",
+    "message":"Moji filteri",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Moja pravila",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"slike",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"skripte u liniji",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Skripte prve strane",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Skripte trećih strana",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Okviri trećih strana",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Povezani sa {{count}} različitih domena",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -324,23 +324,23 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Uredi",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Spremi",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Odbaci",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Uvoz iz datoteke...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Izvoz u datoteku...",
     "description":""
   },
   "rulesDefaultFileName":{

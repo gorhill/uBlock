@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Viimein, tehokas mainosten blokkaaja Chromium selaimille. Kevyt prosessorille ja keskusmuistille.",
+    "message":"Viimein, tehokas mainosten estäjä Chromium selaimille, jolla on alhainen resurssien kulutus.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Omat säännöt",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -48,11 +48,11 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"Tällä sivulla",
+    "message":"tällä sivulla",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"Sitten asennuksen",
+    "message":"asennusen jälkeen",
     "description":"English: since install"
   },
   "popupOr":{
@@ -60,7 +60,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Paina avataksesi hallintapaneelin",
+    "message":"Paina avataksesi hallintapaneeli",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -68,7 +68,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Mene pyynnöt lokiin",
+    "message":"Näytä pyyntöjen loki",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -284,7 +284,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"Yksi URL-osoite kullekin riville. Rivit, joiden alussa on &lsquo;!&rsquo;, jätetään huomiotta. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -300,15 +300,15 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"outdated",
+    "message":"vanhentunut",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"Yksi suodatin kullekin riville. Suodatin voi olla pelkkä osoite tai Adblock Plus -yhteensopiva suodatin. Rivit, joiden alussa on &lsquo;!&rsquo;, jätetään huomiotta.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"Tuo ja liitä loppuun",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -324,31 +324,31 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Muokkaa",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Tallenna",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Hylkää",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Tuo tiedostosta...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Vie tiedostoon...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"omat-dynaamiset-ublock-saannot.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Oma listasi osoitteista, joissa µBlock on pois päältä. Kirjoita yksi osoite kullekin riville. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,7 +360,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"ublock-sallitut_{{datetime}}.txt",
     "description":"English: ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -368,11 +368,11 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"Ota käyttöön verkon pyyntöjen kirjaaminen lokiin",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Laittamalla tämän asetuksen päälle, voit tarkkailla verkkoon tehtäviä pyyntöjä. Tämä nostaa µBlockin muistinkulutusta. Monet käyttäjät eivät koskaan tule käyttämään tätä ominaisuutta, joten se on oletuksena pois päältä.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -436,7 +436,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Aloita alusta...",
+    "message":"Palauta oletusasetukset...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
