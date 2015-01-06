@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con uso ligero de procesador y memoria.",
+    "message":"Por fin, un bloqueador eficiente para los navegadores basados en Chromium, con un uso ligero de procesador y memoria.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

@@ -324,27 +324,27 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Szerkesztés",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Mentés",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Mégsem",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Importálás fájlból...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Exportálás fájlba...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"ublock-dinamikus_szabalyaim.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
