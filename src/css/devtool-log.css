@@ -1,7 +1,7 @@
 body {
     border: 0;
     box-sizing: border-box;
-    font: 11px monospace;
+    font: 12px monospace;
     margin: 0;
     overflow-x: hidden;
     padding: 0;
@@ -58,11 +58,12 @@ body {
     border-right: none;
     width: 75%;
     }
+#content table tr td:nth-of-type(3) b {
+    font-weight: normal;
+    }
 #content table tr.blocked td:nth-of-type(3) b {
     background-color: rgba(192, 0, 0, 0.2);
-    font-weight: normal;
     }
 #content table tr.allowed td:nth-of-type(3) b {
     background-color: rgba(0, 160, 0, 0.2);
-    font-weight: normal;
     }

@@ -309,6 +309,7 @@ NetFilteringResultCache.prototype.dispose = function() {
         clearTimeout(this.timer);
         this.timer = null;
     }
+    this.boundPruneAsyncCallback = null;
     if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
         netFilteringCacheJunkyard.push(this);
     }
