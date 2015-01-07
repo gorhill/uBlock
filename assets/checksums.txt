@@ -1,4 +1,4 @@
-6572a7bce5f1747fee597cb170bd3b98 assets/ublock/privacy.txt
+7edb2a585b445f28aa5ab06306f1a23f assets/ublock/privacy.txt
 357a8d6f939dfb306029c352f4c85b50 assets/ublock/filters.txt
 dcf3e05bae803343c9d632f0baf8bedd assets/ublock/mirror-candidates.txt
 076ba56e9d4fe19fac773e59a09b1c8f assets/ublock/filter-lists.json

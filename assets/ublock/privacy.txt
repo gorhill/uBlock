@@ -13,6 +13,7 @@
 
 # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
 ||addthis.com^$third-party,important
+##.addthis_toolbox
 
 # I think web sites can live without this
 # Commented out on 2014-10-03: I don't see it anymore in benchmarks. Will see.
