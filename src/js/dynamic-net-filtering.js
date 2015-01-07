@@ -243,12 +243,6 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
 
 Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     this.r = 0;
-
-    if ( supportedTypes.hasOwnProperty(type) === false ) {
-        this.type = '';
-        return this;
-    }
-
     this.type = '*';
 
     // Specific-destination + any type
@@ -267,6 +261,11 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     }
 
     // Any destination + specific-type
+    if ( supportedTypes.hasOwnProperty(type) === false ) {
+        this.type = '';
+        return this;
+    }
+
     this.y = '*';
 
     if ( type === 'script' ) {
