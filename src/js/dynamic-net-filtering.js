@@ -430,7 +430,11 @@ Matrix.prototype.fromObsoleteSelfie = function(selfie) {
     if ( selfie === '' ) {
         return '';
     }
-    var bin = JSON.parse(selfie);
+    var bin = {};
+    try {
+        bin = JSON.parse(selfie);
+    } catch(e) {
+    }
     var filters = bin.filters;
     var bits, val;
     for ( var hostname in filters ) {

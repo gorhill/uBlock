@@ -77,7 +77,7 @@
     var settingsLoaded = function(store) {
         µBlock.userSettings = store;
         if ( typeof callback === 'function' ) {
-            callback(store);
+            callback(µBlock.userSettings);
         }
     };
 
@@ -651,31 +651,32 @@
     };
 
     // User settings are in memory
-    var onUserSettingsReady = function(settings) {
+    var onUserSettingsReady = function(userSettings) {
         // https://github.com/gorhill/uBlock/issues/426
         // Important: block remote fetching for when loading assets at launch
         // time.
         µb.assets.allowRemoteFetch = false;
-        µb.assets.autoUpdate = settings.autoUpdate;
+        µb.assets.autoUpdate = userSettings.autoUpdate;
         µb.fromSelfie(onSelfieReady);
-        µb.mirrors.toggle(settings.experimentalEnabled);
-        µb.contextMenu.toggle(settings.contextMenuEnabled);
+        µb.mirrors.toggle(userSettings.experimentalEnabled);
+        µb.contextMenu.toggle(userSettings.contextMenuEnabled);
+        µb.dynamicNetFilteringEngine.fromString(userSettings.dynamicFilteringString);
 
         // Remove obsolete setting
-        delete µb.userSettings.logRequests;
+        delete userSettings.logRequests;
         µb.XAL.keyvalRemoveOne('logRequests');
 
-        if ( typeof settings.dynamicFilteringSelfie === 'string' ) {
-            if ( settings.dynamicFilteringString === '' && settings.dynamicFilteringSelfie !== '' ) {
-                µb.dynamicNetFilteringEngine.fromObsoleteSelfie(settings.dynamicFilteringSelfie);
-                µb.userSettings.dynamicFilteringString = µb.dynamicNetFilteringEngine.toString();
-                µb.XAL.keyvalSetOne('dynamicFilteringString', µb.userSettings.dynamicFilteringString);
+        if ( typeof userSettings.dynamicFilteringSelfie === 'string' ) {
+            if ( userSettings.dynamicFilteringString === '' && userSettings.dynamicFilteringSelfie !== '' ) {
+                µb.dynamicNetFilteringEngine.fromObsoleteSelfie(userSettings.dynamicFilteringSelfie);
+                userSettings.dynamicFilteringString = µb.dynamicNetFilteringEngine.toString();
+                µb.XAL.keyvalSetOne('dynamicFilteringString', userSettings.dynamicFilteringString);
 
                 // Auto-enable advanced user if there were dynamic rules
-                µb.userSettings.advancedUserEnabled = true;
-                µb.XAL.keyvalSetOne('advancedUserEnabled', true);
+                userSettings.advancedUserEnabled = userSettings.dynamicFilteringString !== '';
+                µb.XAL.keyvalSetOne('advancedUserEnabled', userSettings.advancedUserEnabled);
             }
-            delete µb.userSettings.dynamicFilteringSelfie;
+            delete userSettings.dynamicFilteringSelfie;
             µb.XAL.keyvalRemoveOne('dynamicFilteringSelfie');
         }
     };
