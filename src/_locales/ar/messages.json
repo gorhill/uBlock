@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"إظهار الإعدادات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يجب القراءة<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"يجب أن يكون هذا الإدخال آخر واحد",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

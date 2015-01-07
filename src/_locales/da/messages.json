@@ -92,15 +92,15 @@
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"3-part scripts er <b>blokeret<\/b> på denne side",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"1-part rammer er <b>tilladte<\/b> på denne side",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"1-part frames er <b>blokerede<\/b> på denne hjemmeside",
     "description":""
   },
   "popupSite3pFrameEnabled":{
@@ -432,7 +432,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"ublock-sikkerhedskopi_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -444,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Alle dine indstillinger vil blive overskrevet med data sikkerhedskopieret {{time}}, og µBlock vil genstarte.\n\nOverskriv alle indstillinger med sikkerhedskopieret data?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Denne indskrivning må være den sidste",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"מחובר ל {{count}} דומיין\/ים שונה\/ים",
+    "message":"מחובר ל {{count}} דומיין\/ים שונה\/ים מתוך {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
