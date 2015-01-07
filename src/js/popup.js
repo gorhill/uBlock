@@ -235,8 +235,8 @@ var syncAllDynamicFilters = function() {
     }
 
     var summary = vAPI.i18n('popupHitDomainCountPrompt')
-                      .replace('{{count}}', touchedDomainCount)
-                      .replace('{{total}}', allDomainCount);
+                      .replace('{{count}}', touchedDomainCount.toLocaleString())
+                      .replace('{{total}}', allDomainCount.toLocaleString());
     uDom('#privacyInfo').text(summary);
 
     if ( dfPaneBuilt !== true ) {
