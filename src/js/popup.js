@@ -41,7 +41,6 @@ var dfTypes = [
 var popupHeight;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
 var reSrcHostnameFromResult = /^d[abn]:([^ ]+) ([^ ]+)/;
-var touchedDomains = {};
 var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -51,6 +50,9 @@ var threeMinus = '−−−';
 var sixSpace = '\u2007\u2007\u2007\u2007\u2007\u2007';
 var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
+var allDomains = {};
+var allDomainCount = 0;
+var touchedDomainCount = 0;
 
 /******************************************************************************/
 
@@ -64,25 +66,27 @@ var cachePopupData = function(data) {
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
     hostnameToSortableTokenMap = {};
+
     if ( typeof data !== 'object' ) {
         return popupData;
     } 
     popupData = data;
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
     var hostnameDict = popupData.hostnameDict;
-    if ( typeof hostnameDict === 'object' ) {
-        var domain, prefix;
-        for ( var hostname in hostnameDict ) {
-            if ( hostnameDict.hasOwnProperty(hostname) === false ) {
-                continue;
-            }
-            domain = hostnameDict[hostname].domain;
-            if ( domain === popupData.pageDomain ) {
-                domain = '\u0020';
-            }
-            prefix = hostname.slice(0, 0 - domain.length);
-            hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
+    if ( typeof hostnameDict !== 'object' ) {
+        return popupData;
+    }
+    var domain, prefix;
+    for ( var hostname in hostnameDict ) {
+        if ( hostnameDict.hasOwnProperty(hostname) === false ) {
+            continue;
         }
+        domain = hostnameDict[hostname].domain;
+        if ( domain === popupData.pageDomain ) {
+            domain = '\u0020';
+        }
+        prefix = hostname.slice(0, 0 - domain.length);
+        hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
     }
     return popupData;
 };
@@ -122,8 +126,15 @@ var addDynamicFilterRow = function(des) {
     var hnDetails = popupData.hostnameDict[des] || {};
     var isDomain = des === hnDetails.domain;
     row.toggleClass('isDomain', isDomain);
+    if ( allDomains.hasOwnProperty(hnDetails.domain) === false ) {
+        allDomains[hnDetails.domain] = false;
+        allDomainCount += 1;
+    }
     if ( hnDetails.allowCount !== 0 ) {
-        touchedDomains[hnDetails.domain] = true;
+        if ( allDomains[hnDetails.domain] === false ) {
+            allDomains[hnDetails.domain] = true;
+            touchedDomainCount += 1;
+        }
         row.addClass('allowed');
     }
     if ( hnDetails.blockCount !== 0 ) {
@@ -223,7 +234,10 @@ var syncAllDynamicFilters = function() {
         syncDynamicFilterCell(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
     }
 
-    uDom('#privacyInfo').text(vAPI.i18n('popupHitDomainCountPrompt').replace('{{count}}', Object.keys(touchedDomains).length));
+    var summary = vAPI.i18n('popupHitDomainCountPrompt')
+                      .replace('{{count}}', touchedDomainCount)
+                      .replace('{{total}}', allDomainCount);
+    uDom('#privacyInfo').text(summary);
 
     if ( dfPaneBuilt !== true ) {
         uDom('#dynamicFilteringContainer')

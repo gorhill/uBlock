@@ -147,7 +147,7 @@ body.advancedUser #panes.dfEnabled #dfToggler::before {
     }
 #dynamicFilteringContainer > div#privacyInfo {
     background-color: white;
-    color: gray;
+    color: #444;
     padding: 4px 0;
     text-align: center;
     }
