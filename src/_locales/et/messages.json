@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Ühendatud {{count}} eraldiseisva domeeniga",
+    "message":"Ühendatud {{count}}\/{{total}} eraldiseisva domeeniga",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"Kasuta sobivusel kontekstmenüüd",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Olen kogenud kasutaja (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vajalik lugemus<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"Luba katselised funktsioonid (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>teave<\/a>)",
@@ -284,7 +288,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Üks URL rea kohta. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
+    "message":"Üks URL rea kohta, märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -304,7 +308,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
+    "message":"Üks filter rea kohta, filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -316,8 +320,8 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublocki-kohandatud-filtrid_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"minu-ublocki-kohandatud-filtrid_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Kinnita muudatused",
@@ -344,11 +348,11 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"minu-ublocki-dünaamilised-reeglid.txt",
+    "message":"minu-ublocki-dünaamilised-reeglid_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
-    "message":"Nimekiri domeenidest, millel µBlock keelatakse. Üks domeen rea kohta. Vigaseid domeeninimesid eiratakse.",
+    "message":"Nimekiri domeenidest, millel µBlock keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublocki-valgeloend_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"minu-ublocki-valge-loend_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Kinnita muudatused",
@@ -372,7 +376,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Selle valiku lubamisel on teil võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab µBlocki mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
+    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab µBlock'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-varundus_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"minu-ublocki-varundus_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Taasta failist...",

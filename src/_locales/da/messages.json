@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Dine filtre",
+    "message":"Mine filtre",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Mine regler",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -72,23 +72,23 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Inline <code>script<\/code> tags er <b>tilladte<\/b> på denne hjemmeside",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Inline <code>script<\/code> tags <b>blokeres<\/b> på denne hjemmeside",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"1-part scripts er  <b>tilladte<\/b> på denne side",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"1-part scripts er <b>blokeret<\/b> på denne side",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"3-part scripts er <b>tilladt<\/b> på denne hjemmeside",
     "description":""
   },
   "popupSite3pScriptDisabled":{
@@ -152,7 +152,7 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"billeder",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -160,19 +160,19 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"1-part scripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"3-part scripts",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"3-part rammer",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Forbundet til {{count}} særskilt(e) domæne(r) ud af {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -196,11 +196,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Klik. Ctrl-klik",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Blokér element",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"Make use of context menu where appropriate",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Jeg er en erfaren bruger (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Krævet læsning<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
@@ -316,35 +320,35 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Anvend ændringer",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Rediger",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Gem",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Kassér",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Importer fra fil...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Eksporter til fil...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Anvend ændringer",
@@ -424,19 +428,19 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
+    "message":"Backup til fil",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"my-ublock-backup_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restore from file...",
+    "message":"Gendan fra fil...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Reset to default settings...",
+    "message":"Nulstil til standardindstillinger...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -444,11 +448,11 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Data kunne ikke læses eller er ugyldig",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Alle dine indstillinger bliver fjernet, og µBlock genstarter.\n\nNulstil µBlock til fabriksindstillinger?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

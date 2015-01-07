@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"القواعد الخاصة بك",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -152,7 +152,7 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"صور",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"إستخدم لائحة السياق في المكان المناسب",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"فعل المميزات التجريبية",
@@ -316,35 +320,35 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"تحرير",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"حفظ",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"نبذ",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"الاستيراد من ملف...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"تصدير إلى ملف...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"حفظ التغيرات",
@@ -412,7 +416,7 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"الويكي (Wiki)",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"my-ublock-backup_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"إسترجع من الملف...",
@@ -444,7 +448,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"تعذر قراءة البيانات",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

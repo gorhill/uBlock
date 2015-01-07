@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Mga patakaran",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -76,23 +76,23 @@
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Inline <code>script<\/code> tags na <b>blocked<\/b> para sa website",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"Mga 1st-party scripts ay <b>allowed<\/b> sa website na ito",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"Mga 1st-party scripts ay <b>blocked<\/b> sa website na ito",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"3rd-party scripts ay <b>allowed<\/b> para sa website na ito",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"3rd-party scripts ay <b>blocked<\/b> para sa website na ito",
     "description":""
   },
   "popupSite1pFrameEnabled":{
@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -215,6 +215,10 @@
     "message":"Make use of context menu where appropriate",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
@@ -252,7 +256,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Isumite ang mga pagbabago",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -260,11 +264,11 @@
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacy",
+    "message":"Pribado",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Mga Malware domains",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -308,16 +312,16 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"I-Import at idugtong",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"I-Export",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Apply changes",
@@ -344,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Apply changes",
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"my-ublock-backup_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Restore from file...",
@@ -452,7 +456,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Unable to connect to {{url}}",
+    "message":"Hindi maka-connect sa {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Conectado à {{count}} domínio(s) distinto(s)",
+    "message":"Conectado à {{count}} domínio(s) distinto(s) de {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -184,7 +184,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Sair",
+    "message":"Cancelar",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"Fazer o uso do menu de contexto onde apropriado",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"Ativar recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
@@ -316,8 +320,8 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"meus-filtros-estáticos-do-ublock_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Aplicar alterações",
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"minha-listabranca-ublock_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Aplicar alterações",
@@ -420,7 +424,7 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Colaboradores",
+    "message":"Contribuidores",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"meu-ublock-backup_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Restaurar do arquivo...",
@@ -452,7 +456,7 @@
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Não foi possível conectar a {{url}}",
+    "message":"Não foi possível conectar à {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

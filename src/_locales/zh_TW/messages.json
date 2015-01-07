@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"加入右鍵選單",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"啟用實驗性功能",
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-自訂過濾_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"套用變更",
@@ -344,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-白名單_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"套用變更",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock 備份_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"從檔案還原...",

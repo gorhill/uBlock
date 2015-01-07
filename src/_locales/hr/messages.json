@@ -215,6 +215,10 @@
     "message":"Koristite kontekstni izbornik gdje je prikladno",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Obavezna literatura<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Omogućiti eksperimentalne mogućnosti  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>O mogućnostima<\/a>)",
     "description":"English: Enable experimental features"
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Primijeni promjene",
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Primijeni promjene",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Vraćanje iz datoteke...",
