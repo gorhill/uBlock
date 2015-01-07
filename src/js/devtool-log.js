@@ -123,7 +123,7 @@ var renderLogBuffer = function(buffer) {
 /******************************************************************************/
 
 var onBufferRead = function(buffer) {
-    if ( Array.isArray(buffer ) ) {
+    if ( Array.isArray(buffer) ) {
         renderLogBuffer(buffer);
     }
     setTimeout(readLogBuffer, 1000);
@@ -142,13 +142,8 @@ var readLogBuffer = function() {
 /******************************************************************************/
 
 var clearBuffer = function() {
-    var rows = tbody.rows;
-    var row;
-    var i = rows.length;
-    while ( i-- ) {
-        row = rows[i];
-        row.parentNode.removeChild(row);
-        rowJunkyard.push(row);
+    while ( tbody.firstChild !== null ) {
+        rowJunkyard.push(tbody.removeChild(tbody.firstChild));
     }
 };
 

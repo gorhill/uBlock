@@ -159,7 +159,7 @@ LogBuffer.prototype.writeOne = function(details, result) {
     if ( this.writePtr === this.readPtr ) {
         var toMove = this.buffer.slice(0, this.writePtr);
         var minSize = Math.ceil(this.size * 1.5);
-        this.size += this.writePtr;
+        this.size += toMove.length;
         if ( this.size < minSize ) {
             this.buffer = this.buffer.concat(toMove, new Array(minSize - this.size));
             this.writePtr = this.size;
