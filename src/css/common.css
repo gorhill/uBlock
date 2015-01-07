@@ -42,7 +42,7 @@ body[dir=rtl] [data-tip]:hover:after {
     text-align: right;
     }
 
-[data-tip][data-tip-anchor="top"]:hover:after {
+body [data-tip][data-tip-anchor="top"]:hover:after {
     bottom: 140%;
     top: auto;
     }
