@@ -215,6 +215,10 @@
     "message":"Využít kontextovou nabídku kde je to možné",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"Jsem pokročilý uživatel (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nutno přečíst<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
     "description":"English: Enable experimental features"
@@ -316,8 +320,8 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"ublock-me-vlastni-filtry_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Použít změny",
@@ -344,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"ublock-ma-dynamicka-pravidla_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"ublock-muj-whitelist_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Použít změny",
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"ublock-moje-zaloha_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Obnovit ze souboru...",

@@ -215,6 +215,10 @@
     "message":"Gjør bruk av høyreklikkmeny der det er hensiktsmessig",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-egendefinerte-filtre_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Bruk endringer",
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-hviteliste_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Bruk endringer",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock-sikkerhetskopi_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Gjenopprett fra fil...",

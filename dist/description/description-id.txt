@@ -24,7 +24,7 @@ Tersedia daftar filter lain yang bisa Anda pilih jika ingin:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- dan lain - lain.
+- dan banyak lainnya
 
 Tentu saja, semakin banyak filter yang diaktifkan, semakin besar penggunaan memori. Namun, bahkan setelah menambahkan 2 daftar ekstra Fanboy, hpHosts's Ad and tracking severs, penggunaan memori µBlock masih lebih kecil dari pemblokir iklan populer lain yang ada.
 

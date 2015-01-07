@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -215,8 +215,12 @@
     "message":"Używaj menu kontekstowego, gdzie to możliwe",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Więcej<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
-    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Więcej informacji<\/a>)",
+    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Więcej<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Zastosuj zmiany",
@@ -344,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Zastosuj zmiany",
@@ -424,19 +428,19 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Stwórz kopię zapasową do pliku...",
+    "message":"Stwórz kopię zapasową do pliku",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Przywróć z pliku...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Zresetuj ustawienia...",
+    "message":"Przywróć domyślne ustawienia...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

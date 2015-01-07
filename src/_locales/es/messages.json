@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Conectado con {{count}} dominios diferentes",
+    "message":"Conectado con {{count}} dominios diferentes de un total de {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"Hacer uso del menú contextual cuando sea posible",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura obligatoria<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Aplicar cambios",
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Aplicar cambios",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Restaurar desde archivo...",

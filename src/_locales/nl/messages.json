@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Mijn regels",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -88,11 +88,11 @@
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts zijn <b>toegestaan<\/b> op deze site",
+    "message":"3e-partij scripts zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts worden <b>geblokkeerd<\/b> op deze site",
+    "message":"3e-partij scripts worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite1pFrameEnabled":{
@@ -100,59 +100,59 @@
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1e-partij frames zijn <b>geblokkeerd<\/b> op deze site",
+    "message":"1e-partij frames worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"3e-partij frames zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"3e-partij frames worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Inline <code>script<\/code> tags zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Inline <code>script<\/code> tags worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"1e-partij scripts zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"1e-partij scripts worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"3e-partij scripts zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"3e-partij scripts worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"1e-partij frames zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"1e-partij frames worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"3e-partij frames zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"3e-partij frames worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"afbeeldingen",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -160,19 +160,19 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Eerstepartij-scripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Derdepartij-scripts",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Derdepartij-frames",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s)",
+    "message":"Verbonden met {{count}} van {{total}} domein(en)",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -215,8 +215,12 @@
     "message":"Maak gebruik van het contextmenu waar mogelijk",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lees dit eerst<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Experimentele functies (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>) inschakelen",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -316,35 +320,35 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Pas veranderingen toe",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Bewerken",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Opslaan",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Annuleren",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Importeren uit bestand...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Exporteren naar bestand...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Pas veranderingen toe",
@@ -424,12 +428,12 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Bewaar in bestand",
+    "message":"Opslaan naar bestand",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"my-ublock-backup_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Herstel met bestand...",
@@ -440,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Al uw instellingen zullen worden overschreven met de backupdata van {{time}}, en µBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de backupdata?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"Al uw instellingen zullen worden verwijderd, en µBlock zal worden herstart.\n\nWeet u zeker dat u de instellingen wil herstellen naar de standaardwaarden?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

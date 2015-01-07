@@ -215,6 +215,10 @@
     "message":"加入右键菜单",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"启用实验功能",
     "description":"English: Enable experimental features"
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-自定义过滤_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"应用变更",
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-白名单_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"应用变更",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock 备份_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"从文件还原...",

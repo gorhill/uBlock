@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connecté sur {{count}} domaine(s) distinct(s)",
+    "message":"Connecté sur {{count}} domaine(s) distinct(s) pour un total de {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -214,6 +214,10 @@
   "settingsContextMenuPrompt":{
     "message":"Utiliser le menu contextuel si possible",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Je suis un utilisateur expérimenté (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>)",
+    "description":"English: "
   },
   "settingsExperimentalPrompt":{
     "message":"Activer les fonctionnalités expérimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>En savoir plus<\/a>)",
@@ -316,8 +320,8 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"filtres_personnalises_ublock_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "message":"mes-filtres-personnalises-ublock-{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Appliquer",
@@ -344,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"mes-regles-dynamiques-ublock.txt",
+    "message":"mes-regles-dynamiques-ublock-{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -360,8 +364,8 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"liste_blanche_ublock_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "message":"ma-liste-blanche-ublock-{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Appliquer",
@@ -428,8 +432,8 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"sauvegarde_donnees_ublock_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "message":"ma-sauvegarde-des-donnees-ublock-{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Importer depuis un fichier",

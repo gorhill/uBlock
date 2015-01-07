@@ -215,6 +215,10 @@
     "message":"Utilitzar el menú contextual quan sigui possible",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsAdvancedUserPrompt":{
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Habilitar funcions experimentals (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Quant a<\/a>)",
     "description":"English: Enable experimental features"
@@ -317,7 +321,7 @@
   },
   "1pExportFilename":{
     "message":"ublock-custom-filters_{{datetime}}.txt",
-    "description":"English: ublock-custom-filters_{{datetime}}.txt"
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
     "message":"Aplicar canvis",
@@ -361,7 +365,7 @@
   },
   "whitelistExportFilename":{
     "message":"ublock-whitelist_{{datetime}}.txt",
-    "description":"English: ublock-whitelist_{{datetime}}.txt"
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Aplicar canvis",
@@ -429,7 +433,7 @@
   },
   "aboutBackupFilename":{
     "message":"ublock-backup_{{datetime}}.txt",
-    "description":"English: ublock-backup_{{datetime}}.txt"
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
     "message":"Restaurar des d'un fitxer...",
