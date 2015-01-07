@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Мої правила",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"зображення",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"вбудовані сценарії",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Основні скрипти",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Сторонні скрипти",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Сторонні фрейми",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"Підключено до {{count}} різних доменів({{total}} всього доменів)",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Я досвідчений користувач (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обов’язково для прочитання<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -328,23 +328,23 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Редагувати",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Зберегти",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Відкинути",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":" Імпортувати з файлу...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Експорт до файлу...",
     "description":""
   },
   "rulesDefaultFileName":{
