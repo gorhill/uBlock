@@ -42,6 +42,9 @@ body {
 #content table tr.allowed {
     background-color: rgba(0, 160, 0, 0.1)
     }
+#content table tr.maindoc {
+    background-color: #eee;
+    }
 #content table tr td {
     border: 1px solid #ccc;
     padding: 3px;

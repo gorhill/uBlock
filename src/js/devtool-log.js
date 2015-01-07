@@ -99,6 +99,9 @@ var renderLogEntry = function(entry) {
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
     }
+    if ( entry.type === 'main_frame' ) {
+        tr.classList.add('maindoc');
+    }
     tr.cells[0].textContent = entry.result.slice(3);
     tr.cells[1].textContent = entry.type;
     tr.cells[2].innerHTML = renderURL(entry.url, entry.result);

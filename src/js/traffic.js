@@ -39,16 +39,25 @@ var onBeforeRequest = function(details) {
     // Do not block behind the scene requests.
     var tabId = details.tabId;
     if ( tabId < 0 ) {
+        // TODO: logging behind-the-scene requests could be nice..
         return;
     }
 
     var µb = µBlock;
     var requestURL = details.url;
     var requestType = details.type;
+    var pageStore;
 
     // Special handling for root document.
     if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
-        µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
+        pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
+        // Log for convenience
+        if ( pageStore !== null ) {
+            pageStore.requestURL = requestURL;
+            pageStore.requestHostname = pageStore.pageHostname;
+            pageStore.requestType = 'main_frame';
+            pageStore.logBuffer.writeOne(pageStore, '');
+        }
         return;
     }
 
@@ -73,7 +82,7 @@ var onBeforeRequest = function(details) {
     }
 
     // Lookup the page store associated with this tab id.
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
         return;
     }
