@@ -271,7 +271,7 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
 
     if ( type === 'script' ) {
         type = isFirstParty(srcHostname, desHostname) ? '1p-script' : '3p-script';
-    } else if ( type === 'sub-frame' && isFirstParty(srcHostname, desHostname) === false ) {
+    } else if ( type === 'sub_frame' && isFirstParty(srcHostname, desHostname) === false ) {
         type = '3p-frame';
     }
 
