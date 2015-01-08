@@ -410,7 +410,7 @@ vAPI.tabs.get = function(tabId, callback) {
     }
 
     // for internal use
-    if ( tab && typeof callback !== 'function' ) {
+    if ( typeof callback !== 'function' ) {
         return tab;
     }
 
@@ -556,6 +556,16 @@ vAPI.tabs.remove = function(tabIds) {
         for ( var tab of tabs ) {
             win.gBrowser.removeTab(tab);
         }
+    }
+};
+
+/******************************************************************************/
+
+vAPI.tabs.reload = function(tabId) {
+    var tab = this.get(tabId);
+
+    if ( tab ) {
+        tab.ownerDocument.defaultView.gBrowser.reloadTab(tab);
     }
 };
 

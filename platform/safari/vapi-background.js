@@ -327,6 +327,16 @@ vAPI.tabs.remove = function(tabIds) {
 
 /******************************************************************************/
 
+vAPI.tabs.reload = function(tabId) {
+    var tab = this.stack[tabId];
+
+    if ( tab ) {
+        tab.url = tab.url;
+    }
+};
+
+/******************************************************************************/
+
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var tab;
 
