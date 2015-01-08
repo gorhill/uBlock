@@ -19,51 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals addMessageListener, removeMessageListener */
-
 /******************************************************************************/
 
-// https://bugzil.la/673569
-
-(function(frameScriptContext) {
-
-'use strict';
-
-/******************************************************************************/
-
-let appName = Components.stack.filename.match(/:\/\/([^\/]+)/)[1];
-let listeners = {};
-
-Components.utils['import'](Components.stack.filename.replace('Script', 'Module'), {});
-
-/******************************************************************************/
-
-frameScriptContext[appName + '_addMessageListener'] = function(id, fn) {
-    frameScriptContext[appName + '_removeMessageListener'](id);
-    listeners[id] = function(msg) {
-        fn(msg.data);
-    };
-    addMessageListener(id, listeners[id]);
-};
-
-frameScriptContext[appName + '_removeMessageListener'] = function(id) {
-    if ( listeners[id] ) {
-        removeMessageListener(id, listeners[id]);
-    }
-
-    delete listeners[id];
-};
-
-/******************************************************************************/
-
-addMessageListener(appName + ':broadcast', function(msg) {
-    for ( let id in listeners ) {
-        listeners[id](msg);
-    }
-});
-
-/******************************************************************************/
-
-})(this);
+Components.utils.import(
+    Components.stack.filename.replace('Script', 'Module'),
+    null
+);
 
 /******************************************************************************/

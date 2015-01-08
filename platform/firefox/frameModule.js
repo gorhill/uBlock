@@ -25,16 +25,17 @@
 
 this.EXPORTED_SYMBOLS = ['contentObserver'];
 
-const {interfaces: Ci, utils: Cu} = this.Components;
-const appName = this.__URI__.match(/:\/\/([^\/]+)/)[1];
+const {interfaces: Ci, utils: Cu} = Components;
+const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
+const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
+let uniqueSandboxId = 1;
 
-Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://gre/modules/devtools/Console.jsm');
 
 /******************************************************************************/
 
-const getMessageManager = function(context) {
-    return context
+const getMessageManager = function(win) {
+    return win
         .QueryInterface(Ci.nsIInterfaceRequestor)
         .getInterface(Ci.nsIDocShell)
         .sameTypeRootTreeItem
@@ -46,13 +47,14 @@ const getMessageManager = function(context) {
 /******************************************************************************/
 
 const contentObserver = {
-    classDescription: 'content-policy for ' + appName,
+    classDescription: 'content-policy for ' + hostName,
     classID: Components.ID('{e6d173c8-8dbf-4189-a6fd-189e8acffd27}'),
-    contractID: '@' + appName + '/content-policy;1',
+    contractID: '@' + hostName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
-    contentBaseURI: 'chrome://' + appName + '/content/js/',
-    messageName: appName + ':shouldLoad',
+    contentBaseURI: 'chrome://' + hostName + '/content/js/',
+    cpMessageName: hostName + ':shouldLoad',
+    frameSandboxes: new WeakMap(),
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -64,7 +66,7 @@ const contentObserver = {
     },
 
     QueryInterface: (function() {
-        let {XPCOMUtils} = Cu['import']('resource://gre/modules/XPCOMUtils.jsm', {});
+        let {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', {});
 
         return XPCOMUtils.generateQI([
             Ci.nsIFactory,
@@ -84,6 +86,7 @@ const contentObserver = {
 
     register: function() {
         Services.obs.addObserver(this, 'document-element-inserted', true);
+        Services.obs.addObserver(this, 'dom-window-destroyed', true);
 
         this.componentRegistrar.registerFactory(
             this.classID,
@@ -102,6 +105,7 @@ const contentObserver = {
 
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
+        Services.obs.removeObserver(this, 'dom-window-destroyed');
 
         this.componentRegistrar.unregisterFactory(this.classID, this);
         this.categoryManager.deleteCategoryEntry(
@@ -150,7 +154,7 @@ const contentObserver = {
         // so check context.top instead
         if ( context.top && context.location ) {
             // https://bugzil.la/1092216
-            getMessageManager(context).sendRpcMessage(this.messageName, {
+            getMessageManager(context).sendRpcMessage(this.cpMessageName, {
                 opener: opener || null,
                 url: location.spec,
                 type: type,
@@ -164,39 +168,89 @@ const contentObserver = {
 
     initContentScripts: function(win, sandbox) {
         let messager = getMessageManager(win);
+        let sandboxId = hostName + ':sb:' + uniqueSandboxId++;
 
         if ( sandbox ) {
-            win = Cu.Sandbox([win], {
+            let sandboxName = [
+                win.location.href.slice(0, 100),
+                win.document.title.slice(0, 100)
+            ].join(' | ');
+
+            sandbox = Cu.Sandbox([win], {
+                sandboxName: sandboxId + '[' + sandboxName + ']',
                 sandboxPrototype: win,
                 wantComponents: false,
                 wantXHRConstructor: false
             });
 
-            win.self = win;
+            sandbox.injectScript = function(script, evalCode) {
+                if ( evalCode ) {
+                    Cu.evalInSandbox(script, this);
+                    return;
+                }
 
-            // anonymous function needs to be used here
-            win.injectScript = Cu.exportFunction(
-                function(script, evalCode) {
-                    if ( evalCode ) {
-                        Cu.evalInSandbox(script, win);
-                        return;
-                    }
-
-                    Services.scriptloader.loadSubScript(script, win);
-                },
-                win
-            );
+                Services.scriptloader.loadSubScript(script, this);
+            }.bind(sandbox);
+        }
+        else {
+            sandbox = win;
         }
 
-        win.sendAsyncMessage = messager.sendAsyncMessage;
-        win.addMessageListener = messager.ublock_addMessageListener;
-        win.removeMessageListener = messager.ublock_removeMessageListener;
+        if ( win !== win.top ) {
+            this.frameSandboxes.set(win, sandbox);
+        }
 
-        return win;
+        sandbox._sandboxId_ = sandboxId;
+        sandbox.sendAsyncMessage = messager.sendAsyncMessage;
+        sandbox.addMessageListener = function(callback) {
+            if ( this._messageListener_ ) {
+                this.removeMessageListener(
+                    this._sandboxId_,
+                    this._messageListener_
+                );
+            }
+
+            this._messageListener_ = function(message) {
+                callback(message.data);
+            };
+
+            messager.addMessageListener(
+                this._sandboxId_,
+                this._messageListener_
+            );
+            messager.addMessageListener(
+                hostName + ':broadcast',
+                this._messageListener_
+            );
+        }.bind(sandbox);
+        sandbox.removeMessageListener = function() {
+            messager.removeMessageListener(
+                this._sandboxId_,
+                this._messageListener_
+            );
+            messager.removeMessageListener(
+                hostName + ':broadcast',
+                this._messageListener_
+            );
+            this._messageListener_ = null;
+        }.bind(sandbox);
+
+        return sandbox;
     },
 
-    observe: function(doc) {
-        let win = doc.defaultView;
+    observe: function(subject, topic) {
+        if ( topic === 'dom-window-destroyed' ) {
+            let sandbox = this.frameSandboxes.get(subject);
+
+            if ( sandbox ) {
+                sandbox.removeMessageListener();
+                this.frameSandboxes.delete(subject);
+            }
+
+            return;
+        }
+
+        let win = subject.defaultView;
 
         if ( !win ) {
             return;
@@ -205,7 +259,7 @@ const contentObserver = {
         let loc = win.location;
 
         if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' ) {
-            if ( loc.protocol === 'chrome:' && loc.host === appName ) {
+            if ( loc.protocol === 'chrome:' && loc.host === hostName ) {
                 this.initContentScripts(win);
             }
 
@@ -214,17 +268,17 @@ const contentObserver = {
         }
 
         let lss = Services.scriptloader.loadSubScript;
-        win = this.initContentScripts(win, true);
+        let sandbox = this.initContentScripts(win, true);
 
-        lss(this.contentBaseURI + 'vapi-client.js', win);
-        lss(this.contentBaseURI + 'contentscript-start.js', win);
+        lss(this.contentBaseURI + 'vapi-client.js', sandbox);
+        lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
 
         let docReady = function(e) {
             this.removeEventListener(e.type, docReady, true);
-            lss(contentObserver.contentBaseURI + 'contentscript-end.js', win);
+            lss(contentObserver.contentBaseURI + 'contentscript-end.js', sandbox);
         };
 
-        win.document.addEventListener('DOMContentLoaded', docReady, true);
+        subject.addEventListener('DOMContentLoaded', docReady, true);
     }
 };
 

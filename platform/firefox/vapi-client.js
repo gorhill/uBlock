@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(function(self) {
 
 'use strict';
 
@@ -75,23 +75,17 @@ var messagingConnector = function(response) {
 
 /******************************************************************************/
 
-var uniqueId = function() {
-    return Math.random().toString(36).slice(2);
-};
-
-/******************************************************************************/
-
 vAPI.messaging = {
     channels: {},
     listeners: {},
     requestId: 1,
-    connectorId: uniqueId(),
 
     setup: function() {
         this.connector = function(msg) {
             messagingConnector(JSON.parse(msg));
         };
-        addMessageListener(this.connectorId, this.connector);
+
+        addMessageListener(this.connector);
 
         this.channels['vAPI'] = {};
         this.channels['vAPI'].listener = function(msg) {
@@ -112,7 +106,7 @@ vAPI.messaging = {
             return;
         }
 
-        removeMessageListener(this.connectorId, this.connector);
+        removeMessageListener();
         this.connector = null;
         this.channels = {};
         this.listeners = {};
@@ -132,7 +126,7 @@ vAPI.messaging = {
                 }
 
                 message = {
-                    channelName: vAPI.messaging.connectorId + '|' + this.channelName,
+                    channelName: self._sandboxId_ + '|' + this.channelName,
                     msg: message
                 };
 
@@ -154,12 +148,30 @@ vAPI.messaging = {
 
 /******************************************************************************/
 
+var toggleListener = function({type, persisted}) {
+    if ( !persisted || !vAPI.messaging.connector ) {
+        return;
+    }
+
+    if ( type === 'pagehide' ) {
+        removeMessageListener();
+    }
+    else {
+        addMessageListener(vAPI.messaging.connector);
+    }
+};
+
+window.addEventListener('pagehide', toggleListener, true);
+window.addEventListener('pageshow', toggleListener, true);
+
+/******************************************************************************/
+
 vAPI.canExecuteContentScript = function() {
     return true;
 };
 
 /******************************************************************************/
 
-})();
+})(this);
 
 /******************************************************************************/
