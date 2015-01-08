@@ -88,11 +88,11 @@
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Skripty třetí strany jsou <b>povoleny<\/b> na tomto webu",
+    "message":"Skripty třetích stran jsou <b>povoleny<\/b> na tomto webu",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Skripty třetí strany jsou <b>blokovány<\/b> na tomto webu",
+    "message":"Skripty třetích stran jsou <b>blokovány<\/b> na tomto webu",
     "description":""
   },
   "popupSite1pFrameEnabled":{
@@ -104,11 +104,11 @@
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Rámce třetí strany jsou <b>povoleny<\/b> na tomto webu",
+    "message":"Rámce třetích stran jsou <b>povoleny<\/b> na tomto webu",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Rámce třetí strany jsou <b>blokovány<\/b> na tomto webu",
+    "message":"Rámce třetích stran jsou <b>blokovány<\/b> na tomto webu",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
@@ -128,11 +128,11 @@
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Skripty třetí strany jsou <b>povoleny<\/b> všude ve výchozím nastavení",
+    "message":"Skripty třetích stran jsou <b>povoleny<\/b> všude ve výchozím nastavení",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Skripty třetí strany jsou <b>blokovány<\/b> všude ve výchozím nastavení",
+    "message":"Skripty třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
@@ -144,11 +144,11 @@
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Rámce třetí strany jsou <b>blokovány<\/b> všude ve výchozím nastavení",
+    "message":"Rámce třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Rámce třetí strany jsou <b>blokovány<\/b> všude ve výchozím nastavení",
+    "message":"Rámce třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -164,11 +164,11 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"skripty třetí strany",
+    "message":"skripty třetích stran",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"rámce třetí strany",
+    "message":"rámce třetích stran",
     "description":""
   },
   "popupHitDomainCountPrompt":{
