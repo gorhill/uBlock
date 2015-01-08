@@ -109,7 +109,7 @@ var µb = µBlock;
 
 var getHostnameDict = function(hostnameToCountMap) {
     var r = {};
-    var µburi = µb.URI;
+    var domainFromHostname = µb.URI.domainFromHostname;
     var domain, counts;
     for ( var hostname in hostnameToCountMap ) {
         if ( hostnameToCountMap.hasOwnProperty(hostname) === false ) {
@@ -118,7 +118,7 @@ var getHostnameDict = function(hostnameToCountMap) {
         if ( r.hasOwnProperty(hostname) ) {
             continue;
         }
-        domain = µburi.domainFromHostname(hostname);
+        domain = domainFromHostname(hostname);
         counts = hostnameToCountMap[domain] || 0;
         r[domain] = {
             domain: domain,

@@ -194,24 +194,23 @@ Matrix.prototype.evaluateCell = function(srcHostname, desHostname, type) {
 
 Matrix.prototype.clearRegisters = function() {
     this.r = 0;
-    this.type = '';
-    this.y = '';
-    this.z = '';
+    this.type = this.y = this.z = '';
     return this;
 };
 
 /******************************************************************************/
 
-var isFirstParty = function(srcHostname, desHostname) {
-    if ( desHostname.slice(0 - srcHostname.length) !== srcHostname ) {
-        return false;
-    }
-    // Be sure to not confuse 'example.com' with 'anotherexample.com'
-    if ( desHostname.lenght === srcHostname.lenght ) {
+var is3rdParty = function(srcHostname, desHostname) {
+    var srcDomain = domainFromHostname(srcHostname);
+    if ( desHostname.slice(0 - srcDomain.length) !== srcDomain ) {
         return true;
     }
-    return desHostname.charAt(desHostname.length - srcHostname.length - 1) === '.';
+    // Do not confuse 'example.com' with 'anotherexample.com'
+    return desHostname.lenght !== srcDomain.lenght &&
+           desHostname.charAt(desHostname.length - srcDomain.length - 1) !== '.';
 };
+
+var domainFromHostname = µBlock.URI.domainFromHostname;
 
 /******************************************************************************/
 
@@ -262,20 +261,18 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     this.y = '*';
 
     if ( type === 'script' ) {
-        type = isFirstParty(srcHostname, desHostname) ? '1p-script' : '3p-script';
-    } else if ( type === 'sub_frame' && isFirstParty(srcHostname, desHostname) === false ) {
+        type = is3rdParty(srcHostname, desHostname) ? '3p-script' : '1p-script';
+    } else if ( type === 'sub_frame' && is3rdParty(srcHostname, desHostname) ) {
         type = '3p-frame';
     }
-
     // Is this a type suitable for dynamic filtering purpose?
-    if ( supportedDynamicTypes.hasOwnProperty(type) === false ) {
-        this.type = '';
-        return this;
+    if ( supportedDynamicTypes.hasOwnProperty(type) ) {
+        this.type = type;
+        this.r = this.evaluateCellZ(srcHostname, '*', type);
+        if ( this.r !== 0 ) { return this; }
     }
 
-    this.type = type;
-    this.r = this.evaluateCellZ(srcHostname, '*', type);
-
+    this.type = '';
     return this;
 };
 

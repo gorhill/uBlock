@@ -274,20 +274,97 @@ URI.hostnameFromURI = function(uri) {
 
 /******************************************************************************/
 
-// It is expected that there is higher-scoped `publicSuffixList` lingering
-// somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
-var psl = publicSuffixList;
-
 URI.domainFromHostname = function(hostname) {
-    if ( !reIPAddressNaive.test(hostname) ) {
-        return psl.getDomain(hostname);
+    // Try to skip looking up the PSL database
+    if ( domainCache.hasOwnProperty(hostname) ) {
+        var entry = domainCache[hostname];
+        entry.tstamp = Date.now();
+        return entry.domain;
     }
-    return hostname;
+    // Meh.. will have to search it
+    if ( reIPAddressNaive.test(hostname) === false ) {
+        return domainCacheAdd(hostname, psl.getDomain(hostname));
+    }
+    return domainCacheAdd(hostname, hostname);
 };
 
 URI.domain = function() {
     return this.domainFromHostname(this.hostname);
 };
+
+// It is expected that there is higher-scoped `publicSuffixList` lingering
+// somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
+var psl = publicSuffixList;
+
+/******************************************************************************/
+
+// Trying to alleviate the worries of looking up too often the domain name from
+// a hostname. With a cache, uBlock benefits given that it deals with a
+// specific set of hostnames within a narrow time span -- in other words, I
+// believe probability of cache hit are high in uBlock.
+
+var DomainCacheEntry = function(domain) {
+    this.init(domain);
+};
+
+DomainCacheEntry.prototype.init = function(domain) {
+    this.domain = domain;
+    this.tstamp = Date.now();
+    return this;
+};
+
+DomainCacheEntry.prototype.dispose = function() {
+    this.domain = '';
+    if ( domainCacheEntryJunkyard.length < 25 ) {
+        domainCacheEntryJunkyard.push(this);
+    }
+};
+
+var domainCacheEntryFactory = function(domain) {
+    var entry = domainCacheEntryJunkyard.pop();
+    if ( entry ) {
+        return entry.init(domain);
+    }
+    return new DomainCacheEntry(domain);
+};
+
+var domainCacheEntryJunkyard = [];
+
+var domainCacheAdd = function(hostname, domain) {
+    if ( domainCache.hasOwnProperty(hostname) ) {
+        domainCache[hostname].tstamp = Date.now();
+    } else {
+        domainCache[hostname] = domainCacheEntryFactory(domain);
+        domainCacheCount += 1;
+        if ( domainCacheCount === domainCacheCountHighWaterMark ) {
+            domainCachePrune();
+        }
+    }
+    return domain;
+};
+
+var domainCacheEntrySort = function(a, b) {
+    return b.tstamp - a.tstamp;
+};
+
+var domainCachePrune = function() {
+    var hostnames = Object.keys(domainCache)
+                          .sort(domainCacheEntrySort)
+                          .slice(domainCacheCountLowWaterMark);
+    var i = hostnames.length;
+    domainCacheCount -= i;
+    var hostname;
+    while ( i-- ) {
+        hostname = hostnames[i];
+        domainCache[hostname].dispose();
+        delete domainCache[hostname];
+    }
+};
+
+var domainCache = {};
+var domainCacheCount = 0;
+var domainCacheCountLowWaterMark = 75;
+var domainCacheCountHighWaterMark = 100;
 
 /******************************************************************************/
 
