@@ -38,13 +38,11 @@ var Matrix = function() {
 
 /******************************************************************************/
 
-var supportedTypes = {
+var supportedDynamicTypes = {
             '*': true,
 'inline-script': true,
-       'script': true,
     '1p-script': true,
     '3p-script': true,
-    'sub_frame': true,
      '3p-frame': true,
         'image': true
 };
@@ -261,17 +259,18 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     }
 
     // Any destination + specific-type
-    if ( supportedTypes.hasOwnProperty(type) === false ) {
-        this.type = '';
-        return this;
-    }
-
     this.y = '*';
 
     if ( type === 'script' ) {
         type = isFirstParty(srcHostname, desHostname) ? '1p-script' : '3p-script';
     } else if ( type === 'sub_frame' && isFirstParty(srcHostname, desHostname) === false ) {
         type = '3p-frame';
+    }
+
+    // Is this a type suitable for dynamic filtering purpose?
+    if ( supportedDynamicTypes.hasOwnProperty(type) === false ) {
+        this.type = '';
+        return this;
     }
 
     this.type = type;
