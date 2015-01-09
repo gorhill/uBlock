@@ -218,4 +218,4 @@ www.thesimsresource.com##.ad-topleader
 
 # https://github.com/gorhill/uBlock/issues/466
 # Until fixed in EasyPrivacy
-@@||/google-analytics-dashboard
+@@/google-analytics-dashboard
