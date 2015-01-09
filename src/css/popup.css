@@ -116,15 +116,16 @@ p {
     color: #444;
     }
 
-body.advancedUser #dfToggler::before {
+body.advancedUser #dfToggler:before {
     color: gray;
-    content: '+\202F';
+    content: '\202F+\202F';
     cursor: pointer;
     font-size: 14px;
     line-height: 14px;
+    z-index: 10;
     }
-body.advancedUser #panes.dfEnabled #dfToggler::before {
-    content: '\2212\202F';
+body.advancedUser #panes.dfEnabled #dfToggler:before {
+    content: '\202F\2212\202F';
     }
 
 #dynamicFilteringContainer {
