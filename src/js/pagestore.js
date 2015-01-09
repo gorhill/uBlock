@@ -87,7 +87,7 @@ LogEntry.prototype.dispose = function() {
 
 var LogBuffer = function() {
     this.lastReadTime = 0;
-    this.size = 25;
+    this.size = 50;
     this.buffer = null;
     this.readPtr = 0;
     this.writePtr = 0;
