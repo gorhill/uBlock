@@ -149,14 +149,16 @@ vAPI.messaging = {
 /******************************************************************************/
 
 var toggleListener = function({type, persisted}) {
-    if ( !persisted || !vAPI.messaging.connector ) {
+    if ( !vAPI.messaging.connector ) {
         return;
     }
 
     if ( type === 'pagehide' ) {
         removeMessageListener();
+        return;
     }
-    else {
+
+    if ( persisted ) {
         addMessageListener(vAPI.messaging.connector);
     }
 };

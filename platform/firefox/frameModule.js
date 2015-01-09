@@ -30,8 +30,6 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 let uniqueSandboxId = 1;
 
-Cu.import('resource://gre/modules/devtools/Console.jsm');
-
 /******************************************************************************/
 
 const getMessageManager = function(win) {
@@ -54,7 +52,6 @@ const contentObserver = {
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
-    frameSandboxes: new WeakMap(),
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -86,7 +83,6 @@ const contentObserver = {
 
     register: function() {
         Services.obs.addObserver(this, 'document-element-inserted', true);
-        Services.obs.addObserver(this, 'dom-window-destroyed', true);
 
         this.componentRegistrar.registerFactory(
             this.classID,
@@ -105,7 +101,6 @@ const contentObserver = {
 
     unregister: function() {
         Services.obs.removeObserver(this, 'document-element-inserted');
-        Services.obs.removeObserver(this, 'dom-window-destroyed');
 
         this.componentRegistrar.unregisterFactory(this.classID, this);
         this.categoryManager.deleteCategoryEntry(
@@ -196,10 +191,6 @@ const contentObserver = {
             sandbox = win;
         }
 
-        if ( win !== win.top ) {
-            this.frameSandboxes.set(win, sandbox);
-        }
-
         sandbox._sandboxId_ = sandboxId;
         sandbox.sendAsyncMessage = messager.sendAsyncMessage;
         sandbox.addMessageListener = function(callback) {
@@ -238,18 +229,7 @@ const contentObserver = {
         return sandbox;
     },
 
-    observe: function(subject, topic) {
-        if ( topic === 'dom-window-destroyed' ) {
-            let sandbox = this.frameSandboxes.get(subject);
-
-            if ( sandbox ) {
-                sandbox.removeMessageListener();
-                this.frameSandboxes.delete(subject);
-            }
-
-            return;
-        }
-
+    observe: function(subject) {
         let win = subject.defaultView;
 
         if ( !win ) {
