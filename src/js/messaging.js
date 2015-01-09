@@ -402,7 +402,7 @@ var onMessage = function(details, sender, callback) {
 
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
-            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+            if ( pageStore && pageStore.getCosmeticFilteringSwitch() ) {
                 response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;

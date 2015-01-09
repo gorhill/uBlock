@@ -64,6 +64,7 @@ var typeNameToTypeValue = {
     'xmlhttprequest':  6 << 4,
          'sub_frame':  7 << 4,
              'other':  8 << 4,
+'cosmetic-filtering': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
@@ -1243,6 +1244,11 @@ FilterParser.prototype.parse = function(s) {
         }
         if ( opt === 'third-party' ) {
             this.parseOptParty(not);
+            continue;
+        }
+        if ( opt === 'elemhide' && this.action === AllowAction ) {
+            this.types.push(typeNameToTypeValue['cosmetic-filtering']);
+            this.action = BlockAction;
             continue;
         }
         if ( this.toNormalizedType.hasOwnProperty(opt) ) {

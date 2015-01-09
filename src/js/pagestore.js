@@ -492,6 +492,12 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.skipLocalMirroring = false;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
+    // Support `elemhide` filter option. Called at this point so the required
+    // context is all setup at this point.
+    this.skipCosmeticFiltering = µb.staticNetFilteringEngine
+                                   .matchStringExactType(this, pageURL, 'cosmetic-filtering')
+                                   .charAt(1) === 'b';
+
     // Preserve old buffer if there is one already, it may be in use, and
     // overwritting it would required another read to restart it.
     if ( this.logBuffer instanceof LogBuffer === false ) {
@@ -592,6 +598,13 @@ PageStore.prototype.getNetFilteringSwitch = function() {
         this.netFilteringReadTime = Date.now();
     }
     return this.netFiltering;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.getCosmeticFilteringSwitch = function() {
+    return this.getNetFilteringSwitch() === false ||
+           this.skipCosmeticFiltering == false;
 };
 
 /******************************************************************************/
