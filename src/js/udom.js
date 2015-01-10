@@ -225,6 +225,12 @@ DOMList.prototype.toArray = function() {
 
 /******************************************************************************/
 
+DOMList.prototype.pop = function() {
+    return addNodeToList(new DOMList(), this.nodes.pop());
+};
+
+/******************************************************************************/
+
 DOMList.prototype.forEach = function(fn) {
     var n = this.nodes.length;
     for ( var i = 0; i < n; i++ ) {

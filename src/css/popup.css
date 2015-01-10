@@ -79,7 +79,7 @@ p {
 #switch .fa:hover {
     opacity: 0.9;
     }
-#switch .fa.off {
+#switch.off .fa {
     color: #ccc;
     }
 #switch-hint {
@@ -116,18 +116,42 @@ p {
     color: #444;
     }
 
+body.advancedUser #dfToggler {
+    cursor: pointer;
+    }
 body.advancedUser #dfToggler:before {
     color: gray;
-    content: '\202F+\202F';
-    cursor: pointer;
+    content: '+\202F';
     font-size: 14px;
     line-height: 14px;
-    z-index: 10;
     }
 body.advancedUser #panes.dfEnabled #dfToggler:before {
-    content: '\202F\2212\202F';
+    content: '\2212\202F';
     }
 
+#refresh {
+    background-color: #ffe;
+    border: 1px solid #eec;
+    border-radius: 4px;
+    bottom: 4px;
+    color: #888;
+    cursor: pointer;
+    display: none;
+    font-size: 40px;
+    left: 4px;
+    line-height: 40px;
+    padding: 4px 8px;
+    position: absolute;
+    right: 4px;
+    text-align: center;
+    }
+body.dirty #refresh {
+    display: block;
+    }
+body.dirty #refresh:hover {
+    color: black;
+    }
+    
 #dynamicFilteringContainer {
     border: 0;
     font-size: 12px;

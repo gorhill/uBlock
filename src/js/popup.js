@@ -31,16 +31,9 @@
 
 var popupData;
 var dfPaneBuilt = false;
-var dfTypes = [
-    'image',
-    'inline-script',
-    '1p-script',
-    '3p-script',
-    '3p-frame'
-];
 var popupHeight;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
-var reSrcHostnameFromResult = /^d[abn]:([^ ]+) ([^ ]+)/;
+var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+)/;
 var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -53,6 +46,8 @@ var hostnameToSortableTokenMap = {};
 var allDomains = {};
 var allDomainCount = 0;
 var touchedDomainCount = 0;
+var rowsToRecycle = uDom();
+var cachedPopupHash = '';
 
 /******************************************************************************/
 
@@ -93,11 +88,32 @@ var cachePopupData = function(data) {
 
 /******************************************************************************/
 
-var formatNumber = function(count) {
-    if ( typeof count !== 'number' ) {
-        return '';
+var hashFromPopupData = function(reset) {
+    var hasher = [];
+    var rules = popupData.dynamicFilterRules;
+    var rule;
+    for ( var key in rules ) {
+        if ( rules.hasOwnProperty(key) === false ) {
+            continue;
+        }
+        rule = rules[key];
+        if ( rule !== '' ) {
+            hasher.push(rule);
+        }
     }
-    return count.toLocaleString();
+    hasher.push(uDom('#switch').hasClass('off'));
+
+    var hash = hasher.sort().join('');
+    if ( reset ) {
+        cachedPopupHash = hash;
+    }
+    uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
+};
+
+/******************************************************************************/
+
+var formatNumber = function(count) {
+    return typeof count === 'number' ? count.toLocaleString() : '';
 };
 
 /******************************************************************************/
@@ -114,31 +130,33 @@ var rulekeyCompare = function(a, b) {
     return ha.localeCompare(hb);
 };
 
-var reRulekeyCompareNoise = /[^a-z0-9.]/g;
-
 /******************************************************************************/
 
 var addDynamicFilterRow = function(des) {
-    var row = uDom('#templates > div:nth-of-type(1)').clone();
+    var row = rowsToRecycle.pop();
+    if ( row.length === 0 ) {
+        row = uDom('#templates > div:nth-of-type(1)').clone();
+    }
+
     row.descendants('[data-des]').attr('data-des', des);
     row.descendants('span:nth-of-type(1)').text(des);
 
     var hnDetails = popupData.hostnameDict[des] || {};
-    var isDomain = des === hnDetails.domain;
-    row.toggleClass('isDomain', isDomain);
+
+    row.toggleClass('isDomain', des === hnDetails.domain);
+    row.toggleClass('allowed', hnDetails.allowCount !== 0);
+    row.toggleClass('blocked', hnDetails.blockCount !== 0);
+
     if ( allDomains.hasOwnProperty(hnDetails.domain) === false ) {
         allDomains[hnDetails.domain] = false;
         allDomainCount += 1;
     }
+
     if ( hnDetails.allowCount !== 0 ) {
         if ( allDomains[hnDetails.domain] === false ) {
             allDomains[hnDetails.domain] = true;
             touchedDomainCount += 1;
         }
-        row.addClass('allowed');
-    }
-    if ( hnDetails.blockCount !== 0 ) {
-        row.addClass('blocked');
     }
 
     row.appendTo('#dynamicFilteringContainer');
@@ -157,24 +175,24 @@ var addDynamicFilterRow = function(des) {
 
 /******************************************************************************/
 
-var syncDynamicFilterCell = function(scope, des, type, result) {
+var updateDynamicFilterCell = function(scope, des, type, rule) {
     var selector = '#dynamicFilteringContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
     var cell = uDom(selector);
 
-    // Create the row?
+    // This should not happen
     if ( cell.length === 0 ) {
-        cell = addDynamicFilterRow(des).descendants(selector);
+        return;
     }
 
     cell.removeClass();
-    var action = result.charAt(1);
+    var action = rule.charAt(1);
     if ( action !== '' ) {
         cell.toggleClass(action + 'Rule', true);
     }
 
     // Use dark shade visual cue if the filter is specific to the cell.
     var ownRule = false;
-    var matches = reSrcHostnameFromResult.exec(result);
+    var matches = reSrcHostnameFromRule.exec(rule);
     if ( matches !== null ) {
         ownRule =  matches[2] === des &&
                    matches[1] === scopeToSrcHostnameMap[scope];
@@ -205,33 +223,52 @@ var syncDynamicFilterCell = function(scope, des, type, result) {
 
 /******************************************************************************/
 
-var syncAllDynamicFilters = function() {
-    var hasRule = false;
+var updateAllDynamicFilters = function() {
     var rules = popupData.dynamicFilterRules;
-    var type, result;
-    var types = dfTypes;
-    var i = types.length;
-    while ( i-- ) {
-        type = types[i];
-        syncDynamicFilterCell('/', '*', type, rules['/ * ' + type] || '');
-        result = rules['. * ' + type] || '';
-        if ( result.charAt(1) !== '' ) {
-            hasRule = true;
-        }
-        syncDynamicFilterCell('.', '*', type, result);
+    for ( var key in rules ) {
+        updateDynamicFilterCell(
+            key.charAt(0),
+            key.slice(2, key.indexOf(' ', 2)),
+            key.slice(key.lastIndexOf(' ') + 1),
+            rules[key]
+        );
     }
+};
+
+/******************************************************************************/
+
+var buildAllDynamicFilters = function() {
+    // Do this before removing the rows
+    if ( dfHotspots === null ) {
+        dfHotspots = uDom('#actionSelector').on('click', 'span', setDynamicFilterHandler);
+    }
+    dfHotspots.detach();
+
+    // Remove and reuse all rows: the order may have changed, we can't just
+    // reuse them in-place.
+    rowsToRecycle = uDom('#privacyInfo ~ div').detach();
+
+    allDomains = {};
+    allDomainCount = touchedDomainCount = 0;
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
-    var keys = Object.keys(rules).sort(rulekeyCompare);
-    var key;
+    var desHostnameDone = {};
+    var keys = Object.keys(popupData.dynamicFilterRules)
+                     .sort(rulekeyCompare);
+    var key, des;
     for ( var i = 0; i < keys.length; i++ ) {
         key = keys[i];
-        // Specific-type rules -- they were processed above
+        // Specific-type rules -- these are built-in
         if ( key.slice(-1) !== '*' ) {
             continue;
         }
-        syncDynamicFilterCell(key.charAt(0), key.slice(2, key.indexOf(' ', 2)), '*', rules[key]);
+        des = key.slice(2, key.indexOf(' ', 2));
+        if ( desHostnameDone.hasOwnProperty(des) ) {
+            continue;
+        }
+        addDynamicFilterRow(des);
+        desHostnameDone[des] = true;
     }
 
     var summary = vAPI.i18n('popupHitDomainCountPrompt')
@@ -244,14 +281,15 @@ var syncAllDynamicFilters = function() {
             .on('click', 'span[data-src]', unsetDynamicFilterHandler)
             .on('mouseenter', '[data-src]', mouseenterCellHandler)
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
-        dfHotspots = uDom('#actionSelector')
-            .on('click', 'span', setDynamicFilterHandler)
-            .detach();
         dfPaneBuilt = true;
     }
+
+    updateAllDynamicFilters();
 };
 
 /******************************************************************************/
+
+// Assume everything has to be done incrementally.
 
 var renderPopup = function() {
     uDom('#appname').text(popupData.appName);
@@ -261,7 +299,10 @@ var renderPopup = function() {
 
     // Condition for dynamic filtering toggler:
     // - Advanced user
+    uDom('body').removeClass('dirty');
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
+
+    uDom('#switch').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
 
     // Conditions for request log:
     // - `http` or `https` scheme
@@ -306,13 +347,16 @@ var renderPopup = function() {
     }
     uDom('#total-blocked').html(html.join(''));
 
-    // Build dynamic filtering pane only if in use
-    if ( popupData.dfEnabled && popupData.advancedUserEnabled ) {
-        syncAllDynamicFilters();
-    }
+    // https://github.com/gorhill/uBlock/issues/470
+    // This must be done here, to be sure the popup is resized properly
+    var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
 
-    uDom('#switch .fa').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
-    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled && popupData.advancedUserEnabled);
+    uDom('#panes').toggleClass('dfEnabled', dfPaneVisible);
+
+    // Build dynamic filtering pane only if in use
+    if ( dfPaneVisible ) {
+        buildAllDynamicFilters();
+    }
 };
 
 /******************************************************************************/
@@ -328,6 +372,8 @@ var toggleNetFilteringSwitch = function(ev) {
         state: !uDom(this).toggleClass('off').hasClass('off'),
         tabId: popupData.tabId
     });
+
+    hashFromPopupData();
 };
 
 /******************************************************************************/
@@ -387,17 +433,23 @@ var gotoLink = function(ev) {
 
 /******************************************************************************/
 
-var toggleDynamicFiltering = function(ev) {
-    if ( uDom('body').hasClass('advancedUser') === false ) {
+var toggleDynamicFiltering = function() {
+    if ( popupData.advancedUserEnabled === false ) {
         return;
     }
-    var el = uDom('#panes');
     popupData.dfEnabled = !popupData.dfEnabled;
+
     messager.send({
         what: 'userSettings',
         name: 'dynamicFilteringEnabled',
         value: popupData.dfEnabled
-    }, renderPopup);
+    });
+
+    // Dynamic filtering pane may not have been built yet
+    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
+    if ( popupData.dfEnabled && dfPaneBuilt === false ) {
+        buildAllDynamicFilters();
+    }
 };
 
 /******************************************************************************/
@@ -421,7 +473,8 @@ var setDynamicFilter = function(src, des, type, action) {
     }
     var onDynamicFilterChanged = function(response) {
         cachePopupData(response);
-        syncAllDynamicFilters();
+        updateAllDynamicFilters();
+        hashFromPopupData();
     };
     messager.send({
         what: 'toggleDynamicFilter',
@@ -475,21 +528,90 @@ var setDynamicFilterHandler = function() {
 
 /******************************************************************************/
 
+var reloadTab = function() {
+    messager.send({ what: 'reloadTab', tabId: popupData.tabId });
+
+    // Polling will take care of refreshing the popup content
+};
+
+/******************************************************************************/
+
+// Poll for changes.
+//
+// I couldn't find a better way to be notified of changes which can affect
+// popup content, as the messaging API doesn't support firing events accurately
+// from the main extension process to a specific auxiliary extension process:
+//
+// - broadcasting() is not an option given there could be a lot of tabs opened,
+//   and maybe even many frames within these tabs, i.e. unacceptable overhead 
+//   regardless of whether the popup is opened or not).
+//
+// - Modifying the messaging API is not an option, as this would require
+//   revisiting all platform-specific code to support targeted broadcasting,
+//   which who knows could be not so trivial for some platforms.
+//
+// A well done polling is a better anyways IMO, I prefer that data is pulled 
+// on demand rather than having the main process assumes somebody may need to
+// be expressly notified.
+
+var pollForContentChange = (function() {
+    var pollTimer = null;
+
+    var pollCallback = function() {
+        pollTimer = null;
+        messager.send(
+            {
+                what: 'hasPopupContentChanged',
+                tabId: popupData.tabId,
+                contentLastModified: popupData.contentLastModified
+            },
+            queryCallback
+        );
+    };
+
+    var queryCallback = function(response) {
+        if ( response ) {
+            getPopupData();
+            return;
+        }
+        poll();
+    };
+
+    var poll = function() {
+        if ( pollTimer !== null ) {
+            return;
+        }
+        pollTimer = setTimeout(pollCallback, 1500);
+    };
+
+    return poll;
+})();
+
+/******************************************************************************/
+
+var getPopupData = function() {
+    var onDataReceived = function(response) {
+        cachePopupData(response);
+        renderPopup();
+        hashFromPopupData(true);
+        pollForContentChange();
+    };
+    messager.send({ what: 'getPopupData' }, onDataReceived);
+};
+
+/******************************************************************************/
+
 // Make menu only when popup html is fully loaded
 
 uDom.onLoad(function() {
-    messager.send({ what: 'activeTabStats' }, function(response) {
-        if ( !cachePopupData(response) ) {
-            return;
-        }
-        renderPopup();
-    });
+    getPopupData();
     uDom('h1,h2,h3,h4').on('click', gotoDashboard);
-    uDom('#switch .fa').on('click', toggleNetFilteringSwitch);
+    uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoLog').on('click', gotoDevTools);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href^=http]').on('click', gotoLink);
     uDom('#dfToggler').on('click', toggleDynamicFiltering);
+    uDom('#refresh').on('click', reloadTab);
 });
 
 /******************************************************************************/

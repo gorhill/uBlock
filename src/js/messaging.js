@@ -193,6 +193,7 @@ var getStats = function(tabId) {
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
+        r.contentLastModified = pageStore.contentLastModified;
         r.dynamicFilterRules = getDynamicFilterRules(pageStore.pageHostname, r.hostnameDict);
     } else {
         r.hostnameDict = {};
@@ -206,7 +207,7 @@ var getStats = function(tabId) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'activeTabStats':
+        case 'getPopupData':
             vAPI.tabs.get(null, function(tab) {
                 var tabId = tab && tab.id;
                 callback(getStats(tabId));
@@ -228,6 +229,17 @@ var onMessage = function(request, sender, callback) {
             µb.elementPickerExec(request.tabId);
             break;
 
+        case 'hasPopupContentChanged':
+            var pageStore = µb.pageStoreFromTabId(request.tabId);
+            var lastModified = pageStore ? pageStore.contentLastModified : 0;
+            response = lastModified !== request.contentLastModified;
+            break;
+
+        case 'toggleDynamicFilter':
+            µb.toggleDynamicFilter(request);
+            response = getStats(request.tabId);
+            break;
+
         case 'toggleNetFiltering':
             µb.toggleNetFilteringSwitch(
                 request.url,
@@ -235,11 +247,6 @@ var onMessage = function(request, sender, callback) {
                 request.state
             );
             µb.updateBadgeAsync(request.tabId);
-            break;
-
-        case 'toggleDynamicFilter':
-            µb.toggleDynamicFilter(request);
-            response = getStats(request.tabId);
             break;
 
         default:

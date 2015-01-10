@@ -484,6 +484,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
     this.requestURL = this.requestHostname = this.requestType = '';
 
     this.hostnameToCountMap = {};
+    this.contentLastModified = 0;
     this.frames = {};
     this.netFiltering = true;
     this.netFilteringReadTime = 0;
@@ -655,6 +656,7 @@ PageStore.prototype.cacheResult = function(context, result) {
     var requestHostname = context.requestHostname;
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;
+        this.contentLastModified = Date.now();
     }
     var c = result.charAt(1);
     if ( c === '' || c === 'a' ) {
