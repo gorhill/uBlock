@@ -299,7 +299,6 @@ var renderPopup = function() {
 
     // Condition for dynamic filtering toggler:
     // - Advanced user
-    uDom('body').removeClass('dirty');
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
 
     uDom('#switch').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
@@ -544,15 +543,15 @@ var reloadTab = function() {
 //
 // - broadcasting() is not an option given there could be a lot of tabs opened,
 //   and maybe even many frames within these tabs, i.e. unacceptable overhead 
-//   regardless of whether the popup is opened or not).
+//   regardless of whether the popup is opened or not.
 //
 // - Modifying the messaging API is not an option, as this would require
 //   revisiting all platform-specific code to support targeted broadcasting,
 //   which who knows could be not so trivial for some platforms.
 //
 // A well done polling is a better anyways IMO, I prefer that data is pulled 
-// on demand rather than having the main process assumes somebody may need to
-// be expressly notified.
+// on demand rather than forcing the main process to assume a client may need
+// it and thus having to push it all the time unconditionally.
 
 var pollForContentChange = (function() {
     var pollTimer = null;
