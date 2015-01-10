@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Fri, 10 Oct 2014 20:56:38 GMT
-# entries:        2458
+# last updated:   Tue, 06 Jan 2015 08:08:11 GMT
+# entries:        2457
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -670,7 +670,6 @@
 127.0.0.1 ads.ultimate-guitar.com
 127.0.0.1 ads.uncrate.com
 127.0.0.1 ads.undertone.com
-127.0.0.1 ads.unixathome.org
 127.0.0.1 ads.uploading.com
 127.0.0.1 ads.usatoday.com
 127.0.0.1 ads.v3.com
@@ -911,7 +910,6 @@
 127.0.0.1 adviva.com
 127.0.0.1 adviva.net
 127.0.0.1 advnt.com
-127.0.0.1 advprotraffic.com
 127.0.0.1 adwareremovergold.com
 127.0.0.1 adwhirl.com
 127.0.0.1 adwitserver.com
@@ -1008,7 +1006,6 @@
 127.0.0.1 audit.median.hu
 127.0.0.1 audit.webinform.hu
 127.0.0.1 auto-bannertausch.de
-127.0.0.1 autohits.dk
 127.0.0.1 avenuea.com
 127.0.0.1 avpa.javalobby.org
 127.0.0.1 avres.net
@@ -1291,7 +1288,9 @@
 127.0.0.1 count.west263.com
 127.0.0.1 count6.rbc.ru
 127.0.0.1 counted.com
+127.0.0.1 counter.avtoindex.com
 127.0.0.1 counter.bloke.com
+127.0.0.1 counter.cgiworld.net
 127.0.0.1 counter.cnw.cz
 127.0.0.1 counter.cz
 127.0.0.1 counter.dreamhost.com
@@ -1365,7 +1364,6 @@
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
 127.0.0.1 dnads.directnic.com
-127.0.0.1 doclix.com
 127.0.0.1 domaining.in
 127.0.0.1 domainsponsor.com
 127.0.0.1 domainsteam.de
@@ -1467,6 +1465,7 @@
 127.0.0.1 fonecta.leiki.com
 127.0.0.1 foo.cosmocode.de
 127.0.0.1 forex-affiliate.net
+127.0.0.1 forrestersurveys.com
 127.0.0.1 fpctraffic.com
 127.0.0.1 fpctraffic2.com
 127.0.0.1 fragmentserv.iac-online.de
@@ -1530,6 +1529,7 @@
 127.0.0.1 herbalaffiliateprogram.com
 127.0.0.1 hexusads.fluent.ltd.uk
 127.0.0.1 heyos.com
+127.0.0.1 hgads.com
 127.0.0.1 hidden.gogoceleb.com
 127.0.0.1 hightrafficads.com
 127.0.0.1 histats.com
@@ -1565,7 +1565,6 @@
 127.0.0.1 hyperbanner.net
 127.0.0.1 hypertracker.com
 127.0.0.1 i-clicks.net
-127.0.0.1 i-lookup.com
 127.0.0.1 i.xx.openx.com
 127.0.0.1 i1img.com
 127.0.0.1 i1media.no
@@ -1583,7 +1582,6 @@
 127.0.0.1 ifa.tube8live.com
 127.0.0.1 ilbanner.com
 127.0.0.1 ilead.itrack.it
-127.0.0.1 iliillliO00OO0.321.cn
 127.0.0.1 ilovecheating.com
 127.0.0.1 image.ugo.com
 127.0.0.1 imageads.canoe.ca
@@ -1732,6 +1730,7 @@
 127.0.0.1 media1first.com
 127.0.0.1 media6degrees.com
 127.0.0.1 mediaarea.eu
+127.0.0.1 mediacharger.com
 127.0.0.1 mediadvertising.ro
 127.0.0.1 mediageneral.com
 127.0.0.1 mediamayhemcorp.com

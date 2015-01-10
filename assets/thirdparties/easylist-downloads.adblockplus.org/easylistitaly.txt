@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: VS7a7XxeBz8h+RKx0UoVXA
-! Version: 201412301311
+! Checksum: kEZ8EWuQeZQm6eBdgY9ZjQ
+! Version: 201501102051
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 30 Dec 2014 13:11 UTC
+! Ultima modifica: 10 Jan 2015 20:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -327,12 +327,9 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||banzaimedia.it/hpsponsor/
 ||bazarcoupon.com/images/$third-party
 ||betpro.it^*/banner/
-||blogspot.com^*/ban1.png$domain=italiafilm2.com
-||blogspot.com^*/ban2.gif$domain=internapoli-city.org
 ||blogspot.com^*/download_728.gif
 ||blogspot.com^*/download_728_2.gif
 ||blogspot.com^*/downloadnow_it_468.png
-||blogspot.com^*/Streaming.png$domain=internapoli-city.org
 ||booking.com/general.html?$subdocument,domain=quattroruote.it|tuttobaviera.it
 ||booking.com^*;tmpl=banners;$subdocument,domain=trombodromo.com
 ||booking.fioccovacanze.it^$third-party
@@ -475,8 +472,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||stgy.it/images/skin/
 ||stgy.it^*/ova-jw.swf$object-subrequest
 ||streamcaster.net/lunaset/web/template_
-||streamingtorrent.com/images/guarda.jpg
-||streamingtorrent.com/images/scarica.jpg
 ||subito-server.it/banner/
 ||subito.paneaserver.net^
 ||tamtamsrl.it/dreamteam/banner/
@@ -487,7 +482,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||tomshw.corley.it^
 ||tophost.it/banners/
 ||trilud.com/highlight_300X280.php?
-||tripadvisor.ru/WidgetEmbed-tcphoto?$domain=russiaoggi.it
 ||trivago.it/external_rpc.php?
 ||tstore.it/banner.
 ||tuoporno.com/images/banner/
@@ -512,7 +506,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||yoox.it/view.aspx?$subdocument,third-party
 ||yoppinho.com/public/scambio_banner/
 ||youbuy.it/banner/
-||youtube.com/embed/mktiiofqskm$object,domain=tvzoom.it
 ||zxadhosting.it^
 ! *** easylistitaly:easylistitaly/easylistitaly_thirdparty_popup.txt ***
 ||888.it^$popup,third-party
@@ -700,8 +693,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ciaocomo.it/images/banners/
 ||ciclonline.com/images/banners/
 ||cilentotime.it/images/banners/
-||cineblog01.info/ban2_
-||cineblog01.info/ban_
 ||cinemadelsilenzio.it/banner4.js
 ||cinemadelsilenzio.it/images/home/eff2012_
 ||cinemadelsilenzio.it/images/sponsor/
@@ -1008,13 +999,9 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||ilmanifesto.it^*/sponsors/
 ||ilmattino.it/300x200Banner.php
 ||ilmattino.it/box_tuttomercato052011/
-||ilmattino.it/img/magiclandlight.gif
-||ilmattino.it/img/rainbow_magicland.gif
 ||ilmattino.it/imgmol/
 ||ilmessaggero.it/300x200Banner.php
 ||ilmessaggero.it/box_tuttomercato052011/
-||ilmessaggero.it/img/magiclandlight.gif
-||ilmessaggero.it/img/rainbow_magicland.gif
 ||ilmessaggero.it/imgmol/
 ||ilmioip.it/UPLD/BN/
 ||ilmitte.com^*/banner_
@@ -1086,6 +1073,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||italiafilm01.com^*_watchonline_
 ||italiagermania4-3.com/images/banners/
 ||italiagol.it//immagini/File_banner/
+||italpress.com^*-300x180.
 ||ivg.it/slider-elezioni-2014-03.html
 ||ivg.it^*/takeover/
 ||iviaggidellagnocca.info/banner.jpg
@@ -1159,8 +1147,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||leggioggi.it^*/banner/
 ||leggo.it/300x200Banner.php
 ||leggo.it/box_tuttomercato032011/
-||leggo.it/img/magiclandlight.gif
-||leggo.it/img/rainbow_magicland.gif
 ||leggo.it/imgmol/
 ||leonardo.it/images_for_css/skin-
 ||leradio.com/ebay-
@@ -1277,6 +1263,9 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||novara.com^*/MainBanner_
 ||nuovadelsud.it/images/banners/
 ||nuovavicenza.it/banner/
+||nuovosud.it/sites/default/files/box-
+||nuovosud.it/sites/default/files/skin-
+||nuovosud.it^*/banner/
 ||nyc-site.com/newyork/hotel/
 ||oas.repubblica.it^
 ||occhiodisalerno.com/images/banners/
@@ -1346,8 +1335,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||puglialive.net/dfiles/banners/
 ||puntocellulare.it/banner/
 ||pupia.tv/banner-
-||qds.it/docs/bancopopolaresiciliano.gif
-||qds.it/docs/guidamonaci_
 ||qds.it/docs/mariluranch-
 ||qds.it/docs/SICEP.jpg
 ||quattroruote.it^*/logo_*_menu.png
@@ -1364,22 +1351,12 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||quotidianodigela.it/images/background/
 ||quotidianodigela.it^*/banners/
 ||quotidianodipuglia.it/box_tuttomercato032011/
-||quotidianodipuglia.it/img/magiclandlight.gif
-||quotidianodipuglia.it/img/rainbow_magicland.gif
-||r101.it/banner/
-||r101.it/img/bg_streaming_controller_audio.png
-||r101.it/img/btn_innamorarsia101.
-||r101.it/img/btn_innamorarsia101_pic.gif
-||r101.it/img/btn_innamorarsia101_pic_
-||r101.it/img/hp_pulsante_bol.png
 ||radio103.it/banner_
 ||radioalba.it/img_sito/banner/
 ||radioalex.it^*/banner-
 ||radioalex.it^*/banner/
 ||radioalex.it^*/banner_
 ||radioamore.it^*/banners/
-||radiocentro95.it/uploads/banner/
-||radiocentro95.it/uploads/bannerr/
 ||radiocuore.it/nencini.gif
 ||radioetv.it/images/banners/
 ||radioetv.it/images/BigRectangle_
@@ -1403,15 +1380,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||radioroma.fm/images/flash/zoomarine.swf
 ||radioromacapitale.it/images/banner-
 ||radioromacapitale.it/images/conf.jpg
-||radiosport24.com/images/banner.png
-||radiosport24.com/images/blunord.jpg
-||radiosport24.com/images/lakers-fly-tech.jpg
-||radiosport24.com/images/logo_land_rover_.png
-||radiosport24.com/images/pellizza.jpg
-||radiosport24.com/images/romano_auto.png
-||radiosport24.com/images/stories/demo/med-music-corporate.jpg
 ||radiostereo103.it/banner_
-||radiovaticana.va^*/ENEL_022013_320x64.gif
 ||radioveronica.it/uploads/partner/
 ||raffaeleauriemma.com^*/rotor/
 ||rampower.it/download/banner/
@@ -1443,18 +1412,10 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||rietilife.it^*/banner-
 ||rietilife.it^*/banner_
 ||rinnovabili.it^*/sponsor_
-||rnbjunk.com/cdn-cgi/pe/bag?r[]=*.2mdn.net
-||rnbjunk.com/cdn-cgi/pe/bag?r[]=*.amung.us
-||rnbjunk.com/cdn-cgi/pe/bag?r[]=*.clickfuse.com
-||rnbjunk.com/cdn-cgi/pe/bag?r[]=*.doubleclick.net
-||rnbjunk.com/cdn-cgi/pe/bag?r[]=*.tynt.com
 ||rockit.it/dbimg/7banner/
 ||rockit.it/res/css3/skin_
 ||rocknrollradio.it/images/banners/
 ||rollingstonemagazine.it^*/banner/
-||romacapitalenews.com^*-300.jpg
-||romacapitalenews.com^*/romasuonagratis.gif
-||romacapitalenews.com^*_banners/
 ||romait.it/img/banners/
 ||romanews.eu/upload/assets/files/*.swf?linkto=/php/redirect.php?
 ||romatoday.it/images/skin/
@@ -1492,9 +1453,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||sentieriselvaggi.it/public/banner/
 ||serviziopubblico.it/media/images/banner/
 ||settecalcio.it/public/banners/
-||sfilate.it/wp-content/themes/sfilate/images/banner-madeinitaly.gif
-||sfilate.it/wp-content/themes/sfilate/images/cb-logo.jpg
-||sfilate.it/wp-content/themes/sfilate/images/hotel728x90.jpg
 ||si24.it/images/banners/
 ||sibarinet.it/images/banners/
 ||siciliaway.it^*/immagini_promozionali/
@@ -1507,22 +1465,16 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||solopornoitaliano.com/493836.gif
 ||solopornoitaliano.com/bitter728.jpg
 ||solopornoitaliano.com^*/animazione
-||sonorika.com^*/sonorika_home_mito.jpg
 ||spartoo.it/footer_tag_iframe.
 ||spaziofilm.it/includes2/1/google/
 ||spaziogames.it/backgrounds/
 ||spaziogames.it/banner/
 ||spaziogames.it/images/backgrounds/
-||spaziointer.it/wp-content/uploads/2013/05/pushbar_2008.gif
-||spaziointer.it^*/roulette_234x60-1.gif
-||spaziomilan.it^*/banner_
-||spaziomilan.it^*/milancamp.gif
 ||spoletonline.com/banner/
 ||sponsor.imperiapost.it^
 ||sportando.net/sportando/banner/
 ||sportlive.it/images/*_300x100_
 ||sportlive.it/images/300x100_
-||sportnews.bz/uploads/pics/banner869x90.gif.gif
 ||sportrentino.it/portale/novitast/getb.asp?
 ||spotmix.libero.it^
 ||spytwins.com/img/site/ec300.gif
@@ -1538,29 +1490,12 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||stiledimoda.it/n/
 ||stiledimoda.it/p/
 ||stranieriinitalia.it/images/banners/
-||streamingfilm.it/images/stories/downloaddvdhard.jpg
-||streamingfilm.it/images/stories/streaming-film-hd.jpg
-||streamingfilm.it/images/stories/streamingfilmporno.jpg
 ||strill.it/images/banners/
 ||studiocataldi.it/banner/
 ||suannunci.it/cgi-bin/home_pubblicita^
 ||submission.it/banner/
 ||suedtirol-it.com/images/banner/
 ||superba.it/ad-
-||supercalcioextra.altervista.org/888.gif
-||supercalcioextra.altervista.org/betclic.jpg
-||supercalcioextra.altervista.org/betfair.jpg
-||supercalcioextra.altervista.org/betfair2.jpg
-||supercalcioextra.altervista.org/bfcasino.jpg
-||supercalcioextra.altervista.org/bflive.jpg
-||supercalcioextra.altervista.org/bflungo.jpg
-||supercalcioextra.altervista.org/whlungo.jpg
-||supercalcioextra.altervista.org/williamhill.jpg
-||supercalcioextra.altervista.org/williamhill2.jpg
-||supercalcioextra.com/minibc.jpg
-||supercalcioextra.com/minibf.jpg
-||supercalcioextra.com/minipp.jpg
-||supercalcioextra.com/miniwh.jpg
 ||superzeta.it^*/dummy.gif
 ||targatocn.it/fileadmin/archivio/targatocn/*/bgr_body45_
 ||targatocn.it^*/box/
@@ -1585,8 +1520,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||temi-wordpress.net/wp-content/plugins/maxblogpress-unblockable-popup/
 ||tempoitalia.it/banner/
 ||tenews.it/banner/
-||tennis.it/files/banner_blufreccia3c.gif
-||tennis.it/files/olio-san-clemente.jpg
 ||tennisworlditalia.com/banners/
 ||terninrete.it/banner/
 ||terninrete.it/skins/terninrete2/images/headings/head_ha_suggerimenti_da_google.gif
@@ -1667,7 +1600,6 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||valori.it/banner/
 ||vanityfair.it/loaderframe.html
 ||vanityfair.it^*_105x65.jpg
-||vaol.it/include/mod/layout1/images/bps.swf
 ||varesenews.it/banner/
 ||vb33.it/images/banners/
 ||venetogol.it//immagini/File_banner/
@@ -1867,6 +1799,7 @@ rumors.it,trendystyle.it###block-block-27
 rumors.it,trendystyle.it###block-block-4
 rumors.it,trendystyle.it###block-block-5
 axn.it###block-spti_operative-spti_operative_square
+nuovosud.it###block-views-banner-centrale-menu-block
 ilsole24ore.com###block300x250
 cronacamilano.it###block_left
 cronacamilano.it###block_right
@@ -1964,7 +1897,7 @@ cittaceleste.it,juvenews.eu###itemBannerSottoImg
 unita.it###ixeBanner
 prowrestling.it###landingbanner
 macitynet.it###leader-wrapper
-boomerangtv.it,discoverychannel.it,dissacration.com,ebay.it,eurogamer.it,fiscaleweb.com,geekissimo.com,gingerandtomato.com,healthdesk.it,historychannel.it,ilcinemaniaco.com,ilgazzettinovesuviano.com,ilsannioquotidiano.it,iochiamo.com,lasiciliaweb.it,lussuosissimo.com,medicinalive.com,mondoreality.com,musickr.it,theapplelounge.com###leaderboard
+boomerangtv.it,discoverychannel.it,dissacration.com,ebay.it,eurogamer.it,fiscaleweb.com,geekissimo.com,gingerandtomato.com,healthdesk.it,historychannel.it,ilcinemaniaco.com,ilgazzettinovesuviano.com,ilsannioquotidiano.it,iochiamo.com,lasiciliaweb.it,lussuosissimo.com,medicinalive.com,mondoreality.com,musickr.it,skiinfo.ch,skiinfo.it,theapplelounge.com###leaderboard
 ilgazzettinovesuviano.com###leaderboard-footer
 ravennaedintorni.it###leaderboard_div
 bergamosera.com###leaderboard_wrapper
@@ -2027,6 +1960,7 @@ gelocal.it###s3slider
 sampdoria.it###samppromorow
 samp.tv###samptvsponsor
 trombodromo.com###searchboxInc
+nuovosud.it###sfondo
 hdblog.it###shopping_kelkoo
 lonelyplanetitalia.it###side_banner
 lonelyplanetitalia.it###side_banner_300_100
@@ -2159,7 +2093,7 @@ america24.com,gianlucadimarzio.com##.adbox
 loradellacalabria.it##.add768int
 pinkdna.it##.adds300x250
 zapster.it##.addx
-caserta24ore.it,fantagazzetta.com,gamemag.it,phicatube.net,radiospeaker.it,teleborsa.it##.ads
+caserta24ore.it,fantagazzetta.com,gamemag.it,ilikepuglia.it,phicatube.net,radiospeaker.it,teleborsa.it##.ads
 meteowebcam.it##.ads_menu
 corriereadriatico.it,ilgazzettino.it,ilmattino.it,ilmessaggero.it,ilsecoloxix.it,leggo.it,pcprofessionale.it,pubblicitaitalia.it,quotidianodipuglia.it##.adsense
 meteowebcam.it##.adsense_menu
@@ -2205,6 +2139,7 @@ telesud3.com##.banner-destra-tyf
 algheroeco.com##.banner-header-dx
 algheroeco.com##.banner-header-sx
 genova24.it,ivg.it##.banner-middle-board
+ilikepuglia.it##.banner-placeholder
 milanofinanza.it##.banner-sfondo
 telesud3.com##.banner-sidebar
 panorama.it##.banner-spalla-dx
@@ -2237,7 +2172,6 @@ ilfattonisseno.it##.banner_200
 lavocedelpopolo.net##.banner_210
 ilquotidianodellacalabria.it##.banner_234x90
 spaziofilm.it##.banner_300
-gazzettadiparma.it##.banner_300x170
 ilmattinodifoggia.it##.banner_300x250_3
 liberoquotidiano.it##.banner_300x250_colonna_6
 everyeye.it##.banner_600_new
@@ -2284,6 +2218,7 @@ nonsolocinema.com##.banners
 ilquotidianofvg.it##.banners-125
 cremonaoggi.it##.bannersx
 album-mmt.it,musictory.it##.bannertop
+gazzettadiparma.it##.bannervcms
 ticinolive.ch##.bannerwrap
 romagiornoenotte.it##.basebannerBox
 wallstreetitalia.com##.bestbuybiz
@@ -2550,6 +2485,7 @@ mmorpgitalia.it##a[href^="http://ad2games.com/slave.php?"]
 ipadevice.com,ispazio.net##a[href^="http://adserver.ispazio.net/"]
 ilsole24ore.com##a[href^="http://adv.ilsole24ore.it/"]
 multiplayer.it##a[href^="http://adv.multiplayer.it/"]
+guardaserie.net##a[href^="http://bit.ly/"]
 lifegate.it##a[href^="http://goo.gl/"]
 milanodabere.it##a[href^="http://ib.adnxs.com/clktrb?id="]
 film-mkv.net##a[href^="http://netload.in/index.php?refer_id="]
@@ -2858,6 +2794,7 @@ termometropolitico.it##[id^="bsa"]
 @@||laprovinciadibiella.it/upload/webpublic/rss.jpg
 @@||laprovinciadibiella.it/upload/webpublic/twitter.jpg
 @@||laprovinciadibiella.it/upload/webpublic/youtube.jpg
+@@||lastampa.it/modulo/pubblicita/rcs/js/infra-gallery.js?
 @@||mail.tiscali.it/cp/extras/it/dashboard/300x250.html?
 @@||mail.virgilio.it/common/tech_includes/mail/$subdocument,domain=webmail.virgilio.it
 @@||mail.virgilio.it/google/$subdocument,domain=webmail.virgilio.it

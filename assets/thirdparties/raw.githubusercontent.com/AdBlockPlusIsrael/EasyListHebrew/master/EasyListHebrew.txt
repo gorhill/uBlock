@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: tJ1pxt/GHEjF2R9x626zTQ
+! Checksum: 7oUBAJ/WsXZrlJoi2pN0yw
 ! Title: EasyList Hebrew
-! Last modified: 28/12/14  11:09
+! Last modified: 04/01/15  20:47
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -447,6 +447,7 @@ bizportal.co.il###articleBannerMadadimLeft
 bizportal.co.il###hpBannerMadadimLeft
 bizportal.co.il###shdira
 bizportal.co.il###shdira_homepage
+bizportal.co.il###tapet_flash_top
 bizportal.co.il###tapet_superpremium_container
 bizportal.co.il##.adv_breatdcrumbs
 bizportal.co.il##.baner1
@@ -457,11 +458,12 @@ bul.co.il##BODY
 cafe.themarker.com##.banner-wrapper
 cafe.themarker.com##.hp_left_ad
 calcalist.co.il###ArticleBanner
+calcalist.co.il###carouselAdLi
+calcalist.co.il##.SetArtWidth[style="margin-top: 7px;"]
+calcalist.co.il##div[style="width: 315px; overflow-x: hidden;margin-bottom:5px;"]
+calcalist.co.il##table[width="150"]
 calcalist.co.il##[height="7"] + [valign="top"] + TR[height="7"]
 calcalist.co.il##[valign="top"] + [valign="top"] + TR[height="7"]
-calcalist.co.il##div[style="width: 315px; overflow-x: hidden;"]
-calcalist.co.il##table[width="150"]
-calcalist.co.il##table[width="478"]
 carsforum.co.il###bannerwrap
 carsforum.co.il##.box2
 carsforum.co.il##DIV[style="float:left;padding-left:3px;"]
@@ -622,10 +624,12 @@ mako.co.il###googleLinkUnits
 mako.co.il###hp_bottom_strip
 mako.co.il###mysupermarketcontainer
 mako.co.il###neoTopStrip
+mako.co.il###playerAdArea
 mako.co.il###rAdContainer
 mako.co.il###topPageStrip.not_for_print
 mako.co.il##.header_level2_container
 mako.co.il##.mako_banner_coast
+mako.co.il##.pzm_banners
 mako.co.il##.sidebar_pic
 mako.co.il##div[id^="dclk_overlay_"]
 mako.co.il##[href^="http://apps.mako.co.il/common/Advert"]
@@ -836,11 +840,6 @@ winwin.co.il##.MiddleBanners
 wisebuy.co.il##.LboxGrey[style="height:270px;text-align:center;"]
 wisebuy.co.il##.LboxGrey[style="height:337px;text-align:center;"]
 wisebuy.co.il##table[width="100%"][align="center"]
-xnet.co.il###ads\.250x250\.top
-xnet.co.il###ads\.top\.1
-xnet.co.il###XnetAdSenceThinkAdAD-300
-xnet.co.il##.ad.hdn
-xnet.co.il##.ContentLink.banner.Low
 yad2.co.il###left_banner
 yad2.co.il###left_sekindo
 yad2.co.il###td_banner
@@ -850,36 +849,42 @@ yad2.co.il##.banner_strip
 yad2.co.il##.plasma_banner.pie
 yad2.co.il##.search_banners
 yad2.co.il##.yad1_mergetitle
+yad2.co.il##div[style=" height: 90px; background-color: #DDDDDD; border-radius:6px; width:978px; padding-top:8px; padding-bottom:8px; margin-left: auto; margin-right: auto; margin-bottom: 8px; position: relative;"]
 yad2.co.il##TD[style="background:#FFFFFF;"]
 yad2.co.il##TH[style="background: #505D6A; font-size: 13px; font-family: arial; text-align: left; color: white; font-weight: bold; padding: 0px; margin: 0px; padding-right: 0px; padding-left: 10px; height: 31px; border-bottom: 1px solid white;"][colspan="9"]
-yad2.co.il##div[style=" height: 90px; background-color: #DDDDDD; border-radius:6px; width:978px; padding-top:8px; padding-bottom:8px; margin-left: auto; margin-right: auto; margin-bottom: 8px; position: relative;"]
 yeshanews.com###sideban
-yesplanet.co.il###snatch
 yesno.co.il###wrapper
+yesplanet.co.il###snatch
+ynet.co.il###ads\.250x250\.top
 ynet.co.il###ads\.300x600\.1
+ynet.co.il###ads\.top\.1
 ynet.co.il###art_bottom_adsense-1
 ynet.co.il###art_right_sponsored_links-1
 ynet.co.il###googleAdsenseMivzakim
 ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
 ynet.co.il###ww6s_Main
+ynet.co.il###XnetAdSenceThinkAdAD-300
 ynet.co.il###ynet_lightbox_content_top
-ynet.co.il##.CAATVcompAdvertiseTv
-ynet.co.il##.HTcompData
-ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
-ynet.co.il##.MRec_main
+ynet.co.il##.ad.hdn
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
+ynet.co.il##.CAATVcompAdvertiseTv
+ynet.co.il##.ContentLink.banner.High
+ynet.co.il##.ContentLink.banner.Low
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
 ynet.co.il##.ghciPromoLightbox1
 ynet.co.il##.google_ads_t4590B_wrapper
+ynet.co.il##.HTcompData
+ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
 ynet.co.il##.leshonitMain.leshonitBorderRectangle
+ynet.co.il##.MRec_main
 ynet.co.il##DIV[style="width:256px;height:66px;background-color:#FFFFFF;"]
-ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
 ynet.co.il##iframe[style="width:770px;height:191px;"]
+ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
 zap.co.il##.Martef

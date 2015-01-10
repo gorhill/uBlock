@@ -533,6 +533,7 @@ ad.gr.doubleclick.net
 ||mothersblog.gr/media/com_skins/skins/79/*
 ||thepressproject.gr/build/1.jpg
 ||stokokkino.gr/photos/gsk.jpg
+||techgear.gr/wp-content/themes/tg3/images/dressme/techgear_energizer_skin*
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1
@@ -879,6 +880,7 @@ sports.in.gr###middlebanner3
 in.gr###RightBanner6
 in.gr###RightBanner8
 gazzetta.gr###block-wblocks-wblocks_companies
+techgear.gr###fasa
 ! Exception Rules
 @@sport-fm.gr/newspapers/$elemhide
 @@resources.sport-fm.gr/sportfm/newspapers/

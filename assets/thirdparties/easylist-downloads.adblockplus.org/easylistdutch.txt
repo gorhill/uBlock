@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: o4fwlpEJJXqJBMon+iXxdw
-! Version: 201412301311
+! Checksum: VGLsee2e6EtFIf86DCX/yw
+! Version: 201501102051
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 30 Dec 2014 13:11 UTC
+! Last modified: 10 Jan 2015 20:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -154,7 +154,6 @@ _advertentieleaderboardhome.
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
 ||bol.com/nl/upload/banners/
-||bongacash.com/promo.php?
 ||booking.com/?aid=$domain=puuropreis.nl
 ||brightcove.com/js/BrightcoveExperiences.js$domain=backpackgek.nl
 ||buzzlab.nl/input/*Banner
@@ -257,6 +256,7 @@ _advertentieleaderboardhome.
 ||static2-voetbalzone.nl/images/uni_header.
 ||stcm.nl/otla/
 ||strandmeisjes.nl/banners/
+||streaming.orbisvideo.com^*.mp4$object-subrequest,domain=rtlxl.nl
 ||sunjets.be/banners/
 ||thisislive.com/promo/
 ||tienerorgies.be/promo/
@@ -711,7 +711,6 @@ _advertentieleaderboardhome.
 @@||doubleclick.net^*adj/ster_cinema.nl/preroll;$script,domain=cinema.nl
 @@||g.doubleclick.net/gampad/ads?$script,domain=insidegamer.nl|marktplaats.nl
 @@||g.doubleclick.net/gampad/ads?$xmlhttprequest,domain=radioluisteren.fm
-@@||ghstatic.com/archives/*&adurl=$object,domain=game.zylom.com
 @@||google.com/ads/search/module/ads/*/search.js$domain=zoover.be|zoover.nl
 @@||google.com/adsense/$subdocument,domain=sedo.nl
 @@||google.com/adsense/search/ads.js$domain=zoover.be|zoover.nl
@@ -721,8 +720,6 @@ _advertentieleaderboardhome.
 @@||ib.adnxs.com/mtj?$script,domain=9292.nl
 @@||imageceu1.247realmedia.com/0/Player/Player_NL_Home/342x204_mensuel_NLnew.jpg
 @@||images.marktnet.eu/adimg/
-@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=538.nl|radiodigitaal.nl|slamfm.nl
-@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=538.nl|radiodigitaal.nl|slamfm.nl
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
 @@||media.ztat.net/media/teaser/$image,domain=zalando.nl
 @@||nl.gmads.net/crossdomain.xml$object-subrequest,domain=radioveronica.nl
@@ -739,13 +736,17 @@ _advertentieleaderboardhome.
 @@||vtm.be/vmmaplayer/embed?videoUrl=*&adZone=$subdocument,domain=knack.be|zita.be
 ! Anti-Adblock
 @@||g.doubleclick.net/gampad/ads?env=vp&gdfp_req=1&impl=s&output=xml_vast$object-subrequest,domain=rtl.nl|rtlxl.nl
-@@||imasdk.googleapis.com/flash/core/adsapi_3_0_$object-subrequest,domain=2be.be|jim.be|q-music.be|syndication.vmma.be|vitaya.be|vtm.be|vtmkzoom.be
-@@||imasdk.googleapis.com/flash/sdkloader/adsapi_3.swf$object-subrequest,domain=2be.be|jim.be|q-music.be|syndication.vmma.be|vitaya.be|vtm.be|vtmkzoom.be
+@@||g.doubleclick.net/pagead/adview?ai=$object-subrequest,domain=rtlxl.nl
+@@||g.doubleclick.net/pagead/conversion/?ai=*&label=vast_creativeview$object-subrequest,domain=rtlxl.nl
+@@||ima3vpaid.appspot.com/?adTagUrl=$object-subrequest,domain=rtlxl.nl
+@@||ima3vpaid.appspot.com/crossdomain.xml$object-subrequest,domain=rtlxl.nl
 @@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=vtm.be
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=alfaforum.nl
 @@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=vtm.be
 @@||pubads.g.doubleclick.net/gampad/ads?$object-subrequest,domain=vtm.be
 @@||pubads.g.doubleclick.net/gampad/ads?ad_rule=1&$object-subrequest,domain=2be.be|jim.be|syndication.vmma.be|vitaya.be|vtmkzoom.be
+@@||serving-sys.com/BurstingPipe/adServer.bs?*&pl=VAST&$object-subrequest,domain=rtlxl.nl
+@@||serving-sys.com/crossdomain.xml$object-subrequest,domain=rtlxl.nl
 !--------Uitzonderingen--------!
 ! *** easylistdutch/block_first_party_whitelist.txt ***
 @@||2cv.nl/markt/advertenties/$image,subdocument
@@ -762,7 +763,6 @@ _advertentieleaderboardhome.
 @@||zeelandnet.nl/prikbord/assets/*/advertentie.js
 @@||zeelandnet.nl/prikbord/assets/*/advertenties.js
 ! Uitzonderingen voor EasyList
-@@||ad.nl/ad/css/$~third-party
 @@||ad.nl/static/nmc/prm/frameset/overlay/imago/v2/728x90.jpg?
 @@||adhese.standaard.be/jsonp/callback/sl_test_dso_ipad_optimized_avondeditie_-interstitial/?$script
 @@||adsense.nl^$domain=adsense.nl
@@ -1010,15 +1010,14 @@ marktnet.nl##.ThumbGoogle
 gtaforum.nl##.__xXadvertentie
 checkcams.com##.ab
 androidplanet.nl,dewereldmorgen.be,ipadclub.nl,iphoneclub.nl,metronieuws.nl,nu.nl,stemwijzer.nl,tvgids.nl,vkmag.com,z24.nl##.ad
-israeltoday.nl##.ad-hor
 misslipgloss.nl##.ad3
 nu.nl##.adblock_border
-nu.nl##.adblock_noborder
 ncrv.nl##.add-disclaimer
 telegraaf.nl##.addiv > a[target="_new"]
 vt4.be##.adl_medium_rectangle
 nu.nl##.adorange
 porntubexl.nl,studio040.nl,tube.nl##.ads
+openingstijden.com##.adsense
 nu.nl##.adsilver
 allradio.nl##.adv
 9292.nl,classicfm.nl,fcupdate.nl,onemorething.nl##.advert

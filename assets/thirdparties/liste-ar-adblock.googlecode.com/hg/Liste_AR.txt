@@ -832,6 +832,7 @@
 ||saidaonline.com/gifs/bsatad2013.jpg
 ||saidaonline.com/gifs/image5464df131311.jpg
 ||saidaonline.com/gifs/Shubadak-Baner-600x200.jpg
+||sat-vb.com/server.gif
 ||satna.tv/styles/*/satna-promo.gif
 ||sawt-alahrar.net/ara/themes/*/img/alimisurata3.gif
 ||sawt-alahrar.net/ara/themes/*/img/ichhar.jpg
@@ -1173,6 +1174,7 @@ sedty.com##a[href^="http://www.sedty.com/adv/"]
 mothhelah.com##a[href^="index.php?op=ad_click"]
 mtwer.com##a[onclick^="_gaq.push(['_trackEvent', 'Outgoing',"]
 elheddaf.com##a[style="width:100%; height:850px; display:block; background:#000 url(/data/pub/pub.jpg) no-repeat center top; position: relative;"]
+sat-vb.com##a[target="_blanck"] > img
 aliahmedali.com##a[target="_blank"] > img[width="235"][height="60"]
 alrealclub.com##a[title^="ينتهي في"]
 aswaqcity.com##div#vbseo_vhtml_0

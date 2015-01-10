@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Dec 29th, 2014 at 13:41
+# Last updated: Jan 5th, 2015 at 01:29
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1357,6 +1357,7 @@
 127.0.0.1 truehits1.gits.net.th
 127.0.0.1 t.senaldos.com
 127.0.0.1 t.senaluno.com
+127.0.0.1 t.signaletre.com
 127.0.0.1 t.signauxdeux.com # Another email opentracker from hubspot
 127.0.0.1 tu.connect.wunderloop.net
 127.0.0.1 t.yesware.com
@@ -5302,6 +5303,7 @@
 127.0.0.1 cdn.yottos.com
 127.0.0.1 cdn.zeusclicks.com
 127.0.0.1 cds.adecn.com
+127.0.0.1 c.eblastengine.com
 127.0.0.1 cecash.com
 127.0.0.1 ced.sascdn.com
 127.0.0.1 cell-phone-giveaways.com

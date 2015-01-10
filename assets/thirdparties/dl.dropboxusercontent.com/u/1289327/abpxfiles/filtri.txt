@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201412101734
+! Version: 201501071609
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 10-12-2014
+! Last modified: 07-01-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1605,7 +1605,6 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://*.saggiamente.com/*/imgad*
 |http://content.ad20.net/
 |http://ad.360yield.com/match
-|http://*.*.ad6media.fr/?d=
 ||cas.criteo.com/delivery/afr.php?*
 |http://*/*/sendspace-pop.html$popup
 |http://*.sharelive.net/?lpid=$popup
@@ -1718,6 +1717,12 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://*.ebz.io/*/visionnagePub.htm
 |http://*.ebz.io/*/buzzplayer/
 |http://*.cn24tv.it/*/banners/teletopi.png
+|http://*.tccstatic.com/template/tuttomercatoweb.com/*/banner/skin_*
+||calcio2000.it^$popup,domain=tuttomercatoweb.com
+|http://adserver.aktia.it/www/
+||ads.adamoads.com^$popup
+||ragmgci3.com^$popup
+||freewebcams.com^$popup
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -1791,6 +1796,41 @@ condominioweb.com##DIV[id^="div-gpt-ad-"]
 buonenotizie.it##DIV[class="ad"]
 deviantart.com##DIV[class="gr-box gr-genericbox  gr-adcast"]
 deviantart.com##DIV[class^="ad-blocking-"]
+movshare.ag##.sidebarCloseAd
+deviantart.com##.da-custom-ad-box
+deviantart.com##.dp-ad-chrome
+pornhub.com###pb_block
+optimaitalia.com##.adsbygoogle
+ilgiornale.it##[id^="google_ads_iframe"]
+ilgiornale.it##.block.block-ilg-adsense
+simply-hentai.com###divExoLayerWrapper
+pornmd.com##.advertisement
+dailydot.com###ads-leader
+dailydot.com##.sidebar-widget.ad-widget
+rapidvideo.org###hidiv
+nowvideo.li##[class^="ad"]
+playboy.com##[id^="google_ads_iframe"]
+mesgmy.ebay.it###rtm_html_831
+xhamster.com###plAds
+backin.net##DIV[style=" width:100%;height:100%;"]
+milanocam.it##.overcam_advertising_text
+milanocam.it##.adsbygoogle
+games.hdblog.it##[id^="banner3_"]
+muccapazzapazza.altervista.org##.banner_altervista_300X250
+##[id^="bsa"][style$="opacity: 0.95;"]
+subito.it##.box_sponsor
+washingtonpost.com##.leaderboard.ad-hideable
+washingtonpost.com###slug_inline_bb
+washingtonpost.com##.pb-ad-container
+vg247.it###recommendations
+vg247.it##.ad
+comesiscrive.it##.b300
+comesiscrive.it##.pure-u-1-4
+svendere.it##.adsbygoogle
+pokeritaliaweb.org##.overlay
+appcrawlr.com##.adsbygoogle
+ninjamarketing.it##.adv
+hongkiat.com##[id^="google_ads_iframe"]
 ##.adv_630
 newalbumreleases.net##DIV[class="banner"]
 newalbumreleases.net##DIV[class="bannerhead"]
@@ -3296,6 +3336,27 @@ iphoneitalia.com##.wes_main.wes_footer
 cn24tv.it###fancybox-overlay
 cn24tv.it##.modPubblicita.clickableBanner
 cn24tv.it##.modPubblicita
+intoscana.it##.skin-marg
+ispazio.net##.adsbygoogle
+forums.androidcentral.com##.netshelter-ad.gpt
+forum.xda-developers.com##[id^="div-gpt-ad-"]
+theitbros.com##.adsbygoogle
+tuttomercatoweb.com###LOCSTORAGE[src="http://secure-it.imrworldwide.com/storageframe.html"]
+delicious.com##.big-ads
+cn24tv.it###fancybox-content
+m.accuweather.com##.top-ad
+m.accuweather.com##.links
+amazon.it###sponsoredLinks
+amazon.it##[id^="search-desktop-advertising-bottom"]
+thegamesmachine.it###takeover_gv
+m.agi.it##.senseMob
+blog.chron.com##[id^="pmad"]
+blog.chron.com##[id^="google_ads_iframe"]
+blog.chron.com##.row1.clearfix
+blog.chron.com##.adsbygoogle
+blog.chron.com##.adContainer
+blog.chron.com##[id^="googleAd"]
+blog.chron.com##.ob_dual_container
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3319,6 +3380,9 @@ multiplayer.it###personalization_ads
 franchiseherald.com##[id^="google_ads_iframe"]
 latinospost.com##[id^="google_ads_iframe"]
 breathecast.com##[id^="google_ads_iframe_"]
+kickass.so##.advertising
+kickass.so##IFRAME[name^="spot_id"][src^="//ads"]
+kickass.so##[id^="MarketGidScriptRoot"]
 ansa.it##OBJECT[data^="http://timeseeker.thebelab.it/banner"]
 uk.businessinsider.com##.subnav-container
 uk.businessinsider.com##[id^="google_ads_iframe"]
@@ -3346,7 +3410,6 @@ motogp.com##.ads
 ||bet365.it^$popup
 ||lmebxwbsno.com^$popup
 ||binaryinstructor.com^$popup
-||warthunder.com^$popup
 ||ad-center.com^$popup
 ||adk2x.com^
 ||directsports247.tv^$popup
@@ -3446,6 +3509,44 @@ it.ibtimes.com##DIV[class="bk_basic bk_playtv1 mg_b0"]
 emuparadise.me###ad728
 emuparadise.me###ad160
 emuparadise.me##.mctable1345
+||media1first.com^$popup
+||32red.it^$popup
+||warthunder.com^$popup
+||hstpnetwork.com^$popup
+||profitin1minute.com^$popup
+||video.notizie.it^$popup
+||50.7.128.74^
+||streamnowmovies.com^$popup
+||ad121m.com^
+||if-sheknows.info//ads/*
+||if-sheknows.info/showads.php?*
+||ad.theequalground.info//ads/*
+||ad.theequalground.info/showads.php?*
+||zlothonline.info//ads.php?*
+||zlothonline.info/showads.php?*
+||rackcdn.com^$popup
+||doublepimp.com^$popup
+http://www.cultura.rai.it/$popup
+||bitterstrawberry.org^$popup,domain=simply-hentai.com
+||plugrush.com^$popup,domain=simply-hentai.com
+||n99adshostnet.com^$popup,domain=simply-hentai.com
+||ad6media.fr^$popup,domain=rapidvideo.org
+||topstoreoffers.com^$popup,domain=rapidvideo.org
+||fmdwbsfxf0.com^$popup,domain=rapidvideo.org
+||thebrowsergame.com^$popup,domain=firedrive.com
+||cpmterra.com^$popup,domain=firedrive.com
+||elitewindowstream.xyz^$popup,domain=firedrive.com
+||firedrive.com/300x250_r.php?*
+||firedrive.com/728x90.php
+||geolocalization.info^$popup
+||bit.ly^$popup,domain=fastvideo.eu
+||marketresearchglobal.com^$popup
+||purgrobi.com^$popup
+||euromillionairesystem.me^$popup
+||cloudtracked.com/ts/*$popup
+|http://backin.net/banner/
+||milanocam.it/*/banners/adv*
+|http://comesiscrive.it/workspace/javascripts/sociallocker/
 billboard.com##[id^="internal_trc_"]
 billboard.com##[id^="trc_header_"]
 food24.ilsole24ore.com###bannerTop
