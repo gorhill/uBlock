@@ -226,6 +226,9 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
 var updateAllDynamicFilters = function() {
     var rules = popupData.dynamicFilterRules;
     for ( var key in rules ) {
+        if ( rules.hasOwnProperty(key) === false ) {
+            continue;
+        }
         updateDynamicFilterCell(
             key.charAt(0),
             key.slice(2, key.indexOf(' ', 2)),
@@ -512,7 +515,7 @@ var setDynamicFilterHandler = function() {
     if ( hotspotId === 'dynaAllow' ) {
         action = 2;
     } else if ( hotspotId === 'dynaNoop' ) {
-        action = 3
+        action = 3;
     } else {
         action = 1;
     }
