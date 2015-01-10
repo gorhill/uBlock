@@ -52,12 +52,12 @@ Also of interest: [About the required permissions](https://github.com/gorhill/uB
 I think it is pretty obvious, except for this I suppose:
 
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
+
+The big power button is to disable/enable µBlock **for the specific hostname which can be extracted from the URL address of the current page**. (It applies to the current web site only, it is **not** a global power button.) The state of the power switch for a specific site will be remembered. 
+
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-2.png)
 
-The big power button is to disable/enable µBlock **for the specific hostname which can be extracted from the URL address of the current page**. (It applies to the current web site only, it is **not** a global power button.) The state of the power
-switch for a specific site will be remembered. 
-
-To the right: optional [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) at work.
+Optional [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) at work.
 
 ## About
 
