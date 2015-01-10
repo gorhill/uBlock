@@ -64,11 +64,11 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Åpne elementvelgermodus",
+    "message":"Åpne elementvelger-modus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå til forespørselslogg",
+    "message":"Gå til forespørsels-logg",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"Bilder",
+    "message":"bilder",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"Integrerte skript",
+    "message":"integrerte skript",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Førsteparts skript",
+    "message":"førsteparts skript",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Tredjeparts skript",
+    "message":"tredjeparts skript",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Tredjeparts rammer",
+    "message":"tredjeparts rammer",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Koblet til {{count}} distinkt(e) domene(r)",
+    "message":"Koblet til {{count}} distinkt(e) domene(r) av {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-egendefinerte-filtre_{{datetime}}.txt",
+    "message":"mine-ublock-statiske-filtre_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"mine-ublock-dynamiske-regler.txt",
+    "message":"mine-ublock-dynamiske-regler_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -364,7 +364,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-hviteliste_{{datetime}}.txt",
+    "message":"min-ublock-hviteliste_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -432,15 +432,15 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-sikkerhetskopi_{{datetime}}.txt",
+    "message":"min-ublock-sikkerhetskopi_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Gjenopprett fra fil...",
+    "message":"Gjenopprett fra fil",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Tilbakestill til standardinnstillinger...",
+    "message":"Tilbakestill til standardinnstillinger",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
