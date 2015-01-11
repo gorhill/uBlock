@@ -118,7 +118,7 @@ var getHostnameDict = function(hostnameToCountMap) {
         if ( r.hasOwnProperty(hostname) ) {
             continue;
         }
-        domain = domainFromHostname(hostname);
+        domain = domainFromHostname(hostname) || hostname;
         counts = hostnameToCountMap[domain] || 0;
         r[domain] = {
             domain: domain,
