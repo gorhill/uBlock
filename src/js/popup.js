@@ -211,8 +211,9 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
     if ( aCount === 0 && bCount === 0 ) {
         return;
     }
-    aCount = Math.min(Math.ceil(Math.log10(aCount + 1)), 3);
-    bCount = Math.min(Math.ceil(Math.log10(bCount + 1)), 3);
+    // https://github.com/gorhill/uBlock/issues/471
+    aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
+    bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
     // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
     //            ensure this in the HTML file counterpart when you make
     //            changes
