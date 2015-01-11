@@ -219,3 +219,7 @@ www.thesimsresource.com##.ad-topleader
 # https://github.com/gorhill/uBlock/issues/466
 # Until fixed in EasyPrivacy
 @@/google-analytics-dashboard
+
+# https://twitter.com/poroot/status/554300983472574465
+charlie.strim.io#@##tweets
+ovh.strim.io#@##tweets
