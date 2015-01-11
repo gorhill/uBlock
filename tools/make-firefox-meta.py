@@ -25,7 +25,7 @@ target_locale_dir = pj(build_dir, 'locale')
 language_codes = []
 description = ''
 
-for alpha2 in os.listdir(source_locale_dir):
+for alpha2 in sorted(os.listdir(source_locale_dir)):
     locale_path = pj(source_locale_dir, alpha2, 'messages.json')
     with open(locale_path, encoding='utf-8') as f:
         string_data = json.load(f, object_pairs_hook=OrderedDict)

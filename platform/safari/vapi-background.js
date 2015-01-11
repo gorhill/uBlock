@@ -602,6 +602,10 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
+    // Since it's not used
+    this.onBeforeSendHeaders = null;
+    this.onHeadersReceived = null;
+
     var onBeforeRequest = this.onBeforeRequest;
 
     if ( !Array.isArray(onBeforeRequest.types) ) {

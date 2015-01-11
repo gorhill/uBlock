@@ -84,7 +84,7 @@
         </dict>
     </dict>
     <!-- <key>Update Manifest URL</key>
-    <string>https://github.com/gorhill/uBlock/Safari/Update.plist</string> -->
+    <string>https://raw.githubusercontent.com/gorhill/uBlock/master/dist/Update.plist</string> -->
     <key>Website</key>
     <string>https://github.com/gorhill/uBlock</string>
 </dict>

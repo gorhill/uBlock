@@ -18,7 +18,7 @@
             <r:Description>
                 <id>{{ec8030f7-c20a-464f-9b0e-13a3a9e97384}}</id>
                 <minVersion>29.0</minVersion>
-                <maxVersion>37.0</maxVersion>
+                <maxVersion>38.0</maxVersion>
             </r:Description>
         </targetApplication>
 
@@ -27,7 +27,7 @@
             <r:Description>
                 <id>{{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}}</id>
                 <minVersion>2.26</minVersion>
-                <maxVersion>2.34</maxVersion>
+                <maxVersion>2.35</maxVersion>
             </r:Description>
         </targetApplication>
     </r:Description>

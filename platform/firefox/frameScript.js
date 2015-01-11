@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
 /******************************************************************************/
 
 Components.utils.import(

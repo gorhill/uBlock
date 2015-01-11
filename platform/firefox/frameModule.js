@@ -63,7 +63,7 @@ const contentObserver = {
     },
 
     QueryInterface: (function() {
-        let {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', {});
+        let {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
 
         return XPCOMUtils.generateQI([
             Ci.nsIFactory,
@@ -117,7 +117,7 @@ const contentObserver = {
             return this.ACCEPT;
         }
 
-        var opener;
+        let openerURL;
 
         if ( location.scheme !== 'http' && location.scheme !== 'https' ) {
             if ( type !== this.MAIN_FRAME ) {
@@ -127,10 +127,10 @@ const contentObserver = {
             context = context.contentWindow || context;
 
             try {
-                opener = context.opener.location.href;
+                openerURL = context.opener.location.href;
             } catch (ex) {}
 
-            let isPopup = location.spec === 'about:blank' && opener;
+            let isPopup = location.spec === 'about:blank' && openerURL;
 
             if ( location.scheme !== 'data' && !isPopup ) {
                 return this.ACCEPT;
@@ -139,7 +139,7 @@ const contentObserver = {
             context = context.contentWindow || context;
 
             try {
-                opener = context.opener.location.href;
+                openerURL = context.opener.location.href;
             } catch (ex) {}
         } else {
             context = (context.ownerDocument || context).defaultView;
@@ -150,7 +150,7 @@ const contentObserver = {
         if ( context.top && context.location ) {
             // https://bugzil.la/1092216
             getMessageManager(context).sendRpcMessage(this.cpMessageName, {
-                opener: opener || null,
+                openerURL: openerURL || null,
                 url: location.spec,
                 type: type,
                 frameId: type === this.MAIN_FRAME ? -1 : (context === context.top ? 0 : 1),
@@ -215,14 +215,19 @@ const contentObserver = {
             );
         }.bind(sandbox);
         sandbox.removeMessageListener = function() {
-            messager.removeMessageListener(
-                this._sandboxId_,
-                this._messageListener_
-            );
-            messager.removeMessageListener(
-                hostName + ':broadcast',
-                this._messageListener_
-            );
+            try {
+                messager.removeMessageListener(
+                    this._sandboxId_,
+                    this._messageListener_
+                );
+                messager.removeMessageListener(
+                    hostName + ':broadcast',
+                    this._messageListener_
+                );
+            } catch (ex) {
+                // It throws sometimes, mostly when the popup closes
+            }
+
             this._messageListener_ = null;
         }.bind(sandbox);
 

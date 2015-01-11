@@ -85,7 +85,7 @@ vAPI.i18n = (function() {
         try {
             return stringBundle.GetStringFromName(s);
         } catch (ex) {
-            return s;
+            return '';
         }
     };
 })();
