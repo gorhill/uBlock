@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"我是高级用户 （<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> 必读<\/a>）",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-自定义过滤_{{datetime}}.txt",
+    "message":"ublock 自定义过滤 {{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -364,7 +364,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-白名单_{{datetime}}.txt",
+    "message":"ublock 白名单 {{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
