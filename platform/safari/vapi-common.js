@@ -104,48 +104,6 @@ vAPI.i18n = function(s) {
     return this.i18nData[s] || s;
 };
 
-/******************************************************************************/
-
-// update popover size to its content
-if (safari.self.identifier === 'popover') {
-    var onLoaded = function() {
-        // Initial dimensions are set in Info.plist
-        var pWidth = safari.self.width;
-        var pHeight = safari.self.height;
-        var upadteTimer = null;
-        var resizePopover = function() {
-            if (upadteTimer) {
-                return;
-            }
-
-            upadteTimer = setTimeout(function() {
-                safari.self.width = Math.max(pWidth, document.body.clientWidth);
-                safari.self.height = Math.max(pHeight, document.body.clientHeight);
-                upadteTimer = null;
-            }, 20);
-        };
-
-        var mutObs = window.MutationObserver || window.WebkitMutationObserver;
-
-        if (mutObs) {
-            (new mutObs(resizePopover)).observe(document, {
-                childList: true,
-                attributes: true,
-                characterData: true,
-                subtree: true
-            });
-        }
-        else {
-            // Safari doesn't support DOMAttrModified
-            document.addEventListener('DOMSubtreeModified', resizePopover);
-        }
-    };
-
-    window.addEventListener('load', onLoaded);
-}
-
-/******************************************************************************/
-
 })();
 
 /******************************************************************************/

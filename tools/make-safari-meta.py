@@ -3,6 +3,7 @@
 import os
 import json
 import sys
+import codecs
 from time import time
 from shutil import rmtree
 from collections import OrderedDict
@@ -27,7 +28,7 @@ locale_dir = pj(build_dir, '_locales')
 
 for alpha2 in os.listdir(locale_dir):
     locale_path = pj(locale_dir, alpha2, 'messages.json')
-    with open(locale_path, encoding='utf-8') as f:
+    with codecs.open(locale_path, 'r', encoding='utf8') as f:
         string_data = json.load(f, object_pairs_hook=OrderedDict)
 
     if alpha2 == 'en':
@@ -43,7 +44,7 @@ for alpha2 in os.listdir(locale_dir):
 
     mkdirs(pj(locale_dir))
 
-    with open(locale_path, 'wt', encoding='utf-8', newline='\n') as f:
+    with codecs.open(locale_path, 'w', encoding='utf8') as f:
         json.dump(string_data, f, ensure_ascii=False)
 
 
@@ -51,13 +52,13 @@ for alpha2 in os.listdir(locale_dir):
 proj_dir = pj(os.path.split(os.path.abspath(__file__))[0], '..')
 chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
 
-with open(chromium_manifest, encoding='utf-8') as m:
+with codecs.open(chromium_manifest, encoding='utf8') as m:
     manifest = json.load(m)
 
 manifest['buildNumber'] = int(time())
 manifest['description'] = description
 
-with open(pj(build_dir, 'Info.plist'), 'r+t', encoding='utf-8', newline='\n') as f:
+with codecs.open(pj(build_dir, 'Info.plist'), 'r+', encoding='utf8') as f:
     info_plist = f.read()
     f.seek(0)
 
@@ -67,8 +68,8 @@ with open(pj(build_dir, 'Info.plist'), 'r+t', encoding='utf-8', newline='\n') as
 update_plist = pj(proj_dir, 'platform', 'safari', 'Update.plist')
 update_plist_build = pj(build_dir, '..', os.path.basename(update_plist))
 
-with open(update_plist_build, 'wt', encoding='utf-8', newline='\n') as f:
-    with open(update_plist, encoding='utf-8') as u:
+with codecs.open(update_plist_build, 'w', encoding='utf8') as f:
+    with codecs.open(update_plist, encoding='utf8') as u:
         update_plist = u.read()
 
     f.write(update_plist.format(**manifest))
