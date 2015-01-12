@@ -104,27 +104,6 @@ vAPI.i18n = function(s) {
     return this.i18nData[s] || s;
 };
 
-/******************************************************************************/
-
-// update popover size to its content
-if (safari.self.identifier === 'popover') {
-    var whenSizeChanges = function(d,l){(function(a,d){function h(a,b){a.addEventListener("scroll",b)}function e(){k.style.width=b.offsetWidth+10+"px";k.style.height=b.offsetHeight+10+"px";b.scrollLeft=b.scrollWidth;b.scrollTop=b.scrollHeight;c.scrollLeft=c.scrollWidth;c.scrollTop=c.scrollHeight;f=a.offsetWidth;g=a.offsetHeight}a.b=d;a.a=document.createElement("div");a.a.style.cssText="position:absolute;left:0;top:0;right:0;bottom:0;overflow:scroll;z-index:-1;visibility:hidden";a.a.innerHTML='<div style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:scroll;z-index:-1;visibility:hidden"><div style="position:absolute;left:0;top:0;"></div></div><div style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:scroll;z-index:-1;visibility:hidden"><div style="position:absolute;left:0;top:0;width:200%;height:200%"></div></div>';
-a.appendChild(a.a);var b=a.a.childNodes[0],k=b.childNodes[0],c=a.a.childNodes[1],f,g;e();h(b,function(){(a.offsetWidth>f||a.offsetHeight>g)&&a.b();e()});h(c,function(){(a.offsetWidth<f||a.offsetHeight<g)&&a.b();e()})})(d,l)};
-    var onLoaded = function() {
-        var body = document.body, popover = safari.self;
-        var updateSize = function() {
-                popover.width = body.offsetWidth;
-                popover.height = body.offsetHeight;
-        };
-	body.style.position = "relative"; // Necessary for size change detection
-	whenSizeChanges(body, updateSize);
-	updateSize();
-    };
-    window.addEventListener('load', onLoaded);
-}
-
-/******************************************************************************/
-
 })();
 
 /******************************************************************************/
