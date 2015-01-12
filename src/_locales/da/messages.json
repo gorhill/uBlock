@@ -84,71 +84,71 @@
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1-part scripts er <b>blokeret<\/b> på denne side",
+    "message":"Førsteparts scripts <b>blokeres<\/b> på denne side",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3-part scripts er <b>tilladt<\/b> på denne hjemmeside",
+    "message":"Tredjeparts scripts <b>tillades<\/b> på denne side",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3-part scripts er <b>blokeret<\/b> på denne side",
+    "message":"Tredjeparts scripts <b>blokeres<\/b> på denne side",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1-part rammer er <b>tilladte<\/b> på denne side",
+    "message":"Førsteparts  frames <b>tillades<\/b> på denne side",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1-part frames er <b>blokerede<\/b> på denne hjemmeside",
+    "message":"Førsteparts  frames <b>blokeres<\/b> på denne side",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Trejdeparts frames er <b>tilladte<\/b> på dette site",
+    "message":"Tredjeparts frames er <b>tilladte<\/b> på denne side",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Trejdeparts frames <b>blokeres<\/b> på dette site",
+    "message":"Tredjeparts frames <b>blokeres<\/b> på denne side",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Som standard er inline <code>script<\/code>-tags <b>tilladte<\/b> alle steder",
+    "message":"Som standard <b>tillades<\/b>  inline <code>script<\/code>-tags alle steder",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Som standard inline <code>script<\/code>-tags <b>blokeres<\/b> alle steder",
+    "message":"Som standard <b>blokeres<\/b> inline <code>script<\/code>-tags alle steder",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Som standard er førsteparts scripts <b>tilladte<\/b> alle steder",
+    "message":"Som standard <b>tillades<\/b> førsteparts scripts alle steder",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Som standard førsteparts scripts <b>blokeres<\/b> alle steder",
+    "message":"Som standard <b>blokeres<\/b> førsteparts scripts alle steder",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Som standard er trejdeparts scripts <b>tilladt<\/b> alle steder",
+    "message":"Som standard <b>tillades<\/b> tredjeparts scripts alle steder",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Som standard trejdeparts scripts <b>blokeres<\/b> alle steder",
+    "message":"Som standard <b>blokeres<\/b> tredjeparts scripts alle steder",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Som standard er førsteparts frames <b>tilladte<\/b> alle steder",
+    "message":"Som standard <b>tillades<\/b> førsteparts frames alle steder",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Som standard førsteparts frames <b>blokeres<\/b> alle steder",
+    "message":"Som standard <b>blokeres<\/b> førsteparts frames alle steder",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Som standard er tredjeparts frames <b>tilladte<\/b> alle steder",
+    "message":"Som standard <b>tillades<\/b> tredjeparts frames alle steder",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Som standard tredjeparts frames <b>blokeres<\/b> alle steder",
+    "message":"Som standard <b>blokeres<\/b> tredjeparts frames alle steder",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,15 +160,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1-part scripts",
+    "message":"Førsteparts  scripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3-part scripts",
+    "message":"Tredjeparts scripts",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3-part rammer",
+    "message":"Tredjeparts frames",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Brug contextmenuen når det passende",
+    "message":"Brug kontekstmenuen når det er passende",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Slå eksperimentielle funktioner til (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Slå eksperimentielle funktioner til (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -376,7 +376,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Opsamling af netværksforespørgsler forøger uBlocks brug af  hukkommelse. Funktionen er som udgangspunkt slået fra da mange brugere aldrig vil komme til at gøre brug af den.",
+    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Opsamling af netværksforespørgsler forøger uBlocks brug af  hukommelse. Funktionen er som udgangspunkt slået fra da mange brugere aldrig vil komme til at gøre brug af den.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
