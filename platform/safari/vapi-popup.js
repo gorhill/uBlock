@@ -35,10 +35,9 @@ var whenSizeChanges = function(elm, callback) {
 var onLoaded = function() {
     var body = document.body, popover = safari.self;
     var updateSize = function() {
-        popover.width = body.offsetWidth;
-        popover.height = body.offsetHeight;
+        popover.width = body.clientWidth;
+        popover.height = body.clientHeight;
     };
-    updateSize();
     body.style.position = "relative"; // Necessary for size change detection
     whenSizeChanges(body, updateSize);
 };
