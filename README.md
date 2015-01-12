@@ -1,74 +1,90 @@
-# µBlock for Chromium
+# <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/icon_128.png"/>
 
-**Foreword:** Using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Do not fall for this creepy idea. The _ultimate_ logical consequence of "blocking = theft" is the criminalisation of the inalienable right to privacy.
+## µBlock
 
-See [releases page](https://github.com/gorhill/uBlock/releases) for recent changes.
-See [Wiki](https://github.com/gorhill/uBlock/wiki) for more information.
+**An efficient blocker for WebKit- and Blink-based browsers. Fast, potent, and lean.**
 
-An efficient blocker for Chromium-based browsers. Fast and lean. Written from scratch. Development
-through benchmarking.
+> * [Purpose & General Info](#philosophy)
+> * [Performance and Efficiency](#performance)
+>   * [Memory](#memory)
+>   * [CPU](#cpu)
+>   * [Blocking](#blocking)
+> * [Installation](#installation)
+> * [Release History](#release-history)
+> * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
-**µBlock is not an "ad blocker", it's a blocker in the broad sense**, which happens to block ads through its support of [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax.
+# Philosophy
 
-_EasyList_, _Peter Lowe's Adservers_ , _EasyPrivacy_ are enabled by default when you install µBlock. Many more lists are readily available to protect yourself from trackers, analytics, data mining, and more ads. Hosts files are supported.
+µBlock is not an *ad blocker*; it's a general-purpose blocker. µBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
-Ads are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays.
+That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
 
-My main goal with µBlock is to help users neutralize as much as can be privacy-invading apparatus (of which ads, "unintrusive" or not, are just the visible portion) for users who do not want to deal with more technical means like [µMatrix](https://github.com/gorhill/uMatrix).
+Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **µBlock's main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/gorhill/uMatrix)).
+
+_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ are enabled by default when you install µBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
+
+# Performance
+
+## Memory
 
 <p align="center">
-µBlock: on average, it <b>really</b> does make your browser run leaner<br>
+On average, µBlock <b>really</b> does make your browser run leaner<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
-[**Important note re memory usage**: there is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. Just so you are informed memory figures won't be too reliable as soon as you opened even only once the popup UI of an extension. (In all my benchmarks I of course avoided to do this).]
+**Important note regarding memory usage:**
+
+<sup>There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500).</sup>
+
+<sup>This affects *all* extensions.</sup>
+
+<sup>As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
+
+## CPU
 
 <p align="center">
-µBlock: it is also easy on the CPU<br>
+µBlock is also easy on the CPU<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
-<sup>This gives an idea of the CPU overhead added by extensions relative to each other.<br>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
+<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
+## Blocking
+
 <p align="center">
-Being lean doesn't mean blocking less.<br>
+Being lean and efficient doesn't mean blocking less<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201409-30.png" /><br>
-<sup>For details of benchmark, see latest
+<sup>For details of benchmark, see 
 <a href="https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares">µBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
 ## Installation
 
-From the [Chrome store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
+Install µBlock from the [Chrome store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
 
-To benefit from the higher efficiency, it is of course not advised to use an
-inefficient blocker at the same time. µBlock will do as well or better than the
-popular blockers out there.
+Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-Also of interest: [About the required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
+**Note:**
+
+To benefit from µBlock's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). µBlock will do [as well or better](#blocking) than most popular ad blockers.
+
+## Release History
+
+See the [releases pages](https://github.com/gorhill/uBlock/releases) for a history of releases and highlights for each release.
 
 ## Documentation
 
-I think it is pretty obvious, except for this I suppose:
+µBlock's functionality is self-explanatory and intuitive for the most part. One thing to note after you get started is the big power button in µBlock's popup:
 
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
 
-The big power button is to disable/enable µBlock **for the specific hostname which can be extracted from the URL address of the current page**. (It applies to the current web site only, it is **not** a global power button.) The state of the power switch for a specific site will be remembered. 
+The big power button is to disable/enable µBlock for the specific current site/hostname (as extracted from the URL of the current page).
 
-![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-2.png)
+**In other words, it applies to the current site only; it is *not* a global power button.** The state of the power switch for a specific site will be remembered. 
 
-Optional [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) at work.
+For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [µBlock's wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## About
-
-µBlock is born out of [HTTP Switchboard](https://github.com/gorhill/httpswitchboard).
-All the niceties of HTTPSB have been removed, and what is left is a straightforward
-blocker which support EasyList and the likes, and also support host files.
-Cosmetic filters ("element hiding") are supported.
-
-There is nothing more to it. But it does what popular blockers out there do, at a
-fraction of CPU and memory usage for the same blocking power. Also, no unique user id
-and no home means no phoning home (some popular blockers do this, just be careful).
 
 Free. Open source. For users by users. No donations sought.
 
@@ -77,9 +93,8 @@ really do want to contribute something, think about the people working hard
 to maintain the filter lists you are using, which were made available to use by
 all for free.
 
-You may contribute by helping to translate this project. I created an
-[entry on Crowdin](https://crowdin.net/project/ublock), where you may contribute
-to the translation work.
+You can contribute by helping to translate this project. There's an
+[entry on Crowdin](https://crowdin.net/project/ublock) where you may contribute to µBlock's localization.
 
 ## License
 
