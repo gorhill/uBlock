@@ -101,7 +101,7 @@ xhr.send();
 vAPI.i18nData = JSON.parse(xhr.responseText);
 
 vAPI.i18n = function(s) {
-    return this.i18nData[s] || s;
+    return this.i18nData[s] || '';
 };
 
 })();
