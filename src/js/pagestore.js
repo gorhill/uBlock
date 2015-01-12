@@ -604,7 +604,7 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 /******************************************************************************/
 
 PageStore.prototype.getCosmeticFilteringSwitch = function() {
-    return this.getNetFilteringSwitch() === false ||
+    return this.getNetFilteringSwitch() !== false &&
            this.skipCosmeticFiltering === false;
 };
 
