@@ -68,6 +68,12 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
+vAPI.insertHTML = function(node, html) {
+    node.innerHTML = html;
+};
+
+/******************************************************************************/
+
 vAPI.getURL = function(path) {
     return safari.extension.baseURI + path;
 };

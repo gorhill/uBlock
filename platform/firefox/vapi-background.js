@@ -42,7 +42,7 @@ vAPI.firefox = true;
 // TODO: read these data from somewhere...
 vAPI.app = {
     name: 'µBlock',
-    version: '0.8.5.0'
+    version: '0.8.5.3'
 };
 
 /******************************************************************************/
@@ -59,7 +59,7 @@ vAPI.app.restart = function() {
 // List of things that needs to be destroyed when disabling the extension
 // Only functions should be added to it
 
-cleanupTasks = [];
+var cleanupTasks = [];
 
 /******************************************************************************/
 
@@ -1212,8 +1212,9 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
     var resizePopup = function() {
         var body = iframe.contentDocument.body;
         panel.parentNode.style.maxWidth = 'none';
-        panel.style.width = iframe.style.width = body.clientWidth + 'px';
+        // Set the hegiht first, then the width for proper resising
         panel.style.height = iframe.style.height = body.clientHeight + 'px';
+        panel.style.width = iframe.style.width = body.clientWidth + 'px';
         updateTimer = null;
     };
     var onPopupReady = function() {

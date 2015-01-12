@@ -104,7 +104,7 @@ var renderLogEntry = function(entry) {
     }
     tr.cells[0].textContent = entry.result.slice(3);
     tr.cells[1].textContent = entry.type;
-    tr.cells[2].innerHTML = renderURL(entry.url, entry.result);
+    vAPI.insertHTML(tr.cells[2], renderURL(entry.url, entry.result));
     tbody.insertBefore(tr, tbody.firstChild);
 };
 

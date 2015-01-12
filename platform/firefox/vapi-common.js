@@ -70,6 +70,28 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
+vAPI.insertHTML = (function() {
+    const {classes: Cc, interfaces: Ci} = Components;
+    const parser = Cc['@mozilla.org/parserutils;1'].getService(Ci.nsIParserUtils);
+    const io = Cc['@mozilla.org/network/io-service;1'].getService(Ci.nsIIOService);
+
+    return function(node, html) {
+        while ( node.firstChild ) {
+          node.removeChild(node.firstChild);
+        }
+
+        node.appendChild(parser.parseFragment(
+            html,
+            parser.SanitizerAllowStyle,
+            false,
+            io.newURI(document.baseURI, null, null),
+            document.documentElement
+        ));
+    };
+})();
+
+/******************************************************************************/
+
 vAPI.getURL = function(path) {
     return 'chrome://' + location.host + '/content/' + path.replace(/^\/+/, '');
 };

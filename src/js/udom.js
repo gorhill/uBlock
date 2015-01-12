@@ -139,7 +139,7 @@ var addHTMLToList = function(list, html) {
     var cTag = matches[1];
     var pTag = pTagOfChildTag[cTag] || 'div';
     var p = document.createElement(pTag);
-    p.innerHTML = html;
+    vAPI.insertHTML(p, html);
     // Find real parent
     var c = p.querySelector(cTag);
     p = c.parentNode;
@@ -552,7 +552,7 @@ DOMList.prototype.html = function(html) {
         return i ? this.nodes[0].innerHTML : '';
     }
     while ( i-- ) {
-        this.nodes[i].innerHTML = html;
+        vAPI.insertHTML(this.nodes[i], html);
     }
     return this;
 };

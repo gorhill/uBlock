@@ -1,0 +1,1 @@
+/* Firefox: no platform-specific code */
