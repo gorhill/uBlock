@@ -80,7 +80,7 @@
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1-part scripts er  <b>tilladte<\/b> på denne side",
+    "message":"Førsteparts scripts er <b>tilladte<\/b> på denne side",
     "description":""
   },
   "popupSite1pScriptDisabled":{
@@ -104,51 +104,51 @@
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Trejdeparts frames er <b>tilladte<\/b> på dette site",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Trejdeparts frames <b>blokeres<\/b> på dette site",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Som standard er inline <code>script<\/code>-tags <b>tilladte<\/b> alle steder",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Som standard inline <code>script<\/code>-tags <b>blokeres<\/b> alle steder",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Som standard er førsteparts scripts <b>tilladte<\/b> alle steder",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Som standard førsteparts scripts <b>blokeres<\/b> alle steder",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Som standard er trejdeparts scripts <b>tilladt<\/b> alle steder",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Som standard trejdeparts scripts <b>blokeres<\/b> alle steder",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Som standard er førsteparts frames <b>tilladte<\/b> alle steder",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Som standard førsteparts frames <b>blokeres<\/b> alle steder",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Som standard er tredjeparts frames <b>tilladte<\/b> alle steder",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Som standard tredjeparts frames <b>blokeres<\/b> alle steder",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Brug contextmenuen når det passende",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Slå eksperimentielle funktioner til (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "message":"mine-ublock-statiske-filtre_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"mine-ublock-dynamiske-regler_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -364,7 +364,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "message":"min-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -376,7 +376,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Opsamling af netværksforespørgsler forøger uBlocks brug af  hukkommelse. Funktionen er som udgangspunkt slået fra da mange brugere aldrig vil komme til at gøre brug af den.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
