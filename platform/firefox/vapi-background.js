@@ -59,7 +59,7 @@ vAPI.app.restart = function() {
 // List of things that needs to be destroyed when disabling the extension
 // Only functions should be added to it
 
-vAPI.unload = [];
+cleanupTasks = [];
 
 /******************************************************************************/
 
@@ -83,7 +83,7 @@ var SQLite = {
             '(name TEXT PRIMARY KEY NOT NULL, value TEXT);'
         );
 
-        vAPI.unload.push(function() {
+        cleanupTasks.push(function() {
             // VACUUM somewhere else, instead on unload?
             SQLite.run('VACUUM');
             SQLite.db.asyncClose();
@@ -334,7 +334,7 @@ vAPI.tabs.registerListeners = function() {
 
     Services.ww.registerNotification(windowWatcher);
 
-    vAPI.unload.push(function() {
+    cleanupTasks.push(function() {
         Services.ww.unregisterNotification(windowWatcher);
 
         for ( var win of vAPI.tabs.getWindows() ) {
@@ -743,7 +743,7 @@ vAPI.messaging.setup = function(defaultHandler) {
 
     this.globalMessageManager.loadFrameScript(this.frameScript, true);
 
-    vAPI.unload.push(function() {
+    cleanupTasks.push(function() {
         var gmm = vAPI.messaging.globalMessageManager;
 
         gmm.removeDelayedFrameScript(vAPI.messaging.frameScript);
@@ -966,12 +966,12 @@ var httpObserver = {
 
         var sourceTabId = null;
 
-        // popup candidate (only for main_frame type)
+        // Popup candidate (only for main_frame type)
         if ( lastRequest.openerURL ) {
             for ( var tab of vAPI.tabs.getAll() ) {
                 var tabURI = tab.linkedBrowser.currentURI;
 
-                // not the best approach
+                // Not the best approach
                 if ( tabURI.spec === this.lastRequest.openerURL ) {
                     sourceTabId = vAPI.tabs.getTabId(tab);
                     break;
@@ -988,7 +988,7 @@ var httpObserver = {
             return;
         }
 
-        // if request is not handled we may use the data in on-modify-request
+        // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
             channel.setProperty(
                 location.host + 'reqdata',
@@ -1040,7 +1040,7 @@ var httpObserver = {
                 return;
             }
 
-            // carry the data on in case of multiple redirects
+            // Carry the data on in case of multiple redirects
             if ( newChannel instanceof Ci.nsIWritablePropertyBag ) {
                 newChannel.setProperty(location.host + 'reqdata', channelData);
             }
@@ -1096,7 +1096,7 @@ vAPI.net.registerListeners = function() {
 
     httpObserver.register();
 
-    vAPI.unload.push(function() {
+    cleanupTasks.push(function() {
         vAPI.messaging.globalMessageManager.removeMessageListener(
             shouldLoadListenerMessageName,
             shouldLoadListener
@@ -1171,7 +1171,7 @@ vAPI.toolbarButton.init = function() {
         this.closePopup
     );
 
-    vAPI.unload.push(function() {
+    cleanupTasks.push(function() {
         CustomizableUI.destroyWidget(this.id);
         vAPI.messaging.globalMessageManager.removeMessageListener(
             location.host + ':closePopup',
@@ -1457,8 +1457,8 @@ vAPI.onLoadAllCompleted = function() {};
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
-    for ( var unload of vAPI.unload ) {
-        unload();
+    for ( var cleanup of cleanupTasks ) {
+        cleanup();
     }
 
     // frameModule needs to be cleared too
