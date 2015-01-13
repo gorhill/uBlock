@@ -772,6 +772,8 @@ var httpObserver = {
     ABORT: Components.results.NS_BINDING_ABORTED,
     ACCEPT: Components.results.NS_SUCCEEDED,
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
+    VALID_CSP_TARGETS: 1 << Ci.nsIContentPolicy.TYPE_DOCUMENT |
+                       1 << Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     typeMap: {
         2: 'script',
         3: 'image',
@@ -921,7 +923,11 @@ var httpObserver = {
                 return;
             }
 
-            if ( !channelData || channelData[0] !== this.MAIN_FRAME ) {
+            if ( !channelData ) {
+                return;
+            }
+
+            if ( 1 << channelData[0] & this.VALID_CSP_TARGETS === 0 ) {
                 return;
             }
 

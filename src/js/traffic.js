@@ -247,11 +247,6 @@ var onBeforeSendHeaders = function(details) {
 // To handle `inline-script`.
 
 var onHeadersReceived = function(details) {
-    // Only root document.
-    if ( details.parentFrameId !== -1 ) {
-        return;
-    }
-
     // Do not interfere with behind-the-scene requests.
     var tabId = details.tabId;
     if ( tabId < 0 ) {
@@ -266,8 +261,13 @@ var onHeadersReceived = function(details) {
     }
 
     // https://github.com/gorhill/uBlock/issues/384
-    pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
-    pageStore.requestURL = details.url;
+    if ( details.parentFrameId === -1 ) {
+        pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
+    }
+
+    // Concatenating with '{inline-script}' so that the network request cache
+    // can distinguish from the document itself
+    pageStore.requestURL = details.url + '{inline-script}';
     pageStore.requestHostname = µb.URI.hostnameFromURI(details.url);
     pageStore.requestType = 'inline-script';
     var result = pageStore.filterRequest(pageStore);
@@ -351,7 +351,8 @@ vAPI.net.onHeadersReceived = {
         'https://*/*'
     ],
     types: [
-        "main_frame"
+        "main_frame",
+        "sub_frame"
     ],
     extra: [ 'blocking', 'responseHeaders' ],
     callback: onHeadersReceived
