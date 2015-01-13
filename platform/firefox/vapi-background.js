@@ -917,7 +917,7 @@ var httpObserver = {
             }
 
             try {
-                // [tabId, type, sourceTabId - given if it was a popup]
+                // [type, tabId, sourceTabId - given if it was a popup]
                 channelData = channel.getProperty(location.host + 'reqdata');
             } catch (ex) {
                 return;

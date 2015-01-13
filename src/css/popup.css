@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     white-space: nowrap;
+    overflow: hidden;
     }
 h1,h2,h3,h4 {
     background-color: #444;

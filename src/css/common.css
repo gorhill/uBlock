@@ -18,7 +18,7 @@
     cursor: pointer;
     position: relative;
     }
-body:not(.advancedUser) [data-tip]:hover:after {
+body:not(.advancedUser) [data-tip]:after {
     background-color: #ffffee;
     border: 1px solid gray;
     border-radius: 3px;
@@ -36,13 +36,12 @@ body:not(.advancedUser) [data-tip]:hover:after {
     white-space: pre-line;
     z-index: 20;
     pointer-events: none;
-    animation: tooltip 0.8s;
-    -webkit-animation: tooltip 0.8s;
+    opacity: 0;
     }
-[data-tip]:hover::after {
-    opacity: 1;
-    -webkit-transition: opacity 0.2s 0.2s;
-    transition: opacity 0.2s 0.2s;
+[data-tip]:hover:after {
+    opacity: 1 !important;
+    -webkit-transition: opacity 0.2s 0.4s;
+    transition: opacity 0.2s 0.4s;
     }
 body[dir=rtl] [data-tip]:hover:after {
     text-align: right;
@@ -59,17 +58,6 @@ body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
     right: -500%;
-    }
-
-@keyframes tooltip {
-      0% { opacity: 0; }
-     85% { opacity: 0; }
-    100% { opacity: 1; }
-    }
-@-webkit-keyframes tooltip {
-      0% { opacity: 0; }
-     85% { opacity: 0; }
-    100% { opacity: 1; }
     }
 
 .hiddenFileInput {
