@@ -34,6 +34,11 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/464
+if ( document instanceof HTMLDocument === false ) {
+    return false;
+}
+
 // Because in case
 if ( !vAPI ) {
     return;

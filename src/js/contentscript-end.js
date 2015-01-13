@@ -31,8 +31,17 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/464
+if ( document instanceof HTMLDocument === false ) {
+    return false;
+}
+
+if ( !vAPI ) {
+    return;
+}
+
 if ( vAPI.canExecuteContentScript() !== true ) {
-    throw "uBlock> contentscript-end.js > Skipping " + location.protocol;
+    return;
 }
 
 // https://github.com/gorhill/uBlock/issues/456
