@@ -28,9 +28,12 @@ cp LICENSE.txt $DES/
 echo "*** uBlock_xpi: Generating meta..."
 python tools/make-firefox-meta.py $DES/
 
-echo "*** uBlock_xpi: Creating package..."
-pushd $DES/
-zip ../uBlock.firefox.xpi -qr *
-popd
+
+if [ "$1" = all ]; then
+    echo "*** uBlock_xpi: Creating package..."
+    pushd $DES/
+    zip ../uBlock.firefox.xpi -qr *
+    popd
+fi
 
 echo "*** uBlock_xpi: Package done."
