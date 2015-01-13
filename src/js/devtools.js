@@ -36,22 +36,26 @@ var messager = vAPI.messaging.channel('stats.js');
 
 var renderPageSelector = function(targetTabId) {
     var selectedTabId = targetTabId || uDom('#pageSelector').val();
-    var onTabReceived = function(tabId, tabTitle) {
-        uDom('#pageSelector').append('<option value="' + tabId + '">' + tabTitle);
-        if ( tabId.toString() === selectedTabId ) {
-            uDom('#pageSelector').val(tabId);
+    var onDataReceived = function(pageTitles) {
+        if ( pageTitles.hasOwnProperty(selectedTabId) === false ) {
+            selectedTabId = pageTitles[0];
         }
-    };
-    var onDataReceived = function(pageDetails) {
-        uDom('#pageSelector option').remove();
-        if ( pageDetails.hasOwnProperty(selectedTabId) === false ) {
-            selectedTabId = pageDetails[0];
-        }
-        for ( var tabId in pageDetails ) {
-            if ( pageDetails.hasOwnProperty(tabId) ) {
-                onTabReceived(tabId, pageDetails[tabId]);
+        var select = uDom('#pageSelector').empty();
+        var option;
+        for ( var tabId in pageTitles ) {
+            if ( pageTitles.hasOwnProperty(tabId) === false ) {
+                continue;
             }
+            option = uDom('<option>').text(pageTitles[tabId])
+                                     .prop('value', tabId);
+            if ( tabId === selectedTabId ) {
+                option.prop('selected', true);
+            }
+            select.append(option);
         }
+        // This must be done after inserting all option tags, or else Firefox
+        // will refuse values which do not exist yet.
+        select.prop('value', selectedTabId);
         selectPage();
     };
     messager.send({ what: 'getPageDetails' }, onDataReceived);
