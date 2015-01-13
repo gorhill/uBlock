@@ -101,7 +101,7 @@ var renderBlacklists = function() {
         '<li class="listDetails">',
         '<input type="checkbox" {{checked}}>',
         ' ',
-        '<a href="{{URL}}" type="text/plain">',
+        '<a data-href="{{URL}}" type="text/plain">',
         '{{name}}',
         '\u200E</a>',
         '{{homeURL}}',
@@ -236,6 +236,15 @@ var renderBlacklists = function() {
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
         uDom('#lists').html(html.join(''));
         uDom('a').attr('target', '_blank');
+
+        // Firefox: sanitizer drops those `href` attributes that point to local URLs
+        var lis = uDom('a[data-href]');
+        var a;
+        i = lis.length;
+        while ( i-- ) {
+            a = lis.subset(i, 1);
+            a.attr('href', a.attr('data-href'));
+        }
 
         updateWidgets();
     };

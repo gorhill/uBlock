@@ -77,7 +77,7 @@ vAPI.insertHTML = (function() {
 
     return function(node, html) {
         while ( node.firstChild ) {
-          node.removeChild(node.firstChild);
+            node.removeChild(node.firstChild);
         }
 
         node.appendChild(parser.parseFragment(
