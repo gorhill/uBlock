@@ -29,6 +29,8 @@ echo "*** uBlock_xpi: Generating meta..."
 python tools/make-firefox-meta.py $DES/
 
 echo "*** uBlock_xpi: Creating package..."
-zip dist/build/uBlock.firefox.xpi -qr $DES/*
+pushd $DES/
+zip ../uBlock.firefox.xpi -qr *
+popd
 
 echo "*** uBlock_xpi: Package done."
