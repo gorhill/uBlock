@@ -1,17 +1,15 @@
-# <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/icon_128.png"/>
-
-## µBlock
+# ![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/icon_128.png) µBlock
 
 **An efficient blocker for WebKit- and Blink-based browsers. Fast, potent, and lean.**
 
-> * [Purpose & General Info](#philosophy)
-> * [Performance and Efficiency](#performance)
->   * [Memory](#memory)
->   * [CPU](#cpu)
->   * [Blocking](#blocking)
-> * [Installation](#installation)
-> * [Release History](#release-history)
-> * [Wiki](https://github.com/gorhill/uBlock/wiki)
+* [Purpose & General Info](#philosophy)
+* [Performance and Efficiency](#performance)
+  * [Memory](#memory)
+  * [CPU](#cpu)
+  * [Blocking](#blocking)
+* [Installation](#installation)
+* [Release History](#release-history)
+* [Wiki](https://github.com/gorhill/uBlock/wiki)
 
 # Philosophy
 
