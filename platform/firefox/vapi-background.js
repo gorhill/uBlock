@@ -1224,7 +1224,7 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        new win.MutationObserver(delayedResize).observe(win.body, {
+        new win.MutationObserver(delayedResize).observe(win.document.body, {
             attributes: true,
             characterData: true,
             subtree: true

@@ -36,7 +36,8 @@ body:not(.advancedUser) [data-tip]:hover:after {
     white-space: pre-line;
     z-index: 20;
     pointer-events: none;
-    opacity: 0;
+    animation: tooltip 0.8s;
+    -webkit-animation: tooltip 0.8s;
     }
 [data-tip]:hover::after {
     opacity: 1;
@@ -58,6 +59,17 @@ body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
     right: -500%;
+    }
+
+@keyframes tooltip {
+      0% { opacity: 0; }
+     85% { opacity: 0; }
+    100% { opacity: 1; }
+    }
+@-webkit-keyframes tooltip {
+      0% { opacity: 0; }
+     85% { opacity: 0; }
+    100% { opacity: 1; }
     }
 
 .hiddenFileInput {
