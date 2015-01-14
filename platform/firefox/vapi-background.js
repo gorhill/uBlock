@@ -1213,7 +1213,7 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        updateTimer = setTimeout(resizePopup, 50);
+        updateTimer = setTimeout(resizePopup, 20);
     };
     var resizePopup = function() {
         var body = iframe.contentDocument.body;
