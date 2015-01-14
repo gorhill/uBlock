@@ -1,0 +1,16 @@
+sudo: false
+env:
+  matrix:
+  - BROWSER=chromium EXT=zip
+  - BROWSER=firefox EXT=xpi
+script: ./tools/make-${BROWSER}.sh all
+deploy:
+  provider: releases
+  api_key:
+    secure: TODO: your key here!
+  file: dist/build/uBlock.${BROWSER}.${EXT}
+  skip_cleanup: true
+  on:
+    repo: gorhill/uBlock
+    tags: true
+    all_branches: true
