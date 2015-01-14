@@ -1,6 +1,6 @@
 # <sub>![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38.png)</sub> µBlock
 
-**An efficient blocker for WebKit- and Blink-based browsers. Fast, potent, and lean.**
+**An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
 * [Purpose & General Info](#philosophy)
 * [Performance and Efficiency](#performance)
