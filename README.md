@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/icon_128.png) µBlock
+# <sub>![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38.png)</sub> µBlock
 
 **An efficient blocker for WebKit- and Blink-based browsers. Fast, potent, and lean.**
 
