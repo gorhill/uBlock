@@ -33,11 +33,7 @@ On average, µBlock <b>really</b> does make your browser run leaner<br>
 
 **Important note regarding memory usage:**
 
-<sup>There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500).</sup>
-
-<sup>This affects *all* extensions.</sup>
-
-<sup>As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
+<sup>There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
 
 ## CPU
 
