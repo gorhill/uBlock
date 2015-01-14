@@ -223,3 +223,7 @@ www.thesimsresource.com##.ad-topleader
 # https://twitter.com/poroot/status/554300983472574465
 charlie.strim.io#@##tweets
 ovh.strim.io#@##tweets
+
+# https://adblockplus.org/forum/viewtopic.php?f=10&t=24896&start=15#p114675
+# Until fixed in EasyList
+@@||cdn.turner.com/ads/nba/adfuel.js$domain=www.nba.com
