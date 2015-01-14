@@ -4,7 +4,6 @@
 
 echo "*** uBlock.firefox: Copying files"
 
-# use underscore instead of a dot!
 DES=dist/build/uBlock.firefox
 rm -r $DES
 mkdir -p $DES
