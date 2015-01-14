@@ -342,6 +342,7 @@ var filterRequests = function(pageStore, details) {
     var µburi = µb.URI;
 
     // Create evaluation context
+    details.pageHostname = vAPI.punycodeHostname(details.pageHostname);
     details.pageDomain = µburi.domainFromHostname(details.pageHostname);
     details.rootHostname = pageStore.rootHostname;
     details.rootDomain = pageStore.rootDomain;
@@ -356,8 +357,8 @@ var filterRequests = function(pageStore, details) {
         if ( tagNameToRequestTypeMap.hasOwnProperty(request.tagName) === false ) {
             continue;
         }
-        details.requestURL = request.url;
-        details.requestHostname = µburi.hostnameFromURI(request.url);
+        details.requestURL = vAPI.punycodeURL(request.url);
+        details.requestHostname = µburi.hostnameFromURI(details.requestURL);
         details.requestType = tagNameToRequestTypeMap[request.tagName];
         result = pageStore.filterRequest(details);
         if ( pageStore.boolFromResult(result) ) {
@@ -379,9 +380,11 @@ var filterRequest = function(pageStore, details) {
         return;
     }
     var µburi = µb.URI;
+    details.pageHostname = vAPI.punycodeHostname(details.pageHostname);
     details.pageDomain = µburi.domainFromHostname(details.pageHostname);
     details.rootHostname = pageStore.rootHostname;
     details.rootDomain = pageStore.rootDomain;
+    details.requestURL = vAPI.punycodeURL(details.requestURL);
     details.requestHostname = µburi.hostnameFromURI(details.requestURL);
     details.requestType = tagNameToRequestTypeMap[details.tagName];
     var result = pageStore.filterRequest(details);

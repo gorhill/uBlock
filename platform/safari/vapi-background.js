@@ -31,7 +31,8 @@
 
 /******************************************************************************/
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
+
 vAPI.safari = true;
 
 /******************************************************************************/
@@ -792,6 +793,16 @@ vAPI.lastError = function() {
 // the web pages before uBlock was ready.
 
 vAPI.onLoadAllCompleted = function() {
+};
+
+/******************************************************************************/
+
+vAPI.punycodeHostname = function(hostname) {
+    return hostname;
+};
+
+vAPI.punycodeURL = function(url) {
+    return url;
 };
 
 /******************************************************************************/

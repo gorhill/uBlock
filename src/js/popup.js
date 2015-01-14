@@ -139,7 +139,7 @@ var addDynamicFilterRow = function(des) {
     }
 
     row.descendants('[data-des]').attr('data-des', des);
-    row.descendants('span:nth-of-type(1)').text(des);
+    row.descendants('span:nth-of-type(1)').text(punycode.toUnicode(des));
 
     var hnDetails = popupData.hostnameDict[des] || {};
 

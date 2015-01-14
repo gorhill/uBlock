@@ -31,9 +31,8 @@
 
 /******************************************************************************/
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
 
-var vAPI = self.vAPI;
 var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
@@ -466,6 +465,16 @@ vAPI.onLoadAllCompleted = function() {
 
     chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
     chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
+};
+
+/******************************************************************************/
+
+vAPI.punycodeHostname = function(hostname) {
+    return hostname;
+};
+
+vAPI.punycodeURL = function(url) {
+    return url;
 };
 
 /******************************************************************************/

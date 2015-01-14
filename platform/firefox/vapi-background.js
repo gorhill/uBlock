@@ -34,7 +34,8 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 
 /******************************************************************************/
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
+
 vAPI.firefox = true;
 
 /******************************************************************************/
@@ -302,16 +303,16 @@ var tabsProgressListener = {
         var tabId = vAPI.tabs.getTabId(browser);
 
         if ( flags & 1 ) {
-            vAPI.tabs.onUpdated(tabId, {url: location.spec}, {
+            vAPI.tabs.onUpdated(tabId, {url: location.asciiSpec}, {
                 frameId: 0,
                 tabId: tabId,
-                url: browser.currentURI.spec
+                url: browser.currentURI.asciiSpec
             });
         } else if ( location.scheme === 'http' || location.scheme === 'https' ) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: tabId,
-                url: location.spec
+                url: location.asciiSpec
             });
         }
     }
@@ -427,7 +428,7 @@ vAPI.tabs.get = function(tabId, callback) {
         index: gBrowser.browsers.indexOf(browser),
         windowId: windows.indexOf(browser.ownerDocument.defaultView),
         active: tab === gBrowser.selectedTab,
-        url: browser.currentURI.spec,
+        url: browser.currentURI.asciiSpec,
         title: tab.label
     });
 };
@@ -496,7 +497,7 @@ vAPI.tabs.open = function(details) {
         for ( tab of tabs ) {
             var browser = tab.linkedBrowser;
 
-            if ( browser.currentURI.spec.replace(rgxHash, '') === url ) {
+            if ( browser.currentURI.asciiSpec.replace(rgxHash, '') === url ) {
                 browser.ownerDocument.defaultView.gBrowser.selectedTab = tab;
                 return;
             }
@@ -863,7 +864,7 @@ var httpObserver = {
         var result = vAPI.tabs.onPopup({
             tabId: tabId,
             sourceTabId: sourceTabId,
-            url: URI.spec
+            url: URI.asciiSpec
         });
 
         return result === true;
@@ -878,7 +879,7 @@ var httpObserver = {
         }
 
         var result = onBeforeRequest.callback({
-            url: channel.URI.spec,
+            url: channel.URI.asciiSpec,
             type: type,
             tabId: details.tabId,
             frameId: details.frameId,
@@ -940,7 +941,7 @@ var httpObserver = {
             }
 
             result = vAPI.net.onHeadersReceived.callback({
-                url: URI.spec,
+                url: URI.asciiSpec,
                 tabId: channelData[1],
                 parentFrameId: -1,
                 responseHeaders: result ? [{name: topic, value: result}] : []
@@ -978,7 +979,7 @@ var httpObserver = {
                 var tabURI = tab.linkedBrowser.currentURI;
 
                 // Not the best approach
-                if ( tabURI.spec === this.lastRequest.openerURL ) {
+                if ( tabURI.asciiSpec === this.lastRequest.openerURL ) {
                     sourceTabId = vAPI.tabs.getTabId(tab);
                     break;
                 }
@@ -1422,7 +1423,7 @@ vAPI.contextMenu.create = function(details, callback) {
 
         callback(details, {
             id: vAPI.tabs.getTabId(gContextMenu.browser),
-            url: gContextMenu.browser.currentURI.spec
+            url: gContextMenu.browser.currentURI.asciiSpec
         });
     };
 
@@ -1474,6 +1475,17 @@ window.addEventListener('unload', function() {
     frameModule.contentObserver.unregister();
     Cu.unload(vAPI.getURL('frameModule.js'));
 });
+
+/******************************************************************************/
+
+var urlNormalizer = self.URL;
+var punycodeHostname = vAPI.punycodeHostname = punycode.toASCII;
+
+vAPI.punycodeURL = function(url) {
+    urlNormalizer.href = url;
+    urlNormalizer.hostname = punycodeHostname(urlNormalizer.hostname);
+    return urlNormalizer.href;
+};
 
 /******************************************************************************/
 

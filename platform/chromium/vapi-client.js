@@ -31,10 +31,9 @@
 
 /******************************************************************************/
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
 
 var chrome = self.chrome;
-var vAPI = self.vAPI;
 
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
