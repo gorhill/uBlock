@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Verbunden mit {{count}} unterschiedlichen Domains",
+    "message":"Verbunden mit {{count}} unterschiedlichen Domains aus insgesamt {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Ich bin ein erfahrener Benutzer (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Pflichtlektüre<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

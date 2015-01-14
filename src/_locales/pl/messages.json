@@ -156,7 +156,7 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"zagnieżdżone skrypty",
     "description":""
   },
   "popup1pScriptRulePrompt":{
@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"Podłączony do {{count}} różnych domen z {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"moje_zasady_ublock_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{

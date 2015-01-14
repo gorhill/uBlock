@@ -152,15 +152,15 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"imágenes",
+    "message":"Imágenes",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"scripts embebidos",
+    "message":"Scripts embebidos",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Scripts",
+    "message":"Scripts del dominio",
     "description":""
   },
   "popup3pScriptRulePrompt":{
