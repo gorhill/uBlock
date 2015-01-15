@@ -28,9 +28,9 @@ d2ee45b19c8525694bf067453d475160 assets/thirdparties/easylist-downloads.adblockp
 b1326af5a5d781f1a193bdf80fc4f1d1 assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 bc244c3dd4ef8de71c91eb297786d6a7 assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt
-99991f0394fd09dc2acf510b0fda2409 assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt
+6ca4d1bfbe401cd76b7d95cf0cb698bc assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
-60cd207703272fd34adebd0d97f485b7 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
+76a03d779513c24c3d94837c6af40289 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
 bcd261f923113157fa42db633aa4bc16 assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 0d707b2cee4a38988662107971137d13 assets/thirdparties/abp.mozilla-hispano.org/nauscopio/filtros.txt
 f0ed38288ed046f85ed3929d13d9645e assets/thirdparties/margevicius.lt/easylistlithuania.txt
@@ -46,11 +46,11 @@ faf479000090920441f1f01a664e0aca assets/thirdparties/www.fanboy.co.nz/fanboy-vie
 3df22a418775139da419d44bd1dcabbc assets/thirdparties/www.fanboy.co.nz/fanboy-ultimate.txt
 56c849d5af130b803d54177dbe6aac47 assets/thirdparties/www.fanboy.co.nz/fanboy-swedish.txt
 042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
-289ce41e14400131d51af07a4817a150 assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
+89ed3f49844a35c4ada59c7375659ffd assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 816a0bba6720c34dc0e7a493754b0cbf assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt
 b586bd14be3d47911e073614fab9d81c assets/thirdparties/indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt
 72ae2048c0201c940978d27cda361891 assets/thirdparties/stanev.org/abp/adblock_bg.txt
-ae7ff291e8c0dd8515485a3e499e4873 assets/thirdparties/hosts-file.net/ad-servers
+b786c27ccabcf04f1601a965943614ab assets/thirdparties/hosts-file.net/ad-servers
 b0ec07212f06be5b089f8d9464c96bb3 assets/thirdparties/pgl.yoyo.org/as/serverlist
 5b8e13b618c68293430913029118781a assets/thirdparties/pgl.yoyo.org/as/README.md
 0579475f3036f4afc50a88b98d395698 assets/thirdparties/www.void.gr/kargig/void-gr-filters.txt
