@@ -11,7 +11,7 @@
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
-![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
+# ![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
 
 # Philosophy
 
