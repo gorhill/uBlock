@@ -896,7 +896,7 @@ var startPicker = function(details) {
     divDialog.addEventListener('click', onDialogClicked);
     taCandidate = divDialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
-    urlNormalizer = vAPI.getUrlNormalizer();
+    urlNormalizer = document.createElement('a');
     window.addEventListener('scroll', onScrolled, true);
     window.addEventListener('keydown', onKeyPressed, true);
 
