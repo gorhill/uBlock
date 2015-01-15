@@ -25,4 +25,11 @@ cp LICENSE.txt $DES/
 echo "*** uBlock.safariextension: Generating meta..."
 python tools/make-safari-meta.py $DES/
 
+if [ "$1" = all ]; then
+    echo "*** uBlock.safariextension: Creating package..."
+    pushd $DES/
+    zip ../uBlock.safari.safariextension -qr *
+    popd
+fi
+
 echo "*** uBlock.safariextension: Package done."
