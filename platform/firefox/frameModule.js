@@ -192,10 +192,6 @@ const contentObserver = {
         }
 
         sandbox._sandboxId_ = sandboxId;
-        sandbox._urlNormalizer_ = function(url, baseURI) {
-            baseURI = Services.io.newURI(baseURI, null, null);
-            return Services.io.newURI(url, null, baseURI).asciiSpec;
-        };
         sandbox.sendAsyncMessage = messager.sendAsyncMessage;
         sandbox.addMessageListener = function(callback) {
             if ( this._messageListener_ ) {
