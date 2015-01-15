@@ -182,6 +182,12 @@ vAPI.canExecuteContentScript = function() {
 
 /******************************************************************************/
 
+vAPI.getUrlNormalizer = function() {
+    return document.createElement('a');
+};
+
+/******************************************************************************/
+
 // This file can be included into extensin pages,
 // but the following code should run only in content pages.
 

@@ -174,6 +174,19 @@ vAPI.canExecuteContentScript = function() {
 
 /******************************************************************************/
 
+vAPI.getUrlNormalizer = function() {
+    return {
+        get href() {
+            return this._url || '';
+        },
+        set href(url) {
+            this._url = _urlNormalizer_(url, document.baseURI);
+        }
+    };
+};
+
+/******************************************************************************/
+
 })(this);
 
 /******************************************************************************/

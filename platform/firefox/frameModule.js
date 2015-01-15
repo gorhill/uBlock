@@ -119,7 +119,7 @@ const contentObserver = {
 
         let openerURL;
 
-        if ( location.scheme !== 'http' && location.scheme !== 'https' ) {
+        if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
             if ( type !== this.MAIN_FRAME ) {
                 return this.ACCEPT;
             }
@@ -132,7 +132,7 @@ const contentObserver = {
 
             let isPopup = location.spec === 'about:blank' && openerURL;
 
-            if ( location.scheme !== 'data' && !isPopup ) {
+            if ( !location.schemeIs('data') && !isPopup ) {
                 return this.ACCEPT;
             }
         } else if ( type === this.MAIN_FRAME ) {
@@ -145,8 +145,8 @@ const contentObserver = {
             context = (context.ownerDocument || context).defaultView;
         }
 
-        // The context for the popups is an iframe element here,
-        // so check context.top instead
+        // The context for the toolbar popup is an iframe element here,
+        // so check context.top instead of context
         if ( context.top && context.location ) {
             // https://bugzil.la/1092216
             getMessageManager(context).sendRpcMessage(this.cpMessageName, {
@@ -192,6 +192,10 @@ const contentObserver = {
         }
 
         sandbox._sandboxId_ = sandboxId;
+        sandbox._urlNormalizer_ = function(url, baseURI) {
+            baseURI = Services.io.newURI(baseURI, null, null);
+            return Services.io.newURI(url, null, baseURI).asciiSpec;
+        };
         sandbox.sendAsyncMessage = messager.sendAsyncMessage;
         sandbox.addMessageListener = function(callback) {
             if ( this._messageListener_ ) {

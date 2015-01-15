@@ -26,6 +26,9 @@
 
 /******************************************************************************/
 
+// Accessing the context of the background page from Console (e.g., about:addons):
+// var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock]').contentWindow;
+
 let bgProcess;
 const hostName = 'ublock';
 const restartListener = {

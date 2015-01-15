@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global punycode */
+
 // For background page
 
 /******************************************************************************/
@@ -308,7 +310,7 @@ var tabsProgressListener = {
                 tabId: tabId,
                 url: browser.currentURI.asciiSpec
             });
-        } else if ( location.scheme === 'http' || location.scheme === 'https' ) {
+        } else if ( location.schemeIs('http') || location.schemeIs('https') ) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: tabId,
@@ -352,7 +354,7 @@ vAPI.tabs.registerListeners = function() {
             for ( var tab of win.gBrowser.tabs ) {
                 var URI = tab.linkedBrowser.currentURI;
 
-                if ( URI.scheme === 'chrome' && URI.host === location.host ) {
+                if ( URI.schemeIs('chrome') && URI.host === location.host ) {
                     win.gBrowser.removeTab(tab);
                 }
             }
@@ -489,15 +491,14 @@ vAPI.tabs.open = function(details) {
     var tab, tabs;
 
     if ( details.select ) {
-        var rgxHash = /#.*/;
-        // this is questionable
-        var url = details.url.replace(rgxHash, '');
+        var URI = Services.io.newURI(details.url, null, null);
         tabs = this.getAll();
 
         for ( tab of tabs ) {
             var browser = tab.linkedBrowser;
 
-            if ( browser.currentURI.asciiSpec.replace(rgxHash, '') === url ) {
+            // Or simply .equals if we care about the fragment
+            if ( URI.equalsExceptRef(browser.currentURI) ) {
                 browser.ownerDocument.defaultView.gBrowser.selectedTab = tab;
                 return;
             }
@@ -857,7 +858,7 @@ var httpObserver = {
             return false;
         }
 
-        if ( URI.scheme !== 'http' && URI.scheme !== 'https' ) {
+        if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
             return false;
         }
 
@@ -978,8 +979,8 @@ var httpObserver = {
             for ( var tab of vAPI.tabs.getAll() ) {
                 var tabURI = tab.linkedBrowser.currentURI;
 
-                // Not the best approach
-                if ( tabURI.asciiSpec === this.lastRequest.openerURL ) {
+                // Probably isn't the best method to identify the source tab
+                if ( tabURI.spec === this.lastRequest.openerURL ) {
                     sourceTabId = vAPI.tabs.getTabId(tab);
                     break;
                 }
@@ -1016,9 +1017,9 @@ var httpObserver = {
                 return;
             }*/
 
-            var scheme = newChannel.URI.scheme;
+            var URI = newChannel.URI;
 
-            if ( scheme !== 'http' && scheme !== 'https' ) {
+            if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
                 return;
             }
 
@@ -1029,7 +1030,7 @@ var httpObserver = {
             var channelData = oldChannel.getProperty(location.host + 'reqdata');
             var [type, tabId, sourceTabId] = channelData;
 
-            if ( this.handlePopup(newChannel.URI, tabId, sourceTabId) ) {
+            if ( this.handlePopup(URI, tabId, sourceTabId) ) {
                 result = this.ABORT;
                 return;
             }
@@ -1324,8 +1325,9 @@ vAPI.contextMenu.displayMenuItem = function(e) {
     }
 
     var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
+    var currentURI = gContextMenu.browser.currentURI;
 
-    if ( /^https?$/.test(gContextMenu.browser.currentURI.scheme) === false) {
+    if ( !currentURI.schemeIs('http') && !currentURI.schemeIs('https') ) {
         menuitem.hidden = true;
         return;
     }
@@ -1462,6 +1464,25 @@ vAPI.onLoadAllCompleted = function() {};
 
 /******************************************************************************/
 
+// Likelihood is that we do not have to punycode: given punycode overhead,
+// it's faster to check and skip than do it unconditionally all the time.
+
+var punycodeHostname = punycode.toASCII;
+var isNotASCII = /[^\x21-\x7F]/;
+
+vAPI.punycodeHostname = function(hostname) {
+    return isNotASCII.test(hostname) ? punycodeHostname(hostname) : hostname;
+};
+
+vAPI.punycodeURL = function(url) {
+    if ( isNotASCII.test(url) ) {
+        return Services.io.newURI(url, null, null).asciiSpec;
+    }
+    return url;
+};
+
+/******************************************************************************/
+
 // clean up when the extension is disabled
 
 window.addEventListener('unload', function() {
@@ -1475,29 +1496,6 @@ window.addEventListener('unload', function() {
     frameModule.contentObserver.unregister();
     Cu.unload(vAPI.getURL('frameModule.js'));
 });
-
-/******************************************************************************/
-
-// Likelihood is that we do not have to punycode: given punycode overhead,
-// it's faster to check and skip than do it unconditionally all the time.
-
-var punycodeHostname = punycode.toASCII;
-var isNotASCII = /[^\x21-\x7F]/;
-
-vAPI.punycodeHostname = function(hostname) {
-    return isNotASCII.test(hostname) ? punycodeHostname(hostname) : hostname;
-};
-
-var cachedURL = self.URL;
-
-vAPI.punycodeURL = function(url) {
-    if ( isNotASCII.test(url) === false ) {
-        return url;
-    }
-    cachedURL.href = url;
-    cachedURL.hostname = punycodeHostname(cachedURL.hostname);
-    return urlNormalizer.href;
-};
 
 /******************************************************************************/
 
