@@ -26,10 +26,7 @@ echo "*** uBlock.safariextension: Generating meta..."
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** uBlock.safariextension: Creating package..."
-    pushd $DES/
-    zip ../uBlock.safari.safariextension -qr *
-    popd
+    echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
 fi
 
 echo "*** uBlock.safariextension: Package done."
