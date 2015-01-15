@@ -980,10 +980,17 @@ var httpObserver = {
                 var tabURI = tab.linkedBrowser.currentURI;
 
                 // Probably isn't the best method to identify the source tab
-                if ( tabURI.spec === this.lastRequest.openerURL ) {
-                    sourceTabId = vAPI.tabs.getTabId(tab);
+                if ( tabURI.spec !== lastRequest.openerURL ) {
+                    continue
+                }
+
+                sourceTabId = vAPI.tabs.getTabId(tab);
+
+                if ( sourceTabId !== lastRequest.tabId ) {
                     break;
                 }
+
+                sourceTabId = null;
             }
 
             if ( this.handlePopup(channel.URI, lastRequest.tabId, sourceTabId) ) {

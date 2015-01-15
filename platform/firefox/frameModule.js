@@ -127,7 +127,9 @@ const contentObserver = {
             context = context.contentWindow || context;
 
             try {
-                openerURL = context.opener.location.href;
+                if ( context !== context.opener ) {
+                    openerURL = context.opener.location.href;
+                }
             } catch (ex) {}
 
             let isPopup = location.spec === 'about:blank' && openerURL;
@@ -139,7 +141,9 @@ const contentObserver = {
             context = context.contentWindow || context;
 
             try {
-                openerURL = context.opener.location.href;
+                if ( context !== context.opener ) {
+                    openerURL = context.opener.location.href;
+                }
             } catch (ex) {}
         } else {
             context = (context.ownerDocument || context).defaultView;
