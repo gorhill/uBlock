@@ -1478,12 +1478,24 @@ window.addEventListener('unload', function() {
 
 /******************************************************************************/
 
-var urlNormalizer = self.URL;
-var punycodeHostname = vAPI.punycodeHostname = punycode.toASCII;
+// Likelihood is that we do not have to punycode: given punycode overhead,
+// it's faster to check and skip than do it unconditionally all the time.
+
+var punycodeHostname = punycode.toASCII;
+var isNotASCII = /[^\x21-\x7F]/;
+
+vAPI.punycodeHostname = function(hostname) {
+    return isNotASCII.test(hostname) ? punycodeHostname(hostname) : hostname;
+};
+
+var cachedURL = self.URL;
 
 vAPI.punycodeURL = function(url) {
-    urlNormalizer.href = url;
-    urlNormalizer.hostname = punycodeHostname(urlNormalizer.hostname);
+    if ( isNotASCII.test(url) === false ) {
+        return url;
+    }
+    cachedURL.href = url;
+    cachedURL.hostname = punycodeHostname(cachedURL.hostname);
     return urlNormalizer.href;
 };
 
