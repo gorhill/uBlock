@@ -11,6 +11,8 @@
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
+![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
+
 # Philosophy
 
 µBlock is not an *ad blocker*; it's a general-purpose blocker. µBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
