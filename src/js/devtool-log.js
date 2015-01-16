@@ -98,6 +98,9 @@ var renderLogEntry = function(entry) {
         tr.classList.add('blocked');
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
+        if ( entry.result.charAt(0) === 'm' ) {
+            tr.classList.add('mirrored');
+        }
     }
     if ( entry.type === 'main_frame' ) {
         tr.classList.add('maindoc');

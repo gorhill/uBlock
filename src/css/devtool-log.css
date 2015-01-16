@@ -49,6 +49,9 @@ body[dir="rtl"] #content {
 #content table tr.allowed {
     background-color: rgba(0, 160, 0, 0.1)
     }
+#content table tr.allowed.mirrored {
+    background-color: rgba(255, 255, 0, 0.3)
+    }
 #content table tr.maindoc {
     background-color: #eee;
     }

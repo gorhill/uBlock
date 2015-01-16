@@ -104,11 +104,10 @@ var onBeforeRequest = function(details) {
 
     var result = pageStore.filterRequest(requestContext);
 
-    // Log result
-    pageStore.logBuffer.writeOne(requestContext, result);
+    // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
     // Not blocked
-    if ( pageStore.boolFromResult(result) === false ) {
+    if ( µb.isAllowResult(result) ) {
         //console.debug('onBeforeRequest()> ALLOW "%s" (%o) because "%s"', details.url, details, result);
 
         pageStore.perLoadAllowedRequestCount++;
@@ -119,33 +118,25 @@ var onBeforeRequest = function(details) {
             pageStore.addFrame(frameId, requestURL);
         }
 
-        // https://github.com/gorhill/uBlock/issues/351
-        // Bypass experimental features when uBlock is disabled for a site
-        if ( !pageStore.getNetFilteringSwitch() ) {
-            return;
-        }
-
-        if ( !µb.userSettings.experimentalEnabled ) {
-            return;
-        }
-
-        if ( pageStore.skipLocalMirroring ) {
-            return;
-        }
-
         // https://code.google.com/p/chromium/issues/detail?id=387198
         // Not all redirects will succeed, until bug above is fixed.
-        var redirectURL = µb.mirrors.toURL(requestURL, true);
+        var redirectURL = pageStore.toMirrorURL(requestURL);
         if ( redirectURL !== '' ) {
+            pageStore.logBuffer.writeOne(requestContext, 'ma:');
+
             //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
             return { redirectUrl: redirectURL };
         }
+
+        pageStore.logBuffer.writeOne(requestContext, result);
 
         return;
     }
 
     // Blocked
     //console.debug('onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
+
+    pageStore.logBuffer.writeOne(requestContext, result);
 
     pageStore.perLoadBlockedRequestCount++;
     µb.localSettings.blockedRequestCount++;
@@ -222,8 +213,7 @@ var onBeforeSendHeaders = function(details) {
     var referrerHostname = µburi.hostnameFromURI(referrer);
     var pageDetails = {
         pageHostname: referrerHostname,
-        pageDomain: µburi.domainFromHostname(referrerHostname),
-        firstParty: false
+        pageDomain: µburi.domainFromHostname(referrerHostname)
     };
     pageDetails.rootHostname = pageDetails.pageHostname;
     pageDetails.rootDomain = pageDetails.pageDomain;

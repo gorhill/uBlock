@@ -684,6 +684,22 @@ PageStore.prototype.boolFromResult = function(result) {
 
 /******************************************************************************/
 
+PageStore.prototype.toMirrorURL = function(requestURL) {
+    // https://github.com/gorhill/uBlock/issues/351
+    // Bypass experimental features when uBlock is disabled for a site
+    if ( µb.userSettings.experimentalEnabled === false ||
+         this.getNetFilteringSwitch() === false ||
+         this.skipLocalMirroring ) {
+        return '';
+    }
+
+    // https://code.google.com/p/chromium/issues/detail?id=387198
+    // Not all redirects will succeed, until bug above is fixed.
+    return µb.mirrors.toURL(requestURL, true);
+};
+
+/******************************************************************************/
+
 PageStore.prototype.updateBadge = function() {
     var netFiltering = this.getNetFilteringSwitch();
     var badge = '';
