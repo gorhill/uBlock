@@ -1418,15 +1418,23 @@ vAPI.contextMenu.create = function(details, callback) {
     this.onCommand = function() {
         var gContextMenu = this.ownerDocument.defaultView.gContextMenu;
         var details = {
-            menuItemId: this.id,
-            tagName: gContextMenu.target.tagName.toLowerCase()
+            menuItemId: this.id
         };
 
         if ( gContextMenu.inFrame ) {
+            details.tagName = 'iframe';
             details.frameUrl = gContextMenu.focusedWindow.location.href;
-        } else if ( gContextMenu.onImage || gContextMenu.onAudio || gContextMenu.onVideo ) {
+        } else if ( gContextMenu.onImage ) {
+            details.tagName = 'img';
+            details.srcUrl = gContextMenu.mediaURL;
+        } else if ( gContextMenu.onAudio ) {
+            details.tagName = 'audio';
+            details.srcUrl = gContextMenu.mediaURL;
+        } else if ( gContextMenu.onVideo ) {
+            details.tagName = 'video';
             details.srcUrl = gContextMenu.mediaURL;
         } else if ( gContextMenu.onLink ) {
+            details.tagName = 'a';
             details.linkUrl = gContextMenu.linkURL;
         }
 
