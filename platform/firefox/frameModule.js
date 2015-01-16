@@ -153,13 +153,24 @@ const contentObserver = {
         // so check context.top instead of context
         if ( context.top && context.location ) {
             // https://bugzil.la/1092216
-            getMessageManager(context).sendRpcMessage(this.cpMessageName, {
+            let messageManager = getMessageManager(context);
+            let details = {
                 openerURL: openerURL || null,
                 url: location.spec,
                 type: type,
                 frameId: type === this.MAIN_FRAME ? -1 : (context === context.top ? 0 : 1),
                 parentFrameId: context === context.top ? -1 : 0
-            });
+            };
+
+            // TODO: frameId from outerWindowID?
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindowUtils
+
+            if ( typeof messageManager.sendRpcMessage === 'function' ) {
+                messageManager.sendRpcMessage(this.cpMessageName, details);
+            } else {
+                // Compatibility for older versions
+                messageManager.sendSyncMessage(this.cpMessageName, details);
+            }
         }
 
         return this.ACCEPT;

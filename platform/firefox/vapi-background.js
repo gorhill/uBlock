@@ -45,7 +45,7 @@ vAPI.firefox = true;
 // TODO: read these data from somewhere...
 vAPI.app = {
     name: 'µBlock',
-    version: '0.8.5.3'
+    version: '0.8.5.4'
 };
 
 /******************************************************************************/
@@ -366,7 +366,7 @@ vAPI.tabs.registerListeners = function() {
 
 vAPI.tabs.getTabId = function(target) {
     if ( target.linkedPanel ) {
-        return target.linkedPanel.slice(6);
+        return target.linkedPanel;
     }
 
     var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
@@ -374,13 +374,13 @@ vAPI.tabs.getTabId = function(target) {
     // This should be more efficient from version 35
     if ( gBrowser.getTabForBrowser ) {
         i = gBrowser.getTabForBrowser(target);
-        return i ? i.linkedPanel.slice(6) : -1;
+        return i ? i.linkedPanel : -1;
     }
 
     i = gBrowser.browsers.indexOf(target);
 
     if ( i !== -1 ) {
-        i = gBrowser.tabs[i].linkedPanel.slice(6);
+        i = gBrowser.tabs[i].linkedPanel;
     }
 
     return i;
@@ -399,7 +399,7 @@ vAPI.tabs.get = function(tabId, callback) {
 
         for ( var win of windows ) {
             tab = win.gBrowser.tabContainer.querySelector(
-                'tab[linkedpanel="panel-' + tabId + '"]'
+                'tab[linkedpanel="' + tabId + '"]'
             );
 
             if ( tab ) {
@@ -541,7 +541,7 @@ vAPI.tabs.remove = function(tabIds) {
     }
 
     tabIds = tabIds.map(function(tabId) {
-        return 'tab[linkedpanel="panel-' + tabId + '"]';
+        return 'tab[linkedpanel="' + tabId + '"]';
     }).join(',');
 
     for ( var win of this.getWindows() ) {
@@ -579,6 +579,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     if ( details.file ) {
         details.file = vAPI.getURL(details.file);
     }
+
 
     tab.linkedBrowser.messageManager.sendAsyncMessage(
         location.host + ':broadcast',
@@ -1135,7 +1136,12 @@ vAPI.toolbarButton = {
 /******************************************************************************/
 
 vAPI.toolbarButton.init = function() {
-    var {CustomizableUI} = Cu.import('resource:///modules/CustomizableUI.jsm', null);
+    try {
+        var {CustomizableUI} = Cu.import('resource:///modules/CustomizableUI.jsm', null);
+    } catch (ex) {
+        return;
+    }
+
     this.defaultArea = CustomizableUI.AREA_NAVBAR;
     this.styleURI = [
         '#' + this.id + ' {',

@@ -192,6 +192,7 @@ body.dirty #refresh:hover {
     background-color: transparent;
     border: none;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     color: #000;
     display: inline-block;
     height: 24px;
