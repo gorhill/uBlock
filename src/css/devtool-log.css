@@ -1,6 +1,7 @@
 body {
     border: 0;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     font: 12px monospace;
     margin: 0;
     overflow-x: hidden;

@@ -65,4 +65,5 @@ iframe {
     height: 100%;
     border-top: 50px solid transparent;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     }

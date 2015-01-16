@@ -8,6 +8,7 @@ body {
     background-color: #eee;
     border: none;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     height: 4em;
     padding: 1em;
     position: fixed;
@@ -41,6 +42,7 @@ select option {
 #content {
     border: 0;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     height: calc(100vh - 4em);
     margin-top: 4em;
     overflow-y: auto;
