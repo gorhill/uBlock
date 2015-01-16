@@ -217,7 +217,7 @@ var toUrlKey = function(url) {
 var extractMimeType = function(ctin) {
     var pos = ctin.indexOf(';');
     var type = pos === -1 ? ctin.trim() : ctin.slice(0, pos).trim();
-    var charset = pos === -1 ? '' : ctin.slice(pos).trim();
+    var charset = pos === -1 ? '' : ctin.slice(pos + 1).trim();
     if ( charset !== '' ) {
         return type + ';' + charset;
     }
