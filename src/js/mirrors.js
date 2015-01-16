@@ -497,7 +497,7 @@ var load = function() {
     var loadContent = function(urlKey, hash) {
         var binKey = storageKeyFromHash(hash);
         var onContentReady = function(bin) {
-            if ( vAPI.lastError || bin.hasOwnProperty(binKey) === false ) {
+            if ( vAPI.lastError() || bin.hasOwnProperty(binKey) === false ) {
                 //console.debug('mirrors.load(): failed to load content "%s"', binKey);
                 removeMetadata(urlKey);
                 removeContent(binKey);

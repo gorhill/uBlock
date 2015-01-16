@@ -418,6 +418,7 @@
 
         // https://github.com/gorhill/httpswitchboard/issues/15
         // Ensure localhost et al. don't end up in the ubiquitous blacklist.
+        // TODO: do this only if it's not an [Adblock] list
         line = line
             .replace(/\s+#.*$/, '')
             .toLowerCase()
@@ -594,10 +595,18 @@
     var µb = this;
     var fromSelfie = false;
 
+    // Filter lists
+    // Whitelist
+    var countdown = 2;
+
     // Final initialization steps after all needed assets are in memory.
     // - Initialize internal state with maybe already existing tabs.
     // - Schedule next update operation.
-    var onAllDone = function() {
+    var doCountdown = function() {
+        countdown -= 1;
+        if ( countdown !== 0 ) {
+            return;
+        }
         // https://github.com/gorhill/uBlock/issues/426
         // Important: remove barrier to remote fetching, this was useful only
         // for launch time.
@@ -610,16 +619,10 @@
         µb.updater.restart(µb.firstUpdateAfter);
     };
 
-    var filtersReady = false;
-    var whitelistReady = false;
-
     // Filters are in memory.
     // Filter engines need PSL to be ready.
     var onFiltersReady = function() {
-        filtersReady = true;
-        if ( whitelistReady ) {
-            onAllDone();
-        }
+        doCountdown();
     };
 
     // https://github.com/gorhill/uBlock/issues/226
@@ -627,10 +630,7 @@
     // Whitelist parser needs PSL to be ready.
     // gorhill 2014-12-15: not anymore
     var onWhitelistReady = function() {
-        whitelistReady = true;
-        if ( filtersReady ) {
-            onAllDone();
-        }
+        doCountdown();
     };
 
     // Load order because dependencies:

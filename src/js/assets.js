@@ -307,6 +307,14 @@ var updateLocalChecksums = function() {
 var getRepoMetadata = function(callback) {
     callback = callback || nullFunc;
 
+    // https://github.com/gorhill/uBlock/issues/515
+    // Handle re-entrancy here, i.e. we MUST NOT tamper with the waiting list
+    // of callers, if any, except to add one at the end of the list.
+    if ( repoMetadata !== null && repoMetadata.waiting.length !== 0 ) {
+        repoMetadata.waiting.push(callback);
+        return;
+    }
+
     if ( exports.allowRemoteFetch && lastRepoMetaIsRemote === false ) {
         lastRepoMetaTimestamp = 0;
     }
@@ -314,11 +322,7 @@ var getRepoMetadata = function(callback) {
         repoMetadata = null;
     }
     if ( repoMetadata !== null ) {
-        if ( repoMetadata.waiting.length !== 0 ) {
-            repoMetadata.waiting.push(callback);
-        } else {
-            callback(repoMetadata);
-        }
+        callback(repoMetadata);
         return;
     }
 
@@ -356,9 +360,16 @@ var getRepoMetadata = function(callback) {
             updateLocalChecksums();
         }
         // Notify all waiting callers
-        while ( callback = repoMetadata.waiting.pop() ) {
-            callback(repoMetadata);
+        // https://github.com/gorhill/uBlock/issues/515
+        // VERY IMPORTANT: because of re-entrancy, we MUST:
+        // - process the waiting callers in a FIFO manner
+        // - not cache repoMetadata.waiting.length, we MUST use the live
+        //   value, because it can change while looping
+        // - not change the waiting list until they are all processed
+        for ( var i = 0; i < repoMetadata.waiting.length; i++ ) {
+            repoMetadata.waiting[i](repoMetadata);
         }
+        repoMetadata.waiting.length = 0;
     };
 
     var validateChecksums = function(details) {
