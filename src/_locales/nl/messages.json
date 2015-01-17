@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Eindelijk, een efficënte blokkeerder voor Chromiumgebasseerde browsers. Light CPU- en geheugenverbruik.",
+    "message":"Eindelijk, een efficënte blokkeerder. Gebruikt weinig processorkracht en geheugen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

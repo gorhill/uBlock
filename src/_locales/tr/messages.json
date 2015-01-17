@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, Chromium tabanlı tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla kullanmaz.",
+    "message":"Sonunda, tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,11 +16,11 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3. şahıs süzgeçler",
+    "message":"3. parti süzgeçler",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Süzgeçlerin",
+    "message":"Süzgeçlerim",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -152,27 +152,27 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"resimler",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"satır içi scriptleri",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"1. parti scriptler",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"3. parti scriptler",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"3. parti çerçeveler",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"{{total}} ayrı alan adından {{count}} adedine bağlanmış",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Deneyimli kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekir<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "message":"ublock-statik-filtrelerim_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -336,19 +336,19 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"İptal et",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Dosyadan içe aktar...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Dışa aktar...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"dinamik-ublock-kurallarım_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -364,7 +364,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"ublock-beyazliste_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -432,7 +432,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
+    "message":"ublock-yedek_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

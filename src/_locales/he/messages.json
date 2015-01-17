@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"סוף סוף, חוסם יעיל לדפדפנים מבוססי Chromium. קל על המעבד והזיכרון.",
+    "message":"סוף סוף, חוסם יעיל. קל על המעבד והזיכרון.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

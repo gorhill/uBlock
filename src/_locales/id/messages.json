@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Akhirnya, pemblokir yang efisien untuk perambah berbasis Chromium. Penggunaan CPU dan memori ringan.",
+    "message":"Akhirnya, pemblokir iklan yang efisien. Ringan penggunaan CPU dan memori.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

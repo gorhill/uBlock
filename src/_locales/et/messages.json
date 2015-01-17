@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Lõpuks on Chromiumil põhinevatele veebilehitsejatele valmis saanud tõhus blokeerija. CPU ja mälusõbralik.",
+    "message":"Lõpuks on valminud tõhus blokeerija. Protsessori- ja mälusõbralik.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

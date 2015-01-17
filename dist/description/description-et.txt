@@ -1,4 +1,4 @@
-Tõhus blokeerija: kasutab vähe mälu ja CPU-d ning sellest hoolimata suudab ülejäänud tuntud blokeerijatest laadida ja töödelda tuhandeid filtreid.
+Tõhus blokeerija: kasutab vähe mälu ja protsessorit ning sellegipoolest suudab laadida ja kasutada mitu korda rohkem filtreid kui teised tuntud blokeerijad.
 
 Laienduse kasulikkuse täpne ülevaade: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 

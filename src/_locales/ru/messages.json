@@ -80,11 +80,11 @@
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>включены<\/b> для этого сайта",
+    "message":"Пользовательские скрипты <b>доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>отключены<\/b> для этого сайта",
+    "message":"Пользовательские скрипты <b>не доступны<\/b> на этом сайте",
     "description":""
   },
   "popupSite3pScriptEnabled":{
@@ -152,23 +152,23 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"изображения",
+    "message":"Изображения",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"встроенные скрипты",
+    "message":"Встроенные скрипты",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"собственные скрипты",
+    "message":"Собственные скрипты",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"сторонние скрипты",
+    "message":"Сторонние скрипты",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"сторонние фреймы",
+    "message":"Сторонние фреймы",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Все Ваши настройки будут сброшены, и µBlock будет перезапущен. \n\nВосстановить заводские настройки?",
+    "message":"Все Ваши настройки будут сброшены, и µBlock будет перезапущен. \n\nВосстановить настройки по умолчанию?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Ефективний блокувальник реклами для браузерів на основі Chromium таки з’явився. Не навантажує процесор та пам'ять.",
+    "message":"Ефективний блокувальник реклами таки з’явився. Не навантажує процесор та пам'ять.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

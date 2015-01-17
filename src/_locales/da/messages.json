@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blocker til Chromium-baserede browsere. Lavt CPU- og hukommelsesbrug.",
+    "message":"Endelig, en effektiv blocker. Let på CPU og hukommelse.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

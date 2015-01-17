@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"moje_zasady_ublock_{{datetime}}.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "whitelistPrompt":{
@@ -448,7 +448,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Danych nie można odczytać lub są nieprawidłowe",
+    "message":"Dane nieprawidłowe lub niemożliwe do odczytu",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

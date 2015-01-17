@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"وأخيراً, مانع اعلانات كفوء خصيصا للمتصفحات المبنية على نظام كروميوم. خفيف على المعالج و الذاكرة.",
+    "message":"وأخيراً, مانع اعلانات كفوء. خفيف على المعالج و الذاكرة.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
