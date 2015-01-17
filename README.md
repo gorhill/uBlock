@@ -8,7 +8,7 @@
   * [CPU](#cpu)
   * [Blocking](#blocking)
 * [Installation](#installation)
-  * [Chromium-based browsers](#chromium-based-browsers)
+  * [Chromium-based browsers](#chromium-and-offshoots)
   * [Firefox](#firefox)
   * [Safari](#safari)
 * [Release History](#release-history)
