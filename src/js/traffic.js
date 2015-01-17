@@ -255,12 +255,39 @@ var onHeadersReceived = function(details) {
         pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
     }
 
+    var requestURL = details.url;
+    var requestHostname = µb.URI.hostnameFromURI(requestURL);
+    var requestDomain = µb.URI.domainFromHostname(requestHostname);
+
+    // https://github.com/gorhill/uBlock/issues/525
+    // When we are dealing with the root frame, due to fix to issue #516, it
+    // is likely the root frame has not been bound yet to the tab, and thus
+    // we could end up using the context of the previous page for filtering.
+    // So when the request is that of a root frame, simply create an
+    // artificial context, this will ensure we are properly filtering
+    // inline scripts.
+    var context;
+    if ( details.parentFrameId === -1 ) {
+        context = {
+            rootHostname: requestHostname,
+            rootDomain: requestDomain,
+            pageHostname: requestHostname,
+            pageDomain: requestDomain
+        };
+    } else {
+        context = pageStore;
+    }
+
     // Concatenating with '{inline-script}' so that the network request cache
     // can distinguish from the document itself
-    pageStore.requestURL = details.url + '{inline-script}';
-    pageStore.requestHostname = µb.URI.hostnameFromURI(details.url);
-    pageStore.requestType = 'inline-script';
-    var result = pageStore.filterRequest(pageStore);
+    // The cache should do whatever it takes to not confuse same
+    // URLs-different type
+    context.requestURL = requestURL + '{inline-script}';
+    context.requestHostname = requestHostname;
+    context.requestDomain = requestDomain;
+    context.requestType = 'inline-script';
+
+    var result = pageStore.filterRequest(context);
     if ( µb.isBlockResult(result) === false ) {
         return;
     }
@@ -270,7 +297,7 @@ var onHeadersReceived = function(details) {
     µb.localSettings.blockedRequestCount++;
     µb.updateBadgeAsync(tabId);
 
-    pageStore.logBuffer.writeOne(pageStore, result);
+    pageStore.logBuffer.writeOne(context, result);
 
     details.responseHeaders.push({
         'name': 'Content-Security-Policy',
