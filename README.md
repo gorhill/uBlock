@@ -8,6 +8,11 @@
   * [CPU](#cpu)
   * [Blocking](#blocking)
 * [Installation](#installation)
+  * [Chrome](#chrome)
+  * [Safari](#safari)
+  * [Firefox](#firefox)
+  * [Opera](#opera)
+  * [Manually](#manually)
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
@@ -56,11 +61,31 @@ Being lean and efficient doesn't mean blocking less<br>
 
 ## Installation
 
-Install µBlock from the [Chrome store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/gorhill/uBlock/tree/master/dist#install).
-
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-**Note:**
+### Chrome
+
+[![Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_340x96.png)](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm).
+
+µBlock is available for free from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm).
+
+### Safari
+
+µBlock will hopefully soon be published on Apple's Safari Extension Gallery. Meanwhile, feel free to grab the [latest version here](https://chrismatic.io/ublock) from µBlock's Safari maintainer.
+
+### Firefox
+
+Coming soon.
+
+### Opera
+
+µBlock is available from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
+
+### Manually
+
+If you wish to install µBlock manually, [check out this guide](https://github.com/gorhill/uBlock/tree/master/dist#install).
+
+### Note for all browsers
 
 To benefit from µBlock's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). µBlock will do [as well or better](#blocking) than most popular ad blockers.
 

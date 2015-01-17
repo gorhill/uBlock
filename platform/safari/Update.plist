@@ -8,13 +8,13 @@
 				<key>CFBundleIdentifier</key>
 				<string>net.gorhill.uBlock</string>
 				<key>Developer Identifier</key>
-				<string>...</string>
+				<string>96G4BAKDQ9</string>
 				<key>CFBundleShortVersionString</key>
 				<string>{version}</string>
 				<key>CFBundleVersion</key>
 				<string>{buildNumber}</string>
 				<key>URL</key>
-				<string>https://github.com/gorhill/uBlock/releases/download/0.7.0.11/uBlock-0.7.0.11.safariextz</string>
+				<string>https://chrismatic.io/ublock/ublock-0.8.5.4.safariextz</string>
 			</dict>
 		</array>
 	</dict>
