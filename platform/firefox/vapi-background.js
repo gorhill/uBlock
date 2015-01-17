@@ -45,7 +45,7 @@ vAPI.firefox = true;
 // TODO: read these data from somewhere...
 vAPI.app = {
     name: 'µBlock',
-    version: '0.8.5.5'
+    version: '0.8.5.6'
 };
 
 /******************************************************************************/
@@ -945,7 +945,7 @@ var httpObserver = {
             result = vAPI.net.onHeadersReceived.callback({
                 url: URI.asciiSpec,
                 tabId: channelData[1],
-                parentFrameId: -1,
+                parentFrameId: channelData[0] === this.MAIN_FRAME ? -1 : 0,
                 responseHeaders: result ? [{name: topic, value: result}] : []
             });
 
