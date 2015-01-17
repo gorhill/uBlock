@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: kEZ8EWuQeZQm6eBdgY9ZjQ
-! Version: 201501102051
+! Checksum: VXPWv2ZBenW3Moyc9Y/5cg
+! Version: 201501171301
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 10 Jan 2015 20:51 UTC
+! Ultima modifica: 17 Jan 2015 13:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -143,6 +143,7 @@ _sito/adv/
 ##.boxADV
 ##.box_adv_speciali_hp
 ##.cmt_bgadv
+##.ed_Related_Record_Div_Sponsor
 ##.googleAnnunci
 ##.home-rubriche-adv
 ##.inews_adv_top
@@ -177,6 +178,7 @@ _sito/adv/
 ##a[href^="http://www.linkwelove.it/urls/"]
 ##a[href^="https://www.linkwelove.it/urls/"]
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_general_hide.txt ***
+comingsoon.it#@##AdvHeader
 bancavalle.it,bancodibrescia.it,bpa.it,bpb.it,bpci.it,brebanca.it,carime.it,quiubi.it,ubibancapi.it#@##ad_box
 techinfos.it#@##adblock
 giornaledisiracusa.it#@##adsense_testa
@@ -312,6 +314,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||affiliate2.hardstore.com^
 ||affiliatesys.interwetten.it^
 ||affiliati.bet2bet.it^
+||affiliationjs.s3.amazonaws.com^
 ||affiliazione.immobiliare.it^
 ||affiliazioni.misterdomain.eu^
 ||agenziapuntonet.it/banner/
@@ -1347,6 +1350,8 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||quiceditutto.it/flash/*.swf
 ||quicomo.it/qc-ad/
 ||quicomo.it/qc-assets/banner/
+||quicosenza.it/images/banner_
+||quicosenza.it/images/banners/
 ||quotidiano.net/file_generali/flash/ova.swf$object-subrequest
 ||quotidianodigela.it/images/background/
 ||quotidianodigela.it^*/banners/
@@ -1425,6 +1430,7 @@ beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ||rtl.it^*/ico_iTunes-Download-
 ||rtl.it^*/itunes_btn_
 ||rtl.it^*_ban_
+||saggiamente.com^*-helpsaggiamente.jpg
 ||salernonotizie.it/wp-content/banner/
 ||salernonotizie.it/wp-content/skin/
 ||salernonotizie.net^*_banner_
@@ -1912,6 +1918,7 @@ telesud3.com###linkamici
 asroma.it###logos
 eurogamer.it###low-leaderboard
 catanzaroinforma.it###mainsponsor
+catanzaroinforma.it###mainsponsorcronaca
 laroma24.it###marketingRotator
 it.msn.com###markette
 max.rcs.it###max_ppn
@@ -2257,6 +2264,7 @@ businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilr
 businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="font-size:small;font-style:normal;font-weight:normal;margin-top:3px;margin-bottom:3px"]
 edilportale.com##.click-Skin
 tripadvisor.it##.commerce
+saggiamente.com##.consigliati
 gazzettavvisionline.it##.cont_Leaderboard
 leccesette.it##.cont_banner
 gazzetta.it##.contain-sisal-magicup
@@ -2554,6 +2562,8 @@ liguriawebcam.com##div[style="overflow:hidden;height:90px;margin:4px 0;"]
 freeones.it##div[style="padding: 0px; margin: 10px 0px; height: 100px; width: 898px; background-color: #4C89F9; border: 1px solid #4C89F9"]
 puntosicuro.it##div[style="padding: 5px; font-family: Verdana, Arial; font-size: 10px;"]
 giornaledicomo.it,tempi.it##div[style="position: relative; height: 250px; width: 300px;"]
+motorinolimits.com##div[style="position: relative; z-index: 0; width: 160px; height: 160px;"]
+motorinolimits.com##div[style="position: relative; z-index: 0; width: 300px; height: 250px;"]
 telefonino.net##div[style="position: relative;width: 310px;height: 110px;margin: 0px -5px 5px -5px;"]
 ildesk.it##div[style="position:absolute; background-color:#ffffff; width:300px; height:250px; left: 526px; top: -14px;"]
 corriereirpinia.it##div[style="position:absolute;top:0px;left:50%;margin-left:-1116px;width:600px;height:1400px;"]

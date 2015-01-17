@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: t6mWM0TTpr00oTEGKXSOaw
-! Version: 201501102051
+! Checksum: /NftU71rp9YdNskJAQJdHQ
+! Version: 201501171301
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 10 Jan 2015 20:51 UTC
+! Last modified: 17 Jan 2015 13:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -71,6 +71,7 @@
 /medien/werbung/*
 /mod/werbung/*
 /o2-layer.
+/partner/werbung-
 /partneradzwerk/*
 /pic/werbung/*
 /pic/werbung_
@@ -385,6 +386,7 @@ _woz_banner_vote.
 ##.werbung_sidebar
 ##.werbung_text
 ##.werbungamazon
+##.werbungimthread
 ##.werbungrechtstitel
 ##a[href^="http://click.plista.com/pets"]
 ##a[href^="http://farm.plista.com/pets"]
@@ -2758,6 +2760,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mailgen.biz/img/banner_
 ||mailgen.biz/lla2/
 ||mainz05.de/mainz05/banners.html
+||mamamiez.de^*/ecover_banner.png
 ||manabase.de/images/topimg.gif
 ||maniac.de/sites/all/themes/maniac/images/campaigns/
 ||map24.com/banner/
@@ -3350,6 +3353,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||stepstone.de/home_bottombanner.
 ||stepstone.de^*/skyscraper/
 ||stern.de/bilder/stern_5/allgemein/extras_vermarktet/
+||stilmagazin.com/banner/
 ||stol.it/var/ezflow_site/storage/images/beilagen-archiv/
 ||stol.it/var/ezflow_site/storage/images/werbung_intern/look4you/
 ||store51.de/banner.js
@@ -3722,6 +3726,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||epochtimes.de/js/chkba.js
 ||finanzen.net/mediacenter/*/img/*LB*.png
 ||finanzen.net/mediacenter/*/img/*SKY*.png
+||focus.de/fol/fol.min024.js?
+||focus.de/fol/pool.forjx.js
+||focus.de/js_ng/js_ng_fol_gpt.js
 ||gamona.de/assets/*.swf
 ||gamona.de/assets/*_1000x140.
 ||gamona.de/assets/*_160x800_
@@ -4225,6 +4232,7 @@ gmx.net,web.de###footer-icons
 crescendo.de###footer-partners-wrapper
 wohintipp.at###footerBanner
 maniac.de###footeradd_xbox_frame
+forum.stilmagazin.com###footerleader
 fc-suedtirol.com###footersponsor
 dforum.net###forumbanner
 vitaminanalyse.de###fragsbar
@@ -4694,6 +4702,7 @@ stopadblock.org###sidebar > div[id][style="text-align:center"]
 stopadblock.org###sidebar > div[style] + div[id][style]
 abnehmen.com,aquariumforum.de,pferd.de,radforum.de###sidebar > li > .ffwidget_sidebar
 tgs-pforzheim.de###sidebar > ul > #aioslideshow-widget-2
+mamamiez.de###sidebar > ul > #text-7
 mikrocontroller.net###sidebar-right > div[style]:last-child > div[id]:last-child > div[style]
 mikrocontroller.net###sidebar-right > div[style]:last-child > script + div[style]:last-child
 grenzwissenschaft-aktuell.blogspot.de###sidebar-right-1 > #HTML1 > .widget-content:first-child
@@ -5927,6 +5936,7 @@ bild.de##a[href="/infos/entertainment/bild-aktionen/bild-entertainment-aktionen-
 bild.de##a[href="/lifestyle/horoskop/horoskop/home-21648048.bild.html"]
 bild.de##a[href="/spiele/gamesload/computerspiele/pc-spiele-shop-33596804.bild.html"]
 bild.de##a[href="/video/clip/livestrip-sexy-clips/live-strip-24602168.bild.html"]
+strippokerregeln.com##a[href="/www/888casino"]
 sb.sbsb.cc##a[href="download.php"]
 dsl-speedtest.org##a[href="ex/thome1.php"]
 fm-arena.de##a[href="fm-10-bestellen.html"]
@@ -6183,6 +6193,7 @@ metacrawler.de##a[href^="http://performance-netzwerk.de"]
 mobilfunk-talk.de,usp-forum.de##a[href^="http://performance-netzwerk.de/"]
 movie-blog.org##a[href^="http://ph.ly/"]
 movie-blog.org##a[href^="http://pir.at/"]
+funcloud.com##a[href^="http://pn.innogames.com/go.cgi?pid="] > img
 pornkino.to##a[href^="http://pornkino.to/usenet."]
 putenbrust.net##a[href^="http://putenbrust.99k.org"]
 spieletipps.de##a[href^="http://rc23.overture.com"]
@@ -7145,9 +7156,11 @@ androidnext.de##ul[style="list-style-image: url(http://dl.androidnext.de/flame.p
 r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 ! Anti-Adblock
 kabeleins.de,prosieben.de,prosiebenmaxx.de,sat1.de,sixx.de,the-voice-of-germany.de###ad-fullbanner-outer + div:not([id])
+www.prosieben.de,www.sat1.de,www.sixx.de,www.the-voice-of-germany.de###ad-fullbanner-outer + div[class][id] > div + img
 wetter.com###ad-skyscraper1 + * + [class]
 focus.de###article div[align="center"] + [class]
 wetter.com###content div[align="center"] + [class]
+www.prosieben.de,www.sat1.de,www.sixx.de,www.the-voice-of-germany.de###main > div:nth-child(1)
 stern.de###page > div[align="center"] + [class]
 focus.de###page-container > div[class] > div[align="center"] + [class]
 focus.de###sidebar > div[align="center"] + [class]
@@ -7160,9 +7173,14 @@ gala.de##.header + div[align="center"] + [class]
 auto-motor-und-sport.de##.header_topbar + [class] > [class] > [class]
 kabeleins.de,sat1.de##.simad + [class] + [class]
 prosieben.de,prosiebenmaxx.de,sat1.de,sixx.de,the-voice-of-germany.de##.simad + div:not([id])
+www.auto-motor-und-sport.de##.wrapper > div[class] > div[class] > :not(div)[class][id]
 gamestar.de##a[style="display:block;width:160px;height:600px;padding:0;margin:0;text-decoration:none;"]
 shoplenaro.com##body > #hoch > form[method="post"][action="http://shoplenaro.com/go"]
 shoplenaro.com##body > #quer > form[target="_blank"][method="post"][action="http://shoplenaro.com/go"]
+www.focus.de,www.gala.de,www.wetter.com##div > div[align="center"] + div + :not(div)[class][id]
+www.stern.de##div > div[align="center"] + div + div[class][id]
+www.wetter.com##div#ad-skyscraper1-outer > :nth-child(1):not(div)[class][id]
+www.stern.de##div[class][id] > div + img
 focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 !------------------Ausnahmeregeln zum Beheben von Problemen-------------------!
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist.txt ***

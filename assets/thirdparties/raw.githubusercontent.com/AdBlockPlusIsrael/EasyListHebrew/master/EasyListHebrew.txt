@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 7oUBAJ/WsXZrlJoi2pN0yw
+! Checksum: GGT3utVYfYeAs2tppaIBFg
 ! Title: EasyList Hebrew
-! Last modified: 04/01/15  20:47
+! Last modified: 14/01/15  12:35
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -63,19 +63,23 @@
 ||mapi.co.il^$popup,third-party
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
+||mitbahon.co.il/Storage^$popup,third-party
 ||mizrahi-tefahot.co.il/minisites/giyus$popup,third-party
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
 ||mysupermarket.co.il/landingpages/^$popup,third-party
 ||newclio.co.il/sep$popup,third-party
+||next-net.co.il^$third-party
 ||oceanmedia.co.il/landingpages/$popup
 ||onclickads.net^$popup
 ||onlineproxyfree.com^$popup,third-party
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
 ||pigment-adv.co.il/campaign^$popup,third-party
+||psakdin.co.il^$domain=calcalist.co.il
 ||rateonclick.com^$popup,third-party
+||rpe.co.il/landing_^$popup,third-party
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup,third-party
 ||sex-party.co.il^$popup,third-party
@@ -306,6 +310,7 @@
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
+@@||easy.co.il/adsense.js
 @@||goalim4u.org$elemhide
 @@||goalim4u.pw^$elemhide
 @@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
@@ -335,7 +340,7 @@
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
-@@||pubads.g.doubleclick.net/gampad/ad$domain=globes.co.il|m.ynet.co.il
+@@||pubads.g.doubleclick.net/gampad/ad$domain=m.ynet.co.il
 @@||se.c04dl.vds-is.castup.net/server12/468/208/20816834-115.mp4$domain=mako.co.il
 @@||sexadir.co.il/ads/$image,~third-party
 @@||sexadir.co.il/banners/$image,~third-party
@@ -459,9 +464,9 @@ cafe.themarker.com##.banner-wrapper
 cafe.themarker.com##.hp_left_ad
 calcalist.co.il###ArticleBanner
 calcalist.co.il###carouselAdLi
-calcalist.co.il##.SetArtWidth[style="margin-top: 7px;"]
 calcalist.co.il##div[style="width: 315px; overflow-x: hidden;margin-bottom:5px;"]
 calcalist.co.il##table[width="150"]
+calcalist.co.il##TABLE[width="478"][height="174"]
 calcalist.co.il##[height="7"] + [valign="top"] + TR[height="7"]
 calcalist.co.il##[valign="top"] + [valign="top"] + TR[height="7"]
 carsforum.co.il###bannerwrap
@@ -557,16 +562,17 @@ infomed.co.il##.ad_01
 infomed.co.il##OL[anc="adclass"]
 inn.co.il###div160Info
 inn.co.il###div180Info
-inn.co.il###MadLargeInf
 inn.co.il###div300
 inn.co.il###div300ILPict
 inn.co.il###divContentRightInf
+inn.co.il###MadLargeInf
+inn.co.il##.Merlin
 inn.co.il##[class^="divMAD"]
-inn.co.il##[id^="LeftColInf"]
-inn.co.il##[id^="LeftInfo"]
 inn.co.il##[id^="divBottomAd"]
 inn.co.il##[id^="divHr"]
 inn.co.il##[id^="divLeftInf"]
+inn.co.il##[id^="LeftColInf"]
+inn.co.il##[id^="LeftInfo"]
 iphones.co.il###mainBannerSponsers2
 iphones.co.il##div[style="padding-top:10px;width:250px;height:250px"]
 israelhayom.co.il###mini-panel-top_banner
@@ -840,6 +846,14 @@ winwin.co.il##.MiddleBanners
 wisebuy.co.il##.LboxGrey[style="height:270px;text-align:center;"]
 wisebuy.co.il##.LboxGrey[style="height:337px;text-align:center;"]
 wisebuy.co.il##table[width="100%"][align="center"]
+xnet.ynet.co.il###XnetAdSenceThinkAdAD-300
+xnet.ynet.co.il###ads\.250x250\.top
+xnet.ynet.co.il###ads\.top\.1
+xnet.ynet.co.il##.CAATVcompAdvertiseTv
+xnet.ynet.co.il##.ContentLink.banner.High
+xnet.ynet.co.il##.ContentLink.banner.Low
+xnet.ynet.co.il##.ContentLink.banner.Low
+xnet.ynet.co.il##.ad.hdn
 yad2.co.il###left_banner
 yad2.co.il###left_sekindo
 yad2.co.il###td_banner
@@ -855,24 +869,18 @@ yad2.co.il##TH[style="background: #505D6A; font-size: 13px; font-family: arial; 
 yeshanews.com###sideban
 yesno.co.il###wrapper
 yesplanet.co.il###snatch
-ynet.co.il###ads\.250x250\.top
 ynet.co.il###ads\.300x600\.1
-ynet.co.il###ads\.top\.1
 ynet.co.il###art_bottom_adsense-1
 ynet.co.il###art_right_sponsored_links-1
 ynet.co.il###googleAdsenseMivzakim
 ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
 ynet.co.il###ww6s_Main
-ynet.co.il###XnetAdSenceThinkAdAD-300
 ynet.co.il###ynet_lightbox_content_top
-ynet.co.il##.ad.hdn
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
 ynet.co.il##.CAATVcompAdvertiseTv
-ynet.co.il##.ContentLink.banner.High
-ynet.co.il##.ContentLink.banner.Low
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
@@ -887,7 +895,7 @@ ynet.co.il##iframe[style="width:770px;height:191px;"]
 ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
-zap.co.il##.Martef
 zap.co.il##.headerBannerCenter
 zap.co.il##.leftSideBanner
+zap.co.il##.Martef
 zone.walla.co.il##.w2.wp-0-b

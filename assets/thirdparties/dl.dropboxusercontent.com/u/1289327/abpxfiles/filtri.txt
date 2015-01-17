@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201501071609
+! Version: 201501121053
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 07-01-2015
+! Last modified: 12-01-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1723,6 +1723,11 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 ||ads.adamoads.com^$popup
 ||ragmgci3.com^$popup
 ||freewebcams.com^$popup
+|http://www.tripadvisor.it/SimilarHotelsPopunder$popup,domain=tripadvisor.it
+|http://katproxy.com/kata/adx.php
+||firstmediahub.com^$popup
+||fmdwbsfxf0.com^$popup
+about:blank$popup,domain=katproxy.com
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3357,6 +3362,22 @@ blog.chron.com##.adsbygoogle
 blog.chron.com##.adContainer
 blog.chron.com##[id^="googleAd"]
 blog.chron.com##.ob_dual_container
+roma.corriere.it##.ob_strip_container
+robertochibbaro.it##.above_content.box.pad15
+tripadvisor.it##.ad
+eurogamer.it##.related
+aranzulla.tecnologia.virgilio.it##[id^="google_ads_iframe"]
+aranzulla.tecnologia.virgilio.it##.adsbygoogle
+tecnomani.com##[id^="netparade"]
+techzilla.it##[id^="div-gpt-ad"]
+kingdomgame.it##.adv_horizontal
+kingdomgame.it##.adsbygoogle
+katproxy.com##.advertising
+katproxy.com##.advertDownload
+katproxy.com##[id^="MarketGidScriptRoot"]
+katproxy.com##.botmarg10px
+9gag.com##.block-ad
+9gag.com##.naughty-box
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3366,6 +3387,10 @@ theverge.com##.m-ad.m-ad__medrec.vert.vert300
 |http://enoratraffic.com/*/900_xhamster.php
 it.xhamster.com###adTop
 it.xhamster.com##.adVideo
+taggify.net##.tgf_textad
+droidviews.com##.adsbygoogle
+droidviews.com##A[href*="http://*.advertising.com/click/"]
+droidviews.com##.span8.td-header-style-1
 it.xhamster.com###adBottom
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB

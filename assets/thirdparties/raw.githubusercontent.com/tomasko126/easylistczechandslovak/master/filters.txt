@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 26/11/2014
+! Last change: 12/01/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! License: GNU GPL v3
 ! Email: tomastaro@adblock.sk
@@ -70,6 +70,7 @@ exashare.com###player_img
 ||ab-forum.info/xpeed.jpg
 ||abecedaher.cz/index_banner_
 ||adx.fotoaparat.cz/www/images/
+||alfa.cz/images/branding*.jpg
 ||alkoholik.cz/zavislost/images/banners/
 ||archiv.roumen.cz/roumingRLeader.html
 ||autoesa.cz/files/bannery/
@@ -133,6 +134,8 @@ exashare.com###player_img
 ||lui-magazine.cz/images/banners/nove/brand/
 ||luxusnirekreacnidomy.cz/adds/
 ||mamincinyrecepty.cz/images/banner*
+||matematika.cz/content/files/*/background*.jpg
+||matematika.cz/content/files/snapbacks/
 ||mluveneslovo.chaves.cz/images/banners/castor_745x150.jpg
 ||mluveneslovo.chaves.cz/images/banners/palace.gif
 ||mluveneslovo.chaves.cz/images/user/pokourenicko.jpg
@@ -707,6 +710,9 @@ mapy.in-pocasi.cz###topbanner
 mapy.in-pocasi.cz##.devicewidth
 maminka.cz###adframe-shell
 maminka.cz###hledejceny-banner
+matematika.cz###box-3
+matematika.cz##A[id="rbackground-link"]
+matematika.cz##DIV[id*="reklama"]
 mediafax.cz##.bannercauta
 mediafax.cz##.casetaright
 medop.cz###block-nodesinblock-0
@@ -921,6 +927,7 @@ mail.zoznam.sk###box3
 michalovskespravy.sk###footer
 michalovskespravy.sk###headerSlideContent1
 michalovskespravy.sk###ocko
+milujemefilmy.eu##div[style^="z-index: 1000"]
 mojevideo.sk###video_ad
 narodnablockovaloteria.tipos.sk###banners
 onlinefilmy.tv###bg_left

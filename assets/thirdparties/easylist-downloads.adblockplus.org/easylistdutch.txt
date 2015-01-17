@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: VGLsee2e6EtFIf86DCX/yw
-! Version: 201501102051
+! Checksum: EvikX7rKaan50OdA+hhi0A
+! Version: 201501171301
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 10 Jan 2015 20:51 UTC
+! Last modified: 17 Jan 2015 13:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -182,6 +182,7 @@ _advertentieleaderboardhome.
 ||fokzine.net/upload/*_BG_HiActie_
 ||fokzine.net/upload/*_header_fok_blank.jpg.jpg
 ||gbimg.nl/banners/
+||giveawayoftheday.com/ticker/
 ||goedbegin.nl/ad/
 ||goedkoop.info/lastminutebanner.php
 ||goldenpalaceaffiliates.com/marketing_tools/
@@ -1016,7 +1017,7 @@ ncrv.nl##.add-disclaimer
 telegraaf.nl##.addiv > a[target="_new"]
 vt4.be##.adl_medium_rectangle
 nu.nl##.adorange
-porntubexl.nl,studio040.nl,tube.nl##.ads
+fantv.nl,porntubexl.nl,studio040.nl,tube.nl##.ads
 openingstijden.com##.adsense
 nu.nl##.adsilver
 allradio.nl##.adv
@@ -1175,6 +1176,7 @@ nu.nl##a[href*="/advertorial-"]
 zdnet.be##a[href*="_redirect.cfm?ad_id="]
 landenweb.net##a[href="_hPromotionADLW.htm"]
 historiek.net##a[href="http://historiek.net/1/click"]
+fantv.nl##a[href="http://nl.giveawayoftheday.com/"]
 nuzakelijk.nl##a[href="http://www.spaarrente.nl/internetsparen.aspx"]
 partyflock.nl##a[href^="/jlnk/"]
 geilestartpagina.nl##a[href^="http://aff."]

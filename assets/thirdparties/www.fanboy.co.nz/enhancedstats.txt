@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: 0ckZJpYzgTtlJxQJQv30gw
+! Checksum: cvWZgzqfdnq9GM4zL/z8Yw
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 10 Jan 2015
+! Updated: 17 Jan 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -40,7 +40,6 @@
 /adobe-dtm-
 /Adobe-DTM/*
 /akqa.tracking.
-/analytics.sitecatalyst.
 /analytics/*/xtcore.js
 /analytics/mbox_
 /at.js.php|
@@ -64,7 +63,6 @@
 /CoreMetricsSupportLib/*
 /CoreMetricsTracking.
 /customOmnitureData.js
-/dcs.gif?
 /dcs_head.js
 /dcs_tag.js
 /dcs_tag1.js
@@ -73,13 +71,9 @@
 /dcstag_
 /ecomfw.min.js
 /elq_tracking-
-/elqCfg.
 /elqCPers.
 /elqFCS.
-/elqImg.
-/elqNow/*
 /eluminate.
-/eluminate?
 /eluminate_
 /figp.js
 /foresee-
@@ -206,7 +200,6 @@
 /page-addviews?
 /pageLevelOmniture.
 /pagespeed.js
-/pagespeed.js?
 /ParseOmniture.
 /PluginEndPlayOmniture_
 /pubsys.js
@@ -328,7 +321,6 @@
 /wt_tag.js
 /wt_tracking.
 /wtbase.
-/wtbase.js
 /wtbase2.js
 /wtbrand.js
 /wtcollect.
@@ -386,6 +378,7 @@ nautil.us###adpayload
 ||newsmemory.com^$third-party
 ||piano-media.com^$third-party
 ||ppjol.net^$third-party
+||subscriptiongenius.com^$third-party
 ||tinypass.com^$third-party
 !
 ! ---------- Personal Filters ------
@@ -426,7 +419,6 @@ wolframalpha.com###subpod_zoom
 ||bosch.com/WTg/WTg.js
 ||bt.com/media/js/SiteCatalyst-
 ||burberry.com^*/webtrendsMC.js
-||callawaygolf.com/Scripts/s_remote_code_
 ||carpartswholesale.com/includes/cpw_s_code*.js
 ||cbc.ca/g/stats/linktracker.js
 ||cbc.ca/includes/stats/hbx_
@@ -503,6 +495,7 @@ wolframalpha.com###subpod_zoom
 ||5min.com/Handlers/FiveminCookieCache.ashx
 ||adobedtm.com^$third-party
 ||avgthreatlabs.com^$third-party
+||badge.clevergirlscollective.com^$third-party
 ||bbb.org/logo/$third-party
 ||bbb.org/seals/$third-party
 ||browser-update.org^$third-party
@@ -514,6 +507,8 @@ wolframalpha.com###subpod_zoom
 ||content.webcollage.net^$third-party
 ||doubleclick.net^$third-party
 ||dsr.livefyre.com/livecountping/
+||etrust.pro^$third-party
+||feastie.com/badges/$third-party
 ||fwmrm.net^*/SurveyExtension.swf
 ||fwmrm.net^*/VastTranslator.swf
 ||geo.query.yahoo.com^$third-party
@@ -535,12 +530,14 @@ wolframalpha.com###subpod_zoom
 ||medals.bizrate.com^$third-party
 ||my.leadpages.net^$third-party
 ||natoms.com^$third-party
+||ooh.li^$third-party
 ||ooyala.com/3rdparty/visible_measures_
 ||preferences.truste.com^$third-party
 ||privacy-policy.truste.com^$third-party
 ||pubnub.com/time/*uuid=$third-party
 ||resellerratings.com^$third-party
 ||salecycle.com^$third-party
+||seal.alphassl.com^$third-party
 ||seal.digicert.com^$third-party
 ||seal.godaddy.com^$third-party
 ||seal.networksolutions.com^$third-party
@@ -552,11 +549,11 @@ wolframalpha.com###subpod_zoom
 ||sellpoint.net^$third-party
 ||services.disqus.com/event.js?$third-party
 ||shoprunner.com^$third-party
+||smarticon.geotrust.com^$third-party
 ||stats.computecmedia.de^
 ||syncaccess.net^$third-party
 ||tags.tiqcdn.com/utag/*/utag.v.js
 ||trustlogo.com^$third-party
-||ubertags.com^$third-party
 ||verify.authorize.net^$third-party
 ||webengage.com^$third-party
 ||websecurity.norton.com^$third-party
@@ -570,22 +567,16 @@ wolframalpha.com###subpod_zoom
 !
 !--------- Unsorted Rules --------
 !
-||bit.ly/stats?
-||checkstat.nl^$third-party
-||counter27.ch^$third-party
 ||freestat.hu^$third-party
 ||midphase.com^*/img.pl?$third-party
 ||mystats.nl^$third-party
-||ohnorobot.com/verify.pl?$third-party
 ||ovnet.fr^$third-party
 ||pakranks.com^$third-party
 ||predicta.com.br^$third-party
 ||site-id.nl^$third-party
-||statsbox.nl^$third-party
 ||statsector.hu^$third-party
 ||stealth.nl^$third-party
 ||tracknet.twyn.com^
-||traffic4u.nl^$third-party
 ||webcount.finn.no^
 !
 !---------- French Trackers ----------
@@ -594,12 +585,8 @@ wolframalpha.com###subpod_zoom
 ||be2.com/tracker;
 ||beead.fr^$third-party
 ||clickintext.net^$third-party
-||countus.fr^$third-party
 ||emailretargeting.com^
-||geocompteur.com^
 ||ip-label.net/Data/coll.aspx?$third-party
-||p.pagesjaunes.fr^
-||performances.bestofmedia.com^
 ||stats.stats.fr^
 ||tracking.bestofmicro.com^
 ||tracking.infos-du-net.com^
@@ -614,7 +601,6 @@ wolframalpha.com###subpod_zoom
 !
 !---------- Taiwan Trackers ------------
 !
-||hotrank.com.tw^$third-party
 !
 !---------- German Trackers ------------
 !
@@ -623,35 +609,20 @@ wolframalpha.com###subpod_zoom
 .de/stat/
 .de/track/
 .tv/tracking?
-||betarget.de^$third-party
-||chart.dk^$third-party
-||checkeffect.at^$third-party
-||countercity.de^$third-party
-||countercity.net^$third-party
-||counterlevel.de^$third-party
 ||easyranking.de^$third-party
-||econda-monitor.de^$third-party
-||etracker.de^$third-party
-||generaltracking.de^$third-party
 ||hitcount.de^$third-party
-||hitmaster.de^$third-party
 ||hitpage.de^$third-party
 ||ipstats.de^$third-party
 ||met.vgwort.de/na/
-||microcounter.de^$third-party
 ||perlentaucher.de/cgi-bin/blanky?
-||ranking-hits.de^$third-party
 ||ranktraffic.de^$third-party
 ||rapidstats.de^$third-party
-||sedotracker.de^$third-party
 ||serverkompetenz.net/cpx.php?$third-party
 ||trafficcenter.de^$third-party
 ||trk.newtention.net^
-||yoochoose.net^$third-party
 !
 !---------- Danish Trackers ------------
 !
-||agillic.eu^$third-party
 ||netminers.dk^$third-party
 !
 !---------- Anti Adblock Tracking ------
@@ -667,7 +638,7 @@ wolframalpha.com###subpod_zoom
 @@/mbox.js$domain=dominos.com|aol.com|hrblock.com|live.com|movieweb.com|rd.com|skypeassets.com|superpages.com|wdpromedia.com
 @@/omniture.js$domain=apple.com|mlb.com|newyorker.com|ae.com|couponcabin.com|corbisimages.com|delvenetworks.com|shop.puma.com|gq.com|healthgrades.com|pogo.com|nfl.com|slacker.com|teenvogue.com|veer.com|zdnet.com
 @@/ots_omniture_code.js
-@@/s_code.$domain=bodybuilding.com|gatesnotes.com|channel4.com|cio.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|app.qz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com|experian.com|sonypictures.com|qz.com
+@@/s_code.$domain=bodybuilding.com|gatesnotes.com|channel4.com|cio.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com|experian.com|sonypictures.com|qz.com
 @@/s_code_$domain=lg.com|adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com|abc.go.com|forbes.com
 @@/thePlatform-omniture-core.js
 @@/webtrends.js$domain=usps.com|canon.com|horizon-bcbsnj.com|logitech.com|reuters.com|telegraph.co.uk
@@ -725,7 +696,6 @@ wolframalpha.com###subpod_zoom
 @@||eonline.com/includes/js/sitecatalyst/s_all.jsp
 @@||espncdn.com/combiner/c?$script
 @@||espncdn.com/prod/scripts/mbox.20.r2.js
-@@||expedia.com/static/default/default/scripts/siteAnalytics.js?
 @@||fdlstatic.com^*/main.desktop-no-omniture.js$domain=cnet.com
 @@||filmmagic.com/scripts/tracking/omniture-communicator-basic.js
 @@||filmmagic.com/scripts/tracking/omniture-page-communicator.js
@@ -735,7 +705,7 @@ wolframalpha.com###subpod_zoom
 @@||foxnews.com/js/omtr_code.js$domain=foxbusiness.com|foxnews.com
 @@||foxtel.com.au/shop/packages-and-deals/static/js/os-omniture.js
 @@||google-analytics.com/cx/api.js$domain=boingboing.net
-@@||google-analytics.com/ga.js$domain=foxsports.com.au|cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|games.latimes.com|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com
+@@||google-analytics.com/ga.js$domain=foxsports.com.au|cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com
 @@||google-analytics.com/plugins/ua/ecommerce.js
 @@||google-analytics.com/urchin.js$domain=expresspcparts.com.au|roblox.com
 @@||google.com/coop/cse/brand?form=searchbox_$script,domain=wellness.com
@@ -766,7 +736,6 @@ wolframalpha.com###subpod_zoom
 @@||kavanga.ru/exp?$domain=overclockers.ru
 @@||kentucky.com/mistats/products/pubsys_s_code.js
 @@||libs.coremetrics.com^$domain=boscovs.com
-@@||lloydstsb.com/it/xslt/touchclarity/omtr_tc.js
 @@||marilyn.ca/jsHandler.aspx?*omniture
 @@||microsoft.com/Areas/Global/Content/Omniture/
 @@||microsoft.com/Combined.js?*/Omniture/
@@ -800,7 +769,6 @@ wolframalpha.com###subpod_zoom
 @@||ntc-affinity-api.web.aol.com/affinity/?$script,domain=games.com
 @@||nvidia.com/content/websidestory/omniture/$script
 @@||nytimes.com/bi/js/analytics/nyt4/controller.js
-@@||nytimes.com/js/app/analytics/wtbase.js$domain=nytimes.com
 @@||nzherald.co.nz/themes/*/s_code.min.js
 @@||o.aolcdn.com^*&file=/aol/omniture.min.js
 @@||omniture.com^$document,~third-party
@@ -821,7 +789,6 @@ wolframalpha.com###subpod_zoom
 @@||rentals.com/assets/*webtrends-
 @@||rentals.com/javascripts/primedia-webtrends-
 @@||rentals.com/javascripts/webtrends-bindings.js
-@@||reseguiden.se^*.siteCatalyst.js
 @@||rightnow.com/javascript/omniture_variable_
 @@||s.xe.com/*/js/webtrends.1.js
 @@||screenname.aol.com/auth/getToken?*&referer$domain=reader.aol.com
@@ -845,7 +812,6 @@ wolframalpha.com###subpod_zoom
 @@||symantec.com/script/omniture/om_code.js
 @@||tampabay.com/universal/scripts/omniture/tb_code.js
 @@||targetimg3.com^*/omniture/omniture_minified.js$domain=target.com
-@@||telegraph.co.uk/template/*/webtrends/LIVE/WTID.js
 @@||thecomedynetwork.ca/jsHandler.ashx
 @@||thepiratebay.se^*/jquery.min.js
 @@||thestar.com^*/sitecatalyst/
@@ -863,7 +829,6 @@ wolframalpha.com###subpod_zoom
 @@||videos.mediaite.com/embed/*?referrer=http
 @@||washingtonpost.com/wpost/js/combo?token*/wp_omniture.js
 @@||weather.com/clients/widgets/*?referrer=http
-@@||whirlpool.com/foresee/foresee-trigger.js
 @@||wired.com/js/omniture/omniture_helpers.js
 @@||wireimage.com/scripts/tracking/omniture-communicator-basic.js
 @@||wireimage.com/scripts/tracking/omniture-page-communicator.js

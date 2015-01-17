@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Tue, 06 Jan 2015 08:08:11 GMT
-# entries:        2457
+# entries:        2458
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -1494,7 +1494,6 @@
 127.0.0.1 gbanners.hornymatches.com
 127.0.0.1 gemius.pl
 127.0.0.1 geo.digitalpoint.com
-127.0.0.1 geoadserving.coffeetree.info
 127.0.0.1 geobanner.adultfriendfinder.com
 127.0.0.1 geovisite.com
 127.0.0.1 german-linkindex.de
@@ -1582,6 +1581,7 @@
 127.0.0.1 ifa.tube8live.com
 127.0.0.1 ilbanner.com
 127.0.0.1 ilead.itrack.it
+127.0.0.1 iliillliO00OO0.321.cn
 127.0.0.1 ilovecheating.com
 127.0.0.1 image.ugo.com
 127.0.0.1 imageads.canoe.ca
@@ -1944,6 +1944,7 @@
 127.0.0.1 popuptraffic.com
 127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
+127.0.0.1 postmasterbannernet.com
 127.0.0.1 postrelease.com
 127.0.0.1 potenza.cz
 127.0.0.1 pr-star.de
