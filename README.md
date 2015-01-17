@@ -16,7 +16,7 @@
 
 # ![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
 
-# Philosophy
+## Philosophy
 
 µBlock is not an *ad blocker*; it's a general-purpose blocker. µBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
@@ -26,9 +26,9 @@ Ads, "unintrusive" or not, are just the visible portions of privacy-invading app
 
 _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ are enabled by default when you install µBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
 
-# Performance
+## Performance
 
-## Memory
+#### Memory
 
 <p align="center">
 On average, µBlock <b>really</b> does make your browser run leaner<br>
@@ -36,11 +36,9 @@ On average, µBlock <b>really</b> does make your browser run leaner<br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
-**Important note regarding memory usage:**
+<sup>**Important note regarding memory usage:** There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
 
-<sup>There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
-
-## CPU
+#### CPU
 
 <p align="center">
 µBlock is also easy on the CPU<br>
@@ -48,7 +46,7 @@ On average, µBlock <b>really</b> does make your browser run leaner<br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
-## Blocking
+#### Blocking
 
 <p align="center">
 Being lean and efficient doesn't mean blocking less<br>
@@ -61,19 +59,19 @@ Being lean and efficient doesn't mean blocking less<br>
 
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-### Chromium-based browsers
+#### Chromium-based browsers
 
 You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
 
-### Firefox
+#### Firefox
 
 You can install by dragging the latest [uBlock.firefox.xpi](https://github.com/gorhill/uBlock/releases) file to your add-on page.
 
-### Safari
+#### Safari
 
 µBlock will hopefully soon be published on Apple's Safari Extension Gallery. Meanwhile, feel free to grab the [latest version here](https://chrismatic.io/ublock) from µBlock's Safari maintainer.
 
-### Note for all browsers
+#### Note for all browsers
 
 To benefit from µBlock's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). µBlock will do [as well or better](#blocking) than most popular ad blockers.
 
