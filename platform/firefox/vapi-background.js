@@ -45,7 +45,7 @@ vAPI.firefox = true;
 // TODO: read these data from somewhere...
 vAPI.app = {
     name: 'µBlock',
-    version: '0.8.5.4'
+    version: '0.8.5.5'
 };
 
 /******************************************************************************/
