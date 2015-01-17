@@ -270,6 +270,8 @@ var onHeadersReceived = function(details) {
     µb.localSettings.blockedRequestCount++;
     µb.updateBadgeAsync(tabId);
 
+    pageStore.logBuffer.writeOne(pageStore, result);
+
     details.responseHeaders.push({
         'name': 'Content-Security-Policy',
         'value': "script-src 'unsafe-eval' *"

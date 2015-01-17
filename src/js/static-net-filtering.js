@@ -1812,6 +1812,13 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 /******************************************************************************/
 
 FilterContainer.prototype.matchString = function(context) {
+    // https://github.com/gorhill/uBlock/issues/519
+    // Use exact type match for anything beyond `other`
+    var type = typeNameToTypeValue[context.requestType];
+    if ( type > 8 << 4 ) {
+        return this.matchStringExactType(context, context.requestURL, context.requestType);
+    }
+
     // https://github.com/gorhill/httpswitchboard/issues/239
     // Convert url to lower case:
     //     `match-case` option not supported, but then, I saw only one
@@ -1845,7 +1852,6 @@ FilterContainer.prototype.matchString = function(context) {
     // This will be used by hostname-based filters
     pageHostname = context.pageHostname || '';
 
-    var type = typeNameToTypeValue[context.requestType];
     var categories = this.categories;
     var bucket;
 
