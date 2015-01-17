@@ -8,11 +8,9 @@
   * [CPU](#cpu)
   * [Blocking](#blocking)
 * [Installation](#installation)
-  * [Chrome](#chrome)
-  * [Safari](#safari)
+  * [Chromium-based browsers](#chromium-based-browsers)
   * [Firefox](#firefox)
-  * [Opera](#opera)
-  * [Manually](#manually)
+  * [Safari](#safari)
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
@@ -63,27 +61,17 @@ Being lean and efficient doesn't mean blocking less<br>
 
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-### Chrome
+### Chromium-based browsers
 
-[![Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_340x96.png)](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm).
+You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
 
-µBlock is available for free from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm).
+### Firefox
+
+You can install by dragging the latest [uBlock.firefox.xpi](https://github.com/gorhill/uBlock/releases) file to your add-on page.
 
 ### Safari
 
 µBlock will hopefully soon be published on Apple's Safari Extension Gallery. Meanwhile, feel free to grab the [latest version here](https://chrismatic.io/ublock) from µBlock's Safari maintainer.
-
-### Firefox
-
-Coming soon.
-
-### Opera
-
-µBlock is available from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
-
-### Manually
-
-If you wish to install µBlock manually, [check out this guide](https://github.com/gorhill/uBlock/tree/master/dist#install).
 
 ### Note for all browsers
 
