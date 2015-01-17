@@ -930,7 +930,7 @@ var httpObserver = {
                 return;
             }
 
-            if ( 1 << channelData[0] & this.VALID_CSP_TARGETS === 0 ) {
+            if ( (1 << channelData[0] & this.VALID_CSP_TARGETS) === 0 ) {
                 return;
             }
 
