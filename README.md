@@ -8,7 +8,7 @@
   * [CPU](#cpu)
   * [Blocking](#blocking)
 * [Installation](#installation)
-  * [Chromium-based browsers](#chromium-and-offshoots)
+  * [Chromium](#chromium)
   * [Firefox](#firefox)
   * [Safari](#safari)
 * [Release History](#release-history)
@@ -59,7 +59,7 @@ Being lean and efficient doesn't mean blocking less<br>
 
 Feel free to read [about the extension's required permissions](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions).
 
-#### Chromium and offshoots
+#### Chromium
 
 You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
 
