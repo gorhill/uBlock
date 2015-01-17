@@ -41,7 +41,7 @@ vAPI.tabs.onNavigation = function(details) {
     if ( details.frameId !== 0 ) {
         return;
     }
-    µb.bindTabToPageStats(details.tabId, details.url);
+    µb.bindTabToPageStats(details.tabId, details.url, 'afterNavigate');
 };
 
 // It may happen the URL in the tab changes, while the page's document
@@ -146,16 +146,22 @@ vAPI.tabs.registerListeners();
         return null;
     }
 
-    // Reuse page store if one exists: this allows to guess if a tab is
-    // a popup.
+    // Reuse page store if one exists: this allows to guess if a tab is a popup
     var pageStore = this.pageStores[tabId];
 
-    if ( pageStore ) {
-        if ( pageURL !== pageStore.pageURL || context === 'beforeRequest' ) {
-            pageStore.reuse(pageURL, context);
-        }
-    } else {
-        pageStore = this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL);
+    // Tab is not bound
+    if ( !pageStore ) {
+        return this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL);
+    }
+
+    // https://github.com/gorhill/uBlock/issues/516
+    // If context if 'beforeRequest', do not rebind
+    if ( context === 'beforeRequest' ) {
+        return pageStore;
+    }
+
+    if ( context === 'afterNavigate' ) {
+        pageStore.reuse(pageURL, context);
     }
 
     return pageStore;
