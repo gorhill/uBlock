@@ -126,6 +126,9 @@ vAPI.storage = {
 
     set: function(details, callback) {
         for ( var key in details ) {
+            if ( !details.hasOwnProperty(key) ) {
+                continue;
+            }
             this._storage.setItem(key, JSON.stringify(details[key]));
         }
 

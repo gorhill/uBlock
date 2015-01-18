@@ -195,6 +195,9 @@ vAPI.storage = {
         var key, values = [], placeholders = [];
 
         for ( key in details ) {
+            if ( !details.hasOwnProperty(key) ) {
+                continue;
+            }
             values.push(key);
             values.push(JSON.stringify(details[key]));
             placeholders.push('?, ?');
