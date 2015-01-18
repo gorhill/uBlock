@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Statistics",
-    "description":"appears as tab name in dashboard"
+    "message":"µBlock — Network request log",
+    "description":"Title for the network request log window"
   },
   "aboutPageName":{
     "message":"About",
@@ -418,6 +418,10 @@
   "logAllowedRequestsEmpty":{
     "message":"No non-blocked requests logged for this page",
     "description":"English: No non-blocked requests logged for this page"
+  },
+  "logBehindTheScene":{
+    "message":"Behind the scene",
+    "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
     "message":"Change log",
