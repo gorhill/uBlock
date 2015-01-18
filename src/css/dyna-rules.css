@@ -11,3 +11,8 @@ div > p:last-child {
     white-space: pre;
     text-align: left;
     }
+code {
+    background-color: #eee;
+    font: 11px monospace;
+    padding: 2px 4px;
+}
