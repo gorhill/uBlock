@@ -198,21 +198,32 @@ vAPI.noTabId = '-1';
 vAPI.tabs.registerListeners = function() {
     var onNavigation = this.onNavigation;
 
-    this.onNavigation = function(e) {
-        // e.url is not present for local files or data URIs,
-        // or probably for those URLs which we don't have access to
-        if ( !e.target || !e.target.url ) {
+    safari.application.addEventListener('beforeNavigate', function(e) {
+        if ( !e.target || !e.target.url || e.target.url === 'about:blank' ) {
             return;
         }
-
+        var url = e.target.url, tabId = vAPI.tabs.getTabId(e.target);
+        if ( vAPI.tabs.popupCandidate ) {
+            var details = {
+                url: url,
+                tabId: tabId,
+                sourceTabId: vAPI.tabs.popupCandidate
+            };
+            vAPI.tabs.popupCandidate = false;
+            if ( vAPI.tabs.onPopup(details) ) {
+                e.preventDefault();
+                if ( vAPI.tabs.stack[details.sourceTabId] ) {
+                    vAPI.tabs.stack[details.sourceTabId].activate();
+                }
+                return;
+            }
+        }
         onNavigation({
+            url: url,
             frameId: 0,
-            tabId: vAPI.tabs.getTabId(e.target),
-            url: e.target.url
+            tabId: tabId
         });
-    };
-
-    safari.application.addEventListener('navigate', this.onNavigation, true);
+    }, true);
 
     // onClosed handled in the main tab-close event
     // onUpdated handled via monitoring the history.pushState on web-pages
@@ -585,27 +596,6 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-safari.application.addEventListener('beforeNavigate', function(e) {
-    if ( !vAPI.tabs.popupCandidate || e.url === 'about:blank' ) {
-        return;
-    }
-
-    var details = {
-        url: e.url,
-        tabId: vAPI.tabs.getTabId(e.target),
-        sourceTabId: vAPI.tabs.popupCandidate
-    };
-
-    vAPI.tabs.popupCandidate = null;
-
-    if ( vAPI.tabs.onPopup(details) ) {
-        e.preventDefault();
-
-        if ( vAPI.tabs.stack[details.sourceTabId] ) {
-            vAPI.tabs.stack[details.sourceTabId].activate();
-        }
-    }
-}, true);
 
 /******************************************************************************/
 

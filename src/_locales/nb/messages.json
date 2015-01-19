@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Endelig en effektiv blokkeringsutvidelse for Chromium-baserte nettlesere. Lavt CPU- og minnebruk.",
+    "message":"Endelig en effektiv blokkeringsutvidelse. Lavt CPU- og minnebruk.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Statistikk",
-    "description":"appears as tab name in dashboard"
+    "message":"µBlock — Logg for nettverksforespørsler",
+    "description":"Title for the network request log window"
   },
   "aboutPageName":{
     "message":"Om",
@@ -72,83 +72,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Integrerte <code>skript<\/code>-koder er <b>tillatt<\/b> på dette nettstedet",
+    "message":"Integrerte <code>skript<\/code>-koder <b>tillates<\/b> på dette nettstedet",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkert<\/b> på dette nettstedet",
+    "message":"Integrerte <code>skript<\/code>-koder <b>blokkeres<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Førsteparts skript er <b>tillatt<\/b> på dette nettstedet",
+    "message":"Førsteparts skript <b>tillates<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Førsteparts skript er <b>blokkert<\/b> på dette nettstedet",
+    "message":"Førsteparts skript <b>blokkeres<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Tredjeparts skript er <b>tillatt<\/b> på dette nettstedet",
+    "message":"Tredjeparts skript <b>tillates<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Tredjeparts skript er <b>blokkert<\/b> på dette nettstedet",
+    "message":"Tredjeparts skript <b>blokkeres<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Førsteparts iframe-koder er <b>tillatt<\/b> på dette nettstedet",
+    "message":"Førsteparts iframe-koder <b>tillates<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Førsteparts iframe-koder er <b>blokkert<\/b> på dette nettstedet",
+    "message":"Førsteparts iframe-koder <b>blokkeres<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Tredjeparts iframe-koder er <b>tillatt<\/b> på dette nettstedet",
+    "message":"Tredjeparts iframe-koder <b>tillates<\/b> på dette nettstedet",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Tredjeparts iframe-koder er <b>blokkert<\/b> på dette nettstedet",
+    "message":"Tredjeparts iframe-koder <b>blokkeres<\/b> på dette nettstedet",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Integrerte <code>skript<\/code>-koder er <b>tillatt<\/b> overalt som standard",
+    "message":"Integrerte <code>skript<\/code>-koder <b>tillates<\/b> overalt som standard",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Integrerte <code>skript<\/code>-koder er <b>blokkert<\/b> overalt som standard",
+    "message":"Integrerte <code>skript<\/code>-koder <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Førsteparts skript er <b>tillatt<\/b> overalt som standard",
+    "message":"Førsteparts skript <b>tillates<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Førsteparts skript er <b>blokkert<\/b> overalt som standard",
+    "message":"Førsteparts skript <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Tredjeparts skript er <b>tillatt<\/b> overalt som standard",
+    "message":"Tredjeparts skript <b>tillates<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Tredjeparts skript er <b>blokkert<\/b> overalt som standard",
+    "message":"Tredjeparts skript <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Førsteparts iframe-koder er <b>tillatt<\/b> overalt som standard",
+    "message":"Førsteparts iframe-koder <b>tillates<\/b> overalt som standard",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Førsteparts iframe-koder er <b>blokkert<\/b> overalt som standard",
+    "message":"Førsteparts iframe-koder <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Tredjeparts iframe-koder er <b>tillatt<\/b> overalt som standard",
+    "message":"Tredjeparts iframe-koder <b>tillates<\/b> overalt som standard",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Tredjeparts iframe-koder er <b>blokkert<\/b> overalt som standard",
+    "message":"Tredjeparts iframe-koder <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -351,6 +351,14 @@
     "message":"mine-ublock-dynamiske-regler_{{datetime}}.txt",
     "description":"default file name to use"
   },
+  "rulesHint":{
+    "message":"Liste over dine dynamiske filtreringsregler.",
+    "description":"English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint":{
+    "message":"Regelsyntaks: <code>kilde destinasjon type handling<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentasjon<\/a>).",
+    "description":"English: dynamic rule syntax and full documentation."
+  },
   "whitelistPrompt":{
     "message":"Din liste over vertsnavn hvor µBlock blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
@@ -410,6 +418,10 @@
   "logAllowedRequestsEmpty":{
     "message":"Ingen ikke-blokkerte forespørsler logget for denne siden",
     "description":"English: No non-blocked requests logged for this page"
+  },
+  "logBehindTheScene":{
+    "message":"Bak kulissene",
+    "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
     "message":"Endringslogg",

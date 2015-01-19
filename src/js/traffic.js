@@ -115,13 +115,14 @@ var onBeforeRequest = function(details) {
 
         // https://code.google.com/p/chromium/issues/detail?id=387198
         // Not all redirects will succeed, until bug above is fixed.
-        var redirectURL = pageStore.toMirrorURL(requestURL, requestType);
-        if ( redirectURL !== '' ) {
-            pageStore.logBuffer.writeOne(requestContext, 'ma:');
-
+        // https://github.com/gorhill/uBlock/issues/540
+        // Disabling local mirroring for the time being
+        //var redirectURL = pageStore.toMirrorURL(requestURL);
+        //if ( redirectURL !== '' ) {
+        //    pageStore.logBuffer.writeOne(requestContext, 'ma:');
             //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
-            return { redirectUrl: redirectURL };
-        }
+        //    return { redirectUrl: redirectURL };
+        //}
 
         pageStore.logBuffer.writeOne(requestContext, result);
 
@@ -246,9 +247,11 @@ var onHeadersReceived = function(details) {
     }
 
     // https://github.com/gorhill/uBlock/issues/384
-    if ( details.parentFrameId === -1 ) {
-        pageStore.skipLocalMirroring = headerValue(details.responseHeaders, 'content-security-policy');
-    }
+    // https://github.com/gorhill/uBlock/issues/540
+    // Disabling local mirroring for the time being
+    //if ( details.parentFrameId === -1 ) {
+    //    pageStore.skipLocalMirroring = headerStartsWith(details.responseHeaders, 'content-security-policy') !== '';
+    //}
 
     var requestURL = details.url;
     var requestHostname = µb.URI.hostnameFromURI(requestURL);
@@ -308,6 +311,19 @@ var headerValue = function(headers, name) {
     var i = headers.length;
     while ( i-- ) {
         if ( headers[i].name.toLowerCase() === name ) {
+            return headers[i].value;
+        }
+    }
+    return '';
+};
+
+/******************************************************************************/
+
+var headerStartsWith = function(headers, prefix) {
+    var prefixLen = prefix.length;
+    var i = headers.length;
+    while ( i-- ) {
+        if ( headers[i].name.slice(0, prefixLen).toLowerCase() === prefix ) {
             return headers[i].value;
         }
     }

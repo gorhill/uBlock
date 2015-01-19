@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Konačno, efikasan bloker za preglednike bazirane na Chromium kôdu. Lak na CPU i memoriji.",
+    "message":"Konačno, efikasan blokator. Lak na CPU i memoriji.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Statistika",
-    "description":"appears as tab name in dashboard"
+    "message":"µBlock — Zapisnik mrežnih zahtjeva",
+    "description":"Title for the network request log window"
   },
   "aboutPageName":{
     "message":"O programu",
@@ -351,6 +351,14 @@
     "message":"moja-ublock-dinamicna-pravila_{{datetime}}.txt",
     "description":"default file name to use"
   },
+  "rulesHint":{
+    "message":"Popis dinamičkih pravila filtriranja.",
+    "description":"English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint":{
+    "message":"Pravila sintakse: <code>akcija tipa izvornog odredišta<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>sva dokumentacija<\/a>).",
+    "description":"English: dynamic rule syntax and full documentation."
+  },
   "whitelistPrompt":{
     "message":"Popis host naziva za koje će µBlock biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi će tiho biti ignorirani.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
@@ -410,6 +418,10 @@
   "logAllowedRequestsEmpty":{
     "message":"Nema neblokiranih zahtjeva zapisanih za ovu stranicu",
     "description":"English: No non-blocked requests logged for this page"
+  },
+  "logBehindTheScene":{
+    "message":"Iza scene",
+    "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
     "message":"Popis promjena",
