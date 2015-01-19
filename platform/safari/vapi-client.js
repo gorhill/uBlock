@@ -191,47 +191,31 @@ if ( location.protocol === 'safari-extension:' ) {
 
 /******************************************************************************/
 
-window.MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-
-if ( !window.MutationObserver ) {
-    // Dummy, minimalistic shim for older versions (<6)
-    // only supports node insertions, but currently we don't use it for anything else
-    window.MutationObserver = function(handler) {
-        this.observe = function(target) {
-            target.addEventListener('DOMNodeInserted', function(e) {
-                handler([{ addedNodes: [e.target] }]);
-            }, true);
-        };
-    };
-}
-
-/******************************************************************************/
-
 var beforeLoadEvent = document.createEvent('Event');
 beforeLoadEvent.initEvent('beforeload');
 
 /******************************************************************************/
 
 var frameId = window === window.top ? 0 : Date.now() % 1E5;
+var parentFrameId = frameId ? 0 : -1;
 var linkHelper = document.createElement('a');
 var onBeforeLoad = function(e, details) {
-    if ( e.url && e.url.slice(0, 5) === 'data:' ) {
+    if ( e.url && e.url.lastIndexOf('data:', 0) == 0 ) {
         return;
     }
 
     linkHelper.href = details ? details.url : e.url;
+    var url = linkHelper.href;
 
-    if ( linkHelper.protocol !== 'http:' && linkHelper.protocol !== 'https:' ) {
-        if ( !(details && details.type === 'popup') ) {
-            return;
-        }
+    if ( url.lastIndexOf('http:', 0) === -1 && url.lastIndexOf('https:', 0) === -1) {
+        return;
     }
 
     if ( details ) {
-        details.url = linkHelper.href;
+        details.url = url;
     } else {
         details = {
-            url: linkHelper.href
+            url: url
         };
 
         switch ( e.target.nodeName.toLowerCase() ) {
@@ -274,7 +258,7 @@ var onBeforeLoad = function(e, details) {
     // tabId is determined in the background script
     // details.tabId = null;
     details.frameId = frameId;
-    details.parentFrameId = frameId ? 0 : -1;
+    details.parentFrameId = parentFrameId;
     details.timeStamp = Date.now();
 
     var response = safari.self.tab.canLoad(e, details);
@@ -316,11 +300,10 @@ var onBeforeLoad = function(e, details) {
 document.addEventListener('beforeload', onBeforeLoad, true);
 
 /******************************************************************************/
-
 // block pop-ups, intercept xhr requests, and apply site patches
 var firstMutation = function() {
     document.removeEventListener('DOMSubtreeModified', firstMutation, true);
-    firstMutation = null;
+    firstMutation = false;
 
     var randEventName = uniqueId();
 
@@ -337,11 +320,10 @@ var firstMutation = function() {
     var tmpJS = document.createElement('script');
     var tmpScript = ['(function() {',
         'var block = function(u, t) {',
-            'var e = document.createEvent("CustomEvent"),',
-                'd = {url: u, type: t};',
-            'e.initCustomEvent("' + randEventName + '", false, false, d);',
+            'var e = new CustomEvent("' + randEventName +'",',
+                '{detail: {url: u, type: t}, bubbles: false});',
             'dispatchEvent(e);',
-            'return d.url === false;',
+            'return e.detail.url === false;',
         '}, wo = open, xo = XMLHttpRequest.prototype.open;',
         'open = function(u) {',
             'return block(u, "popup") ? null : wo.apply(this, arguments);',
