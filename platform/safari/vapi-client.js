@@ -200,7 +200,7 @@ var frameId = window === window.top ? 0 : Date.now() % 1E5;
 var parentFrameId = frameId ? 0 : -1;
 var linkHelper = document.createElement('a');
 var onBeforeLoad = function(e, details) {
-    if ( e.url && e.url.lastIndexOf('data:', 0) == 0 ) {
+    if ( e.url && e.url.lastIndexOf('data:', 0) === 0 ) {
         return;
     }
 
