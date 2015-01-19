@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Author</key>
-    <string>{author}</string>
+    <string>Chris Aljoudi (core by gorhill)</string>
     <key>Builder Version</key>
     <string>534.57.2</string>
     <key>CFBundleDisplayName</key>
@@ -83,8 +83,8 @@
             <string>All</string>
         </dict>
     </dict>
-    <!-- <key>Update Manifest URL</key>
-    <string>https://raw.githubusercontent.com/gorhill/uBlock/master/dist/Update.plist</string> -->
+    <key>Update Manifest URL</key>
+    <string>https://chrismatic.io/ublock/Update.plist</string>
     <key>Website</key>
     <string>https://github.com/gorhill/uBlock</string>
 </dict>
