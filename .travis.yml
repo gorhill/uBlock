@@ -13,4 +13,4 @@ deploy:
   on:
     repo: gorhill/uBlock
     tags: true
-    all_branches: true
+    branch: master
