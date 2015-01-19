@@ -30,7 +30,7 @@
 
 /******************************************************************************/
 
-var messager = vAPI.messaging.channel('stats.js');
+var messager = vAPI.messaging.channel('devtools.js');
 
 /******************************************************************************/
 
@@ -74,9 +74,21 @@ var selectPage = function() {
     var inspector = uDom('#content');
     var currentSrc = inspector.attr('src');
     var targetSrc = 'devtool-log.html?tabId=' + tabId;
-    if ( targetSrc !== currentSrc ) {
-        inspector.attr('src', targetSrc); 
+    if ( targetSrc === currentSrc ) {
+        return;
     }
+    inspector.attr('src', targetSrc); 
+
+    // This is useful for when the user force-refresh the page: this will
+    // prevent a reset to the original request log.
+    // This is also useful for an outside observer to find out which tab is
+    // being logged, i.e. the popup menu can initialize itself according to
+    // what tab is currently being logged.
+    window.history.pushState(
+        {},
+        '',
+        window.location.href.replace(/^(.+[\?&])tabId=([^&]+)(.*)$/, '$1tabId=' + tabId + '$3')
+    );
 };
 
 /******************************************************************************/

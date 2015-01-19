@@ -187,7 +187,7 @@ return asyncJobManager;
     };
 
     var updateBadgeAsync = function(tabId) {
-        if ( tabId < 0 ) {
+        if ( vAPI.isNoTabId(tabId) ) {
             return;
         }
         µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);

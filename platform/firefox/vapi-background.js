@@ -329,6 +329,14 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
+vAPI.isNoTabId = function(tabId) {
+    return tabId.toString() === '_';
+};
+
+vAPI.noTabId = '_';
+
+/******************************************************************************/
+
 vAPI.tabs.registerListeners = function() {
     // onNavigation and onUpdated handled with tabsProgressListener
     // onClosed - handled in windowWatcher.onTabClose

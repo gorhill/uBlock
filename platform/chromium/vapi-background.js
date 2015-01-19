@@ -61,6 +61,14 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
+vAPI.isNoTabId = function(tabId) {
+    return tabId.toString() === '-1';
+};
+
+vAPI.noTabId = '-1';
+
+/******************************************************************************/
+
 vAPI.tabs.registerListeners = function() {
     if ( typeof this.onNavigation === 'function' ) {
         chrome.webNavigation.onCommitted.addListener(this.onNavigation);

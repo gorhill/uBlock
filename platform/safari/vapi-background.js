@@ -187,6 +187,14 @@ vAPI.tabs = {
 
 /******************************************************************************/
 
+vAPI.isNoTabId = function(tabId) {
+    return tabId.toString() === '-1';
+};
+
+vAPI.noTabId = '-1';
+
+/******************************************************************************/
+
 vAPI.tabs.registerListeners = function() {
     var onNavigation = this.onNavigation;
 

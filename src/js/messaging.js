@@ -72,7 +72,9 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'reloadTab':
-            vAPI.tabs.reload(request.tabId);
+            if ( vAPI.isNoTabId(request.tabId) === false ) {
+                vAPI.tabs.reload(request.tabId);
+            }
             break;
 
         case 'userSettings':
@@ -204,12 +206,35 @@ var getStats = function(tabId) {
 
 /******************************************************************************/
 
+var getTargetTabId = function(tab) {
+    if ( !tab ) {
+        return '';
+    }
+
+    // If the URL is that of the network request logger, fill the popup with
+    // the data from the tab being observed by the logger.
+    // This allows a user to actually modify filtering profile for
+    // behind-the-scene requests.
+    if ( tab.url.indexOf(vAPI.getURL('devtools.html')) !== 0 ) {
+        return tab.id;
+    }
+
+    // Extract the target tab id from the URL
+    var matches = tab.url.match(/[\?&]tabId=([^&]+)/);
+    if ( matches && matches.length === 2 ) {
+        return matches[1];
+    }
+    return tab.id;
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getPopupData':
             vAPI.tabs.get(null, function(tab) {
-                var tabId = tab && tab.id;
+                var tabId = getTargetTabId(tab);
                 callback(getStats(tabId));
             });
             return;
@@ -751,7 +776,7 @@ vAPI.messaging.listen('whitelist.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
-// stats.js
+// devtools.js
 
 (function() {
 
@@ -767,25 +792,41 @@ var getPageDetails = function(callback) {
     var out = {};
     var tabIds = Object.keys(µb.pageStores);
 
-    var countdown = tabIds.length;
-    if ( countdown === 0 ) {
+    // Just in case... I expect there will always be a behind-the-scene page
+    // store, but just to be safe.
+    if ( tabIds.length === 0 ) {
         callback(out);
         return;
     }
 
-    var onTabDetails = function(tab) {
-        if ( tab ) {
-            out[tab.id] = tab.title;
-        }
+    var countdown = tabIds.length;
+    var doCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
             callback(out);
         }
     };
 
+    // Let's not populate the page selector with reference itself
+    var devtoolsURL = vAPI.getURL('devtools.html');
+    var devtoolsURLLen = devtoolsURL.length;
+
+    var onTabDetails = function(tab) {
+        if ( tab && tab.url.slice(0, devtoolsURLLen) !== devtoolsURL ) {
+            out[tab.id] = tab.title;
+        }
+        doCountdown();
+    };
+
     var i = countdown;
     while ( i-- ) {
-        vAPI.tabs.get(tabIds[i], onTabDetails);
+        // Special case: behind-the-scene virtual tab (does not really exist)
+        if ( vAPI.isNoTabId(tabIds[i]) ) {
+            out[vAPI.noTabId] = vAPI.i18n('logBehindTheScene');
+            doCountdown();
+        } else {
+            vAPI.tabs.get(tabIds[i], onTabDetails);
+        }
     }
 };
 
@@ -813,7 +854,7 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('stats.js', onMessage);
+vAPI.messaging.listen('devtools.js', onMessage);
 
 /******************************************************************************/
 

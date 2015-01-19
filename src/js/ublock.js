@@ -288,10 +288,10 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         return type;
     }
     var ext = path.slice(pos) + '.';
-    if ( '.css.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
-        return 'stylesheet';
+    if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
+        return 'font';
     }
-    if ( '.ico.png.gif.jpg.jpeg.'.indexOf(ext) !== -1 ) {
+    if ( '.ico.'.indexOf(ext) !== -1 ) {
         return 'image';
     }
     return type;

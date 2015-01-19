@@ -38,11 +38,6 @@ var onBeforeRequest = function(details) {
 
     // Do not block behind the scene requests.
     var tabId = details.tabId;
-    if ( tabId < 0 ) {
-        // TODO: logging behind-the-scene requests could be nice..
-        return;
-    }
-
     var µb = µBlock;
     var requestURL = details.url;
     var requestType = details.type;
@@ -120,7 +115,7 @@ var onBeforeRequest = function(details) {
 
         // https://code.google.com/p/chromium/issues/detail?id=387198
         // Not all redirects will succeed, until bug above is fixed.
-        var redirectURL = pageStore.toMirrorURL(requestURL);
+        var redirectURL = pageStore.toMirrorURL(requestURL, requestType);
         if ( redirectURL !== '' ) {
             pageStore.logBuffer.writeOne(requestContext, 'ma:');
 

@@ -121,12 +121,21 @@ vAPI.tabs.registerListeners();
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-µb.normalizePageURL = function(pageURL) {
+µb.normalizePageURL = function(tabId, pageURL) {
+    if ( vAPI.isNoTabId(tabId) ) {
+        return 'http://behind-the-scene/';
+    }
     var uri = this.URI.set(pageURL);
-    if ( uri.scheme === 'https' || uri.scheme === 'http' ) {
+    var scheme = uri.scheme;
+    if ( scheme === 'https' || scheme === 'http' ) {
         return uri.normalizedURI();
     }
-    return '';
+
+    if ( uri.hostname !== '' ) {
+        return 'http://' + scheme + '-' + uri.hostname + uri.path;
+    }
+
+    return 'http://' + scheme + '-scheme/';
 };
 
 /******************************************************************************/
@@ -138,7 +147,7 @@ vAPI.tabs.registerListeners();
 
     // https://github.com/gorhill/httpswitchboard/issues/303
     // Normalize page URL
-    pageURL = this.normalizePageURL(pageURL);
+    pageURL = this.normalizePageURL(tabId, pageURL);
 
     // Do not create a page store for URLs which are of no interests
     if ( pageURL === '' ) {
@@ -195,6 +204,15 @@ vAPI.tabs.registerListeners();
 };
 
 /******************************************************************************/
+
+// Permanent page store for behind-the-scene requests. Must never be removed.
+
+µb.pageStores[vAPI.noTabId] = µb.PageStore.factory(
+    vAPI.noTabId,
+    µb.normalizePageURL(vAPI.noTabId)
+);
+
+/******************************************************************************/
 /******************************************************************************/
 
 // Stale page store entries janitor
@@ -218,9 +236,15 @@ var pageStoreJanitor = function() {
     if ( pageStoreJanitorSampleAt >= tabIds.length ) {
         pageStoreJanitorSampleAt = 0;
     }
+    var tabId;
     var n = Math.min(pageStoreJanitorSampleAt + pageStoreJanitorSampleSize, tabIds.length);
     for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
-        checkTab(tabIds[i]);
+        tabId = tabIds[i];
+        // Do not remove behind-the-scene page store
+        if ( vAPI.isNoTabId(tabId) ) {
+            continue;
+        }
+        checkTab(tabId);
     }
     pageStoreJanitorSampleAt = n;
 
