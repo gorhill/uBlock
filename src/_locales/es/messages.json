@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Estadísticas",
-    "description":"appears as tab name in dashboard"
+    "message":"µBlock — Network request log",
+    "description":"Title for the network request log window"
   },
   "aboutPageName":{
     "message":"Acerca de",
@@ -351,6 +351,14 @@
     "message":"my-ublock-dynamic-rules.txt",
     "description":"default file name to use"
   },
+  "rulesHint":{
+    "message":"List of your dynamic filtering rules.",
+    "description":"English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint":{
+    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "description":"English: dynamic rule syntax and full documentation."
+  },
   "whitelistPrompt":{
     "message":"Su lista de nombres de servidores para los cuales se deshabilitará µBlock. Una entrada por línea. Se omitirán los nombres de servidores no válidos.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
@@ -410,6 +418,10 @@
   "logAllowedRequestsEmpty":{
     "message":"No hay peticiones no bloqueadas registradas para esta página",
     "description":"English: No non-blocked requests logged for this page"
+  },
+  "logBehindTheScene":{
+    "message":"Behind the scene",
+    "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
     "message":"Cambios",

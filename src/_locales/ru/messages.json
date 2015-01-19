@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Эффективный блокировщик для браузеров на базе Chromium, не нагружающий ЦП и память.",
+    "message":"Наконец-то, эффективный блокировщик для браузеров, не нагружающий ЦП и оперативную память.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Ваши фильтры",
+    "message":"Мои фильтры",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -32,8 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Статистика",
-    "description":"appears as tab name in dashboard"
+    "message":"µBlock — Журнал сетевых запросов",
+    "description":"Title for the network request log window"
   },
   "aboutPageName":{
     "message":"О расширении",
@@ -72,23 +72,23 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> для этого сайта",
+    "message":"Встроенные теги <code>скриптов<\/code> <b>включены<\/b> для этого сайта",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> для этого сайта",
+    "message":"Встроенные теги <code>скриптов<\/code> <b>заблокированы<\/b> для этого сайта",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>доступны<\/b> на этом сайте",
+    "message":"Пользовательские скрипты <b>разрешены<\/b> на этом сайте",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>не доступны<\/b> на этом сайте",
+    "message":"Пользовательские скрипты <b>заблокированы<\/b> на этом сайте",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Сторонние скрипты <b>включены<\/b> для этого сайта",
+    "message":"Сторонние скрипты <b>разрешены<\/b> для этого сайта",
     "description":""
   },
   "popupSite3pScriptDisabled":{
@@ -96,67 +96,67 @@
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Пользовательские фреймы <b>включены<\/b> для этого сайта",
+    "message":"Пользовательские фреймы <b>разрешены<\/b> для этого сайта",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Пользовательские фреймы <b>отключены<\/b> для этого сайта",
+    "message":"Пользовательские фреймы <b>заблокированы<\/b> для этого сайта",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Сторонние фреймы <b>включены<\/b> для этого сайта",
+    "message":"Сторонние фреймы <b>разрешены<\/b> для этого сайта",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Сторонние фреймы <b>отключены<\/b> для этого сайта",
+    "message":"Сторонние фреймы <b>заблокированы<\/b> для этого сайта",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>включены<\/b> везде по умолчанию",
+    "message":"Встроенные теги <code>скриптов<\/code> <b>разрешены<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Встроенные теги <code>script<\/code> <b>отключены<\/b> везде по умолчанию",
+    "message":"Встроенные теги <code>скриптов<\/code> <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>включены<\/b> везде по умолчанию",
+    "message":"Пользовательские скрипты <b>разрешены<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>отключены<\/b> везде по умолчанию",
+    "message":"Пользовательские скрипты <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Сторонние скрипты <b>включены<\/b> везде по умолчанию",
+    "message":"Сторонние скрипты <b>разрешены<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Сторонние скрипты <b>отключены<\/b> везде по умолчанию",
+    "message":"Сторонние скрипты <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Пользовательские фреймы <b>включены<\/b> везде по умолчанию",
+    "message":"Пользовательские фреймы <b>разрешены<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Пользовательские фреймы <b>отключены<\/b> везде по умолчанию",
+    "message":"Пользовательские фреймы <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Сторонние фреймы <b>включены<\/b> везде по умолчанию",
+    "message":"Сторонние фреймы <b>разрешены<\/b> везде по умолчанию",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Сторонние фреймы <b>отключены<\/b> везде по умолчанию",
+    "message":"Сторонние фреймы <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"Изображения",
+    "message":"изображения",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"Встроенные скрипты",
+    "message":"встроенные скрипты",
     "description":""
   },
   "popup1pScriptRulePrompt":{
@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Подключено к {{count}} отдельному(-ым) домену(-ам)",
+    "message":"Подключено к {{count}} отдельному(-ым) домену(-ам) из {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -351,6 +351,14 @@
     "message":"my-ublock-dynamic-rules.txt",
     "description":"default file name to use"
   },
+  "rulesHint":{
+    "message":"Список динамических правил фильтрации.",
+    "description":"English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint":{
+    "message":"Синтаксис правил: <code>источник назначение тип действие<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>полная документация<\/a>).",
+    "description":"English: dynamic rule syntax and full documentation."
+  },
   "whitelistPrompt":{
     "message":"Список имён узлов, для которых µBlock будет отключен. Одна запись на строку. Неправильные имена будут тихо проигнорированы.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
@@ -411,6 +419,10 @@
     "message":"Нет незаблокированных запросов на этой странице",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logBehindTheScene":{
+    "message":"За кулисами",
+    "description":"Pretty name for behind-the-scene network requests"
+  },
   "aboutChangelog":{
     "message":"Список изменений",
     "description":"English: Change log"
@@ -448,7 +460,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Данные ошибочны или не могут быть прочитаны",
+    "message":"Данные не могут быть прочитаны или ошибочны",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
