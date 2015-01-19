@@ -227,3 +227,7 @@ ovh.strim.io#@##tweets
 # https://adblockplus.org/forum/viewtopic.php?f=10&t=24896&start=15#p114675
 # Until fixed in EasyList
 @@||cdn.turner.com/ads/nba/adfuel.js$domain=www.nba.com
+
+# https://adblockplus.org/forum/viewtopic.php?f=10&t=27509
+# To counter [a.]visualrevenue.com in Dan Pollock's, hpHosts, Peter Lowe's, MVPS
+@@||a.visualrevenue.com/vrs.js$domain=www.ebaumsworld.com
