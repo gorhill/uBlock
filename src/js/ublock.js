@@ -267,7 +267,9 @@ var matchWhitelistDirective = function(url, hostname, directive) {
             break;
         case 'experimentalEnabled':
             if ( typeof this.mirrors === 'object' ) {
-                this.mirrors.toggle(value);
+                // https://github.com/gorhill/uBlock/issues/540
+                // Disabling local mirroring for the time being
+                this.mirrors.toggle(false /* value */);
             }
             break;
         default:

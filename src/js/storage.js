@@ -658,7 +658,12 @@
         µb.assets.allowRemoteFetch = false;
         µb.assets.autoUpdate = userSettings.autoUpdate;
         µb.fromSelfie(onSelfieReady);
+
+        // https://github.com/gorhill/uBlock/issues/540
+        // Disabling local mirroring for the time being
+        userSettings.experimentalEnabled = false;
         µb.mirrors.toggle(userSettings.experimentalEnabled);
+
         µb.contextMenu.toggle(userSettings.contextMenuEnabled);
         µb.dynamicNetFilteringEngine.fromString(userSettings.dynamicFilteringString);
 
