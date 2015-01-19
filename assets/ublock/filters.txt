@@ -228,6 +228,6 @@ ovh.strim.io#@##tweets
 # Until fixed in EasyList
 @@||cdn.turner.com/ads/nba/adfuel.js$domain=www.nba.com
 
-# https://adblockplus.org/forum/viewtopic.php?f=10&t=27509
-# To counter [a.]visualrevenue.com in Dan Pollock's, hpHosts, Peter Lowe's, MVPS
-@@||a.visualrevenue.com/vrs.js$domain=www.ebaumsworld.com
+# From Chrome store: Go to site http://www.vd.nl/ ... links from dropdown top menu do not work
+# To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||google-analytics.com/analytics.js$domain=www.vd.nl
