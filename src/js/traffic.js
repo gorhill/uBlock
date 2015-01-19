@@ -255,7 +255,7 @@ var onHeadersReceived = function(details) {
     // https://github.com/gorhill/uBlock/issues/540
     // Disabling local mirroring for the time being
     //if ( details.parentFrameId === -1 ) {
-    //    pageStore.skipLocalMirroring = headerStartWith(details.responseHeaders, 'content-security-policy') !== '';
+    //    pageStore.skipLocalMirroring = headerStartsWith(details.responseHeaders, 'content-security-policy') !== '';
     //}
 
     var requestURL = details.url;
@@ -324,7 +324,7 @@ var headerValue = function(headers, name) {
 
 /******************************************************************************/
 
-var headerStartWith = function(headers, prefix) {
+var headerStartsWith = function(headers, prefix) {
     var prefixLen = prefix.length;
     var i = headers.length;
     while ( i-- ) {

@@ -662,7 +662,7 @@
         // https://github.com/gorhill/uBlock/issues/540
         // Disabling local mirroring for the time being
         userSettings.experimentalEnabled = false;
-        µb.mirrors.toggle(userSettings.experimentalEnabled);
+        µb.mirrors.toggle(false /* userSettings.experimentalEnabled */);
 
         µb.contextMenu.toggle(userSettings.contextMenuEnabled);
         µb.dynamicNetFilteringEngine.fromString(userSettings.dynamicFilteringString);
