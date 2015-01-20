@@ -191,95 +191,63 @@ if ( location.protocol === 'safari-extension:' ) {
 
 /******************************************************************************/
 
-var beforeLoadEvent = document.createEvent('Event');
-beforeLoadEvent.initEvent('beforeload');
-
-/******************************************************************************/
-
 var frameId = window === window.top ? 0 : Date.now() % 1E5;
 var parentFrameId = frameId ? 0 : -1;
+var beforeLoadEvent = new Event('beforeload'); // Helper event to message background
+
+// Inform that we've navigated
+if(frameId === 0) {
+    safari.self.tab.canLoad(beforeLoadEvent, { 
+        url: location.href,
+        type: 'main_frame',
+        navigatedToNew: true
+    });
+}
+
 var linkHelper = document.createElement('a');
-var onBeforeLoad = function(e, details) {
-    if ( e.url && e.url.lastIndexOf('data:', 0) === 0 ) {
-        return;
-    }
-
-    linkHelper.href = details ? details.url : e.url;
-    var url = linkHelper.href;
-
-    if ( url.lastIndexOf('http:', 0) === -1 && url.lastIndexOf('https:', 0) === -1) {
-        return;
-    }
-
-    if ( details ) {
-        details.url = url;
-    } else {
-        details = {
-            url: url
-        };
-
-        switch ( e.target.nodeName.toLowerCase() ) {
-            case 'frame':
-            case 'iframe':
-                details.type = 'sub_frame';
-                break;
-            case 'script':
-                details.type = 'script';
-                break;
-            case 'img':
-            case 'input': // type=image
-                details.type = 'image';
-                break;
-            case 'object':
-            case 'embed':
-                details.type = 'object';
-                break;
-            case 'link':
-                var rel = e.target.rel.trim().toLowerCase();
-
-                if ( rel.indexOf('icon') !== -1 ) {
-                    details.type = 'image';
-                    break;
-                } else if ( rel === 'stylesheet' ) {
-                    details.type = 'stylesheet';
-                    break;
-                }
-            default:
-                details.type = 'other';
-        }
-
-    }
-
-    // This can run even before the first DOMSubtreeModified event fired
-    if ( firstMutation ) {
-        firstMutation();
-    }
-
-    // tabId is determined in the background script
-    // details.tabId = null;
+var nodeTypes = {
+    'frame': 'sub_frame',
+    'iframe': 'sub_frame',
+    'script': 'script',
+    'img': 'image',
+    'input': 'image',
+    'object': 'object',
+    'embed': 'object',
+    'link': 'stylesheet'
+};
+var shouldBlockDetailedRequest = function(details) {
+    linkHelper.href = details.url;
+    details.url = linkHelper.href;
     details.frameId = frameId;
     details.parentFrameId = parentFrameId;
     details.timeStamp = Date.now();
-
-    var response = safari.self.tab.canLoad(e, details);
-
-    if ( !response ) {
-        if ( details.type === 'main_frame' ) {
-            window.stop();
-        } else {
-            e.preventDefault();
-        }
-
-        return false;
-    }
-
-    // Local mirroring, response should be a data: URL here
-    if ( typeof response !== 'string' ) {
+    return !(safari.self.tab.canLoad(beforeLoadEvent, details));
+}
+var onBeforeLoad = function(e) {
+    if(e.url.lastIndexOf('data:', 0) === 0) {
         return;
     }
-
+    linkHelper.href = e.url;
+    var url = linkHelper.href;
+    var details = {
+        url: url,
+        type: nodeTypes[e.target.nodeName.toLowerCase()] || 'other',
+        // tabId is determined in the background script
+        frameId: frameId,
+        parentFrameId: parentFrameId,
+        timeStamp: Date.now()
+    };
+    var response = safari.self.tab.canLoad(e, details);
+    if(!response) {
+        e.preventDefault();
+        return false;
+    }
+    // Local mirroring, response should be a data: URL here
+    if(typeof response !== 'string') {
+        return;
+    }
+    // Okay, we're mirroring...
     e.preventDefault();
-
     // Content Security Policy with disallowed inline scripts may break things
     details = document.createElement('script');
     details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
@@ -308,11 +276,9 @@ var firstMutation = function() {
     var randEventName = uniqueId();
 
     window.addEventListener(randEventName, function(e) {
-        var result = onBeforeLoad(beforeLoadEvent, e.detail);
-
-        if ( result === false ) {
+        if(shouldBlockDetailedRequest(e.detail)) {
             e.detail.url = false;
-        }
+        };
     }, true);
 
     // the extension context is unable to reach the page context,
@@ -409,18 +375,8 @@ var onContextMenu = function(e) {
 
 self.addEventListener('contextmenu', onContextMenu, true);
 
-/******************************************************************************/
-
-// 'main_frame' simulation
-if ( frameId === 0 ) {
-    onBeforeLoad(beforeLoadEvent, {
-        url: location.href,
-        type: 'main_frame'
-    });
-}
 
 /******************************************************************************/
-
 })();
 
 /******************************************************************************/
