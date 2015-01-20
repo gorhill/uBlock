@@ -189,23 +189,20 @@ vAPI.tabs = {
 
 vAPI.tabs.registerListeners = function() {
     safari.application.addEventListener('beforeNavigate', function(e) {
-        if ( !e.target || e.url === 'about:blank' ) {
+        if ( !vAPI.tabs.popupCandidate || !e.target || e.url === 'about:blank' ) {
             return;
         }
         var url = e.url, tabId = vAPI.tabs.getTabId(e.target);
-        if ( vAPI.tabs.popupCandidate ) {
-            var details = {
-                url: url,
-                tabId: tabId,
-                sourceTabId: vAPI.tabs.popupCandidate
-            };
-            vAPI.tabs.popupCandidate = false;
-            if ( vAPI.tabs.onPopup(details) ) {
-                e.preventDefault();
-                if ( vAPI.tabs.stack[details.sourceTabId] ) {
-                    vAPI.tabs.stack[details.sourceTabId].activate();
-                }
-                return;
+        var details = {
+            url: url,
+            tabId: tabId,
+            sourceTabId: vAPI.tabs.popupCandidate
+        };
+        vAPI.tabs.popupCandidate = false;
+        if ( vAPI.tabs.onPopup(details) ) {
+            e.preventDefault();
+            if ( vAPI.tabs.stack[details.sourceTabId] ) {
+                vAPI.tabs.stack[details.sourceTabId].activate();
             }
         }
     }, true);
