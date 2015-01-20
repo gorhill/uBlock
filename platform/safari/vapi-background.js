@@ -188,13 +188,11 @@ vAPI.tabs = {
 /******************************************************************************/
 
 vAPI.tabs.registerListeners = function() {
-    var onNavigation = this.onNavigation;
-
     safari.application.addEventListener('beforeNavigate', function(e) {
-        if ( !e.target || !e.target.url || e.target.url === 'about:blank' ) {
+        if ( !e.target || e.url === 'about:blank' ) {
             return;
         }
-        var url = e.target.url, tabId = vAPI.tabs.getTabId(e.target);
+        var url = e.url, tabId = vAPI.tabs.getTabId(e.target);
         if ( vAPI.tabs.popupCandidate ) {
             var details = {
                 url: url,
@@ -210,11 +208,6 @@ vAPI.tabs.registerListeners = function() {
                 return;
             }
         }
-        onNavigation({
-            url: url,
-            frameId: 0,
-            tabId: tabId
-        });
     }, true);
 
     // onClosed handled in the main tab-close event
@@ -588,9 +581,6 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-
-/******************************************************************************/
-
 vAPI.net = {};
 
 /******************************************************************************/
@@ -647,6 +637,14 @@ vAPI.net.registerListeners = function() {
                 });
             }
 
+            return;
+        }
+        if ( e.message.navigatedToNew ) {
+            vAPI.tabs.onNavigation({
+                url: e.message.url,
+                frameId: 0,
+                tabId: vAPI.tabs.getTabId(e.target)
+            });
             return;
         }
 
