@@ -7,4 +7,4 @@ because the _"Acceptable Ads"_ marketing campaign is really the business
 plan of a for-profit entity.
 
 Users are best placed to know what is or is not acceptable to them. µBlock's
-sole purpose is to give users the mean to enforce their own choices.
+sole purpose is to give users the means to enforce their own choices.
