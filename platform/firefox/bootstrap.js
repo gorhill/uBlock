@@ -26,7 +26,7 @@
 
 /******************************************************************************/
 
-// Accessing the context of the background page from Console (e.g., about:addons):
+// Accessing the context of the background page:
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock]').contentWindow;
 
 let bgProcess;
@@ -46,17 +46,17 @@ const restartListener = {
 /******************************************************************************/
 
 function startup(data, reason) {
+    let appShell = Components.classes['@mozilla.org/appshell/appShellService;1']
+        .getService(Components.interfaces.nsIAppShellService);
+
     let onReady = function(e) {
         if ( e ) {
             this.removeEventListener(e.type, onReady);
         }
 
-        let hDoc = Components.classes['@mozilla.org/appshell/appShellService;1']
-            .getService(Components.interfaces.nsIAppShellService)
-            .hiddenDOMWindow.document;
-
-        bgProcess = hDoc.documentElement.appendChild(
-            hDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
+        let hiddenDoc = appShell.hiddenDOMWindow.document;
+        bgProcess = hiddenDoc.documentElement.appendChild(
+            hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
         bgProcess.setAttribute(
             'src',
@@ -75,10 +75,20 @@ function startup(data, reason) {
     }
 
     let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
-                .getService(Components.interfaces.nsIWindowWatcher);
+        .getService(Components.interfaces.nsIWindowWatcher);
 
     ww.registerNotification({
-        observe: function(win) {
+        observe: function(win, topic) {
+            if ( topic !== 'domwindowopened' ) {
+                return;
+            }
+
+            try {
+                appShell.hiddenDOMWindow;
+            } catch (ex) {
+                return;
+            }
+
             ww.unregisterNotification(this);
             win.addEventListener('DOMContentLoaded', onReady);
         }
@@ -108,7 +118,8 @@ function shutdown(data, reason) {
 function install() {
     // https://bugzil.la/719376
     Components.classes['@mozilla.org/intl/stringbundle;1']
-        .getService(Components.interfaces.nsIStringBundleService).flushBundles();
+        .getService(Components.interfaces.nsIStringBundleService)
+        .flushBundles();
 }
 
 /******************************************************************************/
