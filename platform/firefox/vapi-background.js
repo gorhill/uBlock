@@ -308,19 +308,23 @@ var tabsProgressListener = {
 
         var tabId = vAPI.tabs.getTabId(browser);
 
+        // LOCATION_CHANGE_SAME_DOCUMENT = "did not load a new document"
         if ( flags & 1 ) {
             vAPI.tabs.onUpdated(tabId, {url: location.asciiSpec}, {
                 frameId: 0,
                 tabId: tabId,
                 url: browser.currentURI.asciiSpec
             });
-        } else if ( location.schemeIs('http') || location.schemeIs('https') ) {
-            vAPI.tabs.onNavigation({
-                frameId: 0,
-                tabId: tabId,
-                url: location.asciiSpec
-            });
+            return;
         }
+
+        // https://github.com/gorhill/uBlock/issues/105
+        // Allow any kind of pages
+        vAPI.tabs.onNavigation({
+            frameId: 0,
+            tabId: tabId,
+            url: location.asciiSpec
+        });
     }
 };
 
@@ -1359,6 +1363,8 @@ vAPI.contextMenu.displayMenuItem = function(e) {
     var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
     var currentURI = gContextMenu.browser.currentURI;
 
+    // https://github.com/gorhill/uBlock/issues/105
+    // TODO: Should the element picker works on any kind of pages?
     if ( !currentURI.schemeIs('http') && !currentURI.schemeIs('https') ) {
         menuitem.hidden = true;
         return;

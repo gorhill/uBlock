@@ -197,6 +197,8 @@ var getStats = function(tabId) {
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
         r.dynamicFilterRules = getDynamicFilterRules(pageStore.pageHostname, r.hostnameDict);
+        r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
+        r.canRequestLog = canRequestLog;
     } else {
         r.hostnameDict = {};
         r.dynamicFilterRules = getDynamicFilterRules();
@@ -204,9 +206,15 @@ var getStats = function(tabId) {
     return r;
 };
 
+// Not the most elegant approach, but it does keep everything simple:
+// This will be set by getTargetTabId() and used by getStats().
+var canRequestLog = true;
+
 /******************************************************************************/
 
 var getTargetTabId = function(tab) {
+    canRequestLog = true;
+
     if ( !tab ) {
         return '';
     }
@@ -220,11 +228,14 @@ var getTargetTabId = function(tab) {
     // This allows a user to actually modify filtering profile for
     // behind-the-scene requests.
 
+    canRequestLog = false;
+
     // Extract the target tab id from the URL
     var matches = tab.url.match(/[\?&]tabId=([^&]+)/);
     if ( matches && matches.length === 2 ) {
         return matches[1];
     }
+
     return tab.id;
 };
 

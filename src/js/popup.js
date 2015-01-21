@@ -298,23 +298,13 @@ var buildAllDynamicFilters = function() {
 var renderPopup = function() {
     uDom('#appname').text(popupData.appName);
     uDom('#version').text(popupData.appVersion);
-
-    var isHTTP = /^https?:\/\/[0-9a-z]/.test(popupData.pageURL);
-
-    // Condition for dynamic filtering toggler:
-    // - Advanced user
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
-
     uDom('#switch').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
 
-    // Conditions for request log:
-    // - `http` or `https` scheme
-    uDom('#gotoLog').toggleClass('enabled', isHTTP);
-    uDom('#gotoLog').attr('href', 'devtools.html?tabId=' + popupData.tabId);
-
-    // Conditions for element picker:
-    // - `http` or `https` scheme
-    uDom('#gotoPick').toggleClass('enabled', isHTTP);
+    // If you think the `=== true` is pointless, you are mistaken
+    uDom('#gotoLog').toggleClass('enabled', popupData.canRequestLog === true)
+                    .attr('href', 'devtools.html?tabId=' + popupData.tabId);
+    uDom('#gotoPick').toggleClass('enabled', popupData.canElementPicker === true);
 
     var or = vAPI.i18n('popupOr');
     var blocked = popupData.pageBlockedRequestCount;
