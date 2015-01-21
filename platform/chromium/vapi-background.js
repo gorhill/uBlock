@@ -396,6 +396,7 @@ vAPI.net.registerListeners = function() {
         details.tabId = details.tabId.toString();
         details.hostname = µburi.hostnameFromURI(details.url);
 
+        // The rest of the function code is to normalize type
         var type = details.type;
         if ( type !== 'other' ) {
             return;
@@ -410,7 +411,9 @@ vAPI.net.registerListeners = function() {
             details.type = 'font';
             return;
         }
-        if ( '.ico.'.indexOf(ext) !== -1 ) {
+        // Still need this because often behind-the-scene requests are wrongly
+        // categorized as 'other'
+        if ( '.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1 ) {
             details.type = 'image';
             return;
         }
