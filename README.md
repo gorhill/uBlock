@@ -36,7 +36,7 @@ On average, µBlock <b>really</b> does make your browser run leaner<br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
 
-<sup>**Important note regarding memory usage:** There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. As such, please be informed of that when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
+<sup>**Important note regarding memory usage:** There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. Keep this in mind when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup>
 
 #### CPU
 
