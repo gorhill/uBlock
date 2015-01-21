@@ -211,13 +211,14 @@ var getTargetTabId = function(tab) {
         return '';
     }
 
+    if ( tab.url.lastIndexOf(vAPI.getURL('devtools.html'), 0) !== 0 ) {
+        return tab.id;
+    }
+
     // If the URL is that of the network request logger, fill the popup with
     // the data from the tab being observed by the logger.
     // This allows a user to actually modify filtering profile for
     // behind-the-scene requests.
-    if ( tab.url.indexOf(vAPI.getURL('devtools.html')) !== 0 ) {
-        return tab.id;
-    }
 
     // Extract the target tab id from the URL
     var matches = tab.url.match(/[\?&]tabId=([^&]+)/);
@@ -234,8 +235,7 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
         case 'getPopupData':
             vAPI.tabs.get(null, function(tab) {
-                var tabId = getTargetTabId(tab);
-                callback(getStats(tabId));
+                callback(getStats(getTargetTabId(tab)));
             });
             return;
 
@@ -792,8 +792,14 @@ var getPageDetails = function(callback) {
     var out = {};
     var tabIds = Object.keys(µb.pageStores);
 
-    // Just in case... I expect there will always be a behind-the-scene page
-    // store, but just to be safe.
+    // Special case: behind-the-scene virtual tab (does not really exist)
+    var pos = tabIds.indexOf(vAPI.noTabId);
+    if ( pos !== -1 ) {
+        tabIds.splice(pos, 1);
+        out[vAPI.noTabId] = vAPI.i18n('logBehindTheScene');
+    }
+
+    // This can happen
     if ( tabIds.length === 0 ) {
         callback(out);
         return;
@@ -807,12 +813,11 @@ var getPageDetails = function(callback) {
         }
     };
 
-    // Let's not populate the page selector with reference itself
+    // Let's not populate the page selector with reference to self
     var devtoolsURL = vAPI.getURL('devtools.html');
-    var devtoolsURLLen = devtoolsURL.length;
 
     var onTabDetails = function(tab) {
-        if ( tab && tab.url.slice(0, devtoolsURLLen) !== devtoolsURL ) {
+        if ( tab && tab.url.lastIndexOf(devtoolsURL, 0) !== 0 ) {
             out[tab.id] = tab.title;
         }
         doCountdown();
@@ -820,13 +825,7 @@ var getPageDetails = function(callback) {
 
     var i = countdown;
     while ( i-- ) {
-        // Special case: behind-the-scene virtual tab (does not really exist)
-        if ( vAPI.isNoTabId(tabIds[i]) ) {
-            out[vAPI.noTabId] = vAPI.i18n('logBehindTheScene');
-            doCountdown();
-        } else {
-            vAPI.tabs.get(tabIds[i], onTabDetails);
-        }
+        vAPI.tabs.get(tabIds[i], onTabDetails);
     }
 };
 
