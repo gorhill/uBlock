@@ -231,3 +231,7 @@ ovh.strim.io#@##tweets
 # From Chrome store: Go to site http://www.vd.nl/ ... links from dropdown top menu do not work
 # To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
 @@||google-analytics.com/analytics.js$domain=www.vd.nl
+
+# https://github.com/gorhill/uBlock/issues/570
+# To counter hpHosts `yui.yahooapis.com`
+@@||yui.yahooapis.com^
