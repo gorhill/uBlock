@@ -785,6 +785,7 @@ var httpObserver = {
     contractID: '@' + location.host + '/net-channel-event-sinks;1',
     ABORT: Components.results.NS_BINDING_ABORTED,
     ACCEPT: Components.results.NS_SUCCEEDED,
+    // Request types: https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIContentPolicy#Constants
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     VALID_CSP_TARGETS: 1 << Ci.nsIContentPolicy.TYPE_DOCUMENT |
                        1 << Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
@@ -795,7 +796,9 @@ var httpObserver = {
         5: 'object',
         6: 'main_frame',
         7: 'sub_frame',
-        11: 'xmlhttprequest'
+        11: 'xmlhttprequest',
+        12: 'object',
+        14: 'font'
     },
     lastRequest: {
         url: null,
@@ -892,11 +895,12 @@ var httpObserver = {
         }
 
         var result = onBeforeRequest.callback({
-            url: channel.URI.asciiSpec,
-            type: type,
-            tabId: details.tabId,
             frameId: details.frameId,
-            parentFrameId: details.parentFrameId
+            hostname: channel.URI.asciiHost,
+            parentFrameId: details.parentFrameId,
+            tabId: details.tabId,
+            type: type,
+            url: channel.URI.asciiSpec
         });
 
         if ( !result || typeof result !== 'object' ) {
@@ -906,7 +910,9 @@ var httpObserver = {
         if ( result.cancel === true ) {
             channel.cancel(this.ABORT);
             return true;
-        } else if ( result.redirectUrl ) {
+        }
+
+        if ( result.redirectUrl ) {
             channel.redirectionLimit = 1;
             channel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
@@ -954,10 +960,11 @@ var httpObserver = {
             }
 
             result = vAPI.net.onHeadersReceived.callback({
-                url: URI.asciiSpec,
-                tabId: channelData[1],
+                hostname: URI.asciiHost,
                 parentFrameId: channelData[0] === this.MAIN_FRAME ? -1 : 0,
-                responseHeaders: result ? [{name: topic, value: result}] : []
+                responseHeaders: result ? [{name: topic, value: result}] : [],
+                tabId: channelData[1],
+                url: URI.asciiSpec
             });
 
             if ( result ) {
@@ -1098,11 +1105,11 @@ vAPI.net.registerListeners = function() {
         // data: and about:blank
         if ( details.url.charAt(0) !== 'h' ) {
             vAPI.net.onBeforeRequest.callback({
-                url: 'http://' + details.url.slice(0, details.url.indexOf(':')),
-                type: 'main_frame',
-                tabId: vAPI.tabs.getTabId(e.target),
                 frameId: details.frameId,
-                parentFrameId: details.parentFrameId
+                parentFrameId: details.parentFrameId,
+                tabId: vAPI.tabs.getTabId(e.target),
+                type: 'main_frame',
+                url: 'http://' + details.url.slice(0, details.url.indexOf(':'))
             });
             return;
         }

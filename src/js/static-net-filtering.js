@@ -68,6 +68,7 @@ var typeNameToTypeValue = {
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
+var typeOtherToTypeValue = typeNameToTypeValue['other'];
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType = BlockAction | AnyType;
@@ -1754,7 +1755,8 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // This will be used by hostname-based filters
     pageHostname = context.pageHostname || '';
 
-    var type = typeNameToTypeValue[requestType];
+    // Be prepared to support unknown types
+    var type = typeNameToTypeValue[requestType] || typeOtherToTypeValue;
     var categories = this.categories;
     var bucket;
 
@@ -1814,7 +1816,8 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 FilterContainer.prototype.matchString = function(context) {
     // https://github.com/gorhill/uBlock/issues/519
     // Use exact type match for anything beyond `other`
-    var type = typeNameToTypeValue[context.requestType];
+    // Also, be prepared to support unknown types
+    var type = typeNameToTypeValue[context.requestType] || typeOtherToTypeValue;
     if ( type > 8 << 4 ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }

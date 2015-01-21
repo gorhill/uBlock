@@ -67,7 +67,6 @@ var logEntryJunkyardMax = 100;
 LogEntry.prototype.init = function(details, result) {
     this.tstamp = Date.now();
     this.url = details.requestURL;
-    this.domain = details.requestDomain;
     this.hostname = details.requestHostname;
     this.type = details.requestType;
     this.result = result;
@@ -77,7 +76,7 @@ LogEntry.prototype.init = function(details, result) {
 /******************************************************************************/
 
 LogEntry.prototype.dispose = function() {
-    this.url = this.domain = this.hostname = this.type = this.result = '';
+    this.url = this.hostname = this.type = this.result = '';
     if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
         logEntryJunkyard.push(this);
     }

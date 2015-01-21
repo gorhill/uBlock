@@ -56,26 +56,6 @@ var onBeforeRequest = function(details) {
         return;
     }
 
-    // Commented out until (and if ever) there is a fix for:
-    // https://code.google.com/p/chromium/issues/detail?id=410382
-    //
-    // Try to transpose generic `other` category into something more meaningful.
-    if ( requestType === 'other' ) {
-        requestType = µb.transposeType('other', µb.URI.set(requestURL).path);
-        // https://github.com/gorhill/uBlock/issues/206
-        // https://code.google.com/p/chromium/issues/detail?id=410382
-        // Work around the issue of Chromium not properly setting the type for
-        // `object` requests. Unclear whether this issue will be fixed, hence
-        // this workaround to prevent torch-and-pitchfork mobs because ads are
-        // no longer blocked in videos.
-        // https://github.com/gorhill/uBlock/issues/281
-        // Looks like Chrome 38 (but not 39) doesn't provide the expected request
-        // header `X-Requested-With`. Sigh.
-        if ( requestType === 'other' ) {
-            requestType = 'object';
-        }
-    }
-
     // Lookup the page store associated with this tab id.
     pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
@@ -94,7 +74,7 @@ var onBeforeRequest = function(details) {
 
     // Setup context and evaluate
     requestContext.requestURL = requestURL;
-    requestContext.requestHostname = µb.URI.hostnameFromURI(requestURL);
+    requestContext.requestHostname = details.hostname;
     requestContext.requestType = requestType;
 
     var result = pageStore.filterRequest(requestContext);
@@ -217,7 +197,7 @@ var onBeforeSendHeaders = function(details) {
     var result = µb.staticNetFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
 
     // Not blocked?
-    if ( result === '' || result.slice(0, 2) === '@@' ) {
+    if ( µb.isAllowResult(result) ) {
         return;
     }
 
@@ -254,8 +234,7 @@ var onHeadersReceived = function(details) {
     //}
 
     var requestURL = details.url;
-    var requestHostname = µb.URI.hostnameFromURI(requestURL);
-    var requestDomain = µb.URI.domainFromHostname(requestHostname);
+    var requestHostname = details.hostname;
 
     // https://github.com/gorhill/uBlock/issues/525
     // When we are dealing with the root frame, due to fix to issue #516, it
@@ -266,11 +245,12 @@ var onHeadersReceived = function(details) {
     // inline scripts.
     var context;
     if ( details.parentFrameId === -1 ) {
+        var contextDomain = µb.URI.domainFromHostname(requestHostname);
         context = {
             rootHostname: requestHostname,
-            rootDomain: requestDomain,
+            rootDomain: contextDomain,
             pageHostname: requestHostname,
-            pageDomain: requestDomain
+            pageDomain: contextDomain
         };
     } else {
         context = pageStore;
@@ -282,7 +262,6 @@ var onHeadersReceived = function(details) {
     // URLs-different type
     context.requestURL = requestURL + '{inline-script}';
     context.requestHostname = requestHostname;
-    context.requestDomain = requestDomain;
     context.requestType = 'inline-script';
 
     var result = pageStore.filterRequest(context);
@@ -323,7 +302,7 @@ var headerStartsWith = function(headers, prefix) {
     var prefixLen = prefix.length;
     var i = headers.length;
     while ( i-- ) {
-        if ( headers[i].name.slice(0, prefixLen).toLowerCase() === prefix ) {
+        if ( headers[i].name.toLowerCase().lastIndexOf(prefix, 0) === 0 ) {
             return headers[i].value;
         }
     }

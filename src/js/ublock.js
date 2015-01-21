@@ -281,26 +281,6 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.transposeType = function(type, path) {
-    if ( type !== 'other' ) {
-        return type;
-    }
-    var pos = path.lastIndexOf('.');
-    if ( pos === -1 ) {
-        return type;
-    }
-    var ext = path.slice(pos) + '.';
-    if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
-        return 'font';
-    }
-    if ( '.ico.'.indexOf(ext) !== -1 ) {
-        return 'image';
-    }
-    return type;
-};
-
-/******************************************************************************/
-
 µBlock.elementPickerExec = function(tabId, targetElement) {
     this.elementPickerTarget = targetElement || '';
     vAPI.tabs.injectScript(tabId, { file: 'js/element-picker.js' });

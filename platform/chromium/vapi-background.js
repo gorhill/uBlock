@@ -38,6 +38,8 @@ var manifest = chrome.runtime.getManifest();
 
 vAPI.chrome = true;
 
+var noopFunc = function(){};
+
 /******************************************************************************/
 
 vAPI.app = {
@@ -280,7 +282,7 @@ vAPI.messaging = {
     ports: {},
     listeners: {},
     defaultHandler: null,
-    NOOPFUNC: function(){},
+    NOOPFUNC: noopFunc,
     UNHANDLED: 'vAPI.messaging.notHandled'
 };
 
@@ -382,25 +384,81 @@ vAPI.messaging.broadcast = function(message) {
 
 /******************************************************************************/
 
-vAPI.net = {
-    registerListeners: function() {
-        var listeners = [
-            'onBeforeRequest',
-            'onBeforeSendHeaders',
-            'onHeadersReceived'
-        ];
+vAPI.net = {};
 
-        for ( var i = 0; i < listeners.length; i++ ) {
-            chrome.webRequest[listeners[i]].addListener(
-                this[listeners[i]].callback,
-                {
-                    'urls': this[listeners[i]].urls || ['<all_urls>'],
-                    'types': this[listeners[i]].types || []
-                },
-                this[listeners[i]].extra
-            );
+/******************************************************************************/
+
+vAPI.net.registerListeners = function() {
+    var µb = µBlock;
+    var µburi = µb.URI;
+
+    var normalizeRequestDetails = function(details) {
+        µburi.set(details.url);
+
+        details.tabId = details.tabId.toString();
+        details.hostname = µburi.hostnameFromURI(details.url);
+
+        var type = details.type;
+        if ( type !== 'other' ) {
+            return;
         }
-    }
+        var path = µburi.path;
+        var pos = path.lastIndexOf('.');
+        if ( pos === -1 ) {
+            return;
+        }
+        var ext = path.slice(pos) + '.';
+        if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
+            details.type = 'font';
+            return;
+        }
+        if ( '.ico.'.indexOf(ext) !== -1 ) {
+            details.type = 'image';
+            return;
+        }
+        // https://code.google.com/p/chromium/issues/detail?id=410382
+        if ( type === 'other' ) {
+            details.type = 'object';
+            return;
+        }
+    };
+
+    var onBeforeRequestClient = this.onBeforeRequest.callback;
+    var onBeforeRequest = function(details) {
+        normalizeRequestDetails(details);
+        return onBeforeRequestClient(details);
+    };
+    chrome.webRequest.onBeforeRequest.addListener(
+        onBeforeRequest,
+        {
+            'urls': this.onBeforeRequest.urls || ['<all_urls>'],
+            'types': this.onBeforeRequest.types || []
+        },
+        this.onBeforeRequest.extra
+    );
+
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        this.onBeforeSendHeaders.callback,
+        {
+            'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
+            'types': this.onBeforeSendHeaders.types || []
+        },
+        this.onBeforeSendHeaders.extra
+    );
+
+    var onHeadersReceivedClient = this.onHeadersReceived.callback;
+    var onHeadersReceived = function(details) {
+        normalizeRequestDetails(details);
+        return onHeadersReceivedClient(details);
+    };
+    chrome.webRequest.onHeadersReceived.addListener(
+        onHeadersReceived,
+        {
+            'urls': this.onHeadersReceived.urls || ['<all_urls>'],
+            'types': this.onHeadersReceived.types || []
+        },
+        this.onHeadersReceived.extra
+    );
 };
 
 /******************************************************************************/

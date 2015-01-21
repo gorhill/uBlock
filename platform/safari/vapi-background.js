@@ -591,6 +591,8 @@ vAPI.net = {};
 /******************************************************************************/
 
 vAPI.net.registerListeners = function() {
+    var µb = µBlock;
+
     // Since it's not used
     this.onBeforeSendHeaders = null;
     this.onHeadersReceived = null;
@@ -615,9 +617,11 @@ vAPI.net.registerListeners = function() {
         }
 
         if ( e.message.isURLWhiteListed ) {
-            block = µBlock.URI.hostnameFromURI(e.message.isURLWhiteListed);
-            block = µBlock.URI.domainFromHostname(block) || block;
-            e.message = !!µBlock.netWhitelist[block];
+            block = µb.URI.hostnameFromURI(e.message.isURLWhiteListed);
+            block = µb.URI.domainFromHostname(block) || block;
+
+            // TODO: revise, this can't work properly
+            e.message = !!µb.netWhitelist[block];
             return e.message;
         }
 
@@ -659,6 +663,7 @@ vAPI.net.registerListeners = function() {
             return true;
         }
 
+        e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
         e.message.tabId = vAPI.tabs.getTabId(e.target);
         block = onBeforeRequest(e.message);
 
