@@ -261,7 +261,6 @@ NetFilteringResultCacheEntry.factory = function(result, type) {
 /******************************************************************************/
 
 // To mitigate memory churning
-var uidGenerator = 1;
 var netFilteringCacheJunkyard = [];
 var netFilteringCacheJunkyardMax = 10;
 

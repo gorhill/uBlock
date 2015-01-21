@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, SafariBrowserTab */
+/* global self, safari, SafariBrowserTab, µBlock */
 
 // For background page
 
@@ -360,7 +360,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     }
 
     if ( details.file ) {
-        var xhr = new XMLHttpRequest;
+        var xhr = new XMLHttpRequest();
         xhr.overrideMimeType('application/x-javascript;charset=utf-8');
         xhr.open('GET', details.file, false);
         xhr.send();

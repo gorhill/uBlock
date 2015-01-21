@@ -68,7 +68,7 @@ var typeNameToTypeValue = {
      'inline-script': 14 << 4,
              'popup': 15 << 4
 };
-var typeOtherToTypeValue = typeNameToTypeValue['other'];
+var typeOtherToTypeValue = typeNameToTypeValue.other;
 
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType = BlockAction | AnyType;
@@ -1756,9 +1756,10 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     pageHostname = context.pageHostname || '';
 
     // Be prepared to support unknown types
-    var type = typeNameToTypeValue[requestType] || typeOtherToTypeValue;
-    var categories = this.categories;
+    var bf = false;
     var bucket;
+    var categories = this.categories;
+    var type = typeNameToTypeValue[requestType] || typeOtherToTypeValue;
 
     // Tokenize only once
     this.tokenize(url);
@@ -1779,7 +1780,6 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     }
 
     // Test against block filters
-    bf = false;
     if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | type)] ) {
         bf = this.matchTokens(bucket, url);
     }
@@ -1855,11 +1855,12 @@ FilterContainer.prototype.matchString = function(context) {
     // This will be used by hostname-based filters
     pageHostname = context.pageHostname || '';
 
+    var bf, bucket;
     var categories = this.categories;
-    var bucket;
 
     // Tokenize only once
     this.tokenize(url);
+
 
     // https://github.com/gorhill/uBlock/issues/139
     // Test against important block filters.

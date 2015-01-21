@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global vAPI */
 /* exported µBlock */
 
 /******************************************************************************/

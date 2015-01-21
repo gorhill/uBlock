@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode */
+/* jshint esnext: true, bitwise: false */
+/* global self, Components, punycode */
 
 // For background page
 
@@ -143,7 +144,7 @@ vAPI.storage = {
 
     sqlWhere: function(col, params) {
         if ( params > 0 ) {
-            params = Array(params + 1).join('?, ').slice(0, -2);
+            params = new Array(params + 1).join('?, ').slice(0, -2);
             return ' WHERE ' + col + ' IN (' + params + ')';
         }
 
@@ -1000,7 +1001,7 @@ var httpObserver = {
 
                 // Probably isn't the best method to identify the source tab
                 if ( tabURI.spec !== lastRequest.openerURL ) {
-                    continue
+                    continue;
                 }
 
                 sourceTabId = vAPI.tabs.getTabId(tab);

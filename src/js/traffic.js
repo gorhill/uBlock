@@ -299,7 +299,6 @@ var headerValue = function(headers, name) {
 /******************************************************************************/
 
 var headerStartsWith = function(headers, prefix) {
-    var prefixLen = prefix.length;
     var i = headers.length;
     while ( i-- ) {
         if ( headers[i].name.toLowerCase().lastIndexOf(prefix, 0) === 0 ) {

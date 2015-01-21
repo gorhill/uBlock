@@ -95,7 +95,7 @@ vAPI.tabs.get = function(tabId, callback) {
     var onTabReady = function(tab) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
-            ;
+            /* noop */
         }
         // Caller must be prepared to deal with nil tab value
         callback(tab);
@@ -110,7 +110,7 @@ vAPI.tabs.get = function(tabId, callback) {
     var onTabReceived = function(tabs) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
-            ;
+            /* noop */
         }
         callback(tabs[0]);
     };
@@ -149,10 +149,8 @@ vAPI.tabs.open = function(details) {
             };
 
             if ( details.tabId ) {
-                details.tabId = parseInt(tabId, 10);
-
                 // update doesn't accept index, must use move
-                chrome.tabs.update(details.tabId, _details, function(tab) {
+                chrome.tabs.update(parseInt(details.tabId, 10), _details, function(tab) {
                     // if the tab doesn't exist
                     if ( vAPI.lastError() ) {
                         chrome.tabs.create(_details);
@@ -219,7 +217,7 @@ vAPI.tabs.remove = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.reload = function(tabId, flags) {
+vAPI.tabs.reload = function(tabId /*, flags*/) {
     if ( typeof tabId === 'string' ) {
         tabId = parseInt(tabId, 10);
     }
