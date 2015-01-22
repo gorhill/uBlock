@@ -247,3 +247,7 @@ ovh.strim.io#@##tweets
 |http://$popup,domain=filenuke.com|sharesix.com
 ||filenuke.com/a/script.js$script
 ||sharesix.com/a/script.js$script
+
+# https://github.com/gorhill/uBlock/issues/580
+# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||cdn-static.liverail.com$domain=9to5mac.com
