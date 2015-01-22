@@ -277,12 +277,11 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'toggleNetFiltering':
-            µb.toggleNetFilteringSwitch(
-                request.url,
-                request.scope,
-                request.state
-            );
-            µb.updateBadgeAsync(request.tabId);
+            var pageStore = µb.pageStoreFromTabId(request.tabId);
+            if ( pageStore ) {
+                pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+                µb.updateBadgeAsync(request.tabId);
+            }
             break;
 
         default:
@@ -912,6 +911,7 @@ var restoreUserData = function(userData) {
 
     var onAllRemoved = function() {
         // Be sure to adjust `countdown` if adding/removing anything below
+        µb.XAL.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings(onCountdown);
         µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
         µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);

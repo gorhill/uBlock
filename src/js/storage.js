@@ -66,9 +66,7 @@
 /******************************************************************************/
 
 µBlock.saveUserSettings = function() {
-    vAPI.storage.set(this.userSettings, function() {
-        µBlock.getBytesInUse();
-    });
+    vAPI.storage.set(this.userSettings);
 };
 
 /******************************************************************************/
@@ -97,9 +95,7 @@
     var bin = {
         'netWhitelist': this.stringFromWhitelist(this.netWhitelist)
     };
-    vAPI.storage.set(bin, function() {
-        µBlock.getBytesInUse();
-    });
+    vAPI.storage.set(bin);
     this.netWhitelistModifyTime = Date.now();
 };
 
@@ -128,7 +124,7 @@
     };
 
     var bin = {
-        'netWhitelist': '',
+        'netWhitelist': 'behind-the-scene',
         'netExceptionList': ''
     };
     vAPI.storage.get(bin, onWhitelistLoaded);
@@ -595,18 +591,10 @@
     var µb = this;
     var fromSelfie = false;
 
-    // Filter lists
-    // Whitelist
-    var countdown = 2;
-
     // Final initialization steps after all needed assets are in memory.
     // - Initialize internal state with maybe already existing tabs.
     // - Schedule next update operation.
-    var doCountdown = function() {
-        countdown -= 1;
-        if ( countdown !== 0 ) {
-            return;
-        }
+    var onAllReady = function() {
         // https://github.com/gorhill/uBlock/issues/426
         // Important: remove barrier to remote fetching, this was useful only
         // for launch time.
@@ -617,6 +605,29 @@
         // https://github.com/gorhill/uBlock/issues/184
         // Check for updates not too far in the future.
         µb.updater.restart(µb.firstUpdateAfter);
+    };
+
+    // To bring older versions up to date
+    var onVersionReady = function(bin) {
+        var lastVersion = bin.version || '0.0.0.0';
+        // Whitelist behind-the-scene scope by default
+        if ( lastVersion.localeCompare('0.8.6.0') < 0 ) {
+            µb.toggleNetFilteringSwitch('http://behind-the-scene/', 'site', false);
+        }
+        vAPI.storage.set({ version: vAPI.app.version });
+        onAllReady();
+    };
+
+    // Filter lists
+    // Whitelist
+    var countdown = 2;
+    var doCountdown = function() {
+        countdown -= 1;
+        if ( countdown !== 0 ) {
+            return;
+        }
+        // Last step: do whatever is necessary when version changes
+        vAPI.storage.get('version', onVersionReady);
     };
 
     // Filters are in memory.
@@ -689,5 +700,4 @@
     this.loadUserSettings(onUserSettingsReady);
     this.loadWhitelist(onWhitelistReady);
     this.loadLocalSettings();
-    this.getBytesInUse();
 };

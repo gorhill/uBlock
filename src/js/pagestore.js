@@ -295,18 +295,7 @@ NetFilteringResultCache.prototype.init = function() {
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.dispose = function() {
-    for ( var key in this.urls ) {
-        if ( this.urls.hasOwnProperty(key) === false ) {
-            continue;
-        }
-        this.urls[key].dispose();
-    }
-    this.urls = {};
-    this.count = 0;
-    if ( this.timer !== null ) {
-        clearTimeout(this.timer);
-        this.timer = null;
-    }
+    this.empty();
     this.boundPruneAsyncCallback = null;
     if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
         netFilteringCacheJunkyard.push(this);
@@ -335,8 +324,19 @@ NetFilteringResultCache.prototype.add = function(context, result) {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.fetchAll = function() {
-    return this.urls;
+NetFilteringResultCache.prototype.empty = function() {
+    for ( var key in this.urls ) {
+        if ( this.urls.hasOwnProperty(key) === false ) {
+            continue;
+        }
+        this.urls[key].dispose();
+    }
+    this.urls = {};
+    this.count = 0;
+    if ( this.timer !== null ) {
+        clearTimeout(this.timer);
+        this.timer = null;
+    }
 };
 
 /******************************************************************************/
@@ -604,6 +604,13 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 PageStore.prototype.getCosmeticFilteringSwitch = function() {
     return this.getNetFilteringSwitch() !== false &&
            this.skipCosmeticFiltering === false;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
+    µb.toggleNetFilteringSwitch(url, scope, state);
+    this.netFilteringCache.empty();
 };
 
 /******************************************************************************/
