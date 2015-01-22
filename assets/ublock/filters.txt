@@ -242,3 +242,8 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/510#issuecomment-71050211
 ||racksauce.com^$domain=promptfile.com
+
+# https://github.com/gorhill/uBlock/issues/510#issuecomment-71078475
+|http://$popup,domain=filenuke.com|sharesix.com
+||filenuke.com/a/script.js$script
+||sharesix.com/a/script.js$script
