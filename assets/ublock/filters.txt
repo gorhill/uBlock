@@ -233,5 +233,12 @@ ovh.strim.io#@##tweets
 @@||google-analytics.com/analytics.js$domain=www.vd.nl
 
 # https://github.com/gorhill/uBlock/issues/570
-# To counter hpHosts `yui.yahooapis.com`
+# To counter `yui.yahooapis.com` in hpHosts
 @@||yui.yahooapis.com^
+
+# Chrome store feedback
+# To counter `top.mail.ru` in Peter Lowe's
+@@||top.mail.ru^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/510#issuecomment-71050211
+||racksauce.com^$domain=promptfile.com
