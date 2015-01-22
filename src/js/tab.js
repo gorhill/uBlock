@@ -92,7 +92,7 @@ vAPI.tabs.onPopup = function(details) {
     }
 
     // Not blocked
-    if ( pageStore.boolFromResult(result) === false ) {
+    if ( µb.isAllowResult(result) ) {
         return;
     }
 

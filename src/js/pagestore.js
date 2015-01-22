@@ -680,15 +680,6 @@ var collapsibleRequestTypes = 'image sub_frame object';
 
 /******************************************************************************/
 
-// false: not blocked
-// true: blocked
-
-PageStore.prototype.boolFromResult = function(result) {
-    return typeof result === 'string' && result.charAt(1) === 'b';
-};
-
-/******************************************************************************/
-
 PageStore.prototype.toMirrorURL = function(requestURL) {
     // https://github.com/gorhill/uBlock/issues/351
     // Bypass experimental features when uBlock is disabled for a site

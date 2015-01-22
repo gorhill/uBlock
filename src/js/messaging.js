@@ -375,6 +375,7 @@ var tagNameToRequestTypeMap = {
 
 var filterRequests = function(pageStore, details) {
     var µburi = µb.URI;
+    var isBlockResult = µb.isBlockResult;
 
     // Create evaluation context
     details.pageHostname = vAPI.punycodeHostname(details.pageHostname);
@@ -385,7 +386,7 @@ var filterRequests = function(pageStore, details) {
 
     var inRequests = details.requests;
     var outRequests = [];
-    var request, result;
+    var request;
     var i = inRequests.length;
     while ( i-- ) {
         request = inRequests[i];
@@ -395,8 +396,7 @@ var filterRequests = function(pageStore, details) {
         details.requestURL = vAPI.punycodeURL(request.url);
         details.requestHostname = µburi.hostnameFromURI(details.requestURL);
         details.requestType = tagNameToRequestTypeMap[request.tagName];
-        result = pageStore.filterRequest(details);
-        if ( pageStore.boolFromResult(result) ) {
+        if ( isBlockResult(pageStore.filterRequest(details)) ) {
             outRequests.push(request);
         }
     }
@@ -422,8 +422,7 @@ var filterRequest = function(pageStore, details) {
     details.requestURL = vAPI.punycodeURL(details.requestURL);
     details.requestHostname = µburi.hostnameFromURI(details.requestURL);
     details.requestType = tagNameToRequestTypeMap[details.tagName];
-    var result = pageStore.filterRequest(details);
-    if ( pageStore.boolFromResult(result) ) {
+    if ( µb.isBlockResult(pageStore.filterRequest(details)) ) {
         return { collapse: µb.userSettings.collapseBlocked };
     }
 };
