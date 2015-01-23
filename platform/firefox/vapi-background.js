@@ -787,7 +787,8 @@ var httpObserver = {
         5: 'object',
         6: 'main_frame',
         7: 'sub_frame',
-        11: 'xmlhttprequest'
+        11: 'xmlhttprequest',
+        12: 'object'
     },
     lastRequest: {
         url: null,
