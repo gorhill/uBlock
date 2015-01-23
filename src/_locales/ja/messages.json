@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"μブロック",
+    "message":"µBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"第三者製フィルター",
+    "message":"サードパーティ製フィルター",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"このボタンを押して<br>今のサイトだけに<br>エクステンションを完全にオンかオフにする",
+    "message":"µBlock の有効 \/ 無効を切り替えます。\n\nクリック: サイト全体  \nCtrl+クリック: このページのみ",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"インストール以来",
+    "message":"インストールしてから",
     "description":"English: since install"
   },
   "popupOr":{
@@ -220,7 +220,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"実験的な機能を有効にする",
+    "message":"実験的な機能を有効にする (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -380,7 +380,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"ネットワークリクエストのログ収集を有効にする",
+    "message":"ネットワークリクエストのログを有効にする",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -388,7 +388,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"ブロックされたリルエスト",
+    "message":"ブロックされたリクエスト",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
@@ -404,7 +404,7 @@
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"インターネットアドレス",
+    "message":"URL",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
@@ -424,7 +424,7 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
-    "message":"の変更履歴",
+    "message":"バージョン更新履歴 (Change log)",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -432,7 +432,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"根源コード（GPLバージョン３）",
+    "message":"ソースコード (GPLバージョン3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{

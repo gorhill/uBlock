@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"自訂規則",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"µBlock — 網路請求日誌",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -152,23 +152,23 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"圖片",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"行內的腳本",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"第一方腳本",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"協力廠商腳本",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"協力廠商框架",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -328,27 +328,27 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"編輯",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"儲存",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"捨棄",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"從檔案匯入...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"匯出至檔案...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"ublock自訂動態規則_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{

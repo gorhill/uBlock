@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Οι κανόνες μου",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"μBlock - Καταγραφή δικτυακής αίτησης",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -152,7 +152,7 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"Εικόνες",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
