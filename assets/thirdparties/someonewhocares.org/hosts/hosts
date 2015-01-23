@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jan 5th, 2015 at 01:29
+# Last updated: Jan 17th, 2015 at 14:00
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -5785,7 +5785,7 @@
 127.0.0.1 freevideodownloadforpc.com
 127.0.0.1 frontend-loadbalancer.meteorsolutions.com
 127.0.0.1 fwdservice.com
-127.0.0.1 fwmrm.net
+#127.0.0.1 fwmrm.net	#may interfere with nhl.com
 127.0.0.1 g1.idg.pl
 127.0.0.1 g2.gumgum.com
 127.0.0.1 g3t4d5.madison.com

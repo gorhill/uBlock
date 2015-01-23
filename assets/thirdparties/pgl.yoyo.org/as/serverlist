@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Tue, 06 Jan 2015 08:08:11 GMT
-# entries:        2458
+# last updated:   Sun, 18 Jan 2015 15:55:36 GMT
+# entries:        2460
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -676,6 +676,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -1006,6 +1007,7 @@
 127.0.0.1 audit.median.hu
 127.0.0.1 audit.webinform.hu
 127.0.0.1 auto-bannertausch.de
+127.0.0.1 autohits.dk
 127.0.0.1 avenuea.com
 127.0.0.1 avpa.javalobby.org
 127.0.0.1 avres.net
@@ -1134,6 +1136,7 @@
 127.0.0.1 bigclicks.com
 127.0.0.1 billboard.cz
 127.0.0.1 bitads.net
+127.0.0.1 bitmedianetwork.com
 127.0.0.1 bizad.nikkeibp.co.jp
 127.0.0.1 bizban.net
 127.0.0.1 bizrate.com
@@ -1435,7 +1438,6 @@
 127.0.0.1 experteerads.com
 127.0.0.1 exponential.com
 127.0.0.1 express-submit.de
-127.0.0.1 extads.web.de
 127.0.0.1 extractorandburner.com
 127.0.0.1 extreme-dm.com
 127.0.0.1 eyeblaster.com
@@ -1494,6 +1496,7 @@
 127.0.0.1 gbanners.hornymatches.com
 127.0.0.1 gemius.pl
 127.0.0.1 geo.digitalpoint.com
+127.0.0.1 geoadserving.coffeetree.info
 127.0.0.1 geobanner.adultfriendfinder.com
 127.0.0.1 geovisite.com
 127.0.0.1 german-linkindex.de
@@ -2005,7 +2008,6 @@
 127.0.0.1 rampidads.com
 127.0.0.1 rank-master.com
 127.0.0.1 rank-master.de
-127.0.0.1 rank8.de
 127.0.0.1 rankchamp.de
 127.0.0.1 ranking-charts.de
 127.0.0.1 ranking-hits.de

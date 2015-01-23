@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: otxUkDmo+UBfyg22YUXvNQ
-! Version: 201501171301
+! Checksum: ZHoM4jvpRZWgzyFR8Jyaow
+! Version: 201501232321
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -220,6 +220,7 @@ _regiepub/
 ||foodstamprhyacotritonolympicus.org^$third-party
 ||foreigncorrespondentatonement.info^$third-party
 ||forgerhineland.com^$third-party
+||frankfurterbunfacecream.net^$third-party
 ||fruitfulnessmechanicalmixture.com^$third-party
 ||gagner-une-console.com^$third-party
 ||gambling-france.com^$third-party
@@ -229,6 +230,7 @@ _regiepub/
 ||genusacinonyxricebeer.com^$third-party
 ||genusbrickeliaparsee.org^$third-party
 ||genushimantoglossumsultanofswat.com^$third-party
+||genusmonesesoddlegcaliper.org^$third-party
 ||genusnumeniusdepend.net^$third-party
 ||genusopisthocomusbuccaneering.info^$third-party
 ||genusscindapsusketeleeria.com^$third-party
@@ -329,6 +331,7 @@ _regiepub/
 ||niobitebradypus.com^$third-party
 ||nols-pub.fr^$third-party
 ||nturveev.com^$third-party
+||nucleicacidsunburstpleat.info^$third-party
 ||nursesharktorreyspine.info^$third-party
 ||odtrialanderror.info^$third-party
 ||oldhickoryfretted.info^$third-party
@@ -1280,6 +1283,7 @@ _regiepub/
 ||idata.over-blog.com/3/41/43/87/75/PUBDIRECT-copie-1.gif
 ||idf1.fr/banner/
 ||idf1.fr/partner/
+||iframe.lachainemeteo.com^
 ||imabox.fr/pub/
 ||imados.fr^*/habbo/
 ||images-et-cadres.fr/images/banners/
@@ -1361,6 +1365,7 @@ _regiepub/
 ||lachainemeteo.com/blocspartenaires/
 ||lafermeduweb.net/images/promote/
 ||langochat.net/partenaires/
+||lanouvellerepublique.fr/pub/
 ||lanutrition.fr/images/banners/
 ||laposte.net^*/scripts/pub_
 ||laptopspirit.fr/js/su.js
@@ -1515,6 +1520,7 @@ _regiepub/
 ||meteo.nc/images/stories/accueil/regie/
 ||meteomedia.com/images/ad_placements/
 ||metronews.fr/partenaires/horoscope.png
+||michelin.fr/data/public/field/image/
 ||midinews.com^*/oas/oas.php?
 ||milisexe.com/vador*.html
 ||millenium.org/images/contenu/habillages/
@@ -1907,6 +1913,7 @@ _regiepub/
 ||wpartage.com/site_media/images/banner
 ||wpartage.com/site_media/images/pin-
 ||xavbox.com/ban/
+||xboxunlimited.fr/images/testaxl.jpg
 ||xlporn.fr/getpub?
 ||xstarsnews.com/admin/gestion_bann/banniere.php
 ||xstarsnews.com/banner-pub/
@@ -2384,6 +2391,7 @@ mypornmotion.com###VideoPub300x250
 porn-tube-sexe.com,sexytout.com###\5f email_catcher
 mappy.com###a300x600
 ecranlarge.com###aNePasManquer
+xboxunlimited.fr###abos
 liveradio.fr###ad1
 meteomedia.com###ad300x250 + * + * + * + *
 mediatntsat.com###ad_archive_above_content1
@@ -3628,7 +3636,6 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||moov.mg/images/offres/push_adsl_bt_v2.jpg
 @@||mozfr.org/custom/img/*_300x250.png
 @@||msf.fr/sites/all/modules/contrib/ad/$~third-party
-@@||mxstatic.com/
 @@||naruto-one.com/images/bannieres/$domain=otaku-attitude.net
 @@||ndsstatic.com^
 @@||netavenir.com^$domain=zap-tele.com
@@ -3670,6 +3677,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||smartadserver.com/def/def/showdef.asp$script,domain=alloclips.com|deezer.com|portail.free.fr
 @@||smartadserver.com/diff/$object-subrequest,domain=ecranlarge.com
 @@||sofoot.com/package/adsense.js?$script
+@@||soutenir.apprentis-auteuil.org/adserver2/$image,script,stylesheet
 @@||startertv.fr/images/v2/bg_topbody_startertv.jpg
 @@||static.s-sfr.fr/resources/custom/adsl/
 @@||static.touraineverte.com/banners/$image
