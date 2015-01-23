@@ -69,7 +69,9 @@ You can install by dragging the latest [uBlock.firefox.xpi](https://github.com/g
 
 #### Safari
 
-µBlock will hopefully soon be published on Apple's Safari Extension Gallery. Meanwhile, feel free to grab the [latest version here](https://chrismatic.io/ublock) from µBlock's Safari maintainer.
+You can get µBlock for Safari (Yosemite's 8.0 or newer) from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
+
+<sup>There are currently no plans to support older Safari's. It's not recommended that you install µBlock on them (*do it at your own risk*).</sup>
 
 #### Note for all browsers
 
