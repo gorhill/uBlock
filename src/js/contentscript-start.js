@@ -148,7 +148,7 @@ var filteringHandler = function(details) {
     // If no filters were found, maybe the script was injected before uBlock's
     // process was fully initialized. When this happens, pages won't be 
     // cleaned right after browser launch.
-    vAPI.contentscriptStartInjected = details && details.cosmeticHide.length !== 0;
+    vAPI.contentscriptStartInjected = details && details.ready;
 
     // Cleanup before leaving
     localMessager.close();

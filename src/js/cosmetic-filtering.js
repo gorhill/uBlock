@@ -933,7 +933,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         return dict;
     };
 
-    this.frozen = true;
     this.acceptedCount = selfie.acceptedCount;
     this.duplicateCount = selfie.duplicateCount;
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
@@ -951,6 +950,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highHighGenericDonthide = selfie.highHighGenericDonthide;
     this.highHighGenericHideCount = selfie.highHighGenericHideCount;
     this.highHighGenericDonthideCount = selfie.highHighGenericDonthideCount;
+    this.frozen = true;
 };
 
 /******************************************************************************/
@@ -1127,7 +1127,12 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     var domain = µb.URI.domainFromHostname(hostname) || hostname;
     var pos = domain.indexOf('.');
 
+    // https://github.com/gorhill/uBlock/issues/587
+    // r.ready will tell the content script the cosmetic filtering engine is
+    // up and ready.
+
     var r = {
+        ready: this.frozen,
         domain: domain,
         entity: pos === -1 ? domain : domain.slice(0, pos - domain.length),
         skipCosmeticFiltering: this.acceptedCount === 0,
