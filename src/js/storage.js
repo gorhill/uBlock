@@ -370,12 +370,15 @@
     var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
     var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
 
-    var reIsCosmeticFilter = /#@?#/;
-    var reLocalhost = /(?:^|\s)(?:localhost\.localdomain|localhost|local|broadcasthost|0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)(?=\s|$)/g;
-    var reAsciiSegment = /^[\x21-\x7e]+$/;
+    var reIsCosmeticFilter = /#[@#]/;
+    var reIsWhitespaceChar = /\s/;
+    var reMaybeLocalIp = /^[\d:f]/;
+    var reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)(?=\s|$)/;
+    var reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/;
+    //var reAsciiSegment = /^[\x21-\x7e]+$/;
     var matches;
     var lineBeg = 0, lineEnd, currentLineBeg;
-    var line, c;
+    var line, lineRaw, c, pos;
 
     while ( lineBeg < rawEnd ) {
         lineEnd = rawText.indexOf('\n', lineBeg);
@@ -389,9 +392,13 @@
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
         // following parsing code.
-        line = rawText.slice(lineBeg, lineEnd).trim();
+        line = lineRaw = rawText.slice(lineBeg, lineEnd).trim();
         currentLineBeg = lineBeg;
         lineBeg = lineEnd + 1;
+
+        if ( line.length === 0 ) {
+            continue;
+        }
 
         // Strip comments
         c = line.charAt(0);
@@ -400,6 +407,7 @@
         }
 
         // Parse or skip cosmetic filters
+        // All cosmetic filters are caught here
         if ( parseCosmeticFilters ) {
             if ( cosmeticFilteringEngine.add(line) ) {
                 continue;
@@ -408,36 +416,59 @@
             continue;
         }
 
+        // Whatever else is next can be assumed to not be a cosmetic filter
+
+        // Most comments start in first column
         if ( c === '#' ) {
             continue;
         }
 
+        // Catch comments somewhere on the line
+        // Remove:
+        //   ... #blah blah blah
+        //   ... # blah blah blah
+        // Don't remove:
+        //   ...#blah blah blah
+        // because some ABP filters uses the `#` character (URL fragment)
+        pos = line.indexOf('#');
+        if ( pos !== -1 && reIsWhitespaceChar.test(line.charAt(pos - 1)) ) {
+            line = line.slice(0, pos).trim();
+        }
+
         // https://github.com/gorhill/httpswitchboard/issues/15
         // Ensure localhost et al. don't end up in the ubiquitous blacklist.
-        // TODO: do this only if it's not an [Adblock] list
-        line = line
-            .replace(/\s+#.*$/, '')
-            .toLowerCase()
-            .replace(reLocalhost, '')
-            .trim();
+        // With hosts files, we need to remove local IP redirection
+        if ( reMaybeLocalIp.test(c) ) {
+            // Ignore hosts file redirect configuration
+            // 127.0.0.1 localhost
+            // 255.255.255.255 broadcasthost
+            if ( reIsLocalhostRedirect.test(line) ) {
+                continue;
+            }
+            line = line.replace(reLocalIp, '').trim();
+        }
+    
+        if ( line.length === 0 ) {
+            continue;
+        }
 
         // The filter is whatever sequence of printable ascii character without
         // whitespaces
-        matches = reAsciiSegment.exec(line);
-        if ( matches === null ) {
-            //console.debug('µBlock.mergeFilterList(): skipping "%s"', lineRaw);
-            continue;
-        }
+        //matches = reAsciiSegment.exec(line);
+        //if ( matches === null ) {
+        //    console.debug('storage.js > µBlock.mergeFilterList(): skipping "%s"', lineRaw);
+        //    continue;
+        //}
 
         // Bypass anomalies
         // For example, when a filter contains whitespace characters, or
         // whatever else outside the range of printable ascii characters.
-        if ( matches[0] !== line ) {
-            // console.error('"%s" !== "%s"', matches[0], line);
-            continue;
-        }
+        //if ( matches[0] !== line ) {
+        //    console.error('"%s" !== "%s"', matches[0], line);
+        //    continue;
+        //}
 
-        staticNetFilteringEngine.add(matches[0]);
+        staticNetFilteringEngine.add(line);
     }
 };
 
@@ -600,11 +631,11 @@
         // for launch time.
         µb.assets.allowRemoteFetch = true;
 
-        vAPI.onLoadAllCompleted();
-
         // https://github.com/gorhill/uBlock/issues/184
         // Check for updates not too far in the future.
         µb.updater.restart(µb.firstUpdateAfter);
+
+        vAPI.onLoadAllCompleted();
     };
 
     // To bring older versions up to date

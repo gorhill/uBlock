@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"ميكرو بلوك - سجل الإتصال بالشبكة",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{

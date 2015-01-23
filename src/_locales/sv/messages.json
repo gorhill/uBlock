@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Mina regler",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"µBlock - Nätverks log",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -72,103 +72,103 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Inline <code>skript<\/code>-taggar är <b>tillåtna på<\/b> denna sida",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Inline <code>skript<\/code>-taggar är <b>blockerade<\/b> på denna sida",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"förstapartsskript är <b>tillåtna<\/b> på denna webbplats",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"förstapartsskript är <b>blockerde<\/b> på denna webbplats",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"tredjepartsskript är <b>tillåtna<\/b> på denna webbplats",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"tredjepartsskript är <b>blockerade<\/b> på denna webbplats",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"förstapartsramar är <b>tillåtna<\/b> på denna webbplats",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"förstapartsramar är <b>blockerade<\/b> på denna webbplats",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"tredjepartsramar är <b>tillåtna<\/b> på denna webbplats",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"tredjepartsramar är <b>blockerade<\/b> på denna webbplats",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"<code>Inline skripttaggarna<\/code> är <b>tillåtna<\/b> överallt som standard",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"<code>Inline skripttaggarna<\/code> är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"förstapartsskript är <b>tillåtna<\/b> överallt som standard",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"förstapartsskript är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"tredjepartsskript är <b>tillåtna<\/b> överallt som standard",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"tredjepartsskript är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"förstapartsramar är <b>tillåtna<\/b> överallt som standard",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"förstapartsramar är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"tredjepartsramar är <b>tillåtna<\/b> överallt som standard",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"tredjepartsramar är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"bilder",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"inline skript",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"förstaparstpartsskripts",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"tredjepartsskript",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"tredjepartsramar",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Jag är en avancerad användare (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> obligatorisk läsning<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -328,23 +328,23 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Redigera",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Spara",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Kasta",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Importera från fil...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Exportera till fil...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -352,7 +352,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"Lista över din dynamiska filterregler.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -372,7 +372,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "message":"min-ublock-vitlista_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -420,7 +420,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"Under huven",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
@@ -460,7 +460,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Datan gick inte att läsa eller är ogiltig",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

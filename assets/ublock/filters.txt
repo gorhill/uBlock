@@ -242,3 +242,20 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/510#issuecomment-71050211
 ||racksauce.com^$domain=promptfile.com
+
+# https://github.com/gorhill/uBlock/issues/510#issuecomment-71078475
+|http://$popup,domain=filenuke.com|sharesix.com
+||filenuke.com/a/script.js$script
+||mwem.filenuke.com/*/*$script
+||rrnq.filenuke.com/*/*$script
+||szbek.filenuke.com/*/*$script
+||wwegr.filenuke.com/*/*$script
+||sharesix.com/a/script.js$script
+||hhg.sharesix.com/*/*$script
+||jha.sharesix.com/*/*$script
+||lsg.sharesix.com/*/*$script
+||nvy.sharesix.com/*/*$script
+
+# https://github.com/gorhill/uBlock/issues/580
+# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||cdn-static.liverail.com$domain=9to5mac.com

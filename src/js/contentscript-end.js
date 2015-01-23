@@ -33,20 +33,30 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
+    //console.debug('contentscript-end.js > not a HTLMDocument');
     return false;
 }
 
 if ( !vAPI ) {
+    //console.debug('contentscript-end.js > vAPI not found');
     return;
 }
 
 if ( vAPI.canExecuteContentScript() !== true ) {
+    //console.debug('contentscript-end.js > can\'t execute');
+    return;
+}
+
+// https://github.com/gorhill/uBlock/issues/587
+// Pointless to execute without the start script having done its job.
+if ( !vAPI.contentscriptStartInjected ) {
     return;
 }
 
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
 if ( vAPI.contentscriptEndInjected ) {
+    //console.debug('contentscript-end.js > content script already injected');
     return;
 }
 vAPI.contentscriptEndInjected = true;

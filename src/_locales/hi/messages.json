@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"मेरे नियम",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
