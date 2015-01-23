@@ -36,22 +36,26 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
+    //console.debug('contentscript-start.js > not a HTLMDocument');
     return false;
 }
 
 // Because in case
 if ( !vAPI ) {
+    //console.debug('contentscript-start.js > vAPI not found');
     return;
 }
 
 // Because Safari
 if ( vAPI.canExecuteContentScript() !== true ) {
+    //console.debug('contentscript-start.js > can\'t execute');
     return;
 }
 
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
 if ( vAPI.contentscriptStartInjected ) {
+    //console.debug('contentscript-start.js > content script already injected');
     return;
 }
 vAPI.contentscriptStartInjected = true;
@@ -139,7 +143,13 @@ var filteringHandler = function(details) {
         // The port will never be used again at this point, disconnecting allows
         // the browser to flush this script from memory.
     }
-    // Do not close the port before we are done.
+
+    // If no filters were found, maybe the script was injected before uBlock's
+    // process was fully initialized. When this happens, pages won't be 
+    // cleaned right after browser launch.
+    vAPI.contentscriptStartInjected = !details || details.cosmeticHide.length !== 0;
+
+    // Cleanup before leaving
     localMessager.close();
 };
 

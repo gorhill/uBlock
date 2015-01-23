@@ -51,6 +51,8 @@ var renderURL = function(url, filter) {
     }
     if ( reText === '*' ) {
         reText = '\\*';
+    } else if ( reText.charAt(0) === '/' && reText.slice(-1) === '/' ) {
+        reText = reText.slice(1, -1);
     } else {
         reText = reText
             .replace(/\./g, '\\.')
@@ -87,6 +89,7 @@ var createRow = function() {
     tr.appendChild(doc.createElement('td'));
     tr.appendChild(doc.createElement('td'));
     tr.appendChild(doc.createElement('td'));
+    tr.appendChild(doc.createElement('td'));
     return tr;
 };
 
@@ -96,18 +99,26 @@ var renderLogEntry = function(entry) {
     var tr = createRow();
     if ( entry.result.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
+        tr.cells[0].textContent = '\u2009\u2212\u2009';
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
         if ( entry.result.charAt(0) === 'm' ) {
             tr.classList.add('mirrored');
         }
+        tr.cells[0].textContent = '\u2009+\u2009';
+    } else {
+        tr.cells[0].textContent = '\u2009\u00A0\u2009';
     }
     if ( entry.type === 'main_frame' ) {
         tr.classList.add('maindoc');
     }
-    tr.cells[0].textContent = entry.result.slice(3);
-    tr.cells[1].textContent = entry.type;
-    vAPI.insertHTML(tr.cells[2], renderURL(entry.url, entry.result));
+    var filterText = entry.result.slice(3);
+    if ( entry.result.lastIndexOf('sa', 0) === 0 ) {
+        filterText = '@@' + filterText;
+    }
+    tr.cells[1].textContent = filterText;
+    tr.cells[2].textContent = entry.type;
+    vAPI.insertHTML(tr.cells[3], renderURL(entry.url, entry.result));
     tbody.insertBefore(tr, tbody.firstChild);
 };
 
