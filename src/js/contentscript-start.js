@@ -144,6 +144,7 @@ var filteringHandler = function(details) {
         // the browser to flush this script from memory.
     }
 
+    // https://github.com/gorhill/uBlock/issues/587
     // If no filters were found, maybe the script was injected before uBlock's
     // process was fully initialized. When this happens, pages won't be 
     // cleaned right after browser launch.

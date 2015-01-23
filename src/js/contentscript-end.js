@@ -47,6 +47,7 @@ if ( vAPI.canExecuteContentScript() !== true ) {
     return;
 }
 
+// https://github.com/gorhill/uBlock/issues/587
 // Pointless to execute without the start script having done its job.
 if ( !vAPI.contentscriptStartInjected ) {
     return;
