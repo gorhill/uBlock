@@ -1384,7 +1384,6 @@ var TokenEntry = function() {
 var FilterContainer = function() {
     this.reAnyToken = /[%0-9a-z]+/g;
     this.tokens = [];
-    this.buckets = new Array(4);
     this.blockedAnyPartyHostnames = new µb.LiquidDict();
     this.blocked3rdPartyHostnames = new µb.LiquidDict();
     this.filterParser = new FilterParser();
