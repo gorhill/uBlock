@@ -171,10 +171,10 @@ vAPI.tabs.registerListeners();
         return pageStore;
     }
 
-    // Rebind according to context
-    if ( pageURL !== pageStore.pageURL ) {
-        pageStore.reuse(pageURL, context);
-    }
+    // Rebind according to context. We rebind even if the URL did not change,
+    // as maybe the tab was force-reloaded, in which case the page stats must
+    // be all reset.
+    pageStore.reuse(pageURL, context);
 
     return pageStore;
 };
