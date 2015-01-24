@@ -617,11 +617,9 @@ vAPI.net.registerListeners = function() {
         }
 
         if ( e.message.isURLWhiteListed ) {
-            block = µb.URI.hostnameFromURI(e.message.isURLWhiteListed);
-            block = µb.URI.domainFromHostname(block) || block;
-
-            // TODO: revise, this can't work properly
-            e.message = !!µb.netWhitelist[block];
+            // https://github.com/gorhill/uBlock/issues/595
+            // Do not access µb.netWhitelist directly
+            e.message = !µb.getNetFilteringSwitch(e.message.isURLWhiteListed);
             return e.message;
         }
 
