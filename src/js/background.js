@@ -71,6 +71,16 @@ return {
     netExceptionList: {}, // TODO: remove once all users are up to date
     netWhitelist: {},
     netWhitelistModifyTime: 0,
+    netWhitelistDefault: [
+        'about-scheme',
+        'behind-the-scene',
+        'chrome-extension-scheme',
+        'chrome-scheme',
+        'data-scheme',
+        'file-scheme',
+        'opera-scheme',
+        ''
+    ].join('\n').trim(),
 
     localSettings: {
         blockedRequestCount: 0,

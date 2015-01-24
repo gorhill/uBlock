@@ -124,7 +124,7 @@
     };
 
     var bin = {
-        'netWhitelist': 'behind-the-scene',
+        'netWhitelist': this.netWhitelistDefault,
         'netExceptionList': ''
     };
     vAPI.storage.get(bin, onWhitelistLoaded);
@@ -641,10 +641,17 @@
     // To bring older versions up to date
     var onVersionReady = function(bin) {
         var lastVersion = bin.version || '0.0.0.0';
-        // Whitelist behind-the-scene scope by default
+
+        // Whitelist some key scopes by default
         if ( lastVersion.localeCompare('0.8.6.0') < 0 ) {
-            µb.toggleNetFilteringSwitch('http://behind-the-scene/', 'site', false);
+            µb.netWhitelist = µb.whitelistFromString(
+                µb.stringFromWhitelist(µb.netWhitelist) + 
+                '\n' + 
+                µb.netWhitelistDefault
+            );
+            µb.saveWhitelist();
         }
+
         vAPI.storage.set({ version: vAPI.app.version });
         onAllReady();
     };

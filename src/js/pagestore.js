@@ -616,8 +616,11 @@ PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
 /******************************************************************************/
 
 PageStore.prototype.filterRequest = function(context) {
+
     if ( this.getNetFilteringSwitch() === false ) {
-        this.cacheResult(context, '');
+        if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
+            this.netFilteringCache.add(context, '');
+        }
         return '';
     }
 
@@ -648,16 +651,53 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
-    this.cacheResult(context, result);
+    if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
+        this.netFilteringCache.add(context, result);
+    }
 
     // console.debug('[%s, %s] = "%s"', context.requestHostname, context.requestType, result);
 
     return result;
 };
 
+// Cache only what is worth it if logging is disabled
+// http://jsperf.com/string-indexof-vs-object
+var collapsibleRequestTypes = 'image sub_frame object';
+
 /******************************************************************************/
 
-PageStore.prototype.cacheResult = function(context, result) {
+PageStore.prototype.filterRequestNoCache = function(context) {
+
+    if ( this.getNetFilteringSwitch() === false ) {
+        return '';
+    }
+
+    var result = '';
+
+    // Given that:
+    // - Dynamic filtering override static filtering
+    // - Evaluating dynamic filtering is much faster than static filtering
+    // We evaluate dynamic filtering first, and hopefully we can skip
+    // evaluation of static filtering.
+    if ( µb.userSettings.advancedUserEnabled ) {
+        var df = µb.dynamicNetFilteringEngine.clearRegisters();
+        df.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        if ( df.mustBlockOrAllow() ) {
+            result = df.toFilterString();
+        }
+    }
+
+    // Static filtering never override dynamic filtering
+    if ( result === '' ) {
+        result = µb.staticNetFilteringEngine.matchString(context);
+    }
+
+    return result;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.logRequest = function(context, result) {
     var requestHostname = context.requestHostname;
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;
@@ -666,17 +706,15 @@ PageStore.prototype.cacheResult = function(context, result) {
     var c = result.charAt(1);
     if ( c === '' || c === 'a' ) {
         this.hostnameToCountMap[requestHostname] += 0x00010000;
+        this.perLoadAllowedRequestCount++;
+        µb.localSettings.allowedRequestCount++;
     } else /* if ( c === 'b' ) */ {
         this.hostnameToCountMap[requestHostname] += 0x00000001;
+        this.perLoadBlockedRequestCount++;
+        µb.localSettings.blockedRequestCount++;
     }
-    if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
-        this.netFilteringCache.add(context, result);
-    }
+    this.logBuffer.writeOne(context, result);
 };
-
-// Cache only what is worth it if logging is disabled
-// http://jsperf.com/string-indexof-vs-object
-var collapsibleRequestTypes = 'image sub_frame object';
 
 /******************************************************************************/
 

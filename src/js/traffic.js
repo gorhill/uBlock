@@ -34,10 +34,15 @@
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
-    //console.debug('onBeforeRequest()> "%s": %o', details.url, details);
+    //console.debug('traffic.js > onBeforeRequest(): "%s": %o', details.url, details);
 
-    // Do not block behind the scene requests.
     var tabId = details.tabId;
+
+    // Special treatment: behind-the-scene requests
+    if ( vAPI.isNoTabId(tabId) ) {
+        return onBeforeBehindTheSceneRequest(details);
+    }
+
     var µb = µBlock;
     var requestURL = details.url;
     var requestType = details.type;
@@ -51,7 +56,7 @@ var onBeforeRequest = function(details) {
             pageStore.requestURL = requestURL;
             pageStore.requestHostname = pageStore.pageHostname;
             pageStore.requestType = 'main_frame';
-            pageStore.logBuffer.writeOne(pageStore, '');
+            pageStore.logRequest(pageStore, '');
         }
         return;
     }
@@ -83,10 +88,7 @@ var onBeforeRequest = function(details) {
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
-        //console.debug('onBeforeRequest()> ALLOW "%s" (%o) because "%s"', details.url, details, result);
-
-        pageStore.perLoadAllowedRequestCount++;
-        µb.localSettings.allowedRequestCount++;
+        //console.debug('traffic.js > onBeforeRequest(): ALLOW "%s" (%o) because "%s"', details.url, details, result);
 
         // https://github.com/gorhill/uBlock/issues/114
         if ( frameId > 0 && frameStore === undefined ) {
@@ -99,28 +101,66 @@ var onBeforeRequest = function(details) {
         // Disabling local mirroring for the time being
         //var redirectURL = pageStore.toMirrorURL(requestURL);
         //if ( redirectURL !== '' ) {
-        //    pageStore.logBuffer.writeOne(requestContext, 'ma:');
-            //console.debug('"%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
+        //    pageStore.logRequest(requestContext, 'ma:');
+            //console.debug('traffic.js > "%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
         //    return { redirectUrl: redirectURL };
         //}
 
-        pageStore.logBuffer.writeOne(requestContext, result);
+        pageStore.logRequest(requestContext, result);
 
         return;
     }
 
     // Blocked
-    //console.debug('onBeforeRequest()> BLOCK "%s" (%o) because "%s"', details.url, details, result);
+    //console.debug('traffic.js > onBeforeRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
 
-    pageStore.logBuffer.writeOne(requestContext, result);
+    pageStore.logRequest(requestContext, result);
 
-    pageStore.perLoadBlockedRequestCount++;
-    µb.localSettings.blockedRequestCount++;
     µb.updateBadgeAsync(tabId);
 
     // https://github.com/gorhill/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
+
+    return { 'cancel': true };
+};
+
+/******************************************************************************/
+
+// Intercept and filter behind-the-scene requests.
+
+var onBeforeBehindTheSceneRequest = function(details) {
+    //console.debug('traffic.js > onBeforeBehindTheSceneRequest(): "%s": %o', details.url, details);
+
+    var µb = µBlock;
+    var pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
+    if ( !pageStore ) {
+        return;
+    }
+
+    pageStore.requestURL = details.url;
+    pageStore.requestHostname = details.hostname;
+    pageStore.requestType = details.type;
+
+    // Blocking behind-the-scene requests can break a lot of stuff: prevent
+    // browser updates, prevent extension updates, prevent extensions from
+    // working properly, etc.
+    // So we filter if and only if the "advanced user" mode is selected
+    var result = '';
+    if ( µb.userSettings.advancedUserEnabled ) {
+        result = pageStore.filterRequestNoCache(pageStore);
+    }
+
+    pageStore.logRequest(pageStore, result);
+
+    // Not blocked
+    if ( µb.isAllowResult(result) ) {
+        //console.debug('traffic.js > onBeforeBehindTheSceneRequest(): ALLOW "%s" (%o) because "%s"', details.url, details, result);
+        return;
+    }
+
+    // Blocked
+    //console.debug('traffic.js > onBeforeBehindTheSceneRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
 
     return { 'cancel': true };
 };
@@ -134,11 +174,11 @@ var onBeforeSendHeaders = function(details) {
     // the tab id could be -1, despite the request not really being a
     // behind-the-scene request. If true, the test below would prevent
     // the popup blocker from working. Need to check this.
-    //console.debug('onBeforeSendHeaders()> "%s" (%o) because "%s"', details.url, details, result);
+    //console.debug('traffic.js > onBeforeSendHeaders(): "%s" (%o) because "%s"', details.url, details, result);
 
     // Do not block behind the scene requests.
     var tabId = details.tabId;
-    if ( tabId < 0 ) {
+    if ( vAPI.isNoTabId(tabId) ) {
         return;
     }
 
@@ -193,7 +233,7 @@ var onBeforeSendHeaders = function(details) {
     };
     pageDetails.rootHostname = pageDetails.pageHostname;
     pageDetails.rootDomain = pageDetails.pageDomain;
-    //console.debug('Referrer="%s"', referrer);
+    //console.debug('traffic.js > Referrer="%s"', referrer);
     var result = µb.staticNetFilteringEngine.matchStringExactType(pageDetails, requestURL, 'popup');
 
     // Not blocked?
@@ -215,7 +255,7 @@ var onBeforeSendHeaders = function(details) {
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
     var tabId = details.tabId;
-    if ( tabId < 0 ) {
+    if ( vAPI.isNoTabId(tabId) ) {
         return;
     }
 
@@ -265,16 +305,15 @@ var onHeadersReceived = function(details) {
     context.requestType = 'inline-script';
 
     var result = pageStore.filterRequest(context);
-    if ( µb.isBlockResult(result) === false ) {
+
+    pageStore.logRequest(context, result);
+
+    // Don't block
+    if ( µb.isAllowResult(result) ) {
         return;
     }
 
-    // Blocked
-    pageStore.perLoadBlockedRequestCount++;
-    µb.localSettings.blockedRequestCount++;
     µb.updateBadgeAsync(tabId);
-
-    pageStore.logBuffer.writeOne(context, result);
 
     details.responseHeaders.push({
         'name': 'Content-Security-Policy',
@@ -368,7 +407,7 @@ vAPI.net.onHeadersReceived = {
 
 vAPI.net.registerListeners();
 
-//console.log('µBlock> Beginning to intercept net requests at %s', (new Date()).toISOString());
+//console.log('traffic.js > Beginning to intercept net requests at %s', (new Date()).toISOString());
 
 /******************************************************************************/
 

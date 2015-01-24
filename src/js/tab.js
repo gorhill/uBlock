@@ -88,7 +88,7 @@ vAPI.tabs.onPopup = function(details) {
             requestHostname: µb.URI.hostnameFromURI(requestURL),
             requestType: 'popup'
         };
-        pageStore.logBuffer.writeOne(context, result);
+        pageStore.logRequest(context, result);
     }
 
     // Not blocked
@@ -131,11 +131,13 @@ vAPI.tabs.registerListeners();
         return uri.normalizedURI();
     }
 
+    var url = 'http://' + scheme + '-scheme/';
+
     if ( uri.hostname !== '' ) {
-        return 'http://' + scheme + '-' + uri.hostname + uri.path;
+        url += uri.hostname + '/';
     }
 
-    return 'http://' + scheme + '-scheme/';
+    return url;
 };
 
 /******************************************************************************/
@@ -169,7 +171,8 @@ vAPI.tabs.registerListeners();
         return pageStore;
     }
 
-    if ( context === 'afterNavigate' ) {
+    // Rebind according to context
+    if ( pageURL !== pageStore.pageURL ) {
         pageStore.reuse(pageURL, context);
     }
 

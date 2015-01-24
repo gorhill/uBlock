@@ -89,6 +89,12 @@ var cachePopupData = function(data) {
 /******************************************************************************/
 
 var hashFromPopupData = function(reset) {
+    // It makes no sense to offer to refresh the behind-the-scene scope
+    if ( popupData.pageHostname === 'behind-the-scene' ) {
+        uDom('body').toggleClass('dirty', false);
+        return;
+    }
+
     var hasher = [];
     var rules = popupData.dynamicFilterRules;
     var rule;
@@ -299,7 +305,13 @@ var renderPopup = function() {
     uDom('#appname').text(popupData.appName);
     uDom('#version').text(popupData.appVersion);
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
-    uDom('#switch').toggleClass('off', popupData.pageURL === '' || !popupData.netFilteringSwitch);
+
+    uDom('#switch').toggleClass(
+        'off',
+        (popupData.pageURL === '') ||
+        (!popupData.netFilteringSwitch) ||
+        (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled)
+    );
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom('#gotoLog').toggleClass('enabled', popupData.canRequestLog === true)
@@ -357,6 +369,9 @@ var renderPopup = function() {
 
 var toggleNetFilteringSwitch = function(ev) {
     if ( !popupData || !popupData.pageURL ) {
+        return;
+    }
+    if ( popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled ) {
         return;
     }
     messager.send({
