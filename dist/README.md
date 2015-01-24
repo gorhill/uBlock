@@ -16,4 +16,4 @@ The extension will now be available in your chromium/chromium-based browser.
 
 Remember that you have to update manually also. For some users, updating manually is actually an advantage because:
 - You can update when **you** want
-- If ever a new version sucks, you can easily just re-installed the previous one
+- If ever a new version sucks, you can easily just re-install the previous one
