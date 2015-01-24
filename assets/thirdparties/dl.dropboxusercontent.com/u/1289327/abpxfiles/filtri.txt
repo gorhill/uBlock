@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201501121053
+! Version: 201501201807
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 12-01-2015
+! Last modified: 20-01-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -769,7 +769,6 @@ http://punto-informatico.it/lt2.gif
 http://punto-informatico.it/n90.swf
 http://punto-informatico.it/ngiv6.swf
 http://punto-informatico.it/ta1.swf
-http://rad.msn.com/
 http://ragazzeinvendita.com/popupTool.php
 http://rcm-it.amazon.it/e/cm
 http://rcm-uk.amazon.co.uk/e/cm?t=delsnewwebsit
@@ -1389,7 +1388,6 @@ http://*.kataweb.it/storage/contentsense/
 http://cdn.adnxs.com/
 http://ad.103092804.com/
 http://ib.adnxs.com/$domain=~zoomin.tv|~youreporter.it
-http://m.adnxs.com/
 http://*.trekaklik.com/$popup
 http://banners*.spacash.com/
 http://cacheonline.europacasino.com/
@@ -1727,7 +1725,8 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://katproxy.com/kata/adx.php
 ||firstmediahub.com^$popup
 ||fmdwbsfxf0.com^$popup
-about:blank$popup,domain=katproxy.com
+about:blank$popup,domain=katproxy.com|filmpertutti.eu
+|http://*.tomshw.it/kelkoo
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -2358,9 +2357,6 @@ wikia.com##DIV[id="TOP_LEADERBOARD"]
 gazzetta.it##DIV[id="tv-adv"]
 motogp.com##DIV[class="adds add_300x250"]
 giornalettismo.com##DIV[class="liq-frame"]
-msn.com##IFRAME[id="dapIfM0"]
-msn.com##IFRAME[id="dapIfM3"]
-msn.com##IFRAME[id="dapIfM2"]
 youreporter.it##.banner_top
 blackberrycool.com##DIV[id="sidebar_store_banner"]
 blackberrycool.com##DIV[id="bannerad"]
@@ -3338,7 +3334,6 @@ vg247.com###recommendations
 ###taboola-below-main-column
 dailygreen.it###link_skin
 iphoneitalia.com##.wes_main.wes_footer
-cn24tv.it###fancybox-overlay
 cn24tv.it##.modPubblicita.clickableBanner
 cn24tv.it##.modPubblicita
 intoscana.it##.skin-marg
@@ -3348,7 +3343,6 @@ forum.xda-developers.com##[id^="div-gpt-ad-"]
 theitbros.com##.adsbygoogle
 tuttomercatoweb.com###LOCSTORAGE[src="http://secure-it.imrworldwide.com/storageframe.html"]
 delicious.com##.big-ads
-cn24tv.it###fancybox-content
 m.accuweather.com##.top-ad
 m.accuweather.com##.links
 amazon.it###sponsoredLinks
@@ -3378,6 +3372,24 @@ katproxy.com##[id^="MarketGidScriptRoot"]
 katproxy.com##.botmarg10px
 9gag.com##.block-ad
 9gag.com##.naughty-box
+rizonesoft.com##.adsbygoogle
+rizonesoft.com##[id^="adswidget"]
+tomshw.it##.ob_container_recs
+tomshw.it##.ob_container
+tomshw.it##.ob_what
+iptrace.in##.TopBanner
+iptrace.in##.BottomBanner
+htaccess-guide.com##.advertisement_728
+salute.diariodelweb.it##.publi300_diariodelweb
+cn24tv.it###popupOverlay
+noelpulis.com##.adsbygoogle
+fogliata.net###switch_pp_override_1_521763\.10747717746
+cn24tv.it##[class^="ad6"]
+theitbros.com##.adhere
+cnet.com##.ad-leader-top
+msn.com##[data-aop="articletakeoverad_ad"]
+msn.com##.ad.non-empty-ad
+msn.com##.ad
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3502,7 +3514,6 @@ sordum.org##.adsbygoogle
 swzone.it###banner728x90
 swzone.it###boxhome-adv
 digitalgamesprices.com##.adsbygoogle
-nowdownload.at##.span4.top20
 neogaf.com##.goodie728
 wccftech.com##.wpInsert.wpInsertInPostAd
 wccftech.com##.adsbygoogle
@@ -3557,7 +3568,6 @@ http://www.cultura.rai.it/$popup
 ||n99adshostnet.com^$popup,domain=simply-hentai.com
 ||ad6media.fr^$popup,domain=rapidvideo.org
 ||topstoreoffers.com^$popup,domain=rapidvideo.org
-||fmdwbsfxf0.com^$popup,domain=rapidvideo.org
 ||thebrowsergame.com^$popup,domain=firedrive.com
 ||cpmterra.com^$popup,domain=firedrive.com
 ||elitewindowstream.xyz^$popup,domain=firedrive.com

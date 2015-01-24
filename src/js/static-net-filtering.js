@@ -1124,7 +1124,6 @@ var FilterParser = function() {
     this.reHasUppercase = /[A-Z]/;
     this.hostnames = [];
     this.notHostnames = [];
-    this.types = [];
     this.reset();
 };
 
@@ -1139,6 +1138,7 @@ FilterParser.prototype.toNormalizedType = {
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
              'other': 'other',
+          'elemhide': 'cosmetic-filtering',
      'inline-script': 'inline-script',
              'popup': 'popup'
 };
@@ -1161,7 +1161,7 @@ FilterParser.prototype.reset = function() {
     this.token = '';
     this.tokenBeg = 0;
     this.tokenEnd = 0;
-    this.types.length = 0;
+    this.types = 0;
     this.important = 0;
     this.unsupported = false;
     return this;
@@ -1169,28 +1169,22 @@ FilterParser.prototype.reset = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/589
+// Be ready to handle multiple negated types
+
 FilterParser.prototype.parseOptType = function(raw, not) {
-    var type = this.toNormalizedType[raw];
-    if ( not ) {
-        for ( var k in typeNameToTypeValue ) {
-            if ( typeNameToTypeValue.hasOwnProperty(k) === false ) {
-                continue;
-            }
-            if ( k === type ) {
-                continue;
-            }
-            // https://github.com/gorhill/uBlock/issues/121
-            // `popup` is a special type, it cannot be set for filters intended
-            // for real net request types. The test is safe since there is no
-            // such thing as a filter using `~popup`.
-            if ( typeNameToTypeValue[k] > typeNameToTypeValue.other ) {
-                continue;
-            }
-            this.types.push(typeNameToTypeValue[k]);
-        }
-    } else {
-        this.types.push(typeNameToTypeValue[type]);
+    var type = typeNameToTypeValue[this.toNormalizedType[raw]];
+
+    if ( !not ) {
+        this.types |= 1 << (type >>> 4);
+        return;
     }
+
+    if ( this.types === 0 ) {
+        this.types = (1 << (typeNameToTypeValue.other >>> 4) + 1) - 1;
+    }
+
+    this.types &= ~(1 << (type >>> 4));
 };
 
 /******************************************************************************/
@@ -1235,7 +1229,7 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         if ( opt === 'elemhide' && this.action === AllowAction ) {
-            this.types.push(typeNameToTypeValue['cosmetic-filtering']);
+            this.parseOptType('elemhide', false);
             this.action = BlockAction;
             continue;
         }
@@ -1284,17 +1278,18 @@ FilterParser.prototype.parse = function(s) {
         }
     }
 
+    // block or allow filter?
+    // Important: this must be executed before parsing options
+    if ( s.lastIndexOf('@@', 0) === 0 ) {
+        this.action = AllowAction;
+        s = s.slice(2);
+    }
+
     // options
     pos = s.indexOf('$');
     if ( pos !== -1 ) {
         this.parseOptions(s.slice(pos + 1));
         s = s.slice(0, pos);
-    }
-
-    // block or allow filter?
-    if ( s.lastIndexOf('@@', 0) === 0 ) {
-        this.action = AllowAction;
-        s = s.slice(2);
     }
 
     // regex?
@@ -1716,13 +1711,22 @@ FilterContainer.prototype.addFilter = function(parsed) {
 
 FilterContainer.prototype.addFilterEntry = function(filter, parsed, party) {
     var bits = parsed.action | parsed.important | party;
-    if ( parsed.types.length === 0 ) {
+
+    // Any type
+    if ( parsed.types === 0 ) {
         this.addToCategory(bits | AnyType, parsed.token, filter);
         return;
     }
-    var n = parsed.types.length;
-    for ( var i = 0; i < n; i++ ) {
-        this.addToCategory(bits | parsed.types[i], parsed.token, filter);
+
+    // Specific type(s)
+    var type = parsed.types >>> 2; // bit 0-1 are unused
+    var bitOffset = 2;
+    while ( type !== 0 ) {
+        if ( type & 0x01 ) {
+            this.addToCategory(bits | (bitOffset << 4), parsed.token, filter);
+        }
+        bitOffset += 1;
+        type >>>= 1;
     }
 };
 

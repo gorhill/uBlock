@@ -1,3 +1,4 @@
+language: ruby
 sudo: false
 env:
   matrix:
@@ -13,4 +14,4 @@ deploy:
   on:
     repo: gorhill/uBlock
     tags: true
-    branch: master
+    all_branches: true
