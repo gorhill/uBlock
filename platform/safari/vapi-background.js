@@ -29,8 +29,6 @@
 
 'use strict';
 
-/******************************************************************************/
-
 var vAPI = self.vAPI = self.vAPI || {};
 
 vAPI.safari = true;
@@ -590,104 +588,84 @@ vAPI.net = {};
 
 /******************************************************************************/
 
+// Fast `contains`
+
+Array.prototype.contains = function(a) {
+    var b = this.length;
+    while(b --) {
+	if(this[b] === a) {
+	    return true;
+	}
+    }
+    return false;
+};
+
+/******************************************************************************/
+
 vAPI.net.registerListeners = function() {
     var µb = µBlock;
 
-    // Since it's not used
-    this.onBeforeSendHeaders = null;
-    this.onHeadersReceived = null;
+    // Until Safari has more specific events, those are instead handled
+    // in the onBeforeRequestAdapter; clean them up so they're garbage-collected
+    vAPI.net.onBeforeSendHeaders = null;
+    vAPI.net.onHeadersReceived = null;
 
-    var onBeforeRequest = this.onBeforeRequest;
+    var onBeforeRequest = vAPI.net.onBeforeRequest,
+	onBeforeRequestClient = onBeforeRequest.callback,
+	blockableTypes = onBeforeRequest.types;
 
-    if ( !Array.isArray(onBeforeRequest.types) ) {
-        onBeforeRequest.types = [];
-    }
-
-    onBeforeRequest = onBeforeRequest.callback;
-    this.onBeforeRequest.callback = function(e) {
-        var block;
-
-        if ( e.name !== 'canLoad' ) {
-            return;
-        }
-
-        // No stopPropagation if it was called from beforeNavigate event
-        if ( e.stopPropagation ) {
-            e.stopPropagation();
-        }
-
-        if ( e.message.isURLWhiteListed ) {
-            // https://github.com/gorhill/uBlock/issues/595
-            // Do not access µb.netWhitelist directly
-            e.message = !µb.getNetFilteringSwitch(e.message.isURLWhiteListed);
-            return e.message;
-        }
-
-        // When the URL changes, but the document doesn't
-        if ( e.message.type === 'popstate' ) {
-            vAPI.tabs.onUpdated(
-                vAPI.tabs.getTabId(e.target),
-                {url: e.message.url},
-                {url: e.message.url}
-            );
-            return;
-        } else if ( e.message.type === 'popup' ) {
-            // blocking unwanted pop-ups
-            if ( e.message.url === 'about:blank' ) {
-                vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
-                e.message = true;
-            } else {
-                e.message = !vAPI.tabs.onPopup({
-                    url: e.message.url,
-                    tabId: 0,
-                    sourceTabId: vAPI.tabs.getTabId(e.target)
-                });
-            }
-
-            return;
-        }
-        if ( e.message.navigatedToNew ) {
-            vAPI.tabs.onNavigation({
-                url: e.message.url,
-                frameId: 0,
-                tabId: vAPI.tabs.getTabId(e.target)
-            });
-            return;
-        }
-
-        block = vAPI.net.onBeforeRequest;
-
-        if ( block.types.indexOf(e.message.type) === -1 ) {
-            return true;
-        }
-
-        e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
-        e.message.tabId = vAPI.tabs.getTabId(e.target);
-        block = onBeforeRequest(e.message);
-
-        // Truthy return value will allow the request,
-        // except when redirectUrl is present
-        if ( block && typeof block === 'object' ) {
-            if ( block.cancel === true ) {
-                e.message = false;
-            } else if ( e.message.type === 'script'
-                && typeof block.redirectUrl === 'string' ) {
-                e.message = block.redirectUrl;
-            } else {
-                e.message = true;
-            }
-        } else {
-            e.message = true;
-        }
-
-        return e.message;
+    var onBeforeRequestAdapter = function(e) {
+	if(e.name !== "canLoad") {
+	    return;
+	}
+	e.stopPropagation && e.stopPropagation();
+	switch(e.message.type) {
+	    case "isWhiteListed":
+		e.message = !µb.getNetFilteringSwitch(e.message.url);
+		break;
+	    case "navigatedToNew":
+		vAPI.tabs.onNavigation({
+		    url: e.message.url,
+		    frameId: 0,
+		    tabId: vAPI.tabs.getTabId(e.target)
+		});
+		break;
+	    case "popup":
+		if(e.message.url === 'about:blank') {
+		    vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
+		    e.message = true;
+		}
+		else {
+		    e.message = !vAPI.tabs.onPopup({
+			url: e.message.url,
+			tabId: 0,
+			sourceTabId: vAPI.tabs.getTabId(e.target)
+		    });
+		}
+		break;
+	    case "popstate":
+		vAPI.tabs.onUpdated(vAPI.tabs.getTabId(e.target), 
+			{url: e.message.url},
+			{url: e.message.url});
+		break;
+	    default:
+		if(!blockableTypes.contains(e.message.type)) {
+		    e.message = true;
+		    return;
+		}
+		e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
+		e.message.tabId = vAPI.tabs.getTabId(e.target);
+		var blockVerdict = onBeforeRequestClient(e.message);
+		if(blockVerdict && blockVerdict.cancel) {
+		    e.message = false;
+		}
+		else {
+		    e.message = true;
+		}
+	}
+	return;
     };
-
-    safari.application.addEventListener(
-        'message',
-        this.onBeforeRequest.callback,
-        true
-    );
+    safari.application.addEventListener("message", onBeforeRequestAdapter, true);
 };
 
 /******************************************************************************/

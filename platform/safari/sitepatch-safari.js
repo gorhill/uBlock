@@ -19,9 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global ytspf */
-'use strict';
-
 /******************************************************************************/
 
 // Adding new URL requires to whitelist it in the background script too (addContentScriptFromURL)
@@ -30,7 +27,7 @@
 // from the extension scope won't be accessible in the sitePatch function.
 
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
 
 if ( /^www\.youtube(-nocookie)?\.com/.test(location.host) ) {
     vAPI.sitePatch = function() {
