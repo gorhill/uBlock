@@ -27,9 +27,7 @@
 
 'use strict';
 
-/******************************************************************************/
-
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
 vAPI.safari = true;
 
 /******************************************************************************/
@@ -177,7 +175,7 @@ vAPI.messaging = {
 /******************************************************************************/
 
 vAPI.canExecuteContentScript = function() {
-    return /^https?:/.test(location.protocol);
+    return (/^https?:/.test(location.protocol) && typeof safari === 'object');
 };
 
 /******************************************************************************/
@@ -185,35 +183,34 @@ vAPI.canExecuteContentScript = function() {
 // This file can be included into extensin pages,
 // but the following code should run only in content pages.
 
-if ( location.protocol === 'safari-extension:' ) {
+if ( location.protocol === 'safari-extension:' || typeof safari !== 'object' ) {
     return;
 }
 
 /******************************************************************************/
 
 var frameId = window === window.top ? 0 : Date.now() % 1E5;
-var parentFrameId = frameId ? 0 : -1;
-var beforeLoadEvent = new Event('beforeload'); // Helper event to message background
+var parentFrameId = (frameId ? 0 : -1);
+var beforeLoadEvent = new Event("beforeload"); // Helper event to message background
 
 // Inform that we've navigated
 if(frameId === 0) {
     safari.self.tab.canLoad(beforeLoadEvent, { 
         url: location.href,
-        type: 'main_frame',
-        navigatedToNew: true
+        type: "navigatedToNew"
     });
 }
 
-var linkHelper = document.createElement('a');
+var linkHelper = document.createElement("a");
 var nodeTypes = {
-    'frame': 'sub_frame',
-    'iframe': 'sub_frame',
-    'script': 'script',
-    'img': 'image',
-    'input': 'image',
-    'object': 'object',
-    'embed': 'object',
-    'link': 'stylesheet'
+    "frame": "sub_frame",
+    "iframe": "sub_frame",
+    "script": "script",
+    "img": "image",
+    "input": "image",
+    "object": "object",
+    "embed": "object",
+    "link": "stylesheet"
 };
 var shouldBlockDetailedRequest = function(details) {
     linkHelper.href = details.url;
@@ -224,7 +221,7 @@ var shouldBlockDetailedRequest = function(details) {
     return !(safari.self.tab.canLoad(beforeLoadEvent, details));
 }
 var onBeforeLoad = function(e) {
-    if(e.url.lastIndexOf('data:', 0) === 0) {
+    if(e.url.lastIndexOf("data:", 0) === 0) {
         return;
     }
     linkHelper.href = e.url;
@@ -240,28 +237,6 @@ var onBeforeLoad = function(e) {
     var response = safari.self.tab.canLoad(e, details);
     if(!response) {
         e.preventDefault();
-        return false;
-    }
-    // Local mirroring, response should be a data: URL here
-    if(typeof response !== 'string') {
-        return;
-    }
-    // Okay, we're mirroring...
-    e.preventDefault();
-    // Content Security Policy with disallowed inline scripts may break things
-    details = document.createElement('script');
-    details.textContent = atob(response.slice(response.indexOf(',', 20) + 1));
-
-    if ( e.target.hasAttribute('defer') && document.readyState === 'loading' ) {
-        var jsOnLoad = function(ev) {
-            this.removeEventListener(ev.type, jsOnLoad, true);
-            this.body.removeChild(this.body.appendChild(details));
-        };
-
-        document.addEventListener('DOMContentLoaded', jsOnLoad, true);
-    } else {
-        e.target.parentNode.insertBefore(details, e.target);
-        details.parentNode.removeChild(details);
     }
 };
 
@@ -270,7 +245,7 @@ document.addEventListener('beforeload', onBeforeLoad, true);
 /******************************************************************************/
 // block pop-ups, intercept xhr requests, and apply site patches
 var firstMutation = function() {
-    document.removeEventListener('DOMSubtreeModified', firstMutation, true);
+    document.removeEventListener('DOMContentLoaded', firstMutation, true);
     firstMutation = false;
 
     var randEventName = uniqueId();
@@ -302,7 +277,7 @@ var firstMutation = function() {
         '};'
     ];
 
-    if ( frameId === 0 ) {
+    if(frameId === 0) {
         tmpScript.push(
             'var pS = history.pushState, rS = history.replaceState,',
             'onpopstate = function(e) {',
@@ -322,22 +297,20 @@ var firstMutation = function() {
         );
     }
 
-    var block = safari.self.tab.canLoad(beforeLoadEvent, {
-        isURLWhiteListed: location.href
+    var whiteListed = safari.self.tab.canLoad(beforeLoadEvent, {
+        type: "isWhiteListed",
+	url: location.href
     });
-
-    if ( vAPI.sitePatch && !block ) {
-        tmpScript.push('(' + vAPI.sitePatch + ')();');
+    if(vAPI.sitePatch && !whiteListed) {
+	tmpScript.push('(' + vAPI.sitePatch + ')();');
     }
 
     tmpScript.push('})();');
     tmpJS.textContent = tmpScript.join('');
-    document.documentElement.removeChild(
-        document.documentElement.appendChild(tmpJS)
-    );
+    document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));
 };
 
-document.addEventListener('DOMSubtreeModified', firstMutation, true);
+document.addEventListener('DOMContentLoaded', firstMutation, true);
 
 /******************************************************************************/
 
