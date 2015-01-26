@@ -72,7 +72,7 @@ cp $SRC/ru/description.txt    $DES/description-ru.txt
 cp $SRC/sv-SE/description.txt $DES/description-sv.txt
 cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
-#cp $SRC/vi/description.txt    $DES/description-vi.txt
+cp $SRC/vi/description.txt    $DES/description-vi.txt
 cp $SRC/zh-CN/description.txt $DES/description-zh_CN.txt
 #cp $SRC/zh-TW/description.txt $DES/description-zh_TW.txt
 
