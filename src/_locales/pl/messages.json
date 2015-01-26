@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Podłączony do {{count}} różnych domen z {{total}}",
+    "message":"Połączony do {{count}} różnych domen z {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "message":"my-ublock-custom-filters_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -460,7 +460,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Dane nieprawidłowe lub niemożliwe do odczytu",
+    "message":"Dane nie mogły zostać odczytane lub są nieprawidłowe",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

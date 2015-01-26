@@ -1,4 +1,4 @@
-µBlock è un efficiente ad-blocker: occupa poca memoria e poca cpu, e può usare migliaia di filtri molto più di quelli che possono usare altri software simili.
+µBlock è un efficiente ad-blocker: occupa poca memoria e poca cpu, ma può usare migliaia di filtri in più rispetto ad altri software simili.
 
 Consulta questa pagina (in Inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 

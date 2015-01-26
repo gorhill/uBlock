@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Cuối cùng, là một bộ chặn hiệu quả cho các trình duyệt dựa trên Chromium. Dễ dàng cho CPU và bộ nhớ.",
+    "message":"Cuối cùng, đã có một công cụ chặn quảng cáo hiệu quả, tiêu tốn ít CPU và bộ nhớ.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -12,19 +12,19 @@
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Cài đặt",
+    "message":"Cấu hình",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Các bộ lọc bên thứ ba",
+    "message":"Bộ lọc bên thứ ba",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Các bộ lọc của bạn",
+    "message":"Bộ lọc của tôi",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"My rules",
+    "message":"Quy tắc của tôi",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"µBlock — Nhật ký yêu cầu mạng",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,15 +40,15 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Nhấp chuột: vĩnh viễn vô hiệu hóa\/kích hoạt µBlock cho trang web này.\nCtrl + bấm chuột: vô hiệu hóa µBlock chỉ trên trang này.",
+    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn µBlock cho trang này.\nCtrl + bấm chuột: vô hiệu µBlock chỉ trên trang này.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"các yêu cầu bị chặn",
+    "message":"yêu cầu đã chặn",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"Trong trang này",
+    "message":"trên trang này",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -72,107 +72,107 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Các thẻ <code>script<\/code> cùng dòng <b>được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Các thẻ <code>script<\/code> cùng dòng <b>không được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "message":"Các script bên thứ nhất <b>được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "message":"Các script bên thứ nhất <b>không được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "message":"Các script bên thứ ba <b>được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "message":"Các script bên thứ ba <b>không được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "message":"Các khung bên thứ nhất <b>được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "message":"Các khung bên thứ nhất <b>không được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "message":"Các khung bên thứ ba <b>được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "message":"Các khung bên thứ ba <b>không được cho phép<\/b> trên trang này",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Các thẻ <code>script<\/code> cùng dòng <b>được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Các thẻ <code>script<\/code> cùng dòng <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Các script bên thứ nhất <b>được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Các script bên thứ nhất <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "message":"Các script bên thứ ba <b>được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "message":"Các script bên thứ ba <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Các khung bên thứ nhất <b>được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Các khung bên thứ nhất <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "message":"Các khung bên thứ ba <b>được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "message":"Các khung bên thứ ba <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"hình ảnh",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"script cùng dòng",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"script bên thứ nhất",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"script bên thứ ba",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"khung bên thứ ba",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"Đã kết nối đến {{count}} tên miền riêng biệt trên tổng số {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -192,7 +192,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Bộ lọc phần tử ẩn",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -212,23 +212,23 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Dùng menu ngữ cảnh nơi thích hợp",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Tôi là một người dùng có kinh nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Yêu cầu đọc qua<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Kích hoạt các tính năng thử nghiệm",
+    "message":"Kích hoạt các tính năng thử nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Thông tin<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} bộ lọc mạng ＋ {{cosmeticFilterCount}} bộ lọc phần tử ẩn từ:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} được dùng trên tổng {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -244,11 +244,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Phân tích và thi hành bộ lọc phần tử ẩn.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>Tuỳ chọn này kích hoạt phân tích và áp dụngThis option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">các bộ lọc yếu tố ẩn tương thích với Adblock Plus<\/a>. Những bộ lọc này dùng để ẩn yếu tố trong một trang web được xem là gây phiền hà đến thị giác và không bị chặn bởi công cụ lọc dựa theo yêu cầu mạng.<\/p><p>Kích hoạt tính năng này sẽ tăng mức sử dụng bộ nhớ của <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -328,23 +328,23 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Chỉnh sửa",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Lưu",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Huỷ",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Nhập từ tập tin...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Xuất ra tập tin...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -352,11 +352,11 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"Danh sách quy tắc lọc động.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "message":"Quy tắc cú pháp: <code>nguồn đích loại hành động<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>tài liệu đầy đủ<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -384,7 +384,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Bạn có thể kiểm tra các chi tiết của các yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng bộ nhớ của µBlock. Vì nhiều người sử dụng sẽ không bao giờ sử dụng tính năng này, nó bị tắt theo mặc định.",
+    "message":"Bạn có thể kiểm tra chi tiết của yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng sử dụng bộ nhớ của µBlock. Vì nhiều người sử dụng sẽ không bao giờ sử dụng tính năng này, nó bị tắt theo mặc định.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -416,7 +416,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Không có những yêu cầu không bị chặn được ghi lại cho trang này",
+    "message":"Không có yêu cầu không bị chặn được ghi lại cho trang này",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
@@ -452,7 +452,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Bắt đầu từ đầu...",
+    "message":"Đặt lại cấu hình mặc định...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -460,11 +460,11 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Không thể đọc dữ liệu hoặc dữ liệu không hợp lệ",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Tất cả các thiết lập của bạn sẽ bị xóa, và µBlock sẽ khởi động lại. \n\nThiết lập lại µBlock về cài đặt ban đầu?",
+    "message":"Tất cả các cấu hình của bạn sẽ bị xóa và µBlock sẽ khởi động lại. \n\nThiết lập µBlock về cấu hình ban đầu?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

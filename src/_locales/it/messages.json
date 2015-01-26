@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Filtri personalizzati",
+    "message":"I miei filtri",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Regole personalizzate",
+    "message":"Le mie regole",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{

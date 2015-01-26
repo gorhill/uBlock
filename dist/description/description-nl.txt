@@ -24,7 +24,7 @@ Meer lijsten zijn beschikbaar om te selecteren indien gewenst:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- En nog vele anderen
 
 Natuurlijk wordt het geheugenverbruik groter naarmate er meer filters worden ingeschakeld. Maar zelfs na Fanboy's two extra lijsten, hpHosts’s Ad en tracking servers toe te voegen heeft µBlock een lager geheugenverbruik dan andere populaire blokkeerders.
 
