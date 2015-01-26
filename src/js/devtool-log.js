@@ -125,6 +125,10 @@ var renderLogEntry = function(entry) {
 /******************************************************************************/
 
 var renderLogBuffer = function(buffer) {
+    if ( buffer.length === 0 ) {
+        return;
+    }
+
     // Preserve scroll position
     var height = tbody.offsetHeight;
 
@@ -132,8 +136,26 @@ var renderLogBuffer = function(buffer) {
     for ( var i = 0; i < n; i++ ) {
         renderLogEntry(buffer[i]);
     }
+
+    var yDelta = tbody.offsetHeight - height;
+    if ( yDelta === 0 ) {
+        return;
+    }
+
+    // Chromium:
+    //   body.scrollTop = good value
+    //   body.parentNode.scrollTop = 0
     if ( body.scrollTop !== 0 ) {
-        body.scrollTop += tbody.offsetHeight - height;
+        body.scrollTop += yDelta;
+        return;
+    }
+
+    // Firefox:
+    //   body.scrollTop = 0
+    //   body.parentNode.scrollTop = good value
+    var parentNode = body.parentNode;
+    if ( parentNode && parentNode.scrollTop !== 0 ) {
+        parentNode.scrollTop += yDelta;
     }
 };
 
