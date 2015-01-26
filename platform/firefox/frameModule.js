@@ -30,6 +30,8 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 let uniqueSandboxId = 1;
 
+// let {console} = Cu.import('resource://gre/modules/devtools/Console.jsm', null);
+
 /******************************************************************************/
 
 const getMessageManager = function(win) {
@@ -112,32 +114,18 @@ const contentObserver = {
 
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
-        // If we don't know what initiated the request, probably it's not a tab
         if ( !context ) {
+            return;
+        }
+
+        if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
             return this.ACCEPT;
         }
 
-        let openerURL;
+        let openerURL, frameId;
 
-        if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
-            if ( type !== this.MAIN_FRAME ) {
-                return this.ACCEPT;
-            }
-
-            context = context.contentWindow || context;
-
-            try {
-                if ( context !== context.opener ) {
-                    openerURL = context.opener.location.href;
-                }
-            } catch (ex) {}
-
-            let isPopup = location.spec === 'about:blank' && openerURL;
-
-            if ( !location.schemeIs('data') && !isPopup ) {
-                return this.ACCEPT;
-            }
-        } else if ( type === this.MAIN_FRAME ) {
+        if ( type === this.MAIN_FRAME ) {
+            frameId = -1;
             context = context.contentWindow || context;
 
             try {
@@ -146,31 +134,33 @@ const contentObserver = {
                 }
             } catch (ex) {}
         } else {
+            // TODO: frameId from outerWindowID?
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindowUtils
+            frameId = context === context.top ? 0 : 1;
             context = (context.ownerDocument || context).defaultView;
         }
 
         // The context for the toolbar popup is an iframe element here,
         // so check context.top instead of context
-        if ( context.top && context.location ) {
+        if ( !context.top || !context.location ) {
+            return this.ACCEPT;
+        }
+
+        let messageManager = getMessageManager(context);
+        let details = {
+            frameId: frameId,
+            openerURL: openerURL || null,
+            parentFrameId: context === context.top ? -1 : 0,
+            type: type,
+            url: location.spec
+        };
+
+        if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
-            let messageManager = getMessageManager(context);
-            let details = {
-                openerURL: openerURL || null,
-                url: location.spec,
-                type: type,
-                frameId: type === this.MAIN_FRAME ? -1 : (context === context.top ? 0 : 1),
-                parentFrameId: context === context.top ? -1 : 0
-            };
-
-            // TODO: frameId from outerWindowID?
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindowUtils
-
-            if ( typeof messageManager.sendRpcMessage === 'function' ) {
-                messageManager.sendRpcMessage(this.cpMessageName, details);
-            } else {
-                // Compatibility for older versions
-                messageManager.sendSyncMessage(this.cpMessageName, details);
-            }
+            messageManager.sendRpcMessage(this.cpMessageName, details);
+        } else {
+            // Compatibility for older versions
+            messageManager.sendSyncMessage(this.cpMessageName, details);
         }
 
         return this.ACCEPT;
@@ -208,6 +198,7 @@ const contentObserver = {
 
         sandbox._sandboxId_ = sandboxId;
         sandbox.sendAsyncMessage = messager.sendAsyncMessage;
+
         sandbox.addMessageListener = function(callback) {
             if ( this._messageListener_ ) {
                 this.removeMessageListener(
@@ -229,6 +220,7 @@ const contentObserver = {
                 this._messageListener_
             );
         }.bind(sandbox);
+
         sandbox.removeMessageListener = function() {
             try {
                 messager.removeMessageListener(

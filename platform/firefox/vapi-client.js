@@ -143,28 +143,26 @@ vAPI.messaging = {
         };
 
         return this.channels[channelName];
+    },
+
+    toggleListener: function({type, persisted}) {
+        if ( !vAPI.messaging.connector ) {
+            return;
+        }
+
+        if ( type === 'pagehide' ) {
+            removeMessageListener();
+            return;
+        }
+
+        if ( persisted ) {
+            addMessageListener(vAPI.messaging.connector);
+        }
     }
 };
 
-/******************************************************************************/
-
-var toggleListener = function({type, persisted}) {
-    if ( !vAPI.messaging.connector ) {
-        return;
-    }
-
-    if ( type === 'pagehide' ) {
-        removeMessageListener();
-        return;
-    }
-
-    if ( persisted ) {
-        addMessageListener(vAPI.messaging.connector);
-    }
-};
-
-window.addEventListener('pagehide', toggleListener, true);
-window.addEventListener('pageshow', toggleListener, true);
+window.addEventListener('pagehide', vAPI.messaging.toggleListener, true);
+window.addEventListener('pageshow', vAPI.messaging.toggleListener, true);
 
 /******************************************************************************/
 

@@ -335,10 +335,10 @@ vAPI.tabs = {};
 /******************************************************************************/
 
 vAPI.isNoTabId = function(tabId) {
-    return tabId.toString() === '_';
+    return tabId.toString() === '-1';
 };
 
-vAPI.noTabId = '_';
+vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
@@ -387,10 +387,18 @@ vAPI.tabs.getTabId = function(target) {
 
     var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
 
+    if ( !gBrowser ) {
+        return -1;
+    }
+
     // This should be more efficient from version 35
     if ( gBrowser.getTabForBrowser ) {
         i = gBrowser.getTabForBrowser(target);
         return i ? i.linkedPanel : -1;
+    }
+
+    if ( !gBrowser.browsers ) {
+        return -1;
     }
 
     i = gBrowser.browsers.indexOf(target);
@@ -795,6 +803,7 @@ var httpObserver = {
     VALID_CSP_TARGETS: 1 << Ci.nsIContentPolicy.TYPE_DOCUMENT |
                        1 << Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     typeMap: {
+        1: 'other',
         2: 'script',
         3: 'image',
         4: 'stylesheet',
@@ -891,7 +900,7 @@ var httpObserver = {
         return result === true;
     },
 
-    handleRequest: function(channel, details) {
+    handleRequest: function(channel, URI, details) {
         var onBeforeRequest = vAPI.net.onBeforeRequest;
         var type = this.typeMap[details.type] || 'other';
 
@@ -901,11 +910,11 @@ var httpObserver = {
 
         var result = onBeforeRequest.callback({
             frameId: details.frameId,
-            hostname: channel.URI.asciiHost,
+            hostname: URI.asciiHost,
             parentFrameId: details.parentFrameId,
             tabId: details.tabId,
             type: type,
-            url: channel.URI.asciiSpec
+            url: URI.asciiSpec
         });
 
         if ( !result || typeof result !== 'object' ) {
@@ -987,8 +996,8 @@ var httpObserver = {
 
         var lastRequest = this.lastRequest;
 
-        if ( !lastRequest.url || lastRequest.url !== URI.spec ) {
-            lastRequest.url = null;
+        if ( lastRequest.url === null ) {
+            this.handleRequest(channel, URI, {tabId: vAPI.noTabId, type: 1});
             return;
         }
 
@@ -1023,7 +1032,7 @@ var httpObserver = {
             }
         }
 
-        if ( this.handleRequest(channel, lastRequest) ) {
+        if ( this.handleRequest(channel, URI, lastRequest) ) {
             return;
         }
 
@@ -1074,7 +1083,7 @@ var httpObserver = {
                 parentFrameId: -1
             };
 
-            if ( this.handleRequest(newChannel, details) ) {
+            if ( this.handleRequest(newChannel, URI, details) ) {
                 result = this.ABORT;
                 return;
             }
@@ -1106,19 +1115,6 @@ vAPI.net.registerListeners = function() {
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
         var details = e.data;
-
-        // data: and about:blank
-        if ( details.url.charAt(0) !== 'h' ) {
-            vAPI.net.onBeforeRequest.callback({
-                frameId: details.frameId,
-                parentFrameId: details.parentFrameId,
-                tabId: vAPI.tabs.getTabId(e.target),
-                type: 'main_frame',
-                url: 'http://' + details.url.slice(0, details.url.indexOf(':'))
-            });
-            return;
-        }
-
         var lastRequest = httpObserver.lastRequest;
         lastRequest.url = details.url;
         lastRequest.type = details.type;
