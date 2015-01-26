@@ -115,7 +115,7 @@ const contentObserver = {
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
         if ( !context ) {
-            return;
+            return this.ACCEPT;
         }
 
         if ( !location.schemeIs('http') && !location.schemeIs('https') ) {
