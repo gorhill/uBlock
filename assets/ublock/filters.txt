@@ -259,3 +259,7 @@ ovh.strim.io#@##tweets
 # https://github.com/gorhill/uBlock/issues/580
 # To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
 @@||cdn-static.liverail.com$domain=9to5mac.com
+
+# https://github.com/gorhill/uBlock/issues/602
+# To counter `/ads.css` in EasyList
+@@||css.washingtonpost.com/*/ads.css$stylesheet
