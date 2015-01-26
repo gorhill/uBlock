@@ -266,4 +266,4 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/607
 # To counter `||pcekspert.com^` in Peter Lowe's
-@@||pcekspert.com^~third-party
+@@||pcekspert.com^$~third-party
