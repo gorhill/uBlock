@@ -209,7 +209,7 @@ var is3rdParty = function(srcHostname, desHostname) {
         return true;
     }
     // Do not confuse 'example.com' with 'anotherexample.com'
-    return desHostname.lenght !== srcDomain.lenght &&
+    return desHostname.length !== srcDomain.length &&
            desHostname.charAt(desHostname.length - srcDomain.length - 1) !== '.';
 };
 
