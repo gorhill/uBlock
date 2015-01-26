@@ -267,3 +267,7 @@ ovh.strim.io#@##tweets
 # https://github.com/gorhill/uBlock/issues/607
 # To counter `||pcekspert.com^` in Peter Lowe's
 @@||pcekspert.com^$~third-party
+
+# https://twitter.com/yo_0/status/559748330390323200
+# To counter `||clickbank.com^` in Dan Pollock's, Peter Lowe's
+@@||clickbank.com^$~third-party
