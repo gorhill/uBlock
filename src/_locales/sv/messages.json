@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Äntligen, en effektiv blockerare för Chromium-baserade webbläsare. Lätt på minne och CPU.",
+    "message":"Äntligen, en effektiv blockerare. Lätt på processor och minne.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Dina filter",
+    "message":"Mina filter",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock - Nätverks log",
+    "message":"µBlock — Log för nätverksbegäranden",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -72,7 +72,7 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>skript<\/code>-taggar är <b>tillåtna på<\/b> denna sida",
+    "message":"Inline <code>skript<\/code> taggar är <b>tillåtna<\/b> på denna sida",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
@@ -172,7 +172,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"Ansluten till {{count}} distinkta domäner utav totalt {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "message":"mina-ublock-statiska-filter_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"mina-ublock-dynamiska-regler_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -356,7 +356,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "message":"Regel syntax: <code>källa destination typ åtgärd<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentation<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -444,7 +444,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"min-ublock-säkerhetskopia_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

@@ -460,7 +460,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Dane nie mogły zostać odczytane lub są nieprawidłowe",
+    "message":"Dane nieprawidłowe lub niemożliwe do odczytu",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
