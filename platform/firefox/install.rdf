@@ -5,13 +5,14 @@
         <version>{version}</version>
         <name>{name}</name>
         <description>{description}</description>
-        <homepageURL>https://github.com/gorhill/uBlock</homepageURL>
+        <homepageURL>{homepage}</homepageURL>
         <creator>{author}</creator>
         <type>2</type>
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
         <optionsType>3</optionsType>
         <optionsURL>chrome://ublock/content/dashboard.html</optionsURL>
+{localized}
 
         <!-- Firefox -->
         <targetApplication>

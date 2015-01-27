@@ -23,17 +23,16 @@ build_dir = os.path.abspath(sys.argv[1])
 source_locale_dir = pj(build_dir, '_locales')
 target_locale_dir = pj(build_dir, 'locale')
 language_codes = []
-description = ''
+descriptions = OrderedDict({})
 
 for alpha2 in sorted(os.listdir(source_locale_dir)):
     locale_path = pj(source_locale_dir, alpha2, 'messages.json')
     with open(locale_path, encoding='utf-8') as f:
         string_data = json.load(f, object_pairs_hook=OrderedDict)
 
-    if alpha2 == 'en':
-        description = string_data['extShortDesc']['message']
-
     alpha2 = alpha2.replace('_', '-')
+    descriptions[alpha2] = string_data['extShortDesc']['message']
+    del string_data['extShortDesc']
 
     language_codes.append(alpha2)
 
@@ -54,8 +53,10 @@ with open(chrome_manifest, 'at', encoding='utf-8', newline='\n') as f:
     f.write(u'\nlocale ublock en ./locale/en/\n')
 
     for alpha2 in language_codes:
-        if alpha2 != 'en':
-            f.write(u'locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
+        if alpha2 == 'en':
+            continue
+
+        f.write(u'locale ublock ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
 
 rmtree(source_locale_dir)
 
@@ -66,10 +67,32 @@ chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
 with open(chromium_manifest, encoding='utf-8') as m:
     manifest = json.load(m)
 
-manifest['description'] = description
+manifest['homepage'] = 'https://github.com/gorhill/uBlock'
+manifest['description'] = descriptions['en']
+del descriptions['en']
+manifest['localized'] = []
+
+t = '    '
+t3 = 3 * t
+
+for alpha2 in descriptions:
+    if alpha2 == 'en':
+        continue
+
+    manifest['localized'].append(
+        '\n' + t*2 + '<localized><r:Description>\n' +
+        t3 + '<locale>' + alpha2 + '</locale>\n' +
+        t3 + '<name>' + manifest['name'] + '</name>\n' +
+        t3 + '<description>' + descriptions[alpha2] + '</description>\n' +
+        t3 + '<creator>' + manifest['author'] + '</creator>\n' +
+        # t3 + '<translator>' + ??? + '</translator>\n' +
+        t3 + '<homepageURL>' + manifest['homepage'] + '</homepageURL>\n' +
+        t*2 + '</r:Description></localized>'
+    )
+
+manifest['localized'] = '\n'.join(manifest['localized'])
 
 install_rdf = pj(build_dir, 'install.rdf')
-
 with open(install_rdf, 'r+t', encoding='utf-8', newline='\n') as f:
     install_rdf = f.read()
     f.seek(0)
