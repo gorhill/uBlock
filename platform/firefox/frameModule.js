@@ -183,14 +183,9 @@ const contentObserver = {
                 wantXHRConstructor: false
             });
 
-            sandbox.injectScript = function(script, evalCode) {
-                if ( evalCode ) {
-                    Cu.evalInSandbox(script, this);
-                    return;
-                }
-
-                Services.scriptloader.loadSubScript(script, this);
-            }.bind(sandbox);
+            sandbox.injectScript = function(script) {
+                Services.scriptloader.loadSubScript(script, sandbox);
+            };
         }
         else {
             sandbox = win;
@@ -200,43 +195,43 @@ const contentObserver = {
         sandbox.sendAsyncMessage = messager.sendAsyncMessage;
 
         sandbox.addMessageListener = function(callback) {
-            if ( this._messageListener_ ) {
-                this.removeMessageListener(
-                    this._sandboxId_,
-                    this._messageListener_
+            if ( sandbox._messageListener_ ) {
+                sandbox.removeMessageListener(
+                    sandbox._sandboxId_,
+                    sandbox._messageListener_
                 );
             }
 
-            this._messageListener_ = function(message) {
+            sandbox._messageListener_ = function(message) {
                 callback(message.data);
             };
 
             messager.addMessageListener(
-                this._sandboxId_,
-                this._messageListener_
+                sandbox._sandboxId_,
+                sandbox._messageListener_
             );
             messager.addMessageListener(
                 hostName + ':broadcast',
-                this._messageListener_
+                sandbox._messageListener_
             );
-        }.bind(sandbox);
+        };
 
         sandbox.removeMessageListener = function() {
             try {
                 messager.removeMessageListener(
-                    this._sandboxId_,
-                    this._messageListener_
+                    sandbox._sandboxId_,
+                    sandbox._messageListener_
                 );
                 messager.removeMessageListener(
                     hostName + ':broadcast',
-                    this._messageListener_
+                    sandbox._messageListener_
                 );
             } catch (ex) {
                 // It throws sometimes, mostly when the popup closes
             }
 
-            this._messageListener_ = null;
-        }.bind(sandbox);
+            sandbox._messageListener_ = null;
+        };
 
         return sandbox;
     },

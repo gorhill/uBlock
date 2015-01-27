@@ -610,11 +610,11 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         return;
     }
 
-    if ( details.file ) {
-        details.file = vAPI.getURL(details.file);
+    if ( typeof details.file !== 'string' ) {
+        return;
     }
 
-
+    details.file = vAPI.getURL(details.file);
     tab.linkedBrowser.messageManager.sendAsyncMessage(
         location.host + ':broadcast',
         JSON.stringify({

@@ -96,7 +96,7 @@ vAPI.messaging = {
                     return;
                 }
 
-                self.injectScript(details.file || details.code, !details.file);
+                self.injectScript(details.file);
             }
         };
     },
