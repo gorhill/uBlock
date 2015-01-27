@@ -281,3 +281,6 @@ ovh.strim.io#@##tweets
 @@||awaps.yandex.ru^$domain=market.yandex.ru
 @@||mc.yandex.ru^$domain=market.yandex.ru
 @@||yastatic.net/market-export/*/advert.js$domain=market.yandex.ru
+
+# https://github.com/gorhill/uBlock/issues/618
+deviantart.com##.dp-ad-chrome.dp-ad-visible
