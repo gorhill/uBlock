@@ -30,7 +30,7 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 let uniqueSandboxId = 1;
 
-// let {console} = Cu.import('resource://gre/modules/devtools/Console.jsm', null);
+// Cu.import('resource://gre/modules/devtools/Console.jsm');
 
 /******************************************************************************/
 
@@ -112,6 +112,13 @@ const contentObserver = {
         );
     },
 
+    getFrameId: function(win) {
+        return win
+            .QueryInterface(Ci.nsIInterfaceRequestor)
+            .getInterface(Ci.nsIDOMWindowUtils)
+            .outerWindowID;
+    },
+
     // https://bugzil.la/612921
     shouldLoad: function(type, location, origin, context) {
         if ( !context ) {
@@ -122,10 +129,17 @@ const contentObserver = {
             return this.ACCEPT;
         }
 
-        let openerURL, frameId;
+        let openerURL = null;
 
         if ( type === this.MAIN_FRAME ) {
-            frameId = -1;
+            // When an iframe is loaded, it will be reported first as type = 6,
+            // then immediately after that type = 7, so ignore the first report.
+            // Origin should be "chrome://browser/content/browser.xul" here.
+            // The lack of side-effects are not guaranteed though.
+            if ( origin === null || origin.schemeIs('chrome') === false ) {
+                return this.ACCEPT;
+            }
+
             context = context.contentWindow || context;
 
             try {
@@ -134,9 +148,6 @@ const contentObserver = {
                 }
             } catch (ex) {}
         } else {
-            // TODO: frameId from outerWindowID?
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindowUtils
-            frameId = context === context.top ? 0 : 1;
             context = (context.ownerDocument || context).defaultView;
         }
 
@@ -146,11 +157,23 @@ const contentObserver = {
             return this.ACCEPT;
         }
 
+        let isTopLevel = context === context.top;
+        let frameId = isTopLevel ? 0 : this.getFrameId(context);
+        let parentFrameId;
+
+        if ( isTopLevel ) {
+            parentFrameId = -1;
+        } else if ( context.parent === context.top ) {
+            parentFrameId = 0;
+        } else {
+            parentFrameId = this.getFrameId(context.parent);
+        }
+
         let messageManager = getMessageManager(context);
         let details = {
             frameId: frameId,
-            openerURL: openerURL || null,
-            parentFrameId: context === context.top ? -1 : 0,
+            openerURL: openerURL,
+            parentFrameId: parentFrameId,
             type: type,
             url: location.spec
         };

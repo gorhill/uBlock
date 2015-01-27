@@ -958,7 +958,13 @@ var httpObserver = {
             }
 
             try {
-                // [type, tabId, sourceTabId - given if it was a popup]
+                /*[
+                    type,
+                    tabId,
+                    sourceTabId - given if it was a popup,
+                    frameId,
+                    parentFrameId
+                ]*/
                 channelData = channel.getProperty(location.host + 'reqdata');
             } catch (ex) {
                 return;
@@ -1047,7 +1053,13 @@ var httpObserver = {
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
             channel.setProperty(
                 location.host + 'reqdata',
-                [lastRequest.type, lastRequest.tabId, sourceTabId]
+                [
+                    lastRequest.type,
+                    lastRequest.tabId,
+                    sourceTabId,
+                    lastRequest.frameId,
+                    lastRequest.parentFrameId
+                ]
             );
         }
     },
@@ -1074,20 +1086,21 @@ var httpObserver = {
                 return;
             }
 
+            // TODO: what if a behind-the-scene request is being redirected?
+            // This data is present only for tabbed requests, so if this throws,
+            // the redirection won't be evaluated and canceled (if necessary)
             var channelData = oldChannel.getProperty(location.host + 'reqdata');
-            var [type, tabId, sourceTabId] = channelData;
 
-            if ( this.handlePopup(URI, tabId, sourceTabId) ) {
+            if ( this.handlePopup(URI, channelData[1], channelData[2]) ) {
                 result = this.ABORT;
                 return;
             }
 
             var details = {
-                type: type,
-                tabId: tabId,
-                // well...
-                frameId: type === this.MAIN_FRAME ? -1 : 0,
-                parentFrameId: -1
+                type: channelData[0],
+                tabId: channelData[1],
+                frameId: channelData[3],
+                parentFrameId: channelData[4]
             };
 
             if ( this.handleRequest(newChannel, URI, details) ) {
