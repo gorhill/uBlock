@@ -158,7 +158,6 @@ const contentObserver = {
         }
 
         let isTopLevel = context === context.top;
-        let frameId = isTopLevel ? 0 : this.getFrameId(context);
         let parentFrameId;
 
         if ( isTopLevel ) {
@@ -171,7 +170,7 @@ const contentObserver = {
 
         let messageManager = getMessageManager(context);
         let details = {
-            frameId: frameId,
+            frameId: isTopLevel ? 0 : this.getFrameId(context),
             openerURL: openerURL,
             parentFrameId: parentFrameId,
             type: type,

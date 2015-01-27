@@ -988,7 +988,7 @@ var httpObserver = {
 
             result = vAPI.net.onHeadersReceived.callback({
                 hostname: URI.asciiHost,
-                parentFrameId: channelData[0] === this.MAIN_FRAME ? -1 : 0,
+                parentFrameId: channelData[4],
                 responseHeaders: result ? [{name: topic, value: result}] : [],
                 tabId: channelData[1],
                 url: URI.asciiSpec
