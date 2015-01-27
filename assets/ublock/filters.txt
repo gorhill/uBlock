@@ -29,7 +29,8 @@ www.zerohedge.com##.similar-box
 # entity = domain minus public suffix
 # The following filters were taken out of EasyList and given an entity name,
 # which makes them candidates to be injected early in the page.
-# Last updated: 2014-11-14
+# Last updated: 2015-01-27
+google.*###center_col > #\5f Emc
 google.*###center_col > #resultStats + #tads
 google.*###center_col > #resultStats + #tads + #res + #tads
 google.*###center_col > #resultStats + div + #res + #tads
@@ -63,12 +64,14 @@ google.*##.ch[onclick="ga(this,event)"]
 google.*##.commercial-unit-desktop-rhs
 google.*##.commercial-unit-desktop-top
 google.*##.lads[width="100%"][style="background:#FFF8DD"]
+google.*##.mod > ._jH + .rscontainer
 google.*##.mw > #rcnt > #center_col > #taw > #tvcap > .c
 google.*##.mw > #rcnt > #center_col > #taw > .c
 google.*##.ra[align="left"][width="30%"]
 google.*##.ra[align="right"][width="30%"]
 google.*##.ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"]
 google.*##.rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"]
+google.*##.rscontainer > .ellip
 
 # https://github.com/gorhill/uBlock/issues/381
 google.*###sqh
