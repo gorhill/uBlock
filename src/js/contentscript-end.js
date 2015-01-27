@@ -545,7 +545,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( typeof src !== 'string' || src === '' ) {
             return;
         }
-        if ( src.slice(0, 4) !== 'http' ) {
+        if ( src.lastIndexOf('http', 0) !== 0 ) {
             return;
         }
 
@@ -584,12 +584,12 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     var onResourceLoaded = function(ev) {
-        //console.debug('Loaded %s[src="%s"]', ev.target.tagName, ev.target.src);
+        //console.debug('onResourceLoaded(%o)', ev);
         onResource(ev.target, loadedElements);
     };
 
     var onResourceFailed = function(ev) {
-        //console.debug('Failed to load %s[src="%s"]', ev.target.tagName, ev.target.src);
+        //console.debug('onResourceFailed(%o)', ev);
         onResource(ev.target, failedElements);
     };
 
@@ -661,7 +661,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             if ( typeof src !== 'string' || src === '' ) {
                 continue;
             }
-            if ( src.slice(0, 4) !== 'http' ) {
+            if ( src.lastIndexOf('http', 0) !== 0 ) {
                 continue;
             }
             requests.push({
