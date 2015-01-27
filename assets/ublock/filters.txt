@@ -271,3 +271,10 @@ ovh.strim.io#@##tweets
 # https://twitter.com/yo_0/status/559748330390323200
 # To counter `||clickbank.com^` in Dan Pollock's, Peter Lowe's
 @@||clickbank.com^$~third-party
+
+# https://github.com/gorhill/uBlock/issues/614
+# To counter `awaps.yandex.ru` in hpHosts
+# To counter `mc.yandex.ru` in hpHosts, MVPS
+@@||awaps.yandex.ru^$domain=market.yandex.ru
+@@||mc.yandex.ru^$domain=market.yandex.ru
+@@||yastatic.net/market-export/*/advert.js$domain=market.yandex.ru
