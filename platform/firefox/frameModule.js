@@ -132,14 +132,6 @@ const contentObserver = {
         let openerURL = null;
 
         if ( type === this.MAIN_FRAME ) {
-            // When an iframe is loaded, it will be reported first as type = 6,
-            // then immediately after that type = 7, so ignore the first report.
-            // Origin should be "chrome://browser/content/browser.xul" here.
-            // The lack of side-effects are not guaranteed though.
-            if ( origin === null || origin.schemeIs('chrome') === false ) {
-                return this.ACCEPT;
-            }
-
             context = context.contentWindow || context;
 
             try {
