@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o µBlock para este site.\n\nCtrl+clique: só desativar o µBlock nesta página.",
+    "message":"Clique: desativar\/ativar o µBlock para este site.\n\nCtrl+clique: desativar o µBlock apenas nesta página.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -64,7 +64,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Entrar no modo de seleção do elemento",
+    "message":"Entrar no modo de seleção de elemento",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{

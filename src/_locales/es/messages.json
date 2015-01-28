@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-custom-filters_{{datetime}}.txt",
+    "message":"ublock-mis-filtros-estaticos_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules.txt",
+    "message":"ublock-mis-reglas-dinamicas_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -372,7 +372,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"ublock-mi-lista-de-permitidos_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -444,7 +444,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
+    "message":"ublock-respaldo_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

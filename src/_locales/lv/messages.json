@@ -4,403 +4,403 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Äntligen, en effektiv blockerare. Lätt på processor och minne.",
+    "message":"Beidzot, efektīvs bloķētājs. Nepārslogo procesoru un atmiņu.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
+    "message":"µBlock — Vadības panelis",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Inställningar",
+    "message":"Iestatījumi",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Tredjepartsfilter",
+    "message":"Trešo pušu filtri",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Mina filter",
+    "message":"Mani filtri",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Mina regler",
+    "message":"Mani noteikumi",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Vitlista",
+    "message":"Atļautais saraksts",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Logg för nätverksbegäranden",
+    "message":"µBlock — Tīkla pieprasījumu žurnāls",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"Om",
+    "message":"Par",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klick: avaktivera\/aktivera µBlock för denna hemsida permanent.\n\nCtrl+klick: avaktivera µBlock för endast denna sida.",
+    "message":"Klikšķis: atslēgt\/ieslēgt µBlock šai mājaslapai.\n\nCtrl+klikšķis: atslēgt µBlock tikai šai lapai.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blockerade förfrågningar",
+    "message":"bloķētie pieprasījumi",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"på denna sida",
+    "message":"šajā lapā",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"sedan installation",
+    "message":"kopš instalācijas brīža",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"eller",
+    "message":"vai",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicka för att öppna dashboard",
+    "message":"Noklikšķiniet, lai atvērtu vadības paneli",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Gå till elementväljarläge",
+    "message":"Ienākt elementa atlasītāju režīmā",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Gå till logg",
+    "message":"Doties uz pieprasījumu žurnālu",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>skript<\/code> taggar är <b>tillåtna<\/b> på denna sida",
+    "message":"Inline <code>skripta<\/code> tagi ir <b>atļauti<\/b> šajā vietnē",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>skript<\/code>-taggar är <b>blockerade<\/b> på denna sida",
+    "message":"Inline <code>skripta<\/code> tagi ir <b>bloķēti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"förstapartsskript är <b>tillåtna<\/b> på denna webbplats",
+    "message":"1st-party skripti ir <b>atļauti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"förstapartsskript är <b>blockerde<\/b> på denna webbplats",
+    "message":"1st-party skripti ir <b>bloķēti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"tredjepartsskript är <b>tillåtna<\/b> på denna webbplats",
+    "message":"3rd-party skripti ir <b>atļauti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"tredjepartsskript är <b>blockerade<\/b> på denna webbplats",
+    "message":"3rd-party skripti ir <b>bloķēti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"förstapartsramar är <b>tillåtna<\/b> på denna webbplats",
+    "message":"1st-party freimi ir <b>atļauti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"förstapartsramar är <b>blockerade<\/b> på denna webbplats",
+    "message":"1st-party freimi ir <b>bloķēti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"tredjepartsramar är <b>tillåtna<\/b> på denna webbplats",
+    "message":"3rd-party freimi ir <b>atļauti<\/b> šajā vietnē",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"tredjepartsramar är <b>blockerade<\/b> på denna webbplats",
+    "message":"3rd-party freimi ir <b>bloķēti<\/b> šajā vietnē",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline  <code>skript<\/code>-taggar är <b>tillåtna<\/b> överallt som standard",
+    "message":"Inline <code>skripta<\/code> tagi ir <b>atļauti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>skript<\/code>-taggar är <b>blockerade<\/b> överallt som standard",
+    "message":"Inline <code>skripta<\/code> tagi ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"förstapartsskript är <b>tillåtna<\/b> överallt som standard",
+    "message":"1st-party skripti ir <b>atļauti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"förstapartsskript är <b>blockerade<\/b> överallt som standard",
+    "message":"1st-party skripti ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"tredjepartsskript är <b>tillåtna<\/b> överallt som standard",
+    "message":"3rd-party skripti ir <b>atļauti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"tredjepartsskript är <b>blockerade<\/b> överallt som standard",
+    "message":"3rd-party skripti ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"förstapartsramar är <b>tillåtna<\/b> överallt som standard",
+    "message":"1st-party freimi ir <b>atļauti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"förstapartsramar är <b>blockerade<\/b> överallt som standard",
+    "message":"1st-party freimi ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"tredjepartsramar är <b>tillåtna<\/b> överallt som standard",
+    "message":"3rd-party freimi ir <b>atļauti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"tredjepartsramar är <b>blockerade<\/b> överallt som standard",
+    "message":"3rd-party freimi ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"bilder",
+    "message":"attēlus",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline skript",
+    "message":"inline skripti",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"förstaparstpartsskripts",
+    "message":"1st-party skripti",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"tredjepartsskript",
+    "message":"3rd-party skripti",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"tredjepartsramar",
+    "message":"3rd-party freimi",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Ansluten till {{count}} distinkta domäner utav totalt {{total}}",
+    "message":"Savienots ar {{count}} atšķirīgiem domēnu(iem) no {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
-    "message":"Skapa",
+    "message":"Izveidot",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Välj",
+    "message":"Izvēlēties",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Avsluta",
+    "message":"Iziet",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Nätfilter",
+    "message":"Resursu filtri",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Kosmetiska filter",
+    "message":"Vizuālie filtri",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Klick, Ctrl-klick",
+    "message":"Click, Ctrl-click",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Blockera element",
+    "message":"Bloķēt elementu",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Dölj platshållare för blockerade element",
+    "message":"Paslēpt vietu no bloķētā elementa",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Visa antalet blockerade förfrågningar på ikonen",
+    "message":"Parādīt bloķēto pieprasījumu skaitu uz ikonas",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Utnyttja kontextmenyn där så är lämpligt",
+    "message":"Izmantot konteksta izvēlni vajadzības gadījumā",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jag är en avancerad användare (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> obligatorisk läsning<\/a>)",
+    "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Nepieciešams izlasīt<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktivera experimentella funktioner",
+    "message":"Iespējot eksperimentālas iespējas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> Sīkāk šeit<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",
+    "message":"{{netFilterCount}} tīkla filtrus ＋ {{cosmeticFilterCount}} kosmētikas filtrus no:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} använda utav {{total}}",
+    "message":"{{used}} izmanto no {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Uppdatera filterlistor automatiskt.",
+    "message":"Automātiski atjaunināt filtra sarakstus.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Uppdatera nu",
+    "message":"Atjaunināt tagad",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Rensa alla cachar",
+    "message":"Visas kešatmiņas iztīrīšana",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Tolka och applicera kosmetiska filter.",
+    "message":"Apstrādāt un izpildīt kosmētikas filtrus.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;<\/a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.<\/p><p>Genom att aktivera denna funktion ökar <i>µBlocks<\/i> minnesanvändning.<\/p>",
+    "message":"<p>Šī opcija iespējo apstrādāt un izpildīt ar <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus saderīgus &ldquo;elementu paslēpšanas&rdquo;<\/a> filtrus. Šie filtri ir būtībā kosmētiski, tie kalpo, lai paslēptu web lapu elementus, kas tiek uzskatīti par vizuālu traucējumu, un kas nevar būt nobloķēti ar pieprasījumu balstītu filtrēšanas programmu.<\/p><p>Šī līdzekļa iespējošana palielina <i>µBlock<\/i> izmantojamās atmiņas daudzumu.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Listor över blockerade värdar",
+    "message":"Bloķēto hostu saraksti",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Verkställ ändringar",
+    "message":"Lietot izmaiņas",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Annonser",
+    "message":"Reklāmas",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Sekretess",
+    "message":"Konfidencialitāte",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Ļaundabīgo programmu domēni",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Socialt",
+    "message":"Sociālie tīkli",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Universalfilter",
+    "message":"Daudzfunkcionālie",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regioner, språk",
+    "message":"Reģionālie, valodas",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Egna filter",
+    "message":"Lietotāja",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"En adress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga adresser kommer också ignoreras.",
+    "message":"Vienu URL vienā rindiņā. Rindiņas, kura sākas ar &lsquo;!&rsquo; tiks ignorētas. Nederīgs URL bez brīdinājuma tiks ignorēts.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Verkställ",
+    "message":"Apstrādāt",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Rensa cache",
+    "message":"iztīrīt kešatmiņu",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"ny version tillgänglig",
+    "message":"pieejama jauna versija",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"utdaterad",
+    "message":"novecojis",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
+    "message":"Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai saderīgs ar Adblock Plus filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importera och lägg till",
+    "message":"Importējiet un pievienojiet",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportera",
+    "message":"Eksportēt",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"mina-ublock-statiska-filter_{{datetime}}.txt",
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Verkställ ändringar",
+    "message":"Lietot izmaiņas",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Redigera",
+    "message":"Rediģēt",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Spara",
+    "message":"Saglabāt",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Förkasta",
+    "message":"Atsacīties",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importera från fil...",
+    "message":"Importēt no faila...",
     "description":""
   },
   "rulesExport":{
-    "message":"Exportera till fil...",
+    "message":"Eksportēt failā...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"mina-ublock-dynamiska-regler_{{datetime}}.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lista över din dynamiska filterregler.",
+    "message":"Dinamisko filtrēšanas noteikumu saraksts.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Regel syntax: <code>källa destination typ åtgärd<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentation<\/a>).",
+    "message":"Noteikumu sintakse: <code>avotu mērķa tipu darbība<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> pilna dokumentācija<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Din lista över värdnamn för vilka μBlock inaktiveras. En post per rad. Ogiltiga värdnamn kommer att ignoreras.",
+    "message":"Saraksts ar interneta resursiem, kuriem tiks atspējots µBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi bez brīdinājuma tiks ignorēti.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importera och lägg till",
+    "message":"Importējiet un pievienojiet",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exportera",
+    "message":"Eksportēt",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"min-ublock-vitlista_{{datetime}}.txt",
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Verkställ ändringar",
+    "message":"Lietot izmaiņas",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Aktivera loggning av nätverksförfrågningar",
+    "message":"Iespējot tīkla pieprasījumu reģistrēšanu",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Om du vill kan du inspektera detaljer över blockerade förfrågningar genom att aktivera detta alternativ. Loggning av nätverksförfrågningar ökar µBlocks minnesanvändning. Eftersom de flesta användare aldrig kommer använda denna funktion är den inaktiverad som standard.",
+    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina µBlock izmantotās atmiņas apjomu. Tā kā daudzi lietotāji, nekad neizmantos šo līdzekli, tas pēc noklusējuma ir atspējots.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blockerade förfrågningar",
+    "message":"Bloķētie pieprasījumi",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Tillåtna förfrågningar",
+    "message":"Atļautie pieprasījumi",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Typ",
+    "message":"Tips",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domän",
+    "message":"Domēns",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -408,23 +408,23 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"Filtrs",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Inga blockerade förfrågningar loggade för denna sida",
+    "message":"Šai lapai nav reģistrēti bloķētie pieprasījumi",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Inga icke-blockerade förfrågningar loggade för denna sida",
+    "message":"Šai lapai nav reģistrēti nebloķētie pieprasījumi",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Under huven",
+    "message":"Aizkulisēs",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
-    "message":"Ändringslogg",
+    "message":"Izmaiņu žurnāls",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -432,43 +432,43 @@
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Källkod (GPLv3)",
+    "message":"Pirmkods (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Bidragsgivare",
+    "message":"Atbalstītāji",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup till fil...",
+    "message":"Rezerves kopiju uz failu",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"min-ublock-säkerhetskopia_{{datetime}}.txt",
+    "message":"my-ublock-backup_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Återställ från fil...",
+    "message":"Atjaunot no faila...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Återställ standardinställningar...",
+    "message":"Atiestatīt uz noklusējuma iestatījumiem...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alla dina inställningar kommer överskrivas med data som säkerhetskopierats den {{time}} och µBlock kommer startas om.\n\nVill du skriva över befintliga inställningar med säkerhetskopierade data?",
+    "message":"Tiks pārrakstīti visi iestatījumi izmantojot datus, kas balstās uz {{time}}, un µBlock tiks restartēts.  Pārrakstīt visus esošos iestatījumus, izmantojot rezerves kopiju?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Datan gick inte att läsa eller är ogiltig",
+    "message":"Datus nevar nolasīt vai tie nav derīgi",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alla dina inställningar kommer att raderas, och µBlock kommer att startas om.\n\nÅterställ µBlock till fabriksinställningar?",
+    "message":"Tiks noņemti visi iestatījumi un µBlock tiks restartēts. Atjaunot rūpnīcas iestatījumus?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Det gick inte att ansluta till {{url}}",
+    "message":"Nevar izveidot savienojumu ar {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{

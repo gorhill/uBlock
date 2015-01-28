@@ -220,11 +220,11 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Ativar recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
+    "message":"Ativar os recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtros de rede + {{cosmeticFilterCount}} filtros cosméticos de:",
+    "message":"{{netFilterCount}} filtros de rede ＋ {{cosmeticFilterCount}} filtros cosméticos de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -284,7 +284,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Lista personalizada",
+    "message":"Personalizada",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -340,7 +340,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importar de um arquivo...",
+    "message":"Importar do arquivo...",
     "description":""
   },
   "rulesExport":{
@@ -356,7 +356,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Regras de Sintaxe: <code>Ação de tipo origem destino<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentação completa<\/a>).",
+    "message":"Regras de sintaxe: <code>origem de destino tipo de ação<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentação completa<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
