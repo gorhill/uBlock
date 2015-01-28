@@ -41,7 +41,18 @@ vAPI.tabs.onNavigation = function(details) {
     if ( details.frameId !== 0 ) {
         return;
     }
-    µb.bindTabToPageStats(details.tabId, details.url, 'afterNavigate');
+    var pageStore = µb.bindTabToPageStats(details.tabId, details.url, 'afterNavigate');
+
+    // https://github.com/gorhill/uBlock/issues/630
+    // The hostname of the bound document must always be present in the
+    // mini-matrix. That's the best place I could find for the fix, all other
+    // options had bad side-effects or complications.
+    // TODO: Evantually, we will have to use an API to check whether a scheme 
+    //       is supported as I suspect we are going to start to see `ws`, `wss`
+    //       as well soon.
+    if ( pageStore && details.url.lastIndexOf('http', 0) === 0 ) {
+        pageStore.hostnameToCountMap[pageStore.pageHostname] = 0;
+    }
 };
 
 // It may happen the URL in the tab changes, while the page's document
@@ -149,10 +160,10 @@ vAPI.tabs.registerListeners();
 
     // https://github.com/gorhill/httpswitchboard/issues/303
     // Normalize page URL
-    pageURL = this.normalizePageURL(tabId, pageURL);
+    var normalURL = this.normalizePageURL(tabId, pageURL);
 
     // Do not create a page store for URLs which are of no interests
-    if ( pageURL === '' ) {
+    if ( normalURL === '' ) {
         this.unbindTabFromPageStats(tabId);
         return null;
     }
@@ -162,7 +173,7 @@ vAPI.tabs.registerListeners();
 
     // Tab is not bound
     if ( !pageStore ) {
-        return this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL);
+        return this.pageStores[tabId] = this.PageStore.factory(tabId, normalURL);
     }
 
     // https://github.com/gorhill/uBlock/issues/516
@@ -174,7 +185,7 @@ vAPI.tabs.registerListeners();
     // Rebind according to context. We rebind even if the URL did not change,
     // as maybe the tab was force-reloaded, in which case the page stats must
     // be all reset.
-    pageStore.reuse(pageURL, context);
+    pageStore.reuse(normalURL, context);
 
     return pageStore;
 };
