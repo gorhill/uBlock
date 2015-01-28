@@ -21,9 +21,10 @@
 
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.sitePatch = function() {
+(function() {
     // disable spf
     window.ytspf = {};
-    Object.defineProperty(ytspf, "enabled", {
+    Object.defineProperty(window.ytspf, "enabled", {
         "value": false
     });
     // Based on ExtendTube's ad removing solution
@@ -87,23 +88,24 @@ vAPI.sitePatch = function() {
             yt[p] = oldyt[p];
         }
     }
-    if(window.ytplayer) {
-        var oldytplayer = window.ytplayer;
-        delete window.ytplayer;
-        for(p in oldytplayer) {
-            ytplayer[p] = oldytplayer[p];
-        }
-    }
     Object.defineProperty(window, "yt", {
         get: function() {
             return yt;
         },
         set: function() {}
     });
+    if(window.ytplayer) {
+        var oldytplayer = window.ytplayer.config;
+        delete window.ytplayer;
+        for(p in oldytplayer) {
+            ytplayer.config[p] = oldytplayer[p];
+        }
+    }
     Object.defineProperty(window, "ytplayer", {
         get: function() {
             return ytplayer;
         },
         set: function() {}
     });
+})();
 };
