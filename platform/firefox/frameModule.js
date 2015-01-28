@@ -54,6 +54,7 @@ const contentObserver = {
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
+    ignoredPopups: new WeakMap(),
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -134,11 +135,10 @@ const contentObserver = {
         if ( type === this.MAIN_FRAME ) {
             context = context.contentWindow || context;
 
-            try {
-                if ( context !== context.opener ) {
-                    openerURL = context.opener.location.href;
-                }
-            } catch (ex) {}
+            if ( context.opener && context.opener !== context
+                && this.ignoredPopups.has(context) === false ) {
+                openerURL = context.opener.location.href;
+            }
         } else {
             context = (context.ownerDocument || context).defaultView;
         }
@@ -250,11 +250,27 @@ const contentObserver = {
         return sandbox;
     },
 
+    ignorePopup: function(e) {
+        if ( e.isTrusted === false ) {
+            return;
+        }
+
+        let contObs = contentObserver;
+        contObs.ignoredPopups.set(this, true);
+        this.removeEventListener('keydown', contObs.ignorePopup, true);
+        this.removeEventListener('mousedown', contObs.ignorePopup, true);
+    },
+
     observe: function(subject) {
         let win = subject.defaultView;
 
         if ( !win ) {
             return;
+        }
+
+        if ( win.opener && this.ignoredPopups.has(win) === false ) {
+            win.addEventListener('keydown', this.ignorePopup, true);
+            win.addEventListener('mousedown', this.ignorePopup, true);
         }
 
         let loc = win.location;
