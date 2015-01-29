@@ -60,7 +60,7 @@ function startup(data, reason) {
         );
         bgProcess.setAttribute(
             'src',
-            'chrome://' + hostName + '/content/background.html'
+            'chrome://' + hostName + '/content/background.html#' + data.version
         );
 
         restartListener.messageManager.addMessageListener(
@@ -104,13 +104,15 @@ function shutdown(data, reason) {
 
     bgProcess.parentNode.removeChild(bgProcess);
 
-    // Remove the restartObserver only when the extension is being disabled
-    if ( data !== undefined ) {
-        restartListener.messageManager.removeMessageListener(
-            hostName + '-restart',
-            restartListener
-        );
+    if ( data === undefined ) {
+        return;
     }
+
+    // Remove the restartObserver only when the extension is being disabled
+    restartListener.messageManager.removeMessageListener(
+        hostName + '-restart',
+        restartListener
+    );
 }
 
 /******************************************************************************/
