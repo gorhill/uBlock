@@ -278,5 +278,11 @@
         "title": "VIE: Fanboy's Vietnamese",
         "group": "regions",
         "homeURL": "https://www.fanboy.co.nz/fanboy-vietnam.txt"
+        },
+    "www.zoso.ro/pages/rolist.txt": {
+        "off": true,
+        "title": "ROU: RO-LIST",
+        "group": "regions",
+        "homeURL": "http://www.zoso.ro/pages/rolist.txt"
         }
 }
