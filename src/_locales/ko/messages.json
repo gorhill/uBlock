@@ -4,403 +4,403 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Por fin, un bloqueador eficiente con uso mínimo de procesador y memoria.",
+    "message":"마침내 나왔습니다, 이 확장기능은 효율적인 차단기입니다. CPU와 메모리에 부담이 적습니다.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Panel de control",
+    "message":"µBlock — 대시보드",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Configuración",
+    "message":"설정",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Filtros de terceros",
+    "message":"보조 필터",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Mis filtros",
+    "message":"내 필터",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Mis reglas",
+    "message":"내 규칙",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Lista blanca",
+    "message":"제외 목록",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Registro de peticiones de red",
+    "message":"µBlock — 네트워크 요청 로그",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"Acerca de",
+    "message":"정보",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: desactivar\/activar µBlock para este sitio.\n\nCtrl + clic: deshabilitar µBlock sólo en esta página.",
+    "message":"클릭: 이 사이트에서 µBlock을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서만 µBlock을 끕니다.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"peticiones bloqueadas",
+    "message":"요청 차단됨",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"en esta página",
+    "message":"이 페이지에서",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"desde que se instaló",
+    "message":"설치 이후 차단된 요소",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"o",
+    "message":"또는",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clic para abrir el panel de control",
+    "message":"클릭하여 대시보드 열기",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Entrar al modo de selección de elementos",
+    "message":"구성 요소 선택기 모드로 진입",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir al registro de peticiones",
+    "message":"네트워크 요청 로그로 이동",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>habilitadas<\/b> para este sitio",
+    "message":"인라인 <code>스크립트<\/code> 태그가 이 사이트에서 <b>허용됨<\/b>",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>deshabilitadas<\/b> para este sitio",
+    "message":"인라인 <code>스크립트<\/code> 태그가 이 사이트에서 <b>차단됨<\/b>",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Scripts <b>habilitados<\/b> para este sitio",
+    "message":"주 스크립트가 이 사이트에서 <b>허용됨<\/b>",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Scripts <b>deshabilitados<\/b> para este sitio",
+    "message":"주 스크립트가 이 사이트에서 <b>차단됨<\/b>",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Scripts de terceros <b>habilitados<\/b> para este sitio",
+    "message":"보조 스크립트가 이 사이트에서 <b>허용됨<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Scripts de terceros <b>deshabilitados<\/b> para este sitio",
+    "message":"보조 스크립트가 이 사이트에서 <b>차단됨<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Frames <b>habilitados<\/b> para este sitio",
+    "message":"주 프레임이 이 사이트에서 <b>허용됨<\/b>",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Frames <b>deshabilitados<\/b> para este sitio",
+    "message":"주 프레임이 이 사이트에서 <b>차단됨<\/b>",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Frames de terceros <b>habilitados<\/b> para este sitio",
+    "message":"보조 프레임이 이 사이트에서 <b>허용됨<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Frames de terceros <b>deshabilitados<\/b> para este sitio",
+    "message":"보조 프레임이 이 사이트에서 <b>차단됨<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>habilitadas<\/b> globalmente por defecto",
+    "message":"인라인 <code>스크립트<\/code> 태그가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>deshabilitadas<\/b> globalmente por defecto",
+    "message":"인라인 <code>스크립트<\/code> 태그가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Scripts <b>habilitados<\/b> globalmente por defecto",
+    "message":"주 스크립트가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Scripts <b>deshabilitados<\/b> globalmente por defecto",
+    "message":"주 스크립트가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Scripts de terceros <b>habilitados<\/b> globalmente por defecto",
+    "message":"보조 스크립트가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Scripts de terceros <b>deshabilitados<\/b> globalmente por defecto",
+    "message":"보조 스크립트가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Frames <b>habilitados<\/b> globalmente por defecto",
+    "message":"주 프레임이 모든 곳에서 기본값으로 <b>허용됨<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Frames <b>deshabilitados<\/b> globalmente por defecto",
+    "message":"주 프레임이 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Frames de terceros <b>habilitados<\/b> globalmente por defecto",
+    "message":"보조 프레임이 모든 곳에서 기본값으로 <b>허용됨<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Frames de terceros <b>deshabilitados<\/b> globalmente por defecto",
+    "message":"보조 프레임이 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"Imágenes",
+    "message":"이미지",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"Scripts embebidos",
+    "message":"인라인 스크립트",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Scripts del dominio",
+    "message":"주 스크립트",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Scripts de terceros",
+    "message":"보조 스크립트",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Frames de terceros",
+    "message":"보조 프레임",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Conectado con {{count}} dominios diferentes de un total de {{total}}",
+    "message":"총 {{total}}개 중 {{count}}개의 개별 도메인에 연결됨",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
-    "message":"Crear",
+    "message":"생성",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Elegir",
+    "message":"선택",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Salir",
+    "message":"종료",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Filtros de red",
+    "message":"넷 필터",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Filtros cosméticos",
+    "message":"시각적 필터",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Clic, Ctrl-clic",
+    "message":"클릭, Ctrl-클릭",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Bloquear elemento",
+    "message":"구성 요소 차단",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar marcadores de posición de los elementos bloqueados",
+    "message":"차단된 구성 요소의 자리 감추기",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Mostrar el número de peticiones bloqueadas en el icono",
+    "message":"차단된 요청 개수를 아이콘에 표시",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Hacer uso del menú contextual cuando sea posible",
+    "message":"컨텍스트 메뉴를 상황에 맞게 사용",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura obligatoria<\/a>)",
+    "message":"고급 사용자 모드 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>필수로 읽어보세요.<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
+    "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtros de red y {{cosmeticFilterCount}} filtros cosméticos de:",
+    "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 시각적 필터:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} de {{total}} utilizados",
+    "message":"{{total}}개 중 {{used}}개 사용 중",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Actualizar automáticamente la lista de filtros.",
+    "message":"필터 목록 자동 업데이트",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Actualizar ahora",
+    "message":"지금 업데이트",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Vaciar todas las memorias caché",
+    "message":"모든 캐시 제거",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Analizar y aplicar filtros cosméticos.",
+    "message":"시각적 필터 분석 및 적용",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\">&ldquo;filtros de ocultación de elementos&rdquo; compatibles con Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos, sirven para ocultar elementos que se consideran una molestia visual en una página web, no siendo posible su eliminación con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta el consumo de memoria de <i>µBlock<\/i>.<\/p>",
+    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo; 구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 시각적 필터입니다. 그것들은 시각적으로 방해가 될 만한 웹 페이지의 요소들을 숨기는 역할을 하며, 넷 요청에 기반한 필터링 엔진에 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>µBlock<\/i>의 메모리 부담을 줄여줍니다.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lista de servidores bloqueados",
+    "message":"차단된 호스트 목록",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Aplicar cambios",
+    "message":"변경사항 적용",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Anuncios",
+    "message":"광고",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Privacidad",
+    "message":"개인정보",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Dominios de malware",
+    "message":"멀웨어 도메인",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"소셜",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multiusos",
+    "message":"다목적",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regiones, idiomas",
+    "message":"지역, 언어",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Personalizada",
+    "message":"사용자 지정",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Una URL por línea. Las líneas que empiezan con &lsquo;!&rsquo; serán ignoradas. Se omitirán las URL no válidas.",
+    "message":"한 줄에 한 개의 URL을 입력하세요. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다. 존재하지 않는 URL은 자동으로 무시됩니다.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Aplicar",
+    "message":"분석",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"vaciar caché",
+    "message":"캐시 제거",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"nueva versión disponible",
+    "message":"최신 버전 존재",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"desactualizado",
+    "message":"구버전",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con &lsquo;!&rsquo; serán ignoradas.",
+    "message":"한 줄에 한 개의 필터를 입력하세요. 필터는 순수 호스트이름, 혹은 Adblock Plus-호환 필터가 될 수 있습니다. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importar y anexar",
+    "message":"가져오기 및 추가하기",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportar",
+    "message":"내보내기",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-mis-filtros-estaticos_{{datetime}}.txt",
+    "message":"ublock-고정필터_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Aplicar cambios",
+    "message":"변경사항 적용",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Editar",
+    "message":"편집",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Guardar",
+    "message":"저장",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Descartar",
+    "message":"취소",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importar desde archivo...",
+    "message":"파일로부터 불러오기...",
     "description":""
   },
   "rulesExport":{
-    "message":"Exportar a archivo...",
+    "message":"파일로 내보내기...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"ublock-mis-reglas-dinamicas_{{datetime}}.txt",
+    "message":"ublock-동적규칙_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Listado de sus reglas de filtrado dinámico.",
+    "message":"당신의 동적 필터링 규칙 목록입니다.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> documentación completa<\/a>).",
+    "message":"규칙 문법: <code>소스 페이지, 필터링 대상, 필터링할 타입, 적용할 조치<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>전체 설명서<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Su lista de nombres de servidores para los cuales se deshabilitará µBlock. Una entrada por línea. Se omitirán los nombres de servidores no válidos.",
+    "message":"당신의 목록에 있는 호스트들은 µBlock에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importar y anexar",
+    "message":"가져오기 및 추가하기",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exportar",
+    "message":"내보내기",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-mi-lista-de-permitidos_{{datetime}}.txt",
+    "message":"ublock-제외목록_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Aplicar cambios",
+    "message":"변경사항 적용",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Habilitar el registro de solicitudes de red",
+    "message":"네트워크 요청들에 대한 로깅 활성화",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Se pueden inspeccionar los detalles de las peticiones bloqueadas habilitando esta opción. El registro de peticiones bloqueadas aumenta el consumo de memoria de µBlock. Puesto que muchos usuarios nunca utilizarán esta opción, está deshabilitada por defecto.",
+    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 µBlock의 메모리 사용량을 늘어나게 합니다.\n많은 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Peticiones bloqueadas",
+    "message":"차단된 요청",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Peticiones permitidas",
+    "message":"허용된 요청",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Tipo",
+    "message":"유형",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Dominio",
+    "message":"도메인",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -408,71 +408,71 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filtro",
+    "message":"필터",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No hay peticiones bloqueadas registradas para esta página",
+    "message":"이 페이지에서 차단된 요청 로그가 없음",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No hay peticiones no bloqueadas registradas para esta página",
+    "message":"이 페이지에 차단되지 않은 요청 로그가 없음",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Peticiones ocultas",
+    "message":"숨겨진 요소",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
-    "message":"Cambios",
+    "message":"변경사항",
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"위키",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Código fuente (GPLv3)",
+    "message":"소스 코드 (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Colaboradores",
+    "message":"기여자",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Respaldar en archivo...",
+    "message":"파일로 백업하기",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-respaldo_{{datetime}}.txt",
+    "message":"ublock-백업_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restaurar desde archivo...",
+    "message":"파일로부터 복원하기...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Empezar desde cero...",
+    "message":"기본 설정으로 초기화...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Toda la configuración se sobrescribirá utilizando datos respaldados {{time}} y µBlock se reiniciará.  \n\n¿Sobrescribir toda la configuración existente utilizando datos de la copia de seguridad?",
+    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, µBlock이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Los datos no se pueden leer o son inválidos",
+    "message":"데이터를 읽을 수 없거나 잘못되었습니다.",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Se borrará toda la configuración y µBlock se reiniciará.\n\n¿Reiniciar µBlock a la configuración por defecto?",
+    "message":"당신의 모든 설정이 제거되며, µBlock이 재시작됩니다.\n\nµBlock의 설정을 처음 설정으로 초기화하시겠습니까?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"No se puede conectar a {{url}}",
+    "message":"{{url}}에 연결할 수 없습니다.",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"Esta entrada debe ser la última",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

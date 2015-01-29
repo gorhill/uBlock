@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"一款基於Chromium瀏覽器的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
+    "message":"最終，一個高效的阻擋工具。使用不多的 CPU 及記憶體資源。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -164,15 +164,15 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"協力廠商腳本",
+    "message":"第三方腳本",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"協力廠商框架",
+    "message":"第三方框架",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"在 {{total}} 個不同的域名中，已連結至 {{count}} 個",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -216,7 +216,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"我是進階的使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -340,23 +340,23 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"從檔案匯入...",
+    "message":"從檔案匯入…",
     "description":""
   },
   "rulesExport":{
-    "message":"匯出至檔案...",
+    "message":"匯出至檔案…",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"ublock自訂動態規則_{{datetime}}.txt",
+    "message":"ublock-自訂動態規則_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"自訂動態過濾規則列表",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "message":"規則語法： <code>來源主機名稱 目標主機名稱 需求類型 行為<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>說明文件<\/a>)。",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -420,7 +420,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"幕後",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
@@ -444,7 +444,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock 備份_{{datetime}}.txt",
+    "message":"ublock-備份_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
