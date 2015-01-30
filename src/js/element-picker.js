@@ -19,14 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CSS */
-'use strict';
+/* global self, vAPI, CSS */
 
 /******************************************************************************/
 /******************************************************************************/
 
 /*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
 ;(function(root) {
+
+    'use strict';
 
     if (!root.CSS) {
         root.CSS = {};
@@ -118,6 +119,8 @@
 
 (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 // don't run in frames
@@ -155,6 +158,19 @@ var svgWidth = 0;
 var svgHeight = 0;
 var elementFromPointCSSProperty = 'pointerEvents';
 var onSvgHoveredTimer = null;
+
+/******************************************************************************/
+
+// For browsers not supporting `:scope`, it's not the end of the world: the
+// suggested CSS selectors may just end up being more verbose.
+
+var cssScope = ':scope > ';
+
+try {
+    document.querySelector(':scope *');
+} catch (e) {
+    cssScope = '';
+}
 
 /******************************************************************************/
 
@@ -295,7 +311,7 @@ var cosmeticFilterFromElement = function(elem, out) {
     var tagName = elem.tagName.toLowerCase();
     var prefix = '';
     var suffix = [];
-    var v;
+    var v, i;
 
     // Id
     v = typeof elem.id === 'string' && CSS.escape(elem.id);
@@ -307,7 +323,7 @@ var cosmeticFilterFromElement = function(elem, out) {
     v = typeof elem.className === 'string' && elem.className.trim();
     if ( v.length ) {
         v = v.split(/\s+/);
-        var i = v.length;
+        i = v.length;
         while ( i-- ) {
             v[i] = CSS.escape(v[i]);
         }
@@ -353,7 +369,29 @@ var cosmeticFilterFromElement = function(elem, out) {
         }
     }
 
-    out.push('##' + prefix + suffix.join(''));
+    var selector = prefix + suffix.join('');
+
+    // https://github.com/gorhill/uBlock/issues/637
+    // If the selector is still ambiguous at this point, further narrow using
+    // `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
+    // `nth-child`, as `nth-of-type` is less volatile.
+    var parentNode = elem.parentNode;
+    if ( parentNode !== null && parentNode.querySelectorAll(cssScope + selector).length > 1 ) {
+        i = 1;
+        while ( elem.previousSibling !== null ) {
+            elem = elem.previousSibling;
+            if ( typeof elem.tagName !== 'string' ) {
+                continue;
+            }
+            if ( elem.tagName.toLowerCase() !== tagName ) {
+                continue;
+            }
+            i++;
+        }
+        selector += ':nth-of-type(' + i + ')';
+    }
+
+    out.push('##' + selector);
 };
 
 /******************************************************************************/
