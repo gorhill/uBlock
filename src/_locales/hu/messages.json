@@ -92,7 +92,7 @@
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Külső webhelytől származó parancsfájlok <b>letiltva<\/b> ezen a webhelyen",
+    "message":"Külső webhelytől származó scriptek <b>letiltva<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite1pFrameEnabled":{

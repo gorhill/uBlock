@@ -452,7 +452,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Відновити параметри за промовчанням...",
+    "message":"Відновити параметри за замовчанням...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{

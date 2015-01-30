@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Ei-blokatut",
+    "message":"Valkolista",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"asennusen jälkeen",
+    "message":"asennuksen jälkeen",
     "description":"English: since install"
   },
   "popupOr":{
@@ -156,7 +156,7 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"upotetut skriptit",
     "description":""
   },
   "popup1pScriptRulePrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Make use of context menu where appropriate",
+    "message":"Käytä sisältövalikkoa, kun mahdollista",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -228,7 +228,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} käytetty {{total}}:stä",
+    "message":"käytetty {{used}}\/{{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -252,7 +252,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lista blokatuista isännistä",
+    "message":"Lista estetyistä isännistä",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -284,7 +284,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Mukautettu",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -372,7 +372,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-sallitut_{{datetime}}.txt",
+    "message":"minun-ublock-valkolista_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -444,7 +444,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-varmuuskopio_{{datetime}}.txt",
+    "message":"minun-ublock-varmuuskopio_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -460,7 +460,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Tietoa ei voitu lukea, tai se on viallista",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

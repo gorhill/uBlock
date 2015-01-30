@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Log van netwerkverzoeken",
+    "message":"µBlock — Log van netwerkaanvragen",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{

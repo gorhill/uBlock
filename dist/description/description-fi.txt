@@ -8,7 +8,7 @@ Käyttö: Iso virtanappi ponnahdusikkunassa on tarkoitettu pysyvästi estämää
 
 Joustava, tämä lisäosa on enemmän kuin perinteinen "mainosten estäjä". Voit lukea ja luoda suodattimia myös hosts-tiedostoista.
 
-Nämä on suodatinlistat ovat automaattisesti ladattuna ja kytketty päälle:
+Nämä suodatinlistat ovat automaattisesti ladattuna ja kytketty päälle:
 
 - EasyList
 - Peter Lowe’s Ad server list
