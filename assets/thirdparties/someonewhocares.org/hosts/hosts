@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Jan 17th, 2015 at 14:00
+# Last updated: Jan 30th, 2015 at 11:05
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -332,6 +332,7 @@
 127.0.0.1 1us.cqcounter.com
 127.0.0.1 1xxx.cqcounter.com
 127.0.0.1 2001-007.com
+127.0.0.1 20585485p.rfihub.com
 127.0.0.1 3bc3fd26-91cf-46b2-8ec6-b1559ada0079.statcamp.net
 127.0.0.1 3ps.go.com
 127.0.0.1 4-counter.com
@@ -371,6 +372,7 @@
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 ant.conversive.nl
 127.0.0.1 apac.rel.msn.com
+127.0.0.1 api.adsymptotic.com
 127.0.0.1 api.bizographics.com
 127.0.0.1 api.tumra.com
 127.0.0.1 apprep.smartscreen.microsoft.com
@@ -393,6 +395,7 @@
 127.0.0.1 bilbo.counted.com
 127.0.0.1 bin.clearspring.com
 127.0.0.1 birta.stats.is
+127.0.0.1 bkrtx.com
 127.0.0.1 bluekai.com
 127.0.0.1 bluestreak.com
 127.0.0.1 bookproplus.com
@@ -652,6 +655,7 @@
 127.0.0.1 directads.mcafee.com
 127.0.0.1 dotcomsecrets.com
 127.0.0.1 dpbolvw.net
+127.0.0.1 dpm.demdex.net
 127.0.0.1 ds.247realmedia.com
 127.0.0.1 ds.amateurmatch.com
 127.0.0.1 dwclick.com
@@ -894,6 +898,7 @@
 127.0.0.1 metrics2.pricegrabber.com
 127.0.0.1 metrics.accuweather.com
 127.0.0.1 metrics.al.com
+127.0.0.1 metrics.att.com 
 127.0.0.1 metrics.boston.com
 127.0.0.1 metrics.cbc.ca
 127.0.0.1 metrics.cleveland.com
@@ -981,6 +986,7 @@
 127.0.0.1 objects.tremormedia.com
 127.0.0.1 okcounter.com
 127.0.0.1 omniture.theglobeandmail.com
+127.0.0.1 omtrdc.net
 127.0.0.1 one.123counters.com
 127.0.0.1 oss-crules.marketscore.com
 127.0.0.1 oss-survey.marketscore.com
@@ -1001,6 +1007,7 @@
 127.0.0.1 pix03.revsci.net
 127.0.0.1 pix04.revsci.net
 127.0.0.1 pixel.invitemedia.com
+127.0.0.1 pixel.tapad.com
 127.0.0.1 pmg.ad-logics.com
 127.0.0.1 pn2.adserver.yahoo.com
 127.0.0.1 pointclicktrack.com
@@ -1083,6 +1090,8 @@
 127.0.0.1 s48.sitemeter.com
 127.0.0.1 s4.histats.com
 127.0.0.1 s4.shinystat.com
+127.0.0.1 sact.atdmt.com
+127.0.0.1 sa.jumptap.com
 127.0.0.1 s.clickability.com
 127.0.0.1 scorecardresearch.com
 127.0.0.1 scribe.twitter.com
@@ -1131,6 +1140,7 @@
 127.0.0.1 server8.opentracker.net
 127.0.0.1 server9.opentracker.net
 127.0.0.1 service.bfast.com
+127.0.0.1 service.maxymiser.net
 #127.0.0.1 services.krxd.net
 127.0.0.1 se.sitestat.com
 127.0.0.1 sexcounter.com
@@ -1150,6 +1160,7 @@
 127.0.0.1 sm8.sitemeter.com
 127.0.0.1 sm9.sitemeter.com
 127.0.0.1 smartstats.com
+127.0.0.1 smetrics.att.com 
 127.0.0.1 softcore.xxxcounter.com
 127.0.0.1 sostats.mozilla.com
 127.0.0.1 sovereign.sitetracker.com
@@ -1285,6 +1296,7 @@
 127.0.0.1 s.youtube.com
 #127.0.0.1 t2.hulu.com		# Uncomment to block Hulu. 
 127.0.0.1 tagging.outrider.com
+127.0.0.1 tags.bkrtx.com
 127.0.0.1 talkcity.realtracker.com
 127.0.0.1 targetnet.com
 127.0.0.1 tates.freestats.com
@@ -3161,6 +3173,7 @@
 127.0.0.1 ad6media.fr
 127.0.0.1 ad.71i.de
 127.0.0.1 ad7.bannerbank.ru
+127.0.0.1 ad8.adfarm1.adition.com
 127.0.0.1 ad8.bannerbank.ru
 127.0.0.1 ad9.bannerbank.ru
 127.0.0.1 ad.abcnews.com
@@ -4879,6 +4892,7 @@
 127.0.0.1 analytics.kwebsoft.com
 127.0.0.1 analytics.percentmobile.com
 127.0.0.1 analyzer51.fc2.com
+127.0.0.1 ANDpolice.com
 127.0.0.1 ankieta-online.pl
 127.0.0.1 annuaire-autosurf.com
 127.0.0.1 anrtx.tacoda.net
@@ -4968,6 +4982,7 @@
 127.0.0.1 aud.pubmatic.com
 127.0.0.1 aureate.com
 127.0.0.1 auslieferung.commindo-media-ressourcen.de
+127.0.0.1 AUSpolice.com
 127.0.0.1 austria1.adverserve.net
 127.0.0.1 autocontext.begun.ru
 127.0.0.1 automotive-offer.com
@@ -5167,6 +5182,7 @@
 127.0.0.1 br.adserver.yahoo.com
 127.0.0.1 brandrewardcentral.com
 127.0.0.1 brandsurveypanel.com
+127.0.0.1 BRApolice.com
 127.0.0.1 bravo.israelinfo.ru
 127.0.0.1 bravospots.com		
 127.0.0.1 br.naked.com
@@ -5404,6 +5420,7 @@
 127.0.0.1 cmn1lsm2.beliefnet.com
 127.0.0.1 cm.npc-hearst.overture.com
 127.0.0.1 cmps.mt50ad.com
+127.0.0.1 CMRpolice.com
 127.0.0.1 cm.the-n.overture.com
 127.0.0.1 c.my.msn.com
 127.0.0.1 cnad1.economicoutlook.net
@@ -5437,6 +5454,8 @@
 127.0.0.1 commerce.www.ibm.com
 127.0.0.1 common.ziffdavisinternet.com
 127.0.0.1 companion.adap.tv
+127.0.0.1 COMpolice.com
+127.0.0.1 COMpolice.net
 127.0.0.1 computer-offer.com
 127.0.0.1 computer-offer.net
 127.0.0.1 computers-electronics-rewardpath.com
@@ -5527,6 +5546,7 @@
 127.0.0.1 cxoadfarm.dyndns.info
 127.0.0.1 cxtad.specificmedia.com
 127.0.0.1 cyber-incentives.com
+127.0.0.1 CYPpolice.com
 127.0.0.1 cz8.clickzs.com
 127.0.0.1 c.za.msn.com
 127.0.0.1 cz.bbelements.com
@@ -5637,6 +5657,7 @@
 127.0.0.1 ead.sharethis.com
 127.0.0.1 earnmygift.com
 127.0.0.1 earnpointsandgifts.com
+127.0.0.1 eas4.emediate.eu
 127.0.0.1 e.as-eu.falkag.net
 127.0.0.1 easyadservice.com
 127.0.0.1 easyweb.tdcanadatrust.secureserver.host1.customer-identification-process.b88600d8.com
@@ -5651,6 +5672,8 @@
 127.0.0.1 edirect.hotkeys.com
 127.0.0.1 education-rewardpath.com
 127.0.0.1 edu-offer.com
+127.0.0.1 EGYpolice.com
+127.0.0.1 EGYpolice.net
 127.0.0.1 electronics-bonuspath.com
 127.0.0.1 electronics-offer.net
 127.0.0.1 electronicspresent.com
@@ -5682,6 +5705,7 @@
 127.0.0.1 espn.footprint.net
 127.0.0.1 etad.telegraph.co.uk
 127.0.0.1 etahub.com
+127.0.0.1 ETHpolice.com
 127.0.0.1 etrk.asus.com
 127.0.0.1 etype.adbureau.net
 127.0.0.1 eu2.madsone.com
@@ -5873,6 +5897,7 @@
 127.0.0.1 gem.pl
 127.0.0.1 geoads.osdn.com
 127.0.0.1 geoloc11.geovisite.com
+127.0.0.1 GEOpolice.com
 127.0.0.1 geo.precisionclick.com
 127.0.0.1 getacool100.com
 127.0.0.1 getacool500.com
@@ -5943,6 +5968,7 @@
 127.0.0.1 g.thinktarget.com
 127.0.0.1 guiaconsumidor.com
 127.0.0.1 guide2poker.com
+127.0.0.1 GUMpolice.com
 127.0.0.1 guptamedianetwork.com
 127.0.0.1 guru.sitescout.netdna-cdn.com
 127.0.0.1 gwallet.com
@@ -6059,6 +6085,7 @@
 127.0.0.1 images.newsx.cc
 127.0.0.1 images.people2people.com
 127.0.0.1 images.primaryads.com
+127.0.0.1 imagesrv.adition.com
 127.0.0.1 images.sexlist.com
 127.0.0.1 images.steamray.com
 127.0.0.1 images.trafficmp.com
@@ -6123,6 +6150,7 @@
 127.0.0.1 incentiverewardcenter.com
 127.0.0.1 incentive-scene.com
 127.0.0.1 indexhu.adocean.pl
+127.0.0.1 INDpolice.com
 127.0.0.1 infinite-ads.com
 127.0.0.1 in.getclicky.com
 127.0.0.1 inklineglobal.com
@@ -6323,6 +6351,8 @@
 127.0.0.1 lt.andomedia.com
 127.0.0.1 lt.angelfire.com
 127.0.0.1 lucky-day-uk.com
+127.0.0.1 LUXpolice.com
+127.0.0.1 LUXpolice.net
 127.0.0.1 luxup.ru
 127.0.0.1 lw1.gamecopyworld.com
 127.0.0.1 lw2.gamecopyworld.com
@@ -6361,6 +6391,7 @@
 127.0.0.1 mb01.com
 127.0.0.1 mbox2.offermatica.com
 127.0.0.1 mbox9.offermatica.com
+127.0.0.1 MCOpolice.com
 127.0.0.1 mds.centrport.net
 127.0.0.1 media2021.videostrip.com
 127.0.0.1 media2.adshuffle.com
@@ -6398,6 +6429,7 @@
 127.0.0.1 media.trafficfactory.biz
 127.0.0.1 media.trafficjunky.net
 127.0.0.1 mediauk.247realmedia.com
+127.0.0.1 mediaupdate41.com
 127.0.0.1 media.ventivmedia.com
 127.0.0.1 media.viwii.net
 127.0.0.1 medical-offer.com
@@ -6636,6 +6668,7 @@
 127.0.0.1 pages.etology.com
 127.0.0.1 paid.outbrain.com
 127.0.0.1 paime.com
+127.0.0.1 PAKpolice.com
 127.0.0.1 panel.adtify.pl
 127.0.0.1 paperg.com
 127.0.0.1 partner01.oingo.com
@@ -6684,6 +6717,7 @@
 127.0.0.1 ph-ad20.focalink.com
 127.0.0.1 ph-ad21.focalink.com
 127.0.0.1 ph-cdn.effectivemeasure.net
+127.0.0.1 PHLpolice.com
 127.0.0.1 phoenixads.co.in
 127.0.0.1 photobucket.adnxs.com
 127.0.0.1 photos0.pop6.com
@@ -6733,6 +6767,7 @@
 127.0.0.1 politicalopinionsurvey.com
 127.0.0.1 pool.pebblemedia.adhese.com
 127.0.0.1 popadscdn.net
+127.0.0.1 popcash.net
 127.0.0.1 popclick.net
 127.0.0.1 poponclick.com
 127.0.0.1 popunder.adsrevenue.net
@@ -6764,6 +6799,68 @@
 127.0.0.1 promos.fling.com
 127.0.0.1 promote-bz.net
 127.0.0.1 promotion.partnercash.com
+127.0.0.1 protection.ALpolice.com
+127.0.0.1 protection.ASpolice.com
+127.0.0.1 protection.AUpolice.com
+127.0.0.1 protection.AZpolice.com
+127.0.0.1 protection.BSpolice.com
+127.0.0.1 protection.BTpolice.com
+127.0.0.1 protection.BYpolice.com
+127.0.0.1 protection.CApolice.com
+127.0.0.1 protection.CCpolice.com
+127.0.0.1 protection.DKpolice.com
+127.0.0.1 protection.ESpolice.com
+127.0.0.1 protection.FRpolice.com
+127.0.0.1 protection.FXpolice.com
+127.0.0.1 protection.GApolice.com
+127.0.0.1 protection.GRpolice.com
+127.0.0.1 protection.HKpolice.com
+127.0.0.1 protection.HNpolice.com
+127.0.0.1 protection.IDpolice.com
+127.0.0.1 protection.ILpolice.com
+127.0.0.1 protection.IQpolice.com
+127.0.0.1 protection.ITpolice.com
+127.0.0.1 protection.ITpolice.net
+127.0.0.1 protection.JMpolice.com
+127.0.0.1 protection.KPpolice.com
+127.0.0.1 protection.KYpolice.com
+127.0.0.1 protection.LApolice.com
+127.0.0.1 protection.LApolice.net
+127.0.0.1 protection.LBpolice.com
+127.0.0.1 protection.LCpolice.com
+127.0.0.1 protection.LIpolice.com
+127.0.0.1 protection.LRpolice.com
+127.0.0.1 protection.LSpolice.com
+127.0.0.1 protection.LVpolice.com
+127.0.0.1 protection.MApolice.com
+127.0.0.1 protection.MCpolice.com
+127.0.0.1 protection.MDpolice.com
+127.0.0.1 protection.MEpolice.com
+127.0.0.1 protection.MNpolice.com
+127.0.0.1 protection.MOpolice.com
+127.0.0.1 protection.MSpolice.net
+127.0.0.1 protection.NApolice.com
+127.0.0.1 protection.NApolice.net
+127.0.0.1 protection.NCpolice.com
+127.0.0.1 protection.NZpolice.com
+127.0.0.1 protection.PApolice.com
+127.0.0.1 protection.PFpolice.com
+127.0.0.1 protection.PGpolice.com
+127.0.0.1 protection.PHpolice.com
+127.0.0.1 protection.PKpolice.com
+127.0.0.1 protection.PRpolice.com
+127.0.0.1 protection.PTpolice.com
+127.0.0.1 protection.SBpolice.com
+127.0.0.1 protection.SCpolice.com
+127.0.0.1 protection.SDpolice.com
+127.0.0.1 protection.SIpolice.com
+127.0.0.1 protection.SKpolice.com
+127.0.0.1 protection.stpolice.com
+127.0.0.1 protection.TKpolice.com
+127.0.0.1 protection.TNpolice.com
+127.0.0.1 protection.TOpolice.com
+127.0.0.1 protection.VApolice.com
+127.0.0.1 protection.VIpolice.com
 127.0.0.1 proximityads.flipcorp.com
 127.0.0.1 proxy.blogads.com
 127.0.0.1 pstatic.datafastguru.info
@@ -6896,6 +6993,8 @@
 127.0.0.1 r.turn.com
 127.0.0.1 ru.bbelements.com
 127.0.0.1 ru.redtram.com
+127.0.0.1 RUSpolice.com
+127.0.0.1 RUSpolice.net
 127.0.0.1 russ-shalavy.ru
 127.0.0.1 rv.adcpx.v1.de.eusem.adaos-ads.net
 127.0.0.1 rya.rockyou.com
@@ -7363,6 +7462,7 @@
 127.0.0.1 upsellit.com
 127.0.0.1 us.adserver.yahoo.com
 127.0.0.1 usads.vibrantmedia.com
+127.0.0.1 USApolice.com
 127.0.0.1 usatoday.app.ur.gcion.com
 127.0.0.1 usatravel-specials.com
 127.0.0.1 usatravel-specials.net

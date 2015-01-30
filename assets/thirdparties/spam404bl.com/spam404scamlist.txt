@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4755
-! Last modified: 14 Jan 2015
+! Version: 4767
+! Last modified: 24 Jan 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4750,6 +4750,18 @@ shortz.so##[onclick="awaiting();"]
 ||clubpenguingenerator.com^
 ||minecraftpromotions.com^
 ||glorycheats.com^
+||searchcheat.com^
+||razor-games.com^
+||alex-hacks.com^
+||forfreeminecraft.com^
+||hustlertunes.com^
+||cheatsgod.com^
+||gameappcheats24.com^
+||secure-runescape.com^
+||fishin.rs^
+||moviestreamhd.eu^
+||watchseriesonline.eu^
+||weakwiki.com^
 !
 !
 !

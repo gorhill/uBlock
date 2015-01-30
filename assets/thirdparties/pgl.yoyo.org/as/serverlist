@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sun, 18 Jan 2015 15:55:36 GMT
-# entries:        2460
+# entries:        2452
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -676,7 +676,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -1048,7 +1047,6 @@
 127.0.0.1 banner.mindshare.de
 127.0.0.1 banner.nixnet.cz
 127.0.0.1 banner.noblepoker.com
-127.0.0.1 banner.northsky.com
 127.0.0.1 banner.orb.net
 127.0.0.1 banner.penguin.cz
 127.0.0.1 banner.prestigecasino.com
@@ -1636,12 +1634,8 @@
 127.0.0.1 itop.cz
 127.0.0.1 its-that-easy.com
 127.0.0.1 itsptp.com
-127.0.0.1 jbeet.cjt1.net
 127.0.0.1 jcount.com
-127.0.0.1 jedonkey.cjt1.net
 127.0.0.1 jinkads.de
-127.0.0.1 jkazaa.cjt1.net
-127.0.0.1 jnova.cjt1.net
 127.0.0.1 joetec.net
 127.0.0.1 jokedollars.com
 127.0.0.1 js.users.51.la
@@ -1910,7 +1904,6 @@
 127.0.0.1 payserve.com
 127.0.0.1 pbnet.ru
 127.0.0.1 pcash.imlive.com
-127.0.0.1 pcekspert.com
 127.0.0.1 peep-auktion.de
 127.0.0.1 peer39.com
 127.0.0.1 pennyweb.com
@@ -2073,7 +2066,6 @@
 127.0.0.1 rose.ixbt.com
 127.0.0.1 rotabanner.com
 127.0.0.1 roxr.net
-127.0.0.1 rpxnow.com
 127.0.0.1 rtbpop.com
 127.0.0.1 rtbpopd.com
 127.0.0.1 rts.doublepimp.com

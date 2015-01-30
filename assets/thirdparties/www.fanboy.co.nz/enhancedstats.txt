@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: m4TeNPIt8aoZWm9oZxHgzw
+! Checksum: E/5AGMXQUJVzDETxWtLO+A
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 22 Jan 2015
+! Updated: 31 Jan 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -531,6 +531,7 @@ wolframalpha.com###subpod_zoom
 ||my.leadpages.net^$third-party
 ||my.leadpages.net^$third-party
 ||natoms.com^$third-party
+||nsg.symantec.com^$third-party
 ||ooh.li^$third-party
 ||ooyala.com/3rdparty/visible_measures_
 ||preferences.truste.com^$third-party
@@ -706,7 +707,7 @@ wolframalpha.com###subpod_zoom
 @@||foxnews.com/js/omtr_code.js$domain=foxbusiness.com|foxnews.com
 @@||foxtel.com.au/shop/packages-and-deals/static/js/os-omniture.js
 @@||google-analytics.com/cx/api.js$domain=boingboing.net
-@@||google-analytics.com/ga.js$domain=foxsports.com.au|cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com|zoo.org.au
+@@||google-analytics.com/ga.js$domain=theblaze.com|foxsports.com.au|cinemassacre.com|comingsoon.neteverydayhealth.com|newyorker.com|dailyfreegames.com|opendns.com|aebn.net|intellicast.com|fossil.com|techbargains.com|search.diy.com|donanimhaber.com|boostmobile.com|filmweb.pl|break.com|mevio.com|mommyish.com|thegrindstone.com|sundance.org|justjared.com|kleinanzeigen.ebay.de|timberland.com|billboard.com|google.com|priceme.co.nz|banshee.fm|eonline.com|yellow.co.nz|logitech.com|lucasarts.com|tomshardware.com|maxcdn.com|tweetgrid.com|frequency.com|aftonbladet.se|seekingalpha.com|threatfire.com|bolha.com|jetbrains.com|fora.tv|thevine.com.au|americanapparel.net|mashable.com|brobible.com|oyster.com|photobucket.com|nuts.co.uk|meetme.com|alatest.com|apps.facebook.com|billabong.com|weeworld.com|youtube.com|philips.com|tvunetworks.com|g4tv.com|jobsite.co.uk|avast.com|ehow.com|gasbuddy.com|globaltv.com|nme.com|imageshack.us|tube8.com|priestville.org|latimes.com|umbro.com|tempe12.com|account.hirezstudios.com|salon.com|juxtapoz.com|wonka.com|medonet.pl|asus.com|7digital.com|lemonfree.com|babylon.com|theweek.com|bookadumpster.com|comingsoon.net|xda-developers.com|zoo.org.au
 @@||google-analytics.com/plugins/ua/ecommerce.js
 @@||google-analytics.com/urchin.js$domain=expresspcparts.com.au|roblox.com
 @@||google.com/coop/cse/brand?form=searchbox_$script,domain=wellness.com
@@ -774,6 +775,7 @@ wolframalpha.com###subpod_zoom
 @@||o.aolcdn.com^*&file=/aol/omniture.min.js
 @@||omniture.com^$document,~third-party
 @@||ooyala.com/3rdparty/comscore_other_$domain=marthastewart.com
+@@||ooyala.com/3rdparty/omniture_module-$domain=bizjournals.com
 @@||ooyala.com/3rdparty/omniture_other_$domain=thesun.co.uk|bloomberg.com|businessweek.com|nintendo.com|marthastewart.com
 @@||optimum.net/js/omniture/external.js
 @@||outbrain.com/nanoWidget/3rd/comScore/comScore.htm$domain=theinsider.com|telegraph.co.uk

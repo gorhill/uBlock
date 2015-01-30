@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!R edirect: http://www.hufilter.hu/hufilter.txt
+!Redirect: https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt
 !Homepage: http://www.hufilter.hu/hufilter.html
 !Title: hufilter
 !Expires: 14 days

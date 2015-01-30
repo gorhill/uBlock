@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: mcRur+NHxgDtuENxo07K0Q
-! Version: 201501232322
+! Checksum: kwofTZXFioFPi4RdYFIWKw
+! Version: 201501302142
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 23 Jan 2015 23:22 UTC
+! Last modified: 30 Jan 2015 21:42 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -721,7 +721,9 @@ _advertentieleaderboardhome.
 @@||ib.adnxs.com/mtj?$script,domain=9292.nl
 @@||imageceu1.247realmedia.com/0/Player/Player_NL_Home/342x204_mensuel_NLnew.jpg
 @@||images.marktnet.eu/adimg/
+@@||imasdk.googleapis.com/flash/core/*/adsapi.swf$object-subrequest,domain=538.nl|slamfm.nl
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
+@@||maps.gstatic.com/maps-api-*/adsense.js$domain=opentot.nl
 @@||media.ztat.net/media/teaser/$image,domain=zalando.nl
 @@||nl.gmads.net/crossdomain.xml$object-subrequest,domain=radioveronica.nl
 @@||nl.gmads.net/r?gmtr=$object-subrequest,domain=radioveronica.nl
@@ -741,6 +743,7 @@ _advertentieleaderboardhome.
 @@||g.doubleclick.net/pagead/conversion/?ai=*&label=vast_creativeview$object-subrequest,domain=rtlxl.nl
 @@||ima3vpaid.appspot.com/?adTagUrl=$object-subrequest,domain=rtlxl.nl
 @@||ima3vpaid.appspot.com/crossdomain.xml$object-subrequest,domain=rtlxl.nl
+@@||imasdk.googleapis.com/flash/core/3.*/adsapi.swf$object-subrequest,domain=2be.be|jim.be|vitaya.be|vtm.be|vtmkzoom.be
 @@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=vtm.be
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=alfaforum.nl
 @@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=vtm.be
@@ -993,6 +996,7 @@ valuta.nl,wisselkoers.nl###theLayerSpaarrenteVergelijken
 valuta.nl,wisselkoers.nl###theLayerZorg
 scholieren.com###top
 marktplaats.nl###top-banner-wrapper
+krapuul.nl###topbanner
 voetbalzone.nl###uniGroot
 pokercollege.nl###verticalbanner
 zeegat.nl###vlissingen700

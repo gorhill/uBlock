@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: ZHoM4jvpRZWgzyFR8Jyaow
-! Version: 201501232321
+! Checksum: sbyVpllg0YAzo9EniuWk1A
+! Version: 201501302141
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -17,8 +17,10 @@
 .be/ads/
 .fr/ads.
 .fr/ads/
+.php?*&zoneid=
 .pubdirecte.
 .publicite.
+/468x60banner.
 /adUnblock.
 /Adv728.
 /aff_pub_
@@ -66,6 +68,7 @@ _regiepub/
 ||188.165.253.6^$popup,third-party
 ||1sponsor.com^$third-party
 ||2mdn.net^$object-subrequest,domain=dhnet.be
+||2town.net^$third-party
 ||46.249.58.117^$third-party
 ||7x4.fr^$third-party
 ||acces-charme.com^$third-party
@@ -105,7 +108,6 @@ _regiepub/
 ||affilinks.fr^$third-party
 ||affilipub.com^$third-party
 ||affility.com^$third-party
-||affilizr.com^$third-party
 ||affpx.com^$third-party
 ||ajoutezvotresite.com^$third-party
 ||aleksandrisolzhenitsynauspices.com^$third-party
@@ -132,6 +134,7 @@ _regiepub/
 ||bizhentai.com^$third-party
 ||biznolimit.com^$third-party
 ||blogbang.com^$third-party
+||bloodsuckingcauterant.org^$third-party
 ||bodencapsulate.org^$third-party
 ||botaalleghenymountainspurge.info^$third-party
 ||box.shopoon.fr^$third-party
@@ -139,6 +142,7 @@ _regiepub/
 ||brachycephalismotterhound.net^$third-party
 ||bragibriefness.com^$third-party
 ||breastfeedingramjet.org^$third-party
+||broadcast.pm^$third-party
 ||bullheadcatfishtortuousness.net^$third-party
 ||buy-targeted-traffic.com^$third-party
 ||buzzvet.com^$third-party
@@ -152,6 +156,7 @@ _regiepub/
 ||cercle-trafic.com$third-party
 ||chinesecheckerscooked.info^$third-party
 ||churidarsfederalreserve.net^$third-party
+||clasticifnot.net^$third-party
 ||claysculptureaniline.com^$third-party
 ||clic-diffusion.com^$third-party
 ||clic.reussissonsensemble.fr^$popup,third-party
@@ -169,7 +174,9 @@ _regiepub/
 ||corpuschristilipped.info^$third-party
 ||cosponsorchianturpentine.com^$third-party
 ||cougar-rencontre.net^$third-party
+||cpasbien.pe$popup
 ||ctenocephalidesfelisaxolotl.org^$third-party
+||ctpsrv.com^$third-party
 ||cysticgenuscoeloglossum.org^$third-party
 ||danstonfion.com^$popup,third-party
 ||danstonfion.com^$third-party
@@ -276,10 +283,10 @@ _regiepub/
 ||indulgeotoole.info^$third-party
 ||inexpressiveelfin.org^$third-party
 ||intermittenceairconditioner.info^$third-party
+||journaux-du-midi.com^$third-party
 ||kadserver.com^$third-party
 ||keynesianpieris.org^$third-party
 ||kishinevunaerated.com^$third-party
-||kontestapp.com^$third-party
 ||koocash.com$popup,third-party
 ||koodoo.net^$third-party
 ||kreaffiliation.com^$third-party
@@ -295,6 +302,7 @@ _regiepub/
 ||livewithbinaryoptions.com^$third-party
 ||lkjfqlmskjdqlkmsjd.com^$third-party
 ||lowlyingcaviller.info^$third-party
+||macadamianutdogma.org^$third-party
 ||macrocephalouspokerface.com^$third-party
 ||madison-ads.net^$third-party
 ||magistratedefenseintelligenceagency.net^$third-party
@@ -327,9 +335,11 @@ _regiepub/
 ||netclickstats.com^$third-party
 ||netmediaeurope.com^$third-party
 ||netmediaeurope.fr^$third-party
+||nighaleuritesfordii.net^$third-party
 ||ninetysixhypothalamic.net^$third-party
 ||niobitebradypus.com^$third-party
 ||nols-pub.fr^$third-party
+||nostalgicallyoperatingroom.com^$third-party
 ||nturveev.com^$third-party
 ||nucleicacidsunburstpleat.info^$third-party
 ||nursesharktorreyspine.info^$third-party
@@ -342,12 +352,15 @@ _regiepub/
 ||orangepublicite.fr^$third-party
 ||overlays.next-targeting.com^$third-party
 ||pandad.eu^$third-party
+||papacarefully.info^$third-party
 ||papycash.com$third-party
+||paraffinscaleraffiavinifera.org^$third-party
 ||partner.uncadeau.com^$third-party
 ||payglad.com^$third-party
 ||perspirercetacea.info^$third-party
 ||phytophagoustransferee.info^$third-party
 ||pictographpenicillinf.com^$third-party
+||piximedia.com^$third-party
 ||piximedia.fr^$third-party
 ||plusservicepartners.com^$third-party
 ||polypeptidetoea.info^$third-party
@@ -361,6 +374,7 @@ _regiepub/
 ||promo.indecentes-voisines.com^$third-party
 ||promo.voyance-web.fr^$popup,third-party
 ||promotions.djummer.com^$popup,third-party
+||proxad.net^$third-party
 ||prurientlygrandfatherclause.net^$third-party
 ||pseudomonodaceaenonlinearcorrelation.info^$third-party
 ||pub-france.com^$third-party
@@ -415,17 +429,20 @@ _regiepub/
 ||stationerydriftice.info^$third-party
 ||stickyads.tv^$third-party
 ||stigads.com^$third-party
+||subduablealphadecay.info^$third-party
 ||superadsoffers.com^$third-party
 ||supersmsoffers.com^$third-party
 ||supertankermavik.net^$third-party
 ||surfactif.fr^$third-party
 ||susanbrownellanthonysabotage.net^$third-party
+||sv2.biz^$third-party
 ||taboola.com^$third-party
 ||tamarauallatonce.com^$third-party
 ||taziyehhenpeck.com^$third-party
 ||teads.fr^$third-party
 ||the-adult-company.com^$popup,third-party
 ||theatreofwarsailorboy.net^$third-party
+||tmcregie.fr^$third-party
 ||tnx.net^$third-party
 ||tool.acces-vod.com^$third-party
 ||tootrash.com^$third-party
@@ -433,12 +450,14 @@ _regiepub/
 ||totaladperformance.com^$third-party
 ||touturf.com^$third-party
 ||tracking.ecookie.fr^$popup,third-party
+||trackor.net^$popup,third-party
 ||trackor.net^$third-party
 ||trafic-booster.biz^$third-party
 ||traficmax.com^$third-party
 ||trifoliumreflexumgenuscladonia.info^$third-party
 ||unbarreleddarkened.net^$third-party
 ||unbodiediridaceousplant.net^$third-party
+||underlaymentgallstone.net^$third-party
 ||videos-x.me^$third-party
 ||videostep.com^$third-party
 ||wbsadsdel2.com^$third-party
@@ -446,6 +465,7 @@ _regiepub/
 ||webprod.cybertesteurs.com^$popup,third-party,domain=~iss.net
 ||wedoo.com^$third-party
 ||wendise.com^$third-party
+||widespace.com^$third-party
 ||widgetbooster.com^$third-party
 ||widgets.outbrain.com^$third-party
 ||wineuroptp.fr^$third-party
@@ -461,6 +481,7 @@ _regiepub/
 !
 !----------------------- Publicités tierces ----------------------!
 !
+|http://*/*?utm_source=*&utm_medium=partenariat&utm_campaign=$popup
 ||1-porno.org/atr_template/trade/
 ||1001sondages.com/assets/images/250x250.jpg
 ||11footballclub.com/equipe/indexhomepage.php?$domain=lequipe.fr
@@ -558,6 +579,7 @@ _regiepub/
 ||crm-pour-pme.fr/images/copie%20de%20728-90.png
 ||crocastuce.fr/images/Boutons/
 ||d34eoj4l97gwgh.cloudfront.net/img/geoloc/$domain=france-examen.com
+||datahc.com/Affiliates/
 ||devisprox-media.s3-website-eu-west-1.amazonaws.com^
 ||devisprox.com/ld.js
 ||dhtml.pornravage.com^
@@ -600,10 +622,12 @@ _regiepub/
 ||fitnext.com/masculin_box$third-party
 ||flyrelax.com/wp-widget/widget.php
 ||fortuneinternet101.com/Bannieres/
+||freedownload-kk.com^
 ||freedriverdetective.com/images/driverdetective.jpg
 ||frenchfriendfinder.com^$domain=choualbox.com
 ||frequence-tv.com/images/frpub.gif
 ||full-wallpaper.com/wallpaperday.js$third-party
+||g3t.org^
 ||gagnantacoupsur.com/images/banner
 ||gagnons-argent.com/pubd.php$popup,third-party
 ||gametap.com/convergence/Header/framed/?
@@ -614,6 +638,7 @@ _regiepub/
 ||gold-barre.com/banner1.gif
 ||googleapis.org/zfe2hi
 ||gov-surveys.com^
+||gratuit-film.fr^
 ||grenierdumaroc.com^$domain=movizfr.com
 ||grillegagnante.com/bannieres/
 ||grosnews.com/grosnews.php?
@@ -821,6 +846,7 @@ _regiepub/
 ||tagbox.fr/banner/
 ||techbeat.com/wp-content/custom-php/tbrecentposts3.php?
 ||teen-passion.net/annuaire/ban/$third-party
+||telecharger9.fr^
 ||teliad.fr^*/banner/
 ||terasexe.com/pubs/
 ||test-psycho.com/meetic.gif$domain=sortirensemble.com
@@ -870,6 +896,10 @@ _regiepub/
 !
 !----------------------- Sites spécifiques -----------------------!
 !
+.com/*?$xmlhttprequest,domain=gentside.com|maxisciences.com|ohmymag.com
+.info/*?$xmlhttprequest,domain=gentside.com|maxisciences.com|ohmymag.com
+.net/*?$xmlhttprequest,domain=gentside.com|maxisciences.com|ohmymag.com
+.org/*?$xmlhttprequest,domain=gentside.com|maxisciences.com|ohmymag.com
 /http://www\.sofoot\.com/IMG/i\d+\.jpg/$domain=sofoot.com
 ||01net.com^*/adnl.$script
 ||01net.com^*/regie/
@@ -913,6 +943,7 @@ _regiepub/
 ||algerie360.com/wp-content/uploads/*/Banniere
 ||alimentation-france.com/*/pubs/
 ||all-musculation.com/AM/template/images/pubs/
+||all-musculation.com^*/pub-fond/
 ||allmetsat.com/data/pub/
 ||allocine.fr/call/pubx/
 ||allstream.fr/images/partenaires/
@@ -975,7 +1006,6 @@ _regiepub/
 ||blogdumac.com/pub/
 ||blogduwebdesign.com/images/BannierePrintBox728x90_1.gif
 ||blogduwebdesign.com/images/Pave300x250_1.gif
-||blogmotion.fr/wp-content/*/images/sideleft/
 ||blogsbd.fr/pub/
 ||blogsbd.fr/public/bbd-pooble.jpg
 ||boiteajeux.net/img/pub/
@@ -1017,6 +1047,7 @@ _regiepub/
 ||choualbox.com/pub/
 ||chronopost.fr^*/public/visuels/partenaires/
 ||cinemay.com/bannier/
+||clk.cpasbien.$popup
 ||clubic.com/06010586-photo-bg.jpg
 ||clubic.com^*/img/content/*-300x150.
 ||clubic.com^*/img/home/300x150-
@@ -1027,6 +1058,8 @@ _regiepub/
 ||commeaucinema.com/ads/
 ||compteur-gratuit.fr/images/bandeau_
 ||compteur-gratuit.fr/pub_
+||comptoir-hardware.com/edi/$subdocument
+||comptoir-hardware.com/pub/$subdocument
 ||comptoir-info.com/pb/
 ||conception-site-web.info/modules/creation-site/images/banner.jpg
 ||confidentielles.com/*/pubimppixel.php?
@@ -1073,6 +1106,8 @@ _regiepub/
 ||depechedekabylie.com/files.php?file=banners/
 ||depechedekabylie.com/files.php?file=pub/
 ||depechedekabylie.com/themes/ddk/img/pub_
+||developpez.com/template/extra.php?
+||developpez.net/template/extra.php?
 ||dimension-ingenieur.com^*/PUBING/
 ||dimension-ingenieur.com^*/Pubs/
 ||directhopital.com/upload/pub/
@@ -1254,6 +1289,7 @@ _regiepub/
 ||groupolitan.be/fr/partners/iframe/
 ||guide-du-travail.com/images/promo/
 ||guide-du-travail.com/popupaudio.php$popup
+||guide-fitness.fr/images/Investir123.gif
 ||guide-hebergeur.fr/img/lwssuper
 ||hamachifrance.com/img/images/banniereci.jpg
 ||hamachifrance.com/img/images/goclecdpub.png
@@ -1412,7 +1448,7 @@ _regiepub/
 ||lepetiteconomiste.com^*/swf_banniere_
 ||lepoint.fr/html/timekeeper/
 ||lepoint.fr/images/*/partenariat/
-||lequipe.fr/v6/js/popins.js?
+||lequipe.fr/*/js/popin$script
 ||lequotidien-oran.com/img/pub.jpg
 ||lerepairedesmotards.com/img/pub/
 ||les-horaires.fr/ajax/staytuned.popup.php?city=
@@ -1479,8 +1515,9 @@ _regiepub/
 ||mappy.com/*/files/campaigns/
 ||mappy.com/services/annoncesjaunes/
 ||marianne.net/photo/background-
-||matchendirect.fr/*/mobile/header_cote.html
-||matchendirect.fr/*/mobile/header_info.html
+||matchendirect.fr/bibliotheque/image/tux/
+||matchendirect.fr/html_include/js/groupe.js
+||matchendirect.fr^*/mobile/header_info.
 ||materiel.net/pub/
 ||matter-du-sexe.com/infopop/
 ||max-videos.com/tools/
@@ -1492,6 +1529,7 @@ _regiepub/
 ||mcetv.fr/img/*/Habillage-
 ||mcetv.fr^*/BAN-partenaires-
 ||med-it.com/ban/
+||media-ext.wanarun.net^
 ||media.rtl.fr/online/image/2014/0709/7773130306_rtl-ara.jpg
 ||medserv.carrefour.com^
 ||medserv.carrefour.fr^
@@ -1555,6 +1593,7 @@ _regiepub/
 ||nofrag.com/v2k7/s/*.jpg
 ||nokenny.com/mechouga|
 ||nouvelobs.com/rue89/*_standard.
+||nouvelobs.com/tools/smart.php
 ||nouvelobs.com^*/iframe-boxes/
 ||nouvelobs.com^*/partenariat89/
 ||novaplanet.com^*/widget/pub_pave_
@@ -1875,6 +1914,7 @@ _regiepub/
 ||votrepromo.com/pub-
 ||voxmakers.fr/partenaires/
 ||vpngratuit.fr^*/gpub.gif
+||vulgarisation-informatique.com/upload/partenariat/
 ||wads.plurielles.fr^
 ||wallpapergratuit.org/scripts.inc.js
 ||wamiz.fr/css/habillage/
@@ -1944,6 +1984,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ||files.macg.co/macgupload/
 ! Anti-Adblock
 ! A l'attention des webmasters : https://easylist.adblockplus.org/blog/2013/05/10/anti-adblock-guide-for-site-admins
+###adb-actived
 ###anti_adblock
 ||pubdirecte.com^$~collapse,domain=debrideurstream.fr
 !
@@ -1968,6 +2009,8 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###ad-rectangle-1-dst
 ###ad-rectangle-2-dst
 ###ad_300_250_right
+###ad_liste_bookmaker
+###ad_rotation_match
 ###ads-medium-rectangle
 ###ads125-box
 ###adsCarre
@@ -2451,7 +2494,8 @@ lacanausurfinfo.com###banner_footer
 jeuxvideo.com###banner_jv
 dzairfoot.net###bannerfloat
 tous-sports.tv###bannerfloat01
-france-pittoresque.com,matchendirect.mobi,radiofrance.fr###banniere
+france-pittoresque.com,gentside.com,matchendirect.mobi,maxisciences.com,ohmymag.com,radiofrance.fr###banniere
+free.fr###banshopping1
 jeux-gratuits.com###barre-partenaires
 tennisactu.net###bgclicable
 neomag.fr###big-ad
@@ -2492,6 +2536,7 @@ imagik.fr###cb30popmedia
 renovationettravaux.fr###cboxOverlay
 emule-island.ru###centre_haut
 chuck-streaming.fr,hawaii-streaming.com,smash-streaming.com,the-big-bang-streaming.com,trone-de-fer-streaming.com###cgu_pub
+wanarun.net###chaussuresCarousel
 wamiz.com###cl-global-link
 scifi-movies.com###clichomepage
 aujourdhui-en-france.fr,leparisien.fr###clubDealbloc
@@ -2500,6 +2545,7 @@ zebulon.fr###col_droite
 zebulon.fr###col_droite_fine
 renovationettravaux.fr###colorbox
 oujdacity.net###common-top-widget
+matchendirect.fr###comparateur
 covoiturage.fr###comuto_insidepage_ads
 meteomedia.com###container_bac
 canalturf.com###content > div[style="width:100%; z-index: 100; margin-bottom:10px; text-align:center "]:first-child
@@ -2672,12 +2718,14 @@ lexpress.fr###partenaires_crm
 miroirsocial.com,wanimo.com###partners
 commentcamarche.net###partners_offers
 equirodi.be###partnerslinks2
+gentside.com,maxisciences.com,ohmymag.com###pave_haut
 dzfoot.com###pave_twoh
 anime00.com,anime00.net,cinemay.com,e-booksland.com,filmscine.com,lastfilmstreaming.com,livre-technique.com,mesfilmsstreaming.com,movizfr.com,mu-streaming.com,seriesnostop.com,videonostop.com###pb1
 garytube.com,oumazik.com###pb2
 comptoir-info.com###pb_lb
 comptoir-info.com###pb_sb
 comptoir-info.com###pb_sq
+lindependant.fr###petitesAnnoncesBlock
 gladplayer.com,paygladplayer.com,pgflow.com,playglad.com###pg_banproll
 topanalyse.com###pid_f
 silicon.fr###plugin-include-php-3
@@ -2691,8 +2739,6 @@ sitedesmarques.com###posPub
 korben.info###post-partenaire
 forumfr.com###post_id_pub
 homecine-compare.com###ppsa_head_i
-matchendirect.fr###prehome_contenu
-matchendirect.fr###prehome_fond
 homecine-compare.com###prl_box_p1
 fluvore.com###prom
 ecranlarge.com,lacanausurfinfo.com###promo
@@ -2723,8 +2769,6 @@ tele.premiere.fr###pub_a2d_pave
 vo2.fr###pub_background
 ouedkniss.com###pub_care
 jeuxvideo.com###pub_carre1
-matchendirect.fr###pub_criteo_300x250_1
-matchendirect.fr###pub_criteo_468x60_1
 elwatan.com###pub_habillage_lien
 chuck-streaming.fr,hawaii-streaming.com,smash-streaming.com,the-big-bang-streaming.com,trone-de-fer-streaming.com###pub_js
 lesmobiles.com###pub_middle_home
@@ -2739,7 +2783,6 @@ troc-velo.com###publine
 macg.co###pubmenu
 focus-numerique.com,japan-expo.be,lapresse.ca###pubs
 algerie360.com###pubsousVid
-matchendirect.fr###pubtetiere
 flights-results.liligo.fr###pulledbanner
 flights-results.liligo.fr###pulledbanner-right-top
 nouvelobs.com###random-div-id-1_masterblock
@@ -2815,6 +2858,7 @@ mac4ever.com###topappWidget
 2siteweb.com###topbanner
 as-salat.com,forumbismillah.com,streamxd.com###topbar
 lateen18.com,lesbeurettes.com,lesbienne-gratis.com,vidule.com###trade
+matchendirect.fr###tux_centrale
 msn.com###upgrade.hide
 voyages.liberation.fr###vHeader-pub
 verif.com###verif_pub_adsense_commander
@@ -2851,7 +2895,7 @@ reverso.net##.adcontent
 gmx.fr##.add
 beaute-test.com##.addictbloc
 01net.com##.adnl_zone
-actustar.com,cvya.dz,do-tube.org,fairytailmx.com,floriankarmen.com,footespagnol.fr,freedom-ip.com,mercato365.com,metronews.fr,obturations.com,oujdacity.net,raje.fr,replay.fr,rugby365.fr,rugby365.fr.fr,scan-mx.com,sortiesdvd.com,sport365.fr,streaming-video3x.com,t411.me,telesatellite.com,tonmanga.com,uzinagaz.com,webstar-auto.com,webstar-electro.com,yourporno.fr##.ads
+actustar.com,cvya.dz,do-tube.org,fairytailmx.com,floriankarmen.com,footespagnol.fr,freedom-ip.com,lephpfacile.com,mercato365.com,metronews.fr,obturations.com,oujdacity.net,raje.fr,replay.fr,rugby365.fr,rugby365.fr.fr,scan-mx.com,sortiesdvd.com,sport365.fr,streaming-video3x.com,t411.me,telesatellite.com,tonmanga.com,uzinagaz.com,webstar-auto.com,webstar-electro.com,yourporno.fr##.ads
 artdeseduire.com##.ads-books
 artdeseduire.com##.ads-information
 cvya.dz##.ads-vert
@@ -2932,6 +2976,7 @@ trictrac.net##.boardgamegeek
 leguide-shopping.tele-2-semaines.fr##.body
 lesnegociales.com##.body_clic
 trocdestrains.com##.boite-partenaire-v
+nextinpact.com##.bonplan_article
 20minutes.fr##.bons-plans
 hentai-3x.com##.boost
 hamachifrance.com##.box-1.deepest[style="min-height: 250px;"]
@@ -2975,6 +3020,7 @@ dailymotion.com##.dm_widget_advert_iabrighttitle
 cdiscount.com##.downinbackMaullContainer
 blog2mature.com##.download
 oujdacity.net,passion-net.fr##.ebuzzing_box
+wp-infinity.com##.entry-featured
 fredzone.org##.entry-pub
 clubic.com##.espace-partenaire-premium
 frandroid.com##.espace-sony-widget
@@ -2988,7 +3034,8 @@ clubic.com##.events
 humanite.fr##.field-name-bloc-pub-1ere-sidebar-contenu-3
 humanite.fr##.field-name-pub-sidebar-first-content
 lefigaro.fr##.fig-adgps
-lefigaro.fr##.fig-promo
+developpez.com##a[href^="http://sysimg.developpez.com/click.php?a="] > img
+!lefigaro.fr##.fig-promo
 2siteweb.com,dvdrip-truefrench.com,filmze.com,filmze.me,fluket.com,funvideomix.org,liberty-lands.com,libertyland.tv,mesfilmsstreaming.com,moviz.net,mu-streaming.com,sky-animes.com,streamgo.net,telechargementgratuits.com,vostfr-vf.com##.fixe
 evene.fr##.fnac-spbox
 francetransactions.com##.fondcliquable
@@ -3081,6 +3128,7 @@ nautiljon.com##.pad
 priceminister.com##.panel_pub
 leparisien.fr##.parisien-section.pratique
 photo.fr##.parrains
+jeuxvideo.com##.part-boutique
 petitfute.com##.partenaire_mid
 caradisiac.com,lesechos.fr,lfp.fr,mangario.fr,sexandtrash.com##.partenaires
 swissquote.ch##.partner
@@ -3095,6 +3143,7 @@ pnc-contact.com##.post.bg3
 abomag.com##.postContent > p[style="float: left;margin: 4px;"]
 strastv.com##.post_pub
 audiofanzine.com##.price
+matchendirect.fr##.promo
 nouvelobs.com##.promo-bottom-art
 frandroid.com##.promo-sony
 lemonde.fr##.promo.michelin
@@ -3124,6 +3173,7 @@ desmatures.com##.pub468100top
 surf-heures.com##.pub72890-forum
 gaytag.net##.pub96590
 whitespirit.fr##.pubHaut
+tuxboard.com##.pubMixte
 jds.fr##.pub_2_1000
 masculin.com##.pub_article
 meilleurmobile.com##.pub_combo
@@ -3211,6 +3261,7 @@ fan-de-cinema.com##.topmargin
 search.ke.voila.fr##.tpl_slpartner_container_bottom
 search.ke.voila.fr##.tpl_slpartner_container_top
 forum-actif.net##.tradeDoubler
+matchendirect.fr##.tux125x125
 omgtorrent.com##.tuyau
 clubic.com##.ui-layout-header
 forum-windows.com##.uniblue
@@ -3257,11 +3308,14 @@ touslesdrivers.com##a.seo
 free-reseau.fr##a[href*="&tag=freereseaufr-"]
 artdeseduire.com##a[href*="/?part=ads"]
 clubic.com##a[href*="/?utm_source"]
+nouvelobs.com##a[href*="?partner="]
+nouvelobs.com##a[href*="?partnerlinkid="]
 metaboli.fr##a[href*="gametap.com/convergence/?"]
 dl-serie.com##a[href*="http://www.dl-serie.blogspot.com/2007/01/comment-gagner-de-l-en-galerant-sur-le.html"]
 forum-vista.net##a[href*="http://www.liutilities.com/aff"]
 magicmaman.com##a[href*="smartadserver.com/call/cliccommand/"]
 webfrance.com##a[href*="webfrance.com/go/"]:not([href="http://www.webfrance.com/go/facebook.php"]):not([href="http://www.webfrance.com/go/twitter.php"]):not([href="http://www.webfrance.com/go/googleplus.php"]):not([href="http://www.webfrance.com/go/linkedin.php"])
+nouvelobs.com##a[href*="xiti.com/go.click?"]
 generation-nt.com##a[href="/boutique.html"]
 omgtorrent.com##a[href="/clic_dl.php?go=fiche"]
 omgtorrent.com##a[href="/clic_dl.php?go=moteur"]
@@ -3291,7 +3345,6 @@ marianne.net##a[href^="/blogsecretdefense/ads/"]
 unchartedatolls.com##a[href^="/file.php?"]
 mayottehebdo.com##a[href^="/index.php?option=com_banners"]
 trictrac.net##a[href^="/partenaire/"]
-estrepublicain.fr,matchendirect.fr##a[href^="/pub/"]
 trictrac.net##a[href^="/publicite/"]
 confidentielles.com##a[href^="/rc_787_"]
 emule-island.ru##a[href^="/tutoriaux/usenext-dl.php?"]
@@ -3313,10 +3366,13 @@ argentmania.com##a[href^="http://fr.scratchmania.com/?brandId="]
 brunotritsch.fr##a[href^="http://fr.webmaster-rank.info/stat/affiliate/"]
 guidebourse.net##a[href^="http://guidebourse.net/ads/"]
 download771onlinepdf.com##a[href^="http://linkz.it/"]
+moviz-telecharger.com##a[href^="http://moviz-telecharger.com/films-en-qualité-hd-"]
 korben.info##a[href^="http://network.bemyapp.com/trk/"]
+nouvelobs.com##a[href^="http://partner.global-espace.com/"]
 jamsvu.fr##a[href^="http://plateforme.flinteractive.fr/affiliation/lead/clic?"]
 annuaire-liens-durs.com##a[href^="http://pub.annuaire-liens-durs.com"]
 brunotritsch.fr##a[href^="http://rdinews.com/ads/"]
+nouvelobs.com##a[href^="http://tempsreel.nouvelobs.com/les-bons-plans-shopping/"]
 tirage-gagnant.com##a[href^="http://tirage-gagnant.com/tirage/"] > img
 radins.com##a[href^="http://track.radins.com/regie.php?"]
 zetorrents.com##a[href^="http://trf."]
@@ -3342,6 +3398,7 @@ laptopspirit.fr##a[href^="http://www.prix-portables.fr/pub/"]
 topj.net##a[href^="http://www.rpjf.com/asp/lien.asp?"]
 torrentfrancais.cc##a[href^="http://www.singulardownload.com/"]
 lcouple2-2m.blogspot.com##a[href^="http://www.ta3arof.net/ads/"]
+lefigaro.fr##a[href^="http://www.ticketac.com/?utm_source="]
 ticketac.com##a[href^="http://www.ticketac.com/redirect_pub.php?"]
 webrankinfo.com##a[href^="http://www.webrankinfo.com/partenaires/"]
 planet-series.tv##a[href^="http://www.yourfilezone.com/"]
@@ -3503,7 +3560,6 @@ people-looks.com##td[width="340"][height="265"][align="center"]
 mon-ordi.com##td[width="567"]
 people-looks.com##td[width="980"][height="40"][bgcolor="#FFFFFF"]
 drague.net##tr > td[height="95"][align="center"][colspan="2"]
-matchendirect.fr##tr[onclick^="pubComparateur"]
 lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([href^="javascript:show"]):not([href^="facebook"])
 !
 !----------------------- Exceptions -----------------------!
@@ -3584,6 +3640,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||ebayrtm.com/rtm?RtmCmd&a=json&p=$script,domain=www.befr.ebay.be
 @@||ebayrtm.com/rtm?RtmPreviewContent&$subdocument,domain=www.befr.ebay.be
 @@||everlong.org/style/banner.php
+@@||evilox.com/includes/js/advertisement.js
 @@||fatherandsons.fr^*/opecom/affiliation/
 @@||fr-advideum.videoplaza.tv/proxy/distributor^$object-subrequest,domain=aufeminin.com|generation-nt.com|lefigaro.fr|rfi.fr
 @@||fr-canalplusdev.videoplaza.tv/proxy/html5-sdk/*-ea.min.js
@@ -3610,7 +3667,7 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 @@||infos.peuples-solidaires.org/adserver2/
 @@||infos.wwf.fr/adserver2/
 @@||iphone4.fr/bannieres/header_icons.png
-@@||jeuxvideo.fr/js/advertisement.js
+@@||jeuxvideo.com/js/adblock.js
 @@||jheberg.net/js/*_advertisement.js
 @@||journaldugeek.com^*/popshow.css
 @@||kapaza.be/*/ad_view_
@@ -4224,6 +4281,7 @@ viedemerde.fr##.droite > .part + .part.second > div[style="position: relative;"]
 @@||lafansubresistance.biz^$script,domain=lafansubresistance.biz
 @@||lien-torrent.com/addrating.php?
 @@||lien-torrent.com/pubs/affiche.php?f=lecteurpub
+@@||matchendirect.fr/html_include/js/publicite-adblocktest.js$script
 @@||mega-exclue.com^*/unblock/blockBlock/advertisement.js
 @@||meteomedia.com/common/js/master/adframe.js
 @@||pagead2.googlesyndication.com/pagead/expansion_embed.js$domain=universal-soundbank.com

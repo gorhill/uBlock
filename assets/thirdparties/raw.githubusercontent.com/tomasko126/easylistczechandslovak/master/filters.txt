@@ -1,9 +1,9 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 12/01/2015
+! Last change: 30/01/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
-! License: GNU GPL v3
+! License: CC-BY-SA v4.0
 ! Email: tomastaro@adblock.sk
 ! Forum: http://adblock.sk/forum
 !
@@ -241,6 +241,7 @@ exashare.com###player_img
 ||hnonline.sk/*hn_lekaren_extra_blok.png
 ||hojko.com/images/banner*.gif
 ||img.karaoketexty.cz/img/ad/
+||img.teevee.sk/img/beangel*.gif
 ||img.teevee.sk/img/TEE-Final2.gif
 ||img5.uloz.to/ul3/images/hp_brand_tsbohemia.jpg
 ||kamzakrasou.sk/actions/
@@ -260,7 +261,6 @@ exashare.com###player_img
 ||parabola.cz/img_menu/b*.gif
 ||parabola.cz/img_menu/flash_astra.swf
 ||partner.zoznam.sk
-||pcforum.sk/styles/white/imageset/topic_moved.gif
 ||player.joj.sk/age-chooser.swf
 ||poweruploaders.eu/bannery/
 ||pricemania.sk/pictures/banners/
@@ -412,6 +412,7 @@ exashare.com###player_img
 lidovky.cz#@#.col-ad
 realitygo.cz#@#.advert-detail
 sluzebnik.cz#@##adverts
+zive.cz#@#.box-adsense
 
 !
 !---------- Slovak Whitelist ------------!
@@ -935,15 +936,7 @@ onlinefilmy.tv###bg_right
 onlinefilmy.tv##.ads
 onlinefilmy.tv##.ads_new
 onlinevidea.tv##.ads_new
-pcforum.sk##DIV[class="gensmall"]
-pcforum.sk##SPAN[class="gensmall"]
-pcforum.sk##.forumdesc
-pcforum.sk##.forumlink[href*="http://www.pcforum.sk/rd.php"]
-pcforum.sk##.postlink[href*="rd.php?"]
-pcforum.sk##table[align="left"]
-pcforum.sk##TD[style="colspan: 2; cursor: pointer;"]
-pcforum.sk##td[style="padding: 5px; margin: 5px; cursor: pointer;"]
-pcforum.sk##td[width="110px"]
+www.pcforum.sk##td[style="cursor: pointer; padding: 10px; background: rgb(255, 255, 255);"]
 pocasie.pozri.sk/nba2.gif
 pokec.azet.sk##.c_banner300x300
 pretaktovanie.zoznam.sk##.post.bg5

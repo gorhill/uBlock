@@ -8588,6 +8588,7 @@
 127.0.0.1	cdn.onescreen.net
 127.0.0.1	cdn.onlinecountdowns.com
 127.0.0.1	cdn.optimizely.com
+127.0.0.1	cdn.pardot.com
 127.0.0.1	cdn.petametrics.com
 127.0.0.1	cdn.popcash.net
 127.0.0.1	cdn.popmyads.com
@@ -14863,7 +14864,6 @@
 127.0.0.1	info-mail.codeguard.com
 127.0.0.1	info.anmedia.co.uk
 127.0.0.1	info.elba.at
-127.0.0.1	info.malwarebytes.org
 127.0.0.1	info.skyhookwireless.com
 127.0.0.1	info.web.de
 127.0.0.1	info4.a7.org
@@ -16922,6 +16922,7 @@
 127.0.0.1	migpay.com
 127.0.0.1	miildoos.ru
 127.0.0.1	mildred-patrick.us
+127.0.0.1	milesaway.oracle.cpa.clicksure.com
 127.0.0.1	miley-music.cf
 127.0.0.1	milira.justclick.ru
 127.0.0.1	militarymommy.com
@@ -25802,6 +25803,7 @@
 127.0.0.1	www.mia-fricks.us
 127.0.0.1	www.migpay.com
 127.0.0.1	www.miildoos.ru
+127.0.0.1	www.milesaway.oracle.cpa.clicksure.com
 127.0.0.1	www.mim.io
 127.0.0.1	www.mindy-sawyer.us
 127.0.0.1	www.mirrorad.com
@@ -27177,4 +27179,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 27172
+# Hosts: 27174

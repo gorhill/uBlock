@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: gF4dOhq8NSgPDla4sbttkg
+! Checksum: 1SHrbUjETxrr3pK5YU4eZQ
 ! Title: Fanboy's Korean
-! Updated: 1 Mar 2014
+! Updated: 24 Jan 2015
 ! This list expires after 4 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -24,10 +24,10 @@
 .com/js.kti/
 .ems/site
 .joins.com/tvad/$~third-party
-.joins.com^*/ad/*
+.joins.com^*/ad/
 .kr/ad.js
 .kr/add/
-.kr/ads/*$script,subdocument,image
+.kr/ads/$script,subdocument,image
 .kr/adview/
 .kr/adx.js
 .kr/banner/
@@ -41,7 +41,7 @@
 .kr/upload/ad/
 .nate.com^*_banner_
 .php?ads_
-.sportsseoul.com^*/ad/*
+.sportsseoul.com^*/ad/
 //adsvc.
 //amcsvc.
 //dbn.or.kr^*_ad.
@@ -202,8 +202,8 @@
 /xframes/banner_
 /ylog.php?
 /yna/basic/ad/*
-2009/banner/*
-8080/js.kti/*
+2009/banner/
+8080/js.kti/
 @tmp_180_80.gif
 @tmp_220_120.gif
 _ad2.gif|
@@ -211,10 +211,10 @@ _ad_rolling.
 _adpop/left_
 _advert_code.js|
 _bnr_ad0
-_com/banner/*
+_com/banner/
 _gmarket.
 _google_text_banner.js|
-_kr/banner/*
+_kr/banner/
 _NtmSiteCounter.html?
 _realclick.
 _realclick_
@@ -233,6 +233,7 @@ _scroll_ad_
 ||38tree.com^*/banner/
 ||7xx.org^*/banner/
 ||9street.co.kr^*/adver/
+||ad.daum.net^
 ||adelaidefocus.com^*/banner/
 ||adfront.auction.co.kr/jsdata/
 ||adm.dcinside.com^
@@ -245,7 +246,7 @@ _scroll_ad_
 ||alldic.nate.com/dic_
 ||alrime.co.kr^*/banner/
 ||andongtv.com/banner/
-||andongtv.com/flash/*$object
+||andongtv.com/flash/$object
 ||andongtv.com^*/banner
 ||andongtv.com^*_banner
 ||answerzone.co.kr^*/banner
@@ -264,13 +265,13 @@ _scroll_ad_
 ||blog.netster.co.kr^*/bann/
 ||blogkorea.net/bnmsvc/images/banner/
 ||bloter.net/banner/
-||bloter.net^*/banner/*
-||boannews.com^*/banner/*
+||bloter.net^*/banner/
+||boannews.com^*/banner/
 ||boannews.com^*_banner
 ||bokjitimes.com/paper/admin_new/
 ||bokjitimes.com^*/banner/
 ||bseconomy.com^*/banner/
-||bugsm.co.kr^*/banner/*
+||bugsm.co.kr^*/banner/
 ||busan.com/2009/ad/
 ||busan.com/AD/
 ||busanilbo.com/ad/
@@ -290,12 +291,12 @@ _scroll_ad_
 ||cctoday.co.kr^*/banner/
 ||cdn.diodeo.com/web_oneaday/
 ||cf.freechal.com/_ad/*.flv
-||chaebul.com^*/images/banner/*
+||chaebul.com^*/images/banner/
 ||channel.mk.co.kr^*/ad/
-||chosun.com*Promotion*$subdocument
+||chosun.com*Promotion$subdocument
 ||chosun.com/*_bestclinc$subdocument
 ||chosun.com/ad/
-||chosun.com/banner/*$object,image,subdocument
+||chosun.com/banner/$object,image,subdocument
 ||chosun.com/common/premium/login/$subdocument
 ||chosun.com/event/article_left/$subdocument
 ||chosun.com/google_tag/
@@ -310,7 +311,7 @@ _scroll_ad_
 ||chosun.com^*_banner$subdocument
 ||chosunilbousa.com/banner/
 ||cjmooter.com/?
-||clubbox.co.kr^*/banner/*
+||clubbox.co.kr^*/banner/
 ||clubcity.kr/gisa_images/sub_
 ||clubcity.kr/images/*_banner
 ||clubcity.kr/images/imsi_benner/
@@ -330,7 +331,7 @@ _scroll_ad_
 ||daejonilbo.com^*banner
 ||daenews.co.kr^*/banner/
 ||dailymedi.com/news/opad/
-||dailynk.com^*/bannerfile/*
+||dailynk.com^*/bannerfile/
 ||dailynk.com^*/img/banner
 ||datanews.co.kr^*/interparkBanner
 ||daum-img.net/_ams/$script
@@ -371,7 +372,7 @@ _scroll_ad_
 ||ekgib.com/ad/
 ||epochtimes.co.kr^*/banner_
 ||etimes.net/etc/adv/
-||etimes.net^*/banner/*
+||etimes.net^*/banner/
 ||etoday.kr^*/inc/i_etoday$subdocument
 ||etoday.kr^*/js/ad.js
 ||etoday.kr^*/section/ad_
@@ -411,7 +412,7 @@ _scroll_ad_
 ||hankooki.com^*/banner_
 ||hankooki.com^*/sponlist.
 ||hankyung.com/img/bnr_sponser_
-||hankyung.com^*/ad/*
+||hankyung.com^*/ad/
 ||hankyung.com^*/banner/
 ||hankyung.com^*/contentsMatchBoard.html
 ||hankyung.com^*left_ad
@@ -419,7 +420,7 @@ _scroll_ad_
 ||hbbs.hangame.com/poll.nhn?
 ||healthbusan.co.kr/healthbusan/flash/$object,object_subrequest
 ||heraldbiz.com^*/article_Count.asp?
-||hi114.kr/fla/banner/*
+||hi114.kr/fla/banner/
 ||hi114.kr^*/banner_$image
 ||hkn24.com/ad/
 ||hkn24.com/banner/
@@ -434,7 +435,7 @@ _scroll_ad_
 ||idomin.com/banner/
 ||ijungang.com^*/bn/
 ||iloveschool.co.kr^*/ilsAd
-||image.bugsm.co.kr/main/sub/*$image
+||image.bugsm.co.kr/main/sub/$image
 ||image.chosun.com^*/ad/
 ||image.donga.com^*/keyword_link
 ||image.donga.com^*_banner
@@ -508,10 +509,10 @@ _scroll_ad_
 ||kbs.co.kr/cms/etc/ad/
 ||kbs.co.kr/etc/ad/
 ||kbs.co.kr/skin/drama_banner
-||kgbnews.kr^*/banner/*
+||kgbnews.kr^*/banner/
 ||khan.co.kr^*_banner
 ||kimsonline.co.kr^*/ad/
-||kndaily.com^*/banner/*
+||kndaily.com^*/banner/
 ||korea.com/view/ad/
 ||korea.com^*_servicead
 ||koreaherald.co.kr^*/banner$script
@@ -524,7 +525,7 @@ _scroll_ad_
 ||kormedi.com/banner/
 ||kormedi.com/uploadfiles/orgfiles/main/
 ||kpanews.co.kr^*/banner
-||kpanews.co.kr^*/flash/sub_b/*$object_subrequest
+||kpanews.co.kr^*/flash/sub_b/$object_subrequest
 ||kr.finance.yahoo.com^*/dcm_iframe?aid=
 ||ksinews.co.kr/tcp.banner/
 ||kukinews.com/ad/
@@ -539,7 +540,7 @@ _scroll_ad_
 ||liits.co.kr^*/banner/
 ||logger.zdnet.co.kr^
 ||mbn.mk.co.kr^*_Ad_
-||media.paran.com^*/banner/*
+||media.paran.com^*/banner/
 ||mediajeju.com/banner/
 ||mediawill.com^*_banner
 ||mediherald.com/banner/
@@ -585,7 +586,7 @@ _scroll_ad_
 ||nate.com/main/srv/ad/
 ||nate.com^*/display_dcm_
 ||naver.com/common/banner/
-||naver.com^*/banners/*$image
+||naver.com^*/banners/$image
 ||netimo.net/ads/
 ||netster.co.kr/flash_swf/*-banner
 ||netv.sbs.co.kr/sbox/ad/
@@ -600,7 +601,7 @@ _scroll_ad_
 ||newspim.com/banner/
 ||newspim.com^*/banner/
 ||newsplus.chosun.com^*/promo/
-||newstoday21.co.kr^*_banner/*
+||newstoday21.co.kr^*_banner/
 ||newswave.kr^*/ad.
 ||newsway.kr/ad/
 ||nonsultest.com/images/banner_
@@ -624,7 +625,7 @@ _scroll_ad_
 ||pohangsosik.com^*/img/banner.
 ||pohangsosik.com^*/img/bn_
 ||polinews.co.kr/banner_
-||polnews.co.kr/br/*
+||polnews.co.kr/br/
 ||ppomppu.co.kr^*/banner/
 ||pressian.com/AD/
 ||provider-cdn.ntomap.com^*/imbc/C2DRAMA@pre_player
@@ -684,9 +685,9 @@ _scroll_ad_
 ||todaykorea.co.kr/img/banner/
 ||tv.joins.com^*banner_$subdocument
 ||ugn.kr/coding/images/banner/
-||unionpress.co.kr^*/banner/*
+||unionpress.co.kr^*/banner/
 ||uplay.co.kr^*/right_banner_
-||userimg.enclean.com^*/clg/widget/*
+||userimg.enclean.com^*/clg/widget/
 ||uway.com^*.htm?PHPSESSID
 ||vanchosun.com/news/img/bb*.swf
 ||vanchosun.com^*_banner
@@ -696,14 +697,14 @@ _scroll_ad_
 ||weeklyh.com/images/ad
 ||weeklytown.co.kr/images/banner/
 ||weeklytrade.co.kr^*/banner/$object
-||whosaeng.com^*/banner/*
+||whosaeng.com^*/banner/
 ||whosaeng.com^*/bn_$image
 ||wikitree.co.kr/images/banner/$object
 ||winz.co.kr^*/banner
 ||winz.co.kr^*_banner
 ||wnn.co.kr^*/banner_
 ||worldweb.co.kr^*/banner/
-||wownet.co.kr^*/banner/*
+||wownet.co.kr^*/banner/
 ||wrdnn.com^*banner
 ||wsos.co.kr/analysis/
 ||yesapt.com/banner/
@@ -716,7 +717,7 @@ _scroll_ad_
 !
 !---------- Korean Popups (Adblock Plus 2.0 or better) ----------
 !
-||9787.com^$popup,image,~image
+||9787.com^$popup
 !
 ! ---------- General blocking rules ----------
 !
@@ -849,7 +850,7 @@ http://ad9.$third-party
 ||adryoho.com^$third-party
 ||ads.korea.com^$third-party
 ||ads.luble.com^$third-party
-||adscope.co.kr^*$third-party
+||adscope.co.kr^$third-party
 ||adsmart.co.kr$third-party
 ||adsvc2.wisenut.co.kr^$third-party
 ||adswap.co.kr^$third-party
@@ -859,7 +860,7 @@ http://ad9.$third-party
 ||adwezet.co.kr^$third-party
 ||adwidget.co.kr^$third-party
 ||adwise.co.kr^$third-party
-||adzzim.com^*$third-party
+||adzzim.com^$third-party
 ||aircross.com^$third-party
 ||aladdin.co.kr/part/$third-party
 ||albamonkorea.com^$third-party
@@ -873,7 +874,7 @@ http://ad9.$third-party
 ||ckddiet.com^$third-party
 ||clicknmall.co.kr^$third-party
 ||co1.kr/co1kr_images/$third-party,image
-||content.goodfile.net^*$third-party
+||content.goodfile.net^$third-party
 ||contents.mylinker.co.kr^$third-party
 ||cpcguard.com^$third-party
 ||crossmedia.co.kr^$third-party
@@ -1289,7 +1290,7 @@ _wiselog.
 @@||stoo.asiae.co.kr/js/logging_asia.js?
 @@||tyinews.com^*/20070814134123_16542.gif
 @@||tyinews.com^*/201001281726_38310.swf
-@@||wikitree.co.kr:8080/wikitreeFiles/webdata/$image,background
+@@||wikitree.co.kr:8080/wikitreeFiles/webdata/$image
 @@||ycinews.co.kr^*/2008123115136_32699.swf
 !
 !---------- Trackers Whitelists ----------
@@ -1611,7 +1612,6 @@ hankooki.com###serial
 hankooki.com###TodayNews
 hankyung.com###ad_life
 hankyung.com###over
-hankyung.com##*[style="margin: 5px 0pt 0pt;"] > TABLE[width="560"]
 hankyung.com##.al4
 hankyung.com##.he18
 hankyung.com##iframe[width="260"]
@@ -1918,6 +1918,10 @@ pressian.com##.ttalk_ad_list
 radio.sbs.co.kr##.banner
 radio.sbs.co.kr##.gorillaShopWrap
 revu.co.kr##.RevU_Left_Ad
+ruliweb.daum.net##.bnr_info
+ruliweb.daum.net##.box_banner
+ruliweb.daum.net##.lnb_bnr
+ruliweb.daum.net##.side_bnr
 sarangbang.com##TD[style="padding: 3px 5px 3px 3px;"]
 sayclub.com##.shopping
 sbs.co.kr###Nad_right_area

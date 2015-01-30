@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: IhedaYFS/EugnZG0DAE08w
+! Checksum: Aco5/6tOzjxzNvGfxsXzJA
 ! Title: EasyList Hebrew
-! Last modified: 20/01/15  14:39
+! Last modified: 29/01/15 09:49
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -17,6 +17,7 @@
 .co.il/adv/$~object-subrequest
 /pirsum/*$script,object
 |http://ad.$domain=co.il
+campaign*.co.il^$popup,third-party
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
@@ -25,6 +26,7 @@
 ||3dots.co.il^$third-party,domain=~maple-team.com
 ||ad-sys.com^$third-party
 ||adland.co.il^$third-party
+||adson.biz^$popup,third-party
 ||adtv.me^$popup
 ||ahituv.biz^$popup,third-party
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
@@ -35,14 +37,9 @@
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||booking.com/index.html^$popup,domain=daka90.co.il
-||campaign.alpha.co.il/?campaign^$popup,third-party
-||campaign.chevrolet.co.il/$popup,third-party
-||campaign.nissan.co.il^$popup,third-party
 ||clickcenter.net^$third-party
 ||clickon.co.il^$popup,third-party
 ||clickon.co.il^$third-party
-||dcampaigns.mitsubishi-israel.co.il^$popup,third-party
-||dcampaigns.hyundaimotors.co.il^$popup,third-party
 ||descreti.co.il^$popup
 ||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
@@ -76,7 +73,7 @@
 ||onlineproxyfree.com^$popup,third-party
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
-||pigment-adv.co.il/campaign^$popup,third-party
+||pigment-adv.co.il^$popup,third-party
 ||psakdin.co.il^$domain=calcalist.co.il
 ||rateonclick.com^$popup,third-party
 ||rpe.co.il/landing_^$popup,third-party
@@ -346,6 +343,7 @@
 @@||sexadir.co.il/banners/$image,~third-party
 @@||seximo.co.il/ads/$image,~third-party
 @@||sfx-images.mozilla.org^$image
+@@||srugim.co.il/*670x100&front=true
 @@||streambb.one.co.il/ads/$media
 @@||upf.co.il/advertisment.js
 @@||xads.zedo.com^$popup,domain=one.co.il
@@ -428,6 +426,9 @@ auto.co.il##.banner2
 auto.co.il##.content.awLng[style="text-align: center;"]
 auto.co.il##.tower-banner
 auto.co.il##div[style="width:300px;height:250px;margin-left:auto;margin-right:auto;"]
+baba-mail.co.il###banner_google
+baba-mail.co.il##.banner
+baba-mail.co.il##.banner300x250
 bari-p2.co.il##TD[style="padding-left:3px; padding-right:3px; padding-top:3px; padding-bottom:4px"]
 bbls.co.il###opacity_curtain
 bbls.co.il###phonepopup
@@ -475,6 +476,7 @@ carsforum.co.il##.box2
 carsforum.co.il##DIV[style="float:left;padding-left:3px;"]
 carsforum.co.il##table.tborder[style="margin-top:6px;"]
 cellebrate.mobi###flow
+ch10.co.il##.rt-banners
 chabad.info###rodefet_left
 chabad.info###rodefet_right
 chabad.info###text_pirsomet
@@ -631,7 +633,6 @@ mako.co.il###googleLinkUnits
 mako.co.il###hp_bottom_strip
 mako.co.il###mysupermarketcontainer
 mako.co.il###neoTopStrip
-mako.co.il###playerAdArea
 mako.co.il###rAdContainer
 mako.co.il###topPageStrip.not_for_print
 mako.co.il##.header_level2_container
@@ -756,6 +757,7 @@ seret.co.il##.cbthfds
 seret.co.il##DIV[style="width:100%;text-align:center;"]
 seret.co.il##SPAN[style="line-height:192px;height:192px;clear:both;display:block;"]
 seretil.me###ads516516as
+shironet.mako.co.il###playerAdArea
 solitaire.co.il##.viv
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_3
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_4
@@ -876,27 +878,33 @@ ynet.co.il###art_right_sponsored_links-1
 ynet.co.il###googleAdsenseMivzakim
 ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
+ynet.co.il###tbl_mt [valign="Top"] > [bgcolor="#cccccc"] + * + * TBODY
 ynet.co.il###ww6s_Main
 ynet.co.il###ynet_lightbox_content_top
+ynet.co.il##.CAATVcompAdvertiseTv
+ynet.co.il##.HTcompData
+ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
+ynet.co.il##.MRec_main
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
-ynet.co.il##.CAATVcompAdvertiseTv
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
+ynet.co.il##.ghci21
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
+ynet.co.il##.ghciMarketTeaserSchedual1
 ynet.co.il##.ghciPromoLightbox1
+ynet.co.il##.ghciWinWinShimushon1
 ynet.co.il##.google_ads_t4590B_wrapper
-ynet.co.il##.HTcompData
-ynet.co.il##.HTleshonitDiv[style="width:300px; background: #000066;"]
+ynet.co.il##.hp_player_header
 ynet.co.il##.leshonitMain.leshonitBorderRectangle
-ynet.co.il##.MRec_main
+ynet.co.il##.shMainDiv
 ynet.co.il##DIV[style="width:256px;height:66px;background-color:#FFFFFF;"]
-ynet.co.il##iframe[style="width:770px;height:191px;"]
 ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
+ynet.co.il##iframe[style="width:770px;height:191px;"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
+zap.co.il##.Martef
 zap.co.il##.headerBannerCenter
 zap.co.il##.leftSideBanner
-zap.co.il##.Martef
 zone.walla.co.il##.w2.wp-0-b

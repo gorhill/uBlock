@@ -1,15 +1,15 @@
 [Adblock Plus 1.1]
-! Checksum: K0JIN0lvt9y5nTUbvE/oJQ
-! Version: 201501232321
+! Checksum: PsKB6s9DaPX3MBAOEtj8pQ
+! Version: 201501302141
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 23 Jan 2015 23:21 UTC
+! Ultima modifica: 30 Jan 2015 21:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
 !
 ! Per favore segnala problemi o pubblicità non bloccate
-! nel forum: (http://forums.lanik.us/)
+! nel forum: (https://forums.lanik.us/)
 ! o via e-mail: (easylistitaly@gmail.com).
 !
 !----------------Regole generali per le pubblicità da bloccare----------------!
@@ -201,8 +201,9 @@ biancolavoro.it#@#.listad
 corrierecomo.it,corrieredicomo.it#@#.module-ad
 latinomagazine.it#@#.moduletable-advert
 camperonline.it,italiasw.com#@#.pubblicita
-beppegrillo.it,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
+beppegrillo.it,d1khqztmu4w2hg.cloudfront.net,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
 ! Anti-Adblock
+dbplanet.net#@##ad_block
 sportube.tv#@#.afs_ads
 !---------------------Server pubblicitari di terze parti----------------------!
 ! *** easylistitaly:easylistitaly/easylistitaly_adservers.txt ***
@@ -533,6 +534,8 @@ sportube.tv#@#.afs_ads
 ||7per24.it^*/banner-
 ||892000.it/img/bannerino_
 ||abruzzolive.it^*banner
+||abruzzoweb.it/cache/banners/
+||abruzzoweb.it^*/banner-
 ||accordiespartiti.it/propalco*.png
 ||accordiespartiti.it/suonarechitarra.jpg
 ||acmilan.com^*/sponsor/
@@ -2098,7 +2101,7 @@ ricettepercucinare.com##.UAP_3to1_Rectangle
 ricettepercucinare.com##.UAP_Medium_Rectangle
 ricettepercucinare.com##.UAP_Wide_Skyscraper
 rietinvetrina.it##.a-single
-4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,mesagne.me,milanlive.it,servizioallerta.it,tripadvisor.it##.ad
+4risate.com,7per24.it,allrecipes.it,ilsole24ore.com,jugo.it,lacrocequotidiano.it,mesagne.me,milanlive.it,servizioallerta.it,tripadvisor.it##.ad
 trustpilot.it##.adblock
 america24.com,gianlucadimarzio.com##.adbox
 loradellacalabria.it##.add768int
@@ -2145,6 +2148,7 @@ lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
 advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,diretta.it,finanzaonline.com,gazzettadiavellino.it,gazzettadinapoli.it,gazzettadisalerno.it,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
+lacrocequotidiano.it##.banner-container
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
 algheroeco.com##.banner-header-dx
@@ -2267,6 +2271,7 @@ quotidiano.net##.category-SPONSOR
 businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="background:#ffffff;border-bottom:1px #ffffff solid;border-top:1px #ffffff solid;margin-bottom:3px;margin-top:3px;"]
 businessmagazine.it,fotografidigitali.it,gamemag.it,hwupgrade.it,ilgiorno.it,ilrestodelcarlino.it,lanazione.it,motorionline.com,quotidiano.net##.center_all > div[style="font-size:small;font-style:normal;font-weight:normal;margin-top:3px;margin-bottom:3px"]
 edilportale.com##.click-Skin
+lacrocequotidiano.it##.column-banner
 tripadvisor.it##.commerce
 saggiamente.com##.consigliati
 gazzettavvisionline.it##.cont_Leaderboard
@@ -2498,6 +2503,7 @@ notizie.it##.yahoo-white-bg
 cittaceleste.it##.zodiak
 windowsblogitalia.com##[id^="bsa"]
 tgcom24.mediaset.it##a[href*=".ad.dotandad.com/clicktracker.jsp?"]
+abruzzoweb.it##a[href*="/adserver/go.php?"]
 mmorpgitalia.it##a[href^="http://ad2games.com/slave.php?"]
 ipadevice.com,ispazio.net##a[href^="http://adserver.ispazio.net/"]
 ilsole24ore.com##a[href^="http://adv.ilsole24ore.it/"]
@@ -2831,7 +2837,7 @@ termometropolitico.it##[id^="bsa"]
 @@||pagead2.googlesyndication.com/pagead/js/*/show_ads_impl.js$domain=windowsblogitalia.com
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=windowsblogitalia.com
 @@||pagead2.googlesyndication.com/pagead/scache/googlevideoads.swf$object-subrequest,domain=giochidicalcio.com
-@@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=ipaditalia.com|iphoneitalia.com
+@@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=dbplanet.net|ipaditalia.com|iphoneitalia.com
 @@||panorama.it/adv/$image
 @@||portalecomuni.net^*/ShowBanner.aspx$image
 @@||primocanale.it/ads/*.flv$object-subrequest

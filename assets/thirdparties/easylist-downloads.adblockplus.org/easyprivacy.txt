@@ -1,14 +1,14 @@
 [Adblock Plus 1.1]
-! Checksum: hBmgkvE7xMBUAaLFO4saMQ
-! Version: 201501232321
+! Checksum: nVrTy1TnEzumvuDm1kiGLw
+! Version: 201501302141
 ! Title: EasyPrivacy
-! Last modified: 23 Jan 2015 23:21 UTC
+! Last modified: 30 Jan 2015 21:41 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
 ! Please report any unblocked tracking or problems
-! in the forums (http://forums.lanik.us/)
+! in the forums (https://forums.lanik.us/)
 ! or via e-mail (easylist.subscription@gmail.com).
 !
 !-----------------General tracking systems-----------------!
@@ -207,6 +207,7 @@
 /adrum-
 /adrum.
 /ads_tracker.
+/adsct?
 /adstat.
 /adstats.
 /adviewtrack.
@@ -3021,6 +3022,7 @@ http://utm.
 ||inferclick.com^$third-party
 ||infinity-tracking.net^$third-party
 ||inflectionpointmedia.com^$third-party
+||inimbus.com.au^$third-party
 ||innovateads.com^$third-party
 ||inphonic.com^$third-party
 ||inpwrd.com^$third-party
@@ -3172,6 +3174,7 @@ http://utm.
 ||measure.ly^$third-party
 ||measuremap.com^$third-party
 ||mediaarmor.com^$third-party
+||mediabong.com^$third-party
 ||mediaforgews.com^$third-party
 ||mediagauge.com^$third-party
 ||mediaseeding.com^$third-party
@@ -3279,6 +3282,7 @@ http://utm.
 ||nr7.us^$third-party
 ||nstracking.com^$third-party
 ||nuconomy.com^$third-party
+||nuggad.net^$third-party
 ||numerino.cz^$third-party
 ||nytlog.com^$third-party
 ||observerapp.com^$third-party
@@ -3525,6 +3529,7 @@ http://utm.
 ||seehits.com^$third-party
 ||seewhy.com^$third-party
 ||segment-analytics.com^$third-party
+||segment.com^$third-party
 ||segment.io^$third-party
 ||selaris.com^$third-party
 ||sellpoints.com^$third-party
@@ -4215,6 +4220,7 @@ http://utm.
 ! French
 ||123compteur.com^$third-party
 ||abcompteur.com^$third-party
+||affilizr.com^$third-party
 ||alkemics.com^$third-party
 ||antvoice.com^$third-party
 ||atraxio.com^$third-party
@@ -4237,7 +4243,6 @@ http://utm.
 ||leadium.com^$third-party
 ||libstat.com^$third-party
 ||livestats.fr^$third-party
-||mediabong.com^$third-party
 ||mmtro.com^$third-party
 ||netquattro.com/stats/
 ||reseau-pub.com^$third-party
@@ -4758,7 +4763,6 @@ http://utm.
 ||analytics.themarketiq.com^
 ||analytics.tout.com^
 ||analytics.tribeca.vidavee.com^
-||analytics.twitter.com^$third-party
 ||analytics.wildtangent.com^
 ||analytics.yola.net^
 ||analytics.yolacdn.net^
@@ -4826,7 +4830,7 @@ http://utm.
 ||beacon2.indieclick.com^
 ||beacon2.indieclicktv.com^$third-party
 ||beacons.brandads.net^
-||bestofmedia.com^*/beacons/
+||bestofmedia.com^*/beacons/$~image
 ||bestweb.net/cgi-bin/count.cgi?
 ||bfnsoftware.com^*/environment.cgi?
 ||bibzopl.com/in.php
@@ -5878,6 +5882,7 @@ http://utm.
 ||traq.li/tracker/
 ||travpan.com/out/$third-party
 ||trax.dirxion.com^
+||tredir.go.com/capmon/GetDE?$third-party
 ||tree-pixel-log.s3.amazonaws.com^
 ||trf.intuitwebsites.com^
 ||triad.technorati.com^
@@ -5943,6 +5948,7 @@ http://utm.
 ||vivociti.com/images/$third-party
 ||viximo.com/1px.gif?
 ||vizury.com/analyze/
+||vk.com/rtrg?
 ||vk.com/videostats.php
 ||vmixcore.com/vmixcore/playlog?
 ||vmp.boldchat.com^$third-party
@@ -8032,6 +8038,7 @@ http://utm.
 ||stats.townnews.com^
 ||stats.uswitch.com^
 ||stats.video.search.yahoo.com^
+||stats.vulture.com^
 ||stats.wordpress.com^
 ||stats.wwd.com^
 ||stats.zmags.com^
@@ -8301,6 +8308,7 @@ http://utm.
 ||vcstar.com/metrics/
 ||velaro.com/lf/monitor2.aspx?
 ||venere.com/common/js/track.js
+||verizonwireless.com/mpel.js?
 ||vertical-stats.huffingtonpost.com^
 ||vevo.com/audit.ashx?
 ||viamichelin.co.uk^*/stats.js
@@ -9193,6 +9201,7 @@ http://utm.
 ||piccy.org.ua/c?
 !-----------------Whitelists-----------------!
 ! *** easylist:easyprivacy/easyprivacy_whitelist.txt ***
+@@/wp-content/plugins/google-analytics-dashboard-for-wp/*$~third-party
 @@||a.visualrevenue.com/vrs.js$domain=ebaumsworld.com|nydailynews.com
 @@||about-australia.com/*/clickheat.js
 @@||accorhotels.com^*/xtanalyzer_roi.js
@@ -9639,6 +9648,7 @@ http://utm.
 @@||wordpress.org/extend/plugins/wp-slimstat/screenshot-$image,~third-party
 @@||wordpress.org/wp-slimstat/assets/banner-$image,~third-party
 @@||wp.com/_static/*/gaAddons.js
+@@||wp.com/_static/*/vip-analytics.js?$domain=time.com
 @@||wwe.com/sites/all/modules/wwe/wwe_analytics/s_wwe_code.js
 @@||x5.xclicks.net/js/x3165.js$domain=small-breasted-teens.com
 @@||xcweather.co.uk/*/geo.php?
@@ -9656,6 +9666,7 @@ http://utm.
 ! Preliminarily whitelisting Omniture s_code tracking pixels (script versions H.25 - H.25.2) due to breakage (https://adblockplus.org/forum/viewtopic.php?f=10&t=11378) if blocking the script causes issues
 @@||112.2o7.net/b/ss/$image,domain=espn.com.br
 @@||122.2o7.net/b/ss/$image,domain=billetnet.dk|billettservice.no|citibank.co.in|goal.com|lippupalvelu.fi|pcworld.com|riverisland.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se
+@@||amazoncustomerservice.d2.sc.omtrdc.net/b/ss/*/H.25.1/$image
 @@||fandango.com/b/ss/$image
 @@||globalnews.ca/b/ss/$image
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
@@ -9667,7 +9678,6 @@ http://utm.
 @@||metrics.thetrainline.com/b/ss/$image
 @@||metrics.ticketmaster.com/b/ss/$image
 @@||oms.dowjoneson.com/b/ss/$image,domain=wsj.com
-@@||omtrdc.net/b/ss/$image,domain=amazon.com
 @@||scorecardresearch.com/r2?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
 @@||scorecardresearch.com/r?$image,domain=ancestry.com|billetnet.dk|billettservice.no|lippupalvelu.fi|pcworld.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se|wsj.com
 @@||simyo.de/b/ss/$image
@@ -9690,7 +9700,7 @@ http://utm.
 @@||billiger.de/js/emos2.js
 @@||btstatic.com/tag.js$domain=oralb.de
 @@||classistatic.de^*/hitcounter.js$domain=mobile.de
-@@||code.etracker.com/t.js?et=$script,domain=apotheken-umschau.de|compo-hobby.de|diabetes-ratgeber.net|kaguma.com|krombacher.de
+@@||code.etracker.com/t.js?et=$script,domain=apotheken-umschau.de|compo-hobby.de|diabetes-ratgeber.net|giz.de|kaguma.com|krombacher.de
 @@||count.rtl.de/crossdomain.xml$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||cxense.com/cx.js$domain=tagesanzeiger.ch
 @@||eltern.de/min.php?*/clickTracking.js
@@ -9700,6 +9710,7 @@ http://utm.
 @@||google-analytics.com/siteopt.js?$domain=chip.de
 @@||hach.de^*/emstrack.js
 @@||hammonline.de/statistik/piwik.js
+@@||hermesworld.com/tracking/urchin.js
 @@||heute.de/zdf/flash/eplayer/player.swf?*/cgi-bin/ivw/
 @@||hse24.de^*/emos2.js
 @@||ing-diba.de^*/sitestat.js
@@ -9732,6 +9743,8 @@ http://utm.
 @@||spiegel.de/layout/js/http/netmind-$script
 @@||static-fra.de^*/targeting.js$domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 @@||stats.g.doubleclick.net/dc.js$domain=diejugendherbergen.de
+@@||stroeerdigitalmedia.de/dynback/call.sjs?$domain=runnersworld.de
+@@||stroeerdigitalmedia.de/praeludium/praeludium_rworld.js$domain=runnersworld.de
 @@||stylished.de/js/vendors/emos2.js$domain=stylished.de
 @@||sunday.de/skin/*/googleanalytics.js$script
 @@||swr3.de/static/swrplayer/web/plugins/ivw/ivw.js
@@ -9745,6 +9758,7 @@ http://utm.
 @@||zdf.de/zdf/flash/eplayer/player.swf?*/cgi-bin/ivw/
 @@||zeit.de/piwik/piwik.js$domain=schach.zeit.de
 ! French
+@@||actiris.be/urchin.js
 @@||analytics.ladmedia.fr/parismatch/xtcore_mod2.js$domain=parismatch.com
 @@||api.mixpanel.com/engage/?data=$xmlhttprequest,domain=deezer.com
 @@||api.mixpanel.com/track/?data=$xmlhttprequest,domain=deezer.com

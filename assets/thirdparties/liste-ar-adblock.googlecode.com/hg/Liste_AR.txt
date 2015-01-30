@@ -12,7 +12,6 @@
 ! ou par e-mail : liste.ar.adblock at gmail point com
 !
 !----------------------- Filtres génériques -----------------!
-##.adv_cont
 .ma/ads/
 /ads_90_728.
 /advStatLib.js
@@ -22,12 +21,19 @@
 /ara/ads/*
 !
 !----------------------- Éléments génériques -----------------!
+###custom-ad
 ###pub-730x90
 ##.ads_box_home_box
 ##.adv-header
+##.adv_cont
 ##.ban-728
+##.custom-advert-banner
+##.custom-advert-banner-frame
 ##.inside_adv_section
+##.large-ad-center
+##.large-ad-center-close
 ##.leftSideAds
+##.ltas_adspot
 ##.pub-730x90
 ##.sidbar-ad1
 ##[href*="ad2games.com/"]
@@ -37,7 +43,6 @@
 ##a[href*="dubizzle.com/ar/?utm_source="]
 ##a[href^="ads.php?id="]
 ##a[href^="http://drivercardusa.info/"]
-##a[href^="http://go.redirectingat.com"]
 ##a[href^="http://share.payoneer-affiliates.com/"]
 ##a[href^="http://www.fusebux.com/index.php?r="] > img
 ##a[href^="http://www.probux.com/?rh="] > img
@@ -89,6 +94,7 @@
 ||mochiads.com^$third-party
 ||nile-ads.com^$third-party
 ||oneclickad.net^$third-party
+||palfad.com^$third-party
 ||poparb.com^$third-party
 ||safeadnetwork.net^$third-party
 ||sarmady-ads.com^$third-party
@@ -106,12 +112,14 @@
 ||0zz0.com/2012/07/28/21/250712642.gif
 ||3nwd.com/uploads/3nwd-1367442631216.gif
 ||3rabgamer.net^*/banner/
+||3rbup.com^*/direct.php?s=5670b66b3011a18f&/zi-m1.gif
 ||3rby.net/$popup,domain=s-ajfan.com
 ||3support.com/wp-content/uploads/*/support.gif
 ||4040.cc/images/fakhr.gif
 ||44aa.com/image/nesba.swf
 ||46.151.209.69^
 ||4arabsex.net/Banner1.jpg
+||4uploading.com/bnr/
 ||5bre.com/images/5bre.gif
 ||5jle.com^$popup,domain=maas1.com
 ||5short.com/short/autokey.php
@@ -292,6 +300,7 @@
 ||servimg.com/u/f30/15/50/53/07/0802.jpg
 ||servimg.com/u/f30/15/50/53/07/0879.jpg
 ||servimg.com/u/f65/11/55/73/09/downlo10.gif
+||sh-arab.com^$popup,domain=zi-m.com
 ||shnat.net/vb/images/14.jpg
 ||shnat.net/vb/images/bag.gif
 ||shofonline.org/open*.js
@@ -311,7 +320,6 @@
 ||tvquran.com/banr/
 ||up700.net/affiliates/
 ||upxmedia.com/$subdocument,domain=shofonline.net
-||vb.zi-m.com^$popup,domain=sh-arab.com
 ||videobam.com/this-pays-for-bandwidth/
 ||vip600.com/aaa/
 ||wadize2ab.com^$subdocument,domain=a7lahmsa.com
@@ -327,6 +335,9 @@
 ||yourjavascript.com/16635201220/add-url.js
 ||yourjavascript.com^*/pp-kora.js
 ||z4ar.com/banner/bsh.gif
+||zi-m.com/uploads/1421349783282.jpg
+||zi-m.com^$popup,domain=sh-arab.com
+||zi-m.info^$popup,domain=zi-m.com
 ||zimabdk.com/uploads/13739105611.gif
 ||zimabdk.com/uploads/13739970081.png
 ||zimabdk.com/uploads/1385612495381.gif
@@ -341,6 +352,7 @@
 ||0zz0.com/js.php
 ||202020.net/abahi/
 ||202020.net/ratteb/asd/
+||222z.net/banners/
 ||24caratksa.com^$popup,domain=syrcafe.com
 ||33sh8.com/up/styles/default2//images/adds.gif
 ||3ajaba.com^$subdocument,domain=ktaby.com
@@ -379,11 +391,13 @@
 ||actionha.net/stylesheets/takeover-rani/$stylesheet
 ||adf.ly^$popup,domain=nassamat.com
 ||adslgate.com/upload/*banner
+||adslgate.com/upload/boxhop33.gif
 ||adv.mmnon.com^
 ||aff.kooora.com/images/aff_
 ||aflamex.com/adv2012/
 ||aflamex.com/forum/download-icon.jpg
 ||aflamex.com/forum/open/
+||aflamonline.info/ads*.
 ||agadir24.info/flash.swf
 ||agadir24.info/khir.swf
 ||agadir24.info/minipain02.swf
@@ -958,6 +972,7 @@ masrawy.com###hleader
 masrawy.com###hswcase
 iq-vb.net###layer1
 contactcars.com###leaderBoard
+7s5.net###light[style="position: absolute; left: 9px; top: 31px; display: block;"]
 alwatannews.net###lnkMainAdver3
 baitkebeer.com###makingdifferentpopup
 contactcars.com###mediumRectangle
@@ -1036,6 +1051,7 @@ arabsharing.com,mediamasr.tv,panorama-istanbul.org##.banners
 marocemploi.net##.bg_link
 bokra.net##.bigStrip
 wmuae.net##.binsaad
+7s5.net##.black_overlay[style="display: block;"]
 ar-wp.com##.box
 inewsarabia.com##.box728
 bokra.net##.catsBanner
@@ -1144,6 +1160,7 @@ retag4.com##a[href^="bnnr.php?"]
 mothhelah.com##a[href^="code,banner,"]
 arabs-up.com##a[href^="go.php?"]
 syrcafe.com##a[href^="http://24caratksa.com/"]
+zi-m.com##a[href^="http://af.gamepower7.com/"]
 almesryoon.com,tvegy.com##a[href^="http://ar.hao123.com/?tn="]
 arbcinema.com##a[href^="http://bit.ly/"]
 ouamer.com##a[href^="http://eepurl.com/"]
@@ -1204,6 +1221,7 @@ arabe-media.com##iframe[width="300"][height="250"]
 el3b.sukrbnat.com##img[alt="M5znUpload"]
 bh-gn.com##img[alt="ضع إعلانك هنا"]
 algeriamax.com##img[alt="مساحة إعلانية"]
+adslgate.com##img[height="90"][width="728"]
 lmseh.com##img[src^="http://www.up.lmseh.com/do.php?"]
 bramjnet.com##img[style="WIDTH: 468px; HEIGHT: 60px"][title*="الإعلان "]
 teckni-sat.com##img[style="height: 90px; width: 728px; border-width: 0px"]

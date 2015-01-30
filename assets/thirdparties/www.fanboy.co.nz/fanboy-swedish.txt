@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: 1+xouG22dFakK6al0bCxqg
+! Checksum: aHkGrSJ8aaEdG+/6ThHWPA
 ! Title: Fanboy's Swedish
-! Updated: 22 Jan 2015
+! Updated: 28 Jan 2015
 ! This list expires after 4 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -33,7 +33,9 @@
 ||dagenshandel.se^*/annons_
 ||flashback.info/img/b/
 ||flashback.org/img/b/
+||flashback.se/img/banners/
 ||fusion.expressen.se^
+||fz.se/media*$image,domain=automotorsport.se
 ||gamereactor.se/ad/
 ||gp.se/polopoly_fs/*.swf
 ||hd.se/static/banners/
@@ -168,6 +170,7 @@ dreamfilmhd.com##DIV[style="background-color:rgba(0,0,0,0.1);width:750px;height:
 dreamfilmhd.com##DIV[style="width:750px;clear:both;margin:0 0 10px 0;padding:0;"]
 expressen.se##a[href^="http://marketnews.se/"]
 flashback.org##.banner_text
+flashback.se###top-banner
 folkbladet.se##[style="border: 1px solid rgb(126, 169, 204); font-family: arial; font-size: 12px; background-color: rgb(255, 255, 255); width: 200px;"]
 folkbladet.se##[style="margin-bottom: 15px; width: 200px; background-color: rgb(199, 231, 231);"]
 fragbite.se###adblock_info

@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.6
+! Version: 7.7
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -515,7 +515,7 @@ eclypsia.com#@##adv_tester
 ! online.dramacafe.in
 online.dramacafe.in#@#.afs_ads
 ! lequipe.fr
-/js/adUnblock.js$script,domain=lequipe.fr
+||lequipe.fr/v6/js/popinVideo.js$script
 ! receive-sms-online.info
 @@||receive-sms-online.info/advertisment.js$script
 ! extreamleech.com
@@ -573,6 +573,7 @@ gtaxscripting.blogspot.com#@##AdSense2
 @@||pagead2.googlesyndication.com/pagead/$script,domain=gtaxscripting.blogspot.com
 ! turkdown.com
 ||tekproxy.com/$popup,domain=turkdown.com
+@@||filmyfundaz.googlecode.com/files/google_ads.js
 ! onvasortir.com
 @@||onvasortir.com/advertisements.js$script
 @@||onvasortir.com/smartadserver.com.js$script
@@ -627,11 +628,65 @@ lien-torrent.com###ad_divl
 ! miniup.com
 @@||miniup.com/ads/ads.png
 ! hackintosh.zone
-@@hackintosh.zone/adblock/advertisement.js$script
+hackintosh.zone#@#.adsbygoogle
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=hackintosh.zone
+@@||pagead2.googlesyndication.com/pagead/js/*/*/show_ads_impl.js$script,domain=hackintosh.zone
+||coindushopping.fr/public/$popup,script,third-party
 ! call-share.ddns.net
 @@||googleads.g.doubleclick.net/favicon.ico$domain=call-share.ddns.net
 ! culo.sourceforge.net
 @@||filmyfundaz.googlecode.com/files/google_ads.js$domain=culo.sourceforge.net
+! subdocument
+||comptoir-hardware.com/edi/edi7_sq.php$subdocument
+||comptoir-hardware.com/edi/edi7_sk.htm$subdocument
+||comptoir-hardware.com/edi/edi7_lb.php$subdocument
+! maxedtech.com
+maxedtech.com#@#.a160x600
+! readms.com
+readms.com###reader-sky
+readms.com##.message-ld.pull-right
+! fz.se
+fz.se###AdBlockerInfo
+! avmask.com
+@@||avmask.com/eroex.js$script
+! pencurimovie.cc
+pencurimovie.cc##.adb_overlay
+pencurimovie.cc###simplemodal-overlay
+pencurimovie.cc###simplemodal-container
+! mangabird.com
+mangabird.com#@#.afs_ads
+! sports.ru
+@@||sports.ru^*/adfox.$xmlhttprequest
+! smashboards.com
+smashboards.com###noticeMain
+smashboards.com##.premiumContain
+! tv3play.se
+! tv6play.se
+! tv8play.se
+! tv10play.se
+@@||5d3e9.v.fwmrm.net/ad/*$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
+@@||adm.fwmrm.net/p/MTG_Live/Video2AdRenderer.swf$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
+@@||adm.fwmrm.net/p/MTG_Live/ExternalHTMLAdRenderer.swf$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
+! zive.cz
+doupe.zive.cz#@##adblock-leaderboard
+@@||ads.rubiconproject.com/ad/*$script,domain=doupe.zive.cz
+||doupe.zive.cz/Client.Scripts/jquery.onp.sociallocker.1.7.6.js$script
+! viki.com
+@@||imasdk.googleapis.com/flash/core/3.177.0/adsapi.swf$object-subrequest,domain=viki.com
+! debilizator.tv
+||debilizator.tv/static/ab.min.js$script
+! videopremium.tv
+videopremium.tv#@#.pub_300x250
+videopremium.tv#@#.pub_300x250m
+videopremium.tv#@#.pub_728x90
+videopremium.tv#@#.text-ad
+videopremium.tv#@#.textAd
+videopremium.tv#@#.text_ad
+videopremium.tv#@#.text_ads
+videopremium.tv#@#.text-ads
+videopremium.tv#@#.text-ad-links
+! filmovizija.com
+@@||filmovizija.com/ads.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -921,6 +976,7 @@ zeyutvcanales.com###KBTricksFBpop
 ! micast.tv##.adv
 micast.tv##.adv
 micast.tv###up
+micast.tv###closediv
 ! pirlotv.tv
 pirlotv.tv###ad_overlay
 pirlotv.tv###ad_overlay_content
@@ -1000,6 +1056,10 @@ playerhd1.pw##.ad
 streaming-foot.info###timer1
 streaming-foot.info###timer2
 streaming-foot.info###timer3
+! foot-live.info
+foot-live.info###timer1
+foot-live.info###timer2
+foot-live.info###timer3
 ! Others ---------------------------------------------------------------------------------------
 ! tvi
 tvi24.iol.pt##iframe[id=barraIOL]
@@ -1059,6 +1119,7 @@ urlchecker.net###ads_notify
 ###WarningCodec
 ! malwares
 ||getapplicationmy.info^
+||doremido.com^
 ! File Search Engines ---------------------------------------------------------------------------
 ! sharedir.com
 sharedir.com##IMG[src="http://premiumdl4.me/rseimages/rse_banner64_3.png"]
@@ -1125,5 +1186,3 @@ ojogo.pt###moldura_ojogo
 ! go4up.com
 go4up.com##[href^="http://liversely.com/g4u?q="]
 go4up.com##[href^="http://go.ad2up.com/afu.php?id="] 
-! coindushopping.fr
-||coindushopping.fr/public/$popup,script,third-party
