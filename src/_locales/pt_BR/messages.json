@@ -288,7 +288,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Uma URL por linha. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas. URLs inválidas serão silenciosamente ignoradas.",
+    "message":"Uma URL por linha. As linhas prefixadas com &lsquo;!&rsquo; serão ignoradas. URLs inválidas serão silenciosamente ignoradas.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -344,7 +344,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exportar para um arquivo...",
+    "message":"Exportar para o arquivo...",
     "description":""
   },
   "rulesDefaultFileName":{

@@ -24,7 +24,7 @@ Egyéb listák is kiválaszthatók a felhasználó igénye szerint:
 - hpHosts hirdetés és követőszerverek listája
 - MVPS HOSTS
 - Spam404
-- És sok másik
+- És sok más
 
 Természetesen, több szűrő használatával a memóriaigény is növekszik. Ennek ellenére Fanboy két extra listája és a hpHosts (reklám és követőszerverek) lista hozzáadásával a µBlock memóriafogyasztása még mindig alacsonyabb, mint a legnépszerűbb blokkolóké.
 

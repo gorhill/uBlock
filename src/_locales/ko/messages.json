@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"설치 이후 차단된 요소",
+    "message":"설치된 이후 차단 통계",
     "description":"English: since install"
   },
   "popupOr":{
@@ -420,7 +420,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"숨겨진 요소",
+    "message":"숨겨진 구성 요소",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{

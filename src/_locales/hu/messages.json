@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Hálózati forgalom napló",
+    "message":"µBlock — Hálózati lekérések naplója",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -72,23 +72,23 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Beszúrt <code>parancsfájl<\/code> tag-ek <b>engedélyezve<\/b> ezen a webhelyen",
+    "message":"Inline <code>script<\/code> tag-ek <b>engedélyezve<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Beszúrt <code>parancsfájl<\/code> tag-ek <b>letiltva<\/b> ezen a webhelyen",
+    "message":"Inline <code>script<\/code> tag-ek <b>letiltva<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Webhelytől származó parancsfájlok <b>engedélyezve<\/b> ezen a webhelyen",
+    "message":"Webhelytől származó scriptek <b>engedélyezve<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Webhelytől származó parancsfájlok <b>letiltva<\/b> ezen a webhelyen",
+    "message":"Webhelytől származó scriptek <b>letiltva<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Külső webhelytől származó parancsfájlok <b>engedélyezve<\/b> ezen a webhelyen",
+    "message":"Külső webhelytől származó scriptek <b>engedélyezve<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite3pScriptDisabled":{
@@ -96,59 +96,59 @@
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Webhelytől származó keretek <b>engedélyezve<\/b> ezen a webhelyen",
+    "message":"Webhelytől származó frame-ek <b>engedélyezve<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Webhelytől származó keretek <b>letiltva<\/b> ezen a webhelyen",
+    "message":"Webhelytől származó frame-ek <b>letiltva<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Külső webhelytől származó keretek <b>engedélyezve<\/b> ezen a webhelyen",
+    "message":"Külső webhelytől származó frame-ek <b>engedélyezve<\/b> ezen a webhelyen",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Külső webhelytől származó keretek <b>letiltva<\/b> ezen a webhelyen",
+    "message":"Külső webhelytől származó frame-ek <b>letiltva<\/b> ezen a webhelyen",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Beszúrt <code>parancsfájl<\/code> tag-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
+    "message":"Inline <code>script<\/code> tag-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Beszúrt <code>parancsfájl<\/code> tag-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
+    "message":"Inline <code>script<\/code> tag-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Webhelytől származó parancsfájlok alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
+    "message":"Webhelytől származó scriptek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Webhelytől származó parancsfájlok alapértelmezetten <b>letiltva<\/b> minden webhelyen",
+    "message":"Webhelytől származó scriptek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Külső webhelytől származó parancsfájlok alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
+    "message":"Külső webhelytől származó scriptek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Külső webhelytől származó parancsfájlok alapértelmezetten <b>letiltva<\/b> minden webhelyen",
+    "message":"Külső webhelytől származó scriptek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Webhelytől származó keretek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
+    "message":"Webhelytől származó frame-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Webhelytől származó keretek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
+    "message":"Webhelytől származó frame-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Külső webhelytől származó keretek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
+    "message":"Külső webhelytől származó frame-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Külső webhelytől származó keretek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
+    "message":"Külső webhelytől származó frame-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -156,23 +156,23 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"beszúrt parancsfájlok",
+    "message":"inline scriptek",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Webhelytől származó parancsfájlok",
+    "message":"1st-party scriptek",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Külső webhelytől származó parancsfájlok",
+    "message":"3rd-party scriptek",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Külső webhelytől származó keretek",
+    "message":"3rd-party frame-ek",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Kapcsolódva {{count}} eltérő tartományhoz, összesen: {{total}}",
+    "message":"Kapcsolódva {{count}} egyéni domainhez, összesen: {{total}}",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -320,7 +320,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-statikus-szabalyok_{{datetime}}.txt",
+    "message":"ublock-statikus-szabalyaim_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -336,7 +336,7 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Mégse",
+    "message":"Elvetés",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
@@ -348,7 +348,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"ublock-dinamikus-szabalyok_{{datetime}}.txt",
+    "message":"ublock-dinamikus-szabalyaim_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -356,7 +356,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Szabályrendszer: <code>forrás cél típus művelet<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>Teljes dokumentáció<\/a>).",
+    "message":"Szabály szintaxis: <code>forrás cél típus művelet<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>Teljes dokumentáció<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -372,7 +372,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-kivetelek_{{datetime}}.txt",
+    "message":"ublock-kiveteleim_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -444,7 +444,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-mentes_{{datetime}}.txt",
+    "message":"ublock-mentesem_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
