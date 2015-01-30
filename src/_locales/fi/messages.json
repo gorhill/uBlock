@@ -72,83 +72,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"<code>skripti<\/code> tagit ovat <b>sallittuja<\/b> tällä sivustolla",
+    "message":"Upotetut <code>skripti<\/code>tagit ovat <b>sallittuja<\/b> tällä sivustolla",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"<code>skripti<\/code> tagit ovat <b>estettyjä<\/b> tällä sivustolla",
+    "message":"Upotetut <code>skripti<\/code> tagit ovat <b>estettyjä<\/b> tällä sivustolla",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1. osapuolen skriptit ovat <b>sallittuja<\/b> tällä sivulla",
+    "message":"1:sen osapuolen skriptit ovat <b>sallittuja<\/b> tällä sivulla",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1. osapuolen skriptit ovat <b>estettyjä<\/b> tällä sivulla",
+    "message":"1:sen osapuolen skriptit ovat <b>estettyjä<\/b> tällä sivulla",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3. osapuolen skriptit ovat <b>sallittuja<\/b> tällä sivulla",
+    "message":"3:nen osapuolen skriptit ovat <b>sallittuja<\/b> tällä sivulla",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3. osapuolen skriptit ovat <b>estettyjä<\/b> tällä sivulla",
+    "message":"3:nen osapuolen skriptit ovat <b>estettyjä<\/b> tällä sivulla",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1. osapuolen kehykset ovat <b>sallittuja<\/b> tällä sivulla",
+    "message":"1:sen osapuolen kehykset ovat <b>sallittuja<\/b> tällä sivulla",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1. osapuolen kehykset ovat <b>estettyjä<\/b> tällä sivulla",
+    "message":"1:sen osapuolen kehykset ovat <b>estettyjä<\/b> tällä sivulla",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3. osapuolen kehykset ovat <b>sallittuja<\/b> tällä sivulla",
+    "message":"3:nen osapuolen kehykset ovat <b>sallittuja<\/b> tällä sivulla",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3. osapuolen kehykset ovat <b>estettyjä<\/b> tällä sivulla",
+    "message":"3:nen osapuolen kehykset ovat <b>estettyjä<\/b> tällä sivulla",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "message":"Upotetut <code>skripti<\/code> tagit ovat<b>sallittuja<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "message":"Upotetut <code>skripti<\/code> tagit ovat<b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1. osapuolen skriptit ovat <b>sallittuja<\/b> kaikkialla oletuksena",
+    "message":"1:sen osapuolen skriptit ovat <b>sallittuja<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1. osapuolen skriptit ovat <b>estettyjä<\/b> kaikkialla oletuksena",
+    "message":"1:sen osapuolen skriptit ovat <b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3. osapuolen skriptit ovat <b>sallittuja<\/b> kaikkialla oletuksena",
+    "message":"3:nen osapuolen skriptit ovat <b>sallittuja<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3. osapuolen skriptit ovat <b>estettyjä<\/b> kaikkialla oletuksena",
+    "message":"3:nen osapuolen skriptit ovat <b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1. osapuolen kehykset ovat <b>sallittuja<\/b> kaikkialla oletuksena",
+    "message":"1:sen osapuolen kehykset ovat <b>sallittuja<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1. osapuolen kehykset ovat <b>estettyjä<\/b> kaikkialla oletuksena",
+    "message":"1:sen osapuolen kehykset ovat <b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3. osapuolen kehykset ovat <b>sallittuja<\/b> kaikkialla oletuksena",
+    "message":"3:nen osapuolen kehykset ovat <b>sallittuja<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3. osapuolen kehykset ovat <b>estettyjä<\/b> kaikkialla oletuksena",
+    "message":"3:nen osapuolen kehykset ovat <b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1. osapuolen skriptit",
+    "message":"1:sen osapuolen skriptit",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -168,7 +168,7 @@
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3. osapuolen kehykset",
+    "message":"3:nen osapuolen kehykset",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -400,7 +400,7 @@
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Verkkotunnus",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -412,11 +412,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"No blocked requests logged for this page",
+    "message":"Ei estettyjä pyyntöjä havaittu tällä sivulla",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"No non-blocked requests logged for this page",
+    "message":"Ei ei-estettyjä pyyntöjä havaittu tällä sivulla",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{

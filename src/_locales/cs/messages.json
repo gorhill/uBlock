@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"požadavků zablokováno",
+    "message":"zablokované požadavky:",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
