@@ -284,3 +284,7 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/618
 deviantart.com##.dp-ad-chrome.dp-ad-visible
+
+# https://github.com/gorhill/uBlock/issues/650
+# To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||www.google-analytics.com/ga.js$domain=onlinetv.ru
