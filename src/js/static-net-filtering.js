@@ -1553,11 +1553,11 @@ FilterContainer.prototype.makeCategoryKey = function(category) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.add = function(s) {
+FilterContainer.prototype.add = function(raw) {
     // ORDER OF TESTS IS IMPORTANT!
 
     // Ignore empty lines
-    s = s.trim();
+    var s = raw.trim();
     if ( s.length === 0 ) {
         return false;
     }
@@ -1578,7 +1578,7 @@ FilterContainer.prototype.add = function(s) {
     // Ignore filters with unsupported options
     if ( parsed.unsupported ) {
         this.rejectedCount += 1;
-        // console.log('µBlock> abp-filter.js/FilterContainer.add(): unsupported filter "%s"', s);
+        //console.log('static-net-filtering.js > FilterContainer.add(): unsupported filter "%s"', raw);
         return false;
     }
 
@@ -1606,6 +1606,7 @@ FilterContainer.prototype.add = function(s) {
     }
 
     if ( this.duplicates[s] ) {
+        //console.log('static-net-filtering.js > FilterContainer.add(): duplicate filter "%s"', raw);
         this.duplicateCount++;
         return false;
     }

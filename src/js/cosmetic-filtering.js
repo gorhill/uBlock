@@ -617,6 +617,7 @@ FilterContainer.prototype.addGenericSelector = function(parsed) {
     if ( entries[parsed.suffix] === undefined ) {
         entries[parsed.suffix] = true;
     } else {
+        //console.log('cosmetic-filtering.js > FilterContainer.addGenericSelector(): duplicate filter "%s"', parsed.suffix);
         this.duplicateCount += 1;
     }
     this.acceptedCount += 1;
@@ -641,6 +642,7 @@ FilterContainer.prototype.addHostnameSelector = function(hostname, parsed) {
     } else if ( entry[parsed.suffix] === undefined ) {
         entry[parsed.suffix] = true;
     } else {
+        //console.log('cosmetic-filtering.js > FilterContainer.addHostnameSelector(): duplicate filter "%s"', parsed.suffix);
         this.duplicateCount += 1;
     }
     this.acceptedCount += 1;
@@ -660,6 +662,7 @@ FilterContainer.prototype.addEntitySelector = function(hostname, parsed) {
     } else if ( entry[parsed.suffix] === undefined ) {
         entry[parsed.suffix] = true;
     } else {
+        //console.log('cosmetic-filtering.js > FilterContainer.addEntitySelector(): duplicate filter "%s"', parsed.suffix);
         this.duplicateCount += 1;
     }
     this.acceptedCount += 1;
