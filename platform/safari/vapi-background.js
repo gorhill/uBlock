@@ -35,10 +35,9 @@
 
     /******************************************************************************/
 
-    vAPI.app = safari.extension.toolbarItems[0].toolTip.split(' ');
     vAPI.app = {
-        name: vAPI.app[0],
-        version: vAPI.app[1]
+        name: "µBlock",
+        version: safari.extension.displayVersion
     };
 
     /******************************************************************************/
