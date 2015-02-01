@@ -57,8 +57,9 @@ Being lean and efficient doesn't mean blocking less<br>
 <a href="https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares">µBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
-#### [Quick tests](http://raymondhill.net/ublock/tests.html)
+#### Quick tests
 
+- [Index](http://raymondhill.net/ublock/tests.html)
 - [Web page components](http://raymondhill.net/ublock/tiles1.html)
 - [Popups](http://raymondhill.net/ublock/popup.html)
 
