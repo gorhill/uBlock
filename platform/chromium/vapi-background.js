@@ -295,17 +295,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 vAPI.messaging.onPortMessage = function(request, port) {
     var callback = vAPI.messaging.NOOPFUNC;
     if ( request.requestId !== undefined ) {
-        callback = function(response) {
-            // https://github.com/gorhill/uBlock/issues/383
-            if ( vAPI.messaging.ports.hasOwnProperty(port.name) === false ) {
-                return;
-            }
-            port.postMessage({
-                requestId: request.requestId,
-                channelName: request.channelName,
-                msg: response !== undefined ? response : null
-            });
-        };
+        callback = CallbackWrapper.factory(port, request).callback;
     }
 
     // Specific handler
@@ -378,6 +368,60 @@ vAPI.messaging.broadcast = function(message) {
         }
         this.ports[portName].postMessage(messageWrapper);
     }
+};
+
+/******************************************************************************/
+
+// This allows to avoid creating a closure for every single message which
+// expects an answer. Having a closure created each time a message is processed
+// has been always bothering me. Another benefit of the implementation here 
+// is to reuse the callback proxy object, so less memory churning.
+//
+// https://developers.google.com/speed/articles/optimizing-javascript
+// "Creating a closure is significantly slower then creating an inner
+//  function without a closure, and much slower than reusing a static 
+//  function"
+//
+// http://hacksoflife.blogspot.ca/2015/01/the-four-horsemen-of-performance.html
+// "the dreaded 'uniformly slow code' case where every function takes 1% 
+//  of CPU and you have to make one hundred separate performance optimizations 
+//  to improve performance at all"
+
+var CallbackWrapper = function(port, request) {
+    // No need to bind every single time
+    this.callback = this.proxy.bind(this);
+    this.messaging = vAPI.messaging;
+    this.init(port, request);
+};
+
+CallbackWrapper.junkyard = [];
+
+CallbackWrapper.factory = function(port, request) {
+    var wrapper = CallbackWrapper.junkyard.pop();
+    if ( wrapper ) {
+        wrapper.init(port, request);
+        return wrapper;
+    }
+    return new CallbackWrapper(port, request);
+};
+
+CallbackWrapper.prototype.init = function(port, request) {
+    this.port = port;
+    this.request = request;
+};
+
+CallbackWrapper.prototype.proxy = function(response) {
+    // https://github.com/gorhill/uBlock/issues/383
+    if ( this.messaging.ports.hasOwnProperty(this.port.name) ) {
+        this.port.postMessage({
+            requestId: this.request.requestId,
+            channelName: this.request.channelName,
+            msg: response !== undefined ? response : null
+        });
+    }
+    // Mark for reuse
+    this.port = this.request = null;
+    CallbackWrapper.junkyard.push(this);
 };
 
 /******************************************************************************/
