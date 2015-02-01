@@ -32,6 +32,7 @@
     var vAPI = self.vAPI = self.vAPI || {};
 
     vAPI.safari = true;
+    var noopFunc = function(){};
 
     /******************************************************************************/
 
@@ -492,7 +493,7 @@
     vAPI.messaging = {
         listeners: {},
         defaultHandler: null,
-        NOOPFUNC: function() {},
+        NOOPFUNC: noopFunc, 
         UNHANDLED: 'vAPI.messaging.notHandled'
     };
 
@@ -504,18 +505,40 @@
 
     /******************************************************************************/
 
+    var CallbackWrapper = function(request, port) {
+        // No need to bind every single time
+        this.callback = this.proxy.bind(this);
+        this.messaging = vAPI.messaging;
+        this.init(request, port);
+    };
+    CallbackWrapper.junkyard = [];
+
+    CallbackWrapper.factory = function(request, port) {
+        var wrapper = CallbackWrapper.junkyard.pop();
+        if(wrapper) {
+            wrapper.init(request, port);
+            return wrapper;
+        }
+        return new CallbackWrapper(request, port);
+    };
+    CallbackWrapper.prototype.init = function(request, port) {
+        this.request = request;
+        this.port = port;
+    };
+    CallbackWrapper.prototype.proxy = function(response) {
+        this.port.dispatchMessage(this.request.name, {
+            requestId: this.request.message.requestId,
+            channelName: this.request.message.channelName,
+            msg: response !== undefined ? response: null
+        });
+        this.port = this.request = null;
+        CallbackWrapper.junkyard.push(this);
+    };
+
     vAPI.messaging.onMessage = function(request) {
         var callback = vAPI.messaging.NOOPFUNC;
         if(request.message.requestId !== undefined) {
-            callback = function(response) {
-                request.target.page.dispatchMessage(
-                    request.name, {
-                        requestId: request.message.requestId,
-                        channelName: request.message.channelName,
-                        msg: response !== undefined ? response : null
-                    }
-                );
-            };
+            callback = CallbackWrapper.factory(request, request.target.page).callback;
         }
 
         var sender = {
