@@ -704,26 +704,18 @@ vAPI.messaging.onMessage = function({target, data}) {
             .chromeEventHandler.ownerDocument.defaultView.messageManager;
     }
 
-    var listenerId = data.channelName.split('|');
-    var requestId = data.requestId;
-    var channelName = listenerId[1];
-    listenerId = listenerId[0];
+    var channelNameRaw = data.channelName;
+    var pos = channelNameRaw.indexOf('|');
+    var channelName = channelNameRaw.slice(pos + 1);
 
     var callback = vAPI.messaging.NOOPFUNC;
-    if ( requestId !== undefined ) {
-        callback = function(response) {
-            var message = JSON.stringify({
-                requestId: requestId,
-                channelName: channelName,
-                msg: response !== undefined ? response : null
-            });
-
-            if ( messageManager.sendAsyncMessage ) {
-                messageManager.sendAsyncMessage(listenerId, message);
-            } else {
-                messageManager.broadcastAsyncMessage(listenerId, message);
-            }
-        };
+    if ( data.requestId !== undefined ) {
+        callback = CallbackWrapper.factory(
+            messageManager,
+            channelName,
+            channelNameRaw.slice(0, pos),
+            data.requestId
+        ).callback;
     }
 
     var sender = {
@@ -794,6 +786,67 @@ vAPI.messaging.broadcast = function(message) {
         location.host + ':broadcast',
         JSON.stringify({broadcast: true, msg: message})
     );
+};
+
+/******************************************************************************/
+
+// This allows to avoid creating a closure for every single message which
+// expects an answer. Having a closure created each time a message is processed
+// has been always bothering me. Another benefit of the implementation here 
+// is to reuse the callback proxy object, so less memory churning.
+//
+// https://developers.google.com/speed/articles/optimizing-javascript
+// "Creating a closure is significantly slower then creating an inner
+//  function without a closure, and much slower than reusing a static 
+//  function"
+//
+// http://hacksoflife.blogspot.ca/2015/01/the-four-horsemen-of-performance.html
+// "the dreaded 'uniformly slow code' case where every function takes 1% 
+//  of CPU and you have to make one hundred separate performance optimizations 
+//  to improve performance at all"
+
+var CallbackWrapper = function(messageManager, channelName, listenerId, requestId) {
+    this.callback = this.proxy.bind(this); // bind once
+    this.init(messageManager, channelName, listenerId, requestId);
+};
+
+CallbackWrapper.junkyard = [];
+
+CallbackWrapper.factory = function(messageManager, channelName, listenerId, requestId) {
+    var wrapper = CallbackWrapper.junkyard.pop();
+    if ( wrapper ) {
+        wrapper.init(messageManager, channelName, listenerId, requestId);
+        return wrapper;
+    }
+    return new CallbackWrapper(messageManager, channelName, listenerId, requestId);
+};
+
+CallbackWrapper.prototype.init = function(messageManager, channelName, listenerId, requestId) {
+    this.messageManager = messageManager;
+    this.channelName = channelName;
+    this.listenerId = listenerId;
+    this.requestId = requestId;
+};
+
+CallbackWrapper.prototype.proxy = function(response) {
+    var message = JSON.stringify({
+        requestId: this.requestId,
+        channelName: this.channelName,
+        msg: response !== undefined ? response : null
+    });
+
+    if ( this.messageManager.sendAsyncMessage ) {
+        this.messageManager.sendAsyncMessage(this.listenerId, message);
+    } else {
+        this.messageManager.broadcastAsyncMessage(this.listenerId, message);
+    }
+
+    // Mark for reuse
+    this.messageManager = 
+    this.channelName = 
+    this.requestId = 
+    this.listenerId = null;
+    CallbackWrapper.junkyard.push(this);
 };
 
 /******************************************************************************/
