@@ -30,6 +30,7 @@
 // var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock]').contentWindow;
 
 let bgProcess;
+let version;
 const hostName = 'ublock';
 const restartListener = {
     get messageManager() {
@@ -46,6 +47,10 @@ const restartListener = {
 /******************************************************************************/
 
 function startup(data, reason) {
+    if ( data !== undefined ) {
+        version = data.version;
+    }
+
     let appShell = Components.classes['@mozilla.org/appshell/appShellService;1']
         .getService(Components.interfaces.nsIAppShellService);
 
@@ -60,7 +65,7 @@ function startup(data, reason) {
         );
         bgProcess.setAttribute(
             'src',
-            'chrome://' + hostName + '/content/background.html#' + data.version
+            'chrome://' + hostName + '/content/background.html#' + version
         );
 
         restartListener.messageManager.addMessageListener(
