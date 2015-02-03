@@ -477,6 +477,12 @@ vAPI.net.registerListeners = function() {
     };
     chrome.webRequest.onBeforeRequest.addListener(
         onBeforeRequest,
+        //function(details) {
+        //    quickProfiler.start('onBeforeRequest');
+        //    var r = onBeforeRequest(details);
+        //    quickProfiler.stop();
+        //    return r;
+        //},
         {
             'urls': this.onBeforeRequest.urls || ['<all_urls>'],
             'types': this.onBeforeRequest.types || []

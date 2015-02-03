@@ -366,12 +366,6 @@ vAPI.net.onBeforeRequest = {
     ],
     extra: [ 'blocking' ],
     callback: onBeforeRequest
-    //function(details) {
-    //    quickProfiler.start('onBeforeRequest');
-    //    var r = onBeforeRequest(details);
-    //    quickProfiler.stop();
-    //    return r;
-    //},
 };
 
 vAPI.net.onBeforeSendHeaders = {
@@ -384,12 +378,6 @@ vAPI.net.onBeforeSendHeaders = {
     ],
     extra: [ 'blocking', 'requestHeaders' ],
     callback: onBeforeSendHeaders
-    //function(details) {
-    //    quickProfiler.start('onBeforeSendHeaders');
-    //    var r = onBeforeSendHeaders(details);
-    //    quickProfiler.stop();
-    //    return r;
-    //},
 };
 
 vAPI.net.onHeadersReceived = {
