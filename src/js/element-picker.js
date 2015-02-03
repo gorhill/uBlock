@@ -114,9 +114,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-/******************************************************************************/
-/******************************************************************************/
-
 (function() {
 
 'use strict';
@@ -270,10 +267,10 @@ var netFilterFromElement = function(elem, out) {
         return;
     }
     var tagName = elem.tagName.toLowerCase();
-    if ( tagName !== 'img' && tagName !== 'iframe' ) {
+    if ( netFilterSources.hasOwnProperty(tagName) === false ) {
         return;
     }
-    var src = elem.getAttribute('src');
+    var src = elem.getAttribute(netFilterSources[tagName]);
     if ( typeof src !== 'string' || src.length === 0 ) {
         return;
     }
@@ -295,6 +292,12 @@ var netFilterFromElement = function(elem, out) {
         src = src.slice(0, pos);
         out.push(src);
     }
+};
+
+var netFilterSources = {
+    'iframe': 'src',
+       'img': 'src',
+    'object': 'data'
 };
 
 /******************************************************************************/
@@ -431,15 +434,16 @@ var elementsFromFilter = function(filter) {
     if ( filter.slice(0, 2) === '||' ) {
         filter = filter.replace('||', '');
     }
-    var elems = document.querySelectorAll('[src]');
+    var elems = document.querySelectorAll('iframe,img,object');
     var i = elems.length;
-    var elem;
+    var elem, src;
     while ( i-- ) {
         elem = elems[i];
-        if ( typeof elem.src !== 'string' ) {
+        src = elem.getAttribute(netFilterSources[elem.tagName.toLowerCase()]);
+        if ( typeof src !== 'string' ) {
             continue;
         }
-        if ( elem.src.indexOf(filter) !== -1 ) {
+        if ( src.indexOf(filter) !== -1 ) {
             out.push(elem);
         }
     }
