@@ -67,14 +67,15 @@ info##DIV[class="banda-sticky-vp"]
 info##DIV[class="banda-sticky-mini"]
 	
 !Whitelist
-@@||homebank.ro^$document
-@@||profitshare.emag.ro/get_ads.php?*
-@@||profitshare.ro/get_ads.php?*
-@@||rezitests.ro/advertisement.js
-@@AC_RunActiveContent.js
-@@media.bestauto.ro
-@@||promozone.ro^$document
-@@||olx.ro/i2/ajax/ad/getcontact/*
+! https://github.com/gorhill/uBlock/issues/693#issuecomment-72928751
+! @@||homebank.ro^$document
+! @@||profitshare.emag.ro/get_ads.php?*
+! @@||profitshare.ro/get_ads.php?*
+! @@||rezitests.ro/advertisement.js
+! @@AC_RunActiveContent.js
+! @@media.bestauto.ro
+! @@||promozone.ro^$document
+! @@||olx.ro/i2/ajax/ad/getcontact/*
 
 !porcarii
 ||24fun.ro/widget/?

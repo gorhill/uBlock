@@ -281,8 +281,8 @@
         },
     "www.zoso.ro/pages/rolist.txt": {
         "off": true,
-        "title": "ROU: RO-LIST",
+        "title": "ROU: RO-LIST (modified)",
         "group": "regions",
-        "homeURL": "http://www.zoso.ro/pages/rolist.txt"
+        "homeURL": ""
         }
 }
