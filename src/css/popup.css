@@ -85,7 +85,7 @@ p {
 #switch .fa {
     color: green;
     cursor: pointer;
-    font-size: 96px;
+    font-size: 108px;
     margin: 0;
     }
 #switch .fa:hover {
@@ -195,8 +195,8 @@ body.dirty #refresh:hover {
     -moz-box-sizing: border-box;
     color: #000;
     display: inline-block;
-    height: 24px;
-    line-height: 24px;
+    height: 22px;
+    line-height: 22px;
     overflow: hidden;
     position: relative;
     vertical-align: top;
@@ -261,7 +261,7 @@ body.dirty #refresh:hover {
     }
 #actionSelector > span {
     display: inline-block;
-    height: 24px;
+    height: 22px;
     opacity: 0.2;
     width: 33.33%;
     }

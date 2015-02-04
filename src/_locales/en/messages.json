@@ -159,6 +159,10 @@
     "message":"images",
     "description":""
   },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
+    "description":""
+  },
   "popupInlineScriptRulePrompt":{
     "message":"inline scripts",
     "description":""

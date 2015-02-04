@@ -200,9 +200,9 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
     var ownRule = false;
     var matches = reSrcHostnameFromRule.exec(rule);
     if ( matches !== null ) {
-        ownRule = matches[2] === des &&
-                  matches[3] === type &&
-                  matches[1] === scopeToSrcHostnameMap[scope];
+        ownRule = (matches[2] !== '*' || matches[3] === type) &&
+                  (matches[2] === des) &&
+                  (matches[1] === scopeToSrcHostnameMap[scope]);
     }
     cell.toggleClass('ownRule', ownRule);
 

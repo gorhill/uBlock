@@ -39,11 +39,12 @@ var Matrix = function() {
 /******************************************************************************/
 
 var supportedDynamicTypes = {
+           '3p': true,
+        'image': true,
 'inline-script': true,
     '1p-script': true,
     '3p-script': true,
-     '3p-frame': true,
-        'image': true
+     '3p-frame': true
 };
 
 var typeBitOffsets = {
@@ -53,7 +54,7 @@ var typeBitOffsets = {
     '3p-script':  6,
      '3p-frame':  8,
         'image': 10,
-       '3p-any': 12
+           '3p': 12
 };
 
 var actionToNameMap = {
@@ -200,6 +201,9 @@ Matrix.prototype.clearRegisters = function() {
 /******************************************************************************/
 
 var is3rdParty = function(srcHostname, desHostname) {
+    if ( desHostname === '*' ) {
+        return false;
+    }
     var srcDomain = domainFromHostname(srcHostname);
     if ( srcDomain === '' ) {
         srcDomain = desHostname;
@@ -217,6 +221,7 @@ var domainFromHostname = µBlock.URI.domainFromHostname;
 /******************************************************************************/
 
 Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
+    this.type = type;
     var bitOffset = typeBitOffsets[type];
     var s = srcHostname;
     var v;
@@ -226,6 +231,7 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
         if ( v !== undefined ) {
             v = v >> bitOffset & 3;
             if ( v !== 0 ) {
+                this.r = v;
                 return v;
             }
         }
@@ -235,44 +241,51 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
         }
     }
     // srcHostname is '*' at this point
+    this.r = 0;
     return 0;
 };
 
 /******************************************************************************/
 
 Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
-    this.r = 0;
+    // Precedence: from most specific to least specific
 
-    // Specific-destination + any type
-    this.type = '*';
+    // Specific-destination, any party, any type
     var d = desHostname;
     while ( d !== '*' ) {
         this.y = d;
-        this.r = this.evaluateCellZ(srcHostname, d, '*');
-        if ( this.r !== 0 ) { return this; }
+        if ( this.evaluateCellZ(srcHostname, d, '*') !== 0 ) { return this; }
         d = toBroaderHostname(d);
     }
 
-    // Any destination + specific-type
+    var thirdParty = is3rdParty(srcHostname, desHostname);
+
+    // Any destination
     this.y = '*';
 
-    if ( type === 'script' ) {
-        type = is3rdParty(srcHostname, desHostname) ? '3p-script' : '1p-script';
-    } else if ( type === 'sub_frame' && is3rdParty(srcHostname, desHostname) ) {
-        type = '3p-frame';
-    }
-    // Is this a type suitable for dynamic filtering purpose?
-    if ( supportedDynamicTypes.hasOwnProperty(type) ) {
-        this.type = type;
-        this.r = this.evaluateCellZ(srcHostname, '*', type);
-        if ( this.r !== 0 ) { return this; }
+    // Specific party
+    if ( thirdParty ) {
+        // 3rd-party, specific type
+        if ( type === 'script' ) {
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-script') !== 0 ) { return this; }
+        } else if ( type === 'sub_frame' ) {
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-frame') !== 0 ) { return this; }
+        }
+        // 3rd-party, any type
+        if ( this.evaluateCellZ(srcHostname, '*', '3p') !== 0 ) { return this; }
+
+    } else if ( type === 'script' ) {
+        // 1st party, specific type
+        if ( this.evaluateCellZ(srcHostname, '*', '1p-script') !== 0 ) { return this; }
     }
 
-    // https://github.com/gorhill/uBlock/issues/682
-    // Any destination, any type
-    this.type = '*';
-    this.r = this.evaluateCellZ(srcHostname, '*', '*');
-    if ( this.r !== 0 ) { return this; }
+    // Any destination, any party, specific type
+    if ( supportedDynamicTypes.hasOwnProperty(type) ) {
+        if ( this.evaluateCellZ(srcHostname, '*', type) !== 0 ) { return this; }
+    }
+
+    // Any destination, any party, any type
+    if ( this.evaluateCellZ(srcHostname, '*', '*') !== 0 ) { return this; }
 
     this.type = '';
     return this;

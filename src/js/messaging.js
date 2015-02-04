@@ -147,6 +147,7 @@ var getDynamicFilterRules = function(srcHostname, desHostnames) {
     var dFiltering = µb.dynamicNetFilteringEngine;
     r['/ * *'] = dFiltering.evaluateCellZY('*', '*', '*').toFilterString();
     r['/ * image'] = dFiltering.evaluateCellZY('*', '*', 'image').toFilterString();
+    r['/ * 3p'] = dFiltering.evaluateCellZY('*', '*', '3p').toFilterString();
     r['/ * inline-script'] = dFiltering.evaluateCellZY('*', '*', 'inline-script').toFilterString();
     r['/ * 1p-script'] = dFiltering.evaluateCellZY('*', '*', '1p-script').toFilterString();
     r['/ * 3p-script'] = dFiltering.evaluateCellZY('*', '*', '3p-script').toFilterString();
@@ -157,6 +158,7 @@ var getDynamicFilterRules = function(srcHostname, desHostnames) {
 
     r['. * *'] = dFiltering.evaluateCellZY(srcHostname, '*', '*').toFilterString();
     r['. * image'] = dFiltering.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
+    r['. * 3p'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p').toFilterString();
     r['. * inline-script'] = dFiltering.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
     r['. * 1p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
     r['. * 3p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
