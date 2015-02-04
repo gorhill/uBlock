@@ -1,10 +1,10 @@
 7edb2a585b445f28aa5ab06306f1a23f assets/ublock/privacy.txt
 a28bf06757a9d5b49985b72f64201fed assets/ublock/filters.txt
 dcf3e05bae803343c9d632f0baf8bedd assets/ublock/mirror-candidates.txt
-67dfe6ac5b9f507fb63d423d99b93c65 assets/ublock/filter-lists.json
+e2ad13cc44f4b792a7ca413411f9e7d7 assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
-b9a955e05ef1beee0d5abf22424dabf2 assets/thirdparties/www.zoso.ro/pages/rolist.txt
+407e48f8b4a82385a385c802c7440b8d assets/thirdparties/www.zoso.ro/pages/rolist.txt
 31758184ec5863b7bec86d768c93eb17 assets/thirdparties/adblock.gardar.net/is.abp.txt
 e00124880337378ec2f7c730498ce336 assets/thirdparties/raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt
 792759192bb162a5114f546454f7c83d assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
