@@ -517,20 +517,83 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 // Permanent
 
 (function() {
-    // Listeners to mop up whatever is otherwise missed:
-    // - Future requests not blocked yet
-    // - Elements dynamically added to the page
-    // - Elements which resource URL changes
+    // https://github.com/gorhill/uBlock/issues/683
+    // Instead of a closure we use a map to remember the element to collapse
+    // or hide.
+    var filterRequestId = 1;
+    var filterRequests = {};
 
-    var loadedElements = {
-        'iframe': 'src'
+    var FilterRequest = function(target, selector) {
+        this.id = filterRequestId++;
+        this.target = target;
+        this.selector = selector;
     };
 
-    var failedElements = {
-        'img': 'src',
-        'input': 'src',
-        'object': 'data'
+    FilterRequest.send = function(target, tagName, prop, src) {
+        var req = new FilterRequest(
+            target,
+            tagName + '[' + prop + '="' + src + '"]'
+        );
+        filterRequests[req.id] = req;
+        messager.send(
+            {
+                what: 'filterRequest',
+                id: req.id,
+                tagName: tagName,
+                requestURL: src,
+                pageHostname: window.location.hostname,
+                pageURL: window.location.href
+            },
+            onAnswerReceived
+        );
     };
+
+    // Process answer: collapse, hide, or do nothing.
+
+    var onAnswerReceived = function(details) {
+        // This should not happen under normal circumstances. It probably can
+        // happen if the extension is disabled though.
+        if ( typeof details !== 'object' || details === null ) {
+            return;
+        }
+
+        // This should definitely not happen
+        if ( filterRequests.hasOwnProperty(details.id) === false ) {
+            return;
+        }
+
+        var req = filterRequests[details.id];
+        delete filterRequests[details.id];
+
+        if ( details.collapse === undefined ) {
+            return;
+        }
+
+        //console.log('contentscript-end.js > onAnswerReceived(%o)', req);
+
+        // If `!important` is not there, going back using history will
+        // likely cause the hidden element to re-appear.
+        if ( details.collapse ) {
+            // https://github.com/gorhill/uBlock/issues/399
+            // Never remove elements from the DOM, just hide them
+            req.target.style.setProperty('display', 'none', 'important');
+        } else {
+            req.target.style.setProperty('visibility', 'hidden', 'important');
+        }
+
+        messager.send({
+            what: 'injectedSelectors',
+            type: 'net',
+            hostname: window.location.hostname,
+            selectors: req.selector
+        });
+    };
+
+    // https://github.com/gorhill/uBlock/issues/174
+    // Do not remove fragment from src URL
+
+    // TODO: Find out whether trying to send more than one filter request per
+    //       message is worth it.
 
     var onResource = function(target, dict) {
         if ( !target ) {
@@ -548,39 +611,22 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( src.lastIndexOf('http', 0) !== 0 ) {
             return;
         }
+        FilterRequest.send(target, tagName, prop, src);
+    };
 
-        // https://github.com/gorhill/uBlock/issues/174
-        // Do not remove fragment from src URL
+    // Listeners to mop up whatever is otherwise missed:
+    // - Future requests not blocked yet
+    // - Elements dynamically added to the page
+    // - Elements which resource URL changes
 
-        var onAnswerReceived = function(details) {
-            if ( typeof details !== 'object' || details === null ) {
-                return;
-            }
-            // If `!important` is not there, going back using history will
-            // likely cause the hidden element to re-appear.
-            if ( details.collapse ) {
-                // https://github.com/gorhill/uBlock/issues/399
-                // Never remove elements from the DOM, just hide them
-                target.style.setProperty('display', 'none', 'important');
-            } else {
-                target.style.setProperty('visibility', 'hidden', 'important');
-            }
-            messager.send({
-                what: 'injectedSelectors',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors: tagName + '[' + prop + '="' + src + '"]'
-            });
-        };
+    var loadedElements = {
+        'iframe': 'src'
+    };
 
-        var details = {
-            what: 'filterRequest',
-            tagName: tagName,
-            requestURL: src,
-            pageHostname: window.location.hostname,
-            pageURL: window.location.href
-        };
-        messager.send(details, onAnswerReceived);
+    var failedElements = {
+        'img': 'src',
+        'input': 'src',
+        'object': 'data'
     };
 
     var onResourceLoaded = function(ev) {

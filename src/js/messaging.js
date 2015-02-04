@@ -423,7 +423,10 @@ var filterRequest = function(pageStore, details) {
     details.requestHostname = µburi.hostnameFromURI(details.requestURL);
     details.requestType = tagNameToRequestTypeMap[details.tagName];
     if ( µb.isBlockResult(pageStore.filterRequest(details)) ) {
-        return { collapse: µb.userSettings.collapseBlocked };
+        return {
+            collapse: µb.userSettings.collapseBlocked,
+            id: details.id
+        };
     }
 };
 
@@ -465,7 +468,11 @@ var onMessage = function(details, sender, callback) {
         // Evaluate a single request
         case 'filterRequest':
             if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+                // console.log('contentscript-end.js > filterRequest(%o)', details);
                 response = filterRequest(pageStore, details);
+            }
+            if ( response === undefined ) {
+                response = { id: details.id };
             }
             break;
 
