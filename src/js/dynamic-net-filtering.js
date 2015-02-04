@@ -275,6 +275,12 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
         if ( this.r !== 0 ) { return this; }
     }
 
+    // https://github.com/gorhill/uBlock/issues/682
+    // Any destination, any type
+    this.type = '*';
+    this.r = this.evaluateCellZ(srcHostname, '*', '*');
+    if ( this.r !== 0 ) { return this; }
+
     this.type = '';
     return this;
 };
