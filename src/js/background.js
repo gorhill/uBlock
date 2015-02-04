@@ -72,12 +72,9 @@ return {
     netWhitelist: {},
     netWhitelistModifyTime: 0,
     netWhitelistDefault: [
-        'about-scheme',
         'behind-the-scene',
         'chrome-extension-scheme',
         'chrome-scheme',
-        'data-scheme',
-        'file-scheme',
         'opera-scheme',
         ''
     ].join('\n').trim(),
@@ -118,7 +115,7 @@ return {
     firstUpdateAfter: 5 * oneMinute,
     nextUpdateAfter: 7 * oneHour,
 
-    selfieMagic: 'knreayqtuguf',
+    selfieMagic: 'jhigubkbgtws',
     selfieAfter: 7 * oneMinute,
 
     pageStores: {},
