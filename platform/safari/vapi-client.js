@@ -205,7 +205,7 @@
     };
     document.addEventListener("beforeload", onBeforeLoad, true);
 
-    // Block popups, intercept XHRs, and add site patches
+    // Block popups, intercept XHRs
     var firstMutation = function() {
         document.removeEventListener("DOMContentLoaded", firstMutation, true);
         firstMutation = false;
