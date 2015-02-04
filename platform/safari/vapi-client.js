@@ -258,13 +258,6 @@ onpopstate();\
 return r;\
 };";
         }
-        var whiteListed = safari.self.tab.canLoad(beforeLoadEvent, {
-            type: "isWhiteListed",
-            url: location.href
-        });
-        if(vAPI.sitePatch && !whiteListed) {
-            tmpScript += "(" + vAPI.sitePatch + ")();";
-        }
         tmpScript += "})();";
         tmpJS.textContent = tmpScript;
         document.documentElement.removeChild(document.documentElement.appendChild(tmpJS));

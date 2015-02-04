@@ -47,20 +47,6 @@
 
     /******************************************************************************/
 
-    // addContentScriptFromURL allows whitelisting,
-    // so load sitepaching this way, instead of adding it to the Info.plist
-
-    safari.extension.addContentScriptFromURL(
-        safari.extension.baseURI + 'js/sitepatch-safari.js', [
-        'http://www.youtube.com/*',
-        'https://www.youtube.com/*',
-        'http://www.youtube-nocookie.com/*',
-        'https://www.youtube-nocookie.com/*'
-    ]
-    );
-
-    /******************************************************************************/
-
     safari.extension.settings.addEventListener('change', function(e) {
         if(e.key === 'open_prefs') {
             vAPI.tabs.open({
