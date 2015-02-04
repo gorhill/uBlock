@@ -33,7 +33,7 @@ var popupData;
 var dfPaneBuilt = false;
 var popupHeight;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
-var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+)/;
+var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+) ([^ ]+)/;
 var scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -200,12 +200,13 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
     var ownRule = false;
     var matches = reSrcHostnameFromRule.exec(rule);
     if ( matches !== null ) {
-        ownRule =  matches[2] === des &&
-                   matches[1] === scopeToSrcHostnameMap[scope];
+        ownRule = matches[2] === des &&
+                  matches[3] === type &&
+                  matches[1] === scopeToSrcHostnameMap[scope];
     }
     cell.toggleClass('ownRule', ownRule);
 
-    if ( scope !== '.' || type !== '*' ) {
+    if ( scope !== '.' || des === '*' ) {
         return;
     }
     if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
@@ -269,12 +270,9 @@ var buildAllDynamicFilters = function() {
     var key, des;
     for ( var i = 0; i < keys.length; i++ ) {
         key = keys[i];
-        // Specific-type rules -- these are built-in
-        if ( key.slice(-1) !== '*' ) {
-            continue;
-        }
         des = key.slice(2, key.indexOf(' ', 2));
-        if ( desHostnameDone.hasOwnProperty(des) ) {
+        // Specific-type rules -- these are built-in
+        if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) {
             continue;
         }
         addDynamicFilterRow(des);

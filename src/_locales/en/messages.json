@@ -151,6 +151,10 @@
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"all",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"images",
     "description":""

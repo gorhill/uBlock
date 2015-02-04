@@ -39,7 +39,6 @@ var Matrix = function() {
 /******************************************************************************/
 
 var supportedDynamicTypes = {
-            '*': true,
 'inline-script': true,
     '1p-script': true,
     '3p-script': true,
@@ -243,21 +242,15 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
 
 Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     this.r = 0;
-    this.type = '*';
 
     // Specific-destination + any type
-    this.y = desHostname;
-    this.r = this.evaluateCellZ(srcHostname, desHostname, '*');
-    if ( this.r !== 0 ) { return this; }
+    this.type = '*';
     var d = desHostname;
-    for (;;) {
-        d = toBroaderHostname(d);
-        if ( d === '*' ) {
-            break;
-        }
+    while ( d !== '*' ) {
         this.y = d;
         this.r = this.evaluateCellZ(srcHostname, d, '*');
         if ( this.r !== 0 ) { return this; }
+        d = toBroaderHostname(d);
     }
 
     // Any destination + specific-type

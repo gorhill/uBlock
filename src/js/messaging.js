@@ -145,6 +145,7 @@ var getHostnameDict = function(hostnameToCountMap) {
 var getDynamicFilterRules = function(srcHostname, desHostnames) {
     var r = {};
     var dFiltering = µb.dynamicNetFilteringEngine;
+    r['/ * *'] = dFiltering.evaluateCellZY('*', '*', '*').toFilterString();
     r['/ * image'] = dFiltering.evaluateCellZY('*', '*', 'image').toFilterString();
     r['/ * inline-script'] = dFiltering.evaluateCellZY('*', '*', 'inline-script').toFilterString();
     r['/ * 1p-script'] = dFiltering.evaluateCellZY('*', '*', '1p-script').toFilterString();
@@ -154,6 +155,7 @@ var getDynamicFilterRules = function(srcHostname, desHostnames) {
         return r;
     }
 
+    r['. * *'] = dFiltering.evaluateCellZY(srcHostname, '*', '*').toFilterString();
     r['. * image'] = dFiltering.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
     r['. * inline-script'] = dFiltering.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
     r['. * 1p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
