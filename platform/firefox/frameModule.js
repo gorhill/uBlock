@@ -28,7 +28,6 @@ this.EXPORTED_SYMBOLS = ['contentObserver'];
 const {interfaces: Ci, utils: Cu} = Components;
 const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
-let uniqueSandboxId = 1;
 
 // Cu.import('resource://gre/modules/devtools/Console.jsm');
 
@@ -55,6 +54,7 @@ const contentObserver = {
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
     ignoredPopups: new WeakMap(),
+    uniqueSandboxId: 1,
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -182,7 +182,7 @@ const contentObserver = {
 
     initContentScripts: function(win, sandbox) {
         let messager = getMessageManager(win);
-        let sandboxId = hostName + ':sb:' + uniqueSandboxId++;
+        let sandboxId = hostName + ':sb:' + this.uniqueSandboxId++;
 
         if ( sandbox ) {
             let sandboxName = [
@@ -210,10 +210,7 @@ const contentObserver = {
 
         sandbox.addMessageListener = function(callback) {
             if ( sandbox._messageListener_ ) {
-                sandbox.removeMessageListener(
-                    sandbox._sandboxId_,
-                    sandbox._messageListener_
-                );
+                sandbox.removeMessageListener();
             }
 
             sandbox._messageListener_ = function(message) {
