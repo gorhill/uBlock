@@ -24,15 +24,16 @@ source_locale_dir = pj(build_dir, '_locales')
 target_locale_dir = pj(build_dir, 'locale')
 language_codes = []
 descriptions = OrderedDict({})
+title_case_strings = ['pickerContextMenuEntry']
 
 for alpha2 in sorted(os.listdir(source_locale_dir)):
     locale_path = pj(source_locale_dir, alpha2, 'messages.json')
     with open(locale_path, encoding='utf-8') as f:
-        string_data = json.load(f, object_pairs_hook=OrderedDict)
+        strings = json.load(f, object_pairs_hook=OrderedDict)
 
     alpha2 = alpha2.replace('_', '-')
-    descriptions[alpha2] = string_data['extShortDesc']['message']
-    del string_data['extShortDesc']
+    descriptions[alpha2] = strings['extShortDesc']['message']
+    del strings['extShortDesc']
 
     language_codes.append(alpha2)
 
@@ -40,10 +41,15 @@ for alpha2 in sorted(os.listdir(source_locale_dir)):
 
     locale_path = pj(target_locale_dir, alpha2, 'messages.properties')
     with open(locale_path, 'wt', encoding='utf-8', newline='\n') as f:
-        for string_name in string_data:
+        for string_name in strings:
+            string = strings[string_name]['message']
+
+            if alpha2 == 'en' and string_name in title_case_strings:
+                string = string.title()
+
             f.write(string_name)
             f.write(u'=')
-            f.write(string_data[string_name]['message'].replace('\n', r'\n'))
+            f.write(string.replace('\n', r'\n'))
             f.write(u'\n')
 
 # generate chrome.manifest file
