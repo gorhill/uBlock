@@ -230,12 +230,14 @@ dispatchEvent(e);\
 return e.detail.url === false;\
 },\
 wo = open,\
-xo = XMLHttpRequest.prototype.open;\
+xo = XMLHttpRequest.prototype.open,\
+_noOP = function(){};\
 open = function(u) {\
 return block(u, 'popup') ? null : wo.apply(this, arguments);\
 };\
 XMLHttpRequest.prototype.open = function(m, u, s) {\
-return xo.apply(this, block(u, 'xmlhttprequest') ? ['HEAD', u, s] : arguments);\
+if(block(u, 'xmlhttprequest')) return {send: _noOP};\
+else return xo.apply(this, arguments);\
 };";
         if(frameId === 0) {
             tmpScript += "\
