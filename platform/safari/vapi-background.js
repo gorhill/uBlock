@@ -206,9 +206,12 @@
     /******************************************************************************/
 
     vAPI.tabs.getTabId = function(tab) {
+        if(typeof tab.uBlockCachedID !== "undefined") {
+            return tab.uBlockCachedID;
+        }
         for(var i in vAPI.tabs.stack) {
             if(vAPI.tabs.stack[i] === tab) {
-                return +i;
+                return (tab.uBlockCachedID = +i);
             }
         }
 
@@ -629,21 +632,20 @@
             }
             e.stopPropagation && e.stopPropagation();
             switch(e.message.type) {
-                case "isWhiteListed":
-                    e.message = !µb.getNetFilteringSwitch(e.message.url);
-                    break;
-                case "navigatedToNew":
+                case "main_frame":
                     vAPI.tabs.onNavigation({
                         url: e.message.url,
                         frameId: 0,
                         tabId: vAPI.tabs.getTabId(e.target)
                     });
-                    break;
+                    // Don't break here; let main_frame go through
                 case "popup":
                     if(e.message.url === 'about:blank') {
                         vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
                         e.message = true;
-                    } else {
+                        return;
+                    }
+                    else {
                         e.message = !vAPI.tabs.onPopup({
                             url: e.message.url,
                             tabId: 0,
@@ -659,17 +661,15 @@
                     });
                     break;
                 default:
-                    if(!blockableTypes.contains(e.message.type)) {
-                        e.message = true;
-                        return;
-                    }
                     e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                     e.message.tabId = vAPI.tabs.getTabId(e.target);
                     var blockVerdict = onBeforeRequestClient(e.message);
                     if(blockVerdict && blockVerdict.cancel) {
                         e.message = false;
+                        return;
                     } else {
                         e.message = true;
+                        return;
                     }
             }
             return;

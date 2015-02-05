@@ -163,7 +163,7 @@
     if(frameId === 0) {
         safari.self.tab.canLoad(beforeLoadEvent, {
             url: location.href,
-            type: "navigatedToNew"
+            type: "main_frame"
         });
     }
     var nodeTypes = {
@@ -189,9 +189,8 @@
             return;
         }
         linkHelper.href = e.url;
-        var url = linkHelper.href;
         var details = {
-            url: url,
+            url: linkHelper.href,
             type: nodeTypes[e.target.nodeName.toLowerCase()] || "other",
             // tabId is determined in the background script
             frameId: frameId,
