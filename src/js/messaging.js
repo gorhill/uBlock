@@ -56,7 +56,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'getAppData':
-            response = vAPI.app;
+            response = {name: vAPI.app.name, version: vAPI.app.version};
             break;
 
         case 'getUserSettings':
