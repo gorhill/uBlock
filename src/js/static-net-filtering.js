@@ -877,6 +877,15 @@ FilterRegexHostname.fromSelfie = function(s) {
 /******************************************************************************/
 
 // Dictionary of hostnames
+//
+// FilterHostnameDict is the main reason why uBlock is not equipped to keep
+// track of which filter comes from which list, and also why it's not equipped
+// to be able to disable a specific filter -- other than through using a
+// counter-filter.
+//
+// On the other hand it is also *one* of the reason uBlock's memory and CPU
+// footprint is smaller. Compacting huge list of hostnames into single strings
+// saves a lot of memory compared to having one dictionary entry per hostname.
 
 var FilterHostnameDict = function() {
     this.h = ''; // short-lived register
@@ -913,7 +922,14 @@ FilterHostnameDict.prototype.meltBucket = function(len, bucket) {
     return map;
 };
 
-// How the key is derived dictates the number and size of buckets. 
+// How the key is derived dictates the number and size of buckets:
+// - more bits = more buckets = higher memory footprint
+// - less bits = less buckets = lower memory footprint
+// - binary search mitigates very well the fact that some buckets may grow
+//   large when fewer bits are used (or when a large number of items are
+//   stored). Binary search also mitigate to the point of non-issue the
+//   CPU footprint requirement with large buckets, as far as reference
+//   benchmark shows.
 //
 // A hash key capable of better spread while being as fast would be
 // just great.
