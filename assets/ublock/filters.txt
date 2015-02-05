@@ -288,3 +288,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/gorhill/uBlock/issues/650
 # To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
 @@||www.google-analytics.com/ga.js$domain=onlinetv.ru
+
+# https://github.com/gorhill/uBlock/issues/686
+@@||mngi.112.2o7.net^$domain=sltrib.com
+@@||scorecardresearch.com^$domain=sltrib.com
