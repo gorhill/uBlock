@@ -5,7 +5,7 @@
 echo "*** uBlock.safariextension: Copying files"
 
 DES=dist/build/uBlock.safariextension
-rm -r $DES
+rm -rf $DES
 mkdir -p $DES
 
 cp -R assets $DES/
