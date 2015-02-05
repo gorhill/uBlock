@@ -34,6 +34,7 @@ _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ are enabled by default when 
 
 <p align="center">
 On average, µBlock <b>really</b> does make your browser run leaner<br>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20150205.png" /><br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/mem-usage-overall-20141224.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
