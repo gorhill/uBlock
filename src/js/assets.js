@@ -820,6 +820,13 @@ var readExternalAsset = function(path, callback) {
 
     var onExternalFileLoaded = function() {
         this.onload = this.onerror = null;
+        // https://github.com/gorhill/uBlock/issues/708
+        // A successful download should never return an empty file: turn this
+        // into an error condition.
+        if ( stringIsNotEmpty(this.responseText) === false ) {
+            onExternalFileError();
+            return;
+        }
         //console.log('µBlock> readExternalAsset("%s") / onExternalFileLoaded1()', path);
         cachedAssetsManager.save(path, this.responseText);
         reportBack(this.responseText);
