@@ -16,7 +16,7 @@ cp -R src/js $DES/
 cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
-mv $DES/img/browsericons/icon128.png $DES/icon.png
+mv $DES/img/icon_128.png $DES/icon.png
 cp platform/firefox/vapi-*.js $DES/js/
 cp platform/firefox/bootstrap.js $DES/
 cp platform/firefox/frame*.js $DES/
