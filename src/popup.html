@@ -14,15 +14,17 @@
     <div>
         <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
         <p id="switch-hint"></p>
-        <p id="dfToggler" data-i18n="popupBlockedRequestPrompt"></p>
-        <p class="stats">
+        <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt"></h2>
+        <p class="statName">
             <span data-i18n="popupBlockedOnThisPagePrompt"></span>&ensp;
             <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
             <a href="#" target="_blank" id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</a>
             </p>
-        <p id="page-blocked">?</p>
-        <p class="stats" data-i18n="popupBlockedSinceInstallPrompt"></p>
-        <p id="total-blocked">?</p>
+        <p class="statValue" id="page-blocked">?</p>
+        <p class="statName" data-i18n="popupBlockedSinceInstallPrompt"></p>
+        <p class="statValue" id="total-blocked">?</p>
+        <h2>domains touched</h2>
+        <p class="statValue" id="privacyExposure"></p>
         <div id="refresh" class="fa">&#xf021;</div>
         </div><!-- DO NOT REMOVE --><div>
         <div id="dynamicFilteringContainer">
@@ -33,7 +35,6 @@
             <div><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="1p-script"> </span><span data-src="." data-des="*" data-type="1p-script"> </span></div>
             <div><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-script"> </span><span data-src="." data-des="*" data-type="3p-script"> </span></div>
             <div><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-frame"> </span><span data-src="." data-des="*" data-type="3p-frame"> </span></div>
-            <div id="privacyInfo" style="display: none;"></div>
             </div>
         </div>
     </div>

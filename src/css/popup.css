@@ -8,14 +8,18 @@ body {
     white-space: nowrap;
     overflow: hidden;
     }
-h1,h2,h3,h4 {
-    background-color: #444;
+h2 {
+    background-color: #eee;
     border: 0;
-    color: white;
-    cursor: pointer;
-    margin:  0;
-    padding: 4px;
+    color: #666;
+    font-size: 14px;
+    font-weight: normal;
+    margin:  1em 0 0.5em 0;
+    padding: 2px 0;
     text-align: center;
+    }
+h2:nth-of-type(1) {
+    margin-top: 0;
     }
 a {
     color: inherit;
@@ -75,17 +79,19 @@ body[dir="rtl"] #panes > div:nth-of-type(2) {
 
 #panes > div:nth-of-type(1) {
     min-width: 150px;
-    padding: 4px 5px 0 5px;
+    padding: 4px 1px;
     }
 p {
-    margin: 16px 0;
     text-align: center;
     white-space: nowrap;
+    }
+#switch {
+    margin: 8px 0;
     }
 #switch .fa {
     color: green;
     cursor: pointer;
-    font-size: 108px;
+    font-size: 96px;
     margin: 0;
     }
 #switch .fa:hover {
@@ -98,20 +104,17 @@ p {
     color: #888;
     font-size: 11px;
     }
-[data-i18n="popupBlockedRequestPrompt"] {
-    font-size: 16px;
-    }
 #page-blocked {
     font-size: 20px;
-    margin-top: 4px;
     }
-#total-blocked {
+.statName {
+    color: #666;
+    margin: 1em 0 0.2em 0;
+    text-align: center;
+    }
+.statValue {
     font-size: 14px;
-    margin-bottom: 8px;
-    margin-top: 4px;
-    }
-.stats {
-    margin-bottom: 4px;
+    margin: 0;
     text-align: center;
     }
 .tool {
@@ -128,16 +131,14 @@ p {
     color: #444;
     }
 
-body.advancedUser #dfToggler {
+body.advancedUser h2 {
     cursor: pointer;
     }
-body.advancedUser #dfToggler:before {
-    color: gray;
+body.advancedUser h2:before {
+    color: #aaa;
     content: '+\202F';
-    font-size: 14px;
-    line-height: 14px;
     }
-body.advancedUser #panes.dfEnabled #dfToggler:before {
+body.advancedUser #panes.dfEnabled h2:before {
     content: '\2212\202F';
     }
 
