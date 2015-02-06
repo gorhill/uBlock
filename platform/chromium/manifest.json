@@ -40,6 +40,10 @@
     ],
     "minimum_chrome_version": "22.0",
     "options_page": "dashboard.html",
+    "options_ui": {
+        "chrome_style": true,
+        "page": "options_ui.html"
+    },
     "permissions": [
         "contextMenus",
         "storage",
