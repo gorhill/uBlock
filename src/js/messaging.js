@@ -333,7 +333,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'retrieveDomainCosmeticSelectors':
-            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
+            if ( pageStore && pageStore.getSpecificCosmeticFilteringSwitch() ) {
                 response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
             }
             break;
@@ -453,7 +453,7 @@ var onMessage = function(details, sender, callback) {
 
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
-            if ( pageStore && pageStore.getCosmeticFilteringSwitch() ) {
+            if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
                 response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;

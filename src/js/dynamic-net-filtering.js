@@ -295,8 +295,20 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
 
 /******************************************************************************/
 
+Matrix.prototype.mustAllowCellZY = function(srcHostname, desHostname, type) {
+    return this.evaluateCellZY(srcHostname, desHostname, type).r === 2;
+};
+
+/******************************************************************************/
+
 Matrix.prototype.mustBlockOrAllow = function() {
     return this.r === 1 || this.r === 2;
+};
+
+/******************************************************************************/
+
+Matrix.prototype.mustBlock = function() {
+    return this.r === 1;
 };
 
 /******************************************************************************/
@@ -321,13 +333,6 @@ Matrix.prototype.toFilterString = function() {
         return 'dn:' + this.z + ' ' + this.y + ' ' + this.type + ' noop';
     }
     return '';
-};
-
-/******************************************************************************/
-
-Matrix.prototype.mustBlock = function(srcHostname, desHostname, type) {
-    this.evaluateCellZY(srcHostname, desHostname, type);
-    return this.r === 1;
 };
 
 /******************************************************************************/

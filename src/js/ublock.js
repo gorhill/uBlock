@@ -154,14 +154,6 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-// For now we will use the net whitelist
-
-µBlock.getCosmeticFilteringSwitch = function(url) {
-    return this.getNetFilteringSwitch(url);
-};
-
-/******************************************************************************/
-
 µBlock.stringFromWhitelist = function(whitelist) {
     var r = {};
     var i, bucket;
