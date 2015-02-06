@@ -1,7 +1,7 @@
-# <sub>![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38.png)</sub> µBlock
-<sub>pronounce _you-block_ as in "you decide what enters your browser" / see the "µ" as a stylish "u", to emphasize small resource footprint<br></sub><sup>sorry for the dubious name, we are coders, not marketers</sup>
+<div align="center"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38@2x.png" width=38>
+</div>
 
-**An efficient blocker add-on for various browsers. Fast, potent, and lean.**
+**µBlock** *(you-block)*: an efficient blocker extension for Chrome, Firefox, and Safari. *Fast, potent, and lean.*
 
 * [Purpose & General Info](#philosophy)
 * [Performance and Efficiency](#performance)
@@ -16,7 +16,7 @@
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
-# ![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
+![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)
 
 ## Philosophy
 
