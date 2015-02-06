@@ -1,6 +1,7 @@
-<div align="center"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38@2x.png" width=38>
+<div align="center"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon48@2x.png" width=48>
+<h1>µBlock</h1>
 </div>
-
+<br>
 **µBlock** *(you-block)*: an efficient blocker extension for Chrome, Firefox, and Safari. *Fast, potent, and lean.*
 
 * [Purpose & General Info](#philosophy)
