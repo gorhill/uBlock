@@ -324,7 +324,7 @@
             filterlistCount -= 1;
         }
         // https://github.com/gorhill/uBlock/issues/695
-        // It's may happen not a single filter list is selected
+        // It may happen not a single filter list is selected
         if ( filterlistLoadingCount === 0 ) {
             loadBlacklistsEnd();
         }
