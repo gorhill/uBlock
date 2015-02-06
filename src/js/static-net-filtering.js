@@ -510,8 +510,8 @@ FilterPlainHnAnchored.fromSelfie = function(s) {
 
 // With a single wildcard, regex is not optimal.
 // See:
-//   http://jsperf.com/regexp-vs-indexof-abp-miss/3
-//   http://jsperf.com/regexp-vs-indexof-abp-hit/3
+//   http://jsperf.com/regexp-vs-indexof-abp-miss/5
+//   http://jsperf.com/regexp-vs-indexof-abp-hit/4
 
 var FilterSingleWildcard = function(lSegment, rSegment, tokenBeg) {
     this.tokenBeg = tokenBeg;
