@@ -50,7 +50,7 @@ var touchedDomainCount = 0;
 var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var orStr = vAPI.i18n('popupOr');
-var domainsHitStr = vAPI.i18n('popupHitDomainCountPrompt');
+var domainsHitStr = vAPI.i18n('popupHitDomainCount');
 
 /******************************************************************************/
 
@@ -302,7 +302,7 @@ var renderPrivacyExposure = function() {
 
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());
-    uDom('#privacyExposure').text(summary);
+    uDom('#popupHitDomainCount').text(summary);
 };
 
 /******************************************************************************/
@@ -330,7 +330,7 @@ var renderPopup = function() {
     var total = popupData.pageAllowedRequestCount + blocked;
     var text = [];
     if ( total === 0 ) {
-        text.push('0');
+        text.push(formatNumber(0));
     } else {
         text.push(
             formatNumber(blocked),
@@ -344,7 +344,7 @@ var renderPopup = function() {
     total = popupData.globalAllowedRequestCount + blocked;
     text = [];
     if ( total === 0 ) {
-        text.push('0');
+        text.push(formatNumber(0));
     } else {
         text.push(
             formatNumber(blocked),

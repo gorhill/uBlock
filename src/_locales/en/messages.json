@@ -180,6 +180,10 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
+    "message":"domains touched",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
     "message":"{{count}} out of {{total}}",
     "description":"appears in popup"
   },
