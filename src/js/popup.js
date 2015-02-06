@@ -45,7 +45,7 @@ var dfHotspots = null;
 var hostnameToSortableTokenMap = {};
 var allDomains = {};
 var allDomainCount = 0;
-var allDomainRows = [];
+var allHostnameRows = [];
 var touchedDomainCount = 0;
 var rowsToRecycle = uDom();
 var cachedPopupHash = '';
@@ -249,9 +249,9 @@ var buildAllDynamicFilters = function() {
     // reuse them in-place.
     rowsToRecycle = uDom('#dynamicFilteringContainer > div:nth-of-type(7) ~ div').detach();
 
-    var n = allDomainRows.length;
+    var n = allHostnameRows.length;
     for ( var i = 0; i < n; i++ ) {
-        addDynamicFilterRow(allDomainRows[i]);
+        addDynamicFilterRow(allHostnameRows[i]);
     }
 
     if ( dfPaneBuilt !== true ) {
@@ -270,7 +270,7 @@ var buildAllDynamicFilters = function() {
 var renderPrivacyExposure = function() {
     allDomains = {};
     allDomainCount = touchedDomainCount = 0;
-    allDomainRows = [];
+    allHostnameRows = [];
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
@@ -296,7 +296,7 @@ var renderPrivacyExposure = function() {
                 touchedDomainCount += 1;
             }
         }
-        allDomainRows.push(des);
+        allHostnameRows.push(des);
         desHostnameDone[des] = true;
     }
 
