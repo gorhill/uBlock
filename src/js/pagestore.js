@@ -708,6 +708,12 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
 PageStore.prototype.logRequest = function(context, result) {
     var requestHostname = context.requestHostname;
+    // rhill 20150206:
+    // be prepared to handle invalid requestHostname, I've seen this
+    // happen: http://./
+    if ( requestHostname === '' ) {
+        requestHostname = context.pageHostname;
+    }
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;
         this.contentLastModified = Date.now();
