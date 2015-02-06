@@ -274,7 +274,7 @@
 
 µBlock.loadFilterLists = function(callback) {
     var µb = this;
-    var blacklistLoadCount;
+    var filterlistCount;
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
@@ -291,8 +291,8 @@
 
     var mergeBlacklist = function(details) {
         µb.mergeFilterList(details);
-        blacklistLoadCount -= 1;
-        if ( blacklistLoadCount === 0 ) {
+        filterlistCount -= 1;
+        if ( filterlistCount === 0 ) {
             loadBlacklistsEnd();
         }
     };
@@ -303,23 +303,30 @@
         µb.cosmeticFilteringEngine.reset();
         µb.destroySelfie();
         var locations = Object.keys(lists);
-        blacklistLoadCount = locations.length;
-        if ( blacklistLoadCount === 0 ) {
-            loadBlacklistsEnd();
-            return;
-        }
+        filterlistCount = locations.length;
 
-        // Load each preset blacklist which is not disabled.
+        // Load all filter lists which are not disabled
         var location;
-        while ( location = locations.pop() ) {
+        var filterlistLoadingCount = 0;
+        while ( filterlistCount !== 0 ) {
+            location = locations.pop()
+            if ( !location ) {
+                break;
+            }
             // rhill 2013-12-09:
             // Ignore list if disabled
             // https://github.com/gorhill/httpswitchboard/issues/78
-            if ( lists[location].off ) {
-                blacklistLoadCount -= 1;
+            if ( lists[location].off === false ) {
+                filterlistLoadingCount += 1;
+                µb.assets.get(location, mergeBlacklist);
                 continue;
             }
-            µb.assets.get(location, mergeBlacklist);
+            filterlistCount -= 1;
+        }
+        // https://github.com/gorhill/uBlock/issues/695
+        // It's may happen not a single filter list is selected
+        if ( filterlistLoadingCount === 0 ) {
+            loadBlacklistsEnd();
         }
     };
 
