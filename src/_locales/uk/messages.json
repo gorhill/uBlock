@@ -151,8 +151,16 @@
     "message":"Сторонні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"всі",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"зображення",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"сторонні",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

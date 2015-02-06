@@ -151,8 +151,16 @@
     "message":"מסגרות צד-3 <b>חסומות<\/b> בכל מקום כברירת מחדל",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"הכל",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"תמונות",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"צד-3",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

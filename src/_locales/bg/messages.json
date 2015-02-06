@@ -151,8 +151,16 @@
     "message":"Рамки от трети лица са <b>блокирани<\/b> навсякъде по подразбирне",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"всички",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Изображения",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"трети лица",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

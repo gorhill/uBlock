@@ -151,8 +151,16 @@
     "message":"3. parti çerçeveler heryerde varsayılan olarak <b>engelleniyor<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"Tümü",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"resimler",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3.-parti",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

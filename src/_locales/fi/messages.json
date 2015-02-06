@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3-osapuolen suodattimet",
+    "message":"3:nen osapuolen suodattimet",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -151,8 +151,16 @@
     "message":"3:nen osapuolen kehykset ovat <b>estettyjä<\/b> kaikkialla oletuksena",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"kaikki",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"kuvat",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3. osapuoli",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -204,7 +212,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Piilota estettyjen elementtien paikkamerkit",
+    "message":"Piilota estettyjen elementtien paikanpitäjät",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{

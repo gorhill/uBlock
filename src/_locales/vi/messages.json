@@ -151,8 +151,16 @@
     "message":"Các khung bên thứ ba <b>không được cho phép<\/b> ở mọi nơi theo mặc định",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"tất cả",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"hình ảnh",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"bên thứ ba",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

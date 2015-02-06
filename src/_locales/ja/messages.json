@@ -151,8 +151,16 @@
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"すべて",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"images",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -448,7 +456,7 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"ファイルからの復元...",
+    "message":"ファイルから復元...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{

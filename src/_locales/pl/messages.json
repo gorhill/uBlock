@@ -151,8 +151,16 @@
     "message":"Ramki pochodzące ze stron zewnętrznych są domyślnie <b>zablokowane<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"wszystko",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"zdjęcia",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"ze stron zewnętrznych",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

@@ -151,8 +151,16 @@
     "message":"Külső webhelytől származó frame-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"minden",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"képek",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"külső féltől",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

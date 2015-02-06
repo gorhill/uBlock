@@ -151,8 +151,16 @@
     "message":"3rd-party frames está <b>bloqueado<\/b> em todos os lugares por padrão",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"tudo",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Imagens",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

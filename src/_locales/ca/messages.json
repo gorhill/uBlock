@@ -151,8 +151,16 @@
     "message":"Marcs de tercers <b>desactivats<\/b> per a qualsevol lloc",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"all",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"imatges",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

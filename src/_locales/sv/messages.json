@@ -151,8 +151,16 @@
     "message":"tredjepartsramar är <b>blockerade<\/b> överallt som standard",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"alla",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"bilder",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

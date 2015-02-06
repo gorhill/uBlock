@@ -151,8 +151,16 @@
     "message":"Frames de terceros <b>deshabilitados<\/b> globalmente por defecto",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"todo",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Imágenes",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"De terceros",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

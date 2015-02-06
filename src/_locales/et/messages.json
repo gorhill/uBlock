@@ -151,8 +151,16 @@
     "message":"Kolmanda osapoole raamid on kõikjal vaikimisi <b>keelatud<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"kõik",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"pildid",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3. osapool",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

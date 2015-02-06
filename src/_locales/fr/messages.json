@@ -151,8 +151,16 @@
     "message":"Les cadres de tierce-partie sont <b>bloqués<\/b> n'importe où par défaut",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"Tout",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Images",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"Tierce-partie",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

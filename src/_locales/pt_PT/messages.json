@@ -151,8 +151,16 @@
     "message":"Frames de terceiros são <b>bloqueados<\/b> em todo o lado por predefinição",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"tudo",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"imagens",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"Scripts de terceiros",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

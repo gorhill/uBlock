@@ -151,8 +151,16 @@
     "message":"3e-partij frames worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"alle",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"afbeeldingen",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

@@ -151,8 +151,16 @@
     "message":"3rd-party freimi ir <b>bloķēti<\/b> visur pēc noklusējuma",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"Visi",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"attēli",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"No trešajām pusēm",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -288,7 +296,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Vienu URL katrā rindiņā. Rindiņas, kura sākas ar &lsquo;!&rsquo; tiks ignorētas. Nederīgs URL bez brīdinājuma tiks ignorēts.",
+    "message":"Vienu URL katrā rindiņā. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas. Nederīgs URL tiks ignorēts bez brīdinājuma.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -360,7 +368,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Saraksts ar interneta resursiem, kuriem tiks atspējots µBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi bez brīdinājuma tiks ignorēti.",
+    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts µBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

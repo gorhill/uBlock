@@ -151,8 +151,16 @@
     "message":"Okviri trećih strana su <b>blokirani<\/b> posvuda po zadanom",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"sve",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"slike",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"treće strane",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

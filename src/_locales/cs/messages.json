@@ -151,8 +151,16 @@
     "message":"Rámce třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"vše",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"obrázky",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"z třetí strany",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

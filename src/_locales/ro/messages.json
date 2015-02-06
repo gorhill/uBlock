@@ -151,8 +151,16 @@
     "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"all",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"imagini",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -172,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
+    "message":"Conectat la {{count}} din {{total}} domenii distincte",
     "description":"appear in dynamic filtering pane"
   },
   "pickerCreate":{
@@ -328,7 +336,7 @@
     "description":"English: Apply changes"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Editează",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
@@ -444,7 +452,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"ublock-backup_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -456,11 +464,11 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și µBlock va fi repornit.\n\nDoriți să suprascrieți toate opțiunile folosind datele salvate?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Datele nu au putut fi citite sau sunt invalide",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{

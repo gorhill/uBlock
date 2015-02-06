@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"마침내 나왔습니다, 이 확장기능은 효율적인 차단기입니다. CPU와 메모리에 부담이 적습니다.",
+    "message":"이 확장기능은 효율적인 차단기입니다. CPU와 메모리에 주는 부담이 적습니다.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"설치된 이후 차단 통계",
+    "message":"설치된 이후",
     "description":"English: since install"
   },
   "popupOr":{
@@ -151,8 +151,16 @@
     "message":"보조 프레임이 모든 곳에서 기본값으로 <b>차단됨<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"전체",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"이미지",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"보조",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

@@ -151,8 +151,16 @@
     "message":"فریم های 3rd-party بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"همه",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"تصاویر",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

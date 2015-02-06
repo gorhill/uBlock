@@ -151,8 +151,16 @@
     "message":"Frame pihak ketiga <b>diblokir<\/b> di mana-mana secara default",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"semua",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"gambar",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

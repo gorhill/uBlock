@@ -151,8 +151,16 @@
     "message":"任何協力廠商框架在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"all",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"圖片",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

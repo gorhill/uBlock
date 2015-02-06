@@ -151,8 +151,16 @@
     "message":"Сторонние фреймы <b>заблокированы<\/b> везде по умолчанию",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"все",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"изображения",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"от третьих лиц",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

@@ -151,8 +151,16 @@
     "message":"Tredjeparts iframe-koder <b>blokkeres<\/b> overalt som standard",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"all",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"bilder",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"3rd-party",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

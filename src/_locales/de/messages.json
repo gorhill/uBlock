@@ -151,8 +151,16 @@
     "message":"Frames von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"Alle Ressourcen",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Bilder",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"Ressourcen von Drittseiten",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

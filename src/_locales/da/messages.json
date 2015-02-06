@@ -151,8 +151,16 @@
     "message":"Som standard <b>blokeres<\/b> tredjeparts frames alle steder",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"alle",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"billeder",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"Tredjeparts",
     "description":""
   },
   "popupInlineScriptRulePrompt":{

@@ -68,7 +68,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Vai al registro richiesto",
+    "message":"Vai al registro della richiesta",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -151,8 +151,16 @@
     "message":"I frame di terze parti sono <b>bloccati<\/b> ovunque per impostazione predefinita",
     "description":""
   },
+  "popupAnyRulePrompt":{
+    "message":"tutto",
+    "description":""
+  },
   "popupImageRulePrompt":{
     "message":"Immagini",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"Di terze parti",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
