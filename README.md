@@ -35,7 +35,7 @@ _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ are enabled by default when 
 <div align="center">
 On average, µBlock <b>really</b> does make your browser run leaner.<br><br>
 
-Chromium<sup>**</sup><br>
+Chromium<sup>[1]</sup><br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br><br>
 
 Firefox<br>
@@ -48,7 +48,7 @@ Safari<br>
 
 <sup>Details of the benchmark available at <a href="https://github.com/gorhill/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">Firefox version: benchmarking memory footprint</a>.</sup><br>
 
-<sup><b>**</b> Important note: There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects *all* extensions. Keep this in mind when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup><br>
+<sup><b>[1] Important note:</b> There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects <i>all</i> extensions. Keep this in mind when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup><br>
 
 #### CPU
 
