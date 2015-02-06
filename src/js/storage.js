@@ -307,25 +307,19 @@
 
         // Load all filter lists which are not disabled
         var location;
-        var filterlistLoadingCount = 0;
-        while ( filterlistCount !== 0 ) {
-            location = locations.pop()
-            if ( !location ) {
-                break;
-            }
+        while ( location = locations.pop() ) {
             // rhill 2013-12-09:
             // Ignore list if disabled
             // https://github.com/gorhill/httpswitchboard/issues/78
-            if ( lists[location].off === false ) {
-                filterlistLoadingCount += 1;
-                µb.assets.get(location, mergeBlacklist);
+            if ( lists[location].off ) {
+                filterlistCount -= 1;
                 continue;
             }
-            filterlistCount -= 1;
+            µb.assets.get(location, mergeBlacklist);
         }
         // https://github.com/gorhill/uBlock/issues/695
         // It may happen not a single filter list is selected
-        if ( filterlistLoadingCount === 0 ) {
+        if ( filterlistCount === 0 ) {
             loadBlacklistsEnd();
         }
     };
