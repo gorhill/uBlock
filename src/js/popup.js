@@ -300,6 +300,13 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
+    // The root page domain must always be counted as connected: that's from 
+    // where the root document was fetched.
+    if ( allDomains[popupData.pdageDomain] !== true ) {
+        allDomains[popupData.pdageDomain] = true;
+        touchedDomainCount += 1;
+    }
+
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());
     uDom('#popupHitDomainCount').text(summary);
