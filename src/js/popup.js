@@ -196,14 +196,18 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
     }
     cell.toggleClass('ownRule', ownRule);
 
+    if ( scope !== '.' || des === '*' ) {
+        return;
+    }
+
     // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
     //            ensure this in the HTML file counterpart when you make
     //            changes
     var textNode = cell.nodeAt(0).firstChild;
 
-    // Since this may be a cell from a reused row, we need to clear text
+    // Remember this may be a cell from a reused row, we need to clear text
     // content if we can't compute request counts.
-    if ( scope !== '.' || des === '*' || popupData.hostnameDict.hasOwnProperty(des) === false ) {
+    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
         textNode.nodeValue = ' ';
         return;
     }
