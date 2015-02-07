@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Připojeno k {{count}} různým doménám z {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domén dotčeno",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} z {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Vytvořit",

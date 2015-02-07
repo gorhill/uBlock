@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connected to {{count}} distinct domain(s) out of {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domains connected",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} out of {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"作成",

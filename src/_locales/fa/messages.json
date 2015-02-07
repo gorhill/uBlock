@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"متصل به {{count}} دامنه(های) متمایز از {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"دامنه های دست خورده",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"تعداد {{count}} از {{total}} تا",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"ایجاد",

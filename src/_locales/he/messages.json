@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"מחובר ל {{count}} דומיין\/ים שונה\/ים מתוך {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"דומיינים שהתחברת אליהם",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} מתוך {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"צור",

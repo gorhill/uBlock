@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"متصل بـ {{count}} نطاق مختلف من {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"النطاقات الملموسة",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} من {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"إنشاء",

@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Подключено к {{count}} отдельному(-ым) домену(-ам) из {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"доменов затронуто",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} из {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Создать",

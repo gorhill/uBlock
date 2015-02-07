@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"alle",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"tredjepart",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Koblet til {{count}} distinkt(e) domene(r) av {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domains connected",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} out of {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Opprett",

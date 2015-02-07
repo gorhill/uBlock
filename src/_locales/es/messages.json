@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Conectado con {{count}} dominios diferentes de un total de {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"dominios activos",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} de {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Crear",

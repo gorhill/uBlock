@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"连接到 {{count}} 不同的域",
-    "description":"appear in dynamic filtering pane"
+    "message":"施加影响于",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} \/ {{total}} 个域",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"创建",

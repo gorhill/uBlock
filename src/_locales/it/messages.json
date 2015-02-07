@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"tutto",
+    "message":"Tutto",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connesso a {{count}} domini su un totale di {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domains connected",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} out of {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Crea",

@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Connecté sur {{count}} domaine(s) distinct(s) pour un total de {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domaines concernés",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} sur {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Créer",

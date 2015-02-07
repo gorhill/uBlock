@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"보조",
+    "message":"보조 필터",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"총 {{total}}개 중 {{count}}개의 개별 도메인에 연결됨",
-    "description":"appear in dynamic filtering pane"
+    "message":"도메인 선택됨",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{total}}개 중 {{count}}개",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"생성",

@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"在 {{total}} 個不同的域名中，已連結至 {{count}} 個",
-    "description":"appear in dynamic filtering pane"
+    "message":"domains connected",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} out of {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"建立",

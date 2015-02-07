@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"Pihak ke-3",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -180,8 +180,12 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Terhubung ke {{count}} domain berbeda dari total {{total}}",
-    "description":"appear in dynamic filtering pane"
+    "message":"domain disentuh",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} dari {{total}}",
+    "description":"appears in popup"
   },
   "pickerCreate":{
     "message":"Membuat",
@@ -360,7 +364,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Susun penyaringan dinamis anda.",
+    "message":"Daftar penyaringan dinamis anda.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
