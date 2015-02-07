@@ -101,13 +101,9 @@ See the [releases pages](https://github.com/gorhill/uBlock/releases) for a histo
 
 ## Documentation
 
-µBlock's functionality is self-explanatory and intuitive for the most part. One thing to note after you get started is the big power button in µBlock's popup:
-
 ![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
 
-The big power button is to disable/enable µBlock for the specific current site/hostname (as extracted from the URL of the current page).
-
-**In other words, it applies to the current site only; it is *not* a global power button.** The state of the power switch for a specific site will be remembered. 
+[Quick guide: popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
 
 For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [µBlock's wiki](https://github.com/gorhill/uBlock/wiki).
 
