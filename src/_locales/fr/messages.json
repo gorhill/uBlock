@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domaines concernés",
+    "message":"Nombre de domaines connectés",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} sur {{total}}",
+    "message":"{{count}} sur un total de {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{

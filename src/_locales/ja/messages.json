@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"サードパーティ製フィルター",
+    "message":"外部フィルター",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -56,7 +56,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"又は",
+    "message":"or",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"すべて",
+    "message":"all",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"接続したドメイン",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} \/ {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{

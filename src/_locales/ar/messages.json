@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"فلتراتي",
+    "message":"الفلاتر الخاصة بي",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -172,11 +172,11 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"نصوص برمجة الطرف الثالث",
+    "message":"نصوص برمجة من طرف خارجي",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"إطارات الطرف الثالث",
+    "message":"إطارات من طرف خارجي",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -228,7 +228,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"أنا مستخدم متطور (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يتطلب القراءة<\/a>)",
+    "message":"إظهار الإعدادات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يجب القراءة<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -452,7 +452,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"النسخ الإحتياطي للملف...",
+    "message":"النسخ الإحتياطي لملف",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -472,7 +472,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"لا يمكن قراءة البيانات أو إنها غير صالحة",
+    "message":"تعذر قراءة البيانات أو إنها غير صالحة",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
