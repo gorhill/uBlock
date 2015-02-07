@@ -196,27 +196,32 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
     }
     cell.toggleClass('ownRule', ownRule);
 
-    if ( scope !== '.' || des === '*' ) {
+    // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
+    //            ensure this in the HTML file counterpart when you make
+    //            changes
+    var textNode = cell.nodeAt(0).firstChild;
+
+    // Since this may be a cell from a reused row, we need to clear text
+    // content if we can't compute request counts.
+    if ( scope !== '.' || des === '*' || popupData.hostnameDict.hasOwnProperty(des) === false ) {
+        textNode.nodeValue = ' ';
         return;
     }
-    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
-        return;
-    }
+
     var hnDetails = popupData.hostnameDict[des];
     var aCount = hnDetails.allowCount;
     var bCount = hnDetails.blockCount;
     if ( aCount === 0 && bCount === 0 ) {
+        textNode.nodeValue = ' ';
         return;
     }
+
     // https://github.com/gorhill/uBlock/issues/471
     aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
     bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
-    // IMPORTANT: It is completely assumed the first node is a TEXT_NODE, so
-    //            ensure this in the HTML file counterpart when you make
-    //            changes
-    cell.nodeAt(0).firstChild.nodeValue = threePlus.slice(0, aCount) +
-                                          sixSpace.slice(aCount + bCount) +
-                                          threeMinus.slice(0, bCount);
+    textNode.nodeValue = threePlus.slice(0, aCount) +
+                         sixSpace.slice(aCount + bCount) +
+                         threeMinus.slice(0, bCount);
 };
 
 /******************************************************************************/
