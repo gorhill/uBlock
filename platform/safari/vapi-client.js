@@ -209,7 +209,7 @@
         document.removeEventListener("DOMContentLoaded", firstMutation, true);
         firstMutation = false;
         var randEventName = uniqueId();
-        window.addEventListener(randEventName, function(e) {
+        document.addEventListener(randEventName, function(e) {
             if(shouldBlockDetailedRequest(e.detail)) {
                 e.detail.url = false;
             }
@@ -225,7 +225,7 @@ type: t\
 },\
 bubbles: false\
 });\
-dispatchEvent(e);\
+document.dispatchEvent(e);\
 return e.detail.url === false;\
 },\
 wo = open,\
