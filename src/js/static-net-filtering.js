@@ -1825,6 +1825,7 @@ FilterContainer.prototype.addHostnameOnlyFilter = function(parsed) {
         return false;
     }
 
+    var isNewFilter = false;
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
         party = parsed.firstParty ? FirstParty : ThirdParty;
@@ -1844,19 +1845,23 @@ FilterContainer.prototype.addHostnameOnlyFilter = function(parsed) {
                 bucket['.'] = new FilterHostnameDict();
             }
             if ( bucket['.'].add(parsed.f) ) {
-                if ( parsed.action ) {
-                    this.allowFilterCount += 1;
-                } else {
-                    this.blockFilterCount += 1;
-                }
-            } else {
-                this.duplicateCount++;
+                isNewFilter = true;
             }
         }
         bitOffset += 1;
         type >>>= 1;
     }
-
+    // https://github.com/gorhill/uBlock/issues/719
+    // Count whole filter, not its decomposed versions
+    if ( isNewFilter ) {
+        if ( parsed.action ) {
+            this.allowFilterCount += 1;
+        } else {
+            this.blockFilterCount += 1;
+        }
+    } else {
+        this.duplicateCount += 1;
+    }
     return true;
 };
 
