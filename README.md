@@ -101,9 +101,9 @@ See the [releases pages](https://github.com/gorhill/uBlock/releases) for a histo
 
 ## Documentation
 
-![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
-
 [Quick guide: popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
+
+![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
 
 For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [µBlock's wiki](https://github.com/gorhill/uBlock/wiki).
 
