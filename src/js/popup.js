@@ -302,8 +302,8 @@ var renderPrivacyExposure = function() {
 
     // The root page domain must always be counted as connected: that's from 
     // where the root document was fetched.
-    if ( allDomains[popupData.pdageDomain] !== true ) {
-        allDomains[popupData.pdageDomain] = true;
+    if ( allDomains[popupData.pageDomain] !== true ) {
+        allDomains[popupData.pageDomain] = true;
         touchedDomainCount += 1;
     }
 
