@@ -115,7 +115,7 @@ return {
     firstUpdateAfter: 5 * oneMinute,
     nextUpdateAfter: 7 * oneHour,
 
-    selfieMagic: 'jhigubkbgtws',
+    selfieMagic: 'bizhviclttie',
     selfieAfter: 7 * oneMinute,
 
     pageStores: {},

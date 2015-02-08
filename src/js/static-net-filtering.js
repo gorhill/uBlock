@@ -1382,8 +1382,16 @@ FilterParser.prototype.parseOptType = function(raw, not) {
         return;
     }
 
+    // Negated type: set all valid network request type bits to 1
     if ( this.types === 0 ) {
-        this.types = (1 << (typeNameToTypeValue.other >>> 4) + 1) - 1;
+        // bring origin to 0 (from 4 -- see typeNameToTypeValue)
+        // add 2 = number of left shift to use
+        // left-shift 1 by the above-calculated value
+        // subtract 4 to set all type bits, *except* for 2 lsb
+
+        // https://github.com/gorhill/uBlock/issues/723
+        // The 2 lsb *must* be zeroed
+        this.types = (1 << (typeNameToTypeValue.other >>> 4) + 2) - 4;
     }
 
     this.types &= ~(1 << (type >>> 4));
