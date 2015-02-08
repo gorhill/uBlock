@@ -70,6 +70,16 @@ var typeNameToTypeValue = {
 };
 var typeOtherValue = typeNameToTypeValue.other;
 
+// All network request types to bitmap
+//   bring origin to 0 (from 4 -- see typeNameToTypeValue)
+//   add 2 = number of left shift to use
+//   left-shift 1 by the above-calculated value
+//   subtract 4 to set all type bits, *except* for 2 lsb
+
+// https://github.com/gorhill/uBlock/issues/723
+// The 2 lsb *must* be zeroed
+var allNetRequestTypesBitmap = (1 << (typeOtherValue >>> 4) + 2) - 4;
+
 const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 const BlockAnyType = BlockAction | AnyType;
 const BlockAnyParty = BlockAction | AnyParty;
@@ -1384,14 +1394,7 @@ FilterParser.prototype.parseOptType = function(raw, not) {
 
     // Negated type: set all valid network request type bits to 1
     if ( this.types === 0 ) {
-        // bring origin to 0 (from 4 -- see typeNameToTypeValue)
-        // add 2 = number of left shift to use
-        // left-shift 1 by the above-calculated value
-        // subtract 4 to set all type bits, *except* for 2 lsb
-
-        // https://github.com/gorhill/uBlock/issues/723
-        // The 2 lsb *must* be zeroed
-        this.types = (1 << (typeNameToTypeValue.other >>> 4) + 2) - 4;
+        this.types = allNetRequestTypesBitmap;
     }
 
     this.types &= ~(1 << (type >>> 4));
