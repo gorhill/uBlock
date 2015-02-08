@@ -256,7 +256,7 @@ var buildAllDynamicFilters = function() {
 
     // Remove and reuse all rows: the order may have changed, we can't just
     // reuse them in-place.
-    rowsToRecycle = uDom('#dynamicFilteringContainer > div:nth-of-type(7) ~ div').detach();
+    rowsToRecycle = uDom('#dynamicFilteringContainer > div:nth-of-type(6) ~ div').detach();
 
     var n = allHostnameRows.length;
     for ( var i = 0; i < n; i++ ) {
