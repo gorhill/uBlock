@@ -183,12 +183,6 @@ body.dirty #refresh:hover {
 #dynamicFilteringContainer > div:hover {
     background-color: #f0f0f0;
     }
-#dynamicFilteringContainer > div#privacyInfo {
-    background-color: white;
-    color: #444;
-    padding: 4px 0;
-    text-align: center;
-    }
 #dynamicFilteringContainer > div > span {
     background-color: transparent;
     border: none;
@@ -200,7 +194,11 @@ body.dirty #refresh:hover {
     line-height: 22px;
     overflow: hidden;
     position: relative;
-    vertical-align: top;
+    vertical-align: middle;
+    }
+#dynamicFilteringContainer > div:nth-of-type(1) > span {
+    height: 18px;
+    line-height: 18px;
     }
 #dynamicFilteringContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
