@@ -31,8 +31,10 @@
 
 /******************************************************************************/
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
+vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
+    Math.random().toString(36).slice(2);
 
 /******************************************************************************/
 

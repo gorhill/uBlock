@@ -527,6 +527,40 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+        case 'elementPickerArguments':
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'epicker.html', true);
+            xhr.overrideMimeType('text/html;charset=utf-8');
+            xhr.responseType = 'text';
+            xhr.onload = function() {
+                this.onload = null;
+                var i18n = {
+                    bidi_dir: document.body.getAttribute('dir'),
+                    create: vAPI.i18n('pickerCreate'),
+                    pick: vAPI.i18n('pickerPick'),
+                    quit: vAPI.i18n('pickerQuit'),
+                    netFilters: vAPI.i18n('pickerNetFilters'),
+                    cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
+                    cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
+                };
+                var reStrings = /\{\{(\w+)\}\}/g;
+                var replacer = function(a0, string) {
+                    return i18n[string];
+                };
+
+                callback({
+                    frameContent: this.responseText.replace(reStrings, replacer),
+                    target: µb.contextMenuTarget,
+                    clientX: µb.contextMenuClientX,
+                    clientY: µb.contextMenuClientY
+                });
+
+                µb.contextMenuTarget = '';
+                µb.contextMenuClientX = -1;
+                µb.contextMenuClientY = -1;
+            };
+            xhr.send();
+            return;
         default:
             break;
     }
@@ -535,26 +569,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'elementPickerArguments':
-            response = {
-                i18n: {
-                    '@@bidi_dir': document.body.getAttribute('dir'),
-                    create: vAPI.i18n('pickerCreate'),
-                    pick: vAPI.i18n('pickerPick'),
-                    quit: vAPI.i18n('pickerQuit'),
-                    netFilters: vAPI.i18n('pickerNetFilters'),
-                    cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
-                    cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
-                },
-                target: µb.contextMenuTarget,
-                clientX: µb.contextMenuClientX,
-                clientY: µb.contextMenuClientY
-            };
-            µb.contextMenuTarget = '';
-            µb.contextMenuClientX = -1;
-            µb.contextMenuClientY = -1;
-            break;
-
         case 'createUserFilter':
             µb.appendUserFilters(request.filters);
             break;

@@ -25,14 +25,13 @@
 
 /******************************************************************************/
 
-(function() {
+(function(self) {
 
 'use strict';
 
 /******************************************************************************/
 
 var vAPI = self.vAPI = self.vAPI || {};
-
 var chrome = self.chrome;
 
 // https://github.com/gorhill/uBlock/issues/456
@@ -40,8 +39,10 @@ var chrome = self.chrome;
 if ( vAPI.vapiClientInjected ) {
     return;
 }
-vAPI.vapiClientInjected = true;
 
+vAPI.vapiClientInjected = true;
+vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
+    Math.random().toString(36).slice(2);
 vAPI.chrome = true;
 
 /******************************************************************************/
@@ -85,21 +86,14 @@ var messagingConnector = function(response) {
 
 /******************************************************************************/
 
-var uniqueId = function() {
-    return Math.random().toString(36).slice(2);
-};
-
-/******************************************************************************/
-
 vAPI.messaging = {
     port: null,
     channels: {},
     listeners: {},
     requestId: 1,
-    connectorId: uniqueId(),
 
     setup: function() {
-        this.port = chrome.runtime.connect({name: this.connectorId});
+        this.port = chrome.runtime.connect({name: vAPI.sessionId});
         this.port.onMessage.addListener(messagingConnector);
     },
 
@@ -150,6 +144,6 @@ vAPI.messaging = {
 
 /******************************************************************************/
 
-})();
+})(this);
 
 /******************************************************************************/

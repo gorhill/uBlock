@@ -1,0 +1,120 @@
+<head>
+<meta charset="utf-8">
+<style>
+body {
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    font: 12px sans-serif;
+}
+ul, li, div {
+    display: block;
+}
+button {
+    border: 1px solid #aaa;
+    padding: 6px 8px 4px 8px;
+    box-sizing: border-box;
+    box-shadow: none;
+    border-radius: 3px;
+    display: inline;
+    line-height: 1;
+    color: #444;
+    background-color: #ccc;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #eee;
+}
+button:disabled {
+    color: #999;
+    background-color: #ccc;
+}
+#create:not(:disabled) {
+    background-color: #ffdca8;
+}
+section {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 8em;
+    position: relative;
+    width: 100%;
+}
+textarea {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font: 11px monospace;
+    height: 100%;
+    overflow: hidden;
+    padding: 2px;
+    resize: none;
+    width: 100%;
+}
+div {
+    bottom: 2px;
+    direction: ltr;
+    opacity: 0.2;
+    position: absolute;
+    right: 2px;
+}
+div:hover {
+    opacity: 1;
+}
+button {
+    margin-left: 3px;
+}
+ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+    overflow: hidden;
+}
+body > ul > li {
+    padding-top: 3px;
+}
+ul > li > span:nth-of-type(1) {
+    font-weight: bold;
+}
+ul > li > span:nth-of-type(2) {
+    font-size: smaller;
+    color: gray;
+}
+ul > li > ul {
+    background-color: #eee;
+    list-style-type: none;
+    margin: 0 0 0 1em;
+    overflow: hidden;
+    text-align: left;
+}
+ul > li > ul > li {
+    font: 11px monospace;
+    white-space: nowrap;
+    cursor: pointer;
+    direction: ltr;
+}
+ul > li > ul > li:hover {
+    background-color: rgba(255,255,255,1.0);
+}
+</style>
+</head>
+
+<body direction="{{bidi_dir}}">
+    <section>
+        <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
+        <div>
+            <button id="create" type="button" disabled="disabled">{{create}}</button>
+            <button id="pick" type="button">{{pick}}</button>
+            <button id="quit" type="button">{{quit}}</button>
+        </div>
+    </section>
+    <ul>
+        <li id="netFilters">
+            <span>{{netFilters}}</span><ul lang="en" class="changeFilter"></ul>
+        </li>
+        <li id="cosmeticFilters">
+            <span>{{cosmeticFilters}}</span> <span>{{cosmeticFiltersHint}}</span>
+            <ul lang="en" class="changeFilter"></ul>
+        </li>
+    </ul>
+</body>
