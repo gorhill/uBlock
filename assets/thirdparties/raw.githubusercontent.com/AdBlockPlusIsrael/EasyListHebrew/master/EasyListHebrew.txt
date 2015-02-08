@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: Aco5/6tOzjxzNvGfxsXzJA
+! Checksum: 748HtuFaff/CFR6RUS4vAg
 ! Title: EasyList Hebrew
-! Last modified: 29/01/15 09:49
+! Last modified: 08/02/15 20:50
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -17,7 +17,6 @@
 .co.il/adv/$~object-subrequest
 /pirsum/*$script,object
 |http://ad.$domain=co.il
-campaign*.co.il^$popup,third-party
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
@@ -37,14 +36,17 @@ campaign*.co.il^$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||booking.com/index.html^$popup,domain=daka90.co.il
+||campaign.*.co.il^$popup,third-party
 ||clickcenter.net^$third-party
 ||clickon.co.il^$popup,third-party
 ||clickon.co.il^$third-party
+||dcampaigns.*.co.il^$popup,third-party
 ||descreti.co.il^$popup
 ||etrader.co.il^$popup,third-party
 ||expert-offers.com^$popup
 ||fattal-alazman.co.il/?a_aid$popup,third-party
 ||forifiha.com/null^$popup
+||gitam.co.il^$popup,third-party
 ||great-offers.co.il^$popup
 ||greenlead.co.il^$popup
 ||ha-deal.co.il^$popup
@@ -65,7 +67,7 @@ campaign*.co.il^$popup,third-party
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
-||mysupermarket.co.il/landingpages/^$popup,third-party
+||mysupermarket.co.il/landingpage$popup,third-party
 ||newclio.co.il/sep$popup,third-party
 ||next-net.co.il^$third-party
 ||oceanmedia.co.il/landingpages/$popup
@@ -175,15 +177,13 @@ campaign*.co.il^$popup,third-party
 ||rcs.mako.co.il/rss/yad2.
 ||sdc.mako.co.il^
 !-fxp-!
-||cdn.salamtak.org.uk^$domain=fxp.co.il
 ||fcdn.co.il/*.swf$domain=fxp.co.il
-||fifa.games-il.info/AHfVczS/fed/repeat/*
+||fifa.games-il.info/AHfVczS/fed/repeat/
 ||fortest.info^$domain=fxp.co.il
 ||fxp.co.il/skinfxp/*.php$script,image
 ||games-il.info^$domain=fxp.co.il
 ||games-il.org.uk^$domain=fxp.co.il
 ||ofofof.info^$domain=fxp.co.il
-||roni.salamtak.org.uk^$third-party,domain=fxp.co.il
 ||salamtak.org.uk^$domain=fxp.co.il
 ||shaoli-the-king.xyz^$domain=fxp.co.il
 ||why-love-fifa.me.uk^$domain=fxp.co.il
@@ -244,6 +244,7 @@ campaign*.co.il^$popup,third-party
 ||pc.co.il/ajaxfilemanager/uploaded/$object
 ||pc.co.il/wp-content/uploads/$object
 ||pitro.net/Banners/
+||psakdin.co.il/Pictures/Banners/
 ||raddar.co.il/bannersa.php
 ||rol.co.il/files/banners/
 ||rotter.net/edit/text/
@@ -285,10 +286,11 @@ campaign*.co.il^$popup,third-party
 !
 !--------------Whitelists Rules (caused by EasyList / EasyPrivacy )-----------!
 !
+@@||10tv.nana10.co.il/Video/advert.png
 @@||adnxs.com^$object-subrequest,domain=mako.co.il
 @@||ads.one.co.il/images/ads/2014/01/21/1400/home.png
 @@||ads.one.co.il/images/Ads/2014/05/22/1500/51x20.gif
-@@||ads.one.co.il/images/ads/2014/06/02/1415/*
+@@||ads.one.co.il/images/ads/2014/06/02/1415/
 @@||ads.one.co.il/images/ads/2014/06/02/1430/444.png
 @@||ads.one.co.il/images/MSites/2014/05/22/1530/cremahadash.png
 @@||adserver.adtech.de/?advideo/$object-subrequest,domain=mako.co.il
@@ -466,6 +468,7 @@ cafe.themarker.com##.banner-wrapper
 cafe.themarker.com##.hp_left_ad
 calcalist.co.il###ArticleBanner
 calcalist.co.il###carouselAdLi
+calcalist.co.il###relevanti_area
 calcalist.co.il##div[style="width: 315px; overflow-x: hidden;margin-bottom:5px;"]
 calcalist.co.il##table[width="150"]
 calcalist.co.il##TABLE[width="478"][height="174"]
@@ -500,6 +503,7 @@ fbssl.walla.co.il##.container_footer
 flix.mako.co.il###topBannerTable
 flix.tapuz.co.il##.headerMiddle
 flix.tapuz.co.il##DIV[style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; min-height: 94px;\a     padding-bottom: 10px; padding-top: 65px; text-align: center; width: 960px;"]
+foodsdictionary.co.il###bottom-banner-container
 foodsdictionary.co.il###main-header-ad
 forbes.co.il##EMBED[src^="/download/banners/"]
 forbes.co.il##TABLE[style="background-color:#e8e8e8"]
@@ -561,7 +565,10 @@ hwzone.co.il##.wideBanner
 i.start.co.il###boxes
 ice.co.il##.top_pirsomet
 ilimudim.co.il##.mp-hd-banner
+infomed.co.il##.ad
 infomed.co.il##.ad_01
+infomed.co.il##.google_adDiv
+infomed.co.il##.squere_ad
 infomed.co.il##OL[anc="adclass"]
 inn.co.il###div160Info
 inn.co.il###div180Info
@@ -579,6 +586,7 @@ inn.co.il##[id^="LeftInfo"]
 iphones.co.il###mainBannerSponsers2
 iphones.co.il##div[style="padding-top:10px;width:250px;height:250px"]
 israelhayom.co.il###mini-panel-top_banner
+israelhayom.co.il##.cm8_plasma_wrapper
 israelhayom.co.il##.panel-pane.pane-panels-mini.pane-banners-art-op-bottom
 israelweather.co.il###weekFlashes
 junkyard.co.il##.plasma_banner
@@ -734,6 +742,7 @@ onlife.co.il###top_article_ads_wrapper
 onlife.co.il##.commercial
 ori-diamonds.co.il##IMG[style="cursor: default; width: 100%;"]
 pitro.net###p_lt_WebPartZone3_zoneTopBanner_PitronetBannerRotator_nolinkPanel
+psakdin.co.il###bnrTop
 rateonclick.com##A[href*="campaigns.layer.co.il/"]
 reshet.tv##div[id^="CM8ShowAd"]
 reshet.tv###Ctrl_nPromotionBanner
@@ -810,6 +819,7 @@ teamim.co.il###dnn_pageheaderpane
 themarker.com###floatingBannerDepPage
 themarker.com###floatingBannerHomePage
 themarker.com##.CutTransperetLine + .border-box
+themarker.com##.ad.h-hidden--s-and-m
 themarker.com##.banner-area
 themarker.com##.banner_92008
 themarker.com##.border-box.noSourceList
@@ -855,7 +865,6 @@ xnet.ynet.co.il###ads\.top\.1
 xnet.ynet.co.il##.CAATVcompAdvertiseTv
 xnet.ynet.co.il##.ContentLink.banner.High
 xnet.ynet.co.il##.ContentLink.banner.Low
-xnet.ynet.co.il##.ContentLink.banner.Low
 xnet.ynet.co.il##.ad.hdn
 yad2.co.il###left_banner
 yad2.co.il###left_sekindo
@@ -878,7 +887,6 @@ ynet.co.il###art_right_sponsored_links-1
 ynet.co.il###googleAdsenseMivzakim
 ynet.co.il###google_ads_iframe_\/ynt\.top\.central
 ynet.co.il###startPlaying
-ynet.co.il###tbl_mt [valign="Top"] > [bgcolor="#cccccc"] + * + * TBODY
 ynet.co.il###ww6s_Main
 ynet.co.il###ynet_lightbox_content_top
 ynet.co.il##.CAATVcompAdvertiseTv
@@ -889,10 +897,8 @@ ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
 ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
-ynet.co.il##.ghci21
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
-ynet.co.il##.ghciMarketTeaserSchedual1
 ynet.co.il##.ghciPromoLightbox1
 ynet.co.il##.ghciWinWinShimushon1
 ynet.co.il##.google_ads_t4590B_wrapper

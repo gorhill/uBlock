@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sun, 18 Jan 2015 15:55:36 GMT
-# entries:        2452
+# entries:        2450
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -676,6 +676,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -1047,6 +1048,7 @@
 127.0.0.1 banner.mindshare.de
 127.0.0.1 banner.nixnet.cz
 127.0.0.1 banner.noblepoker.com
+127.0.0.1 banner.northsky.com
 127.0.0.1 banner.orb.net
 127.0.0.1 banner.penguin.cz
 127.0.0.1 banner.prestigecasino.com
@@ -2154,7 +2156,6 @@
 127.0.0.1 stat.cliche.se
 127.0.0.1 stat.dealtime.com
 127.0.0.1 stat.dyna.ultraweb.hu
-127.0.0.1 stat.pl
 127.0.0.1 stat.su
 127.0.0.1 stat.tudou.com
 127.0.0.1 stat.webmedia.pl
@@ -2252,7 +2253,6 @@
 127.0.0.1 toplist.pornhost.com
 127.0.0.1 toplista.mw.hu
 127.0.0.1 toplistcity.com
-127.0.0.1 topmango.com
 127.0.0.1 topmmorpgsites.com
 127.0.0.1 topping.com.ua
 127.0.0.1 toprebates.com
@@ -2274,7 +2274,6 @@
 127.0.0.1 trackalyzer.com
 127.0.0.1 tracker.icerocket.com
 127.0.0.1 tracking.gajmp.com
-127.0.0.1 tracking.koego.com
 127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
 127.0.0.1 trackingsoft.com
@@ -2459,5 +2458,4 @@
 127.0.0.1 zenzuu.com
 127.0.0.1 zeus.developershed.com
 127.0.0.1 zeusclicks.com
-127.0.0.1 zintext.com
 127.0.0.1 zmedia.com

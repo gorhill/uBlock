@@ -271,6 +271,7 @@ go4up.com##IMG[src="http://go4up.com/assets/img/downloadfr.gif"]
 videotools.12pings.net###chucknorris
 ! viki.com
 @@||pubads.g.doubleclick.net/gampad/*$domain=viki.com
+@@||imasdk.googleapis.com/flash/core/3.177.0/adsapi.swf$object-subrequest,domain=viki.com
 ! thesimsresource.com
 thesimsresource.com#@##leaderboardad
 ! mako.co.il
@@ -671,8 +672,6 @@ smashboards.com##.premiumContain
 doupe.zive.cz#@##adblock-leaderboard
 @@||ads.rubiconproject.com/ad/*$script,domain=doupe.zive.cz
 ||doupe.zive.cz/Client.Scripts/jquery.onp.sociallocker.1.7.6.js$script
-! viki.com
-@@||imasdk.googleapis.com/flash/core/3.177.0/adsapi.swf$object-subrequest,domain=viki.com
 ! debilizator.tv
 ||debilizator.tv/static/ab.min.js$script
 ! videopremium.tv
@@ -687,6 +686,28 @@ videopremium.tv#@#.text-ads
 videopremium.tv#@#.text-ad-links
 ! filmovizija.com
 @@||filmovizija.com/ads.js$script
+! psarips.com
+@@||psarips.com/wp-content/plugins/@NT1-PSA/js/directrev.com.js$script
+! skidrowcrack.com
+||skidrowcrack.com/adblock-checker.js$script
+! afdah.com
+afdah.com##.debridnok
+! alternativeto.net
+alternativeto.net##.cuuummmonnnn
+! ketubanjiwa.com
+ketubanjiwa.com#@#.afs_ads
+! turbogenerator.info
+turbogenerator.info###blanuncio
+turbogenerator.info###anuncio
+! grifthost.com
+grifthost.com#@#.ad468
+! dota-trade.com
+@@||media.dota-trade.com/js/ads.js$script
+! rojadirecta.me
+rojadirecta.me#@##adserver
+! planetatvonlinehd.blogspot.com
+planetatvonlinehd.blogspot.com#@#.adsantilok
+planetatvonlinehd.blogspot.com.ar#@#.adsantilok
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

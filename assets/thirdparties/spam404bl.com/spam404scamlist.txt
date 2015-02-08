@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4767
-! Last modified: 24 Jan 2015
+! Version: 4893
+! Last modified: 7 Feb 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -139,6 +139,11 @@
 ##[href^="http://edgydownload.com/"]
 ##[href^="http://grabfile.co/"]
 ##[href^="http://seizefile.co/"]
+##[href^="http://stream.aff-id.com/"]
+##[href^="http://streams.aff-id.com/"]
+##[href^="http://tv.aff-id.com/"]
+##[href^="http://play.affmob.org/"]
+##[href^="http://gripconfirmation.com/"]
 !
 !
 !
@@ -148,6 +153,10 @@ dream-file.com##[alt="Regular Download"]
 ##[onclick="$(this).hide(); $('#offerlst').show('slow');"]
 shortz.so##[onclick="awaiting();"]
 ##.login-window[href="#stream"]
+##.inline.play-button.cboxElement[href="#login"]
+###login.oncasvid
+hepimovie.net###login
+##.remodal[data-remodal-options="hashTracking: false"][data-remodal-id="login"]
 !
 !
 !
@@ -4762,6 +4771,123 @@ shortz.so##[onclick="awaiting();"]
 ||moviestreamhd.eu^
 ||watchseriesonline.eu^
 ||weakwiki.com^
+||getpsncode.net^
+||premium-cheats.net^
+||xboxlivecodegenerator.info^
+||gameshackeasy.com^
+||hackpro.us^
+||smartdownload.eu^
+||krackers.eu^
+||grypers.eu^
+||nicecheat.eu^
+||bestorican.com^
+||clashofclansgemmes.com^
+||downloadhacktool.com^
+||clashofclanswar.com^
+||telechargergratuites.com^
+||allgameshacked.com^
+||clashofclansgemmes.net^
+||magictrucs.com^
+||newest-hacks.com^
+||bookhacks.com^
+||freeeshopcodes.com^
+||amber3graph.com^
+||bentdownload.com^
+||myfilesdownload.org^
+||bestones.net^
+||gamehacktoolz.com^
+||world-of-tanks-gold-hack.com^
+||hacknosurvey.org^
+||probtc.org^
+||warface-hack.net^
+||liversely.com^
+||doubleu.us^
+||continuumdownload.com^
+||idyllicdownload.com^
+||veasydownload.net^
+||watchmovieonlinestreaming.com^
+||movieozy.com^
+||hdmovieon.com^
+||diemov.com^
+||myon.biz^
+||hepimovie.net^
+||3dmoviehd.com^
+||hardmovie.info^
+||moviesbag.us^
+||gamegiftcard.net^
+||smarttvlive.com^
+||moviebuzzer.us^
+||movieheadline.us^
+||anamovies.com^
+||movieset.us^
+||seventin17.com^
+||speedmovies.net^
+||joharmovies.net^
+||tube-id.org^
+||vid-id.org^
+||video-id.org^
+||mixmovie.biz^
+||moviebox21.com^
+||trek21.net^
+||idaplay.com^
+||desmovies.com^
+||rizfilm.com^
+||popularfilm.us^
+||moviehitz.us^
+||moviereload.us^
+||panacinema.pw^
+||loooking.biz^
+||gitmovies.com^
+||staemcommunitry.com^
+||hackcrackkeygenteam.com^
+||moviexe.com^
+||pushplay.com^
+||reelhd.com^
+||filmlush.com^
+||bulletflix.com^
+||cinamuse.com^
+||cineble.com^
+||cinemaden.com^
+||flixaddict.com^
+||ireel.com^
+||itshd.com^
+||moviease.com^
+||movielush.com^
+||reelvidz.com^
+||gta5onlinehack.net^
+||teamripmax.com^
+||gamekeygenerator.com^
+||2014tools.com^
+||gta5onlinednscodes.club^
+||hacksgta5.com^
+||quickfilmz.com^
+||consolesupply.com^
+||filmlair.com^
+||cinemaflix.in^
+||cipta.net^
+||moviecharlie.com^
+||vidhaze.com^
+||moshgame.com^
+||gamerz123.com^
+||megaplayz.com^
+||watchmovieonlinefull.com^
+||gostream.us^
+||pcplayz.com^
+||studioomovie.com^
+||roistv.net^
+||movieloader.net^
+||playinhd.biz^
+||media-fire.org^
+||movies20ntvshow.com^
+||cinemabio.com^
+||k4movie.com^
+||movieapunk.com^
+||moviearie.com^
+||movieidik.com^
+||grabtrk.com^
+||gamerspro.net^
+||cheapestgameservers.com^
+||gripconfirmation.com^
 !
 !
 !

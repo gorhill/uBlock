@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: qMLRx6mp1YdTHQlfGUCmmw
-! Version: 201501302141
+! Checksum: vxMdUbLQMotcdhn5dVyyjg
+! Version: 201502082241
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 30 Jan 2015 21:41 UTC
+! Last modified: 08 Feb 2015 22:41 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -772,6 +772,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||inlinks.de^$third-party
 ||intensifier.de^$third-party
 ||interwebads.de^$third-party
+||iqcontentplatform.de^$third-party
 ||itrack.it^$third-party
 ||jink.de^$third-party
 ||jokers-banner.de^$third-party
@@ -3047,6 +3048,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||pornit.org^*/trade.js
 ||pornkino.to/insmess.js
 ||pornkino.to/instantrotator/
+||pornkino.to/lassdescheissman.js
+||pornkino.to/lassdescheissman2.js
 ||pornkino.to/pk_out.js
 ||pornkino.to/pkino.js
 ||pornkino.to/theme.js
@@ -3231,6 +3234,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||schnittberichte.com^*.swf$object
 ||schnittberichte.com^*_459x1200_
 ||schnittberichte.com^*_takeover_
+||schoener-fernsehen.com/images/gotootr.jpg
 ||schoener-onanieren.de/grifftechniken/maenner/autogas.jpg
 ||schule-studium.de/Studienkreis/Studienkreis160-600-
 ||schule-studium.de/Studienkreis/StudienkreisSkyscraper.jpg
@@ -3435,15 +3439,14 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||taketv.net/bilder/backdell.jpg
 ||tape.tv/tape2fs-new/images/campaign/$object-subrequest
 ||tape.tv/tape2fs/images/campaign/$object-subrequest
-||taschenlampen-forum.de/images/fenix/fenix-taschenlampen-2014.swf
+||taschenlampen-forum.de/images/fenix/
+||taschenlampen-forum.de/images/imalent/
 ||taschenlampen-forum.de/images/jetbeam/
-||taschenlampen-forum.de/images/ktl-store/CR6HC50_728X9001.gif
-||taschenlampen-forum.de/images/myled.com/MyLED-Taschenlampe.jpg
-||taschenlampen-forum.de/images/myled.com/Taschenlampen-Forum.jpg
-||taschenlampen-forum.de/images/neonlaserchina.com/TLF.jpg
-||taschenlampen-forum.de/images/thrunite/TN35-45.jpg
-||taschenlampen-forum.de/images/thrunite/TN35-90.jpg
-||taschenlampen-forum.de/images/tmart.com/t-mart-01-2013.jpg
+||taschenlampen-forum.de/images/ktl-store/
+||taschenlampen-forum.de/images/myled.com/
+||taschenlampen-forum.de/images/neonlaserchina.com/
+||taschenlampen-forum.de/images/thrunite/
+||taschenlampen-forum.de/images/tmart.com/
 ||taschenlampen-forum.de/images/vtlershop.de/
 ||tattoo-spirit.de/subsystems/adv_manager/
 ||taucher.net/tnadsy/
@@ -3873,6 +3876,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||rapidvideo.com/popup.php$popup
 ||saugzone.info/vote/out.php$popup
 ||sexfilmchen.com^$popup,domain=ddl-porn.us
+||sexpartnersite.net^$popup,domain=pornkino.to
 ||share-online.biz/affiliate/$popup,domain=linxcrypt.com
 ||simple-files.com^$popup,domain=3dl.tv
 ||slimtrade.com/out.php?$popup,domain=byte.to|ddl-porn.us|hd-load.org|porno-streams.com
@@ -4422,6 +4426,7 @@ hornoxe.com###lside > center > a[target="_blank"] > img
 chili-warez.net,mov-world.net,xxx-4-free.net###lyr
 filmz.de###m > div[style="left:16px;width:468px;overflow:hidden"] + .p[style="left:4px;width:492px;height:262px"]:last-child
 crackajack.de###madcowdesease_premium
+gmx.net,web.de###mail-list .new.iba
 gmx.net,web.de###mail-list .new.nma
 mov-world.net###main > #lblock + [style*="width: 180px"]
 emergency-forum.de###main > .border > .container-1[style="text-align: center"]:first-child:last-child
@@ -5255,6 +5260,7 @@ bluewin.ch##.column-right > .column-right-right > .teaser-special > .ts-image + 
 gamestar.de##.columnContentTeaser > .gl
 tripadvisor.de##.commerce
 auto-motor-und-sport.de,azonline.de,getgoods.4teams.de,mv-online.de,wn.de##.commercial
+filecrypt.cc##.container td[class] > button
 deutscherskiverband.de##.container-banner-2
 secured.in##.container-banner-image
 tarifagent.com##.container_fullbanner
@@ -5300,6 +5306,7 @@ sportal.ch##.content_right_side_wetten
 augsburger-allgemeine.de,heise.de##.contentbanner
 bild.de##.contentbar
 dastelefonbuch.de##.context_banners
+chip.de##.cs-widget[data-cloudsider="vod"]
 klassikradio.de##.cssmedia[height="125"][width="288"]
 rimparerhandballer.de##.custom > .adv_slideshowTable
 lounge.fm##.custom-sponsor
@@ -5448,6 +5455,7 @@ livingathome.de##.heftBox[style="padding-left:0px;margin-left:0px;padding-bottom
 transfermarkt.de##.hide-for-small[style="height: 273px; text-align: center; overflow: hidden;"]
 deutsche-startups.de##.highlighted.squares
 moviebb.to##.highspeed_button
+tarnkappe.info##.home-bottom > #text-36
 tarnkappe.info##.home-middle > #text-10
 tarnkappe.info##.home-middle > #text-18
 tarnkappe.info##.home-top > #text-29
@@ -6938,6 +6946,9 @@ t-online.de##img[height="365"][width="178"][style="margin-left:-10px;margin-bott
 hoerbuch.in,lesen.to,liplop.de,teen-blog.us##img[height="60"][width="468"]
 blogtotal.de##img[height="600"][width="120"]
 arthouse.ch##img[height="72"][alt="banner"]
+schoener-fernsehen.com##img[id$="closer"] + h2
+schoener-fernsehen.com##img[id$="icon"]
+schoener-fernsehen.com##img[id$="icon"] + p
 ak-kurier.de,nr-kurier.de,ww-kurier.de##img[name="banner"]
 seatforum.de##img[src="http://www.seatforum.de/forum/images/anzeige.gif"] + a[target="_blank"] > img
 tsv1860ro-fussball.de##img[style="left: 0px; top: 1100px; width: 400px; height: 200px;"]
@@ -7034,6 +7045,7 @@ playnation.de##noscript + script + script + #al
 teltarif.de##p + .tetable + .tetable[width="100%"][cellspacing="0"][cellpadding="0"][border="0"][bgcolor="#E3D470"]
 prad.de##p > a > img[width="614"][height="249"]
 englische-briefe.de##p > table[width="769"][cellpadding="4"]
+schoener-fernsehen.com##p[id$="link"]
 byte.to##p[style="color: #FFFFFF;"] > a > big
 titanic-magazin.de##p[style="font-size: 7pt; color: grey; text-align: left; margin: 0; padding: 0;"]
 titanic-magazin.de##p[style="font-size: 7pt; color: grey; text-align: left; margin: 0; padding: 0;"] + .teaser_row[style="height: 181px;"]
@@ -7578,6 +7590,7 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||smart.allocine.fr/a/diff/*/show*.asp?$object-subrequest,domain=ufa-dresden.de
 @@||smart.allocine.fr/call/pubx/*&video=$object-subrequest
 @@||smartadserver.com/a/diff/*/show*.asp?$script,domain=edge.download.newmedia.nacamar.net|freestream.nmdn.net
+@@||smartadserver.com/call/pubi/*/(bild/*/?format=.mp4$media,domain=bild.de
 @@||smartadserver.com/call/pubj/*/s/$script,domain=edge.download.newmedia.nacamar.net|freestream.nmdn.net
 @@||smartadserver.com/diff/*/show*.asp?$script,domain=edge.download.newmedia.nacamar.net|freestream.nmdn.net
 @@||smartadserver.com/diff/*/smartad.js$domain=sky.de
@@ -7726,6 +7739,7 @@ focus.de##div[id^="adsdf_"] + div[class] > div[align="center"] + [class]
 @@||aktuelles-handelsrecht.info^$elemhide
 @@||alle-news.com^$image,script,domain=news.feed-reader.net
 @@||altfarm.mediaplex.com/ad/js/*?mpt=*&mpvc=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de
+@@||alysson.de^$document,subdocument,domain=gamona.de
 @@||amazonaws.com^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||amgdgt.com/ads?$object-subrequest,domain=clipfish.de
 @@||apmebf.com/ad/js/*&mpvc=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de

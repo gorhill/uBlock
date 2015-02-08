@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: kwofTZXFioFPi4RdYFIWKw
-! Version: 201501302142
+! Checksum: Et1RS8jhbNw+Jj3wupR1vA
+! Version: 201502082242
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 30 Jan 2015 21:42 UTC
+! Last modified: 08 Feb 2015 22:42 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -22,8 +22,8 @@
 /adv_tekstlinks.
 /adverteerders/*
 /advertentie-banner-
-/advertentie.
-/advertentie/*
+/advertentie.$domain=~2dehands.be|~tweedehands.nl
+/advertentie/*$domain=~2dehands.be|~tweedehands.nl
 /advertentie1.
 /advertentie2/*
 /advertentie_head.
@@ -722,6 +722,8 @@ _advertentieleaderboardhome.
 @@||imageceu1.247realmedia.com/0/Player/Player_NL_Home/342x204_mensuel_NLnew.jpg
 @@||images.marktnet.eu/adimg/
 @@||imasdk.googleapis.com/flash/core/*/adsapi.swf$object-subrequest,domain=538.nl|slamfm.nl
+@@||imasdk.googleapis.com/js/core/bridge3.*.html#goog_$subdocument,domain=2be.be|syndication.vmma.be|vitaya.be|vtm.be|vtmkzoom.be
+@@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=2be.be|syndication.vmma.be|vitaya.be|vtmkzoom.be
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
 @@||maps.gstatic.com/maps-api-*/adsense.js$domain=opentot.nl
 @@||media.ztat.net/media/teaser/$image,domain=zalando.nl

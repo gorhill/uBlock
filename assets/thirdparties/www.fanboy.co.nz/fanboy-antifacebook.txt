@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: ST17RrQiEWMpZ1Fx+nwLTw
-! Title: Anti-ThirdpartySocial
+! Checksum: IFigFzsyqA63eW9uc9dqWg
+! Title: Anti-Facebook List
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
 !
@@ -44,9 +44,9 @@
 ||spot.im/embed/scripts/launcher.js$third-party
 ||static.ak.fbcdn.net^$third-party,domain=~facebook.com
 !
-! Test Filters (Third-party Chat)
+! Test Filters (For Gannett sites, which don't work anyways with Facebook blocked)
 !
-||liveperson.net^$third-party
+##.util-bar-module-firefly-visible
 !
 ! Whitelist Filters
 !

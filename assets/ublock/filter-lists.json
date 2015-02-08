@@ -174,9 +174,9 @@
         },
     "www.hufilter.hu/hufilter.txt": {
         "off": true,
-        "title": "HUN: hufilter (magyar)",
+        "title": "HUN: hufilter (obsolete, will be removed)",
         "group": "regions",
-        "homeURL": "http://www.hufilter.hu/hufilter.txt"
+        "homeURL": ""
         },
     "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt": {
         "off": true,
@@ -218,6 +218,12 @@
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt"
+        },
+    "raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": {
+        "off": true,
+        "title": "HUN: hufilter",
+        "group": "regions",
+        "homeURL": "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt"
         },
     "www.fanboy.co.nz/fanboy-korean.txt": {
         "off": true,

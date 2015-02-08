@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: aHkGrSJ8aaEdG+/6ThHWPA
+! Checksum: Yq97P8XQKC+lPKhUnzb3WQ
 ! Title: Fanboy's Swedish
-! Updated: 28 Jan 2015
+! Updated: 31 Jan 2015
 ! This list expires after 4 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -154,6 +154,7 @@ blocket.se##.eas_expander
 blocket.se##.fif
 blocket.se##.motesplatsen
 bohuslaningen.se##.cg-teaserWrapper
+cartoonnetwork.se###header
 corren.se###lokusSearchDiv
 corren.se###topjobs
 corren.se##.open-house-container
@@ -166,6 +167,7 @@ destination.se###topbanner
 destination.se###tower
 dn.se###board-enirolinks
 dn.se##.box.box-html.box-first
+dn.se##.lp_logobox
 dreamfilmhd.com##DIV[style="background-color:rgba(0,0,0,0.1);width:750px;height:100px;margin:0 5px 0 5px"]
 dreamfilmhd.com##DIV[style="width:750px;clear:both;margin:0 0 10px 0;padding:0;"]
 expressen.se##a[href^="http://marketnews.se/"]
@@ -204,6 +206,7 @@ ostran.se##.clsTopJobs
 rakaka.se##IMG[src="content/annons.jpg"]
 realtid.se##p[style="margin: 0pt 0pt 3px; clear: both;"]
 svd.se###in-between-2
+svd.se##.ad
 svd.se##.ad
 sweclockers.com##.banner[style="min-height: 122px;"]
 sweclockers.com##div[style="min-height: 250px;"]

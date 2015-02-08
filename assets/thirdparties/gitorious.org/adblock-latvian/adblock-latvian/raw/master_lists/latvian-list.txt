@@ -1,7 +1,7 @@
 [Adblock Plus 1.2]
-! Checksum: IOshXVLBzTrMceqx07AZ+g
+! Checksum: kGfr4yv4TOwrDrmS00izrg
 ! Title: Latvian List
-! Last modified: 2015-01-08 18:59 UTC
+! Last modified: 2015-02-02 17:11 UTC
 ! Expires: 2 days (update frequency)
 ! Homepage: http://latvian-list.site11.com/
 ! Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
@@ -200,6 +200,7 @@
 apollo.tvnet.lv###e-shop-banner-block
 apollo.tvnet.lv##.banner-block
 apollo.tvnet.lv##.banner-block-small
+apollo.tvnet.lv##.custom-ad-widget
 apollo.tvnet.lv##.e-shop-banner-block
 bilesuserviss.lv##.banner_clicker
 bilesuserviss.lv##.main_column_banner

@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: E/5AGMXQUJVzDETxWtLO+A
+! Checksum: V1b4zwZP5zKm+c8otGjgpA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 31 Jan 2015
+! Updated: 7 Feb 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -424,7 +424,7 @@ wolframalpha.com###subpod_zoom
 ||cbc.ca/includes/stats/hbx_
 ||ccom-cdn.com/assets/js/ga.js
 ||cdc.gov/JScript/metrics/
-||cf2.rackcdn.com^$script,domain=comingsoon.net|cnet.com|flixist.com|mamma.com|destructoid.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com|wikia.com|memory-alpha.org|conferenceusa.com|pch.com
+||cf*.rackcdn.com^$script,domain=comingsoon.net|cnet.com|flixist.com|mamma.com|destructoid.com|techrepublic.com|metacritic.com|tvguide.com|cbsnews.com|metrolyrics.com|tv.com|mp3.com|cbssports.com|chow.com|gamefaqs.com|wikia.com|memory-alpha.org|conferenceusa.com|pch.com
 ||chevron.com/js/chevron_ga.js
 ||cknw.com^*/s_cknwam_code.js
 ||cleartrip.com/javascripts/ga.*.js
@@ -543,6 +543,7 @@ wolframalpha.com###subpod_zoom
 ||seal.digicert.com^$third-party
 ||seal.godaddy.com^$third-party
 ||seal.networksolutions.com^$third-party
+||seal.starfieldtech.com^$third-party
 ||seal.stellaservice.com^$third-party
 ||seal.thawte.com^$third-party
 ||seal.verisign.com^$third-party
@@ -630,6 +631,7 @@ wolframalpha.com###subpod_zoom
 !---------- Anti Adblock Tracking ------
 !
 @@||canada.com^*/advertisement.js
+@@||forums.qrz.com/js/advertisement.js
 @@||tnwcdn.com/assets/js/advertising.js$domain=thenextweb.com
 @@||vice.com/assets/js/vmp/adblocker/
 @@||vox-cdn.com/javascripts/lib/advertisement.

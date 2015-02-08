@@ -1,8 +1,9 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 30/01/2015
+! Last change: 07/02/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
+! Expires: 3 days
 ! License: CC-BY-SA v4.0
 ! Email: tomastaro@adblock.sk
 ! Forum: http://adblock.sk/forum
@@ -174,6 +175,7 @@ exashare.com###player_img
 ||sokolov.cz/images/reklama/
 ||spoluzaci.cz/img/new-skin/bgr-main.png
 ||static.autoweb.cz/img/brands/
+||stream*.idnes.cz/*#Reklama*
 ||stobklub.cz/images/banners/maintop.jpg
 ||super.cz/static/flash/
 ||superhry.cz/design/09/banner120.gif
@@ -397,16 +399,20 @@ exashare.com###player_img
 @@||hry.cz/ad/ad.aspx?
 @@||hry.sazka.cz/banners/new_banner*.*
 @@||iboys.cz/advert-list.php
-@@||i.imedia.cz/$third-party,domain=stream.cz
 @@||i.imedia.cz/js/im2.js
 @@||i.imedia.cz/js/im3.js
 @@||moviezone.cz/js/
+@@||*.nova.cz/static/cz/shared/js/advert.js
+@@||*.nova.cz/static/shared/app/videojs/plugins/adblock/
+@@||*.nova.cz/static/shared/app/videojs/plugins/ads/
 @@||ocko.tv/content/adv/flash/
 @@||reklama-*.cz
 @@||smartmania.cz/advertisment.js
 @@||sokolov.cz/images/reklama/
 @@||static.cz.prg.cmestatic.com/static/cz/shared/js/adtrack.nova.js
 @@||static.tn.nova.cz/static/cz/shared/js/banners.js
+@@||stream.cz/static/js/stream/IssueDetector/advert.js
+@@||stream.cz/static/swf/advert-nextEpisode.swf
 @@||*-reklama.cz
 @@||ta3.com/advert-async-system/load-items.html?
 lidovky.cz#@#.col-ad
@@ -420,6 +426,7 @@ zive.cz#@#.box-adsense
 @@/moje-konto/inzeraty/$document,domain=autobazar.sk|bazar.sk|nehnutelnosti.sk
 @@/moje-inzeraty/$document,domain=autobazar.sk|bazar.sk|nehnutelnosti.sk
 @@||img.aaaauto.eu/thumb/
+@@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
 @@||/moje-konto/inzeraty/
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
 @@||tpd.sk/ads/rotator/
@@ -755,6 +762,7 @@ nova.cz###square_banner
 nova.cz###square_banner_2
 nova.cz##.big_baner
 nova.cz##.pr_box
+novaplus.nova.cz##.vjs-marker.active
 novinky.cz###advertRightTopPosition
 novinky.cz###sklikReklama_6022
 onlajny.com###banner-top-four
@@ -844,6 +852,8 @@ uschovna.cz##.right_banner_mat
 videacesky.cz##.im_top
 videacesky.cz##.leftAddBarContainer
 videacesky.cz##.fullbanner
+video.idnes.cz##stripe
+video.idnes.cz##stripemark
 vodafonesms.cz##.banner-block-inside1
 vodafonesms.cz##.banner-block-right
 volny.cz###banner_flash
@@ -936,7 +946,7 @@ onlinefilmy.tv###bg_right
 onlinefilmy.tv##.ads
 onlinefilmy.tv##.ads_new
 onlinevidea.tv##.ads_new
-www.pcforum.sk##td[style="cursor: pointer; padding: 10px; background: rgb(255, 255, 255);"]
+pcforum.sk##td[style="cursor: pointer; padding: 10px; background: rgb(255, 255, 255);"]
 pocasie.pozri.sk/nba2.gif
 pokec.azet.sk##.c_banner300x300
 pretaktovanie.zoznam.sk##.post.bg5

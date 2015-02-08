@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: PsKB6s9DaPX3MBAOEtj8pQ
-! Version: 201501302141
+! Checksum: 8/Vz/IQh/TNV7pJIUd3h1A
+! Version: 201502082241
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 30 Jan 2015 21:41 UTC
+! Ultima modifica: 08 Feb 2015 22:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -209,7 +209,7 @@ sportube.tv#@#.afs_ads
 ! *** easylistitaly:easylistitaly/easylistitaly_adservers.txt ***
 ||178.32.140.64^$third-party,domain=~pirchio.ip
 ||24network.it^$third-party
-||2mdn.net^$object-subrequest,third-party,domain=beppegrillo.it|calciomercato.com|corriereadriatico.it|corrieredellosport.it|forbiciate.com|foxsports.it|ilgazzettino.it|ilmattino.it|ilmessaggero.it|ilmeteo.it|italiaoggi.it|lapresse.it|lastampa.it|leggo.it|mediapason.it|mffashion.com|milanofinanza.it|pianetadonna.it|quotidianodipuglia.it|tiscali.it|tripadvisor.it|tuttomercatoweb.com|violachannel.tv|youreporter.it|youreporternews.it
+||2mdn.net^$object-subrequest,third-party,domain=beppegrillo.it|calciomercato.com|corriereadriatico.it|corrieredellosport.it|forbiciate.com|foxsports.it|ilgazzettino.it|ilmattino.it|ilmessaggero.it|ilmeteo.it|italiaoggi.it|lapresse.it|lastampa.it|leggo.it|leonardo.it|mediapason.it|mffashion.com|milanofinanza.it|pianetadonna.it|quotidianodipuglia.it|tiscali.it|tripadvisor.it|tuttomercatoweb.com|violachannel.tv|youreporter.it|youreporternews.it
 ||ad4mat.it^$third-party
 ||adagionet.com^$third-party
 ||adbrawl.com^$third-party
@@ -1192,6 +1192,7 @@ sportube.tv#@#.afs_ads
 ||mammedomani.it/images/banners/
 ||manduriaoggi.it/layout_nuovo/banner.asp
 ||marigliano.net/_upload/banner/
+||marsalaviva.it/images/banners/
 ||marsicalive.it^*banner
 ||masterviaggi.it/banner/
 ||mattinonline.ch^*/banner_
@@ -1294,6 +1295,8 @@ sportube.tv#@#.afs_ads
 ||omnimilano.it/dati/banner/
 ||omniroma.it/dati/banner/
 ||ondarock.it/skin/
+||opinione.it/media/*60x150.
+||opinione.it/media/*750x50.
 ||orvietosi.it^*298x100.swf
 ||oxfordparavia.it/img/babylon.gif
 ||padovanews.it/images/banners/
@@ -1643,6 +1646,7 @@ sportube.tv#@#.afs_ads
 ||virgilio.it/sg/boxis_
 ||virgilio.it/src_tag_sponsor_
 ||viterbonews24.it/gesBanner/
+||viterbopost.it^*/Partner.
 ||vivafm.it^*/banners/
 ||vivereancona.it/images/banners_
 ||viverejesi.it/images/banners_
@@ -1800,6 +1804,7 @@ siracusanews.it###banners-top
 si24.it###banners_middle
 cmnews.it###bannersdx
 telefonino.net###bannerstrip
+alfredopedulla.com###bannertop
 senigallianotizie.it###bbitalia_banner
 altalex.com,primopianomolise.it,sentenze.net###bglink
 gizmodo.it###big-mega
@@ -1926,6 +1931,8 @@ asroma.it###logos
 eurogamer.it###low-leaderboard
 catanzaroinforma.it###mainsponsor
 catanzaroinforma.it###mainsponsorcronaca
+viterbopost.it###manchette-dx
+viterbopost.it###manchette-sx
 laroma24.it###marketingRotator
 it.msn.com###markette
 max.rcs.it###max_ppn
@@ -2036,7 +2043,8 @@ lavocedelpopolo.net###text-20
 lavocedelpopolo.net###text-26
 lavocedelpopolo.net###text-28
 lavocedelpopolo.net###text-33
-lavocedelpopolo.net###text-35
+viterbopost.it###text-34
+lavocedelpopolo.net,viterbopost.it###text-35
 lavocedelpopolo.net###text-41
 studioconsulenzaromano.net###text-561964208
 farevela.net###text-7
@@ -2180,6 +2188,7 @@ ilmessaggero.it,ravennanotizie.it##.bannerH
 beppegrillo.it##.bannerHeader
 cittaceleste.it,juvenews.eu##.bannerNelTesto
 key4biz.it##.bannerRight
+emmelle.it##.bannerSlide
 corriereirpinia.it##.bannerTd
 avvenire.it,borsaitaliana.it,ilmessaggero.it##.bannerTop
 ilquotidianodellacalabria.it##.banner_186x290
@@ -2431,6 +2440,7 @@ europages.it,gazzetta.it,ilgiornale.it,pubblicitaitalia.it,repubblica.it,stickma
 fcparma.com##.sponsor-group
 milanofinanza.it##.sponsor-red
 erbanotizie.com,lecconotizie.com##.sponsor-rubrica
+viterbopost.it##.sponsorA
 treccani.it##.sponsorLogo
 tuttosport.com##.sponsor_peroni
 gazzetta.it,wired.it##.sponsored

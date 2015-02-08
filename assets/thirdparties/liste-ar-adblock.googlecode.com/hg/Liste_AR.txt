@@ -36,6 +36,7 @@
 ##.ltas_adspot
 ##.pub-730x90
 ##.sidbar-ad1
+##.yourcolor-ads
 ##[href*="ad2games.com/"]
 ##a[href*="/ads/ad_link.php?"]
 ##a[href*="adintop.com/outgoing/click.php?"]
@@ -119,6 +120,7 @@
 ||44aa.com/image/nesba.swf
 ||46.151.209.69^
 ||4arabsex.net/Banner1.jpg
+||4halal.co/*.htm$subdocument,domain=4halal.co|4helal.co
 ||4uploading.com/bnr/
 ||5bre.com/images/5bre.gif
 ||5jle.com^$popup,domain=maas1.com
@@ -128,6 +130,7 @@
 ||a7la-games.com/b/
 ||a7lahmsa.com/vb/$subdocument,domain=s-ajfan.com
 ||ads-bubble.snseonetwork.com/zone?
+||af.gamepower7.com/*?aid=$popup,third-party
 ||agarcom.com/up/uploads/1375263039741.gif
 ||al-ghla.net/vb/$subdocument,domain=a7lahmsa.com
 ||al3ab2014.com^$popup,third-party
@@ -337,7 +340,6 @@
 ||z4ar.com/banner/bsh.gif
 ||zi-m.com/uploads/1421349783282.jpg
 ||zi-m.com^$popup,domain=sh-arab.com
-||zi-m.info^$popup,domain=zi-m.com
 ||zimabdk.com/uploads/13739105611.gif
 ||zimabdk.com/uploads/13739970081.png
 ||zimabdk.com/uploads/1385612495381.gif
@@ -370,6 +372,7 @@
 ||3roos.com/files/ups/
 ||3roos.com/images/i3lan.gif
 ||4algeria.com^*/al-e3lnat/
+||4helal.co/images/bnr/
 ||5jle.com^$subdocument,domain=liilas.com
 ||6ba5.com/Violet_hexll/images/hexll_19.png
 ||6ef.com/ee/*-160x300.
@@ -573,6 +576,7 @@
 ||dohaup.com/up/2010-02-10/dohaup_1758332280.gif
 ||dostor.org/images/stories/300x150.gif
 ||dramacafe.tv/dramacafe.js
+||dreambox-tunisie.com/vb/500.gif
 ||dzecole.com/^$popup,domain=bacdz.org
 ||e-mailaat.com/banarat/
 ||e3lanat.rofof.com^
@@ -740,6 +744,10 @@
 ||manga-ar.com/upload/adv/
 ||marocannonces.com/images/agency_banner.jpg
 ||marocannonces.com^*/bannier_
+||masrawysat.com/img/505.gif
+||masrawysat.com/img/astra.gif
+||masrawysat.com/img/LNB.gif
+||masrawysat.com/img/omix.gif
 ||masrawysat.com/vb/images/alsharingbanner.gif
 ||mazajcool.net/160.gif
 ||mazajcool.net/300.gif
@@ -900,6 +908,7 @@
 ||uob-bh.com/uploadfiles/bahraindir.gif
 ||uskarmawi.com^$subdocument,domain=asalahpal.com
 ||vb.zi-m.com/aerowindow/
+||vb.zi-m.com/js.php
 ||vbdar.com^$popup,domain=darseries.com
 ||vip4soft.com/draw.swf
 ||vip4soft.com/images/baneers/
@@ -1117,6 +1126,7 @@ bokra.net##.tower
 bokra.net##.towerBanner
 bokra.net##.twoBanners
 arabia.com##.ykaleader
+dreambox-tunisie.com##.yourcolor-main
 2flam.net##A[href="http://shwqna.at.ua/ADs.htm"]
 ounousa.com##[class^="SubBanner"]
 ounousa.com##[class^="banner"]
