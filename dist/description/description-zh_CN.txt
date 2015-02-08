@@ -1,54 +1,54 @@
-一款高效的广告拦截工具：超低的内存和CPU占用，和其他常见的广告拦截工具相比，可以加载并执行上千条过滤规则。
+一款高效的请求过滤工具：占用极低的内存和CPU，和其他常见的过滤工具相比，它能够加载并执行上千条过滤规则。
 
 效率概述说明： 
 https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-用法：点击弹出窗口中的电源按钮，µBlock将对于当前网页永久禁用/启用广告拦截功能。 它只适用于当前网页，而不是全局按钮。
+用法：点击弹出窗口中的电源按钮，µBlock 将对当前网页永久禁用/启用过滤功能。 它只控制当前网页的请求过滤，而不是一个全局开关。
 
 ***
 
-它不只是一个广告拦截工具，它还可以从hosts文件里读取和创建过滤规则。
+它不只是一个广告拦截工具，它还可以从 hosts 文件里读取和创建过滤规则。
 
-初始默认加载和执行下列过滤规则：
+初始默认加载和执行下列过滤规则列表：
 
--EasyList
+- EasyList
 - Peter Lowe’s Ad server list
--EasyPrivacy
+- EasyPrivacy
 - Malware domains
 - Long-lived malware domains
 - Malware Domains List
 
-这里还拥有更多的过滤规则供你选择：
+这里还有更多的规则列表供你选择：
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- 其他
+- 等等
 
-启用越多的过滤规则就会产生越多的内存占用。 然而，即使在添加 Fanboy 额外的两个规则和 hpHosts’s Ad and tracking servers，µBlock 的内存占用依然比其他常见的过滤工具要小的多。
+当然，启用越多的过滤规则就会产生越高的内存占用。 然而，即使再添加 Fanboy 额外的两个规则列表，如 hpHosts’s Ad 和 tracking servers，µBlock 的内存占用依然比其他常见的过滤工具要低的多。
 
-另外，请注意选择的一些额外的列表可能会导致网页破损可能性增高 — — 尤其是那些通常用作hosts文件的列表。
+另外请注意，选择一些额外的列表可能会导致网页破损可能性增高 —— 尤其是那些通常被用作 hosts 文件的列表。
 
 ***
 
-没有这些过滤规则列表，这个扩展就没有了意义。 所以如果你真的想要做点儿贡献，想想那些努力维护广告过滤规则列表的人们，至少这一切可以免费使用。
+没有这些过滤规则列表，这个扩展就没有了意义。 所以如果你真的想做点贡献，想想那些维护过滤规则的人们，是他们让所有人能够免费使用这一切变得可能。
 
 ***
 
 免费。
-开放源代码与公共许可证 (GPLv3)
+遵从 GPLv3 公共许可协议开源。
 一切为了用户。
 
-贡献者@ Github： 
+贡献者 @ Github:
 https://github.com/gorhill/uBlock/graphs/contributors
-贡献者 @ Crowdin： 
+贡献者 @ Crowdin:
 https://crowdin.net/project/ublock
 
 ***
 
-它是一个非常早期的版本，当你评论的时候记住这一点。
+它还是一个相当早期的版本，在您评论的时候请记住这一点。
 
-项目更改日志：
+项目更新日志：
 https://github.com/gorhill/uBlock/releases

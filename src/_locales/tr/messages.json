@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3.-parti",
+    "message":"3. parti",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"bağlanan adresler",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{total}} taneden {{count}}",
     "description":"appears in popup"
   },
   "pickerCreate":{

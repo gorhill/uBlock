@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Registro de solicitações de rede",
+    "message":"µBlock — Registro de pedidos de rede",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"solicitações bloqueadas",
+    "message":"pedidos bloqueados",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -68,7 +68,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir para o registro de solicitações",
+    "message":"Ir para registro de pedidos",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -220,7 +220,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Mostrar o número de solicitações bloqueadas no ícone",
+    "message":"Mostrar o número de pedidos bloqueados no ícone",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -260,7 +260,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> filtros de \"esconder elementos\" compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;esconder elementos&rdquo; compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -392,19 +392,19 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Ativar o registro de solicitações de rede",
+    "message":"Ativar o registro de pedidos de rede",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Ativando essa opção você pode inspecionar os detalhes das solicitações de rede. O registro de solicitações de rede aumenta o consumo de memória do μBlock. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
+    "message":"Ativando essa opção você pode inspecionar os detalhes dos pedidos de rede. O registro de pedidos de rede aumenta o consumo de memória do μBlock. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Solicitações bloqueadas",
+    "message":"Pedidos bloqueados",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Solicitações permitidas",
+    "message":"Pedidos permitidos",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -424,11 +424,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Não há solicitações bloqueadas registrados para essa página",
+    "message":"Não há pedidos bloqueados registrado nesta página",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Não há solicitações não-bloqueadas registrados para esta página",
+    "message":"Não há pedidos não-bloqueados registrado nesta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{

@@ -184,7 +184,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} ud af {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
