@@ -1,0 +1,54 @@
+{
+    "manifest_version": 2,
+
+    "name": "µBlock",
+    "version": "0.8.7.0",
+
+    "default_locale": "en",
+    "description": "__MSG_extShortDesc__",
+    "icons": {
+        "16": "img/icon_16.png",
+        "128": "img/icon_128.png"
+    },
+
+    "browser_action": {
+        "default_icon": {
+            "19": "img/browsericons/icon19-off.png",
+            "38": "img/browsericons/icon38-off.png"
+        },
+        "default_title": "µBlock",
+        "default_popup": "popup.html"
+    },
+
+    "author": "The µBlock Development Team",
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/vapi-client.js", "js/contentscript-start.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/contentscript-end.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "minimum_opera_version": "15.0",
+    "options_page": "dashboard.html",
+    "permissions": [
+        "contextMenus",
+        "storage",
+        "tabs",
+        "unlimitedStorage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ]
+}
