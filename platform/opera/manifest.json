@@ -38,7 +38,7 @@
             "all_frames": true
         }
     ],
-    "minimum_opera_version": "15.0",
+    "minimum_chrome_version": "22.0",
     "options_page": "dashboard.html",
     "permissions": [
         "contextMenus",
