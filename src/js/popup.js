@@ -544,7 +544,7 @@ var reloadTab = function() {
     // there were changes or not.
     popupData.contentLastModified = -1;
 
-    // No need to wait to remvoe this.
+    // No need to wait to remove this.
     uDom('body').toggleClass('dirty', false);
 };
 
