@@ -1,11 +1,14 @@
 <head>
 <meta charset="utf-8">
 <style>
-body {
+:focus {
+    outline: none;
+}
+html, body {
     margin: 0;
     width: 100%;
+    height: 100%;
     overflow: hidden;
-    display: inline-block;
     font: 12px sans-serif;
 }
 ul, li, div {
@@ -13,6 +16,7 @@ ul, li, div {
 }
 button {
     border: 1px solid #aaa;
+    margin-left: 3px;
     padding: 6px 8px 4px 8px;
     box-sizing: border-box;
     box-shadow: none;
@@ -61,9 +65,6 @@ div {
 div:hover {
     opacity: 1;
 }
-button {
-    margin-left: 3px;
-}
 ul {
     padding: 0;
     list-style-type: none;
@@ -94,27 +95,66 @@ ul > li > ul > li {
     direction: ltr;
 }
 ul > li > ul > li:hover {
-    background-color: rgba(255,255,255,1.0);
+    background-color: rgba(255,255,255,1);
+}
+svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+    width: 100%;
+    height: 100%;
+}
+.paused > svg {
+    cursor: wait;
+}
+svg > path:first-child {
+    fill: rgba(0,0,0,0.75);
+    fill-rule: evenodd;
+}
+svg > path + path {
+    stroke: #F00;
+    stroke-width: 0.5px;
+    fill: rgba(255,0,0,0.25);
+}
+aside {
+    background-color: rgba(255,255,255,0.9);
+    bottom: 4px;
+    padding: 4px;
+    display: none;
+    position: fixed;
+    right: 4px;
+    width: 30em;
+}
+body.paused > aside {
+    opacity: 0.2;
+    display: block;
+}
+body.paused > aside:hover {
+    opacity: 1;
 }
 </style>
 </head>
 
 <body direction="{{bidi_dir}}">
-    <section>
-        <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
-        <div>
-            <button id="create" type="button" disabled="disabled">{{create}}</button>
-            <button id="pick" type="button">{{pick}}</button>
-            <button id="quit" type="button">{{quit}}</button>
-        </div>
-    </section>
-    <ul>
-        <li id="netFilters">
-            <span>{{netFilters}}</span><ul lang="en" class="changeFilter"></ul>
-        </li>
-        <li id="cosmeticFilters">
-            <span>{{cosmeticFilters}}</span> <span>{{cosmeticFiltersHint}}</span>
-            <ul lang="en" class="changeFilter"></ul>
-        </li>
-    </ul>
+<svg><path></path><path></path></svg>
+<aside>
+<section>
+    <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
+    <div>
+        <button id="create" type="button" disabled="disabled">{{create}}</button>
+        <button id="pick" type="button">{{pick}}</button>
+        <button id="quit" type="button">{{quit}}</button>
+    </div>
+</section>
+<ul>
+    <li id="netFilters">
+        <span>{{netFilters}}</span><ul lang="en" class="changeFilter"></ul>
+    </li>
+    <li id="cosmeticFilters">
+        <span>{{cosmeticFilters}}</span> <span>{{cosmeticFiltersHint}}</span>
+        <ul lang="en" class="changeFilter"></ul>
+    </li>
+</ul>
+</aside>
 </body>

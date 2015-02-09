@@ -133,23 +133,16 @@ if ( pickerRoot ) {
 
 var localMessager = vAPI.messaging.channel('element-picker.js');
 
-var svgRoot = null;
 var svgOcean = null;
 var svgIslands = null;
-var frameDialog = null;
-var dialogBody = null;
+var dialog = null;
 var taCandidate = null;
 var urlNormalizer = null;
-
-var lastDetails = null;
 
 var netFilterCandidates = [];
 var cosmeticFilterCandidates = [];
 
 var targetElements = [];
-var svgWidth = 0;
-var svgHeight = 0;
-var onSvgHoveredTimer = null;
 
 /******************************************************************************/
 
@@ -166,20 +159,16 @@ try {
 
 /******************************************************************************/
 
-var pickerPaused = function() {
-    return pickerRoot.classList.contains('paused');
-};
-
-/******************************************************************************/
-
 var pausePicker = function() {
-    pickerRoot.classList.add('paused');
+    dialog.parentNode.classList.add('paused');
+    svgListening(false);
 };
 
 /******************************************************************************/
 
 var unpausePicker = function() {
-    pickerRoot.classList.remove('paused');
+    dialog.parentNode.classList.remove('paused');
+    svgListening(true);
 };
 
 /******************************************************************************/
@@ -193,16 +182,15 @@ var highlightElements = function(elems, force) {
     }
     targetElements = elems;
 
-    var ow = parseInt(svgRoot.style.width, 10);
+    var ow = pickerRoot.contentWindow.innerWidth;
+    var oh = pickerRoot.contentWindow.innerHeight;
     var ocean = [
         'M0 0',
         'h', ow,
-        'v', parseInt(svgRoot.style.height, 10),
+        'v', oh,
         'h-', ow,
         'z'
     ];
-    var offx = window.pageXOffset;
-    var offy = window.pageYOffset;
     var islands = [];
 
     var elem, rect, poly;
@@ -212,7 +200,14 @@ var highlightElements = function(elems, force) {
             continue;
         }
         rect = elem.getBoundingClientRect();
-        poly = 'M' + (rect.left + offx) + ' ' + (rect.top + offy) +
+
+        // Ignore if it's not on the screen
+        if ( rect.left > ow || rect.top > oh ||
+             rect.left + rect.width < 0 || rect.top + rect.height < 0 ) {
+            continue;
+        }
+
+        poly = 'M' + rect.left + ' ' + rect.top +
                'h' + rect.width +
                'v' + rect.height +
                'h-' + rect.width +
@@ -460,7 +455,7 @@ var userFilterFromCandidate = function() {
 
 var onCandidateChanged = function() {
     var elems = elementsFromFilter(taCandidate.value);
-    dialogBody.querySelector('#create').disabled = elems.length === 0;
+    dialog.querySelector('#create').disabled = elems.length === 0;
     highlightElements(elems);
 };
 
@@ -564,7 +559,7 @@ var showDialog = function(options) {
 
     // Create lists of candidate filters
     var populate = function(src, des) {
-        var root = dialogBody.querySelector(des);
+        var root = dialog.querySelector(des);
         var ul = root.querySelector('ul');
         removeAllChildren(ul);
         var li;
@@ -579,8 +574,8 @@ var showDialog = function(options) {
     populate(netFilterCandidates, '#netFilters');
     populate(cosmeticFilterCandidates, '#cosmeticFilters');
 
-    dialogBody.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
-    dialogBody.querySelector('#create').disabled = true;
+    dialog.querySelector('ul').style.display = netFilterCandidates.length || cosmeticFilterCandidates.length ? '' : 'none';
+    dialog.querySelector('#create').disabled = true;
 
     // Auto-select a candidate filter
     var filterChoice = {
@@ -602,42 +597,30 @@ var showDialog = function(options) {
         taCandidate.value = candidateFromFilterChoice(filterChoice);
         onCandidateChanged();
     }
-
-    frameDialog.style.height = dialogBody.offsetHeight + 'px';
 };
 
 /******************************************************************************/
 
 var elementFromPoint = function(x, y) {
-    svgRoot.style.pointerEvents = 'none';
+    pickerRoot.style.pointerEvents = 'none';
     var elem = document.elementFromPoint(x, y);
     if ( elem === document.body || elem === document.documentElement ) {
         elem = null;
     }
-    svgRoot.style.pointerEvents = '';
+    pickerRoot.style.pointerEvents = '';
     return elem;
 };
 
 /******************************************************************************/
 
 var onSvgHovered = function(ev) {
-    if ( pickerPaused() || onSvgHoveredTimer) {
-        return;
-    }
-
-    onSvgHoveredTimer = setTimeout(function() {
-        var elem = elementFromPoint(ev.clientX, ev.clientY);
-        highlightElements(elem ? [elem] : []);
-        onSvgHoveredTimer = null;
-    }, 50);
+    var elem = elementFromPoint(ev.clientX, ev.clientY);
+    highlightElements(elem ? [elem] : []);
 };
 
 /******************************************************************************/
 
 var onSvgClicked = function(ev) {
-    if ( pickerPaused() ) {
-        return;
-    }
     var elem = elementFromPoint(ev.clientX, ev.clientY);
     if ( elem === null ) {
         return;
@@ -648,8 +631,17 @@ var onSvgClicked = function(ev) {
 
 /******************************************************************************/
 
+var svgListening = function(on) {
+    var svg = dialog.ownerDocument.body.querySelector('svg');
+    var action = (on ? 'add' : 'remove') + 'EventListener';
+    svg[action]('mousemove', onSvgHovered);
+    svg[action]('click', onSvgClicked);
+};
+
+/******************************************************************************/
+
 var onKeyPressed = function(ev) {
-    if ( ev.key === 27 || ev.keyCode === 27 ) {
+    if ( ev.which === 27 ) {
         ev.stopPropagation();
         ev.preventDefault();
         stopPicker();
@@ -663,12 +655,6 @@ var onKeyPressed = function(ev) {
 // of highlighted elements.
 
 var onScrolled = function() {
-    var newHeight = this.scrollY + this.innerHeight;
-    if ( newHeight > svgHeight ) {
-        svgHeight = newHeight;
-        svgRoot.style.height = svgHeight + 'px';
-        svgRoot.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
-    }
     highlightElements(targetElements, true);
 };
 
@@ -678,37 +664,40 @@ var onScrolled = function() {
 // in use: to ensure this, release all local references.
 
 var stopPicker = function() {
-    if ( pickerRoot !== null ) {
-        window.removeEventListener('keydown', onKeyPressed, true);
-        window.removeEventListener('scroll', onScrolled, true);
-        taCandidate.removeEventListener('input', onCandidateChanged);
-        dialogBody.removeEventListener('click', onDialogClicked);
-        svgRoot.removeEventListener('mousemove', onSvgHovered);
-        svgRoot.removeEventListener('click', onSvgClicked);
-        pickerRoot.parentNode.removeChild(pickerRoot);
-        pickerRoot =
-        frameDialog =
-        dialogBody =
-        svgRoot = svgOcean = svgIslands =
-        taCandidate =
-        urlNormalizer = null;
-        localMessager.close();
-    }
     targetElements = [];
+
+    if ( pickerRoot === null ) {
+        return;
+    }
+
+    window.removeEventListener('scroll', onScrolled, true);
+    pickerRoot.contentWindow.removeEventListener('keydown', onKeyPressed, true);
+    taCandidate.removeEventListener('input', onCandidateChanged);
+    dialog.removeEventListener('click', onDialogClicked);
+    svgListening(false);
+    pickerRoot.parentNode.removeChild(pickerRoot);
+    pickerRoot.onload = null;
+    pickerRoot =
+    dialog =
+    svgOcean = svgIslands =
+    taCandidate =
+    urlNormalizer = null;
+    localMessager.close();
+
+    window.focus();
 };
 
 /******************************************************************************/
 
-var onFrameReady = function() {
-    var elem;
-    var details = lastDetails;
-    this.onload = lastDetails = null;
-
+var startPicker = function(details) {
+    var frameDoc = pickerRoot.contentDocument;
     var parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
-    var frameDoc = this.contentDocument;
+
+    pickerRoot.onload = stopPicker;
+
     frameDoc.documentElement.replaceChild(
         frameDoc.adoptNode(parsedDom.head),
         frameDoc.head
@@ -718,12 +707,30 @@ var onFrameReady = function() {
         frameDoc.body
     );
 
-    dialogBody = frameDoc.body;
-    dialogBody.addEventListener('click', onDialogClicked);
-    taCandidate = dialogBody.querySelector('textarea');
+    frameDoc.body.setAttribute('lang', navigator.language);
+
+    dialog = frameDoc.body.querySelector('aside');
+    dialog.addEventListener('click', onDialogClicked);
+
+    taCandidate = dialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
 
+    var svgRoot = frameDoc.body.querySelector('svg');
+    svgOcean = svgRoot.firstChild;
+    svgIslands = svgRoot.lastChild;
+    svgListening(true);
+
+    urlNormalizer = document.createElement('a');
+
+    window.addEventListener('scroll', onScrolled, true);
+    pickerRoot.contentWindow.addEventListener('keydown', onKeyPressed, true);
+    pickerRoot.contentWindow.focus();
+
     // Auto-select a specific target, if any, and if possible
+
+    highlightElements([], true);
+
+    var elem;
 
     // Try using mouse position
     if ( details.clientX !== -1 ) {
@@ -774,129 +781,31 @@ var onFrameReady = function() {
 
 /******************************************************************************/
 
-var startPicker = function(details) {
-    pickerRoot = document.createElement('div');
-    var pid = vAPI.sessionId;
-    pickerRoot.id = pid;
-    pickerRoot.setAttribute('lang', navigator.language);
+pickerRoot = document.createElement('iframe');
+pickerRoot.id = vAPI.sessionId;
+pickerRoot.style.cssText = [
+    'position: fixed',
+    'top: 0',
+    'left: 0',
+    'width: 100%',
+    'height: 100%',
+    'background: transparent',
+    'border: 0',
+    'border-radius: 0',
+    'box-shadow: none',
+    'float: none',
+    'margin: 0',
+    'outline: 0',
+    'padding: 0',
+    'z-index: 2147483647',
+    ''
+].join('!important; ');
 
-    var pickerStyle = document.createElement('style');
-    pickerStyle.setAttribute('scoped', '');
-    pid = '#' + pid;
-    pickerStyle.textContent = [
-        pid + ' {',
-            'position: absolute;',
-            'top: 0;',
-            'left: 0;',
-        '}',
-        pid + ', ' + pid + ' > iframe, ' + pid + ' > svg {',
-            'background: transparent;',
-            'border: 0;',
-            'border-radius: 0;',
-            'box-shadow: none;',
-            'display: inline;',
-            'float: none;',
-            'height: auto;',
-            'margin: 0;',
-            'max-width: none;',
-            'min-height: 0;',
-            'min-width: 0;',
-            'outline: 0;',
-            'overflow: visible;',
-            'padding: 0;',
-            'width: auto;',
-            'z-index: auto;',
-        '}',
-        pid + ' > svg {',
-            'position: absolute;',
-            'top: 0;',
-            'left: 0;',
-            'pointer-events: auto;',
-            'cursor: crosshair;',
-            'z-index: 4999999999;',
-        '}',
-        pid + '.paused > svg {',
-            'cursor: wait;',
-        '}',
-        pid + ' > svg > path:first-child {',
-            'fill: rgba(0,0,0,0.75);',
-            'fill-rule: evenodd;',
-        '}',
-        pid + ' > svg > path + path {',
-            'stroke: #F00;',
-            'stroke-width: 0.5px;',
-            'fill: rgba(255,0,0,0.25);',
-        '}',
-        pid + ' > iframe {',
-            'background-color: rgba(255,255,255,0.9);',
-            'bottom: 4px;',
-            'display: none;',
-            'padding: 4px;',
-            'position: fixed;',
-            'right: 4px;',
-            'width: 30em;',
-            'z-index: 5999999999;',
-        '}',
-        pid + '.paused > iframe {',
-            'opacity: 0.2;',
-            'display: block;',
-        '}',
-        pid + '.paused > iframe:hover {',
-            'opacity: 1;',
-        '}',
-        ''
-    ].join('\n');
-    pickerRoot.appendChild(pickerStyle);
-
-    var svgns = 'http://www.w3.org/2000/svg';
-    svgRoot = document.createElementNS(svgns, 'svg');
-    svgRoot.appendChild(document.createElementNS(svgns, 'path'));
-    svgRoot.appendChild(document.createElementNS(svgns, 'path'));
-    svgWidth = document.documentElement.scrollWidth;
-    svgHeight = Math.max(
-        document.documentElement.scrollHeight,
-        window.scrollY + window.innerHeight
-    );
-    svgRoot.setAttribute('x', 0);
-    svgRoot.setAttribute('y', 0);
-    svgRoot.style.width = svgWidth + 'px';
-    svgRoot.style.height = svgHeight + 'px';
-    svgRoot.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
-    svgOcean = svgRoot.firstChild;
-    svgIslands = svgRoot.lastChild;
-    pickerRoot.appendChild(svgRoot);
-
-    // https://github.com/gorhill/uBlock/issues/344#issuecomment-60775958
-    // Insert in `html` tag, not `body` tag.
-    document.documentElement.appendChild(pickerRoot);
-    svgRoot.addEventListener('click', onSvgClicked);
-    svgRoot.addEventListener('mousemove', onSvgHovered);
-    urlNormalizer = document.createElement('a');
-    window.addEventListener('scroll', onScrolled, true);
-    window.addEventListener('keydown', onKeyPressed, true);
-
-    highlightElements([], true);
-
-    lastDetails = {
-        frameContent: details.frameContent,
-        clientX: details.clientX,
-        clientY: details.clientY,
-        target: details.target
-    };
-
-    frameDialog = document.createElement('iframe');
-    frameDialog.setAttribute('seamless', '');
-    frameDialog.onload = onFrameReady;
-    pickerRoot.appendChild(frameDialog);
+pickerRoot.onload = function() {
+    localMessager.send({ what: 'elementPickerArguments' }, startPicker);
 };
 
-/******************************************************************************/
-
-localMessager.send({ what: 'elementPickerArguments' }, startPicker);
-
-// So the shortcuts will be usable in Firefox
-// (also triggers the hiding of the popover in Safari)
-window.focus();
+document.documentElement.appendChild(pickerRoot);
 
 /******************************************************************************/
 
