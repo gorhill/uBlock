@@ -136,10 +136,10 @@ body.advancedUser h2 {
     }
 body.advancedUser h2:before {
     color: #aaa;
-    content: '+\202F';
+    content: '+ ';
     }
 body.advancedUser #panes.dfEnabled h2:before {
-    content: '\2212\202F';
+    content: '\2212  ';
     }
 
 #refresh {
