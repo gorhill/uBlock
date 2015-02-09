@@ -110,7 +110,7 @@ var hashFromPopupData = function(reset) {
             hasher.push(rule);
         }
     }
-    hasher.push(uDom('#switch').hasClass('off'));
+    hasher.push(uDom('body').hasClass('off'));
 
     var hash = hasher.sort().join('');
     if ( reset ) {
@@ -330,7 +330,7 @@ var renderPopup = function() {
     uDom('#version').text(popupData.appVersion);
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
 
-    uDom('#switch').toggleClass(
+    uDom('body').toggleClass(
         'off',
         (popupData.pageURL === '') ||
         (!popupData.netFilteringSwitch) ||
@@ -398,7 +398,7 @@ var toggleNetFilteringSwitch = function(ev) {
         what: 'toggleNetFiltering',
         url: popupData.pageURL,
         scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
-        state: !uDom(this).toggleClass('off').hasClass('off'),
+        state: !uDom('body').toggleClass('off').hasClass('off'),
         tabId: popupData.tabId
     });
 
@@ -538,6 +538,14 @@ var reloadTab = function() {
     messager.send({ what: 'reloadTab', tabId: popupData.tabId });
 
     // Polling will take care of refreshing the popup content
+
+    // https://github.com/gorhill/uBlock/issues/748
+    // User forces a reload, assume the popup has to be updated regardless if
+    // there were changes or not.
+    popupData.contentLastModified = -1;
+
+    // No need to wait to remvoe this.
+    uDom('body').toggleClass('dirty', false);
 };
 
 /******************************************************************************/
