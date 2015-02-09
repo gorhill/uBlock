@@ -89,7 +89,7 @@ p {
     margin: 8px 0;
     }
 #switch .fa {
-    color: green;
+    color: #000;
     cursor: pointer;
     font-size: 96px;
     margin: 0;
@@ -97,7 +97,7 @@ p {
 #switch .fa:hover {
     opacity: 0.9;
     }
-#switch.off .fa {
+body.off #switch .fa {
     color: #ccc;
     }
 #switch-hint {
@@ -280,4 +280,19 @@ body.dirty #refresh:hover {
 #dynamicFilteringContainer span.nRule #actionSelector > span:nth-of-type(2),
 #dynamicFilteringContainer span.bRule #actionSelector > span:nth-of-type(3) {
     visibility: hidden;
+    }
+
+#offOverlay {
+    background-color: #fff;
+    bottom: 0;
+    display: none;
+    left: 0;
+    opacity: 0.4;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+body.off #offOverlay {
+    display: block;
     }
