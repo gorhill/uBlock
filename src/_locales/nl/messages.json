@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"aangeraakte domeinen",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{

@@ -152,11 +152,11 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"सभी",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"चित्र",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -192,11 +192,11 @@
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"चयन",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"बंद करें",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -400,27 +400,27 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blocked requests",
+    "message":"रुके हुए अनुरोध",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Allowed requests",
+    "message":"अनुमित अनुरोध",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"प्रकार",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"डोमेन",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"URL",
+    "message":"यू आर एल",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filter",
+    "message":"फिल्टर",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
@@ -440,7 +440,7 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"विकी",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
@@ -448,7 +448,7 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contributors",
+    "message":"योगदानकर्ता",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{

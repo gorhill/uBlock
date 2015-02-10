@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"全部",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"第三方",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"個域名已連結",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} \/ {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
