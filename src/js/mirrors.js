@@ -332,7 +332,7 @@ var updateMetadataNow = function() {
 
 var updateMetadataAsync = function() {
     if ( metadataPersistTimer === null ) {
-        setTimeout(updateMetadata, 60 * 1000);
+        metadataPersistTimer = setTimeout(updateMetadata, 60 * 1000);
     }
 };
 
