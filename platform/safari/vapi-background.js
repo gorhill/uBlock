@@ -71,6 +71,7 @@
 
             if(keys === null) {
                 for(i in this._storage) {
+                    if(!this._storage.hasOwnProperty(i)) continue;
                     value = this._storage[i];
 
                     if(typeof value === 'string') {
@@ -93,6 +94,7 @@
                 }
             } else if(typeof keys === 'object') {
                 for(i in keys) {
+                    if(!keys.hasOwnProperty(i)) continue;
                     value = this._storage[i];
 
                     if(typeof value === 'string') {
@@ -197,7 +199,6 @@
                 }
             }
         }, true);
-
         // onClosed handled in the main tab-close event
         // onUpdated handled via monitoring the history.pushState on web-pages
         // onPopup is handled in window.open on web-pages
@@ -298,7 +299,7 @@
             details.index = curWin.tabs.indexOf(curWin.activeTab) + 1;
         }
 
-        tab = details.tabId && this.stack[details.tabId] || curWin.openTab(details.active ? 'foreground' : 'background');
+        tab = (details.tabId ? this.stack[details.tabId] : curWin.openTab(details.active ? 'foreground' : 'background'));
 
         if(details.index !== undefined) {
             curWin.insertTab(tab, details.index);
