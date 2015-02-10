@@ -97,8 +97,17 @@ function handleImportFilePicker() {
         if ( typeof this.result !== 'string' || this.result === '' ) {
             return;
         }
+        // https://github.com/gorhill/uBlock/issues/757
+        // Support RequestPolicy rule syntax
+        var result = this.result;
+        var matches = /\[origins-to-destinations\]([^\[]+)/.exec(result);
+        if ( matches && matches.length === 2 ) {
+            result = matches[1].trim()
+                               .replace(/\|/g, ' ')
+                               .replace(/\n/g, ' * noop\n');
+        }
         var textarea = uDom('#rulesEditor');
-        textarea.val([textarea.val(), this.result].join('\n').trim());
+        textarea.val([textarea.val(), result].join('\n').trim());
         rulesChanged();
     };
     var file = this.files[0];
