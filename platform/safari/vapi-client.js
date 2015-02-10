@@ -157,7 +157,8 @@
     // Helper event to message background,
     // and helper anchor element
     var beforeLoadEvent = new Event("beforeload"),
-        linkHelper = document.createElement("a");
+        linkHelper = document.createElement("a"),
+        isHttp_s = /^https?:/;
 
     // Inform that we've navigated
     if(frameId === 0) {
@@ -183,9 +184,9 @@
         details.parentFrameId = parentFrameId;
         details.timeStamp = Date.now();
         return !(safari.self.tab.canLoad(beforeLoadEvent, details));
-    }
+    };
     var onBeforeLoad = function(e) {
-        if(e.url.lastIndexOf("data:", 0) === 0) {
+        if(e.url.charCodeAt(0) !== 104 && !isHttp_s.test(e.url)) { // h = 104
             return;
         }
         linkHelper.href = e.url;
