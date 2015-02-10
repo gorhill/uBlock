@@ -431,8 +431,11 @@
 
     // reload the popup when that is opened
     safari.application.addEventListener('popover', function(e) {
-        e.target.contentWindow.document.body.textContent = '';
-        e.target.contentWindow.location.reload();
+        var w = e.target.contentWindow, body = w.document.body, child;
+        while(child = body.firstChild) {
+            body.removeChild(child);
+        }
+        w.location.reload();
     }, true);
 
     /******************************************************************************/

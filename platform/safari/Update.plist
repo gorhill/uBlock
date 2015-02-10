@@ -14,7 +14,7 @@
 				<key>CFBundleVersion</key>
 				<string>{buildNumber}</string>
 				<key>URL</key>
-				<string>https://chrismatic.io/ublock/ublock-0.8.6.0.safariextz</string>
+				<string>https://chrismatic.io/ublock/ublock-latest.safariextz</string>
 			</dict>
 		</array>
 	</dict>
