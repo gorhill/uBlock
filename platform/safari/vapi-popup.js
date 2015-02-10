@@ -18,6 +18,8 @@
 
     Home: https://github.com/gorhill/uBlock
 */
+(function() {
+'use strict';
 
 var whenSizeChanges = function(elm, callback) {
     var reset = function() {
@@ -63,3 +65,4 @@ var onLoaded = function() {
     whenSizeChanges(body, updateSize);
 };
 window.addEventListener('load', onLoaded);
+})();

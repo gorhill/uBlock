@@ -24,6 +24,10 @@
 (function() {
     'use strict';
     var vAPI = self.vAPI = self.vAPI || {};
+    if(vAPI.vapiClientInjected) {
+        return;
+    }
+    vAPI.vapiClientInjected = true;
     vAPI.safari = true;
     /******************************************************************************/
     var messagingConnector = function(response) {
@@ -143,7 +147,7 @@
     };
 
     vAPI.canExecuteContentScript = function() {
-        return(/^https?:/.test(location.protocol) && typeof safari === "object");
+        return (/^https?:/.test(location.protocol) && typeof safari === "object");
     };
 
     // The following code should run only in content pages
