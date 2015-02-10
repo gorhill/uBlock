@@ -195,6 +195,9 @@ var highlightElements = function(elems, force) {
     var elem, rect, poly;
     for ( var i = 0; i < elems.length; i++ ) {
         elem = elems[i];
+        if ( elem === pickerRoot ) {
+            continue;
+        }
         if ( typeof elem.getBoundingClientRect !== 'function' ) {
             continue;
         }
@@ -385,6 +388,11 @@ var filtersFromElement = function(elem) {
 
 var elementsFromFilter = function(filter) {
     var out = [];
+
+    filter = filter.trim();
+    if ( filter === '' ) {
+        return out;
+    }
 
     // Cosmetic filters: these are straight CSS selectors
     // TODO: This is still not working well for a[href], because there are
