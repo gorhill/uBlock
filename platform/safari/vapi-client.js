@@ -86,7 +86,7 @@
             this.channels['vAPI'] = {
                 listener: function(msg) {
                     if(msg.cmd === 'injectScript' && msg.details.code) {
-                        Function(msg.details.code).call(self);
+                         Function(msg.details.code).call(self);
                     }
                 }
             };
@@ -144,10 +144,6 @@
             };
             return this.channels[channelName];
         }
-    };
-
-    vAPI.canExecuteContentScript = function() {
-        return (/^https?:/.test(location.protocol) && typeof safari === "object");
     };
 
     // The following code should run only in content pages

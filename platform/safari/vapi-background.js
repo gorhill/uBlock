@@ -32,7 +32,6 @@
     var vAPI = self.vAPI = self.vAPI || {};
 
     vAPI.safari = true;
-    var noopFunc = function(){};
 
     /******************************************************************************/
 
@@ -349,22 +348,23 @@
 
         if(details.file) {
             var xhr = new XMLHttpRequest();
-            xhr.overrideMimeType('application/x-javascript;charset=utf-8');
-            xhr.open('GET', details.file, false);
+            xhr.open('GET', details.file, true);
+            xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4) {
+                    details.code = xhr.responseText;
+                    tab.page.dispatchMessage('broadcast', {
+                        channelName: 'vAPI',
+                        msg: {
+                            cmd: 'injectScript',
+                            details: details
+                        }
+                    });
+                    if(typeof callback === 'function') {
+                        setTimeout(callback, 13);
+                    }
+                }
+            });
             xhr.send();
-            details.code = xhr.responseText;
-        }
-
-        tab.page.dispatchMessage('broadcast', {
-            channelName: 'vAPI',
-            msg: {
-                cmd: 'injectScript',
-                details: details
-            }
-        });
-
-        if(typeof callback === 'function') {
-            setTimeout(callback, 13);
         }
     };
 
@@ -488,7 +488,7 @@
     vAPI.messaging = {
         listeners: {},
         defaultHandler: null,
-        NOOPFUNC: noopFunc, 
+        NOOPFUNC: function() {}, 
         UNHANDLED: 'vAPI.messaging.notHandled'
     };
 

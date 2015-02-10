@@ -46,12 +46,6 @@ if ( !vAPI ) {
     return;
 }
 
-// Because Safari
-if ( vAPI.canExecuteContentScript() !== true ) {
-    //console.debug('contentscript-start.js > can\'t execute');
-    return;
-}
-
 // https://github.com/gorhill/uBlock/issues/456
 // Already injected?
 if ( vAPI.contentscriptStartInjected ) {

@@ -42,11 +42,6 @@ if ( !vAPI ) {
     return;
 }
 
-if ( vAPI.canExecuteContentScript() !== true ) {
-    //console.debug('contentscript-end.js > can\'t execute');
-    return;
-}
-
 // https://github.com/gorhill/uBlock/issues/587
 // Pointless to execute without the start script having done its job.
 if ( !vAPI.contentscriptStartInjected ) {
