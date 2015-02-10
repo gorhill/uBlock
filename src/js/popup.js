@@ -311,7 +311,10 @@ var renderPrivacyExposure = function() {
 
     // The root page domain must always be counted as connected: that's from 
     // where the root document was fetched.
-    if ( allDomains[popupData.pageDomain] !== true ) {
+    // https://github.com/gorhill/uBlock/issues/759
+    // The root page domain must be counted if and only if it was actually
+    // obtained through a network request.
+    if ( allDomainCount !== 0 && allDomains[popupData.pageDomain] !== true ) {
         allDomains[popupData.pageDomain] = true;
         touchedDomainCount += 1;
     }
