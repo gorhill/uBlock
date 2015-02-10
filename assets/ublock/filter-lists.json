@@ -33,6 +33,7 @@
         "homeURL": "https://www.fanboy.co.nz/enhancedstats.txt"
         },
     "mirror1.malwaredomains.com/files/immortal_domains.txt": {
+        "off": true,
         "title": "Malware domains (long-lived)",
         "group": "malware",
         "homeURL": ""
