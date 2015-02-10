@@ -783,19 +783,21 @@ var startPicker = function(details) {
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
 pickerRoot.style.cssText = [
+    'display: block',
+    'visibility: visible',
+    'opacity: 1',
     'position: fixed',
     'top: 0',
     'left: 0',
     'width: 100%',
     'height: 100%',
     'background: transparent',
+    'margin: 0',
+    'padding: 0',
     'border: 0',
     'border-radius: 0',
     'box-shadow: none',
-    'float: none',
-    'margin: 0',
     'outline: 0',
-    'padding: 0',
     'z-index: 2147483647',
     ''
 ].join('!important; ');
