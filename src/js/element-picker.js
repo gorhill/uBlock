@@ -271,6 +271,7 @@ var netFilterFromElement = function(elem, out) {
 };
 
 var netFilterSources = {
+     'embed': 'src',
     'iframe': 'src',
        'img': 'src',
     'object': 'data'
@@ -410,15 +411,16 @@ var elementsFromFilter = function(filter) {
     if ( filter.slice(0, 2) === '||' ) {
         filter = filter.replace('||', '');
     }
-    var elems = document.querySelectorAll('iframe,img,object');
+    var elems = document.querySelectorAll('iframe, img, object, embed');
     var i = elems.length;
     var elem, src;
     while ( i-- ) {
         elem = elems[i];
-        src = elem.getAttribute(netFilterSources[elem.tagName.toLowerCase()]);
+        src = elem[netFilterSources[elem.tagName.toLowerCase()]];
         if ( typeof src !== 'string' ) {
             continue;
         }
+
         if ( src.indexOf(filter) !== -1 ) {
             out.push(elem);
         }
@@ -752,6 +754,7 @@ var startPicker = function(details) {
         'a': 'href',
         'img': 'src',
         'iframe': 'src',
+        'embed': 'src',
         'video': 'src',
         'audio': 'src'
     };
