@@ -240,7 +240,7 @@
             index: tab.browserWindow.tabs.indexOf(tab),
             windowId: safari.application.browserWindows.indexOf(tab.browserWindow),
             active: tab === tab.browserWindow.activeTab,
-            url: tab.url,
+            url: tab.url || "about:blank",
             title: tab.title
         });
     };
@@ -272,7 +272,9 @@
                 var url = details.url.replace(rgxHash, '');
 
                 for(var i = 0; i < win.tabs.length; i++) {
-                    if(win.tabs[i].url.replace(rgxHash, '') === url) {
+                    // Some tabs don't have a URL
+                    if(win.tabs[i].url &&
+                       win.tabs[i].url.replace(rgxHash, '') === url) {
                         win.tabs[i].activate();
                         return true;
                     }
