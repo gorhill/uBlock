@@ -137,7 +137,6 @@ var svgOcean = null;
 var svgIslands = null;
 var dialog = null;
 var taCandidate = null;
-var urlNormalizer = null;
 
 var netFilterCandidates = [];
 var cosmeticFilterCandidates = [];
@@ -246,8 +245,8 @@ var netFilterFromElement = function(elem, out) {
     if ( netFilterSources.hasOwnProperty(tagName) === false ) {
         return;
     }
-    var src = elem.getAttribute(netFilterSources[tagName]);
-    if ( typeof src !== 'string' || src.length === 0 ) {
+    var src = elem[netFilterSources[tagName]];
+    if ( src.length === 0 ) {
         return;
     }
     // Remove fragment
@@ -255,10 +254,6 @@ var netFilterFromElement = function(elem, out) {
     if ( pos !== -1 ) {
         src = src.slice(0, pos);
     }
-    // Feed the attribute to a link element, then retrieve back: this
-    // should normalize it.
-    urlNormalizer.href = src;
-    src = urlNormalizer.href;
     // Anchor absolute filter to hostname
     src = src.replace(/^https?:\/\//, '||');
     out.push(src);
@@ -417,11 +412,7 @@ var elementsFromFilter = function(filter) {
     while ( i-- ) {
         elem = elems[i];
         src = elem[netFilterSources[elem.tagName.toLowerCase()]];
-        if ( typeof src !== 'string' ) {
-            continue;
-        }
-
-        if ( src.indexOf(filter) !== -1 ) {
+        if ( src && src.indexOf(filter) !== -1 ) {
             out.push(elem);
         }
     }
@@ -682,8 +673,7 @@ var stopPicker = function() {
     pickerRoot =
     dialog =
     svgOcean = svgIslands =
-    taCandidate =
-    urlNormalizer = null;
+    taCandidate = null;
     localMessager.close();
 
     window.focus();
@@ -721,8 +711,6 @@ var startPicker = function(details) {
     svgOcean = svgRoot.firstChild;
     svgIslands = svgRoot.lastChild;
     svgListening(true);
-
-    urlNormalizer = document.createElement('a');
 
     window.addEventListener('scroll', onScrolled, true);
     pickerRoot.contentWindow.addEventListener('keydown', onKeyPressed, true);
