@@ -491,7 +491,7 @@ var mouseleaveCellHandler = function() {
 
 /******************************************************************************/
 
-var setFirewallRule = function(src, des, type, action) {
+var setFirewallRule = function(src, des, type, action, persist) {
     // This can happen on pages where uBlock does not work
     if ( typeof popupData.pageHostname !== 'string' || popupData.pageHostname === '' ) {
         return;
@@ -508,26 +508,28 @@ var setFirewallRule = function(src, des, type, action) {
         srcHostname: src,
         desHostname: des,
         requestType: type,
-        action: action
+        action: action,
+        persist: persist
     }, onFirewallRuleChanged);
 };
 
 /******************************************************************************/
 
-var unsetFirewallRuleHandler = function() {
+var unsetFirewallRuleHandler = function(ev) {
     var cell = uDom(this);
     setFirewallRule(
         cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
-        0
+        0,
+        ev.ctrlKey || ev.metaKey
     );
     dfHotspots.appendTo(cell);
 };
 
 /******************************************************************************/
 
-var setFirewallRuleHandler = function() {
+var setFirewallRuleHandler = function(ev) {
     var hotspot = uDom(this);
     var cell = hotspot.ancestors('[data-src]');
     if ( cell.length === 0 ) {
@@ -546,7 +548,8 @@ var setFirewallRuleHandler = function() {
         cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
-        action
+        action,
+        ev.ctrlKey || ev.metaKey
     );
     dfHotspots.detach();
 };
@@ -569,10 +572,11 @@ var reloadTab = function() {
 
 /******************************************************************************/
 
-var saveRules = function() {
-    messager.send({ what: 'saveRules',
-        'srcHostname': popupData.pageHostname,
-        'desHostnames': popupData.hostnameDict
+var saveFirewallRules = function() {
+    messager.send({
+        what: 'saveFirewallRules',
+        srcHostname: popupData.pageHostname,
+        desHostnames: popupData.hostnameDict
     });
     uDom('#firewallContainer').removeClass('dirty');
 };
@@ -653,7 +657,7 @@ uDom.onLoad(function() {
     uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
-    uDom('#saveRules').on('click', saveRules);
+    uDom('#saveRules').on('click', saveFirewallRules);
 });
 
 /******************************************************************************/

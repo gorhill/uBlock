@@ -288,6 +288,16 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, details.requestType);
     }
 
+    // https://github.com/gorhill/uBlock/issues/731#issuecomment-73937469
+    if ( details.persist ) {
+        if ( details.action !== 0 ) {
+            this.permanentFirewall.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
+        } else {
+            this.permanentFirewall.unsetCell(details.srcHostname, details.desHostname, details.requestType, details.action);
+        }
+        this.savePermanentFirewallRules();
+    }
+
     // https://github.com/gorhill/uBlock/issues/420
     this.cosmeticFilteringEngine.removeFromSelectorCache(details.srcHostname, 'net');
 };
