@@ -690,21 +690,17 @@ var stopPicker = function() {
 /******************************************************************************/
 
 var startPicker = function(details) {
+    pickerRoot.onload = stopPicker;
+
     var frameDoc = pickerRoot.contentDocument;
     var parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
 
-    pickerRoot.onload = stopPicker;
-
-    frameDoc.documentElement.replaceChild(
-        frameDoc.adoptNode(parsedDom.head),
-        frameDoc.head
-    );
-    frameDoc.documentElement.replaceChild(
-        frameDoc.adoptNode(parsedDom.body),
-        frameDoc.body
+    frameDoc.replaceChild(
+        frameDoc.adoptNode(parsedDom.documentElement),
+        frameDoc.documentElement
     );
 
     frameDoc.body.setAttribute('lang', navigator.language);
