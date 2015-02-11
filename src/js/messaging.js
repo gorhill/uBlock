@@ -752,6 +752,9 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'setSessionFirewallRules':
+            // https://github.com/gorhill/uBlock/issues/772
+            µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
+
             µb.sessionFirewall.fromString(request.rules);
             response = getFirewallRules();
             break;

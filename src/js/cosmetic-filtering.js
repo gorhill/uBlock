@@ -408,9 +408,10 @@ SelectorCacheEntry.prototype.add = function(selectors, type) {
 // https://github.com/gorhill/uBlock/issues/420
 SelectorCacheEntry.prototype.remove = function(type) {
     this.lastAccessTime = Date.now();
-    if ( type === 'cosmetic' ) {
+    if ( type === undefined || type === 'cosmetic' ) {
         this.cosmetic = {};
-    } else {
+    }
+    if ( type === undefined || type === 'net' ) {
         this.net = {};
         this.netCount = 0;
     }
