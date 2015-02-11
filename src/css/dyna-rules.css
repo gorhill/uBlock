@@ -140,7 +140,7 @@ body[dir="rtl"] #commitButton:before {
     border-top: 1px solid #eee;
     direction: ltr;
     font: 12px monospace;
-    line-height: calc(140% + 4px);
+    line-height: 1.733;
     height: 100%;
     left: 0;
     margin: 0;
