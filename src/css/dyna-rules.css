@@ -130,7 +130,6 @@ body[dir="rtl"] #commitButton:before {
     }
 #diff .right li.notLeft {
     color: #000;
-    background: lightgreen;
     opacity: 1;
     }
 #diff .right li.notRight {
@@ -139,7 +138,6 @@ body[dir="rtl"] #commitButton:before {
 #diff .right li.toRemove {
     color: #000;
     text-decoration: line-through;
-    background: lightpink;
     opacity: 1;
     }
 #diff textarea {
