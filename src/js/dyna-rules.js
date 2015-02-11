@@ -33,31 +33,6 @@ var messager = vAPI.messaging.channel('dyna-rules.js');
 
 /******************************************************************************/
 
-// Switches before, rules after
-
-var normalizeRawRules = function(s) {
-    return s.replace(/[ \t]+/g, ' ')
-            .split(/\s*\n+\s*/)
-            .sort()
-            .join('\n')
-            .trim();
-};
-
-/******************************************************************************/
-
-// This is to give a visual hint that the content of user blacklist has changed.
-
-function rulesChanged() {
-    uDom('#rulesApply').prop(
-        'disabled',
-        normalizeRawRules(uDom('#rulesEditor').val()) === cachedRawRules
-    );
-}
-
-var cachedRawRules = '';
-
-/******************************************************************************/
-
 var renderRules = function(details) {
     var rules, rule, i;
     var permanentList = [];
@@ -211,7 +186,7 @@ var commitHandler = function() {
 
 /******************************************************************************/
 
-var editStartHandler = function(ev) {
+var editStartHandler = function() {
     uDom('#diff .right textarea').val(rulesFromHTML('#diff .right li'));
     var parent = uDom(this).ancestors('#diff');
     parent.toggleClass('edit', true);
@@ -219,7 +194,7 @@ var editStartHandler = function(ev) {
 
 /******************************************************************************/
 
-var editStopHandler = function(ev) {
+var editStopHandler = function() {
     var parent = uDom(this).ancestors('#diff');
     parent.toggleClass('edit', false);
     var request = {
@@ -231,7 +206,7 @@ var editStopHandler = function(ev) {
 
 /******************************************************************************/
 
-var editCancelHandler = function(ev) {
+var editCancelHandler = function() {
     var parent = uDom(this).ancestors('#diff');
     parent.toggleClass('edit', false);
 };
@@ -244,11 +219,11 @@ uDom.onLoad(function() {
     uDom('#importFilePicker').on('change', handleImportFilePicker);
     uDom('#exportButton').on('click', exportUserRulesToFile);
 
-    uDom('#revertButton').on('click', revertHandler)
-    uDom('#commitButton').on('click', commitHandler)
-    uDom('#editEnterButton').on('click', editStartHandler)
-    uDom('#editStopButton').on('click', editStopHandler)
-    uDom('#editCancelButton').on('click', editCancelHandler)
+    uDom('#revertButton').on('click', revertHandler);
+    uDom('#commitButton').on('click', commitHandler);
+    uDom('#editEnterButton').on('click', editStartHandler);
+    uDom('#editStopButton').on('click', editStopHandler);
+    uDom('#editCancelButton').on('click', editCancelHandler);
 
     messager.send({ what: 'getFirewallRules' }, renderRules);
 });
