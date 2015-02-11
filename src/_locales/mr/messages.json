@@ -339,6 +339,22 @@
     "message":"बदल लागू करा",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Permanent rules",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Temporary rules",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revert",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Commit",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Edit",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Export to file",
     "description":""
   },
   "rulesDefaultFileName":{

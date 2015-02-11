@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"अंत में, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। CPU और स्मृति पर आसान।",
+    "message":"आख़िरकार, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। CPU और स्मृति पर आसान।",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -28,11 +28,11 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"सफेद सूची",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"यूब्लॉक  —  नेटवर्क रिक्वेस्ट लॉग",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"तृतीय-पक्ष",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"नेट फिलटर्स",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -292,11 +292,11 @@
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"क्षेत्र, भाषा",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"कस्टम",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -328,7 +328,7 @@
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Export",
+    "message":"निर्यात करें",
     "description":"English: Export"
   },
   "1pExportFilename":{
@@ -339,16 +339,32 @@
     "message":"Apply changes",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Permanent rules",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Temporary rules",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revert",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Commit",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"एडिट",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"सहेजें",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"रद्द करें",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file...",
+    "message":"Export to file",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -380,7 +396,7 @@
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"निर्यात करें",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
@@ -388,7 +404,7 @@
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Apply changes",
+    "message":"परिवर्तन लागू करें",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
@@ -432,7 +448,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"पर्दे के पीछे",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{

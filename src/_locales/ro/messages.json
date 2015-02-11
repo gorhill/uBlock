@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"tot",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"domenii conectate",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} din {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -339,6 +339,22 @@
     "message":"Aplică modificările",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Permanent rules",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Temporary rules",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revert",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Commit",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Editează",
     "description":"Will enable manual-edit mode (textarea)"
@@ -432,7 +448,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"În fundal",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{

@@ -339,6 +339,22 @@
     "message":"Terapkan perubahan",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Aturan permanen",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Aturan sementara",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revert",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Commit",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Sunting",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Ekspor ke berkas...",
+    "message":"Ekspor ke berkas",
     "description":""
   },
   "rulesDefaultFileName":{

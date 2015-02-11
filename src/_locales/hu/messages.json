@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"domain csatlakozik",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}}, összesen: {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -338,6 +338,22 @@
   "1pApplyChanges":{
     "message":"Módosítások alkalmazása",
     "description":"English: Apply changes"
+  },
+  "rulesPermanentHeader":{
+    "message":"Permanent rules",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Temporary rules",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revert",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Commit",
+    "description":"This will persist temporary rules"
   },
   "rulesEdit":{
     "message":"Szerkesztés",

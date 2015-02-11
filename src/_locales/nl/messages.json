@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"aangeraakte domeinen",
+    "message":"verbonden domeinen",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -338,6 +338,22 @@
   "1pApplyChanges":{
     "message":"Pas veranderingen toe",
     "description":"English: Apply changes"
+  },
+  "rulesPermanentHeader":{
+    "message":"Permanente regels",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Tijdelijke regels",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Zet terug",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Sla op",
+    "description":"This will persist temporary rules"
   },
   "rulesEdit":{
     "message":"Bewerken",

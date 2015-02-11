@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"savienotie domēni",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} no {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -339,6 +339,22 @@
     "message":"Lietot izmaiņas",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Pastāvīgie noteikumi",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Pagaidu noteikumi",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Atgriezt",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Ieviest",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Rediģēt",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Eksportēt failā...",
+    "message":"Eksportēt uz failu...",
     "description":""
   },
   "rulesDefaultFileName":{

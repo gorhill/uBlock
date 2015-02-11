@@ -72,83 +72,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Вътрешните <code>script<\/code> тагове са <b>позволени<\/b> за този сайт",
+    "message":"За този сайт, вътрешните <code>script<\/code> тагове са <b>позволени<\/b>",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Вътрешните <code>script<\/code> тагове са <b>блокирани<\/b> за този сайт",
+    "message":"За този сайт, вътрешните <code>script<\/code> тагове са <b>блокирани<\/b>",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Скриптовете от 1-ви лица са <b>позволени<\/b> за този сайт",
+    "message":"За този сайт, скриптовете от 1-ви лица са <b>позволени<\/b>",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Скриптовете от 1-ви лица са <b>блокирани<\/b> за този сайт",
+    "message":"За този сайт, скриптовете от 1-ви лица са <b>блокирани<\/b>",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Скриптовете от 3-ти лица са <b>позволени<\/b> за този сайт",
+    "message":"За този сайт, скриптовете от 3-ти лица са <b>позволени<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Скриптовете от 3-ти лица са <b>блокирани<\/b> за този сайт",
+    "message":"За този сайт, скриптовете от 3-ти лица са <b>блокирани<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Рамките от 1-ви лица са <b>позволени<\/b> за този сайт",
+    "message":"За този сайт, рамките от 1-ви лица са <b>позволени<\/b>",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Рамките от 1-ви лица са <b>блокирани<\/b> за този сайт",
+    "message":"За този сайт, рамките от 1-ви лица са <b>блокирани<\/b>",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Рамките от 3-ти лица са <b>позволени<\/b> за този сайт",
+    "message":"За този сайт, рамките от 3-ти лица са <b>позволени<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Рамките от 3-ти лица са <b>блокирани<\/b> за този сайт",
+    "message":"За този сайт, рамките от 3-ти лица са <b>блокирани<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Вмъкнатите <code>script<\/code> тагове са <b>позволени<\/b> навсякъде, по подразбиране",
+    "message":"По подразбиране, вмъкнатите <code>script<\/code> тагове са <b>позволени<\/b> навсякъде",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Вмъкнатите <code>script<\/code> тагове са <b>блокирани<\/b> навсякъде, по подразбиране",
+    "message":"По подразбиране, вмъкнатите <code>script<\/code> тагове са <b>блокирани<\/b> навсякъде",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Скриптовете от 1-ви лица са <b>позволени<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, скриптовете от 1-ви лица са <b>позволени<\/b> навсякъде",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Скриптовете от 1-ви лица са <b>блокирани<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, скриптовете от 1-ви лица са <b>блокирани<\/b> навсякъде",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Скриптовете от 3-ти лица са <b>позволени<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, скриптовете от 3-ти лица са <b>позволени<\/b> навсякъде",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Скриптовете от 3-ти лица са <b>блокирани<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, скриптовете от 3-ти лица са <b>блокирани<\/b> навсякъде",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Рамките от 1-ви лица са <b>позволени<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, рамките от 1-ви лица са <b>позволени<\/b> навсякъде",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Рамките от 1-ви лица са <b>блокирани<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, рамките от 1-ви лица са <b>блокирани<\/b> навсякъде",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Рамките от 3-ти лица са <b>позволени<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, рамките от 3-ти лица са <b>позволени<\/b> навсякъде",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Рамките от 3-ти лица са <b>блокирани<\/b> навсякъде, по подразбирне",
+    "message":"По подразбиране, рамките от 3-ти лица са <b>блокирани<\/b> навсякъде",
     "description":""
   },
   "popupAnyRulePrompt":{
@@ -280,7 +280,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Домейни със злонамерен софтуер",
+    "message":"Вредоносни домейни",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -300,7 +300,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"По един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси ще бъдат игнорирани.",
+    "message":"По един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -312,11 +312,11 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"налична нова версия",
+    "message":"Налична нова версия",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"остарял",
+    "message":"Остарял",
     "description":"English: outdated"
   },
   "1pFormatHint":{
@@ -339,6 +339,22 @@
     "message":"Прилагане на промените",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Постоянни правила",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Временни правила",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Връщане",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Фиксиране",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Редактиране",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Изнасяне във файл...",
+    "message":"Изнасяне във файл",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -396,7 +412,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки, като включите тази опция. Записването им увеличава консумацията на памет от µBlock. Тъй като много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
+    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки, като включите тази опция. Записването им увеличава консумацията на памет от µBlock. Тъй като, много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -424,11 +440,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Няма блокирани заявки, регистрирани за тази страница",
+    "message":"За тази страница няма регистрирани блокирани заявки",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Няма неблокирани заявки, регистрирани за тази страница",
+    "message":"За тази страница няма регистрирани неблокирани заявки",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
@@ -468,7 +484,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат заместени, с помощта на данни, архивирани на {{time}}, и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки използвайки архивирани данни?",
+    "message":"Всички ваши настройки ще бъдат заместени, с помощта на данни, архивирани на {{time}}, и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивирани данни?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{

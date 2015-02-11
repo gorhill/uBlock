@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domén dotčeno",
+    "message":"domén připojeno",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -339,6 +339,22 @@
     "message":"Použít změny",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Permanentní pravidla",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Dočasná pravidla",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Vrátit",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Potvrdit",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Upravit",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Uložit do souboru…",
+    "message":"Exportovat do souboru",
     "description":""
   },
   "rulesDefaultFileName":{

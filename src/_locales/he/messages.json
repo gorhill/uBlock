@@ -339,6 +339,22 @@
     "message":"החל שינויים",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"חוקים קבועים",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"חוקים זמניים",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"החזר למצב הקודם",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"החל",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"ערוך",
     "description":"Will enable manual-edit mode (textarea)"

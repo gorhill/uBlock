@@ -339,6 +339,22 @@
     "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"قواعد دائمة",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"قواعد مؤقتة",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"إلغاء",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"تعليق",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"تعديل",
     "description":"Will enable manual-edit mode (textarea)"

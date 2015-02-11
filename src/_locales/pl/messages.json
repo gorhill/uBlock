@@ -339,6 +339,22 @@
     "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Reguły stałe",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Reguły tymczasowe",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Przywróć",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Wyślij",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Edytuj",
     "description":"Will enable manual-edit mode (textarea)"

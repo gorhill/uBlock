@@ -339,6 +339,22 @@
     "message":"Aplicar cambios",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Reglas permanentes",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Reglas temporales",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Revertir",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Establecer",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Editar",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exportar a archivo...",
+    "message":"Exportar a archivo",
     "description":""
   },
   "rulesDefaultFileName":{

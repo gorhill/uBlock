@@ -339,6 +339,22 @@
     "message":"Primijeni promjene",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Trajna pravila",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Privremena pravila",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Vratiti",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Izvršiti",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Uredi",
     "description":"Will enable manual-edit mode (textarea)"

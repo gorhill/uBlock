@@ -339,6 +339,22 @@
     "message":"Kinnita muudatused",
     "description":"English: Apply changes"
   },
+  "rulesPermanentHeader":{
+    "message":"Igavesed reeglid",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Ajutised reeglid",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Aseta ajutisse",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Aseta igavesse",
+    "description":"This will persist temporary rules"
+  },
   "rulesEdit":{
     "message":"Muuda",
     "description":"Will enable manual-edit mode (textarea)"
@@ -356,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Ekspordi faili...",
+    "message":"Ekspordi failina",
     "description":""
   },
   "rulesDefaultFileName":{
