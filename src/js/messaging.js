@@ -142,9 +142,9 @@ var getHostnameDict = function(hostnameToCountMap) {
 
 /******************************************************************************/
 
-var getDynamicFilterRules = function(srcHostname, desHostnames) {
+var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
-    var dFiltering = µb.dynamicNetFilteringEngine;
+    var dFiltering = µb.sessionFirewall;
     r['/ * *'] = dFiltering.evaluateCellZY('*', '*', '*').toFilterString();
     r['/ * image'] = dFiltering.evaluateCellZY('*', '*', 'image').toFilterString();
     r['/ * 3p'] = dFiltering.evaluateCellZY('*', '*', '3p').toFilterString();
@@ -200,12 +200,19 @@ var getStats = function(tabId) {
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
-        r.dynamicFilterRules = getDynamicFilterRules(pageStore.pageHostname, r.hostnameDict);
+        r.firewallRules = getFirewallRules(pageStore.pageHostname, r.hostnameDict);
         r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
     } else {
         r.hostnameDict = {};
-        r.dynamicFilterRules = getDynamicFilterRules();
+        r.firewallRules = getFirewallRules();
+    }
+    if ( r.pageHostname ) {
+        r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
+            µb.permanentFirewall,
+            r.pageHostname,
+            r.hostnameDict
+        );
     }
     return r;
 };
@@ -275,8 +282,17 @@ var onMessage = function(request, sender, callback) {
             response = lastModified !== request.contentLastModified;
             break;
 
-        case 'toggleDynamicFilter':
-            µb.toggleDynamicFilter(request);
+        case 'saveRules':
+            µb.permanentFirewall.copyRules(
+                µb.sessionFirewall,
+                request.srcHostname,
+                request.desHostnames
+            );
+            µb.savePermanentFirewallRules();
+            break;
+            
+        case 'toggleFirewallRule':
+            µb.toggleFirewallRule(request);
             response = getStats(request.tabId);
             break;
 
@@ -723,13 +739,13 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'getDynamicRules':
-            response = µb.dynamicNetFilteringEngine.toString();
+            response = µb.permanentFirewall.toString();
             break;
 
         case 'setDynamicRules':
-            µb.dynamicNetFilteringEngine.fromString(request.rawRules);
-            µb.saveDynamicRules();
-            response = µb.dynamicNetFilteringEngine.toString();
+            µb.permanentFirewall.fromString(request.rawRules);
+            µb.savePermanentFirewallRules();
+            response = µb.permanentFirewall.toString();
             break;
 
         default:

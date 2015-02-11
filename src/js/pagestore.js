@@ -604,7 +604,7 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
     return this.getNetFilteringSwitch() &&
            (µb.userSettings.advancedUserEnabled &&
-            µb.dynamicNetFilteringEngine.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+            µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
 };
 
 /******************************************************************************/
@@ -613,7 +613,7 @@ PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
     return this.getNetFilteringSwitch() &&
            this.skipCosmeticFiltering === false &&
            (µb.userSettings.advancedUserEnabled &&
-            µb.dynamicNetFilteringEngine.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+            µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
 };
 
 /******************************************************************************/
@@ -648,7 +648,7 @@ PageStore.prototype.filterRequest = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.dynamicNetFilteringEngine.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        var df = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
         if ( df.mustBlockOrAllow() ) {
             result = df.toFilterString();
         }
@@ -689,8 +689,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.dynamicNetFilteringEngine.clearRegisters();
-        df.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        var df = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
         if ( df.mustBlockOrAllow() ) {
             result = df.toFilterString();
         }

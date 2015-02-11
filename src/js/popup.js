@@ -99,7 +99,7 @@ var hashFromPopupData = function(reset) {
     }
 
     var hasher = [];
-    var rules = popupData.dynamicFilterRules;
+    var rules = popupData.firewallRules;
     var rule;
     for ( var key in rules ) {
         if ( rules.hasOwnProperty(key) === false ) {
@@ -141,7 +141,7 @@ var rulekeyCompare = function(a, b) {
 
 /******************************************************************************/
 
-var addDynamicFilterRow = function(des) {
+var addFirewallRow = function(des) {
     var row = rowsToRecycle.pop();
     if ( row.length === 0 ) {
         row = uDom('#templates > div:nth-of-type(1)').clone();
@@ -155,7 +155,7 @@ var addDynamicFilterRow = function(des) {
     row.toggleClass('isDomain', des === hnDetails.domain);
     row.toggleClass('allowed', hnDetails.allowCount !== 0);
     row.toggleClass('blocked', hnDetails.blockCount !== 0);
-    row.appendTo('#dynamicFilteringContainer');
+    row.appendTo('#firewallContainer');
 
     // Hacky? I couldn't figure a CSS recipe for this problem.
     // I do not want the left pane -- optional and hidden by defaut -- to
@@ -171,8 +171,8 @@ var addDynamicFilterRow = function(des) {
 
 /******************************************************************************/
 
-var updateDynamicFilterCell = function(scope, des, type, rule) {
-    var selector = '#dynamicFilteringContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
+var updateFirewallCell = function(scope, des, type, rule) {
+    var selector = '#firewallContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
     var cell = uDom(selector);
 
     // This should not happen
@@ -230,48 +230,61 @@ var updateDynamicFilterCell = function(scope, des, type, rule) {
 
 /******************************************************************************/
 
-var updateAllDynamicFilters = function() {
-    var rules = popupData.dynamicFilterRules;
+var updateAllFirewallCells = function() {
+    var rules = popupData.firewallRules;
     for ( var key in rules ) {
         if ( rules.hasOwnProperty(key) === false ) {
             continue;
         }
-        updateDynamicFilterCell(
+        updateFirewallCell(
             key.charAt(0),
             key.slice(2, key.indexOf(' ', 2)),
             key.slice(key.lastIndexOf(' ') + 1),
             rules[key]
         );
     }
+
+    uDom('#firewallContainer').toggleClass(
+        'dirty',
+        popupData.matrixIsDirty === true
+    );
 };
 
 /******************************************************************************/
 
-var buildAllDynamicFilters = function() {
+var buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots = uDom('#actionSelector').on('click', 'span', setDynamicFilterHandler);
+        dfHotspots = uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
     }
     dfHotspots.detach();
 
     // Remove and reuse all rows: the order may have changed, we can't just
     // reuse them in-place.
-    rowsToRecycle = uDom('#dynamicFilteringContainer > div:nth-of-type(7) ~ div').detach();
+    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
 
     var n = allHostnameRows.length;
     for ( var i = 0; i < n; i++ ) {
-        addDynamicFilterRow(allHostnameRows[i]);
+        addFirewallRow(allHostnameRows[i]);
     }
 
     if ( dfPaneBuilt !== true ) {
-        uDom('#dynamicFilteringContainer')
-            .on('click', 'span[data-src]', unsetDynamicFilterHandler)
+        uDom('#firewallContainer')
+            .on('click', 'span[data-src]', unsetFirewallRuleHandler)
             .on('mouseenter', '[data-src]', mouseenterCellHandler)
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
         dfPaneBuilt = true;
     }
 
-    updateAllDynamicFilters();
+    // The padlock must be manually positioned, because its position depends
+    // on whether there is a vertical scrollbar.
+    var pane = document.getElementById('firewallContainer');
+    var rect = pane.getBoundingClientRect();
+    var padlock = document.getElementById('saveRules');
+    padlock.style.setProperty('left', (rect.left + 4) + 'px');
+    padlock.style.setProperty('top', (rect.top + 4) + 'px');
+
+    updateAllFirewallCells();
 };
 
 /******************************************************************************/
@@ -284,7 +297,7 @@ var renderPrivacyExposure = function() {
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
     var desHostnameDone = {};
-    var keys = Object.keys(popupData.dynamicFilterRules)
+    var keys = Object.keys(popupData.firewallRules)
                      .sort(rulekeyCompare);
     var key, des, hnDetails;
     for ( var i = 0; i < keys.length; i++ ) {
@@ -384,7 +397,7 @@ var renderPopup = function() {
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
-        buildAllDynamicFilters();
+        buildAllFirewallRows();
     }
 };
 
@@ -442,7 +455,7 @@ var gotoURL = function(ev) {
 
 /******************************************************************************/
 
-var toggleDynamicFiltering = function() {
+var toggleFirewallPane = function() {
     if ( popupData.advancedUserEnabled === false ) {
         return;
     }
@@ -457,7 +470,7 @@ var toggleDynamicFiltering = function() {
     // Dynamic filtering pane may not have been built yet
     uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
-        buildAllDynamicFilters();
+        buildAllFirewallRows();
     }
 };
 
@@ -475,32 +488,32 @@ var mouseleaveCellHandler = function() {
 
 /******************************************************************************/
 
-var setDynamicFilter = function(src, des, type, action) {
+var setFirewallRule = function(src, des, type, action) {
     // This can happen on pages where uBlock does not work
     if ( typeof popupData.pageHostname !== 'string' || popupData.pageHostname === '' ) {
         return;
     }
-    var onDynamicFilterChanged = function(response) {
+    var onFirewallRuleChanged = function(response) {
         cachePopupData(response);
-        updateAllDynamicFilters();
+        updateAllFirewallCells();
         hashFromPopupData();
     };
     messager.send({
-        what: 'toggleDynamicFilter',
+        what: 'toggleFirewallRule',
         tabId: popupData.tabId,
         pageHostname: popupData.pageHostname,
         srcHostname: src,
         desHostname: des,
         requestType: type,
         action: action
-    }, onDynamicFilterChanged);
+    }, onFirewallRuleChanged);
 };
 
 /******************************************************************************/
 
-var unsetDynamicFilterHandler = function() {
+var unsetFirewallRuleHandler = function() {
     var cell = uDom(this);
-    setDynamicFilter(
+    setFirewallRule(
         cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
@@ -511,7 +524,7 @@ var unsetDynamicFilterHandler = function() {
 
 /******************************************************************************/
 
-var setDynamicFilterHandler = function() {
+var setFirewallRuleHandler = function() {
     var hotspot = uDom(this);
     var cell = hotspot.ancestors('[data-src]');
     if ( cell.length === 0 ) {
@@ -526,7 +539,7 @@ var setDynamicFilterHandler = function() {
     } else {
         action = 1;
     }
-    setDynamicFilter(
+    setFirewallRule(
         cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
         cell.attr('data-type'),
@@ -549,6 +562,16 @@ var reloadTab = function() {
 
     // No need to wait to remove this.
     uDom('body').toggleClass('dirty', false);
+};
+
+/******************************************************************************/
+
+var saveRules = function() {
+    messager.send({ what: 'saveRules',
+        'srcHostname': popupData.pageHostname,
+        'desHostnames': popupData.hostnameDict
+    });
+    uDom('#firewallContainer').removeClass('dirty');
 };
 
 /******************************************************************************/
@@ -625,8 +648,9 @@ uDom.onLoad(function() {
     uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href]').on('click', gotoURL);
-    uDom('h2').on('click', toggleDynamicFiltering);
+    uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
+    uDom('#saveRules').on('click', saveRules);
 });
 
 /******************************************************************************/

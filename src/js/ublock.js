@@ -280,19 +280,13 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.toggleDynamicFilter = function(details) {
+µBlock.toggleFirewallRule = function(details) {
     var changed = false;
     if ( details.action !== 0 ) {
-        changed = this.dynamicNetFilteringEngine.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
+        this.sessionFirewall.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
     } else {
-        changed = this.dynamicNetFilteringEngine.unsetCell(details.srcHostname, details.desHostname, details.requestType);
+        this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, details.requestType);
     }
-    if ( !changed ) {
-        return;
-    }
-
-    this.userSettings.dynamicFilteringString = this.dynamicNetFilteringEngine.toString();
-    this.XAL.keyvalSetOne('dynamicFilteringString', this.userSettings.dynamicFilteringString);
 
     // https://github.com/gorhill/uBlock/issues/420
     this.cosmeticFilteringEngine.removeFromSelectorCache(details.srcHostname, 'net');

@@ -84,8 +84,8 @@
 
 /******************************************************************************/
 
-µBlock.saveDynamicRules = function() {
-    this.userSettings.dynamicFilteringString = this.dynamicNetFilteringEngine.toString();
+µBlock.savePermanentFirewallRules = function() {
+    this.userSettings.dynamicFilteringString = this.permanentFirewall.toString();
     this.XAL.keyvalSetOne('dynamicFilteringString', this.userSettings.dynamicFilteringString);
 };
 
@@ -715,25 +715,12 @@
         µb.mirrors.toggle(false /* userSettings.experimentalEnabled */);
 
         µb.contextMenu.toggle(userSettings.contextMenuEnabled);
-        µb.dynamicNetFilteringEngine.fromString(userSettings.dynamicFilteringString);
+        µb.permanentFirewall.fromString(userSettings.dynamicFilteringString);
+        µb.sessionFirewall.assign(µb.permanentFirewall);
 
         // Remove obsolete setting
         delete userSettings.logRequests;
         µb.XAL.keyvalRemoveOne('logRequests');
-
-        if ( typeof userSettings.dynamicFilteringSelfie === 'string' ) {
-            if ( userSettings.dynamicFilteringString === '' && userSettings.dynamicFilteringSelfie !== '' ) {
-                µb.dynamicNetFilteringEngine.fromObsoleteSelfie(userSettings.dynamicFilteringSelfie);
-                userSettings.dynamicFilteringString = µb.dynamicNetFilteringEngine.toString();
-                µb.XAL.keyvalSetOne('dynamicFilteringString', userSettings.dynamicFilteringString);
-
-                // Auto-enable advanced user if there were dynamic rules
-                userSettings.advancedUserEnabled = userSettings.dynamicFilteringString !== '';
-                µb.XAL.keyvalSetOne('advancedUserEnabled', userSettings.advancedUserEnabled);
-            }
-            delete userSettings.dynamicFilteringSelfie;
-            µb.XAL.keyvalRemoveOne('dynamicFilteringSelfie');
-        }
     };
 
     this.loadUserSettings(onUserSettingsReady);
