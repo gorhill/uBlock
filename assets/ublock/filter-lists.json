@@ -114,9 +114,15 @@
         "group": "regions",
         "homeURL": "https://easylist-downloads.adblockplus.org/easylistchina.txt"
         },
-    "cjxlist1.googlecode.com/svn/cjxlist.txt": {
+    "raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": {
         "off": true,
         "title": "CHN: China: cjxlist (main focus on Chinese sites)",
+        "group": "regions",
+        "homeURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
+        },
+    "cjxlist1.googlecode.com/svn/cjxlist.txt": {
+        "off": true,
+        "title": "CHN: China: cjxlist (obsolete, will be removed)",
         "group": "regions",
         "homeURL": "https://cjxlist1.googlecode.com/svn/cjxlist.txt"
         },

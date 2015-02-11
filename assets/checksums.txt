@@ -1,13 +1,14 @@
 7edb2a585b445f28aa5ab06306f1a23f assets/ublock/privacy.txt
 87bd880663ad80dae0f13ea76bbe10d1 assets/ublock/filters.txt
 dcf3e05bae803343c9d632f0baf8bedd assets/ublock/mirror-candidates.txt
-2d844cd37df8721845321ccd75daa977 assets/ublock/filter-lists.json
+48f4e02826d244a48d140cb5e4b81114 assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 407e48f8b4a82385a385c802c7440b8d assets/thirdparties/www.zoso.ro/pages/rolist.txt
 31758184ec5863b7bec86d768c93eb17 assets/thirdparties/adblock.gardar.net/is.abp.txt
 e00124880337378ec2f7c730498ce336 assets/thirdparties/raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt
 804fa768e2694b0e10a324981c6b5e02 assets/thirdparties/raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt
+a4e1ec7ed8faf43bb36c89e82e29e1f1 assets/thirdparties/raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt
 9ea55c53d40cc39426882c337cac5bb0 assets/thirdparties/raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt
 54f7032c0e7ef73feb32d3c5437b8694 assets/thirdparties/raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt
 1eb9a94089587b559d71d43a7fff7e74 assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
