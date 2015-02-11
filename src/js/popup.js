@@ -165,6 +165,11 @@ var addFirewallRow = function(des) {
     if ( popupHeight === undefined ) {
         popupHeight = uDom('#panes > div:nth-of-type(1)').nodeAt(0).offsetHeight;
         uDom('#panes > div:nth-of-type(2)').css('height', popupHeight + 'px');
+
+        // The padlock must be manually positioned:
+        // - It's vertical position depends on the height on the title bar.
+        var rect = document.getElementById('gotoPrefs').getBoundingClientRect();
+        document.getElementById('saveRules').style.setProperty('top', (rect.bottom + 4) + 'px');
     }
     return row;
 };
@@ -276,13 +281,11 @@ var buildAllFirewallRows = function() {
         dfPaneBuilt = true;
     }
 
-    // The padlock must be manually positioned, because its position depends
-    // on whether there is a vertical scrollbar.
-    var pane = document.getElementById('firewallContainer');
-    var rect = pane.getBoundingClientRect();
-    var padlock = document.getElementById('saveRules');
-    padlock.style.setProperty('left', (rect.left + 4) + 'px');
-    padlock.style.setProperty('top', (rect.top + 4) + 'px');
+    // The padlock must be manually positioned:
+    // - Its horizontal position depends on whether there is a vertical
+    //   scrollbar.
+    var rect = document.getElementById('firewallContainer').getBoundingClientRect();
+    document.getElementById('saveRules').style.setProperty('left', (rect.left + 4) + 'px');
 
     updateAllFirewallCells();
 };
