@@ -727,6 +727,15 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var getFirewallRules = function() {
+    return {
+        permanentRules: µb.permanentFirewall.toString(),
+        sessionRules: µb.sessionFirewall.toString()
+    };
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -738,14 +747,19 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'getDynamicRules':
-            response = µb.permanentFirewall.toString();
+        case 'getFirewallRules':
+            response = getFirewallRules();
             break;
 
-        case 'setDynamicRules':
-            µb.permanentFirewall.fromString(request.rawRules);
+        case 'setSessionFirewallRules':
+            µb.sessionFirewall.fromString(request.rules);
+            response = getFirewallRules();
+            break;
+
+        case 'setPermanentFirewallRules':
+            µb.permanentFirewall.fromString(request.rules);
             µb.savePermanentFirewallRules();
-            response = µb.permanentFirewall.toString();
+            response = getFirewallRules();
             break;
 
         default:

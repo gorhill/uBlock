@@ -10,16 +10,33 @@
 
 <body>
 
-<div>
-    <p data-i18n="rulesHint"></p>
-    <p data-i18n="rulesFormatHint"></p>
-    <p><button id="rulesApply" disabled="true" data-i18n="1pApplyChanges"></button></p>
-    <textarea id="rulesEditor" spellcheck="false" dir="auto"></textarea>
-    <p><button id="importButton" type="button" data-i18n="1pImport"></button> &emsp;
-       <button id="exportButton" type="button" data-i18n="1pExport"></button>
-       <input class="hidden" id="importFilePicker" type="file" accept="text/plain" style="display: none;"></p>
-    <span class="hidden" data-i18n="rulesDefaultFileName" style="display: none;"></span>
-</div>
+<p data-i18n="rulesHint"></p>
+<p data-i18n="rulesFormatHint"></p>
+<div id="diff">
+    <div class="pane left">
+        <div>
+            <h2 data-i18n="rulesPermanentHeader"></h2>
+            <button type="button" id="exportButton" data-i18n="rulesExport"></button>
+            <button type="button" id="revertButton" data-i18n="rulesRevert"></button>
+            </div>
+        <ul></ul>
+        </div>
+    <div class="pane right">
+        <div>
+            <h2 data-i18n="rulesTemporaryHeader"></h2>
+            <button type="button" id="commitButton" data-i18n="rulesCommit"></button>
+            <button type="button" id="editEnterButton" data-i18n="rulesEdit"></button>
+            <button type="button" id="editStopButton" data-i18n="rulesEditSave"></button>
+            <button type="button" id="editCancelButton" data-i18n="rulesEditDiscard"></button>
+            <button type="button" id="importButton" data-i18n="rulesImport"></button>
+            </div>
+        <textarea spellcheck="false"></textarea>
+        <ul></ul>
+        </div>
+    </div>
+
+<input class="hidden" id="importFilePicker" type="file" accept="text/plain" style="display: none;">
+<span class="hidden" data-i18n="rulesDefaultFileName" style="display: none;"></span>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
