@@ -1,51 +1,51 @@
-Pemblokir yang efisien: ringan penggunaan memori dan CPU, namun dapat memuat dan menjalankan ribuan filter lain yang lebih daripada pemblokir populer lain yang ada.
+Pemblokir yang efisien: ringan penggunaan memori dan CPU, namun dapat memuat dan menjalankan ribuan filter lain dibanding pemblokir populer lain di luar sana.
 
 Ringkasan ilustrasi efisiensi: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-Compared
 
-Penggunaan: Tombol power yang besar dalam popup adalah untuk  menonaktifkan/mengaktifkan µBlock untuk situs yang sedang dibuka secara permanen. Hanya berlaku untuk situs yang sedang dibuka saja, bukan sebuah tombol  global.
+Penggunaan: Tombol daya yang besar dalam popup berfungsi menonaktifkan/mengaktifkan µBlock secara permanen untuk situs yang sedang dibuka. Berlaku untuk situs yang sedang dibuka saja, bukan tombol daya global.
 
 ***
 
-Fleksibel, lebih dari sekedar "Pemblokir iklan": juga dapat membaca dan membuat filter dari file host.
+Fleksibel, lebih dari sekedar "pemblokir iklan": juga dapat membaca dan membuat filter dari berkas host.
 
-Berikut ini daftar filter yang bisa langsung dipakai:
+Langsung bekerja, daftar filter berikut ini dimuat dan dijalankan:
 
 - EasyList
-- Peter Lowe’s Ad server list
+- Daftar server iklan Peter Lowe
 - EasyPrivacy
-- Malware domains
-- Long-lived malware domains
-- Malware Domains List
+- Domain malware
+- Domain malware berumur panjang
+- Daftar Domain Malware
 
-Tersedia daftar filter lain yang bisa Anda pilih jika ingin:
+Jika anda ingin, masih banyak tersedia daftar lain untuk anda pilih:
 
-- Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
-- MVPS HOSTS
+- Daftar Pelacakan Fanboy yang DItingkatkan
+- Berkas host Dan Pollock
+- Server iklan dan pelacakan hpHosts
+- HOST MVPS
 - Spam404
 - dan banyak lainnya
 
-Tentu saja, semakin banyak filter yang diaktifkan, semakin besar penggunaan memori. Namun, bahkan setelah menambahkan 2 daftar ekstra Fanboy, hpHosts's Ad and tracking severs, penggunaan memori µBlock masih lebih kecil dari pemblokir iklan populer lain yang ada.
+Tentu saja, semakin banyak filter yang diaktifkan, semakin besar penggunaan memori. Namun, bahkan setelah menambahkan 2 daftar ekstra Fanboy, server iklan dan pelacakan hpHosts, penggunaan memori µBlock masih lebih kecil dibanding pemblokir iklan populer lain di luar sana.
 
-Perlu diketahui juga bahwa memilih beberapa daftar ekstra juga berpeluang  lebih tinggi menyebabkan kerusakan situs  -- terutama daftar tersebut yang biasanya digunakan sebagai file host.
-
-***
-
-Tanpa daftar filter preset, ekstensi ini bukanlah apa-apa. Jadi jika Anda benar-benar ingin untuk menyumbangkan sesuatu, berpikirlah  tentang orang-orang yang bekerja keras untuk mengelola daftar filter yang Anda gunakan, yang dibuat tersedia untuk digunakan oleh semua secara  gratis.
+Perlu diketahui juga bahwa memilih beberapa daftar ekstra juga berpeluang lebih tinggi menyebabkan kerusakan situs  -- terutama daftar yang biasanya digunakan sebagai berkas host.
 
 ***
 
-Bebas.
+Tanpa daftar filter yang ada, ekstensi ini bukanlah apa-apa. Jadi, jika Anda benar-benar ingin berkontribusi sesuatu, berpikirlah tentang orang-orang yang bekerja keras mengelola daftar filter yang anda gunakan, yang dibuat dan tersedia untuk digunakan oleh semua dengan gratis.
+
+***
+
+Gratis.
 Sumber terbuka dengan lisensi publik (GPLv3)
-Bagi pengguna oleh pengguna.
+Untuk pengguna oleh pengguna.
 
 Kontributor @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Kontributor @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Ini masih dalam versi yang amat awal, harap diperhatikan ketika Anda meninjau.
+Masih dalam versi yang amat awal, mohon diperhatikan ketika anda membuat ulasan.
 
-Daftar perubahan proyek:
+Catatan perubahan proyek:
 https://github.com/gorhill/uBlock/releases

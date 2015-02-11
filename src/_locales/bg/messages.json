@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Най-накрая, ефективен рекламен блокер за Chromium-базирани браузъри. С малки изисквания за процесор и памет.",
+    "message":"Най-накрая, ефективен рекламен блокер. С малки изисквания за процесор и памет.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,15 +16,15 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Филтри от други хора",
+    "message":"Филтри от 3-ти лица",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Твоите филтри",
+    "message":"Мои филтри",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Мойте правила",
+    "message":"Мои правила",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,15 +32,15 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — дневник на мрежовите заявки",
+    "message":"µBlock — Дневник на мрежовите заявки",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"За блокера",
+    "message":"Относно",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Натисни: забрани\/разреши µBlock за този сайт.\n\nCtrl+Натисни: забрани µBlock само за тази страница.",
+    "message":"Щракване: забранява\/разрешава µBlock за този сайт.\n\nCtrl + щракване: забранява µBlock само за тази страница.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -60,99 +60,99 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Натисни за да отвориш таблото",
+    "message":"Щракнете за да отворите таблото",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Режим за избираме на отделен елемент",
+    "message":"Режим за избиране на отделен елемент",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Виж история за заявките",
+    "message":"Преглед на дневника със заявки",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Вътрешните <code>script<\/code> таговете са <b>позволени<\/b> за този сайт",
+    "message":"Вътрешните <code>script<\/code> тагове са <b>позволени<\/b> за този сайт",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Вътрешните <code>script<\/code> таговете са <b>блокирани<\/b> за този сайт",
+    "message":"Вътрешните <code>script<\/code> тагове са <b>блокирани<\/b> за този сайт",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"Доверените скриптове са <b>позволени<\/b> за този сайт",
+    "message":"Скриптовете от 1-ви лица са <b>позволени<\/b> за този сайт",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"Доверените скриптове са <b>забранени<\/b> за този сайт",
+    "message":"Скриптовете от 1-ви лица са <b>блокирани<\/b> за този сайт",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"Скриптовете от трети лица са <b>позволени<\/b> за този сайт",
+    "message":"Скриптовете от 3-ти лица са <b>позволени<\/b> за този сайт",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"Скриптовете от трети лица са <b>блокирани<\/b> за този сайт",
+    "message":"Скриптовете от 3-ти лица са <b>блокирани<\/b> за този сайт",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"Рамки от първи лица са <b>позволени<\/b> за този сайт",
+    "message":"Рамките от 1-ви лица са <b>позволени<\/b> за този сайт",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"Рамки от първи лица са <b>блокирани<\/b> за този сайт",
+    "message":"Рамките от 1-ви лица са <b>блокирани<\/b> за този сайт",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"Рамки от трети лица са <b>позволени<\/b> за този сайт",
+    "message":"Рамките от 3-ти лица са <b>позволени<\/b> за този сайт",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"Рамки от трети лица са <b>блокирани<\/b> за този сайт",
+    "message":"Рамките от 3-ти лица са <b>блокирани<\/b> за този сайт",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"Вмъкнати <code>script<\/code> тагове са <b>позволени<\/b> навсякъде, по подразбиране",
+    "message":"Вмъкнатите <code>script<\/code> тагове са <b>позволени<\/b> навсякъде, по подразбиране",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"Вмъкнати <code>script<\/code> тагове са <b>блокирани<\/b> навсякъде, по подразбиране",
+    "message":"Вмъкнатите <code>script<\/code> тагове са <b>блокирани<\/b> навсякъде, по подразбиране",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"Скриптове от първи лица са <b>позволени<\/b> навсякъде по подразбирне",
+    "message":"Скриптовете от 1-ви лица са <b>позволени<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"Скриптове от първи лица са <b>блокирани<\/b> навсякъде по подразбирне",
+    "message":"Скриптовете от 1-ви лица са <b>блокирани<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"Скриптове от трети лица са <b>позволени<\/b> навсякъде по подразбирне",
+    "message":"Скриптовете от 3-ти лица са <b>позволени<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"Скриптове от трети лица са <b>блокирани<\/b> навсякъде по подразбирне",
+    "message":"Скриптовете от 3-ти лица са <b>блокирани<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"Рамки от първи лица са <b>позволени<\/b> навсякъде по подразбирне",
+    "message":"Рамките от 1-ви лица са <b>позволени<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"Рамки от първи лица са <b>блокирани<\/b> навсякъде по подразбирне",
+    "message":"Рамките от 1-ви лица са <b>блокирани<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"Рамки от трети лица са <b>позволени<\/b> навсякъде по подразбирне",
+    "message":"Рамките от 3-ти лица са <b>позволени<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"Рамки от трети лица са <b>блокирани<\/b> навсякъде по подразбирне",
+    "message":"Рамките от 3-ти лица са <b>блокирани<\/b> навсякъде, по подразбирне",
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"всички",
+    "message":"Всички",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,31 +160,31 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"трети лица",
+    "message":"3-ти лица",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"вградени скриптове",
+    "message":"Вградени скриптове",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Одобрени скриптове",
+    "message":"Скриптове от 1-ви лица",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Неодобрени скриптове",
+    "message":"Скриптове от 3-ти лица",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Неодобрени фреймове",
+    "message":"Рамки от 3-ти лица",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"свързани домейни",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} от {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -192,7 +192,7 @@
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Избери",
+    "message":"Избиране",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -208,23 +208,23 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Натискане, Ctrl-Натискане",
+    "message":"Щракване, Ctrl + щракване",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Блокирай елемент",
+    "message":"Блокиране на елемент",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Скрий подсказващите текстове на блокираните елементи",
+    "message":"Скриване подсказващите текстове на блокираните елементи",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Покажи броят блокирани заявки в иконката",
+    "message":"Показване броят на блокираните заявки в иконката",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Използвайте контекстното меню, когато е възможно",
+    "message":"Използване на контекстното меню, когато е възможно",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -240,7 +240,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} използвани от общо {{total}}",
+    "message":"използвани {{used}} от общо {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -248,19 +248,19 @@
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Актуализирай",
+    "message":"Актуализиране",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Изчисти всички кешове",
+    "message":"Изчистване на цялата кеш памет",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Анализирай и приложи козметичните филтри.",
+    "message":"Анализиране и прилагане на козметичните филтри.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock  Plus-съвместими филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри са по същество козметични, те служат за скриване на елементи в web страница, които се считат за визуална неприятно и които не могат да бъдат блокирани от системата за блокиране на мрежови заявки.<\/p><p>Активирането на тази функция увеличава паметта, която  <i>µBlock<\/i> използва.<\/p>",
+    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в web страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази функция увеличава паметта, която  <i>µBlock<\/i> използва.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -268,7 +268,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Приложи промените",
+    "message":"Прилагане на промените",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -288,7 +288,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Универсален",
+    "message":"Универсални",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -296,11 +296,11 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Лични промени",
+    "message":"Потребителски",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"По един адрес на ред. Линии с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси ще бъдат просто игнорирани.",
+    "message":"По един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси ще бъдат игнорирани.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -308,11 +308,11 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"Изчисти кеша",
+    "message":"Изчистване на кеш паметта",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"има нова версия",
+    "message":"налична нова версия",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -320,15 +320,15 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"По един филтър на ред. Филтър може да бъде обикновен хост или съвместими с Adblock Plus филтър. Линии с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
+    "message":"По един филтър на ред. Филтър може да бъде обикновен хост или съвместим с Adblock Plus филтър. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Импортиране и добавяне",
+    "message":"Внасяне и добавяне",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Експортиране",
+    "message":"Изнасяне",
     "description":"English: Export"
   },
   "1pExportFilename":{
@@ -336,7 +336,7 @@
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Приложи промените",
+    "message":"Прилагане на промените",
     "description":"English: Apply changes"
   },
   "rulesEdit":{
@@ -344,19 +344,19 @@
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Съхрани",
+    "message":"Запазване",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Откажи промените",
+    "message":"Отказване на промените",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Импортиране от файл...",
+    "message":"Внасяне от файл...",
     "description":""
   },
   "rulesExport":{
-    "message":"Експортиране във файл...",
+    "message":"Изнасяне във файл...",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -372,31 +372,31 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Вашата листа с хост имена, за които µBlock ще бъде изключен. Едно име на ред. Невалидни хост имена ще бъдат безшумно игнорирани.",
+    "message":"Вашият списък с хост имена, за които µBlock ще бъде изключен. Едно име на ред. Невалидните хост имена ще бъдат игнорирани.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Импортиране и добавяне",
+    "message":"Внасяне и добавяне",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Експортиране",
+    "message":"Изнасяне",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"моят-ublock-списък-с-желания_{{datetime}}.txt",
+    "message":"моят-ublock-списък-с-изключения_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Приложи промените",
+    "message":"Прилагане на промените",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Включи записването на мрежови искания в дневника",
+    "message":"Включване записването на мрежови заявки в дневник",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки като включите тази опция. Записването на мрежови заявки увеличава консумацията на памет от µBlock. Тъй като много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
+    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки, като включите тази опция. Записването им увеличава консумацията на памет от µBlock. Тъй като много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -416,7 +416,7 @@
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"URL АДРЕС",
+    "message":"URL адрес",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
@@ -440,7 +440,7 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Уики",
+    "message":"Wiki",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
@@ -448,15 +448,15 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Спомогнали за проекта",
+    "message":"Сътрудници",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Архивиране към файл",
+    "message":"Архивиране във файл",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"моето-ublock-резервно-копие_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -468,7 +468,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат заместени с помощта на данни, записани на {{time}}, и µBlock ще се рестартира.  Презаписване на всички съществуващи настройки използвайки архивирани данни?",
+    "message":"Всички ваши настройки ще бъдат заместени, с помощта на данни, архивирани на {{time}}, и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки използвайки архивирани данни?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -476,7 +476,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат премахнати, и µBlock ще се рестартира.  Върни фабричните настройки на µBlock?",
+    "message":"Всички ваши настройки ще бъдат премахнати и µBlock ще се рестартира.\n\nВръщане фабричните настройки на µBlock?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
