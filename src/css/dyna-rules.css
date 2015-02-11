@@ -20,7 +20,7 @@ code {
     border: 0;
     box-sizing: box-border;
     display: inline-block;
-    font: 12px/1.4 monospace;
+    font: 12px/1.8 monospace;
     margin: 0;
     padding: 0;
     position: relative;
@@ -113,7 +113,7 @@ body[dir="rtl"] #commitButton:before {
 #diff li {
     background-color: white;
     direction: ltr;
-    padding: 2px 0;
+    padding: 0;
     text-align: left;
     white-space: nowrap;
     }
@@ -140,9 +140,9 @@ body[dir="rtl"] #commitButton:before {
     border-top: 1px solid #eee;
     direction: ltr;
     font: 12px monospace;
-    line-height: 1.733;
     height: 100%;
     left: 0;
+    line-height: 1.8;
     margin: 0;
     overflow: hidden;
     overflow-y: auto;
