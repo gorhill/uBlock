@@ -154,6 +154,7 @@ body[dir="rtl"] #commitButton:before {
                          nowrap doesn't consistently
                         respect \n's (example: Safari) per the CSS spec:
                         http://www.w3.org/wiki/CSS/Properties/white-space */
+    word-wrap: normal;
     width: 100%;
     }
 #diff.edit textarea {
