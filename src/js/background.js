@@ -58,7 +58,6 @@ return {
         collapseBlocked: true,
         contextMenuEnabled: true,
         dynamicFilteringString: '',
-        dynamicFilteringSelfie: '',
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,

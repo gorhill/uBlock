@@ -24,7 +24,7 @@
 
 /******************************************************************************/
 
-µBlock.dynamicNetFilteringEngine = (function() {
+µBlock.Firewall = (function() {
 
 /******************************************************************************/
 
@@ -115,6 +115,97 @@ Matrix.prototype.reset = function() {
     this.y = '';
     this.z = '';
     this.rules = {};
+};
+
+/******************************************************************************/
+
+Matrix.prototype.assign = function(other) {
+    var thisRules = this.rules;
+    var otherRules = other.rules;
+    var k;
+
+    // Remove rules not in other
+    for ( k in thisRules ) {
+        if ( thisRules.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        if ( otherRules.hasOwnProperty(k) === false ) {
+            delete thisRules[k];
+        }
+    }
+
+    // Add/change rules in other
+    for ( k in otherRules ) {
+        if ( otherRules.hasOwnProperty(k) === false ) {
+            continue;
+        }
+        thisRules[k] = otherRules[k];
+    }
+};
+
+/******************************************************************************/
+
+Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
+    var thisRules = this.rules;
+    var otherRules = other.rules;
+
+    // Specific types
+    thisRules['* *'] = otherRules['* *'];
+    var ruleKey = srcHostname + ' *';
+    thisRules[ruleKey] = otherRules[ruleKey];
+
+    // Specific destinations
+    for ( var desHostname in desHostnames ) {
+        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
+            continue;
+        }
+        ruleKey = '* ' + desHostname;
+        thisRules[ruleKey] = otherRules[ruleKey];
+        ruleKey = srcHostname + ' ' + desHostname ;
+        thisRules[ruleKey] = otherRules[ruleKey];
+    }
+
+    return true;
+};
+
+/******************************************************************************/
+
+// - *    *  type
+// - from *  type
+// - *    to * 
+// - from to *
+
+Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {
+    var thisRules = this.rules;
+    var otherRules = other.rules;
+    var ruleKey;
+
+    // Specific types
+    ruleKey = '* *';
+    if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+        return false;
+    }
+    ruleKey = srcHostname + ' *';
+    if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+        return false;
+    }
+
+    // Specific destinations
+    for ( var desHostname in desHostnames ) {
+        if ( desHostnames.hasOwnProperty(desHostname) === false ) {
+            continue;
+        }
+        ruleKey = '* ' + desHostname;
+        if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+            return false;
+        }
+        ruleKey = srcHostname + ' ' + desHostname ;
+        if ( thisRules[ruleKey] !== otherRules[ruleKey] ) {
+            return false;
+        }
+    }
+
+    return true;
 };
 
 /******************************************************************************/
@@ -501,12 +592,17 @@ Matrix.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-return new Matrix();
+return Matrix;
 
 /******************************************************************************/
 
 // http://youtu.be/5-K8R1hDG9E?t=31m1s
 
 })();
+
+/******************************************************************************/
+
+µBlock.sessionFirewall = new µBlock.Firewall();
+µBlock.permanentFirewall = new µBlock.Firewall();
 
 /******************************************************************************/

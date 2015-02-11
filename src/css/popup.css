@@ -165,14 +165,14 @@ body.dirty #refresh:hover {
     color: black;
     }
 
-#dynamicFilteringContainer {
+#firewallContainer {
     border: 0;
     font-size: 12px;
     margin: 0;
     padding: 0;
     text-align: right;
     }
-#dynamicFilteringContainer > div {
+#firewallContainer > div {
     background-color: #e6e6e6;
     border: 0;
     border-bottom: 1px solid white;
@@ -180,10 +180,10 @@ body.dirty #refresh:hover {
     margin: 0;
     padding: 0;
     }
-#dynamicFilteringContainer > div:hover {
+#firewallContainer > div:hover {
     background-color: #f0f0f0;
     }
-#dynamicFilteringContainer > div > span {
+#firewallContainer > div > span {
     background-color: transparent;
     border: none;
     box-sizing: border-box;
@@ -196,58 +196,58 @@ body.dirty #refresh:hover {
     position: relative;
     vertical-align: middle;
     }
-#dynamicFilteringContainer > div:nth-of-type(1) > span {
+#firewallContainer > div:nth-of-type(1) > span {
     height: 18px;
     line-height: 18px;
     }
-#dynamicFilteringContainer > div > span:nth-of-type(1) {
+#firewallContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
     padding-right: 2px;
     text-overflow: ellipsis;
     width: 70%;
     }
-#dynamicFilteringContainer > div > span:nth-of-type(2) {
+#firewallContainer > div > span:nth-of-type(2) {
     cursor: pointer;
     width: 15%;
     }
-#dynamicFilteringContainer > div > span:nth-of-type(3) {
+#firewallContainer > div > span:nth-of-type(3) {
     border-left: 1px solid white;
     color: #444;
     cursor: pointer;
     text-align: center;
     width: 15%;
     }
-#dynamicFilteringContainer > div.isDomain > span:nth-of-type(1) {
+#firewallContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
     }
-#dynamicFilteringContainer > div.allowed > span:nth-of-type(1) {
+#firewallContainer > div.allowed > span:nth-of-type(1) {
     background-color: rgba(0, 160, 0, 0.1);
     }
-#dynamicFilteringContainer > div.blocked > span:nth-of-type(1) {
+#firewallContainer > div.blocked > span:nth-of-type(1) {
     background-color: rgba(192, 0, 0, 0.1);
     }
-#dynamicFilteringContainer > div.allowed.blocked > span:nth-of-type(1) {
+#firewallContainer > div.allowed.blocked > span:nth-of-type(1) {
     background-color: rgba(192, 160, 0, 0.1);
     }
-#dynamicFilteringContainer > div > span.aRule {
+#firewallContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
-#dynamicFilteringContainer > div > span.bRule {
+#firewallContainer > div > span.bRule {
     background-color: rgba(192, 0, 0, 0.3);
     }
-#dynamicFilteringContainer > div > span.nRule {
+#firewallContainer > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.3);
     }
-#dynamicFilteringContainer > div > span.ownRule {
+#firewallContainer > div > span.ownRule {
     color: white;
     }
-#dynamicFilteringContainer > div > span.aRule.ownRule {
+#firewallContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     }
-#dynamicFilteringContainer > div > span.bRule.ownRule {
+#firewallContainer > div > span.bRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
     }
-#dynamicFilteringContainer > div > span.nRule.ownRule {
+#firewallContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     }
 
@@ -276,23 +276,28 @@ body.dirty #refresh:hover {
 #actionSelector > span:nth-of-type(3) {
     background-color: rgb(192, 0, 0);
     }
-#dynamicFilteringContainer span.aRule #actionSelector > span:nth-of-type(1),
-#dynamicFilteringContainer span.nRule #actionSelector > span:nth-of-type(2),
-#dynamicFilteringContainer span.bRule #actionSelector > span:nth-of-type(3) {
+#firewallContainer span.aRule #actionSelector > span:nth-of-type(1),
+#firewallContainer span.nRule #actionSelector > span:nth-of-type(2),
+#firewallContainer span.bRule #actionSelector > span:nth-of-type(3) {
     visibility: hidden;
     }
 
-#offOverlay {
-    background-color: #fff;
-    bottom: 0;
+#saveRules {
+    background-color: #ffe;
+    border: 1px solid #eec;
+    border-radius: 4px;
+    color: #888;
+    cursor: pointer;
     display: none;
-    left: 0;
-    opacity: 0.4;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
+    font-size: 30px;
+    line-height: 40px;
+    padding: 0.1em 0.4em;
+    position: fixed;
+    text-align: center;
     }
-body.off #offOverlay {
+#firewallContainer.dirty ~ #saveRules {
     display: block;
+    }
+#firewallContainer.dirty ~ #saveRules:hover {
+    color: black;
     }
