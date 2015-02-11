@@ -71,6 +71,9 @@ var renderRules = function(details) {
     i = rules.length;
     while ( i-- ) {
         rule = rules[i].trim();
+        if ( rule === '' ) {
+            continue;
+        }
         sessionRules[rule] = allRules[rule] = true;
     }
     details.sessionRules = rules.sort().join('\n');
@@ -79,6 +82,9 @@ var renderRules = function(details) {
     i = rules.length;
     while ( i-- ) {
         rule = rules[i].trim();
+        if ( rule === '' ) {
+            continue;
+        }
         permanentRules[rule] = allRules[rule] = true;
     }
     details.permanentRules = rules.sort().join('\n');
