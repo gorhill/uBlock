@@ -282,7 +282,7 @@ var onMessage = function(request, sender, callback) {
             response = lastModified !== request.contentLastModified;
             break;
 
-        case 'saveRules':
+        case 'saveFirewallRules':
             µb.permanentFirewall.copyRules(
                 µb.sessionFirewall,
                 request.srcHostname,
