@@ -81,10 +81,10 @@ var renderRules = function(details) {
         }
     }
 
-    uDom('#diff > .left > ul > li').remove();
-    uDom('#diff > .left > ul').html(permanentList.join(''));
-    uDom('#diff > .right > ul > li').remove();
-    uDom('#diff > .right > ul').html(sessionList.join(''));
+    uDom('#diff > .left ul > li').remove();
+    uDom('#diff > .left ul').html(permanentList.join(''));
+    uDom('#diff > .right ul > li').remove();
+    uDom('#diff > .right ul').html(sessionList.join(''));
     uDom('#diff').toggleClass('dirty', details.sessionRules !== details.permanentRules);
 };
 

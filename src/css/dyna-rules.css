@@ -15,8 +15,9 @@ code {
     margin: 0;
     padding: 0.5em 0 0 0;
     white-space: nowrap;
+    font-size: 0; /* otherwise spaces between inline-blocks will be rendered */
 }
-#diff > .pane {
+#diff .pane {
     border: 0;
     box-sizing: border-box;
     display: inline-block;
@@ -25,14 +26,15 @@ code {
     padding: 0;
     position: relative;
     white-space: normal;
-    width: calc(50% - 2px);
+    width: 50%;
     }
-#diff > .pane > div {
+#diff .pane .rulesContainer {
+    position: relative;
+    min-height: 150px; /* too short is confusing */
+    }
+#diff .ruleActions {
     padding: 0 0 1em 0;
     text-align: center;
-    }
-#diff > .pane > div > span {
-    float: left;
     }
 body[dir="ltr"] #revertButton:after {
     content: '\2009\f061';
@@ -105,19 +107,20 @@ body[dir="rtl"] #commitButton:before {
     visibility: hidden;
     }
 #diff .left {
-    padding: 0 0 0 0;
+    border-right: 1px solid #eee;
     }
 #diff .right > ul {
     color: #888;
     }
 #diff li {
-    background-color: white;
+    background-color: #ddd;
     direction: ltr;
     padding: 0;
     text-align: left;
     white-space: nowrap;
+    padding-left: 3px; /* a bit of padding; must also be in textarea */
     }
-#diff li:nth-of-type(2n+0) {
+#diff li:nth-child(even) {
     background-color: #eee;
     }
 #diff .right li {
@@ -137,17 +140,20 @@ body[dir="rtl"] #commitButton:before {
 #diff textarea {
     background-color: #f8f8ff;
     border: 0;
+    margin: 0;
     border-top: 1px solid #eee;
     direction: ltr;
     font: 12px monospace;
-    height: 100%;
-    left: 0;
     line-height: 1.8;
-    margin: 0;
     overflow: hidden;
     overflow-y: auto;
-    padding: 1em 0 0 0;
+    padding: 1em 0 0 3px; /* same left and top padding as ul/li */
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     resize: none;
     visibility: hidden;
     white-space: pre; /* this imples nowrap; break only on \n and <br>.
@@ -155,7 +161,6 @@ body[dir="rtl"] #commitButton:before {
                         respect \n's (example: Safari) per the CSS spec:
                         http://www.w3.org/wiki/CSS/Properties/white-space */
     word-wrap: normal;
-    width: 100%;
     }
 #diff.edit textarea {
     visibility: visible;
