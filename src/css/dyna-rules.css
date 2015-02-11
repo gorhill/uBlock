@@ -150,7 +150,8 @@ body[dir="rtl"] #commitButton:before {
     position: absolute;
     resize: none;
     visibility: hidden;
-    white-space: nowrap;
+    white-space: pre; /* this imples nowrap; break only on \n and <br>
+                        and nowrap doesn't always respect \n's (example: Safari). */
     width: 100%;
     }
 #diff.edit textarea {
