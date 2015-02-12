@@ -208,7 +208,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"क्लिक, कंट्रोल - क्लिक",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -228,7 +228,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"मैं एक उच्च उपयोगकर्ता हूँ (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>आवश्यक पठन<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

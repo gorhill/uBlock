@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Постійні правила",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Тимчасові правила",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Повернути",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Затвердити",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

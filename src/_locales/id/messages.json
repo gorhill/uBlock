@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Filter pihak ke-3",
+    "message":"Filter Pihak ke-3",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"Pihak ke-3",
+    "message":"pihak ke-3",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -168,15 +168,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Skrip pihak pertama",
+    "message":"skrip pihak pertama",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Skrip pihak ke-3",
+    "message":"skrip pihak ke-3",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Frame pihak ke-3",
+    "message":"frame pihak ke-3",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Filter kosmetik",
+    "message":"Filter tampilan",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -240,7 +240,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} telah terpakai dari {{total}}",
+    "message":"{{used}} digunakan dari {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -252,7 +252,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Bersihkan semua cache",
+    "message":"Bersihkan semua tembolok",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -304,7 +304,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Uraikan",
+    "message":"Baca",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -348,11 +348,11 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Kembalikan",
+    "message":"Urungkan",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Masukkan",
+    "message":"Tetapkan",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

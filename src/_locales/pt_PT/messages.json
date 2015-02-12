@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Regras permanentes",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Regras temporárias",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Reverter",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Submeter",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exportar para ficheiro...",
+    "message":"Exportar para ficheiro",
     "description":""
   },
   "rulesDefaultFileName":{

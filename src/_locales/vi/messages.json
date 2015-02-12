@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Quy tắc vĩnh viễn",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Quy tắc tạm thời",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Phục hồi",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Xác nhận",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

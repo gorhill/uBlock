@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Permanente regler",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Midlertidige regler",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Tilbakestill",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Send",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -368,11 +368,11 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importer fra fil...",
+    "message":"Importer fra fil",
     "description":""
   },
   "rulesExport":{
-    "message":"Eksporter til fil...",
+    "message":"Eksporter til fil",
     "description":""
   },
   "rulesDefaultFileName":{

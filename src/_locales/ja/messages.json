@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"恒久的ルール",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"一時的なルール",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"元に戻す",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"コミット",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -488,7 +488,7 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"データが無効、または読み込みができませんでした。",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
