@@ -318,7 +318,7 @@ var tabWatcher = {
         var tabId = vAPI.tabs.getTabId(browser);
 
         // LOCATION_CHANGE_SAME_DOCUMENT = "did not load a new document"
-        if ( flags & 1 ) {
+        if ( flags & Ci.nsIWebProgressListener.LOCATION_CHANGE_SAME_DOCUMENT ) {
             vAPI.tabs.onUpdated(tabId, {url: location.asciiSpec}, {
                 frameId: 0,
                 tabId: tabId,
