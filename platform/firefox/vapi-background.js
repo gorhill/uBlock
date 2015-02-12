@@ -1321,15 +1321,19 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        updateTimer = setTimeout(resizePopup, 20);
+        updateTimer = setTimeout(resizePopup, 10);
     };
     var resizePopup = function() {
+        updateTimer = null;
         var body = iframe.contentDocument.body;
         panel.parentNode.style.maxWidth = 'none';
-        // Set the hegiht first, then the width for proper resising
-        panel.style.height = iframe.style.height = body.clientHeight + 'px';
-        panel.style.width = iframe.style.width = body.clientWidth + 'px';
-        updateTimer = null;
+        // https://github.com/gorhill/uBlock/issues/730
+        // Voodoo programming: this recipe works
+        panel.style.height = iframe.style.height = body.clientHeight.toString() + 'px';
+        panel.style.width = iframe.style.width = body.clientWidth.toString() + 'px';
+        if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
+            delayedResize();
+        }
     };
     var onPopupReady = function() {
         var win = this.contentWindow;
