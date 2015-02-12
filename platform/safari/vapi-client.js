@@ -29,6 +29,7 @@
     }
     vAPI.vapiClientInjected = true;
     vAPI.safari = true;
+
     /******************************************************************************/
     var messagingConnector = function(response) {
         if(!response) {
@@ -74,6 +75,9 @@
         requestId: 1,
         connectorId: uniqueId(),
         setup: function() {
+            if(typeof safari === "undefined") {
+                return;
+            }
             this.connector = function(msg) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the connectorId to accept only
@@ -107,6 +111,9 @@
                 channelName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
+                    if(typeof safari === "undefined") {
+                        return;
+                    }
                     if(!vAPI.messaging.connector) {
                         vAPI.messaging.setup();
                     }
@@ -157,8 +164,7 @@
     // Helper event to message background,
     // and helper anchor element
     var beforeLoadEvent = new Event("beforeload"),
-        linkHelper = document.createElement("a"),
-        isHttp_s = /^https?:/;
+        linkHelper = document.createElement("a");
 
     // Inform that we've navigated
     if(frameId === 0) {
@@ -186,10 +192,10 @@
         return !(safari.self.tab.canLoad(beforeLoadEvent, details));
     };
     var onBeforeLoad = function(e) {
-        if(e.url.charCodeAt(0) !== 104 && !isHttp_s.test(e.url)) { // h = 104
+        linkHelper.href = e.url;
+        if(linkHelper.protocol.charCodeAt(0) !== 104) { // h = 104
             return;
         }
-        linkHelper.href = e.url;
         var details = {
             url: linkHelper.href,
             type: nodeTypes[e.target.nodeName.toLowerCase()] || "other",
@@ -199,7 +205,7 @@
             timeStamp: Date.now()
         };
         var response = safari.self.tab.canLoad(e, details);
-        if(!response) {
+        if(response === false) {
             e.preventDefault();
         }
     };

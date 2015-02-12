@@ -292,3 +292,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/gorhill/uBlock/issues/774
 # To counter `carbonads.net` in Peter Lowe's
 @@||carbonads.net^$~third-party
+
+# This enables twitch.tv to work in HTML5
+@@||imasdk.googleapis.com$domain=twitch.tv
