@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Списък с изключения",
+    "message":"Изключения",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{

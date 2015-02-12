@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"filters van derden",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Log van netwerkaanvragen",
+    "message":"µBlock — Log van netwerkverzoeken",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -60,7 +60,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klik op dashboard te openen",
+    "message":"Klik om het dashboard te openen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -76,39 +76,39 @@
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code>-tags zijn <b>toegestaan<\/b> op deze site",
+    "message":"Inline <code>script<\/code>-tags zijn <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"1e-partij scripts zijn <b>toegestaan<\/b> op deze site",
+    "message":"scripts van de site zelf zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"1e-partij scripts worden <b>geblokkeerd<\/b> op deze site",
+    "message":"scripts van de site zelf worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"3e-partij scripts zijn <b>toegestaan<\/b> op deze site",
+    "message":"scripts van derden zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"3e-partij scripts worden <b>geblokkeerd<\/b> op deze site",
+    "message":"scripts van derden worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"1e-partij frames zijn <b>toegestaan<\/b> op deze site",
+    "message":"frames van de site zelf zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"1e-partij frames worden <b>geblokkeerd<\/b> op deze site",
+    "message":"frames van de site zelf worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"3e-partij frames zijn <b>toegestaan<\/b> op deze site",
+    "message":"frames van derden zijn <b>toegestaan<\/b> op deze site",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"3e-partij frames worden <b>geblokkeerd<\/b> op deze site",
+    "message":"frames van derden worden <b>geblokkeerd<\/b> op deze site",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
@@ -120,35 +120,35 @@
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"1e-partij scripts zijn standaard overal <b>toegestaan<\/b>",
+    "message":"scripts van de sites zelf zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"1e-partij scripts worden standaard overal <b>geblokkeerd<\/b>",
+    "message":"scripts van de sites zelf worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"3e-partij scripts zijn standaard overal <b>toegestaan<\/b>",
+    "message":"scripts van derden zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"3e-partij scripts worden standaard overal <b>geblokkeerd<\/b>",
+    "message":"scripts van derden worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"1e-partij frames zijn standaard overal <b>toegestaan<\/b>",
+    "message":"frames van de sites zelf zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"1e-partij frames worden standaard overal <b>geblokkeerd<\/b>",
+    "message":"frames van de sites zelf worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"3e-partij frames zijn standaard overal <b>toegestaan<\/b>",
+    "message":"frames van derden zijn standaard overal <b>toegestaan<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"3e-partij frames worden standaard overal <b>geblokkeerd<\/b>",
+    "message":"frames van derden worden standaard overal <b>geblokkeerd<\/b>",
     "description":""
   },
   "popupAnyRulePrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"derde partij",
+    "message":"derden",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -168,15 +168,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Eerstepartij-scripts",
+    "message":"scripts van de sites zelf",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Derdepartij-scripts",
+    "message":"scripts van derden",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Derdepartij-frames",
+    "message":"frames van derden",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Blokkeer element",
+    "message":"Element blokkeren",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -232,7 +232,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Experimentele functies (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>) inschakelen",
+    "message":"Experimentele functies inschakelen (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -244,7 +244,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Filterlijst van automatische updates.",
+    "message":"Filterlijst automatisch updaten.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -252,15 +252,15 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Alle cache legen",
+    "message":"Alle caches legen",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parseer en pas cosmetische filters toe.",
+    "message":"Lees en pas cosmetische filters toe.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Deze optie schakelt het parseren en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch, ze verbergen elementen in de webpagina die een visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door het net request-based filtering engine.<\/p><p>Het inschakelen van deze funtie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Deze optie schakelt het lezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch, ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -268,7 +268,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Pas veranderingen toe",
+    "message":"Veranderingen toepassen",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -280,7 +280,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware",
+    "message":"Malwaredomeinen",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -296,11 +296,11 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Aangepast",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Één URL per lijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stil genegeerd.",
+    "message":"Één URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stilletjes genegeerd.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -316,15 +316,15 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"kan overbodig zijn",
+    "message":"verouderd",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Één filter per lijn. Een filter kan een gewone hostname of een Adblock Plus-compatibele filter zijn. Lijnen voorgaand met &lsquo;!&rsquo; worden genegeerd.",
+    "message":"Één filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibele filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importeer en voeg toe",
+    "message":"Importeren en toevoegen",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -336,7 +336,7 @@
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Pas veranderingen toe",
+    "message":"Veranderingen toepassen",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
@@ -352,7 +352,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Sla op",
+    "message":"Opslaan",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exporteren naar bestand...",
+    "message":"Exporteren naar bestand",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -380,7 +380,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lijst van uw dynamische filterregels.",
+    "message":"Lijst van je dynamische filterregels.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -388,11 +388,11 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Één per lijn ingeven. Ongeldige hostnamen worden genegeerd zonder melding.",
+    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Één per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importeer en voeg toe",
+    "message":"Importeren en toevoegen",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -404,7 +404,7 @@
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Pas veranderingen toe",
+    "message":"Veranderingen toepassen",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
@@ -412,7 +412,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie aan te zetten. Het loggen van netwerkverzoeken vraagt meer geheugen. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
+    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie in te schakelen. Het loggen van netwerkverzoeken vraagt meer geheugen. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -464,11 +464,11 @@
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Medewerkers",
+    "message":"Bijdragers",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Opslaan naar bestand",
+    "message":"Backup naar bestand",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -476,7 +476,7 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Herstel met bestand...",
+    "message":"Herstel uit bestand...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
@@ -484,15 +484,15 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Al uw instellingen zullen worden overschreven met de backupdata van {{time}}, en µBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de backupdata?",
+    "message":"Al uw instellingen zullen worden overschreven met de backupgegevens van {{time}} en µBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de backupgegevens?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"De gegevens konden niet gelezen worden of zijn ongeldig",
+    "message":"De gegevens konden niet worden gelezen of zijn ongeldig",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Al uw instellingen zullen worden verwijderd, en µBlock zal worden herstart.\n\nWeet u zeker dat u de instellingen wil herstellen naar de standaardwaarden?",
+    "message":"Al uw instellingen zullen worden verwijderd, waarna µBlock zich herstart.\n\nInstellingen toch herstellen naar de standaardwaarden?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

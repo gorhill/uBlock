@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"도메인 선택됨",
+    "message":"도메인 연결됨",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"영구 규칙",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"임시 규칙",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"되돌리기",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"제출",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

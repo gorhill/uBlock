@@ -348,11 +348,11 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Aseta ajutisse",
+    "message":"Ennista",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Aseta igavesse",
+    "message":"Rakenda",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Ekspordi failina",
+    "message":"Ekspordi faili",
     "description":""
   },
   "rulesDefaultFileName":{

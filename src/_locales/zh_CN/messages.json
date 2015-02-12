@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"永久规则",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"临时规则",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"还原",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"提交",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

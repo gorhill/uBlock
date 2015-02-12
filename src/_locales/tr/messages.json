@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Kalıcı kurallar",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Geçici Kurallar",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Geri al",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"İşle",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

@@ -348,11 +348,11 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Kembalikan",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Masukkan",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

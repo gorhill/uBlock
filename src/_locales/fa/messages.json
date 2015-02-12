@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"قوانین دائمی",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"قوانین موقت",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"بازگرداندن",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"ذخیره در منبع",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
