@@ -41,6 +41,10 @@ var vAPI = self.vAPI = self.vAPI || {};
 
 vAPI.firefox = true;
 
+vAPI.fennec = Components.classes["@mozilla.org/xre/app-info;1"]
+    .getService(Components.interfaces.nsIXULAppInfo)
+    .ID == "{aa3c5121-dab2-40e2-81ca-7ea25febc110}";
+
 /******************************************************************************/
 
 vAPI.app = {
@@ -262,15 +266,22 @@ var windowWatcher = {
             return;
         }
 
-        if ( !this.gBrowser || !this.gBrowser.tabContainer ) {
-            return;
+        if ( this.gBrowser && this.gBrowser.tabContainer ) {
+            // desktop Firefox
+            var tC = this.gBrowser.tabContainer;
+
+            this.gBrowser.addTabsProgressListener(tabWatcher);
+            tC.addEventListener('TabClose', tabWatcher.onTabClose);
+            tC.addEventListener('TabSelect', tabWatcher.onTabSelect);
+
+        } else if ( this.BrowserApp && this.BrowserApp.deck ) {
+            // Fennec
+            var deck = this.BrowserApp.deck;
+
+            deck.addEventListener('DOMTitleChanged', tabWatcher.onFennecLocationChange);
+            deck.addEventListener('TabClose', tabWatcher.onTabClose);
+            deck.addEventListener('TabSelect', tabWatcher.onTabSelect);
         }
-
-        var tC = this.gBrowser.tabContainer;
-
-        this.gBrowser.addTabsProgressListener(tabWatcher);
-        tC.addEventListener('TabClose', tabWatcher.onTabClose);
-        tC.addEventListener('TabSelect', tabWatcher.onTabSelect);
 
         vAPI.contextMenu.register(this.document);
 
@@ -294,7 +305,14 @@ var tabWatcher = {
     },
 
     onTabSelect: function({target: tab}) {
-        var URI = tab.linkedBrowser.currentURI;
+        var URI = null;
+        if ( tab.currentURI ) {
+            // on Fennec the target is actually the linked browser
+            URI = tab.currentURI;
+        } else {
+            // desktop Firefox
+            URI = tab.linkedBrowser.currentURI;
+        }
         var aboutPath = URI.schemeIs('about') && URI.path;
         var tabId = vAPI.tabs.getTabId(tab);
 
@@ -334,7 +352,25 @@ var tabWatcher = {
             tabId: tabId,
             url: location.asciiSpec
         });
-    }
+    },
+
+    onFennecLocationChange: function(e) {
+        // Fennec "equivalent" to onLocationChange
+        // note that DOMTitleChanged is selected as it fires very early
+        // (before DOMContentLoaded), and it does fire even if there is no title
+
+        var tabId = vAPI.tabs.getTabId(e.target);
+        if ( tabId === -1 ) {
+            // probably not top level
+            return;
+        }
+
+        vAPI.tabs.onNavigation({
+            frameId: 0,
+            tabId: tabId,
+            url: e.target.location.href
+        });
+    },
 };
 
 /******************************************************************************/
@@ -367,20 +403,39 @@ vAPI.tabs.registerListeners = function() {
 
         for ( var win of vAPI.tabs.getWindows() ) {
             vAPI.contextMenu.unregister(win.document);
-
             win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
-            win.gBrowser.removeTabsProgressListener(tabWatcher);
 
-            var tC = win.gBrowser.tabContainer;
-            tC.removeEventListener('TabClose', tabWatcher.onTabClose);
-            tC.removeEventListener('TabSelect', tabWatcher.onTabSelect);
+            if ( win.gBrowser && win.gBrowser.tabContainer ) {
+                // desktop Firefox
+                var tC = win.gBrowser.tabContainer;
 
-            // close extension tabs
-            for ( var tab of win.gBrowser.tabs ) {
-                var URI = tab.linkedBrowser.currentURI;
+                win.gBrowser.removeTabsProgressListener(tabWatcher);
+                tC.removeEventListener('TabClose', tabWatcher.onTabClose);
+                tC.removeEventListener('TabSelect', tabWatcher.onTabSelect);
 
-                if ( URI.schemeIs('chrome') && URI.host === location.host ) {
-                    win.gBrowser.removeTab(tab);
+                // close extension tabs
+                for ( var tab of win.gBrowser.tabs ) {
+                    var URI = tab.linkedBrowser.currentURI;
+
+                    if ( URI.schemeIs('chrome') && URI.host === location.host ) {
+                        win.gBrowser.removeTab(tab);
+                    }
+                }
+            } else if ( win.BrowserApp && win.BrowserApp.deck ) {
+                // Fennec
+                var deck = win.BrowserApp.deck;
+
+                deck.removeEventListener('DOMTitleChanged', tabWatcher.onFennecLocationChange);
+                deck.removeEventListener('TabClose', tabWatcher.onTabClose);
+                deck.removeEventListener('TabSelect', tabWatcher.onTabSelect);
+
+                // close extension tabs
+                for ( var tab of win.BrowserApp.tabs ) {
+                    var URI = tab.browser.currentURI;
+
+                    if ( URI.schemeIs('chrome') && URI.host === location.host ) {
+                        win.BrowserApp.closeTab(tab);
+                    }
                 }
             }
         }
@@ -390,53 +445,97 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 vAPI.tabs.getTabId = function(target) {
-    if ( target.linkedPanel ) {
-        return target.linkedPanel;
-    }
+    if ( vAPI.fennec ) {
+        // Fennec
 
-    var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
+        if ( target.browser ) {
+            // target is a tab
+            return target.id;
+        }
 
-    if ( !gBrowser ) {
+        // target is a browser or contentDocument
+        for ( var win of vAPI.tabs.getWindows() ) {
+            for ( var tab of win.BrowserApp.tabs ) {
+                if ( target === tab.browser ||
+                     target === tab.window.document ) {
+                    return tab.id;
+                }
+            }
+        }
         return -1;
+
+    } else {
+        // desktop Firefox
+
+        if ( target.linkedPanel ) {
+            // target is a tab
+            return target.linkedPanel;
+        }
+
+        // target is a browser
+        var i, gBrowser = target.ownerDocument.defaultView.gBrowser;
+
+        if ( !gBrowser ) {
+            return -1;
+        }
+
+        // This should be more efficient from version 35
+        if ( gBrowser.getTabForBrowser ) {
+            i = gBrowser.getTabForBrowser(target);
+            return i ? i.linkedPanel : -1;
+        }
+
+        if ( !gBrowser.browsers ) {
+            return -1;
+        }
+
+        i = gBrowser.browsers.indexOf(target);
+
+        if ( i !== -1 ) {
+            i = gBrowser.tabs[i].linkedPanel;
+        }
+
+        return i;
     }
-
-    // This should be more efficient from version 35
-    if ( gBrowser.getTabForBrowser ) {
-        i = gBrowser.getTabForBrowser(target);
-        return i ? i.linkedPanel : -1;
-    }
-
-    if ( !gBrowser.browsers ) {
-        return -1;
-    }
-
-    i = gBrowser.browsers.indexOf(target);
-
-    if ( i !== -1 ) {
-        i = gBrowser.tabs[i].linkedPanel;
-    }
-
-    return i;
 };
 
 /******************************************************************************/
 
 vAPI.tabs.get = function(tabId, callback) {
-    var tab, windows;
+    var tab, windows, win;
 
     if ( tabId === null ) {
-        tab = Services.wm.getMostRecentWindow('navigator:browser').gBrowser.selectedTab;
+        win = Services.wm.getMostRecentWindow('navigator:browser');
+        if ( win.gBrowser ) {
+            // desktop Firefox
+            tab = win.gBrowser.selectedTab;
+        } else if ( win.BrowserApp ) {
+            // Fennec
+            tab = win.BrowserApp.selectedTab;
+        }
         tabId = vAPI.tabs.getTabId(tab);
     } else {
         windows = this.getWindows();
 
-        for ( var win of windows ) {
-            tab = win.gBrowser.tabContainer.querySelector(
-                'tab[linkedpanel="' + tabId + '"]'
-            );
+        if ( vAPI.fennec ) {
+            // Fennec
+            for ( win of windows ) {
+                tab = win.BrowserApp.getTabForId(tabId);
 
-            if ( tab ) {
-                break;
+                if ( tab ) {
+                    break;
+                }
+            }
+        } else {
+            // desktop Firefox
+            for ( win of windows ) {
+                tab = win.gBrowser.tabContainer.querySelector(
+                    'tab[linkedpanel="' + tabId + '"]'
+                );
+
+                if ( tab ) {
+                    break;
+                }
             }
         }
     }
@@ -451,21 +550,41 @@ vAPI.tabs.get = function(tabId, callback) {
         return;
     }
 
-    var browser = tab.linkedBrowser;
-    var gBrowser = browser.ownerDocument.defaultView.gBrowser;
+    if ( tab.linkedBrowser ) {
+        // desktop Firefox
+        var browser = tab.linkedBrowser;
+        var gBrowser = win.gBrowser;
 
-    if ( !windows ) {
-        windows = this.getWindows();
+        if ( !windows ) {
+            windows = this.getWindows();
+        }
+
+        callback({
+            id: tabId,
+            index: gBrowser.browsers.indexOf(browser),
+            windowId: windows.indexOf(win),
+            active: tab === gBrowser.selectedTab,
+            url: browser.currentURI.asciiSpec,
+            title: tab.label
+        });
+    } else if ( tab.browser ) {
+        // Fennec
+        var browser = tab.browser;
+        var BrowserApp = win.BrowserApp;
+
+        if ( !windows ) {
+            windows = this.getWindows();
+        }
+
+        callback({
+            id: tabId,
+            index: BrowserApp.tabs.indexOf(tab),
+            windowId: windows.indexOf(win),
+            active: tab === BrowserApp.selectedTab,
+            url: browser.currentURI.asciiSpec,
+            title: browser.contentDocument.title
+        });
     }
-
-    callback({
-        id: tabId,
-        index: gBrowser.browsers.indexOf(browser),
-        windowId: windows.indexOf(browser.ownerDocument.defaultView),
-        active: tab === gBrowser.selectedTab,
-        url: browser.currentURI.asciiSpec,
-        title: tab.label
-    });
 };
 
 /******************************************************************************/
@@ -478,7 +597,16 @@ vAPI.tabs.getAll = function(window) {
             continue;
         }
 
-        for ( tab of win.gBrowser.tabs ) {
+        var tabList;
+        if ( win.gBrowser ) {
+            // desktop Firefox
+            tabList = win.gBrowser.tabs;
+        } else {
+            // Fennec
+            tabList = win.BrowserApp.tabs;
+        }
+
+        for ( tab of tabList ) {
             tabs.push(tab);
         }
     }
@@ -528,11 +656,25 @@ vAPI.tabs.open = function(details) {
         tabs = this.getAll();
 
         for ( tab of tabs ) {
-            var browser = tab.linkedBrowser;
+            var browser;
+            if ( tab.linkedBrowser ) {
+                // desktop Firefox
+                browser = tab.linkedBrowser;
+            } else {
+                // Fennec
+                browser = tab.browser;
+            }
 
             // Or simply .equals if we care about the fragment
             if ( URI.equalsExceptRef(browser.currentURI) ) {
-                browser.ownerDocument.defaultView.gBrowser.selectedTab = tab;
+                var win = browser.ownerDocument.defaultView;
+                if ( win.gBrowser ) {
+                    // desktop Firefox
+                    win.gBrowser.selectedTab = tab;
+                } else {
+                    // Fennec
+                    win.BrowserApp.selectTab(tab);
+                }
                 return;
             }
         }
@@ -542,27 +684,52 @@ vAPI.tabs.open = function(details) {
         details.active = true;
     }
 
-    var gBrowser = Services.wm.getMostRecentWindow('navigator:browser').gBrowser;
+    var win = Services.wm.getMostRecentWindow('navigator:browser');
+    if ( win.gBrowser ) {
+        // desktop Firefox
+        var gBrowser = win.gBrowser;
 
-    if ( details.index === -1 ) {
-        details.index = gBrowser.browsers.indexOf(gBrowser.selectedBrowser) + 1;
-    }
+        if ( details.index === -1 ) {
+            details.index = gBrowser.browsers.indexOf(gBrowser.selectedBrowser) + 1;
+        }
 
-    if ( details.tabId ) {
-        tabs = tabs || this.getAll();
+        if ( details.tabId ) {
+            tabs = tabs || this.getAll();
 
-        for ( tab of tabs ) {
-            if ( vAPI.tabs.getTabId(tab) === details.tabId ) {
-                tab.linkedBrowser.loadURI(details.url);
+            for ( tab of tabs ) {
+                if ( vAPI.tabs.getTabId(tab) === details.tabId ) {
+                    tab.linkedBrowser.loadURI(details.url);
+                    return;
+                }
+            }
+        }
+
+        tab = gBrowser.loadOneTab(details.url, {inBackground: !details.active});
+
+        if ( details.index !== undefined ) {
+            gBrowser.moveTabTo(tab, details.index);
+        }
+    } else {
+        // Fennec
+        var BrowserApp = win.BrowserApp;
+
+        if ( details.index === -1 ) {
+            details.index = BrowserApp.tabs.indexOf(gBrowser.selectedTab) + 1;
+        }
+
+        if ( details.tabId ) {
+            tabs = tabs || this.getAll();
+
+            tab = BrowserApp.getTabForId(details.tabId);
+            if ( tab ) {
+                tab.browser.loadURI(details.url);
                 return;
             }
         }
-    }
 
-    tab = gBrowser.loadOneTab(details.url, {inBackground: !details.active});
+        tab = BrowserApp.addTab(details.url, {selected: details.active});
 
-    if ( details.index !== undefined ) {
-        gBrowser.moveTabTo(tab, details.index);
+        // note that it's impossible to move tabs on Fennec, so don't bother
     }
 };
 
@@ -573,19 +740,35 @@ vAPI.tabs.remove = function(tabIds) {
         tabIds = [tabIds];
     }
 
-    tabIds = tabIds.map(function(tabId) {
-        return 'tab[linkedpanel="' + tabId + '"]';
-    }).join(',');
+    if ( vAPI.fennec ) {
+        // Fennec
+        for ( var win of this.getWindows() ) {
+            var tabs = win.BrowserApp.tabs;
+            if ( !tabs ) {
+                continue;
+            }
 
-    for ( var win of this.getWindows() ) {
-        var tabs = win.gBrowser.tabContainer.querySelectorAll(tabIds);
-
-        if ( !tabs ) {
-            continue;
+            for ( var tab of tabs ) {
+                if ( tab.id in tabIds ) {
+                    win.BrowserApp.closeTab(tab);
+                }
+            }
         }
+    } else {
+        // desktop Firefox
+        tabIds = tabIds.map(function(tabId) {
+            return 'tab[linkedpanel="' + tabId + '"]';
+        }).join(',');
 
-        for ( var tab of tabs ) {
-            win.gBrowser.removeTab(tab);
+        for ( var win of this.getWindows() ) {
+            var tabs = win.gBrowser.tabContainer.querySelectorAll(tabIds);
+            if ( !tabs ) {
+                continue;
+            }
+
+            for ( var tab of tabs ) {
+                win.gBrowser.removeTab(tab);
+            }
         }
     }
 };
@@ -596,7 +779,13 @@ vAPI.tabs.reload = function(tabId) {
     var tab = this.get(tabId);
 
     if ( tab ) {
-        tab.ownerDocument.defaultView.gBrowser.reloadTab(tab);
+        if ( tab.browser ) {
+            // Fennec
+            tab.browser.reload();
+        } else {
+            // desktop Firefox
+            tab.ownerDocument.defaultView.gBrowser.reloadTab(tab);
+        }
     }
 };
 
@@ -638,8 +827,17 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     var win = badge === undefined
         ? iconStatus
         : Services.wm.getMostRecentWindow('navigator:browser');
-    var curTabId = vAPI.tabs.getTabId(win.gBrowser.selectedTab);
     var tb = vAPI.toolbarButton;
+    var selectedTab, curTabId;
+
+    if ( win.gBrowser ) {
+        // desktop Firefox
+        selectedTab = win.gBrowser.selectedTab;
+    } else {
+        // Fennec
+        selectedTab = win.BrowserApp.selectedTab;
+    }
+    curTabId = vAPI.tabs.getTabId(selectedTab);
 
     // from 'TabSelect' event
     if ( tabId === undefined ) {
@@ -1503,15 +1701,29 @@ vAPI.contextMenu.register = function(doc) {
         return;
     }
 
-    var contextMenu = doc.getElementById('contentAreaContextMenu');
-    var menuitem = doc.createElement('menuitem');
-    menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
-    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
-    menuitem.setAttribute('class', 'menuitem-iconic');
-    menuitem.addEventListener('command', this.onCommand);
-    contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    if ( vAPI.fennec ) {
+        // Fennec
+        // TODO
+        /*
+        var nativeWindow = doc.defaultView.NativeWindow;
+        contextId = nativeWindow.contextmenus.add(
+                  this.menuLabel,
+                      nativeWindow.contextmenus.linkOpenableContext, // TODO https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/NativeWindow/contextmenus/add
+                  this.onCommand);
+                  */
+    } else {
+        // desktop Firefox
+
+        var contextMenu = doc.getElementById('contentAreaContextMenu');
+        var menuitem = doc.createElement('menuitem');
+        menuitem.setAttribute('id', this.menuItemId);
+        menuitem.setAttribute('label', this.menuLabel);
+        menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+        menuitem.setAttribute('class', 'menuitem-iconic');
+        menuitem.addEventListener('command', this.onCommand);
+        contextMenu.addEventListener('popupshowing', this.displayMenuItem);
+        contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    }
 };
 
 /******************************************************************************/
@@ -1521,11 +1733,18 @@ vAPI.contextMenu.unregister = function(doc) {
         return;
     }
 
-    var menuitem = doc.getElementById(this.menuItemId);
-    var contextMenu = menuitem.parentNode;
-    menuitem.removeEventListener('command', this.onCommand);
-    contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.removeChild(menuitem);
+    if ( vAPI.fennec ) {
+        // Fennec
+        // TODO
+    } else {
+        // desktop Firefox
+
+        var menuitem = doc.getElementById(this.menuItemId);
+        var contextMenu = menuitem.parentNode;
+        menuitem.removeEventListener('command', this.onCommand);
+        contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
+        contextMenu.removeChild(menuitem);
+    }
 };
 
 /******************************************************************************/
