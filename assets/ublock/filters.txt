@@ -292,3 +292,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/gorhill/uBlock/issues/686
 @@||mngi.112.2o7.net^$domain=sltrib.com
 @@||scorecardresearch.com^$domain=sltrib.com
+
+# https://github.com/gorhill/uBlock/issues/774
+# To counter `carbonads.net` in Peter Lowe's
+@@||carbonads.net^$~third-party
