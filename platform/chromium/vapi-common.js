@@ -29,6 +29,29 @@
 
 'use strict';
 
+var fileName = 'options_ui.html';
+
+if ( location.pathname.slice(-fileName.length) === fileName ) {
+    var messager = vAPI.messaging.channel('_open');
+    messager.send({
+        what: 'gotoURL',
+        details: {
+            url: 'dashboard.html',
+            index: -1
+        }
+    });
+    window.close();
+}
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+(function() {
+
+'use strict';
+
 self.vAPI = self.vAPI || {};
 
 var chrome = self.chrome;
