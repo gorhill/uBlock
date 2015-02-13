@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"导出到文件…",
+    "message":"导出到文件",
     "description":""
   },
   "rulesDefaultFileName":{

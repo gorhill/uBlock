@@ -352,7 +352,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Запазване",
+    "message":"Приемане",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

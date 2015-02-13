@@ -340,11 +340,11 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Pysyvät säännöt",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Väliaikaiset säännöt",
     "description":"header"
   },
   "rulesRevert":{

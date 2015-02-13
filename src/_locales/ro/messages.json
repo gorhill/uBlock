@@ -72,11 +72,11 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "message":"Etichetele <code>script<\/code> în linie sunt <b>permise<\/b> pe acest site",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "message":"Etichetele <code>script<\/code> în linie sunt <b>blocate<\/b> pe acest site",
     "description":""
   },
   "popupSite1pScriptEnabled":{
@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Reguli permanente",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Reguli temporare",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Înlătură",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Aplică",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -472,7 +472,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
+    "message":"salvarea-mea-ublock_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

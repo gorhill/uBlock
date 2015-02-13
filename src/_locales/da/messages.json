@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"Tilsluttede domæner",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -340,7 +340,7 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Permanente regler",
     "description":"header"
   },
   "rulesTemporaryHeader":{
