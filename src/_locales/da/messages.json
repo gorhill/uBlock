@@ -344,15 +344,15 @@
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Midlertidige regler",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Gendan",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Gør permanent",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Eksporter til fil...",
+    "message":"Eksporter til fil",
     "description":""
   },
   "rulesDefaultFileName":{
