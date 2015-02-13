@@ -1538,6 +1538,12 @@ FilterParser.prototype.parse = function(s) {
         s = trimChar(s, '*');
     }
 
+    // nothing left?
+    if ( s === '' ) {
+        this.unsupported = true;
+        return this;
+    }
+
     // plain hostname?
     this.hostnamePure = this.hostnameAnchored && reHostnameRule.test(s);
 
