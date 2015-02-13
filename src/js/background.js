@@ -67,7 +67,6 @@ return {
 
     // https://github.com/gorhill/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
-    netExceptionList: {}, // TODO: remove once all users are up to date
     netWhitelist: {},
     netWhitelistModifyTime: 0,
     netWhitelistDefault: [
@@ -85,7 +84,7 @@ return {
 
     // EasyList, EasyPrivacy and many others have an 4-day update period,
     // as per list headers.
-    updateAssetsEvery: 75 * oneHour + 23 * oneMinute + 53 * oneSecond + 605,
+    updateAssetsEvery: 97 * oneHour,
     projectServerRoot: 'https://raw.githubusercontent.com/gorhill/uBlock/master/',
     userFiltersPath: 'assets/user/filters.txt',
     pslPath: 'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
@@ -111,11 +110,8 @@ return {
     remoteBlacklists: {
     },
 
-    firstUpdateAfter: 5 * oneMinute,
-    nextUpdateAfter: 7 * oneHour,
-
     selfieMagic: 'bizhviclttie',
-    selfieAfter: 7 * oneMinute,
+    selfieAfter: 23 * oneMinute,
 
     pageStores: {},
 

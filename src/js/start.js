@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     µBlock - a Chromium browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,97 +19,148 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock */
+/* global vAPI, µBlock */
 
 /******************************************************************************/
 
-// Automatic update of non-user assets
-// https://github.com/gorhill/httpswitchboard/issues/334
+// Load all: executed once.
 
-µBlock.updater = (function() {
-
-'use strict';
+(function() {
 
 /******************************************************************************/
 
-var µb = µBlock;
+// Final initialization steps after all needed assets are in memory.
+// - Initialize internal state with maybe already existing tabs.
+// - Schedule next update operation.
 
-var jobCallback = function() {
-    // Simpler to fire restart here, and safe given how far this will happen
-    // in the future.
-    restart();
+var onAllReady = function() {
+    var µb = µBlock;
 
-    // If auto-update is disabled, check again in a while.
-    if ( µb.userSettings.autoUpdate !== true ) {
+    // https://github.com/gorhill/uBlock/issues/184
+    // Check for updates not too far in the future.
+    µb.assetUpdater.onStart.addEventListener(µb.updateStartHandler.bind(µb));
+    µb.assetUpdater.onCompleted.addEventListener(µb.updateCompleteHandler.bind(µb));
+
+    // Important: remove barrier to remote fetching, this was useful only
+    // for launch time.
+    µb.assets.allowRemoteFetch = true;
+
+    vAPI.onLoadAllCompleted();
+};
+
+/******************************************************************************/
+
+// To bring older versions up to date
+
+var onVersionReady = function(bin) {
+    var µb = µBlock;
+    var lastVersion = bin.version || '0.0.0.0';
+
+    // Whitelist some key scopes by default
+    if ( lastVersion.localeCompare('0.8.6.0') < 0 ) {
+        µb.netWhitelist = µb.whitelistFromString(
+            µb.stringFromWhitelist(µb.netWhitelist) + 
+            '\n' + 
+            µb.netWhitelistDefault
+        );
+        µb.saveWhitelist();
+    }
+
+    vAPI.storage.set({ version: vAPI.app.version });
+    onAllReady();
+};
+
+/******************************************************************************/
+
+// Filter lists
+// Whitelist
+
+var countdown = 2;
+var doCountdown = function() {
+    countdown -= 1;
+    if ( countdown !== 0 ) {
         return;
     }
-
-    var onMetadataReady = function(metadata) {
-        // Check PSL
-        var mdEntry = metadata[µb.pslPath];
-        if ( mdEntry.repoObsolete ) {
-            // console.log('µBlock.updater> updating all updatable assets');
-            µb.loadUpdatableAssets({ update: true });
-            return;
-        }
-        // Check used filter lists
-        var lists = µb.remoteBlacklists;
-        for ( var path in lists ) {
-            if ( lists.hasOwnProperty(path) === false ) {
-                continue;
-            }
-            if ( lists[path].off ) {
-                continue;
-            }
-            if ( metadata.hasOwnProperty(path) === false ) {
-                continue;
-            }
-            mdEntry = metadata[path];
-            if ( mdEntry.cacheObsolete || mdEntry.repoObsolete ) {
-                // console.log('µBlock.updater> updating only filter lists');
-                µb.loadUpdatableAssets({ update: true, psl: false });
-                return;
-            }
-        }
-
-        // console.log('µBlock.updater> all is up to date');
-    };
-
-    µb.assets.metadata(onMetadataReady);
+    // Last step: do whatever is necessary when version changes
+    vAPI.storage.get('version', onVersionReady);
 };
-
-// https://www.youtube.com/watch?v=cIrGQD84F1g
 
 /******************************************************************************/
 
-var restart = function(after) {
-    if ( after === undefined ) {
-        after = µb.nextUpdateAfter;
+// Filters are in memory.
+// Filter engines need PSL to be ready.
+
+var onFiltersReady = function() {
+    doCountdown();
+};
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/226
+// Whitelist in memory.
+// Whitelist parser needs PSL to be ready.
+// gorhill 2014-12-15: not anymore
+
+var onWhitelistReady = function() {
+    doCountdown();
+};
+
+/******************************************************************************/
+
+// Load order because dependencies:
+// User settings -> PSL -> [filter lists]
+
+var onPSLReady = function() {
+    µBlock.loadFilterLists(onFiltersReady);
+};
+
+/******************************************************************************/
+
+// If no selfie available, take the long way, i.e. load and parse
+// raw data.
+
+var onSelfieReady = function(success) {
+    if ( success === true ) {
+        onFiltersReady();
+        return;
     }
-
-    µb.asyncJobs.add(
-        'autoUpdateAssets',
-        null,
-        jobCallback,
-        after,
-        false
-    );
+    µBlock.loadPublicSuffixList(onPSLReady);
 };
 
 /******************************************************************************/
 
-return {
-    restart: restart
+// User settings are in memory
+
+var onUserSettingsReady = function(userSettings) {
+    var µb = µBlock;
+
+    // https://github.com/gorhill/uBlock/issues/426
+    // Important: block remote fetching for when loading assets at launch
+    // time.
+    µb.assets.allowRemoteFetch = false;
+    µb.assets.autoUpdate = userSettings.autoUpdate;
+    µb.fromSelfie(onSelfieReady);
+
+    // https://github.com/gorhill/uBlock/issues/540
+    // Disabling local mirroring for the time being
+    userSettings.experimentalEnabled = false;
+    µb.mirrors.toggle(false /* userSettings.experimentalEnabled */);
+
+    µb.contextMenu.toggle(userSettings.contextMenuEnabled);
+    µb.permanentFirewall.fromString(userSettings.dynamicFilteringString);
+    µb.sessionFirewall.assign(µb.permanentFirewall);
+
+    // Remove obsolete setting
+    delete userSettings.logRequests;
+    µb.XAL.keyvalRemoveOne('logRequests');
 };
+
+µBlock.loadUserSettings(onUserSettingsReady);
+µBlock.loadWhitelist(onWhitelistReady);
+µBlock.loadLocalSettings();
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/
-
-// Load everything
-
-µBlock.load();
 
 /******************************************************************************/

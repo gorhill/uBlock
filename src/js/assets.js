@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     µBlock - a Chromium browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -274,7 +274,7 @@ var getTextFileFromURL = function(url, onLoad, onError) {
     // console.log('µBlock> getTextFileFromURL("%s"):', url);
     var xhr = new XMLHttpRequest();
     xhr.open('get', url, true);
-    xhr.timeout = 15000;
+    xhr.timeout = 30000;
     xhr.onload = onResponseReceived;
     xhr.onerror = onError;
     xhr.ontimeout = onError;
@@ -1044,7 +1044,194 @@ exports.purgeAll = function(callback) {
 
 return exports;
 
+})();
+
 /******************************************************************************/
+/******************************************************************************/
+
+µBlock.assetUpdater = (function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+var updateDaemonTimerPeriod =      11 * 60 * 1000; // 11 minutes
+var updateCycleFirstPeriod  =       7 * 60 * 1000; //  7 minutes
+var updateCycleNextPeriod   = 11 * 60 * 60 * 1000; // 11 hours
+var updateCycleTime = 0;
+
+var toUpdate = {};
+var toUpdateCount = 0;
+var updated = {};
+var updatedCount = 0;
+var metadata = null;
+
+var onStart = null;
+var onCompleted = null;
+
+var exports = {};
+
+/******************************************************************************/
+
+var onAssetUpdated = function(details) {
+    var path = details.path;
+    if ( details.error ) {
+        console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
+        return;
+    }
+    console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s"', path);
+    updated[path] = true;
+    updatedCount += 1;
+
+    // New data available: selfie is now invalid
+    µb.destroySelfie();
+};
+
+/******************************************************************************/
+
+var updateOne = function() {
+    var metaEntry;
+    for ( var path in toUpdate ) {
+        if ( toUpdate.hasOwnProperty(path) === false ) {
+            continue;
+        }
+        if ( toUpdate[path] !== true ) {
+            continue;
+        }
+        toUpdate[path] = false;
+        toUpdateCount -= 1;
+        if ( metadata.hasOwnProperty(path) === false ) {
+            continue;
+        }
+        metaEntry = metadata[path];
+        if ( !metaEntry.cacheObsolete && !metaEntry.repoObsolete ) {
+            continue;
+        }
+        console.debug('assets.js > µBlock.assetUpdater/updateOne: assets.get("%s")', path);
+        µb.assets.get(path, onAssetUpdated);
+        break;
+    }
+};
+
+/******************************************************************************/
+
+var onMetadataReady = function(response) {
+    metadata = response;
+    updateOne();
+};
+
+/******************************************************************************/
+
+var updateDaemon = function() {
+    setTimeout(updateDaemon, updateDaemonTimerPeriod);
+
+    µb.assets.autoUpdate = µb.userSettings.autoUpdate;
+
+    if ( µb.assets.autoUpdate !== true ) {
+        return;
+    }
+
+    // Start an update cycle?
+    if ( updateCycleTime !== 0 ) {
+        if ( Date.now() >= updateCycleTime ) {
+            console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle started');
+            reset();
+            if ( onStart !== null ) {
+                onStart();
+            }
+        }
+        return;
+    }
+
+    // Any asset to update?
+    if ( toUpdateCount !== 0 ) {
+        if ( metadata === null ) {
+            µb.assets.metadata(onMetadataReady);
+        } else {
+            updateOne();
+        }
+        return;
+    }
+    // Nothing left to update
+
+    // If anything was updated, notify listener
+    if ( updatedCount !== 0 ) {
+        if ( onCompleted !== null ) {
+            console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle completed');
+            onCompleted({
+                updated: JSON.parse(JSON.stringify(updated)), // give callee its own safe copy
+                updatedCount: updatedCount
+            });
+        }
+    }
+
+    // Schedule next update cycle
+    if ( updateCycleTime === 0 ) {
+        reset();
+        console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
+        updateCycleTime = Date.now() + updateCycleNextPeriod;
+    }
+};
+
+setTimeout(updateDaemon, updateDaemonTimerPeriod);
+
+/******************************************************************************/
+
+var reset = function() {
+    toUpdate = {};
+    toUpdateCount = 0;
+    updated = {};
+    updatedCount = 0;
+    updateCycleTime = 0;
+    metadata = null;
+};
+
+/******************************************************************************/
+
+exports.onStart = {
+    addEventListener: function(callback) {
+        onStart = callback || null;
+        if ( onStart !== null ) {
+            updateCycleTime = Date.now() + updateCycleFirstPeriod;
+        }
+    }
+};
+
+/******************************************************************************/
+
+exports.onCompleted = {
+    addEventListener: function(callback) {
+        onCompleted = callback || null;
+    }
+};
+
+/******************************************************************************/
+
+exports.add = function(path) {
+    if ( toUpdate.hasOwnProperty(path) ) {
+        return;
+    }
+
+    console.debug('assets.js > µBlock.assetUpdater.add("%s")', path);
+
+    toUpdate[path] = true;
+    toUpdateCount += 1;
+};
+
+/******************************************************************************/
+
+// Typically called when an update has been forced.
+
+exports.restart = function() {
+    reset();
+    updateCycleTime = Date.now() + updateCycleNextPeriod;
+};
+
+/******************************************************************************/
+
+return exports;
 
 })();
 

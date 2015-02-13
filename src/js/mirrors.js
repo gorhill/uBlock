@@ -498,6 +498,9 @@ var parseMirrorCandidates = function(rawText) {
 /******************************************************************************/
 
 var load = function() {
+    if ( loaded ) {
+        return;
+    }
     loaded = true;
 
     var onMirrorCandidatesReady = function(details) {
