@@ -1506,7 +1506,7 @@ FilterParser.prototype.parse = function(s) {
     }
 
     // regex?
-    if ( s.charAt(0) === '/' && s.slice(-1) === '/' ) {
+    if ( s.charAt(0) === '/' && s.slice(-1) === '/' && s.lenght > 2 ) {
         this.isRegex = true;
         this.f = s.slice(1, -1);
         return this;
