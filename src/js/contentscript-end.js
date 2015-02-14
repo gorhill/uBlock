@@ -71,8 +71,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     if ( vAPI.specificHideStyle instanceof HTMLStyleElement === false ) {
         return;
     }
-    // Is our style tag still available?
-    if ( document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5') !== null ) {
+    // Is our style tag still in the DOM? (the guess is whatever parent there
+    // is, it is in the DOM)
+    if ( vAPI.specificHideStyle.parentNode !== null ) {
         return;
     }
     // Put it back
