@@ -14,15 +14,16 @@ html, body {
 ul, li, div {
     display: block;
 }
+ul {
+    margin: 0.25em 0 0 0;
+}
 button {
+    margin: 0 0 0 2px;
     border: 1px solid #aaa;
-    margin-left: 3px;
-    padding: 6px 8px 4px 8px;
+    padding: 4px 6px;
     box-sizing: border-box;
     box-shadow: none;
     border-radius: 3px;
-    display: inline;
-    line-height: 1;
     color: #444;
     background-color: #ccc;
     cursor: pointer;
@@ -38,6 +39,7 @@ button:disabled {
     background-color: #ffdca8;
 }
 section {
+    border: 1px solid #ccc;
     box-sizing: border-box;
     display: inline-block;
     height: 8em;
@@ -46,21 +48,21 @@ section {
 }
 textarea {
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 0;
     box-sizing: border-box;
     font: 11px monospace;
     height: 100%;
     overflow: hidden;
-    padding: 2px;
+    padding: 0;
     resize: none;
     width: 100%;
 }
 div {
-    bottom: 2px;
+    bottom: 1px;
     direction: ltr;
     opacity: 0.2;
     position: absolute;
-    right: 2px;
+    right: 1px;
 }
 div:hover {
     opacity: 1;
@@ -141,11 +143,7 @@ body.paused > aside:hover {
 <aside>
 <section>
     <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
-    <div>
-        <button id="create" type="button" disabled="disabled">{{create}}</button>
-        <button id="pick" type="button">{{pick}}</button>
-        <button id="quit" type="button">{{quit}}</button>
-    </div>
+    <div><button id="create" type="button" disabled="disabled">{{create}}</button><button id="pick" type="button">{{pick}}</button><button id="quit" type="button">{{quit}}</button></div>
 </section>
 <ul>
     <li id="netFilters">
