@@ -67,8 +67,6 @@ var localMessager = vAPI.messaging.channel('contentscript-start.js');
 var cosmeticFilters = function(details) {
     var donthideCosmeticFilters = {};
     var hideCosmeticFilters = {};
-    var style = document.createElement('style');
-    style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
     var hide = details.cosmeticHide;
     var i;
@@ -96,15 +94,17 @@ var cosmeticFilters = function(details) {
         }
     }
     if ( hide.length !== 0 ) {
-        var text = vAPI.specificHideStyleText = hide.join(',\n');
+        var text = hide.join(',\n');
         hideElements(text);
+        var style = vAPI.specificHideStyle = document.createElement('style');
+        style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
-    }
-    var parent = document.head || document.documentElement;
-    if ( parent ) {
-        parent.appendChild(style);
+        var parent = document.head || document.documentElement;
+        if ( parent ) {
+            parent.appendChild(style);
+        }
     }
     vAPI.donthideCosmeticFilters = donthideCosmeticFilters;
     vAPI.hideCosmeticFilters = hideCosmeticFilters;

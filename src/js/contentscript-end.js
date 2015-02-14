@@ -68,23 +68,17 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 (function() {
     // Were there specific cosmetic filters?
-    var text = vAPI.specificHideStyleText;
-    if ( typeof text !== 'string' ) {
+    if ( vAPI.specificHideStyle instanceof HTMLStyleElement === false ) {
         return;
     }
-    vAPI.specificHideStyleText = undefined;
     // Is our style tag still available?
-    var style = document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-    if ( style !== null ) {
+    if ( document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5') !== null ) {
         return;
     }
     // Put it back
-    style = document.createElement('style');
-    style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
-    style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
     var parent = document.head || document.documentElement;
     if ( parent ) {
-        parent.appendChild(style);
+        parent.appendChild(vAPI.specificHideStyle);
     }
 })();
 
