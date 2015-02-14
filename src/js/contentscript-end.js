@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI */
+/* global vAPI, HTMLDocument */
 
 /******************************************************************************/
 
@@ -62,7 +62,35 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 /******************************************************************************/
 
-// ABP cosmetic filters
+// https://github.com/gorhill/uBlock/issues/789
+// Be sure that specific cosmetic filters are still applied.
+// Executed once, then flushed from memory.
+
+(function() {
+    // Were there specific cosmetic filters?
+    var text = vAPI.specificHideStyleText;
+    if ( typeof text !== 'string' ) {
+        return;
+    }
+    vAPI.specificHideStyleText = undefined;
+    // Is our style tag still available?
+    var style = document.getElementById('ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+    if ( style !== null ) {
+        return;
+    }
+    // Put it back
+    style = document.createElement('style');
+    style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
+    style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
+    var parent = document.head || document.documentElement;
+    if ( parent ) {
+        parent.appendChild(style);
+    }
+})();
+
+/******************************************************************************/
+
+// Cosmetic filters
 
 (function() {
     if ( vAPI.skipCosmeticFiltering ) {
@@ -77,15 +105,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var highGenerics = null;
     var contextNodes = [document];
     var nullArray = { push: function(){} };
-
-    var domLoaded = function() {
-        idsFromNodeList(document.querySelectorAll('[id]'));
-        classesFromNodeList(document.querySelectorAll('[class]'));
-        retrieveGenericSelectors();
-
-        // Flush dead code from memory (does this work?)
-        domLoaded = null;
-    };
 
     var retrieveGenericSelectors = function() {
         var selectors = classSelectors !== null ? Object.keys(classSelectors) : [];
@@ -430,7 +449,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
     // Start cosmetic filtering.
 
-    domLoaded();
+    idsFromNodeList(document.querySelectorAll('[id]'));
+    classesFromNodeList(document.querySelectorAll('[class]'));
+    retrieveGenericSelectors();
 
     // Below this point is the code which takes care to observe changes in
     // the page and to add if needed relevant CSS rules as a result of the

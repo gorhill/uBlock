@@ -20,7 +20,7 @@
 */
 
 /* jshint multistr: true */
-/* global vAPI */
+/* global vAPI, HTMLDocument */
 
 /******************************************************************************/
 
@@ -71,31 +71,32 @@ var cosmeticFilters = function(details) {
     style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var donthide = details.cosmeticDonthide;
     var hide = details.cosmeticHide;
+    var i;
     if ( donthide.length !== 0 ) {
         donthide = donthide.length !== 1 ? donthide.join(',\n') : donthide[0];
         donthide = donthide.split(',\n');
-        var i = donthide.length;
+        i = donthide.length;
         while ( i-- ) {
             donthideCosmeticFilters[donthide[i]] = true;
         }
-        // https://github.com/gorhill/uBlock/issues/143
-        if ( hide.length !== 0 ) {
-            hide = hide.length !== 1 ? hide.join(',\n') : hide[0];
-            hide = hide.split(',\n');
-            i = hide.length;
-            var selector;
-            while ( i-- ) {
-                selector = hide[i];
-                if ( donthideCosmeticFilters[selector] ) {
-                    hide.splice(i, 1);
-                } else {
-                    hideCosmeticFilters[selector] = true;
-                }
+    }
+    // https://github.com/gorhill/uBlock/issues/143
+    if ( hide.length !== 0 ) {
+        hide = hide.length !== 1 ? hide.join(',\n') : hide[0];
+        hide = hide.split(',\n');
+        i = hide.length;
+        var selector;
+        while ( i-- ) {
+            selector = hide[i];
+            if ( donthideCosmeticFilters[selector] ) {
+                hide.splice(i, 1);
+            } else {
+                hideCosmeticFilters[selector] = true;
             }
         }
     }
     if ( hide.length !== 0 ) {
-        var text = hide.join(',\n');
+        var text = vAPI.specificHideStyleText = hide.join(',\n');
         hideElements(text);
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
