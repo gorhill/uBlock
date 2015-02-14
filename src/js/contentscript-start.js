@@ -97,7 +97,6 @@ var cosmeticFilters = function(details) {
         var text = hide.join(',\n');
         hideElements(text);
         var style = vAPI.specificHideStyle = document.createElement('style');
-        style.setAttribute('id', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
@@ -116,7 +115,6 @@ var netFilters = function(details) {
         return;
     }
     var style = document.createElement('style');
-    style.setAttribute('class', 'ublock-preload-1ae7a5f130fc79b4fdb8a4272d9426b5');
     var text = details.netHide.join(',\n');
     var css = details.netCollapse ?
         '\n{display:none !important;}' :

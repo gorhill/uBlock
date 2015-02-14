@@ -208,7 +208,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var addStyleTag = function(selectors) {
         hideElements(selectors);
         var style = document.createElement('style');
-        style.setAttribute('class', 'ublock-postload-1ae7a5f130fc79b4fdb8a4272d9426b5');
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(selectors.join(',\n') + '\n{display:none !important;}'));
         var parent = document.body || document.documentElement;
