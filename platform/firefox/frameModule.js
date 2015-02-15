@@ -151,10 +151,10 @@ const contentObserver = {
 
         // https://github.com/gorhill/uBlock/issues/795
         // Only the top main frame can be an orphan
-        let isTopLevel = context === context.top && type === this.MAIN_FRAME;
+        let isTopLevel = context === context.top;
         let parentFrameId;
 
-        if ( isTopLevel ) {
+        if ( isTopLevel && type === this.MAIN_FRAME ) {
             parentFrameId = -1;
         } else if ( context.parent === context.top ) {
             parentFrameId = 0;
