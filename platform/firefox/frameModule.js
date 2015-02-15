@@ -139,6 +139,8 @@ const contentObserver = {
                 && this.ignoredPopups.has(context) === false ) {
                 openerURL = context.opener.location.href;
             }
+        } else if ( type === 7 ) { // SUB_DOCUMENT
+            context = context.contentWindow;
         } else {
             context = (context.ownerDocument || context).defaultView;
         }
@@ -149,12 +151,10 @@ const contentObserver = {
             return this.ACCEPT;
         }
 
-        // https://github.com/gorhill/uBlock/issues/795
-        // Only the top main frame can be an orphan
         let isTopLevel = context === context.top;
         let parentFrameId;
 
-        if ( isTopLevel && type === this.MAIN_FRAME ) {
+        if ( isTopLevel ) {
             parentFrameId = -1;
         } else if ( context.parent === context.top ) {
             parentFrameId = 0;
