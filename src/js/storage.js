@@ -547,7 +547,7 @@
         cosmeticFilteringEngine: this.cosmeticFilteringEngine.toSelfie()
     };
     vAPI.storage.set({ selfie: selfie });
-    console.log('storage.js > µBlock.toSelfie()');
+    //console.debug('storage.js > µBlock.toSelfie()');
 };
 
 // This is to be sure the selfie is generated in a sane manner: the selfie will
@@ -601,7 +601,7 @@
 µBlock.destroySelfie = function() {
     vAPI.storage.remove('selfie');
     this.asyncJobs.remove('toSelfie');
-    console.log('storage.js > µBlock.destroySelfie()');
+    //console.debug('storage.js > µBlock.destroySelfie()');
 };
 
 /******************************************************************************/
@@ -640,7 +640,7 @@
 
     var onPSLReady = function() {
         if ( updatedCount !== 0 ) {
-            console.debug('storage.js > µBlock.updateCompleteHandler: reloading filter lists');
+            //console.debug('storage.js > µBlock.updateCompleteHandler: reloading filter lists');
             µb.loadFilterLists(onFiltersReady);
         } else {
             onFiltersReady();
@@ -652,7 +652,7 @@
     }
 
     if ( details.hasOwnProperty(this.pslPath) ) {
-        console.debug('storage.js > µBlock.updateCompleteHandler: reloading PSL');
+        //console.debug('storage.js > µBlock.updateCompleteHandler: reloading PSL');
         this.loadPublicSuffixList(onPSLReady);
         updatedCount -= 1;
     } else {

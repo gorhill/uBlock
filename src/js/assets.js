@@ -265,11 +265,21 @@ var cachedAssetsManager = (function() {
 var getTextFileFromURL = function(url, onLoad, onError) {
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
-        // xhr for local files gives status 0, but actually succeeds
-        if ( (this.status >= 200 && this.status < 300) || (this.status === 0 && this.responseText) ) {
-            return onLoad.call(this);
+        if ( this.status < 200 || this.status >= 300 ) {
+            return onError.call(this);
         }
-        return onError.call(this);
+        // xhr for local files gives status 0, but actually succeeds
+        if ( this.status === 0 && stringIsNotEmpty(this.responseText) === false ) {
+            return onError.call(this);
+        }
+        // we never download anything else than plain text: discard if response
+        // appears to be a HTML document: could happen when server returns
+        // some kind of error page I suppose
+        var text = this.responseText.trim();
+        if ( text.charAt(0) === '<' && text.slice(-1) === '>' ) {
+            return onError.call(this);
+        }
+        return onLoad.call(this);
     };
     // console.log('µBlock> getTextFileFromURL("%s"):', url);
     var xhr = new XMLHttpRequest();
@@ -1078,10 +1088,10 @@ var exports = {};
 var onAssetUpdated = function(details) {
     var path = details.path;
     if ( details.error ) {
-        console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
+        //console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
         return;
     }
-    console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s"', path);
+    //console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s"', path);
     updated[path] = true;
     updatedCount += 1;
 
@@ -1109,7 +1119,7 @@ var updateOne = function() {
         if ( !metaEntry.cacheObsolete && !metaEntry.repoObsolete ) {
             continue;
         }
-        console.debug('assets.js > µBlock.assetUpdater/updateOne: assets.get("%s")', path);
+        //console.debug('assets.js > µBlock.assetUpdater/updateOne: assets.get("%s")', path);
         µb.assets.get(path, onAssetUpdated);
         break;
     }
@@ -1136,7 +1146,7 @@ var updateDaemon = function() {
     // Start an update cycle?
     if ( updateCycleTime !== 0 ) {
         if ( Date.now() >= updateCycleTime ) {
-            console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle started');
+            //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle started');
             reset();
             if ( onStart !== null ) {
                 onStart();
@@ -1159,7 +1169,7 @@ var updateDaemon = function() {
     // If anything was updated, notify listener
     if ( updatedCount !== 0 ) {
         if ( onCompleted !== null ) {
-            console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle completed');
+            //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle completed');
             onCompleted({
                 updated: JSON.parse(JSON.stringify(updated)), // give callee its own safe copy
                 updatedCount: updatedCount
@@ -1170,7 +1180,7 @@ var updateDaemon = function() {
     // Schedule next update cycle
     if ( updateCycleTime === 0 ) {
         reset();
-        console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
+        //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
         updateCycleTime = Date.now() + updateCycleNextPeriod;
     }
 };
@@ -1214,7 +1224,7 @@ exports.add = function(path) {
         return;
     }
 
-    console.debug('assets.js > µBlock.assetUpdater.add("%s")', path);
+    //console.debug('assets.js > µBlock.assetUpdater.add("%s")', path);
 
     toUpdate[path] = true;
     toUpdateCount += 1;
