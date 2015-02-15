@@ -484,7 +484,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат заместени, с помощта на данни, архивирани на {{time}}, и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивирани данни?",
+    "message":"Всички ваши настройки ще бъдат заместени с помощта на данни, архивирани на {{time}} и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивираните данни?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -492,7 +492,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат премахнати и µBlock ще се рестартира.\n\nВръщане фабричните настройки на µBlock?",
+    "message":"Всички ваши настройки ще бъдат премахнати и µBlock ще се рестартира.\n\nВръщане стандартните настройки на µBlock?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

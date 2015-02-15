@@ -4,79 +4,79 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"În sfârșit, un blocant eficient. Folosește procesorul și memoria foarte puțin.",
+    "message":"Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorjen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Panou de control",
+    "message":"µBlock — Pulti i programit",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
-    "message":"Opțiuni",
+    "message":"Parametrat",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Filtre externe",
+    "message":"3rd-party filters",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Filtrele mele",
+    "message":"Filtrat e mi",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Regulile mele",
+    "message":"Rregullat e mia",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Lista de excluderi",
+    "message":"Lista e bardhë",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Jurnalul cererilor de rețea",
+    "message":"µBlock — Ditari i kërkesave të rrjetit",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"Despre",
+    "message":"Info",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: dezactivează\/activează µBlock pentru acest site.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
+    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"cereri blocate",
+    "message":"kërkesa të bllokuara",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"pe această pagină",
+    "message":"te kjo faqja",
     "description":"English: on this page"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"de la instalare",
+    "message":"që prej instalimit",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"sau",
+    "message":"ose",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Clic pentru a deschide panoul",
+    "message":"Hapni pultin e programit duket klikuar",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Modul alege element",
+    "message":"Përzgjedhësi i elementeve",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Deschide jurnalul cererilor",
+    "message":"Hap ditarin e kërkesave",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"Etichetele <code>script<\/code> în linie sunt <b>permise<\/b> pe acest site",
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"Etichetele <code>script<\/code> în linie sunt <b>blocate<\/b> pe acest site",
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
     "description":""
   },
   "popupSite1pScriptEnabled":{
@@ -152,11 +152,11 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"tot",
+    "message":"të gjitha",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"imagini",
+    "message":"figurat",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -164,7 +164,7 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"scripturi înglobate",
+    "message":"skriptet e integruara",
     "description":""
   },
   "popup1pScriptRulePrompt":{
@@ -180,255 +180,255 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domenii conectate",
+    "message":"domene të kontaktuara",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} din {{total}}",
+    "message":"{{count}} nga {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Creează",
+    "message":"Krijoj",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Alege",
+    "message":"Përzgjedh",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Ieșire",
+    "message":"Mbyll",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Filtre net",
+    "message":"Filtrat e rrjetit",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Filtre vizuale",
+    "message":"Filtrat kozmetikë",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Clic, Ctrl-clic",
+    "message":"Klikoj, Ctrl-klikim",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Blochează elementul",
+    "message":"Bllokoj elementin",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ascunde substituenții elementelor blocate",
+    "message":"Fsheh simbolet e elementeve të bllokuara",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Arată numărul cererilor blocate pe pictogramă",
+    "message":"Tregoj te ikona numrin e kërkesave që janë bllokuar",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Folosește meniul contextual unde este cazul",
+    "message":"Përdor menynë kontekstuale kur duhet",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Sunt un utilizator avansat (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lectură obligatorie<\/a>)",
+    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Activează funcțiile experimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Despre<\/a>)",
+    "message":"Aktivizoj veçoritë eksperimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtre rețea ＋ {{cosmeticFilterCount}} filtre vizuale din:",
+    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} folosite din {{total}}",
+    "message":"{{used}} used out of {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Actualizare automată a listelor de filtre.",
+    "message":"Përditësoj filtrat automatikisht.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Actualizează acum",
+    "message":"Përditësoj tani",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Golește cacheurile",
+    "message":"Purge all caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Citește și aplică filtrele vizuale.",
+    "message":"Parse and enforce cosmetic filters.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Aceasta optiune permite citirea si aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor Adblock Plus a elementelor de ascuns<\/a>. Aceste filtre sunt in esenta vizuale, acestea servind la ascunderea elementelor intr-un site care sunt marcate ca inutile si care nu pot fi blocate de cererile pe baza de filtre net.<\/p><p>Activand aceasta optiune memoria utilizata de <i>µBlock<\/i> va creste<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lista adreselor blocate",
+    "message":"Lists of blocked hosts",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Aplică modificările",
+    "message":"Ruaj ndryshimet",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"Reclame",
+    "message":"Reklamat",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"Intimitate",
+    "message":"Sfera private",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Domenii malitioase",
+    "message":"Malware domains",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Rrjetet sociale",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multifuncționale",
+    "message":"Për qëllime të ndryshme",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regiuni, limbi",
+    "message":"Rajonet, gjuhët",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Personalizare",
+    "message":"Personalizoj",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"O adresa pe linie. Liniile care incep cu &lsquo;!&rsquo; vor fi ignorate. Adresele invalide vor fi ignorate fara avertizare.",
+    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Analizează",
+    "message":"Analizoj",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"goleste cacheul",
+    "message":"purge cache",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"versiune nouă disponibilă",
+    "message":"ka dalë versioni i ri",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"posibil invechit",
+    "message":"e vjetër",
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Importă și adaugă",
+    "message":"Importoj dhe shtoj",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"Exportă",
+    "message":"Eksportoj",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"filtrele-mele-statice-ublock_{{datetime}}.txt",
+    "message":"my-ublock-static-filters_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"Aplică modificările",
+    "message":"Ruaj ndryshimet",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Reguli permanente",
+    "message":"Rregulla të përhershme",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Reguli temporare",
+    "message":"Rregulla të përkohshme",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Înlătură",
+    "message":"Revert",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Aplică",
+    "message":"Aplikoj",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"Editează",
+    "message":"Modifikoj",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Salvează",
+    "message":"Ruaj",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Elimină",
+    "message":"Anuloj",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importă din fișier...",
+    "message":"Importoj nga një skedë...",
     "description":""
   },
   "rulesExport":{
-    "message":"Exportă în fișier...",
+    "message":"Eksportoj në një skedë",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"regulile-mele-dinamice-ublock_{{datetime}}.txt",
+    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lista regulilor tale de filtrare dinamică.",
+    "message":"List of your dynamic filtering rules.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Sintaxa pentru regulă: <code>sursă destinație tip acțiune<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentație<\/a>).",
+    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista ta de nume de gazde unde µBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Importă și adaugă",
+    "message":"Importoj dhe shtoj",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Exportă",
+    "message":"Eksportoj",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"lista-mea-de-excluderi-ublock_{{datetime}}.txt",
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"Aplică modificările",
+    "message":"Ruaj ndryshimet",
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Activează înregistrarea cererilor de rețea",
+    "message":"Mbaj shënime për kërkesat e rrjetit",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Poti inspecta detaliile cererilor de retea daca vrei, activand aceasta optiune. Inregistrarea cererilor de retea poate conduce la cresterea gradului de utilizare a memoriei de catre µBlock. Pentru ca multi utilizatori n-or sa foloseasca niciodata aceasta optiune, aceasta este dezactivata implicit.",
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Cereri blocate",
+    "message":"Kërkesa të bllokuara",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Cereri permise",
+    "message":"Kërkesa të lejuara",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
-    "message":"Tip",
+    "message":"Lloji",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domeniu",
+    "message":"Domeni",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -436,71 +436,71 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"Filtru",
+    "message":"Filtri",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Nicio cerere blocată pentru această pagină",
+    "message":"Për këtë faqe nuk raportohet asnjë kërkesë e bllokuar",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nicio cerere ne-blocată pentru această pagină",
+    "message":"Për këtë faqe nuk raportohet asnjë kërkesë e pabllokuar",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"În fundal",
+    "message":"Në prapaskenë",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{
-    "message":"Jurnalul de modificări",
+    "message":"Ditari i ndryshimeve",
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"Wiki",
+    "message":"Dokumentimi",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Cod sursă (GPLv3)",
+    "message":"Source code (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"Contribuitori",
+    "message":"Kontributorët",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Copie de siguranță în fișier",
+    "message":"Kopjoj në skedë",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"salvarea-mea-ublock_{{datetime}}.txt",
+    "message":"my-ublock-backup_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Restaurează din fișier...",
+    "message":"Rindërtoj sipas skedës...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Restaurează la configurarea implicită...",
+    "message":"Kthej parametrat e mëparshëm...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și µBlock va fi repornit.\n\nDoriți să suprascrieți toate opțiunile folosind datele salvate?",
+    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe µBlock do të rifillojë.\n\nDo i mbishkruani parametrat aktualë?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"Datele nu au putut fi citite sau sunt invalide",
+    "message":"Të dhënat nuk lexohen ose mund të jenë dëmtuar",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Toate configurările tale vor fi eliminate și µBlock va reporni.\n\nRestaurează µBlock la configurările din fabrică?",
+    "message":"Të gjithë parametrat do të fshihen dhe µBlock do të rifillojë.\n\nDo i ktheni parametrat origjinalë?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"Nu mă pot conecta la {{url}}",
+    "message":"Nuk arrin të lidhet me {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"Aceasta intrare trebuie sa fie ultima",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }
