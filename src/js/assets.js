@@ -263,7 +263,7 @@ var cachedAssetsManager = (function() {
 var getTextFileFromURL = function(url, onLoad, onError) {
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
-        if ( this.status < 200 || this.status >= 300 ) {
+        if ( this.status !== 0 && ( this.status < 200 || this.status >= 300 ) ) {
             return onError.call(this);
         }
         // xhr for local files gives status 0, but actually succeeds
