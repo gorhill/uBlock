@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Sun, 18 Jan 2015 15:55:36 GMT
-# entries:        2450
+# last updated:   Mon, 09 Feb 2015 08:55:06 GMT
+# entries:        2451
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -130,7 +130,6 @@
 127.0.0.1 ad.media-servers.net
 127.0.0.1 ad.mediastorm.hu
 127.0.0.1 ad.mgd.de
-127.0.0.1 ad.moscowtimes.ru
 127.0.0.1 ad.musicmatch.com
 127.0.0.1 ad.nachtagenten.de
 127.0.0.1 ad.netdialogs.de
@@ -312,6 +311,7 @@
 127.0.0.1 adnetinteractive.com
 127.0.0.1 adnetwork.net
 127.0.0.1 adnews.maddog2000.de
+127.0.0.1 adnxs.com
 127.0.0.1 adocean.pl
 127.0.0.1 adonspot.com
 127.0.0.1 adoperator.com
@@ -586,7 +586,6 @@
 127.0.0.1 ads.ookla.com
 127.0.0.1 ads.optusnet.com.au
 127.0.0.1 ads.outpersonals.com
-127.0.0.1 ads.overclockers.at
 127.0.0.1 ads.p161.net
 127.0.0.1 ads.passion.com
 127.0.0.1 ads.pennet.com
@@ -676,7 +675,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -1551,6 +1549,7 @@
 127.0.0.1 hits.europuls.eu
 127.0.0.1 hits.informer.com
 127.0.0.1 hits.puls.lv
+127.0.0.1 hits.theguardian.com
 127.0.0.1 hits4me.com
 127.0.0.1 hits4pay.com
 127.0.0.1 hitslink.com
@@ -1567,6 +1566,7 @@
 127.0.0.1 hyperbanner.net
 127.0.0.1 hypertracker.com
 127.0.0.1 i-clicks.net
+127.0.0.1 i-lookup.com
 127.0.0.1 i.xx.openx.com
 127.0.0.1 i1img.com
 127.0.0.1 i1media.no
@@ -2156,6 +2156,7 @@
 127.0.0.1 stat.cliche.se
 127.0.0.1 stat.dealtime.com
 127.0.0.1 stat.dyna.ultraweb.hu
+127.0.0.1 stat.pl
 127.0.0.1 stat.su
 127.0.0.1 stat.tudou.com
 127.0.0.1 stat.webmedia.pl

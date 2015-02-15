@@ -19,6 +19,7 @@
 /antiadblockmsg.
 /ar/ads/*
 /ara/ads/*
+/bnr468.
 !
 !----------------------- Éléments génériques -----------------!
 ###custom-ad
@@ -319,6 +320,7 @@
 ||thouk.com/thouk.gif
 ||traidnt.net/link/fast_link.html?
 ||tumblr.com/$subdocument,domain=s-ajfan.com
+||tvgate.tv/tvgate/campaign/
 ||tvmasrnet-javafiles.googlecode.com/files/Ads
 ||tvquran.com/banr/
 ||up700.net/affiliates/
@@ -581,6 +583,7 @@
 ||e-mailaat.com/banarat/
 ||e3lanat.rofof.com^
 ||eaglepro.net^$popup,domain=bramjnet.com
+||easycima.com^$popup,domain=el7l.co
 ||echoroukonline.com/img/aswak2.swf
 ||echoroukonline.com/sponsors/
 ||educ40.net/hotcourses.swf
@@ -1079,6 +1082,7 @@ almasryalyoum.com##.gam-holder
 moheet.com##.gplus
 graaam.com##.haw
 bramj.co,qwled.com##.headerbanner
+msryh.com##.indexbnrleft
 filgoal.com##.inner_leaderboard
 n4hr.com##.ladv
 arabia.com##.leaderBoard
@@ -1096,6 +1100,7 @@ skynewsarabia.com##.mpu
 abotlal.com##.nannr
 rassoulallah.info##.narrow_column
 brooonzyah.net##.navbar_notice
+msryh.com##.navbnr
 ar-wp.com##.nbanners
 ounousa.com##.newBanner
 now24.net##.pad5

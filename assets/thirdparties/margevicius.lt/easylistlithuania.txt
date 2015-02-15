@@ -1,12 +1,12 @@
 [Adblock Plus 2.0]
-! Checksum: XxSDranwyiMA7TNSVfWSFA
+! Checksum: qxHnZO9bW8hPL+dCyjytjQ
 ! Title: EasyList Lithuania
 ! Prisidėjo: Algimantas Margevičius, Mantas Malcius 
 ! Apie neužblokuotas reklamas ar kitas bėdas praneškite el. paštu algimantas@margevicius.lt arba forume http://forums.lanik.us/ 
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2015-01-03
+! Paskutinis atnaujinimas: 2015-02-15
 ! Expires: 7 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -40,7 +40,11 @@
 15min.lt##.kainos_box
 15min.lt##.most_read_ads
 15min.lt##.outer-links
+15min.lt##.plius-base-box.plius-base-box-auto
+15min.lt##.plius-base-box.plius-base-box-domo
+15min.lt##.plius-base-box.plius-base-box-plius
 15min.lt##.top-banner
+15min.lt##.top-banner *
 15min.lt##A[href="http://www.vistienakitaip.lt/fiesta"] > IMG
 15min.lt##DIV[class^="pi_base_box pi_base_"]
 15min.lt##IMG[alt="Klasikinės muzikos gerbėjams dovana – „Vivace Vilnius“ festivalio koncertai"]
@@ -66,6 +70,7 @@
 @@||pildyk.lt/uploads/files/BANERIS_pildyk.jpg
 @@||post.lt/bin/banners/
 @@||post.lt/files/resized/*x*/banners/
+@@||simpsonaionline.net/js/advertisement.js
 @@||tavovaikams.lt//images/goods/$domain=~tavovaikams.lt
 @@||teatras.lt/uploads/img/banners/
 @@||technologijos.lt/iframe_komentarai
@@ -108,6 +113,10 @@ asvyras.lt##.ad2
 atvfanai.lt###banner-placeholder-1.banner-placeholder
 auto-loads.lt##.js-autotaurage-banner *
 auto-loads.lt##DIV[class^="banner_container_corner_"]
+auto.plius.lt###banner_middle3
+auto.plius.lt###banner_right
+auto.plius.lt###banner_right2
+auto.plius.lt##.ads-hor
 auto.plius.lt##.auto_leasing *
 auto.plius.lt##.citadele-wrapper *
 automokyklos.lt##.reklamaadd
@@ -350,6 +359,8 @@ man.lt###text-86775731
 manoekonamai.lt##.tb-content-block.tb-content-block-banners-sidebar
 maps.lt##.title-right-banner
 maps.lt##DIV[style="background: url('client/img/sep-1.gif') repeat-x center;"]
+marijampolieciai.lt##A[href] > IMG[src^="/images/stories/Logotipai/"]
+marijampolieciai.lt##A[href^=""] > IMG[src^="/images/stories/Logotipai/"]
 marijosradijas.lt##A > IMG[src^="/images/banners/"]
 martens.lt##.squarebanner
 masazonamai.lt###imagecontainer.header-image-container
@@ -840,9 +851,11 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||man.lt/banner/300x230_Empire.jpg
 ||manonamai.lt/newsfeed/
 ||manosveikata.lt/resources/_banners/
+||marijampolieciai.lt/images/stories/suv.jpg
 ||masazonamai.lt/imunitetas.gif
 ||masazonamai.lt/kleopatra%2060x120.jpg
 ||maxtraffic.com
+||medguru.lt/uploads/img/banners/
 ||meileslegendos.lt/wp-content/uploads/2014/02/fotografas.png
 ||meileslegendos.lt/wp-content/uploads/2014/02/mergvakario-baneris_legendos.jpg
 ||meileslegendos.lt/wp-content/uploads/2014/03/vestuviu-fotografai.jpg

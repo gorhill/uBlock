@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 07/02/2015
+! Last change: 16/02/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -172,7 +172,6 @@ exashare.com###player_img
 ||showcase.gamepark.cz/
 ||skjalovec.com/img/banners/
 ||slevy.tyden.cz/banner/
-||sokolov.cz/images/reklama/
 ||spoluzaci.cz/img/new-skin/bgr-main.png
 ||static.autoweb.cz/img/brands/
 ||stream*.idnes.cz/*#Reklama*
@@ -390,6 +389,7 @@ exashare.com###player_img
 @@||bbelements.com/crossdomain.xml$domain=idnes.cz
 @@||blesk.cz/js/*adocean.js*$domain=synotliga.isport.blesk.cz
 @@||blesk.cz/js/*/player/videoad.swf*$domain=synotliga.isport.blesk.cz
+@@||c.mfstatic.cz/js/advantage.min.js$domain=doupe.zive.cz
 @@||cars.cz^$third-party,domain=autocartichy.cz
 @@||cz.adocean.pl/files/js/ado.js$domain=blesk.cz
 @@||fastshare.cz/banner/site_logo.jpg
@@ -406,6 +406,7 @@ exashare.com###player_img
 @@||*.nova.cz/static/shared/app/videojs/plugins/adblock/
 @@||*.nova.cz/static/shared/app/videojs/plugins/ads/
 @@||ocko.tv/content/adv/flash/
+@@|http://pagead2.googlesyndication.com/pagead/show_ads.js$domain=pismenkuje.cz|pise.cz|blbne.cz|bonzuje.cz|sdeluje.cz|svetu.cz|vzpomina.cz
 @@||reklama-*.cz
 @@||smartmania.cz/advertisment.js
 @@||sokolov.cz/images/reklama/
@@ -415,11 +416,11 @@ exashare.com###player_img
 @@||stream.cz/static/swf/advert-nextEpisode.swf
 @@||*-reklama.cz
 @@||ta3.com/advert-async-system/load-items.html?
+doupe.zive.cz#@##adblock-leaderboard
 lidovky.cz#@#.col-ad
 realitygo.cz#@#.advert-detail
 sluzebnik.cz#@##adverts
 zive.cz#@#.box-adsense
-
 !
 !---------- Slovak Whitelist ------------!
 !
@@ -427,7 +428,7 @@ zive.cz#@#.box-adsense
 @@/moje-inzeraty/$document,domain=autobazar.sk|bazar.sk|nehnutelnosti.sk
 @@||img.aaaauto.eu/thumb/
 @@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
-@@||/moje-konto/inzeraty/
+@@/moje-konto/inzeraty/
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
 @@||tpd.sk/ads/rotator/
 ulozisko.sk#@##reklama_big
@@ -463,7 +464,6 @@ ulozisko.sk#@##reklama_big
 ###reklamni-box
 ###reklamy
 ###sklik
-###sklikReklama_19976
 ###slevomat_ad
 ###super_ad_note
 ###super_banner_default
@@ -719,7 +719,7 @@ mapy.in-pocasi.cz##.devicewidth
 maminka.cz###adframe-shell
 maminka.cz###hledejceny-banner
 matematika.cz###box-3
-matematika.cz##A[id="rbackground-link"]
+matematika.cz###rbackground-link
 matematika.cz##DIV[id*="reklama"]
 mediafax.cz##.bannercauta
 mediafax.cz##.casetaright
@@ -764,7 +764,6 @@ nova.cz##.big_baner
 nova.cz##.pr_box
 novaplus.nova.cz##.vjs-marker.active
 novinky.cz###advertRightTopPosition
-novinky.cz###sklikReklama_6022
 onlajny.com###banner-top-four
 onlajny.com###sportObchodBanner
 orbion.cz###DIV[style="text-align: center; display: none; z-index: 9999; bottom: 0px;"]
@@ -858,7 +857,6 @@ vodafonesms.cz##.banner-block-inside1
 vodafonesms.cz##.banner-block-right
 volny.cz###banner_flash
 volny.cz###services_content
-warcenter.cz###19704
 warezforum.cz##OBJECT[id*="bfad"]
 warezforum.cz##.center
 warforum.cz###adLocation-21
@@ -883,7 +881,6 @@ zeny.tiscali.cz###zone-tiscali-zeny-wide
 zing.cz###background
 zing.cz###bgSpaceArea
 zive.cz###ctl01_jobs
-zive.cz###zivefirmy
 zive.cz##.banner
 zive.cz##.banner-box
 zpravy.tiscali.cz###zone-tiscali-zpravy-wide

@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: V1b4zwZP5zKm+c8otGjgpA
+! Checksum: Gc93yKaX9/9eW1xyzCpirQ
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 7 Feb 2015
+! Updated: 15 Feb 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -651,8 +651,8 @@ wolframalpha.com###subpod_zoom
 @@||actiris.be/urchin.js
 @@||adobe.com/uber/js/omniture_s_code_rm.js
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
-@@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com
-@@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com
+@@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com|lenovo.com
+@@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com|lenovo.com
 @@||akamai.net/*/www-origin.walmart.com/webanalytics/$domain=walmart.com
 @@||akamai.net^*/hints.netflame.cc/$domain=annualcreditreport.com
 @@||amd.com/*/scode_global.js
@@ -822,6 +822,7 @@ wolframalpha.com###subpod_zoom
 @@||thestar.com^*/sitecatalyst/
 @@||ticketmaster.com^*/omniture_tracker.js
 @@||timeinc.net/tii/omniture/$script
+@@||topmarques.co.uk^*/tracking/module.omniture.js
 @@||traderonline.com/javascript/master_s_code.js
 @@||tvlistings.optimum.net/foresee/foresee-trigger.js
 @@||unionbank.com/coremetrics/*/eluminate.js

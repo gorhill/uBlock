@@ -5900,6 +5900,7 @@
 127.0.0.1	affiliate.a4dtracker.com
 127.0.0.1	affiliate.ab1trk.com
 127.0.0.1	affiliate.abctrcker.com
+127.0.0.1	affiliate.adgtracker.com
 127.0.0.1	affiliate.adiclicks.com
 127.0.0.1	affiliate.admtracker.com
 127.0.0.1	affiliate.agstracker.com
@@ -9302,6 +9303,15 @@
 127.0.0.1	cheaperia.digidip.net
 127.0.0.1	cheatcc.us.intellitxt.com
 127.0.0.1	cheatingdome.us.intellitxt.com
+127.0.0.1	checker.admitad.com
+127.0.0.1	checker.cityads.com
+127.0.0.1	checker.cityads.com.br
+127.0.0.1	checker.cityads.ru
+127.0.0.1	checker.cityadspix.com
+127.0.0.1	checker.cityredirect.com
+127.0.0.1	checker.cityviplink.com
+127.0.0.1	checker.dumedia.ru
+127.0.0.1	checker.gameleads.ru
 127.0.0.1	checkm8.com
 127.0.0.1	checkstat.com
 127.0.0.1	checkstat.net
@@ -9374,10 +9384,15 @@
 127.0.0.1	citrix.tradedoubler.com
 127.0.0.1	city-ads.de
 127.0.0.1	city.sk
+127.0.0.1	cityads.com
+127.0.0.1	cityads.com.br
 127.0.0.1	cityads.ru
 127.0.0.1	cityads.telus.net
+127.0.0.1	cityadslink.com
 127.0.0.1	cityadspix.com
 127.0.0.1	citygrid.com
+127.0.0.1	cityredirect.com
+127.0.0.1	cityviplink.com
 127.0.0.1	cj.com
 127.0.0.1	cj.dotomi.com
 127.0.0.1	cj.net
@@ -12372,6 +12387,7 @@
 127.0.0.1	duba.net
 127.0.0.1	dubich91119.justclick.ru
 127.0.0.1	dufue2m4sondk.cloudfront.net
+127.0.0.1	dumedia.ru
 127.0.0.1	durre.freestats.com
 127.0.0.1	dust.ipfingerprint.com
 127.0.0.1	dv.bitterstrawberry.com
@@ -14050,6 +14066,7 @@
 127.0.0.1	gameads.digyourowngrave.com
 127.0.0.1	gamefuse.go2cloud.org
 127.0.0.1	gamehouse.com
+127.0.0.1	gameleads.ru
 127.0.0.1	gamersblast.com
 127.0.0.1	gamingblast.com
 127.0.0.1	gamingclub.com
@@ -14804,6 +14821,7 @@
 127.0.0.1	hits.zdnet.co.kr
 127.0.0.1	hitserver.ibope.com.br
 127.0.0.1	hitslink.com
+127.0.0.1	hitsniffer.com
 127.0.0.1	hitsquad.us.intellitxt.com
 127.0.0.1	hittrack.org
 127.0.0.1	hitweb.org
@@ -15183,7 +15201,6 @@
 127.0.0.1	image.providesupport.com
 127.0.0.1	image.reporo.net
 127.0.0.1	image.safe-sender.co.uk
-127.0.0.1	image.tmdb.org
 127.0.0.1	image.ugo.com
 127.0.0.1	image.versiontracker.com
 127.0.0.1	image01.ctvdigital.com
@@ -16196,7 +16213,6 @@
 127.0.0.1	kyg.go2cloud.org
 127.0.0.1	kylee-hickok.us
 127.0.0.1	kyra-lazaro.us
-127.0.0.1	l-stat.livejournal.net
 127.0.0.1	l.addthiscdn.com
 127.0.0.1	l.advertstream.com
 127.0.0.1	l.adxcore.com
@@ -17026,6 +17042,7 @@
 127.0.0.1	madisonlogic.com
 127.0.0.1	madmax53.stellar.cpa.clicksure.com
 127.0.0.1	madmimi.com
+127.0.0.1	madnet.ru
 127.0.0.1	mads.at.atwola.com
 127.0.0.1	mads.cnet.com
 127.0.0.1	mads.com.com
@@ -17264,6 +17281,7 @@
 127.0.0.1	mcc.cometsystems.com
 127.0.0.1	mcc.godaddy.com
 127.0.0.1	mcc.qa.cometsystems.com
+127.0.0.1	mcityadslink.com
 127.0.0.1	mcl.girlsgothic.com
 127.0.0.1	mclient.ivwbox.de
 127.0.0.1	mclient2.ivwbox.de
@@ -18766,6 +18784,7 @@
 127.0.0.1	ox-d.gamer-network.net
 127.0.0.1	ox-d.gloh.co.uk
 127.0.0.1	ox-d.imgur.servedbyopenx.com
+127.0.0.1	ox-d.intermarkets.net
 127.0.0.1	ox-d.interweave.com
 127.0.0.1	ox-d.journatic.com
 127.0.0.1	ox-d.jrn.com
@@ -19985,6 +20004,7 @@
 127.0.0.1	rd.advertising.com
 127.0.0.1	rd.alice.it
 127.0.0.1	rd.ane.yahoo.co.jp
+127.0.0.1	rd.apmebf.com
 127.0.0.1	rd.jersey.ads.juno.com
 127.0.0.1	rd.mobiteasy.com
 127.0.0.1	rd.rakuten.co.jp
@@ -20335,6 +20355,7 @@
 127.0.0.1	rs-staticart.ybcdn.net
 127.0.0.1	rs.epoq.de
 127.0.0.1	rs.ero-advertising.com
+127.0.0.1	rs.gwallet.com
 127.0.0.1	rs0.co.uk
 127.0.0.1	rs1.avenuea.com
 127.0.0.1	rs2.ero-advertising.com
@@ -20953,6 +20974,7 @@
 127.0.0.1	servedby.openxmarket.asia
 127.0.0.1	servedby.openxmarket.jp
 127.0.0.1	servedby.orbisvideo.com
+127.0.0.1	servedby.revcontent.com
 127.0.0.1	servedby1.advertising.com
 127.0.0.1	servedby2.advertising.com
 127.0.0.1	servedby3.advertising.com
@@ -22427,6 +22449,7 @@
 127.0.0.1	tags.topshareware.com
 127.0.0.1	tags.toroadvertising.com
 127.0.0.1	tags.transportdirect.info
+127.0.0.1	tagx.nytimes.com
 127.0.0.1	tajs.qq.com
 127.0.0.1	take5.real.com
 127.0.0.1	talesoftheslayer.bravejournal.com
@@ -24063,7 +24086,6 @@
 127.0.0.1	v2.popupsky.ir
 127.0.0.1	v2.shareaholic.com
 127.0.0.1	v2.visualwebsiteoptimizer.com
-127.0.0.1	v2.zopim.com
 127.0.0.1	v3.adition.com
 127.0.0.1	v3.come.to
 127.0.0.1	v6exp3-ds.metric.gstatic.com
@@ -25148,6 +25170,7 @@
 127.0.0.1	www.admaya.in
 127.0.0.1	www.admeld.com
 127.0.0.1	www.admestate.ru
+127.0.0.1	www.admitad.com
 127.0.0.1	www.adnooka.com
 127.0.0.1	www.adocean.pl
 127.0.0.1	www.adonnetwork.com
@@ -25563,7 +25586,12 @@
 127.0.0.1	www.chrystal-stoudt.us
 127.0.0.1	www.cindy-malott.us
 127.0.0.1	www.cinthya-hanks.us
+127.0.0.1	www.cityads.com
+127.0.0.1	www.cityads.com.br
 127.0.0.1	www.cityads.ru
+127.0.0.1	www.cityadspix.com
+127.0.0.1	www.cityredirect.com
+127.0.0.1	www.cityviplink.com
 127.0.0.1	www.cjsab.com
 127.0.0.1	www.cktrk.net
 127.0.0.1	www.claire-bonelli.us
@@ -25611,6 +25639,7 @@
 127.0.0.1	www.cmltrk.info
 127.0.0.1	www.cmltrk3.com
 127.0.0.1	www.cms2.net
+127.0.0.1	www.cnt.my
 127.0.0.1	www.cntrrx1.com
 127.0.0.1	www.cntrtr.com
 127.0.0.1	www.cnzz.com
@@ -25839,6 +25868,7 @@
 127.0.0.1	www.dsply.com
 127.0.0.1	www.dsytrk.com
 127.0.0.1	www.duba.net
+127.0.0.1	www.dumedia.ru
 127.0.0.1	www.dummywebsitedatabase.com
 127.0.0.1	www.dustat.com
 127.0.0.1	www.e-tracker.de
@@ -26055,6 +26085,7 @@
 127.0.0.1	www.gabia.com
 127.0.0.1	www.gameadexchange.com
 127.0.0.1	www.gamecity.net
+127.0.0.1	www.gameleads.ru
 127.0.0.1	www.gamersblast.com
 127.0.0.1	www.gamingblast.com
 127.0.0.1	www.gawartis.info
@@ -26154,6 +26185,7 @@
 127.0.0.1	www.hitexchange.net
 127.0.0.1	www.hitfarm.com
 127.0.0.1	www.hitslink.com
+127.0.0.1	www.hitsniffer.com
 127.0.0.1	www.hittrack.org
 127.0.0.1	www.hitwise.co.uk
 127.0.0.1	www.hitx.net
@@ -26523,6 +26555,7 @@
 127.0.0.1	www.madisonlogic.com
 127.0.0.1	www.madmax53.stellar.cpa.clicksure.com
 127.0.0.1	www.madmimi.com
+127.0.0.1	www.madnet.ru
 127.0.0.1	www.maegan-abad.us
 127.0.0.1	www.magentanews.com
 127.0.0.1	www.magicmail.co.nz
@@ -27566,7 +27599,6 @@
 127.0.0.1	www12.yesadvertising.com
 127.0.0.1	www14.a8.net
 127.0.0.1	www14.yesadvertising.com
-127.0.0.1	www15.ad.tomshardware.com
 127.0.0.1	www1flypeit.maynemyltf.netdna-cdn.com
 127.0.0.1	www2.addfreestats.com
 127.0.0.1	www2.adhost.com
@@ -27610,7 +27642,6 @@
 127.0.0.1	www26.a8.net
 127.0.0.1	www28.a8.net
 127.0.0.1	www2a.sitetracker.com
-127.0.0.1	www3.ad.tomshardware.com
 127.0.0.1	www3.adhost.com
 127.0.0.1	www3.adireland.com
 127.0.0.1	www3.bannner.com
@@ -27632,7 +27663,6 @@
 127.0.0.1	www3.webhostingtalk.com
 127.0.0.1	www3.yesadvertising.com
 127.0.0.1	www35.glam.com
-127.0.0.1	www4.ad.tomshardware.com
 127.0.0.1	www4.addfreestats.com
 127.0.0.1	www4.bannner.com
 127.0.0.1	www4.brittany-mcnulty.us
@@ -27659,7 +27689,6 @@
 127.0.0.1	www4.smartadserver.com
 127.0.0.1	www4.trix.net
 127.0.0.1	www4.yesadvertising.com
-127.0.0.1	www5.ad.tomshardware.com
 127.0.0.1	www5.addfreestats.com
 127.0.0.1	www5.burstnet.com
 127.0.0.1	www5.cj.com
@@ -27672,7 +27701,6 @@
 127.0.0.1	www5.mystats.nl
 127.0.0.1	www5.overture.com
 127.0.0.1	www5.yesadvertising.com
-127.0.0.1	www6.ad.tomshardware.com
 127.0.0.1	www6.addfreestats.com
 127.0.0.1	www6.burstnet.com
 127.0.0.1	www6.counter.bloke.com
@@ -28028,4 +28056,4 @@
 127.0.0.1	zxypenguin.people-group.su
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 28020
+# Hosts: 28048

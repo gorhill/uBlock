@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: e8HWE49AkhMO4XvKf7vI+Q
-! Version: 201502082241
+! Checksum: UnWjQ8C4/7dF4qiIo8ANEQ
+! Version: 201502152051
 ! Title: EasyPrivacy
-! Last modified: 08 Feb 2015 22:41 UTC
+! Last modified: 15 Feb 2015 20:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -114,6 +114,7 @@
 .net/HG?hc=&hb=
 .net/p.gif?
 .net/ping.php?
+.net/t.gif?
 .net/trck/
 .ntpagetag.
 .nz/t.gif?
@@ -439,6 +440,7 @@
 /campaign_trax.
 /cbanalytics.
 /cclickTracking.
+/cdn-cgi/ping?$image
 /cdn5.js?
 /cds-webanalytics.
 /cdx.gif?
@@ -1516,6 +1518,7 @@
 /rbipt.js
 /rcdntpagetag.js
 /readomniturecookie.
+/readReceipt/notify/?img=$image
 /readtracker-
 /recommendtrack?
 /record.do?
@@ -2245,6 +2248,7 @@ _Analytics.js?
 _analytics.php?
 _astatspro/
 _baynote.
+_beacon?
 _browsermetrix.
 _cedexis.
 _chartbeat.js
@@ -3052,14 +3056,12 @@ http://utm.
 ||intelli-direct.com^$third-party
 ||intelli-tracker.com^$third-party
 ||intelligencefocus.com^$third-party
-||intentmedia.net^$third-party
 ||interceptum.com^$third-party
 ||intermundomedia.com^$third-party
 ||intervigil.com^$third-party
 ||invitemedia.com^$third-party
 ||invoc.us^$third-party
 ||invodo.com^$third-party
-||ip-adress.com^$third-party
 ||ip-api.com^$third-party
 ||ip-label.net^$third-party
 ||ip2location.com^$third-party
@@ -3245,7 +3247,6 @@ http://utm.
 ||mxpnl.com^$third-party
 ||mxptint.net^$third-party
 ||myaffiliateprogram.com^$third-party
-||myaudience.de^$third-party
 ||mybloglog.com^$third-party
 ||myfastcounter.com^$third-party
 ||mynewcounter.com^$third-party
@@ -3819,6 +3820,7 @@ http://utm.
 ||veduy.com^$third-party
 ||veinteractive.com^$third-party
 ||velaro.com^$third-party
+||vendri.io^$third-party
 ||ventivmedia.com^$third-party
 ||vertical-leap.co.uk^$third-party
 ||vertical-leap.net^$third-party
@@ -4146,6 +4148,7 @@ http://utm.
 ||plexworks.de^$third-party
 ||powerbar-pagerank.de^$third-party
 ||powercount.com^$third-party
+||ppro.de^$third-party
 ||pr-chart.com^$third-party
 ||pr-chart.de^$third-party
 ||pr-link.eu^$third-party
@@ -4440,6 +4443,7 @@ http://utm.
 ||hitgraph.jp^$third-party
 ||japanmetrix.jp^$third-party
 ||mobylog.jp^$third-party
+||omiki.com^$third-party
 ||owldata.com^$third-party
 ||research-artisan.com^$third-party
 ||rtoaster.jp^$third-party
@@ -4728,6 +4732,7 @@ http://utm.
 ||amatomu.com/log.php?
 ||amazon.*/gp/r.html?R=$image
 ||amazon.com/gp/*&linkCode$third-party
+||amazonaws.com/?wsid=
 ||amazonaws.com/cdn.barilliance.com/
 ||amazonaws.com/g.aspx$third-party
 ||amazonaws.com/initialize/$third-party
@@ -5593,7 +5598,7 @@ http://utm.
 ||rackcdn.com/easie.js
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
+||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||readcube.com/tracking/
@@ -7135,7 +7140,6 @@ http://utm.
 ||feeds.timesonline.co.uk^*/mf.gif
 ||feedsportal.com/c/
 ||felitb.rightinthebox.com^
-||fidelity.com/adobe/measurement/insight/
 ||fightforthefuture.org/wf/open?
 ||filmlinks4u.net/twatch/jslogger.php
 ||financeglobe.com/Visit/
@@ -7346,6 +7350,7 @@ http://utm.
 ||icq.com/search/js/stats.js
 ||id.allegisgroup.com^
 ||id.google.*/verify/*.gif
+||iedc.fitbit.com^
 ||ign.com/global/analytics/drones.js
 ||iheart.com/tracking/
 ||image.providesupport.com/cmd/
@@ -7449,6 +7454,7 @@ http://utm.
 ||letitbit.net/atercattus/letitbit/counter/?
 ||letitbit.net/counter/
 ||lexus.com/lexus-share/js/campaign_tracking.js
+||lh.secure.yahoo.com^
 ||life.com/sm-stat/
 ||lifehacker.com/at.js.php
 ||lifehacker.com^*/trackers.html
@@ -7464,6 +7470,7 @@ http://utm.
 ||lipsy.co.uk/_assets/images/skin/tracking/
 ||live.com/handlers/watson.mvc?
 ||live.philips.com^
+||live365.com/trkr/
 ||livedoor.com/counter/
 ||livejournal.com/ljcounter/?
 ||liveperson.net/hc/*/?visitor=
@@ -8555,6 +8562,7 @@ http://utm.
 ||mnginteractive.com/live/js/omniture/SiteCatalystCode_H_22_1_NC.js
 ||mnginteractive.com/live/omniture/custom_scripts/omnicore-blogs.js$domain=mercurynews.com
 ||mnginteractive.com/live/omniture/sccore.js$domain=denverpost.com
+||mnginteractive.com/live/omniture/sccore_NEW.js$domain=pasadenastarnews.com
 ||mnginteractive.com/live/omniture/sccore_NEW_JRC.js$domain=delcotimes.com
 ||nwsource.com/shared/js/s_code.js?$domain=seattletimes.com
 ||nyteknik.se/ver02/javascript/2012_s_code_global.js
@@ -9116,6 +9124,7 @@ http://utm.
 ||goo.ne.jp^*/vltracedmd.js
 ||i2i.jp/bin/
 ||mainichi.jp^*/null.gif?
+||seesaawiki.jp/img/rainman.gif?
 ||visit.geocities.jp^
 ||yahoo.co.jp/b?p=
 ! Korean
@@ -9887,6 +9896,8 @@ http://utm.
 ! Latvian
 @@/webtracking/*$domain=pasts.lv
 @@||google-analytics.com/analytics.js$domain=tv3play.lt|tvplay.lv
+! Norwegian
+@@||google-analytics.com/analytics.js$domain=tv3play.no
 ! Polish
 @@||gemius.pl/gstream.js
 @@||kropka.onet.pl^*/onet.js$domain=tvnwarszawa.pl

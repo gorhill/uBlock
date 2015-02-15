@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 8/Vz/IQh/TNV7pJIUd3h1A
-! Version: 201502082241
+! Checksum: 50jhN89RaTDX98nuDr+WmA
+! Version: 201502152051
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 08 Feb 2015 22:41 UTC
+! Ultima modifica: 15 Feb 2015 20:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1181,6 +1181,7 @@ sportube.tv#@#.afs_ads
 ||lolasesso.com^*/pene.gif
 ||lolasesso.com^*/video2.jpg
 ||lombardianews.it/banner/
+||loraquotidiano.it/wp-content/banners/
 ||lospiffero.com/banner/
 ||losportivo.sm/img/banner/
 ||luccaindiretta.it/images/banners/
@@ -2115,7 +2116,7 @@ america24.com,gianlucadimarzio.com##.adbox
 loradellacalabria.it##.add768int
 pinkdna.it##.adds300x250
 zapster.it##.addx
-caserta24ore.it,fantagazzetta.com,gamemag.it,ilikepuglia.it,phicatube.net,radiospeaker.it,teleborsa.it##.ads
+caserta24ore.it,fantagazzetta.com,gamemag.it,ilikepuglia.it,phicatube.net,radiospeaker.it,supereva.it,teleborsa.it##.ads
 meteowebcam.it##.ads_menu
 corriereadriatico.it,ilgazzettino.it,ilmattino.it,ilmessaggero.it,ilsecoloxix.it,leggo.it,pcprofessionale.it,pubblicitaitalia.it,quotidianodipuglia.it##.adsense
 meteowebcam.it##.adsense_menu
@@ -2242,12 +2243,12 @@ nonsolocinema.com##.banners
 ilquotidianofvg.it##.banners-125
 cremonaoggi.it##.bannersx
 album-mmt.it,musictory.it##.bannertop
-gazzettadiparma.it##.bannervcms
+corrieredilatina.it,gazzettadiparma.it##.bannervcms
 ticinolive.ch##.bannerwrap
 romagiornoenotte.it##.basebannerBox
 wallstreetitalia.com##.bestbuybiz
 losportivo.sm##.bg_blocchi
-corriereromagna.it,ilmattinodifoggia.it,lanuovaprimapagina.it##.bgbanner
+corrieredilatina.it,corriereromagna.it,ilmattinodifoggia.it,lanuovaprimapagina.it##.bgbanner
 libero.it##.big
 youreporter.it##.bigrectangle600
 ilgiornale.it##.block-ilg-adsense
@@ -2346,7 +2347,7 @@ vivastreet.it##.kiwii-box-300x250
 corrieredellosport.it##.label_sponsor_sp
 alessandrianews.it##.leader-board-225x90
 alessandrianews.it##.leader-board-728x90
-close-up.it,foxtv.it,guidasicilia.it,la7.it,radiospeaker.it,today.it##.leaderboard
+close-up.it,foxtv.it,guidasicilia.it,la7.it,meteovista.it,radiospeaker.it,today.it##.leaderboard
 blastingnews.com##.leaderboard-article
 erbanotizie.com,lecconotizie.com##.leaderboard-bottom
 ilsole24ore.com##.link_expand
@@ -2711,6 +2712,7 @@ livesicilia.it##div[style="width:940px; margin:0 auto 25px"]
 livesicilia.it##div[style="width:940px; margin:0 auto 25px;"]
 altoadigetv.it,trentinotv.it##div[style="width:945px; padding:0px 0px 0px 3px;"]
 spaziogames.it##div[style="width:956px;height:250px;float:left;padding-bottom:10px;margin:0"]
+peeplo.it##div[style="width:965px; margin-bottom:30px"]
 winmagazine.it##div[style="width:980px; height:90px; margin: 0 auto;text-align:center;margin-bottom:5px"]
 wintricks.it##div[style="width:980px;height:90px;margin: 0 auto"]
 wintricks.it##div[style="width:980px;height:90px;margin: 0 auto;background:none"]

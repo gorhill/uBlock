@@ -99,6 +99,7 @@ info##DIV[class="banda-sticky-mini"]
 ||web3.protv.ro/assets/protv/widgets/newsletter.swf?
 ||turcescu.ro/wp-content/uploads/myfragrancero72890.jpg?v=2
 ||capital.ro/js/scripts.js?*
+||priceexpert.com/detect.js
 
 !div rules
 220.ro##DIV#nql_optiuni

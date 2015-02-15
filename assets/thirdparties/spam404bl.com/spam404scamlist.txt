@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4893
-! Last modified: 7 Feb 2015
+! Version: 4941
+! Last modified: 12 Feb 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -144,6 +144,7 @@
 ##[href^="http://tv.aff-id.com/"]
 ##[href^="http://play.affmob.org/"]
 ##[href^="http://gripconfirmation.com/"]
+##[href^="http://fileston.com/"]
 !
 !
 !
@@ -4888,6 +4889,53 @@ hepimovie.net###login
 ||gamerspro.net^
 ||cheapestgameservers.com^
 ||gripconfirmation.com^
+||hackshared.com^
+||cardgen.co^
+||misterhack.com^
+||reviewscircle.com^
+||officialcheats.info^
+||free-itunes-codes.net^
+||itunesgenerator.com^
+||hacksandcracks.net^
+||freexboxlivee.com^
+||xboxlivegenerator.com^
+||riotpromos.com^
+||gamercheatscode.com^
+||dailyhacks.net^
+||filesecure.in^
+||watchrugbystream.com^
+||cheats-factory.com^
+||hackindustry.com^
+||fxscape.com^
+||gripnode.net^
+||nebula-team.com^
+||unlocksimphone.com^
+||hacktelecharger.fr^
+||oopscaughoncam.info^
+||gmanetwork.info^
+||newomgvideos.info^
+||foxnews-tv.info^
+||hd-livetream.com^
+||the-amazing-spider-man2.info^
+||shocking-news.info^
+||cnn-breaking-news.info^
+||abscbn-news-online.info^
+||reliablecoins.net^
+||hackfacebook2015.net^
+||fbforce.net^
+||hackersfb.org^
+||facebookhack.pl^
+||fb-szpieguj.pl^
+||canadianmedstores.org^
+||vexplay.com^
+||seasonfull.com^
+||furplay.net^
+||playpoke.net^
+||pcgamerparadise.com^
+||cinemaon7.com^
+||247gamerz.com^
+||movielist21.com^
+||cpaoi.com^
 !
 !
 !

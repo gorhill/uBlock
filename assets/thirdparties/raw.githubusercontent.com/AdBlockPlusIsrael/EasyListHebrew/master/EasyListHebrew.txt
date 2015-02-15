@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 748HtuFaff/CFR6RUS4vAg
+! Checksum: H/5ORPS7SKL/UXgFFQicrw
 ! Title: EasyList Hebrew
-! Last modified: 08/02/15 20:50
+! Last modified: 15/02/15 20:19
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -33,6 +33,7 @@
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||ashleymadison.com^$popup,third-party
 ||ashleyrnadison.com^$popup,third-party
+||beauty-place.co.il^$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
 ||booking.com/index.html^$popup,domain=daka90.co.il
@@ -83,6 +84,7 @@
 ||sekindo.com^$popup,third-party
 ||sex-party.co.il^$popup,third-party
 ||shorter.co.il/js/fp.js.php
+||strauss-water-campaign.co.il^$popup,third-party
 ||streamin.to^$popup
 ||syngrestic.com/null^$popup
 ||talkahead.com^$third-party
@@ -177,6 +179,7 @@
 ||rcs.mako.co.il/rss/yad2.
 ||sdc.mako.co.il^
 !-fxp-!
+||iotest.me.uk^$domain=fxp.co.il
 ||fcdn.co.il/*.swf$domain=fxp.co.il
 ||fifa.games-il.info/AHfVczS/fed/repeat/
 ||fortest.info^$domain=fxp.co.il
@@ -541,6 +544,7 @@ globes.co.il##.G_divTopSpace20
 globes.co.il##.banner_box_300x250.NoTopBorder
 globes.co.il##.banner_box_550x90
 globes.co.il##.banners
+globes.co.il##.topBanner.nocontent
 globes.co.il##div[style="border:0px solid #cacaca; padding:0px 25px; direction:rtl;"]
 google.co.il###mbEnd
 google.co.il###tads
@@ -589,10 +593,11 @@ israelhayom.co.il###mini-panel-top_banner
 israelhayom.co.il##.cm8_plasma_wrapper
 israelhayom.co.il##.panel-pane.pane-panels-mini.pane-banners-art-op-bottom
 israelweather.co.il###weekFlashes
+jobmaster.co.il##TABLE[width="100%"][style="border-top:1px solid #EEEEEE;"]
 junkyard.co.il##.plasma_banner
 junkyard.co.il##DIV[id^="banner"]
-jobmaster.co.il##TABLE[width="100%"][style="border-top:1px solid #EEEEEE;"]
 kafe.co.il###adv
+kikar.co.il##[id^="takeover"]
 kikarhashabat.co.il###exposeMask
 kikarhashabat.co.il###jumbo
 kikarhashabat.co.il###maavaron_overlay
@@ -643,7 +648,6 @@ mako.co.il###mysupermarketcontainer
 mako.co.il###neoTopStrip
 mako.co.il###rAdContainer
 mako.co.il###topPageStrip.not_for_print
-mako.co.il##.header_level2_container
 mako.co.il##.mako_banner_coast
 mako.co.il##.pzm_banners
 mako.co.il##.sidebar_pic

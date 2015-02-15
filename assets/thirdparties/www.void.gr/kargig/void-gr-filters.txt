@@ -535,6 +535,7 @@ ad.gr.doubleclick.net
 ||thepressproject.gr/build/1.jpg
 ||stokokkino.gr/photos/gsk.jpg
 ||techgear.gr/wp-content/themes/tg3/images/dressme/techgear_energizer_skin*
+||mignatiou.com/wp-content/uploads/2014/09/300x250_piraeus_stametrasou_final.jpg
 !Element-Hiding Rules
 antenna.gr###afdiv
 sportdog.gr###block-views-promoted_companies-block_1

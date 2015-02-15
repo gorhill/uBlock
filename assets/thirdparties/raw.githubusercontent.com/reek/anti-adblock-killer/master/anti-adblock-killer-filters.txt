@@ -478,6 +478,7 @@ clubedohardware.com.br#@#.ipsAd
 @@||ailde.biz/a.sponsorads.js$domain=cbs.com,script
 ! gamingroom.tv
 gamingroom.tv#@#.adsbygoogle
+@@||ad4.liverail.com^$xmlhttprequest
 ! upf.co.il
 @@||upf.co.il/advertisment.js$script
 ! paidverts.com
@@ -708,6 +709,9 @@ rojadirecta.me#@##adserver
 ! planetatvonlinehd.blogspot.com
 planetatvonlinehd.blogspot.com#@#.adsantilok
 planetatvonlinehd.blogspot.com.ar#@#.adsantilok
+! phonandroid.com
+phonandroid.com##.clofzspq-bg
+@@/wp-content/plugins/adblock-notify-by-bweb/js/show_ads.js$script,domain=phonandroid.com
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -833,6 +837,7 @@ zetorrents.com##A[href^="http://www.insta-cash.net/tds/?"]
 ||prm.cpasbien.pe/js/ec_connectorDelivery.js$script
 ! rarbg.com
 rarbg.com##A[href^="/download_direct.php"]
+rarbg.com##A[href^="/pub_download_d.php"]
 ! emule-island.ru##
 emule-island.ru##.newsgroup
 emule-island.ru##.lastnews + A[href^="http://www.downloadmr.com/dmr/download/"]
