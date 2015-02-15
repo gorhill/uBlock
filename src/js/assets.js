@@ -119,8 +119,6 @@ var cachedAssetsManager = (function() {
             var lastVersion = store.extensionLastVersion || '0.0.0.0';
             if ( currentVersion !== lastVersion ) {
                 vAPI.storage.set({ 'extensionLastVersion': currentVersion });
-                exports.remove(/^assets\/(ublock|thirdparties)\//);
-                exports.remove('assets/checksums.txt');
             }
             callback(entries);
         };
