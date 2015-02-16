@@ -159,13 +159,13 @@ try {
 /******************************************************************************/
 
 var safeQuerySelectorAll = function(node, selector) {
-    var nodeList;
-    try {
-        nodeList = node.querySelectorAll(selector);
-    } catch (e) {
-        nodeList = [];
+    if ( node !== null ) {
+        try {
+            return node.querySelectorAll(selector);
+        } catch (e) {
+        }
     }
-    return nodeList;
+    return [];
 };
 
 /******************************************************************************/
@@ -366,7 +366,7 @@ var cosmeticFilterFromElement = function(elem, out) {
     // `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
     // `nth-child`, as `nth-of-type` is less volatile.
     var parentNode = elem.parentNode;
-    if ( parentNode !== null && safeQuerySelectorAll(parentNode, cssScope + selector).length > 1 ) {
+    if ( safeQuerySelectorAll(parentNode, cssScope + selector).length > 1 ) {
         i = 1;
         while ( elem.previousSibling !== null ) {
             elem = elem.previousSibling;
