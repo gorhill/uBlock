@@ -212,7 +212,7 @@
         "off": true,
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt"
+        "homeURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt"
         },
     "raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": {
         "off": true,
