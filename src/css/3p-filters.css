@@ -116,10 +116,11 @@ body[dir=rtl] #externalListsDiv {
     margin: 2em 2em 0;
     }
 #externalLists {
+    box-sizing: border-box;
     font-size: smaller;
-    width: 48em;
-    height: 8em;
+    height: 10em;
     white-space: pre;
+    width: 100%;
     }
 body #busyOverlay {
     position: fixed;
