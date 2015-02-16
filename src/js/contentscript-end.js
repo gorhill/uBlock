@@ -127,7 +127,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     // https://github.com/gorhill/uBlock/issues/452
-    // This needs to be executed *after* the response from our query is 
+    // This needs to be executed *after* the response from our query is
     // received, not at `DOMContentLoaded` time, or else there is a good
     // likeliness to outrun contentscript-start.js, which may still be waiting
     // on a response from its own query.
@@ -749,6 +749,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
 (function() {
+    if ( window !== window.top ) {
+        return;
+    }
     var onContextMenu = function(ev) {
         messager.send({
             what: 'contextMenuEvent',
