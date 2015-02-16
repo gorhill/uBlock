@@ -5,9 +5,10 @@ div > p:last-child {
     margin-bottom: 0;
     }
 .userFilters {
+    box-sizing: border-box;
     font-size: small;
-    width: 48em;
-    height: 40em;
+    height: 60vh;
     white-space: pre;
+    width: 100%;
     text-align: left;
     }
