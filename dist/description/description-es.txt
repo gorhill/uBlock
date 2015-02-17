@@ -14,8 +14,6 @@ Por defecto ya trae configuradas las siguientes listas de filtros:
 - Lista de servidores de anuncios de Peter Lowe
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Otras listas disponibles pueden ser seleccionadas, si se desea:
 

@@ -14,8 +14,6 @@ Nämä suodatinlistat ovat automaattisesti ladattuna ja kytketty päälle:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Halutessasi voit valita käyttöösi lisää listoja:
 

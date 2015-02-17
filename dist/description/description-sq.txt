@@ -14,8 +14,6 @@ Filtrat e listuar këtu hapen dhe zbatohen pas instalimit:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Po të doni, ka edhe shumë lista të tjera të gatshme:
 

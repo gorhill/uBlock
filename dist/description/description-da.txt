@@ -14,8 +14,6 @@ Ud af boksen, er disse lister over filtre indlæses og håndhævet:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Flere lister er tilgængelige for dig at vælge når du ønsker det:
 

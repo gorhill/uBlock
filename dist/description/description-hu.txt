@@ -14,8 +14,6 @@ Alapértelmezetten a következő szűrőlisták kerülnek betöltésre és alkal
 - Peter Lowe hirdetési szerverlistája
 - EasyPrivacy
 - Kártékony domének
-- Hosszúéletű kártékony domének
-- Malware Domains List
 
 Egyéb listák is kiválaszthatók a felhasználó igénye szerint:
 

@@ -14,8 +14,6 @@ Pēc noklusējuma, ielādē un izpilda šos filtru sarakstus:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Ja vēlaties, ir pieejami daudz vairāk sarakstu, no kuriem jūs varat izvēlēties:
 

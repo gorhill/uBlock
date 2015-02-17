@@ -14,8 +14,6 @@ Langsung bekerja, daftar filter berikut ini dimuat dan dijalankan:
 - Daftar server iklan Peter Lowe
 - EasyPrivacy
 - Domain malware
-- Domain malware berumur panjang
-- Daftar Domain Malware
 
 Jika anda ingin, masih banyak tersedia daftar lain untuk anda pilih:
 

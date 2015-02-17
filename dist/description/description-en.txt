@@ -14,8 +14,6 @@ Out of the box, these lists of filters are loaded and enforced:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 More lists are available for you to select if you wish:
 

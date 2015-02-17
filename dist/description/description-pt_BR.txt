@@ -14,8 +14,6 @@ Por padrão essas são as listas de filtros que são carregadas e aplicadas:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Mais listas estão disponíveis para você escolher, se desejar:
 

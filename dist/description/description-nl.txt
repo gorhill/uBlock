@@ -1,12 +1,12 @@
-Een efficiënte blokkeerder: licht geheugen- en CPU-verbruik. Toch kan het duizenden filters meer laden en gebruiken dan andere populaire blokkeerders.
+Een efficiënte adblocker: gebruikt weinig processorkracht en geheugen. Toch kan het duizenden filters meer laden en toepassen dan andere populaire adblockers.
 
-Geïllustreerd overzicht van de efficiëntie: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Geïllustreerde efficiëntievergelijking: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Hoe te gebruiken: De grote aan/uit-knop in de popup is om µBlock permanent in/uit te schakelen voor de huidige website. Het wordt enkel op de huidige website toegepast. Het is geen globale aan/uit-knop.
+Gebruik: Met de grote aan-uitknop in de popup kan µBlock permanent in- of uitgeschakeld worden voor de huidige website. Het wordt enkel op de huidige website toegepast. Het is geen globale aan-uitknop.
 
 ***
 
-Flexibel, het is meer dan een "advertentieblokkeerder": het kan ook filters lezen en creëren van hostsbestanden.
+Flexibel, want het is meer dan een "adblocker": het kan ook filters inlezen en maken van hostsbestanden.
 
 Standaard worden de volgende filterlijsten geladen en toegepast:
 
@@ -14,25 +14,23 @@ Standaard worden de volgende filterlijsten geladen en toegepast:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
-Meer lijsten zijn beschikbaar om te selecteren indien gewenst:
+Er zijn meer lijsten beschikbaar die je als je wilt kan inschakelen:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- En nog vele anderen
+- en nog vele andere...
 
-Natuurlijk wordt het geheugenverbruik groter naarmate er meer filters worden ingeschakeld. Maar zelfs na Fanboy's two extra lijsten, hpHosts’s Ad en tracking servers toe te voegen heeft µBlock een lager geheugenverbruik dan andere populaire blokkeerders.
+Natuurlijk wordt het geheugengebruik groter naarmate er meer filters worden ingeschakeld. Maar zelfs na het inschakelen van Fanboy's twee extra lijsten, hpHosts’s Ad en tracking servers, heeft µBlock een lager geheugengebruik dan andere populaire blockers.
 
-Let op, het gebruik van sommige van deze extra lijsten verhoogt de kans dat websites breken -- zeker de lijsten die normaal als hosts-bestand worden gebruikt.
+Let op, het gebruik van sommige van deze extra lijsten verhoogt de kans dat websites niet correct worden weergegeven -- zeker de lijsten die normaal als hosts-bestand worden gebruikt.
 
 ***
 
-Zonder de standaard filterlijst doet deze extensie niets. Dus als je ooit echt een bijdrage wilt leveren, denk dan aan de mensen die hard werken om de filterlijsten die je aan het gebruiken bent te onderhouden, die allemaal gratis beschikbaar en te gebruiken zijn.
+Zonder de standaard filterlijst doet deze extensie niets. Dus als je ooit echt een bijdrage wilt leveren, denk dan aan de mensen die hard werken om de filterlijsten die je gebruikt te onderhouden, welke allemaal gratis beschikbaar gemaakt zijn.
 
 ***
 
@@ -40,12 +38,12 @@ Gratis.
 Open source met publieke licentie (GPLv3)
 Voor gebruikers, door gebruikers.
 
-Medewerkers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Medewerkers @ Crowdin: https://crowdin.net/project/ublock
+Bijdragers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bijdragers @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Het is een hele vroege verse, onthoud dit wanneer je een review maakt.
+Onthoud dat dit een hele vroege verse is wanneer je een review maakt.
 
 Projectwijzigingenlogboek:
 https://github.com/gorhill/uBlock/releases

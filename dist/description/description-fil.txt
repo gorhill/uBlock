@@ -15,8 +15,6 @@ Ang mga listahang ito ng mga filter nag-loload at ipinapatupad :
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Higit pang mga listahan ay magagamit para sa iyo upang piliin kung nanaisin:
 

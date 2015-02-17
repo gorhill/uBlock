@@ -14,8 +14,6 @@ Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
 - Peter Lowe reklaamiserveri loend
 - EasyPrivacy
 - Pahavara levitavad domeenid
-- Aegunud pahavara domeenid
-- Pahavara domeenide loend
 
 Lisaks neile on veel saadaval:
 

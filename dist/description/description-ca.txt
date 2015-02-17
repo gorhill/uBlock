@@ -14,8 +14,6 @@ Per defecte, es carreguen i s'apliquen aquestes llistes de filtres:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Dominis de malware
-- Long-lived malware domains
-- Malware Domains List
 
 Si voleu, podeu seleccionar altres llistes disponibles:
 

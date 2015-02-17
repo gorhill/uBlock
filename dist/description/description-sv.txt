@@ -15,8 +15,6 @@ Som standard är följande filterlistor laddade och applicerade:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Fler filterlistor finns tillgängliga att använda om du vill:
 

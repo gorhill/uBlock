@@ -14,8 +14,6 @@ Bunun dışında, aşağıdaki filtre listeleri yüklenmiştir ve uygulanır:
 -Peter Lowe'uns reklam sunucuları listesi
 -EasyPrivacy
 -Zararlı websiteleri
--Uzun vadeli zararlı alan adları
-- Malware Domains List
 
 Daha fazla listeyi de seçerek kullanılabilirsiniz:
 

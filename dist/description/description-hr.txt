@@ -14,8 +14,6 @@ Odmah po instalaciji slijedeći popisi filtera su pokrenuti i provode se:
 - Peter Loweov popis reklamnih poslužitelja
 - EasyPrivacy
 - Zloćudne domene
-- Dugovječne zloćudne domene
-- Lista zloćudnih domena
 
 Ostale liste su dostupne za odabir ako ih želite:
 

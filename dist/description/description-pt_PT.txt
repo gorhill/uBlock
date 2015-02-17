@@ -15,8 +15,6 @@ Por predefinição, estas listas de filtros são carregadas e aplicadas:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Mais listas estão disponíveis para seleccionar se desejar:
 

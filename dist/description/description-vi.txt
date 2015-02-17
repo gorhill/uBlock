@@ -14,8 +14,6 @@ Ngay lập tức, những bộ lọc này được nạp và áp dụng:
 - Danh sách máy chủ quảng cáo của Peter Lowe
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Có thêm nhiều danh sách để bạn lựa chọn:
 

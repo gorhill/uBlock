@@ -14,8 +14,6 @@
 - Λίστα διαφημίσεων του Peter Lowe
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Περισσότερες λίστες είναι διαθέσιμες για επιλογή εάν το επιθυμείτε:
 

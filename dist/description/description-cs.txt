@@ -14,8 +14,6 @@ Po instalaci jsou načteny a použity tyto filtry:
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 Pokud chcete, můžete si vybrat tyto další filtry:
 

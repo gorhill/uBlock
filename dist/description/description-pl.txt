@@ -14,8 +14,6 @@ Po zainstalowaniu te listy filtrów są ładowane i egzekwowane:
 - Serwer listy reklam Peter Lowe'a
 - EasyPrivacy
 - Domeny malware
-- Długotrwałe domeny malware
-- Lista domen malware
 
 Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:
 

@@ -14,8 +14,6 @@
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
-- Long-lived malware domains
-- Malware Domains List
 
 당신이 원한다면 더 많은 목록을 선택할 수 있습니다:
 

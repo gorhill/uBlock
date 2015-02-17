@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Eindelijk, een efficënte blokkeerder. Gebruikt weinig processorkracht en geheugen.",
+    "message":"Eindelijk, een efficiënte adblocker. Gebruikt weinig processorkracht of geheugen.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"filters van derden",
+    "message":"Filters van derden",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikken: schakel µBlock aan\/uit voor deze website.\n\nCtrl+klikken: schakel µBlock uit enkel voor deze pagina.",
+    "message":"Klikken: µBlock voor deze website in-\/uitschakelen.\n\nCtrl+klikken: µBlock enkel voor deze pagina uitschakelen.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -152,7 +152,7 @@
     "description":""
   },
   "popupAnyRulePrompt":{
-    "message":"alle",
+    "message":"alles",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"derden",
+    "message":"van derden",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -188,11 +188,11 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Maak",
+    "message":"Maken",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Kies",
+    "message":"Kiezen",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -216,15 +216,15 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Verberg tijdelijke aanduidingen van geblokkeerde elementen",
+    "message":"Tijdelijke aanduidingen van geblokkeerde elementen verbergen",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Toon het aantal geblokkeerde aanvragen op het icoon",
+    "message":"Het aantal geblokkeerde aanvragen op het icoon tonen",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Maak gebruik van het contextmenu waar mogelijk",
+    "message":"Waar mogelijk van het contextmenu gebruik maken",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -256,11 +256,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Lees en pas cosmetische filters toe.",
+    "message":"Cosmetische filters inlezen en toepassen.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Deze optie schakelt het lezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch, ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch: ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -300,7 +300,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Één URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stilletjes genegeerd.",
+    "message":"Eén URL per regel. Regels beginnend met &lsquo;!&rsquo; worden genegeerd. Ongeldige URL's worden stilletjes genegeerd.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -320,7 +320,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"Één filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibele filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
+    "message":"Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibele filter zijn. Regels beginnend met &lsquo;!&rsquo; worden genegeerd.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -348,11 +348,11 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Zet terug",
+    "message":"Terugzetten",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Opslaan",
+    "message":"Toepassen",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -368,11 +368,11 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importeren uit bestand...",
+    "message":"Uit bestand importeren...",
     "description":""
   },
   "rulesExport":{
-    "message":"Exporteren naar bestand",
+    "message":"Naar bestand exporteren",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -380,7 +380,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lijst van je dynamische filterregels.",
+    "message":"Lijst van jouw dynamische filterregels.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -388,7 +388,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Één per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
+    "message":"Je lijst van hostnamen waarop µBlock uitgeschakeld is. Eén per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -408,7 +408,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Schakel het loggen van netwerkverzoeken in",
+    "message":"Het loggen van netwerkverzoeken inschakelen",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -440,11 +440,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Geen geblokkeerde verzoeken zijn gelogd voor deze pagina",
+    "message":"Voor deze pagina zijn geen geblokkeerde verzoeken gelogd",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Geen niet-geblokkeerde verzoeken zijn gelogd voor deze pagina",
+    "message":"Voor deze pagina zijn geen toegelaten verzoeken gelogd",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
@@ -468,7 +468,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup naar bestand",
+    "message":"Naar bestand back-uppen",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -476,15 +476,15 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Herstel uit bestand...",
+    "message":"Uit bestand herstellen...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Herstel naar de standaardinstellingen...",
+    "message":"Naar de standaardinstellingen herstellen...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Al uw instellingen zullen worden overschreven met de backupgegevens van {{time}} en µBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de backupgegevens?",
+    "message":"Al uw instellingen zullen worden overschreven met de back-upgegevens van {{time}} en µBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de back-upgegevens?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
