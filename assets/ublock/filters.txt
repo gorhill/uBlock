@@ -295,3 +295,8 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # This enables twitch.tv to work in HTML5
 @@||imasdk.googleapis.com$domain=twitch.tv
+
+# Chrome store feedback: "totaljobs.com [...] with μBlock enabled, I can't click any links"
+# To counter `2o7.net` in Peter Lowe's
+@@||2o7.net^$domain=totaljobs.com
+
