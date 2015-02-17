@@ -1,5 +1,5 @@
 7edb2a585b445f28aa5ab06306f1a23f assets/ublock/privacy.txt
-eea39e8e3af8f068bd7b8f30bee5ce7a assets/ublock/filters.txt
+701bc2ed14a77539e075fd4b9432caae assets/ublock/filters.txt
 dcf3e05bae803343c9d632f0baf8bedd assets/ublock/mirror-candidates.txt
 96e088c2dbb8759e046d2a44ed375000 assets/ublock/filter-lists.json
 132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
