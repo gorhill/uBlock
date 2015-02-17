@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"最終，一個高效的阻擋工具。使用不多的 CPU 及記憶體資源。",
+    "message":"終於，一款高效的阻擋工具。使用不多的 CPU 及記憶體資源。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{

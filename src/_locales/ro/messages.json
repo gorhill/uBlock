@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: dezactivează\/activează µBlock pentru acest site.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
+    "message":"Clic: dezactivează\/activează µBlock pentru acest sait.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"terțe",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -168,15 +168,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Scripturi din saitul primar",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Scripturi din saituri terțe",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Cadre din saituri terțe",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -260,7 +260,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Aceasta optiune permite citirea si aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor Adblock Plus a elementelor de ascuns<\/a>. Aceste filtre sunt in esenta vizuale, acestea servind la ascunderea elementelor intr-un site care sunt marcate ca inutile si care nu pot fi blocate de cererile pe baza de filtre net.<\/p><p>Activand aceasta optiune memoria utilizata de <i>µBlock<\/i> va creste<\/p>",
+    "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de <i>µBlock<\/i> va crește.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -308,7 +308,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"goleste cacheul",
+    "message":"golește cacheul",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -448,7 +448,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"În fundal",
+    "message":"În spatele scenei",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "aboutChangelog":{

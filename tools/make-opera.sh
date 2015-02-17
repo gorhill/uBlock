@@ -23,6 +23,5 @@ cp LICENSE.txt $DES/
 
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/mr
-rm -r $DES/_locales/sq
 
 echo "*** uBlock.opera: Package done."

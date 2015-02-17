@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"Filtrat nga palët e treta",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
+    "message":"Klikoj: µBlock bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: µBlock bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -60,7 +60,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Hapni pultin e programit duket klikuar",
+    "message":"Hap pultin e programit duket klikuar",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"Palët e treta",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -168,15 +168,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"Skriptet e vetë faqes",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"Skriptet nga palët e treta",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"Kuadro nga palët e treta",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -228,7 +228,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -236,11 +236,11 @@
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} filtra të rrjetit ＋ {{cosmeticFilterCount}} filtra kozmetikë nga:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} të përdorur nga {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -252,19 +252,19 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Heq të gjitha stoqet",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"Analizoj dhe zbatoj filtrat kozmetikë.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë kryesisht shërbejnë për të fshehur elemente të padëshirueshme nga ana vizive, të cilat nuk bllokohen me metodën e filtrimit standard.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>µBlock<\/i> te memorja e kompjuterit.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"Lista e hosteve të bllokuara",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -280,7 +280,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Domenet e dëmshme",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -300,7 +300,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"Një URL për rresht. Rreshtat që kanë si parashtesë &lsquo;!&rsquo; nuk do të merren parasysh, sikurse adresat pa kuptim.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -308,7 +308,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"heq stokun",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -320,7 +320,7 @@
     "description":"English: outdated"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
+    "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Rreshtat që kanë si parashtesë &lsquo;!&rsquo; nuk do të merren parasysh.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -348,7 +348,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Rikthej",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -380,15 +380,15 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"Lista e rregullave tuaja për filtrimin dinamik.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full documentation<\/a>).",
+    "message":"Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "message":"Lista juaj me emrat e hosteve për të cilat µBlock do të jetë joaktiv. Një element për rresht. Emrat e pasaktë nuk do të merren parasysh.",
     "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -412,7 +412,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"Aktivizoni këtë opsionin kur doni të kontrolloni kërkesat e rrjetit me hollësi. Mbledhja e këtyre kërkesave rrit impaktin e µBlock te memorja e kompjuterit. Përderisa shumë përdorues nuk do e shfrytëzojnë asnjëherë këtë veçori, ajo normalisht qëndron joaktive.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -460,7 +460,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Source code (GPLv3)",
+    "message":"Materiali burimor (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{

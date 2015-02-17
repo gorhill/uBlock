@@ -25,15 +25,15 @@ De asemenea, mai sunt disponibile și alte liste precum:
 - Lista de reclame și urmărire hpHosts
 - Gazdele MVPS
 - Spam404
-- Etc.
+- Și multe altele
 
-Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria. Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, µBlock tot folosește mai puțină memorie decât restul paravanelor.
+Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, µBlock tot folosește mai puțină memorie decât restul paravanelor.
 
 De ținut minte, că odată cu selectarea în plus a unora dintre liste poate conduce la afectarea aspectului siteurilor -- în special listele care sunt în mod normal fișiere hosts.
 
 ***
 
-Fără lista de filtre implicită, aceasta extensie nu face nimic. Așadar, dacă totuși vreți să contribuiți, gândiți-vă la persoanele care muncesc să întrețină aceste filtre pe care le utilizați, care sunt oferite pentru utilizare gratuită.
+Fără listele prestabilite de filtre această extensie nu face nimic. Așadar, dacă totuși vreți să contribuiți, gândiți-vă la persoanele care muncesc să întrețină aceste filtre pe care le utilizați, care sunt oferite pentru utilizare gratuită.
 
 ***
 
@@ -41,8 +41,7 @@ Gratuit.
 Cu sursă liberă și licență publică (GPLv3)
 Pentru utilizatori de la utilizatori.
 
-Contribuitori pe Github:
-https://github.com/gorhill/uBlock/graphs/contributors
+Contribuitori pe Github: https://github.com/gorhill/uBlock/graphs/contributors
 Contribuitori pe Crowdin: https://crowdin.net/project/ublock
 
 ***

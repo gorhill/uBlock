@@ -79,7 +79,7 @@ cp $SRC/pt-BR/description.txt $DES/description-pt_BR.txt
 cp $SRC/pt-PT/description.txt $DES/description-pt_PT.txt
 cp $SRC/ro/description.txt    $DES/description-ro.txt
 cp $SRC/ru/description.txt    $DES/description-ru.txt
-#cp $SRC/sq/description.txt    $DES/description-sq.txt
+cp $SRC/sq/description.txt    $DES/description-sq.txt
 cp $SRC/sv-SE/description.txt $DES/description-sv.txt
 cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
