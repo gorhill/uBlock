@@ -222,6 +222,7 @@ uDom.onLoad(function() {
     uDom('#revertButton').on('click', revertHandler);
     uDom('#commitButton').on('click', commitHandler);
     uDom('#editEnterButton').on('click', editStartHandler);
+    uDom('#diff > .pane.right > .rulesContainer').on('dblclick', editStartHandler);
     uDom('#editStopButton').on('click', editStopHandler);
     uDom('#editCancelButton').on('click', editCancelHandler);
 
