@@ -110,9 +110,9 @@ var µb = µBlock;
 /******************************************************************************/
 
 var getHostnameDict = function(hostnameToCountMap) {
-    var r = {};
+    var r = {}, de;
     var domainFromHostname = µb.URI.domainFromHostname;
-    var domain, counts;
+    var domain, counts, blockCount, allowCount;
     for ( var hostname in hostnameToCountMap ) {
         if ( hostnameToCountMap.hasOwnProperty(hostname) === false ) {
             continue;
@@ -122,19 +122,31 @@ var getHostnameDict = function(hostnameToCountMap) {
         }
         domain = domainFromHostname(hostname) || hostname;
         counts = hostnameToCountMap[domain] || 0;
-        r[domain] = {
-            domain: domain,
-            blockCount: counts & 0xFFFF,
-            allowCount: counts >>> 16 & 0xFFFF
-        };
+        blockCount = counts & 0xFFFF;
+        allowCount = counts >>> 16 & 0xFFFF;
+        if ( r.hasOwnProperty(domain) === false ) {
+            de = r[domain] = {
+                domain: domain,
+                blockCount: blockCount,
+                allowCount: allowCount,
+                totalBlockCount: 0,
+                totalAllowCount: 0
+            };
+        } else {
+            de = r[domain];
+        }
+        counts = hostnameToCountMap[hostname] || 0;
+        blockCount = counts & 0xFFFF;
+        allowCount = counts >>> 16 & 0xFFFF;
+        de.totalBlockCount += blockCount;
+        de.totalAllowCount += allowCount;
         if ( hostname === domain ) {
             continue;
         }
-        counts = hostnameToCountMap[hostname] || 0;
         r[hostname] = {
             domain: domain,
-            blockCount: counts & 0xFFFF,
-            allowCount: counts >>> 16 & 0xFFFF
+            blockCount: blockCount,
+            allowCount: allowCount
         };
     }
     return r;
@@ -182,6 +194,7 @@ var getStats = function(tabId) {
         appVersion: vAPI.app.version,
         cosmeticFilteringSwitch: false,
         dfEnabled: µb.userSettings.dynamicFilteringEnabled,
+        firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         netFilteringSwitch: false,

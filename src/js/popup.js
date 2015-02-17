@@ -152,7 +152,9 @@ var addFirewallRow = function(des) {
 
     var hnDetails = popupData.hostnameDict[des] || {};
 
-    row.toggleClass('isDomain', des === hnDetails.domain);
+    var isDomain = des === hnDetails.domain;
+    row.toggleClass('isDomain', isDomain);
+    row.toggleClass('isSubDomain', !isDomain);
     row.toggleClass('allowed', hnDetails.allowCount !== 0);
     row.toggleClass('blocked', hnDetails.blockCount !== 0);
     row.appendTo('#firewallContainer');
@@ -220,17 +222,34 @@ var updateFirewallCell = function(scope, des, type, rule) {
     var hnDetails = popupData.hostnameDict[des];
     var aCount = hnDetails.allowCount;
     var bCount = hnDetails.blockCount;
-    if ( aCount === 0 && bCount === 0 ) {
+    if ( aCount !== 0 || bCount !== 0 ) {
+        // https://github.com/gorhill/uBlock/issues/471
+        aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
+        bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
+        textNode.nodeValue = threePlus.slice(0, aCount) +
+                             sixSpace.slice(aCount + bCount) +
+                             threeMinus.slice(0, bCount);
+    } else {
         textNode.nodeValue = ' ';
+    }
+
+    if ( hnDetails.domain !== des ) {
         return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/471
-    aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
-    bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
-    textNode.nodeValue = threePlus.slice(0, aCount) +
-                         sixSpace.slice(aCount + bCount) +
-                         threeMinus.slice(0, bCount);
+    textNode = cell.nodeAt(1).firstChild;
+    aCount = hnDetails.totalAllowCount;
+    bCount = hnDetails.totalBlockCount;
+    if ( aCount !== 0 || bCount !== 0 ) {
+        // https://github.com/gorhill/uBlock/issues/471
+        aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
+        bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
+        textNode.nodeValue = threePlus.slice(0, aCount) +
+                             sixSpace.slice(aCount + bCount) +
+                             threeMinus.slice(0, bCount);
+    } else {
+        textNode.nodeValue = ' ';
+    }
 };
 
 /******************************************************************************/
@@ -397,6 +416,7 @@ var renderPopup = function() {
     var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
 
     uDom('#panes').toggleClass('dfEnabled', dfPaneVisible);
+    uDom('#firewallContainer').toggleClass('minimized', popupData.firewallPaneMinimized);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
@@ -572,6 +592,19 @@ var reloadTab = function() {
 
 /******************************************************************************/
 
+var toggleMinimize = function() {
+    var elem = uDom('#firewallContainer');
+    elem.toggleClass('minimized');
+    popupData.firewallPaneMinimized = elem.hasClass('minimized');
+    messager.send({
+        what: 'userSettings',
+        name: 'firewallPaneMinimized',
+        value: popupData.firewallPaneMinimized
+    });
+};
+
+/******************************************************************************/
+
 var saveFirewallRules = function() {
     messager.send({
         what: 'saveFirewallRules',
@@ -658,6 +691,7 @@ uDom.onLoad(function() {
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
     uDom('#saveRules').on('click', saveFirewallRules);
+    uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 });
 
 /******************************************************************************/

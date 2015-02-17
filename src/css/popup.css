@@ -183,6 +183,9 @@ body.dirty #refresh:hover {
 #firewallContainer > div:hover {
     background-color: #f0f0f0;
     }
+#firewallContainer.minimized > div.isSubDomain {
+    display: none;
+    }
 #firewallContainer > div > span {
     background-color: transparent;
     border: none;
@@ -200,6 +203,9 @@ body.dirty #refresh:hover {
     height: 18px;
     line-height: 18px;
     }
+#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1) {
+    cursor: pointer;
+    }
 #firewallContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
     padding-right: 2px;
@@ -210,15 +216,25 @@ body.dirty #refresh:hover {
     cursor: pointer;
     width: 15%;
     }
-#firewallContainer > div > span:nth-of-type(3) {
+#firewallContainer > div > span:nth-of-type(3),
+#firewallContainer > div > span:nth-of-type(4) {
     border-left: 1px solid white;
     color: #444;
     cursor: pointer;
     text-align: center;
     width: 15%;
     }
+#firewallContainer > div > span:nth-of-type(4) {
+    display: none;
+    }
 #firewallContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
+    }
+#firewallContainer.minimized > div.isDomain > span:nth-of-type(3) {
+    display: none;
+    }
+#firewallContainer.minimized > div.isDomain > span:nth-of-type(4) {
+    display: inline-block;
     }
 #firewallContainer > div.allowed > span:nth-of-type(1) {
     background-color: rgba(0, 160, 0, 0.1);
