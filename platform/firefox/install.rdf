@@ -32,6 +32,15 @@
             </r:Description>
         </targetApplication>
 
+        <!-- Firefox for Android
+        <targetApplication>
+            <r:Description>
+                <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
+                <minVersion>24.0</minVersion>
+                <maxVersion>39.0</maxVersion>
+            </r:Description>
+        </targetApplication> -->
+
         <!-- Thunderbird
         <targetApplication>
             <r:Description>
