@@ -377,7 +377,7 @@
             i = wins.length,
             j;
 
-        while(i--) {
+        while(i --) {
             j = wins[i].tabs.length;
 
             while(j--) {
@@ -426,13 +426,13 @@
             return;
         }
 
-        // update the badge, when tab is selected
-        vAPI.setIcon();
+        // update the badge
+        vAPI.setIcon(vAPI.tabs.getTabId(e.target));
     }, true);
 
     /******************************************************************************/
 
-    // reload the popup when that is opened
+    // reload the popup when it's opened
     safari.application.addEventListener('popover', function(e) {
         var w = e.target.contentWindow, body = w.document.body, child;
         while(child = body.firstChild) {
@@ -442,42 +442,32 @@
     }, true);
 
     /******************************************************************************/
+    function TabIcon() {}
+    TabIcon.prototype.badge = 0;
+    TabIcon.prototype.img = "";
 
     vAPI.tabIcons = { /*tabId: {badge: 0, img: suffix}*/ };
     vAPI.setIcon = function(tabId, iconStatus, badge) {
-        var curTabId = vAPI.tabs.getTabId(
-            safari.application.activeBrowserWindow.activeTab
-        );
-
-        // from 'activate' event
-        if(tabId === undefined) {
-            tabId = curTabId;
-        } else {
-            if(badge && /\D/.test(badge)) {
-                badge = 999;
-            }
-
-            vAPI.tabIcons[tabId] = {
-                badge: badge || 0,
-                img: iconStatus === 'on' ? '' : '-off'
-            };
+        var icon = vAPI.tabIcons[tabId];
+        if(typeof icon === "undefined") {
+            icon = vAPI.tabIcons[tabId] = new TabIcon();
         }
 
-        if(tabId !== curTabId) {
-            return;
+        // If we've been passed a badge/iconStatus:
+        if(typeof badge !== "undefined") {
+            icon.badge = badge;
+            icon.img = (iconStatus === "on" ? "" : "-off");
         }
 
-        // if the selected tab has the same ID, then update the badge too,
-        // or always update it when changing tabs ('activate' event)
-        var items = safari.extension.toolbarItems;
-        var i = items.length;
+        var items = safari.extension.toolbarItems,
+            i = items.length;
 
-        while(i--) {
-            if(items[i].browserWindow === safari.application.activeBrowserWindow) {
-                var icon = vAPI.tabIcons[tabId];
-                items[i].badge = icon && icon.badge || 0;
-                // TODO: a disabled icon for Safari
-                // items[i].img = vAPI.getURL(icon.img);
+        var curWindow = safari.application.activeBrowserWindow;
+        while(i --) {
+            if(items[i].browserWindow === curWindow) {
+                items[i].badge = icon.badge;
+                items[i].image = vAPI.getURL("img/browsericons/icon16" +
+                                    icon.img + ".png");
                 return;
             }
         }
