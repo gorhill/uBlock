@@ -61,7 +61,7 @@ return {
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
-        firewallPaneMinimized: false,
+        firewallPaneMinimized: true,
         parseAllABPHideFilters: true,
         showIconBadge: true
     },
