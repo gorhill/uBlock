@@ -426,7 +426,10 @@
         }
         vAPI.toolbarItem = event.target;
     }, true);
-    safari.application.addEventListener("activate", function() {
+    safari.application.addEventListener("activate", function(event) {
+        if(!(event.target instanceof SafariBrowserTab)) {
+            return;
+        }
         vAPI.updateIcon(vAPI.toolbarItem);
     }, true);
 
