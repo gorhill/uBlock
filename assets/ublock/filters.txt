@@ -304,3 +304,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/gorhill/uBlock/issues/822
 # To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
 @@||google-analytics.com^$domain=musixmatch.com
+
+# https://github.com/gorhill/uBlock/issues/841
+# To counter `quantcast.com` in hpHosts, Peter Lowe's
+@@||quantcast.com^$~third-party
