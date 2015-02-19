@@ -412,7 +412,7 @@
                 vAPI.tabs.onClosed(tabId);
             }
 
-            delete vAPI.tabIcons[tabId];
+            delete vAPI.tabIconState[tabId];
             delete vAPI.tabs.stack[tabId];
         }
     }, true);
