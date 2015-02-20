@@ -1016,7 +1016,7 @@ FilterHostnameDict.prototype.matchesExactly = function(hn) {
         return false;
     }
     if ( typeof bucket === 'object' ) {
-        return bucket.hasOwnProperty(hn) !== undefined;
+        return bucket.hasOwnProperty(hn);
     }
     if ( bucket.charAt(0) === ' ' ) {
         return bucket.indexOf(' ' + hn + ' ') !== -1;
