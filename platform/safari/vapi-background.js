@@ -27,7 +27,7 @@
 
 (function() {
 
-    'use strict';
+    "use strict";
 
     var vAPI = self.vAPI = self.vAPI || {};
 
@@ -412,29 +412,32 @@
                 vAPI.tabs.onClosed(tabId);
             }
 
-            delete vAPI.tabIcons[tabId];
+            delete vAPI.tabIconState[tabId];
             delete vAPI.tabs.stack[tabId];
         }
     }, true);
 
     /******************************************************************************/
 
-    // update badge when tab is activated
-    safari.application.addEventListener('activate', function(e) {
-        // ignore windows
-        if(!(e.target instanceof SafariBrowserTab)) {
+    vAPI.toolbarItem = false;
+    safari.application.addEventListener("validate", function(event) {
+        if(vAPI.toolbarItem === event.target) {
             return;
         }
-
-        // update the badge
-        vAPI.setIcon(vAPI.tabs.getTabId(e.target));
+        vAPI.toolbarItem = event.target;
+    }, true);
+    safari.application.addEventListener("activate", function(event) {
+        if(!(event.target instanceof SafariBrowserTab)) {
+            return;
+        }
+        vAPI.updateIcon(vAPI.toolbarItem);
     }, true);
 
     /******************************************************************************/
 
     // reload the popup when it's opened
-    safari.application.addEventListener('popover', function(e) {
-        var w = e.target.contentWindow, body = w.document.body, child;
+    safari.application.addEventListener("popover", function(event) {
+        var w = event.target.contentWindow, body = w.document.body, child;
         while(child = body.firstChild) {
             body.removeChild(child);
         }
@@ -442,35 +445,29 @@
     }, true);
 
     /******************************************************************************/
-    function TabIcon() {}
-    TabIcon.prototype.badge = 0;
-    TabIcon.prototype.img = "";
 
-    vAPI.tabIcons = { /*tabId: {badge: 0, img: suffix}*/ };
+    function TabIconState() {}
+    TabIconState.prototype.badge = 0;
+    TabIconState.prototype.img = "";
+
+    vAPI.tabIconState = { /*tabId: {badge: 0, img: suffix}*/ };
+    vAPI.updateIcon = function(icon) {
+        var tabId = vAPI.tabs.getTabId(icon.browserWindow.activeTab),
+            state = vAPI.tabIconState[tabId];
+        if(typeof state === "undefined") {
+            state = vAPI.tabIconState[tabId] = new TabIconState();
+        }
+        icon.badge = state.badge; 
+        icon.image = vAPI.getURL("img/browsericons/icon16" + state.img + ".png");
+    };
     vAPI.setIcon = function(tabId, iconStatus, badge) {
-        var icon = vAPI.tabIcons[tabId];
-        if(typeof icon === "undefined") {
-            icon = vAPI.tabIcons[tabId] = new TabIcon();
+        var state = vAPI.tabIconState[tabId];
+        if(typeof state === "undefined") {
+            state = vAPI.tabIconState[tabId] = new TabIconState();
         }
-
-        // If we've been passed a badge/iconStatus:
-        if(typeof badge !== "undefined") {
-            icon.badge = badge;
-            icon.img = (iconStatus === "on" ? "" : "-off");
-        }
-
-        var items = safari.extension.toolbarItems,
-            i = items.length;
-
-        var curWindow = safari.application.activeBrowserWindow;
-        while(i --) {
-            if(items[i].browserWindow === curWindow) {
-                items[i].badge = icon.badge;
-                items[i].image = vAPI.getURL("img/browsericons/icon16" +
-                                    icon.img + ".png");
-                return;
-            }
-        }
+        state.badge = badge || 0;
+        state.img = (iconStatus === "on" ? "" : "-off");
+        vAPI.updateIcon(vAPI.toolbarItem);
     };
 
     /******************************************************************************/

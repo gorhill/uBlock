@@ -89,7 +89,7 @@ Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox
 
 ##### 8.0 or newer only
 
-You can get and install the latest µBlock for Safari [right here](https://chrismatic.io/ublock).
+You can get and install the latest µBlock for Safari **[right here](https://chrismatic.io/ublock/)**.
 
 µBlock is also available on the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9), although that's not guaranteed to be the latest version.
 
