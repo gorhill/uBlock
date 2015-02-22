@@ -449,9 +449,15 @@ vAPI.net.registerListeners = function() {
         }
         var path = µburi.path;
         var pos = path.lastIndexOf('.');
+
+        // https://github.com/gorhill/uBlock/issues/862
+        // If no transposition possible, transpose to `object` as per 
+        // Chromium bug 410382 (see below)
         if ( pos === -1 ) {
+            details.type = 'object';
             return;
         }
+
         var ext = path.slice(pos) + '.';
         if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
             details.type = 'font';
