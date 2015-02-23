@@ -481,7 +481,7 @@ var makeHash = function(unhide, token, mask) {
         if ( unhide !== 0 ) {
             hval |= 0x20000;
         }
-    return String.fromCharCode(hval >>> 9, hval & 0x1FF);
+    return hval.toString(36);
 };
 
 /******************************************************************************/
@@ -503,8 +503,8 @@ var makeHash = function(unhide, token, mask) {
 // Specific filers can be enforced before the main document is loaded.
 
 var FilterContainer = function() {
-    this.domainHashMask = (1 << 10) - 1;
-    this.genericHashMask = (1 << 15) - 1;
+    this.domainHashMask = (1 << 10) - 1; // 10 bits
+    this.genericHashMask = (1 << 15) - 1; // 15 bits
     this.type0NoDomainHash = 'type0NoDomain';
     this.type1NoDomainHash = 'type1NoDomain';
     this.parser = new FilterParser();
@@ -521,22 +521,14 @@ var FilterContainer = function() {
 
 FilterContainer.prototype.reset = function() {
     this.parser.reset();
+    this.µburi = µb.URI;
     this.frozen = false;
     this.acceptedCount = 0;
     this.duplicateCount = 0;
+    this.duplicateBuster = {};
 
     this.selectorCache = {};
     this.selectorCacheCount = 0;
-
-    // temporary (at parse time)
-    this.lowGenericHide = {};
-    this.lowGenericDonthide = {};
-    this.highGenericHide = {};
-    this.highGenericDonthide = {};
-    this.hostnameHide = {};
-    this.hostnameDonthide = {};
-    this.entityHide = {};
-    this.entityDonthide = {};
 
     // permanent
     // [class], [id]
@@ -555,9 +547,11 @@ FilterContainer.prototype.reset = function() {
     this.highMediumGenericDonthideCount = 0;
 
     // everything else
+    this.highHighGenericHideArray = [];
     this.highHighGenericHide = '';
-    this.highHighGenericDonthide = '';
     this.highHighGenericHideCount = 0;
+    this.highHighGenericDonthideArray = [];
+    this.highHighGenericDonthide = '';
     this.highHighGenericDonthideCount = 0;
 
     // hostname, entity-based filters
@@ -567,7 +561,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.add = function(s) {
+FilterContainer.prototype.compile = function(s, out) {
     var parsed = this.parser.parse(s);
     if ( parsed.invalid ) {
         return false;
@@ -576,271 +570,284 @@ FilterContainer.prototype.add = function(s) {
     var hostnames = parsed.hostnames;
     var i = hostnames.length;
     if ( i === 0 ) {
-        this.addGenericSelector(parsed);
-        return true;
-    }
-    // https://github.com/gorhill/uBlock/issues/151
-    // Negated hostname means the filter applies to all non-negated hostnames
-    // of same filter OR globally if there is no non-negated hostnames.
-    var applyGlobally = true;
-    var hostname;
-    while ( i-- ) {
-        hostname = hostnames[i];
-        if ( hostname.charAt(0) !== '~' ) {
-            applyGlobally = false;
+        this.compileGenericSelector(parsed, out);
+    } else {
+        // https://github.com/gorhill/uBlock/issues/151
+        // Negated hostname means the filter applies to all non-negated hostnames
+        // of same filter OR globally if there is no non-negated hostnames.
+        var applyGlobally = true;
+        var hostname;
+        while ( i-- ) {
+            hostname = hostnames[i];
+            if ( hostname.charAt(0) !== '~' ) {
+                applyGlobally = false;
+            }
+            if ( hostname.slice(-2) === '.*' ) {
+                this.compileEntitySelector(hostname, parsed, out);
+            } else {
+                this.compileHostnameSelector(hostname, parsed, out);
+            }
         }
-        if ( hostname.slice(-2) === '.*' ) {
-            this.addEntitySelector(hostname, parsed);
-        } else {
-            this.addHostnameSelector(hostname, parsed);
+        if ( applyGlobally ) {
+            this.compileGenericSelector(parsed, out);
         }
     }
-    if ( applyGlobally ) {
-        this.addGenericSelector(parsed);
-    }
+
     return true;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.addGenericSelector = function(parsed) {
-    var entries;
-    var selectorType = parsed.suffix.charAt(0);
-    if ( selectorType === '#' || selectorType === '.' ) {
-        entries = parsed.unhide === 0 ?
-            this.lowGenericHide :
-            this.lowGenericDonthide;
-    } else {
-        entries = parsed.unhide === 0 ?
-            this.highGenericHide :
-            this.highGenericDonthide;
+FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
+    var selector = parsed.suffix;
+    var type = selector.charAt(0);
+    var matches;
+
+    if ( type === '#' || type === '.' ) {
+        matches = this.rePlainSelector.exec(selector);
+        if ( matches === null ) {
+            return;
+        }
+        out.push(
+            'c\v' +
+            (matches[1] === selector ? 'lg\v' : 'lg+\v') +
+            makeHash(parsed.unhide, matches[1], this.genericHashMask) + '\v' +
+            selector
+        );
+        return;
     }
-    if ( entries[parsed.suffix] === undefined ) {
-        entries[parsed.suffix] = true;
-    } else {
-        //console.log('cosmetic-filtering.js > FilterContainer.addGenericSelector(): duplicate filter "%s"', parsed.suffix);
-        this.duplicateCount += 1;
+
+    // ["title"] and ["alt"] will go in high-low generic bin.
+    if ( this.reHighLow.test(selector) ) {
+        out.push(
+            'c\v' +
+            (parsed.unhide === 0 ? 'hlg0\v' : 'hlg1\v') +
+            selector
+        );
+        return;
     }
-    this.acceptedCount += 1;
+
+    // [href^="..."] will go in high-medium generic bin.
+    matches = this.reHighMedium.exec(selector);
+    if ( matches && matches.length === 2 ) {
+        out.push(
+            'c\v' +
+            (parsed.unhide === 0 ? 'hmg0\v' : 'hmg1\v') +
+            matches[1] + '\v' +
+            selector
+        );
+        return;
+    }
+
+    // All else
+    out.push(
+        'c\v' +
+        (parsed.unhide === 0 ? 'hhg0\v' : 'hhg1\v') +
+        selector
+    );
 };
+
+FilterContainer.prototype.rePlainSelector = /^([#.][\w-]+)/;
+FilterContainer.prototype.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
+FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
 /******************************************************************************/
 
-FilterContainer.prototype.addHostnameSelector = function(hostname, parsed) {
+FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, out) {
     // https://github.com/gorhill/uBlock/issues/145
     var unhide = parsed.unhide;
     if ( hostname.charAt(0) === '~' ) {
         hostname = hostname.slice(1);
         unhide ^= 1;
     }
-    var entries = unhide === 0 ?
-        this.hostnameHide :
-        this.hostnameDonthide;
-    var entry = entries[hostname];
-    if ( entry === undefined ) {
-        entry = entries[hostname] = {};
-        entry[parsed.suffix] = true;
-    } else if ( entry[parsed.suffix] === undefined ) {
-        entry[parsed.suffix] = true;
+    // https://github.com/gorhill/uBlock/issues/188
+    // If not a real domain as per PSL, assign a synthetic one
+    var hash;
+    var domain = this.µburi.domainFromHostname(hostname);
+    if ( domain === '' ) {
+        hash = unhide === 0 ? this.type0NoDomainHash : this.type1NoDomainHash;
     } else {
-        //console.log('cosmetic-filtering.js > FilterContainer.addHostnameSelector(): duplicate filter "%s"', parsed.suffix);
-        this.duplicateCount += 1;
+        hash = makeHash(unhide, domain, this.domainHashMask);
     }
-    this.acceptedCount += 1;
+    out.push(
+        'c\v' +
+        'h\v' +
+        hash + '\v' +
+        hostname + '\v' +
+        parsed.suffix
+    );
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.addEntitySelector = function(hostname, parsed) {
-    var entries = parsed.unhide === 0 ?
-        this.entityHide :
-        this.entityDonthide;
+FilterContainer.prototype.compileEntitySelector = function(hostname, parsed, out) {
     var entity = hostname.slice(0, -2);
-    var entry = entries[entity];
-    if ( entry === undefined ) {
-        entry = entries[entity] = {};
-        entry[parsed.suffix] = true;
-    } else if ( entry[parsed.suffix] === undefined ) {
-        entry[parsed.suffix] = true;
-    } else {
-        //console.log('cosmetic-filtering.js > FilterContainer.addEntitySelector(): duplicate filter "%s"', parsed.suffix);
-        this.duplicateCount += 1;
-    }
-    this.acceptedCount += 1;
+    out.push(
+        'c\v' +
+        'e\v' + 
+        entity + '\v' +
+        parsed.suffix
+    );
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.freezeLowGenerics = function(what, type) {
-    var selectors = this[what];
-    var matches, selectorPrefix, f, hash, bucket;
-    for ( var selector in selectors ) {
-        if ( selectors.hasOwnProperty(selector) === false ) {
-            continue;
-        }
-        matches = this.rePlainSelector.exec(selector);
-        if ( !matches ) {
-            continue;
-        }
-        selectorPrefix = matches[1];
-        f = selectorPrefix === selector ?
-            new FilterPlain(selector) :
-            new FilterPlainMore(selector);
-        hash = makeHash(type, selectorPrefix, this.genericHashMask);
-        bucket = this.lowGenericFilters[hash];
-        if ( bucket === undefined ) {
-            this.lowGenericFilters[hash] = f;
-        } else if ( bucket instanceof FilterBucket ) {
-            bucket.add(f);
-        } else {
-            this.lowGenericFilters[hash] = new FilterBucket(bucket, f);
-        }
+FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
+    if ( skip ) {
+        return this.skipCompiledContent(text, lineBeg);
     }
-    this[what] = {};
-};
 
-FilterContainer.prototype.rePlainSelector = /^([#.][\w-]+)/;
+    var lineEnd;
+    var textEnd = text.length;
+    var line, fields, filter, bucket;
 
-/******************************************************************************/
+    while ( lineBeg < textEnd ) {
+        if ( text.charAt(lineBeg) !== 'c' ) {
+            return lineBeg;
+        }
+        lineEnd = text.indexOf('\n', lineBeg);
+        if ( lineEnd === -1 ) {
+            lineEnd = textEnd;
+        }
+        line = text.slice(lineBeg + 2, lineEnd);
+        lineBeg = lineEnd + 1;
 
-FilterContainer.prototype.freezeHostnameSpecifics = function(what, type) {
-    var µburi = µb.URI;
-    var entries = this[what];
-    var filters = this.hostnameFilters;
-    var f, domain, hash, bucket;
-    for ( var hostname in entries ) {
-        if ( entries.hasOwnProperty(hostname) === false ) {
+
+        this.acceptedCount += 1;
+        if ( this.duplicateBuster.hasOwnProperty(line) ) {
+            this.duplicateCount += 1;
             continue;
         }
-        f = new FilterHostname(Object.keys(entries[hostname]).join(',\n'), hostname);
-        // https://github.com/gorhill/uBlock/issues/188
-        // If not a real domain as per PSL, assign a synthetic one
-        domain = µburi.domainFromHostname(hostname);
-        if ( domain === '' ) {
-            hash = type === 0 ? this.type0NoDomainHash : this.type1NoDomainHash;
-        } else {
-            hash = makeHash(type, domain, this.domainHashMask);
-        }
-        bucket = filters[hash];
-        if ( bucket === undefined ) {
-            filters[hash] = f;
-        } else if ( bucket instanceof FilterBucket ) {
-            bucket.add(f);
-        } else {
-            filters[hash] = new FilterBucket(bucket, f);
-        }
-    }
-    this[what] = {};
-};
+        this.duplicateBuster[line] = true;
 
-/******************************************************************************/
+        fields = line.split('\v');
 
-FilterContainer.prototype.freezeEntitySpecifics = function(what, type) {
-    var entries = this[what];
-    var filters = this.entityFilters;
-    var f, hash, bucket;
-    for ( var entity in entries ) {
-        if ( entries.hasOwnProperty(entity) === false ) {
-            continue;
-        }
-        f = new FilterEntity(Object.keys(entries[entity]).join(',\n'), entity);
-        hash = makeHash(type, entity, this.domainHashMask);
-        bucket = filters[hash];
-        if ( bucket === undefined ) {
-            filters[hash] = f;
-        } else if ( bucket instanceof FilterBucket ) {
-            bucket.add(f);
-        } else {
-            filters[hash] = new FilterBucket(bucket, f);
-        }
-    }
-    this[what] = {};
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.freezeHighGenerics = function(what) {
-    var selectors = this['highGeneric' + what];
-
-    // ["title"] and ["alt"] will go in high-low generic bin.
-    var highLowGenericProp = 'highLowGeneric' + what;
-    var highLowGeneric = this[highLowGenericProp];
-    var highLowGenericCount = 0;
-
-    // [href^="..."] will go in high-medium generic bin.
-    var highMediumGenericProp = 'highMediumGeneric' + what;
-    var highMediumGeneric = this[highMediumGenericProp];
-    var highMediumGenericCount = 0;
-
-    // The rest will be put in the high-high generic bin.
-    // https://github.com/gorhill/uBlock/issues/236
-    // Insert whatever we already have
-    var highHighGeneric = [];
-    var highHighGenericProp = 'highHighGeneric' + what;
-    if ( this[highHighGenericProp] !== '' ) {
-        highHighGeneric.push(this[highHighGenericProp]);
-    }
-    var highHighGenericCount = 0;
-
-    // https://github.com/gorhill/uBlock/issues/456
-    // Include tag name, it's part of the filter
-    var reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
-    var reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
-    var matches, hash;
-
-    for ( var selector in selectors ) {
-        if ( selectors.hasOwnProperty(selector) === false ) {
-            continue;
-        }
-        // ["title"] and ["alt"] will go in high-low generic bin.
-        matches = reHighLow.exec(selector);
-        if ( matches && matches.length === 1 ) {
-            highLowGeneric[matches[0]] = true;
-            highLowGenericCount += 1;
-            continue;
-        }
-        // [href^="..."] will go in high-medium generic bin.
-        matches = reHighMedium.exec(selector);
-        if ( matches && matches.length === 2 ) {
-            hash = matches[1];
-            if  ( highMediumGeneric[hash] === undefined ) {
-                highMediumGeneric[hash] = matches[0];
+        // h	ir	twitter.com	.promoted-tweet
+        if ( fields[0] === 'h' ) {
+            filter = new FilterHostname(fields[3], fields[2]);
+            bucket = this.hostnameFilters[fields[1]];
+            if ( bucket === undefined ) {
+                this.hostnameFilters[fields[1]] = filter;
+            } else if ( bucket instanceof FilterBucket ) {
+                bucket.add(filter);
             } else {
-                highMediumGeneric[hash] += ',\n' + matches[0];
+                this.hostnameFilters[fields[1]] = new FilterBucket(bucket, filter);
             }
-            highMediumGenericCount += 1;
             continue;
         }
-        // All else
-        highHighGeneric.push(selector);
-        highHighGenericCount += 1;
+
+        // lg	105	.largeAd
+        // lg+	2jx	.Mpopup + #Mad > #MadZone
+        if ( fields[0] === 'lg' || fields[0] === 'lg+' ) {
+            filter = fields[0] === 'lg' ?
+                        new FilterPlain(fields[2]) :
+                        new FilterPlainMore(fields[2]);
+            bucket = this.lowGenericFilters[fields[1]];
+            if ( bucket === undefined ) {
+                this.lowGenericFilters[fields[1]] = filter;
+            } else if ( bucket instanceof FilterBucket ) {
+                bucket.add(filter);
+            } else {
+                this.lowGenericFilters[fields[1]] = new FilterBucket(bucket, filter);
+            }
+            continue;
+        }
+
+        // entity	selector
+        if ( fields[0] === 'e' ) {
+            bucket = this.entityFilters[fields[1]];
+            if ( bucket === undefined ) {
+                this.entityFilters[fields[1]] = [fields[2]];
+            } else {
+                bucket.push(fields[2]);
+            }
+            continue;
+        }
+
+        if ( fields[0] === 'hlg0' ) {
+            this.highLowGenericHide[fields[1]] = true;
+            this.highLowGenericHideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hlg1' ) {
+            this.highLowGenericDonthide[fields[1]] = true;
+            this.highLowGenericDonthideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hmg0' ) {
+            if ( Array.isArray(this.highMediumGenericHide[fields[1]]) ) {
+                this.highMediumGenericHide[fields[1]].push(fields[2]);
+            } else {
+                this.highMediumGenericHide[fields[1]] = [fields[2]];
+            }
+            this.highMediumGenericHideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hmg1' ) {
+            if ( Array.isArray(this.highMediumGenericDonthide[fields[1]]) ) {
+                this.highMediumGenericDonthide[fields[1]].push(fields[2]);
+            } else {
+                this.highMediumGenericDonthide[fields[1]] = [fields[2]];
+            }
+            this.highMediumGenericDonthideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hhg0' ) {
+            this.highHighGenericHideArray.push(fields[1]);
+            this.highHighGenericHideCount += 1;
+            continue;
+        }
+
+        if ( fields[0] === 'hhg1' ) {
+            this.highHighGenericDonthideArray.push(fields[1]);
+            this.highHighGenericDonthideCount += 1;
+            continue;
+        }
     }
+    return textEnd;
+};
 
-    this[highLowGenericProp + 'Count'] += highLowGenericCount;
-    this[highMediumGenericProp + 'Count'] += highMediumGenericCount;
-    this[highHighGenericProp] = highHighGeneric.join(',\n');
-    this[highHighGenericProp + 'Count'] += highHighGenericCount;
+/******************************************************************************/
 
-    // Empty cumulated selectors
-    this['highGeneric' + what] = {};
+FilterContainer.prototype.skipCompiledContent = function(text, lineBeg) {
+    var lineEnd;
+    var textEnd = text.length;
+
+    while ( lineBeg < textEnd ) {
+        if ( text.charAt(lineBeg) !== 'c' ) {
+            return lineBeg;
+        }
+        lineEnd = text.indexOf('\n', lineBeg);
+        if ( lineEnd === -1 ) {
+            lineEnd = textEnd;
+        }
+        lineBeg = lineEnd + 1;
+    }
+    return textEnd;
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    this.freezeLowGenerics('lowGenericHide', 0);
-    this.freezeLowGenerics('lowGenericDonthide', 1);
-    this.freezeHighGenerics('Hide');
-    this.freezeHighGenerics('Donthide');
-    this.freezeHostnameSpecifics('hostnameHide', 0);
-    this.freezeHostnameSpecifics('hostnameDonthide', 1);
-    this.freezeEntitySpecifics('entityHide', 0);
-    this.freezeEntitySpecifics('entityDonthide', 1);
+    this.duplicateBuster = {};
+
+    if ( this.highHighGenericHide !== '' ) {
+        this.highHighGenericHideArray.unshift(this.highHighGenericHide);
+    }
+    this.highHighGenericHide = this.highHighGenericHideArray.join(',\n');
+    this.highHighGenericHideArray = [];
+    if ( this.highHighGenericDonthide !== '' ) {
+        this.highHighGenericDonthideArray.unshift(this.highHighGenericDonthide);
+    }
+    this.highHighGenericDonthide = this.highHighGenericDonthideArray.join(',\n');
+    this.highHighGenericDonthideArray = [];
+
     this.parser.reset();
     this.frozen = true;
-
-    //histogram('lowGenericFilters', this.lowGenericFilters);
-    //histogram('hostnameFilters', this.hostnameFilters);
 };
 
 /******************************************************************************/
@@ -875,7 +882,7 @@ FilterContainer.prototype.toSelfie = function() {
         acceptedCount: this.acceptedCount,
         duplicateCount: this.duplicateCount,
         hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
-        entitySpecificFilters: selfieFromDict(this.entityFilters),
+        entitySpecificFilters: this.entityFilters,
         lowGenericFilters: selfieFromDict(this.lowGenericFilters),
         highLowGenericHide: this.highLowGenericHide,
         highLowGenericDonthide: this.highLowGenericDonthide,
@@ -940,7 +947,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.acceptedCount = selfie.acceptedCount;
     this.duplicateCount = selfie.duplicateCount;
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
-    this.entityFilters = dictFromSelfie(selfie.entitySpecificFilters);
+    this.entityFilters = selfie.entitySpecificFilters;
     this.lowGenericFilters = dictFromSelfie(selfie.lowGenericFilters);
     this.highLowGenericHide = selfie.highLowGenericHide;
     this.highLowGenericDonthide = selfie.highLowGenericDonthide;
@@ -1156,14 +1163,18 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     if ( bucket = this.hostnameFilters[this.type0NoDomainHash] ) {
         bucket.retrieve(hostname, r.cosmeticHide);
     }
-    hash = makeHash(0, r.entity, this.domainHashMask);
-    if ( bucket = this.entityFilters[hash] ) {
-        bucket.retrieve(pos === -1 ? domain : hostname.slice(0, pos - domain.length), r.cosmeticHide);
+
+    // entity filter buckets are always plain js array
+    if ( bucket = this.entityFilters[r.entity] ) {
+        r.cosmeticHide = r.cosmeticHide.concat(bucket);
     }
+    // No entity exceptions as of now
+
     hash = makeHash(1, domain, this.domainHashMask);
     if ( bucket = this.hostnameFilters[hash] ) {
         bucket.retrieve(hostname, r.cosmeticDonthide);
     }
+
     // https://github.com/gorhill/uBlock/issues/188
     // Special bucket for those filters without a valid domain name as per PSL
     if ( bucket = this.hostnameFilters[this.type1NoDomainHash] ) {

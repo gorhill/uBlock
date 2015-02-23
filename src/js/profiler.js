@@ -20,11 +20,12 @@
 */
 
 /* exported quickProfiler */
-'use strict';
 
 /******************************************************************************/
 
 var quickProfiler = (function() {
+    'use strict';
+
     var timer = window.performance || Date;
     var time = 0;
     var count = 0;

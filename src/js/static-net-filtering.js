@@ -227,7 +227,7 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlain.prototype.fid = 'a';
+FilterPlain.fid = FilterPlain.prototype.fid = 'a';
 
 FilterPlain.prototype.toString = function() {
     return this.s;
@@ -236,6 +236,10 @@ FilterPlain.prototype.toString = function() {
 FilterPlain.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.tokenBeg;
+};
+
+FilterPlain.compile = function(details) {
+    return details.f + '\t' + details.tokenBeg;
 };
 
 FilterPlain.fromSelfie = function(s) {
@@ -256,7 +260,7 @@ FilterPlainHostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainHostname.prototype.fid = 'ah';
+FilterPlainHostname.fid = FilterPlainHostname.prototype.fid = 'ah';
 
 FilterPlainHostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
@@ -266,6 +270,12 @@ FilterPlainHostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.tokenBeg + '\t' +
            this.hostname;
+};
+
+FilterPlainHostname.compile = function(details, hostname) {
+    return details.f + '\t' +
+           details.tokenBeg + '\t' +
+           hostname;
 };
 
 FilterPlainHostname.fromSelfie = function(s) {
@@ -283,7 +293,7 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainPrefix0.prototype.fid = '0a';
+FilterPlainPrefix0.fid = FilterPlainPrefix0.prototype.fid = '0a';
 
 FilterPlainPrefix0.prototype.toString = function() {
     return this.s;
@@ -291,6 +301,10 @@ FilterPlainPrefix0.prototype.toString = function() {
 
 FilterPlainPrefix0.prototype.toSelfie = function() {
     return this.s;
+};
+
+FilterPlainPrefix0.compile = function(details) {
+    return details.f;
 };
 
 FilterPlainPrefix0.fromSelfie = function(s) {
@@ -309,7 +323,7 @@ FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainPrefix0Hostname.prototype.fid = '0ah';
+FilterPlainPrefix0Hostname.fid = FilterPlainPrefix0Hostname.prototype.fid = '0ah';
 
 FilterPlainPrefix0Hostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
@@ -318,6 +332,10 @@ FilterPlainPrefix0Hostname.prototype.toString = function() {
 FilterPlainPrefix0Hostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.hostname;
+};
+
+FilterPlainPrefix0Hostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
 };
 
 FilterPlainPrefix0Hostname.fromSelfie = function(s) {
@@ -335,7 +353,7 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
-FilterPlainPrefix1.prototype.fid = '1a';
+FilterPlainPrefix1.fid = FilterPlainPrefix1.prototype.fid = '1a';
 
 FilterPlainPrefix1.prototype.toString = function() {
     return this.s;
@@ -343,6 +361,10 @@ FilterPlainPrefix1.prototype.toString = function() {
 
 FilterPlainPrefix1.prototype.toSelfie = function() {
     return this.s;
+};
+
+FilterPlainPrefix1.compile = function(details) {
+    return details.f;
 };
 
 FilterPlainPrefix1.fromSelfie = function(s) {
@@ -361,7 +383,7 @@ FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
-FilterPlainPrefix1Hostname.prototype.fid = '1ah';
+FilterPlainPrefix1Hostname.fid = FilterPlainPrefix1Hostname.prototype.fid = '1ah';
 
 FilterPlainPrefix1Hostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
@@ -370,6 +392,10 @@ FilterPlainPrefix1Hostname.prototype.toString = function() {
 FilterPlainPrefix1Hostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.hostname;
+};
+
+FilterPlainPrefix1Hostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
 };
 
 FilterPlainPrefix1Hostname.fromSelfie = function(s) {
@@ -387,7 +413,7 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
     return url.slice(0, this.s.length) === this.s;
 };
 
-FilterPlainLeftAnchored.prototype.fid = '|a';
+FilterPlainLeftAnchored.fid = FilterPlainLeftAnchored.prototype.fid = '|a';
 
 FilterPlainLeftAnchored.prototype.toString = function() {
     return '|' + this.s;
@@ -395,6 +421,10 @@ FilterPlainLeftAnchored.prototype.toString = function() {
 
 FilterPlainLeftAnchored.prototype.toSelfie = function() {
     return this.s;
+};
+
+FilterPlainLeftAnchored.compile = function(details) {
+    return details.f;
 };
 
 FilterPlainLeftAnchored.fromSelfie = function(s) {
@@ -413,7 +443,7 @@ FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
            url.slice(0, this.s.length) === this.s;
 };
 
-FilterPlainLeftAnchoredHostname.prototype.fid = '|ah';
+FilterPlainLeftAnchoredHostname.fid = FilterPlainLeftAnchoredHostname.prototype.fid = '|ah';
 
 FilterPlainLeftAnchoredHostname.prototype.toString = function() {
     return '|' + this.s + '$domain=' + this.hostname;
@@ -422,6 +452,10 @@ FilterPlainLeftAnchoredHostname.prototype.toString = function() {
 FilterPlainLeftAnchoredHostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.hostname;
+};
+
+FilterPlainLeftAnchoredHostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
 };
 
 FilterPlainLeftAnchoredHostname.fromSelfie = function(s) {
@@ -439,7 +473,7 @@ FilterPlainRightAnchored.prototype.match = function(url) {
     return url.slice(-this.s.length) === this.s;
 };
 
-FilterPlainRightAnchored.prototype.fid = 'a|';
+FilterPlainRightAnchored.fid = FilterPlainRightAnchored.prototype.fid = 'a|';
 
 FilterPlainRightAnchored.prototype.toString = function() {
     return this.s + '|';
@@ -447,6 +481,10 @@ FilterPlainRightAnchored.prototype.toString = function() {
 
 FilterPlainRightAnchored.prototype.toSelfie = function() {
     return this.s;
+};
+
+FilterPlainRightAnchored.compile = function(details) {
+    return details.f;
 };
 
 FilterPlainRightAnchored.fromSelfie = function(s) {
@@ -465,7 +503,7 @@ FilterPlainRightAnchoredHostname.prototype.match = function(url) {
            url.slice(-this.s.length) === this.s;
 };
 
-FilterPlainRightAnchoredHostname.prototype.fid = 'a|h';
+FilterPlainRightAnchoredHostname.fid = FilterPlainRightAnchoredHostname.prototype.fid = 'a|h';
 
 FilterPlainRightAnchoredHostname.prototype.toString = function() {
     return this.s + '|$domain=' + this.hostname;
@@ -474,6 +512,10 @@ FilterPlainRightAnchoredHostname.prototype.toString = function() {
 FilterPlainRightAnchoredHostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.hostname;
+};
+
+FilterPlainRightAnchoredHostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
 };
 
 FilterPlainRightAnchoredHostname.fromSelfie = function(s) {
@@ -500,7 +542,7 @@ FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
            reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
 };
 
-FilterPlainHnAnchored.prototype.fid = 'h|a';
+FilterPlainHnAnchored.fid = FilterPlainHnAnchored.prototype.fid = 'h|a';
 
 FilterPlainHnAnchored.prototype.toString = function() {
     return '||' + this.s;
@@ -508,6 +550,10 @@ FilterPlainHnAnchored.prototype.toString = function() {
 
 FilterPlainHnAnchored.prototype.toSelfie = function() {
     return this.s;
+};
+
+FilterPlainHnAnchored.compile = function(details) {
+    return details.f;
 };
 
 FilterPlainHnAnchored.fromSelfie = function(s) {
@@ -535,7 +581,7 @@ FilterSingleWildcard.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
-FilterSingleWildcard.prototype.fid = '*';
+FilterSingleWildcard.fid = FilterSingleWildcard.prototype.fid = '*';
 
 FilterSingleWildcard.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment;
@@ -545,6 +591,14 @@ FilterSingleWildcard.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment + '\t' +
            this.tokenBeg;
+};
+
+FilterSingleWildcard.compile = function(details) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t' +
+           details.tokenBeg;
 };
 
 FilterSingleWildcard.fromSelfie = function(s) {
@@ -568,7 +622,7 @@ FilterSingleWildcardHostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
-FilterSingleWildcardHostname.prototype.fid = '*h';
+FilterSingleWildcardHostname.fid = FilterSingleWildcardHostname.prototype.fid = '*h';
 
 FilterSingleWildcardHostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
@@ -579,6 +633,15 @@ FilterSingleWildcardHostname.prototype.toSelfie = function() {
            this.rSegment + '\t' +
            this.tokenBeg + '\t' +
            this.hostname;
+};
+
+FilterSingleWildcardHostname.compile = function(details, hostname) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t' +
+           details.tokenBeg + '\t' +
+           hostname;
 };
 
 FilterSingleWildcardHostname.fromSelfie = function(s) {
@@ -598,7 +661,7 @@ FilterSingleWildcardPrefix0.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
-FilterSingleWildcardPrefix0.prototype.fid = '0*';
+FilterSingleWildcardPrefix0.fid = FilterSingleWildcardPrefix0.prototype.fid = '0*';
 
 FilterSingleWildcardPrefix0.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment;
@@ -607,6 +670,12 @@ FilterSingleWildcardPrefix0.prototype.toString = function() {
 FilterSingleWildcardPrefix0.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment;
+};
+
+FilterSingleWildcardPrefix0.compile = function(details) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' + s.slice(pos + 1);
 };
 
 FilterSingleWildcardPrefix0.fromSelfie = function(s) {
@@ -628,7 +697,7 @@ FilterSingleWildcardPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.indexOf(this.rSegment, tokenBeg + this.lSegment.length) > 0;
 };
 
-FilterSingleWildcardPrefix0Hostname.prototype.fid = '0*h';
+FilterSingleWildcardPrefix0Hostname.fid = FilterSingleWildcardPrefix0Hostname.prototype.fid = '0*h';
 
 FilterSingleWildcardPrefix0Hostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
@@ -638,6 +707,14 @@ FilterSingleWildcardPrefix0Hostname.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment + '\t' +
            this.hostname;
+};
+
+FilterSingleWildcardPrefix0Hostname.compile = function(details, hostname) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t' +
+           hostname;
 };
 
 FilterSingleWildcardPrefix0Hostname.fromSelfie = function(s) {
@@ -657,7 +734,7 @@ FilterSingleWildcardLeftAnchored.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
-FilterSingleWildcardLeftAnchored.prototype.fid = '|*';
+FilterSingleWildcardLeftAnchored.fid = FilterSingleWildcardLeftAnchored.prototype.fid = '|*';
 
 FilterSingleWildcardLeftAnchored.prototype.toString = function() {
     return '|' + this.lSegment + '*' + this.rSegment;
@@ -666,6 +743,13 @@ FilterSingleWildcardLeftAnchored.prototype.toString = function() {
 FilterSingleWildcardLeftAnchored.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment;
+};
+
+FilterSingleWildcardLeftAnchored.compile = function(details) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t';
 };
 
 FilterSingleWildcardLeftAnchored.fromSelfie = function(s) {
@@ -687,7 +771,7 @@ FilterSingleWildcardLeftAnchoredHostname.prototype.match = function(url) {
            url.indexOf(this.rSegment, this.lSegment.length) > 0;
 };
 
-FilterSingleWildcardLeftAnchoredHostname.prototype.fid = '|*h';
+FilterSingleWildcardLeftAnchoredHostname.fid = FilterSingleWildcardLeftAnchoredHostname.prototype.fid = '|*h';
 
 FilterSingleWildcardLeftAnchoredHostname.prototype.toString = function() {
     return '|' + this.lSegment + '*' + this.rSegment + '$domain=' + this.hostname;
@@ -697,6 +781,14 @@ FilterSingleWildcardLeftAnchoredHostname.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment + '\t' +
            this.hostname;
+};
+
+FilterSingleWildcardLeftAnchoredHostname.compile = function(details, hostname) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t' +
+           hostname;
 };
 
 FilterSingleWildcardLeftAnchoredHostname.fromSelfie = function(s) {
@@ -716,7 +808,7 @@ FilterSingleWildcardRightAnchored.prototype.match = function(url) {
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
 
-FilterSingleWildcardRightAnchored.prototype.fid = '*|';
+FilterSingleWildcardRightAnchored.fid = FilterSingleWildcardRightAnchored.prototype.fid = '*|';
 
 FilterSingleWildcardRightAnchored.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '|';
@@ -725,6 +817,13 @@ FilterSingleWildcardRightAnchored.prototype.toString = function() {
 FilterSingleWildcardRightAnchored.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment;
+};
+
+FilterSingleWildcardRightAnchored.compile = function(details) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t';
 };
 
 FilterSingleWildcardRightAnchored.fromSelfie = function(s) {
@@ -746,7 +845,7 @@ FilterSingleWildcardRightAnchoredHostname.prototype.match = function(url) {
            url.lastIndexOf(this.lSegment, url.length - this.rSegment.length - this.lSegment.length) >= 0;
 };
 
-FilterSingleWildcardRightAnchoredHostname.prototype.fid = '*|h';
+FilterSingleWildcardRightAnchoredHostname.fid = FilterSingleWildcardRightAnchoredHostname.prototype.fid = '*|h';
 
 FilterSingleWildcardRightAnchoredHostname.prototype.toString = function() {
     return this.lSegment + '*' + this.rSegment + '|$domain=' + this.hostname;
@@ -756,6 +855,14 @@ FilterSingleWildcardRightAnchoredHostname.prototype.toSelfie = function() {
     return this.lSegment + '\t' +
            this.rSegment + '\t' +
            this.hostname;
+};
+
+FilterSingleWildcardRightAnchoredHostname.compile = function(details, hostname) {
+    var s = details.f;
+    var pos = s.indexOf('*');
+    return s.slice(0, pos) + '\t' +
+           s.slice(pos + 1) + '\t' +
+           hostname;
 };
 
 FilterSingleWildcardRightAnchoredHostname.fromSelfie = function(s) {
@@ -781,15 +888,18 @@ FilterManyWildcards.prototype.match = function(url, tokenBeg) {
     return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
-FilterManyWildcards.prototype.fid = '*+';
+FilterManyWildcards.fid = FilterManyWildcards.prototype.fid = '*+';
 
 FilterManyWildcards.prototype.toString = function() {
     return this.s;
 };
 
 FilterManyWildcards.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.tokenBeg;
+    return this.s + '\t' + this.tokenBeg;
+};
+
+FilterManyWildcards.compile = function(details) {
+    return details.f + '\t' + details.tokenBeg;
 };
 
 FilterManyWildcards.fromSelfie = function(s) {
@@ -811,7 +921,7 @@ FilterManyWildcardsHostname.prototype.match = function(url, tokenBeg) {
            this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
-FilterManyWildcardsHostname.prototype.fid = '*+h';
+FilterManyWildcardsHostname.fid = FilterManyWildcardsHostname.prototype.fid = '*+h';
 
 FilterManyWildcardsHostname.prototype.toString = function() {
     return this.s + '$domain=' + this.hostname;
@@ -821,6 +931,12 @@ FilterManyWildcardsHostname.prototype.toSelfie = function() {
     return this.s + '\t' +
            this.tokenBeg + '\t' +
            this.hostname;
+};
+
+FilterManyWildcardsHostname.compile = function(details, hostname) {
+    return details.f + '\t' +
+           details.tokenBeg + '\t' +
+           hostname;
 };
 
 FilterManyWildcardsHostname.fromSelfie = function(s) {
@@ -840,7 +956,7 @@ FilterRegex.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterRegex.prototype.fid = '//';
+FilterRegex.fid = FilterRegex.prototype.fid = '//';
 
 FilterRegex.prototype.toString = function() {
     return '/' + this.re.source + '/';
@@ -848,6 +964,10 @@ FilterRegex.prototype.toString = function() {
 
 FilterRegex.prototype.toSelfie = function() {
     return this.re.source;
+};
+
+FilterRegex.compile = function(details) {
+    return details.f;
 };
 
 FilterRegex.fromSelfie = function(s) {
@@ -867,15 +987,18 @@ FilterRegexHostname.prototype.match = function(url) {
            this.re.test(url);
 };
 
-FilterRegexHostname.prototype.fid = '//h';
+FilterRegexHostname.fid = FilterRegexHostname.prototype.fid = '//h';
 
 FilterRegexHostname.prototype.toString = function() {
     return '/' + this.re.source + '/$domain=' + this.hostname;
 };
 
 FilterRegexHostname.prototype.toSelfie = function() {
-    return this.re.source + '\t' +
-           this.hostname;
+    return this.re.source + '\t' + this.hostname;
+};
+
+FilterRegexHostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
 };
 
 FilterRegexHostname.fromSelfie = function(s) {
@@ -981,12 +1104,12 @@ FilterHostnameDict.prototype.add = function(hn) {
     if ( typeof bucket === 'string' ) {
         bucket = this.dict[key] = this.meltBucket(hn.len, bucket);
     }
-    if ( bucket[hn] === undefined ) {
-        bucket[hn] = true;
-        this.count += 1;
-        return true;
+    if ( bucket.hasOwnProperty(hn) ) {
+        return false;
     }
-    return false;
+    bucket[hn] = true;
+    this.count += 1;
+    return true;
 };
 
 FilterHostnameDict.prototype.freeze = function() {
@@ -1041,7 +1164,7 @@ FilterHostnameDict.prototype.matchesExactly = function(hn) {
     return false;
 };
 
-FilterHostnameDict.prototype.match = function(hn) {
+FilterHostnameDict.prototype.match = function() {
     // TODO: mind IP addresses
 
     var pos,
@@ -1058,7 +1181,7 @@ FilterHostnameDict.prototype.match = function(hn) {
     return this;
 };
 
-FilterHostnameDict.prototype.fid = '{h}';
+FilterHostnameDict.fid = FilterHostnameDict.prototype.fid = '{h}';
 
 FilterHostnameDict.prototype.toString = function() {
     return this.h;
@@ -1186,85 +1309,81 @@ FilterBucket.fromSelfie = function() {
 
 /******************************************************************************/
 
-var makeFilter = function(details) {
-    var s = details.f;
+var getFilterClass = function(details) {
     if ( details.isRegex ) {
-        return new FilterRegex(s);
+        return FilterRegex;
     }
+    var s = details.f;
     var wcOffset = s.indexOf('*');
     if ( wcOffset !== -1 ) {
         if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
-            return details.anchor === 0 ? new FilterManyWildcards(s, details.tokenBeg) : null;
+            return details.anchor === 0 ? FilterManyWildcards : null;
         }
-        var lSegment = s.slice(0, wcOffset);
-        var rSegment = s.slice(wcOffset + 1);
         if ( details.anchor < 0 ) {
-            return new FilterSingleWildcardLeftAnchored(lSegment, rSegment);
+            return FilterSingleWildcardLeftAnchored;
         }
         if ( details.anchor > 0 ) {
-            return new FilterSingleWildcardRightAnchored(lSegment, rSegment);
+            return FilterSingleWildcardRightAnchored;
         }
         if ( details.tokenBeg === 0 ) {
-            return new FilterSingleWildcardPrefix0(lSegment, rSegment);
+            return FilterSingleWildcardPrefix0;
         }
-        return new FilterSingleWildcard(lSegment, rSegment, details.tokenBeg);
+        return FilterSingleWildcard;
     }
     if ( details.anchor < 0 ) {
-        return new FilterPlainLeftAnchored(s);
+        return FilterPlainLeftAnchored;
     }
     if ( details.anchor > 0 ) {
-        return new FilterPlainRightAnchored(s);
+        return FilterPlainRightAnchored;
     }
     if ( details.hostnameAnchored ) {
-        return new FilterPlainHnAnchored(s);
+        return FilterPlainHnAnchored;
     }
     if ( details.tokenBeg === 0 ) {
-        return new FilterPlainPrefix0(s);
+        return FilterPlainPrefix0;
     }
     if ( details.tokenBeg === 1 ) {
-        return new FilterPlainPrefix1(s);
+        return FilterPlainPrefix1;
     }
-    return new FilterPlain(s, details.tokenBeg);
+    return FilterPlain;
 };
 
 /******************************************************************************/
 
-var makeHostnameFilter = function(details, hostname) {
-    var s = details.f;
+var getHostnameBasedFilterClass = function(details) {
     if ( details.isRegex ) {
-        return new FilterRegexHostname(s, hostname);
+        return FilterRegexHostname;
     }
+    var s = details.f;
     var wcOffset = s.indexOf('*');
     if ( wcOffset !== -1 ) {
         if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
-            return details.anchor === 0 ? new FilterManyWildcardsHostname(s, details.tokenBeg, hostname) : null;
+            return details.anchor === 0 ? FilterManyWildcardsHostname : null;
         }
-        var lSegment = s.slice(0, wcOffset);
-        var rSegment = s.slice(wcOffset + 1);
         if ( details.anchor < 0 ) {
-            return new FilterSingleWildcardLeftAnchoredHostname(lSegment, rSegment, hostname);
+            return FilterSingleWildcardLeftAnchoredHostname;
         }
         if ( details.anchor > 0 ) {
-            return new FilterSingleWildcardRightAnchoredHostname(lSegment, rSegment, hostname);
+            return FilterSingleWildcardRightAnchoredHostname;
         }
         if ( details.tokenBeg === 0 ) {
-            return new FilterSingleWildcardPrefix0Hostname(lSegment, rSegment, hostname);
+            return FilterSingleWildcardPrefix0Hostname;
         }
-        return new FilterSingleWildcardHostname(lSegment, rSegment, details.tokenBeg, hostname);
+        return FilterSingleWildcardHostname;
     }
     if ( details.anchor < 0 ) {
-        return new FilterPlainLeftAnchoredHostname(s, hostname);
+        return FilterPlainLeftAnchoredHostname;
     }
     if ( details.anchor > 0 ) {
-        return new FilterPlainRightAnchoredHostname(s, hostname);
+        return FilterPlainRightAnchoredHostname;
     }
     if ( details.tokenBeg === 0 ) {
-        return new FilterPlainPrefix0Hostname(s, hostname);
+        return FilterPlainPrefix0Hostname;
     }
     if ( details.tokenBeg === 1 ) {
-        return new FilterPlainPrefix1Hostname(s, hostname);
+        return FilterPlainPrefix1Hostname;
     }
-    return new FilterPlainHostname(s, details.tokenBeg, hostname);
+    return FilterPlainHostname;
 };
 
 /******************************************************************************/
@@ -1615,8 +1734,8 @@ FilterContainer.prototype.reset = function() {
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.duplicateCount = 0;
+    this.duplicateBuster = {};
     this.categories = Object.create(null);
-    this.duplicates = Object.create(null);
     this.filterParser.reset();
 };
 
@@ -1624,6 +1743,8 @@ FilterContainer.prototype.reset = function() {
 
 FilterContainer.prototype.freeze = function() {
     histogram('allFilters', this.categories);
+    this.duplicateBuster = {};
+
     var categories = this.categories;
     var bucket;
     for ( var k in categories ) {
@@ -1632,9 +1753,39 @@ FilterContainer.prototype.freeze = function() {
             bucket.freeze();
         }
     }
-    this.duplicates = Object.create(null);
+
     this.filterParser.reset();
     this.frozen = true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.factories = {
+     '[]': FilterBucket,
+      'a': FilterPlain,
+     'ah': FilterPlainHostname,
+     '0a': FilterPlainPrefix0,
+    '0ah': FilterPlainPrefix0Hostname,
+     '1a': FilterPlainPrefix1,
+    '1ah': FilterPlainPrefix1Hostname,
+     '|a': FilterPlainLeftAnchored,
+    '|ah': FilterPlainLeftAnchoredHostname,
+     'a|': FilterPlainRightAnchored,
+    'a|h': FilterPlainRightAnchoredHostname,
+    'h|a': FilterPlainHnAnchored,
+      '*': FilterSingleWildcard,
+     '*h': FilterSingleWildcardHostname,
+     '0*': FilterSingleWildcardPrefix0,
+    '0*h': FilterSingleWildcardPrefix0Hostname,
+     '|*': FilterSingleWildcardLeftAnchored,
+    '|*h': FilterSingleWildcardLeftAnchoredHostname,
+     '*|': FilterSingleWildcardRightAnchored,
+    '*|h': FilterSingleWildcardRightAnchoredHostname,
+     '*+': FilterManyWildcards,
+    '*+h': FilterManyWildcardsHostname,
+     '//': FilterRegex,
+    '//h': FilterRegexHostname,
+    '{h}': FilterHostnameDict
 };
 
 /******************************************************************************/
@@ -1697,34 +1848,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.blockFilterCount = selfie.blockFilterCount;
     this.duplicateCount = selfie.duplicateCount;
 
-    var factories = {
-         '[]': FilterBucket,
-          'a': FilterPlain,
-         'ah': FilterPlainHostname,
-         '0a': FilterPlainPrefix0,
-        '0ah': FilterPlainPrefix0Hostname,
-         '1a': FilterPlainPrefix1,
-        '1ah': FilterPlainPrefix1Hostname,
-         '|a': FilterPlainLeftAnchored,
-        '|ah': FilterPlainLeftAnchoredHostname,
-         'a|': FilterPlainRightAnchored,
-        'a|h': FilterPlainRightAnchoredHostname,
-        'h|a': FilterPlainHnAnchored,
-          '*': FilterSingleWildcard,
-         '*h': FilterSingleWildcardHostname,
-         '0*': FilterSingleWildcardPrefix0,
-        '0*h': FilterSingleWildcardPrefix0Hostname,
-         '|*': FilterSingleWildcardLeftAnchored,
-        '|*h': FilterSingleWildcardLeftAnchoredHostname,
-         '*|': FilterSingleWildcardRightAnchored,
-        '*|h': FilterSingleWildcardRightAnchoredHostname,
-         '*+': FilterManyWildcards,
-        '*+h': FilterManyWildcardsHostname,
-         '//': FilterRegex,
-        '//h': FilterRegexHostname,
-        '{h}': FilterHostnameDict
-    };
-
     var catKey, tokenKey;
     var dict = this.categories, subdict;
     var bucket = null;
@@ -1752,7 +1875,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
             bucket = null;
             continue;
         }
-        factory = factories[what];
+        factory = this.factories[what];
         if ( bucket === null ) {
             bucket = subdict[tokenKey] = factory.fromSelfie(line.slice(pos + 1));
             continue;
@@ -1766,12 +1889,12 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 /******************************************************************************/
 
 FilterContainer.prototype.makeCategoryKey = function(category) {
-    return String.fromCharCode(category);
+    return category.toString(16);
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.add = function(raw) {
+FilterContainer.prototype.compile = function(raw, out) {
     // ORDER OF TESTS IS IMPORTANT!
 
     // Ignore empty lines
@@ -1795,40 +1918,22 @@ FilterContainer.prototype.add = function(raw) {
 
     // Ignore filters with unsupported options
     if ( parsed.unsupported ) {
-        this.rejectedCount += 1;
         //console.log('static-net-filtering.js > FilterContainer.add(): unsupported filter "%s"', raw);
         return false;
     }
 
-    this.processedFilterCount += 1;
-    this.acceptedCount += 1;
-
     // Pure hostnames, use more efficient liquid dict
     // https://github.com/gorhill/uBlock/issues/665
     // Create a dict keyed on request type etc.
-    if ( parsed.hostnamePure && this.addHostnameOnlyFilter(parsed) ) {
+    if ( parsed.hostnamePure && this.compileHostnameOnlyFilter(parsed, out) ) {
         return true;
     }
 
-    if ( this.duplicates[s] ) {
-        //console.log('static-net-filtering.js > FilterContainer.add(): duplicate filter "%s"', raw);
-        this.duplicateCount++;
-        return false;
-    }
-    if ( this.frozen === false ) {
-        this.duplicates[s] = true;
-    }
-
-    var r = this.addFilter(parsed);
+    var r = this.compileFilter(parsed, out);
     if ( r === false ) {
         return false;
     }
 
-    if ( parsed.action ) {
-        this.allowFilterCount += 1;
-    } else {
-        this.blockFilterCount += 1;
-    }
     return true;
 };
 
@@ -1836,55 +1941,37 @@ FilterContainer.prototype.add = function(raw) {
 
 // Using fast/compact dictionary when filter is a (or portion of) pure hostname.
 
-FilterContainer.prototype.addHostnameOnlyFilter = function(parsed) {
+FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     // Can't fit the filter in a pure hostname dictionary.
     if ( parsed.hostnames.length !== 0 || parsed.notHostnames.length !== 0 ) {
-        return false;
+        return;
     }
 
-    var isNewFilter = false;
     var party = AnyParty;
     if ( parsed.firstParty !== parsed.thirdParty ) {
         party = parsed.firstParty ? FirstParty : ThirdParty;
     }
     var keyShard = parsed.action | parsed.important | party;
-    var key, bucket;
     var type = parsed.types >>> 1 || 1; // bit 0 is unused; also, default to AnyType
     var bitOffset = 1;
     while ( type !== 0 ) {
         if ( type & 1 ) {
-            key = this.makeCategoryKey(keyShard | (bitOffset << 4));
-            bucket = this.categories[key];
-            if ( bucket === undefined ) {
-                bucket = this.categories[key] = Object.create(null);
-            }
-            if ( bucket['.'] === undefined ) {
-                bucket['.'] = new FilterHostnameDict();
-            }
-            if ( bucket['.'].add(parsed.f) ) {
-                isNewFilter = true;
-            }
+            out.push(
+                'n\v' +
+                this.makeCategoryKey(keyShard | (bitOffset << 4)) + '\v' +
+                '.\v' +
+                parsed.f
+            );
         }
         bitOffset += 1;
         type >>>= 1;
-    }
-    // https://github.com/gorhill/uBlock/issues/719
-    // Count whole filter, not its decomposed versions
-    if ( isNewFilter ) {
-        if ( parsed.action ) {
-            this.allowFilterCount += 1;
-        } else {
-            this.blockFilterCount += 1;
-        }
-    } else {
-        this.duplicateCount += 1;
     }
     return true;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.addFilter = function(parsed) {
+FilterContainer.prototype.compileFilter = function(parsed, out) {
     parsed.makeToken();
     if ( parsed.token === '' ) {
         console.error('static-net-filtering.js > FilterContainer.addFilter("%s"): can\'t tokenize', parsed.f);
@@ -1896,28 +1983,28 @@ FilterContainer.prototype.addFilter = function(parsed) {
         party = parsed.firstParty ? FirstParty : ThirdParty;
     }
 
-    var filter;
+    var filterClass;
     var i = parsed.hostnames.length;
     var j = parsed.notHostnames.length;
 
     // Applies to all domains without exceptions
     if ( i === 0 && j === 0 ) {
-        filter = makeFilter(parsed);
-        if ( !filter ) {
+        filterClass = getFilterClass(parsed);
+        if ( filterClass === null ) {
             return false;
         }
-        this.addFilterEntry(filter, parsed, party);
+        this.compileToAtomicFilter(filterClass, parsed, party, out);
         return true;
     }
 
     // Applies to specific domains
     if ( i !== 0 ) {
         while ( i-- ) {
-            filter = makeHostnameFilter(parsed, parsed.hostnames[i]);
-            if ( !filter ) {
+            filterClass = getHostnameBasedFilterClass(parsed);
+            if ( filterClass === null ) {
                 return false;
             }
-            this.addFilterEntry(filter, parsed, party);
+            this.compileToAtomicFilter(filterClass, parsed, party, out, parsed.hostnames[i]);
         }
     }
     // No exceptions
@@ -1930,13 +2017,13 @@ FilterContainer.prototype.addFilter = function(parsed) {
     // Example:
     // - ||adm.fwmrm.net/p/msnbc_live/$object-subrequest,third-party,domain=~msnbc.msn.com|~www.nbcnews.com
     if ( i === 0 ) {
-        filter = makeFilter(parsed);
-        if ( !filter ) {
+        filterClass = getFilterClass(parsed);
+        if ( filterClass === null ) {
             return false;
         }
         // https://github.com/gorhill/uBlock/issues/251
         // Apply third-party option if it is present
-        this.addFilterEntry(filter, parsed, party);
+        this.compileToAtomicFilter(filterClass, parsed, party, out);
     }
 
     // Cases:
@@ -1948,8 +2035,8 @@ FilterContainer.prototype.addFilter = function(parsed) {
     // Reverse purpose of filter
     parsed.action ^= ToggleAction;
     while ( j-- ) {
-        filter = makeHostnameFilter(parsed, parsed.notHostnames[j]);
-        if ( !filter ) {
+        filterClass = getHostnameBasedFilterClass(parsed);
+        if ( filterClass === null ) {
             return false;
         }
         // https://github.com/gorhill/uBlock/issues/191#issuecomment-53654024
@@ -1958,20 +2045,26 @@ FilterContainer.prototype.addFilter = function(parsed) {
         if ( parsed.action === BlockAction ) {
             parsed.important = Important;
         }
-        this.addFilterEntry(filter, parsed, party);
+        this.compileToAtomicFilter(filterClass, parsed, party, out, parsed.notHostnames[j]);
     }
     return true;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.addFilterEntry = function(filter, parsed, party) {
+FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, party, out, hostname) {
     var bits = parsed.action | parsed.important | party;
     var type = parsed.types >>> 1 || 1; // bit 0 is unused; also, default to AnyType
     var bitOffset = 1;
     while ( type !== 0 ) {
         if ( type & 1 ) {
-            this.addToCategory(bits | (bitOffset << 4), parsed.token, filter);
+            out.push(
+                'n\v' +
+                this.makeCategoryKey(bits | (bitOffset << 4)) + '\v' +
+                parsed.token + '\v' +
+                filterClass.fid + '\v' +
+                filterClass.compile(parsed, hostname)
+            );
         }
         bitOffset += 1;
         type >>>= 1;
@@ -1980,22 +2073,60 @@ FilterContainer.prototype.addFilterEntry = function(filter, parsed, party) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.addToCategory = function(category, tokenKey, filter) {
-    var categoryKey = this.makeCategoryKey(category);
-    var categoryBucket = this.categories[categoryKey];
-    if ( !categoryBucket ) {
-        categoryBucket = this.categories[categoryKey] = Object.create(null);
+FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
+    var lineEnd;
+    var textEnd = text.length;
+    var line, fields, bucket, entry, factory, filter;
+
+    while ( lineBeg < textEnd ) {
+        if ( text.charAt(lineBeg) !== 'n' ) {
+            return lineBeg;
+        }
+        lineEnd = text.indexOf('\n', lineBeg);
+        if ( lineEnd === -1 ) {
+            lineEnd = textEnd;
+        }
+        line = text.slice(lineBeg + 2, lineEnd);
+        fields = line.split('\v');
+        lineBeg = lineEnd + 1;
+
+        this.acceptedCount += 1;
+
+        bucket = this.categories[fields[0]];
+        if ( bucket === undefined ) {
+            bucket = this.categories[fields[0]] = Object.create(null);
+        }
+        entry = bucket[fields[1]];
+
+        if ( fields[1] === '.' ) {
+            if ( entry === undefined ) {
+                entry = bucket['.'] = new FilterHostnameDict();
+            }
+            if ( entry.add(fields[2]) === false ) {
+                this.duplicateCount += 1;
+            }
+            continue;
+        }
+
+        if ( this.duplicateBuster.hasOwnProperty(line) ) {
+            this.duplicateCount += 1;
+            continue;
+        }
+        this.duplicateBuster[line] = true;
+
+        factory = this.factories[fields[2]];
+        filter = factory.fromSelfie(fields[3]);
+        if ( entry === undefined ) {
+            bucket[fields[1]] = filter;
+            continue;
+        }
+        if ( entry.fid === '[]' ) {
+            entry.add(filter);
+            continue;
+        }
+        bucket[fields[1]] = new FilterBucket(entry, filter);
     }
-    var filterEntry = categoryBucket[tokenKey];
-    if ( filterEntry === undefined ) {
-        categoryBucket[tokenKey] = filter;
-        return;
-    }
-    if ( filterEntry.fid === '[]' ) {
-        filterEntry.add(filter);
-        return;
-    }
-    categoryBucket[tokenKey] = new FilterBucket(filterEntry, filter);
+    return textEnd;
 };
 
 /******************************************************************************/
@@ -2275,7 +2406,7 @@ FilterContainer.prototype.matchString = function(context) {
 /******************************************************************************/
 
 FilterContainer.prototype.getFilterCount = function() {
-    return this.blockFilterCount + this.allowFilterCount;
+    return this.acceptedCount - this.duplicateCount;
 };
 
 /******************************************************************************/

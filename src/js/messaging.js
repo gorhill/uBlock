@@ -68,7 +68,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'reloadAllFilters':
-            µb.reloadPresetBlacklists(request.switches, request.update);
+            µb.reloadFilterLists(request.switches, request.update);
             break;
 
         case 'reloadTab':

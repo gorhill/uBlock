@@ -27,6 +27,8 @@
 
 (function() {
 
+quickProfiler.start('start.js');
+
 /******************************************************************************/
 
 // Final initialization steps after all needed assets are in memory.
@@ -40,10 +42,14 @@ var onAllReady = function() {
     // Check for updates not too far in the future.
     µb.assetUpdater.onStart.addEventListener(µb.updateStartHandler.bind(µb));
     µb.assetUpdater.onCompleted.addEventListener(µb.updateCompleteHandler.bind(µb));
+    µb.assetUpdater.onAssetUpdated.addEventListener(µb.assetUpdatedHandler.bind(µb));
+    µb.assets.onAssetCacheRemoved.addEventListener(µb.assetCacheRemovedHandler.bind(µb));
 
     // Important: remove barrier to remote fetching, this was useful only
     // for launch time.
     µb.assets.allowRemoteFetch = true;
+
+    quickProfiler.stop(0);
 
     vAPI.onLoadAllCompleted();
 };
@@ -155,9 +161,34 @@ var onUserSettingsReady = function(userSettings) {
     µb.XAL.keyvalRemoveOne('logRequests');
 };
 
-µBlock.loadUserSettings(onUserSettingsReady);
-µBlock.loadWhitelist(onWhitelistReady);
-µBlock.loadLocalSettings();
+/******************************************************************************/
+
+// Housekeeping, as per system setting changes
+
+var onSystemSettingsReady = function(system) {
+    var µb = µBlock;
+
+    var mustSaveSystemSettings = false;
+    if ( system.compiledMagic !== µb.systemSettings.compiledMagic ) {
+        µb.assets.purge(/^cache:\/\/compiled-/);
+        mustSaveSystemSettings = true;
+    }
+    if ( system.selfieMagic !== µb.systemSettings.selfieMagic ) {
+        µb.destroySelfie();
+        mustSaveSystemSettings = true;
+    }
+    if ( mustSaveSystemSettings ) {
+        µb.saveSystemSettings();
+    }
+
+    µb.loadUserSettings(onUserSettingsReady);
+    µb.loadWhitelist(onWhitelistReady);
+    µb.loadLocalSettings();
+};
+
+/******************************************************************************/
+
+µBlock.loadSystemSettings(onSystemSettingsReady);
 
 /******************************************************************************/
 

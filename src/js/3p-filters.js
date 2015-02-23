@@ -43,7 +43,7 @@ var re3rdPartyExternalAsset = /^https?:\/\/[a-z0-9]+/;
 
 var onMessage = function(msg) {
     switch ( msg.what ) {
-        case 'loadUbiquitousBlacklistCompleted':
+        case 'allFilterListsReloaded':
             renderBlacklists();
             break;
 

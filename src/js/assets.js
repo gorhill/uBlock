@@ -57,6 +57,7 @@ var thirdpartiesRepositoryRoot = 'https://raw.githubusercontent.com/gorhill/uAss
 var nullFunc = function() {};
 var reIsExternalPath = /^[a-z]+:\/\//;
 var reIsUserPath = /^assets\/user\//;
+var reIsCachePath = /^cache:\/\//;
 var lastRepoMetaTimestamp = 0;
 var lastRepoMetaIsRemote = false;
 var refreshRepoMetaPeriod = 5 * oneHour;
@@ -197,17 +198,26 @@ var cachedAssetsManager = (function() {
         var cachedContentPath = cachedAssetPathPrefix + path;
         var bin = {};
         bin[cachedContentPath] = content;
+        var removedItems = [];
         var onSaved = function() {
             var lastError = vAPI.lastError();
             if ( lastError ) {
                 details.error = 'Error: ' + lastError.message;
                 console.error('µBlock> cachedAssetsManager.save():', details.error);
                 cbError(details);
-            } else {
-                cbSuccess(details);
+                return;
             }
+            // Saving over an existing item must be seen as removing an 
+            // existing item and adding a new one.
+            if ( typeof exports.onRemovedListener === 'function' ) {
+                exports.onRemovedListener(removedItems);
+            }
+            cbSuccess(details);
         };
         var onEntries = function(entries) {
+            if ( entries.hasOwnProperty(path) ) {
+                removedItems.push(path);
+            }
             entries[path] = Date.now();
             bin.cached_asset_entries = entries;
             vAPI.storage.set(bin, onSaved);
@@ -218,6 +228,7 @@ var cachedAssetsManager = (function() {
     exports.remove = function(pattern, before) {
         var onEntries = function(entries) {
             var keystoRemove = [];
+            var removedItems = [];
             var paths = Object.keys(entries);
             var i = paths.length;
             var path;
@@ -232,12 +243,16 @@ var cachedAssetsManager = (function() {
                 if ( typeof before === 'number' && entries[path] >= before ) {
                     continue;
                 }
+                removedItems.push(path);
                 keystoRemove.push(cachedAssetPathPrefix + path);
                 delete entries[path];
             }
             if ( keystoRemove.length ) {
                 vAPI.storage.remove(keystoRemove);
                 vAPI.storage.set({ 'cached_asset_entries': entries });
+                if ( typeof exports.onRemovedListener === 'function' ) {
+                    exports.onRemovedListener(removedItems);
+                }
             }
         };
         getEntries(onEntries);
@@ -245,8 +260,10 @@ var cachedAssetsManager = (function() {
 
     exports.removeAll = function(callback) {
         var onEntries = function() {
+            // Careful! do not remove 'assets/user/'
             exports.remove(/^https?:\/\/[a-z0-9]+/);
             exports.remove(/^assets\/(ublock|thirdparties)\//);
+            exports.remove(/^cache:\/\//);
             exports.remove('assets/checksums.txt');
             if ( typeof callback === 'function' ) {
                 callback(null);
@@ -254,6 +271,8 @@ var cachedAssetsManager = (function() {
         };
         getEntries(onEntries);
     };
+
+    exports.onRemovedListener = null;
 
     return exports;
 })();
@@ -263,15 +282,18 @@ var cachedAssetsManager = (function() {
 var getTextFileFromURL = function(url, onLoad, onError) {
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
-        if ( this.status !== 0 && ( this.status < 200 || this.status >= 300 ) ) {
+        this.onload = this.onerror = this.ontimeout = null;
+        // xhr for local files gives status 0, but actually succeeds
+        var status = this.status || 200;
+        if ( status < 200 || status >= 300 ) {
             return onError.call(this);
         }
-        // xhr for local files gives status 0, but actually succeeds
-        if ( this.status === 0 && stringIsNotEmpty(this.responseText) === false ) {
+        // consider an empty result to be an error
+        if ( stringIsNotEmpty(this.responseText) === false ) {
             return onError.call(this);
         }
         // we never download anything else than plain text: discard if response
-        // appears to be a HTML document: could happen when server returns
+        // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
         var text = this.responseText.trim();
         if ( text.charAt(0) === '<' && text.slice(-1) === '>' ) {
@@ -279,15 +301,23 @@ var getTextFileFromURL = function(url, onLoad, onError) {
         }
         return onLoad.call(this);
     };
+    var onErrorReceived = function() {
+        this.onload = this.onerror = this.ontimeout = null;
+        onError.call(this);
+    };
     // console.log('µBlock> getTextFileFromURL("%s"):', url);
     var xhr = new XMLHttpRequest();
-    xhr.open('get', url, true);
-    xhr.timeout = 30000;
-    xhr.onload = onResponseReceived;
-    xhr.onerror = onError;
-    xhr.ontimeout = onError;
-    xhr.responseType = 'text';
-    xhr.send();
+    try {
+        xhr.open('get', url, true);
+        xhr.timeout = 30000;
+        xhr.onload = onResponseReceived;
+        xhr.onerror = onErrorReceived;
+        xhr.ontimeout = onErrorReceived;
+        xhr.responseType = 'text';
+        xhr.send();
+    } catch (e) {
+        onErrorReceived.call(xhr);
+    }
 };
 
 /******************************************************************************/
@@ -454,13 +484,11 @@ var readLocalFile = function(path, callback) {
     };
 
     var onInstallFileLoaded = function() {
-        this.onload = this.onerror = null;
         //console.log('µBlock> readLocalFile("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
     };
 
     var onInstallFileError = function() {
-        this.onload = this.onerror = null;
         console.error('µBlock> readLocalFile("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
     };
@@ -512,7 +540,6 @@ var readRepoFile = function(path, callback) {
     var repositoryURL = projectRepositoryRoot + path;
 
     var onRepoFileLoaded = function() {
-        this.onload = this.onerror = null;
         //console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
         // https://github.com/gorhill/httpswitchboard/issues/263
         if ( this.status === 200 ) {
@@ -523,7 +550,6 @@ var readRepoFile = function(path, callback) {
     };
 
     var onRepoFileError = function() {
-        this.onload = this.onerror = null;
         console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         reportBack('', 'Error');
     };
@@ -568,13 +594,11 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onInstallFileLoaded = function() {
-        this.onload = this.onerror = null;
         //console.log('µBlock> readRepoCopyAsset("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
     };
 
     var onInstallFileError = function() {
-        this.onload = this.onerror = null;
         console.error('µBlock> readRepoCopyAsset("%s") / onInstallFileError():', path, this.statusText);
         reportBack('', 'Error');
     };
@@ -593,7 +617,6 @@ var readRepoCopyAsset = function(path, callback) {
     var repositoryURLSkipCache = repositoryURL + '?ublock=' + Date.now();
 
     var onRepoFileLoaded = function() {
-        this.onload = this.onerror = null;
         if ( stringIsNotEmpty(this.responseText) === false ) {
             console.error('µBlock> readRepoCopyAsset("%s") / onRepoFileLoaded("%s"): error', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
@@ -605,13 +628,11 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onRepoFileError = function() {
-        this.onload = this.onerror = null;
         console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
 
     var onHomeFileLoaded = function() {
-        this.onload = this.onerror = null;
         if ( stringIsNotEmpty(this.responseText) === false ) {
             console.error('µBlock> readRepoCopyAsset("%s") / onHomeFileLoaded("%s"): no response', path, homeURL);
             // Fetch from repo only if obsolescence was due to repo checksum
@@ -628,7 +649,6 @@ var readRepoCopyAsset = function(path, callback) {
     };
 
     var onHomeFileError = function() {
-        this.onload = this.onerror = null;
         console.error(errorCantConnectTo.replace('{{url}}', homeURL));
         // Fetch from repo only if obsolescence was due to repo checksum
         if ( assetEntry.localChecksum !== assetEntry.repoChecksum ) {
@@ -715,13 +735,11 @@ var readRepoOnlyAsset = function(path, callback) {
     };
 
     var onInstallFileLoaded = function() {
-        this.onload = this.onerror = null;
         //console.log('µBlock> readRepoOnlyAsset("%s") / onInstallFileLoaded()', path);
         reportBack(this.responseText);
     };
 
     var onInstallFileError = function() {
-        this.onload = this.onerror = null;
         console.error('µBlock> readRepoOnlyAsset("%s") / onInstallFileError()', path);
         reportBack('', 'Error');
     };
@@ -739,7 +757,6 @@ var readRepoOnlyAsset = function(path, callback) {
     var repositoryURL = projectRepositoryRoot + path + '?ublock=' + Date.now();
 
     var onRepoFileLoaded = function() {
-        this.onload = this.onerror = null;
         if ( typeof this.responseText !== 'string' ) {
             console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
@@ -757,7 +774,6 @@ var readRepoOnlyAsset = function(path, callback) {
     };
 
     var onRepoFileError = function() {
-        this.onload = this.onerror = null;
         console.error(errorCantConnectTo.replace('{{url}}', repositoryURL));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
@@ -827,7 +843,6 @@ var readExternalAsset = function(path, callback) {
     };
 
     var onExternalFileLoaded = function() {
-        this.onload = this.onerror = null;
         // https://github.com/gorhill/uBlock/issues/708
         // A successful download should never return an empty file: turn this
         // into an error condition.
@@ -841,7 +856,6 @@ var readExternalAsset = function(path, callback) {
     };
 
     var onExternalFileError = function() {
-        this.onload = this.onerror = null;
         console.error(errorCantConnectTo.replace('{{url}}', path));
         cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
     };
@@ -874,12 +888,33 @@ var readExternalAsset = function(path, callback) {
 
 var readUserAsset = function(path, callback) {
     var onCachedContentLoaded = function(details) {
-        //console.log('µBlock> readUserAsset("%s") / onCachedContentLoaded()', path);
+        //console.log('µBlock.assets/readUserAsset("%s")/onCachedContentLoaded()', path);
         callback({ 'path': path, 'content': details.content });
     };
 
     var onCachedContentError = function() {
-        //console.log('µBlock> readUserAsset("%s") / onCachedContentError()', path);
+        //console.log('µBlock.assets/readUserAsset("%s")/onCachedContentError()', path);
+        callback({ 'path': path, 'content': '' });
+    };
+
+    cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
+};
+
+/******************************************************************************/
+
+// Asset available only from the cache.
+// Cache data:
+//       Path --> starts with 'cache://'
+//      Cache --> whatever
+
+var readCacheAsset = function(path, callback) {
+    var onCachedContentLoaded = function(details) {
+        //console.log('µBlock.assets/readCacheAsset("%s")/onCachedContentLoaded()', path);
+        callback({ 'path': path, 'content': details.content });
+    };
+
+    var onCachedContentError = function() {
+        //console.log('µBlock.assets/readCacheAsset("%s")/onCachedContentError()', path);
         callback({ 'path': path, 'content': '' });
     };
 
@@ -927,6 +962,11 @@ exports.get = function(path, callback) {
 
     if ( reIsUserPath.test(path) ) {
         readUserAsset(path, callback);
+        return;
+    }
+
+    if ( reIsCachePath.test(path) ) {
+        readCacheAsset(path, callback);
         return;
     }
 
@@ -1042,10 +1082,16 @@ exports.purge = function(pattern, before) {
     cachedAssetsManager.remove(pattern, before);
 };
 
-/******************************************************************************/
-
 exports.purgeAll = function(callback) {
     cachedAssetsManager.removeAll(callback);
+};
+
+/******************************************************************************/
+
+exports.onAssetCacheRemoved = {
+    addEventListener: function(callback) {
+        cachedAssetsManager.onRemovedListener = callback || null;
+    }
 };
 
 /******************************************************************************/
@@ -1076,8 +1122,9 @@ var updated = {};
 var updatedCount = 0;
 var metadata = null;
 
-var onStart = null;
-var onCompleted = null;
+var onStartListener = null;
+var onCompletedListener = null;
+var onAssetUpdatedListener = null;
 
 var exports = {};
 
@@ -1086,15 +1133,15 @@ var exports = {};
 var onAssetUpdated = function(details) {
     var path = details.path;
     if ( details.error ) {
-        //console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
+        //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
         return;
     }
-    //console.debug('assets.js > µBlock.assetUpdater/onAssetUpdated: "%s"', path);
+    //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s"', path);
     updated[path] = true;
     updatedCount += 1;
-
-    // New data available: selfie is now invalid
-    µb.destroySelfie();
+    if ( typeof onAssetUpdatedListener === 'function' ) {
+        onAssetUpdatedListener(details);
+    }
 };
 
 /******************************************************************************/
@@ -1117,7 +1164,7 @@ var updateOne = function() {
         if ( !metaEntry.cacheObsolete && !metaEntry.repoObsolete ) {
             continue;
         }
-        //console.debug('assets.js > µBlock.assetUpdater/updateOne: assets.get("%s")', path);
+        //console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
         µb.assets.get(path, onAssetUpdated);
         break;
     }
@@ -1144,10 +1191,10 @@ var updateDaemon = function() {
     // Start an update cycle?
     if ( updateCycleTime !== 0 ) {
         if ( Date.now() >= updateCycleTime ) {
-            //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle started');
+            //console.debug('µBlock.assetUpdater/updateDaemon: update cycle started');
             reset();
-            if ( onStart !== null ) {
-                onStart();
+            if ( typeof onStartListener === 'function' ) {
+                onStartListener();
             }
         }
         return;
@@ -1166,9 +1213,9 @@ var updateDaemon = function() {
 
     // If anything was updated, notify listener
     if ( updatedCount !== 0 ) {
-        if ( onCompleted !== null ) {
-            //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle completed');
-            onCompleted({
+        if ( typeof onCompletedListener === 'function' ) {
+            //console.debug('µBlock.assetUpdater/updateDaemon: update cycle completed');
+            onCompletedListener({
                 updated: JSON.parse(JSON.stringify(updated)), // give callee its own safe copy
                 updatedCount: updatedCount
             });
@@ -1178,7 +1225,7 @@ var updateDaemon = function() {
     // Schedule next update cycle
     if ( updateCycleTime === 0 ) {
         reset();
-        //console.debug('assets.js > µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
+        //console.debug('µBlock.assetUpdater/updateDaemon: update cycle re-scheduled');
         updateCycleTime = Date.now() + updateCycleNextPeriod;
     }
 };
@@ -1200,8 +1247,8 @@ var reset = function() {
 
 exports.onStart = {
     addEventListener: function(callback) {
-        onStart = callback || null;
-        if ( onStart !== null ) {
+        onStartListener = callback || null;
+        if ( typeof onStartListener === 'function' ) {
             updateCycleTime = Date.now() + updateCycleFirstPeriod;
         }
     }
@@ -1209,9 +1256,17 @@ exports.onStart = {
 
 /******************************************************************************/
 
+exports.onAssetUpdated = {
+    addEventListener: function(callback) {
+        onAssetUpdatedListener = callback || null;
+    }
+};
+
+/******************************************************************************/
+
 exports.onCompleted = {
     addEventListener: function(callback) {
-        onCompleted = callback || null;
+        onCompletedListener = callback || null;
     }
 };
 

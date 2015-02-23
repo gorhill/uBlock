@@ -83,6 +83,12 @@ return {
         allowedRequestCount: 0
     },
 
+    // read-only
+    systemSettings: {
+        compiledMagic: 'dgycowxrdjuf',
+        selfieMagic: 'dmakcrbecglp'
+    },
+
     // EasyList, EasyPrivacy and many others have an 4-day update period,
     // as per list headers.
     updateAssetsEvery: 97 * oneHour,
@@ -111,7 +117,6 @@ return {
     remoteBlacklists: {
     },
 
-    selfieMagic: 'bizhviclttie',
     selfieAfter: 23 * oneMinute,
 
     pageStores: {},

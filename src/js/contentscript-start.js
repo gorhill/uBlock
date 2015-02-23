@@ -71,8 +71,6 @@ var cosmeticFilters = function(details) {
     var hide = details.cosmeticHide;
     var i;
     if ( donthide.length !== 0 ) {
-        donthide = donthide.length !== 1 ? donthide.join(',\n') : donthide[0];
-        donthide = donthide.split(',\n');
         i = donthide.length;
         while ( i-- ) {
             donthideCosmeticFilters[donthide[i]] = true;
@@ -80,8 +78,6 @@ var cosmeticFilters = function(details) {
     }
     // https://github.com/gorhill/uBlock/issues/143
     if ( hide.length !== 0 ) {
-        hide = hide.length !== 1 ? hide.join(',\n') : hide[0];
-        hide = hide.split(',\n');
         i = hide.length;
         var selector;
         while ( i-- ) {

@@ -334,7 +334,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             hash = href.slice(pos + 3, pos + 11);
             selectors = generics[hash];
             if ( selectors === undefined ) { continue; }
-            selectors = selectors.split(',\n');
             iSelector = selectors.length;
             while ( iSelector-- ) {
                 selector = selectors[iSelector];

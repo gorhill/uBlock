@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, vAPI, punycode, publicSuffixList */
+/* global YaMD5, µBlock, vAPI, punycode, publicSuffixList */
 
 'use strict';
 
@@ -49,6 +49,21 @@
     };
 
     vAPI.storage.get(this.localSettings, settingsLoaded);
+};
+
+/******************************************************************************/
+
+µBlock.saveSystemSettings = function() {
+    vAPI.storage.set(this.systemSettings, this.noopFunc);
+};
+
+/******************************************************************************/
+
+µBlock.loadSystemSettings = function(callback) {
+    vAPI.storage.get({
+        compiledMagic: '',
+        selfieMagic: ''
+    }, callback);
 };
 
 /******************************************************************************/
@@ -133,17 +148,30 @@
 /******************************************************************************/
 
 µBlock.appendUserFilters = function(content) {
+    if ( content.length === 0 ) {
+        return;
+    }
+
     var µb = this;
+
+    var onCompiledListLoaded = function(details) {
+        var snfe = µb.staticNetFilteringEngine;
+        var cfe = µb.cosmeticFilteringEngine;
+        var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
+        var duplicateCount = snfe.duplicateCount + cfe.duplicateCount;
+        µb.applyCompiledFilters(details.content);
+        var entry = µb.remoteBlacklists[µb.userFiltersPath];
+        entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
+        entry.entryUsedCount = entry.entryCount - snfe.duplicateCount - cfe.duplicateCount + duplicateCount;
+        µb.staticNetFilteringEngine.freeze();
+        µb.cosmeticFilteringEngine.freeze();
+    };
 
     var onSaved = function(details) {
         if ( details.error ) {
             return;
         }
-        µb.mergeFilterText(content);
-        µb.staticNetFilteringEngine.freeze();
-        µb.cosmeticFilteringEngine.freeze();
-        µb.destroySelfie();
-        µb.toSelfieAsync();
+        µb.getCompiledFilterList(µb.userFiltersPath, onCompiledListLoaded);
     };
 
     var onLoaded = function(details) {
@@ -153,12 +181,10 @@
         if ( details.content.indexOf(content.trim()) !== -1 ) {
             return;
         }
-        µb.saveUserFilters(details.content + '\n' + content, onSaved);
+        µb.saveUserFilters(details.content.trim() + '\n' + content.trim(), onSaved);
     };
 
-    if ( content.length > 0 ) {
-        this.loadUserFilters(onLoaded);
-    }
+    this.loadUserFilters(onLoaded);
 };
 
 /******************************************************************************/
@@ -260,111 +286,152 @@
 
 /******************************************************************************/
 
+µBlock.createShortUniqueId = function(path) {
+    var md5 = YaMD5.hashStr(path);
+    return md5.slice(0, 4) + md5.slice(-4);
+};
+
+µBlock.createShortUniqueId.idLength = 8;
+
+/******************************************************************************/
+
 µBlock.loadFilterLists = function(callback) {
+
+    //quickProfiler.start('µBlock.loadFilterLists()');
+
     var µb = this;
-    var filterlistCount;
+    var filterlistsCount = 0;
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
 
-    var loadBlacklistsEnd = function() {
+    var onDone = function() {
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
-        vAPI.messaging.broadcast({ what: 'loadUbiquitousBlacklistCompleted' });
-        µb.toSelfieAsync();
+        vAPI.messaging.broadcast({ what: 'allFilterListsReloaded' });
         callback();
+
+        µb.toSelfieAsync();
+
+        //quickProfiler.stop(0);
     };
 
-    var mergeBlacklist = function(details) {
-        µb.mergeFilterList(details);
-        filterlistCount -= 1;
-        if ( filterlistCount === 0 ) {
-            loadBlacklistsEnd();
+    var applyCompiledFilters = function(path, compiled) {
+        var snfe = µb.staticNetFilteringEngine;
+        var cfe = µb.cosmeticFilteringEngine;
+        var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
+        var duplicateCount = snfe.duplicateCount + cfe.duplicateCount;
+        µb.applyCompiledFilters(compiled);
+        if ( µb.remoteBlacklists.hasOwnProperty(path) ) {
+            var entry = µb.remoteBlacklists[path];
+            entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
+            entry.entryUsedCount = entry.entryCount - snfe.duplicateCount - cfe.duplicateCount + duplicateCount;
         }
     };
 
-    var loadBlacklistsStart = function(lists) {
-        µb.remoteBlacklists = lists;
-        µb.staticNetFilteringEngine.reset();
-        µb.cosmeticFilteringEngine.reset();
-        µb.destroySelfie();
-        var locations = Object.keys(lists);
-        filterlistCount = locations.length;
+    var onCompiledListLoaded = function(details) {
+        applyCompiledFilters(details.path, details.content);
+        filterlistsCount -= 1;
+        if ( filterlistsCount === 0 ) {
+            onDone();
+        }
+    };
 
-        // Load all filter lists which are not disabled
-        var location;
-        while ( location = locations.pop() ) {
-            // rhill 2013-12-09:
-            // Ignore list if disabled
-            // https://github.com/gorhill/httpswitchboard/issues/78
-            if ( lists[location].off ) {
-                filterlistCount -= 1;
+    var onFilterListsReady = function(lists) {
+        µb.remoteBlacklists = lists;
+
+        µb.cosmeticFilteringEngine.reset();
+        µb.staticNetFilteringEngine.reset();
+        µb.destroySelfie();
+
+        // We need to build a complete list of assets to pull first: this is
+        // because it *may* happens that some load operations are synchronous:
+        // This happens for assets which do not exist, ot assets with no
+        // content.
+        var toLoad = [];
+        for ( var path in lists ) {
+            if ( lists.hasOwnProperty(path) === false ) {
                 continue;
             }
-            µb.assets.get(location, mergeBlacklist);
+            if ( lists[path].off ) {
+                continue;
+            }
+            toLoad.push(path);
         }
-        // https://github.com/gorhill/uBlock/issues/695
-        // It may happen not a single filter list is selected
-        if ( filterlistCount === 0 ) {
-            loadBlacklistsEnd();
+        filterlistsCount = toLoad.length;
+        if ( filterlistsCount === 0 ) {
+            onDone();
+            return;
+        }
+
+        var i = toLoad.length;
+        while ( i-- ) {
+            µb.getCompiledFilterList(toLoad[i], onCompiledListLoaded);
         }
     };
 
-    this.getAvailableLists(loadBlacklistsStart);
+    this.getAvailableLists(onFilterListsReady);
 };
 
 /******************************************************************************/
 
-µBlock.mergeFilterList = function(details) {
-    // console.log('µBlock > mergeFilterList from "%s": "%s..."', details.path, details.content.slice(0, 40));
+µBlock.getCompiledFilterListPath = function(path) {
+    return 'cache://compiled-filter-list:' + this.createShortUniqueId(path);
+};
 
-    var staticNetFilteringEngine = this.staticNetFilteringEngine;
-    var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
-    var duplicateCount = staticNetFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount;
-    var acceptedCount = staticNetFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount;
+/******************************************************************************/
 
-    this.mergeFilterText(details.content);
+µBlock.getCompiledFilterList = function(path, callback) {
+    var compiledPath = this.getCompiledFilterListPath(path);
+    var µb = this;
 
-    // For convenience, store the number of entries for this
-    // blacklist, user might be happy to know this information.
-    duplicateCount = staticNetFilteringEngine.duplicateCount + cosmeticFilteringEngine.duplicateCount - duplicateCount;
-    acceptedCount = staticNetFilteringEngine.acceptedCount + cosmeticFilteringEngine.acceptedCount - acceptedCount;
-
-    var filterListMeta = this.remoteBlacklists[details.path];
-
-    filterListMeta.entryCount = acceptedCount;
-    filterListMeta.entryUsedCount = acceptedCount - duplicateCount;
-
-    // Try to extract a human-friendly name (works only for
-    // ABP-compatible filter lists)
-    if ( filterListMeta.title === '' ) {
-        var matches = details.content.slice(0, 1024).match(/(?:^|\n)!\s*Title:([^\n]+)/i);
-        if ( matches !== null ) {
-            filterListMeta.title = matches[1].trim();
+    var onRawListLoaded = function(details) {
+        if ( details.content !== '' ) {
+            //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
+            details.content = µb.compileFilters(details.content);
+            µb.assets.put(compiledPath, details.content);
         }
-    }
+        callback(details);
+    };
+
+    var onCompiledListLoaded = function(details) {
+        if ( details.content === '' ) {
+            //console.debug('µBlock.getCompiledFilterList/onCompiledListLoaded: no compiled version for "%s"', path);
+            µb.assets.get(path, onRawListLoaded);
+            return;
+        }
+        //console.debug('µBlock.getCompiledFilterList/onCompiledListLoaded: using compiled version for "%s"', path);
+        details.path = path;
+        callback(details);
+    };
+
+    this.assets.get(compiledPath, onCompiledListLoaded);
 };
 
 /******************************************************************************/
 
-µBlock.mergeFilterText = function(rawText) {
+µBlock.purgeCompiledFilterList = function(path) {
+    this.assets.purge(this.getCompiledFilterListPath(path));
+};
+
+/******************************************************************************/
+
+µBlock.compileFilters = function(rawText) {
     var rawEnd = rawText.length;
+    var compiledFilters = [];
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     var staticNetFilteringEngine = this.staticNetFilteringEngine;
     var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
-    var parseCosmeticFilters = this.userSettings.parseAllABPHideFilters;
-
-    var reIsCosmeticFilter = /#[@#]/;
     var reIsWhitespaceChar = /\s/;
     var reMaybeLocalIp = /^[\d:f]/;
     var reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)(?=\s|$)/;
     var reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/;
-    //var reAsciiSegment = /^[\x21-\x7e]+$/;
+
     var lineBeg = 0, lineEnd, currentLineBeg;
     var line, lineRaw, c, pos;
 
@@ -396,11 +463,7 @@
 
         // Parse or skip cosmetic filters
         // All cosmetic filters are caught here
-        if ( parseCosmeticFilters ) {
-            if ( cosmeticFilteringEngine.add(line) ) {
-                continue;
-            }
-        } else if ( reIsCosmeticFilter.test(line) ) {
+        if ( cosmeticFilteringEngine.compile(line, compiledFilters) ) {
             continue;
         }
 
@@ -440,41 +503,46 @@
             continue;
         }
 
-        // The filter is whatever sequence of printable ascii character without
-        // whitespaces
-        //matches = reAsciiSegment.exec(line);
-        //if ( matches === null ) {
-        //    console.debug('storage.js > µBlock.mergeFilterList(): skipping "%s"', lineRaw);
-        //    continue;
-        //}
+        //staticNetFilteringEngine.add(line);
+        staticNetFilteringEngine.compile(line, compiledFilters);
+    }
 
-        // Bypass anomalies
-        // For example, when a filter contains whitespace characters, or
-        // whatever else outside the range of printable ascii characters.
-        //if ( matches[0] !== line ) {
-        //    console.error('"%s" !== "%s"', matches[0], line);
-        //    continue;
-        //}
+    return compiledFilters.join('\n');
+};
 
-        staticNetFilteringEngine.add(line);
+/******************************************************************************/
+
+µBlock.applyCompiledFilters = function(rawText) {
+    var skipCosmetic = !this.userSettings.parseAllABPHideFilters;
+    var staticNetFilteringEngine = this.staticNetFilteringEngine;
+    var cosmeticFilteringEngine = this.cosmeticFilteringEngine;
+    var lineBeg = 0;
+    var rawEnd = rawText.length;
+    while ( lineBeg < rawEnd ) {
+        lineBeg = cosmeticFilteringEngine.fromCompiledContent(rawText, lineBeg, skipCosmetic);
+        lineBeg = staticNetFilteringEngine.fromCompiledContent(rawText, lineBeg);
     }
 };
 
 /******************************************************************************/
 
-// `switches` contains the preset blacklists for which the switch must be
-// revisited.
+// `switches` contains the filter lists for which the switch must be revisited.
 
-µBlock.reloadPresetBlacklists = function(switches, update) {
-    var µb = µBlock;
+µBlock.reloadFilterLists = function(switches, update) {
+    var µb = this;
 
     var onFilterListsReady = function() {
         µb.loadUpdatableAssets({ update: update, psl: update });
     };
 
-    // Toggle switches, if any
-    if ( switches !== undefined ) {
-        var filterLists = this.remoteBlacklists;
+    var onPurgeDone = function() {
+        // Toggle switches, if any
+        if ( switches === undefined ) {
+            onFilterListsReady();
+            return;
+        }
+
+        var filterLists = µb.remoteBlacklists;
         var i = switches.length;
         while ( i-- ) {
             if ( filterLists.hasOwnProperty(switches[i].location) === false ) {
@@ -484,26 +552,76 @@
         }
         // Save switch states
         vAPI.storage.set({ 'remoteBlacklists': filterLists }, onFilterListsReady);
-    } else {
-        onFilterListsReady();
+    };
+
+    // If we must update, we need to purge the compiled versions of
+    // obsolete assets.
+    if ( update !== true ) {
+        onPurgeDone();
+        return;
     }
+
+    var onMetadataReady = function(metadata) {
+        var filterLists = µb.remoteBlacklists;
+        var entry;
+        // Purge obsolete filter lists
+        for ( var path in filterLists ) {
+            if ( filterLists.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            if ( metadata.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            entry = metadata[path];
+            if ( entry.repoObsolete !== true && entry.cacheObsolete !== true ) {
+                continue;
+            }
+            µb.purgeCompiledFilterList(path);
+        }
+        // Purge obsolete PSL
+        if ( metadata.hasOwnProperty(µb.pslPath) === false ) {
+            entry = metadata[µb.pslPath];
+            if ( entry.repoObsolete === true ) {
+                µb.assets.purge('cache://compiled-publicsuffixlist');
+            }
+        }
+        onPurgeDone();
+    };
+
+    this.assets.metadata(onMetadataReady);
 };
 
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = function(callback) {
+    var µb = this;
+    var path = µb.pslPath;
+    var compiledPath = 'cache://compiled-publicsuffixlist';
+
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
-    var applyPublicSuffixList = function(details) {
-        // TODO: Not getting proper suffix list is a bit serious, I think
-        // the extension should be force-restarted if it occurs..
-        if ( !details.error ) {
+    var onRawListLoaded = function(details) {
+        if ( details.content !== '' ) {
+            //console.debug('µBlock.loadPublicSuffixList/onRawListLoaded: compiling "%s"', path);
             publicSuffixList.parse(details.content, punycode.toASCII);
+            µb.assets.put(compiledPath, JSON.stringify(publicSuffixList.toSelfie()));
         }
         callback();
     };
-    this.assets.get(this.pslPath, applyPublicSuffixList);
+
+    var onCompiledListLoaded = function(details) {
+        if ( details.content === '' ) {
+            //console.debug('µBlock.loadPublicSuffixList/onCompiledListLoaded: no compiled version for "%s"', path);
+            µb.assets.get(path, onRawListLoaded);
+            return;
+        }
+        //console.debug('µBlock.loadPublicSuffixList/onCompiledListLoaded: using compiled version for "%s"', path);
+        publicSuffixList.fromSelfie(JSON.parse(details.content));
+        callback();
+    };
+
+    this.assets.get(compiledPath, onCompiledListLoaded);
 };
 
 /******************************************************************************/
@@ -540,7 +658,7 @@
 
 µBlock.toSelfie = function() {
     var selfie = {
-        magic: this.selfieMagic,
+        magic: this.systemSettings.selfieMagic,
         publicSuffixList: publicSuffixList.toSelfie(),
         filterLists: this.remoteBlacklists,
         staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
@@ -578,7 +696,7 @@
 
     var onSelfieReady = function(store) {
         var selfie = store.selfie;
-        if ( typeof selfie !== 'object' || selfie.magic !== µb.selfieMagic ) {
+        if ( typeof selfie !== 'object' || selfie.magic !== µb.systemSettings.selfieMagic ) {
             callback(false);
             return;
         }
@@ -586,7 +704,7 @@
             callback(false);
             return;
         }
-        // console.log('µBlock.fromSelfie> selfie looks good');
+        //console.log('µBlock.fromSelfie> selfie looks good');
         µb.remoteBlacklists = selfie.filterLists;
         µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
         µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
@@ -601,7 +719,7 @@
 µBlock.destroySelfie = function() {
     vAPI.storage.remove('selfie');
     this.asyncJobs.remove('toSelfie');
-    //console.debug('storage.js > µBlock.destroySelfie()');
+    //console.debug('µBlock.destroySelfie()');
 };
 
 /******************************************************************************/
@@ -622,6 +740,25 @@
     this.getAvailableLists(onListsReady);
     this.assetUpdater.add(this.pslPath);
     this.assetUpdater.add('assets/ublock/mirror-candidates.txt');
+};
+
+/******************************************************************************/
+
+µBlock.assetUpdatedHandler = function(details) {
+    var path = details.path || '';
+    if ( this.remoteBlacklists.hasOwnProperty(path) === false ) {
+        return;
+    }
+    var entry = this.remoteBlacklists[path];
+    if ( entry.off ) {
+        return;
+    }
+    // Compile the list while we have the raw version in memory
+    //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
+    this.assets.put(
+        this.getCompiledFilterListPath(path),
+        this.compileFilters(details.content)
+    );
 };
 
 /******************************************************************************/
@@ -659,3 +796,35 @@
         onPSLReady();
     }
 };
+
+/******************************************************************************/
+
+µBlock.assetCacheRemovedHandler = (function() {
+    var barrier = false;
+
+    var handler = function(paths) {
+        if ( barrier ) {
+            return;
+        }
+        barrier = true;
+        var i = paths.length;
+        var path;
+        while ( i-- ) {
+            path = paths[i];
+            if ( this.remoteBlacklists.hasOwnProperty(path) ) {
+                //console.debug('µBlock.assetCacheRemovedHandler: decompiling "%s"', path);
+                this.purgeCompiledFilterList(path);
+                continue;
+            }
+            if ( path === this.pslPath ) {
+                //console.debug('µBlock.assetCacheRemovedHandler: decompiling "%s"', path);
+                this.assets.purge('cache://compiled-publicsuffixlist');
+                continue;
+            }
+        }
+        this.destroySelfie();
+        barrier = false;
+    };
+
+    return handler;
+})();
