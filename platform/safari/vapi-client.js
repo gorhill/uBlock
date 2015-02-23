@@ -188,6 +188,9 @@
         return !(safari.self.tab.canLoad(beforeLoadEvent, details));
     };
     var onBeforeLoad = function(e) {
+        if(firstMutation !== false) {
+            firstMutation();
+        }
         linkHelper.href = e.url;
         if(linkHelper.protocol.charCodeAt(0) !== 104) { // h = 104
             return;
@@ -232,7 +235,20 @@ return e.detail.url === false;\
 },\
 wo = open,\
 xo = XMLHttpRequest.prototype.open,\
+img = Image;\
 _noOP = function(){};\
+window.Image = function() {\
+var x = new img();\
+Object.defineProperty(x, 'src', {\
+    get: function() {\
+        return x.getAttribute('src');\
+    },\
+    set: function(val) {\
+        x.setAttribute('src', block(val, 'image') ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=' : val);\
+    }\
+});\
+return x;\
+};\
 open = function(u) {\
 return block(u, 'popup') ? null : wo.apply(this, arguments);\
 };\
