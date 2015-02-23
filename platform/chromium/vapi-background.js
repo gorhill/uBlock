@@ -443,12 +443,12 @@ vAPI.net.registerListeners = function() {
         details.hostname = µburi.hostnameFromURI(details.url);
 
         // The rest of the function code is to normalize type
-        var type = details.type;
-        if ( type !== 'other' ) {
+        if ( details.type !== 'other' ) {
             return;
         }
-        var path = µburi.path;
-        var pos = path.lastIndexOf('.');
+
+        var tail = µburi.path.slice(-6);
+        var pos = tail.lastIndexOf('.');
 
         // https://github.com/gorhill/uBlock/issues/862
         // If no transposition possible, transpose to `object` as per 
@@ -458,7 +458,7 @@ vAPI.net.registerListeners = function() {
             return;
         }
 
-        var ext = path.slice(pos) + '.';
+        var ext = tail.slice(pos) + '.';
         if ( '.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1 ) {
             details.type = 'font';
             return;
@@ -470,10 +470,7 @@ vAPI.net.registerListeners = function() {
             return;
         }
         // https://code.google.com/p/chromium/issues/detail?id=410382
-        if ( type === 'other' ) {
-            details.type = 'object';
-            return;
-        }
+        details.type = 'object';
     };
 
     var onBeforeRequestClient = this.onBeforeRequest.callback;
