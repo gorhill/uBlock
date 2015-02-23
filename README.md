@@ -22,7 +22,7 @@
 
 ## Philosophy
 
-µBlock is not an *ad blocker*; it's a general-purpose blocker. µBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock  [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
+µBlock is not merely an *ad blocker*; it's a general-purpose blocker. µBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). µBlock [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
 That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
 
@@ -115,6 +115,8 @@ For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uB
 
 ## About
 
+[µBlock's manifesto](MANIFESTO.md).
+
 Free. Open source. For users by users. No donations sought.
 
 Without the preset lists of filters, this extension is nothing. So if ever you
@@ -122,8 +124,7 @@ really do want to contribute something, think about the people working hard
 to maintain the filter lists you are using, which were made available to use by
 all for free.
 
-You can contribute by helping to translate this project. There's an
-[entry on Crowdin](https://crowdin.net/project/ublock) where you may contribute to µBlock's localization.
+You can contribute by helping translate µBlock [on Crowdin](https://crowdin.net/project/ublock).
 
 ## License
 
