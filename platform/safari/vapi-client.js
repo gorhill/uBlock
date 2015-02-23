@@ -237,15 +237,15 @@ wo = open,\
 xo = XMLHttpRequest.prototype.open,\
 img = Image;\
 _noOP = function(){};\
-window.Image = function() {\
+Image = function() {\
 var x = new img();\
 Object.defineProperty(x, 'src', {\
-    get: function() {\
-        return x.getAttribute('src');\
-    },\
-    set: function(val) {\
-        x.setAttribute('src', block(val, 'image') ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=' : val);\
-    }\
+get: function() {\
+return x.getAttribute('src');\
+},\
+set: function(val) {\
+x.setAttribute('src', block(val, 'image') ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=' : val);\
+}\
 });\
 return x;\
 };\
