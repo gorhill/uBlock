@@ -19,7 +19,7 @@
     <key>Chrome</key>
     <dict>
         <key>Database Quota</key>
-        <real>52428800</real>
+        <real>104857600</real>
         <key>Global Page</key>
         <string>background.html</string>
         <key>Popovers</key>
