@@ -333,6 +333,14 @@
 
     var onRawListLoaded = function(details) {
         if ( details.content !== '' ) {
+            var listMeta = µb.remoteBlacklists[path];
+            if ( listMeta && listMeta.title === '' ) {
+                var matches = details.content.slice(0, 1024).match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+                if ( matches !== null ) {
+                    listMeta.title = matches[1].trim();
+                }
+            }
+
             //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
             details.content = µb.compileFilters(details.content);
             µb.assets.put(compiledPath, details.content);
