@@ -571,26 +571,27 @@ FilterContainer.prototype.compile = function(s, out) {
     var i = hostnames.length;
     if ( i === 0 ) {
         this.compileGenericSelector(parsed, out);
-    } else {
-        // https://github.com/gorhill/uBlock/issues/151
-        // Negated hostname means the filter applies to all non-negated hostnames
-        // of same filter OR globally if there is no non-negated hostnames.
-        var applyGlobally = true;
-        var hostname;
-        while ( i-- ) {
-            hostname = hostnames[i];
-            if ( hostname.charAt(0) !== '~' ) {
-                applyGlobally = false;
-            }
-            if ( hostname.slice(-2) === '.*' ) {
-                this.compileEntitySelector(hostname, parsed, out);
-            } else {
-                this.compileHostnameSelector(hostname, parsed, out);
-            }
+        return true;
+    }
+
+    // https://github.com/gorhill/uBlock/issues/151
+    // Negated hostname means the filter applies to all non-negated hostnames
+    // of same filter OR globally if there is no non-negated hostnames.
+    var applyGlobally = true;
+    var hostname;
+    while ( i-- ) {
+        hostname = hostnames[i];
+        if ( hostname.charAt(0) !== '~' ) {
+            applyGlobally = false;
         }
-        if ( applyGlobally ) {
-            this.compileGenericSelector(parsed, out);
+        if ( hostname.slice(-2) === '.*' ) {
+            this.compileEntitySelector(hostname, parsed, out);
+        } else {
+            this.compileHostnameSelector(hostname, parsed, out);
         }
+    }
+    if ( applyGlobally ) {
+        this.compileGenericSelector(parsed, out);
     }
 
     return true;
