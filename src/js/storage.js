@@ -43,38 +43,13 @@
 
 /******************************************************************************/
 
-µBlock.loadLocalSettings = function() {
-    var settingsLoaded = function(store) {
-        µBlock.localSettings = store;
-    };
-
-    vAPI.storage.get(this.localSettings, settingsLoaded);
-};
-
-/******************************************************************************/
-
-µBlock.saveSystemSettings = function() {
-    vAPI.storage.set(this.systemSettings, this.noopFunc);
-};
-
-/******************************************************************************/
-
-µBlock.loadSystemSettings = function(callback) {
-    vAPI.storage.get({
-        compiledMagic: '',
-        selfieMagic: ''
-    }, callback);
-};
-
-/******************************************************************************/
-
 // Save local settings regularly. Not critical.
 
 µBlock.asyncJobs.add(
     'autoSaveLocalSettings',
     null,
     µBlock.saveLocalSettings.bind(µBlock),
-    2 * 60 * 1000,
+    4 * 60 * 1000,
     true
 );
 
@@ -82,19 +57,6 @@
 
 µBlock.saveUserSettings = function() {
     vAPI.storage.set(this.userSettings);
-};
-
-/******************************************************************************/
-
-µBlock.loadUserSettings = function(callback) {
-    var settingsLoaded = function(store) {
-        µBlock.userSettings = store;
-        if ( typeof callback === 'function' ) {
-            callback(µBlock.userSettings);
-        }
-    };
-
-    vAPI.storage.get(this.userSettings, settingsLoaded);
 };
 
 /******************************************************************************/
@@ -112,25 +74,6 @@
     };
     vAPI.storage.set(bin);
     this.netWhitelistModifyTime = Date.now();
-};
-
-/******************************************************************************/
-
-µBlock.loadWhitelist = function(callback) {
-    var onWhitelistLoaded = function(store) {
-        var µb = µBlock;
-        µb.netWhitelist = µb.whitelistFromString(store.netWhitelist);
-        µb.netWhitelistModifyTime = Date.now();
-
-        if ( typeof callback === 'function' ) {
-            callback();
-        }
-    };
-
-    var bin = {
-        'netWhitelist': this.netWhitelistDefault
-    };
-    vAPI.storage.get(bin, onWhitelistLoaded);
 };
 
 /******************************************************************************/
@@ -310,12 +253,13 @@
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
+
+        //quickProfiler.stop(0);
+
         vAPI.messaging.broadcast({ what: 'allFilterListsReloaded' });
         callback();
 
         µb.toSelfieAsync();
-
-        //quickProfiler.stop(0);
     };
 
     var applyCompiledFilters = function(path, compiled) {
@@ -683,35 +627,6 @@
         after,
         false
     );
-};
-
-/******************************************************************************/
-
-µBlock.fromSelfie = function(callback) {
-    var µb = this;
-
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
-    }
-
-    var onSelfieReady = function(store) {
-        var selfie = store.selfie;
-        if ( typeof selfie !== 'object' || selfie.magic !== µb.systemSettings.selfieMagic ) {
-            callback(false);
-            return;
-        }
-        if ( publicSuffixList.fromSelfie(selfie.publicSuffixList) !== true ) {
-            callback(false);
-            return;
-        }
-        //console.log('µBlock.fromSelfie> selfie looks good');
-        µb.remoteBlacklists = selfie.filterLists;
-        µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
-        µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
-        callback(true);
-    };
-
-    vAPI.storage.get('selfie', onSelfieReady);
 };
 
 /******************************************************************************/

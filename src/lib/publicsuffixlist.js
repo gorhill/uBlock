@@ -42,7 +42,7 @@ var selfieMagic = 'iscjsfsaolnm';
 // This value dictate how the search will be performed:
 //    < this.cutoffLength = indexOf()
 //   >= this.cutoffLength = binary search
-var cutoffLength = 480;
+var cutoffLength = 256;
 var mustPunycode = /[^a-z0-9.-]/;
 
 /******************************************************************************/
