@@ -280,6 +280,8 @@ var cachedAssetsManager = (function() {
 /******************************************************************************/
 
 var getTextFileFromURL = function(url, onLoad, onError) {
+    // console.log('µBlock.assets/getTextFileFromURL("%s"):', url);
+
     // https://github.com/gorhill/uMatrix/issues/15
     var onResponseReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
@@ -301,11 +303,15 @@ var getTextFileFromURL = function(url, onLoad, onError) {
         }
         return onLoad.call(this);
     };
+
     var onErrorReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
         onError.call(this);
     };
-    // console.log('µBlock> getTextFileFromURL("%s"):', url);
+
+    // Be ready for thrown exceptions:
+    // I am pretty sure it used to work, but now using a URL such as
+    // `file:///` on Chromium 40 results in an exception being thrown.
     var xhr = new XMLHttpRequest();
     try {
         xhr.open('get', url, true);
