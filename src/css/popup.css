@@ -201,7 +201,7 @@ body.dirty #refresh:hover {
     }
 #firewallContainer > div:nth-of-type(1) > span {
     height: 18px;
-    line-height: 18px;
+    line-height: 20px;
     }
 #firewallContainer > div:nth-of-type(1) > span:nth-of-type(1) {
     cursor: pointer;
@@ -229,6 +229,14 @@ body.dirty #refresh:hover {
     }
 #firewallContainer > div.isDomain > span:nth-of-type(1) {
     font-weight: bold;
+    }
+#firewallContainer > div:nth-of-type(1) > span:nth-of-type(1):before {
+    color: #aaa;
+    content: '\2012';
+    padding-right: 0.25em;
+    }
+#firewallContainer.minimized > div:nth-of-type(1) > span:nth-of-type(1):before {
+    content: '+';
     }
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(3) {
     display: none;
