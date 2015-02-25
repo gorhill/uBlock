@@ -1,12 +1,8 @@
 # µBlock -- Privacy
-# Status: experimental
 #
-# Experimental list: use only if you don't mind potential breakage, I just
-# don't have the resource to deal with lists, I do it because blocking these
-# are in the interest of users.
-#
-# These filters make use of the `important` filter option, which purpose is
-# to guarantee that a filter won't be overriden by exception filters.
+# Some of these filters make use of the `important` filter option,
+# which purpose is to guarantee that a filter won't be overriden by 
+# exception filters.
 #
 # I will use data from benchmarks to decide what to add here.
 # https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
