@@ -61,11 +61,14 @@ textarea {
 div {
     bottom: 1px;
     direction: ltr;
-    opacity: 0.2;
+    opacity: 1;
     position: absolute;
     right: 1px;
 }
-div:hover {
+textarea:focus + div {
+    opacity: 0.2;
+}
+textarea:focus + div:hover {
     opacity: 1;
 }
 ul {
