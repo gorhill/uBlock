@@ -521,6 +521,12 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
+        // https://github.com/gorhill/uBlock/issues/840
+        // Discard invalid rules
+        if ( desHostname !== '*' && type !== '*' ) {
+            continue;
+        }
+
         action = nameToActionMap[fields[3]];
         if ( typeof action !== 'number' || action < 0 || action > 3 ) {
             continue;
