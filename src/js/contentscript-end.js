@@ -574,7 +574,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         var req = filterRequests[details.id];
         delete filterRequests[details.id];
 
-        if ( details.collapse === undefined ) {
+        // https://github.com/gorhill/uBlock/issues/869
+        if ( details.collapse !== true ) {
             return;
         }
 
@@ -582,13 +583,10 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
         // If `!important` is not there, going back using history will
         // likely cause the hidden element to re-appear.
-        if ( details.collapse ) {
-            // https://github.com/gorhill/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            req.target.style.setProperty('display', 'none', 'important');
-        } else {
-            req.target.style.setProperty('visibility', 'hidden', 'important');
-        }
+        // https://github.com/gorhill/uBlock/issues/399
+
+        // Never remove elements from the DOM, just hide them
+        req.target.style.setProperty('display', 'none', 'important');
 
         messager.send({
             what: 'injectedSelectors',
@@ -672,21 +670,22 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( typeof details !== 'object' || details === null ) {
             return;
         }
-        var requests = details.requests;
         var collapse = details.collapse;
+
+        // https://github.com/gorhill/uBlock/issues/869
+        if ( collapse !== true ) {
+            return;
+        }
+
+        var requests = details.requests;
         var selectors = [];
         var i = requests.length;
-        var request, elem;
+        var request;
         while ( i-- ) {
             request = requests[i];
-            elem = elements[request.index];
-            if ( collapse ) {
-                // https://github.com/gorhill/uBlock/issues/399
-                // Never remove elements from the DOM, just hide them
-                elem.style.setProperty('display', 'none', 'important');
-            } else {
-                elem.style.setProperty('visibility', 'hidden', 'important');
-            }
+            // https://github.com/gorhill/uBlock/issues/399
+            // Never remove elements from the DOM, just hide them
+            elements[request.index].style.setProperty('display', 'none', 'important');
             selectors.push(request.tagName + '[' + srcProps[request.tagName] + '="' + request.url + '"]');
         }
         if ( selectors.length !== 0 ) {

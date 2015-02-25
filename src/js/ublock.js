@@ -254,6 +254,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // Post-change
     switch ( name ) {
+        case 'collapseBlocked':
+            if ( value === false ) {
+                this.cosmeticFilteringEngine.removeFromSelectorCache('*', 'net');
+            }
+            break;
         case 'contextMenuEnabled':
             this.contextMenu.toggle(value);
             break;
