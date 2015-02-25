@@ -574,19 +574,19 @@ PageStore.prototype.disposeFrameStores = function() {
 
 /******************************************************************************/
 
-PageStore.prototype.addFrame = function(frameId, frameURL) {
-    var frameStore = this.frames[frameId];
-    if ( frameStore === undefined ) {
-        this.frames[frameId] = frameStore = FrameStore.factory(this.rootHostname, frameURL);
-        //console.debug('µBlock> PageStore.addFrame(%d, "%s")', frameId, frameURL);
-    }
-    return frameStore;
+PageStore.prototype.getFrame = function(frameId) {
+    return this.frames[frameId];
 };
 
 /******************************************************************************/
 
-PageStore.prototype.getFrame = function(frameId) {
-    return this.frames[frameId];
+PageStore.prototype.setFrame = function(frameId, frameURL) {
+    var frameStore = this.frames[frameId];
+    if ( frameStore instanceof FrameStore ) {
+        frameStore.init(this.rootHostname, frameURL);
+    } else {
+        this.frames[frameId] = FrameStore.factory(this.rootHostname, frameURL);
+    }
 };
 
 /******************************************************************************/

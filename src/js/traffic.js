@@ -34,7 +34,7 @@
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
-    //console.debug('traffic.js > onBeforeRequest(): "%s": %o', details.url, details);
+    //console.debug('µBlock.webRequest/onBeforeRequest(): "%s": %o', details.url, details);
 
     var tabId = details.tabId;
 
@@ -70,7 +70,15 @@ var onBeforeRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/114
     var requestContext = pageStore;
     var frameStore;
-    var frameId = details.frameId;
+    // https://github.com/gorhill/uBlock/issues/886
+    // For requests of type `sub_frame`, the parent frame id must be used
+    // to lookup the proper context:
+    // > If the document of a (sub-)frame is loaded (type is main_frame or
+    // > sub_frame), frameId indicates the ID of this frame, not the ID of
+    // > the outer frame.
+    // > (ref: https://developer.chrome.com/extensions/webRequest)
+    var isFrame = requestType === 'sub_frame' || requestType === 'main_frame';
+    var frameId = isFrame ? details.parentFrameId : details.frameId;
     if ( frameId > 0 ) {
         if ( frameStore = pageStore.getFrame(frameId) ) {
             requestContext = frameStore;
@@ -91,8 +99,8 @@ var onBeforeRequest = function(details) {
         //console.debug('traffic.js > onBeforeRequest(): ALLOW "%s" (%o) because "%s"', details.url, details, result);
 
         // https://github.com/gorhill/uBlock/issues/114
-        if ( frameId > 0 && frameStore === undefined ) {
-            pageStore.addFrame(frameId, requestURL);
+        if ( isFrame && details.frameId > 0 ) {
+            pageStore.setFrame(details.frameId, requestURL);
         }
 
         // https://code.google.com/p/chromium/issues/detail?id=387198
