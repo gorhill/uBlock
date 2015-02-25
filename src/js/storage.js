@@ -134,6 +134,7 @@
 
 µBlock.getAvailableLists = function(callback) {
     var availableLists = {};
+    var relocationMap = {};
 
     // selected lists
     var onSelectedListsLoaded = function(store) {
@@ -143,11 +144,17 @@
         var location, availableEntry, storedEntry;
 
         while ( location = locations.pop() ) {
+            storedEntry = lists[location];
+            // New location?
+            if ( relocationMap.hasOwnProperty(location) ) {
+                µb.purgeFilterList(location);
+                location = relocationMap[location];
+            }
             availableEntry = availableLists[location];
             if ( availableEntry === undefined ) {
+                µb.purgeFilterList(location);
                 continue;
             }
-            storedEntry = lists[location];
             availableEntry.off = storedEntry.off || false;
             µb.assets.setHomeURL(location, availableEntry.homeURL);
             if ( storedEntry.entryCount !== undefined ) {
@@ -182,6 +189,13 @@
             // We now support built-in external filter lists
             if ( /^https?:/.test(location) === false ) {
                 location = 'assets/thirdparties/' + location;
+            }
+            // Migrate obsolete location to new location, if any
+            if ( typeof entry.oldLocation === 'string' ) {
+                if ( /^https?:/.test(entry.oldLocation) === false ) {
+                    entry.oldLocation = 'assets/thirdparties/' + entry.oldLocation;
+                }
+                relocationMap[entry.oldLocation] = location;
             }
             availableLists[location] = entry;
         }
@@ -366,6 +380,13 @@
 
 µBlock.purgeCompiledFilterList = function(path) {
     this.assets.purge(this.getCompiledFilterListPath(path));
+};
+
+/******************************************************************************/
+
+µBlock.purgeFilterList = function(path) {
+    this.purgeCompiledFilterList(path);
+    this.assets.purge(path);
 };
 
 /******************************************************************************/
