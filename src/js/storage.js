@@ -136,6 +136,15 @@
     var availableLists = {};
     var relocationMap = {};
 
+    var fixLocation = function(location) {
+        // https://github.com/gorhill/uBlock/issues/418
+        // We now support built-in external filter lists
+        if ( /^https?:/.test(location) === false ) {
+            location = 'assets/thirdparties/' + location;
+        }
+        return location;
+    };
+
     // selected lists
     var onSelectedListsLoaded = function(store) {
         var µb = µBlock;
@@ -185,16 +194,10 @@
                 continue;
             }
             entry = locations[location];
-            // https://github.com/gorhill/uBlock/issues/418
-            // We now support built-in external filter lists
-            if ( /^https?:/.test(location) === false ) {
-                location = 'assets/thirdparties/' + location;
-            }
+            location = fixLocation(location);
             // Migrate obsolete location to new location, if any
             if ( typeof entry.oldLocation === 'string' ) {
-                if ( /^https?:/.test(entry.oldLocation) === false ) {
-                    entry.oldLocation = 'assets/thirdparties/' + entry.oldLocation;
-                }
+                entry.oldLocation = fixLocation(entry.oldLocation);
                 relocationMap[entry.oldLocation] = location;
             }
             availableLists[location] = entry;
