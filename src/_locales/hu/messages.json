@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Állandó szabályok",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Átmeneti szabályok",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Visszaállítás",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Alkalmaz",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

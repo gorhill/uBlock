@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"域名已連結",
+    "message":"已連結的域名數",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{

@@ -332,7 +332,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"minu-ublocki-kohandatud-filtrid_{{datetime}}.txt",
+    "message":"minu-ublocki-staatilised-filtrid_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{

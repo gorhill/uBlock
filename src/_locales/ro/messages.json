@@ -168,15 +168,15 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"Scripturi din saitul primar",
+    "message":"scripturi din saitul primar",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"Scripturi din saituri terțe",
+    "message":"scripturi din saituri terțe",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"Cadre din saituri terțe",
+    "message":"cadre din saituri terțe",
     "description":""
   },
   "popupHitDomainCountPrompt":{

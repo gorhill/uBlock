@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"Tredjeparts",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -168,7 +168,7 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"förstaparstpartsskripts",
+    "message":"förstapartskript",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"anslutna domän",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} av {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -340,19 +340,19 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Permanenta regler",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Temporära regler",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Ångra",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Skicka",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{

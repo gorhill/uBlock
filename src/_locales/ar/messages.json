@@ -168,11 +168,11 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"نصوص برمجة الطرف الاول",
+    "message":"سكربتات من الطرف الاول",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"نصوص برمجة من طرف خارجي",
+    "message":"سكربتات من طرف خارجي",
     "description":""
   },
   "popup3pFrameRulePrompt":{
@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"النطاقات الملموسة",
+    "message":"النطاقات المتصلة",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -352,7 +352,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"تعليق",
+    "message":"حفظ",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -372,7 +372,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"تصدير إلى ملف...",
+    "message":"تصدير إلى ملف",
     "description":""
   },
   "rulesDefaultFileName":{
