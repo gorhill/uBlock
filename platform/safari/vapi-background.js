@@ -624,14 +624,14 @@
                 return;
             }
             e.stopPropagation && e.stopPropagation();
+            if(e.message.type === "main_frame") {
+                vAPI.tabs.onNavigation({
+                    url: e.message.url,
+                    frameId: 0,
+                    tabId: vAPI.tabs.getTabId(e.target)
+                });
+            }
             switch(e.message.type) {
-                case "main_frame":
-                    vAPI.tabs.onNavigation({
-                        url: e.message.url,
-                        frameId: 0,
-                        tabId: vAPI.tabs.getTabId(e.target)
-                    });
-                    // Don't break here; let main_frame go through
                 case "popup":
                     if(e.message.url === 'about:blank') {
                         vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
@@ -660,7 +660,8 @@
                     if(blockVerdict && blockVerdict.cancel) {
                         e.message = false;
                         return;
-                    } else {
+                    }
+                    else {
                         e.message = true;
                         return;
                     }
