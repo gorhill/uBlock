@@ -85,8 +85,8 @@ return {
 
     // read-only
     systemSettings: {
-        compiledMagic: 'dgycowxrdjuf',
-        selfieMagic: 'dmakcrbecglp'
+        compiledMagic: 'riimnrvxjchy',
+        selfieMagic: 'spqmeuaftfra'
     },
 
     // EasyList, EasyPrivacy and many others have an 4-day update period,

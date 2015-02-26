@@ -1453,6 +1453,9 @@ var trimChar = function(s, c) {
 var FilterParser = function() {
     this.reHasWildcard = /[\^\*]/;
     this.reHasUppercase = /[A-Z]/;
+    this.reCleanupHostname = /^\|\|[.*]*/;
+    this.reIsolateHostname = /^([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
+    this.reHasUnicode = /[^\x00-\x7F]/;
     this.hostnames = [];
     this.notHostnames = [];
     this.reset();
@@ -1588,9 +1591,11 @@ FilterParser.prototype.parseOptions = function(s) {
 
 /******************************************************************************/
 
-FilterParser.prototype.parse = function(s) {
+FilterParser.prototype.parse = function(raw) {
     // important!
     this.reset();
+
+    var s = raw;
 
     // plain hostname?
     if ( reHostnameRule.test(s) ) {
@@ -1631,10 +1636,19 @@ FilterParser.prototype.parse = function(s) {
         return this;
     }
 
-    // hostname anchoring
+    // hostname-anchored
     if ( s.lastIndexOf('||', 0) === 0 ) {
         this.hostnameAnchored = true;
-        s = s.slice(2);
+        // cleanup: `||example.com`, `||*.example.com^`, `||.example.com/*`
+        s = s.replace(this.reCleanupHostname, '');
+        // convert hostname to punycode if needed
+        if ( this.reHasUnicode.test(s) ) {
+            var matches = this.reIsolateHostname.exec(s);
+            if ( matches && matches.length === 3 ) {
+                s = punycode.toASCII(matches[1]) + matches[2];
+                //console.debug('µBlock.staticNetFilteringEngine/FilterParser.parse():', raw, '=', s);
+            }
+        }
     }
 
     // left-anchored
