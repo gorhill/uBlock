@@ -30,7 +30,7 @@ Ads, "unintrusive" or not, are just the visible portions of privacy-invading app
 
 _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install µBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
 
-Once you install µBlock, you may easily un-select any of the pre-selected filter lists if you think µBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ selected by default.
+Once you install µBlock, you may easily un-select any of the pre-selected filter lists if you think µBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
 
 ## Performance
 
