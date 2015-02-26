@@ -35,6 +35,7 @@
 
 var onBeforeRequest = function(details) {
     //console.debug('µBlock.webRequest/onBeforeRequest(): "%s": %o', details.url, details);
+    //console.debug('µBlock.webRequest/onBeforeRequest(): "type=%s, id=%d, parent id=%d, url=%s', details.type, details.frameId, details.parentFrameId, details.url);
 
     var tabId = details.tabId;
 
