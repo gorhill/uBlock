@@ -313,3 +313,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://github.com/gorhill/uBlock/issues/841
 # To counter `quantcast.com` in hpHosts, Peter Lowe's
 @@||quantcast.com^$~third-party
+
+# Chrome store feedback: "on gaana.com it blocks the site"
+# To counter `_social_tracking.` in EasyPrivacy
+@@||css5.gaanacdn.com/minify-*/min/?$script
