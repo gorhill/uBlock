@@ -1268,6 +1268,61 @@ vAPI.toolbarButton.init = function() {
                 'content: attr(badge);',
             '}'
         );
+    } else {
+        this.CUIEvents = {};
+        this.CUIEvents.onCustomizeEnd = function() {
+            var wId = vAPI.toolbarButton.id;
+            var buttonInPanel = CustomizableUI.getWidget(wId).areaType === CustomizableUI.TYPE_MENU_PANEL;
+
+            for ( var win of vAPI.tabs.getWindows() ) {
+                var button = win.document.getElementById(wId);
+                if ( buttonInPanel ) {
+                    button.classList.remove('badged-button');
+                    continue;
+                }
+                if ( button === null ) {
+                    continue;
+                }
+                button.classList.add('badged-button');
+            }
+
+            if ( buttonInPanel ) {
+                return;
+            }
+
+            // Anonymous elements need some time to be reachable
+            setTimeout(this.updateBadgeStyle, 0);
+        }.bind(this.CUIEvents);
+        this.CUIEvents.updateBadgeStyle = function() {
+            var css = [
+                'background: #666',
+                'color: #fff'
+            ].join(';');
+
+            for ( var win of vAPI.tabs.getWindows() ) {
+                var button = win.document.getElementById(vAPI.toolbarButton.id);
+                if ( button === null ) {
+                    continue;
+                }
+                var badge = button.ownerDocument.getAnonymousElementByAttribute(
+                    button,
+                    'class',
+                    'toolbarbutton-badge'
+                );
+                if ( !badge ) {
+                    return;
+                }
+
+                badge.style.cssText = css;
+            }
+        };
+
+        this.onCreated = function(button) {
+            button.setAttribute('badge', '');
+            setTimeout(this.CUIEvents.onCustomizeEnd, 0);
+        };
+
+        CustomizableUI.addListener(this.CUIEvents);
     }
 
     this.styleURI = Services.io.newURI(
@@ -1289,6 +1344,10 @@ vAPI.toolbarButton.init = function() {
     );
 
     cleanupTasks.push(function() {
+        if ( this.CUIEvents ) {
+            CustomizableUI.removeListener(this.CUIEvents);
+        }
+
         CustomizableUI.destroyWidget(this.id);
         vAPI.messaging.globalMessageManager.removeMessageListener(
             location.host + ':closePopup',
@@ -1359,42 +1418,6 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
     doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
         .getInterface(Ci.nsIDOMWindowUtils)
         .loadSheet(this.styleURI, 1);
-};
-
-/******************************************************************************/
-
-vAPI.toolbarButton.onCreated = function(button) {
-    var platformVersion = Services.appinfo.platformVersion;
-
-    if ( Services.vc.compare(platformVersion, '36.0') < 0 ) {
-        return;
-    }
-
-    button.setAttribute('badge', '');
-    button.classList.add('badged-button');
-
-    setTimeout(function() {
-        var badge = button.ownerDocument.getAnonymousElementByAttribute(
-            button,
-            'class',
-            'toolbarbutton-badge'
-        );
-
-        if ( !badge ) {
-            return;
-        }
-
-        badge.style.cssText = [
-            'position: absolute;',
-            'bottom: 0;',
-            'right: 0;',
-            'padding: 1px;',
-            'background: #666;',
-            'color: #fff;',
-            'font-size: 9px;',
-            'font-weight: bold;'
-        ].join('');
-    }, 1000);
 };
 
 /******************************************************************************/
@@ -1482,15 +1505,12 @@ vAPI.contextMenu.register = function(doc) {
 
     var contextMenu = doc.getElementById('contentAreaContextMenu');
     var menuitem = doc.createElement('menuitem');
-
     menuitem.setAttribute('id', this.menuItemId);
     menuitem.setAttribute('label', this.menuLabel);
     menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
     menuitem.setAttribute('class', 'menuitem-iconic');
-
     menuitem.addEventListener('command', this.onCommand);
     contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-
     contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
 };
 
@@ -1503,7 +1523,6 @@ vAPI.contextMenu.unregister = function(doc) {
 
     var menuitem = doc.getElementById(this.menuItemId);
     var contextMenu = menuitem.parentNode;
-
     menuitem.removeEventListener('command', this.onCommand);
     contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
     contextMenu.removeChild(menuitem);
