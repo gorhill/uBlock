@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "µBlock",
-    "version": "0.8.8.5",
+    "version": "0.8.9.0",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",

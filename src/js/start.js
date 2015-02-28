@@ -27,7 +27,7 @@
 
 (function() {
 
-quickProfiler.start('start.js');
+//quickProfiler.start('start.js');
 
 /******************************************************************************/
 
@@ -51,7 +51,7 @@ var onAllReady = function() {
     // for launch time.
     µb.assets.allowRemoteFetch = true;
 
-    quickProfiler.stop(0);
+    //quickProfiler.stop(0);
 
     vAPI.onLoadAllCompleted();
 };
