@@ -749,7 +749,7 @@ FilterSingleWildcardLeftAnchored.compile = function(details) {
     var s = details.f;
     var pos = s.indexOf('*');
     return s.slice(0, pos) + '\t' +
-           s.slice(pos + 1) + '\t';
+           s.slice(pos + 1);
 };
 
 FilterSingleWildcardLeftAnchored.fromSelfie = function(s) {
@@ -823,7 +823,7 @@ FilterSingleWildcardRightAnchored.compile = function(details) {
     var s = details.f;
     var pos = s.indexOf('*');
     return s.slice(0, pos) + '\t' +
-           s.slice(pos + 1) + '\t';
+           s.slice(pos + 1);
 };
 
 FilterSingleWildcardRightAnchored.fromSelfie = function(s) {
