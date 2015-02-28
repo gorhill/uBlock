@@ -348,7 +348,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Повернути",
+    "message":"скасувати зміни",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{

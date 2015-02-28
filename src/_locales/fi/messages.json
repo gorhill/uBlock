@@ -348,7 +348,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Kumoa",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{

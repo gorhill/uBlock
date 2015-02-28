@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finalmente, um bloqueador eficiente para os navegadores baseados no Chromium. Leve na CPU e memória.",
+    "message":"Finalmente, um bloqueador eficiente. Leve no CPU e memória.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Lista Branca",
+    "message":"Lista branca",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
@@ -232,7 +232,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Ativar as funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
+    "message":"Ativar funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -444,7 +444,7 @@
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Não há pedidos de não bloqueados registados para esta página",
+    "message":"Não há pedidos não bloqueados registados para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{

@@ -180,11 +180,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domain csatlakozik",
+    "message":"domainekhez kapcsolódva",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}}, összesen: {{total}}",
+    "message":"{{count}} a(z) {{total}}-böl",
     "description":"appears in popup"
   },
   "pickerCreate":{
