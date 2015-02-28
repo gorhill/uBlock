@@ -75,10 +75,11 @@ button.custom.reloadAll:not(.disabled) {
     background-image: linear-gradient(#ffdca8, #ffcc7f);
     }
 #buttonApply {
-    position: fixed;
     display: initial;
-    top: 1em;
+    padding: 1em;
+    position: fixed;
     right: 1em;
+    top: 0;
     }
 body[dir=rtl] #buttonApply {
     right: auto;
