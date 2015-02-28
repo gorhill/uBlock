@@ -1064,7 +1064,10 @@ var httpObserver = {
         var lastRequest = this.lastRequest;
 
         if ( lastRequest.url === null ) {
-            this.handleRequest(channel, URI, {tabId: vAPI.noTabId, type: 1});
+            this.handleRequest(channel, URI, {
+                tabId: vAPI.noTabId,
+                type: channel.loadInfo && channel.loadInfo.contentPolicyType || 1
+            });
             return;
         }
 
