@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4941
-! Last modified: 12 Feb 2015
+! Version: 4973
+! Last modified: 19 Feb 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -145,6 +145,10 @@
 ##[href^="http://play.affmob.org/"]
 ##[href^="http://gripconfirmation.com/"]
 ##[href^="http://fileston.com/"]
+##[href^="http://filedirection.com/"]
+##[href^="http://grabclicks.com/"]
+##[href^="http://fileconfirmation.com/"]
+##[href^="http://gripclix.com/"]
 !
 !
 !
@@ -4936,6 +4940,34 @@ hepimovie.net###login
 ||247gamerz.com^
 ||movielist21.com^
 ||cpaoi.com^
+||forgametrick.com^
+||fbprofileviewer.com^
+||bomb-hack.com^
+||pediahack.org^
+||filedirection.com^
+||hackgenerations.com^
+||putlockermovie.net^
+||moviehack.net^
+||ultimovie.com^
+||gatotkaca.pw^
+||grabclicks.com^
+||fileconfirmation.com^
+||zagamers.com^
+||dewisri.pw^
+||watchingmovie21.com^
+||clomgiriwil.com^
+||aeriapointshack.com^
+||gametrainersave.com^
+||topmovie.co^
+||gandawati.pw^
+||mobigrr.com^
+||movimx.com^
+||fiftyshadesofgreyonlinemovie.com^
+||androidblender.com^
+||gadgetgiveawayz.com^
+||gripclix.com^
+||themovs.net^
+||wayachts.eu^
 !
 !
 !

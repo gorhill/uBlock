@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: Gc93yKaX9/9eW1xyzCpirQ
+! Checksum: w7Kb5nBkLLUPd5L8VI9j9g
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 15 Feb 2015
+! Updated: 22 Feb 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -269,6 +269,7 @@
 /siteClarity/*
 /sitewise_cms.
 /smart_source_*/dcs_$script
+/smartbanner/appbanner.js
 /smeadvert-
 /somni.js
 /sonyOmnitureTracker.
@@ -522,6 +523,7 @@ wolframalpha.com###subpod_zoom
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||images.dmca.com^$third-party
 ||images.scanalert.com^$third-party
+||joinbot.com^$third-party
 ||kalooga.com^$third-party
 ||lockerdome.com^$third-party
 ||mark.reevoo.com^$third-party
@@ -651,8 +653,8 @@ wolframalpha.com###subpod_zoom
 @@||actiris.be/urchin.js
 @@||adobe.com/uber/js/omniture_s_code_rm.js
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
-@@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com|lenovo.com
-@@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com|lenovo.com
+@@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com|lenovo.com|oprah.com
+@@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com|lenovo.com|oprah.com
 @@||akamai.net/*/www-origin.walmart.com/webanalytics/$domain=walmart.com
 @@||akamai.net^*/hints.netflame.cc/$domain=annualcreditreport.com
 @@||amd.com/*/scode_global.js
@@ -816,6 +818,7 @@ wolframalpha.com###subpod_zoom
 @@||swfs.bimvid.com/omniture-*.swf
 @@||symantec.com/script/omniture/om_code.js
 @@||tampabay.com/universal/scripts/omniture/tb_code.js
+@@||tapatalk.com/welcome_screen.php?$script,domain=vpsboard.com
 @@||targetimg3.com^*/omniture/omniture_minified.js$domain=target.com
 @@||thecomedynetwork.ca/jsHandler.ashx
 @@||thepiratebay.se^*/jquery.min.js

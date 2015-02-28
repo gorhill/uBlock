@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Feb 4th, 2015 at 14:03
+# Last updated: Feb 26th, 2015 at 11:58
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -4727,6 +4727,7 @@
 127.0.0.1 ads.vg.basefarm.net
 127.0.0.1 ads.viddler.com
 127.0.0.1 ads.videoadvertising.com
+127.0.0.1 adsvidsdouble.com
 127.0.0.1 ads.viewlondon.co.uk
 127.0.0.1 ads.virginislandsdailynews.com
 127.0.0.1 ads.virtualcountries.com
@@ -6047,6 +6048,8 @@
 127.0.0.1 go.lotech.bbelements.com
 127.0.0.1 goodsblock.marketgid.com
 127.0.0.1 goody-garage.com
+127.0.0.1 go.padsdelivery.com
+127.0.0.1 go.padstm.com
 127.0.0.1 go.pl.bbelements.com
 127.0.0.1 got2goshop.com
 127.0.0.1 goto.trafficmultiplier.com

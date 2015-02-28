@@ -35,6 +35,7 @@
 ##.large-ad-center-close
 ##.leftSideAds
 ##.ltas_adspot
+##.pm-ad-zone
 ##.pub-730x90
 ##.sidbar-ad1
 ##.yourcolor-ads
@@ -83,6 +84,7 @@
 ||cpxmasters.com^$third-party
 ||edomz.com^$third-party
 ||emarketing.net.sa^$third-party
+||exarab.com^$third-party
 ||gateads.co^$third-party
 ||geniusinstaller.com^$third-party
 ||hibamedia.com^$third-party
@@ -105,6 +107,7 @@
 ||shabakti.com^$third-party
 ||trafficrevmaster.com^$third-party
 ||vuiads.org^$third-party
+||wafmedia2.com^$third-party
 ||zwaar.net^$popup,third-party
 ||zwaar.net^$third-party
 !
@@ -188,6 +191,7 @@
 ||darendeal.com/widgets/recommendation_box?
 ||diwanee.net/?ref=
 ||dohaup.com/up/2010-05-07/dohaup_206097194.gif
+||dramacafe.tv/Adblock_
 ||dubizzle.com^*/?utm_source=$popup
 ||dzautos.com/data/dzauto.swf
 ||egyup.com/300.png
@@ -234,6 +238,7 @@
 ||imageshack.us/img687/748/83145832.jpg
 ||imageshack.us/img831/6584/69953352.jpg
 ||imageshack.us/img856/4224/64119518.jpg
+||imgur.com/9VzIEw9.gif
 ||islamiy.com^$subdocument,domain=wadilarab.com
 ||jazora.com/banner/
 ||jo-sharing.com^*/bnnr.
@@ -323,6 +328,9 @@
 ||tvgate.tv/tvgate/campaign/
 ||tvmasrnet-javafiles.googlecode.com/files/Ads
 ||tvquran.com/banr/
+||up-00.com/2015-02/1424470761543.jpg
+||up-00.com/2015-02/1424470761776.jpg
+||up-00.com/2015-02/1424472081151.jpg
 ||up700.net/affiliates/
 ||upxmedia.com/$subdocument,domain=shofonline.net
 ||videobam.com/this-pays-for-bandwidth/
@@ -332,6 +340,7 @@
 ||wald-aden.com/mghrdon.gif
 ||wdbook.net^$subdocument,domain=wadilarab.com
 ||web4africa.net/banners/
+||widgipedia.com/widgets/$third-party
 ||wirwaar.com/$subdocument,domain=s-ajfan.com
 ||xatech.com^
 ||xuscacamusca.se/js/adsj.js
@@ -567,6 +576,9 @@
 ||d2ja.com/Ads/
 ||dafatir.ma/do.php?img=441
 ||dafatiri.com/vb/open.js
+||damasgate.com/vb/1x160.
+||damasgate.com/vb/1x336x600.
+||damasgate.com/vb/2x300.
 ||daralkotob.com/images/photos/niledesign.jpg
 ||daralkotob.com^*/banners/
 ||dawshagya.org/vb/open.js
@@ -757,6 +769,8 @@
 ||mazajcool.net/300.html
 ||mazajcool.net/728.gif
 ||mazajcool.net/up-2.png
+||mazika2day.com/popup.
+||mazika2day.com/unnamed1.png
 ||mbc.net/?utm_source=$popup,domain=arabseed.com
 ||mbc.net/dms/analytics-and-banners/
 ||melody.ma/images/300/
@@ -1236,7 +1250,8 @@ arabe-media.com##iframe[width="300"][height="250"]
 el3b.sukrbnat.com##img[alt="M5znUpload"]
 bh-gn.com##img[alt="ضع إعلانك هنا"]
 algeriamax.com##img[alt="مساحة إعلانية"]
-adslgate.com##img[height="90"][width="728"]
+wed-alqlop.com##img[height="600"][width="160"]
+adslgate.com,wed-alqlop.com##img[height="90"][width="728"]
 lmseh.com##img[src^="http://www.up.lmseh.com/do.php?"]
 bramjnet.com##img[style="WIDTH: 468px; HEIGHT: 60px"][title*="الإعلان "]
 teckni-sat.com##img[style="height: 90px; width: 728px; border-width: 0px"]
@@ -1290,6 +1305,7 @@ arbface.co##table[width="800"][height="200"][bgcolor="#FFFFCC"]
 adslgate.com##td[style="border: 1px solid #3878FA; border-top: 0px;background:#fafafa;"]
 7hob.com##td[style="border:2px #EA8336 dotted ; width:336px;height:280px;"]
 forums.7hob.com##td[style="border:2px #EA8610 dotted ; width:750px;height:280px;"]
+damasgate.com##td[width="160"]
 traidnt.net##td[width="160px"]
 ! Anti-Adblock
 @@||coolkora.com^$elemhide
@@ -1298,6 +1314,7 @@ traidnt.net##td[width="160px"]
 !
 @@||ads.hsoub.com/$domain=hsoub.com
 @@||arabe-media.com/advertisement.js
+@@||arabhardware.net^$popup,domain=facebook.com
 @@||bawazir-tech.com/banners/
 @@||betakonline.com/advertisements/securimage/
 @@||echoroukonline.com/banners/half/

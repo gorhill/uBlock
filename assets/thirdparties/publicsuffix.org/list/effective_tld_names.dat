@@ -5906,6 +5906,38 @@ store.st
 
 // su : http://en.wikipedia.org/wiki/.su
 su
+adygeya.su
+arkhangelsk.su
+balashov.su
+bashkiria.su
+bryansk.su
+dagestan.su
+grozny.su
+ivanovo.su
+kalmykia.su
+kaluga.su
+karelia.su
+khakassia.su
+krasnodar.su
+kurgan.su
+lenug.su
+mordovia.su
+msk.su
+murmansk.su
+nalchik.su
+nov.su
+obninsk.su
+penza.su
+pokrovsk.su
+sochi.su
+spb.su
+togliatti.su
+troitsk.su
+tula.su
+tuva.su
+vladikavkaz.su
+vladimir.su
+vologda.su
 
 // sv : http://www.svnet.org.sv/niveldos.pdf
 sv
@@ -9137,6 +9169,7 @@ zuerich
 
 // ===END ICANN DOMAINS===
 // ===BEGIN PRIVATE DOMAINS===
+// (Note: these are in alphabetical order by company name)
 
 // Amazon CloudFront : https://aws.amazon.com/cloudfront/
 // Submitted by Donavan Miller <donavanm@amazon.com> 2013-03-22
@@ -9570,6 +9603,10 @@ firebaseapp.com
 // Submitted by Jonathan Rudenberg <jonathan@flynn.io> 2014-07-12
 flynnhub.com
 
+// GDS : https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains
+// Submitted by David Illsley <david.illsley@digital.cabinet-office.gov.uk> 2014-08-28
+service.gov.uk
+
 // GitHub, Inc.
 // Submitted by Ben Toews <btoews@github.com> 2014-02-06
 github.io
@@ -9681,17 +9718,19 @@ poznan.pl
 wroc.pl
 zakopane.pl
 
+// priv.at : http://www.nic.priv.at/
+// Submitted by registry <lendl@nic.at> 2008-06-09
+priv.at
+
 // Red Hat, Inc. OpenShift : https://openshift.redhat.com/
 // Submitted by Tim Kramer <tkramer@rhcloud.com> 2012-10-24
 rhcloud.com
 
-// GDS : https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains
-// Submitted by David Illsley <david.illsley@digital.cabinet-office.gov.uk> 2014-08-28
-service.gov.uk
-
-// priv.at : http://www.nic.priv.at/
-// Submitted by registry <lendl@nic.at> 2008-06-09
-priv.at
+// SinaAppEngine : http://sae.sina.com.cn/
+// Submitted by SinaAppEngine <saesupport@sinacloud.com> 2015-02-02
+sinaapp.com
+vipsinaapp.com
+1kapp.com
 
 // TASK geographical domains (www.task.gda.pl/uslugi/dns)
 gda.pl

@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 16/02/2015
+! Last change: 17/02/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -241,6 +241,7 @@ exashare.com###player_img
 ||gamesite.sk/templates/gamesite_sk/images/background/
 ||hnonline.sk/*hn_lekaren_extra_blok.png
 ||hojko.com/images/banner*.gif
+||i.iinfo.cz/sh//ads/
 ||img.karaoketexty.cz/img/ad/
 ||img.teevee.sk/img/beangel*.gif
 ||img.teevee.sk/img/TEE-Final2.gif
@@ -259,11 +260,13 @@ exashare.com###player_img
 ||ourphorum.com/images/banner*
 ||ourphorum.com/images/brapid.gif
 ||ourphorum.com/images/showlivecz.jpg
-||parabola.cz/img_menu/b*.gif
+||parabola.cz/img_menu/b*
+||parabola.cz/img_menu/ico_*.gif
 ||parabola.cz/img_menu/flash_astra.swf
 ||partner.zoznam.sk
 ||player.joj.sk/age-chooser.swf
 ||poweruploaders.eu/bannery/
+||priznaj.sk/images/*_banner.png
 ||pricemania.sk/pictures/banners/
 ||pricemania.sk/pictures/campaigns/
 ||spartak.sk/pics-new2/reklamy/
@@ -964,6 +967,9 @@ topky.sk##.nastip
 topky.sk##.takeoverKlik
 topky.sk###top-offers-slider
 topnovinky.sk###rekl_left_banner
+tv-program.sk##.stn.stns > a[target="_blank"]
+tv-program.sk##.stn.stnu > a[target="_blank"]
+tv-program.sk##.dragobj > div:nth-of-type(2)
 warmacher.com###reklamne_bannery
 webnode.sk###f3l9j1708q
 webnode.sk###fStrip150815823

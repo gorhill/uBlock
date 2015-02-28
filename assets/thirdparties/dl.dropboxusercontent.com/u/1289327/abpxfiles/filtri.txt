@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201501201807
+! Version: 201502171013
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 20-01-2015
+! Last modified: 17-02-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1316,7 +1316,7 @@ http://forums.novell.com/*/banners/
 http://*.chicchedicala.it/banner/
 http://*.calciomercato.com/*/banners/
 http://*.criteo.com/delivery/ajs.php$domain=~tzetze.it
-http://*.liverail.com/*/admanager.swf$domain=~reachadv.it
+http://*.liverail.com/*/admanager.swf$domain=~reachadv.it|~ilfattoquotidiano.it
 http://*.calciomercato.com/images/back.driveilfilm.*.jpg
 http://*.neobux.com/*/banner*
 http://*.friendfinder.com/banners/
@@ -1727,6 +1727,22 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 ||fmdwbsfxf0.com^$popup
 about:blank$popup,domain=katproxy.com|filmpertutti.eu
 |http://*.tomshw.it/kelkoo
+|http://lucca.fantasymagazine.it/img/lucca/banner_lucca2014.jpg
+|http://*.cn24tv.it/public/pubblicita/
+||ebzkswbs78.com^$popup
+|http://adprovider.adlure.net/
+||tapestry.tapad.com/tapestry/*
+||thelostsheep.net^$popup
+|https://*.paypublicity-system.com/banner/
+||aflrm.com^$popup
+||weblinkads.com^$popup
+||simple-files.info^$popup
+||vipcpms.com^$popup
+||stockpair.com^$popup
+||178.32.140.64/pv.php?*
+||stats.coreg-feed.com^
+|http://goodmove.tv/adv/
+||dasfdasfasdf.no-ip.info^
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3390,6 +3406,52 @@ cnet.com##.ad-leader-top
 msn.com##[data-aop="articletakeoverad_ad"]
 msn.com##.ad.non-empty-ad
 msn.com##.ad
+fantasymagazine.it##[id^="div-gpt-ad-"]
+makeuseof.com##.sidebar-banner
+cn24tv.it##.popupBanner.clickableBanner
+mobile.hdblog.it##.gad_container
+misterimprese.it##.adsbygoogle
+androidpit.com###ad_leadfull
+androidpit.com##[id^="ad_mpu"]
+ilmessaggero.it###adv_BoxTop
+ilmessaggero.it##[id^="google_ads_iframe"]
+rapidvideo.org##.video_sta
+laptop-driver.blogspot.it##.adsbygoogle
+fontpalace.com##.adsbygoogle
+pmi.it##.banner
+lg.hdblog.it##.adsbygoogle
+lg.hdblog.it##.ads_container_top
+lg.hdblog.it##.gad_container
+thelostsheep.net##[id^="fancybox"]
+thelostsheep.net###adsensestory
+thelostsheep.net##DIV[style="width: 450px;height:300px;background-image:url('images/bella.png');background-repeat:no-repeat;margin:auto;"]
+thelostsheep.net###adsense_link
+thelostsheep.net##DIV[style="clear:both"][width="300px;"][height="60px;"]
+groups.yahoo.com###yom-ad-LREC
+dday.it##.adv-block
+filmstream.me##[class$="_gizle"]
+filmstream.me##[id$="_reklam"]
+filmstream.me##[id^="reklam"]
+filmstream.me##[id^="ad-video-"]
+macusato.it##.widget-box.banner
+macusato.it###topbanner
+ticketone.it###banner
+imdb.com###top_ad_wrapper
+mondo3.com##.adsbygoogle
+maketecheasier.com##[id^="google_ads_iframe"]
+maketecheasier.com##.adsbygoogle
+pcprofessionale.it##[id^="ads300"]
+6sicuro.it##[id^="hotSpot"]
+nintendolife.com##.masthead
+nintendolife.com##[id^="google_ads_iframe"]
+nintendolife.com##.block.outbrain
+livenation.it##[id^="google_ads_iframe"]
+theguardian.com##[id*="-ad-"]
+statcounter.com##.top-banner
+labnol.org##.garectangle
+tabletmag.com##.vox_ad
+tabletmag.com##.sidebar-ad
+guidesmartphone.net##.adsbygoogle
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3398,12 +3460,30 @@ theverge.com##.m-ad.m-ad__medrec.vert.vert300
 |http://*.exoclick.com/xhamster-945x100.php
 |http://enoratraffic.com/*/900_xhamster.php
 it.xhamster.com###adTop
+trakt.tv##[id^="huckster-"]
+fileinfo.com##[id^="div-gpt-ad-"]
+fileinfo.com###tlbspace
+fileinfo.com###linkunits
 it.xhamster.com##.adVideo
+roadtvitalia.it##.adsbygoogle
+documoo.tv###leader-wrapper
+documoo.tv##.adsbygoogle
+makeuseof.com##.sidebar-banner
+nintendolife.com##[id^="google_ads_iframe"]
+nintendolife.com##[data-dfp-sizes="728x90,960x250,1260x110"]
+nintendolife.com##[id^="NL_MPU_"][data-dfp-sizes="300x250"]
+nintendon.it##[id^="div-gpt-ad"]
 taggify.net##.tgf_textad
 droidviews.com##.adsbygoogle
 droidviews.com##A[href*="http://*.advertising.com/click/"]
 droidviews.com##.span8.td-header-style-1
 it.xhamster.com###adBottom
+rai.tv##.banner300x250
+bgr.com##[id^="google_ads_iframe"]
+who.is##.advertisements
+guide-informatica.com##.adsbygoogle
+||sms-mmm.com^$popup
+||adv.videomega.tv^$popup
 mail.yahoo.com###slot-mb-msg-read
 mail.yahoo.com###slot_MB
 eurosport.yahoo.com##DIV[class^="yom-ad"]

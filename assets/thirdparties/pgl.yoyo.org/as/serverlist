@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Mon, 09 Feb 2015 08:55:06 GMT
-# entries:        2451
+# last updated:   Tue, 17 Feb 2015 15:07:40 GMT
+# entries:        2445
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -181,7 +181,6 @@
 127.0.0.1 ad2.ip.ro
 127.0.0.1 ad2.linxcz.cz
 127.0.0.1 ad2.lupa.cz
-127.0.0.1 ad2.pamedia.com.au
 127.0.0.1 ad2flash.com
 127.0.0.1 ad2games.com
 127.0.0.1 ad3.iinfo.cz
@@ -540,7 +539,6 @@
 127.0.0.1 ads.livenation.com
 127.0.0.1 ads.localnow.com
 127.0.0.1 ads.lvz-online.de
-127.0.0.1 ads.mambocommunities.com
 127.0.0.1 ads.mariuana.it
 127.0.0.1 ads.massinfra.nl
 127.0.0.1 ads.mcafee.com
@@ -675,6 +673,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -1059,7 +1058,6 @@
 127.0.0.1 banner.webmersion.com
 127.0.0.1 banner.wirenode.com
 127.0.0.1 bannerads.de
-127.0.0.1 bannerads.zwire.com
 127.0.0.1 bannerbank.ru
 127.0.0.1 bannerboxes.com
 127.0.0.1 bannercommunity.de
@@ -1343,7 +1341,6 @@
 127.0.0.1 dealdotcom.com
 127.0.0.1 debtbusterloans.com
 127.0.0.1 decknetwork.net
-127.0.0.1 default-homepage-network.com
 127.0.0.1 deloo.de
 127.0.0.1 demandbase.com
 127.0.0.1 depilflash.tv
@@ -1938,7 +1935,6 @@
 127.0.0.1 popupmoney.com
 127.0.0.1 popupnation.com
 127.0.0.1 popups.infostart.com
-127.0.0.1 popupsponsor.com
 127.0.0.1 popuptraffic.com
 127.0.0.1 porngraph.com
 127.0.0.1 porntrack.com
@@ -1964,7 +1960,6 @@
 127.0.0.1 projectwonderful.com
 127.0.0.1 promo.badoink.com
 127.0.0.1 promo.ulust.com
-127.0.0.1 promo1.webcams.nl
 127.0.0.1 promobenef.com
 127.0.0.1 promos.fling.com
 127.0.0.1 promote.pair.com
@@ -2258,7 +2253,6 @@
 127.0.0.1 topping.com.ua
 127.0.0.1 toprebates.com
 127.0.0.1 topsafelist.net
-127.0.0.1 topsajt.com
 127.0.0.1 topsearcher.com
 127.0.0.1 topsir.com
 127.0.0.1 topsite.lv
@@ -2274,6 +2268,7 @@
 127.0.0.1 track.gawker.com
 127.0.0.1 trackalyzer.com
 127.0.0.1 tracker.icerocket.com
+127.0.0.1 tracking.crunchiemedia.com
 127.0.0.1 tracking.gajmp.com
 127.0.0.1 tracking.yourfilehost.com
 127.0.0.1 tracking101.com
@@ -2402,7 +2397,6 @@
 127.0.0.1 wikia-ads.wikia.com
 127.0.0.1 window.nixnet.cz
 127.0.0.1 wintricksbanner.googlepages.com
-127.0.0.1 wipub.com
 127.0.0.1 witch-counter.de
 127.0.0.1 wlmarketing.com
 127.0.0.1 wmirk.ru

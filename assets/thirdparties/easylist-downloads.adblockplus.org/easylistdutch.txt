@@ -1,16 +1,16 @@
 [Adblock Plus 2.0]
-! Checksum: RZPnDxn8ptGlmbgfU2lAdg
-! Version: 201502152052
+! Checksum: 2DkmQCPihvWQKD2l1qBOdA
+! Version: 201502280138
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 15 Feb 2015 20:52 UTC
+! Last modified: 28 Feb 2015 01:38 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
 ! Alleen voor advertenties op Nederlandstalige sites!
 ! Rapporteer gevonden advertenties of fouten hier:
-! http://forums.lanik.us/viewforum.php?f=100
+! https://forums.lanik.us/viewforum.php?f=100
 ! of stuur een email naar fam.lam [at] live.nl
 !
 !--------Algemene blokkeerregels--------!
@@ -658,6 +658,8 @@ _advertentieleaderboardhome.
 ||wetenschapsforum.nl/bnr/
 ||whatismyip.nl/images/vista_sky2.gif
 ||wiebetaaltwat.nl/includes/mr.miller/$image,object
+||wiskunde-examens.nl^*/bottom.htm
+||wiskunde-examens.nl^*/top.htm
 ||wiskundeforum.nl/studysteps.jpg
 ||woningnetgroningen.nl^*/Images/banner/
 ||woningnetregioamsterdam.nl^*/Images/banner/
@@ -726,6 +728,7 @@ _advertentieleaderboardhome.
 @@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=2be.be|syndication.vmma.be|vitaya.be|vtmkzoom.be
 @@||longtailvideo.com/5/ova/ova-jw.swf$object-subrequest,domain=538.nl
 @@||maps.gstatic.com/maps-api-*/adsense.js$domain=opentot.nl
+@@||media.adrcdn.com/ads/Mini/*/vast.xml$xmlhttprequest,domain=radio10.nl
 @@||media.ztat.net/media/teaser/$image,domain=zalando.nl
 @@||nl.gmads.net/crossdomain.xml$object-subrequest,domain=radioveronica.nl
 @@||nl.gmads.net/r?gmtr=$object-subrequest,domain=radioveronica.nl
@@ -733,6 +736,7 @@ _advertentieleaderboardhome.
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=spel.nl|spelletjes.nl|wereldklokken.nl
 @@||partner.googleadservices.com/gampad/$domain=jaggle.nl
 @@||partner.googleadservices.com/gpt/pubads_impl_$script,domain=insidegamer.nl|marktplaats.nl
+@@||rtr.innovid.com/r1.*;cb=$xmlhttprequest,domain=radio10.nl
 @@||smartinit.webads.nl/bin/smartinit.dll?$script,domain=vi.nl
 @@||spilcdn.com^*/js/advertisement/css/sgadgirls.css$domain=girlsgogames.nl
 @@||spilcdn.com^*/js/advertisement/flowplayer/flowplayer-3.2.6.min.js$domain=girlsgogames.nl|spel.nl|spelletjes.nl
@@ -1034,6 +1038,7 @@ biertijd.com##.advertorialtitle ~ *
 synoniemen.net##.annblokslot
 waldnet.nl##.art-lin > div:first-child > a[target="_blank"]
 welingelichtekringen.nl##.artblok:nth-child(-2n+6)
+rechtennieuws.nl##.artikel_informatie > div[style="clear: both; float: left; position: relative; margin: 5px 0px 15px 0px; padding: 0px; text-align: center; width: 280px; color: #cccccc; font-size: 10px;"]
 2xklikken.nl,at5.nl,belgie.fm,camping-frankrijk.nl,ed.nl,elkspel.nl,express.be,fd.nl,hardwarewoensdag.tv,hetkrantje-online.nl,insidegamer.nl,koopplein.nl,mensenlinq.nl,nederland.fm,nederlandmobiel.nl,nieuws.nl,privesexopname.nl,startbewijs.nl,studenten.nl,telegraaf.nl,toeto.com,waldnet.nl,westlanders.nu,zappsite.nl##.banner
 weeronline.nl##.banner + .specialBlockDiv
 at5.nl##.banner-300-100

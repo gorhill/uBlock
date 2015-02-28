@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: gdnWrCHeMHm1z771s0CVOA
+! Checksum: WS+RskmX1pr2OpgZCV5/HQ
 ! Title: Fanboy's Swedish
-! Updated: 15 Feb 2015
+! Updated: 22 Feb 2015
 ! This list expires after 4 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Email: fanboyadblock@googlegroups.com
@@ -63,9 +63,9 @@
 !
 existenz.se###slidebox
 !
-!---------- Swedish Popups (Adblock Plus Pop-up Addon required) ----------
+!---------- Swedish Popups ----------
 !
-||filesonic.se^$popup,image,~image
+||filesonic.se^$popup
 !
 ! ---------- 3rd party blocking rules ----------
 !
@@ -81,6 +81,7 @@ existenz.se###slidebox
 ||careerbuilder.se^$third-party
 ||casinotoplists.com^$third-party
 ||de17a.com^$third-party
+||edynpub.com^$third-party
 ||emediate.eu^$third-party
 ||emediate.se^$third-party
 ||mraffiliate.com^$third-party

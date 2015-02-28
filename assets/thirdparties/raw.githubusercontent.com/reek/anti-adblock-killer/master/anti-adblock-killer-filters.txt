@@ -689,6 +689,7 @@ videopremium.tv#@#.text-ad-links
 @@||filmovizija.com/ads.js$script
 ! psarips.com
 @@||psarips.com/wp-content/plugins/@NT1-PSA/js/directrev.com.js$script
+@@||popads2.byethost33.com/directrev.com.js$script,domain=psarips.com
 ! skidrowcrack.com
 ||skidrowcrack.com/adblock-checker.js$script
 ! afdah.com
@@ -712,6 +713,25 @@ planetatvonlinehd.blogspot.com.ar#@#.adsantilok
 ! phonandroid.com
 phonandroid.com##.clofzspq-bg
 @@/wp-content/plugins/adblock-notify-by-bweb/js/show_ads.js$script,domain=phonandroid.com
+! lolesporte.com
+lolesporte.com#@#.afs_ads
+! rlsbb.com
+rlsbb.com###contentArea > .information
+! crococoin.com
+@@||crococoin.com/static/js/Controller/Advertise.js$script
+! treebitcoin.com
+@@||treebitcoin.com/static/js/Controller/Advertise.js$script
+! bithourly.com
+! dailyfreebits.com
+! jewelrybitco.in
+! welovebtc.com
+@@/show_ads.js$script,domain=bithourly.com|dailyfreebits.com|jewelrybitco.in|welovebtc.com
+! satoshiquiz.com
+@@/ads.js$script,domain=satoshiquiz.com
+! ogmcdownload.com
+ogmcdownload.com#@#.afs_ads
+! jetetroll.com
+jetetroll.com#@##adsense
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
