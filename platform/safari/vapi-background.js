@@ -59,7 +59,7 @@
 
     vAPI.storage = {
         _storage: safari.extension.settings,
-        QUOTA_BYTES: 52428800, // copied from Info.plist
+        QUOTA_BYTES: 104857600, // copied from Info.plist
 
         get: function(keys, callback) {
             if(typeof callback !== 'function') {
@@ -457,7 +457,7 @@
         if(typeof state === "undefined") {
             state = vAPI.tabIconState[tabId] = new TabIconState();
         }
-        icon.badge = state.badge; 
+        icon.badge = state.badge;
         icon.image = vAPI.getURL("img/browsericons/icon16" + state.img + ".png");
     };
     vAPI.setIcon = function(tabId, iconStatus, badge) {
@@ -475,7 +475,7 @@
     vAPI.messaging = {
         listeners: {},
         defaultHandler: null,
-        NOOPFUNC: function() {}, 
+        NOOPFUNC: function() {},
         UNHANDLED: 'vAPI.messaging.notHandled'
     };
 

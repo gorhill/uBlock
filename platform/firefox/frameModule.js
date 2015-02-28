@@ -53,6 +53,7 @@ const contentObserver = {
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
+
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
 

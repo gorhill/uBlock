@@ -23,12 +23,12 @@
             </r:Description>
         </targetApplication>
 
-        <!-- Firefox for Android -->
+        <!-- Fennec -->
         <targetApplication>
             <r:Description>
                 <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
                 <minVersion>24.0</minVersion>
-                <maxVersion>38.0</maxVersion>
+                <maxVersion>39.0</maxVersion>
             </r:Description>
         </targetApplication>
 
@@ -40,23 +40,5 @@
                 <maxVersion>2.36</maxVersion>
             </r:Description>
         </targetApplication>
-
-        <!-- Firefox for Android
-        <targetApplication>
-            <r:Description>
-                <id>{{aa3c5121-dab2-40e2-81ca-7ea25febc110}}</id>
-                <minVersion>24.0</minVersion>
-                <maxVersion>39.0</maxVersion>
-            </r:Description>
-        </targetApplication> -->
-
-        <!-- Thunderbird
-        <targetApplication>
-            <r:Description>
-                <id>{{3550f703-e582-4d05-9a08-453d09bdfdc6}}</id>
-                <minVersion>24.0</minVersion>
-                <maxVersion>39.0</maxVersion>
-            </r:Description>
-        </targetApplication> -->
     </r:Description>
 </r:RDF>
