@@ -4,10 +4,6 @@
 # => blocking counterpart in Peter Lowe's Ad Server
 @@||www.google-analytics.com/ga.js^$domain=xda-developers.com
 
-# https://github.com/gorhill/uBlock/wiki/My-answer-to-web-store-reviews-where-appropriate#barfin-bob-chrome-store-24-june-2014
-# => blocking counterpart in EasyPrivacy
-@@||media.star-telegram.com/mistats/sites/dfw/startelegram.js^$domain=star-telegram.com
-
 # https://github.com/gorhill/uBlock/issues/17
 # => blocking counterpart in hpHosts Ad Server: `l.yimg.com`
 @@||l.yimg.com^$stylesheet,domain=yahoo.com
