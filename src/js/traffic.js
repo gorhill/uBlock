@@ -125,7 +125,11 @@ var onBeforeRequest = function(details) {
 
     pageStore.logRequest(requestContext, result);
 
-    µb.updateBadgeAsync(tabId);
+    // https://github.com/gorhill/uBlock/issues/905#issuecomment-76543649
+    // No point updating the badge if it's not being displayed.
+    if ( µb.userSettings.showIconBadge ) {
+        µb.updateBadgeAsync(tabId);
+    }
 
     // https://github.com/gorhill/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
