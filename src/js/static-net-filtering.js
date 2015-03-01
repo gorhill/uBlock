@@ -19,8 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false, esnext: true */
-/* global µBlock */
+/* jshint bitwise: false, esnext: true, boss: true */
+/* global punycode, µBlock */
 
 // Older Safari throws an exception for const when it's used with 'use strict'.
 // 'use strict';
@@ -88,7 +88,7 @@ const AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 
-var reHostnameRule = /^[0-9a-z][0-9a-z.-]+[0-9a-z]$/;
+var reHostnameRule = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
 var reHostnameToken = /^[0-9a-z]+/g;
 var reGoodToken = /[%0-9a-z]{2,}/g;
 var reURLPostHostnameAnchors = /[\/?#]/;
