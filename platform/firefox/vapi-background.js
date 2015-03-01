@@ -579,7 +579,7 @@ vAPI.tabs.get = function(tabId, callback) {
         }
     }
 
-    // for internal use
+    // For internal use
     if ( typeof callback !== 'function' ) {
         return tab;
     }
@@ -595,9 +595,14 @@ vAPI.tabs.get = function(tabId, callback) {
 
     var browser = getBrowserForTab(tab);
     var tabBrowser = getTabBrowser(win);
-    var tabIndex = vAPI.fennec
-        ? tabBrowser.tabs.indexOf(tab)
-        : tabBrowser.browsers.indexOf(browser);
+    var tabIndex, tabTitle;
+    if ( vAPI.fennec ) {
+        tabIndex = tabBrowser.tabs.indexOf(tab);
+        tabTitle = browser.contentTitle;
+    } else {
+        tabIndex = tabBrowser.browsers.indexOf(browser);
+        tabTitle = tab.label;
+    }
 
     callback({
         id: tabId,
@@ -605,7 +610,7 @@ vAPI.tabs.get = function(tabId, callback) {
         windowId: windows.indexOf(win),
         active: tab === tabBrowser.selectedTab,
         url: browser.currentURI.asciiSpec,
-        title: tab.label
+        title: tabTitle
     });
 };
 
