@@ -269,14 +269,7 @@ var windowWatcher = {
             return;
         }
 
-        if ( tabBrowser.deck ) {
-            // Fennec
-            tabContainer = tabBrowser.deck;
-            tabContainer.addEventListener(
-                'DOMTitleChanged',
-                tabWatcher.onFennecLocationChange
-            );
-        } else if ( tabBrowser.tabContainer ) {
+        if ( tabBrowser.tabContainer ) {
             // desktop Firefox
             tabContainer = tabBrowser.tabContainer;
             tabBrowser.addTabsProgressListener(tabWatcher);
@@ -353,23 +346,6 @@ var tabWatcher = {
             url: location.asciiSpec
         });
     },
-
-    onFennecLocationChange: function({target: doc}) {
-        // Fennec "equivalent" to onLocationChange
-        // note that DOMTitleChanged is selected as it fires very early
-        // (before DOMContentLoaded), and it does fire even if there is no title
-
-        var win = doc.defaultView;
-        if ( win !== win.top ) {
-            return;
-        }
-
-        vAPI.tabs.onNavigation({
-            frameId: 0,
-            tabId: getOwnerWindow(win).getTabForWindow(win).id,
-            url: Services.io.newURI(win.location.href, null, null).asciiSpec
-        });
-    }
 };
 
 /******************************************************************************/
@@ -441,14 +417,7 @@ vAPI.tabs.registerListeners = function() {
                 continue;
             }
 
-            if ( tabBrowser.deck ) {
-                // Fennec
-                tabContainer = tabBrowser.deck;
-                tabContainer.removeEventListener(
-                    'DOMTitleChanged',
-                    tabWatcher.onFennecLocationChange
-                );
-            } else if ( tabBrowser.tabContainer ) {
+            if ( tabBrowser.tabContainer ) {
                 tabContainer = tabBrowser.tabContainer;
                 tabBrowser.removeTabsProgressListener(tabWatcher);
             }
@@ -482,7 +451,7 @@ vAPI.tabs.getTabId = function(target) {
 
         for ( var win of this.getWindows() ) {
             var tab = win.BrowserApp.getTabForBrowser(target);
-            if ( tab && tab.id ) {
+            if ( tab && tab.id !== undefined ) {
                 return tab.id;
             }
         }
@@ -593,6 +562,9 @@ vAPI.tabs.get = function(tabId, callback) {
     var tabIndex = vAPI.fennec
         ? tabBrowser.tabs.indexOf(tab)
         : tabBrowser.browsers.indexOf(browser);
+    var tabTitle = vAPI.fennec
+        ? browser.contentTitle
+        : tab.label;
 
     callback({
         id: tabId,
@@ -600,7 +572,7 @@ vAPI.tabs.get = function(tabId, callback) {
         windowId: windows.indexOf(win),
         active: tab === tabBrowser.selectedTab,
         url: browser.currentURI.asciiSpec,
-        title: tab.label
+        title: tabTitle
     });
 };
 
@@ -1168,6 +1140,9 @@ var httpObserver = {
         if ( !(channel instanceof Ci.nsIHttpChannel) ) {
             return;
         }
+        
+        var reqDataKey = location.host + 'reqdata';
+        
 
         var URI = channel.URI;
         var channelData, result;
@@ -1185,7 +1160,7 @@ var httpObserver = {
                     frameId,
                     parentFrameId
                 ]*/
-                channelData = channel.getProperty(location.host + 'reqdata');
+                channelData = channel.getProperty(reqDataKey);
             } catch (ex) {
                 return;
             }
@@ -1267,6 +1242,14 @@ var httpObserver = {
                 return;
             }
         }
+        
+        if ( lastRequest.type === this.MAIN_FRAME && lastRequest.frameId === 0 ) {
+            vAPI.tabs.onNavigation({
+				frameId: 0,
+				tabId: lastRequest.tabId,
+				url: URI.asciiSpec
+			});
+        }
 
         if ( this.handleRequest(channel, URI, lastRequest) ) {
             return;
@@ -1275,7 +1258,7 @@ var httpObserver = {
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
             channel.setProperty(
-                location.host + 'reqdata',
+                reqDataKey,
                 [
                     lastRequest.type,
                     lastRequest.tabId,
