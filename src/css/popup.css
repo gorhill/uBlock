@@ -72,6 +72,9 @@ body[dir="ltr"] #panes > div:nth-of-type(2) {
 body[dir="rtl"] #panes > div:nth-of-type(2) {
     direction: ltr; /* scroll bar to the right */
     }
+#panes:not(.dfEnabled) > div:nth-of-type(2) {
+    display: none;
+    }
 #panes.dfEnabled > div:nth-of-type(2) {
     overflow-y: auto;
     width: 320px;
