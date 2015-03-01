@@ -47,7 +47,7 @@ vAPI.tabs.onNavigation = function(details) {
     // The hostname of the bound document must always be present in the
     // mini-matrix. That's the best place I could find for the fix, all other
     // options had bad side-effects or complications.
-    // TODO: Evantually, we will have to use an API to check whether a scheme 
+    // TODO: Evantually, we will have to use an API to check whether a scheme
     //       is supported as I suspect we are going to start to see `ws`, `wss`
     //       as well soon.
     if ( pageStore && details.url.lastIndexOf('http', 0) === 0 ) {
