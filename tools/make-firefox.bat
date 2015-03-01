@@ -30,7 +30,7 @@ c:\python34\python "%~dp0\make-firefox-meta.py" %DES%\
 if "%1"=="all" (
     echo "*** uBlock.firefox: Creating package..."
     pushd %DES%\
-    "%ProgramW6432%\7-Zip\7z.exe" a -tzip -mx9 -bd ..\uBlock.firefox.xpi *
+    "%ProgramW6432%\7-Zip\7z.exe" a -tzip -mx5 -bd ..\uBlock.firefox.xpi *
     popd
 )
 
