@@ -904,7 +904,7 @@ FilterGenericHnAnchored.prototype.match = function(url) {
 FilterGenericHnAnchored.fid = FilterGenericHnAnchored.prototype.fid = '||_';
 
 FilterGenericHnAnchored.prototype.toString = function() {
-    return this.s;
+    return '||' + this.s;
 };
 
 FilterGenericHnAnchored.prototype.toSelfie = function() {
