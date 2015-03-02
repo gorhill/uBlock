@@ -358,8 +358,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     //     - document.querySelector() = 44.79 ms
     //     - document.body.matches()  =  6.06 ms
     //     Firefox 36:
-    //     - document.querySelector() = 14.23 ms
-    //     - document.body.matches()  =  2.97 ms
+    //     - document.querySelector() = 27.10 ms
+    //     - document.body.matches()  =  3.50 ms
     //
     // However, Element.matches() is available from Chromium 34/Firefox 34. So
     // we fall back to slower document.querySelector() when Element.matches()
