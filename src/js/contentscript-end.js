@@ -93,7 +93,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         return;
     }
 
-    //var tStart = window.performance.now();
+    //var timer = window.performance || Date;
+    //var tStart = timer.now();
 
     var queriedSelectors = {};
     var injectedSelectors = {};
@@ -154,7 +155,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     var otherRetrieveHandler = function(selectors) {
-        //var tStart = window.performance.now();
+        //var tStart = timer.now();
         //console.debug('µBlock> contextNodes = %o', contextNodes);
         if ( selectors && selectors.highGenerics ) {
             highGenerics = selectors.highGenerics;
@@ -193,7 +194,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
-        //console.debug('%f: uBlock: CSS injection time', window.performance.now() - tStart);
+        //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
     };
 
     var retrieveHandler = firstRetrieveHandler;
@@ -347,6 +348,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // requests to process high-high generics into as few requests as possible.
     // The gain is *significant* on bloated pages.
 
+    var processHighHighGenericsMisses = 0;
     var processHighHighGenericsTimer = null;
 
     var processHighHighGenerics = function() {
@@ -354,9 +356,16 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) {
             return;
         }
-        //var tStart = window.performance.now();
+        //var tStart = timer.now();
         if ( document.querySelector(highGenerics.hideHigh) === null ) {
-            //console.debug('%f: uBlock: high-high generic time', window.performance.now() - tStart);
+            //console.debug('%f: high-high generic test time', timer.now() - tStart);
+            processHighHighGenericsMisses += 1;
+            // Too many misses for these nagging highly generic CSS rules,
+            // so we will just skip them from now on.
+            if ( processHighHighGenericsMisses >= 8 ) {
+                injectedSelectors['{{highHighGenerics}}'] = true;
+                console.debug('high-high generic: clearly not needed...');
+            }
             return;
         }
         injectedSelectors['{{highHighGenerics}}'] = true;
@@ -444,7 +453,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     classesFromNodeList(document.querySelectorAll('[class]'));
     retrieveGenericSelectors();
 
-    //console.debug('%f: uBlock: survey time', window.performance.now() - tStart);
+    //console.debug('%f: uBlock: survey time', timer.now() - tStart);
 
     // Below this point is the code which takes care to observe changes in
     // the page and to add if needed relevant CSS rules as a result of the
