@@ -1164,13 +1164,13 @@ var httpObserver = {
             return true;
         }
 
-        if ( result.redirectUrl ) {
+        /*if ( result.redirectUrl ) {
             channel.redirectionLimit = 1;
             channel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
             );
             return true;
-        }
+        }*/
 
         return false;
     },
@@ -1241,10 +1241,28 @@ var httpObserver = {
         var lastRequest = this.lastRequest;
 
         if ( lastRequest.url === null ) {
-            this.handleRequest(channel, URI, {
+            result = this.handleRequest(channel, URI, {
                 tabId: vAPI.noTabId,
-                type: channel.loadInfo && channel.loadInfo.contentPolicyType || 1
+                type: channel.loadInfo && channel.loadInfo.contentPolicyType
             });
+
+            if ( result === true ) {
+                return;
+            }
+
+            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
+                return;
+            }
+
+            // Carry data for behind-the-scene redirects
+            channelData = [
+                channel.loadInfo && channel.loadInfo.contentPolicyType || 1,
+                vAPI.noTabId,
+                null,
+                0,
+                -1
+            ];
+            channel.setProperty(this.REQDATAKEY, channelData);
             return;
         }
 
@@ -1293,16 +1311,14 @@ var httpObserver = {
 
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
-            channel.setProperty(
-                this.REQDATAKEY,
-                [
-                    lastRequest.type,
-                    lastRequest.tabId,
-                    sourceTabId,
-                    lastRequest.frameId,
-                    lastRequest.parentFrameId
-                ]
-            );
+            channelData = [
+                lastRequest.type,
+                lastRequest.tabId,
+                sourceTabId,
+                lastRequest.frameId,
+                lastRequest.parentFrameId
+            ];
+            channel.setProperty(this.REQDATAKEY, channelData);
         }
     },
 
@@ -1312,12 +1328,6 @@ var httpObserver = {
 
         // If error thrown, the redirect will fail
         try {
-            // skip internal redirects?
-            /*if ( flags & 4 ) {
-                console.log('internal redirect skipped');
-                return;
-            }*/
-
             var URI = newChannel.URI;
 
             if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
@@ -1328,10 +1338,7 @@ var httpObserver = {
                 return;
             }
 
-            // TODO: what if a behind-the-scene request is being redirected?
-            // This data is present only for tabbed requests, so if this throws,
-            // the redirection won't be evaluated and canceled (if necessary)
-            var channelData = oldChannel.getProperty(location.host + 'reqdata');
+            var channelData = oldChannel.getProperty(this.REQDATAKEY);
 
             if ( this.handlePopup(URI, channelData[1], channelData[2]) ) {
                 result = this.ABORT;
@@ -1352,7 +1359,7 @@ var httpObserver = {
 
             // Carry the data on in case of multiple redirects
             if ( newChannel instanceof Ci.nsIWritablePropertyBag ) {
-                newChannel.setProperty(location.host + 'reqdata', channelData);
+                newChannel.setProperty(this.REQDATAKEY, channelData);
             }
         } catch (ex) {
             // console.error(ex);
