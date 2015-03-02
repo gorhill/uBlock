@@ -100,8 +100,13 @@ var onBeforeRequest = function(details) {
         //console.debug('traffic.js > onBeforeRequest(): ALLOW "%s" (%o) because "%s"', details.url, details, result);
 
         // https://github.com/gorhill/uBlock/issues/114
-        if ( isFrame && details.frameId > 0 ) {
-            pageStore.setFrame(details.frameId, requestURL);
+        frameId = details.frameId;
+        if ( frameId > 0 ) {
+            if ( isFrame  ) {
+                pageStore.setFrame(frameId, requestURL);
+            } else if ( pageStore.getFrame(frameId) === null ) {
+                pageStore.setFrame(frameId, requestURL);
+            }
         }
 
         // https://code.google.com/p/chromium/issues/detail?id=387198

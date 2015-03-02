@@ -575,7 +575,7 @@ PageStore.prototype.disposeFrameStores = function() {
 /******************************************************************************/
 
 PageStore.prototype.getFrame = function(frameId) {
-    return this.frames[frameId];
+    return this.frames[frameId] || null;
 };
 
 /******************************************************************************/
