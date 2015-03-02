@@ -348,7 +348,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // requests to process high-high generics into as few requests as possible.
     // The gain is *significant* on bloated pages.
 
-    var processHighHighGenericsMisses = 0;
+    var processHighHighGenericsMisses = 8;
     var processHighHighGenericsTimer = null;
 
     var processHighHighGenerics = function() {
@@ -359,12 +359,12 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         //var tStart = timer.now();
         if ( document.querySelector(highGenerics.hideHigh) === null ) {
             //console.debug('%f: high-high generic test time', timer.now() - tStart);
-            processHighHighGenericsMisses += 1;
+            processHighHighGenericsMisses -= 1;
             // Too many misses for these nagging highly generic CSS rules,
             // so we will just skip them from now on.
-            if ( processHighHighGenericsMisses >= 8 ) {
+            if ( processHighHighGenericsMisses === 0 ) {
                 injectedSelectors['{{highHighGenerics}}'] = true;
-                console.debug('high-high generic: clearly not needed...');
+                console.debug('high-high generic: apparently not needed...');
             }
             return;
         }
