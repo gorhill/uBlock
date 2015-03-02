@@ -27,6 +27,13 @@
     if(vAPI.vapiClientInjected) {
         return;
     }
+    var safari;
+    if(typeof self.safari === "undefined") {
+        safari = self.top.safari;
+    }
+    else {
+        safari = self.safari;
+    }
     vAPI.vapiClientInjected = true;
     vAPI.safari = true;
     vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
@@ -71,9 +78,6 @@
         listeners: {},
         requestId: 1,
         setup: function() {
-            if(typeof safari === "undefined") {
-                return;
-            }
             this.connector = function(msg) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the vAPI.sessionId to accept only
@@ -107,9 +111,6 @@
                 channelName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
-                    if(typeof safari === "undefined") {
-                        return;
-                    }
                     if(!vAPI.messaging.connector) {
                         vAPI.messaging.setup();
                     }
