@@ -347,34 +347,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // requests to process high-high generics into as few requests as possible.
     // The gain is *significant* on bloated pages.
 
-    // Speed boost (uBlock 0.8.9.2+):
-    //   Element.matches is MUCH faster than document.querySelector().
-    //
-    //   Example:
-    //     gmail.com, a page rich in mutation events, which causes many calls
-    //     to processHighHighGenerics(). Cumulative time of 24 calls to 
-    //     matchesSelector() (default filter lists):
-    //     Chromium 40:
-    //     - document.querySelector() = 44.79 ms
-    //     - document.body.matches()  =  6.06 ms
-    //     Firefox 36:
-    //     - document.querySelector() = 27.10 ms
-    //     - document.body.matches()  =  3.50 ms
-    //
-    // However, Element.matches() is available from Chromium 34/Firefox 34. So
-    // we fall back to slower document.querySelector() when Element.matches()
-    // is not available.
-    var matchesSelector = (function() {
-        if ( document.body && document.body.matches ) {
-            return function(selector) {
-                return document.body.matches(selector);
-            };
-        }
-        return function(selector) {
-            return document.querySelector(selector) !== null;
-        };
-    })();
-
     var processHighHighGenericsTimer = null;
 
     var processHighHighGenerics = function() {
@@ -383,7 +355,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             return;
         }
         //var tStart = window.performance.now();
-        if ( matchesSelector(highGenerics.hideHigh) === false ) {
+        if ( document.querySelector(highGenerics.hideHigh) === null ) {
             //console.debug('%f: uBlock: high-high generic time', window.performance.now() - tStart);
             return;
         }
