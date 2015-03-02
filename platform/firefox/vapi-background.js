@@ -1052,14 +1052,7 @@ var httpObserver = {
         12: 'object',
         14: 'font'
     },
-    lastRequest: {
-        url: null,
-        type: null,
-        tabId: null,
-        frameId: null,
-        parentFrameId: null,
-        openerURL: null
-    },
+    lastRequest: [{}, {}],
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -1238,12 +1231,21 @@ var httpObserver = {
 
         // http-on-opening-request
 
-        var lastRequest = this.lastRequest;
+        var lastRequest = this.lastRequest[0];
+
+        if ( lastRequest.url !== URI.spec ) {
+            if ( this.lastRequest[1].url === URI.spec ) {
+                lastRequest = this.lastRequest[1];
+            } else {
+                lastRequest.url = null;
+            }
+        }
 
         if ( lastRequest.url === null ) {
+            lastRequest.type = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
             result = this.handleRequest(channel, URI, {
                 tabId: vAPI.noTabId,
-                type: channel.loadInfo && channel.loadInfo.contentPolicyType
+                type: lastRequest.type
             });
 
             if ( result === true ) {
@@ -1255,14 +1257,10 @@ var httpObserver = {
             }
 
             // Carry data for behind-the-scene redirects
-            channelData = [
-                channel.loadInfo && channel.loadInfo.contentPolicyType || 1,
-                vAPI.noTabId,
-                null,
-                0,
-                -1
-            ];
-            channel.setProperty(this.REQDATAKEY, channelData);
+            channel.setProperty(
+                this.REQDATAKEY,
+                [lastRequest.type, vAPI.noTabId, null, 0, -1]
+            );
             return;
         }
 
@@ -1311,14 +1309,13 @@ var httpObserver = {
 
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
-            channelData = [
+            channel.setProperty(this.REQDATAKEY, [
                 lastRequest.type,
                 lastRequest.tabId,
                 sourceTabId,
                 lastRequest.frameId,
                 lastRequest.parentFrameId
-            ];
-            channel.setProperty(this.REQDATAKEY, channelData);
+            ]);
         }
     },
 
@@ -1385,12 +1382,15 @@ vAPI.net.registerListeners = function() {
     var shouldLoadListener = function(e) {
         var details = e.data;
         var lastRequest = httpObserver.lastRequest;
-        lastRequest.url = details.url;
-        lastRequest.type = details.type;
-        lastRequest.tabId = vAPI.tabs.getTabId(e.target);
-        lastRequest.frameId = details.frameId;
-        lastRequest.parentFrameId = details.parentFrameId;
-        lastRequest.openerURL = details.openerURL;
+        lastRequest[1] = lastRequest[0];
+        lastRequest[0] = {
+            url: details.url,
+            type: details.type,
+            tabId: vAPI.tabs.getTabId(e.target),
+            frameId: details.frameId,
+            parentFrameId: details.parentFrameId,
+            openerURL: details.openerURL
+        };
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
