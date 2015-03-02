@@ -921,6 +921,40 @@ FilterGenericHnAnchored.fromSelfie = function(s) {
 
 /******************************************************************************/
 
+var FilterGenericHnAnchoredHostname = function(s, hostname) {
+    FilterGenericHnAnchored.call(this, s);
+    this.hostname = hostname;
+};
+FilterGenericHnAnchoredHostname.prototype = Object.create(FilterGenericHnAnchored.prototype);
+
+FilterGenericHnAnchoredHostname.prototype.match = function(url) {
+    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+        return false;
+    }
+    return FilterGenericHnAnchored.prototype.match.call(this. url);
+};
+
+FilterGenericHnAnchoredHostname.fid = FilterGenericHnAnchoredHostname.prototype.fid = '||_h';
+
+FilterGenericHnAnchoredHostname.prototype.toString = function() {
+    return '||' + this.s + '$domain=' + this.hostname;
+};
+
+FilterGenericHnAnchoredHostname.prototype.toSelfie = function() {
+    return this.s + '\t' + this.hostname;
+};
+
+FilterGenericHnAnchoredHostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
+};
+
+FilterGenericHnAnchoredHostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterGenericHnAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
+};
+
+/******************************************************************************/
+
 // With many wildcards, a regex is best.
 
 // Ref: regex escaper taken from:
@@ -1417,6 +1451,9 @@ var getHostnameBasedFilterClass = function(details) {
     var s = details.f;
     var wcOffset = s.indexOf('*');
     if ( wcOffset !== -1 ) {
+        if ( details.hostnameAnchored ) {
+            return FilterGenericHnAnchoredHostname;
+        }
         if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
             return details.anchor === 0 ? FilterManyWildcardsHostname : null;
         }
@@ -1735,23 +1772,31 @@ var findFirstGoodToken = function(s) {
     reGoodToken.lastIndex = 0;
     var matches;
     while ( matches = reGoodToken.exec(s) ) {
+        if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
+            continue;
+        }
         if ( badTokens.hasOwnProperty(matches[0]) ) {
             continue;
         }
+        return matches;
+    }
+    // No good token found, try again without minding "bad" tokens
+    reGoodToken.lastIndex = 0;
+    while ( matches = reGoodToken.exec(s) ) {
         if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
             continue;
         }
         return matches;
     }
-    // No good token found, just return the first token from left
-    reGoodToken.lastIndex = 0;
-    return reGoodToken.exec(s);
+    return null;
 };
 
 var findHostnameToken = function(s) {
     reHostnameToken.lastIndex = 0;
     return reHostnameToken.exec(s);
 };
+
+/******************************************************************************/
 
 FilterParser.prototype.makeToken = function() {
     if ( this.isRegex ) {
@@ -1774,7 +1819,7 @@ FilterParser.prototype.makeToken = function() {
     }
 
     matches = findFirstGoodToken(this.f);
-    if ( !matches || matches[0].length === 0 ) {
+    if ( matches === null || matches[0].length === 0 ) {
         return;
     }
     this.tokenBeg = matches.index;
@@ -1864,7 +1909,8 @@ FilterContainer.prototype.factories = {
      '//': FilterRegex,
     '//h': FilterRegexHostname,
     '{h}': FilterHostnameDict,
-    '||_': FilterGenericHnAnchored
+    '||_': FilterGenericHnAnchored,
+   '||_h': FilterGenericHnAnchoredHostname
 };
 
 /******************************************************************************/
