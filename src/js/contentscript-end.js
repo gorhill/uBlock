@@ -103,7 +103,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var nullArray = { push: function(){} };
 
     var retrieveGenericSelectors = function() {
-        if ( lowGenericSelectors.length > 0 || highGenerics === null ) {
+        if ( lowGenericSelectors.length !== 0 || highGenerics === null ) {
             //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', lowGenericSelectors.length);
             messager.send({
                     what: 'retrieveGenericCosmeticSelectors',
