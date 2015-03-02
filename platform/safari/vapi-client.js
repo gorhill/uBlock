@@ -236,7 +236,6 @@ return e.detail.url === false;\
 wo = open,\
 xo = XMLHttpRequest.prototype.open,\
 img = Image;\
-_noOP = function(){};\
 Image = function() {\
 var x = new img();\
 Object.defineProperty(x, 'src', {\
@@ -252,9 +251,9 @@ return x;\
 open = function(u) {\
 return block(u, 'popup') ? null : wo.apply(this, arguments);\
 };\
-XMLHttpRequest.prototype.open = function(m, u, s) {\
-if(block(u, 'xmlhttprequest')) return {send: _noOP};\
-else return xo.apply(this, arguments);\
+XMLHttpRequest.prototype.open = function(m, u) {\
+if(block(u, 'xmlhttprequest')) {throw 'InvalidAccessError'; return;}\
+else {xo.apply(this, arguments); return;}\
 };";
         if(frameId === 0) {
             tmpScript += "\
