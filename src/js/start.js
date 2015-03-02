@@ -158,11 +158,11 @@ var onSystemSettingsReady = function(fetched) {
         mustSaveSystemSettings = true;
     }
     if ( fetched.selfieMagic !== µb.systemSettings.selfieMagic ) {
-        fetched.selfie = null;
-        µb.destroySelfie();
         mustSaveSystemSettings = true;
     }
     if ( mustSaveSystemSettings ) {
+        fetched.selfie = null;
+        µb.destroySelfie();
         vAPI.storage.set(µb.systemSettings, µb.noopFunc);
     }
 };

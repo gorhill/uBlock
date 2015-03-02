@@ -59,6 +59,8 @@ var renderURL = function(url, filter) {
             .replace(/\?/g, '\\?')
             .replace('||', '')
             .replace(/\^/g, '.')
+            .replace(/^\|/g, '^')
+            .replace(/\|$/g, '$')
             .replace(/\*/g, '.*')
             ;
     }

@@ -288,7 +288,7 @@
         if ( µb.remoteBlacklists.hasOwnProperty(path) ) {
             var entry = µb.remoteBlacklists[path];
             entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
-            entry.entryUsedCount = entry.entryCount - snfe.duplicateCount - cfe.duplicateCount + duplicateCount;
+            entry.entryUsedCount = entry.entryCount - (snfe.duplicateCount + cfe.duplicateCount - duplicateCount);
         }
     };
 

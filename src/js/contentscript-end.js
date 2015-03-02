@@ -93,25 +93,23 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         return;
     }
 
+    //var timer = window.performance || Date;
+    //var tStart = timer.now();
+
     var queriedSelectors = {};
     var injectedSelectors = {};
-    var classSelectors = null;
-    var idSelectors = null;
+    var lowGenericSelectors = [];
     var highGenerics = null;
     var contextNodes = [document];
     var nullArray = { push: function(){} };
 
     var retrieveGenericSelectors = function() {
-        var selectors = classSelectors !== null ? Object.keys(classSelectors) : [];
-        if ( idSelectors !== null ) {
-            selectors = selectors.concat(idSelectors);
-        }
-        if ( selectors.length > 0 || highGenerics === null ) {
-            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', selectors.length);
+        if ( lowGenericSelectors.length !== 0 || highGenerics === null ) {
+            //console.log('µBlock> ABP cosmetic filters: retrieving CSS rules using %d selectors', lowGenericSelectors.length);
             messager.send({
                     what: 'retrieveGenericCosmeticSelectors',
                     pageURL: window.location.href,
-                    selectors: selectors,
+                    selectors: lowGenericSelectors,
                     highGenerics: highGenerics === null
                 },
                 retrieveHandler
@@ -122,8 +120,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         } else {
             otherRetrieveHandler(null);
         }
-        idSelectors = null;
-        classSelectors = null;
+        lowGenericSelectors = [];
     };
 
     // https://github.com/gorhill/uBlock/issues/452
@@ -139,7 +136,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         var selectors = vAPI.hideCosmeticFilters;
         if ( typeof selectors === 'object' ) {
             injectedSelectors = selectors;
-            hideElements(Object.keys(selectors).join(','));
+            //hideElements(Object.keys(selectors));
         }
         // Add exception filters into injected filters collection, in order
         // to force them to be seen as "already injected".
@@ -158,6 +155,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     };
 
     var otherRetrieveHandler = function(selectors) {
+        //var tStart = timer.now();
         //console.debug('µBlock> contextNodes = %o', contextNodes);
         if ( selectors && selectors.highGenerics ) {
             highGenerics = selectors.highGenerics;
@@ -196,6 +194,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
+        //console.debug('%f: uBlock: CSS injection time', timer.now() - tStart);
     };
 
     var retrieveHandler = firstRetrieveHandler;
@@ -206,10 +205,10 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        hideElements(selectors);
+        //hideElements(selectors);
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
-        style.appendChild(document.createTextNode(selectors.join(',\n') + '\n{display:none !important;}'));
+        style.appendChild(document.createTextNode(selectors.toString() + '\n{display:none !important;}'));
         var parent = document.body || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
@@ -349,12 +348,26 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // requests to process high-high generics into as few requests as possible.
     // The gain is *significant* on bloated pages.
 
+    var processHighHighGenericsMisses = 8;
     var processHighHighGenericsTimer = null;
 
     var processHighHighGenerics = function() {
         processHighHighGenericsTimer = null;
-        if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) { return; }
-        if ( document.querySelector(highGenerics.hideHigh) === null ) { return; }
+        if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) {
+            return;
+        }
+        //var tStart = timer.now();
+        if ( document.querySelector(highGenerics.hideHigh) === null ) {
+            //console.debug('%f: high-high generic test time', timer.now() - tStart);
+            processHighHighGenericsMisses -= 1;
+            // Too many misses for these nagging highly generic CSS rules,
+            // so we will just skip them from now on.
+            if ( processHighHighGenericsMisses === 0 ) {
+                injectedSelectors['{{highHighGenerics}}'] = true;
+                console.debug('high-high generic: apparently not needed...');
+            }
+            return;
+        }
         injectedSelectors['{{highHighGenerics}}'] = true;
         // We need to filter out possible exception cosmetic filters from
         // high-high generics selectors.
@@ -388,11 +401,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( !nodes || !nodes.length ) {
             return;
         }
-        if ( idSelectors === null ) {
-            idSelectors = [];
-        }
         var qq = queriedSelectors;
-        var ii = idSelectors;
+        var ll = lowGenericSelectors;
         var node, v;
         var i = nodes.length;
         while ( i-- ) {
@@ -404,8 +414,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             v = v.trim();
             if ( v === '' ) { continue; }
             v = '#' + v;
-            if ( qq[v] ) { continue; }
-            ii.push(v);
+            if ( qq.hasOwnProperty(v) ) { continue; }
+            ll.push(v);
             qq[v] = true;
         }
     };
@@ -417,11 +427,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( !nodes || !nodes.length ) {
             return;
         }
-        if ( classSelectors === null ) {
-            classSelectors = {};
-        }
         var qq = queriedSelectors;
-        var cc = classSelectors;
+        var ll = lowGenericSelectors;
         var node, v, vv, j;
         var i = nodes.length;
         while ( i-- ) {
@@ -433,8 +440,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 v = vv[j];
                 if ( typeof v !== 'string' ) { continue; }
                 v = '.' + v;
-                if ( qq[v] ) { continue; }
-                cc[v] = true;
+                if ( qq.hasOwnProperty(v) ) { continue; }
+                ll.push(v);
                 qq[v] = true;
             }
         }
@@ -445,6 +452,8 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     idsFromNodeList(document.querySelectorAll('[id]'));
     classesFromNodeList(document.querySelectorAll('[class]'));
     retrieveGenericSelectors();
+
+    //console.debug('%f: uBlock: survey time', timer.now() - tStart);
 
     // Below this point is the code which takes care to observe changes in
     // the page and to add if needed relevant CSS rules as a result of the
@@ -528,7 +537,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 (function() {
     // https://github.com/gorhill/uBlock/issues/683
     // Instead of a closure we use a map to remember the element to collapse
-    // or hide.
     var filterRequestId = 1;
     var filterRequests = {};
 

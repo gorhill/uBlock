@@ -549,7 +549,7 @@ vAPI.tabs.get = function(tabId, callback) {
         }
     }
 
-    // for internal use
+    // For internal use
     if ( typeof callback !== 'function' ) {
         return tab;
     }
@@ -565,12 +565,14 @@ vAPI.tabs.get = function(tabId, callback) {
 
     var browser = getBrowserForTab(tab);
     var tabBrowser = getTabBrowser(win);
-    var tabIndex = vAPI.fennec
-        ? tabBrowser.tabs.indexOf(tab)
-        : tabBrowser.browsers.indexOf(browser);
-    var tabTitle = vAPI.fennec
-        ? browser.contentTitle
-        : tab.label;
+    var tabIndex, tabTitle;
+    if ( vAPI.fennec ) {
+        tabIndex = tabBrowser.tabs.indexOf(tab);
+        tabTitle = browser.contentTitle;
+    } else {
+        tabIndex = tabBrowser.browsers.indexOf(browser);
+        tabTitle = tab.label;
+    }
 
     callback({
         id: tabId,
@@ -1022,14 +1024,7 @@ var httpObserver = {
         12: 'object',
         14: 'font'
     },
-    lastRequest: {
-        url: null,
-        type: null,
-        tabId: null,
-        frameId: null,
-        parentFrameId: null,
-        openerURL: null
-    },
+    lastRequest: [{}, {}],
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -1134,13 +1129,13 @@ var httpObserver = {
             return true;
         }
 
-        if ( result.redirectUrl ) {
+        /*if ( result.redirectUrl ) {
             channel.redirectionLimit = 1;
             channel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
             );
             return true;
-        }
+        }*/
 
         return false;
     },
@@ -1159,13 +1154,6 @@ var httpObserver = {
             }
 
             try {
-                /*[
-                    type,
-                    tabId,
-                    sourceTabId - given if it was a popup,
-                    frameId,
-                    parentFrameId
-                ]*/
                 channelData = channel.getProperty(this.REQDATAKEY);
             } catch (ex) {
                 return;
@@ -1175,7 +1163,7 @@ var httpObserver = {
                 return;
             }
 
-            if ( (1 << channelData[0] & this.VALID_CSP_TARGETS) === 0 ) {
+            if ( (1 << channelData[4] & this.VALID_CSP_TARGETS) === 0 ) {
                 return;
             }
 
@@ -1189,9 +1177,9 @@ var httpObserver = {
 
             result = vAPI.net.onHeadersReceived.callback({
                 hostname: URI.asciiHost,
-                parentFrameId: channelData[4],
+                parentFrameId: channelData[1],
                 responseHeaders: result ? [{name: topic, value: result}] : [],
-                tabId: channelData[1],
+                tabId: channelData[3],
                 url: URI.asciiSpec
             });
 
@@ -1208,13 +1196,36 @@ var httpObserver = {
 
         // http-on-opening-request
 
-        var lastRequest = this.lastRequest;
+        var lastRequest = this.lastRequest[0];
+
+        if ( lastRequest.url !== URI.spec ) {
+            if ( this.lastRequest[1].url === URI.spec ) {
+                lastRequest = this.lastRequest[1];
+            } else {
+                lastRequest.url = null;
+            }
+        }
 
         if ( lastRequest.url === null ) {
-            this.handleRequest(channel, URI, {
+            lastRequest.type = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
+            result = this.handleRequest(channel, URI, {
                 tabId: vAPI.noTabId,
-                type: channel.loadInfo && channel.loadInfo.contentPolicyType || 1
+                type: lastRequest.type
             });
+
+            if ( result === true ) {
+                return;
+            }
+
+            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
+                return;
+            }
+
+            // Carry data for behind-the-scene redirects
+            channel.setProperty(
+                this.REQDATAKEY,
+                [lastRequest.type, vAPI.noTabId, null, 0, -1]
+            );
             return;
         }
 
@@ -1222,34 +1233,11 @@ var httpObserver = {
         // the URL will be the same, so it could fall into an infinite loop
         lastRequest.url = null;
 
-        var sourceTabId = null;
-
-        // Popup candidate (only for main_frame type)
-        if ( lastRequest.openerURL ) {
-            for ( var tab of vAPI.tabs.getAll() ) {
-                var tabURI = tab.linkedBrowser.currentURI;
-
-                // Probably isn't the best method to identify the source tab
-                if ( tabURI.spec !== lastRequest.openerURL ) {
-                    continue;
-                }
-
-                sourceTabId = vAPI.tabs.getTabId(tab);
-
-                if ( sourceTabId !== lastRequest.tabId ) {
-                    break;
-                }
-
-                sourceTabId = null;
-            }
-
-            if ( this.handlePopup(channel.URI, lastRequest.tabId, sourceTabId) ) {
-                channel.cancel(this.ABORT);
-                return;
-            }
+        if ( this.handleRequest(channel, URI, lastRequest) ) {
+            return;
         }
-        
-        if ( lastRequest.type === this.MAIN_FRAME && lastRequest.frameId === 0 ) {
+
+        if ( vAPI.fennec && lastRequest.type === this.MAIN_FRAME && lastRequest.frameId === 0 ) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: lastRequest.tabId,
@@ -1257,22 +1245,15 @@ var httpObserver = {
             });
         }
 
-        if ( this.handleRequest(channel, URI, lastRequest) ) {
-            return;
-        }
-
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
-            channel.setProperty(
-                this.REQDATAKEY,
-                [
-                    lastRequest.type,
-                    lastRequest.tabId,
-                    sourceTabId,
-                    lastRequest.frameId,
-                    lastRequest.parentFrameId
-                ]
-            );
+            channel.setProperty(this.REQDATAKEY, [
+                lastRequest.frameId,
+                lastRequest.parentFrameId,
+                lastRequest.sourceTabId,
+                lastRequest.tabId,
+                lastRequest.type
+            ]);
         }
     },
 
@@ -1282,12 +1263,6 @@ var httpObserver = {
 
         // If error thrown, the redirect will fail
         try {
-            // skip internal redirects?
-            /*if ( flags & 4 ) {
-                console.log('internal redirect skipped');
-                return;
-            }*/
-
             var URI = newChannel.URI;
 
             if ( !URI.schemeIs('http') && !URI.schemeIs('https') ) {
@@ -1298,21 +1273,18 @@ var httpObserver = {
                 return;
             }
 
-            // TODO: what if a behind-the-scene request is being redirected?
-            // This data is present only for tabbed requests, so if this throws,
-            // the redirection won't be evaluated and canceled (if necessary)
             var channelData = oldChannel.getProperty(this.REQDATAKEY);
 
-            if ( this.handlePopup(URI, channelData[1], channelData[2]) ) {
+            if ( this.handlePopup(URI, channelData[3], channelData[2]) ) {
                 result = this.ABORT;
                 return;
             }
 
             var details = {
-                type: channelData[0],
-                tabId: channelData[1],
-                frameId: channelData[3],
-                parentFrameId: channelData[4]
+                frameId: channelData[0],
+                parentFrameId: channelData[1],
+                tabId: channelData[3],
+                type: channelData[4]
             };
 
             if ( this.handleRequest(newChannel, URI, details) ) {
@@ -1347,13 +1319,46 @@ vAPI.net.registerListeners = function() {
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
         var details = e.data;
+        var tabId = vAPI.tabs.getTabId(e.target);
+        var sourceTabId = null;
+
+        // Popup candidate
+        if ( details.openerURL ) {
+            for ( var tab of vAPI.tabs.getAll() ) {
+                var URI = tab.linkedBrowser.currentURI;
+
+                // Probably isn't the best method to identify the source tab
+                if ( URI.spec !== details.openerURL ) {
+                    continue;
+                }
+
+                sourceTabId = vAPI.tabs.getTabId(tab);
+
+                if ( sourceTabId === tabId ) {
+                    sourceTabId = null;
+                    continue;
+                }
+
+                URI = Services.io.newURI(details.url, null, null);
+
+                if ( httpObserver.handlePopup(URI, tabId, sourceTabId) ) {
+                    return;
+                }
+
+                break;
+            }
+        }
+
         var lastRequest = httpObserver.lastRequest;
-        lastRequest.url = details.url;
-        lastRequest.type = details.type;
-        lastRequest.tabId = vAPI.tabs.getTabId(e.target);
-        lastRequest.frameId = details.frameId;
-        lastRequest.parentFrameId = details.parentFrameId;
-        lastRequest.openerURL = details.openerURL;
+        lastRequest[1] = lastRequest[0];
+        lastRequest[0] = {
+            frameId: details.frameId,
+            parentFrameId: details.parentFrameId,
+            sourceTabId: sourceTabId,
+            tabId: tabId,
+            type: details.type,
+            url: details.url
+        };
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
@@ -1813,7 +1818,7 @@ vAPI.contextMenu.create = function(details, callback) {
 
         if ( gContextMenu.inFrame ) {
             details.tagName = 'iframe';
-            // Probably won't work with e01s
+            // Probably won't work with e10s
             details.frameUrl = gContextMenu.focusedWindow.location.href;
         } else if ( gContextMenu.onImage ) {
             details.tagName = 'img';

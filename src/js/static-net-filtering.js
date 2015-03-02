@@ -19,8 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false, esnext: true */
-/* global µBlock */
+/* jshint bitwise: false, esnext: true, boss: true */
+/* global punycode, µBlock */
 
 // Older Safari throws an exception for const when it's used with 'use strict'.
 // 'use strict';
@@ -88,9 +88,7 @@ const AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
 const AllowAnyType = AllowAction | AnyType;
 const AllowAnyParty = AllowAction | AnyParty;
 
-var reHostnameRule = /^[0-9a-z][0-9a-z.-]+[0-9a-z]$/;
-var reHostnameToken = /^[0-9a-z]+/g;
-var reGoodToken = /[%0-9a-z]{2,}/g;
+var reHostnameRule = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
 var reURLPostHostnameAnchors = /[\/?#]/;
 
 // ABP filters: https://adblockplus.org/en/filters
@@ -166,6 +164,12 @@ var isFirstParty = function(firstPartyDomain, hostname) {
     // Be sure to not confuse 'example.com' with 'anotherexample.com'
     var c = hostname.charAt(hostname.length - firstPartyDomain.length - 1);
     return c === '.' || c === '';
+};
+
+var strToRegex = function(prefix, s) {
+    var reStr = s.replace(/([.+?^=!:${}()|\[\]\/\\])/g, '\\$1')
+                 .replace(/\*/g, '.*');
+    return new RegExp(prefix + reStr);
 };
 
 /*******************************************************************************
@@ -872,6 +876,51 @@ FilterSingleWildcardRightAnchoredHostname.fromSelfie = function(s) {
 
 /******************************************************************************/
 
+// Generic filter: hostname-anchored: it has that extra test to find out
+// whether the start of the match falls within the hostname part of the
+// URL.
+
+var FilterGenericHnAnchored = function(s) {
+    this.s = s;
+    this.re = null;
+};
+
+FilterGenericHnAnchored.prototype.match = function(url) {
+    if ( this.re === null ) {
+        this.re = strToRegex('', this.s);
+    }
+    // Quick test first
+    if ( this.re.test(url) === false ) {
+        return false;
+    }
+    // Valid only if begininning of match is within the hostname
+    // part of the url
+    var match = this.re.exec(url);
+    var pos = url.indexOf('://');
+    return pos !== -1 &&
+           reURLPostHostnameAnchors.test(url.slice(pos + 3, match.index)) === false;
+};
+
+FilterGenericHnAnchored.fid = FilterGenericHnAnchored.prototype.fid = '||_';
+
+FilterGenericHnAnchored.prototype.toString = function() {
+    return '||' + this.s;
+};
+
+FilterGenericHnAnchored.prototype.toSelfie = function() {
+    return this.s;
+};
+
+FilterGenericHnAnchored.compile = function(details) {
+    return details.f;
+};
+
+FilterGenericHnAnchored.fromSelfie = function(s) {
+    return new FilterGenericHnAnchored(s);
+};
+
+/******************************************************************************/
+
 // With many wildcards, a regex is best.
 
 // Ref: regex escaper taken from:
@@ -881,10 +930,13 @@ FilterSingleWildcardRightAnchoredHostname.fromSelfie = function(s) {
 var FilterManyWildcards = function(s, tokenBeg) {
     this.s = s;
     this.tokenBeg = tokenBeg;
-    this.re = new RegExp('^' + s.replace(/([.+?^=!:${}()|\[\]\/\\])/g, '\\$1').replace(/\*/g, '.*'));
+    this.re = null;
 };
 
 FilterManyWildcards.prototype.match = function(url, tokenBeg) {
+    if ( this.re === null ) {
+        this.re = strToRegex('^', this.s);
+    }
     return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
@@ -912,13 +964,18 @@ FilterManyWildcards.fromSelfie = function(s) {
 var FilterManyWildcardsHostname = function(s, tokenBeg, hostname) {
     this.s = s;
     this.tokenBeg = tokenBeg;
-    this.re = new RegExp('^' + s.replace(/([.+?^=!:${}()|\[\]\/\\])/g, '\\$1').replace(/\*/g, '.*'));
+    this.re = null;
     this.hostname = hostname;
 };
 
 FilterManyWildcardsHostname.prototype.match = function(url, tokenBeg) {
-    return pageHostnameRegister.slice(-this.hostname.length) === this.hostname &&
-           this.re.test(url.slice(tokenBeg - this.tokenBeg));
+    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+        return false;
+    }
+    if ( this.re === null ) {
+        this.re = strToRegex('^', this.s);
+    }
+    return this.re.test(url.slice(tokenBeg - this.tokenBeg));
 };
 
 FilterManyWildcardsHostname.fid = FilterManyWildcardsHostname.prototype.fid = '*+h';
@@ -1316,6 +1373,9 @@ var getFilterClass = function(details) {
     var s = details.f;
     var wcOffset = s.indexOf('*');
     if ( wcOffset !== -1 ) {
+        if ( details.hostnameAnchored ) {
+            return FilterGenericHnAnchored;
+        }
         if ( s.indexOf('*', wcOffset + 1) !== -1 ) {
             return details.anchor === 0 ? FilterManyWildcards : null;
         }
@@ -1384,47 +1444,6 @@ var getHostnameBasedFilterClass = function(details) {
         return FilterPlainPrefix1Hostname;
     }
     return FilterPlainHostname;
-};
-
-/******************************************************************************/
-
-// Given a string, find a good token. Tokens which are too generic, i.e. very
-// common with a high probability of ending up as a miss, are not
-// good. Avoid if possible. This has a *significant* positive impact on
-// performance.
-// These "bad tokens" are collated manually.
-
-var badTokens = {
-    'com': true,
-    'http': true,
-    'https': true,
-    'icon': true,
-    'images': true,
-    'img': true,
-    'js': true,
-    'net': true,
-    'news': true,
-    'www': true
-};
-
-var findFirstGoodToken = function(s) {
-    reGoodToken.lastIndex = 0;
-    var matches;
-    while ( matches = reGoodToken.exec(s) ) {
-        if ( badTokens[matches[0]] === undefined ) {
-            return matches;
-        }
-    }
-    // No good token found, just return the first token from left
-    reGoodToken.lastIndex = 0;
-    return reGoodToken.exec(s);
-};
-
-/******************************************************************************/
-
-var findHostnameToken = function(s) {
-    reHostnameToken.lastIndex = 0;
-    return reHostnameToken.exec(s);
 };
 
 /******************************************************************************/
@@ -1690,6 +1709,50 @@ FilterParser.prototype.parse = function(raw) {
 
 /******************************************************************************/
 
+// Given a string, find a good token. Tokens which are too generic, i.e. very
+// common with a high probability of ending up as a miss, are not
+// good. Avoid if possible. This has a *significant* positive impact on
+// performance.
+// These "bad tokens" are collated manually.
+
+var reHostnameToken = /^[0-9a-z]+/g;
+var reGoodToken = /[%0-9a-z]{2,}/g;
+
+var badTokens = {
+    'com': true,
+    'http': true,
+    'https': true,
+    'icon': true,
+    'images': true,
+    'img': true,
+    'js': true,
+    'net': true,
+    'news': true,
+    'www': true
+};
+
+var findFirstGoodToken = function(s) {
+    reGoodToken.lastIndex = 0;
+    var matches;
+    while ( matches = reGoodToken.exec(s) ) {
+        if ( badTokens.hasOwnProperty(matches[0]) ) {
+            continue;
+        }
+        if ( s.charAt(reGoodToken.lastIndex) === '*' ) {
+            continue;
+        }
+        return matches;
+    }
+    // No good token found, just return the first token from left
+    reGoodToken.lastIndex = 0;
+    return reGoodToken.exec(s);
+};
+
+var findHostnameToken = function(s) {
+    reHostnameToken.lastIndex = 0;
+    return reHostnameToken.exec(s);
+};
+
 FilterParser.prototype.makeToken = function() {
     if ( this.isRegex ) {
         this.token = '*';
@@ -1698,7 +1761,8 @@ FilterParser.prototype.makeToken = function() {
 
     var matches;
 
-    if ( this.hostnameAnchored ) {
+    // Hostname-anchored with no wildcard always have a token index of 0.
+    if ( this.hostnameAnchored && this.f.indexOf('*') === -1 ) {
         matches = findHostnameToken(this.f);
         if ( !matches || matches[0].length === 0 ) {
             return;
@@ -1799,7 +1863,8 @@ FilterContainer.prototype.factories = {
     '*+h': FilterManyWildcardsHostname,
      '//': FilterRegex,
     '//h': FilterRegexHostname,
-    '{h}': FilterHostnameDict
+    '{h}': FilterHostnameDict,
+    '||_': FilterGenericHnAnchored
 };
 
 /******************************************************************************/

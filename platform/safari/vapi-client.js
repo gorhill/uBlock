@@ -27,6 +27,13 @@
     if(vAPI.vapiClientInjected) {
         return;
     }
+    var safari;
+    if(typeof self.safari === "undefined") {
+        safari = self.top.safari;
+    }
+    else {
+        safari = self.safari;
+    }
     vAPI.vapiClientInjected = true;
     vAPI.safari = true;
     vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
@@ -71,9 +78,6 @@
         listeners: {},
         requestId: 1,
         setup: function() {
-            if(typeof safari === "undefined") {
-                return;
-            }
             this.connector = function(msg) {
                 // messages from the background script are sent to every frame,
                 // so we need to check the vAPI.sessionId to accept only
@@ -107,9 +111,6 @@
                 channelName: channelName,
                 listener: typeof callback === 'function' ? callback : null,
                 send: function(message, callback) {
-                    if(typeof safari === "undefined") {
-                        return;
-                    }
                     if(!vAPI.messaging.connector) {
                         vAPI.messaging.setup();
                     }
@@ -236,7 +237,6 @@ return e.detail.url === false;\
 wo = open,\
 xo = XMLHttpRequest.prototype.open,\
 img = Image;\
-_noOP = function(){};\
 Image = function() {\
 var x = new img();\
 Object.defineProperty(x, 'src', {\
@@ -252,9 +252,9 @@ return x;\
 open = function(u) {\
 return block(u, 'popup') ? null : wo.apply(this, arguments);\
 };\
-XMLHttpRequest.prototype.open = function(m, u, s) {\
-if(block(u, 'xmlhttprequest')) return {send: _noOP};\
-else return xo.apply(this, arguments);\
+XMLHttpRequest.prototype.open = function(m, u) {\
+if(block(u, 'xmlhttprequest')) {throw 'InvalidAccessError'; return;}\
+else {xo.apply(this, arguments); return;}\
 };";
         if(frameId === 0) {
             tmpScript += "\
