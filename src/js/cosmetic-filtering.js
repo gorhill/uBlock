@@ -1199,7 +1199,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
 /******************************************************************************/
 
 FilterContainer.prototype.getFilterCount = function() {
-    return this.acceptedCount;
+    return this.acceptedCount - this.duplicateCount;
 };
 
 /******************************************************************************/
