@@ -10,8 +10,7 @@
         <type>2</type>
         <bootstrap>true</bootstrap>
         <multiprocessCompatible>true</multiprocessCompatible>
-        <optionsType>3</optionsType>
-        <optionsURL>chrome://ublock/content/dashboard.html</optionsURL>
+        <optionsType>2</optionsType>
 {localized}
 
         <!-- Firefox -->

@@ -15,6 +15,7 @@ xcopy /S /I src\js %DES%\js
 xcopy /S /I src\lib %DES%\lib
 xcopy /S /I src\_locales %DES%\_locales
 xcopy src\*.html %DES%\
+xcopy src\*.xul %DES%\
 move %DES%\img\icon_128.png %DES%\icon.png
 xcopy platform\firefox\vapi-*.js %DES%\js\
 xcopy platform\firefox\bootstrap.js %DES%\
@@ -30,6 +31,7 @@ c:\python34\python "%~dp0\make-firefox-meta.py" %DES%\
 if "%1"=="all" (
     echo "*** uBlock.firefox: Creating package..."
     pushd %DES%\
+    del ..\uBlock.firefox.xpi
     "%ProgramW6432%\7-Zip\7z.exe" a -tzip -mx5 -bd ..\uBlock.firefox.xpi *
     popd
 )
