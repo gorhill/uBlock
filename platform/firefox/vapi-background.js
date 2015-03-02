@@ -1182,13 +1182,6 @@ var httpObserver = {
             }
 
             try {
-                /*[
-                    type,
-                    tabId,
-                    sourceTabId - given if it was a popup,
-                    frameId,
-                    parentFrameId
-                ]*/
                 channelData = channel.getProperty(this.REQDATAKEY);
             } catch (ex) {
                 return;
@@ -1198,7 +1191,7 @@ var httpObserver = {
                 return;
             }
 
-            if ( (1 << channelData[0] & this.VALID_CSP_TARGETS) === 0 ) {
+            if ( (1 << channelData[4] & this.VALID_CSP_TARGETS) === 0 ) {
                 return;
             }
 
@@ -1212,9 +1205,9 @@ var httpObserver = {
 
             result = vAPI.net.onHeadersReceived.callback({
                 hostname: URI.asciiHost,
-                parentFrameId: channelData[4],
+                parentFrameId: channelData[1],
                 responseHeaders: result ? [{name: topic, value: result}] : [],
-                tabId: channelData[1],
+                tabId: channelData[3],
                 url: URI.asciiSpec
             });
 
@@ -1268,33 +1261,6 @@ var httpObserver = {
         // the URL will be the same, so it could fall into an infinite loop
         lastRequest.url = null;
 
-        var sourceTabId = null;
-
-        // Popup candidate (only for main_frame type)
-        if ( lastRequest.openerURL ) {
-            for ( var tab of vAPI.tabs.getAll() ) {
-                var tabURI = tab.linkedBrowser.currentURI;
-
-                // Probably isn't the best method to identify the source tab
-                if ( tabURI.spec !== lastRequest.openerURL ) {
-                    continue;
-                }
-
-                sourceTabId = vAPI.tabs.getTabId(tab);
-
-                if ( sourceTabId !== lastRequest.tabId ) {
-                    break;
-                }
-
-                sourceTabId = null;
-            }
-
-            if ( this.handlePopup(channel.URI, lastRequest.tabId, sourceTabId) ) {
-                channel.cancel(this.ABORT);
-                return;
-            }
-        }
-
         if ( this.handleRequest(channel, URI, lastRequest) ) {
             return;
         }
@@ -1310,11 +1276,11 @@ var httpObserver = {
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
             channel.setProperty(this.REQDATAKEY, [
-                lastRequest.type,
-                lastRequest.tabId,
-                sourceTabId,
                 lastRequest.frameId,
-                lastRequest.parentFrameId
+                lastRequest.parentFrameId,
+                lastRequest.sourceTabId,
+                lastRequest.tabId,
+                lastRequest.type
             ]);
         }
     },
@@ -1337,16 +1303,16 @@ var httpObserver = {
 
             var channelData = oldChannel.getProperty(this.REQDATAKEY);
 
-            if ( this.handlePopup(URI, channelData[1], channelData[2]) ) {
+            if ( this.handlePopup(URI, channelData[3], channelData[2]) ) {
                 result = this.ABORT;
                 return;
             }
 
             var details = {
-                type: channelData[0],
-                tabId: channelData[1],
-                frameId: channelData[3],
-                parentFrameId: channelData[4]
+                frameId: channelData[0],
+                parentFrameId: channelData[1],
+                tabId: channelData[3],
+                type: channelData[4]
             };
 
             if ( this.handleRequest(newChannel, URI, details) ) {
@@ -1381,15 +1347,45 @@ vAPI.net.registerListeners = function() {
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
         var details = e.data;
+        var tabId = vAPI.tabs.getTabId(e.target);
+        var sourceTabId = null;
+
+        // Popup candidate
+        if ( details.openerURL ) {
+            for ( var tab of vAPI.tabs.getAll() ) {
+                var URI = tab.linkedBrowser.currentURI;
+
+                // Probably isn't the best method to identify the source tab
+                if ( URI.spec !== details.openerURL ) {
+                    continue;
+                }
+
+                sourceTabId = vAPI.tabs.getTabId(tab);
+
+                if ( sourceTabId === tabId ) {
+                    sourceTabId = null;
+                    continue;
+                }
+
+                URI = Services.io.newURI(details.url, null, null);
+
+                if ( httpObserver.handlePopup(URI, tabId, sourceTabId) ) {
+                    return;
+                }
+
+                break;
+            }
+        }
+
         var lastRequest = httpObserver.lastRequest;
         lastRequest[1] = lastRequest[0];
         lastRequest[0] = {
-            url: details.url,
-            type: details.type,
-            tabId: vAPI.tabs.getTabId(e.target),
             frameId: details.frameId,
             parentFrameId: details.parentFrameId,
-            openerURL: details.openerURL
+            sourceTabId: sourceTabId,
+            tabId: tabId,
+            type: details.type,
+            url: details.url
         };
     };
 
