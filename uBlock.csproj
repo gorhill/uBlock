@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{56C47343-44BB-40E9-9803-CDA9544BB0DF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>uBlock</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63819</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63819/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)tools\deploy-firefox-android.bat"</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="platform\firefox\bootstrap.js" />
+    <Content Include="platform\firefox\frameModule.js" />
+    <Content Include="platform\firefox\frameScript.js" />
+    <Content Include="platform\firefox\vapi-background.js" />
+    <Content Include="platform\firefox\vapi-client.js" />
+    <Content Include="platform\firefox\vapi-common.js" />
+    <Content Include="platform\firefox\vapi-popup.js" />
+    <Content Include="src\1p-filters.html" />
+    <Content Include="src\3p-filters.html" />
+    <Content Include="src\about.html" />
+    <Content Include="src\asset-viewer.html" />
+    <Content Include="src\background.html" />
+    <Content Include="src\css\1p-filters.css" />
+    <Content Include="src\css\3p-filters.css" />
+    <Content Include="src\css\about.css" />
+    <Content Include="src\css\common.css" />
+    <Content Include="src\css\dashboard-common.css" />
+    <Content Include="src\css\dashboard.css" />
+    <Content Include="src\css\devtool-log.css" />
+    <Content Include="src\css\devtools.css" />
+    <Content Include="src\css\dyna-rules.css" />
+    <Content Include="src\css\fonts\OFL.txt" />
+    <Content Include="src\css\popup.css" />
+    <Content Include="src\css\whitelist.css" />
+    <None Include="src\options.xul" />
+    <Content Include="src\dashboard.html" />
+    <Content Include="src\devtool-log.html" />
+    <Content Include="src\devtools.html" />
+    <Content Include="src\dyna-rules.html" />
+    <Content Include="src\epicker.html" />
+    <Content Include="src\img\browsericons\icon16%402x.png" />
+    <Content Include="src\img\browsericons\icon16-off%402x.png" />
+    <Content Include="src\img\browsericons\icon16-off.png" />
+    <Content Include="src\img\browsericons\icon16-off.svg" />
+    <Content Include="src\img\browsericons\icon16.png" />
+    <Content Include="src\img\browsericons\icon16.svg" />
+    <Content Include="src\img\browsericons\icon19-off.png" />
+    <Content Include="src\img\browsericons\icon19.png" />
+    <Content Include="src\img\browsericons\icon38-off.png" />
+    <Content Include="src\img\browsericons\icon38.png" />
+    <Content Include="src\img\help16.png" />
+    <Content Include="src\img\icon_128.png" />
+    <Content Include="src\img\icon_16.png" />
+    <Content Include="src\img\ublock.svg" />
+    <Content Include="src\js\1p-filters.js" />
+    <Content Include="src\js\3p-filters.js" />
+    <Content Include="src\js\about.js" />
+    <Content Include="src\js\asset-viewer.js" />
+    <Content Include="src\js\assets.js" />
+    <Content Include="src\js\async.js" />
+    <Content Include="src\js\background.js" />
+    <Content Include="src\js\contentscript-end.js" />
+    <Content Include="src\js\contentscript-start.js" />
+    <Content Include="src\js\contextmenu.js" />
+    <Content Include="src\js\cosmetic-filtering.js" />
+    <Content Include="src\js\dashboard-common.js" />
+    <Content Include="src\js\dashboard.js" />
+    <Content Include="src\js\devtool-log.js" />
+    <Content Include="src\js\devtools.js" />
+    <Content Include="src\js\dyna-rules.js" />
+    <Content Include="src\js\dynamic-net-filtering.js" />
+    <Content Include="src\js\element-picker.js" />
+    <Content Include="src\js\i18n.js" />
+    <Content Include="src\js\messaging.js" />
+    <Content Include="src\js\mirrors.js" />
+    <Content Include="src\js\pagestore.js" />
+    <Content Include="src\js\popup.js" />
+    <Content Include="src\js\profiler.js" />
+    <Content Include="src\js\settings.js" />
+    <Content Include="src\js\start.js" />
+    <Content Include="src\js\static-net-filtering.js" />
+    <Content Include="src\js\storage.js" />
+    <Content Include="src\js\tab.js" />
+    <Content Include="src\js\traffic.js" />
+    <Content Include="src\js\ublock.js" />
+    <Content Include="src\js\udom.js" />
+    <Content Include="src\js\uritools.js" />
+    <Content Include="src\js\utils.js" />
+    <Content Include="src\js\whitelist.js" />
+    <Content Include="src\js\xal.js" />
+    <Content Include="src\lib\publicsuffixlist.js" />
+    <Content Include="src\lib\punycode.js" />
+    <Content Include="src\lib\yamd5.js" />
+    <Content Include="src\popup.html" />
+    <Content Include="src\settings.html" />
+    <Content Include="src\whitelist.html" />
+    <Content Include="src\_locales\en\messages.json" />
+    <Content Include="tools\deploy-firefox-android.bat" />
+    <Content Include="tools\make-firefox.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\css\fonts\fontawesome-webfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="platform\firefox\chrome.manifest" />
+    <Content Include="platform\firefox\install.rdf">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+</Project>
