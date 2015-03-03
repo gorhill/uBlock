@@ -36,6 +36,12 @@ uDom.onLoad(function() {
             elem.attr('title', title);
         }
     });
+    uDom('[placeholder]').forEach(function(elem) {
+        var placeholder = vAPI.i18n(elem.attr('placeholder'));
+        if ( placeholder ) {
+            elem.attr('placeholder', placeholder);
+        }
+    });
     uDom('[data-i18n-tip]').forEach(function(elem) {
         elem.attr(
             'data-tip',
