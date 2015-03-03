@@ -245,16 +245,13 @@ var unapplyFilter = function() {
 /******************************************************************************/
 
 var onFilterButton = function() {
-    uDom('#filterButton').toggleClass('off');
-    onFilterChanged();
+    uDom('body').toggleClass('filterOff');
 };
 
 /******************************************************************************/
 
 var onFilterChanged = function() {
-    var filterRaw = uDom('#filterButton').hasClass('off') ?
-            '' :
-            uDom('#filterExpression').val().trim();
+    var filterRaw = uDom('#filterExpression').val().trim();
 
     if ( filterRaw === '') {
         reFilter = null;

@@ -34,7 +34,7 @@ body {
 #toolbar .button:hover {
     background-color: #eee;
     }
-#toolbar #filterButton.off {
+body.filterOff #toolbar #filterButton {
     opacity: 0.25;
     }
 #content {
@@ -58,7 +58,7 @@ body {
 #content table tr.maindoc {
     background-color: #eee;
     }
-#content table tr.hidden {
+body:not(.filterOff) #content table tr.hidden {
     display: none;
     }
 #content table tr td {
