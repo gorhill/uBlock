@@ -26,6 +26,8 @@
 
 µBlock.Firewall = (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var magicId = 'chmdgxwtetgu';
