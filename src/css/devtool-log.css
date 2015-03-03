@@ -10,32 +10,35 @@ body {
     width: 100%;
     }
 #toolbar {
-    padding: 8px 0;
+    background-color: white;
+    border: 0;
+    box-sizing: border-box;
+    height: 36px;
+    margin: 0;
+    padding: 0;
     position: fixed;
     text-align: center;
     top: 0;
-    width: 4em;
+    width: 100%;
     }
 #toolbar .button {
     background-color: white;
     border: none;
+    box-sizing: border-box;
     cursor: pointer;
-    display: block;
-    font-size: large;
+    display: inline-block;
+    font-size: 20px;
     margin: 0;
-    padding: 0.5em 0;
+    padding: 8px;
     }
 #toolbar .button:hover {
     background-color: #eee;
     }
+#toolbar #filterButton.off {
+    opacity: 0.25;
+    }
 #content {
-    width: calc(100% - 4em);
-    }
-body[dir="ltr"] #content {
-    margin-left: 4em;
-    }
-body[dir="rtl"] #content {
-    margin-right: 4em;
+    margin-top: 36px;
     }
 #content table {
     border: 0;
@@ -55,6 +58,9 @@ body[dir="rtl"] #content {
 #content table tr.maindoc {
     background-color: #eee;
     }
+#content table tr.hidden {
+    display: none;
+    }
 #content table tr td {
     border: 1px solid #ccc;
     padding: 3px;
@@ -63,6 +69,7 @@ body[dir="rtl"] #content {
 #content table tr td:nth-of-type(1) {
     padding: 3px 0;
     text-align: center;
+    white-space: pre;
     }
 #content table tr td:nth-of-type(2) {
     white-space: normal;

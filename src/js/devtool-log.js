@@ -36,6 +36,7 @@ var doc = document;
 var body = doc.body;
 var tbody = doc.querySelector('#content tbody');
 var rowJunkyard = [];
+var reFilter = null;
 
 /******************************************************************************/
 
@@ -101,15 +102,15 @@ var renderLogEntry = function(entry) {
     var tr = createRow();
     if ( entry.result.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
-        tr.cells[0].textContent = '\u2009\u2212\u2009';
+        tr.cells[0].textContent = ' \u2212\u00A0';
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
         if ( entry.result.charAt(0) === 'm' ) {
             tr.classList.add('mirrored');
         }
-        tr.cells[0].textContent = '\u2009+\u2009';
+        tr.cells[0].textContent = ' +\u00A0';
     } else {
-        tr.cells[0].textContent = '\u2009\u00A0\u2009';
+        tr.cells[0].textContent = '   ';
     }
     if ( entry.type === 'main_frame' ) {
         tr.classList.add('maindoc');
@@ -118,9 +119,10 @@ var renderLogEntry = function(entry) {
     if ( entry.result.lastIndexOf('sa', 0) === 0 ) {
         filterText = '@@' + filterText;
     }
-    tr.cells[1].textContent = filterText;
-    tr.cells[2].textContent = entry.type;
+    tr.cells[1].textContent = filterText + ' ';
+    tr.cells[2].textContent = entry.type + ' ';
     vAPI.insertHTML(tr.cells[3], renderURL(entry.url, entry.result));
+    applyFilterToRow(tr);
     tbody.insertBefore(tr, tbody.firstChild);
 };
 
@@ -196,6 +198,105 @@ var reloadTab = function() {
 
 /******************************************************************************/
 
+var applyFilterToRow = function(row) {
+    var re = reFilter;
+    if ( re === null || re.test(row.textContent) ) {
+        row.classList.remove('hidden');
+    } else {
+        row.classList.add('hidden');
+    }
+};
+
+/******************************************************************************/
+
+var applyFilter = function() {
+    if ( reFilter === null ) {
+        unapplyFilter();
+        return;
+    }
+    var row = document.querySelector('#content tr');
+    if ( row === null ) {
+        return;
+    }
+    var re = reFilter;
+    while ( row !== null ) {
+        if ( re.test(row.textContent) ) {
+            row.classList.remove('hidden');
+        } else {
+            row.classList.add('hidden');
+        }
+        row = row.nextSibling;
+    }
+};
+
+/******************************************************************************/
+
+var unapplyFilter = function() {
+    var row = document.querySelector('#content tr');
+    if ( row === null ) {
+        return;
+    }
+    while ( row !== null ) {
+        row.classList.remove('hidden');
+        row = row.nextSibling;
+    }
+};
+
+/******************************************************************************/
+
+var onFilterButton = function() {
+    uDom('#filterButton').toggleClass('off');
+    onFilterChanged();
+};
+
+/******************************************************************************/
+
+var onFilterChanged = function() {
+    var filterRaw = uDom('#filterButton').hasClass('off') ?
+            '' :
+            uDom('#filterExpression').val().trim();
+
+    if ( filterRaw === '') {
+        reFilter = null;
+        unapplyFilter();
+        return;
+    }
+
+    var filterParts = filterRaw
+                        .replace(/^\s*-(\s+|$)/, '−\xA0')
+                        .replace(/^\s*\\+(\s+|$)/, '\\+\xA0')
+                        .split(/\s+/);
+    var n = filterParts.length;
+    for ( var i = 0; i < n; i++ ) {
+        filterParts[i] = filterParts[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    reFilter = new RegExp(filterParts.join('.*\\s+.*'));
+
+    applyFilter();
+};
+
+/******************************************************************************/
+
+var onFilterChangedAsync = (function() {
+    var timer = null;
+
+    var commit = function() {
+        timer = null;
+        onFilterChanged();
+    };
+
+    var changed = function() {
+        if ( timer !== null ) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(commit, 750);
+    };
+
+    return changed;
+})();
+
+/******************************************************************************/
+
 uDom.onLoad(function() {
     // Extract the tab id of the page we need to pull the log
     var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
@@ -207,6 +308,8 @@ uDom.onLoad(function() {
 
     uDom('#reload').on('click', reloadTab);
     uDom('#clear').on('click', clearBuffer);
+    uDom('#filterButton').on('click', onFilterButton);
+    uDom('#filterExpression').on('input', onFilterChangedAsync);
 });
 
 /******************************************************************************/
