@@ -22,12 +22,11 @@
 /* jshint bitwise: false, esnext: true, boss: true */
 /* global punycode, µBlock */
 
-// Older Safari throws an exception for const when it's used with 'use strict'.
-// 'use strict';
-
 /******************************************************************************/
 
 µBlock.staticNetFilteringEngine = (function(){
+
+'use strict';
 
 /******************************************************************************/
 
@@ -45,17 +44,17 @@ var µb = µBlock;
 // |      +---- bit 8-15: unused
 // +---- bit 15: never use! (to ensure valid unicode character)
 
-const BlockAction = 0 << 0;
-const AllowAction = 1 << 0;
-const ToggleAction = BlockAction ^ AllowAction;
+var BlockAction = 0 << 0;
+var AllowAction = 1 << 0;
+var ToggleAction = BlockAction ^ AllowAction;
 
-const Important = 1 << 1;
+var Important = 1 << 1;
 
-const AnyParty = 0 << 2;
-const FirstParty = 1 << 2;
-const ThirdParty = 2 << 2;
+var AnyParty = 0 << 2;
+var FirstParty = 1 << 2;
+var ThirdParty = 2 << 2;
 
-const AnyType = 1 << 4;
+var AnyType = 1 << 4;
 var typeNameToTypeValue = {
         'stylesheet':  2 << 4,
              'image':  3 << 4,
@@ -80,13 +79,13 @@ var typeOtherValue = typeNameToTypeValue.other;
 // The 2 lsb *must* be zeroed
 var allNetRequestTypesBitmap = (1 << (typeOtherValue >>> 4) + 2) - 4;
 
-const BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
-const BlockAnyType = BlockAction | AnyType;
-const BlockAnyParty = BlockAction | AnyParty;
+var BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
+var BlockAnyType = BlockAction | AnyType;
+var BlockAnyParty = BlockAction | AnyParty;
 
-const AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
-const AllowAnyType = AllowAction | AnyType;
-const AllowAnyParty = AllowAction | AnyParty;
+var AllowAnyTypeAnyParty = AllowAction | AnyType | AnyParty;
+var AllowAnyType = AllowAction | AnyType;
+var AllowAnyParty = AllowAction | AnyParty;
 
 var reHostnameRule = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/;
 var reURLPostHostnameAnchors = /[\/?#]/;
