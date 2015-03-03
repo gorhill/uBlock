@@ -313,3 +313,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # Chrome store feedback: "on gaana.com it blocks the site"
 # To counter `_social_tracking.` in EasyPrivacy
 @@||css5.gaanacdn.com/minify-*/min/?$script
+
+# http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
+||www.notempire.com/js/gridview$script
