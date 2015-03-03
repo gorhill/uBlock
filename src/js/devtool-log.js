@@ -141,6 +141,13 @@ var renderLogBuffer = function(buffer) {
         renderLogEntry(buffer[i]);
     }
 
+    // Prevent logger from growing infinitely and eating all memory. For
+    // instance someone could forget that it is left opened for some
+    // dynamically refreshed pages.
+    while ( tbody.childElementCount > 25000 ) {
+        rowJunkyard.push(tbody.removeChild(tbody.lastElementChild));
+    }
+
     var yDelta = tbody.offsetHeight - height;
     if ( yDelta === 0 ) {
         return;
@@ -246,6 +253,7 @@ var unapplyFilter = function() {
 
 var onFilterButton = function() {
     uDom('body').toggleClass('filterOff');
+    uDom('#filterExpression').nodeAt(0).focus();
 };
 
 /******************************************************************************/
