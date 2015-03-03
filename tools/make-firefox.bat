@@ -15,13 +15,13 @@ xcopy /S /I src\js %DES%\js
 xcopy /S /I src\lib %DES%\lib
 xcopy /S /I src\_locales %DES%\_locales
 xcopy src\*.html %DES%\
-xcopy src\*.xul %DES%\
 move %DES%\img\icon_128.png %DES%\icon.png
 xcopy platform\firefox\vapi-*.js %DES%\js\
 xcopy platform\firefox\bootstrap.js %DES%\
 xcopy platform\firefox\frame*.js %DES%\
 xcopy platform\firefox\chrome.manifest %DES%\
 xcopy platform\firefox\install.rdf %DES%\
+xcopy platform\firefox\*.xul %DES%\
 xcopy LICENSE.txt %DES%\
 
 echo "*** uBlock.firefox: Generating meta..."

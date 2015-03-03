@@ -83,7 +83,7 @@
     <Content Include="src\css\fonts\OFL.txt" />
     <Content Include="src\css\popup.css" />
     <Content Include="src\css\whitelist.css" />
-    <None Include="src\options.xul" />
+    <None Include="platform\firefox\options.xul" />
     <Content Include="src\dashboard.html" />
     <Content Include="src\devtool-log.html" />
     <Content Include="src\devtools.html" />
@@ -148,6 +148,7 @@
     <Content Include="src\_locales\en\messages.json" />
     <Content Include="tools\deploy-firefox-android.bat" />
     <Content Include="tools\make-firefox.bat" />
+    <Content Include="tools\make-firefox.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\css\fonts\fontawesome-webfont.ttf" />
