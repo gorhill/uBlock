@@ -931,7 +931,7 @@ FilterGenericHnAnchoredHostname.prototype.match = function(url) {
     if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
         return false;
     }
-    return FilterGenericHnAnchored.prototype.match.call(this. url);
+    return FilterGenericHnAnchored.prototype.match.call(this, url);
 };
 
 FilterGenericHnAnchoredHostname.fid = FilterGenericHnAnchoredHostname.prototype.fid = '||_h';
