@@ -35,6 +35,10 @@
     "message":"\"µBlock\" — سجل الإتصال بالشبكة",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"فلتر سجل الإدخالات",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"معلومات عني",
     "description":"appears as tab name in dashboard"

@@ -35,6 +35,10 @@
     "message":"µBlock — Дневник на мрежовите заявки",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"филтриране на записи",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Относно",
     "description":"appears as tab name in dashboard"
@@ -192,11 +196,11 @@
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Избиране",
+    "message":"Нов избор",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Изход",
+    "message":"Отказ",
     "description":"English: Quit"
   },
   "pickerNetFilters":{

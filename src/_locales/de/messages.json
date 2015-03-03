@@ -35,6 +35,10 @@
     "message":"µBlock — Protokoll der Netzwerk-Anforderungen",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"Protokoll-Einträge filtern",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Über",
     "description":"appears as tab name in dashboard"

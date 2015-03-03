@@ -35,6 +35,10 @@
     "message":"µBlock — Kërkesat e rrjetit",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtroni elementet e ditarit",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Info",
     "description":"appears as tab name in dashboard"

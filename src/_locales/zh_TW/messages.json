@@ -35,6 +35,10 @@
     "message":"µBlock — 網路請求日誌",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"過濾日誌規則",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"關於",
     "description":"appears as tab name in dashboard"

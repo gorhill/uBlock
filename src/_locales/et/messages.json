@@ -35,6 +35,10 @@
     "message":"µBlock — Võrgutaotluste logi",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtreeri logikirjeid",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Teave",
     "description":"appears as tab name in dashboard"

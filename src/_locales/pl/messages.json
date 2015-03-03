@@ -35,6 +35,10 @@
     "message":"µBlock — Log żądań sieciowych",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtruj wpisy w logu",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"O rozszerzeniu",
     "description":"appears as tab name in dashboard"

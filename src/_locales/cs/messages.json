@@ -35,6 +35,10 @@
     "message":"µBlock — Záznamy síťových požadavků",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtrovat záznamy",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"O rozšíření",
     "description":"appears as tab name in dashboard"

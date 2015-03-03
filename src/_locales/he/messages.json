@@ -35,6 +35,10 @@
     "message":"µBlock — מתעד בקשות רשת",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"סנן רשומות",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"אודות",
     "description":"appears as tab name in dashboard"

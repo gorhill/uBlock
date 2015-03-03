@@ -35,6 +35,10 @@
     "message":"µBlock — Ağ istek günlüğü",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filter log entries",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Hakkında",
     "description":"appears as tab name in dashboard"

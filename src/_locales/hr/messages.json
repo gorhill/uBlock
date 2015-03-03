@@ -35,6 +35,10 @@
     "message":"µBlock — Zapisnik mrežnih zahtjeva",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtrirajte zabilješke",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"O programu",
     "description":"appears as tab name in dashboard"

@@ -35,6 +35,10 @@
     "message":"µBlock — Nhật ký yêu cầu mạng",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"lọc mục ghi nhận",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Giới thiệu",
     "description":"appears as tab name in dashboard"
@@ -180,7 +184,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"tên miền",
+    "message":"tên miền đã kết nối",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{

@@ -35,6 +35,10 @@
     "message":"µBlock — Журнал мережевих запитів",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"фільтр журналу записів",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Про програму",
     "description":"appears as tab name in dashboard"

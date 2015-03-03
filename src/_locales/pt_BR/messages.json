@@ -35,6 +35,10 @@
     "message":"µBlock — Registro de pedidos de rede",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"filtrar entradas de registro",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Sobre",
     "description":"appears as tab name in dashboard"

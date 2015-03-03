@@ -35,6 +35,10 @@
     "message":"µBlock — Hálózati lekérések naplója",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"Naplóbejegyzések szűrése",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"Névjegy",
     "description":"appears as tab name in dashboard"

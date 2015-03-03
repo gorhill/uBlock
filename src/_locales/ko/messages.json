@@ -35,6 +35,10 @@
     "message":"µBlock — 네트워크 요청 로그",
     "description":"Title for the network request log window"
   },
+  "statsFilterPrompt":{
+    "message":"로그 필터",
+    "description":"English: filter log entries"
+  },
   "aboutPageName":{
     "message":"정보",
     "description":"appears as tab name in dashboard"
