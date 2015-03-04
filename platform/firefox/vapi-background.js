@@ -768,12 +768,7 @@ vAPI.tabs.reload = function(tabId) {
         return;
     }
 
-    if ( vAPI.fennec ) {
-        tab.browser.reload();
-        return;
-    }
-
-    getOwnerWindow(tab).gBrowser.reloadTab(tab);
+    getBrowserForTab(tab).webNavigation.reload(0);
 };
 
 /******************************************************************************/
