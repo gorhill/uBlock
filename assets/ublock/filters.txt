@@ -316,3 +316,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
 ||www.notempire.com/js/gridview$script
+
+# https://github.com/gorhill/uBlock/issues/919
+@@||s.youtube.com/api/stats/playback?$image,object-subrequest
