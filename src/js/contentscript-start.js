@@ -156,11 +156,12 @@ var hideElements = function(selectors) {
     }
 };
 
+var url = window.location.href;
 localMessager.send(
     {
         what: 'retrieveDomainCosmeticSelectors',
-        pageURL: window.location.href,
-        locationURL: window.location.href
+        pageURL: url,
+        locationURL: url
     },
     filteringHandler
 );
