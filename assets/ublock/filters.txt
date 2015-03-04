@@ -323,3 +323,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # https://twitter.com/Urre/status/572742363069714432
 # To counter `/keen.min.js` in EasyPrivacy
 @@||keen.github.io/*/keen.min.js$domain=keen.github.io
+
+# Feedback from Chrome store: "videos dont work on this site"
+# http://www.okgoals.com/match-highlights-1425491618---41
+@@||cdn.phoenix.intergi.com^$domain=okgoals.com
