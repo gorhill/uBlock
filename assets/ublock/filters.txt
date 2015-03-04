@@ -319,3 +319,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # https://github.com/gorhill/uBlock/issues/919
 @@||s.youtube.com/api/stats/playback?$image,object-subrequest
+
+# https://twitter.com/Urre/status/572742363069714432
+# To counter `/keen.min.js` in EasyPrivacy
+@@||keen.github.io/*/keen*.js
