@@ -37,6 +37,15 @@ var body = doc.body;
 var tbody = doc.querySelector('#content tbody');
 var rowJunkyard = [];
 var reFilter = null;
+var filterTargetTestResult = true;
+var maxEntries = 0;
+
+var prettyRequestTypes = {
+    'main_frame': 'doc',
+    'stylesheet': 'css',
+    'sub_frame': 'frame',
+    'xmlhttprequest': 'xhr'
+};
 
 /******************************************************************************/
 
@@ -102,7 +111,7 @@ var renderLogEntry = function(entry) {
     var tr = createRow();
     if ( entry.result.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
-        tr.cells[0].textContent = ' \u2212\u00A0';
+        tr.cells[0].textContent = ' -\u00A0';
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
         if ( entry.result.charAt(0) === 'm' ) {
@@ -110,7 +119,7 @@ var renderLogEntry = function(entry) {
         }
         tr.cells[0].textContent = ' +\u00A0';
     } else {
-        tr.cells[0].textContent = '   ';
+        tr.cells[0].textContent = '';
     }
     if ( entry.type === 'main_frame' ) {
         tr.classList.add('maindoc');
@@ -119,8 +128,8 @@ var renderLogEntry = function(entry) {
     if ( entry.result.lastIndexOf('sa', 0) === 0 ) {
         filterText = '@@' + filterText;
     }
-    tr.cells[1].textContent = filterText + ' ';
-    tr.cells[2].textContent = entry.type + ' ';
+    tr.cells[1].textContent = filterText + '\t';
+    tr.cells[2].textContent = (prettyRequestTypes[entry.type] || entry.type) + '\t';
     vAPI.insertHTML(tr.cells[3], renderURL(entry.url, entry.result));
     applyFilterToRow(tr);
     tbody.insertBefore(tr, tbody.firstChild);
@@ -144,9 +153,7 @@ var renderLogBuffer = function(buffer) {
     // Prevent logger from growing infinitely and eating all memory. For
     // instance someone could forget that it is left opened for some
     // dynamically refreshed pages.
-    while ( tbody.childElementCount > 25000 ) {
-        rowJunkyard.push(tbody.removeChild(tbody.lastElementChild));
-    }
+    truncateLog(maxEntries);
 
     var yDelta = tbody.offsetHeight - height;
     if ( yDelta === 0 ) {
@@ -167,6 +174,18 @@ var renderLogBuffer = function(buffer) {
     var parentNode = body.parentNode;
     if ( parentNode && parentNode.scrollTop !== 0 ) {
         parentNode.scrollTop += yDelta;
+    }
+};
+
+/******************************************************************************/
+
+var truncateLog = function(size) {
+    if ( size === 0 ) {
+        size = 25000;
+    }
+    size = Math.min(size, 25000);
+    while ( tbody.childElementCount > size ) {
+        rowJunkyard.push(tbody.removeChild(tbody.lastElementChild));
     }
 };
 
@@ -207,7 +226,7 @@ var reloadTab = function() {
 
 var applyFilterToRow = function(row) {
     var re = reFilter;
-    if ( re === null || re.test(row.textContent) ) {
+    if ( re === null || re.test(row.textContent) === filterTargetTestResult ) {
         row.classList.remove('hidden');
     } else {
         row.classList.add('hidden');
@@ -226,8 +245,9 @@ var applyFilter = function() {
         return;
     }
     var re = reFilter;
+    var target = filterTargetTestResult;
     while ( row !== null ) {
-        if ( re.test(row.textContent) ) {
+        if ( re.test(row.textContent) === target ) {
             row.classList.remove('hidden');
         } else {
             row.classList.add('hidden');
@@ -253,31 +273,50 @@ var unapplyFilter = function() {
 
 var onFilterButton = function() {
     uDom('body').toggleClass('filterOff');
-    uDom('#filterExpression').nodeAt(0).focus();
 };
 
 /******************************************************************************/
 
 var onFilterChanged = function() {
-    var filterRaw = uDom('#filterExpression').val().trim();
+    var filterExpression = uDom('#filterExpression');
+    var filterRaw = filterExpression.val().trim();
 
+    // Assume good filter expression
+    filterExpression.removeClass('bad');
+
+    // Invert resultset?
+    filterTargetTestResult = filterRaw.charAt(0) !== '!';
+    if ( filterTargetTestResult === false ) {
+        filterRaw = filterRaw.slice(1);
+    }
+
+    // No filter
     if ( filterRaw === '') {
         reFilter = null;
-        unapplyFilter();
         return;
     }
 
+    // Regex?
+    if ( filterRaw.length > 1 && filterRaw.charAt(0) === '/' && filterRaw.slice(-1) === '/' ) {
+        try {
+            reFilter = new RegExp(filterRaw.slice(1, -1));
+        } catch (e) {
+            reFilter = null;
+            filterExpression.addClass('bad');
+        }
+        return;
+    }
+
+    // Plain filtering
     var filterParts = filterRaw
-                        .replace(/^\s*-(\s+|$)/, '−\xA0')
-                        .replace(/^\s*\\+(\s+|$)/, '\\+\xA0')
-                        .split(/\s+/);
+                        .replace(/^\s*-(\s+|$)/, '-\xA0')
+                        .replace(/^\s*\\+(\s+|$)/, '+\xA0')
+                        .split(/[ \f\n\r\t\v​]+/);
     var n = filterParts.length;
     for ( var i = 0; i < n; i++ ) {
         filterParts[i] = filterParts[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     reFilter = new RegExp(filterParts.join('.*\\s+.*'));
-
-    applyFilter();
 };
 
 /******************************************************************************/
@@ -288,6 +327,7 @@ var onFilterChangedAsync = (function() {
     var commit = function() {
         timer = null;
         onFilterChanged();
+        applyFilter();
     };
 
     var changed = function() {
@@ -302,6 +342,28 @@ var onFilterChangedAsync = (function() {
 
 /******************************************************************************/
 
+var onMaxEntriesChanged = function() {
+    var raw = uDom(this).val();
+    try {
+        maxEntries = parseInt(raw, 10);
+        if ( isNaN(maxEntries) ) {
+            maxEntries = 0;
+        }
+    } catch (e) {
+        maxEntries = 0;
+    }
+
+    messager.send({
+        what: 'userSettings',
+        name: 'requestLogMaxEntries',
+        value: maxEntries
+    });
+
+    truncateLog(maxEntries);
+};
+
+/******************************************************************************/
+
 uDom.onLoad(function() {
     // Extract the tab id of the page we need to pull the log
     var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
@@ -309,12 +371,19 @@ uDom.onLoad(function() {
         inspectedTabId = matches[1];
     }
 
+    var onSettingsReady = function(settings) {
+        maxEntries = settings.requestLogMaxEntries || 0;
+        uDom('#maxEntries').val(maxEntries || '');
+    };
+    messager.send({ what: 'getUserSettings' }, onSettingsReady);
+
     readLogBuffer();
 
     uDom('#reload').on('click', reloadTab);
     uDom('#clear').on('click', clearBuffer);
     uDom('#filterButton').on('click', onFilterButton);
     uDom('#filterExpression').on('input', onFilterChangedAsync);
+    uDom('#maxEntries').on('change', onMaxEntriesChanged);
 });
 
 /******************************************************************************/

@@ -37,6 +37,15 @@ body {
 body.filterOff #toolbar #filterButton {
     opacity: 0.25;
     }
+#filterExpression.bad {
+    background-color: #fee;
+    }
+#maxEntries {
+    margin-left: 3em;
+    }
+input:focus {
+    background-color: #ffe;
+    }
 #content {
     margin-top: 36px;
     }

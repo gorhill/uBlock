@@ -63,6 +63,7 @@ return {
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
         parseAllABPHideFilters: true,
+        requestLogMaxEntries: 0,
         showIconBadge: true
     },
 
