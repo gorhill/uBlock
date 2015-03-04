@@ -332,7 +332,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-自訂過濾_{{datetime}}.txt",
+    "message":"我的-ublock-自訂過濾_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -376,7 +376,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"ublock-自訂動態規則_{{datetime}}.txt",
+    "message":"我的-ublock-自訂動態規則_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -384,7 +384,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"規則語法： <code>來源主機名稱 目標主機名稱 需求類型 行為<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>說明文件<\/a>)。",
+    "message":"規則語法：<code>來源主機名稱 目標主機名稱 連線請求類型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整說明<\/a>）。",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
@@ -400,7 +400,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-白名單_{{datetime}}.txt",
+    "message":"我的-ublock-白名單_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -452,11 +452,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"過濾日誌規則",
+    "message":"過濾規則的日誌項目",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"紀錄的最大項目數量",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -480,7 +480,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-備份_{{datetime}}.txt",
+    "message":"我的-ublock-備份_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
