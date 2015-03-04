@@ -309,8 +309,8 @@ var onFilterChanged = function() {
 
     // Plain filtering
     var filterParts = filterRaw
-                        .replace(/^\s*-(\s+|$)/, '-\xA0')
-                        .replace(/^\s*\\+(\s+|$)/, '+\xA0')
+                        .replace(/^\s*-(\s+|$)/, '-\xA0 ')
+                        .replace(/^\s*\\+(\s+|$)/, '+\xA0 ')
                         .split(/[ \f\n\r\t\v​]+/);
     var n = filterParts.length;
     for ( var i = 0; i < n; i++ ) {
