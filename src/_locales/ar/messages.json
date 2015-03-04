@@ -35,10 +35,6 @@
     "message":"\"µBlock\" — سجل الإتصال بالشبكة",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"فلتر سجل الإدخالات",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"معلومات عني",
     "description":"appears as tab name in dashboard"
@@ -356,7 +352,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"حفظ",
+    "message":"تعليق",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"خلف الكواليس",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"فلتر سجل الإدخالات",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"العدد الأقصى للإدخالات في السجلات",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"سجل التغيير",

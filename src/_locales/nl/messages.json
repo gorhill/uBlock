@@ -32,12 +32,8 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Log van netwerkverzoeken",
+    "message":"µBlock — Logboek van netwerkverzoeken",
     "description":"Title for the network request log window"
-  },
-  "statsFilterPrompt":{
-    "message":"loggegevens filteren",
-    "description":"English: filter log entries"
   },
   "aboutPageName":{
     "message":"Over",
@@ -72,7 +68,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ga naar verzoekenlog",
+    "message":"Naar verzoekenlogboek gaan",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"Achter de schermen",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"logboekitems filteren",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximum aantal logboekitems",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Veranderingenlogboek",

@@ -35,10 +35,6 @@
     "message":"µBlock — 네트워크 요청 로그",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"로그 필터",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"정보",
     "description":"appears as tab name in dashboard"
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"숨겨진 구성 요소",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"필터 로그 항목",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"로그 항목의 최대 갯수",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"변경사항",

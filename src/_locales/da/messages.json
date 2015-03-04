@@ -35,10 +35,6 @@
     "message":"µBlock — Netværkslog",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"filter log entries",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"Om",
     "description":"appears as tab name in dashboard"
@@ -184,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Tilsluttede domæner",
+    "message":"Forbundne domæner",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -384,7 +380,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Liste af dine dynamiske filtreringsregler.",
+    "message":"Liste over dine dynamiske filtreringsregler.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"Bag kulisserne",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"Filtrér elementer i log",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maksimalt antal elementer i log",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Changelog",

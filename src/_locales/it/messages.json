@@ -35,10 +35,6 @@
     "message":"µBlock — registro richieste di rete",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"filter log entries",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"Info",
     "description":"appears as tab name in dashboard"
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"Dietro le quinte",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filter log entries",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximum number of log entries",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Change log",

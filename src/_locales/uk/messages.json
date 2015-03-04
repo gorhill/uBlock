@@ -35,10 +35,6 @@
     "message":"µBlock — Журнал мережевих запитів",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"фільтр журналу записів",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"Про програму",
     "description":"appears as tab name in dashboard"
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"За лаштунками",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"фільтр журналу записів",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Максимальна кількість записів в журналі",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Журнал змін",

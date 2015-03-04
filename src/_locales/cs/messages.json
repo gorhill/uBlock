@@ -35,10 +35,6 @@
     "message":"µBlock — Záznamy síťových požadavků",
     "description":"Title for the network request log window"
   },
-  "statsFilterPrompt":{
-    "message":"filtrovat záznamy",
-    "description":"English: filter log entries"
-  },
   "aboutPageName":{
     "message":"O rozšíření",
     "description":"appears as tab name in dashboard"
@@ -454,6 +450,14 @@
   "logBehindTheScene":{
     "message":"Za oponou",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtrovat záznamy",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximum number of log entries",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Change log",
