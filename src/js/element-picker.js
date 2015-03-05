@@ -423,16 +423,47 @@ var elementsFromFilter = function(filter) {
 
     // Net filters: we need to lookup manually -- translating into a
     // foolproof CSS selector is just not possible
-    if ( filter.slice(0, 2) === '||' ) {
-        filter = filter.replace('||', '');
+
+    // https://github.com/gorhill/uBlock/issues/945
+    // Transform into a regular expression, this allows the user to edit and
+    // insert wildcard(s) into the proposed filter
+    var reStr = '';
+    if ( filter.length > 1 && filter.charAt(0) === '/' && filter.slice(-1) === '/' ) {
+        reStr = filter.slice(1, -1);
     }
-    var elems = document.querySelectorAll('iframe, img, object, embed');
+    else {
+        var rePrefix = '', reSuffix = '';
+        if ( filter.slice(0, 2) === '||' ) {
+            filter = filter.replace('||', '');
+        } else {
+            if ( filter.charAt(0) === '|' ) {
+                rePrefix = '^';
+                filter = filter.slice(1);
+            }
+        }
+        if ( filter.slice(-1) === '|' ) {
+            reSuffix = '$';
+            filter = filter.slice(0, -1);
+        }
+        reStr = rePrefix +
+                filter.replace(/[.+?${}()|[\]\\]/g, '\\$&').replace(/[\*^]+/g, '.*') +
+                reSuffix;
+    }
+    var reFilter = null;
+    try {
+        reFilter = new RegExp(reStr);
+    } catch (e) {
+        return out;
+    }
+
+    var props = netFilterSources;
+    var elems = document.querySelectorAll(Object.keys(props).join());
     var i = elems.length;
     var elem, src;
     while ( i-- ) {
         elem = elems[i];
-        src = elem[netFilterSources[elem.tagName.toLowerCase()]];
-        if ( src && src.indexOf(filter) !== -1 ) {
+        src = elem[props[elem.tagName.toLowerCase()]];
+        if ( src && reFilter.test(src) ) {
             out.push(elem);
         }
     }
