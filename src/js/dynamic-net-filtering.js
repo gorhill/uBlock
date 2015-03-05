@@ -150,11 +150,22 @@ Matrix.prototype.assign = function(other) {
 Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
     var thisRules = this.rules;
     var otherRules = other.rules;
+    var ruleKey, ruleValue;
 
     // Specific types
-    thisRules['* *'] = otherRules['* *'];
-    var ruleKey = srcHostname + ' *';
-    thisRules[ruleKey] = otherRules[ruleKey];
+    ruleValue = otherRules['* *'] || 0;
+    if ( ruleValue !== 0 ) {
+        thisRules['* *'] = ruleValue;
+    } else {
+        delete thisRules['* *'];
+    }
+    ruleKey = srcHostname + ' *';
+    ruleValue = otherRules[ruleKey] || 0;
+    if ( ruleValue !== 0 ) {
+        thisRules[ruleKey] = ruleValue;
+    } else {
+        delete thisRules[ruleKey];
+    }
 
     // Specific destinations
     for ( var desHostname in desHostnames ) {
@@ -162,9 +173,19 @@ Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
             continue;
         }
         ruleKey = '* ' + desHostname;
-        thisRules[ruleKey] = otherRules[ruleKey];
+        ruleValue = otherRules[ruleKey] || 0;
+        if ( ruleValue !== 0 ) {
+            thisRules[ruleKey] = ruleValue;
+        } else {
+            delete thisRules[ruleKey];
+        }
         ruleKey = srcHostname + ' ' + desHostname ;
-        thisRules[ruleKey] = otherRules[ruleKey];
+        ruleValue = otherRules[ruleKey] || 0;
+        if ( ruleValue !== 0 ) {
+            thisRules[ruleKey] = ruleValue;
+        } else {
+            delete thisRules[ruleKey];
+        }
     }
 
     return true;
