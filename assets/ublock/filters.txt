@@ -326,4 +326,5 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # Feedback from Chrome store: "videos dont work on this site"
 # http://www.okgoals.com/match-highlights-1425491618---41
+# To counter `intergi.com` in Peter Lowe's
 @@||cdn.phoenix.intergi.com^$domain=okgoals.com
