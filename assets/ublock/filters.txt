@@ -303,8 +303,9 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 @@||2o7.net^$domain=totaljobs.com
 
 # https://github.com/gorhill/uBlock/issues/822
+# https://github.com/gorhill/uBlock/issues/940
 # To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com^$domain=musixmatch.com
+@@||google-analytics.com^$domain=musixmatch.com|bikstok.sonymusicshop.dk
 
 # https://github.com/gorhill/uBlock/issues/841
 # To counter `quantcast.com` in hpHosts, Peter Lowe's
