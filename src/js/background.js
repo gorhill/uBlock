@@ -81,12 +81,14 @@ return {
 
     localSettings: {
         blockedRequestCount: 0,
-        allowedRequestCount: 0
+        allowedRequestCount: 0,
     },
+    localSettingsModifyTime: 0,
+    localSettingsSaveTime: 0,
 
     // read-only
     systemSettings: {
-        compiledMagic: 'shztbfhkfjit',
+        compiledMagic: 'wcuwrlodqyee',
         selfieMagic: 'spqmeuaftfra'
     },
 
