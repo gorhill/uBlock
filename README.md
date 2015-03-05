@@ -91,9 +91,9 @@ Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox
 
 #### Safari
 
-<sup>Safari 6.1 and later (developed on Safari 8/Yosemite; tested on 6.1/Mountain Lion and 7/Mavericks).</sup>
-
 Install the latest µBlock for Safari [from its homepage](https://chrismatic.io/ublock/), or a potentially-outdated version from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
+
+<sup>Safari 6.1 and later (developed on Safari 8/Yosemite; tested on 6.1/Mountain Lion and 7/Mavericks).</sup>
 
 #### Note for all browsers
 
