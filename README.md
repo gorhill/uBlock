@@ -91,13 +91,11 @@ Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox
 
 #### Safari
 
-##### 8.0 or newer only
+<sup>Safari 6.1 and later (developed on Safari 8/Yosemite; tested on 6.1/Mountain Lion and 7/Mavericks).</sup>
 
-You can get and install the latest µBlock for Safari **[right here](https://chrismatic.io/ublock/)**.
+The latest build of µBlock for Safari is available to download at https://chrismatic.io/ublock/.
 
 µBlock is also available on the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9), although that's not guaranteed to be the latest version.
-
-<sup>Safari versions prior to 8.0 have a bug triggering a crash during µBlock installation. It's not recommended that you attempt to install µBlock on them (*if you must, do it at your own risk*).</sup>
 
 #### Note for all browsers
 
