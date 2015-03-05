@@ -713,9 +713,10 @@ PageStore.prototype.logRequest = function(context, result) {
     if ( requestHostname === '' ) {
         requestHostname = context.pageHostname;
     }
+    var now = Date.now();
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
         this.hostnameToCountMap[requestHostname] = 0;
-        this.contentLastModified = Date.now();
+        this.contentLastModified = now;
     }
     var c = result.charAt(1);
     if ( c === '' || c === 'a' ) {
@@ -727,6 +728,7 @@ PageStore.prototype.logRequest = function(context, result) {
         this.perLoadBlockedRequestCount++;
         µb.localSettings.blockedRequestCount++;
     }
+    this.localSettingsModifyTime = now;
     this.logBuffer.writeOne(context, result);
 };
 

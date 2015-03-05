@@ -38,6 +38,11 @@
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
+    if ( this.localSettingsModifyTime <= this.localSettingsSaveTime ) {
+        callback();
+        return;
+    }
+    this.localSettingsSaveTime = Date.now();
     vAPI.storage.set(this.localSettings, callback);
 };
 
