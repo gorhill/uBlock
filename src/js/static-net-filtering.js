@@ -1885,7 +1885,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
 
         factory = this.factories[fields[2]];
 
-		// For development purpose
+        // For development purpose
         //if ( this.filterCounts.hasOwnProperty(fields[2]) === false ) {
         //    this.filterCounts[fields[2]] = 1;
         //} else {

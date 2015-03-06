@@ -728,7 +728,7 @@ PageStore.prototype.logRequest = function(context, result) {
         this.perLoadBlockedRequestCount++;
         µb.localSettings.blockedRequestCount++;
     }
-    this.localSettingsModifyTime = now;
+    µb.localSettingsModifyTime = now;
     this.logBuffer.writeOne(context, result);
 };
 
