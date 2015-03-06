@@ -483,14 +483,15 @@ var userFilterFromCandidate = function() {
     }
 
     // Cosmetic filter?
-    if ( v.slice(0, 2) === '##' ) {
+    if ( v.lastIndexOf('##', 0) === 0 ) {
         return window.location.hostname + v;
     }
 
     // If domain included in filter, no need for domain option
-    if ( v.slice(0, 2) === '||' ) {
+    if ( v.lastIndexOf('||', 0) === 0 ) {
         return v;
     }
+
     // Assume net filter
     return v + '$domain=' + window.location.hostname;
 };
@@ -560,7 +561,11 @@ var onDialogClicked = function(ev) {
     else if ( ev.target.id === 'create' ) {
         var filter = userFilterFromCandidate();
         if ( filter ) {
-            localMessager.send({ what: 'createUserFilter', filters: filter });
+            var d = new Date();
+            localMessager.send({
+                what: 'createUserFilter',
+                filters: '# ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+            });
             removeElements(elementsFromFilter(taCandidate.value));
             stopPicker();
         }
