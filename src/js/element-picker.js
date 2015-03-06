@@ -564,7 +564,7 @@ var onDialogClicked = function(ev) {
             var d = new Date();
             localMessager.send({
                 what: 'createUserFilter',
-                filters: '# ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+                filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
             });
             removeElements(elementsFromFilter(taCandidate.value));
             stopPicker();

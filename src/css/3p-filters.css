@@ -122,6 +122,7 @@ body[dir=rtl] #externalListsDiv {
     height: 10em;
     white-space: pre;
     width: 100%;
+    word-wrap: normal;
     }
 body #busyOverlay {
     position: fixed;
