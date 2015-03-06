@@ -329,3 +329,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # http://www.okgoals.com/match-highlights-1425491618---41
 # To counter `intergi.com` in Peter Lowe's
 @@||cdn.phoenix.intergi.com^$domain=okgoals.com
+
+# https://github.com/gorhill/uBlock/issues/951
+answers.yahoo.com###ya-center-rail > [id^="ya-q-"][id$="-textads"]
