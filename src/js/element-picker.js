@@ -412,9 +412,9 @@ var elementsFromFilter = function(filter) {
     // One idea is to normalize all a[href] on the page, but for now I will
     // wait and see, as I prefer to refrain from tampering with the page
     // content if I can avoid it.
-    if ( filter.slice(0, 2) === '##' ) {
+    if ( filter.lastIndexOf('##', 0) === 0 ) {
         try {
-            out = document.querySelectorAll(filter.replace('##', ''));
+            out = document.querySelectorAll(filter.slice(2));
         }
         catch (e) {
         }
