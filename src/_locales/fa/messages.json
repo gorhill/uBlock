@@ -452,11 +452,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"فیلتر کردن مطالب لاگ",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"بیشترین تعداد مطالب لاگ",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -508,7 +508,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"این باید آخرین مطلب باشد",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

@@ -452,7 +452,7 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"Filtrează intrările din jurnal",
+    "message":"filtrează intrările din jurnal",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{

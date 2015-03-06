@@ -452,11 +452,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"過濾規則的日誌項目",
+    "message":"過濾日誌條目",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"紀錄的最大項目數量",
+    "message":"最大日誌條目數量",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
