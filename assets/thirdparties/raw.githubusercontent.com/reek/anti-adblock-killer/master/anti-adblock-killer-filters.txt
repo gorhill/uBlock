@@ -139,7 +139,8 @@
 !@@||anywriters.com/main/js/advert.js$script
 !@@||1stwrites.com/main/js/ads-adv.js$script
 !@@||writingaids.com/main/js/ads-adv.js$script
-@@/main/js/ads-adv.js$script,third-party,domain=writing.com
+!@@||writeracademy.com/main/js/ad-text.js
+@@/main/js/ad*.js$script,third-party,domain=writing.com
 ! teknogods.com
 @@||teknogods.com/advert.js$script
 ! siamfishing.com
@@ -628,7 +629,7 @@ iphones.ru##DIV[style="background-color: rgb(222, 71, 0); margin-bottom: 20px; p
 lien-torrent.com###ad_divr
 lien-torrent.com###ad_divl
 ! miniup.com
-@@||miniup.com/ads/ads.png
+@@||miniup.com/images/ads.png$image
 ! hackintosh.zone
 hackintosh.zone#@#.adsbygoogle
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=hackintosh.zone
@@ -732,6 +733,16 @@ rlsbb.com###contentArea > .information
 ogmcdownload.com#@#.afs_ads
 ! jetetroll.com
 jetetroll.com#@##adsense
+! hack-sat.com
+hack-sat.com#@#.afs_ads
+! flashback.org
+flashback.org###top-banner-container
+! captchme.net
+@@||api.captchme.net/js/advertisement-min.js$script
+! toolslib.net
+toolslib.net##.panel.panel-default > .panel-body > .center-table.block-3x2
+! socialblade.com
+socialblade.com#@##bottomAd
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -1099,6 +1110,8 @@ biggestplayer.me##.cuadrado.rmv
 playerhd1.pw###total
 playerhd1.pw###total_banner 
 playerhd1.pw##.ad
+! streaming-foot.info
+streaming-foot.info###id7d
 streaming-foot.info###timer1
 streaming-foot.info###timer2
 streaming-foot.info###timer3
@@ -1106,6 +1119,9 @@ streaming-foot.info###timer3
 foot-live.info###timer1
 foot-live.info###timer2
 foot-live.info###timer3
+! tvfree.me
+antena.tvfree.me###layer1
+||tvfree.me/pub/*$subdocument,image
 ! Others ---------------------------------------------------------------------------------------
 ! tvi
 tvi24.iol.pt##iframe[id=barraIOL]
@@ -1231,4 +1247,6 @@ ojogo.pt###moldura_ojogo
 ||cpatrendreklam.com^$third-party,script
 ! go4up.com
 go4up.com##[href^="http://liversely.com/g4u?q="]
-go4up.com##[href^="http://go.ad2up.com/afu.php?id="] 
+go4up.com##[href^="http://go.ad2up.com/afu.php?id="]
+! academia.edu
+@@||api.academia.edu/v0/users/*/stats$script

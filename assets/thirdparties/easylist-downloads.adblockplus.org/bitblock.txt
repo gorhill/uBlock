@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: BsFmd9zR0UZTrelX+qfyfg
-! Version: 201502280140
-! Last modified: 28 Feb 2015 01:40 UTC
+! Checksum: u766/4J6NK3HBFIVK20uXA
+! Version: 201503071830
+! Last modified: 07 Mar 2015 18:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -192,7 +192,7 @@ _vkontakte.png
 -social_
 -socialicons.
 -socialmedia-sprite.
--socialMedia.
+-socialMedia.$domain=~easy-socialmedia.com
 -socialmediashare.
 -sprite-social-
 -stumbleupon-icon-24.
@@ -2667,6 +2667,7 @@ _youtube_social_
 ###connectFacebookLink
 ###connectWithUs
 ###connect_share
+###consol-share
 ###container-like-button
 ###content-article-share
 ###content-sharer-article
@@ -3213,6 +3214,7 @@ _youtube_social_
 ###menu-share
 ###menu-social
 ###menu-social-1
+###menu-social-buttons
 ###menu-social-fb
 ###menu-social-icons
 ###menu-social-menu
@@ -3427,6 +3429,7 @@ _youtube_social_
 ###share-this-topams
 ###share-tools
 ###share-tools-title
+###share-track-tw
 ###share-trigger
 ###share-tweet
 ###share-twitter
@@ -3732,6 +3735,7 @@ _youtube_social_
 ###social-module-1
 ###social-module-container
 ###social-nav
+###social-navigation
 ###social-network
 ###social-networking-icons-round
 ###social-networking-images
@@ -3751,6 +3755,7 @@ _youtube_social_
 ###social-reader
 ###social-right
 ###social-share
+###social-share-bottom
 ###social-share-buttons-block
 ###social-share-buttons-wrapper
 ###social-share-links-side
@@ -4069,6 +4074,7 @@ _youtube_social_
 ###subheader-social-box
 ###subscribe-and-share
 ###subscribe-icons-2
+###subscribe-options
 ###subscribeSocial
 ###subscribe_box
 ###subscribe_under_post
@@ -4259,6 +4265,7 @@ _youtube_social_
 ##.FollowButton
 ##.FollowByEmail
 ##.FollowUs
+##.GPlusOne
 ##.GigyaShareBarBottomControl
 ##.GigyaShareBarTopControl
 ##.GoogleFollowButton
@@ -4372,6 +4379,7 @@ _youtube_social_
 ##.ad-social
 ##.add-this
 ##.addthis
+##.addthis-block-pre-content
 ##.addthis-block-sidebar
 ##.addthis-button
 ##.addthis-div
@@ -4769,6 +4777,7 @@ _youtube_social_
 ##.custom-google-plus-button
 ##.custom-sharing
 ##.custom-sharing-link
+##.custom-soc
 ##.custom-social
 ##.custom-social-widgets
 ##.custom-tweet-button
@@ -5241,6 +5250,7 @@ _youtube_social_
 ##.fodicon-twitter
 ##.follow-appeal-container
 ##.follow-bar
+##.follow-bar-wrapper
 ##.follow-btn
 ##.follow-button
 ##.follow-button-gplus
@@ -6299,6 +6309,7 @@ _youtube_social_
 ##.pane-social-plugins-social-plugins-widget
 ##.pane-social-widget-items
 ##.pane-storypage-sharethis
+##.panel-share-networks
 ##.panelSocial
 ##.panelTweets
 ##.pangea_social_icons
@@ -6860,6 +6871,7 @@ _youtube_social_
 ##.shareaholic-show-on-load
 ##.shareaholic-ui
 ##.sharebar
+##.sharebar-radial
 ##.sharebar-shareicon
 ##.sharebarWrapper
 ##.sharebar_mainsites
@@ -6899,6 +6911,7 @@ _youtube_social_
 ##.sharepanel__bottom
 ##.sharepanel__buttons
 ##.shareplusone
+##.sharepop
 ##.sharepost
 ##.sharepostwide
 ##.sharer-btn
@@ -8119,6 +8132,7 @@ _youtube_social_
 ##.twitterbox
 ##.twitterboxot
 ##.twitterbtn
+##.twitterbutton
 ##.twittercommon
 ##.twitterfeed
 ##.twitterfollow
@@ -8524,6 +8538,7 @@ _youtube_social_
 ##a[href^="https://www.facebook.com/sharer/sharer.php?u="]
 ##a[href^="https://www.pinterest.com/pin/create/button/"]
 ##a[href^="https://www.stumbleupon.com/submit?url="]
+##a[href^="https://www.xing.com/social_plugins/share/"]
 ##a[href^="https://www.xing.com/spi/shares/new?url="]
 ##a[name="sharethis"]
 ##a[title="Add to Facebook"]
@@ -8582,6 +8597,7 @@ _youtube_social_
 ##a[title="Share on Reddit"]
 ##a[title="Share this article"]
 ##a[title="Share this to Technorati"]
+##a[title="Share via Twitter"]
 ##a[title="Share via facebook"]
 ##a[title="Subscribe to our YouTube Channel"]
 ##a[title="Subscribe to us on YouTube."]
@@ -9100,6 +9116,7 @@ kp.ru###fb_popup
 inosmi.ru###left_sliding_block
 google.com###lhn-friends
 google.com###lhn-recommendations
+thailandproperty.tv###pagenav_menu + table
 seasonvar.ru###player_msoc
 vk.com###pv_hh
 sfw.org.ua###qipbtn
@@ -10076,6 +10093,7 @@ _eu_cookie_
 ##.psmag_subscribe_box_wrapper
 ##.publishToStatus
 ##.qanda-button-launch
+##.qs-article_widget
 ##.quick-share
 ##.rate-share
 ##.recommended-flyout-wrap
@@ -11122,6 +11140,7 @@ _eu_cookie_
 ###eu-cookie
 ###eu-cookie-bar
 ###eu-cookie-content
+###eu-cookie-notify-wrap
 ###eu-cookie-policy-banner-wrapper
 ###eu-cp-banner
 ###eu_cookies
@@ -11381,6 +11400,7 @@ _eu_cookie_
 ##.cookies-alert-wider-wrap
 ##.cookies-banner
 ##.cookies-bar
+##.cookies-dialog
 ##.cookies-info
 ##.cookies-info-static
 ##.cookies-msg
@@ -11797,12 +11817,14 @@ _eu_cookie_
 ||puzyaka.ru/ub/
 ||qip.ru/images/sign/
 ||raptr.com/badge/
+||retailrocket.ru^$third-party
 ||rolki.ru/project/ubars/
 ||rostovmama.ru/components/com_line/
 ||ruler.autoserv.ru^
 ||sakura.ne.jp/blogparts/
 ||samforum.ws/signaturepics/
 ||samlab.ws/img/*-bar.$image
+||sarafanpro.ru^$third-party
 ||schitalka.ru^$third-party
 ||smayli.ru^$third-party
 ||smiles.clan.su^$third-party
@@ -11972,6 +11994,7 @@ _eu_cookie_
 ||mail.advantagebusinessmedia.com^$third-party
 ||moreshare.com^$third-party
 ||mozo.com.au/widgets/$third-party
+||my.leadpages.net^$third-party
 ||newsgator.com^$third-party
 ||newswhip.com^$third-party
 ||nrcdn.com/custom-script/$third-party
@@ -12213,6 +12236,7 @@ livejournal.com##.b-journalpromo-container
 gagadget.com##.b-magicblock
 allsoft.ru##.b-popup-overlay_subscription
 sports.ru##.b-subscribe-block
+piter.com##.banner
 reklama-sev.com.ua##.banner-holder
 experts-exchange.com##.bffr_trusted
 sports.ru##.c-read-also
@@ -12329,6 +12353,7 @@ twellow.com#@#a[href="http://www.twellow.com/"]
 babblr.me#@#mc_embed_signup
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist.txt ***
 @@/rutorrent/plugins/rss/*$image
+@@||3dmark.com/proxycon/js/jquery.cookiesdirective.js
 @@||adfoc.us/*/interstitial.js$~third-party
 @@||aliunicorn.com/js/*/cookie-info.js
 @@||amazonaws.com^*/feedback-v2.js?$domain=avgthreatlabs.com
@@ -12405,6 +12430,7 @@ last.fm#@##sharebuttons
 bufferapp.com#@##sharer
 renren.com#@##sharevideo
 mozilla.org#@##social-footer
+appspot.com#@##social-header
 amongtech.com#@##social-sidebar
 okanime.com#@##social-wrapper
 coverscreen.com#@##social_bar
@@ -12581,6 +12607,7 @@ neoseeker.com#@#.social_share
 leica-camera.com#@#.social_toolbar
 wuala.com#@#.socialbox
 wuala.com#@#.socialboxp
+clientsfromhell.net#@#.socialbuttons
 heise.de,thenextweb.com#@#.socialmedia
 chaturbate.com,gog.com#@#.socials
 stumbleupon.com#@#.stumble-button
@@ -12641,7 +12668,7 @@ google.com#@#img[alt="Instagram"]
 google.com,linkedin.com#@#img[alt="LinkedIn"]
 breakoutlist.com,facebook.com,google.com#@#img[alt="Pinterest"]
 acceptableads.org,breakoutlist.com,easyicon.net#@#img[alt="Reddit"]
-breakoutlist.com,google.com,incgamers.com,maxthon.com,twitter.com,whatthetech.com#@#img[alt="Twitter"]
+breakoutlist.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatthetech.com#@#img[alt="Twitter"]
 theverge.com,twitter.com#@#img[alt="Vine"]
 maxthon.com#@#img[alt="Youtube"]
 uservoice.com#@#img[alt="facebook"]
@@ -12930,6 +12957,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||yimg.com^*/combo?*/share-buttons-$script,domain=yahoo.com
 @@||yougetsignal.com/img/*_igoogle.gif
 @@||yukons.net/share.js$domain=zuuk.net
+@@||zillowstatic.com/*-social-share-
 ! "Muzli - Design Breakfast" Chrome new tab extension (https://chrome.google.com/webstore/detail/muzli-design-breakfast/glcipcfhmopcgidicgdociohdoicpdfc)
 @@||aquest.it/images/aq_facebook.jpg
 @@||evil-icons.io/assets/images/social.png
@@ -12962,7 +12990,7 @@ stopgame.ru#@#.social-links
 loginza.ru#@#.vkontakte
 @@/btns.png$domain=antivirus.ua
 @@/images/icons/*_auth.$domain=rusfolder.com|rusfolder.net
-@@/images/share_$domain=joyreactor.cc
+@@/images/share_$domain=apple.com|joyreactor.cc
 @@/images/social/*$domain=ren-tv.com|zaycev.net
 @@/sharebox.$domain=vk.me
 @@/wp-content/plugins/wp-minify/min/?f=$stylesheet,~third-party
