@@ -25,9 +25,13 @@
 
 /******************************************************************************/
 
-µBlock.getBytesInUse = function() {
+µBlock.getBytesInUse = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
     var getBytesInUseHandler = function(bytesInUse) {
         µBlock.storageUsed = bytesInUse;
+        callback(bytesInUse);
     };
     vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
 };

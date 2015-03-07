@@ -143,12 +143,6 @@ var onUserSettingsReady = function(fetched) {
 
 /******************************************************************************/
 
-var onLocalSettingsReady = function(fetched) {
-    fromFetch(µb.localSettings, fetched);
-};
-
-/******************************************************************************/
-
 // Housekeeping, as per system setting changes
 
 var onSystemSettingsReady = function(fetched) {
@@ -170,11 +164,11 @@ var onSystemSettingsReady = function(fetched) {
 /******************************************************************************/
 
 var onFirstFetchReady = function(fetched) {
-
     // Order is important -- do not change:
     onSystemSettingsReady(fetched);
-    onLocalSettingsReady(fetched);
+    fromFetch(µb.localSettings, fetched);
     onUserSettingsReady(fetched);
+    fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
 
@@ -191,6 +185,10 @@ var onFirstFetchReady = function(fetched) {
 
 var fetchableProps = {
     'compiledMagic': '',
+    'lastRestoreFile': '',
+    'lastRestoreTime': 0,
+    'lastBackupFile': '',
+    'lastBackupTime': 0,
     'netWhitelist': '',
     'selfie': null,
     'selfieMagic': '',
@@ -222,6 +220,7 @@ var fromFetch = function(to, fetched) {
 
 toFetch(µb.localSettings, fetchableProps);
 toFetch(µb.userSettings, fetchableProps);
+toFetch(µb.restoreBackupSettings, fetchableProps);
 
 vAPI.storage.get(fetchableProps, onFirstFetchReady);
 

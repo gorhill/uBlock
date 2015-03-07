@@ -92,6 +92,13 @@ return {
         selfieMagic: 'spqmeuaftfra'
     },
 
+    restoreBackupSettings: {
+        lastRestoreFile: '',
+        lastRestoreTime: 0,
+        lastBackupFile: '',
+        lastBackupTime: 0
+    },
+
     // EasyList, EasyPrivacy and many others have an 4-day update period,
     // as per list headers.
     updateAssetsEvery: 97 * oneHour,

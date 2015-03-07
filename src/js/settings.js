@@ -33,27 +33,16 @@ var messager = vAPI.messaging.channel('settings.js');
 
 /******************************************************************************/
 
-var exportToFile = function() {
-    var onUserDataReady = function(userData) {
-        if (!userData) {
-            return;
-        }
-        var now = new Date();
-        var filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', now.toLocaleString())
-            .replace(/ +/g, '_');
-        vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
-            'filename': filename
-        });
-    };
-
-    messager.send({ what: 'getUserData' }, onUserDataReady);
-};
-
-/******************************************************************************/
-
 var handleImportFilePicker = function() {
+    var file = this.files[0];
+    if ( file === undefined || file.name === '' ) {
+        return;
+    }
+    if ( file.type.indexOf('text') !== 0 ) {
+        return;
+    }
+    var filename = file.name;
+
     var fileReaderOnLoadHandler = function() {
         var userData;
         try {
@@ -80,20 +69,17 @@ var handleImportFilePicker = function() {
         }
         var time = new Date(userData.timeStamp);
         var msg = vAPI.i18n('aboutRestoreDataConfirm')
-            .replace('{{time}}', time.toLocaleString());
+                      .replace('{{time}}', time.toLocaleString());
         var proceed = window.confirm(msg);
         if ( proceed ) {
-            messager.send({ what: 'restoreUserData', userData: userData });
+            messager.send({
+                what: 'restoreUserData',
+                userData: userData,
+                file: filename
+            });
         }
     };
 
-    var file = this.files[0];
-    if ( file === undefined || file.name === '' ) {
-        return;
-    }
-    if ( file.type.indexOf('text') !== 0 ) {
-        return;
-    }
     var fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
@@ -108,6 +94,47 @@ var startImportFilePicker = function() {
     // one picked.
     input.value = '';
     input.click();
+};
+
+/******************************************************************************/
+
+var exportToFile = function() {
+    messager.send({ what: 'backupUserData' }, onLocalDataReceived);
+};
+
+/******************************************************************************/
+
+var onLocalDataReceived = function(details) {
+    uDom('#localData > ul > li:nth-of-type(1)').text(
+        vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
+    );
+
+    var elem, dt;
+    var timeOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZoneName: 'short'
+    };
+    var lastBackupFile = details.lastBackupFile || '';
+    if ( lastBackupFile !== '' ) {
+        dt = new Date(details.lastBackupTime);
+        uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+        uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
+        uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
+    }
+
+    var lastRestoreFile = details.lastRestoreFile || '';
+    elem = uDom('#localData > p:nth-of-type(3)');
+    if ( lastRestoreFile !== '' ) {
+        dt = new Date(details.lastRestoreTime);
+        uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+        uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
+        uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
+    }
 };
 
 /******************************************************************************/
@@ -175,6 +202,7 @@ var onUserSettingsReceived = function(details) {
 
 uDom.onLoad(function() {
     messager.send({ what: 'userSettings' }, onUserSettingsReceived);
+    messager.send({ what: 'getLocalData' }, onLocalDataReceived);
 });
 
 /******************************************************************************/

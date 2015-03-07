@@ -7,8 +7,20 @@
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <style>
 ul {
-    list-style-type: none;
     padding-left: 1em;
+    }
+li {
+    margin-top: 0.25em;
+    }
+ul#userSettings {
+    list-style-type: none;
+    }
+#localData > ul > li {
+    margin-top: 1em;
+    }
+#localData > ul > li > ul > li:nth-of-type(2) {
+    font-family: monospace;
+    font-size: small;
     }
 #experimental-enabled {
     margin-top: 1em;
@@ -18,24 +30,36 @@ ul {
 
 <body>
 
-<ul>
+<ul id="userSettings">
     <li><input id="collapse-blocked" type="checkbox"><label data-i18n="settingsCollapseBlockedPrompt" for="collapse-blocked"></label>
     <li><input id="icon-badge" type="checkbox"><label data-i18n="settingsIconBadgePrompt" for="icon-badge"></label>
     <li><input id="context-menu-enabled" type="checkbox"><label data-i18n="settingsContextMenuPrompt" for="context-menu-enabled"></label>
     <li><input id="advanced-user-enabled" type="checkbox"><label data-i18n="settingsAdvancedUserPrompt" for="advanced-user-enabled"></label>
-
     <!-- <li><input id="experimental-enabled" type="checkbox" disabled><label data-i18n="settingsExperimentalPrompt" for="experimental-enabled"></label> -->
-</ul>
+    </ul>
 
-<div style="margin:3em 0;border-top:1px solid #ccc;"></div>
+<div id="localData" style="margin: 0 1em;">
+    <div style="margin: 2.5em 0; border-top: 1px solid #ccc;"></div>
+    <ul>
+        <li>
+        <li style="display: none;"><span data-i18n="settingsLastBackupPrompt"></span><ul>
+            <li>
+            <li>
+            </ul>
+        <li style="display: none;"><span data-i18n="settingsLastRestorePrompt"></span><ul>
+            <li>
+            <li>
+            </ul>
+        </ul>
+    </div>
 
-<div style="margin:1em 0 0 1em;">
+<div style="margin: 2.5em 1em;">
     <p><button type="button" id="export" data-i18n="aboutBackupDataButton"></button>&ensp;
        <button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
        <input id="restoreFilePicker" type="file" accept="text/plain" class="hiddenFileInput">
     <p>
     <p><button type="button" id="reset" data-i18n="aboutResetDataButton"></button>
-</div>
+    </div>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
