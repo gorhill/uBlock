@@ -235,6 +235,18 @@
     "message":"فعال کردن ویژگی های آزمایشی (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> درباره<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"فضای مصرفی: {{value}} بایت",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"آخرین بازیابی:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"آخرین پشتیبانی:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} فیلتر های شبکه ＋ {{cosmeticFilterCount}} فرم های فیلتر انتخابی:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -451,6 +463,14 @@
     "message":"پشت صحنه",
     "description":"Pretty name for behind-the-scene network requests"
   },
+  "logFilterPrompt":{
+    "message":"فیلتر کردن مطالب لاگ",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"بیشترین تعداد مطالب لاگ",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
   "aboutChangelog":{
     "message":"تغییرات اخیر",
     "description":"English: Change log"
@@ -500,7 +520,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"این باید آخرین مطلب باشد",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

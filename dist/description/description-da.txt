@@ -1,21 +1,21 @@
-En effektiv blocker: let på hukommelse og CPU fodaftryk, og endnu kan indlæse og håndhæve tusindvis flere filtre end andre populære blokkere derude.
+En effektiv blocker: let på hukommelse og CPU forbrug,. Kan indlæse og anvende tusindvis af flere filtre end andre populære blockere derude.
 
-Illustreret oversigt over dens effektivitet: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
+Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
 
-Brug: Den Store power knap i pop-up-vinduet er til permanent deaktivere/aktivere µBlock for det aktuelle websted. Det gælder kun for det aktuelle websted , det er ikke en global afbryderknap.
+Anvendelse: Den Store power knap i pop-up-vinduet kan permanent deaktivere/aktivere µBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global afbryderknap.
 
 ***
 
-Fleksibel, det er mere end en "ad blocker": det kan også læse og oprette filtre fra hosts-filer.
+Fleksibel, det er mere end en "ad blocker": den kan også læse og oprette filtre fra hosts-filer.
 
-Ud af boksen, er disse lister over filtre indlæses og håndhævet:
+Fra starten af er disse lister over filtre indlæst og anvendt:
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
-Flere lister er tilgængelige for dig at vælge når du ønsker det:
+Flere lister er tilgængelige hvis du ønsker det:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
@@ -24,26 +24,26 @@ Flere lister er tilgængelige for dig at vælge når du ønsker det:
 - Spam404
 - Osv.
 
-Selvfølgelig, jo flere aktive filtre mere jo højere hukommelse fodtryk. Endnu, selv efter at tilføje Fanboys to ekstra lister, Hphosts's annonce og tracking servere, µBlock stadig har en ringere hukommelse footprint end andre meget populære blokkere derude.
+Selvfølgelig vil flere aktive filtre betyde højere hukommelsesforbrug. Selv efter tilføjelse af Fanboys to ekstra lister, og hpHosts’s Ad and tracking server, har µBlock stadig et lavere hukommelsesforbrug end andre blockere derude.
 
-Desuden være opmærksom på at vælge nogle af disse ekstra lister kan føre til højere sandsynlighed for webstedet brud - især de lister, der normalt anvendes som host-filel.
+Vær desuden opmærksom på, at hvis du vælger nogle af disse ekstra lister kan det føre til højere sandsynlighed for, at webstedet bliver vist forkert - især de lister der normalt anvendes som hosts-fil.
 
 ***
 
-Uden de forudindstillede lister over filtre er denne udvidelse intet. Så hvis du nogensinde  virkelig ønsker at bidrage med noget, tænk på de mennesker, der arbejder hårdt for at vedligeholde filterlister, du bruger, som blev stillet til rådighed til brug af alle gratis.
+Uden de forudindstillede lister med filtre er denne udvidelse intet. Hvis du nogensinde  virkelig ønsker at bidrage med noget, så tænk på de mennesker der arbejder hårdt for at vedligeholde de filterlister du bruger, som alle blev stillet gratis til rådighed for alle.
 
 ***
 
 Gratis.
-Open source med offentlige licens (GPLv3)
-For brugere af brugere.
+Open source med offentlig licens (GPLv3)
+For brugere, af brugere.
 
 Bidragydere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Bidragydere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Det er ganske en tidlig version, holde dette i tankerne, når du gennemser.
+Dette er en tidlig version. Hav dette i tankerne når du skriver en anmeldelse.
 
-Projekt Ændringslog:
+Projekt changelog:
 https://github.com/gorhill/uBlock/releases

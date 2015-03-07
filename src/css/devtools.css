@@ -27,6 +27,9 @@ body {
     margin: 0 0 0 1em;
     vertical-align: middle;
     }
+#pageSelector {
+    max-width: 80%;
+    }
 #toolbar #refresh {
     margin-left: 4px;
     }

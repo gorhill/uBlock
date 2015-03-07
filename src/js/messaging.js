@@ -961,24 +961,58 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var getUserData = function(callback) {
-    var onUserFiltersReady = function(details) {
+var getLocalData = function(callback) {
+    var onStorageInfoReady = function(bytesInUse) {
+        var o = µb.restoreBackupSettings;
         callback({
-            'timeStamp': Date.now(),
-            'version': vAPI.app.version,
-            'userSettings': µb.userSettings,
-            'filterLists': µb.remoteBlacklists,
-            'netWhitelist': µb.stringFromWhitelist(µb.netWhitelist),
-            'userFilters': details.content
+            storageUsed: bytesInUse,
+            lastRestoreFile: o.lastRestoreFile,
+            lastRestoreTime: o.lastRestoreTime,
+            lastBackupFile: o.lastBackupFile,
+            lastBackupTime: o.lastBackupTime
         });
     };
+
+    µb.getBytesInUse(onStorageInfoReady);
+};
+
+/******************************************************************************/
+
+var backupUserData = function(callback) {
+    var onUserFiltersReady = function(details) {
+        var userData = {
+            timeStamp: Date.now(),
+            version: vAPI.app.version,
+            userSettings: µb.userSettings,
+            filterLists: µb.remoteBlacklists,
+            netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            userFilters: details.content
+        };
+        var now = new Date();
+        var filename = vAPI.i18n('aboutBackupFilename')
+            .replace('{{datetime}}', now.toLocaleString())
+            .replace(/ +/g, '_');
+
+        vAPI.download({
+            'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(userData, null, '  ')),
+            'filename': filename
+        });
+
+        µb.restoreBackupSettings.lastBackupFile = filename;
+        µb.restoreBackupSettings.lastBackupTime = Date.now();
+        µb.XAL.keyvalSetMany(µb.restoreBackupSettings);
+
+        getLocalData(callback);
+    };
+
     µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
 };
 
 /******************************************************************************/
 
-var restoreUserData = function(userData) {
-    var countdown = 5;
+var restoreUserData = function(request) {
+    var userData = request.userData;
+    var countdown = 6;
     var onCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
@@ -994,6 +1028,13 @@ var restoreUserData = function(userData) {
         µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
         µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist, onCountdown);
         µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
+
+        µb.XAL.keyvalSetMany({
+            lastRestoreFile: request.file || '',
+            lastRestoreTime: Date.now(),
+            lastBackupFile: '',
+            lastBackupTime: 0
+        }, onCountdown);
     };
 
     // If we are going to restore all, might as well wipe out clean local
@@ -1006,7 +1047,7 @@ var restoreUserData = function(userData) {
 var resetUserData = function() {
     µb.XAL.keyvalRemoveAll();
     // Keep global counts, people can become quite attached to numbers
-    µBlock.saveLocalSettings();
+    µb.saveLocalSettings();
     vAPI.app.restart();
 };
 
@@ -1015,8 +1056,11 @@ var resetUserData = function() {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'getUserData':
-            return getUserData(callback);
+        case 'backupUserData':
+            return backupUserData(callback);
+
+        case 'getLocalData':
+            return getLocalData(callback);
 
         default:
             break;
@@ -1027,7 +1071,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'restoreUserData':
-            restoreUserData(request.userData);
+            restoreUserData(request);
             break;
 
         case 'resetUserData':

@@ -235,6 +235,18 @@
     "message":"Luba katselised funktsioonid (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>teave<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Mahtu kasutatud: {{value}} baiti",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Viimane taastus:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Viimane varundus:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} võrgufiltrit ＋ {{cosmeticFilterCount}} ilufiltrit:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Telgitagus",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtreeri logikirjeid",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maksimaalne logikirjete arv",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Muudatuste logi",

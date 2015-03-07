@@ -235,6 +235,18 @@
     "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Prostoru využito: {{value}} bajtů",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Poslední obnova:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Poslední záloha:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Za oponou",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtrovat záznamy",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximální počet záznamů",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Change log",

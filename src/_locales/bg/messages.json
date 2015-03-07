@@ -192,11 +192,11 @@
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Избиране",
+    "message":"Нов избор",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Изход",
+    "message":"Отказ",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -234,6 +234,18 @@
   "settingsExperimentalPrompt":{
     "message":"Разрешаване на експериментални функции (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> за<\/a>)",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Използвани за съхранение: {{value}} байта",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Последно възстановяване:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Последно резервно копие:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} мрежови филтри ＋ {{cosmeticFilterCount}} козметични филтри от:",
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Скрити",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"филтриране на записи",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Максимален брой записи в дневника",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Списък с промени",

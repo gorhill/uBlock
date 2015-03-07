@@ -235,6 +235,18 @@
     "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"스토리지 사용량: {{value}} 바이트",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"최근 복원:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"최근 백업:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 시각적 필터:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"숨겨진 구성 요소",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"필터 로그 항목",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"로그 항목의 최대 갯수",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"변경사항",

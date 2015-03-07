@@ -180,7 +180,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Tilsluttede domæner",
+    "message":"Forbundne domæner",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -234,6 +234,18 @@
   "settingsExperimentalPrompt":{
     "message":"Slå eksperimentielle funktioner til (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Storage used: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Last restore:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Last backup:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} netværksfiltre ＋ {{cosmeticFilterCount}} kosmetiske filtre fra:",
@@ -380,7 +392,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Liste af dine dynamiske filtreringsregler.",
+    "message":"Liste over dine dynamiske filtreringsregler.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Bag kulisserne",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"Filtrér elementer i log",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maksimalt antal elementer i log",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Changelog",

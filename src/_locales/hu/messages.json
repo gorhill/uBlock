@@ -184,7 +184,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} a(z) {{total}}-böl",
+    "message":"{{count}}, összesen: {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -234,6 +234,18 @@
   "settingsExperimentalPrompt":{
     "message":"Kísérleti funkciók engedélyezése",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Tárolóhely használva: {{value}} byte",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Utolsó biztonsági mentés visszaállitása:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Utolsó biztonsági mentés:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} net-szűrők ＋ {{cosmeticFilterCount}} kozmetikai szűrők:",
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Hálózati forgalom a háttérben",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"Naplóbejegyzések szűrése",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximum naplóbejegyzések száma",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Változások listája",

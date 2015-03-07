@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Log van netwerkverzoeken",
+    "message":"µBlock — Logboek van netwerkverzoeken",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -68,7 +68,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ga naar verzoekenlog",
+    "message":"Naar verzoekenlogboek gaan",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -234,6 +234,18 @@
   "settingsExperimentalPrompt":{
     "message":"Experimentele functies inschakelen (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>)",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Gebruikte opslagruimte: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Laatste herstel:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Laatste back-up:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} netwerkfilters ＋ {{cosmeticFilterCount}} cosmetische filters van:",
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Achter de schermen",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"logboekitems filteren",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximum aantal logboekitems",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Veranderingenlogboek",

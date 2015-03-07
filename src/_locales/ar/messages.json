@@ -235,6 +235,18 @@
     "message":"تفعيل الخصائص التجريبية (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>حول<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"الذاكرة المستخدمة: {{value}} بايت",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"آخر استيراد:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"آخر تصدير:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}}  من فلاتر الشبكه ＋ {{cosmeticFilterCount}} فلاتر تجميليه:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -352,7 +364,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"حفظ",
+    "message":"تعليق",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"خلف الكواليس",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"فلتر سجل الإدخالات",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"العدد الأقصى للإدخالات في السجلات",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"سجل التغيير",

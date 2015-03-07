@@ -63,6 +63,7 @@ return {
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
         parseAllABPHideFilters: true,
+        requestLogMaxEntries: 0,
         showIconBadge: true
     },
 
@@ -80,13 +81,22 @@ return {
 
     localSettings: {
         blockedRequestCount: 0,
-        allowedRequestCount: 0
+        allowedRequestCount: 0,
     },
+    localSettingsModifyTime: 0,
+    localSettingsSaveTime: 0,
 
     // read-only
     systemSettings: {
-        compiledMagic: 'shztbfhkfjit',
+        compiledMagic: 'wcuwrlodqyee',
         selfieMagic: 'spqmeuaftfra'
+    },
+
+    restoreBackupSettings: {
+        lastRestoreFile: '',
+        lastRestoreTime: 0,
+        lastBackupFile: '',
+        lastBackupTime: 0
     },
 
     // EasyList, EasyPrivacy and many others have an 4-day update period,

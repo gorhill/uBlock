@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Painel de Controlo",
+    "message":"µBlock — Painel de controlo",
     "description":"English: µBlock — Dashboard"
   },
   "settingsPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o µBlock para este site.\n\nCtrl+clique: desativar o µBlock apenas nesta página.",
+    "message":"Clique: desativar\/ativar o µBlock para este sítio web.\n\nCtrl+clique: desativar o µBlock apenas nesta página.",
     "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -216,7 +216,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ocultar espaços ocupados de elementos bloqueados",
+    "message":"Ocultar espaços ocupados por elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -234,6 +234,18 @@
   "settingsExperimentalPrompt":{
     "message":"Ativar funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Armazenamento utilizado: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Último restauro:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Último backup:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtros de rede ＋ {{cosmeticFilterCount}} filtros cosméticos a partir de:",
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Bastidores",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtrar entradas de registo",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Número máximo de entradas de registo",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Registo de alterações",

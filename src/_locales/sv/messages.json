@@ -160,7 +160,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"Tredjeparts",
+    "message":"Tredjepart",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -232,8 +232,20 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Aktivera experimentella funktioner",
+    "message":"Aktivera experimentella funktioner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
     "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Använt utrymme: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Senaste återställning:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Senaste säkerhetskopia:",
+    "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} nätverksfilter ＋ {{cosmeticFilterCount}} kosmetiska filter från:",
@@ -372,7 +384,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exportera till fil...",
+    "message":"Exportera till fil",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Under huven",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtrera loggposter",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maximalt antal loggposter",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Ändringslogg",

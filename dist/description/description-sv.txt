@@ -23,7 +23,7 @@ Fler filterlistor finns tillgängliga att använda om du vill:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- m.fl.
+- med flera
 
 Ju fler aktiverade filter, desto högre minnesanvändning. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts' Ad and tracking servers så använder µBlock mindre minne än andra väldigt populära blockerare.
 

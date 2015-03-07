@@ -235,6 +235,18 @@
     "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Almacenamiento usado: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Última restauración:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Último respaldo:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtros de red y {{cosmeticFilterCount}} filtros cosméticos de:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -451,8 +463,16 @@
     "message":"Peticiones ocultas",
     "description":"Pretty name for behind-the-scene network requests"
   },
+  "logFilterPrompt":{
+    "message":"filtrar entradas del registro",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Cantidad máxima de entradas del registro",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
   "aboutChangelog":{
-    "message":"Cambios",
+    "message":"Registro de cambios",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -484,7 +504,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Toda la configuración se sobrescribirá utilizando datos respaldados {{time}} y µBlock se reiniciará.  \n\n¿Sobrescribir toda la configuración existente utilizando datos de la copia de seguridad?",
+    "message":"Toda la configuración se sobrescribirá utilizando datos respaldados en {{time}} y µBlock se reiniciará.  \n\n¿Sobrescribir toda la configuración existente utilizando datos de la copia de seguridad?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{

@@ -303,8 +303,9 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 @@||2o7.net^$domain=totaljobs.com
 
 # https://github.com/gorhill/uBlock/issues/822
+# https://github.com/gorhill/uBlock/issues/940
 # To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com^$domain=musixmatch.com
+@@||google-analytics.com^$domain=musixmatch.com|bikstok.sonymusicshop.dk
 
 # https://github.com/gorhill/uBlock/issues/841
 # To counter `quantcast.com` in hpHosts, Peter Lowe's
@@ -313,3 +314,21 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # Chrome store feedback: "on gaana.com it blocks the site"
 # To counter `_social_tracking.` in EasyPrivacy
 @@||css5.gaanacdn.com/minify-*/min/?$script
+
+# http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
+||www.notempire.com/js/gridview$script
+
+# https://github.com/gorhill/uBlock/issues/919
+@@||s.youtube.com/api/stats/playback?$image,object-subrequest
+
+# https://twitter.com/Urre/status/572742363069714432
+# To counter `/keen.min.js` in EasyPrivacy
+@@||keen.github.io/*/keen.min.js$domain=keen.github.io
+
+# Feedback from Chrome store: "videos dont work on this site"
+# http://www.okgoals.com/match-highlights-1425491618---41
+# To counter `intergi.com` in Peter Lowe's
+@@||cdn.phoenix.intergi.com^$domain=okgoals.com
+
+# https://github.com/gorhill/uBlock/issues/951
+answers.yahoo.com###ya-center-rail > [id^="ya-q-"][id$="-textads"]

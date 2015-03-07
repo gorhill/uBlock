@@ -364,7 +364,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             // so we will just skip them from now on.
             if ( processHighHighGenericsMisses === 0 ) {
                 injectedSelectors['{{highHighGenerics}}'] = true;
-                console.debug('high-high generic: apparently not needed...');
+                //console.debug('high-high generic: apparently not needed...');
             }
             return;
         }

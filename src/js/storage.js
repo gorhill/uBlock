@@ -25,9 +25,13 @@
 
 /******************************************************************************/
 
-µBlock.getBytesInUse = function() {
+µBlock.getBytesInUse = function(callback) {
+    if ( typeof callback !== 'function' ) {
+        callback = this.noopFunc;
+    }
     var getBytesInUseHandler = function(bytesInUse) {
         µBlock.storageUsed = bytesInUse;
+        callback(bytesInUse);
     };
     vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
 };
@@ -38,6 +42,11 @@
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
+    if ( this.localSettingsModifyTime <= this.localSettingsSaveTime ) {
+        callback();
+        return;
+    }
+    this.localSettingsSaveTime = Date.now();
     vAPI.storage.set(this.localSettings, callback);
 };
 
@@ -124,7 +133,7 @@
         if ( details.content.indexOf(content.trim()) !== -1 ) {
             return;
         }
-        µb.saveUserFilters(details.content.trim() + '\n' + content.trim(), onSaved);
+        µb.saveUserFilters(details.content.trim() + '\n\n' + content.trim(), onSaved);
     };
 
     this.loadUserFilters(onLoaded);

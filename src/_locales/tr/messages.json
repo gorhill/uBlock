@@ -235,6 +235,18 @@
     "message":"Test aşamasındaki özellikleri etkinleştir (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Hakkında<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Storage used: {{value}} bytes",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Last restore:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Last backup:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} ağ filtresi ＋ {{cosmeticFilterCount}} kozmetik filtre:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Sahne arkası",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"Log kayıtlarını filtrele",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Maksimum log kayıt sayısı",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Değişiklikler",

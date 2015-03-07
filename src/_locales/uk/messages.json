@@ -235,6 +235,18 @@
     "message":"Ввімкнути експериментальні функції (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Детальніше тут<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Використано: {{value}} байт",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Востаннє відновлено:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Остання резервна копія:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} мережевих фільтрів ＋ {{cosmeticFilterCount}} косметичних фільтрів з:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -348,7 +360,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"скасувати зміни",
+    "message":"Скасувати зміни",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"За лаштунками",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"фільтр журналу записів",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Максимальна кількість записів в журналі",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Журнал змін",

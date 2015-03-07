@@ -42,6 +42,29 @@
 
     /******************************************************************************/
 
+    if(navigator.userAgent.indexOf("Safari/6") === -1) { // If we're not on at least Safari 8
+        var _open = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(m, u) {
+            if(u.lastIndexOf("safari-extension:", 0) === 0) {
+                var i = u.length, seeDot = false;
+                while(i --) {
+                    if(u[i] === ".") {
+                        seeDot = true;
+                    }
+                    else if(u[i] === "/") {
+                        break;
+                    }
+                }
+                if(seeDot === false) {
+                    throw 'InvalidAccessError'; // Avoid crash
+                    return;
+                }
+            }
+            _open.apply(this, arguments);
+        };
+    }
+    /******************************************************************************/
+
     vAPI.app.restart = function() {};
 
     /******************************************************************************/

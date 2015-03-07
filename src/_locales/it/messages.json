@@ -235,6 +235,18 @@
     "message":"Attiva funzionalità sperimentali (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informazioni<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Spazio utilizzato: {{value}} byte",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Ultimo ripristino:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Ultimo backup:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtri di rete + {{cosmeticFilterCount}} filtri cosmetici da:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
@@ -450,6 +462,14 @@
   "logBehindTheScene":{
     "message":"Dietro le quinte",
     "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtra voci del registro",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Numero massimo di voci del registro",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
     "message":"Change log",

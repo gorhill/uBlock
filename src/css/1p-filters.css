@@ -8,7 +8,8 @@ div > p:last-child {
     box-sizing: border-box;
     font-size: small;
     height: 60vh;
+    text-align: left;
     white-space: pre;
     width: 100%;
-    text-align: left;
+    word-wrap: normal;
     }
