@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -344,7 +344,7 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
-    // The root page domain must always be counted as connected: that's from 
+    // The root page domain must always be counted as connected: that's from
     // where the root document was fetched.
     // https://github.com/gorhill/uBlock/issues/759
     // The root page domain must be counted if and only if it was actually

@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -483,7 +483,7 @@
             }
             line = line.replace(reLocalIp, '').trim();
         }
-    
+
         if ( line.length === 0 ) {
             continue;
         }

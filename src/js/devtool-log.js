@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    sessbench - a Chromium browser extension to benchmark browser session.
+    sessbench - a browser extension to benchmark browser session.
     Copyright (C) 2013  Raymond Hill
 
     This program is free software: you can redistribute it and/or modify

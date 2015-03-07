@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -73,8 +73,8 @@ var onVersionReady = function(lastVersion) {
     // Whitelist some key scopes by default
     if ( lastVersion.localeCompare('0.8.6.0') < 0 ) {
         µb.netWhitelist = µb.whitelistFromString(
-            µb.stringFromWhitelist(µb.netWhitelist) + 
-            '\n' + 
+            µb.stringFromWhitelist(µb.netWhitelist) +
+            '\n' +
             µb.netWhitelistDefault
         );
         µb.saveWhitelist();
