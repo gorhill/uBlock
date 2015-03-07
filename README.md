@@ -1,7 +1,7 @@
 # <sub>![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38.png)</sub> uBlock
 
 <sup>[中文](https://github.com/fang5566/uBlock#-%C2%B5block)</sup><br>
-<sub>pronounce _you-block_ as in "you decide what enters your browser" / see the "µ" as a stylish "u", to emphasize small resource footprint<br></sub><sup>sorry for the dubious name, we are coders, not marketers</sup>
+<sub>pronounce _you-block_ as in "you decide what enters your browser"</sup>
 
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
