@@ -1,6 +1,6 @@
 # <sub>![logo](https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/browsericons/icon38.png)</sub> uBlock
 
-<sup>[中文](https://github.com/fang5566/uBlock#-%C2%B5block)</sup><br>
+[![Build Status](https://travis-ci.org/gorhill/uBlock.svg?branch=master)](https://travis-ci.org/gorhill/uBlock)<br><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18"></sub>&nbsp;<sup>[Chinese (中文)](https://github.com/fang5566/uBlock#-%C2%B5block)</sup><br>
 <sub>pronounce _you-block_ as in "you decide what enters your browser"</sup>
 
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
@@ -17,8 +17,6 @@
   * [Safari](#safari)
 * [Release History](#release-history)
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
-
-# [![Build Status](https://travis-ci.org/gorhill/uBlock.svg?branch=master)](https://travis-ci.org/gorhill/uBlock)
 
 ## Philosophy
 
