@@ -123,7 +123,7 @@ var onLocalDataReceived = function(details) {
     if ( lastBackupFile !== '' ) {
         dt = new Date(details.lastBackupTime);
         uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-        uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
+        //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
         uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
     }
 
