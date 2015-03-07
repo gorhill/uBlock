@@ -240,11 +240,11 @@
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"آخر استيراد:",
+    "message":"آخر إسترجاع:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"آخر تصدير:",
+    "message":"آخر تخزين:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
