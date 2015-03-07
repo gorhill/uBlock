@@ -235,6 +235,18 @@
     "message":"Omogućiti eksperimentalne mogućnosti  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>O mogućnostima<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Korišteno prostora: {{value}} bajtova",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Posljednji povratak na prijašnje:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Posljednja sigurnosna kopija:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} mrežni\/ih filter\/a ＋ {{cosmeticFilterCount}} estetski\/ih filter\/a iz:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

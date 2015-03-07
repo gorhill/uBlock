@@ -235,6 +235,18 @@
     "message":"Разрешаване на експериментални функции (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> за<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Използвани за съхранение: {{value}} байта",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Последно възстановяване:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Последно резервно копие:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} мрежови филтри ＋ {{cosmeticFilterCount}} козметични филтри от:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

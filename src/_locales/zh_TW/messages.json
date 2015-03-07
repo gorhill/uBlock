@@ -235,6 +235,18 @@
     "message":"啟用實驗性功能",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"已使用的儲存: {{value}} 位元組",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"最後的還原:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"最後的備份:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"目前使用{{netFilterCount}} 網址過濾和{{cosmeticFilterCount}} 元素過濾規則:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

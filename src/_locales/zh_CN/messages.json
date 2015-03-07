@@ -235,6 +235,18 @@
     "message":"启用实验功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>关于<\/a>）",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"已用空间：{{value}} 字节",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"上次恢复：",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"上次备份：",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"当前使用了 {{netFilterCount}} 个 URL 过滤规则和 {{cosmeticFilterCount}} 个元素过滤规则：",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

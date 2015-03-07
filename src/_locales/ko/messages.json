@@ -235,6 +235,18 @@
     "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"스토리지 사용량: {{value}} 바이트",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"최근 복원:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"최근 백업:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} 네트워크 필터 ＋ {{cosmeticFilterCount}} 시각적 필터:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

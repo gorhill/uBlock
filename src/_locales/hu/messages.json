@@ -235,6 +235,18 @@
     "message":"Kísérleti funkciók engedélyezése",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Tárolóhely használva: {{value}} byte",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Utolsó biztonsági mentés visszaállitása:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Utolsó biztonsági mentés:",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} net-szűrők ＋ {{cosmeticFilterCount}} kozmetikai szűrők:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"

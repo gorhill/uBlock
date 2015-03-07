@@ -235,6 +235,18 @@
     "message":"Activer les fonctionnalités expérimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>En savoir plus<\/a>)",
     "description":"English: Enable experimental features"
   },
+  "settingsStorageUsed":{
+    "message":"Stockage utilisé : {{value}} octet(s)",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Date de la dernière restauration :",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Date de la dernière sauvegarde :",
+    "description":"English: Last backup:"
+  },
   "3pListsOfBlockedHostsPrompt":{
     "message":"{{netFilterCount}} filtre(s) réseau et {{cosmeticFilterCount}} filtre(s) esthétique(s) actuellement en action :",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
