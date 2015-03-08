@@ -7,6 +7,10 @@
 uBlock
 </h1>
 <p align="center">
+<sup> <!-- Pronounciation -->
+      pronounce <i>you-block</i> as in "you decide what enters your browser"
+</sup>
+<br>
 <sup> <!-- Languages -->
       <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18">
       <sup>
@@ -14,14 +18,10 @@ uBlock
             Chinese (中文)    </a>
       </sup>
 </sup>
-<br>
-<sup> <!-- Pronounciation -->
-      pronounce <i>you-block</i> as in "you decide what enters your browser"
-</sup>
 </p>
 
 
-**An efficient blocker add-on for various browsers. Fast, potent, and lean.** [<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)
+**An efficient blocker add-on for various browsers. Fast, potent, and lean.**&nbsp;&nbsp;[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)
 
 * [Purpose & General Info](#philosophy)
 * [Performance and Efficiency](#performance)
