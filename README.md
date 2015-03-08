@@ -8,7 +8,7 @@ uBlock
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
-      pronounce <i>you-block</i> as in "you decide what enters your browser"
+      pronounced <i>you-block</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
 </sup>
 <br>
 <sup> <!-- Languages -->
