@@ -166,7 +166,8 @@
 
     try {
         beforeLoadEvent = new Event("beforeload")
-    } catch (ex) {
+    }
+    catch(ex) {
         legacyMode = true;
         beforeLoadEvent = document.createEvent("Event");
         beforeLoadEvent.initEvent("beforeload");
@@ -233,11 +234,10 @@
         var tmpScript = "\
 (function() {\
 var block = function(u, t) {" +
-( legacyMode
-    ? "var e = document.createEvent('CustomEvent');\
+(legacyMode ?
+"var e = document.createEvent('CustomEvent');\
 e.initCustomEvent('" + vAPI.sessionId + "', false, false, {url: u, type: t});"
-    : "var e = new CustomEvent('" + vAPI.sessionId + "',\
-{bubbles: false, detail: {url: u, type: t}});"
+: "var e = new CustomEvent('" + vAPI.sessionId + "', {bubbles: false, detail: {url: u, type: t}});"
 ) +
 "document.dispatchEvent(e);\
 return e.detail.url === false;\
@@ -318,4 +318,5 @@ return r;\
     };
     self.addEventListener("contextmenu", onContextMenu, true);
 })(this);
+
 /******************************************************************************/
