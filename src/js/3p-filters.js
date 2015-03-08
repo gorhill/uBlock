@@ -37,8 +37,6 @@ var cacheWasPurged = false;
 var needUpdate = false;
 var hasCachedContent = false;
 
-var re3rdPartyExternalAsset = /^https?:\/\/[a-z0-9]+/;
-
 /******************************************************************************/
 
 var onMessage = function(msg) {
