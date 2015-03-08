@@ -20,8 +20,7 @@
     <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
     <li><p id="listsOfBlockedHostsPrompt"></p>
 </ul>
-<ul id="lists">
-</ul>
+<ul id="lists"></ul>
 
 <div id="externalListsDiv">
 <p data-i18n="3pExternalListsHint" style="margin: 0 0 0.25em 0; font-size: 13px;"></p>
@@ -30,6 +29,23 @@
 </div>
 
 <div id="busyOverlay"></div>
+
+<div id="templates" style="display: none;">
+    <ul>
+        <li class="groupEntry"><span></span>
+            <ul></ul>
+            </li>
+        <li class="listEntry">
+            <input type="checkbox">
+            <a type="text/plain" target="_blank" href=""></a>
+            <a href="" style="display: none;" target="_blank"></a>: <!--
+         --><span class="dim"></span><!--
+         --><span class="status new" style="display: none;" data-i18n="3pExternalListNew"></span><!--
+         --><span class="status obsolete" style="display: none;" data-i18n="3pExternalListObsolete"></span><!--
+         --><span class="status purge" style="display: none;" data-i18n="3pExternalListPurge"></span>
+            </li>
+        </ul>
+    </div>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

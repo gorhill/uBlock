@@ -67,6 +67,10 @@ var renderNumber = function(value) {
 var renderBlacklists = function() {
     uDom('body').toggleClass('busy', true);
 
+    var listGroupTemplate = uDom('#templates .groupEntry');
+    var listEntryTemplate = uDom('#templates .listEntry');
+    var listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats');
+
     // Assemble a pretty blacklist name if possible
     var listNameFromListKey = function(listKey) {
         if ( listKey === listDetails.userFiltersPath ) {
@@ -80,98 +84,71 @@ var renderBlacklists = function() {
         return listTitle;
     };
 
-    // Assemble a pretty blacklist name if possible
-    var htmlFromHomeURL = function(entry) {
-        if ( !entry.homeDomain ) {
-            return '';
+    var liFromListEntry = function(listKey) {
+        var elem, text;
+        var entry = listDetails.available[listKey];
+        var li = listEntryTemplate.clone();
+
+        if ( entry.off !== true ) {
+            li.descendants('input').attr('checked', '');
         }
-        return [
-            ' <a href="http://',
-            entry.homeHostname,
-            '" target="_blank">(',
-            entry.homeDomain,
-            ')</a>'
-        ].join('');
-    };
 
-    var purgeButtontext = vAPI.i18n('3pExternalListPurge');
-    var updateButtontext = vAPI.i18n('3pExternalListNew');
-    var obsoleteButtontext = vAPI.i18n('3pExternalListObsolete');
-    var liTemplate = [
-        '<li class="listDetails">',
-        '<input type="checkbox" {{checked}}>',
-        ' ',
-        '<a data-href="{{URL}}" type="text/plain">',
-        '{{name}}',
-        '\u200E</a>',
-        '{{homeURL}}',
-        ': ',
-        '<span class="dim">',
-        vAPI.i18n('3pListsOfBlockedHostsPerListStats'),
-        '</span>'
-    ].join('');
+        elem = li.descendants('a:nth-of-type(1)');
+        elem.attr('href', encodeURI(listKey));
+        elem.text(listNameFromListKey(listKey) + '\u200E');
 
-    var htmlFromLeaf = function(listKey) {
-        var html = [];
-        var list = listDetails.available[listKey];
-        var li = liTemplate
-            .replace('{{checked}}', list.off ? '' : 'checked')
-            .replace('{{URL}}', encodeURI(listKey))
-            .replace('{{name}}', listNameFromListKey(listKey))
-            .replace('{{homeURL}}', htmlFromHomeURL(list))
-            .replace('{{used}}', !list.off && !isNaN(+list.entryUsedCount) ? renderNumber(list.entryUsedCount) : '0')
-            .replace('{{total}}', !isNaN(+list.entryCount) ? renderNumber(list.entryCount) : '?');
-        html.push(li);
+        elem = li.descendants('a:nth-of-type(2)');
+        if ( entry.homeDomain ) {
+            elem.attr('href', 'http://' + encodeURI(entry.homeHostname));
+            elem.text('(' + entry.homeDomain + ')');
+            elem.css('display', '');
+        }
+
+        elem = li.descendants('span:nth-of-type(1)');
+        text = listStatsTemplate
+            .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
+            .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
+        elem.text(text);
+
         // https://github.com/gorhill/uBlock/issues/104
-        var asset = listDetails.cache[listKey];
-        if ( asset === undefined ) {
-            return html.join('\n');
-        }
+        var asset = listDetails.cache[listKey] || {};
+
         // Update status
-        if ( list.off !== true ) {
-            var obsolete = asset.repoObsolete ||
-                       asset.cacheObsolete ||
-                       asset.cached !== true && re3rdPartyExternalAsset.test(listKey);
-            if ( obsolete ) {
-                html.push(
-                    '&ensp;',
-                    '<span class="status obsolete">',
-                    asset.repoObsolete ? updateButtontext : obsoleteButtontext,
-                    '</span>'
-                );
+        if ( entry.off !== true ) {
+            if ( asset.repoObsolete ) {
+                li.descendants('span.status.new').css('display', '');
+                needUpdate = true;
+            } else if ( asset.cacheObsolete ) {
+                li.descendants('span.status.obsolete').css('display', '');
+                needUpdate = true;
+            } else if ( entry.external && !asset.cached ) {
+                li.descendants('span.status.obsolete').css('display', '');
                 needUpdate = true;
             }
         }
+
         // In cache
         if ( asset.cached ) {
-            html.push(
-                '&ensp;',
-                '<span class="status purge">',
-                purgeButtontext,
-                '</span>'
-            );
+            li.descendants('span.status.purge').css('display', '');
             hasCachedContent = true;
         }
-        return html.join('\n');
+        return li;
     };
 
-    var htmlFromBranch = function(groupKey, listKeys) {
-        var html = [
-            '<li>',
-            vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1)),
-            '<ul>'
-        ];
+    var liFromListGroup = function(groupKey, listKeys) {
+        var liGroup = listGroupTemplate.clone();
+        liGroup.descendants('span').text(vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1)));
+        var ulGroup = liGroup.descendants('ul');
         if ( !listKeys ) {
-            return html.join('');
+            return liGroup;
         }
         listKeys.sort(function(a, b) {
             return (listDetails.available[a].title || "").localeCompare(listDetails.available[b].title || "");
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
-            html.push(htmlFromLeaf(listKeys[i]));
+            ulGroup.append(liFromListEntry(listKeys[i]));
         }
-        html.push('</ul>');
-        return html.join('');
+        return liGroup;
     };
 
     // https://www.youtube.com/watch?v=unCVi4hYRlY#t=30m18s
@@ -201,7 +178,7 @@ var renderBlacklists = function() {
         hasCachedContent = false;
 
         // Visually split the filter lists in purpose-based groups
-        var html = [];
+        var ulLists = uDom('#lists').empty();
         var groups = groupsFromLists(details.available);
         var groupKey, i;
         var groupKeys = [
@@ -216,15 +193,14 @@ var renderBlacklists = function() {
         ];
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            html.push(htmlFromBranch(groupKey, groups[groupKey]));
+            ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
             delete groups[groupKey];
         }
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            html.push(htmlFromBranch(groupKey, groups[groupKey]));
-            delete groups[groupKey];
+            ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
         }
 
         uDom('#listsOfBlockedHostsPrompt').text(
@@ -234,17 +210,6 @@ var renderBlacklists = function() {
         );
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
-        uDom('#lists').html(html.join(''));
-        uDom('a').attr('target', '_blank');
-
-        // Firefox: sanitizer drops those `href` attributes that point to local URLs
-        var lis = uDom('a[data-href]');
-        var a;
-        i = lis.length;
-        while ( i-- ) {
-            a = lis.subset(i, 1);
-            a.attr('href', a.attr('data-href'));
-        }
 
         updateWidgets();
     };
@@ -370,7 +335,7 @@ var reloadAll = function(update) {
     });
     // Reload blacklists
     var switches = [];
-    var lis = uDom('#lists .listDetails');
+    var lis = uDom('#lists .listEntry');
     var i = lis.length;
     var path;
     while ( i-- ) {
@@ -472,8 +437,8 @@ uDom.onLoad(function() {
     uDom('#buttonApply').on('click', buttonApplyHandler);
     uDom('#buttonUpdate').on('click', buttonUpdateHandler);
     uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
-    uDom('#lists').on('change', '.listDetails > input', onListCheckboxChanged);
-    uDom('#lists').on('click', '.listDetails > a:nth-of-type(1)', onListLinkClicked);
+    uDom('#lists').on('change', '.listEntry > input', onListCheckboxChanged);
+    uDom('#lists').on('click', '.listEntry > a:nth-of-type(1)', onListLinkClicked);
     uDom('#lists').on('click', 'span.purge', onPurgeClicked);
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);

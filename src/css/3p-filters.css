@@ -20,26 +20,28 @@ body[dir=rtl] #lists {
 #lists > li {
     margin: 0.5em 0 0 0;
     padding: 0;
-    font-size: 15px;
     list-style-type: none;
+    }
+#lists > li > span {
+    font-size: 15px;
     }
 #lists > li > ul {
     margin: 0.25em 0 0 0;
     }
-li.listDetails {
+li.listEntry {
     font-size: 14px;
     margin: 0 auto 0 auto;
     margin-left: 1em;
     margin-right: 0em;
     }
-body[dir=rtl] li.listDetails {
+body[dir=rtl] li.listEntry {
     margin-left: 0em;
     margin-right: 1em;
     }
-li.listDetails > * {
+li.listEntry > * {
     unicode-bidi: embed;
     }
-li.listDetails > a:nth-of-type(2) {
+li.listEntry > a:nth-of-type(2) {
     font-size: 13px;
     opacity: 0.5;
     }
@@ -89,11 +91,12 @@ body[dir=rtl] #buttonApply {
     display: none;
     }
 span.status {
-    margin: 0;
+    margin: 0 0 0 1em;
     border: 1px solid transparent;
     padding: 1px 2px;
     display: inline-block;
-    font-size: 11px;
+    font-size: smaller;
+    line-height: 1;
     opacity: 0.7;
 }
 span.purge {
