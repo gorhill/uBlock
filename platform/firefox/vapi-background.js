@@ -1118,9 +1118,9 @@ var httpObserver = {
         }
 
         var result = vAPI.tabs.onPopup({
-            tabId: tabId,
-            sourceTabId: sourceTabId,
-            url: URI.asciiSpec
+            targetTabId: tabId,
+            openerTabId: sourceTabId,
+            targetURL: URI.asciiSpec
         });
 
         return result === true;

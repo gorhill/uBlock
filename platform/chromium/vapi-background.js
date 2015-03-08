@@ -71,6 +71,17 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
+var onCreatedNavigationTarget = function(details) {
+    vAPI.tabs.onPopup({
+        openerTabId: details.sourceTabId,
+        openerURL: '',
+        targetURL: details.url,
+        targetTabId: details.tabId
+    });
+};
+
+/******************************************************************************/
+
 vAPI.tabs.registerListeners = function() {
     if ( typeof this.onNavigation === 'function' ) {
         chrome.webNavigation.onCommitted.addListener(this.onNavigation);
@@ -85,7 +96,7 @@ vAPI.tabs.registerListeners = function() {
     }
 
     if ( typeof this.onPopup === 'function' ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(this.onPopup);
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     }
 };
 
@@ -493,15 +504,6 @@ vAPI.net.registerListeners = function() {
         this.onBeforeRequest.extra
     );
 
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        this.onBeforeSendHeaders.callback,
-        {
-            'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
-            'types': this.onBeforeSendHeaders.types || []
-        },
-        this.onBeforeSendHeaders.extra
-    );
-
     var onHeadersReceivedClient = this.onHeadersReceived.callback;
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
@@ -514,6 +516,56 @@ vAPI.net.registerListeners = function() {
             'types': this.onHeadersReceived.types || []
         },
         this.onHeadersReceived.extra
+    );
+
+    // Intercept root frame requests.
+    // This is where we identify and block popups early, whenever possible.
+
+    var onBeforeSendHeaders = function(details) {
+        // Do not block behind the scene requests.
+        if ( vAPI.isNoTabId(details.tabId) ) {
+            return;
+        }
+
+        // Only root document.
+        if ( details.parentFrameId !== -1 ) {
+            return;
+        }
+
+        var referrer = headerValue(details.requestHeaders, 'referer');
+        if ( referrer === '' ) {
+            return;
+        }
+
+        var result = vAPI.tabs.onPopup({
+            openerTabId: undefined,
+            openerURL: referrer,
+            targetTabId: details.tabId,
+            targetURL: details.url
+        });
+
+        if ( result ) {
+            return { 'cancel': true };
+        }
+    };
+
+    var headerValue = function(headers, name) {
+        var i = headers.length;
+        while ( i-- ) {
+            if ( headers[i].name.toLowerCase() === name ) {
+                return headers[i].value;
+            }
+        }
+        return '';
+    };
+
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        onBeforeSendHeaders,
+        {
+            'urls': [ 'http://*/*', 'https://*/*' ],
+            'types': [ 'main_frame' ]
+        },
+        [ 'blocking', 'requestHeaders' ]
     );
 };
 

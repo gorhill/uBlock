@@ -209,15 +209,15 @@
             var url = e.url,
                 tabId = vAPI.tabs.getTabId(e.target);
             var details = {
-                url: url,
-                tabId: tabId,
-                sourceTabId: vAPI.tabs.popupCandidate
+                targetURL: url,
+                targetTabId: tabId,
+                openerTabId: vAPI.tabs.popupCandidate
             };
             vAPI.tabs.popupCandidate = false;
             if(vAPI.tabs.onPopup(details)) {
                 e.preventDefault();
-                if(vAPI.tabs.stack[details.sourceTabId]) {
-                    vAPI.tabs.stack[details.sourceTabId].activate();
+                if(vAPI.tabs.stack[details.openerTabId]) {
+                    vAPI.tabs.stack[details.openerTabId].activate();
                 }
             }
         }, true);
@@ -663,9 +663,9 @@
                     }
                     else {
                         e.message = !vAPI.tabs.onPopup({
-                            url: e.message.url,
-                            tabId: 0,
-                            sourceTabId: vAPI.tabs.getTabId(e.target)
+                            targetURL: e.message.url,
+                            targetTabId: 0,
+                            openerTabId: vAPI.tabs.getTabId(e.target)
                         });
                     }
                     break;
