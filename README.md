@@ -1,8 +1,19 @@
-# <sub><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/icon38@2x.png" height="38" width="38"></sub> uBlock&nbsp;<sup>[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)</sup>
+<h1 align="center">
+<sub>
+<img  src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/icon38@2x.png"
+      height="38"
+      width="38">
+</sub>
+uBlock&nbsp;</h1>
 
-<sup>pronounce _you-block_ as in "you decide what enters your browser"</sup>
+<p align="center">
+<sup>
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18"></sub>&nbsp;<sup>English, [Chinese (中文)](https://github.com/fang5566/uBlock#-%C2%B5block)</sup><br>
+pronounce _you-block_ as in "you decide what enters your browser"
+</sup>
+</p>
 
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18"></sub>&nbsp;<sup>English, [Chinese (中文)](https://github.com/fang5566/uBlock#-%C2%B5block)</sup>
+[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)
 
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
