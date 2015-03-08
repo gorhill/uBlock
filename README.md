@@ -8,10 +8,13 @@ uBlock&nbsp;</h1>
 
 <p align="center">
 <sup>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18"></sub>&nbsp;
-English, [Chinese (中文)](https://github.com/fang5566/uBlock#-%C2%B5block)
+<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/languageicon-36.png" width="18" height="18"></sub>
+      <sup>
+            English,          <a href="https://github.com/fang5566/uBlock#-%C2%B5block">
+            Chinese (中文)    </a>
+      </sup>
 <br>
-pronounce _you-block_ as in "you decide what enters your browser"
+pronounce <i>you-block</i> as in "you decide what enters your browser"
 </sup>
 </p>
 
