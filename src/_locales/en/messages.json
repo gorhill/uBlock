@@ -521,7 +521,7 @@
   },
   "subscriberConfirm":{
     "message":"µBlock: Add the following resource to your selection of filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description":"English: Network error: unable to connect to {{url}}"
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "dummy":{
     "message":"This entry must be the last one",
