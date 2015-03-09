@@ -127,7 +127,9 @@ var renderBlacklists = function() {
 
         // In cache
         if ( asset.cached ) {
-            li.descendants('span.status.purge').css('display', '');
+            elem = li.descendants('span.status.purge');
+            elem.css('display', '');
+            elem.attr('title', renderElapsedTime(asset.lastModified));
             hasCachedContent = true;
         }
         return li;
