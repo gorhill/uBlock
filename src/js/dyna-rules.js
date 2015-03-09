@@ -35,8 +35,6 @@ var messager = vAPI.messaging.channel('dyna-rules.js');
 
 var renderRules = function(details) {
     var rules, rule, i;
-    var permanentList = [];
-    var sessionList = [];
     var allRules = {};
     var permanentRules = {};
     var sessionRules = {};
@@ -64,27 +62,31 @@ var renderRules = function(details) {
     }
     details.permanentRules = rules.sort().join('\n');
 
+    var liTemplate = uDom('#templates > ul > li');
+    var ulLeft = uDom('#diff > .left ul').empty();
+    var ulRight = uDom('#diff > .right ul').empty();
+    var liLeft, liRight;
+
     rules = Object.keys(allRules).sort();
     for ( i = 0; i < rules.length; i++ ) {
         rule = rules[i];
         onLeft = permanentRules.hasOwnProperty(rule);
         onRight = sessionRules.hasOwnProperty(rule);
+        liLeft = liTemplate.clone();
+        liRight = liTemplate.clone();
         if ( onLeft && onRight ) {
-            permanentList.push('<li>', rule);
-            sessionList.push('<li>', rule);
+            liLeft.text(rule);
+            liRight.text(rule);
         } else if ( onLeft ) {
-            permanentList.push('<li>', rule);
-            sessionList.push('<li class="notRight toRemove">', rule);
+            liLeft.text(rule);
+            liRight.text(rule).addClass('notRight toRemove');
         } else {
-            permanentList.push('<li>&nbsp;');
-            sessionList.push('<li class="notLeft">', rule);
+            liRight.text(rule).addClass('notLeft');
         }
+        ulLeft.append(liLeft);
+        ulRight.append(liRight);
     }
 
-    uDom('#diff > .left ul > li').remove();
-    uDom('#diff > .left ul').html(permanentList.join(''));
-    uDom('#diff > .right ul > li').remove();
-    uDom('#diff > .right ul').html(sessionList.join(''));
     uDom('#diff').toggleClass('dirty', details.sessionRules !== details.permanentRules);
 };
 
