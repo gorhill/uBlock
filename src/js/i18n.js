@@ -51,7 +51,7 @@ uDom.onLoad(function() {
 
 /******************************************************************************/
 
-var renderElapsedTime = function(tstamp) {
+vAPI.i18n.renderElapsedTimeToString = function(tstamp) {
     var value = (Date.now() - tstamp) / 60000;
     if ( value < 2 ) {
         return vAPI.i18n('elapsedOneMinuteAgo');

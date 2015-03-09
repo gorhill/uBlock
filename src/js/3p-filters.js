@@ -68,6 +68,7 @@ var renderBlacklists = function() {
     var listGroupTemplate = uDom('#templates .groupEntry');
     var listEntryTemplate = uDom('#templates .listEntry');
     var listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats');
+    var renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString;
 
     // Assemble a pretty blacklist name if possible
     var listNameFromListKey = function(listKey) {
@@ -129,7 +130,7 @@ var renderBlacklists = function() {
         if ( asset.cached ) {
             elem = li.descendants('span.status.purge');
             elem.css('display', '');
-            elem.attr('title', renderElapsedTime(asset.lastModified));
+            elem.attr('title', renderElapsedTimeToString(asset.lastModified));
             hasCachedContent = true;
         }
         return li;
