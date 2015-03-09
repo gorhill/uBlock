@@ -86,7 +86,7 @@ vAPI.tabs.onClosed = function(tabId) {
 // https://github.com/gorhill/uBlock/issues/297
 
 vAPI.tabs.onPopup = function(details) {
-    //console.debug('vAPI.tabs.onPopup: url="%s"', details.url);
+    //console.debug('vAPI.tabs.onPopup: details = %o', details);
 
     var pageStore = µb.pageStoreFromTabId(details.openerTabId);
     var openerURL = details.openerURL || '';
@@ -121,12 +121,11 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/91
     if ( pageStore ) {
-        var context = {
+        pageStore.logRequest({
             requestURL: targetURL,
             requestHostname: µb.URI.hostnameFromURI(targetURL),
             requestType: 'popup'
-        };
-        pageStore.logRequest(context, result);
+        }, result);
     }
 
     // Not blocked
