@@ -527,15 +527,27 @@
             return;
         }
 
+        // Only the lists referenced by the switches are touched.
+
         var filterLists = µb.remoteBlacklists;
+        var entry, state, location;
         var i = switches.length;
         while ( i-- ) {
-            if ( filterLists.hasOwnProperty(switches[i].location) === false ) {
+            entry = switches[i];
+            state = entry.off === true;
+            location = entry.location;
+            if ( filterLists.hasOwnProperty(location) === false ) {
+                if ( state !== true ) {
+                    filterLists[location] = { off: state };
+                }
                 continue;
             }
-            filterLists[switches[i].location].off = !!switches[i].off;
+            if ( filterLists[location].off === state ) {
+                continue;
+            }
+            filterLists[location].off = state;
         }
-        // Save switch states
+
         vAPI.storage.set({ 'remoteBlacklists': filterLists }, onFilterListsReady);
     };
 
@@ -564,9 +576,8 @@
             µb.purgeCompiledFilterList(path);
         }
         // Purge obsolete PSL
-        if ( metadata.hasOwnProperty(µb.pslPath) === false ) {
-            entry = metadata[µb.pslPath];
-            if ( entry.repoObsolete === true ) {
+        if ( metadata.hasOwnProperty(µb.pslPath) ) {
+            if ( metadata[µb.pslPath].repoObsolete === true ) {
                 µb.assets.purge('cache://compiled-publicsuffixlist');
             }
         }

@@ -36,6 +36,15 @@
             "js": ["js/contentscript-end.js"],
             "run_at": "document_end",
             "all_frames": true
+        },
+        {
+            "matches": [
+                "https://*.adblockplus.org/*",
+                "https://*.adblockplus.me/*",
+                "https://www.fanboy.co.nz/*"
+            ],
+            "js": ["js/subscriber.js"],
+            "run_at": "document_idle"
         }
     ],
     "minimum_chrome_version": "22.0",

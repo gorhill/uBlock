@@ -55,6 +55,11 @@ const contentObserver = {
     cpMessageName: hostName + ':shouldLoad',
     ignoredPopups: new WeakMap(),
     uniqueSandboxId: 1,
+    subscriberTargets: {
+        'adblockplus.org': true,
+        'adblockplus.me': true,
+        'fanboy.co.nz': true
+    },
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -295,6 +300,27 @@ const contentObserver = {
         };
 
         subject.addEventListener('DOMContentLoaded', docReady, true);
+
+/* Does not work, I do not know why
+
+        let docIdle = function(e) {
+            this.removeEventListener(e.type, docIdle);
+            lss(this.contentBaseURI + 'subscriber.js', sandbox);
+        };
+
+        var target = loc.host;
+        while ( target !== '' ) {
+            if ( this.subscriberTargets.hasOwnProperty(target) ) {
+                subject.addEventListener('load', docIdle);
+                break;
+            }
+            let pos = target.indexOf('.');
+            if ( pos === -1 ) {
+                break;
+            }
+            target = target.slice(pos + 1);
+        }
+*/
     }
 };
 
