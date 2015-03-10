@@ -260,8 +260,8 @@ const contentObserver = {
         this.removeEventListener('mousedown', contObs.ignorePopup, true);
     },
 
-    observe: function(subject) {
-        let win = subject.defaultView;
+    observe: function(doc) {
+        let win = doc.defaultView;
 
         if ( !win ) {
             return;
@@ -289,12 +289,17 @@ const contentObserver = {
         lss(this.contentBaseURI + 'vapi-client.js', sandbox);
         lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
 
-        let docReady = function(e) {
-            this.removeEventListener(e.type, docReady, true);
-            lss(contentObserver.contentBaseURI + 'contentscript-end.js', sandbox);
+        let docReady = (e) => {
+            let doc = e.target;
+            doc.removeEventListener(e.type, docReady, true);
+            lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
+
+            if ( doc.querySelector('a[href^="abp:"]') ) {
+                lss(this.contentBaseURI + 'subscriber.js', sandbox);
+            }
         };
 
-        subject.addEventListener('DOMContentLoaded', docReady, true);
+        doc.addEventListener('DOMContentLoaded', docReady, true);
     }
 };
 

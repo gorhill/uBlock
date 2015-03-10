@@ -160,8 +160,18 @@
 
     // Helper event to message background,
     // and helper anchor element
-    var beforeLoadEvent = new Event("beforeload"),
+    var beforeLoadEvent,
+        legacyMode = false,
         linkHelper = document.createElement("a");
+
+    try {
+        beforeLoadEvent = new Event("beforeload")
+    }
+    catch(ex) {
+        legacyMode = true;
+        beforeLoadEvent = document.createEvent("Event");
+        beforeLoadEvent.initEvent("beforeload");
+    }
 
     // Inform that we've navigated
     if(frameId === 0) {
@@ -223,15 +233,13 @@
         var tmpJS = document.createElement("script");
         var tmpScript = "\
 (function() {\
-var block = function(u, t) {\
-var e = new CustomEvent('" + vAPI.sessionId + "', {\
-detail: {\
-url: u,\
-type: t\
-},\
-bubbles: false\
-});\
-document.dispatchEvent(e);\
+var block = function(u, t) {" +
+(legacyMode ?
+"var e = document.createEvent('CustomEvent');\
+e.initCustomEvent('" + vAPI.sessionId + "', false, false, {url: u, type: t});"
+: "var e = new CustomEvent('" + vAPI.sessionId + "', {bubbles: false, detail: {url: u, type: t}});"
+) +
+"document.dispatchEvent(e);\
 return e.detail.url === false;\
 },\
 wo = open,\
@@ -310,4 +318,5 @@ return r;\
     };
     self.addEventListener("contextmenu", onContextMenu, true);
 })(this);
+
 /******************************************************************************/

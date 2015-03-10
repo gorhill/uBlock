@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: w7Kb5nBkLLUPd5L8VI9j9g
+! Checksum: HzA79EVcIUETJnxCsDlajA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 22 Feb 2015
+! Updated: 7 Mar 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -675,6 +675,7 @@ wolframalpha.com###subpod_zoom
 @@||bissell.com/min.axd?
 @@||bose.com/assets/js/site_catalyst_functions.js
 @@||bt.com/static/includes/homepage/touchclarity/*/omtr_tc.js
+@@||canada.com/js/global_s_code.js
 @@||canadiantire.ca/content/canadian-tire/*.sitecatalyst.
 @@||canadiantire.ca/etc/clientlibs/foundation/sitecatalyst/
 @@||canadiantire.ca/etc/cloudservices/*/mbox.js

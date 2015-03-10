@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Tue, 17 Feb 2015 15:07:40 GMT
-# entries:        2445
+# last updated:   Sun, 01 Mar 2015 07:39:13 GMT
+# entries:        2449
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -243,7 +243,6 @@
 127.0.0.1 adgridwork.com
 127.0.0.1 adhese.be
 127.0.0.1 adhese.com
-127.0.0.1 adhostcenter.com
 127.0.0.1 adi.mainichi.co.jp
 127.0.0.1 adimage.asiaone.com.sg
 127.0.0.1 adimage.guardian.co.uk
@@ -436,6 +435,7 @@
 127.0.0.1 ads.eatinparis.com
 127.0.0.1 ads.economist.com
 127.0.0.1 ads.edbindex.dk
+127.0.0.1 ads.egrana.com.br
 127.0.0.1 ads.einmedia.com
 127.0.0.1 ads.electrocelt.com
 127.0.0.1 ads.elitetrader.com
@@ -835,7 +835,6 @@
 127.0.0.1 adsmart.co.uk
 127.0.0.1 adsmart.com
 127.0.0.1 adsmart.net
-127.0.0.1 adsmusic.com
 127.0.0.1 adsoftware.com
 127.0.0.1 adsoldier.com
 127.0.0.1 adsonar.com
@@ -1633,8 +1632,12 @@
 127.0.0.1 itop.cz
 127.0.0.1 its-that-easy.com
 127.0.0.1 itsptp.com
+127.0.0.1 jbeet.cjt1.net
 127.0.0.1 jcount.com
+127.0.0.1 jedonkey.cjt1.net
 127.0.0.1 jinkads.de
+127.0.0.1 jkazaa.cjt1.net
+127.0.0.1 jnova.cjt1.net
 127.0.0.1 joetec.net
 127.0.0.1 jokedollars.com
 127.0.0.1 js.users.51.la
@@ -1960,6 +1963,7 @@
 127.0.0.1 projectwonderful.com
 127.0.0.1 promo.badoink.com
 127.0.0.1 promo.ulust.com
+127.0.0.1 promo1.webcams.nl
 127.0.0.1 promobenef.com
 127.0.0.1 promos.fling.com
 127.0.0.1 promote.pair.com

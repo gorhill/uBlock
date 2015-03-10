@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201502171013
+! Version: 201503021216
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 17-02-2015
+! Last modified: 02-03-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -19,6 +19,7 @@
 @@||gioxx.org^$document
 @@||noads.it^$document
 ! [Gruppo di filtri per bloccare elementi]/blocking
+http://ad*.adpdx.com/
 ||ashleymadison.com^$popup
 ||syndication.exoclick.com^$popup
 ||lp.ilivid.com^$popup,image,~image
@@ -1743,6 +1744,11 @@ about:blank$popup,domain=katproxy.com|filmpertutti.eu
 ||stats.coreg-feed.com^
 |http://goodmove.tv/adv/
 ||dasfdasfasdf.no-ip.info^
+||s.ad125m.com^
+||wagital.com/Wagital-Ads.html
+|http://www.buono-spesa.it/?aid=
+|http://track.adform.net/Serving/TrackPoint
+|http://reytv.co/adds/
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 ravennaedintorni.it##DIV[id="leaderboard_div"]
 ravennaedintorni.it##DIV[id="manchette_div"]
@@ -3452,6 +3458,19 @@ labnol.org##.garectangle
 tabletmag.com##.vox_ad
 tabletmag.com##.sidebar-ad
 guidesmartphone.net##.adsbygoogle
+maxigossip.com##.adsbygoogle
+maxigossip.com##[class^="adspace"]
+avvenire.it##[id^="300x250"]
+forum.xda-developers.com##IFRAME[width="728"][height="90"][src="/pubgalaxy/728x90.html"]
+forum.xda-developers.com##.unicorn
+cricfree.sx##[id^="floatLayer"]
+reytv.co##[id^="floatLayer"]
+reytv.co###timerDiv
+reytv.co###video_ads_overdiv
+breaknotizie.com##.adsbygoogle
+breaknotizie.com##[id^="ads300"]
+minecraft-italia.it##.adsbygoogle
+minecraft-italia.it##[class^="forum_home_adv"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup

@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ var µb = µBlock;
 
 // When the DOM content of root frame is loaded, this means the tab
 // content has changed.
+
 vAPI.tabs.onNavigation = function(details) {
     if ( details.frameId !== 0 ) {
         return;
@@ -55,9 +56,12 @@ vAPI.tabs.onNavigation = function(details) {
     }
 };
 
+/******************************************************************************/
+
 // It may happen the URL in the tab changes, while the page's document
 // stays the same (for instance, Google Maps). Without this listener,
 // the extension icon won't be properly refreshed.
+
 vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
     if ( !tab.url || tab.url === '' ) {
         return;
@@ -68,6 +72,8 @@ vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
     µb.bindTabToPageStats(tabId, changeInfo.url, 'tabUpdated');
 };
 
+/******************************************************************************/
+
 vAPI.tabs.onClosed = function(tabId) {
     if ( tabId < 0 ) {
         return;
@@ -75,31 +81,51 @@ vAPI.tabs.onClosed = function(tabId) {
     µb.unbindTabFromPageStats(tabId);
 };
 
-// https://github.com/gorhill/uBlock/issues/297
-vAPI.tabs.onPopup = function(details) {
-    //console.debug('vAPI.tabs.onPopup: url="%s"', details.url);
+/******************************************************************************/
 
-    var pageStore = µb.pageStoreFromTabId(details.sourceTabId);
-    if ( !pageStore ) {
+// https://github.com/gorhill/uBlock/issues/297
+
+vAPI.tabs.onPopup = function(details) {
+    //console.debug('vAPI.tabs.onPopup: details = %o', details);
+
+    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
+    var openerURL = details.openerURL || '';
+
+    if ( openerURL === '' && pageStore ) {
+        openerURL = pageStore.pageURL;
+    }
+
+    if ( openerURL === '' ) {
         return;
     }
-    var requestURL = details.url;
+
+    var µburi = µb.URI;
+    var openerHostname = µburi.hostnameFromURI(openerURL);
+    var openerDomain = µburi.domainFromHostname(openerHostname);
+
+    var context = {
+        pageHostname: openerHostname,
+        pageDomain: openerDomain,
+        rootHostname: openerHostname,
+        rootDomain: openerDomain
+    };
+
+    var targetURL = details.targetURL;
     var result = '';
 
     // https://github.com/gorhill/uBlock/issues/323
     // If popup URL is whitelisted, do not block it
-    if ( µb.getNetFilteringSwitch(requestURL) ) {
-        result = µb.staticNetFilteringEngine.matchStringExactType(pageStore, requestURL, 'popup');
+    if ( µb.getNetFilteringSwitch(targetURL) ) {
+        result = µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup');
     }
 
     // https://github.com/gorhill/uBlock/issues/91
-    if ( result !== '' ) {
-        var context = {
-            requestURL: requestURL,
-            requestHostname: µb.URI.hostnameFromURI(requestURL),
+    if ( pageStore ) {
+        pageStore.logRequest({
+            requestURL: targetURL,
+            requestHostname: µb.URI.hostnameFromURI(targetURL),
             requestType: 'popup'
-        };
-        pageStore.logRequest(context, result);
+        }, result);
     }
 
     // Not blocked
@@ -110,10 +136,9 @@ vAPI.tabs.onPopup = function(details) {
     // Blocked
 
     // It is a popup, block and remove the tab.
-    µb.unbindTabFromPageStats(details.tabId);
-    vAPI.tabs.remove(details.tabId);
+    µb.unbindTabFromPageStats(details.targetTabId);
+    vAPI.tabs.remove(details.targetTabId);
 
-    // for Safari and Firefox
     return true;
 };
 

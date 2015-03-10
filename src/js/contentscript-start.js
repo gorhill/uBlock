@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -135,7 +135,7 @@ var filteringHandler = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/587
     // If no filters were found, maybe the script was injected before uBlock's
-    // process was fully initialized. When this happens, pages won't be 
+    // process was fully initialized. When this happens, pages won't be
     // cleaned right after browser launch.
     vAPI.contentscriptStartInjected = details && details.ready;
 

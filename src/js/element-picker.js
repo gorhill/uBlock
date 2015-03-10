@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -135,6 +135,7 @@ var localMessager = vAPI.messaging.channel('element-picker.js');
 
 var svgOcean = null;
 var svgIslands = null;
+var svgRoot = null;
 var dialog = null;
 var taCandidate = null;
 
@@ -166,20 +167,6 @@ var safeQuerySelectorAll = function(node, selector) {
         }
     }
     return [];
-};
-
-/******************************************************************************/
-
-var pausePicker = function() {
-    dialog.parentNode.classList.add('paused');
-    svgListening(false);
-};
-
-/******************************************************************************/
-
-var unpausePicker = function() {
-    dialog.parentNode.classList.remove('paused');
-    svgListening(true);
 };
 
 /******************************************************************************/
@@ -670,6 +657,13 @@ var onSvgHovered = function(ev) {
 /******************************************************************************/
 
 var onSvgClicked = function(ev) {
+    // https://github.com/gorhill/uBlock/issues/810#issuecomment-74600694
+    // Unpause picker if user click outside dialog
+    if ( dialog.parentNode.classList.contains('paused') ) {
+        unpausePicker();
+        return;
+    }
+
     var elem = elementFromPoint(ev.clientX, ev.clientY);
     if ( elem === null ) {
         return;
@@ -681,10 +675,8 @@ var onSvgClicked = function(ev) {
 /******************************************************************************/
 
 var svgListening = function(on) {
-    var svg = dialog.ownerDocument.body.querySelector('svg');
     var action = (on ? 'add' : 'remove') + 'EventListener';
-    svg[action]('mousemove', onSvgHovered);
-    svg[action]('click', onSvgClicked);
+    svgRoot[action]('mousemove', onSvgHovered);
 };
 
 /******************************************************************************/
@@ -709,6 +701,20 @@ var onScrolled = function() {
 
 /******************************************************************************/
 
+var pausePicker = function() {
+    dialog.parentNode.classList.add('paused');
+    svgListening(false);
+};
+
+/******************************************************************************/
+
+var unpausePicker = function() {
+    dialog.parentNode.classList.remove('paused');
+    svgListening(true);
+};
+
+/******************************************************************************/
+
 // Let's have the element picker code flushed from memory when no longer
 // in use: to ensure this, release all local references.
 
@@ -724,11 +730,12 @@ var stopPicker = function() {
     taCandidate.removeEventListener('input', onCandidateChanged);
     dialog.removeEventListener('click', onDialogClicked);
     svgListening(false);
+    svgRoot.removeEventListener('click', onSvgClicked);
     pickerRoot.parentNode.removeChild(pickerRoot);
     pickerRoot.onload = null;
     pickerRoot =
     dialog =
-    svgOcean = svgIslands =
+    svgRoot = svgOcean = svgIslands =
     taCandidate = null;
     localMessager.close();
 
@@ -759,9 +766,10 @@ var startPicker = function(details) {
     taCandidate = dialog.querySelector('textarea');
     taCandidate.addEventListener('input', onCandidateChanged);
 
-    var svgRoot = frameDoc.body.querySelector('svg');
+    svgRoot = frameDoc.body.querySelector('svg');
     svgOcean = svgRoot.firstChild;
     svgIslands = svgRoot.lastChild;
+    svgRoot.addEventListener('click', onSvgClicked);
     svgListening(true);
 
     window.addEventListener('scroll', onScrolled, true);

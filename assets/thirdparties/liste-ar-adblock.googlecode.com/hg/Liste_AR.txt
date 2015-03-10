@@ -20,14 +20,17 @@
 /ar/ads/*
 /ara/ads/*
 /bnr468.
+/cdn-cgi/pe/bag*?
 !
 !----------------------- Éléments génériques -----------------!
+###advBarMars
 ###custom-ad
 ###pub-730x90
 ##.ads_box_home_box
 ##.adv-header
 ##.adv_cont
 ##.ban-728
+##.cubes-ads
 ##.custom-advert-banner
 ##.custom-advert-banner-frame
 ##.inside_adv_section
@@ -35,6 +38,7 @@
 ##.large-ad-center-close
 ##.leftSideAds
 ##.ltas_adspot
+##.panet-mars-adv-panel
 ##.pm-ad-zone
 ##.pub-730x90
 ##.sidbar-ad1
@@ -51,6 +55,7 @@
 ##a[href^="http://www.probux.com/?rh="] > img
 ##a[href^="http://www.sotmasr.com/announcements/"]
 ##a[href^="http://xat.com/"]
+##a[href^="https://khamsat.com/?r="] > img
 !
 !----------------------- Annonceurs -----------------------!
 !
@@ -100,6 +105,8 @@
 ||oneclickad.net^$third-party
 ||palfad.com^$third-party
 ||poparb.com^$third-party
+||rvfrm2005.com^$popup,third-party
+||rvfrm2005.com^$third-party
 ||safeadnetwork.net^$third-party
 ||sarmady-ads.com^$third-party
 ||sarmady.net^$third-party
@@ -108,8 +115,11 @@
 ||trafficrevmaster.com^$third-party
 ||vuiads.org^$third-party
 ||wafmedia2.com^$third-party
+||xaddad.com^$third-party
 ||zwaar.net^$popup,third-party
 ||zwaar.net^$third-party
+||zwaar.org^$popup,third-party
+||zwaar.org^$third-party
 !
 !----------------------- Publicités tierces ----------------------!
 !
@@ -117,6 +127,7 @@
 ||0zz0.com/2012/07/28/21/250712642.gif
 ||3nwd.com/uploads/3nwd-1367442631216.gif
 ||3rabgamer.net^*/banner/
+||3rbup.com/plugins/imageviewer/site/direct.php?s=2d82009cee6b9b33
 ||3rbup.com^*/direct.php?s=5670b66b3011a18f&/zi-m1.gif
 ||3rby.net/$popup,domain=s-ajfan.com
 ||3support.com/wp-content/uploads/*/support.gif
@@ -287,6 +298,7 @@
 ||nadorimg.com/pub/
 ||neargood.com^$popup,third-party
 ||nqashalhob.com/sharing.gif
+||op-arab.net/images/2015/01/04/BYVMon.gif
 ||optionyard.com/l.aspx?
 ||postimg.org/g70xglyjt/banner.png
 ||profvb.com/pub/
@@ -331,6 +343,7 @@
 ||up-00.com/2015-02/1424470761543.jpg
 ||up-00.com/2015-02/1424470761776.jpg
 ||up-00.com/2015-02/1424472081151.jpg
+||up07.net/open*.js
 ||up700.net/affiliates/
 ||upxmedia.com/$subdocument,domain=shofonline.net
 ||videobam.com/this-pays-for-bandwidth/
@@ -350,6 +363,8 @@
 ||yourjavascript.com^*/pp-kora.js
 ||z4ar.com/banner/bsh.gif
 ||zi-m.com/uploads/1421349783282.jpg
+||zi-m.com/uploads/1424183257331.png
+||zi-m.com/uploads/1424438015121.gif
 ||zi-m.com^$popup,domain=sh-arab.com
 ||zimabdk.com/uploads/13739105611.gif
 ||zimabdk.com/uploads/13739970081.png
@@ -358,6 +373,7 @@
 !
 !----------------------- Sites spécifiques -----------------------!
 !
+|http:$subdocument,third-party,domain=sa.ae
 |http://j.gs^$popup,domain=showsat.org
 ||0sat.net/index/
 ||0zz0.com/e/$image
@@ -540,6 +556,7 @@
 ||bentvip.com/up/20120511032813.gif
 ||bit.ly^$popup,domain=arbcinema.com|ultshare.com
 ||blogspot.ae^$popup,domain=cima4u.com
+||blogspot.com/-ZGaEt5qQ2Sw/*/*D8%A7%D8%B4%2B160%2B600.png
 ||blogspot.com^$popup,domain=cima4u.com|el7l.co|el7l.com|mountada.net|uiraqi.com|yallamoviez.com
 ||blogspot.com^*/banusr.jpg$domain=juste4femme.blogspot.com
 ||blogspot.com^*/download_little.jpg$domain=shofonline.net
@@ -623,6 +640,7 @@
 ||elbashayer.com/images/forex.jpg
 ||elbashayer.com/images/orientalweavers.jpg
 ||elbashayer.com/newahly100.swf
+||elcinema.com/images/booking-button-homepage.png
 ||eldjoumhouria.dz^*/pub/
 ||elhayatalarabiya.com^*/images/banner.gif
 ||elheddaf.com/data/dzauto.swf
@@ -813,6 +831,7 @@
 ||othaimmarkets.com/themes/*/BannerRotator.swf?
 ||ouestribune-dz.com/boutons/Pub-louer.swf
 ||panet.co.il/Ext/js/auadsx.js
+||panet.co.il/online/images/links_blocks/
 ||panet.co.il^*/flash_banners/
 ||panorama-istanbul.org/vb/open/
 ||popup.egyup.com^
@@ -886,6 +905,7 @@
 ||servimg.com/u/f10/16/22/48/64/f40-mo10.gif
 ||servimg.com/u/f42/16/22/48/64/34637510.gif
 ||sfari-s.com^$subdocument,domain=r-khleeg.net
+||shababnow.com/asset/img/300.jpg
 ||shatelarab.com^*/banners/
 ||shattalarab.net/*/images/avd.png
 ||shofonline.org/megapop.js
@@ -899,6 +919,7 @@
 ||str-ly.com/open*.js
 ||support-ar.com^*/support-adv/
 ||swalif.com/banner/
+||sweetarabs.com/asset/img/320.gif
 ||syrcafe.co/vb/aerowindow/
 ||syrcafe.co/wal*.js
 ||syrcafe.com/ra03a.js
@@ -1056,7 +1077,7 @@ elraaed.com##.ads_1
 kalemaro.com##.adsance
 arab-eng.org##.adsensarab2
 linkat-online.com##.adss_left
-ashwagi.com,fll2.com,mobdi3ine.net,shofha.com,swarih.com,y4yy.com,yallabina.com##.adv
+ashwagi.com,fll2.com,mobdi3ine.net,op-arab.com,shofha.com,swarih.com,y4yy.com,yallabina.com##.adv
 kalemaro.com##.adv2
 n4hr.com##.advactar
 mp3quran.net##.advertising
@@ -1110,6 +1131,7 @@ alarab.net##.mbAdImg
 mediamasr.tv##.mediumbanner
 hawaaweb.com##.middle-banner
 ech-chaab.net##.module.mod-line.color-black.deepest
+elcinema.com##.movie-reserve-cinema
 skynewsarabia.com##.mpu
 abotlal.com##.nannr
 rassoulallah.info##.narrow_column
@@ -1308,6 +1330,8 @@ forums.7hob.com##td[style="border:2px #EA8610 dotted ; width:750px;height:280px;
 damasgate.com##td[width="160"]
 traidnt.net##td[width="160px"]
 ! Anti-Adblock
+g9g.com#@##myAd
+xaddad.com#@#.afs_ads
 @@||coolkora.com^$elemhide
 !
 !----------------------- Exceptions -----------------------!
@@ -1320,6 +1344,7 @@ traidnt.net##td[width="160px"]
 @@||echoroukonline.com/banners/half/
 @@||elhiwarnet.com/images/banners/meteo-hiwar.png
 @@||elmassar-ar.com/ara/ads/logo2010.swf
+@@||xaddad.com/advertisers/$~third-party
 !
 !----------------------- Exceptions d'éléments -----------------------!
 !

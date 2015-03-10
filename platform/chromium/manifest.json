@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
 
-    "name": "µBlock",
+    "name": "uBlock",
     "version": "0.9.0.0",
 
     "default_locale": "en",
@@ -16,11 +16,11 @@
             "19": "img/browsericons/icon19-off.png",
             "38": "img/browsericons/icon38-off.png"
         },
-        "default_title": "µBlock",
+        "default_title": "uBlock",
         "default_popup": "popup.html"
     },
 
-    "author": "The µBlock Development Team",
+    "author": "The uBlock Development Team",
     "background": {
         "page": "background.html"
     },
@@ -36,6 +36,15 @@
             "js": ["js/contentscript-end.js"],
             "run_at": "document_end",
             "all_frames": true
+        },
+        {
+            "matches": [
+                "https://*.adblockplus.org/*",
+                "https://*.adblockplus.me/*",
+                "https://www.fanboy.co.nz/*"
+            ],
+            "js": ["js/subscriber.js"],
+            "run_at": "document_idle"
         }
     ],
     "minimum_chrome_version": "22.0",

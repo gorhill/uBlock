@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: nqmvUqyIRkl4oTWWv6DbTg
-! Version: 201502280131
+! Checksum: mdPoyj3fZQbZsP6Mn0l3EQ
+! Version: 201503071831
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 28 Feb 2015 01:31 UTC
+! Last modified: 07 Mar 2015 18:31 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -506,6 +506,7 @@ delamar.de#@#.custom_ads
 autoscout24.de#@#.detail-ads
 esvkticker.sports-stream.de#@#.google_adsense
 immobilienscout24.de#@#.has-ad
+guterhut.de#@#.img_ad
 frankenlist.de#@#.item-ad
 frankenlist.de#@#.list-ad
 styleranking.de#@#.medrect-ad
@@ -3749,6 +3750,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||zweinullig.de/wp-content/uploads/125.png
 ||zweinullig.de/wp-content/uploads/chaershop.jpg
 ! Anti-Adblock
+.de/test/*.html$subdocument,domain=gamona.de
+|http://*.de^*.$subdocument,third-party,domain=gamona.de
 ||2mdn.net/videoplayback/$object-subrequest,domain=n-tvnow.de|rtl-now.rtl.de|rtl2now.rtl2.de|rtlnitronow.de|superrtlnow.de|voxnow.de
 ||astronews.com^*_6.js
 ||csgo.99damage.de/wp-content/$image

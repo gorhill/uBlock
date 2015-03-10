@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to black/white list requests.
+    µBlock - a browser extension to black/white list requests.
     Copyright (C) 2014  Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -195,7 +195,7 @@ Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
 
 // - *    *  type
 // - from *  type
-// - *    to * 
+// - *    to *
 // - from to *
 
 Matrix.prototype.hasSameRules = function(other, srcHostname, desHostnames) {

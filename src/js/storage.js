@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -99,8 +99,8 @@
 
 /******************************************************************************/
 
-µBlock.appendUserFilters = function(content) {
-    if ( content.length === 0 ) {
+µBlock.appendUserFilters = function(filter) {
+    if ( filter.length === 0 ) {
         return;
     }
 
@@ -130,10 +130,11 @@
         if ( details.error ) {
             return;
         }
-        if ( details.content.indexOf(content.trim()) !== -1 ) {
-            return;
-        }
-        µb.saveUserFilters(details.content.trim() + '\n\n' + content.trim(), onSaved);
+        // https://github.com/gorhill/uBlock/issues/976
+        // If we reached this point, the filter quite probably needs to be
+        // added for sure: do not try to be too smart, trying to avoid
+        // duplicates at this point may lead to more issues.
+        µb.saveUserFilters(details.content.trim() + '\n\n' + filter.trim(), onSaved);
     };
 
     this.loadUserFilters(onLoaded);
@@ -483,7 +484,7 @@
             }
             line = line.replace(reLocalIp, '').trim();
         }
-    
+
         if ( line.length === 0 ) {
             continue;
         }
@@ -527,15 +528,27 @@
             return;
         }
 
+        // Only the lists referenced by the switches are touched.
+
         var filterLists = µb.remoteBlacklists;
+        var entry, state, location;
         var i = switches.length;
         while ( i-- ) {
-            if ( filterLists.hasOwnProperty(switches[i].location) === false ) {
+            entry = switches[i];
+            state = entry.off === true;
+            location = entry.location;
+            if ( filterLists.hasOwnProperty(location) === false ) {
+                if ( state !== true ) {
+                    filterLists[location] = { off: state };
+                }
                 continue;
             }
-            filterLists[switches[i].location].off = !!switches[i].off;
+            if ( filterLists[location].off === state ) {
+                continue;
+            }
+            filterLists[location].off = state;
         }
-        // Save switch states
+
         vAPI.storage.set({ 'remoteBlacklists': filterLists }, onFilterListsReady);
     };
 
@@ -564,9 +577,8 @@
             µb.purgeCompiledFilterList(path);
         }
         // Purge obsolete PSL
-        if ( metadata.hasOwnProperty(µb.pslPath) === false ) {
-            entry = metadata[µb.pslPath];
-            if ( entry.repoObsolete === true ) {
+        if ( metadata.hasOwnProperty(µb.pslPath) ) {
+            if ( metadata[µb.pslPath].repoObsolete === true ) {
                 µb.assets.purge('cache://compiled-publicsuffixlist');
             }
         }

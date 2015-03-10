@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@
 */
 
 /* global vAPI, uDom */
+/* exported renderElapsedTime */
+
 'use strict';
 
 /******************************************************************************/
@@ -46,3 +48,29 @@ uDom.onLoad(function() {
         );
     });
 });
+
+/******************************************************************************/
+
+vAPI.i18n.renderElapsedTimeToString = function(tstamp) {
+    var value = (Date.now() - tstamp) / 60000;
+    if ( value < 2 ) {
+        return vAPI.i18n('elapsedOneMinuteAgo');
+    }
+    if ( value < 60 ) {
+        return vAPI.i18n('elapsedManyMinutesAgo').replace('{{value}}', Math.floor(value).toLocaleString());
+    }
+    value /= 60;
+    if ( value < 2 ) {
+        return vAPI.i18n('elapsedOneHourAgo');
+    }
+    if ( value < 24 ) {
+        return vAPI.i18n('elapsedManyHoursAgo').replace('{{value}}', Math.floor(value).toLocaleString());
+    }
+    value /= 24;
+    if ( value < 2 ) {
+        return vAPI.i18n('elapsedOneDayAgo');
+    }
+    return vAPI.i18n('elapsedManyDaysAgo').replace('{{value}}', Math.floor(value).toLocaleString());
+};
+
+/******************************************************************************/

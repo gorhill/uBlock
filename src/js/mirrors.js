@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -205,13 +205,13 @@ var toUrlKey = function(url) {
 // Ref: http://www.iana.org/assignments/media-types/media-types.xhtml
 
 // https://github.com/gorhill/uBlock/issues/362
-// 
+//
 // Using http://dev.w3.org/2006/webapi/FileAPI/#enctype logic, at least it's
 // something... It looks like this is what the browser should be doing with
 // `data:` URI, but it's not happening, so i will do it manually for now.
-// 
+//
 // ...
-// 5. If the "getting an encoding" steps above return failure, then set 
+// 5. If the "getting an encoding" steps above return failure, then set
 //    encoding to null.
 // 6. If encoding is null, then set encoding to utf-8.
 

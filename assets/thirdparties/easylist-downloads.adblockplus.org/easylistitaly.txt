@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Ey3PmKgaCipCF7ct4S5rFQ
-! Version: 201502280132
+! Checksum: PNMR5l0QAEBv2FX95822Jw
+! Version: 201503071831
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 28 Feb 2015 01:32 UTC
+! Ultima modifica: 07 Mar 2015 18:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -175,6 +175,7 @@ _sito/adv/
 ##a[href^="http://crazylead.com/video/"]
 ##a[href^="http://edintorni.net/related/service/sponsor/redirect/?"]
 ##a[href^="http://tracking.crazylead.com/"]
+##a[href^="http://w.linkwelove.it/urls/"]
 ##a[href^="http://www.linkwelove.it/urls/"]
 ##a[href^="https://www.linkwelove.it/urls/"]
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_general_hide.txt ***
@@ -503,6 +504,7 @@ sportube.tv#@#.afs_ads
 ||webalice.it/blackberry_09/trovadeal/
 ||webalice.it/ivo.gervasoni/$third-party
 ||webself.it/banners/
+||websooncms.com^*/Banner/$domain=radiozeta.it
 ||wecoclub.it^*_banner_
 ||widget.promoqui.it^
 ||ws.shoppydoo.com^$third-party
@@ -797,6 +799,7 @@ sportube.tv#@#.afs_ads
 ||ecoseven.net/img/banner/
 ||ecostiera.it^*/banner/
 ||ehgoo.com/banner/
+||elaborare.com/Skin-
 ||elaborare.info/forum/vbulletin/images/sfondo.jpg
 ||emiliagol.it//immagini/File_banner/
 ||erostubes.com/590.gif
@@ -1021,6 +1024,7 @@ sportube.tv#@#.afs_ads
 ||ilmitte.com^*/banner_
 ||ilmonferrato.it/banners/
 ||ilmonferrato.it/media/generalauto_
+||ilnapolista.it/content/banner/
 ||ilnord.it/imgbank/banner/
 ||ilpaesenuovo.it^*/italfiamma.jpg
 ||ilpaesenuovo.it^*/perhospital-01.jpg
@@ -1186,6 +1190,7 @@ sportube.tv#@#.afs_ads
 ||livescore.it/logos/icons/bookmakers/
 ||livescore.it/upload/william-100-5casino.jpg
 ||livesicilia.it/upload/assets/files/1323,-1,729/1170-att.jpg
+||lnd.it/storage/Sponsor/
 ||lolasesso.com/js/messaggio.js
 ||lolasesso.com^*/pene.gif
 ||lolasesso.com^*/video2.jpg
@@ -1491,7 +1496,6 @@ sportube.tv#@#.afs_ads
 ||solopornoitaliano.com/493836.gif
 ||solopornoitaliano.com/bitter728.jpg
 ||solopornoitaliano.com^*/animazione
-||spartoo.it/footer_tag_iframe.
 ||spaziofilm.it/includes2/1/google/
 ||spaziogames.it/backgrounds/
 ||spaziogames.it/banner/
@@ -1676,6 +1680,7 @@ sportube.tv#@#.afs_ads
 ||weboggi.it/banners/
 ||webpartner.mrcrawler.it^
 ||widget.blogosfere.it/assicurazione/
+||wikilao.com^*/banners/
 ||wintersport-news.it/banners/
 ||worldweb.it/images/banners/
 ||worldweb.it/images/stories/registrazionemotoridiricerca.jpg
@@ -1729,6 +1734,7 @@ ilgazzettinovesuviano.com###adsensing
 la7.it,ustation.it,virgilio.it,xvideoscopate.com###adv
 agarymathematics.net###adv1
 cinquequotidiano.it###adv2
+ilnapolista.it###adv3
 cinquequotidiano.it###adv_1
 3bmeteo.com###adv_5
 rockol.it,sanihelp.it###advertisement
@@ -1745,7 +1751,8 @@ calciomercato.com###background_left
 calciomercato.com###background_right
 lastampa.it###badge
 advertiser.it,asylumitalia.it,bitcity.it,car4you.it,forzapescara.net,grandefratellonews.com,meteo-emiliaromagna.it,rvuno.it,tendenzeonline.info,webpedia.altervista.org###banner
-serviziopubblico.it###banner-1
+radiozeta.it,serviziopubblico.it###banner-1
+radiozeta.it###banner-2
 gustissimo.it###banner-alto
 telesud3.com###banner-header
 sportnews.bz###banner-leaderboard
@@ -2764,6 +2771,7 @@ mmorpgitalia.it##img[width="500"][height="122"]
 tuttoshoppingmotori.com##img[width="610px;"]
 romanews.eu##img[width="630"][height="80"]
 hbritalia.it##img[width="728"][height="90"]
+spaziomilan.it##img[width="900"][height="60"]
 animeclick.it##img[width="997"][height="108"]
 corrieredelgiorno.com##ins[style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"]
 algheroeco.com##object[width="960"][height="30"]
@@ -2778,6 +2786,7 @@ stadionews.it##table[width="1000px"][height="90px"]
 cheauto.it##table[width="208"][height="148"][style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; background-image: url(imgmol/background_300_form3campi.gif); border: 1px solid #ffffff;"]
 guidaviaggi.it##table[width="215"][height="240"]
 acquaportal.it##table[width="284px"][style="border:1px solid #A5C9ED"]
+elaborare.com##table[width="300"]
 tio.ch##table[width="302"][style="border:1px solid #A7A9AC;border-top:none;"]
 film-stream.org##table[width="503"][height="202"]
 mnews.it##table[width="728"][height="280"]

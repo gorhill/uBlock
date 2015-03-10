@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ var selectPage = function() {
     if ( targetSrc === currentSrc ) {
         return;
     }
-    inspector.attr('src', targetSrc); 
+    inspector.attr('src', targetSrc);
 
     // This is useful for when the user force-refresh the page: this will
     // prevent a reset to the original request log.

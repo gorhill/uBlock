@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 8ENo//qM2miaQhtYsnsOYw
+! Checksum: 5Wy15cbmzm/enCjf0zQ8KA
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY for Japanese: see Support Policy)
 ! Expires: 6 hours
-! Version: 201502171925
+! Version: 201503072000
 
-! Last modified: 2015-02-17 19:25 JST(UTC+0900)
+! Last modified: 2015-03-07 20:00 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons 3.0 BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
@@ -6791,8 +6791,9 @@ _yahooads_
 ||dmm-rank.com^$third-party
 ||dmm.co.jp^$domain=~dmm.co.jp|~dmm.com
 ||dmm.co.jp/lp/$popup
-||aqua.dmm.co.jp^
 ||dmm.com^$domain=~dmm.co.jp|~dmm.com
+||dmm.com/lp/$popup
+||aqua.dmm.co.jp^
 ||dmtracker.com^$third-party
 ||dmtry.com^
 ||dn888.com^
@@ -8338,7 +8339,8 @@ _yahooads_
 ||nikkeibp.co.jp^*/rPR_
 ||nikkeibp.co.jp^*/welcome$script
 ||nikkeibp.co.jp^*_campaign_
-||nikkeibp.co.jp/images/bpnet/*/banner/$image,object
+||nikkeibp.co.jp/images/*/banner/$image,object
+||nikkeibp.co.jp/images/*/itprostore.$image,object
 ||nikkeibp.co.jp/img/rpt/
 ||bizad.nikkeibp.co.jp^
 ||nimg.jp^*/searchformflash/

@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 17/02/2015
+! Last change: 04/03/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -84,6 +84,7 @@ exashare.com###player_img
 ||cztorrent.net/images/bannery/
 ||d.lookit.cz/vv.js
 ||data.idnes.cz/soutez/
+||data.idnes.cz/uni/
 ||devbook.cz/images/banners/
 ||devbook.cz/images/partnersky*.jpg
 ||digitalnitelevize.cz/obrazky/reklamni_odkazy/
@@ -137,6 +138,7 @@ exashare.com###player_img
 ||mamincinyrecepty.cz/images/banner*
 ||matematika.cz/content/files/*/background*.jpg
 ||matematika.cz/content/files/snapbacks/
+||mfad*.advantage.as
 ||mluveneslovo.chaves.cz/images/banners/castor_745x150.jpg
 ||mluveneslovo.chaves.cz/images/banners/palace.gif
 ||mluveneslovo.chaves.cz/images/user/pokourenicko.jpg
@@ -395,6 +397,7 @@ exashare.com###player_img
 @@||c.mfstatic.cz/js/advantage.min.js$domain=doupe.zive.cz
 @@||cars.cz^$third-party,domain=autocartichy.cz
 @@||cz.adocean.pl/files/js/ado.js$domain=blesk.cz
+@@||doupe.zive.cz/Client.Scripts/advertisement.js
 @@||fastshare.cz/banner/site_logo.jpg
 @@||g.idnes.cz/o/lidovky_ln3b/poutaky/sport/
 @@||heureka.*/crossdomain.xml
@@ -605,6 +608,7 @@ diit.cz##.leftbox-main
 doktorka.cz###zone-doktorka-box
 doktorka.cz###zone-doktorka-sky
 doktorka.cz##.ban1
+doupe.zive.cz###adframe-shell
 drumandbass.cz##.banner
 e15.cz##.hp-page-card.hp-page-card-zive-firmy
 edna.cz##.banner

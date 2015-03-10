@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global µBlock, vAPI, YaMD5 */
+/* global µBlock, vAPI */
 
 /******************************************************************************/
 /******************************************************************************/
@@ -283,6 +283,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
+    var pageStore;
     var response;
 
     switch ( request.what ) {
@@ -297,7 +298,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'hasPopupContentChanged':
-            var pageStore = µb.pageStoreFromTabId(request.tabId);
+            pageStore = µb.pageStoreFromTabId(request.tabId);
             var lastModified = pageStore ? pageStore.contentLastModified : 0;
             response = lastModified !== request.contentLastModified;
             break;
@@ -310,14 +311,14 @@ var onMessage = function(request, sender, callback) {
             );
             µb.savePermanentFirewallRules();
             break;
-            
+
         case 'toggleFirewallRule':
             µb.toggleFirewallRule(request);
             response = getStats(request.tabId);
             break;
 
         case 'toggleNetFiltering':
-            var pageStore = µb.pageStoreFromTabId(request.tabId);
+            pageStore = µb.pageStoreFromTabId(request.tabId);
             if ( pageStore ) {
                 pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
                 µb.updateBadgeAsync(request.tabId);
@@ -672,9 +673,6 @@ var onMessage = function(request, sender, callback) {
 
         case 'purgeAllCaches':
             return µb.assets.purgeAll(callback);
-
-        case 'writeUserUbiquitousBlockRules':
-            return µb.assets.put(µb.userFiltersPath, request.content, callback);
 
         default:
             break;
@@ -1132,6 +1130,50 @@ var onMessage = function(request, sender, callback) {
 };
 
 vAPI.messaging.listen('devtool-log.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+// https://www.youtube.com/watch?v=3_WcygKJP1k
+
+/******************************************************************************/
+/******************************************************************************/
+
+// subscriber.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'subscriberData':
+            response = {
+                confirmStr: vAPI.i18n('subscriberConfirm'),
+                externalLists: µBlock.userSettings.externalLists
+            };
+            break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('subscriber.js', onMessage);
 
 /******************************************************************************/
 

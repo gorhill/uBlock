@@ -84,9 +84,10 @@ vAPI.getURL = function(path) {
 // First language is the default
 
 vAPI.i18nData = [
-    'en', 'ar', 'ca', 'cs', 'da', 'de', 'el', 'es', 'et', 'fi', 'fil',
-    'fr', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'mr', 'nb', 'nl', 'pl',
-    'pt-BR', 'pt-PT', 'ro', 'ru', 'sv', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
+    'en', 'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el','es', 'et', 'fa', 'fi',
+    'fil', 'fr', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lv', 'mr',
+    'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sq', 'sv', 'tr', 'uk',
+    'vi', 'zh-CN', 'zh-TW'
 ];
 
 vAPI.i18n = navigator.language;

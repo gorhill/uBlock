@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a Chromium browser extension to block requests.
+    µBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ var messager = vAPI.messaging.channel('asset-viewer.js');
 /******************************************************************************/
 
 var onAssetContentReceived = function(details) {
-    uDom('#content').html(details && (details.content || ''));
+    uDom('#content').text(details && (details.content || ''));
 };
 
 /******************************************************************************/

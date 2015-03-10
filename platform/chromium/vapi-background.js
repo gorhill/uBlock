@@ -71,6 +71,17 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
+var onCreatedNavigationTarget = function(details) {
+    vAPI.tabs.onPopup({
+        openerTabId: details.sourceTabId,
+        openerURL: '',
+        targetURL: details.url,
+        targetTabId: details.tabId
+    });
+};
+
+/******************************************************************************/
+
 vAPI.tabs.registerListeners = function() {
     if ( typeof this.onNavigation === 'function' ) {
         chrome.webNavigation.onCommitted.addListener(this.onNavigation);
@@ -85,7 +96,7 @@ vAPI.tabs.registerListeners = function() {
     }
 
     if ( typeof this.onPopup === 'function' ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(this.onPopup);
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     }
 };
 
@@ -374,17 +385,17 @@ vAPI.messaging.broadcast = function(message) {
 
 // This allows to avoid creating a closure for every single message which
 // expects an answer. Having a closure created each time a message is processed
-// has been always bothering me. Another benefit of the implementation here 
+// has been always bothering me. Another benefit of the implementation here
 // is to reuse the callback proxy object, so less memory churning.
 //
 // https://developers.google.com/speed/articles/optimizing-javascript
 // "Creating a closure is significantly slower then creating an inner
-//  function without a closure, and much slower than reusing a static 
+//  function without a closure, and much slower than reusing a static
 //  function"
 //
 // http://hacksoflife.blogspot.ca/2015/01/the-four-horsemen-of-performance.html
-// "the dreaded 'uniformly slow code' case where every function takes 1% 
-//  of CPU and you have to make one hundred separate performance optimizations 
+// "the dreaded 'uniformly slow code' case where every function takes 1%
+//  of CPU and you have to make one hundred separate performance optimizations
 //  to improve performance at all"
 //
 // http://jsperf.com/closure-no-closure/2
@@ -451,7 +462,7 @@ vAPI.net.registerListeners = function() {
         var pos = tail.lastIndexOf('.');
 
         // https://github.com/gorhill/uBlock/issues/862
-        // If no transposition possible, transpose to `object` as per 
+        // If no transposition possible, transpose to `object` as per
         // Chromium bug 410382 (see below)
         if ( pos === -1 ) {
             details.type = 'object';
@@ -493,15 +504,6 @@ vAPI.net.registerListeners = function() {
         this.onBeforeRequest.extra
     );
 
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        this.onBeforeSendHeaders.callback,
-        {
-            'urls': this.onBeforeSendHeaders.urls || ['<all_urls>'],
-            'types': this.onBeforeSendHeaders.types || []
-        },
-        this.onBeforeSendHeaders.extra
-    );
-
     var onHeadersReceivedClient = this.onHeadersReceived.callback;
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
@@ -514,6 +516,56 @@ vAPI.net.registerListeners = function() {
             'types': this.onHeadersReceived.types || []
         },
         this.onHeadersReceived.extra
+    );
+
+    // Intercept root frame requests.
+    // This is where we identify and block popups early, whenever possible.
+
+    var onBeforeSendHeaders = function(details) {
+        // Do not block behind the scene requests.
+        if ( vAPI.isNoTabId(details.tabId) ) {
+            return;
+        }
+
+        // Only root document.
+        if ( details.parentFrameId !== -1 ) {
+            return;
+        }
+
+        var referrer = headerValue(details.requestHeaders, 'referer');
+        if ( referrer === '' ) {
+            return;
+        }
+
+        var result = vAPI.tabs.onPopup({
+            openerTabId: undefined,
+            openerURL: referrer,
+            targetTabId: details.tabId,
+            targetURL: details.url
+        });
+
+        if ( result ) {
+            return { 'cancel': true };
+        }
+    };
+
+    var headerValue = function(headers, name) {
+        var i = headers.length;
+        while ( i-- ) {
+            if ( headers[i].name.toLowerCase() === name ) {
+                return headers[i].value;
+            }
+        }
+        return '';
+    };
+
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        onBeforeSendHeaders,
+        {
+            'urls': [ 'http://*/*', 'https://*/*' ],
+            'types': [ 'main_frame' ]
+        },
+        [ 'blocking', 'requestHeaders' ]
     );
 };
 

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: 30XV55xaW4FGy0y/UEOCmw
+! Checksum: wCWZ/ADCwnaUhCBa7d1uIA
 ! Title: EasyList Hebrew
-! Last modified: 17/02/15 02:35
+! Last modified: 05/03/15 22:58
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -20,6 +20,7 @@
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
+||035555555.co.il/landingpages$popup,third-party
 ||213.8.137.51^
 ||213.8.137.51^$popup,third-party
 ||3dots.co.il^$third-party,domain=~maple-team.com
@@ -29,6 +30,7 @@
 ||adtv.me^$popup
 ||ahituv.biz^$popup,third-party
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
+||albar.co.il/ads$popup,third-party
 ||amazing-offers.co.il^$popup,third-party
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||ashleymadison.com^$popup,third-party
@@ -63,11 +65,13 @@
 ||mapi.co.il^$popup,third-party
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
+||mini-sites.net^$popup,third-party
 ||mitbahon.co.il/Storage^$popup,third-party
 ||mizrahi-tefahot.co.il/minisites/giyus$popup,third-party
 ||movies-club.com/$popup
 ||multidown.co.il/affiliates.php$third-party
 ||mvertex.co.il^$third-party
+||mylp.co.il/carasso$popup,third-party
 ||mysupermarket.co.il/landingpage$popup,third-party
 ||newclio.co.il/sep$popup,third-party
 ||next-net.co.il^$third-party
@@ -77,6 +81,7 @@
 ||osef.co.il^$third-party
 ||pera.co.il^$third-party
 ||pigment-adv.co.il^$popup,third-party
+||pisrael.com/Campaign$popup,third-party
 ||psakdin.co.il^$domain=calcalist.co.il
 ||rateonclick.com^$popup,third-party
 ||rpe.co.il/landing_^$popup,third-party
@@ -390,8 +395,10 @@ feeder.co.il,rest.co.il###banner
 rateonclick.com,view-movies.co.il###connect
 bhol-forums.co.il,bhol.co.il###divBanner_Plazma
 ladaat.info,tapuz.co.il###divTopBanner
+kikar.co.il,kikarhashabat.co.il###exposeMask
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws###extra
 ori-diamonds.co.il,popcorate.co.il###hoverConnect
+kikar.co.il,kikarhashabat.co.il###maavaron_overlay
 bhol-forums.co.il,bhol.co.il###sdera.width100pc
 nana10.co.il,nrg.co.il,wallashops.co.il###topBanner
 bizportal.co.il,bursagraph.co.il,saloona.co.il###top_banner
@@ -597,10 +604,9 @@ jobmaster.co.il##TABLE[width="100%"][style="border-top:1px solid #EEEEEE;"]
 junkyard.co.il##.plasma_banner
 junkyard.co.il##DIV[id^="banner"]
 kafe.co.il###adv
+kikar.co.il##.logo
 kikar.co.il##[id^="takeover"]
-kikarhashabat.co.il###exposeMask
 kikarhashabat.co.il###jumbo
-kikarhashabat.co.il###maavaron_overlay
 kikarhashabat.co.il###takeover_wrapper
 kikarhashabat.co.il##.ads_category_box
 kikarhashabat.co.il##.ads_category_header.subcat_cap
@@ -725,8 +731,10 @@ nrg.co.il##.bannerWrapper
 nrg.co.il##.tallBanner
 nrg.co.il##IFRAME[style="height:250px;width:300px;"]
 one.co.il###Adv2
+one.co.il###WinnnerRacer
 one.co.il###adBomba
 one.co.il###divAdChance
+one.co.il###divEventCounter
 one.co.il###divFarzda
 one.co.il###divYnetNews
 one.co.il###tblAdBlock
@@ -758,6 +766,7 @@ rest.co.il##.adBox2
 rest.co.il##.ad_box_1
 rest.co.il##.ad_box_3
 rest.co.il##.left_box_1
+rotter.net##BR + * > P
 rotter.net##TD[style="width:120px;border:0px solid red;"]
 s-maof.com###backgroundPopup
 s-maof.com###popupContact
