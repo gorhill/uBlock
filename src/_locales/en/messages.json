@@ -51,6 +51,10 @@
     "message":"on this page",
     "description":"English: on this page"
   },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
+  },
   "popupBlockedSinceInstallPrompt":{
     "message":"since install",
     "description":"English: since install"
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"outdated",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
