@@ -63,7 +63,7 @@ var messager = vAPI.messaging.channel('subscriber.js');
 /******************************************************************************/
 
 var onAbpLinkClicked = function(ev) {
-    var receiver = event.target;
+    var receiver = ev.target;
     if ( receiver === null ) {
         return;
     }
