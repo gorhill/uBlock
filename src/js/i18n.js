@@ -63,7 +63,7 @@ vAPI.i18n.renderElapsedTimeToString = function(tstamp) {
     if ( value < 2 ) {
         return vAPI.i18n('elapsedOneHourAgo');
     }
-    if ( value < (24 * 60) ) {
+    if ( value < 24 ) {
         return vAPI.i18n('elapsedManyHoursAgo').replace('{{value}}', Math.floor(value).toLocaleString());
     }
     value /= 24;
