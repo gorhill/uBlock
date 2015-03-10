@@ -36,7 +36,7 @@
     /******************************************************************************/
 
     vAPI.app = {
-        name: "µBlock",
+        name: "uBlock",
         version: safari.extension.displayVersion
     };
 
