@@ -74,7 +74,7 @@ function startup(data, reason) {
         );
     };
 
-    if (reason !== APP_STARTUP) {
+    if ( reason !== APP_STARTUP ) {
         onReady();
         return;
     }

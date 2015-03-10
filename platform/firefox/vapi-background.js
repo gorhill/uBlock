@@ -1139,7 +1139,7 @@ var httpObserver = {
         if ( !(channel instanceof Ci.nsIHttpChannel) ) {
             return;
         }
-        
+
         var URI = channel.URI;
         var channelData, result;
 
@@ -1483,7 +1483,7 @@ vAPI.toolbarButton.init = function() {
                 'content: attr(badge);',
             '}'
         );
-     } else {
+    } else {
         this.CUIEvents = {};
 
         var updateBadge = function() {
@@ -1584,7 +1584,6 @@ vAPI.toolbarButton.init = function() {
     }.bind(this));
 };
 
-
 /******************************************************************************/
 
 vAPI.toolbarButton.onBeforeCreated = function(doc) {
@@ -1653,6 +1652,27 @@ vAPI.toolbarButton.onViewHiding = function({target}) {
     target.parentNode.style.maxWidth = '';
     target.firstChild.setAttribute('src', 'about:blank');
 };
+
+vAPI.toolbarButton.updateState = function(win, tabId) {
+    var button = win.document.getElementById(this.id);
+
+    if ( !button ) {
+        return;
+    }
+
+    var icon = this.tabs[tabId];
+    button.setAttribute('badge', icon && icon.badge || '');
+
+    if ( !icon || !icon.img ) {
+        icon = '';
+    }
+    else {
+        icon = 'url(' + vAPI.getURL('img/browsericons/icon16.svg') + ')';
+    }
+
+    button.style.listStyleImage = icon;
+};
+}
 
 /******************************************************************************/
 
