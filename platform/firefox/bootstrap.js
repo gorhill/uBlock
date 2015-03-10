@@ -44,25 +44,6 @@ const restartListener = {
     }
 };
 
-const optionsObserver = {
-    observe: function (aSubject, aTopic, aData) {
-        if (aTopic === "addon-options-displayed" && aData === "{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}") {
-            var doc = aSubject;
-            setupOptionsButton(doc, "showDashboardButton", "dashboard.html");
-            setupOptionsButton(doc, "showNetworkLogButton", "devtools.html");
-        }
-    }
-};
-
-function setupOptionsButton(doc, id, page) {
-    var vAPI = bgProcess.contentWindow.vAPI;
-    var button = doc.getElementById(id);
-    button.addEventListener("command", function () {
-        vAPI.tabs.open({ url: vAPI.getURL(page), index: -1 });
-    });
-    button.label = vAPI.i18n(id);
-}
-
 /******************************************************************************/
 
 function startup(data, reason) {
@@ -92,10 +73,6 @@ function startup(data, reason) {
             restartListener
         );
     };
-
-    let obs = Components.classes['@mozilla.org/observer-service;1']
-        .getService(Components.interfaces.nsIObserverService);
-    obs.addObserver(optionsObserver, "addon-options-displayed", false);
 
     if (reason !== APP_STARTUP) {
         onReady();
@@ -141,10 +118,6 @@ function shutdown(data, reason) {
         hostName + '-restart',
         restartListener
     );
-
-    let obs = Components.classes['@mozilla.org/observer-service;1']
-        .getService(Components.interfaces.nsIObserverService);
-    obs.removeObserver(optionsObserver, "addon-options-displayed");
 }
 
 /******************************************************************************/

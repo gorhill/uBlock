@@ -1403,7 +1403,7 @@ if (vAPI.fennec) {
             }
         }
         return label;
-    }
+    };
 
     vAPI.toolbarButton.init = function() {
         // Only actually expecting one window under Fennec (note, not tabs, windows)
@@ -1412,7 +1412,7 @@ if (vAPI.fennec) {
         }
 
         cleanupTasks.push(this.cleanUp);
-    }
+    };
 
     vAPI.toolbarButton.addToWindow = function(win, label) {
         var id = win.NativeWindow.menu.add({
@@ -1420,13 +1420,13 @@ if (vAPI.fennec) {
             callback: this.onClick
         });
         this.menuItemIds.set(win, id);
-    }
+    };
 
     vAPI.toolbarButton.cleanUp = function() {
         for (var win of vAPI.tabs.getWindows()) {
             vAPI.toolbarButton.removeFromWindow(win);
         }
-    }
+    };
 
     vAPI.toolbarButton.removeFromWindow = function(win) {
         var id = this.menuItemIds.get(win);
@@ -1434,21 +1434,21 @@ if (vAPI.fennec) {
             win.NativeWindow.menu.remove(id);
             this.menuItemIds.delete(win);
         }
-    }
+    };
 
-    vAPI.toolbarButton.updateState = function (win, tabId) {
+    vAPI.toolbarButton.updateState = function(win, tabId) {
         var id = this.menuItemIds.get(win);
         if (!id) {
             return;
         }
         win.NativeWindow.menu.update(id, { name: this.getMenuItemLabel(tabId) });
-    }
+    };
 
     vAPI.toolbarButton.onClick = function() {
         var win = Services.wm.getMostRecentWindow('navigator:browser');
         var curTabId = vAPI.tabs.getTabId(getTabBrowser(win).selectedTab);
-        vAPI.tabs.open({ url: vAPI.getURL("popup.html?tabId=" + curTabId), index: -1, select: true });
-    }
+        vAPI.tabs.open({ url: "popup.html?tabId=" + curTabId, index: -1, select: true });
+    };
 } else {
     // Toolbar button UI
 
@@ -1875,6 +1875,40 @@ vAPI.punycodeURL = function(url) {
 };
 
 /******************************************************************************/
+
+vAPI.optionsObserver = {
+    register: function () {
+        var obs = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
+        obs.addObserver(this, "addon-options-displayed", false);
+        
+        cleanupTasks.push(this.unregister.bind(this));
+    },
+
+    observe: function (aSubject, aTopic, aData) {
+        if (aTopic === "addon-options-displayed" && aData === "{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}") {
+            var doc = aSubject;
+            this.setupOptionsButton(doc, "showDashboardButton", "dashboard.html");
+            this.setupOptionsButton(doc, "showNetworkLogButton", "devtools.html");
+        }
+    },
+    setupOptionsButton: function (doc, id, page) {
+        var button = doc.getElementById(id);
+        button.addEventListener("command", function () {
+            vAPI.tabs.open({ url: page, index: -1 });
+        });
+        button.label = vAPI.i18n(id);
+    },
+
+    unregister: function () {
+        var obs = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
+        obs.removeObserver(this, "addon-options-displayed");
+    },
+};
+
+vAPI.optionsObserver.register();
+
+/******************************************************************************/
+
 
 // clean up when the extension is disabled
 
