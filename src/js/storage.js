@@ -99,8 +99,8 @@
 
 /******************************************************************************/
 
-µBlock.appendUserFilters = function(content) {
-    if ( content.length === 0 ) {
+µBlock.appendUserFilters = function(filter) {
+    if ( filter.length === 0 ) {
         return;
     }
 
@@ -130,10 +130,11 @@
         if ( details.error ) {
             return;
         }
-        if ( details.content.indexOf(content.trim()) !== -1 ) {
-            return;
-        }
-        µb.saveUserFilters(details.content.trim() + '\n\n' + content.trim(), onSaved);
+        // https://github.com/gorhill/uBlock/issues/976
+        // If we reached this point, the filter quite probably needs to be
+        // added for sure: do not try to be too smart, trying to avoid
+        // duplicates at this point may lead to more issues.
+        µb.saveUserFilters(details.content.trim() + '\n\n' + filter.trim(), onSaved);
     };
 
     this.loadUserFilters(onLoaded);
