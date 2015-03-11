@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, uDom */
+/* global punycode, vAPI, uDom */
 
 /******************************************************************************/
 
@@ -49,7 +49,7 @@ var allHostnameRows = [];
 var touchedDomainCount = 0;
 var rowsToRecycle = uDom();
 var cachedPopupHash = '';
-var orStr = vAPI.i18n('popupOr');
+var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
 
 /******************************************************************************/
@@ -383,33 +383,26 @@ var renderPopup = function () {
                     .attr('href', 'devtools.html?tabId=' + popupData.tabId);
     uDom('#gotoPick').toggleClass('enabled', popupData.canElementPicker === true);
 
+    var text;
     var blocked = popupData.pageBlockedRequestCount;
     var total = popupData.pageAllowedRequestCount + blocked;
-    var text = [];
     if ( total === 0 ) {
-        text.push(formatNumber(0));
+        text = formatNumber(0);
     } else {
-        text.push(
-            formatNumber(blocked),
-            '\u00a0', orStr, '\u00a0',
-            formatNumber(Math.floor(blocked * 100 / total)), '%'
-        );
+        text = statsStr.replace('{{count}}', formatNumber(blocked))
+                       .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom('#page-blocked').text(text.join(''));
+    uDom('#page-blocked').text(text);
 
     blocked = popupData.globalBlockedRequestCount;
     total = popupData.globalAllowedRequestCount + blocked;
-    text = [];
     if ( total === 0 ) {
-        text.push(formatNumber(0));
+        text = formatNumber(0);
     } else {
-        text.push(
-            formatNumber(blocked),
-            '\u00a0', orStr, '\u00a0',
-            formatNumber(Math.floor(blocked * 100 / total)), '%'
-        );
+        text = statsStr.replace('{{count}}', formatNumber(blocked))
+                       .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom('#total-blocked').text(text.join(''));
+    uDom('#total-blocked').text(text);
 
     // This will collate all domains, touched or not
     renderPrivacyExposure();
