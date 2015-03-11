@@ -25,7 +25,7 @@
 
 // Load all: executed once.
 
-(function() {
+µBlock.restart = (function() {
 
 'use strict';
 
@@ -57,9 +57,6 @@ var onAllReady = function() {
 
     vAPI.onLoadAllCompleted();
 };
-
-// Forbid remote fetching of assets
-µb.assets.remoteFetchBarrier += 1;
 
 /******************************************************************************/
 
@@ -188,18 +185,6 @@ var onFirstFetchReady = function(fetched) {
 
 /******************************************************************************/
 
-var fetchableProps = {
-    'compiledMagic': '',
-    'lastRestoreFile': '',
-    'lastRestoreTime': 0,
-    'lastBackupFile': '',
-    'lastBackupTime': 0,
-    'netWhitelist': '',
-    'selfie': null,
-    'selfieMagic': '',
-    'version': '0.0.0.0'
-};
-
 var toFetch = function(from, fetched) {
     for ( var k in from ) {
         if ( from.hasOwnProperty(k) === false ) {
@@ -223,14 +208,33 @@ var fromFetch = function(to, fetched) {
 
 /******************************************************************************/
 
-toFetch(µb.localSettings, fetchableProps);
-toFetch(µb.userSettings, fetchableProps);
-toFetch(µb.restoreBackupSettings, fetchableProps);
+return function() {
+    // Forbid remote fetching of assets
+    µb.assets.remoteFetchBarrier += 1;
 
-vAPI.storage.get(fetchableProps, onFirstFetchReady);
+    var fetchableProps = {
+        'compiledMagic': '',
+        'lastRestoreFile': '',
+        'lastRestoreTime': 0,
+        'lastBackupFile': '',
+        'lastBackupTime': 0,
+        'netWhitelist': '',
+        'selfie': null,
+        'selfieMagic': '',
+        'version': '0.0.0.0'
+    };
+
+    toFetch(µb.localSettings, fetchableProps);
+    toFetch(µb.userSettings, fetchableProps);
+    toFetch(µb.restoreBackupSettings, fetchableProps);
+
+    vAPI.storage.get(fetchableProps, onFirstFetchReady);
+};
 
 /******************************************************************************/
 
 })();
 
 /******************************************************************************/
+
+µBlock.restart();
