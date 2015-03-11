@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Dashboard",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Opzioni",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Click: disabilita\/abilita permanentemente µBlock per questo sito.\n\nCtrl+click: disabilita µBlock solo su questa pagina.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"richieste bloccate",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"in questa pagina",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"dall'installazione",
@@ -68,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Vai al registro della richiesta",
+    "message":"Vai al registro delle richieste",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -312,7 +316,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Un URL per ogni riga. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata. Url non validi verranno silenziosamente ignorati.",
+    "message":"Un URL per ogni riga. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata. URL non validi verranno silenziosamente ignorati.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"obsoleto",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata.",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Lista dei siti dove µBlock è disattivato. Un sito per ogni riga. Le voci non valide verranno silenziosamente ignorate.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importa e aggiungi",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Puoi controllare i dettagli delle richieste bloccate se abiliti questa opzione. La registrazione delle richieste bloccate aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
+    "message":"Puoi controllare i dettagli delle richieste di rete se abiliti questa opzione. La registrazione delle richieste di rete aumenta l'uso della memoria da parte di µBlock. Di default è disabilitata, poiché la maggior parte degli utenti non ha bisogno di questa funzione.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +452,7 @@
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"Indirizzo",
+    "message":"URL",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Impossibile connettersi al {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Aggiungere il seguente URL alla tua lista dei filtri personalizzata?\n\nTitolo: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"un minuto fa",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minuti fa",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"un'ora fa",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} ore fa",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"un giorno fa",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} giorni fa",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

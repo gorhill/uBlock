@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dasbor",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Dasbor",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Pengaturan",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Catatan Permintaan Jaringan",
+    "message":"uBlock — Catatan Permintaan Jaringan",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: nonaktifkan\/aktifkan µBlock untuk situs ini.\n\nCtrl+klik: nonaktifkan µBlock hanya di laman ini.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klik: nonaktifkan\/aktifkan uBlock untuk situs ini.\n\nCtrl+klik: nonaktifkan uBlock hanya di laman ini.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"permintaan diblokir",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"di laman ini",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} atau {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"sejak dipasang",
@@ -236,15 +240,15 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Penyimpanan terpakai: {{value}} bita",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Pemulihan terakhir:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Pencadangan terakhir:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Opsi ini mengaktifkan pembacaan dan menjalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar filter tampilan, berfungsi untuk menyembunyikan elemen di laman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Mengaktifkan fitur ini akan meningkatkan penggunaan memori <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Opsi ini mengaktifkan pembacaan dan menjalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar filter tampilan, berfungsi untuk menyembunyikan elemen di laman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Mengaktifkan fitur ini akan meningkatkan penggunaan memori <i>uBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"usang",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Pembaharuan terakhir: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan &lsquo;!&rsquo; akan diabaikan.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Daftar nama host dimana µBlock akan dinonaktifkan. Satu entri per baris. Nama host yang tidak valid akan diabaikan tanpa peringatan.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Daftar nama host yang mana uBlock akan dinonaktifkan. Satu entri per baris. Nama host yang tidak valid akan diabaikan tanpa peringatan.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Impor dan tambahkan",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Jika ingin, Anda dapat memeriksa secara rinci permintaan jaringan dengan mengaktifkan opsi ini. Pencatatan permintaan jaringan akan meningkatkan penggunaan memori µBlock. Karena kebanyakan pengguna tidak akan pernah menggunakan fitur ini, secara bawaan fitur ini dinonaktifkan.",
+    "message":"Jika ingin, Anda dapat memeriksa secara rinci permintaan jaringan dengan mengaktifkan opsi ini. Pencatatan permintaan jaringan akan meningkatkan penggunaan memori uBlock. Karena kebanyakan pengguna tidak akan pernah menggunakan fitur ini, secara bawaan fitur ini dinonaktifkan.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Semua pengaturan anda akan ditimpa dengan data yang dicadangkan pada {{time}}, dan µBlock akan memulai ulang.\n\nTimpa semua pengaturan yang ada dengan data cadangan?",
+    "message":"Semua pengaturan anda akan ditimpa dengan data yang dicadangkan pada {{time}}, dan uBlock akan memulai ulang.\n\nTimpa semua pengaturan yang ada dengan data cadangan?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Semua pengaturan anda akan dihapus, dan µBlock akan memulai ulang.\n\nKembalikan µBlock ke pengaturan bawaan?",
+    "message":"Semua pengaturan anda akan dihapus, dan uBlock akan memulai ulang.\n\nKembalikan uBlock ke pengaturan bawaan?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Tidak dapat terhubung ke {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Tambahkan URL berikut ke daftar filter kustom Anda ?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"satu menit yang lalu",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} menit yang lalu",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"satu jam yang lalu",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} jam yang lalu",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"satu hari yang lalu",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} hari yang lalu",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Entri ini harus menjadi yang terakhir",

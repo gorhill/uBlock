@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — डैशबोर्ड",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"सेटिंग्स",
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"requests blocked",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"इस पृष्ठ पर",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"since install",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>uBlock<\/i>'s memory footprint.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"पुरानी",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Your list of host names for which µBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Your list of host names for which uBlock will be disabled. One entry per line. Invalid host names will be silently ignored.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Import and append",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of µBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of uBlock. Since many users will never use this feature, it is disabled by default.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and µBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"All your settings will be overwritten using data backed up on {{time}}, and uBlock will restart.\n\nOverwrite all existing settings using backed up data?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and µBlock will restart.\n\nReset µBlock to factory settings?",
+    "message":"All your settings will be removed, and uBlock will restart.\n\nReset uBlock to factory settings?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Unable to connect to {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"a minute ago",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minutes ago",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"an hour ago",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} hours ago",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"a day ago",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} days ago",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

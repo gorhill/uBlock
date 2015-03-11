@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Vadības panelis",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Vadības panelis",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Iestatījumi",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Tīkla pieprasījumu žurnāls",
+    "message":"uBlock — Tīkla pieprasījumu žurnāls",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikšķis: atslēgt\/ieslēgt µBlock šajā vietnē.\n\nCtrl+klikšķis: atslēgt µBlock tikai šai lapai.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klikšķis: atslēgt\/ieslēgt uBlock šajā vietnē.\n\nCtrl+klikšķis: atslēgt uBlock tikai šai lapai.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"bloķētie pieprasījumi",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"šajā lapā",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} no {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"kopš instalācijas brīža",
@@ -236,15 +240,15 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Izmantotais krātuves lielums: {{value}} baiti",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Pēdējā atjaunošana veikta:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Pēdējā rezerves kopija:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Šī opcija iespējo apstrādāt un izpildīt ar <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus saderīgus &ldquo;elementu paslēpšanas&rdquo;<\/a> filtrus. Šie filtri ir būtībā kosmētiski, tie kalpo, lai paslēptu web lapu elementus, kas tiek uzskatīti par vizuālu traucējumu, un kas nevar būt nobloķēti ar pieprasījumu balstītu filtrēšanas programmu.<\/p><p>Šī līdzekļa iespējošana palielina <i>µBlock<\/i> izmantojamās atmiņas daudzumu.<\/p>",
+    "message":"<p>Šī opcija iespējo apstrādāt un ieviest ar <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus saderīgus &ldquo;elementu paslēpšanas&rdquo;<\/a> filtrus. Šie filtri ir būtībā kosmētiski, tie kalpo, lai paslēptu tīmekļa lapu elementus, kas tiek uzskatīti par vizuālu traucējumu, un kas nevar būt nobloķēti ar pieprasījumu balstītu filtrēšanas programmu.<\/p><p>Šī līdzekļa iespējošana palielina <i>uBlock<\/i> izmantojamās atmiņas daudzumu.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"novecojis",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Pēdējo reizi atjaunināts: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai saderīgs ar Adblock Plus filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts µBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importēt un pievienot",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina µBlock izmantotās atmiņas apjomu. Tā kā daudzi lietotāji, nekad neizmantos šo līdzekli, tas pēc noklusējuma ir atspējots.",
+    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina uBlock izmantotās atmiņas apjomu. Tā kā daudzi lietotāji nekad neizmantos šo līdzekli, tas pēc noklusējuma ir izslēgts.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tiks pārrakstīti visi iestatījumi izmantojot datus, kas balstās uz {{time}}, un µBlock tiks restartēts.  Pārrakstīt visus esošos iestatījumus, izmantojot rezerves kopiju?",
+    "message":"Tiks pārrakstīti visi iestatījumi izmantojot datus, kas balstās uz {{time}}, un uBlock tiks restartēts.  Pārrakstīt visus esošos iestatījumus, izmantojot rezerves kopiju?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Tiks atcelti visi Jūsu iestatījumi, un µBlock tiks restartēts. Atjaunot rūpnīcas iestatījumus?",
+    "message":"Tiks atcelti visi Jūsu iestatījumi, un uBlock tiks restartēts. Atjaunot rūpnīcas iestatījumus?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Nevar izveidot savienojumu ar {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"pirms minūtes",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"pirms {{value}} minūtēm",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"pirms stundas",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"pirms {{value}} stundām",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"vakar",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"pirms {{value}} dienām",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Šim ierakstam ir jābūt pēdējam",

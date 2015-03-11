@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashboard",
-    "description":"English: µBlock — Dashboard"
+    "message":"µBlock — Instrumentbräda",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Inställningar",
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klick: avaktivera\/aktivera µBlock för denna hemsida permanent.\n\nCtrl+klick: avaktivera µBlock för endast denna sida.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klick: avaktivera\/aktivera µBlock för denna hemsida permanent.\n\nCtrl+klick: avaktivera µBlock endast för denna sida.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"blockerade förfrågningar",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"på denna sida",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} eller {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"sedan installation",
@@ -331,6 +335,10 @@
     "message":"utdaterad",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Senaste uppdatering: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Din lista över värdnamn för vilka μBlock inaktiveras. En post per rad. Ogiltiga värdnamn kommer att ignoreras.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importera och lägg till",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Det gick inte att ansluta till {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Lägg till den följande URLen till din skräddarsydda filter lista?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"en minut sedan",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minuter sedan",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"en timme sedan",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} timmar sedan",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"en dag sen",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} dagar sen",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

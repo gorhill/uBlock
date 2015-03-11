@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Панель керування",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Налаштування",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Журнал мережевих запитів",
+    "message":"µBlock — Журнал запитів мережі",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Натиснення: вимикає\/умикає µBlock для поточного сайту.\n\nCtrl+натиснення: вимикає µBlock тільки для цієї сторінки.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Клік: вимикає\/умикає µBlock для сайту.\n\nCtrl+клік: вимикає µBlock тільки для поточної сторінки.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"запитів заблоковано",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"на цій сторінці",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"від моменту встановлення",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p> Ця опція вмикає розбір та задіяння <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів<\/a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
+    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і можуть бути блоковані механізмом фільтрації  мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"застаріле",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Список тих доменів, для яких µBlock буде вимикатись. Один запис на рядок. Недопустимі назви будуть ігноруватись.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Ваш список сайтів, які µBlock буде ігнорувати. Один запис на рядок. Невірні запси буде проігноровано без зауважень.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Імпортувати та додати",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті µBlock. Так як більшість користувачів ніколи не використовують цю функцію, за замовчуванням її вимкнено.",
+    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті µBlock. Через те, що більшість користувачів ніколи не використовують цю функцію, зазвичай її вимкнено.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всі ваші налаштування будуть перезаписані з резервної копії від {{time}} та µBlock буде перезапущено.\n\nПерезаписати всі налаштування використовуючи резервну копію?",
+    "message":"Всі ваші налаштування буде відновлено з резервної копії від {{time}}, µBlock буде перезапущено.\n\nПерезаписати впоточні налаштування використовуючи резервну копію?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Ваші налаштування буде знищено та µBlock буде перезапущено.\n\nПовернути µBlock до заводських налаштувань?",
+    "message":"Ваші налаштування буде видалено та µBlock буде перезапущено.\n\nПовернути µBlock до початкових налаштувань?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Не вдалося підключитися до {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"хвилину тому",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} хвилин(и) тому",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"годину тому",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} годин(и) тому",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"день тому",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} дні(в) тому",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Цей запис має бути останнім",

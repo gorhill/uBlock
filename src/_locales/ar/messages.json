@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — قوائم إعداد المعلومات",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"الإعدادات",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"اضغط: لتعطيل\/لتشغيل الاضافه بالكامل.\n\nCtrl+click لتعطيل الاداة لصفحه فقط",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"تم منع الطلبات",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"على الصفحه",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} أو {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"منذ بداية التنصيب",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"هذا الخيار يفعل تحليل وتطبيق فلاتر <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> هذي الفلاتر مخصصه للتجميل الصفحه. هذي الفلاتر تخفي بعض صناديق او اعلانات المزعجه التي لا يمنعها محرك الفلاتر تفعيل هذي الخاصيه سوف يجعل الاضافه تستعمل الذاكره اكثر",
+    "message":"<p> هذا الخيار يمكن من تحليل و تطبيق <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">  فلاتر<\/a> &ldquo;إخفاء العناصر&rdquo; المتوافقة مع Adblock Plus. هذه الفلاتر هي تجميلية أساسا، وظيفتها إخفاء العناصر في صفحة الويب التي تعبر مصدر إزعاج بصري، و التي لا يمكن حجبها بإستعمال محرك الفلاتر المبني على طلبات الشبكة. <\/p><p>  تفعيل هذه الخاصية يزيد من  أثر  <i>µBlock<\/i> على الذاكرة.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"قد يكون قديم ولا يعمل ",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"آخر تحديث: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"كل سطر يمكن ان يتحمل على فلتر واحد. يمكن ان يكون الفلتر رابط موقع او فلتر متعارف مع نظام AdBlock Plus. روابط التي تحتوي على &lsquo;!&rsquo;  سوف يتم تجاهلها.",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"لستتك الخاصه فيك التي سوف يتم منعها من قبل الاداة. رابط واحد كل سطر, الروابط الغير صحيحه سوف يتم تجاهلها.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"استيراد",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"ليس بالإمكان الإتصال بـ {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock : إضافة الرابط التالي للقوائم الفلترات الخاصة لك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"منذ دقيقة",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"منذ {{value}} دقيقة",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"منذ ساعة",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"منذ {{value}} ساعات",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"قبل يوم واحد",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"منذ {{value}} أيام",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",

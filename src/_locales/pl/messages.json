@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Kokpit",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Ustawienia",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Kliknij, aby na stałe włączyć\/wyłączyć µBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć µBlock tylko dla tej strony.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"zablokowane żądania",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"na tej stronie",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} ({{percent}}%)",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"od instalacji",
@@ -156,7 +160,7 @@
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"zdjęcia",
+    "message":"obrazki",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Opcja ta włącza przetwarzanie i używanie filtrów <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">ukrywania elementów kompatybilnych z Adblock Plus<\/a>. Filtry te są głównie kosmetyczne, służą do ukrycia elementów na stronach, które są uważane za wizualne uciążliwe, a które nie mogą zostać zablokowane przez mechanizm filtrujący.<\/p><p>Włączenie tej funkcji zwiększa zużycie pamięci przez <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Opcja ta włącza przetwarzanie i używanie filtrów <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">ukrywania elementów kompatybilnych z Adblock Plus<\/a>. Filtry te są głównie kosmetyczne, służą do ukrycia elementów uważanych za wizualne uciążliwe, które nie mogą zostać ukryte przez blokowanie żądań sieciowych.<\/p><p>Włączenie tej funkcji zwiększa zużycie pamięci przez <i>uBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -331,6 +335,10 @@
     "message":"nieaktualne",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Zaktualizowano: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Jeden filtr na linię. Filtrem może być nazwa hosta, albo filtr kompatybilny z Adblock Plus. Linie poprzedzone znakiem &lsquo;!&rsquo; będą ignorowane.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -364,7 +372,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Wyślij",
+    "message":"Zatwierdź",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Twoja lista nazw hostów, na których µBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importuj i dołącz",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Możesz zobaczyć dokładne informacje o żądaniach sieciowych poprzez włączenie tej opcji. Rejestrowanie żądań zwiększa użycie pamięci przez µBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
+    "message":"Możesz zobaczyć dokładne informacje o żądaniach sieciowych poprzez włączenie tej opcji. Rejestrowanie żądań zwiększa użycie pamięci przez uBlock. Ponieważ większość użytkowników nigdy nie używa tej opcji, domyślnie jest wyłączona.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -492,7 +500,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-backup_{{datetime}}.txt",
+    "message":"my-ublock-backup_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Wszystkie twoje ustawienia zostaną nadpisane przez kopię stworzoną {{time}}. µBlock zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
+    "message":"Wszystkie twoje ustawienia zostaną nadpisane przez kopię stworzoną {{time}}. uBlock zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Nie można połączyć się z {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Dodać następujący URL do Twojej niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"minutę temu",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minut temu",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"godzinę temu",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} godzin temu",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"wczoraj",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} dni temu",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Ta pozycja musi być ostatnia",

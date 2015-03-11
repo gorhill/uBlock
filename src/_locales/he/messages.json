@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — פאנל הקונפיגורציות",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"הגדרות",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"לחיצה: כבה\/הפעל את µBlock לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את µBlock רק בדף זה.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"בקשות שנחסמו",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"בדף זה",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"מאז ההתקנה",
@@ -331,6 +335,10 @@
     "message":"לא עדכני",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"רשימת שמות המתחם שלך בהם µBlock לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"ייבא וצרף",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"אין אפשרות להתחבר ל {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"לפני דקה",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"לפני {{value}} דקות",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"לפני שעה",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"לפני {{value}} שעות",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"לפני יום",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"לפני {{value}} ימים",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"ערך זה חייב להיות האחרון",

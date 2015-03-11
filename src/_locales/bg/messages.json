@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Табло",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Табло",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Настройки",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Дневник на мрежовите заявки",
+    "message":"uBlock — Дневник на мрежовите заявки",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Щракване: забранява\/разрешава µBlock за този сайт.\n\nCtrl + щракване: забранява µBlock само за тази страница.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Щракване: забранява\/разрешава uBlock за този сайт.\n\nCtrl + щракване: забранява uBlock само за тази страница.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"блокирани заявки",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"на тази страница",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} или {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"от инсталацията",
@@ -236,7 +240,7 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Използвани за съхранение: {{value}} байта",
+    "message":"Използвана памет за съхранение: {{value}} байта",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в web страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази функция увеличава паметта, която  <i>µBlock<\/i> използва.<\/p>",
+    "message":"<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в web страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази функция увеличава паметта, която  <i>uBlock<\/i> използва.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"Остарял",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Последно обновено: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"По един филтър на ред. Филтър може да бъде обикновен хост или съвместим с Adblock Plus филтър. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Вашият списък с хост имена, за които µBlock ще бъде изключен. Едно име на ред. Невалидните хост имена ще бъдат игнорирани.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Вашият списък с хост имена, за които uBlock ще бъде изключен. Едно име на ред. Невалидните хост имена ще бъдат игнорирани.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Внасяне от файл...",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки, като включите тази опция. Записването им увеличава консумацията на памет от µBlock. Тъй като, много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
+    "message":"Ако желаете, може да разгледате подробности за мрежовите заявки, като включите тази опция. Записването им увеличава консумацията на памет от uBlock. Тъй като, много потребители никога няма да използват тази опция, тя е изключена по подразбиране.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат заместени с помощта на данни, архивирани на {{time}} и µBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивираните данни?",
+    "message":"Всички ваши настройки ще бъдат заместени с помощта на данни, архивирани на {{time}} и uBlock ще се рестартира.\n\nПрезаписване на всички съществуващи настройки, използвайки архивираните данни?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Всички ваши настройки ще бъдат премахнати и µBlock ще се рестартира.\n\nВръщане стандартните настройки на µBlock?",
+    "message":"Всички ваши настройки ще бъдат премахнати и uBlock ще се рестартира.\n\nВръщане на uBlock към стандартните настройки?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Неуспешно свързване с {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Добавяне на следния адрес към вашият потребителски списък с филтри?\n\nНаименование: \"{{title}}\"\nURL адрес: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"преди минута",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"преди {{value}} минути",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"преди час",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"преди {{value}} часа",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"преди ден",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"преди {{value}} дни",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Това поле трябва да бъде последното",

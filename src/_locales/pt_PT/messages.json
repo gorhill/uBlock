@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Painel de controlo",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Definições",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Clique: desativar\/ativar o µBlock para este sítio web.\n\nCtrl+clique: desativar o µBlock apenas nesta página.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pedidos bloqueados",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"nesta página",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"desde a instalação",
@@ -331,8 +335,12 @@
     "message":"desatualizado",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
-    "message":"Um filtro por linha. Um filtro pode ser um simples hostname, ou um filtro compatível com o Adblock Plus. Linhas começadas por &lsquo;!&rsquo; serão ignoradas.",
+    "message":"Um filtro por linha. Um filtro pode ser um simples nome de servidor, ou um filtro compatível com o Adblock Plus. Linhas começadas por &lsquo;!&rsquo; serão ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Lista pessoal de servidores para os quais o µBlock será desativado. Uma entrada por linha. Servidores inválidos serão ignorados silenciosamente.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importar e anexar",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Não é possível conectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Adicionar o seguinte URL à lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"há um minuto",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"há {{value}} minutos",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"há uma hora",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"há {{value}} horas",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"há um dia",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"há {{value}} dias",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Esta entrada deve ser a última",

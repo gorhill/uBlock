@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Vezérlőpult",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Beállítások",
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: a teljes webszájt tiltása\/engedélyezése.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klikk: µBlock tiltása\/engedélyezése ezen a webhelyen.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"blokkolt kérések",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"ezen a lapon",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} vagy {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"telepítés óta",
@@ -180,7 +184,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domainekhez kapcsolódva",
+    "message":"domain csatlakozik",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -236,11 +240,11 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Tárolóhely használva: {{value}} byte",
+    "message":"Tárolóhely használat: {{value}} byte",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Utolsó biztonsági mentés visszaállitása:",
+    "message":"Utolsó visszaállítás:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de az internetes lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>µBlock<\/i> memóriahasználatát.<\/p>",
+    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de a hálózati lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>µBlock<\/i> memóriahasználatát.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -331,6 +335,10 @@
     "message":"elavult",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Utolsó frissítés: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Egy sor egy szűrő. A szűrő lehet egy hosztnév, vagy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -384,7 +392,7 @@
     "description":""
   },
   "rulesExport":{
-    "message":"Exportálás fájlba…",
+    "message":"Exportálás fájlba",
     "description":""
   },
   "rulesDefaultFileName":{
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Az álábbi listában felsorolt hosztokon a kiegészítő nem fog működni. Egy sor egy bejegyzés. Érvénytelen hosztnevek figyelmen kívül maradnak.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Az álábbi listában felsorolt hostokon a kiegészítő nem fog működni. Soronként egy bejegyzés. Érvénytelen hostnevek figyelmen kívül maradnak.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importál és hozzáad",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"E beállítással lehetőség adatik az egyes kérések részleteinek megfigyelésére. Bekapcsolása megnöveli a memóriahasználatot. Alapértelmezetten inaktív, mivel legtöbb felhasználónak valószínű nem lesz szüksége erre a funkcióra.",
+    "message":"A hálózati lekérések részletei tekinthetőek meg ennek az opciónak a bekapcsolásával.\nA hálózati lekérések naplózása megnöveli a memóriahasználatot. Alapértelmezetten ki van kapcsolva, mivel a legtöbb felhasználónak nem lesz szüksége erre a funkcióra.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -464,11 +472,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"Naplóbejegyzések szűrése",
+    "message":"naplóbejegyzések szűrése",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum naplóbejegyzések száma",
+    "message":"Naplóbejegyzések maximális száma",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"A jelenlegi beállítások elvesznek, utána a µBlock újraindul.\n\nÁllítsa vissza a gyári beállításokat?",
+    "message":"Az összes beállítás törlődik, utána a µBlock újraindul.\n\nÁllítsa vissza a gyári beállításokat?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Csatlakozás sikertelen a következő címhez: {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Hozzáadja a következő URL-t a saját szűrő listákhoz?\n\nNév: \"{{title}}\"\nURL: \"{{url}}\"",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"egy perce",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} perce",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"egy órája",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} órája",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"egy napja",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} napja",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",

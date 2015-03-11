@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Pulti i programit",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Parametrat",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klikoj: µBlock bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: µBlock bëhet joaktiv vetëm te kjo faqja.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"kërkesa të bllokuara",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"te kjo faqja",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} ose {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"që prej instalimit",
@@ -331,6 +335,10 @@
     "message":"e vjetër",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Përditësimi i fundit: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i ngjasojë atyre që përdor Adblock Plus. Rreshtat që kanë si parashtesë &lsquo;!&rsquo; nuk do të merren parasysh.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Lista juaj me emrat e hosteve për të cilat µBlock do të jetë joaktiv. Një element për rresht. Emrat e pasaktë nuk do të merren parasysh.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importoj dhe shtoj",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Nuk arrin të lidhet me {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"një minutë më parë",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minuta më parë",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"një orë më parë",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} orë më parë",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"një ditë më parë",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} ditë më parë",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

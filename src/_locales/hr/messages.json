@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Nadzorna ploča",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Nadzorna ploča",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Postavke",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Zapisnik mrežnih zahtjeva",
+    "message":"uBlock — Zapisnik mrežnih zahtjeva",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: trajno onemogućiti\/omogućiti µBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock samo za ovu stranicu.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klik: trajno onemogućiti\/omogućiti uBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock samo za ovu stranicu.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"zahtjeva blokirano",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"na ovoj stranici",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} ili {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"od instalacije",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; <\/a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.<\/p><p>Omogućavanje ove značajke povećava <i>µBlock<\/i>memorijski otisak.<\/p>",
+    "message":"<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; <\/a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.<\/p><p>Omogućavanje ove značajke povećava <i>uBlock<\/i>memorijski otisak.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"zastarjelo",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Posljednje ažuriranje: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Jedan filtar po retku. Filtar može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom &lsquo;!&rsquo;  zanemarit će se.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Popis host naziva za koje će µBlock biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi će tiho biti ignorirani.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Popis host naziva za koje će uBlock biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi će tiho biti ignorirani.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Uvesti i dodati",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Detalje mrežnih zahtjeva možete provjeriti aktiviranjem ove mogućnosti. Bilježenje mrežnih zahtjeva povećava memorijski otisak µBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
+    "message":"Detalje mrežnih zahtjeva možete provjeriti aktiviranjem ove mogućnosti. Bilježenje mrežnih zahtjeva povećava memorijski otisak uBlock-a. Budući da mnogi korisnici nikada neće koristiti ovu značajku, to je onemogućeno u zadanoj postavci.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Sve vaše postavke prebrisat će se sa postavkama spremljenim {{time}}, i µBlock će se ponovno pokrenuti. \n\nPrepisati sve postojeće postavke pomoću sigurnosne kopije postavki?",
+    "message":"Sve vaše postavke prebrisat će se sa postavkama spremljenim {{time}}, i uBlock će se ponovno pokrenuti. \n\nPrepisati sve postojeće postavke pomoću sigurnosne kopije postavki?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Sve vaše postavke će biti obrisane i µBlock će se ponovno pokrenuti.  \n\nVraćanje µBlock tvorničkih postavki?",
+    "message":"Sve vaše postavke će biti obrisane i uBlock će se ponovno pokrenuti.  \n\nVraćanje µBlock tvorničkih postavki?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Nemoguće se povezati sa {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Dodajte slijedeći izvor u vaš izbor filter lista?\n\nNaslov: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"prije minutu",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"prije {{value}} minute\/a",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"prije jedan sat",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"prije {{value}} sata\/i",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"prije jedan dan",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"prije {{value}} dana",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

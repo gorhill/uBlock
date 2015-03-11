@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Tauler de control",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Configuració",
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: desactiva\/activa µBlock per a aquest lloc.\n\nCtrl+click: desactiva µBlock només en aquesta pàgina.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Clic: habilita\/inhabilita l'µBlock per a aquest lloc.\n\nCtrl+clic: inhabilita l'µBlock només en aquesta pàgina.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"sol·licituds bloquejades",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"en aquesta pàgina",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} o {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"des de la instal·lació",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb Adblock Plus &ldquo;per a amagar elements&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que no es pode amagar per defecte.<\/p><p>Activant aquesta opció augmenta el consum de memòria del <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"antiquat",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Darrera actualització: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb Adblock Plus. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"La seva llista de noms de servidors per als quals es desactivarà µBlock. Una entrada per línia. Els noms de servidors no vàlids s'ignoraran.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Llistat dels noms de servidor amb que s'inhabilitarà l'µBlock. Una entrada per línia. S'ignoraran els noms de servidor no vàlid.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Imporar i annexar",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Es pot inspeccionar els detalls de les peticions bloquejades activant aquesta opció. El registre de peticions bloquejades augmenta el consum de memòria. Ja que molts usuaris mai ho utilitzen, està desactivada per defecte.",
+    "message":"Podeu inspeccionar els detalls de les peticions blocades habilitant aquesta opció. El registre de peticions blocades augmenta el consum de memòria. Per defecte està inhabilitada, atès que normalment no s'utilitza.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tota la configuració es reescriurà amb la còpia de seguretat del {{time}}, i µBlock es reiniciarà.\n\nRestaurar la configuració amb la còpia de seguretat?",
+    "message":"La configuració es sobreescriurà amb la còpia de seguretat del {{time}}, i es reiniciarà l'µBlock.\n\nVoleu restaurar la configuració amb la còpia de seguretat?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"S'esborrarà tota la configuració i µBlock es reiniciarà.\n\nReiniciar µBlock als valors de fàbrica?",
+    "message":"La configuració serà suprimida i es reiniciarà l'µBlock.\n\nVoleu reiniciar l'µBlock als valors per defecte?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Impossible connectar a {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Voleu afegir aquest enllaç a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"fa un minut",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"fa {{value}} minuts",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"fa una hora",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"fa {{value}} hores",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"fa un dia",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"fa {{value}} dies",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Aquesta entrada ha de ser l'última",

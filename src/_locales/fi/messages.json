@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Hallintapaneeli",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Asetukset",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Painallus: poista käytöstä\/ota käyttöön µBlock tällä sivustolla.\n\nCtrl+painallus: poista µBlock käytöstä vain tällä sivulla.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pyyntöjä estetty",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"tällä sivulla",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"asennuksen jälkeen",
@@ -184,7 +188,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}}\/{{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -236,7 +240,7 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Muistia käytetty: {{value}} tavua",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>µBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>uBlock<\/i>'s memory footprint.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"vanhentunut",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Yksi suodatin kullekin riville. Suodatin voi olla pelkkä osoite tai Adblock Plus -yhteensopiva suodatin. Rivit, joiden alussa on &lsquo;!&rsquo;, jätetään huomiotta.",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Oma listasi osoitteista, joissa µBlock on pois päältä. Kirjoita yksi osoite kullekin riville. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Tuo ja lisää",
@@ -460,15 +468,15 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"Kulissien takana",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"suodata lokimerkinnät",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"Maksimi määrä lokimerkintöjä",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Yhteyttä ei voitu muodostaa osoitteeseen: {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"minuutti sitten",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minuuttia sitten",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"tunti sitten",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} tuntia sitten",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"päivä sitten",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} päivää sitten",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

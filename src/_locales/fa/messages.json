@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — داشبورد",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"تنظیمات",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"کلیک: غیر فعال\/ فعال کردن µBlock برای این سایت.\n\nکنترل+کلیک: غیر فعال کردن µBlock فقط برای همین صفحه.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"درخواست مسدود شده",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"در این صفحه",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"از زمان نصب",
@@ -331,6 +335,10 @@
     "message":"منقضی شده",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"یک فیلتر در هر خط. یک فیلتر می تواند آدرس هاست ساده یا فیلتر سازگار با Adblock plus باشد. خطوط با پیشوند &lsquo;!&rsquo; نادیده گرفته می شوند.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"لیستی از هاست هایی که µBlock در آنها غیرفعال خواهد شد. یک مطلب در هر خط. میزبان های نامعتبر در سکوت نادیده گرفته می شوند.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"وارد کردن و الحاق",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"قادر به اتصال به {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"1 دقیقه پیش",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} دقیقه پیش",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"یک ساعت پیش",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} ساعت قبل",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"دیروز",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} روز قبل",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"این باید آخرین مطلب باشد",

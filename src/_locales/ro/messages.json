@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Panou de control",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Opțiuni",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Clic: dezactivează\/activează µBlock pentru acest sait.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"cereri blocate",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"pe această pagină",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} sau {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"de la instalare",
@@ -331,6 +335,10 @@
     "message":"posibil invechit",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Ultima actualizare: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de &lsquo;!&rsquo; vor fi ignorate.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Lista ta de nume de gazde unde µBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importă și adaugă",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Nu mă pot conecta la {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Adaugă următorul URL în lista de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"acum un minut",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"acum {{value}} minute",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"acum o oră",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"acum {{value}} ore",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"în urmă cu o zi",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"în urmă cu {{value}} zile",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Aceasta intrare trebuie sa fie ultima",

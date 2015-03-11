@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock 控制面板",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"设置",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"单击：对此网站禁用\/启用 µBlock。\n\nCtrl + 单击：在此页面上禁用 µBlock。",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"请求已拦截",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"此页面",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} 或称 {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"总计",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>此选项将启用 <a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">Adblock Plus 兼容的&ldquo;隐藏元素&rdquo;规则的解析和应用<\/a>。这些过滤规则本质上只是装饰，它们用来隐藏一个网页上被认为碍眼的并且不能被网络请求过滤引擎所屏蔽的视觉元素。<\/p><p>启用这项功能将增加 <i>µBlock<\/i> 的内存使用量。<\/p>",
+    "message":"<p>此选项将启用<a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">与 Adblock Plus 兼容的&ldquo;元素隐藏&rdquo;规则的解析和应用<\/a>。这些过滤规则本质上只是装饰美化，它们用来隐藏一个网页上被认为碍眼且不能被网络请求过滤引擎所屏蔽的视觉元素。<\/p><p>启用这项功能将增加 <i>μBlock<\/i> 的内存使用量。<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"过时的版本",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"上次更新：{{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条 Adblock Plus 兼容的过滤规则。以 &lsquo;!&rsquo; 开头的行将被忽略。",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"您的列表中针对 µBlock 的主机名将被禁用。一行一条规则。无效的主机名将直接被忽略。",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"导入并添加",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"无法连接到 {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"一分钟前",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} 分钟前",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"一小时前",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} 小时前",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"一天前",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} 天前",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

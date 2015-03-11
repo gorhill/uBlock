@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Панель управления",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Настройки",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Журнал сетевых запросов",
+    "message":"Журнал сетевых запросов µBlock",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Нажмите кнопку питания, чтобы <br>навсегда отключить\/включить <br>µBlock для текущего сайта",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Клик: отключить\/включить µBlock для этого сайта.\n\nCTRL+Клик: отключить µBlock для этой страницы.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"запросов заблокировано",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"на этой странице",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}}, или {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"со времени установки",
@@ -331,6 +335,10 @@
     "message":"может быть устаревшей",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Последнее обновление: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Линии, начинающиеся с &lsquo;!&rsquo;, будут пропущены.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Список имён узлов, для которых µBlock будет отключен. Одна запись на строку. Неправильные имена будут тихо проигнорированы.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Импортировать и добавить",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Вы можете проверить сведения о сетевых запросах, включив эту опцию. Журнал сетевых запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
+    "message":"Вы можете исследовать сведения о сетевых запросах, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти µBlock.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Все Ваши настройки будут заменены данными от {{time}}, и µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
+    "message":"Текущие настройки будут заменены данными из резервной копии от {{time}}, µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Все Ваши настройки будут сброшены, и µBlock будет перезапущен. \n\nВосстановить настройки по умолчанию?",
+    "message":"Все ваши настройки будут удалены, µBlock будет перезапущен. \n\nСбросить на настройки по умолчанию?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Не удается подключиться к {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Добавить этот адрес в список ваших фильтров?\n\nНазвание: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"минуту назад",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} минут(-ы) назад",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"час назад",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} часа(-ов) назад",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"день назад",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} дня(-ей) назад",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Эта запись должна быть последней",

@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"µBlock — Dashbord",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Innstillinger",
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Klikk: Deaktiver\/aktiver µBlock for dette nettstedet.\n\nCtrl+klikk: Deaktiver µBlock bare på denne siden.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"forespørsler blokkert",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"på denne siden",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"siden installering",
@@ -331,6 +335,10 @@
     "message":"utdatert",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"Last update: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Din liste over vertsnavn hvor µBlock blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importer og legg til",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"Kan ikke koble til {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"a minute ago",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minutes ago",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"an hour ago",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} hours ago",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"a day ago",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} days ago",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Denne oppføringen må være den siste",

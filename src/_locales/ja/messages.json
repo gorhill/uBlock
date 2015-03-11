@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"μBlock — ダッシュボード",
-    "description":"English: µBlock — Dashboard"
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":" 設定",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Network request log",
+    "message":"uBlock — Network request log",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"µBlock の有効 \/ 無効を切り替えます。\n\nクリック: サイト全体  \nCtrl+クリック: このページのみ",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"リクエストはブロックされました",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"このページ",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"インストールしてから",
@@ -331,6 +335,10 @@
     "message":"古いバージョンです",
     "description":"English: outdated"
   },
+  "3pLastUpdate":{
+    "message":"最終更新: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
   "1pFormatHint":{
     "message":"一つのフィルターにつき一行です。フィルターはただのホストネームでもAdblock Plus適合のフィルターでも構いません。&lsquo;!&rsquo;ですでに固定されている行は無視されます。",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"このエクステンションホスト名のリストは無効になります。１ 行につき １ つのエントリ。無効なホスト名はサイレント モードで無視されます。",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"μBlockが無効になるホスト名のリストです。1行につき1つのエントリとなっており、無効なホスト名は無視されます。",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"インポートと追加",
@@ -518,6 +526,34 @@
   "errorCantConnectTo":{
     "message":"{{url}}に接続できません",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"一分前",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} 分前",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"一時間前",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} 時間前",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"一日前",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} 日前",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

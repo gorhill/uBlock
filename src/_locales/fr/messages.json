@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Tableau de bord",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Tableau de bord",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Paramètres",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Journal des requêtes réseau",
+    "message":"uBlock — Journal des requêtes réseau",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Cliquez pour désactiver\/activer en permanence µBlock pour le site courant\n\nCtrl+cliquez pour désactiver µBlock sur cette page seulement",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Cliquez pour désactiver\/activer uBlock pour le site courant\n\nCtrl+cliquez pour désactiver uBlock sur cette page uniquement",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"Requêtes bloquées",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"sur cette page :",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}}, soit {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"depuis toujours :",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Cette option permet de prendre en charge les filtres AdblockPlus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de <i>µBlock<\/i><\/p>",
+    "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de <i>uBlock<\/i><\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"Potentiellement obsolète",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Dernière mise à jour effectuée : {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"Ici se trouve votre liste d'hôtes à autoriser. Un nom d'hôte par ligne. Les noms d'hôte invalides seront ignorés et vous n'en serez pas averti(e).",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importer",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par µBlock. Puisque bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock. Puisque bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis µBlock redémarrera.\n\nProcéder à l'importation ?",
+    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis uBlock redémarrera.\n\nProcéder à l'importation ?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Vos paramètres seront effacés, puis µBlock redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
+    "message":"Vos paramètres seront effacés, puis uBlock redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Ne peut se connecter sur {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"Il y a une minute",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"Il y a {{value}} minutes",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"Il y a une heure",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"Il y a {{value}} heures",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"Il y a un jour",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"Il y a {{value}} jours",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

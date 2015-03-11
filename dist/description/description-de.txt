@@ -2,11 +2,11 @@ Ein effizienter Blocker: Geringer Speicherbedarf und niedrige CPU-Belastung - un
 
 Ein illustrierter Überblick über seine Effizienz: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum An-/Ausschalten von µBlock auf der aktuellen Webseite. Dies wirkt sich also nur auf die aktuelle Webseite aus und nicht global.
+Benutzung: Der An-/Ausschaltknopf beim Klicken des Erweiterungssymbols dient zum An-/Ausschalten von uBlock auf der aktuellen Webseite. Dies wirkt sich also nur auf die aktuelle Webseite aus und nicht global.
 
 ***
 
-µBlock ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
+uBlock ist flexibel, denn es ist mehr als ein "Werbeblocker": Es verarbeitet auch Filter aus mehreren hosts-Dateien.
 
 Standardmäßig werden folgende Filterlisten geladen und angewandt:
 
@@ -24,7 +24,7 @@ Auf Wunsch können zusätzliche Listen ausgewählt werden:
 - Spam404
 - etc.
 
-Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von µBlock geringer als bei anderen sehr populären Blockern.
+Natürlich ist der Speicherbedarf umso höher, desto mehr Filter angewandt werden. Aber selbst mit den zwei zusätzlichen Listen von Fanboy und hpHosts’s Ad and tracking servers ist der Speicherbedarf von uBlock geringer als bei anderen sehr populären Blockern.
 
 Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichkeit größer wird, dass bestimmte Webseiten nicht richtig geladen werden - vor allem bei Listen, die normalerweise als hosts-Dateien verwendet werden.
 

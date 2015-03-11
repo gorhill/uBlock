@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — 대시보드",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — 대시보드",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"설정",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — 네트워크 요청 로그",
+    "message":"uBlock — 네트워크 요청 로그",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"클릭: 이 사이트에서 µBlock을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서만 µBlock을 끕니다.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"클릭: 이 사이트에서 uBlock을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서만 uBlock을 끕니다.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"요청 차단됨",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"이 페이지에서",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} or {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"설치된 이후",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo; 구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 시각적 필터입니다. 그것들은 시각적으로 방해가 될 만한 웹 페이지의 요소들을 숨기는 역할을 하며, 넷 요청에 기반한 필터링 엔진에 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>µBlock<\/i>의 메모리 부담을 줄여줍니다.<\/p>",
+    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock<\/i>의 메모리 사용량이 늘어납니다.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"구버전",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"마지막 업데이트: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"한 줄에 한 개의 필터를 입력하세요. 필터는 순수 호스트이름, 혹은 Adblock Plus-호환 필터가 될 수 있습니다. 시작 부분이 &lsquo;!&rsquo; 로 시작되면 무시됩니다.",
@@ -401,7 +409,7 @@
   },
   "whitelistPrompt":{
     "message":"당신의 목록에 있는 호스트들은 µBlock에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"가져오기 및 추가하기",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 µBlock의 메모리 사용량을 늘어나게 합니다.\n많은 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
+    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 uBlock의 메모리 사용량을 늘어나게 합니다.\n많은 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, µBlock이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
+    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"당신의 모든 설정이 제거되며, µBlock이 재시작됩니다.\n\nµBlock의 설정을 처음 설정으로 초기화하시겠습니까?",
+    "message":"당신의 모든 설정이 제거되며, uBlock이 재시작됩니다.\n\nuBlock의 설정을 처음 설정으로 초기화하시겠습니까?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"{{url}}에 연결할 수 없습니다.",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: 선택한 URL을 사용자 지정 필터 목록에 추가하시겠습니까?\n\n제목: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"1 분 전",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} 분 전",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"1 시간 전",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} 시간 전",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"1 일 전",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} 일 전",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"This entry must be the last one",

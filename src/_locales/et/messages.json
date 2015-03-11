@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Töölaud",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Töölaud",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Seaded",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Võrgutaotluste logi",
+    "message":"uBlock — Võrgutaotluste logi",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klõps: keela\/luba µBlock sellel saidil.\n\nCtrl+klõps: keela µBlock ainult sellel lehel.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Klõps: keela\/luba uBlock sellel saidil.\n\nCtrl+klõps: keela uBlock ainult sellel lehel.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"blokeeritud taotlusi",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"sellel lehel",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} või {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"paigaldamise algusest",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>µBlock<\/i>'i mälu kasutavust.<\/p>",
+    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>uBlock<\/i>'i mälu kasutavust.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"vananenud",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Viimane uuendus: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Üks filter rea kohta, filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Nimekiri domeenidest, millel µBlock keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Nimekiri domeenidest, millel uBlock keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Impordi ja lisa",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab µBlock'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
+    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab uBlock'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning µBlock taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
+    "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning uBlock taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Kõik seaded kustutatakse ning µBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
+    "message":"Kõik seaded kustutatakse ning uBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Ei suudetud ühenduda aadressiga {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"minuti eest",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minuti eest",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"tunni eest",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} tunni eest",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"eile",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} päeva tagasi",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"See sisestus peab olema viimane",

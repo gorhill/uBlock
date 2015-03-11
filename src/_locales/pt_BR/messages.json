@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Painel",
-    "description":"English: µBlock — Dashboard"
+    "message":"uBlock — Painel",
+    "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
     "message":"Preferências",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Registro de pedidos de rede",
+    "message":"uBlock — Registro de pedidos de rede",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o µBlock para o site atual.\n\nCtrl+Clique: desativar o µBlock apenas nesta página.",
-    "description":"English: Click: disable\/enable µBlock for this site.\n\nCtrl+click: disable µBlock only on this page."
+    "message":"Clique: desativar\/ativar o uBlock para o site atual.\n\nCtrl+Clique: desativar o uBlock apenas nesta página.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pedidos bloqueados",
@@ -50,6 +50,10 @@
   "popupBlockedOnThisPagePrompt":{
     "message":"nesta página",
     "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} ou {{percent}}%",
+    "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"desde a instalação",
@@ -272,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;esconder elementos&rdquo; compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;esconder elementos&rdquo; compatível com Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, eles servem para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não pode ser bloqueado pelo motor de filtragem com base em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do <i>uBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -330,6 +334,10 @@
   "3pExternalListObsolete":{
     "message":"desatualizada",
     "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Última atualização: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
     "message":"Adicione um filtro por linha. Um filtro pode ser um simples hostname ou um filtro compatível com o Adblock Plus. Linhas prefixadas com &lsquo;!&rsquo; serão ignoradas.",
@@ -400,8 +408,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Sua lista de exceções de nomes de host para qual o μBlock será desativado. Uma entrada por linha. hostnames inválidos serão silenciosamente ignorados.",
-    "description":"English: Your list of host names for which µBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Sua lista de exceções de nomes de host para qual o uBlock será desativado. Uma entrada por linha. hostnames inválidos serão silenciosamente ignorados.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importar e adicionar",
@@ -424,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Ativando essa opção você pode inspecionar os detalhes dos pedidos de rede. O registro de pedidos de rede aumenta o consumo de memória do μBlock. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
+    "message":"Ativando essa opção você pode inspecionar os detalhes dos pedidos de rede. O registro de pedidos de rede aumenta o consumo de memória do uBlock. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -504,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Todas as suas configurações serão substituídas pelos dados do backup salvo em {{time}}, e o μBlock será reiniciado. \n\nDeseja substituir todas as configurações existentes usando os dados do backup?",
+    "message":"Todas as suas configurações serão substituídas pelos dados do backup salvo em {{time}}, e o uBlock será reiniciado. \n\nDeseja substituir todas as configurações existentes usando os dados do backup?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -512,12 +520,40 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Todas as suas configurações serão apagadas, e o μBlock será reiniciado. \n\nDeseja redefinir as configurações de fábrica do μBlock?",
+    "message":"Todas as suas configurações serão apagadas, e o uBlock será reiniciado. \n\nDeseja restaurar as configurações de fábrica do uBlock?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
     "message":"Não foi possível conectar à {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"uBlock: Adicionar a seguinte URL à sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"um minuto atrás",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"{{value}} minutos atrás",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"uma hora atrás",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"{{value}} horas atrás",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"um dia atrás",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"{{value}} dias atrás",
+    "description":"English: {{value}} days ago"
   },
   "dummy":{
     "message":"Esta entrada deve ser a última",
