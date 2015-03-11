@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"μBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"μBlock 控制台",
+    "message":"μBlock — 控制台",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — 網路連線請求日誌",
+    "message":"uBlock — 網路連線請求日誌",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"點選：對此網站 停用\/啟用 μBlock。\n\nCtrl + 點擊：僅在此頁面停用 μBlock。",
+    "message":"點選：對此網站 停用\/啟用 uBlock。\n\nCtrl + 點擊：僅在此頁面停用 uBlock。",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>這項選項啟用了與 <a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">Adblock Plus 所相容的 &ldquo;元素隱藏&rdquo; 過濾規則<\/a>。這些過濾規則本質上只是裝飾，它們被用於隱藏一個網頁上被認為礙眼的元素，並且這些元素不能被網路連線需求類型的過濾引擎所阻擋。<\/p><p>啟用這項功能將增加 <i>μBlock<\/i> 的記憶體使用量。<\/p>",
+    "message":"<p>這項選項啟用了與 <a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">Adblock Plus 所相容的 &ldquo;元素隱藏&rdquo; 過濾規則<\/a>。這些過濾規則本質上只是裝飾，它們被用於隱藏一個網頁上被認為礙眼的元素，並且這些元素不能被網路連線需求類型的過濾引擎所阻擋。<\/p><p>啟用這項功能將增加 <i>uBlock<\/i> 的記憶體使用量。<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"開啟此選項，將可以查看網路請求的詳細資訊。這個功能會增加 μBlock 的記憶體使用量。由於多數使用者不需要此功能，因此它預設是停用的。",
+    "message":"開啟此選項，將可以查看網路請求的詳細資訊。這個功能會增加 uBlock 的記憶體使用量。由於多數使用者不需要此功能，因此它預設是停用的。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"所有設定將會被備份於 {{time}} 的資料覆蓋，μBlock 將重新啟動。\n確定用備份的資料覆蓋現有的設定嗎？",
+    "message":"所有設定將會被備份於 {{time}} 的資料覆蓋，uBlock 將重新啟動。\n確定用備份的資料覆蓋現有的設定嗎？",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"您的設定將被清除，μBlock 將重新啟動。\n確定將 μBlock 重設？",
+    "message":"您的設定將被清除，uBlock 將重新啟動。\n確定將 uBlock 重設？",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock：新增下列網址至自定義過濾規則列表？\n\n標題：\"{{title}}\"\n網址：{{url}}",
+    "message":"uBlock：新增下列網址至自定義過濾規則列表？\n\n標題：\"{{title}}\"\n網址：{{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

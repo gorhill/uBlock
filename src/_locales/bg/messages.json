@@ -336,7 +336,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Последно обновено: {{ago}}",
+    "message":"Последна актуализация: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{

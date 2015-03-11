@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock 控制面板",
+    "message":"uBlock 控制面板",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock 网络请求日志",
+    "message":"uBlock 网络请求日志",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"单击：对此网站禁用\/启用 µBlock。\n\nCtrl + 单击：在此页面上禁用 µBlock。",
+    "message":"单击：对此网站禁用\/启用 uBlock。\n\nCtrl + 单击：在此页面上禁用 uBlock。",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>此选项将启用<a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">与 Adblock Plus 兼容的&ldquo;元素隐藏&rdquo;规则的解析和应用<\/a>。这些过滤规则本质上只是装饰美化，它们用来隐藏一个网页上被认为碍眼且不能被网络请求过滤引擎所屏蔽的视觉元素。<\/p><p>启用这项功能将增加 <i>μBlock<\/i> 的内存使用量。<\/p>",
+    "message":"<p>此选项将启用<a href=\"https:\/\/adblockplus.org\/zh_CN\/faq_internal#elemhide\">与 Adblock Plus 兼容的&ldquo;元素隐藏&rdquo;规则的解析和应用<\/a>。这些过滤规则本质上只是装饰美化，它们用来隐藏一个网页上被认为碍眼且不能被网络请求过滤引擎所屏蔽的视觉元素。<\/p><p>启用这项功能将增加 <i>uBlock<\/i> 的内存使用量。<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"您的列表中针对 µBlock 的主机名将被禁用。一行一条规则。无效的主机名将直接被忽略。",
+    "message":"您的列表中针对 uBlock 的主机名将被禁用。一行一条规则。无效的主机名将直接被忽略。",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"开启此选项后，您将可以看到网络请求的详细信息。这个网络请求记录功能会增加 µBlock 的内存使用量。由于多数用户永远用不到此功能，它默认是禁用的。",
+    "message":"开启此选项后，您将可以看到网络请求的详细信息。这个网络请求记录功能会增加 uBlock 的内存使用量。由于多数用户永远用不到此功能，它默认是禁用的。",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"您的所有设置将被备份于 {{time}} 的数据覆盖，并且 µBlock 将重新启动。\n确定要用备份的数据覆盖全部现有设置吗？",
+    "message":"您的所有设置将被备份于 {{time}} 的数据覆盖，并且 uBlock 将重新启动。\n确定要用备份的数据覆盖全部现有设置吗？",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"您的设置将被清除，µBlock 将重新启动。\n\n确定将 µBlock 重置到初始状态？",
+    "message":"您的设置将被清除，uBlock 将重新启动。\n\n确定将 uBlock 重置到初始状态？",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
+    "message":"uBlock：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} or {{percent}}%",
+    "message":"{{count}} ou {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -336,7 +336,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"Última atualização: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{

@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Эта опция включает разбор и применение <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых &ldquo;element hiding&rdquo; фильтров<\/a>. Эти фильтры по сути только визуальные, они позволяют скрыть элементы страницы, которые не могут быть заблокированы матрицей фильтров или ABP-фильтрами.<\/p><p>Включение этой опции увеличивает использование памяти для <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Эта опция включает анализ и применение <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых &ldquo;element hiding&rdquo; фильтров<\/a>. По сути это косметические фильтры - скрывают визуально раздражающие элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Включение этой опции увеличивает использование памяти <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Список имён узлов, для которых µBlock будет отключен. Одна запись на строку. Неправильные имена будут тихо проигнорированы.",
+    "message":"Ваш список доменов которые проигнорирует µBlock. Одна запись на строку. Некорректные записи будут тихо проигнорированы.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
