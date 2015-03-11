@@ -51,12 +51,15 @@ var onAllReady = function() {
 
     // Important: remove barrier to remote fetching, this was useful only
     // for launch time.
-    µb.assets.allowRemoteFetch = true;
+    µb.assets.remoteFetchBarrier -= 1;
 
     //quickProfiler.stop(0);
 
     vAPI.onLoadAllCompleted();
 };
+
+// Forbid remote fetching of assets
+µb.assets.remoteFetchBarrier += 1;
 
 /******************************************************************************/
 
@@ -126,7 +129,6 @@ var onUserSettingsReady = function(fetched) {
     // https://github.com/gorhill/uBlock/issues/426
     // Important: block remote fetching for when loading assets at launch
     // time.
-    µb.assets.allowRemoteFetch = false;
     µb.assets.autoUpdate = userSettings.autoUpdate;
     µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 

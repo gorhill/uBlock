@@ -67,7 +67,7 @@ var exports = {
     autoUpdateDelay: 4 * oneDay,
 
     // https://github.com/gorhill/uBlock/issues/426
-    allowRemoteFetch: true
+    remoteFetchBarrier: 0
 };
 
 /******************************************************************************/
@@ -358,7 +358,7 @@ var getRepoMetadata = function(callback) {
         return;
     }
 
-    if ( exports.allowRemoteFetch && lastRepoMetaIsRemote === false ) {
+    if ( exports.remoteFetchBarrier === 0 && lastRepoMetaIsRemote === false ) {
         lastRepoMetaTimestamp = 0;
     }
     if ( (Date.now() - lastRepoMetaTimestamp) >= refreshRepoMetaPeriod ) {
@@ -370,7 +370,7 @@ var getRepoMetadata = function(callback) {
     }
 
     lastRepoMetaTimestamp = Date.now();
-    lastRepoMetaIsRemote = exports.allowRemoteFetch;
+    lastRepoMetaIsRemote = exports.remoteFetchBarrier === 0;
 
     var localChecksums;
     var repoChecksums;
@@ -528,7 +528,7 @@ var readLocalFile = function(path, callback) {
 
 var readRepoFile = function(path, callback) {
     // https://github.com/gorhill/uBlock/issues/426
-    if ( exports.allowRemoteFetch === false ) {
+    if ( exports.remoteFetchBarrier !== 0 ) {
         readLocalFile(path, callback);
         return;
     }
@@ -668,7 +668,10 @@ var readRepoCopyAsset = function(path, callback) {
         // - Auto-update enabled AND (not in cache OR in cache but obsolete)
         var timestamp = entries[path];
         var inCache = typeof timestamp === 'number';
-        if ( exports.allowRemoteFetch && exports.autoUpdate && stringIsNotEmpty(homeURL) ) {
+        if (
+            exports.remoteFetchBarrier === 0 &&
+            exports.autoUpdate && stringIsNotEmpty(homeURL)
+        ) {
             if ( inCache === false || cacheIsObsolete(timestamp) ) {
                 //console.log('µBlock> readRepoCopyAsset("%s") / onCacheMetaReady(): not cached or obsolete', path);
                 getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
@@ -696,7 +699,11 @@ var readRepoCopyAsset = function(path, callback) {
         }
 
         // Repo copy changed: fetch from home URL
-        if ( exports.allowRemoteFetch && exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+        if (
+            exports.remoteFetchBarrier === 0 &&
+            exports.autoUpdate &&
+            assetEntry.localChecksum !== assetEntry.repoChecksum
+        ) {
             //console.log('µBlock> readRepoCopyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             if ( stringIsNotEmpty(homeURL) ) {
                 getTextFileFromURL(homeURL, onHomeFileLoaded, onHomeFileError);
@@ -793,7 +800,11 @@ var readRepoOnlyAsset = function(path, callback) {
         }
 
         // Asset added or changed: load from repo URL and then cache result
-        if ( exports.allowRemoteFetch && exports.autoUpdate && assetEntry.localChecksum !== assetEntry.repoChecksum ) {
+        if (
+            exports.remoteFetchBarrier === 0 &&
+            exports.autoUpdate &&
+            assetEntry.localChecksum !== assetEntry.repoChecksum
+        ) {
             //console.log('µBlock> readRepoOnlyAsset("%s") / onRepoMetaReady(): repo has newer version', path);
             getTextFileFromURL(repositoryURL, onRepoFileLoaded, onRepoFileError);
             return;
@@ -872,7 +883,9 @@ var readExternalAsset = function(path, callback) {
         // - Auto-update enabled AND in cache but obsolete
         var timestamp = entries[path];
         var notInCache = typeof timestamp !== 'number';
-        var updateCache = exports.allowRemoteFetch && exports.autoUpdate && cacheIsObsolete(timestamp);
+        var updateCache = exports.remoteFetchBarrier === 0 &&
+                          exports.autoUpdate &&
+                          cacheIsObsolete(timestamp);
         if ( notInCache || updateCache ) {
             getTextFileFromURL(path, onExternalFileLoaded, onExternalFileError);
             return;
@@ -1150,6 +1163,7 @@ var onOneUpdated = function(details) {
 
     var path = details.path;
     if ( details.error ) {
+        manualUpdateNotify(false, updatedCount / (updatedCount + toUpdateCount));
         //console.debug('µBlock.assetUpdater/onOneUpdated: "%s" failed', path);
         return;
     }

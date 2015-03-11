@@ -282,7 +282,14 @@
         callback = this.noopFunc;
     }
 
+    // Never fetch from remote servers when we load filter lists: this has to
+    // be as fast as possible.
+    µb.assets.remoteFetchBarrier += 1;
+
     var onDone = function() {
+        // Remove barrier to remote fetching
+        µb.assets.remoteFetchBarrier -= 1;
+
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
@@ -683,12 +690,12 @@
     var µb = this;
     var updatedCount = details.updatedCount;
 
-    // Assets are supposed to have been all updated, avoid fetching from
+    // Assets are supposed to have been all updated, prevent fetching from
     // remote servers.
-    µb.assets.allowRemoteFetch = false;
+    µb.assets.remoteFetchBarrier += 1;
 
     var onFiltersReady = function() {
-        µb.assets.allowRemoteFetch = true;
+        µb.assets.remoteFetchBarrier -= 1;
     };
 
     var onPSLReady = function() {
