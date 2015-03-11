@@ -31,7 +31,8 @@
     "use strict";
 
     var vAPI = self.vAPI = self.vAPI || {};
-
+ 
+    vAPI.isMainProcess = true;
     vAPI.safari = true;
 
     /******************************************************************************/
