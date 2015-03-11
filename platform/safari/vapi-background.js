@@ -158,7 +158,7 @@
                     result[key] = keys[key];
                 }
                 localforage.iterate(function(value, key) {
-                    if(!keys[key]) return;
+                    if(!keys.hasOwnProperty(key)) return;
                     if(typeof value === "string") {
                         result[key] = JSON.parse(value);
                     }
