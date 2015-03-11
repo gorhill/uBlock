@@ -36,6 +36,7 @@ var vAPI = self.vAPI = self.vAPI || {};
 var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
+vAPI.isMainProcess = true;
 vAPI.chrome = true;
 
 var noopFunc = function(){};

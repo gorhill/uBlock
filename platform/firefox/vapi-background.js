@@ -38,6 +38,7 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 /******************************************************************************/
 
 var vAPI = self.vAPI = self.vAPI || {};
+vAPI.isMainProcess = true;
 vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 
