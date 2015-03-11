@@ -1021,7 +1021,7 @@ var backupUserData = function(callback) {
 
 var restoreUserData = function(request) {
     var userData = request.userData;
-    var countdown = 6;
+    var countdown = 5;
     var onCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
@@ -1032,7 +1032,7 @@ var restoreUserData = function(request) {
     var onAllRemoved = function() {
         // Be sure to adjust `countdown` if adding/removing anything below
         µb.XAL.keyvalSetOne('version', userData.version);
-        µBlock.saveLocalSettings(onCountdown);
+        µBlock.saveLocalSettings(true);
         µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
         µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
         µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist, onCountdown);
@@ -1055,8 +1055,10 @@ var restoreUserData = function(request) {
 
 var resetUserData = function() {
     µb.XAL.keyvalRemoveAll();
+
     // Keep global counts, people can become quite attached to numbers
-    µb.saveLocalSettings();
+    µb.saveLocalSettings(true);
+
     vAPI.app.restart();
 };
 

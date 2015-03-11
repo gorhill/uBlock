@@ -38,16 +38,15 @@
 
 /******************************************************************************/
 
-µBlock.saveLocalSettings = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
+µBlock.saveLocalSettings = function(force) {
+    if ( force ) {
+        this.localSettingsModifyTime = Date.now();
     }
     if ( this.localSettingsModifyTime <= this.localSettingsSaveTime ) {
-        callback();
         return;
     }
     this.localSettingsSaveTime = Date.now();
-    vAPI.storage.set(this.localSettings, callback);
+    vAPI.storage.set(this.localSettings);
 };
 
 /******************************************************************************/
@@ -638,9 +637,10 @@
 
 /******************************************************************************/
 
-µBlock.updateStartHandler = function() {
+µBlock.updateStartHandler = function(callback) {
     var µb = this;
     var onListsReady = function(lists) {
+        var assets = {};
         for ( var location in lists ) {
             if ( lists.hasOwnProperty(location) === false ) {
                 continue;
@@ -648,12 +648,14 @@
             if ( lists[location].off ) {
                 continue;
             }
-            µb.assetUpdater.add(location);
+            assets[location] = true;
         }
+        assets[µb.pslPath] = true;
+        assets['assets/ublock/mirror-candidates.txt'] = true;
+        callback(assets);
     };
+
     this.getAvailableLists(onListsReady);
-    this.assetUpdater.add(this.pslPath);
-    this.assetUpdater.add('assets/ublock/mirror-candidates.txt');
 };
 
 /******************************************************************************/

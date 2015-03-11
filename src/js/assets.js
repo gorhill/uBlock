@@ -1144,17 +1144,17 @@ var exports = {
 
 /******************************************************************************/
 
-var onAssetUpdated = function(details) {
+var onOneUpdated = function(details) {
     // Resource fetched, we can safely restart the daemon.
     scheduleUpdateDaemon();
 
     var path = details.path;
     if ( details.error ) {
-        //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
+        //console.debug('µBlock.assetUpdater/onOneUpdated: "%s" failed', path);
         return;
     }
 
-    //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s"', path);
+    //console.debug('µBlock.assetUpdater/onOneUpdated: "%s"', path);
     updated[path] = true;
     updatedCount += 1;
 
@@ -1168,6 +1168,9 @@ var onAssetUpdated = function(details) {
 /******************************************************************************/
 
 var updateOne = function() {
+    // Because this can be called from outside the daemon's main loop
+    µb.assets.autoUpdate = µb.userSettings.autoUpdate || exports.manualUpdate;
+
     var metaEntry;
     var updatingCount = 0;
     var updatingText = null;
@@ -1196,7 +1199,7 @@ var updateOne = function() {
         suspendUpdateDaemon();
 
         //console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
-        µb.assets.get(path, onAssetUpdated);
+        µb.assets.get(path, onOneUpdated);
         updatingCount = 1;
         updatingText = metaEntry.homeURL || path;
         break;
@@ -1211,9 +1214,58 @@ var updateOne = function() {
 
 /******************************************************************************/
 
-var onMetadataReady = function(response) {
-    metadata = response;
-    updateOne();
+// Update one asset, fetch metadata if not done yet.
+
+var safeUpdateOne = function() {
+    if ( metadata !== null ) {
+        updateOne();
+        return;
+    }
+
+    // Because this can be called from outside the daemon's main loop
+    µb.assets.autoUpdate = µb.userSettings.autoUpdate || exports.manualUpdate;
+
+    var onMetadataReady = function(response) {
+        scheduleUpdateDaemon();
+        metadata = response;
+        updateOne();
+    };
+
+    suspendUpdateDaemon();
+    µb.assets.metadata(onMetadataReady);
+};
+
+/******************************************************************************/
+
+var safeStartListener = function(callback) {
+    // Because this can be called from outside the daemon's main loop
+    µb.assets.autoUpdate = µb.userSettings.autoUpdate || exports.manualUpdate;
+
+    var onStartListenerDone = function(assets) {
+        scheduleUpdateDaemon();
+        assets = assets || {};
+        for ( var path in assets ) {
+            if ( assets.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            if ( toUpdate.hasOwnProperty(path) ) {
+                continue;
+            }
+            //console.debug('assets.js > µBlock.assetUpdater/safeStartListener: "%s"', path);
+            toUpdate[path] = true;
+            toUpdateCount += 1;
+        }
+        if ( typeof callback === 'function' ) {
+            callback();
+        }
+    };
+
+    if ( typeof onStartListener === 'function' ) {
+        suspendUpdateDaemon();
+        onStartListener(onStartListenerDone);
+    } else {
+        onStartListenerDone(null);
+    }
 };
 
 /******************************************************************************/
@@ -1233,20 +1285,14 @@ var updateDaemon = function() {
         if ( Date.now() >= updateCycleTime ) {
             //console.debug('µBlock.assetUpdater/updateDaemon: update cycle started');
             reset();
-            if ( typeof onStartListener === 'function' ) {
-                onStartListener();
-            }
+            safeStartListener();
         }
         return;
     }
 
     // Any asset to update?
     if ( toUpdateCount !== 0 ) {
-        if ( metadata === null ) {
-            µb.assets.metadata(onMetadataReady);
-        } else {
-            updateOne();
-        }
+        safeUpdateOne();
         return;
     }
     // Nothing left to update
@@ -1307,37 +1353,6 @@ var reset = function() {
 
 /******************************************************************************/
 
-// Manual update: just a matter of forcing the update daemon to work on a
-// tighter schedule.
-
-exports.force = function() {
-    if ( exports.manualUpdate ) {
-        return;
-    }
-
-    suspendUpdateDaemon();
-    reset();
-
-    if ( typeof onStartListener === 'function' ) {
-        onStartListener();
-    }
-
-    // This must be done here
-    exports.manualUpdate = true;
-
-    if ( toUpdateCount === 0 ) {
-        updateCycleTime = Date.now() + updateCycleNextPeriod;
-        scheduleUpdateDaemon();
-        manualUpdateNotify(true, 1);
-        return;
-    }
-
-    scheduleUpdateDaemon();
-    manualUpdateNotify(false, 0);
-};
-
-/******************************************************************************/
-
 var manualUpdateNotify = function(done, value, text) {
     if ( exports.manualUpdate === false ) {
         return;
@@ -1365,6 +1380,33 @@ var manualUpdateNotify = function(done, value, text) {
 
 /******************************************************************************/
 
+// Manual update: just a matter of forcing the update daemon to work on a
+// tighter schedule.
+
+exports.force = function() {
+    if ( exports.manualUpdate ) {
+        return;
+    }
+
+    reset();
+
+    exports.manualUpdate = true;
+
+    var onStartListenerDone = function() {
+        if ( toUpdateCount === 0 ) {
+            updateCycleTime = Date.now() + updateCycleNextPeriod;
+            manualUpdateNotify(true, 1);
+        } else {
+            manualUpdateNotify(false, 0);
+            safeUpdateOne();
+        }
+    };
+
+    safeStartListener(onStartListenerDone);
+};
+
+/******************************************************************************/
+
 exports.onStart = {
     addEventListener: function(callback) {
         onStartListener = callback || null;
@@ -1388,19 +1430,6 @@ exports.onCompleted = {
     addEventListener: function(callback) {
         onCompletedListener = callback || null;
     }
-};
-
-/******************************************************************************/
-
-exports.add = function(path) {
-    if ( toUpdate.hasOwnProperty(path) ) {
-        return;
-    }
-
-    //console.debug('assets.js > µBlock.assetUpdater.add("%s")', path);
-
-    toUpdate[path] = true;
-    toUpdateCount += 1;
 };
 
 /******************************************************************************/
