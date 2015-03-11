@@ -78,6 +78,9 @@ var onMessage = function(request, sender, callback) {
         case 'reloadTab':
             if ( vAPI.isNoTabId(request.tabId) === false ) {
                 vAPI.tabs.reload(request.tabId);
+                if (request.select && vAPI.tabs.select) {
+                    vAPI.tabs.select(request.tabId);
+                }
             }
             break;
 
@@ -195,7 +198,7 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 
 /******************************************************************************/
 
-var getStats = function(tabId) {
+var getStats = function(tabId, tabTitle) {
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -209,7 +212,8 @@ var getStats = function(tabId) {
         pageURL: '',
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
-        tabId: tabId
+        tabId: tabId,
+        tabTitle: tabTitle
     };
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
@@ -277,8 +281,8 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getPopupData':
-            vAPI.tabs.get(null, function(tab) {
-                callback(getStats(getTargetTabId(tab)));
+            vAPI.tabs.get(request.tabId, function(tab) {
+                callback(getStats(getTargetTabId(tab), tab.title));
             });
             return;
 
@@ -296,6 +300,9 @@ var onMessage = function(request, sender, callback) {
             µb.contextMenuClientX = -1;
             µb.contextMenuClientY = -1;
             µb.elementPickerExec(request.tabId);
+            if (request.select && vAPI.tabs.select) {
+                vAPI.tabs.select(request.tabId);
+            }
             break;
 
         case 'hasPopupContentChanged':

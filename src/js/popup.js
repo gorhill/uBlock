@@ -363,7 +363,10 @@ var renderPrivacyExposure = function() {
 
 // Assume everything has to be done incrementally.
 
-var renderPopup = function() {
+var renderPopup = function () {
+    if (popupData.tabTitle) {
+        document.title = popupData.appName + " - " + popupData.tabTitle;
+    }
     uDom('#appname').text(popupData.appName);
     uDom('#version').text(popupData.appVersion);
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
@@ -449,8 +452,9 @@ var toggleNetFilteringSwitch = function(ev) {
 var gotoPick = function() {
     messager.send({
         what: 'gotoPick',
-        tabId: popupData.tabId
-    });
+        tabId: popupData.tabId,
+        select: true
+});
 
     vAPI.closePopup();
 };
@@ -577,7 +581,7 @@ var setFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 var reloadTab = function() {
-    messager.send({ what: 'reloadTab', tabId: popupData.tabId });
+    messager.send({ what: 'reloadTab', tabId: popupData.tabId, select: true });
 
     // Polling will take care of refreshing the popup content
 
@@ -651,7 +655,7 @@ var pollForContentChange = (function() {
 
     var queryCallback = function(response) {
         if ( response ) {
-            getPopupData();
+            getPopupData(popupData.tabId);
             return;
         }
         poll();
@@ -669,22 +673,30 @@ var pollForContentChange = (function() {
 
 /******************************************************************************/
 
-var getPopupData = function() {
+var getPopupData = function(tabId) {
     var onDataReceived = function(response) {
         cachePopupData(response);
         renderPopup();
         hashFromPopupData(true);
         pollForContentChange();
     };
-    messager.send({ what: 'getPopupData' }, onDataReceived);
+    messager.send({ what: 'getPopupData', tabId: tabId }, onDataReceived);
 };
 
 /******************************************************************************/
 
 // Make menu only when popup html is fully loaded
 
-uDom.onLoad(function() {
-    getPopupData();
+uDom.onLoad(function () {
+    var tabId = null; //If there's no tab ID specified in the query string, it will default to current tab.
+
+    // Extract the tab id of the page this popup is for
+    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    if (matches && matches.length === 2) {
+        tabId = matches[1];
+    }
+
+    getPopupData(tabId);
     uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href]').on('click', gotoURL);

@@ -555,6 +555,18 @@
     "message":"{{value}} days ago",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Show Dashboard",
+    "description":"English: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Show Network Request Log",
+    "description":"English: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff": {
+    "message": "off",
+    "description": "Appears as µBlock (off)"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
