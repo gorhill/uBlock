@@ -137,42 +137,34 @@
                 }
                 for(var i = 0; i < n; i++) {
                     var key = keys[i];
-                    localforage.getItem(key, function(err, value) {
+                    var func = function(err, value) {
                         toSatisfy--;
                         if(typeof value === "string") {
-                            result[key] = JSON.parse(value);
+                            result[arguments.callee.myKey] = JSON.parse(value);
                         }
                         if(toSatisfy === 0) {
                             callback(result);
                         }
-                    });
+                    };
+                    func.myKey = key;
+                    localforage.getItem(key, func);
                 }
             }
             else if(typeof keys === "object") {
-                var toSatisfy = 0;
                 for(var key in keys) {
                     if(!keys.hasOwnProperty(key)) {
                         continue;
                     }
-                    toSatisfy++;
+                    result[key] = keys[key];
                 }
-                for(var key in keys) {
-                    if(!keys.hasOwnProperty(key)) {
-                        continue;
+                localforage.iterate(function(value, key) {
+                    if(!keys[key]) return;
+                    if(typeof value === "string") {
+                        result[key] = JSON.parse(value);
                     }
-                    var i = key;
-                    localforage.getItem(i, function(err, value) {
-                        if(typeof value === "string") {
-                            result[i] = JSON.parse(value);
-                        }
-                        else {
-                            result[i] = keys[i];
-                        }
-                        if(--toSatisfy === 0) {
-                            callback(result);
-                        }
-                    });
-                }
+                }, function() {
+                    callback(result);
+                });
             }
         },
 
