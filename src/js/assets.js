@@ -1315,10 +1315,7 @@ exports.force = function() {
         return;
     }
 
-    if ( updateDaemonTimer !== null ) {
-        clearTimeout(updateDaemonTimer);
-    }
-
+    suspendUpdateDaemon();
     reset();
 
     if ( typeof onStartListener === 'function' ) {
