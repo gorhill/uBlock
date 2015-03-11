@@ -64,7 +64,7 @@ vAPI.download = function(details) {
     };
 
     if ( vAPI.isMainProcess ) {
-        vAPI.tabs.open(request);
+        vAPI.tabs.open(request.details);
         return;
     }
 
