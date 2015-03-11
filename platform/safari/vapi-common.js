@@ -55,14 +55,21 @@ vAPI.download = function(details) {
         a.dispatchEvent(new MouseEvent('click'));
         return;
     }
-    var messager = vAPI.messaging.channel('_download');
-    messager.send({
+    var request = {
         what: 'gotoURL',
         details: {
             url: details.url,
             index: -1
         }
-    });
+    };
+
+    if ( vAPI.isMainProcess ) {
+        vAPI.tabs.open(request);
+        return;
+    }
+
+    var messager = vAPI.messaging.channel('_download');
+    messager.send(request);
     messager.close();
 };
 
