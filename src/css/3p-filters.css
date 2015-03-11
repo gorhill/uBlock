@@ -128,17 +128,63 @@ body[dir=rtl] #externalListsDiv {
     word-wrap: normal;
     }
 body #busyOverlay {
-    position: fixed;
-    top: 0;
-    right: 0;
+    background-color: transparent;
     bottom: 0;
-    left: 0;
-    background-color: white;
-    opacity: 0.5;
     cursor: wait;
     display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
     z-index: 1000;
     }
 body.busy #busyOverlay {
     display: block;
+    }
+#busyOverlay > div:nth-of-type(1) {
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    opacity: 0.75;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+#busyOverlay > div:nth-of-type(2) {
+    background-color: #eee;
+    border: 1px solid transparent;
+    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 3em;
+    left: 10%;
+    position: absolute;
+    bottom: 75%;
+    width: 80%;
+    }
+#busyOverlay > div:nth-of-type(2) > div:nth-of-type(1) {
+    background-color: hsl(216, 100%, 75%);
+    background-image: linear-gradient(#a8cbff, #80b3ff);
+    background-repeat: repeat-x;
+    border: 0;
+    box-sizing: border-box;
+    color: #222;
+    height: 100%;
+    left: 0;
+    padding: 0;
+    position: absolute;
+    width: 25%;
+    }
+#busyOverlay > div:nth-of-type(2) > div:nth-of-type(2) {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    line-height: 3em;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
     }

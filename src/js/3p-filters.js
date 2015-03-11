@@ -42,7 +42,14 @@ var hasCachedContent = false;
 var onMessage = function(msg) {
     switch ( msg.what ) {
         case 'allFilterListsReloaded':
-            renderBlacklists();
+            renderFilterLists();
+            break;
+
+        case 'forceUpdateAssetsProgress':
+            renderBusyOverlay(true, msg.progress);
+            if ( msg.done ) {
+                messager.send({ what: 'reloadAllFilters' });
+            }
             break;
 
         default:
@@ -62,13 +69,12 @@ var renderNumber = function(value) {
 
 // TODO: get rid of background page dependencies
 
-var renderBlacklists = function() {
-    uDom('body').toggleClass('busy', true);
-
+var renderFilterLists = function() {
     var listGroupTemplate = uDom('#templates .groupEntry');
     var listEntryTemplate = uDom('#templates .listEntry');
     var listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats');
     var renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString;
+    var lastUpdateString = vAPI.i18n('3pLastUpdate');
 
     // Assemble a pretty blacklist name if possible
     var listNameFromListKey = function(listKey) {
@@ -130,7 +136,7 @@ var renderBlacklists = function() {
         if ( asset.cached ) {
             elem = li.descendants('span.status.purge');
             elem.css('display', '');
-            elem.attr('title', renderElapsedTimeToString(asset.lastModified));
+            elem.attr('title', lastUpdateString.replace('{{ago}}', renderElapsedTimeToString(asset.lastModified)));
             hasCachedContent = true;
         }
         return li;
@@ -212,10 +218,42 @@ var renderBlacklists = function() {
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
 
-        updateWidgets();
+        renderWidgets();
+        renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
     };
 
     messager.send({ what: 'getLists' }, onListsReceived);
+};
+
+/******************************************************************************/
+
+// Progress must be normalized to [0, 1], or can be undefined.
+
+var renderBusyOverlay = function(state, progress) {
+    progress = progress || {};
+    var showProgress = typeof progress.value === 'number';
+    if ( showProgress ) {
+        uDom('#busyOverlay > div:nth-of-type(2) > div:first-child').css(
+            'width',
+            (progress.value * 100).toFixed(1) + '%'
+        );
+        var text = progress.text || '';
+        if ( text !== '' ) {
+            uDom('#busyOverlay > div:nth-of-type(2) > div:last-child').text(text);
+        }
+    }
+    uDom('#busyOverlay > div:nth-of-type(2)').css('display', showProgress ? '' : 'none');
+    uDom('body').toggleClass('busy', !!state);
+};
+
+/******************************************************************************/
+
+// This is to give a visual hint that the selection of blacklists has changed.
+
+var renderWidgets = function() {
+    uDom('#buttonApply').toggleClass('disabled', !listsSelectionChanged());
+    uDom('#buttonUpdate').toggleClass('disabled', !listsContentChanged());
+    uDom('#buttonPurgeAll').toggleClass('disabled', !hasCachedContent);
 };
 
 /******************************************************************************/
@@ -226,12 +264,15 @@ var listsSelectionChanged = function() {
     if ( listDetails.cosmetic !== cosmeticSwitch ) {
         return true;
     }
+
     if ( cacheWasPurged ) {
         return true;
     }
+
     var availableLists = listDetails.available;
     var currentLists = listDetails.current;
     var location, availableOff, currentOff;
+    
     // This check existing entries
     for ( location in availableLists ) {
         if ( availableLists.hasOwnProperty(location) === false ) {
@@ -243,6 +284,7 @@ var listsSelectionChanged = function() {
             return true;
         }
     }
+
     // This check removed entries
     for ( location in currentLists ) {
         if ( currentLists.hasOwnProperty(location) === false ) {
@@ -254,6 +296,7 @@ var listsSelectionChanged = function() {
             return true;
         }
     }
+
     return false;
 };
 
@@ -267,17 +310,6 @@ var listsContentChanged = function() {
 
 /******************************************************************************/
 
-// This is to give a visual hint that the selection of blacklists has changed.
-
-var updateWidgets = function() {
-    uDom('#buttonApply').toggleClass('disabled', !listsSelectionChanged());
-    uDom('#buttonUpdate').toggleClass('disabled', !listsContentChanged());
-    uDom('#buttonPurgeAll').toggleClass('disabled', !hasCachedContent);
-    uDom('body').toggleClass('busy', false);
-};
-
-/******************************************************************************/
-
 var onListCheckboxChanged = function() {
     var href = uDom(this).parent().descendants('a').first().attr('href');
     if ( typeof href !== 'string' ) {
@@ -287,7 +319,7 @@ var onListCheckboxChanged = function() {
         return;
     }
     listDetails.available[href].off = !this.checked;
-    updateWidgets();
+    renderWidgets();
 };
 
 /******************************************************************************/
@@ -317,24 +349,21 @@ var onPurgeClicked = function() {
     button.remove();
     if ( li.descendants('input').first().prop('checked') ) {
         cacheWasPurged = true;
-        updateWidgets();
+        renderWidgets();
     }
 };
 
 /******************************************************************************/
 
-var reloadAll = function(update) {
-    // Loading may take a while when resources are fetched from remote
-    // servers. We do not want the user to force reload while we are reloading.
-    uDom('body').toggleClass('busy', true);
-
-    // Reload blacklists
+var selectFilterLists = function(callback) {
+    // Cosmetic filtering switch
     messager.send({
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
         value: listDetails.cosmetic
     });
-    // Reload blacklists
+
+    // Filter lists
     var switches = [];
     var lis = uDom('#lists .listEntry');
     var i = lis.length;
@@ -349,18 +378,30 @@ var reloadAll = function(update) {
             off: lis.subset(i, 1).descendants('input').prop('checked') === false
         });
     }
+
     messager.send({
-        what: 'reloadAllFilters',
-        switches: switches,
-        update: update
-    });
-    cacheWasPurged = false;
+        what: 'selectFilterLists',
+        switches: switches
+    }, callback);
 };
 
 /******************************************************************************/
 
 var buttonApplyHandler = function() {
-    reloadAll(false);
+    renderBusyOverlay(true);
+
+    var onReloadDone = function() {
+        messager.send({ what: 'reloadAllFilters' });
+    };
+
+    var onSelectionDone = function() {
+        messager.send({ what: 'reloadAllFilters' }, onReloadDone);
+    };
+
+    selectFilterLists(onSelectionDone);
+
+    cacheWasPurged = false;
+
     uDom('#buttonApply').toggleClass('enabled', false);
 };
 
@@ -368,16 +409,28 @@ var buttonApplyHandler = function() {
 
 var buttonUpdateHandler = function() {
     if ( needUpdate ) {
-        reloadAll(true);
+        renderBusyOverlay(true);
+
+        var onSelectionDone = function() {
+            messager.send({ what: 'forceUpdateAssets' });
+        };
+
+        selectFilterLists(onSelectionDone);
+
+        cacheWasPurged = false;
     }
+
+    uDom('#buttonPurgeAll').toggleClass('enabled', false);
 };
 
 /******************************************************************************/
 
 var buttonPurgeAllHandler = function() {
     var onCompleted = function() {
-        renderBlacklists();
+        cacheWasPurged = true;
+        renderFilterLists();
     };
+
     messager.send({ what: 'purgeAllCaches' }, onCompleted);
 };
 
@@ -395,7 +448,7 @@ var autoUpdateCheckboxChanged = function() {
 
 var cosmeticSwitchChanged = function() {
     listDetails.cosmetic = this.checked;
-    updateWidgets();
+    renderWidgets();
 };
 
 /******************************************************************************/
@@ -426,7 +479,7 @@ var externalListsApplyHandler = function() {
         name: 'externalLists',
         value: externalLists
     });
-    renderBlacklists();
+    renderFilterLists();
     uDom('#externalListsApply').prop('disabled', true);
 };
 
@@ -444,7 +497,7 @@ uDom.onLoad(function() {
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);
 
-    renderBlacklists();
+    renderFilterLists();
     renderExternalLists();
 });
 

@@ -27,6 +27,8 @@
 
 (function() {
 
+'use strict';
+
 //quickProfiler.start('start.js');
 
 /******************************************************************************/
@@ -126,6 +128,7 @@ var onUserSettingsReady = function(fetched) {
     // time.
     µb.assets.allowRemoteFetch = false;
     µb.assets.autoUpdate = userSettings.autoUpdate;
+    µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
     // https://github.com/gorhill/uBlock/issues/540
     // Disabling local mirroring for the time being

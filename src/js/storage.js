@@ -182,8 +182,15 @@
             if ( storedEntry.entryUsedCount !== undefined ) {
                 availableEntry.entryUsedCount = storedEntry.entryUsedCount;
             }
-            // This may happen if the list name was pulled from the list content
-            if ( availableEntry.title === '' && storedEntry.title !== '' ) {
+            // This may happen if the list name was pulled from the list
+            // content.
+            // https://github.com/gorhill/uBlock/issues/982
+            // There is no guarantee the title was successfully extracted from
+            // the list content.
+            if ( availableEntry.title === '' &&
+                 typeof storedEntry.title === 'string' &&
+                 storedEntry.title !== ''
+            ) {
                 availableEntry.title = storedEntry.title;
             }
         }
@@ -514,78 +521,47 @@
 
 // `switches` contains the filter lists for which the switch must be revisited.
 
-µBlock.reloadFilterLists = function(switches, update) {
-    var µb = this;
+µBlock.selectFilterLists = function(switches) {
+    switches = switches || {};
 
-    var onFilterListsReady = function() {
-        µb.loadUpdatableAssets({ update: update, psl: update });
-    };
-
-    var onPurgeDone = function() {
-        // Toggle switches, if any
-        if ( switches === undefined ) {
-            onFilterListsReady();
-            return;
-        }
-
-        // Only the lists referenced by the switches are touched.
-
-        var filterLists = µb.remoteBlacklists;
-        var entry, state, location;
-        var i = switches.length;
-        while ( i-- ) {
-            entry = switches[i];
-            state = entry.off === true;
-            location = entry.location;
-            if ( filterLists.hasOwnProperty(location) === false ) {
-                if ( state !== true ) {
-                    filterLists[location] = { off: state };
-                }
-                continue;
+    // Only the lists referenced by the switches are touched.
+    var filterLists = this.remoteBlacklists;
+    var entry, state, location;
+    var i = switches.length;
+    while ( i-- ) {
+        entry = switches[i];
+        state = entry.off === true;
+        location = entry.location;
+        if ( filterLists.hasOwnProperty(location) === false ) {
+            if ( state !== true ) {
+                filterLists[location] = { off: state };
             }
-            if ( filterLists[location].off === state ) {
-                continue;
-            }
-            filterLists[location].off = state;
+            continue;
         }
-
-        vAPI.storage.set({ 'remoteBlacklists': filterLists }, onFilterListsReady);
-    };
-
-    // If we must update, we need to purge the compiled versions of
-    // obsolete assets.
-    if ( update !== true ) {
-        onPurgeDone();
-        return;
+        if ( filterLists[location].off === state ) {
+            continue;
+        }
+        filterLists[location].off = state;
     }
 
-    var onMetadataReady = function(metadata) {
-        var filterLists = µb.remoteBlacklists;
-        var entry;
-        // Purge obsolete filter lists
-        for ( var path in filterLists ) {
-            if ( filterLists.hasOwnProperty(path) === false ) {
-                continue;
-            }
-            if ( metadata.hasOwnProperty(path) === false ) {
-                continue;
-            }
-            entry = metadata[path];
-            if ( entry.repoObsolete !== true && entry.cacheObsolete !== true ) {
-                continue;
-            }
-            µb.purgeCompiledFilterList(path);
-        }
-        // Purge obsolete PSL
-        if ( metadata.hasOwnProperty(µb.pslPath) ) {
-            if ( metadata[µb.pslPath].repoObsolete === true ) {
-                µb.assets.purge('cache://compiled-publicsuffixlist');
-            }
-        }
-        onPurgeDone();
+    vAPI.storage.set({ 'remoteBlacklists': filterLists });
+};
+
+/******************************************************************************/
+
+// Plain reload of all filters.
+
+µBlock.reloadAllFilters = function() {
+    var µb = this;
+
+    // We are just reloading the filter lists: we do not want assets to update.
+    this.assets.autoUpdate = false;
+
+    var onFiltersReady = function() {
+        µb.assets.autoUpdate = µb.userSettings.autoUpdate;
     };
 
-    this.assets.metadata(onMetadataReady);
+    this.loadFilterLists(onFiltersReady);
 };
 
 /******************************************************************************/
@@ -619,36 +595,6 @@
     };
 
     this.assets.get(compiledPath, onCompiledListLoaded);
-};
-
-/******************************************************************************/
-
-// Load updatable assets
-
-µBlock.loadUpdatableAssets = function(details) {
-    var µb = this;
-
-    details = details || {};
-    var update = details.update !== false;
-
-    this.assets.autoUpdate = update || this.userSettings.autoUpdate;
-    this.assets.autoUpdateDelay = this.updateAssetsEvery;
-
-    var onFiltersReady = function() {
-        if ( update ) {
-            µb.assetUpdater.restart();
-        }
-    };
-
-    var onPSLReady = function() {
-        µb.loadFilterLists(onFiltersReady);
-    };
-
-    if ( details.psl !== false ) {
-        this.loadPublicSuffixList(onPSLReady);
-    } else {
-        this.loadFilterLists(onFiltersReady);
-    }
 };
 
 /******************************************************************************/

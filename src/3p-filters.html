@@ -12,7 +12,7 @@
 
 <button id="buttonApply" class="custom reloadAll disabled" data-i18n="3pApplyChanges"></button>
 <ul id="options">
-    <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>
+    <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;
         <button class="custom reloadAll disabled" id="buttonUpdate" data-i18n="3pUpdateNow"></button>
         <button id="buttonPurgeAll" class="custom disabled" data-i18n="3pPurgeAll"></button>
     <li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label>
@@ -28,7 +28,11 @@
 <p style="margin: 0.25em 0 0 0"><button id="externalListsApply" disabled="true" data-i18n="3pExternalListsApply"></button></p>
 </div>
 
-<div id="busyOverlay"></div>
+<div id="busyOverlay">
+    <div></div>
+    <!-- progress bar widget -->
+    <div><div></div><div></div></div>
+</div>
 
 <div id="templates" style="display: none;">
     <ul>

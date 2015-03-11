@@ -42,6 +42,10 @@ var onMessage = function(request, sender, callback) {
             µb.assets.get(request.url, callback);
             return;
 
+        case 'reloadAllFilters':
+            µb.reloadAllFilters(callback);
+            return;
+
         default:
             break;
     }
@@ -53,6 +57,10 @@ var onMessage = function(request, sender, callback) {
         case 'contextMenuEvent':
             µb.contextMenuClientX = request.clientX;
             µb.contextMenuClientY = request.clientY;
+            break;
+
+        case 'forceUpdateAssets':
+            µb.assetUpdater.force();
             break;
 
         case 'getAppData':
@@ -67,14 +75,14 @@ var onMessage = function(request, sender, callback) {
             vAPI.tabs.open(request.details);
             break;
 
-        case 'reloadAllFilters':
-            µb.reloadFilterLists(request.switches, request.update);
-            break;
-
         case 'reloadTab':
             if ( vAPI.isNoTabId(request.tabId) === false ) {
                 vAPI.tabs.reload(request.tabId);
             }
+            break;
+
+        case 'selectFilterLists':
+            µb.selectFilterLists(request.switches);
             break;
 
         case 'userSettings':
@@ -634,17 +642,20 @@ var prepEntries = function(entries) {
 
 var getLists = function(callback) {
     var r = {
-        available: null,
-        current: µb.remoteBlacklists,
-        cosmetic: µb.userSettings.parseAllABPHideFilters,
-        netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
-        cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         autoUpdate: µb.userSettings.autoUpdate,
-        userFiltersPath: µb.userFiltersPath,
-        cache: null
+        available: null,
+        cache: null,
+        cosmetic: µb.userSettings.parseAllABPHideFilters,
+        cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
+        current: µb.remoteBlacklists,
+        manualUpdate: false,
+        netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
+        userFiltersPath: µb.userFiltersPath
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
+        r.manualUpdate = µb.assetUpdater.manualUpdate;
+        r.manualUpdateProgress = µb.assetUpdater.manualUpdateProgress;
         prepEntries(r.cache);
         callback(r);
     };

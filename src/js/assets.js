@@ -53,7 +53,6 @@ var oneDay = 24 * oneHour;
 /******************************************************************************/
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
-var thirdpartiesRepositoryRoot = 'https://raw.githubusercontent.com/gorhill/uAssets/master/src';
 var nullFunc = function() {};
 var reIsExternalPath = /^[a-z]+:\/\//;
 var reIsUserPath = /^assets\/user\//;
@@ -1117,7 +1116,10 @@ return exports;
 
 var µb = µBlock;
 
-var updateDaemonTimerPeriod =      11 * 60 * 1000; // 11 minutes
+var updateDaemonTimer = null;
+var autoUpdateDaemonTimerPeriod   = 11 * 60 * 1000; // 11 minutes
+var manualUpdateDaemonTimerPeriod =       5 * 1000; //  5 seconds
+
 var updateCycleFirstPeriod  =       7 * 60 * 1000; //  7 minutes
 var updateCycleNextPeriod   = 11 * 60 * 60 * 1000; // 11 hours
 var updateCycleTime = 0;
@@ -1132,28 +1134,44 @@ var onStartListener = null;
 var onCompletedListener = null;
 var onAssetUpdatedListener = null;
 
-var exports = {};
+var exports = {
+    manualUpdate: false,
+    manualUpdateProgress: {
+        value: 0,
+        text: null
+    }
+};
 
 /******************************************************************************/
 
 var onAssetUpdated = function(details) {
+    // Resource fetched, we can safely restart the daemon.
+    scheduleUpdateDaemon();
+
     var path = details.path;
     if ( details.error ) {
         //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s" failed', path);
         return;
     }
+
     //console.debug('µBlock.assetUpdater/onAssetUpdated: "%s"', path);
     updated[path] = true;
     updatedCount += 1;
+
     if ( typeof onAssetUpdatedListener === 'function' ) {
         onAssetUpdatedListener(details);
     }
+
+    manualUpdateNotify(false, updatedCount / (updatedCount + toUpdateCount + 1));
 };
 
 /******************************************************************************/
 
 var updateOne = function() {
     var metaEntry;
+    var updatingCount = 0;
+    var updatingText = null;
+
     for ( var path in toUpdate ) {
         if ( toUpdate.hasOwnProperty(path) === false ) {
             continue;
@@ -1170,10 +1188,25 @@ var updateOne = function() {
         if ( !metaEntry.cacheObsolete && !metaEntry.repoObsolete ) {
             continue;
         }
+
+        // Will restart the update daemon once the resource is received: the
+        // fetching of a resource may take some time, possibly beyond the
+        // next scheduled daemon cycle, so this ensure the daemon won't do
+        // anything else before the resource is fetched (or times out).
+        suspendUpdateDaemon();
+
         //console.debug('µBlock.assetUpdater/updateOne: assets.get("%s")', path);
         µb.assets.get(path, onAssetUpdated);
+        updatingCount = 1;
+        updatingText = metaEntry.homeURL || path;
         break;
     }
+
+    manualUpdateNotify(
+        false,
+        (updatedCount + updatingCount/2) / (updatedCount + toUpdateCount + updatingCount + 1),
+        updatingText
+    );
 };
 
 /******************************************************************************/
@@ -1186,9 +1219,10 @@ var onMetadataReady = function(response) {
 /******************************************************************************/
 
 var updateDaemon = function() {
-    setTimeout(updateDaemon, updateDaemonTimerPeriod);
+    updateDaemonTimer = null;
+    scheduleUpdateDaemon();
 
-    µb.assets.autoUpdate = µb.userSettings.autoUpdate;
+    µb.assets.autoUpdate = µb.userSettings.autoUpdate || exports.manualUpdate;
 
     if ( µb.assets.autoUpdate !== true ) {
         return;
@@ -1217,6 +1251,9 @@ var updateDaemon = function() {
     }
     // Nothing left to update
 
+    // In case of manual update, fire progress notifications
+    manualUpdateNotify(true, 1, '');
+
     // If anything was updated, notify listener
     if ( updatedCount !== 0 ) {
         if ( typeof onCompletedListener === 'function' ) {
@@ -1236,7 +1273,26 @@ var updateDaemon = function() {
     }
 };
 
-setTimeout(updateDaemon, updateDaemonTimerPeriod);
+/******************************************************************************/
+
+var scheduleUpdateDaemon = function() {
+    if ( updateDaemonTimer !== null ) {
+        clearTimeout(updateDaemonTimer);
+    }
+    updateDaemonTimer = setTimeout(
+        updateDaemon,
+        exports.manualUpdate ? manualUpdateDaemonTimerPeriod : autoUpdateDaemonTimerPeriod
+    );
+};
+
+var suspendUpdateDaemon = function() {
+    if ( updateDaemonTimer !== null ) {
+        clearTimeout(updateDaemonTimer);
+        updateDaemonTimer = null;
+    }
+};
+
+scheduleUpdateDaemon();
 
 /******************************************************************************/
 
@@ -1247,6 +1303,67 @@ var reset = function() {
     updatedCount = 0;
     updateCycleTime = 0;
     metadata = null;
+};
+
+/******************************************************************************/
+
+// Manual update: just a matter of forcing the update daemon to work on a
+// tighter schedule.
+
+exports.force = function() {
+    if ( exports.manualUpdate ) {
+        return;
+    }
+
+    if ( updateDaemonTimer !== null ) {
+        clearTimeout(updateDaemonTimer);
+    }
+
+    reset();
+
+    if ( typeof onStartListener === 'function' ) {
+        onStartListener();
+    }
+
+    // This must be done here
+    exports.manualUpdate = true;
+
+    if ( toUpdateCount === 0 ) {
+        updateCycleTime = Date.now() + updateCycleNextPeriod;
+        scheduleUpdateDaemon();
+        manualUpdateNotify(true, 1);
+        return;
+    }
+
+    scheduleUpdateDaemon();
+    manualUpdateNotify(false, 0);
+};
+
+/******************************************************************************/
+
+var manualUpdateNotify = function(done, value, text) {
+    if ( exports.manualUpdate === false ) {
+        return;
+    }
+
+    exports.manualUpdate = !done;
+    exports.manualUpdateProgress.value = value || 0;
+    if ( typeof text === 'string' ) {
+        exports.manualUpdateProgress.text = text;
+    }
+
+    vAPI.messaging.broadcast({
+        what: 'forceUpdateAssetsProgress',
+        done: !exports.manualUpdate,
+        progress: exports.manualUpdateProgress,
+        updatedCount: updatedCount
+    });
+
+    // When manually updating, whatever launched the manual update is
+    // responsible to launch a reload of the filter lists.
+    if ( exports.manualUpdate !== true ) {
+        reset();
+    }
 };
 
 /******************************************************************************/

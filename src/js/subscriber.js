@@ -84,12 +84,15 @@ var onAbpLinkClicked = function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
 
+    var onListsSelectionDone = function() {
+        messager.send({ what: 'reloadAllFilters' });
+    };
+
     var onExternalListsSaved = function() {
         messager.send({
-            what: 'reloadAllFilters',
-            switches: [ { location: location, off: false } ],
-            update: false
-        });
+            what: 'selectFilterLists',
+            switches: [ { location: location, off: false } ]
+        }, onListsSelectionDone);
     };
 
     var onSubscriberDataReady = function(details) {
