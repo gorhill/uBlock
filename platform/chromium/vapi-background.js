@@ -159,12 +159,20 @@ vAPI.tabs.open = function(details) {
                 active: !!details.active
             };
 
+            // Opening a tab from incognito window won't focus the window
+            // in which the tab was opened
+            var focusWindow = function(tab) {
+                if ( tab.active ) {
+                    chrome.windows.update(tab.windowId, { focused: true });
+                }
+            };
+
             if ( !details.tabId ) {
                 if ( details.index !== undefined ) {
                     _details.index = details.index;
                 }
 
-                chrome.tabs.create(_details);
+                chrome.tabs.create(_details, focusWindow);
                 return;
             }
 
@@ -172,7 +180,7 @@ vAPI.tabs.open = function(details) {
             chrome.tabs.update(parseInt(details.tabId, 10), _details, function(tab) {
                 // if the tab doesn't exist
                 if ( vAPI.lastError() ) {
-                    chrome.tabs.create(_details);
+                    chrome.tabs.create(_details, focusWindow);
                 } else if ( details.index !== undefined ) {
                     chrome.tabs.move(tab.id, {index: details.index});
                 }
@@ -203,8 +211,9 @@ vAPI.tabs.open = function(details) {
     chrome.tabs.query({ url: targetURL }, function(tabs) {
         var tab = tabs[0];
         if ( tab ) {
-            chrome.windows.update(tab.windowId, { focused: true });
-            chrome.tabs.update(tab.id, { active: true });
+            chrome.tabs.update(tab.id, { active: true }, function(tab) {
+                chrome.windows.update(tab.windowId, { focused: true });
+            });
         } else {
             wrapper();
         }
