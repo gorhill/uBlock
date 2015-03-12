@@ -159,61 +159,63 @@ vAPI.tabs.open = function(details) {
                 active: !!details.active
             };
 
-            if ( details.tabId ) {
-                // update doesn't accept index, must use move
-                chrome.tabs.update(parseInt(details.tabId, 10), _details, function(tab) {
-                    // if the tab doesn't exist
-                    if ( vAPI.lastError() ) {
-                        chrome.tabs.create(_details);
-                    } else if ( details.index !== undefined ) {
-                        chrome.tabs.move(tab.id, {index: details.index});
-                    }
-                });
-            } else {
+            if ( !details.tabId ) {
                 if ( details.index !== undefined ) {
                     _details.index = details.index;
                 }
 
                 chrome.tabs.create(_details);
+                return;
             }
+
+            // update doesn't accept index, must use move
+            chrome.tabs.update(parseInt(details.tabId, 10), _details, function(tab) {
+                // if the tab doesn't exist
+                if ( vAPI.lastError() ) {
+                    chrome.tabs.create(_details);
+                } else if ( details.index !== undefined ) {
+                    chrome.tabs.move(tab.id, {index: details.index});
+                }
+            });
         };
 
-        if ( details.index === -1 ) {
-            vAPI.tabs.get(null, function(tab) {
-                if ( tab ) {
-                    details.index = tab.index + 1;
-                } else {
-                    delete details.index;
-                }
-
-                subWrapper();
-            });
-        }
-        else {
+        if ( details.index !== -1 ) {
             subWrapper();
+            return;
         }
+
+        vAPI.tabs.get(null, function(tab) {
+            if ( tab ) {
+                details.index = tab.index + 1;
+            } else {
+                delete details.index;
+            }
+
+            subWrapper();
+        });
     };
 
-    if ( details.select ) {
-        chrome.tabs.query({ currentWindow: true }, function(tabs) {
-            var rgxHash = /#.*/;
-            // this is questionable
-            var url = targetURL.replace(rgxHash, '');
-            var selected = tabs.some(function(tab) {
-                if ( tab.url.replace(rgxHash, '') === url ) {
-                    chrome.tabs.update(tab.id, { active: true });
-                    return true;
-                }
-            });
+    if ( !details.select ) {
+        wrapper();
+        return;
+    }
 
-            if ( !selected ) {
-                wrapper();
+    chrome.tabs.query({}, function(tabs) {
+        var rgxHash = /#.*/;
+        // this is questionable
+        var url = targetURL.replace(rgxHash, '');
+        var selected = tabs.some(function(tab) {
+            if ( tab.url.replace(rgxHash, '') === url ) {
+                chrome.tabs.update(tab.id, { active: true });
+                chrome.windows.update(tab.windowId, { focused: true });
+                return true;
             }
         });
-    }
-    else {
-        wrapper();
-    }
+
+        if ( !selected ) {
+            wrapper();
+        }
+    });
 };
 
 /******************************************************************************/
