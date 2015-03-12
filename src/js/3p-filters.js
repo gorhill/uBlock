@@ -424,6 +424,8 @@ var buttonUpdateHandler = function() {
 var buttonPurgeAllHandler = function() {
     uDom('#buttonPurgeAll').removeClass('enabled');
 
+    renderBusyOverlay(true);
+
     var onCompleted = function() {
         cacheWasPurged = true;
         renderFilterLists();
