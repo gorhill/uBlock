@@ -365,17 +365,13 @@ var selectFilterLists = function(callback) {
 
     // Filter lists
     var switches = [];
-    var lis = uDom('#lists .listEntry');
+    var lis = uDom('#lists .listEntry'), li;
     var i = lis.length;
-    var path;
     while ( i-- ) {
-        path = lis
-            .subset(i, 1)
-            .descendants('a')
-            .attr('href');
+        li = lis.at(i);
         switches.push({
-            location: path,
-            off: lis.subset(i, 1).descendants('input').prop('checked') === false
+            location: li.descendants('a').attr('href'),
+            off: li.descendants('input').prop('checked') === false
         });
     }
 
