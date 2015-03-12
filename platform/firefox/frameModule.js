@@ -299,7 +299,11 @@ const contentObserver = {
             }
         };
 
-        doc.addEventListener('DOMContentLoaded', docReady, true);
+        if ( doc.readyState === 'loading') {
+            doc.addEventListener('DOMContentLoaded', docReady, true);
+        } else {
+            docReady({ target: doc, type: 'DOMContentLoaded' });
+        }
     }
 };
 

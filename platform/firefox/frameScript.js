@@ -19,13 +19,43 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/******************************************************************************/
+
+(function() {
+
 'use strict';
 
 /******************************************************************************/
 
-Components.utils.import(
+let {contentObserver} = Components.utils.import(
     Components.stack.filename.replace('Script', 'Module'),
     null
 );
+
+let injectContentScripts = function(win) {
+    if ( !win || !win.document ) {
+        return;
+    }
+
+    contentObserver.observe(win.document);
+
+    if ( win.frames && win.frames.length ) {
+        let i = win.frames.length;
+        while ( i-- ) {
+            injectContentScripts(win.frames[i]);
+        }
+    }
+};
+
+let onLoadCompleted = function() {
+    removeMessageListener('ublock-load-completed', onLoadCompleted);
+    injectContentScripts(content);
+};
+
+addMessageListener('ublock-load-completed', onLoadCompleted);
+
+/******************************************************************************/
+
+})();
 
 /******************************************************************************/

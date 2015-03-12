@@ -1849,7 +1849,22 @@ vAPI.lastError = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-vAPI.onLoadAllCompleted = function() {};
+vAPI.onLoadAllCompleted = function() {
+    var µb = µBlock;
+    for ( var tab of this.tabs.getAll() ) {
+        // We're insterested in only the tabs that were already loaded
+        if ( tab.hasAttribute('pending') ) {
+            continue;
+        }
+
+        var tabId = this.tabs.getTabId(tab);
+        var browser = getBrowserForTab(tab);
+        µb.bindTabToPageStats(tabId, browser.currentURI.spec);
+        browser.messageManager.sendAsyncMessage(
+            location.host + '-load-completed'
+        );
+    }
+};
 
 /******************************************************************************/
 
