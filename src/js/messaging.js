@@ -78,7 +78,7 @@ var onMessage = function(request, sender, callback) {
         case 'reloadTab':
             if ( vAPI.isNoTabId(request.tabId) === false ) {
                 vAPI.tabs.reload(request.tabId);
-                if (request.select && vAPI.tabs.select) {
+                if ( request.select && vAPI.tabs.select ) {
                     vAPI.tabs.select(request.tabId);
                 }
             }
@@ -300,7 +300,7 @@ var onMessage = function(request, sender, callback) {
             µb.contextMenuClientX = -1;
             µb.contextMenuClientY = -1;
             µb.elementPickerExec(request.tabId);
-            if (request.select && vAPI.tabs.select) {
+            if ( request.select && vAPI.tabs.select ) {
                 vAPI.tabs.select(request.tabId);
             }
             break;

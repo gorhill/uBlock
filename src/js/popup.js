@@ -363,10 +363,11 @@ var renderPrivacyExposure = function() {
 
 // Assume everything has to be done incrementally.
 
-var renderPopup = function () {
-    if (popupData.tabTitle) {
-        document.title = popupData.appName + " - " + popupData.tabTitle;
+var renderPopup = function() {
+    if ( popupData.tabTitle ) {
+        document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
+
     uDom('#appname').text(popupData.appName);
     uDom('#version').text(popupData.appVersion);
     uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);

@@ -44,7 +44,7 @@ vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'µBlock',
+    name: 'uBlock',
     version: location.hash.slice(1)
 };
 
@@ -656,12 +656,7 @@ vAPI.tabs.open = function(details) {
                 continue;
             }
 
-            tabBrowser = getTabBrowser(getOwnerWindow(tab));
-            if ( vAPI.fennec ) {
-                tabBrowser.selectTab(tab);
-            } else {
-                tabBrowser.selectedTab = tab;
-            }
+            this.select(tab);
             return;
         }
     }
@@ -745,8 +740,8 @@ vAPI.tabs.reload = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.select = function(tabId) {
-    var tab = this.get(tabId);
+vAPI.tabs.select = function(tab) {
+    tab = typeof tab === 'object' ? tab : this.get(tab);
 
     if ( !tab ) {
         return;
@@ -754,7 +749,7 @@ vAPI.tabs.select = function(tabId) {
 
     var tabBrowser = getTabBrowser(getOwnerWindow(tab));
 
-    if (vAPI.fennec) {
+    if ( vAPI.fennec ) {
         tabBrowser.selectTab(tab);
     } else {
         tabBrowser.selectedTab = tab;
@@ -809,11 +804,9 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
         tb.tabs[tabId] = { badge: badge, img: iconStatus === 'on' };
     }
 
-    if ( tabId !== curTabId ) {
-        return;
+    if ( tabId === curTabId ) {
+        tb.updateState(win, tabId);
     }
-
-    tb.updateState(win, tabId);
 };
 
 /******************************************************************************/
@@ -1138,7 +1131,7 @@ var httpObserver = {
     },
 
     observe: function(channel, topic) {
-        if ( !(channel instanceof Ci.nsIHttpChannel) ) {
+        if ( channel instanceof Ci.nsIHttpChannel === false ) {
             return;
         }
 
@@ -1234,7 +1227,7 @@ var httpObserver = {
             return;
         }
 
-        if ( vAPI.fennec && lastRequest.type === this.MAIN_FRAME && lastRequest.frameId === 0 ) {
+        if ( vAPI.fennec && lastRequest.type === this.MAIN_FRAME ) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: lastRequest.tabId,
@@ -1386,68 +1379,79 @@ vAPI.toolbarButton = {
     tabs: {/*tabId: {badge: 0, img: boolean}*/}
 };
 
-if (vAPI.fennec) {
-    // Menu UI
-    vAPI.toolbarButton.menuItemIds = new WeakMap();
+/******************************************************************************/
 
-    vAPI.toolbarButton.getMenuItemLabel = function(tabId) {
-        var label = this.label;
-        if (tabId !== undefined) {
+// Toolbar button UI for desktop Firefox
+vAPI.toolbarButton.init = function() {
+    if ( vAPI.fennec ) {
+        // Menu UI for Fennec
+        var tb = {
+            menuItemIds: new WeakMap(),
+            label: vAPI.app.name,
+            tabs: {}
+        };
+        vAPI.toolbarButton = tb;
+
+        tb.getMenuItemLabel = function(tabId) {
+            var label = this.label;
+            if ( tabId === undefined ) {
+                return label;
+            }
             var tabDetails = this.tabs[tabId];
-            if (tabDetails) {
-                if (tabDetails.img) {
-                    if (tabDetails.badge) {
-                        label = label + " (" + tabDetails.badge + ")";
-                    }
-                } else {
-                    label = label + " (" + vAPI.i18n("fennecMenuItemBlockingOff") + ")";
+            if ( !tabDetails ) {
+                return label;
+            }
+            if ( !tabDetails.img ) {
+                label += ' (' + vAPI.i18n('fennecMenuItemBlockingOff') + ')';
+            } else if ( tabDetails.badge ) {
+                label += ' (' + tabDetails.badge + ')';
+            }
+            return label;
+        };
+
+        tb.onClick = function() {
+            var win = Services.wm.getMostRecentWindow('navigator:browser');
+            var curTabId = vAPI.tabs.getTabId(getTabBrowser(win).selectedTab);
+            vAPI.tabs.open({
+                url: 'popup.html?tabId=' + curTabId,
+                index: -1,
+                select: true
+            });
+        };
+
+        tb.updateState = function(win, tabId) {
+            var id = this.menuItemIds.get(win);
+            if ( !id ) {
+                return;
+            }
+            win.NativeWindow.menu.update(id, {
+                name: this.getMenuItemLabel(tabId)
+            });
+        };
+
+        // Only actually expecting one window under Fennec (note, not tabs, windows)
+        for ( var win of vAPI.tabs.getWindows() ) {
+            var label = tb.getMenuItemLabel();
+            var id = win.NativeWindow.menu.add({
+                name: label,
+                callback: tb.onClick
+            });
+            tb.menuItemIds.set(win, id);
+        }
+
+        cleanupTasks.push(function() {
+            for ( var win of vAPI.tabs.getWindows() ) {
+                var id = tb.menuItemIds.get(win);
+                if ( id ) {
+                    win.NativeWindow.menu.remove(id);
+                    tb.menuItemIds.delete(win);
                 }
             }
-        }
-        return label;
-    };
-
-    vAPI.toolbarButton.init = function() {
-        // Only actually expecting one window under Fennec (note, not tabs, windows)
-        for (var win of vAPI.tabs.getWindows()) {
-            this.addToWindow(win, this.getMenuItemLabel());
-        }
-
-        cleanupTasks.push(this.cleanUp);
-    };
-
-    vAPI.toolbarButton.addToWindow = function(win, label) {
-        var id = win.NativeWindow.menu.add({
-            name: label,
-            callback: this.onClick
         });
-        this.menuItemIds.set(win, id);
-    };
 
-    vAPI.toolbarButton.removeFromWindow = function(win) {
-        var id = this.menuItemIds.get(win);
-        if (id) {
-            win.NativeWindow.menu.remove(id);
-            this.menuItemIds.delete(win);
-        }
-    };
+        return;
+    }
 
-    vAPI.toolbarButton.updateState = function(win, tabId) {
-        var id = this.menuItemIds.get(win);
-        if (!id) {
-            return;
-        }
-        win.NativeWindow.menu.update(id, { name: this.getMenuItemLabel(tabId) });
-    };
-
-    vAPI.toolbarButton.onClick = function() {
-        var win = Services.wm.getMostRecentWindow('navigator:browser');
-        var curTabId = vAPI.tabs.getTabId(getTabBrowser(win).selectedTab);
-        vAPI.tabs.open({ url: "popup.html?tabId=" + curTabId, index: -1, select: true });
-    };
-} else {
-// Toolbar button UI
-vAPI.toolbarButton.init = function() {
     var CustomizableUI;
     try {
         CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
@@ -1487,8 +1491,7 @@ vAPI.toolbarButton.init = function() {
         );
     } else {
         this.CUIEvents = {};
-
-        var updateBadge = function() {
+        this.CUIEvents.updateBadge = function() {
             var wId = vAPI.toolbarButton.id;
             var buttonInPanel = CustomizableUI.getWidget(wId).areaType === CustomizableUI.TYPE_MENU_PANEL;
 
@@ -1509,11 +1512,10 @@ vAPI.toolbarButton.init = function() {
             }
 
             // Anonymous elements need some time to be reachable
-            setTimeout(this.updateBadgeStyle, 50);
-        }.bind(this.CUIEvents);
-
-        this.CUIEvents.onCustomizeEnd = updateBadge;
-        this.CUIEvents.onWidgetUnderflow = updateBadge;
+            setTimeout(this.updateBadgeStyle, 250);
+        };
+        this.CUIEvents.onCustomizeEnd = this.CUIEvents.updateBadge;
+        this.CUIEvents.onWidgetUnderflow = this.CUIEvents.updateBadge;
 
         this.CUIEvents.updateBadgeStyle = function() {
             var css = [
@@ -1541,7 +1543,7 @@ vAPI.toolbarButton.init = function() {
 
         this.onCreated = function(button) {
             button.setAttribute('badge', '');
-            setTimeout(this.CUIEvents.onCustomizeEnd, 50);
+            setTimeout(this.CUIEvents.updateBadge, 250);
         };
 
         CustomizableUI.addListener(this.CUIEvents);
@@ -1584,6 +1586,8 @@ vAPI.toolbarButton.init = function() {
                 .removeSheet(this.styleURI, 1);
         }
     }.bind(this));
+
+    this.init = null;
 };
 
 /******************************************************************************/
@@ -1655,6 +1659,8 @@ vAPI.toolbarButton.onViewHiding = function({target}) {
     target.firstChild.setAttribute('src', 'about:blank');
 };
 
+/******************************************************************************/
+
 vAPI.toolbarButton.updateState = function(win, tabId) {
     var button = win.document.getElementById(this.id);
 
@@ -1674,7 +1680,6 @@ vAPI.toolbarButton.updateState = function(win, tabId) {
 
     button.style.listStyleImage = icon;
 };
-}
 
 /******************************************************************************/
 
@@ -1838,6 +1843,38 @@ vAPI.contextMenu.create = function(details, callback) {
 
 /******************************************************************************/
 
+var optionsObserver = {
+    register: function() {
+        Services.obs.addObserver(this, 'addon-options-displayed', false);
+        cleanupTasks.push(this.unregister.bind(this));
+    },
+
+    unregister: function() {
+        Services.obs.removeObserver(this, 'addon-options-displayed');
+    },
+
+    setupOptionsButton: function(doc, id, page) {
+        var button = doc.getElementById(id);
+        button.addEventListener('command', function() {
+            vAPI.tabs.open({ url: page, index: -1 });
+        });
+        button.label = vAPI.i18n(id);
+    },
+
+    observe: function(doc, topic, extensionId) {
+        if ( extensionId !== '{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}' ) {
+            return;
+        }
+
+        this.setupOptionsButton(doc, 'showDashboardButton', 'dashboard.html');
+        this.setupOptionsButton(doc, 'showNetworkLogButton', 'devtools.html');
+    }
+};
+
+optionsObserver.register();
+
+/******************************************************************************/
+
 vAPI.lastError = function() {
     return null;
 };
@@ -1886,40 +1923,6 @@ vAPI.punycodeURL = function(url) {
 };
 
 /******************************************************************************/
-
-vAPI.optionsObserver = {
-    register: function () {
-        var obs = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
-        obs.addObserver(this, "addon-options-displayed", false);
-
-        cleanupTasks.push(this.unregister.bind(this));
-    },
-
-    observe: function (aSubject, aTopic, aData) {
-        if (aTopic === "addon-options-displayed" && aData === "{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}") {
-            var doc = aSubject;
-            this.setupOptionsButton(doc, "showDashboardButton", "dashboard.html");
-            this.setupOptionsButton(doc, "showNetworkLogButton", "devtools.html");
-        }
-    },
-    setupOptionsButton: function (doc, id, page) {
-        var button = doc.getElementById(id);
-        button.addEventListener("command", function () {
-            vAPI.tabs.open({ url: page, index: -1 });
-        });
-        button.label = vAPI.i18n(id);
-    },
-
-    unregister: function () {
-        var obs = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
-        obs.removeObserver(this, "addon-options-displayed");
-    },
-};
-
-vAPI.optionsObserver.register();
-
-/******************************************************************************/
-
 
 // clean up when the extension is disabled
 
