@@ -32,6 +32,7 @@ messager.send({
     what: 'gotoURL',
     details: {
         url: 'dashboard.html',
+        select: true,
         index: -1
     }
 });
