@@ -738,7 +738,9 @@ vAPI.tabs.reload = function(tabId) {
         return;
     }
 
-    getBrowserForTab(tab).webNavigation.reload(0);
+    getBrowserForTab(tab).webNavigation.reload(
+        Ci.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE
+    );
 };
 
 /******************************************************************************/
