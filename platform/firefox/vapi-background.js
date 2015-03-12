@@ -38,7 +38,6 @@ const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
 /******************************************************************************/
 
 var vAPI = self.vAPI = self.vAPI || {};
-vAPI.isMainProcess = true;
 vAPI.firefox = true;
 vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 
@@ -1875,7 +1874,7 @@ vAPI.optionsObserver = {
     register: function () {
         var obs = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
         obs.addObserver(this, "addon-options-displayed", false);
-        
+
         cleanupTasks.push(this.unregister.bind(this));
     },
 

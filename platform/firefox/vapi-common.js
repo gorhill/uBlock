@@ -50,30 +50,9 @@ vAPI.download = function(details) {
     }
 
     var a = document.createElement('a');
-
-    if ( 'download' in a ) {
-        a.href = details.url;
-        a.setAttribute('download', details.filename || '');
-        a.dispatchEvent(new MouseEvent('click'));
-        return;
-    }
-
-    var request = {
-        what: 'gotoURL',
-        details: {
-            url: details.url,
-            index: -1
-        }
-    };
-
-    if ( vAPI.isMainProcess ) {
-        vAPI.tabs.open(request.details);
-        return;
-    }
-
-    var messager = vAPI.messaging.channel('_download');
-    messager.send(request);
-    messager.close();
+    a.href = details.url;
+    a.setAttribute('download', details.filename || '');
+    a.dispatchEvent(new MouseEvent('click'));
 };
 
 /******************************************************************************/
