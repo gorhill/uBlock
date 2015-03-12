@@ -200,19 +200,12 @@ vAPI.tabs.open = function(details) {
         return;
     }
 
-    chrome.tabs.query({}, function(tabs) {
-        var rgxHash = /#.*/;
-        // this is questionable
-        var url = targetURL.replace(rgxHash, '');
-        var selected = tabs.some(function(tab) {
-            if ( tab.url.replace(rgxHash, '') === url ) {
-                chrome.tabs.update(tab.id, { active: true });
-                chrome.windows.update(tab.windowId, { focused: true });
-                return true;
-            }
-        });
-
-        if ( !selected ) {
+    chrome.tabs.query({ url: targetURL }, function(tabs) {
+        var tab = tabs[0];
+        if ( tab ) {
+            chrome.windows.update(tab.windowId, { focused: true });
+            chrome.tabs.update(tab.id, { active: true });
+        } else {
             wrapper();
         }
     });
