@@ -189,8 +189,12 @@ var commitHandler = function() {
 /******************************************************************************/
 
 var editStartHandler = function() {
-    uDom('#diff .right textarea').val(rulesFromHTML('#diff .right li'));
     var parent = uDom(this).ancestors('#diff');
+    // If we're already editing, don't reset
+    if ( parent.hasClassName('edit') ) {
+        return;
+    }
+    uDom('#diff .right textarea').val(rulesFromHTML('#diff .right li'));
     parent.toggleClass('edit', true);
 };
 
