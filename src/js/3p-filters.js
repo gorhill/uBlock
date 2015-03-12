@@ -384,6 +384,8 @@ var selectFilterLists = function(callback) {
 /******************************************************************************/
 
 var buttonApplyHandler = function() {
+    uDom('#buttonApply').removeClass('enabled');
+
     renderBusyOverlay(true);
 
     var onReloadDone = function() {
@@ -397,13 +399,13 @@ var buttonApplyHandler = function() {
     selectFilterLists(onSelectionDone);
 
     cacheWasPurged = false;
-
-    uDom('#buttonApply').toggleClass('enabled', false);
 };
 
 /******************************************************************************/
 
 var buttonUpdateHandler = function() {
+    uDom('#buttonUpdate').removeClass('enabled');
+
     if ( needUpdate ) {
         renderBusyOverlay(true);
 
@@ -415,13 +417,13 @@ var buttonUpdateHandler = function() {
 
         cacheWasPurged = false;
     }
-
-    uDom('#buttonPurgeAll').toggleClass('enabled', false);
 };
 
 /******************************************************************************/
 
 var buttonPurgeAllHandler = function() {
+    uDom('#buttonPurgeAll').removeClass('enabled');
+
     var onCompleted = function() {
         cacheWasPurged = true;
         renderFilterLists();
