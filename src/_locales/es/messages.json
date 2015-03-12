@@ -508,7 +508,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Restablecer configuración por defecto...",
+    "message":"Restablecer ajustes predeterminados...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
