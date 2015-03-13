@@ -30,6 +30,7 @@ cp $SRC/id/messages.json    $DES/id/messages.json
 cp $SRC/it/messages.json    $DES/it/messages.json
 cp $SRC/ja/messages.json    $DES/ja/messages.json
 cp $SRC/ko/messages.json    $DES/ko/messages.json
+cp $SRC/lt/messages.json    $DES/lt/messages.json
 cp $SRC/lv/messages.json    $DES/lv/messages.json
 cp $SRC/mr/messages.json    $DES/mr/messages.json
 cp $SRC/no/messages.json    $DES/nb/messages.json
@@ -39,7 +40,9 @@ cp $SRC/pt-BR/messages.json $DES/pt_BR/messages.json
 cp $SRC/pt-PT/messages.json $DES/pt_PT/messages.json
 cp $SRC/ro/messages.json    $DES/ro/messages.json
 cp $SRC/ru/messages.json    $DES/ru/messages.json
+cp $SRC/sl/messages.json    $DES/sl/messages.json
 cp $SRC/sq/messages.json    $DES/sq/messages.json
+cp $SRC/sr/messages.json    $DES/sr/messages.json
 cp $SRC/sv-SE/messages.json $DES/sv/messages.json
 cp $SRC/te/messages.json    $DES/te/messages.json
 cp $SRC/tr/messages.json    $DES/tr/messages.json
@@ -71,6 +74,7 @@ cp $SRC/id/description.txt    $DES/description-id.txt
 cp $SRC/it/description.txt    $DES/description-it.txt
 cp $SRC/ja/description.txt    $DES/description-ja.txt
 cp $SRC/ko/description.txt    $DES/description-ko.txt
+cp $SRC/lt/description.txt    $DES/description-lt.txt
 cp $SRC/lv/description.txt    $DES/description-lv.txt
 #cp $SRC/mr/description.txt $DES/description-mr.txt
 cp $SRC/no/description.txt    $DES/description-no.txt
@@ -80,7 +84,9 @@ cp $SRC/pt-BR/description.txt $DES/description-pt_BR.txt
 cp $SRC/pt-PT/description.txt $DES/description-pt_PT.txt
 cp $SRC/ro/description.txt    $DES/description-ro.txt
 cp $SRC/ru/description.txt    $DES/description-ru.txt
+cp $SRC/sl/description.txt    $DES/description-sl.txt
 cp $SRC/sq/description.txt    $DES/description-sq.txt
+cp $SRC/sr/description.txt    $DES/description-sr.txt
 cp $SRC/sv-SE/description.txt $DES/description-sv.txt
 cp $SRC/te/description.txt    $DES/description-te.txt
 cp $SRC/tr/description.txt    $DES/description-tr.txt
