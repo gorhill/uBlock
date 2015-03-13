@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Dashbord",
+    "message":"uBlock — Dashbord",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Logg for nettverksforespørsler",
+    "message":"uBlock — Nettverkforespørselslogg",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: Deaktiver\/aktiver µBlock for dette nettstedet.\n\nCtrl+klikk: Deaktiver µBlock bare på denne siden.",
+    "message":"Klikk: Deaktiver\/aktiver uBlock for dette nettstedet.\n\nCtrl+klikk: Deaktiver uBlock bare på denne siden.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -240,15 +240,15 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Brukt lagringsplass: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Siste gjenoppretting:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Siste sikkerhetskopi:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener til å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørsel-baserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Dette alternativet aktiverer analyseringen og bruken av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible filtre for &ldquo;elementskjuling&rdquo;<\/a>. Disse filtrene er i hovedsak kosmetiske, de tjener til å skjule elementer i en nettside som anses for å være en visuell ulempe, og som ikke blokkeres av den nettforespørselsbaserte filtreringsmotoren.<\/p><p>Aktivering av denne funksjonen øker minnebruken til <i>uBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"Siste oppdatering: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Din liste over vertsnavn hvor µBlock blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
+    "message":"Din liste over vertsnavn hvor uBlock blir deaktivert. Én oppføring per linje. Ugyldige vertsnavn blir stille ignorert.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Du kan inspisere detaljer om nettverksforespørsler ved å aktivere dette alternativet. Logging av nettverksforespørsler øker minnebruken til µBlock. Siden mange brukere aldri vil bruke denne funksjonen er den deaktivert som standard.",
+    "message":"Du kan inspisere detaljer om nettverksforespørsler ved å aktivere dette alternativet. Logging av nettverksforespørsler øker minnebruken til uBlock. Siden mange brukere aldri vil bruke denne funksjonen er den deaktivert som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -472,11 +472,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"filtrer loggoppføringer",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"Maksimum antall loggoppføringer",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alle dine innstillinger vil bli overskrevet med data sikkerhetskopiert {{time}}, og µBlock vil starte på nytt.\n\nOverskrive alle eksisterende innstillinger med sikkerhetskopierte data?",
+    "message":"Alle dine innstillinger vil bli overskrevet med data sikkerhetskopiert {{time}}, og uBlock vil starte på nytt.\n\nOverskrive alle eksisterende innstillinger med sikkerhetskopierte data?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alle dine innstillinger blir fjernet, og µBlock vil starte på nytt.\n\nTilbakestille µBlock til opprinnelige innstillinger?",
+    "message":"Alle dine innstillinger blir fjernet, og uBlock vil starte på nytt.\n\nTilbakestille uBlock til opprinnelige innstillinger?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,31 +528,31 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Legge til følgende nettadresse i din egendefinerte filterliste?\n\nTittel: \"{{title}}\"\nNettadresse: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"a minute ago",
+    "message":"et minutt siden",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"{{value}} minutes ago",
+    "message":"{{value}} minutter siden",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"an hour ago",
+    "message":"en time siden",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"{{value}} hours ago",
+    "message":"{{value}} timer siden",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"a day ago",
+    "message":"en dag siden",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"{{value}} days ago",
+    "message":"{{value}} dager siden",
     "description":"English: {{value}} days ago"
   },
   "dummy":{

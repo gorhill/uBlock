@@ -41,6 +41,7 @@ cp $SRC/ro/messages.json    $DES/ro/messages.json
 cp $SRC/ru/messages.json    $DES/ru/messages.json
 cp $SRC/sq/messages.json    $DES/sq/messages.json
 cp $SRC/sv-SE/messages.json $DES/sv/messages.json
+cp $SRC/te/messages.json    $DES/te/messages.json
 cp $SRC/tr/messages.json    $DES/tr/messages.json
 cp $SRC/uk/messages.json    $DES/uk/messages.json
 cp $SRC/vi/messages.json    $DES/vi/messages.json
@@ -81,6 +82,7 @@ cp $SRC/ro/description.txt    $DES/description-ro.txt
 cp $SRC/ru/description.txt    $DES/description-ru.txt
 cp $SRC/sq/description.txt    $DES/description-sq.txt
 cp $SRC/sv-SE/description.txt $DES/description-sv.txt
+cp $SRC/te/description.txt    $DES/description-te.txt
 cp $SRC/tr/description.txt    $DES/description-tr.txt
 cp $SRC/uk/description.txt    $DES/description-uk.txt
 cp $SRC/vi/description.txt    $DES/description-vi.txt
