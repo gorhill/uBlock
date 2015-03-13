@@ -31,6 +31,14 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1001
+// This is to be used as last-resort fallback in case a tab is found to not
+// be bound while network requests are fired for the tab.
+
+var mostRecentRootDocURL = '';
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
@@ -38,6 +46,24 @@ var onBeforeRequest = function(details) {
     //console.debug('µBlock.webRequest/onBeforeRequest(): "type=%s, id=%d, parent id=%d, url=%s', details.type, details.frameId, details.parentFrameId, details.url);
 
     var tabId = details.tabId;
+    var requestType = details.type;
+    var requestURL = details.url;
+
+    // Special handling for root document.
+    // https://github.com/gorhill/uBlock/issues/1001
+    // This must be executed regardless of whether the request is
+    // behind-the-scene
+    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
+        pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
+        if ( pageStore !== null ) {
+            pageStore.requestURL = requestURL;
+            pageStore.requestHostname = pageStore.pageHostname;
+            pageStore.requestType = 'main_frame';
+            pageStore.logRequest(pageStore, '');
+        }
+        mostRecentRootDocURL = requestURL;
+        return;
+    }
 
     // Special treatment: behind-the-scene requests
     if ( vAPI.isNoTabId(tabId) ) {
@@ -45,27 +71,22 @@ var onBeforeRequest = function(details) {
     }
 
     var µb = µBlock;
-    var requestURL = details.url;
-    var requestType = details.type;
     var pageStore;
-
-    // Special handling for root document.
-    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
-        pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
-        // Log for convenience
-        if ( pageStore !== null ) {
-            pageStore.requestURL = requestURL;
-            pageStore.requestHostname = pageStore.pageHostname;
-            pageStore.requestType = 'main_frame';
-            pageStore.logRequest(pageStore, '');
-        }
-        return;
-    }
 
     // Lookup the page store associated with this tab id.
     pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        return;
+        // https://github.com/gorhill/uBlock/issues/1001
+        // Not a behind-the-scene request, yet no page store found for the
+        // tab id: we will thus bind the last-seen root document to the
+        // unbound tab. It's a guess, but better than ending up filtering
+        // nothing at all.
+        if ( mostRecentRootDocURL !== '' ) {
+            pageStore = µb.bindTabToPageStats(tabId, mostRecentRootDocURL, 'beforeRequest');
+        }
+        if ( !pageStore ) {
+            return;
+        }
     }
 
     // https://github.com/gorhill/uBlock/issues/114
@@ -159,13 +180,6 @@ var onBeforeBehindTheSceneRequest = function(details) {
     pageStore.requestURL = details.url;
     pageStore.requestHostname = details.hostname;
     pageStore.requestType = details.type;
-
-    // https://github.com/gorhill/uBlock/issues/1001
-    // Never block request for root document.
-    if ( details.type === 'main_frame' && details.parentFrameId === -1 ) {
-        pageStore.logRequest(pageStore, '');
-        return;
-    }
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
