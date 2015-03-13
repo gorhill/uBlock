@@ -110,15 +110,14 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                     what: 'retrieveGenericCosmeticSelectors',
                     pageURL: window.location.href,
                     selectors: lowGenericSelectors,
-                    highGenerics: highGenerics === null
+                    firstSurvey: highGenerics === null
                 },
                 retrieveHandler
             );
             // https://github.com/gorhill/uBlock/issues/452
-            // There is only one first..
-            retrieveHandler = otherRetrieveHandler;
+            retrieveHandler = nextRetrieveHandler;
         } else {
-            otherRetrieveHandler(null);
+            nextRetrieveHandler(null);
         }
         lowGenericSelectors = [];
     };
@@ -148,21 +147,25 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 }
             }
         }
-        // Flush dead code from memory (does this work?)
+        // Flush dead code from memory
         firstRetrieveHandler = null;
 
-        otherRetrieveHandler(response);
+        // These are sent only once
+        if ( response ) {
+            if ( response.highGenerics ) {
+                highGenerics = response.highGenerics;
+            }
+            if ( response.donthide ) {
+                processLowGenerics(response.donthide, nullArray);
+            }
+        }
+
+        nextRetrieveHandler(response);
     };
 
-    var otherRetrieveHandler = function(selectors) {
+    var nextRetrieveHandler = function(selectors) {
         //var tStart = timer.now();
         //console.debug('µBlock> contextNodes = %o', contextNodes);
-        if ( selectors && selectors.highGenerics ) {
-            highGenerics = selectors.highGenerics;
-        }
-        if ( selectors && selectors.donthide.length ) {
-            processLowGenerics(selectors.donthide, nullArray);
-        }
         var hideSelectors = [];
         if ( selectors && selectors.hide.length ) {
             processLowGenerics(selectors.hide, hideSelectors);

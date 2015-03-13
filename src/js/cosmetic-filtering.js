@@ -1055,12 +1055,10 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     //quickProfiler.start('FilterContainer.retrieve()');
 
     var r = {
-        hide: [],
-        // https://github.com/gorhill/uBlock/issues/497
-        donthide: this.genericDonthide
+        hide: []
     };
 
-    if ( request.highGenerics ) {
+    if ( request.firstSurvey ) {
         r.highGenerics = {
             hideLow: this.highLowGenericHide,
             hideLowCount: this.highLowGenericHideCount,
@@ -1069,6 +1067,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             hideHigh: this.highHighGenericHide,
             hideHighCount: this.highHighGenericHideCount
         };
+        // https://github.com/gorhill/uBlock/issues/497
+        r.donthide = this.genericDonthide;
     }
 
     var hash, bucket;
