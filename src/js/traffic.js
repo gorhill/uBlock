@@ -54,7 +54,7 @@ var onBeforeRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    if ( requestType === 'main_frame' && details.parentFrameId === -1 ) {
+    if ( requestType === 'main_frame' ) {
         pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
         if ( pageStore !== null ) {
             pageStore.requestURL = requestURL;
@@ -221,7 +221,7 @@ var onHeadersReceived = function(details) {
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        if ( details.type === 'main_frame' && details.parentFrameId === -1 ) {
+        if ( details.type === 'main_frame' ) {
             pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
         }
         if ( !pageStore ) {
