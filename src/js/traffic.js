@@ -201,11 +201,18 @@ var onHeadersReceived = function(details) {
         return;
     }
 
+    var requestURL = details.url;
+
     // Lookup the page store associated with this tab id.
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        return;
+        if ( details.type === 'main_frame' && details.parentFrameId === -1 ) {
+            pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
+        }
+        if ( !pageStore ) {
+            return;
+        }
     }
 
     // https://github.com/gorhill/uBlock/issues/384
@@ -215,7 +222,6 @@ var onHeadersReceived = function(details) {
     //    pageStore.skipLocalMirroring = headerStartsWith(details.responseHeaders, 'content-security-policy') !== '';
     //}
 
-    var requestURL = details.url;
     var requestHostname = details.hostname;
 
     // https://github.com/gorhill/uBlock/issues/525
