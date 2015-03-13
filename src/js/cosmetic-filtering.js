@@ -532,7 +532,8 @@ FilterContainer.prototype.reset = function() {
 
     // permanent
     // [class], [id]
-    this.lowGenericFilters = {};
+    this.lowGenericHide = {};
+    this.lowGenericDonthide = [];
 
     // [alt="..."], [title="..."]
     this.highLowGenericHide = {};
@@ -601,6 +602,19 @@ FilterContainer.prototype.compile = function(s, out) {
 
 FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     var selector = parsed.suffix;
+
+    // https://github.com/gorhill/uBlock/issues/497
+    // All generic exception filters are put in the same bucket: they are
+    // expected to be very rare.
+    if ( parsed.unhide ) {
+        out.push(
+            'c\v' +
+            'g1\v' +
+            selector
+        );
+        return;
+    }
+
     var type = selector.charAt(0);
     var matches;
 
@@ -743,13 +757,13 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             filter = fields[0] === 'lg' ?
                         new FilterPlain(fields[2]) :
                         new FilterPlainMore(fields[2]);
-            bucket = this.lowGenericFilters[fields[1]];
+            bucket = this.lowGenericHide[fields[1]];
             if ( bucket === undefined ) {
-                this.lowGenericFilters[fields[1]] = filter;
+                this.lowGenericHide[fields[1]] = filter;
             } else if ( bucket instanceof FilterBucket ) {
                 bucket.add(filter);
             } else {
-                this.lowGenericFilters[fields[1]] = new FilterBucket(bucket, filter);
+                this.lowGenericHide[fields[1]] = new FilterBucket(bucket, filter);
             }
             continue;
         }
@@ -807,6 +821,12 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             this.highHighGenericDonthideArray.push(fields[1]);
             this.highHighGenericDonthideCount += 1;
             continue;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/497
+        // Generic exception filters: expected to be a rare occurrence.
+        if ( fields[0] === 'g1' ) {
+            this.lowGenericDonthide.push(fields[1]);
         }
     }
     return textEnd;
@@ -884,7 +904,8 @@ FilterContainer.prototype.toSelfie = function() {
         duplicateCount: this.duplicateCount,
         hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
         entitySpecificFilters: this.entityFilters,
-        lowGenericFilters: selfieFromDict(this.lowGenericFilters),
+        lowGenericHide: selfieFromDict(this.lowGenericHide),
+        lowGenericDonthide: this.lowGenericDonthide,
         highLowGenericHide: this.highLowGenericHide,
         highLowGenericDonthide: this.highLowGenericDonthide,
         highLowGenericHideCount: this.highLowGenericHideCount,
@@ -949,7 +970,8 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.duplicateCount = selfie.duplicateCount;
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
     this.entityFilters = selfie.entitySpecificFilters;
-    this.lowGenericFilters = dictFromSelfie(selfie.lowGenericFilters);
+    this.lowGenericHide = dictFromSelfie(selfie.lowGenericHide);
+    this.lowGenericDonthide = selfie.lowGenericDonthide;
     this.highLowGenericHide = selfie.highLowGenericHide;
     this.highLowGenericDonthide = selfie.highLowGenericDonthide;
     this.highLowGenericHideCount = selfie.highLowGenericHideCount;
@@ -1078,7 +1100,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     var r = {
         hide: [],
-        donthide: []
+        // https://github.com/gorhill/uBlock/issues/497
+        donthide: this.lowGenericDonthide
     };
 
     if ( request.highGenerics ) {
@@ -1110,7 +1133,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             continue;
         }
         hash = makeHash(0, selector, hashMask);
-        if ( bucket = this.lowGenericFilters[hash] ) {
+        if ( bucket = this.lowGenericHide[hash] ) {
             bucket.retrieve(selector, hideSelectors);
         }
     }

@@ -353,6 +353,9 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
     var processHighHighGenerics = function() {
         processHighHighGenericsTimer = null;
+        if ( highGenerics.hideHigh === '' ) {
+            return;
+        }
         if ( injectedSelectors.hasOwnProperty('{{highHighGenerics}}') ) {
             return;
         }
