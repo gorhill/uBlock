@@ -160,6 +160,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
     pageStore.requestHostname = details.hostname;
     pageStore.requestType = details.type;
 
+    // https://github.com/gorhill/uBlock/issues/1001
+    // Never block request for root document.
+    if ( details.type === 'main_frame' && details.parentFrameId === -1 ) {
+        pageStore.logRequest(pageStore, '');
+        return;
+    }
+
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
     // working properly, etc.
@@ -256,18 +263,6 @@ var onHeadersReceived = function(details) {
     });
 
     return { 'responseHeaders': details.responseHeaders };
-};
-
-/******************************************************************************/
-
-var headerStartsWith = function(headers, prefix) {
-    var i = headers.length;
-    while ( i-- ) {
-        if ( headers[i].name.toLowerCase().lastIndexOf(prefix, 0) === 0 ) {
-            return headers[i].value;
-        }
-    }
-    return '';
 };
 
 /******************************************************************************/
