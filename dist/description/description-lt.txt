@@ -1,0 +1,50 @@
+Efektyvus blokatorius: neapkraunantis procesoriaus ir atminties, taip pat galintis naudoti tūkstančius skirtingų filtrų, kurių neturi kiti populiarūs blokatoriai.
+
+Efektyvumo iliustracija:
+https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+
+Naudojimas: didelis įjungimo mygtukas skirtas įjungti/išjungti µBlock dabartiniam puslapiui. Jis skirtas tik dabartiniam puslapiui ir nėra naudojamas visiškai išjungti plėtinį.
+
+***
+
+Lankstus, jis daugiau nei paprastas „reklamų blokatorius“: jis taip pat gali nuskaityti ir sukurti filtrus pagal hosts failus.
+
+Iškart yra įtraukiami ir pradedami naudoti šie filtrų sąrašai:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Jei tik norite, galite pasirinkti dar daugiau sąrašų:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Ir daugybę kitų
+
+Žinoma, kuo daugiau įjungsite filtrų, tuo labiau bus apkrauta operatyvioji atmintis (RAM). Tačiau, net ir pridėjus du Fanboy's sąrašus bei hpHosts’s Ad and tracking servers, µBlock naudoja žymiai mažiau atminties nei kiti populiarūs blokatoriai.
+
+Taip pat, žinokite, kad pridėjus kelis kitus sąrašus, atsiranda didesnė tikimybė, kad puslapis nebus rodomas tvarkingai, tai ypač galioja sąrašams, kurie dažniausiai naudojami kaip hosts failai.
+
+***
+
+Be filtrų sąrašų, šis plėtinys būtų niekas. Taigi, jeigu jūs iš tiesų norite paaukoti kam nors, pagalvokite apie sunkiai dirbančius žmones, kurių dėka reklamų filtrų sąrašai yra prieinami visiems nemokamai.
+
+***
+
+Nemokamas.
+Pagal atviro kodo licenciją (GPLv3)
+Naudotojų naudotojams.
+
+Github talkininkai: https://github.com/gorhill/uBlock/graphs/contributors
+Crowdin talkininkai: https://crowdin.net/project/ublock
+
+***
+
+Ši versija nėra galutinė, taigi prašome turėti tai omenyje, kai rašysite apžvalgą.
+
+Pakeitimų žurnalas:
+https://github.com/gorhill/uBlock/releases

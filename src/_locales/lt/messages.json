@@ -1,0 +1,562 @@
+{
+  "extName":{
+    "message":"µBlock",
+    "description":"extension name."
+  },
+  "extShortDesc":{
+    "message":"Pagaliau, efektyvus blokatorius, neapkraunantis nei procesoriaus, nei darbinės atminties.",
+    "description":"this will be in the chrome web store: must be 132 characters or less"
+  },
+  "dashboardName":{
+    "message":"µBlock — Prietaisų skydas",
+    "description":"English: uBlock — Dashboard"
+  },
+  "settingsPageName":{
+    "message":"Nustatymai",
+    "description":"appears as tab name in dashboard"
+  },
+  "3pPageName":{
+    "message":"3-iųjų šalių filtrai",
+    "description":"appears as tab name in dashboard"
+  },
+  "1pPageName":{
+    "message":"Mano filtrai",
+    "description":"appears as tab name in dashboard"
+  },
+  "rulesPageName":{
+    "message":"Mano taisyklės",
+    "description":"appears as tab name in dashboard"
+  },
+  "whitelistPageName":{
+    "message":"Išimtys",
+    "description":"appears as tab name in dashboard"
+  },
+  "statsPageName":{
+    "message":"µBlock — Tinklo užklausų žurnalas",
+    "description":"Title for the network request log window"
+  },
+  "aboutPageName":{
+    "message":"Apie",
+    "description":"appears as tab name in dashboard"
+  },
+  "popupPowerSwitchInfo":{
+    "message":"Spustelėkite: įjunkite\/išjunkite µBlock šiam puslapiui.\n\nVald+spustelėjimas: išjunkite µBlock tik šiam puslapiui.",
+    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+  },
+  "popupBlockedRequestPrompt":{
+    "message":"blokuotos užklausos",
+    "description":"English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt":{
+    "message":"šiame puslapyje",
+    "description":"English: on this page"
+  },
+  "popupBlockedStats":{
+    "message":"{{count}} arba {{percent}} %",
+    "description":"Example: 15 or 13%"
+  },
+  "popupBlockedSinceInstallPrompt":{
+    "message":"nuo įdiegimo",
+    "description":"English: since install"
+  },
+  "popupOr":{
+    "message":"arba",
+    "description":"English: or"
+  },
+  "popupTipDashboard":{
+    "message":"Spauskite, norėdami atidaryti prietaisų skydą",
+    "description":"English: Click to open the dashboard"
+  },
+  "popupTipPicker":{
+    "message":"Atverti elementų parinkimo veikseną",
+    "description":"English: Enter element picker mode"
+  },
+  "popupTipLog":{
+    "message":"Eiti į užklausų žurnalą",
+    "description":"English: Go to request log"
+  },
+  "popupSiteInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSiteInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> on this site",
+    "description":""
+  },
+  "popupSite3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> on this site",
+    "description":""
+  },
+  "popupDefaultInlineScriptEnabled":{
+    "message":"Inline <code>script<\/code> tags are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefaultInlineScriptDisabled":{
+    "message":"Inline <code>script<\/code> tags are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptEnabled":{
+    "message":"1st-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pScriptDisabled":{
+    "message":"1st-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptEnabled":{
+    "message":"3rd-party scripts are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pScriptDisabled":{
+    "message":"3rd-party scripts are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameEnabled":{
+    "message":"1st-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault1pFrameDisabled":{
+    "message":"1st-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameEnabled":{
+    "message":"3rd-party frames are <b>allowed<\/b> everywhere by default",
+    "description":""
+  },
+  "popupDefault3pFrameDisabled":{
+    "message":"3rd-party frames are <b>blocked<\/b> everywhere by default",
+    "description":""
+  },
+  "popupAnyRulePrompt":{
+    "message":"visi",
+    "description":""
+  },
+  "popupImageRulePrompt":{
+    "message":"vaizdai",
+    "description":""
+  },
+  "popup3pAnyRulePrompt":{
+    "message":"trečios šalies",
+    "description":""
+  },
+  "popupInlineScriptRulePrompt":{
+    "message":"įterptieji scenarijai",
+    "description":""
+  },
+  "popup1pScriptRulePrompt":{
+    "message":"1-os šalies scenarijai",
+    "description":""
+  },
+  "popup3pScriptRulePrompt":{
+    "message":"3-ios šalies scenarijai",
+    "description":""
+  },
+  "popup3pFrameRulePrompt":{
+    "message":"3-ios šalies rėmeliai",
+    "description":""
+  },
+  "popupHitDomainCountPrompt":{
+    "message":"jungtasi prie sričių",
+    "description":"appears in popup"
+  },
+  "popupHitDomainCount":{
+    "message":"{{count}} iš {{total}}",
+    "description":"appears in popup"
+  },
+  "pickerCreate":{
+    "message":"Sukurti",
+    "description":"English: Create"
+  },
+  "pickerPick":{
+    "message":"Parinkti",
+    "description":"English: Pick"
+  },
+  "pickerQuit":{
+    "message":"Baigti",
+    "description":"English: Quit"
+  },
+  "pickerNetFilters":{
+    "message":"Tinklo filtrai",
+    "description":"English: Net filters"
+  },
+  "pickerCosmeticFilters":{
+    "message":"Kosmetiniai filtrai",
+    "description":"English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint":{
+    "message":"Spustelėti, Vald-spustelėti",
+    "description":"English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry":{
+    "message":"Blokuoti elementą",
+    "description":"English: Block element"
+  },
+  "settingsCollapseBlockedPrompt":{
+    "message":"Slėpti blokuotų elementų rezervuotą vietą",
+    "description":"English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt":{
+    "message":"Rodyti blokuotų užklausų skaičių piktogramoje",
+    "description":"English: Show the number of blocked requests on the icon"
+  },
+  "settingsContextMenuPrompt":{
+    "message":"Kur tinka, naudoti kontekstinį meniu",
+    "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsAdvancedUserPrompt":{
+    "message":"Aš esu patyręs naudotojas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Privaloma perskaityti<\/a>)",
+    "description":"English: "
+  },
+  "settingsExperimentalPrompt":{
+    "message":"Įjungti eksperimentines funkcijas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Apie<\/a>)",
+    "description":"English: Enable experimental features"
+  },
+  "settingsStorageUsed":{
+    "message":"Naudojama vietos: {{value}} baitų",
+    "description":"English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt":{
+    "message":"Paskutinis atkūrimas:",
+    "description":"English: Last restore:"
+  },
+  "settingsLastBackupPrompt":{
+    "message":"Paskutinė atsarginė kopija:",
+    "description":"English: Last backup:"
+  },
+  "3pListsOfBlockedHostsPrompt":{
+    "message":"Tinklo filtrų ({{netFilterCount}})  ＋ kosmetinių filtrų ({{cosmeticFilterCount}}) iš:",
+    "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
+  },
+  "3pListsOfBlockedHostsPerListStats":{
+    "message":"naudojami {{used}} iš {{total}}",
+    "description":"English: {{used}} used out of {{total}}"
+  },
+  "3pAutoUpdatePrompt1":{
+    "message":"Automatiškai atnaujinti filtrų sąrašus.",
+    "description":"English: Auto-update filter lists."
+  },
+  "3pUpdateNow":{
+    "message":"Atnaujinti dabar",
+    "description":"English: Update now"
+  },
+  "3pPurgeAll":{
+    "message":"Valyti visus kešus",
+    "description":"English: Purge all caches"
+  },
+  "3pParseAllABPHideFiltersPrompt1":{
+    "message":"Analizuoti ir taikyti kosmetinius filtrus.",
+    "description":"English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo":{
+    "message":"<p>Ši nuostata įjungia <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Su Adblock Plus suderinamų „elementų slėpimo“ filtrų<\/a> analizę ir taikymą. Šie filtrai iš esmės yra kosmetiniai, jie naudojami tinklalapio elementams, kurie yra laikomi vaizdiniais nepatogumais ir kurių negalima užblokuoti tinklo užklausomis paremtais filtrais, paslėpti.<\/p><p>Šios nuostatos įjungimas padidina <i>µBlock<\/i> atminties naudojimą.<\/p>",
+    "description":"English: see English messages.json"
+  },
+  "3pListsOfBlockedHostsHeader":{
+    "message":"Blokuotų serverių sąrašas",
+    "description":"English: Lists of blocked hosts"
+  },
+  "3pApplyChanges":{
+    "message":"Taikyti pakeitimus",
+    "description":"English: Apply changes"
+  },
+  "3pGroupAds":{
+    "message":"Reklamos",
+    "description":"English: Ads"
+  },
+  "3pGroupPrivacy":{
+    "message":"Privatumas",
+    "description":"English: Privacy"
+  },
+  "3pGroupMalware":{
+    "message":"Kenksmingos sritys",
+    "description":"English: Malware domains"
+  },
+  "3pGroupSocial":{
+    "message":"Socialiniai",
+    "description":"English: Social"
+  },
+  "3pGroupMultipurpose":{
+    "message":"Univarsalūs",
+    "description":"English: Multipurpose"
+  },
+  "3pGroupRegions":{
+    "message":"Regionai, kalbos",
+    "description":"English: Regions, languages"
+  },
+  "3pGroupCustom":{
+    "message":"Adaptuoti",
+    "description":"English: Custom"
+  },
+  "3pExternalListsHint":{
+    "message":"Vienas URL eilutėje. Eilutės pradėtos „!“ bus ignoruotos. Neteisingi URL bus tyliai ignoruoti.",
+    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+  },
+  "3pExternalListsApply":{
+    "message":"Analizuoti",
+    "description":"English: Parse"
+  },
+  "3pExternalListPurge":{
+    "message":"valyti kešą",
+    "description":"English: purge cache"
+  },
+  "3pExternalListNew":{
+    "message":"prieinama nauja versija",
+    "description":"English: new version available"
+  },
+  "3pExternalListObsolete":{
+    "message":"pasenęs",
+    "description":"English: outdated"
+  },
+  "3pLastUpdate":{
+    "message":"Paskutinis atnaujinimas: {{ago}}",
+    "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
+  },
+  "1pFormatHint":{
+    "message":"Vienas filtras eilutėje. Filtras gali būti paprastas serverio adresas, arba su Adblock Plus suderinamas filtras. Eilutės pradėtos „!“ bus ignoruotos. ",
+    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+  },
+  "1pImport":{
+    "message":"Importuoti ir papildyti",
+    "description":"English: Import and append"
+  },
+  "1pExport":{
+    "message":"Eksportuoti",
+    "description":"English: Export"
+  },
+  "1pExportFilename":{
+    "message":"mano-ublock-statiniai-filtrai_{{datetime}}.txt",
+    "description":"English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "1pApplyChanges":{
+    "message":"Taikyti pakeitimus",
+    "description":"English: Apply changes"
+  },
+  "rulesPermanentHeader":{
+    "message":"Pastovios taisyklės",
+    "description":"header"
+  },
+  "rulesTemporaryHeader":{
+    "message":"Laikinos taisyklės",
+    "description":"header"
+  },
+  "rulesRevert":{
+    "message":"Atstatyti",
+    "description":"This will remove all temporary rules"
+  },
+  "rulesCommit":{
+    "message":"Pritaikyti",
+    "description":"This will persist temporary rules"
+  },
+  "rulesEdit":{
+    "message":"Redaguoti",
+    "description":"Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave":{
+    "message":"Įrašyti",
+    "description":"Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard":{
+    "message":"Atmesti",
+    "description":"Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport":{
+    "message":"Importuoti iš failo...",
+    "description":""
+  },
+  "rulesExport":{
+    "message":"Eksportuoti į failą",
+    "description":""
+  },
+  "rulesDefaultFileName":{
+    "message":"mano-ublock-dinaminės-taisyklės_{{datetime}}.txt",
+    "description":"default file name to use"
+  },
+  "rulesHint":{
+    "message":"Dinaminių filtrų taisyklių sąrašas.",
+    "description":"English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint":{
+    "message":"Taisyklės sintaksė: <code>šaltinis paskirtis tipas veiksmas<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentacija<\/a>).",
+    "description":"English: dynamic rule syntax and full documentation."
+  },
+  "whitelistPrompt":{
+    "message":"Serverių sąrašas, kuriems µBlock bus išjungtas. Vienas įrašas eilutėje. Neteisingi serverių vardai bus tyliai ignoruoti.",
+    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+  },
+  "whitelistImport":{
+    "message":"Importuoti ir papildyti",
+    "description":"English: Import and append"
+  },
+  "whitelistExport":{
+    "message":"Eksportuoti",
+    "description":"English: Export"
+  },
+  "whitelistExportFilename":{
+    "message":"mano-ublock-išimtys_{{datetime}}.txt",
+    "description":"English: my-ublock-whitelist_{{datetime}}.txt"
+  },
+  "whitelistApply":{
+    "message":"Taikyti pakeitimus",
+    "description":"English: Apply changes"
+  },
+  "logNetRequestsPrompt":{
+    "message":"Įjungti tinklo užklausų registravimą",
+    "description":"English: Enable the logging of network requests"
+  },
+  "logNetRequestsHelp":{
+    "message":"Įjungę šią nuostatą galite nagrinėti tinklo užklausas. Tinklo užklausų registravimas padidina µBlock atminties naudojimą. Kadangi daugelis naudotojų niekada nenaudos šios funkcijos, ji yra išjungta.",
+    "description":"English: see _locales\/en\/messages.log"
+  },
+  "logBlockedRequestsHeader":{
+    "message":"Blokuotos užklausos",
+    "description":"English: Blocked requests"
+  },
+  "logAllowedRequestsHeader":{
+    "message":"Leistos užklausos",
+    "description":"English: Allowed requests"
+  },
+  "logRequestsHeaderType":{
+    "message":"Tipas",
+    "description":"English: Type"
+  },
+  "logRequestsHeaderDomain":{
+    "message":"Sritis",
+    "description":"English: Domain"
+  },
+  "logRequestsHeaderURL":{
+    "message":"URL",
+    "description":"English: URL"
+  },
+  "logRequestsHeaderFilter":{
+    "message":"Filtras",
+    "description":"English: Filter"
+  },
+  "logBlockedRequestsEmpty":{
+    "message":"Nėra registruota blokuotų užklausų šiame puslapyje",
+    "description":"English: No blocked requests logged for this page"
+  },
+  "logAllowedRequestsEmpty":{
+    "message":"Nėra registruota neblokuotų užklausų šiame puslapyje",
+    "description":"English: No non-blocked requests logged for this page"
+  },
+  "logBehindTheScene":{
+    "message":"Užkulisiai",
+    "description":"Pretty name for behind-the-scene network requests"
+  },
+  "logFilterPrompt":{
+    "message":"filtruoti žurnalo įrašus",
+    "description":"English: filter log entries"
+  },
+  "logMaxEntriesTip":{
+    "message":"Didžiausias žurnalo įrašų skaičius",
+    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "aboutChangelog":{
+    "message":"Pakeitimų žurnalas",
+    "description":"English: Change log"
+  },
+  "aboutWiki":{
+    "message":"Viki",
+    "description":"English: project' wiki on Github"
+  },
+  "aboutCode":{
+    "message":"Pirminis tekstas (GPLv3)",
+    "description":"English: Source code (GPLv3)"
+  },
+  "aboutContributors":{
+    "message":"Talkininkai",
+    "description":"English: Contributors"
+  },
+  "aboutBackupDataButton":{
+    "message":"Padaryti atsarginę kopiją į failą",
+    "description":"English: Backup to file"
+  },
+  "aboutBackupFilename":{
+    "message":"mano-ublock-atsarginė_kopija_{{datetime}}.txt",
+    "description":"English: my-ublock-backup_{{datetime}}.txt"
+  },
+  "aboutRestoreDataButton":{
+    "message":"Atkurti iš failo...",
+    "description":"English: Restore from file..."
+  },
+  "aboutResetDataButton":{
+    "message":"Atkurti numatytuosius nustatymus...",
+    "description":"English: Reset to default settings..."
+  },
+  "aboutRestoreDataConfirm":{
+    "message":"Visi jūsų nustatymai bus perrašyti naudojant duomenis iš {{time}} atsarginės kopijos, o µBlock bus perleistas.\n\nPerrašyti visus nustatymus naudojant atsarginės kopijos duomenis?",
+    "description":"Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError":{
+    "message":"Nepavyko nuskaityti duomenų arba jie neteisingi",
+    "description":"Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm":{
+    "message":"Visi jūsų nustatymai bus pašalinti, o µBlock bus perleistas.\n\nAtkurti µBlock pradinius nustatymus?",
+    "description":"Message asking user to confirm reset"
+  },
+  "errorCantConnectTo":{
+    "message":"Nepavyko prisijungti prie {{url}}",
+    "description":"English: Network error: unable to connect to {{url}}"
+  },
+  "subscriberConfirm":{
+    "message":"µBlock: Pridėti šį URL į jūsų adaptuotų filtrų sąrašą?\n\nPavadinimas: „{{title}}“\nURL: {{url}}",
+    "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo":{
+    "message":"prieš minutę",
+    "description":"English: a minute ago"
+  },
+  "elapsedManyMinutesAgo":{
+    "message":"prieš {{value}} min.",
+    "description":"English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo":{
+    "message":"prieš valandą",
+    "description":"English: an hour ago"
+  },
+  "elapsedManyHoursAgo":{
+    "message":"prieš {{value}} val.",
+    "description":"English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo":{
+    "message":"prieš dieną",
+    "description":"English: a day ago"
+  },
+  "elapsedManyDaysAgo":{
+    "message":"prieš {{value}} d.",
+    "description":"English: {{value}} days ago"
+  },
+  "dummy":{
+    "message":"This entry must be the last one",
+    "description":"so we dont need to deal with comma for last entry"
+  }
+}
