@@ -547,12 +547,12 @@ FilterContainer.prototype.reset = function() {
     this.highHighGenericHide = '';
     this.highHighGenericHideCount = 0;
 
+    // generic exception filters
+    this.genericDonthide = [];
+
     // hostname, entity-based filters
     this.hostnameFilters = {};
     this.entityFilters = {};
-
-    // generic exception filters
-    this.genericDonthide = [];
 };
 
 /******************************************************************************/
