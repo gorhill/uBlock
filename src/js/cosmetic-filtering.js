@@ -533,31 +533,26 @@ FilterContainer.prototype.reset = function() {
     // permanent
     // [class], [id]
     this.lowGenericHide = {};
-    this.lowGenericDonthide = [];
 
     // [alt="..."], [title="..."]
     this.highLowGenericHide = {};
-    this.highLowGenericDonthide = {};
     this.highLowGenericHideCount = 0;
-    this.highLowGenericDonthideCount = 0;
 
     // a[href^="http..."]
     this.highMediumGenericHide = {};
-    this.highMediumGenericDonthide = {};
     this.highMediumGenericHideCount = 0;
-    this.highMediumGenericDonthideCount = 0;
 
     // everything else
     this.highHighGenericHideArray = [];
     this.highHighGenericHide = '';
     this.highHighGenericHideCount = 0;
-    this.highHighGenericDonthideArray = [];
-    this.highHighGenericDonthide = '';
-    this.highHighGenericDonthideCount = 0;
 
     // hostname, entity-based filters
     this.hostnameFilters = {};
     this.entityFilters = {};
+
+    // generic exception filters
+    this.genericDonthide = [];
 };
 
 /******************************************************************************/
@@ -626,7 +621,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         out.push(
             'c\v' +
             (matches[1] === selector ? 'lg\v' : 'lg+\v') +
-            makeHash(parsed.unhide, matches[1], this.genericHashMask) + '\v' +
+            makeHash(0, matches[1], this.genericHashMask) + '\v' +
             selector
         );
         return;
@@ -636,7 +631,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     if ( this.reHighLow.test(selector) ) {
         out.push(
             'c\v' +
-            (parsed.unhide === 0 ? 'hlg0\v' : 'hlg1\v') +
+            'hlg0\v' +
             selector
         );
         return;
@@ -647,7 +642,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     if ( matches && matches.length === 2 ) {
         out.push(
             'c\v' +
-            (parsed.unhide === 0 ? 'hmg0\v' : 'hmg1\v') +
+            'hmg0\v' +
             matches[1] + '\v' +
             selector
         );
@@ -657,7 +652,7 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     // All else
     out.push(
         'c\v' +
-        (parsed.unhide === 0 ? 'hhg0\v' : 'hhg1\v') +
+        'hhg0\v' +
         selector
     );
 };
@@ -785,12 +780,6 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        if ( fields[0] === 'hlg1' ) {
-            this.highLowGenericDonthide[fields[1]] = true;
-            this.highLowGenericDonthideCount += 1;
-            continue;
-        }
-
         if ( fields[0] === 'hmg0' ) {
             if ( Array.isArray(this.highMediumGenericHide[fields[1]]) ) {
                 this.highMediumGenericHide[fields[1]].push(fields[2]);
@@ -801,32 +790,16 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        if ( fields[0] === 'hmg1' ) {
-            if ( Array.isArray(this.highMediumGenericDonthide[fields[1]]) ) {
-                this.highMediumGenericDonthide[fields[1]].push(fields[2]);
-            } else {
-                this.highMediumGenericDonthide[fields[1]] = [fields[2]];
-            }
-            this.highMediumGenericDonthideCount += 1;
-            continue;
-        }
-
         if ( fields[0] === 'hhg0' ) {
             this.highHighGenericHideArray.push(fields[1]);
             this.highHighGenericHideCount += 1;
             continue;
         }
 
-        if ( fields[0] === 'hhg1' ) {
-            this.highHighGenericDonthideArray.push(fields[1]);
-            this.highHighGenericDonthideCount += 1;
-            continue;
-        }
-
         // https://github.com/gorhill/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
         if ( fields[0] === 'g1' ) {
-            this.lowGenericDonthide.push(fields[1]);
+            this.genericDonthide.push(fields[1]);
         }
     }
     return textEnd;
@@ -861,11 +834,6 @@ FilterContainer.prototype.freeze = function() {
     }
     this.highHighGenericHide = this.highHighGenericHideArray.join(',\n');
     this.highHighGenericHideArray = [];
-    if ( this.highHighGenericDonthide !== '' ) {
-        this.highHighGenericDonthideArray.unshift(this.highHighGenericDonthide);
-    }
-    this.highHighGenericDonthide = this.highHighGenericDonthideArray.join(',\n');
-    this.highHighGenericDonthideArray = [];
 
     this.parser.reset();
     this.frozen = true;
@@ -905,19 +873,13 @@ FilterContainer.prototype.toSelfie = function() {
         hostnameSpecificFilters: selfieFromDict(this.hostnameFilters),
         entitySpecificFilters: this.entityFilters,
         lowGenericHide: selfieFromDict(this.lowGenericHide),
-        lowGenericDonthide: this.lowGenericDonthide,
         highLowGenericHide: this.highLowGenericHide,
-        highLowGenericDonthide: this.highLowGenericDonthide,
         highLowGenericHideCount: this.highLowGenericHideCount,
-        highLowGenericDonthideCount: this.highLowGenericDonthideCount,
         highMediumGenericHide: this.highMediumGenericHide,
-        highMediumGenericDonthide: this.highMediumGenericDonthide,
         highMediumGenericHideCount: this.highMediumGenericHideCount,
-        highMediumGenericDonthideCount: this.highMediumGenericDonthideCount,
         highHighGenericHide: this.highHighGenericHide,
-        highHighGenericDonthide: this.highHighGenericDonthide,
         highHighGenericHideCount: this.highHighGenericHideCount,
-        highHighGenericDonthideCount: this.highHighGenericDonthideCount
+        genericDonthide: this.genericDonthide
     };
 };
 
@@ -971,19 +933,13 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.hostnameFilters = dictFromSelfie(selfie.hostnameSpecificFilters);
     this.entityFilters = selfie.entitySpecificFilters;
     this.lowGenericHide = dictFromSelfie(selfie.lowGenericHide);
-    this.lowGenericDonthide = selfie.lowGenericDonthide;
     this.highLowGenericHide = selfie.highLowGenericHide;
-    this.highLowGenericDonthide = selfie.highLowGenericDonthide;
     this.highLowGenericHideCount = selfie.highLowGenericHideCount;
-    this.highLowGenericDonthideCount = selfie.highLowGenericDonthideCount;
     this.highMediumGenericHide = selfie.highMediumGenericHide;
-    this.highMediumGenericDonthide = selfie.highMediumGenericDonthide;
     this.highMediumGenericHideCount = selfie.highMediumGenericHideCount;
-    this.highMediumGenericDonthideCount = selfie.highMediumGenericDonthideCount;
     this.highHighGenericHide = selfie.highHighGenericHide;
-    this.highHighGenericDonthide = selfie.highHighGenericDonthide;
     this.highHighGenericHideCount = selfie.highHighGenericHideCount;
-    this.highHighGenericDonthideCount = selfie.highHighGenericDonthideCount;
+    this.genericDonthide = selfie.genericDonthide;
     this.frozen = true;
 };
 
@@ -1101,7 +1057,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     var r = {
         hide: [],
         // https://github.com/gorhill/uBlock/issues/497
-        donthide: this.lowGenericDonthide
+        donthide: this.genericDonthide
     };
 
     if ( request.highGenerics ) {
@@ -1111,13 +1067,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             hideMedium: this.highMediumGenericHide,
             hideMediumCount: this.highMediumGenericHideCount,
             hideHigh: this.highHighGenericHide,
-            hideHighCount: this.highHighGenericHideCount,
-            donthideLow: this.highLowGenericDonthide,
-            donthideLowCount: this.highLowGenericDonthideCount,
-            donthideMedium: this.highMediumGenericDonthide,
-            donthideMediumCount: this.highMediumGenericDonthideCount,
-            donthideHigh: this.highHighGenericDonthide,
-            donthideHighCount: this.highHighGenericDonthideCount
+            hideHighCount: this.highHighGenericHideCount
         };
     }
 

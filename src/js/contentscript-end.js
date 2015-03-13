@@ -163,18 +163,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         if ( selectors && selectors.donthide.length ) {
             processLowGenerics(selectors.donthide, nullArray);
         }
-        if ( highGenerics ) {
-            if ( highGenerics.donthideLowCount ) {
-                processHighLowGenerics(highGenerics.donthideLow, nullArray);
-            }
-            if ( highGenerics.donthideMediumCount ) {
-                processHighMediumGenerics(highGenerics.donthideMedium, nullArray);
-            }
-        }
-        // No such thing as high-high generic exceptions.
-        //if ( highGenerics.donthideHighCount ) {
-        //    processHighHighGenerics(document, highGenerics.donthideHigh, nullArray);
-        //}
         var hideSelectors = [];
         if ( selectors && selectors.hide.length ) {
             processLowGenerics(selectors.hide, hideSelectors);
