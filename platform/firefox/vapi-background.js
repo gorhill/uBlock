@@ -452,15 +452,9 @@ vAPI.tabs.getTabId = function(target) {
     if ( vAPI.fennec ) {
         if ( target.browser ) {
             // target is a tab
-            return target.id;
+            return target.browser.loadContext.DOMWindowID;
         }
-
-        for ( var win of this.getWindows() ) {
-            var tab = win.BrowserApp.getTabForBrowser(target);
-            if ( tab && tab.id !== undefined ) {
-                return tab.id;
-            }
-        }
+        return target.loadContext.DOMWindowID;
 
         return -1;
     }
@@ -513,7 +507,8 @@ vAPI.tabs.getTabsForIds = function(tabIds, tabBrowser) {
 
     if ( vAPI.fennec ) {
         for ( tabId of tabIds ) {
-            var tab = tabBrowser.getTabForId(tabId);
+
+            var tab = tabBrowser.tabs.find(tab=>tab.browser.loadContext.DOMWindowID === Number(tabId));
             if ( tab ) {
                 tabs.push(tab);
             }
