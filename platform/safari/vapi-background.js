@@ -517,7 +517,7 @@
             state = vAPI.tabIconState[tabId] = new TabIconState();
         }
         icon.badge = state.badge;
-        icon.image = vAPI.getURL("img/browsericons/icon16" + state.img + ".png");
+        icon.image = vAPI.getURL("img/browsericons/safari-icon16" + state.img + ".png");
     };
     vAPI.setIcon = function(tabId, iconStatus, badge) {
         var state = vAPI.tabIconState[tabId];
