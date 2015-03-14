@@ -22,3 +22,6 @@
 #   Users can still block this one through hpHosts, MVPS, Dan Pollock's or
 #   manually through custom filters, or 3rd-party scripts
 # ||www.googletagservices.com/tag/js/gpt.js
+
+# To counter EasyList's `@@||trc.taboola.com*http%$script,third-party`
+||trc.taboola.com*http%$script,third-party,important
