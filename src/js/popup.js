@@ -29,6 +29,16 @@
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/996
+// Experimental: mitigate glitchy popup UI: immediately set the firewall pane
+// visibility to its last known state. By default the pane is hidden.
+// Will remove if it makes no difference.
+if ( vAPI.localStorage.getItem('popupFirewallPane') === 'true' ) {
+    uDom('#panes').addClass('dfEnabled');
+}
+
+/******************************************************************************/
+
 var popupData;
 var dfPaneBuilt = false;
 var popupHeight;
@@ -493,6 +503,11 @@ var toggleFirewallPane = function() {
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
+
+    // https://github.com/gorhill/uBlock/issues/996
+    // Experimental: Remember the last state of the firewall pane.
+    // Will remove if it makes no difference.
+    vAPI.localStorage.setItem('popupFirewallPane', popupData.dfEnabled);
 };
 
 /******************************************************************************/
