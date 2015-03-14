@@ -282,7 +282,8 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
         case 'getPopupData':
             vAPI.tabs.get(request.tabId, function(tab) {
-                callback(getStats(getTargetTabId(tab), tab.title));
+                // https://github.com/gorhill/uBlock/issues/1012
+                callback(getStats(getTargetTabId(tab), tab ? tab.title : ''));
             });
             return;
 
