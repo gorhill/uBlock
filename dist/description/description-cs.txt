@@ -2,7 +2,7 @@ Efektivní blokovač: nezanechává velké stopy, nezatěžuje paměť a CPU, a 
 
 Grafický přehled jeho účinnosti: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Použití: Velký vypínač ve vyskakovacím okně trvale povolí/zakáže µBlock pro otevřenou stránku. Funguje pouze pro aktivní webovou stránku, není to obecný vypínač.
+Použití: Velký vypínač ve vyskakovacím okně trvale povolí/zakáže uBlock pro otevřenou stránku. Funguje pouze pro aktivní webovou stránku, není to obecný vypínač.
 
 ***
 
@@ -24,13 +24,13 @@ Pokud chcete, můžete si vybrat tyto další filtry:
 - Spam404
 - A mnoho dalších
 
-Čím více filtrů je povoleno, tím je samozřejmě větší stopa v paměti. I přesto má ale µBlock i po přidání dvou dalších seznamů od Fanboye a "hpHosts’s Ad and tracking servers" menší vliv na paměť než mnohé další velmi populární blockery.
+Čím více filtrů je povoleno, tím je samozřejmě větší stopa v paměti. I přesto má ale uBlock i po přidání dvou dalších seznamů od Fanboye a "hpHosts’s Ad and tracking servers" menší vliv na paměť než mnohé další velmi populární blockery.
 
 Dále mějte na paměti, že vybírání více filtrů zvyšuje šanci chybného zobrazení webů -- především u seznamů, které se normálně používají jako hosts soubory.
 
 ***
 
-Bez předvolených seznamů filtrů by toto rozšíření bylo k ničemu. Pokud tedy opravdu budete chtít něčím přispět, myslete na lidi, kteří spravují vámi používané seznamy filtrů a uvolňují je pro všechny zdarma.
+Bez předvolených seznamů filtrů by toto rozšíření bylo k ničemu. Pokud tedy opravdu budete chtít něčím přispět, myslete na lidi, kteří spravují Vámi používané seznamy filtrů a uvolňují je pro všechny zdarma.
 
 ***
 

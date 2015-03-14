@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"Журнал сетевых запросов µBlock",
+    "message":"µBlock — Журнал сетевых запросов",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ваш список доменов которые проигнорирует µBlock. Одна запись на строку. Некорректные записи будут тихо проигнорированы.",
+    "message":"Список доменов, которые проигнорирует µBlock. Одна запись на строку. Некорректные записи будут проигнорированы.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Вы можете исследовать сведения о сетевых запросах, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти µBlock.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
+    "message":"Вы можете проверить детали сетевых запросов, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти µBlock.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Все ваши настройки будут удалены, µBlock будет перезапущен. \n\nСбросить на настройки по умолчанию?",
+    "message":"Все ваши настройки будут удалены, µBlock будет перезапущен. \n\nВосстановить настройки по умолчанию?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
