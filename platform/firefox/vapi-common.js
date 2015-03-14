@@ -29,6 +29,13 @@
 
 'use strict';
 
+/******************************************************************************/
+
+const {Services} = Components.utils.import(
+    'resource://gre/modules/Services.jsm',
+    null
+);
+
 self.vAPI = self.vAPI || {};
 
 /******************************************************************************/
@@ -58,9 +65,8 @@ vAPI.download = function(details) {
 /******************************************************************************/
 
 vAPI.insertHTML = (function() {
-    const {classes: Cc, interfaces: Ci} = Components;
-    const parser = Cc['@mozilla.org/parserutils;1'].getService(Ci.nsIParserUtils);
-    const io = Cc['@mozilla.org/network/io-service;1'].getService(Ci.nsIIOService);
+    const parser = Components.classes['@mozilla.org/parserutils;1']
+        .getService(Components.interfaces.nsIParserUtils);
 
     return function(node, html) {
         while ( node.firstChild ) {
@@ -71,7 +77,7 @@ vAPI.insertHTML = (function() {
             html,
             parser.SanitizerAllowStyle,
             false,
-            io.newURI(document.baseURI, null, null),
+            Services.io.newURI(document.baseURI, null, null),
             document.documentElement
         ));
     };
@@ -86,9 +92,9 @@ vAPI.getURL = function(path) {
 /******************************************************************************/
 
 vAPI.i18n = (function() {
-    var stringBundle = Components.classes['@mozilla.org/intl/stringbundle;1']
-        .getService(Components.interfaces.nsIStringBundleService)
-        .createBundle('chrome://' + location.host + '/locale/messages.properties');
+    var stringBundle = Services.strings.createBundle(
+        'chrome://' + location.host + '/locale/messages.properties'
+    );
 
     return function(s) {
         try {
@@ -114,12 +120,21 @@ vAPI.closePopup = function() {
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
 
-vAPI.localStorage = {
-    key: function(){},
-    getItem: function(){},
-    setItem: function(){},
-    removeItem: function(){}
-};
+Object.defineProperty(vAPI, 'localStorage', {
+    get: function() {
+        if ( this._localStorage ) {
+            return this._localStorage;
+        }
+
+        this._localStorage = Services.domStorageManager.getLocalStorageForPrincipal(
+            Services.scriptSecurityManager.getCodebasePrincipal(
+                Services.io.newURI('http://ublock.raymondhill.net/', null, null)
+            ),
+            ''
+        );
+        return this._localStorage;
+    }
+});
 
 /******************************************************************************/
 
