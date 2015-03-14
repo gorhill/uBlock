@@ -19,6 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global DOMTokenList */
 /* exported uDom */
 
 /******************************************************************************/
@@ -484,6 +485,28 @@ DOMList.prototype.clone = function(notDeep) {
         addNodeToList(r, this.nodes[i].cloneNode(!notDeep));
     }
     return r;
+};
+
+/******************************************************************************/
+
+DOMList.prototype.nthOfType = function() {
+    if ( this.nodes.length === 0 ) {
+        return 0;
+    }
+    var node = this.nodes[0];
+    var tagName = node.tagName;
+    var i = 1;
+    while ( node.previousElementSibling !== null ) {
+        node = node.previousElementSibling;
+        if ( typeof node.tagName !== 'string' ) {
+            continue;
+        }
+        if ( node.tagName !== tagName ) {
+            continue;
+        }
+        i++;
+    }
+    return i;
 };
 
 /******************************************************************************/

@@ -109,6 +109,20 @@ vAPI.closePopup = function() {
 
 /******************************************************************************/
 
+// A localStorage-like object which should be accessible from the
+// background page or auxiliary pages.
+// This storage is optional, but it is nice to have, for a more polished user
+// experience.
+
+vAPI.localStorage = {
+    key: function(){},
+    getItem: function(){},
+    setItem: function(){},
+    removeItem: function(){}
+};
+
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/

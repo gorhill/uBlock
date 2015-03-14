@@ -22,11 +22,23 @@ body[dir=rtl] #lists {
     padding: 0;
     list-style-type: none;
     }
-#lists > li > span {
+#lists > .groupEntry > span {
+    cursor: pointer;
     font-size: 15px;
     }
-#lists > li > ul {
+#lists > .groupEntry:not(:first-child) > span:before {
+    color: #aaa;
+    content: '\2212  ';
+    }
+#lists > .groupEntry.collapsed > span:before {
+    color: #aaa;
+    content: '+  ';
+    }
+#lists > .groupEntry > ul {
     margin: 0.25em 0 0 0;
+    }
+#lists > .groupEntry.collapsed > ul {
+    display: none;
     }
 li.listEntry {
     font-size: 14px;

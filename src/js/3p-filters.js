@@ -185,7 +185,7 @@ var renderFilterLists = function() {
         hasCachedContent = false;
 
         // Visually split the filter lists in purpose-based groups
-        var ulLists = uDom('#lists').empty();
+        var ulLists = uDom('#lists').empty(), liGroup;
         var groups = groupsFromLists(details.available);
         var groupKey, i;
         var groupKeys = [
@@ -200,7 +200,12 @@ var renderFilterLists = function() {
         ];
         for ( i = 0; i < groupKeys.length; i++ ) {
             groupKey = groupKeys[i];
-            ulLists.append(liFromListGroup(groupKey, groups[groupKey]));
+            liGroup = liFromListGroup(groupKey, groups[groupKey]);
+            liGroup.toggleClass(
+                'collapsed',
+                vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
+            );
+            ulLists.append(liGroup);
             delete groups[groupKey];
         }
         // For all groups not covered above (if any left)
@@ -485,6 +490,19 @@ var externalListsApplyHandler = function() {
 
 /******************************************************************************/
 
+var groupEntryClickHandler = function() {
+    var li = uDom(this).ancestors('.groupEntry');
+    li.toggleClass('collapsed');
+    var key = 'collapseGroup' + li.nthOfType();
+    if ( li.hasClass('collapsed') ) {
+        vAPI.localStorage.setItem(key, 'y');
+    } else {
+        vAPI.localStorage.removeItem(key);
+    }
+};
+
+/******************************************************************************/
+
 uDom.onLoad(function() {
     uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
     uDom('#parseCosmeticFilters').on('change', cosmeticSwitchChanged);
@@ -496,6 +514,7 @@ uDom.onLoad(function() {
     uDom('#lists').on('click', 'span.purge', onPurgeClicked);
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);
+    uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 
     renderFilterLists();
     renderExternalLists();
