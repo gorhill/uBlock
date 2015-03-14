@@ -91,10 +91,10 @@ vAPI.getURL = function(path) {
 // First language is the default
 
 vAPI.i18nData = [
-    'en', 'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el','es', 'et', 'fa', 'fi',
+    'en', 'ar', 'bg', 'ca', 'cs', 'da', 'de', 'el', 'es', 'et', 'fa', 'fi',
     'fil', 'fr', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv',
-     'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sl', 'sq', 'sr',
-     'sv', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
+    'mr', 'nb', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sl', 'sq', 'sr',
+    'sv', 'te', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'
 ];
 
 vAPI.i18n = navigator.language;
@@ -135,11 +135,6 @@ vAPI.closePopup = function() {
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
 
-vAPI.localStorage = {
-    key: function(){},
-    getItem: function(){},
-    setItem: function(){},
-    removeItem: function(){}
-};
+vAPI.localStorage = window.localStorage;
 
 })();
