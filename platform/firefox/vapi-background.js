@@ -1890,13 +1890,13 @@ vAPI.onLoadAllCompleted = function() {
     var µb = µBlock;
     for ( var tab of this.tabs.getAll() ) {
         // We're insterested in only the tabs that were already loaded
-        if ( tab.hasAttribute('pending') ) {
+        if ( !vAPI.fennec && tab.hasAttribute('pending') ) {
             continue;
         }
 
         var tabId = this.tabs.getTabId(tab);
         var browser = getBrowserForTab(tab);
-        µb.bindTabToPageStats(tabId, browser.currentURI.spec);
+        µb.bindTabToPageStats(tabId, browser.currentURI.asciiSpec);
         browser.messageManager.sendAsyncMessage(
             location.host + '-load-completed'
         );
