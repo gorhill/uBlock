@@ -557,15 +557,15 @@
   },
   "showDashboardButton":{
     "message":"Show Dashboard",
-    "description":"English: Show Dashboard"
+    "description":"Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
     "message":"Show Network Request Log",
-    "description":"English: Show Network Request Log"
+    "description":"Firefox/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff": {
     "message": "off",
-    "description": "Appears as µBlock (off)"
+    "description": "Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"This entry must be the last one",
