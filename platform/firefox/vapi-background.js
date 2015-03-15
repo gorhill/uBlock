@@ -308,7 +308,8 @@ var tabWatcher = {
 
     onTabSelect: function({target}) {
         // target is tab in Firefox, browser in Fennec
-        var URI = (target.linkedBrowser || target).currentURI;
+        var browser = (target.linkedBrowser || target);
+        var URI = browser.currentURI;
         var aboutPath = URI.schemeIs('about') && URI.path;
         var tabId = vAPI.tabs.getTabId(target);
 
@@ -317,11 +318,13 @@ var tabWatcher = {
             return;
         }
 
-        vAPI.tabs.onNavigation({
-            frameId: 0,
-            tabId: tabId,
-            url: URI.asciiSpec
-        });
+        if ( browser.webNavigation.busyFlags === 0  /*BUSY_FLAGS_NONE*/ ) {
+            vAPI.tabs.onNavigation({
+                frameId: 0,
+                tabId: tabId,
+                url: URI.asciiSpec
+            });
+        }
     },
 
     onLocationChange: function(browser, webProgress, request, location, flags) {
