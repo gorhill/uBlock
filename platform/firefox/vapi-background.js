@@ -308,7 +308,8 @@ var tabWatcher = {
 
     onTabSelect: function({target}) {
         // target is tab in Firefox, browser in Fennec
-        var URI = (target.linkedBrowser || target).currentURI;
+        var browser = (target.linkedBrowser || target);
+        var URI = browser.currentURI;
         var aboutPath = URI.schemeIs('about') && URI.path;
         var tabId = vAPI.tabs.getTabId(target);
 
@@ -317,11 +318,13 @@ var tabWatcher = {
             return;
         }
 
-        vAPI.tabs.onNavigation({
-            frameId: 0,
-            tabId: tabId,
-            url: URI.asciiSpec
-        });
+        if ( browser.webNavigation.busyFlags === 0  /*BUSY_FLAGS_NONE*/ ) {
+            vAPI.tabs.onNavigation({
+                frameId: 0,
+                tabId: tabId,
+                url: URI.asciiSpec
+            });
+        }
     },
 
     onLocationChange: function(browser, webProgress, request, location, flags) {
@@ -452,15 +455,9 @@ vAPI.tabs.getTabId = function(target) {
     if ( vAPI.fennec ) {
         if ( target.browser ) {
             // target is a tab
-            return target.id;
+            return target.browser.loadContext.DOMWindowID;
         }
-
-        for ( var win of this.getWindows() ) {
-            var tab = win.BrowserApp.getTabForBrowser(target);
-            if ( tab && tab.id !== undefined ) {
-                return tab.id;
-            }
-        }
+        return target.loadContext.DOMWindowID;
 
         return -1;
     }
@@ -513,7 +510,8 @@ vAPI.tabs.getTabsForIds = function(tabIds, tabBrowser) {
 
     if ( vAPI.fennec ) {
         for ( tabId of tabIds ) {
-            var tab = tabBrowser.getTabForId(tabId);
+
+            var tab = tabBrowser.tabs.find(tab=>tab.browser.loadContext.DOMWindowID === Number(tabId));
             if ( tab ) {
                 tabs.push(tab);
             }
