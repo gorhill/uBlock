@@ -35,6 +35,7 @@
 // This is to be used as last-resort fallback in case a tab is found to not
 // be bound while network requests are fired for the tab.
 
+var mostRecentRootDocURLTimestamp = 0;
 var mostRecentRootDocURL = '';
 
 /******************************************************************************/
@@ -63,6 +64,7 @@ var onBeforeRequest = function(details) {
             pageStore.logRequest(pageStore, '');
         }
         mostRecentRootDocURL = requestURL;
+        mostRecentRootDocURLTimestamp = Date.now();
         return;
     }
 
@@ -76,6 +78,13 @@ var onBeforeRequest = function(details) {
     // Lookup the page store associated with this tab id.
     pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
+        // https://github.com/gorhill/uBlock/issues/1025
+        // Google Hangout popup opens without a root frame. So for now we will
+        // just discard that best-guess root frame if it is too far in the
+        // future, at which point it ceases to be a "best guess".
+        if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
+            mostRecentRootDocURL = '';
+        }
         // https://github.com/gorhill/uBlock/issues/1001
         // Not a behind-the-scene request, yet no page store found for the
         // tab id: we will thus bind the last-seen root document to the
