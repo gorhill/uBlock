@@ -1844,9 +1844,17 @@ vAPI.contextMenu.create = function(details, callback) {
 /******************************************************************************/
 
 var optionsObserver = {
+    addonId: '{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}',
+
     register: function() {
         Services.obs.addObserver(this, 'addon-options-displayed', false);
         cleanupTasks.push(this.unregister.bind(this));
+
+        var browser = getBrowserForTab(vAPI.tabs.get(null));
+        if ( browser.currentURI.spec !== 'about:addons' ) {
+            return;
+        }
+        this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
     },
 
     unregister: function() {
@@ -1861,8 +1869,8 @@ var optionsObserver = {
         button.label = vAPI.i18n(id);
     },
 
-    observe: function(doc, topic, extensionId) {
-        if ( extensionId !== '{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}' ) {
+    observe: function(doc, topic, addonId) {
+        if ( addonId !== this.addonId ) {
             return;
         }
 
