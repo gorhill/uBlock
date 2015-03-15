@@ -69,9 +69,30 @@ function allFiltersApplyHandler() {
 /******************************************************************************/
 
 var handleImportFilePicker = function() {
+    // https://github.com/gorhill/uBlock/issues/1004
+    // Support extraction of filters from ABP backup file
+    var abpImporter = function(s) {
+        var reAbpExtractor = /\n\[Subscription\]\n+url=~[\x08-\x7E]+?\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
+        var matches = reAbpExtractor.exec(s);
+        // Not an ABP backup file
+        if ( matches === null ) {
+            return s;
+        }
+        var out = [];
+        while ( matches !== null ) {
+            if ( matches.length !== 2 ) {
+                continue;
+            }
+            out.push(matches[1].trim().replace(/\\\[/g, '['));
+            matches = reAbpExtractor.exec(s);
+        }
+        return out.join('\n');
+    };
+
     var fileReaderOnLoadHandler = function() {
+        var sanitized = abpImporter(this.result);
         var textarea = uDom('#userFilters');
-        textarea.val([textarea.val(), this.result].join('\n').trim());
+        textarea.val(textarea.val().trim() + '\n' + sanitized);
         userFiltersChanged();
     };
     var file = this.files[0];
