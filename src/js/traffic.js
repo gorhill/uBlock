@@ -156,7 +156,7 @@ var onBeforeRequest = function(details) {
     }
 
     // Blocked
-    console.debug('traffic.js > onBeforeRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
+    //console.debug('traffic.js > onBeforeRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
 
     pageStore.logRequest(requestContext, result);
 
@@ -208,7 +208,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     // Blocked
-    console.debug('traffic.js > onBeforeBehindTheSceneRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
+    //console.debug('traffic.js > onBeforeBehindTheSceneRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
 
     return { 'cancel': true };
 };
