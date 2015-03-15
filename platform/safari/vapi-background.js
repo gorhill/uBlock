@@ -105,6 +105,16 @@
         size: storageQuota,
         storeName: "keyvaluepairs"
     });
+    var oldSettings = safari.extension.settings; // To smoothly transition users
+    if(oldSettings.hasOwnProperty("version")) { // Old 'storage'!
+        for(var key in oldSettings) {
+            if(!oldSettings.hasOwnProperty(key) || key === "open_prefs") {
+                continue;
+            }
+            localforage.setItem(key, oldSettings[key]);
+        }
+        oldSettings.clear();
+    }
     vAPI.storage = {
         QUOTA_BYTES: storageQuota, // copied from Info.plist
 
