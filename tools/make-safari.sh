@@ -18,6 +18,7 @@ cp -R src/_locales $DES/
 cp src/*.html $DES/
 mv $DES/img/icon_128.png $DES/Icon.png
 cp platform/safari/*.js $DES/js/
+cp -R platform/safari/img $DES/
 cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt $DES/
