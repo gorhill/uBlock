@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn µBlock cho trang này.\nCtrl + bấm chuột: vô hiệu µBlock chỉ trên trang này.",
+    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn µBlock cho trang này.\nCtrl + nhấp chuột: vô hiệu µBlock chỉ trên trang này.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -554,6 +554,18 @@
   "elapsedManyDaysAgo":{
     "message":"{{value}} ngày trước",
     "description":"English: {{value}} days ago"
+  },
+  "showDashboardButton":{
+    "message":"Hiện bảng điều khiển",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Hiện nhật ký yêu cầu mạng",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"tắt",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"This entry must be the last one",

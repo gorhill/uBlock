@@ -555,6 +555,18 @@
     "message":"преди {{value}} дни",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Показване на табло",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Показване на дневника за мрежови заявки",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"изключване",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"Това поле трябва да бъде последното",
     "description":"so we dont need to deal with comma for last entry"

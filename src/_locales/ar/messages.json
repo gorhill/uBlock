@@ -555,6 +555,18 @@
     "message":"منذ {{value}} أيام",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"عرض لوحة التحكم",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"عرض سجل الإتصال بالشبكة",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"تعطيل",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",
     "description":"so we dont need to deal with comma for last entry"

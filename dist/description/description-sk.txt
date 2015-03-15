@@ -1,49 +1,49 @@
-An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+Účinný blokovač: nezaťažuje CPU a pamäť a dokáže načítať a vynútiť o niekoľko tisíc filtrov viac ako iné populárne blokovače.
 
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Ilustrovaný prehľad o jeho účinnosti: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
-Usage: The big power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
+Použitie: Veľký vypínač vo vyskakovacom okne natrvalo zakáže/povolí μBlock pre aktuálnu webovú stránku. Vzťahuje sa len na aktuálnu webovú stránku, nie na všeobecný vypínač.
 
 ***
 
-Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+Flexibilný, je viac než len "blokovač reklám": dokáže tiež načítať a vytvárať filtre z hosts súborov.
 
-Out of the box, these lists of filters are loaded and enforced:
+Tieto zoznamy filtrov sú predvolene načítané a vynútené:
 
 - EasyList
-- Peter Lowe’s Ad server list
+- Zoznam reklamných serverov od Petra Lowesa
 - EasyPrivacy
-- Malware domains
+- Domény malvéru
 
-More lists are available for you to select if you wish:
+Ďalšie zoznamy sú k dispozícii pre vás na výber, ak si prajete:
 
-- Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
+- Rozšírený stopovací zoznam od Fanboya
+- Hosts súbor od Dana Pollocka
+- Reklamné a stopovacie servery od hpHosts
 - MVPS HOSTS
 - Spam404
-- And many others
+- A mnoho ďalších
 
-Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, µBlock still has a lower memory footprint than other very popular blockers out there.
+Samozrejme, čím viac povolených filtrov, tým vyššie nároky na pamäť. Aj po pridaní dvoch ďalších zoznamov od Fanboya, reklamných a stopovacích serverov od hpHost má µBlock stále menšie nároky na pamäť ako mnohé ďalšie veľmi populárne blockovače.
 
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
-
-***
-
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+Ďalej majte na pamäti, že výber viacerých filtrov zvyšuje šancu chybného zobrazenie webov - predovšetkým u zoznamov, ktoré sa normálne používajú ako hosts súbory.
 
 ***
 
-Free.
-Open source with public license (GPLv3)
-For users by users.
-
-Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Contributors @ Crowdin: https://crowdin.net/project/ublock
+Bez predvolených zoznamov filtrov by bolo toto rozšírenie k ničomu. Ak teda naozaj budete chcieť niečím prispieť, myslite na ľudí, ktorí spravujú vami používané zoznamy filtrov a uvoľňujú ich pre všetkých zadarmo.
 
 ***
 
-It's quite an early version, keep this in mind when you review.
+Bezplatný.
+Otvorený zdrojový kód s verejnou licenciou (GPLv3)
+Pre používateľov od používateľov.
 
-Project change log:
+Prispievatelia @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Prispievatelia @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Ide o pomerne skorú verziu, majte to na pamäti pri recenzovaní.
+
+Zoznam zmien projektu:
 https://github.com/gorhill/uBlock/releases

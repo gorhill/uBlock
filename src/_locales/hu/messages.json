@@ -555,6 +555,18 @@
     "message":"{{value}} napja",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Vezérlőpult megnyitása",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Naplózott hálozati lekérések megtekintése",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"kikapcsolva",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",
     "description":"so we dont need to deal with comma for last entry"

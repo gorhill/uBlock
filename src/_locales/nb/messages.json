@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Åpne elementvelger-modus",
+    "message":"Åpne element-velgermodus",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -554,6 +554,18 @@
   "elapsedManyDaysAgo":{
     "message":"{{value}} dager siden",
     "description":"English: {{value}} days ago"
+  },
+  "showDashboardButton":{
+    "message":"Vis dashbord",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Vis nettverkforespørselslogg",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"av",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"Denne oppføringen må være den siste",

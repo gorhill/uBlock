@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Myルール",
+    "message":"マイルール",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Network request log",
+    "message":"uBlock — ネットワークリクエストログ",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -554,6 +554,18 @@
   "elapsedManyDaysAgo":{
     "message":"{{value}} 日前",
     "description":"English: {{value}} days ago"
+  },
+  "showDashboardButton":{
+    "message":"ダッシュボードを表示",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"ネットワークリクエストログを表示",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"オフ",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"This entry must be the last one",

@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — داشبورد",
+    "message":"uBlock — داشبورد",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — لاگ درخواست های شبکه",
+    "message":"uBlock — لاگ درخواست های شبکه",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"کلیک: غیر فعال\/ فعال کردن µBlock برای این سایت.\n\nکنترل+کلیک: غیر فعال کردن µBlock فقط برای همین صفحه.",
+    "message":"کلیک: غیر فعال\/ فعال کردن uBlock برای این سایت.\n\nکنترل+کلیک: غیر فعال کردن uBlock فقط برای همین صفحه.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>این گزینه <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> را  تجزیه و اجرا میکند. این فیلتر ها اساساً فنی هستند،  آنها اشیاء موجود در صفحه وب را که مزاحم تلقی میشوند و با موتور فیلترینگ شبکه قابل بلاک کردن نیستند را حذف میکنند.<\/p><p>فعال کردن این قابلیت مصرف حافظه ی  <i>µBlock<\/i>را افزایش میدهد.<\/p>",
+    "message":"<p>این گزینه <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> را  تجزیه و اجرا میکند. این فیلتر ها اساساً فنی هستند،  آنها اشیاء موجود در صفحه وب را که مزاحم تلقی میشوند و با موتور فیلترینگ شبکه قابل بلاک کردن نیستند را حذف میکنند.<\/p><p>فعال کردن این قابلیت مصرف حافظه ی  <i>uBlock<\/i>را افزایش میدهد.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"آخرین به روز رسانی: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"لیستی از هاست هایی که µBlock در آنها غیرفعال خواهد شد. یک مطلب در هر خط. میزبان های نامعتبر در سکوت نادیده گرفته می شوند.",
+    "message":"لیستی از هاست هایی که uBlock در آنها غیرفعال خواهد شد. یک مطلب در هر خط. میزبان های نامعتبر در سکوت نادیده گرفته می شوند.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"اگر می خواهید با فعال کردن این گزینه شما می توانید جزئیات شبکه را بازرسی کنید. لاگ کردن درخواست های شبکه مصرف حافظه های µBlock را افزایش می دهد. از آنجا که بسیاری از کاربران هرگز از این ویژگی استفاده نمیکنند، به طور پیش فرض غیرفعال شده است.",
+    "message":"اگر می خواهید با فعال کردن این گزینه شما می توانید جزئیات شبکه را بازرسی کنید. لاگ کردن درخواست های شبکه مصرف حافظه های uBlock را افزایش می دهد. از آنجا که بسیاری از کاربران هرگز از این ویژگی استفاده نمیکنند، به طور پیش فرض غیرفعال شده است.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"تمام تنظیمات با استفاده از پشتیبان گیری در {{time}}،  رونویسی شده و µBlock مجدد راه اندازی میشود.\n\nتمام تنظیمات موجود با استفاده از داده های پشتیبانی رونویسی شود؟",
+    "message":"تمام تنظیمات با استفاده از پشتیبان گیری در {{time}}،  رونویسی شده و uBlock مجدد راه اندازی میشود.\n\nتمام تنظیمات موجود با استفاده از داده های پشتیبانی رونویسی شود؟",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"تمام تنظیمات شده حذف و µBlock دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد µBlock به تنظیمات کارخانه؟",
+    "message":"تمام تنظیمات شده حذف و uBlock دوباره راه اندازی خواهد شد.\n\nتنظیم مجدد uBlock به تنظیمات کارخانه؟",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
+    "message":"uBlock: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -554,6 +554,18 @@
   "elapsedManyDaysAgo":{
     "message":"{{value}} روز قبل",
     "description":"English: {{value}} days ago"
+  },
+  "showDashboardButton":{
+    "message":"نمایش داشبورد",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"نمایش درخواست ثبت شبکه",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"خاموش",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"این باید آخرین مطلب باشد",

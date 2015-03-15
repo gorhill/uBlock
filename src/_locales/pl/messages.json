@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Kokpit",
+    "message":"uBlock — Kokpit",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -554,6 +554,18 @@
   "elapsedManyDaysAgo":{
     "message":"{{value}} dni temu",
     "description":"English: {{value}} days ago"
+  },
+  "showDashboardButton":{
+    "message":"Otwórz kokpit",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Otwórz dziennik żądań",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"wyłączony",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
     "message":"Ta pozycja musi być ostatnia",

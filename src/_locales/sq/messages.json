@@ -555,6 +555,18 @@
     "message":"{{value}} ditë më parë",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Pulti i programit",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Ditari i kërkesave të rrjetit",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"fikur",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

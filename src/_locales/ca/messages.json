@@ -555,6 +555,18 @@
     "message":"fa {{value}} dies",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Show Dashboard",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Show Network Request Log",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"off",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"Aquesta entrada ha de ser l'última",
     "description":"so we dont need to deal with comma for last entry"

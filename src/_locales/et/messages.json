@@ -555,6 +555,18 @@
     "message":"{{value}} päeva tagasi",
     "description":"English: {{value}} days ago"
   },
+  "showDashboardButton":{
+    "message":"Kuva töölaud",
+    "description":"Firefox\/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton":{
+    "message":"Kuva võrgupäringute logi",
+    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+  },
+  "fennecMenuItemBlockingOff":{
+    "message":"väljas",
+    "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
   "dummy":{
     "message":"See sisestus peab olema viimane",
     "description":"so we dont need to deal with comma for last entry"
