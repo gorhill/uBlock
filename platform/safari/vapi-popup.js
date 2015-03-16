@@ -55,14 +55,27 @@ var whenSizeChanges = function(elm, callback) {
         reset();
     });
 };
+
 var onLoaded = function() {
+    var style = document.createElement("style");
+    style.textContent = "html,body,#panes{width:100%}#panes{white-space:nowrap;text-align:right}#panes > div:nth-of-type(2){display:inline-block !important}";
+    var _toggle = DOMTokenList.prototype.toggle;
+    DOMTokenList.prototype.toggle = function(cls, stt) {
+        _toggle.apply(this, arguments);
+        if(cls === "dfEnabled") {
+            isThere = stt;
+            setTimeout(updateSize, 0);
+            var _this = this, _args = arguments;
+        }
+    };
     var body = document.body, popover = safari.self;
+    body.appendChild(style);
+    var isThere = !!document.querySelector(".dfEnabled");
     var updateSize = function() {
-        popover.width = body.clientWidth;
+        popover.width = 152 + (isThere ? 320 : 0);
         popover.height = body.clientHeight;
     };
     body.style.position = "relative"; // Necessary for size change detection
-    whenSizeChanges(body, updateSize);
     updateSize();
 };
 window.addEventListener("load", onLoaded);
