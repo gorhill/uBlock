@@ -63,6 +63,7 @@ var onLoaded = function() {
     };
     body.style.position = "relative"; // Necessary for size change detection
     whenSizeChanges(body, updateSize);
+    updateSize();
 };
-window.addEventListener('load', onLoaded);
+window.addEventListener("load", onLoaded);
 })();
