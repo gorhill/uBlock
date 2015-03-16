@@ -109,7 +109,9 @@ var onAbpLinkClicked = function(ev) {
         }
 
         // List already subscribed to?
-        var externalLists = details.externalLists.trim().split(/\s+/);
+        // https://github.com/gorhill/uBlock/issues/1033
+        // Split on line separators, not whitespaces.
+        var externalLists = details.externalLists.trim().split(/\s*[\n\r]+\s*/);
         if ( externalLists.indexOf(location) !== -1 ) {
             return;
         }
