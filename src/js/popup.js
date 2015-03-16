@@ -356,7 +356,6 @@ var renderPrivacyExposure = function() {
 
     // Domain of the page must always be included
     if ( allDomains.hasOwnProperty(popupData.pageDomain) === false ) {
-        console.log(popupData.pageDomain);
         allHostnameRows.push(popupData.pageDomain);
         allDomains[popupData.pageDomain] = false;
         allDomainCount += 1;
