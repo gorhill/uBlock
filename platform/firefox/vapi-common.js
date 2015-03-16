@@ -120,21 +120,35 @@ vAPI.closePopup = function() {
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
 
-Object.defineProperty(vAPI, 'localStorage', {
-    get: function() {
-        if ( this._localStorage ) {
-            return this._localStorage;
+vAPI.localStorage = {
+    PB: Services.prefs.getBranch('extensions.' + location.host + '.'),
+    str: Components.classes['@mozilla.org/supports-string;1']
+        .createInstance(Components.interfaces.nsISupportsString),
+    getItem: function(key) {
+        try {
+            return this.PB.getComplexValue(
+                key,
+                Components.interfaces.nsISupportsString
+            ).data;
+        } catch (ex) {
+            return null;
         }
-
-        this._localStorage = Services.domStorageManager.getLocalStorageForPrincipal(
-            Services.scriptSecurityManager.getCodebasePrincipal(
-                Services.io.newURI('http://ublock.raymondhill.net/', null, null)
-            ),
-            ''
+    },
+    setItem: function(key, value) {
+        this.str.data = value;
+        this.PB.setComplexValue(
+            key,
+            Components.interfaces.nsISupportsString,
+            this.str
         );
-        return this._localStorage;
+    },
+    removeItem: function(key) {
+        this.PB.clearUserPref(key);
+    },
+    clear: function() {
+        this.PB.deleteBranch('');
     }
-});
+};
 
 /******************************************************************************/
 
