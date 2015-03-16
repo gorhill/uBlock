@@ -237,7 +237,9 @@ var FilterParser = function() {
     this.unhide = 0;
     this.hostnames = [];
     this.invalid = false;
+    this.cosmetic = true;
     this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
+    this.div = document.createElement('div');
 };
 
 /******************************************************************************/
@@ -248,7 +250,20 @@ FilterParser.prototype.reset = function() {
     this.unhide = 0;
     this.hostnames.length = 0;
     this.invalid = false;
+    this.cosmetic = true;
     return this;
+};
+
+/******************************************************************************/
+
+FilterParser.prototype.isValidSelector = function(s) {
+    try {
+        this.div.matches(s);
+    } catch (e) {
+        console.error('µBlock> invalid cosmetic filter:', s);
+        return false;
+    }
+    return true;
 };
 
 /******************************************************************************/
@@ -259,7 +274,7 @@ FilterParser.prototype.parse = function(s) {
 
     var matches = this.reParser.exec(s);
     if ( matches === null || matches.length !== 4 ) {
-        this.invalid = true;
+        this.cosmetic = false;
         return this;
     }
 
@@ -272,7 +287,7 @@ FilterParser.prototype.parse = function(s) {
     // Any sequence of `#` longer than one means the line is not a valid
     // cosmetic filter.
     if ( this.suffix.indexOf('##') !== -1 ) {
-        this.invalid = true;
+        this.cosmetic = false;
         return this;
     }
 
@@ -281,6 +296,13 @@ FilterParser.prototype.parse = function(s) {
     // is designed to minimize overhead -- this is a low occurrence filter.
     if ( this.suffix.charAt(1) === '[' && this.suffix.slice(2, 9) === 'href^="' ) {
         this.suffix = this.suffix.slice(1);
+    }
+
+    // https://github.com/gorhill/uBlock/issues/1004
+    // Detect and report invalid CSS selectors.
+    if ( this.isValidSelector(this.suffix) === false ) {
+        this.invalid = true;
+        return this;
     }
 
     this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
@@ -559,8 +581,11 @@ FilterContainer.prototype.reset = function() {
 
 FilterContainer.prototype.compile = function(s, out) {
     var parsed = this.parser.parse(s);
-    if ( parsed.invalid ) {
+    if ( parsed.cosmetic === false ) {
         return false;
+    }
+    if ( parsed.invalid ) {
+        return true;
     }
 
     var hostnames = parsed.hostnames;
