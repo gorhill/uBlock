@@ -20,7 +20,7 @@
 */
 
 /* jshint esnext: true, bitwise: false */
-/* global self, Components, punycode */
+/* global self, Components, punycode, µBlock */
 
 // For background page
 
@@ -451,45 +451,30 @@ vAPI.tabs.registerListeners = function() {
 
 /******************************************************************************/
 
+vAPI.tabs.stack = new WeakMap();
+vAPI.tabs.stackId = 1;
+
+/******************************************************************************/
+
 vAPI.tabs.getTabId = function(target) {
     if ( vAPI.fennec ) {
         if ( target.browser ) {
             // target is a tab
             target = target.browser;
         }
-        return target.loadContext.DOMWindowID;
-    }
-
-    if ( target.linkedPanel ) {
+    } else if ( target.linkedPanel ) {
         // target is a tab
-        return target.linkedPanel;
+        target = target.linkedBrowser;
     }
-
-    // target is a browser
-    var i;
-    var gBrowser = getOwnerWindow(target).gBrowser;
-
-    if ( !gBrowser ) {
-        return -1;
+    if ( target.localName !== 'browser' ) {
+        return vAPI.noTabId;
     }
-
-    // This should be more efficient from version 35
-    if ( gBrowser.getTabForBrowser ) {
-        i = gBrowser.getTabForBrowser(target);
-        return i ? i.linkedPanel : -1;
+    var tabId = this.stack.get(target);
+    if ( !tabId ) {
+        tabId = '' + this.stackId++;
+        this.stack.set(target, tabId);
     }
-
-    if ( !gBrowser.browsers ) {
-        return -1;
-    }
-
-    i = gBrowser.browsers.indexOf(target);
-
-    if ( i !== -1 ) {
-        i = gBrowser.tabs[i].linkedPanel;
-    }
-
-    return i;
+    return tabId;
 };
 
 /******************************************************************************/
@@ -497,51 +482,41 @@ vAPI.tabs.getTabId = function(target) {
 // If tabIds is an array, then an array of tabs will be returned,
 // otherwise a single tab
 
-vAPI.tabs.getTabsForIds = function(tabIds, tabBrowser) {
-    var tabId;
+vAPI.tabs.getTabsForIds = function(tabIds) {
     var tabs = [];
     var singleTab = !Array.isArray(tabIds);
-
     if ( singleTab ) {
         tabIds = [tabIds];
     }
-
-    if ( vAPI.fennec ) {
-        for ( tabId of tabIds ) {
-
-            var tab = tabBrowser.tabs.find(tab=>tab.browser.loadContext.DOMWindowID === Number(tabId));
-            if ( tab ) {
-                tabs.push(tab);
-            }
+    for ( var tab of this.getAll() ) {
+        var browser = getBrowserForTab(tab);
+        var tabId = this.stack.get(browser);
+        if ( !tabId ) {
+            continue;
         }
-    } else {
-        var query = [];
-        for ( tabId of tabIds ) {
-            query.push('tab[linkedpanel="' + tabId + '"]');
+        if ( tabIds.indexOf(tabId) !== -1 ) {
+            tabs.push(tab);
         }
-        query = query.join(',');
-        tabs = [].slice.call(tabBrowser.tabContainer.querySelectorAll(query));
+        if ( tabs.length >= tabIds.length ) {
+            break;
+        }
     }
-
     return singleTab ? tabs[0] || null : tabs;
 };
 
 /******************************************************************************/
 
 vAPI.tabs.get = function(tabId, callback) {
-    var tab, windows, win;
+    var tab, win;
 
     if ( tabId === null ) {
         win = Services.wm.getMostRecentWindow('navigator:browser');
         tab = getTabBrowser(win).selectedTab;
         tabId = this.getTabId(tab);
     } else {
-        windows = this.getWindows();
-        for ( win of windows ) {
-            tab = vAPI.tabs.getTabsForIds(tabId, getTabBrowser(win));
-            if ( tab ) {
-                break;
-            }
+        tab = this.getTabsForIds(tabId);
+        if ( tab ) {
+            win = getOwnerWindow(tab);
         }
     }
 
@@ -555,10 +530,7 @@ vAPI.tabs.get = function(tabId, callback) {
         return;
     }
 
-    if ( !windows ) {
-        windows = this.getWindows();
-    }
-
+    var windows = this.getWindows();
     var browser = getBrowserForTab(tab);
     var tabBrowser = getTabBrowser(win);
     var tabIndex, tabTitle;
@@ -662,12 +634,10 @@ vAPI.tabs.open = function(details) {
     }
 
     if ( details.tabId ) {
-        for ( win in this.getWindows() ) {
-            tab = this.getTabsForIds(details.tabId, win);
-            if ( tab ) {
-                getBrowserForTab(tab).loadURI(details.url);
-                return;
-            }
+        tab = this.getTabsForIds(details.tabId);
+        if ( tab ) {
+            getBrowserForTab(tab).loadURI(details.url);
+            return;
         }
     }
 
@@ -707,16 +677,12 @@ vAPI.tabs.remove = function(tabIds) {
     if ( !Array.isArray(tabIds) ) {
         tabIds = [tabIds];
     }
-
-    for ( var win of this.getWindows() ) {
-        var tabBrowser = getTabBrowser(win);
-        var tabs = this.getTabsForIds(tabIds, tabBrowser);
-        if ( !tabs ) {
-            continue;
-        }
-        for ( var tab of tabs ) {
-            this._remove(tab, tabBrowser);
-        }
+    var tabs = this.getTabsForIds(tabIds);
+    if ( tabs.length === 0 ) {
+        return;
+    }
+    for ( var tab of tabs ) {
+        this._remove(tab, getTabBrowser(getOwnerWindow(tab)));
     }
 };
 
@@ -1311,7 +1277,7 @@ vAPI.net.registerListeners = function() {
         // Popup candidate
         if ( details.openerURL ) {
             for ( var tab of vAPI.tabs.getAll() ) {
-                var URI = tab.linkedBrowser.currentURI;
+                var URI = getBrowserForTab(tab).currentURI;
 
                 // Probably isn't the best method to identify the source tab
                 if ( URI.spec !== details.openerURL ) {
