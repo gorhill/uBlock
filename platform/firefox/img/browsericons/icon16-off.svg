@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ublock-16.svg"
+   sodipodi:docname="icon16-off.svg"
    inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/ff_icon_16.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -98,7 +98,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:description>Use gray 50% for the &quot;off&quot; color</dc:description>
       </cc:Work>
     </rdf:RDF>
@@ -118,19 +118,15 @@
        inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/ff_icon-off_16.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
-    <text
-       xml:space="preserve"
-       style="font-size:12.42635727px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.24999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-       x="28.466146"
-       y="26.439238"
-       id="text3832"
-       sodipodi:linespacing="125%"
-       transform="scale(0.91012365,1.0987518)"><tspan
-         sodipodi:role="line"
-         id="tspan3834"
-         x="28.466146"
-         y="26.439238"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.24999997;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">u</tspan></text>
+    <g
+       transform="scale(0.91012365,1.0987518)"
+       style="font-size:12.42635727px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.24999997;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       id="text3832">
+      <path
+         d="m 31.037043,26.252842 c -0.265101,0.06627 -0.617181,0.13669 -1.05624,0.211248 -0.430785,0.07456 -0.931981,0.111837 -1.503589,0.111838 -0.497058,-1e-6 -0.915411,-0.07042 -1.255062,-0.211249 -0.339656,-0.149116 -0.613036,-0.356221 -0.82014,-0.621317 -0.207107,-0.265095 -0.356223,-0.575754 -0.447349,-0.931977 -0.09113,-0.364505 -0.136691,-0.76629 -0.13669,-1.205357 l 0,-3.628496 1.155651,0 0,3.379969 c -2e-6,0.787005 0.124262,1.350333 0.372791,1.689985 0.248525,0.339654 0.666878,0.509481 1.255062,0.50948 0.12426,1e-6 0.252666,-0.0041 0.385217,-0.01243 0.132544,-0.0083 0.256807,-0.01657 0.372791,-0.02485 0.115975,-0.01657 0.219528,-0.02899 0.310659,-0.03728 0.09941,-0.01657 0.169822,-0.03314 0.211248,-0.0497 l 0,-5.455171 1.155651,0 0,6.27531"
+         style="fill:#ffffff;stroke:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2993" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
