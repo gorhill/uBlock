@@ -23,25 +23,51 @@
 
 /******************************************************************************/
 
+// Ensure the popup is properly sized as soon as possible. It is assume the DOM
+// content is ready at this point, which should be the case given where this
+// script file is included in the HTML file.
+
+(function() {
+    'use strict';
+
+    var doc = document;
+
+    // Hacky? I couldn't figure a CSS recipe for this problem.
+    // I do not want the left pane -- optional and hidden by defaut -- to
+    // dictate the height of the popup. The right pane dictates the height
+    // of the popup, and the left pane will have a scrollbar if ever its
+    // height is larger than what is available.
+    doc.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
+        'height',
+        doc.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
+    );
+
+    // The padlock must be manually positioned:
+    // - It's vertical position depends on the height on the title bar.
+    doc.getElementById('saveRules').style.setProperty(
+        'top',
+        (doc.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
+    );
+
+    // https://github.com/gorhill/uBlock/issues/996
+    // Experimental: mitigate glitchy popup UI: immediately set the firewall pane
+    // visibility to its last known state. By default the pane is hidden.
+    // Will remove if it makes no difference.
+    if ( vAPI.localStorage.getItem('popupFirewallPane') === 'true' ) {
+        doc.getElementById('panes').classList.add('dfEnabled');
+    }
+})();
+
+/******************************************************************************/
+
 (function() {
 
 'use strict';
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/996
-// Experimental: mitigate glitchy popup UI: immediately set the firewall pane
-// visibility to its last known state. By default the pane is hidden.
-// Will remove if it makes no difference.
-if ( vAPI.localStorage.getItem('popupFirewallPane') === 'true' ) {
-    uDom('#panes').addClass('dfEnabled');
-}
-
-/******************************************************************************/
-
 var popupData;
 var dfPaneBuilt = false;
-var popupHeight;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
 var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+) ([^ ]+)/;
 var scopeToSrcHostnameMap = {
@@ -169,20 +195,6 @@ var addFirewallRow = function(des) {
     row.toggleClass('blocked', hnDetails.blockCount !== 0);
     row.appendTo('#firewallContainer');
 
-    // Hacky? I couldn't figure a CSS recipe for this problem.
-    // I do not want the left pane -- optional and hidden by defaut -- to
-    // dictate the height of the popup. The right pane dictates the height
-    // of the popup, and the left pane will have a scrollbar if ever its
-    // height is larger than what is available.
-    if ( popupHeight === undefined ) {
-        popupHeight = uDom('#panes > div:nth-of-type(1)').nodeAt(0).offsetHeight;
-        uDom('#panes > div:nth-of-type(2)').css('height', popupHeight + 'px');
-
-        // The padlock must be manually positioned:
-        // - It's vertical position depends on the height on the title bar.
-        var rect = document.getElementById('gotoPrefs').getBoundingClientRect();
-        document.getElementById('saveRules').style.setProperty('top', (rect.bottom + 4) + 'px');
-    }
     return row;
 };
 
