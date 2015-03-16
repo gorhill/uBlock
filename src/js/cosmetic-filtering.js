@@ -260,7 +260,7 @@ FilterParser.prototype.isValidSelector = function(s) {
     try {
         this.div.matches(s);
     } catch (e) {
-        console.error('µBlock> invalid cosmetic filter:', s);
+        console.error('uBlock> invalid cosmetic filter:', s);
         return false;
     }
     return true;
