@@ -36,7 +36,7 @@
     // I do not want the left pane -- optional and hidden by defaut -- to
     // dictate the height of the popup. The right pane dictates the height
     // of the popup, and the left pane will have a scrollbar if ever its
-    // height is larger than what is available.
+    // height is more than what is available.
     doc.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
         'height',
         doc.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
