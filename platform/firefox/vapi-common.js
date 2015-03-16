@@ -127,7 +127,8 @@ vAPI.localStorage = {
     getItem: function(key) {
         try {
             return this.PB.getComplexValue(
-                key, Components.interfaces.nsISupportsString
+                key,
+                Components.interfaces.nsISupportsString
             ).data;
         } catch (ex) {
             return null;

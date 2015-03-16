@@ -37,7 +37,7 @@
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
     //console.debug('contentscript-start.js > not a HTLMDocument');
-    return false;
+    return;
 }
 
 // Because in case
@@ -52,7 +52,7 @@ if ( !vAPI ) {
 // The links look like this:
 //   abp:subscribe?location=https://easylist-downloads.adblockplus.org/easyprivacy.txt[...]
 
-if ( document.querySelector('[href^="abp:subscribe?"]') === null ) {
+if ( document.querySelector('a[href^="abp:"]') === null ) {
     return;
 }
 
@@ -66,14 +66,16 @@ var onAbpLinkClicked = function(ev) {
     if ( ev.button !== 0 ) {
         return;
     }
-    var receiver = ev.target;
-    if ( receiver === null ) {
-        return;
-    }
-    if ( receiver.tagName.toLowerCase() !== 'a' ) {
-        return;
-    }
-    var href = receiver.getAttribute('href') || '';
+    var target = ev.target;
+    var limit = 3;
+    var href = '';
+    do {
+        if ( target instanceof HTMLAnchorElement ) {
+            href = target.href;
+            break;
+        }
+        target = target.parentNode;
+    } while ( target && --limit );
     if ( href === '' ) {
         return;
     }

@@ -455,11 +455,9 @@ vAPI.tabs.getTabId = function(target) {
     if ( vAPI.fennec ) {
         if ( target.browser ) {
             // target is a tab
-            return target.browser.loadContext.DOMWindowID;
+            target = target.browser;
         }
         return target.loadContext.DOMWindowID;
-
-        return -1;
     }
 
     if ( target.linkedPanel ) {
