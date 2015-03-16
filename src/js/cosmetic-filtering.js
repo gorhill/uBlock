@@ -239,7 +239,15 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
+
+    // Not all browsers support `Element.matches`:
+    // http://caniuse.com/#feat=matchesselector
     this.div = document.createElement('div');
+    if ( typeof this.div.matches !== 'function' ) {
+        this.div = {
+            matches: function() { return true; }
+        };
+    }
 };
 
 /******************************************************************************/
