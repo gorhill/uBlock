@@ -354,15 +354,22 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
+    // Domain of the page must always be included
+    if ( allDomains.hasOwnProperty(popupData.pageDomain) === false ) {
+        console.log(popupData.pageDomain);
+        allHostnameRows.push(popupData.pageDomain);
+        allDomains[popupData.pageDomain] = false;
+        allDomainCount += 1;
+    }
+
     // The root page domain must always be counted as connected: that's from
     // where the root document was fetched.
     // https://github.com/gorhill/uBlock/issues/759
     // The root page domain must be counted if and only if it was actually
     // obtained through a network request.
-    if ( allDomainCount !== 0 && allDomains[popupData.pageDomain] !== true ) {
-        allDomains[popupData.pageDomain] = true;
-        touchedDomainCount += 1;
-    }
+    //if ( allDomainCount !== 0 && allDomains[popupData.pageDomain] === false ) {
+    //    touchedDomainCount += 1;
+    //}
 
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());
