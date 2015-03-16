@@ -21,22 +21,29 @@
 (function() {
 'use strict';
 
+var DF_ENABLED_CLASS = "dfEnabled";
+
 var onLoaded = function() {
-    var style = document.createElement("style");
-    style.textContent = "html,body,#panes{width:100%}#panes{white-space:nowrap;text-align:right}#panes > div:nth-of-type(2){display:inline-block !important}";
     var _toggle = DOMTokenList.prototype.toggle;
-    DOMTokenList.prototype.toggle = function(cls, stt) {
+    DOMTokenList.prototype.toggle = function(className) {
         _toggle.apply(this, arguments);
-        if(cls === "dfEnabled") {
-            isThere = stt;
+        if(className === DF_ENABLED_CLASS) {
             setTimeout(updateSize, 0);
         }
     };
     var body = document.body, popover = safari.self;
+    
+    var style = document.createElement("style");
+    style.textContent = "html,body,#panes{width:100%}#panes{white-space:nowrap;text-align:right}#panes > div:nth-of-type(2){display:inline-block !important}";
     body.appendChild(style);
-    var isThere = !!document.querySelector(".dfEnabled");
+
+    var panes = document.getElementById("panes"),
+        powerAndStatsPane = panes.children[0],
+        dfPane = panes.children[1];
+
     var updateSize = function() {
-        popover.width = 152 + (isThere ? 320 : 0);
+        var dfEnabled = panes.classList.contains(DF_ENABLED_CLASS);
+        popover.width = powerAndStatsPane.clientWidth + (dfEnabled ? dfPane.clientWidth : 0);
         popover.height = body.clientHeight;
     };
     updateSize();
