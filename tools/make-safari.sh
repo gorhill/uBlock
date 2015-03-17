@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# This script assumes a linux environment
+# This script assumes an OS X or *NIX environment
 
-echo "*** uBlock.safariextension: Copying files"
+echo "*** uBlock.safariextension: Copying files..."
 
 DES=dist/build/uBlock.safariextension
 rm -rf $DES
@@ -23,11 +23,11 @@ cp platform/safari/Info.plist $DES/
 cp platform/safari/Settings.plist $DES/
 cp LICENSE.txt $DES/
 
-echo "*** uBlock.safariextension: Generating meta..."
+echo "*** uBlock.safariextension: Generating Info.plist..."
 python tools/make-safari-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** Use Safari's Extension Builder to create the signed uBlock extension package -- can't automate it."
 fi
 
-echo "*** uBlock.safariextension: Package done."
+echo "*** uBlock.safariextension: Done."
