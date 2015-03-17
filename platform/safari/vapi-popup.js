@@ -33,13 +33,14 @@ var onLoaded = function() {
     };
     var body = document.body, popover = safari.self;
     
-    var style = document.createElement("style");
-    style.textContent = "html,body,#panes{width:100%}#panes{white-space:nowrap;text-align:right}#panes > div:nth-of-type(2){display:inline-block !important}";
-    body.appendChild(style);
-
     var panes = document.getElementById("panes"),
         powerAndStatsPane = panes.children[0],
         dfPane = panes.children[1];
+
+    body.style.setProperty("width", "100%");
+    panes.style.setProperty("text-align", "right");
+    panes.style.setProperty("width", "100%");
+    dfPane.style.setProperty("display", "inline-block", "important");
 
     var updateSize = function() {
         var dfEnabled = panes.classList.contains(DF_ENABLED_CLASS);
