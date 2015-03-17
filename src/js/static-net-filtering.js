@@ -165,16 +165,29 @@ var isFirstParty = function(firstPartyDomain, hostname) {
     return c === '.' || c === '';
 };
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+var alwaysTruePseudoRegex = {
+    test: function() {
+        return true;
+    }
+};
 
 var strToRegex = function(s, anchor) {
+    // https://github.com/gorhill/uBlock/issues/1038
+    // Special case: always match.
+    if ( s === '*' ) {
+        return alwaysTruePseudoRegex;
+    }
+
+    // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
     var reStr = s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
                  .replace(/\*/g, '.*');
+
     if ( anchor < 0 ) {
         reStr = '^' + reStr;
     } else if ( anchor > 0 ) {
         reStr += reStr + '$';
     }
+
     //console.debug('µBlock.staticNetFilteringEngine: created RegExp("%s")', reStr);
     return new RegExp(reStr);
 };
@@ -1082,7 +1095,7 @@ var getFilterClass = function(details) {
         return FilterRegex;
     }
     var s = details.f;
-    if ( s.indexOf('*') !== -1 ) {
+    if ( s.indexOf('*') !== -1 || details.token === '*' ) {
         if ( details.hostnameAnchored ) {
             return FilterGenericHnAnchored;
         }
@@ -1113,7 +1126,7 @@ var getHostnameBasedFilterClass = function(details) {
         return FilterRegexHostname;
     }
     var s = details.f;
-    if ( s.indexOf('*') !== -1 ) {
+    if ( s.indexOf('*') !== -1 || details.token === '*' ) {
         if ( details.hostnameAnchored ) {
             return FilterGenericHnAnchoredHostname;
         }
@@ -1380,8 +1393,7 @@ FilterParser.prototype.parse = function(raw) {
 
     // nothing left?
     if ( s === '' ) {
-        this.unsupported = true;
-        return this;
+        s = '*';
     }
 
     // plain hostname?
@@ -1455,27 +1467,37 @@ FilterParser.prototype.makeToken = function() {
         return;
     }
 
+    var s = this.f;
+
+    // https://github.com/gorhill/uBlock/issues/1038
+    // Match any URL.
+    if ( s === '*' ) {
+        this.token = '*';
+        return;
+    }
+
     var matches;
 
     // Hostname-anchored with no wildcard always have a token index of 0.
-    if ( this.hostnameAnchored && this.f.indexOf('*') === -1 ) {
-        matches = findHostnameToken(this.f);
+    if ( this.hostnameAnchored && s.indexOf('*') === -1 ) {
+        matches = findHostnameToken(s);
         if ( !matches || matches[0].length === 0 ) {
             return;
         }
         this.tokenBeg = matches.index;
         this.tokenEnd = reHostnameToken.lastIndex;
-        this.token = this.f.slice(this.tokenBeg, this.tokenEnd);
+        this.token = s.slice(this.tokenBeg, this.tokenEnd);
         return;
     }
 
-    matches = findFirstGoodToken(this.f);
+    matches = findFirstGoodToken(s);
     if ( matches === null || matches[0].length === 0 ) {
+        this.token = '*';
         return;
     }
     this.tokenBeg = matches.index;
     this.tokenEnd = reGoodToken.lastIndex;
-    this.token = this.f.slice(this.tokenBeg, this.tokenEnd);
+    this.token = s.slice(this.tokenBeg, this.tokenEnd);
 };
 
 /******************************************************************************/
