@@ -130,6 +130,14 @@ vAPI.closePopup = function() {
 
 /******************************************************************************/
 
+Number.prototype._toLocaleString = Number.prototype.toLocaleString;
+Number.prototype.toLocaleString = function() {
+    // some parts expect comma-formatting; Safari doesn't do it automatically
+    return this._toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+/******************************************************************************/
+
 // A localStorage-like object which should be accessible from the
 // background page or auxiliary pages.
 // This storage is optional, but it is nice to have, for a more polished user
