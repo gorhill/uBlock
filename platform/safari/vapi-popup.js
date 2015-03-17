@@ -38,8 +38,8 @@ var onLoaded = function() {
         dfPane = panes.children[1];
 
     body.style.setProperty("width", "100%");
-    panes.style.setProperty("text-align", "right");
     panes.style.setProperty("width", "100%");
+    panes.style.setProperty("text-align", "right");
     dfPane.style.setProperty("display", "inline-block", "important");
 
     var updateSize = function() {
