@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"తిరస్కరించబడిన అభ్యర్ధనలు",
+    "message":"నిరోధించబడిన అభ్యర్ధనలు",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -432,11 +432,11 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of uBlock. Since many users will never use this feature, it is disabled by default.",
+    "message":"ఈ ఎంపిక ద్వారా మీరు నెట్వర్క్ అభ్యర్దనల గురించి మరిన్ని వివరాలు తెలుసుకోవచ్చు. అయితే ఈ లక్షణం uబ్లాక్ యొక్క మెమరీ వాడుకను రేట్టిస్తుంది. మాములుగా ఈ ఎంపికను ఎవరు వాడారు అందుకే ఇది అప్రమేయంగా అచేతనపరచి వుంటుంది.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"తిరస్కరించబడిన అభ్యర్ధనలు",
+    "message":"నిరోధించబడిన అభ్యర్ధనలు",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
@@ -460,7 +460,7 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"ఈ వెబ్ పేజిలొ అభ్యర్దనలను తిరస్కరించినట్టు దాఖలాలు లేవు",
+    "message":"ఈ వెబ్ పేజిలొ అభ్యర్దనలను నిరోధించబడినట్టు దాఖలాలు లేవు",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and uBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"మీరు పేర్కొన్న ఐచ్చిక్కాలన్ని {{time}}నకు తీసుకున్న నకలు డేటాతో తిరగారాయబడుతాయి, ఆ పిమ్మట uబ్లాక్ పునఃప్రారంభమవుతుంది.\n\nమీ ఐచ్చికాలను తిరగరాయుట మీకు సమ్మతమేనా?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uబ్లాక్: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

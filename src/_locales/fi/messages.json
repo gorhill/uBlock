@@ -556,7 +556,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Näytä Dashboard",
+    "message":"Näytä Hallintapaneeli",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{

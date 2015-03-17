@@ -532,7 +532,7 @@
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"一分前",
+    "message":"1分前",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -540,7 +540,7 @@
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"一時間前",
+    "message":"1時間前",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
@@ -548,7 +548,7 @@
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"一日前",
+    "message":"1日前",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{

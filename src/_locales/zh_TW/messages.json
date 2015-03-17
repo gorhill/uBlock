@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"終於，一款高效的阻擋工具。使用不多的 CPU 及記憶體資源。",
+    "message":"終於，一個高效率的阻擋器。使用不多的 CPU 及記憶體資源。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -16,15 +16,15 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"過濾清單",
+    "message":"第三方過濾規則",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"自訂過濾",
+    "message":"自訂過濾規則",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"自訂規則",
+    "message":"自訂動態過濾規則",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -44,11 +44,11 @@
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"已封鎖廣告",
+    "message":"已封鎖的連線請求數",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"本頁",
+    "message":"在此頁面上",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"按一下打開控制台",
+    "message":"點一下開啟控制台",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"查看請求日誌",
+    "message":"查看連線請求日誌",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
@@ -92,11 +92,11 @@
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"目前網頁的協力廠商腳本將被 <b>允許<\/b>",
+    "message":"目前網頁的第三方腳本將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"目前網頁的協力廠商腳本將被 <b>隱藏<\/b>",
+    "message":"目前網頁的第三方腳本將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
@@ -108,11 +108,11 @@
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"目前網頁的協力廠商框架將被 <b>允許<\/b>",
+    "message":"目前網頁的第三方框架將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"目前網頁的協力廠商框架將被 <b>隱藏<\/b>",
+    "message":"目前網頁的第三方框架將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
@@ -132,11 +132,11 @@
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"任何協力廠商腳本在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第三方腳本在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"任何協力廠商腳本在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第三方腳本在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
@@ -148,11 +148,11 @@
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"任何協力廠商框架在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第三方框架在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"任何協力廠商框架在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第三方框架在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupAnyRulePrompt":{
@@ -204,15 +204,15 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"網址過濾",
+    "message":"網址過濾規則",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"元素過濾",
+    "message":"元素隱藏過濾規則",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"按一下，按住 Ctrl 鍵按一下",
+    "message":"點一下，按住 Ctrl 鍵點一下",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -220,15 +220,15 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"隱藏已隱藏元素的預留位置",
+    "message":"隱藏已阻擋的元素的預留位置",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"在圖示上顯示封鎖廣告數量",
+    "message":"在圖示上顯示已被封鎖的連線請求數量",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"加入右鍵選單",
+    "message":"使用階層式內容功能表",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -236,7 +236,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"啟用實驗性功能",
+    "message":"啟用實驗性質的功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>關於<\/a>）",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -252,15 +252,15 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"目前使用{{netFilterCount}} 網址過濾和{{cosmeticFilterCount}} 元素過濾規則:",
+    "message":"目前已使用 {{netFilterCount}} 個網址過濾規則 ＋ {{cosmeticFilterCount}} 個元素隱藏過濾規則：",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{total}}中使用{{used}}",
+    "message":"在 {{total}} 個中，已使用 {{used}} 個",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"自動更新過濾規則",
+    "message":"自動更新過濾規則列表",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -268,11 +268,11 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"清除所有暫存檔",
+    "message":"清除所有快取",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"解析並套用Adblock+元素隱藏過濾規則。",
+    "message":"解析並套用 Adblock+ 元素隱藏過濾規則。",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -280,7 +280,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"被隱藏網站列表",
+    "message":"已封鎖的主機列表",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -296,7 +296,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"惡意軟體",
+    "message":"惡意域名",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -308,7 +308,7 @@
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"地區語言",
+    "message":"地區，語言",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -324,7 +324,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"清除暫存檔",
+    "message":"清除快取",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -332,7 +332,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"過期",
+    "message":"已過期",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -340,19 +340,19 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"每行一個規則。一條規則可以是一個平凡的網站名或者是一條Adblock Plus的相容過濾規則。以“!”開頭的行將被忽略。",
+    "message":"每行一個過濾規則。一個規則可以是一個平凡的主機名稱或者是一個與 Adblock Plus 相容的過濾規則。以“!”開頭的行將被忽略。",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"導入並加入規則",
+    "message":"匯入並加入",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"匯出規則",
+    "message":"匯出",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"我的-ublock-自訂過濾_{{datetime}}.txt",
+    "message":"我的-ublock-靜態過濾規則_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -396,11 +396,11 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"我的-ublock-自訂動態規則_{{datetime}}.txt",
+    "message":"我的-ublock-動態過濾規則_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"自訂動態過濾規則列表",
+    "message":"您的動態過濾規則列表",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -412,11 +412,11 @@
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"導入並附加規則",
+    "message":"匯入並加入",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"匯出規則",
+    "message":"匯出",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
@@ -428,7 +428,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"啟用網路請求記錄",
+    "message":"啟用網路連線請求記錄",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -436,11 +436,11 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"封鎖請求",
+    "message":"已封鎖的連線請求",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"允許請求",
+    "message":"已允許的連線請求",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -448,7 +448,7 @@
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"功能變數名稱",
+    "message":"域名",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -456,15 +456,15 @@
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"過濾",
+    "message":"過濾規則",
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"該頁面沒有封鎖記錄",
+    "message":"本頁面沒有封鎖連線請求的記錄",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"該頁面沒有未封鎖記錄",
+    "message":"本頁面沒有不封鎖連線請求的記錄",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
@@ -472,11 +472,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"過濾日誌條目",
+    "message":"過濾日誌項目",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"最大日誌條目數量",
+    "message":"最大日誌項目的數量",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -484,11 +484,11 @@
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"維基百科",
+    "message":"共筆系統",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"原始程式碼 (GPLv3)",
+    "message":"原始程式碼（GPLv3）",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
@@ -496,7 +496,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"備份到檔案...",
+    "message":"備份到檔案…",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -504,11 +504,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"從檔案還原...",
+    "message":"從檔案還原…",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"重設為預設值",
+    "message":"重置成預設值",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"您的設定將被清除，uBlock 將重新啟動。\n確定將 uBlock 重設？",
+    "message":"您的設定將被清除，而 uBlock 將會重新啟動。\n確定要將 uBlock 回復原廠設定？",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -532,7 +532,7 @@
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"一分鐘前",
+    "message":"1 分鐘前",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -540,7 +540,7 @@
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"一小時前",
+    "message":"1 小時前",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
@@ -548,7 +548,7 @@
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"一天前",
+    "message":"1 天前",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{

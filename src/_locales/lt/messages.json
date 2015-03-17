@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Spustelėkite: įjunkite\/išjunkite uBlock šiam puslapiui.\n\nVald+spustelėjimas: išjunkite uBlock tik šiam puslapiui.",
+    "message":"Spustelėjimas: įjungti\/išjungti uBlock šiam puslapiui.\n\nVald+spustelėjimas: i6jungti uBlock tik šiam puslapiui.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Spauskite, norėdami atidaryti prietaisų skydą",
+    "message":"Spustelėkite prietaisų skydui atverti",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -212,7 +212,7 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Spustelėti, Vald-spustelėti",
+    "message":"Spustelėjimas, Vald-spustelėjimas",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
@@ -256,7 +256,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"naudojami {{used}} iš {{total}}",
+    "message":"naudojama {{used}} iš {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -268,7 +268,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Valyti visus kešus",
+    "message":"Valyti visus podėlius",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -324,7 +324,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"valyti kešą",
+    "message":"valyti podėlį",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -400,7 +400,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Dinaminių filtrų taisyklių sąrašas.",
+    "message":"Dinaminių filtravimo taisyklių sąrašas.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Įjungę šią nuostatą galite nagrinėti tinklo užklausas. Tinklo užklausų registravimas padidina uBlock atminties naudojimą. Kadangi daugelis naudotojų niekada nenaudos šios funkcijos, ji yra išjungta.",
+    "message":"Įjungę šią nuostatą galite nagrinėti tinklo užklausas. Tinklo užklausų registravimas padidina uBlock atminties naudojimą. Kadangi daugelis naudotojų niekada nenaudos šios funkcijos, ji paprastai yra išjungta.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
