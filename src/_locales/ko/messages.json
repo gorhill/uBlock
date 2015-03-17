@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — 대시보드",
+    "message":"uBlock — 대쉬보드",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"클릭하여 대시보드 열기",
+    "message":"클릭하여 대쉬보드 열기",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{

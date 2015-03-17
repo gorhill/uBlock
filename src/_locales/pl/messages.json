@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Log żądań sieciowych",
+    "message":"uBlock — Dziennik żądań sieciowych",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Kliknij, aby na stałe włączyć\/wyłączyć µBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć µBlock tylko dla tej strony.",
+    "message":"Kliknij, aby włączyć\/wyłączyć uBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć uBlock tylko dla tej strony.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{

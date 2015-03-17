@@ -556,15 +556,15 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"Mostrar Tauler de control",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
+    "message":"Mostrar registre de peticions de xarxa",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"off",
+    "message":"desactivat",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{

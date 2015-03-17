@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"మొత్తానికి RAM మరియు CPUపై తేలికయిన, ఒక సమర్థవంతమైన నిరోధిని.",
+    "message":"మొత్తానికి RAM మరియు CPU పై తేలికయిన, ఒక సమర్థవంతమైన నిరోధిని.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -188,7 +188,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{total}}లో {{count}}",
+    "message":"{{total}} లో {{count}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -240,15 +240,15 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"వాడుతున్న నిలువల పరిమాణం: {{value}} బైట్స్",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"గత పునరుద్ధారణ:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"గత నకలు:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -256,7 +256,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{total}} లో వాడుతున్నది {{used}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -328,7 +328,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"నవీకరణ అన్డుబతులువుంది",
+    "message":"నవీకరణ అందుబాటులో ఉంది",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -336,7 +336,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"గత నవీకరణ: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -344,7 +344,7 @@
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"Import and append",
+    "message":"దిగుమతిచేసి పోడిగించుము",
     "description":"English: Import and append"
   },
   "1pExport":{
@@ -400,7 +400,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"మీ క్రియాశీలక జల్లెడ నియమాల జాబితా.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -412,7 +412,7 @@
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"Import and append",
+    "message":"దిగుమతిచేసి పోడిగించుము",
     "description":"English: Import and append"
   },
   "whitelistExport":{
@@ -428,7 +428,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Enable the logging of network requests",
+    "message":"నెట్వర్క్ అభ్యర్ధనలను చిట్టాలో పొందుపరచుము",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -436,11 +436,11 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"తిరస్కరించిన అభ్యర్ధనలు",
+    "message":"తిరస్కరించబడిన అభ్యర్ధనలు",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"అనుమతించిన అభ్యర్ధనలు",
+    "message":"అనుమతించబడిన అభ్యర్ధనలు",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -460,23 +460,23 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"ఈ వెబ్ పేజిలొ ఇప్పటి వరకు ఎలాంటి అభ్యర్దనలను తిరస్కరించలేదు",
+    "message":"ఈ వెబ్ పేజిలొ అభ్యర్దనలను తిరస్కరించినట్టు దాఖలాలు లేవు",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"ఈ వెబ్ పేజి నుండి అనుమతించబడిన అభ్యర్దనలు వున్నటత చిట్టాలొ దాఖలాలు లేవు",
+    "message":"ఈ వెబ్ పేజి నుండి అనుమతించబడిన అభ్యర్దనలు వున్నట్టు చిట్టాలొ దాఖలాలు లేవు",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"తేరా వెనుక",
+    "message":"తేర వెనుక",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filter log entries",
+    "message":"చిట్టాలోని నమోదులను జల్లెడపరచు",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maximum number of log entries",
+    "message":"చిట్టాలోని గరిష్ట నమోదుల సంఖ్య",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -508,7 +508,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Reset to default settings...",
+    "message":"సంస్థాపన ఐచ్చికాలను పునరుద్దరించు...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -516,15 +516,15 @@
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"డేటాను చదవడంలో లోపం సంభవించినది(డేటా పాడైవుంది లేదా అందుబాటులో లేదు)",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and uBlock will restart.\n\nReset uBlock to factory settings?",
+    "message":"ఐచ్చికాలలో మీరు చేసిన మార్పులన్నీ తొలగించనా పిమ్మట uబ్లాక్ పునఃప్రారంభిన్చాబాడును.\n\nమరి సంస్థాపన ఐచ్చికాలను పునరుద్ధరించాలా?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"{{url}} తో అనుసంధానం విఫలమైనది",
+    "message":"{{url}}తో అనుసంధానం విఫలమైనది",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
@@ -532,43 +532,43 @@
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"a minute ago",
+    "message":"ఒక నిమిషం క్రితం",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"{{value}} minutes ago",
+    "message":"{{value}} నిమిషాల క్రితం",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"an hour ago",
+    "message":"ఒక గంట క్రితం",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"{{value}} hours ago",
+    "message":"{{value}} గంటల క్రితం",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"a day ago",
+    "message":"ఒక రోజు క్రితం",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"{{value}} days ago",
+    "message":"{{value}} రోజుల క్రితం",
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"నియంత్రణా పట్టికను చూపు",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
+    "message":"నెట్వర్క్ అభ్యర్ధనల చిట్టాను చూపు",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"off",
+    "message":"అచేతనం",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"ఇది అంతిమంగా వుండాల్సిన నమోదు",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

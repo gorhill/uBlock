@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Панель управления",
+    "message":"Панель управления µBlock",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Журнал сетевых запросов",
+    "message":"Журнал сетевых запросов µBlock",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Клик: отключить\/включить µBlock для этого сайта.\n\nCTRL+Клик: отключить µBlock для этой страницы.",
+    "message":"Нажатие ЛКМ: отключить\/включить µBlock для этого сайта.\n\nCtrl+ЛКМ: отключить µBlock для этой страницы.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Эта опция включает анализ и применение <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых &ldquo;element hiding&rdquo; фильтров<\/a>. По сути это косметические фильтры - скрывают визуально раздражающие элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Включение этой опции увеличивает использование памяти <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Эта опция включает использование анализатора <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых фильтров &ldquo;скрытия элементов&rdquo;<\/a> Это косметические фильтры, дающие возможность скрыть ненужные элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Использование данной опции увеличивает потребление памяти <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ваш список адресов сайтов, для которых µBlock будет неактивен. Добавьте по одной записи в строку. Некорректные адреса будут проигнорированы без уведомлений.",
+    "message":"Ваш список адресов сайтов, для которых µBlock будет неактивен. Одна запись на строку. Некорректные адреса будут проигнорированы без уведомлений.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Вы можете анализировать данные сетевых запросов, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти µBlock.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
+    "message":"Вы можете проверить сведения о сетевых запросах, включив эту опцию. Журнал сетевых запросов увеличивает объем памяти µBlock. Поскольку многие пользователи никогда не будут использовать эту функцию, по умолчанию она отключена.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Текущие настройки будут заменены данными из резервной копии от {{time}}, µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
+    "message":"Все Ваши настройки будут заменены данными от {{time}}, и µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Добавить этот адрес в список ваших фильтров?\n\nНазвание: \"{{title}}\"\nURL: {{url}}",
+    "message":"µBlock: добавить следующий адрес в Ваш список фильтров?\n\nНазвание: \"{{title}}\"\nURL-адрес: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
