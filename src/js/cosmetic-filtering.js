@@ -239,15 +239,6 @@ var FilterParser = function() {
     this.invalid = false;
     this.cosmetic = true;
     this.reParser = /^\s*([^#]*)(##|#@#)(.+)\s*$/;
-
-    // Not all browsers support `Element.matches`:
-    // http://caniuse.com/#feat=matchesselector
-    this.div = document.createElement('div');
-    if ( typeof this.div.matches !== 'function' ) {
-        this.div = {
-            matches: function() { return true; }
-        };
-    }
 };
 
 /******************************************************************************/
@@ -260,18 +251,6 @@ FilterParser.prototype.reset = function() {
     this.invalid = false;
     this.cosmetic = true;
     return this;
-};
-
-/******************************************************************************/
-
-FilterParser.prototype.isValidSelector = function(s) {
-    try {
-        this.div.matches(s);
-    } catch (e) {
-        console.error('uBlock> invalid cosmetic filter:', s);
-        return false;
-    }
-    return true;
 };
 
 /******************************************************************************/
@@ -304,13 +283,6 @@ FilterParser.prototype.parse = function(s) {
     // is designed to minimize overhead -- this is a low occurrence filter.
     if ( this.suffix.charAt(1) === '[' && this.suffix.slice(2, 9) === 'href^="' ) {
         this.suffix = this.suffix.slice(1);
-    }
-
-    // https://github.com/gorhill/uBlock/issues/1004
-    // Detect and report invalid CSS selectors.
-    if ( this.isValidSelector(this.suffix) === false ) {
-        this.invalid = true;
-        return this;
     }
 
     this.unhide = matches[2].charAt(1) === '@' ? 1 : 0;
@@ -587,6 +559,32 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/1004
+// Detect and report invalid CSS selectors.
+
+FilterContainer.prototype.div = document.createElement('div');
+
+// Not all browsers support `Element.matches`:
+// http://caniuse.com/#feat=matchesselector
+
+if ( typeof FilterContainer.prototype.div.matches === 'function' ) {
+    FilterContainer.prototype.isValidSelector = function(s) {
+        try {
+            this.div.matches(s);
+        } catch (e) {
+            console.error('uBlock> invalid cosmetic filter:', s);
+            return false;
+        }
+        return true;
+    };
+} else {
+    FilterContainer.prototype.isValidSelector = function() {
+        return true;
+    };
+}
+
+/******************************************************************************/
+
 FilterContainer.prototype.compile = function(s, out) {
     var parsed = this.parser.parse(s);
     if ( parsed.cosmetic === false ) {
@@ -600,6 +598,15 @@ FilterContainer.prototype.compile = function(s, out) {
     var i = hostnames.length;
     if ( i === 0 ) {
         this.compileGenericSelector(parsed, out);
+        return true;
+    }
+
+    // For hostname- or entity-based filters, class- or id-based selectors are
+    // still the most common, and can easily be tested using a plain regex.
+    if (
+        this.reClassOrIdSelector.test(parsed.suffix) === false &&
+        this.isValidSelector(parsed.suffix) === false
+    ) {
         return true;
     }
 
@@ -635,11 +642,9 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     // All generic exception filters are put in the same bucket: they are
     // expected to be very rare.
     if ( parsed.unhide ) {
-        out.push(
-            'c\v' +
-            'g1\v' +
-            selector
-        );
+        if ( this.isValidSelector(selector) ) {
+            out.push('c\vg1\v' + selector);
+        }
         return;
     }
 
@@ -651,45 +656,56 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
         if ( matches === null ) {
             return;
         }
-        out.push(
-            'c\v' +
-            (matches[1] === selector ? 'lg\v' : 'lg+\v') +
-            makeHash(0, matches[1], this.genericHashMask) + '\v' +
-            selector
-        );
+        // Single-CSS rule: no need to test for whether the selector
+        // is valid, the regex took care of this. Most generic selector falls
+        // into that category.
+        if ( matches[1] === selector ) {
+            out.push(
+                'c\vlg\v' +
+                makeHash(0, matches[1], this.genericHashMask) + '\v' +
+                selector
+            );
+            return;
+        }
+        // Many-CSS rules
+        if ( this.isValidSelector(selector) ) {
+            out.push(
+                'c\vlg+\v' +
+                makeHash(0, matches[1], this.genericHashMask) + '\v' +
+                selector
+            );
+        }
         return;
     }
 
     // ["title"] and ["alt"] will go in high-low generic bin.
     if ( this.reHighLow.test(selector) ) {
-        out.push(
-            'c\v' +
-            'hlg0\v' +
-            selector
-        );
+        if ( this.isValidSelector(selector) ) {
+            out.push('c\vhlg0\v' + selector);
+        }
         return;
     }
 
     // [href^="..."] will go in high-medium generic bin.
     matches = this.reHighMedium.exec(selector);
     if ( matches && matches.length === 2 ) {
-        out.push(
-            'c\v' +
-            'hmg0\v' +
-            matches[1] + '\v' +
-            selector
-        );
+        if ( this.isValidSelector(selector) ) {
+            out.push(
+                'c\vhmg0\v' +
+                matches[1] + '\v' +
+                selector
+            );
+        }
         return;
     }
 
     // All else
-    out.push(
-        'c\v' +
-        'hhg0\v' +
-        selector
-    );
+    if ( this.isValidSelector(selector) ) {
+        out.push('c\vhhg0\v' + selector);
+    }
 };
 
+FilterContainer.prototype.reClassOrIdSelector = /^([#.][\w-]+)$/;
 FilterContainer.prototype.rePlainSelector = /^([#.][\w-]+)/;
 FilterContainer.prototype.reHighLow = /^[a-z]*\[(?:alt|title)="[^"]+"\]$/;
 FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
