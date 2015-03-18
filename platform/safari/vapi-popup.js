@@ -39,7 +39,6 @@ var onLoaded = function() {
 
     body.style.setProperty("width", "100%");
     panes.style.setProperty("width", "100%");
-    panes.style.setProperty("text-align", "right");
     dfPane.style.setProperty("display", "inline-block", "important");
 
     var updateSize = function() {

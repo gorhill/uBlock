@@ -50,6 +50,9 @@ body[dir="ltr"] #panes {
 body[dir="rtl"] #panes {
     direction: ltr;
     }
+body, #panes {
+    text-align: right; /* this helps the popup render better at "intermediate" widths */
+    }
 #panes > div {
     display: inline-block;
     position: relative;
