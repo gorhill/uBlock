@@ -371,6 +371,9 @@ var getTabBrowser = function(win) {
 /******************************************************************************/
 
 var getBrowserForTab = function(tab) {
+    if ( !tab ) {
+        return null;
+    }
     return vAPI.fennec && tab.browser || tab.linkedBrowser || null;
 };
 
@@ -457,6 +460,9 @@ vAPI.tabs.stackId = 1;
 /******************************************************************************/
 
 vAPI.tabs.getTabId = function(target) {
+    if ( !target ) {
+        return vAPI.noTabId;
+    }
     if ( vAPI.fennec ) {
         if ( target.browser ) {
             // target is a tab
@@ -1009,6 +1015,15 @@ var httpObserver = {
     register: function() {
         Services.obs.addObserver(this, 'http-on-opening-request', true);
         Services.obs.addObserver(this, 'http-on-examine-response', true);
+
+        // Guard against stale instances not having been unregistered
+        if ( this.componentRegistrar.isCIDRegistered(this.classID) ) {
+            try {
+                this.componentRegistrar.unregisterFactory(this.classID, Components.manager.getClassObject(this.classID, Ci.nsIFactory))    
+            } catch (ex) {
+                console.error('µBlock> httpObserver > unable to unregister stale instance: ', ex);
+            }
+        }
 
         this.componentRegistrar.registerFactory(
             this.classID,
@@ -1813,10 +1828,9 @@ var optionsObserver = {
         cleanupTasks.push(this.unregister.bind(this));
 
         var browser = getBrowserForTab(vAPI.tabs.get(null));
-        if ( browser.currentURI.spec !== 'about:addons' ) {
-            return;
+        if ( browser && browser.currentURI && browser.currentURI.spec === 'about:addons' ) {
+            this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
         }
-        this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
     },
 
     unregister: function() {
