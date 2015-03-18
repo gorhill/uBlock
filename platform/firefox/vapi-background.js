@@ -64,6 +64,29 @@ vAPI.app.restart = function() {
 
 var cleanupTasks = [];
 
+// This must be updated manually, every time a new task is added/removed
+var expectedNumberOfCleanups = 7;
+
+window.addEventListener('unload', function() {
+    for ( var cleanup of cleanupTasks ) {
+        cleanup();
+    }
+
+    if ( cleanupTasks.length < expectedNumberOfCleanups ) {
+        console.error(
+            'uBlock> Cleanup tasks performed: %s (out of %s)',
+            cleanupTasks.length,
+            expectedNumberOfCleanups
+        );
+    }
+
+    // frameModule needs to be cleared too
+    var frameModule = {};
+    Cu.import(vAPI.getURL('frameModule.js'), frameModule);
+    frameModule.contentObserver.unregister();
+    Cu.unload(vAPI.getURL('frameModule.js'));
+});
+
 /******************************************************************************/
 
 var SQLite = {
@@ -495,8 +518,7 @@ vAPI.tabs.getTabsForIds = function(tabIds) {
         tabIds = [tabIds];
     }
     for ( var tab of this.getAll() ) {
-        var browser = getBrowserForTab(tab);
-        var tabId = this.stack.get(browser);
+        var tabId = this.stack.get(getBrowserForTab(tab));
         if ( !tabId ) {
             continue;
         }
@@ -846,7 +868,7 @@ vAPI.messaging.onMessage = function({target, data}) {
         return;
     }
 
-    console.error('µBlock> messaging > unknown request: %o', data);
+    console.error('uBlock> messaging > unknown request: %o', data);
 
     // Unhandled:
     // Need to callback anyways in case caller expected an answer, or
@@ -1021,7 +1043,7 @@ var httpObserver = {
             try {
                 this.componentRegistrar.unregisterFactory(this.classID, Components.manager.getClassObject(this.classID, Ci.nsIFactory));
             } catch (ex) {
-                console.error('µBlock> httpObserver > unable to unregister stale instance: ', ex);
+                console.error('uBlock> httpObserver > unable to unregister stale instance: ', ex);
             }
         }
 
@@ -1908,22 +1930,6 @@ vAPI.punycodeURL = function(url) {
     }
     return url;
 };
-
-/******************************************************************************/
-
-// clean up when the extension is disabled
-
-window.addEventListener('unload', function() {
-    for ( var cleanup of cleanupTasks ) {
-        cleanup();
-    }
-
-    // frameModule needs to be cleared too
-    var frameModule = {};
-    Cu.import(vAPI.getURL('frameModule.js'), frameModule);
-    frameModule.contentObserver.unregister();
-    Cu.unload(vAPI.getURL('frameModule.js'));
-});
 
 /******************************************************************************/
 
