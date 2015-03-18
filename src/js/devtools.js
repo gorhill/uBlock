@@ -78,6 +78,7 @@ var selectPage = function() {
         return;
     }
     inspector.attr('src', targetSrc);
+    uDom('#popup').attr('src', tabId ? 'popup.html?tabId=' + tabId : '');
 
     // This is useful for when the user force-refresh the page: this will
     // prevent a reset to the original request log.
@@ -93,6 +94,63 @@ var selectPage = function() {
 
 /******************************************************************************/
 
+var togglePopup = function() {
+    var tabId = uDom('#pageSelector').val() || '';
+    var body = uDom('body');
+    body.toggleClass('popupEnabled');
+    if ( body.hasClass('popupEnabled') === false ) {
+        tabId = '';
+    }
+    uDom('#popup').attr('src', tabId ? 'popup.html?tabId=' + tabId : '');
+};
+
+/******************************************************************************/
+
+var resizePopup = function() {
+    var popup = document.getElementById('popup');
+    popup.style.width = popup.contentWindow.document.body.clientWidth + 'px';
+    popup.style.height = popup.contentWindow.document.body.clientHeight + 'px';
+};
+
+/******************************************************************************/
+
+var onPopupLoaded = function() {
+    resizePopup();
+
+    if ( popupObserver !== null ) {
+        popupObserver.disconnect();
+    }
+
+    var popup = document.getElementById('popup');
+    if ( popup.contentDocument === null ) {
+        return;
+    }
+    var popupBody = popup.contentDocument.body;
+    if ( popupBody === null ) {
+        return;
+    }
+    var popupPanes = popup.contentDocument.getElementById('panes');
+    if ( popupPanes === null ) {
+        return;
+    }
+
+    if ( popupObserver === null ) {
+        popupObserver = new MutationObserver(resizePopup);
+    }
+
+    var details = {
+        childList: false,
+        attributes: true,
+        attributeFilter: ['class']
+    };
+    popupObserver.observe(popupBody, details);
+    popupObserver.observe(popupPanes, details);
+};
+
+var popupObserver = null;
+
+/******************************************************************************/
+
 uDom.onLoad(function() {
     var tabId;
 
@@ -101,6 +159,9 @@ uDom.onLoad(function() {
     if ( matches && matches.length === 2 ) {
         tabId = matches[1];
     }
+
+    uDom('#popupToggler').on('click', togglePopup);
+    uDom('#popup').on('load', onPopupLoaded);
 
     renderPageSelector(tabId);
 

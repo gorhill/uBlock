@@ -14,12 +14,12 @@ body {
     border: 0;
     box-sizing: border-box;
     height: 36px;
+    left: 1em;
     margin: 0;
     padding: 0;
     position: fixed;
     text-align: center;
     top: 0;
-    width: 100%;
     }
 #toolbar .button {
     background-color: white;

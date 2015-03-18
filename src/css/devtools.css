@@ -17,6 +17,7 @@ body {
     }
 #toolbar > * {
     display: inline-block;
+    position: relative;
     vertical-align: middle;
     }
 #toolbar button {
@@ -42,6 +43,14 @@ select {
 select option {
     max-width: 40em;
     }
+#popupToggler {
+    opacity: 0.25;
+    position: absolute;
+    right: 0;
+    }
+body.popupEnabled #popupToggler {
+    opacity: 1;
+    }
 #content {
     border: 0;
     box-sizing: border-box;
@@ -51,4 +60,14 @@ select option {
     overflow-y: auto;
     padding: 0;
     width: 100%;
+    }
+#popup {
+    border: 1px solid gray;
+    display: none;
+    position: fixed;
+    right: 2px;
+    top: calc(4em + 2px);
+    }
+body.popupEnabled #popup[src^="popup.html"] {
+    display: initial;
     }
