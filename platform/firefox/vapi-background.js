@@ -1019,7 +1019,7 @@ var httpObserver = {
         // Guard against stale instances not having been unregistered
         if ( this.componentRegistrar.isCIDRegistered(this.classID) ) {
             try {
-                this.componentRegistrar.unregisterFactory(this.classID, Components.manager.getClassObject(this.classID, Ci.nsIFactory))    
+                this.componentRegistrar.unregisterFactory(this.classID, Components.manager.getClassObject(this.classID, Ci.nsIFactory));
             } catch (ex) {
                 console.error('µBlock> httpObserver > unable to unregister stale instance: ', ex);
             }
@@ -1839,6 +1839,9 @@ var optionsObserver = {
 
     setupOptionsButton: function(doc, id, page) {
         var button = doc.getElementById(id);
+        if ( button === null ) {
+            return;
+        }
         button.addEventListener('command', function() {
             vAPI.tabs.open({ url: page, index: -1 });
         });
