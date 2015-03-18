@@ -49,6 +49,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 // Derived
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
+var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]+)\//;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
@@ -248,7 +249,11 @@ URI.authorityFromURI = function(uri) {
 // The most used function, so it better be fast.
 
 URI.hostnameFromURI = function(uri) {
-    var matches = reAuthorityFromURI.exec(uri);
+    var matches = reCommonHostnameFromURL.exec(uri);
+    if ( matches ) {
+        return matches[1];
+    }
+    matches = reAuthorityFromURI.exec(uri);
     if ( !matches ) {
         return '';
     }
