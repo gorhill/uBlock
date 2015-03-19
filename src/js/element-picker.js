@@ -446,7 +446,7 @@ var cosmeticFilterFromElement = function(elem, out) {
 var filtersFromElement = function(elem) {
     netFilterCandidates.length = 0;
     cosmeticFilterCandidates.length = 0;
-    while ( elem && elem !== document.body ) {
+    while ( elem && elem !== document.documentElement ) {
         netFilterFromElement(elem, netFilterCandidates);
         cosmeticFilterFromElement(elem, cosmeticFilterCandidates);
         elem = elem.parentNode;
