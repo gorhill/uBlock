@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"اضغط: لتعطيل\/لتشغيل الاضافه بالكامل.\n\nCtrl+click لتعطيل الاداة لصفحه فقط",
+    "message":"اضغط: لتعطيل\/تشغيل ميكروبلوك لهذا الموقع.\n\nCtrl+click لتعطيل ميكروبلوك لهذه الصفحة فقط.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -372,7 +372,7 @@
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"تعليق",
+    "message":"إضافة",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock : إضافة الرابط التالي للقوائم الفلترات الخاصة لك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
+    "message":"µBlock : أضف الرابط التالي لقائمة الفلترة الخاصة بك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -556,15 +556,15 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"عرض لوحة التحكم",
+    "message":"اعرض لوحة التحكم",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"عرض سجل الإتصال بالشبكة",
+    "message":"اعرض سجل طلبات الإتصال بالشبكة",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"تعطيل",
+    "message":"مطفئ",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
