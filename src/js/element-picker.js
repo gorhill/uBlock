@@ -237,18 +237,8 @@ var removeElements = function(elems) {
 var incrementalNetFilter = (function() {
     var lastHostname = '';
     var lastNetFilter = '';
-    var reTokenizer = /([^0-9a-z%*]+)([0-9a-z%]+|\*)/gi;
+    var reTokenizer = /[^0-9a-z%*]+|[0-9a-z%]+|\*/gi;
     var a = document.createElement('a');
-
-    var tokenize = function(s) {
-        var out = [];
-        var match;
-        reTokenizer.lastIndex = 0;
-        while ( match = reTokenizer.exec(s) ) {
-            out.push(match[1], match[2]);
-        }
-        return out;
-    };
 
     var compute = function(to, out) {
         a.href= to;
@@ -270,24 +260,30 @@ var incrementalNetFilter = (function() {
         // Related URLs
         lastHostname = a.host;
 
-        var fromTokens = tokenize(from);
-        var toTokens = tokenize(to);
-        var toIndex = 0, i;
+        var fromTokens = from.match(reTokenizer);
+        var toTokens = to.match(reTokenizer);
+        var toCount = toTokens.length, toIndex = 0;
+        var fromToken, pos;
 
         for ( var fromIndex = 0; fromIndex < fromTokens.length; fromIndex += 1 ) {
-            if ( fromTokens[fromIndex] === '*' ) {
+            fromToken = fromTokens[fromIndex];
+            if ( fromToken === '*' ) {
                 continue;
             }
-            i = toTokens.indexOf(fromTokens[fromIndex], toIndex);
-            if ( i === -1 ) {
+            pos = toTokens.indexOf(fromToken, toIndex);
+            if ( pos === -1 ) {
                 fromTokens[fromIndex] = '*';
                 continue;
             }
-            if ( i !== toIndex ) {
+            if ( pos !== toIndex ) {
                 fromTokens.splice(fromIndex, 0, '*');
                 fromIndex += 1;
             }
-            toIndex = i + 1;
+            toIndex = pos + 1;
+            if ( toIndex === toCount ) {
+                fromTokens = fromTokens.slice(0, fromIndex + 1);
+                break;
+            }
         }
         from = fromTokens.join('').replace(/\*\*+/g, '*');
         if ( from !== '/*' ) {
