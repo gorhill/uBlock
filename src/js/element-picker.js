@@ -234,6 +234,75 @@ var removeElements = function(elems) {
 
 /******************************************************************************/
 
+var incrementalNetFilter = (function() {
+    var lastHostname = '';
+    var lastNetFilter = '';
+    var reTokenizer = /([^0-9a-z%*]+)([0-9a-z%]+|\*)/gi;
+    var a = document.createElement('a');
+
+    var tokenize = function(s) {
+        var out = [];
+        var match;
+        reTokenizer.lastIndex = 0;
+        while ( match = reTokenizer.exec(s) ) {
+            out.push(match[1], match[2]);
+        }
+        return out;
+    };
+
+    var compute = function(to, out) {
+        a.href= to;
+        to = a.pathname + a.search;
+        var from = lastNetFilter;
+
+        // Reset reference filter when dealing with unrelated URLs
+        if ( from === '' ) {
+            lastHostname = a.host;
+            lastNetFilter = to;
+            return;
+        }
+        if ( a.host !== lastHostname ) {
+            lastHostname = a.host;
+            lastNetFilter = to;
+            return;
+        }
+
+        // Related URLs
+        lastHostname = a.host;
+
+        var fromTokens = tokenize(from);
+        var toTokens = tokenize(to);
+        var toIndex = 0, i;
+
+        for ( var fromIndex = 0; fromIndex < fromTokens.length; fromIndex += 1 ) {
+            if ( fromTokens[fromIndex] === '*' ) {
+                continue;
+            }
+            i = toTokens.indexOf(fromTokens[fromIndex], toIndex);
+            if ( i === -1 ) {
+                fromTokens[fromIndex] = '*';
+                continue;
+            }
+            if ( i !== toIndex ) {
+                fromTokens.splice(fromIndex, 0, '*');
+                fromIndex += 1;
+            }
+            toIndex = i + 1;
+        }
+        from = fromTokens.join('').replace(/\*\*+/g, '*');
+        if ( from !== '/*' ) {
+            out.push('||' + lastHostname + from);
+        } else {
+            from = to;
+        }
+        lastNetFilter = from;
+    };
+
+    return compute;
+})();
+
+/******************************************************************************/
+
 // Extract the best possible net filter, i.e. as specific as possible.
 
 var netFilterFromElement = function(elem, out) {
@@ -256,15 +325,20 @@ var netFilterFromElement = function(elem, out) {
     if ( pos !== -1 ) {
         src = src.slice(0, pos);
     }
+
+    var filter = src.replace(/^https?:\/\//, '||');
+
     // Anchor absolute filter to hostname
-    src = src.replace(/^https?:\/\//, '||');
-    out.push(src);
+    out.push(filter);
+
     // Suggest a less narrow filter if possible
-    pos = src.indexOf('?');
+    pos = filter.indexOf('?');
     if ( pos !== -1 ) {
-        src = src.slice(0, pos);
-        out.push(src);
+        out.push(filter.slice(0, pos));
     }
+
+    // Suggest a filter which is a result of combining more than one URL.
+    incrementalNetFilter(src, out);
 };
 
 var netFilterSources = {
