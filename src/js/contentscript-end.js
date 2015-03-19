@@ -682,13 +682,19 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         var requests = details.requests;
         var selectors = [];
         var i = requests.length;
-        var request;
+        var request, elem, attr, value;
         while ( i-- ) {
             request = requests[i];
+            elem = elements[request.index];
             // https://github.com/gorhill/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
-            elements[request.index].style.setProperty('display', 'none', 'important');
-            selectors.push(request.tagName + '[' + srcProps[request.tagName] + '="' + request.url + '"]');
+            elem.style.setProperty('display', 'none', 'important');
+            // https://github.com/gorhill/uBlock/issues/1048
+            // Use attribute to construct CSS rule
+            attr = srcProps[request.tagName];
+            if ( value = elem.getAttribute(attr) ) {
+                selectors.push(request.tagName + '[' + attr + '="' + value + '"]');
+            }
         }
         if ( selectors.length !== 0 ) {
             messager.send({
