@@ -1843,6 +1843,14 @@ vAPI.contextMenu.create = function(details, callback) {
 
 /******************************************************************************/
 
+vAPI.contextMenu.remove = function() {
+    for ( var win of vAPI.tabs.getWindows() ) {
+        this.unregister(win.document);
+    }
+};
+
+/******************************************************************************/
+
 var optionsObserver = {
     addonId: '{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}',
 
