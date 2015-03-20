@@ -468,7 +468,6 @@ PageStore.factory = function(tabId, pageURL) {
 
 PageStore.prototype.init = function(tabId, pageURL) {
     this.tabId = tabId;
-    this.previousPageURL = '';
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
 
@@ -515,7 +514,6 @@ PageStore.prototype.reuse = function(pageURL, context) {
     // video thumbnail would not work, because the frame hierarchy structure
     // was flushed from memory, while not really being flushed on the page.
     if ( context === 'tabUpdated' ) {
-        this.previousPageURL = this.pageURL;
         this.pageURL = pageURL;
         this.pageHostname = µb.URI.hostnameFromURI(pageURL);
         this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
@@ -531,9 +529,7 @@ PageStore.prototype.reuse = function(pageURL, context) {
     // A new page is completely reloaded from scratch, reset all.
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
-    var previousPageURL = this.pageURL;
     this.init(this.tabId, pageURL);
-    this.previousPageURL = previousPageURL;
     return this;
 };
 
@@ -546,7 +542,7 @@ PageStore.prototype.dispose = function() {
     // need to release the memory taken by these, which can amount to
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
-    this.pageURL = this.previousPageURL =
+    this.pageURL =
     this.pageHostname = this.pageDomain =
     this.rootHostname = this.rootDomain =
     this.requestURL = this.requestHostname = this.requestType = '';
