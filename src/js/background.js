@@ -141,6 +141,9 @@ return {
     contextMenuClientX: -1,
     contextMenuClientY: -1,
 
+    epickerTarget: '',
+    epickerEprom: null,
+
     // so that I don't have to care for last comma
     dummy: 0
 };

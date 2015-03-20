@@ -144,6 +144,10 @@ var cosmeticFilterCandidates = [];
 
 var targetElements = [];
 
+var lastNetFilterSession = window.location.host + window.location.pathname;
+var lastNetFilterHostname = '';
+var lastNetFilterUnion = '';
+
 /******************************************************************************/
 
 // For browsers not supporting `:scope`, it's not the end of the world: the
@@ -234,31 +238,30 @@ var removeElements = function(elems) {
 
 /******************************************************************************/
 
-var incrementalNetFilter = (function() {
-    var lastHostname = '';
-    var lastNetFilter = '';
+var netFilterFromUnion = (function() {
     var reTokenizer = /[^0-9a-z%*]+|[0-9a-z%]+|\*/gi;
     var a = document.createElement('a');
 
-    var compute = function(to, out) {
+    return function(to, out) {
         a.href= to;
         to = a.pathname + a.search;
-        var from = lastNetFilter;
+        var from = lastNetFilterUnion;
 
         // Reset reference filter when dealing with unrelated URLs
-        if ( from === '' ) {
-            lastHostname = a.host;
-            lastNetFilter = to;
-            return;
-        }
-        if ( a.host !== lastHostname ) {
-            lastHostname = a.host;
-            lastNetFilter = to;
+        if ( from === '' && a.host !== lastNetFilterHostname ) {
+            lastNetFilterHostname = a.host;
+            lastNetFilterUnion = to;
+            localMessager.send({
+                what: 'elementPickerEprom',
+                lastNetFilterSession: lastNetFilterSession,
+                lastNetFilterHostname: lastNetFilterHostname,
+                lastNetFilterUnion: lastNetFilterUnion
+            });
             return;
         }
 
         // Related URLs
-        lastHostname = a.host;
+        lastNetFilterHostname = a.host;
 
         var fromTokens = from.match(reTokenizer);
         var toTokens = to.match(reTokenizer);
@@ -287,14 +290,20 @@ var incrementalNetFilter = (function() {
         }
         from = fromTokens.join('').replace(/\*\*+/g, '*');
         if ( from !== '/*' ) {
-            out.push('||' + lastHostname + from);
+            out.push('||' + lastNetFilterHostname + from);
         } else {
             from = to;
         }
-        lastNetFilter = from;
-    };
+        lastNetFilterUnion = from;
 
-    return compute;
+        // Remember across element picker sessions
+        localMessager.send({
+            what: 'elementPickerEprom',
+            lastNetFilterSession: lastNetFilterSession,
+            lastNetFilterHostname: lastNetFilterHostname,
+            lastNetFilterUnion: lastNetFilterUnion
+        });
+    };
 })();
 
 /******************************************************************************/
@@ -334,7 +343,7 @@ var netFilterFromElement = function(elem, out) {
     }
 
     // Suggest a filter which is a result of combining more than one URL.
-    incrementalNetFilter(src, out);
+    netFilterFromUnion(src, out);
 };
 
 var netFilterSources = {
@@ -845,6 +854,13 @@ var startPicker = function(details) {
     window.addEventListener('scroll', onScrolled, true);
     pickerRoot.contentWindow.addEventListener('keydown', onKeyPressed, true);
     pickerRoot.contentWindow.focus();
+
+    // Restore net filter union data if it originate from the same URL.
+    var eprom = details.eprom || {};
+    if ( eprom.lastNetFilterSession === lastNetFilterSession ) {
+        lastNetFilterHostname = eprom.lastNetFilterHostname || '';
+        lastNetFilterUnion = eprom.lastNetFilterUnion || '';
+    }
 
     // Auto-select a specific target, if any, and if possible
 

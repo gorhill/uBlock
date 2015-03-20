@@ -586,7 +586,8 @@ var onMessage = function(request, sender, callback) {
                     frameContent: this.responseText.replace(reStrings, replacer),
                     target: µb.contextMenuTarget,
                     clientX: µb.contextMenuClientX,
-                    clientY: µb.contextMenuClientY
+                    clientY: µb.contextMenuClientY,
+                    eprom: µb.epickerEprom
                 });
 
                 µb.contextMenuTarget = '';
@@ -595,6 +596,7 @@ var onMessage = function(request, sender, callback) {
             };
             xhr.send();
             return;
+
         default:
             break;
     }
@@ -605,6 +607,10 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
         case 'createUserFilter':
             µb.appendUserFilters(request.filters);
+            break;
+
+        case 'elementPickerEprom':
+            µb.epickerEprom = request;
             break;
 
         default:
