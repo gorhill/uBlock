@@ -1002,7 +1002,8 @@ var httpObserver = {
         7: 'sub_frame',
         11: 'xmlhttprequest',
         12: 'object',
-        14: 'font'
+        14: 'font',
+        21: 'image'
     },
     lastRequest: [{}, {}],
 
