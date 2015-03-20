@@ -213,6 +213,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
+    /*
     var hideElements = function(selectors) {
         // https://github.com/gorhill/uBlock/issues/207
         // Do not call querySelectorAll() using invalid CSS selectors
@@ -230,6 +231,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             elems[i].style.setProperty('display', 'none', 'important');
         }
     };
+    */
 
     // Extract and return the staged nodes which (may) match the selectors.
 
@@ -534,17 +536,15 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     var filterRequestId = 1;
     var filterRequests = {};
 
-    var FilterRequest = function(target, selector) {
+    var FilterRequest = function(target, tagName, attr) {
         this.id = filterRequestId++;
         this.target = target;
-        this.selector = selector;
+        this.tagName = tagName;
+        this.attr = attr;
     };
 
     FilterRequest.send = function(target, tagName, prop, src) {
-        var req = new FilterRequest(
-            target,
-            tagName + '[' + prop + '="' + src + '"]'
-        );
+        var req = new FilterRequest(target, tagName, prop);
         filterRequests[req.id] = req;
         messager.send(
             {
@@ -559,7 +559,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         );
     };
 
-    // Process answer: collapse, hide, or do nothing.
+    // Process answer: collapse, or do nothing.
 
     var onAnswerReceived = function(details) {
         // This should not happen under normal circumstances. It probably can
@@ -590,11 +590,18 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         // Never remove elements from the DOM, just hide them
         req.target.style.setProperty('display', 'none', 'important');
 
+        // https://github.com/gorhill/uBlock/issues/1048
+        // We need to use the atrtibute value for the CSS rule
+        var value = req.target.getAttribute(req.attr);
+        if ( !value ) {
+            return;
+        }
+
         messager.send({
             what: 'injectedSelectors',
             type: 'net',
             hostname: window.location.hostname,
-            selectors: req.selector
+            selectors:  req.tagName + '[' + req.attr + '="' + value + '"]'
         });
     };
 
