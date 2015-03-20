@@ -27,6 +27,8 @@
 
 (function() {
 
+'use strict';
+
 /******************************************************************************/
 
 var messager = vAPI.messaging.channel('devtool-log.js');
@@ -49,9 +51,19 @@ var prettyRequestTypes = {
 
 /******************************************************************************/
 
+var escapeHTML = function(s) {
+    return s.replace(reEscapeLeftBracket, '&lt;')
+            .replace(reEscapeRightBracket, '&gt;');
+};
+
+var reEscapeLeftBracket = /</g;
+var reEscapeRightBracket = />/g;
+
+/******************************************************************************/
+
 var renderURL = function(url, filter) {
     if ( filter.charAt(0) !== 's' ) {
-        return url;
+        return escapeHTML(url);
     }
     // make a regex out of the filter
     var reText = filter.slice(3);
@@ -79,11 +91,13 @@ var renderURL = function(url, filter) {
     var renderedURL = url;
 
     if ( matches && matches[0].length ) {
-        renderedURL = url.slice(0, matches.index) +
+        renderedURL = escapeHTML(url.slice(0, matches.index)) +
                       '<b>' +
-                      url.slice(matches.index, re.lastIndex) +
+                      escapeHTML(url.slice(matches.index, re.lastIndex)) +
                       '</b>' +
-                      url.slice(re.lastIndex);
+                      escapeHTML(url.slice(re.lastIndex));
+    } else {
+        renderedURL = escapeHTML(renderedURL);
     }
 
     return renderedURL;

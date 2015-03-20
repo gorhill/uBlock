@@ -71,21 +71,92 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
-var onCreatedNavigationTarget = function(details) {
-    vAPI.tabs.onPopup({
-        openerTabId: details.sourceTabId,
-        openerURL: '',
-        targetURL: details.url,
-        targetTabId: details.tabId
-    });
-};
-
-/******************************************************************************/
-
 vAPI.tabs.registerListeners = function() {
-    if ( typeof this.onNavigation === 'function' ) {
-        chrome.webNavigation.onCommitted.addListener(this.onNavigation);
-    }
+    var onNavigationClient = this.onNavigation || noopFunc;
+    var onPopupClient = this.onPopup || noopFunc;
+
+    // https://developer.chrome.com/extensions/webNavigation
+    // [onCreatedNavigationTarget ->]
+    //  onBeforeNavigate ->
+    //  onCommitted ->
+    //  onDOMContentLoaded ->
+    //  onCompleted
+
+    var popupCandidates = Object.create(null);
+
+    var PopupCandidate = function(details) {
+        this.targetTabId = details.tabId;
+        this.openerTabId = details.sourceTabId;
+        this.targetURL = details.url;
+        this.selfDestructionTimer = null;
+    };
+
+    PopupCandidate.prototype.selfDestruct = function() {
+        if ( this.selfDestructionTimer !== null ) {
+            clearTimeout(this.selfDestructionTimer);
+        }
+        delete popupCandidates[this.targetTabId];
+    };
+
+    PopupCandidate.prototype.launchSelfDestruction = function() {
+        if ( this.selfDestructionTimer !== null ) {
+            clearTimeout(this.selfDestructionTimer);
+        }
+        this.selfDestructionTimer = setTimeout(this.selfDestruct.bind(this), 1000);
+    };
+
+    var popupCandidateCreate = function(details) {
+        var popup = popupCandidates[details.tabId];
+        // This really should not happen...
+        if ( popup !== undefined ) {
+            return;
+        }
+        return popupCandidates[details.tabId] = new PopupCandidate(details);
+    };
+
+    var popupCandidateTest = function(details) {
+        var popup = popupCandidates[details.tabId];
+        if ( popup === undefined ) {
+            return;
+        }
+        popup.targetURL = details.url;
+        if ( onPopupClient(popup) !== true ) {
+            return;
+        }
+        popup.selfDestruct();
+        return true;
+    };
+
+    var popupCandidateDestroy = function(details) {
+        var popup = popupCandidates[details.tabId];
+        if ( popup instanceof PopupCandidate ) {
+            popup.launchSelfDestruction();
+        }
+    };
+
+    var onCreatedNavigationTarget = function(details) {
+        //console.debug('onCreatedNavigationTarget: popup candidate', details.tabId);
+        popupCandidateCreate(details);
+        popupCandidateTest(details);
+    };
+
+    var onBeforeNavigate = function(details) {
+        //console.debug('onBeforeNavigate: popup candidate', details.tabId);
+        popupCandidateTest(details);
+    };
+
+    var onCommitted = function(details) {
+        //console.debug('onCommitted: popup candidate', details.tabId);
+        if ( popupCandidateTest(details) === true ) {
+            return;
+        }
+        popupCandidateDestroy(details);
+        onNavigationClient(details);
+    };
+
+    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
+    chrome.webNavigation.onCommitted.addListener(onCommitted);
 
     if ( typeof this.onUpdated === 'function' ) {
         chrome.tabs.onUpdated.addListener(this.onUpdated);
@@ -95,9 +166,6 @@ vAPI.tabs.registerListeners = function() {
         chrome.tabs.onRemoved.addListener(this.onClosed);
     }
 
-    if ( typeof this.onPopup === 'function' ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
-    }
 };
 
 /******************************************************************************/
@@ -520,56 +588,6 @@ vAPI.net.registerListeners = function() {
             'types': this.onHeadersReceived.types || []
         },
         this.onHeadersReceived.extra
-    );
-
-    // Intercept root frame requests.
-    // This is where we identify and block popups early, whenever possible.
-
-    var onBeforeSendHeaders = function(details) {
-        // Do not block behind the scene requests.
-        if ( vAPI.isNoTabId(details.tabId) ) {
-            return;
-        }
-
-        // Only root document.
-        if ( details.parentFrameId !== -1 ) {
-            return;
-        }
-
-        var referrer = headerValue(details.requestHeaders, 'referer');
-        if ( referrer === '' ) {
-            return;
-        }
-
-        var result = vAPI.tabs.onPopup({
-            openerTabId: undefined,
-            openerURL: referrer,
-            targetTabId: details.tabId,
-            targetURL: details.url
-        });
-
-        if ( result ) {
-            return { 'cancel': true };
-        }
-    };
-
-    var headerValue = function(headers, name) {
-        var i = headers.length;
-        while ( i-- ) {
-            if ( headers[i].name.toLowerCase() === name ) {
-                return headers[i].value;
-            }
-        }
-        return '';
-    };
-
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        onBeforeSendHeaders,
-        {
-            'urls': [ 'http://*/*', 'https://*/*' ],
-            'types': [ 'main_frame' ]
-        },
-        [ 'blocking', 'requestHeaders' ]
     );
 };
 
