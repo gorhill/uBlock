@@ -20,11 +20,20 @@
 */
 
 /* global uDom */
-'use strict';
 
 /******************************************************************************/
 
 (function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var resizeFrame = function() {
+    var navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
+    var viewRect = document.documentElement.getBoundingClientRect();
+    document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height) + 'px');
+};
 
 /******************************************************************************/
 
@@ -49,6 +58,9 @@ var onTabClickHandler = function(e) {
 /******************************************************************************/
 
 uDom.onLoad(function() {
+    window.addEventListener('resize', resizeFrame);
+    resizeFrame();
+
     var matches = window.location.search.slice(1).match(/\??(tab=([^&]+))?(.*)$/);
     var tab = '', q = '';
     if ( matches && matches.length === 4 ) {

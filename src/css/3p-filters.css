@@ -2,9 +2,6 @@ ul {
     padding: 0;
     list-style-type: none;
     }
-#options {
-    margin-top: 0;
-    }
 #options li {
     margin-bottom: 0.5em;
     }
@@ -45,12 +42,14 @@ li.listEntry {
     margin: 0 auto 0 auto;
     margin-left: 1em;
     margin-right: 0em;
+    text-indent: -2em;
     }
 body[dir=rtl] li.listEntry {
     margin-left: 0em;
     margin-right: 1em;
     }
 li.listEntry > * {
+    text-indent: 0;
     unicode-bidi: embed;
     }
 li.listEntry > a:nth-of-type(2) {
@@ -90,10 +89,12 @@ button.custom.reloadAll:not(.disabled) {
     }
 #buttonApply {
     display: initial;
+    margin: 1em 0;
     padding: 1em;
     position: fixed;
     right: 1em;
     top: 0;
+    z-index: 10;
     }
 body[dir=rtl] #buttonApply {
     right: auto;

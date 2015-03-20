@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    padding: 0 0.5em 5em 0.5em;
+    padding: 0 0.5em 0.5em 0.5em;
     font: 14px sans-serif;
     }
 h2, h3 {
@@ -9,9 +9,6 @@ h2, h3 {
     }
 h2 {
     font-size: 18px;
-    }
-h2:nth-of-type(1) {
-    margin-top: 0;
     }
 h3 {
     font-size: 16px;

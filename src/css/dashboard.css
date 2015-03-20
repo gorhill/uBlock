@@ -12,10 +12,8 @@ html, body {
     margin: 0;
     border: 0;
     padding: 0;
-    position: absolute;
     width: 100%;
     top: 0;
-    height: 50px;
     z-index: 10;
     }
 #dashboard-nav-widgets {
@@ -30,20 +28,20 @@ html, body {
     font-size: larger;
     }
 .tabButton {
-    margin: 0;
+    background-color: #eee;
     border: 1px solid #ccc;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     border-bottom: 1px solid #ccc;
-    padding: 4px;
-    display: inline-block;
-    position: relative;
-    top: 1px;
     color: black;
-    background-color: #eee;
-    font: inherit;
     cursor: pointer;
+    display: inline-block;
+    font: inherit;
+    margin: 0;
+    padding: 4px;
+    position: relative;
     text-decoration: none;
+    top: 1px;
     }
 .tabButton:focus {
     outline: 0;
@@ -52,7 +50,6 @@ html, body {
     color: inherited;
     }
 .tabButton.selected {
-    border-bottom: 1px solid white;
     background-color: white;
     border-bottom: 1px solid white;
     }
@@ -62,8 +59,23 @@ iframe {
     padding: 0;
     background-color: transparent;
     width: 100%;
-    height: 100%;
-    border-top: 50px solid transparent;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    }
+
+@media (max-width: 600px) {
+    #dashboard-nav {
+        position: relative;
+        }
+    #dashboard-nav-widgets {
+        padding: 0;
+        }
+    [data-i18n="extName"] {
+        display: none;
+        }
+    .tabButton {
+        border-top: 0;
+        display: block;
+        }
+    .tabButton.selected {
+        border-bottom: 1px solid #ccc;
+        }
     }
