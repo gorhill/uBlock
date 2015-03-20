@@ -376,16 +376,17 @@ var cosmeticFilterFromElement = function(elem, out) {
     }
 
     // Class(es)
-    v = typeof elem.className === 'string' && elem.className.trim();
-    if ( v.length ) {
-        v = v.split(/\s+/);
-        i = v.length;
-        while ( i-- ) {
-            v[i] = CSS.escape(v[i]);
+    if ( suffix.length === 0 ) {
+        v = elem.classList;
+        if ( v ) {
+            i = v.length || 0;
+            while ( i-- ) {
+                suffix.push('.' + CSS.escape(v.item(i)));
+            }
         }
-        suffix.push('.', v.join('.'));
     }
 
+    // Tag name
     if ( suffix.length === 0 ) {
         prefix = tagName;
     }
@@ -455,10 +456,16 @@ var cosmeticFilterFromElement = function(elem, out) {
 var filtersFromElement = function(elem) {
     netFilterCandidates.length = 0;
     cosmeticFilterCandidates.length = 0;
-    while ( elem && elem !== document.documentElement ) {
+    while ( elem && elem !== document.body ) {
         netFilterFromElement(elem, netFilterCandidates);
         cosmeticFilterFromElement(elem, cosmeticFilterCandidates);
         elem = elem.parentNode;
+    }
+    // The body tag is needed as anchor only when the immediate child
+    // uses`nth-of-type`.
+    var i = cosmeticFilterCandidates.length;
+    if ( i !== 0 && cosmeticFilterCandidates[i-1].indexOf(':nth-of-type(') !== -1 ) {
+        cosmeticFilterCandidates.push('##body');
     }
 };
 
