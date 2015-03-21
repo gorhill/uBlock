@@ -46,37 +46,24 @@ var onBeforeRequest = function(details) {
     //console.debug('µBlock.webRequest/onBeforeRequest(): "%s": %o', details.url, details);
     //console.debug('µBlock.webRequest/onBeforeRequest(): "type=%s, id=%d, parent id=%d, url=%s', details.type, details.frameId, details.parentFrameId, details.url);
 
-    var µb = µBlock;
-    var tabId = details.tabId;
-    var requestType = details.type;
-    var requestURL = details.url;
-
     // Special handling for root document.
     // https://github.com/gorhill/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
+    var requestType = details.type;
     if ( requestType === 'main_frame' ) {
-        pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
-        if ( pageStore !== null ) {
-            pageStore.requestURL = requestURL;
-            pageStore.requestHostname = pageStore.pageHostname;
-            pageStore.requestType = 'main_frame';
-            pageStore.logRequest(pageStore, '');
-        }
-        mostRecentRootDocURL = requestURL;
-        mostRecentRootDocURLTimestamp = Date.now();
-        return;
+        return onBeforeRootFrameRequest(details);
     }
 
     // Special treatment: behind-the-scene requests
+    var tabId = details.tabId;
     if ( vAPI.isNoTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
 
-    var pageStore;
-
     // Lookup the page store associated with this tab id.
-    pageStore = µb.pageStoreFromTabId(tabId);
+    var µb = µBlock;
+    var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
         if ( mostRecentRootDocURL === '' ) {
             return;
@@ -111,7 +98,7 @@ var onBeforeRequest = function(details) {
     // > sub_frame), frameId indicates the ID of this frame, not the ID of
     // > the outer frame.
     // > (ref: https://developer.chrome.com/extensions/webRequest)
-    var isFrame = requestType === 'sub_frame' || requestType === 'main_frame';
+    var isFrame = requestType === 'sub_frame';
     var frameId = isFrame ? details.parentFrameId : details.frameId;
     if ( frameId > 0 ) {
         if ( frameStore = pageStore.getFrame(frameId) ) {
@@ -120,6 +107,7 @@ var onBeforeRequest = function(details) {
     }
 
     // Setup context and evaluate
+    var requestURL = details.url;
     requestContext.requestURL = requestURL;
     requestContext.requestHostname = details.hostname;
     requestContext.requestType = requestType;
@@ -174,6 +162,25 @@ var onBeforeRequest = function(details) {
     // will not be made. There can be no such guarantee with redirection.
 
     return { 'cancel': true };
+};
+
+/******************************************************************************/
+
+var onBeforeRootFrameRequest = function(details) {
+    // Special handling for root document.
+    // https://github.com/gorhill/uBlock/issues/1001
+    // This must be executed regardless of whether the request is
+    // behind-the-scene
+    var requestURL = details.url;
+    var pageStore = µBlock.bindTabToPageStats(details.tabId, requestURL, 'beforeRequest');
+    if ( pageStore !== null ) {
+        pageStore.requestURL = requestURL;
+        pageStore.requestHostname = pageStore.pageHostname;
+        pageStore.requestType = 'main_frame';
+        pageStore.logRequest(pageStore, '');
+    }
+    mostRecentRootDocURL = requestURL;
+    mostRecentRootDocURLTimestamp = Date.now();
 };
 
 /******************************************************************************/
