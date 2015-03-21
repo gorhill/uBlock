@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"終於，一個高效率的阻擋器。使用不多的 CPU 及記憶體資源。",
+    "message":"終於出現了，一個高效率的阻擋器，使用不多的 CPU 及記憶體資源。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} 或 {{percent}}%",
+    "message":"{{count}} 個（{{percent}}%）",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -60,7 +60,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"或",
+    "message":"個或",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -188,7 +188,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"在 {{total}} 個中，已連結 {{count}} 個",
+    "message":"{{count}} 個（全部共 {{total}} 個）",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -384,7 +384,7 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"擯棄",
+    "message":"捨棄",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{

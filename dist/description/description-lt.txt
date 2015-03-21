@@ -1,6 +1,6 @@
 Efektyvus blokatorius: neapkraunantis procesoriaus ir atminties, bet galintis taikyti tūkstančiais daugiau filtrų, nei kiti populiarūs blokatoriai.
 
-Efektyvumo iliustracija:
+Iliustruota efektyvumo apžvalga:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Naudojimas: didelis įjungimo mygtukas iškylančiame lange skirtas įjungti/išjungti uBlock dabartiniam puslapiui. Jis skirtas tik dabartiniam puslapiui ir nėra naudojamas visiškai išjungti plėtinį.
