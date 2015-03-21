@@ -1,9 +1,9 @@
 Un paravan de protecție eficient: folosește procesorul și memoria foarte puțin și totuși poate încărca și aplica filtre cu mii în plus față de alte paravane.
 
 O ilustrare a eficienței poate fi observată la:
-https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Utilizare: Acel buton de pornire/oprire în fereastra paravanului este pentru a activa/debloca µBlock pentru siteul curent. Funcția este valabilă doar pentru siteul curent, nu la nivel global.
+Utilizare: Acel buton de pornire/oprire în fereastra paravanului este pentru a activa/debloca uBlock pentru siteul curent. Funcția este valabilă doar pentru siteul curent, nu la nivel global.
 
 ***
 
@@ -25,7 +25,7 @@ De asemenea, mai sunt disponibile și alte liste precum:
 - Spam404
 - Și multe altele
 
-Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, µBlock tot folosește mai puțină memorie decât restul paravanelor.
+Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, uBlock tot folosește mai puțină memorie decât restul paravanelor.
 
 De ținut minte, că odată cu selectarea în plus a unora dintre liste poate conduce la afectarea aspectului siteurilor -- în special listele care sunt în mod normal fișiere hosts.
 

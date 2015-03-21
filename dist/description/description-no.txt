@@ -1,6 +1,6 @@
 Effektiv blokkering av reklame, sporing mm., lavt CPU- og minnebruk, og kan likevel laste og bruke tusenvis av flere filtre enn andre populære utvidelser for blokkering.
 
-Illustrert oversikt over effektiviteten: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Illustrert oversikt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Anvendelse: Den store av/på-knappen i oppsprettsvinduet er for å permanent deaktivere/aktivere uBlock for det gjeldende nettstedet. Dette gjelder bare for det gjeldende nettstedet, det er ikke en global av/på-knapp.
 

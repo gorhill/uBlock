@@ -1,8 +1,8 @@
 An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
 
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Usage: The big power button in the popup is to permanently disable/enable µBlock for the current web site. It applies to the current web site only, it is not a global power button.
+Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
 
 ***
 
@@ -24,7 +24,7 @@ More lists are available for you to select if you wish:
 - Spam404
 - And many others
 
-Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, µBlock still has a lower memory footprint than other very popular blockers out there.
+Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
 
 Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
 

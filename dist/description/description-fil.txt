@@ -1,9 +1,9 @@
 Isang episyenteng blocker: magaan sa memorya at CPU footprint, pero naka-loload at nag-eenforce ng libo-libong mga filters kaysa sa mga ibang sikat na blockers.
 
 Isinalarawan pangkalahatang-ideya ng kahusayan ng uBlock:
-https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Paggamit: Ang malaking button sa sa popup ay upang permanenteng huwag paganahin / paganahin ang μBlock para sa kasalukuyang web site. Nalalapat ito sa kasalukuyang web site lamang , hindi ito pangkalahatang button.
+Paggamit: Ang malaking button sa sa popup ay upang permanenteng huwag paganahin / paganahin ang uBlock para sa kasalukuyang web site. Nalalapat ito sa kasalukuyang web site lamang , hindi ito pangkalahatang button.
 
 ***
 
@@ -25,7 +25,7 @@ Higit pang mga listahan ay magagamit para sa iyo upang piliin kung nanaisin:
 - Spam404
 - At iba pa.
 
-Siyempre, mas maraming pinapaganang mga filter , mas mataas ang memory footprint. Ngunit , kahit ang pagdaragdag ng dalawang extra na mga listahan ng Fanboy , hpHosts’s Ad at tracking servers, ang μBlock pa rin ay may mas mababang memory footprint kaysa sa iba pang mga sikat na blockers.
+Siyempre, mas maraming pinapaganang mga filter , mas mataas ang memory footprint. Ngunit , kahit ang pagdaragdag ng dalawang extra na mga listahan ng Fanboy , hpHosts’s Ad at tracking servers, ang uBlock pa rin ay may mas mababang memory footprint kaysa sa iba pang mga sikat na blockers.
 
 Gayundin, magkaroon ng kamalayan na ang pagpili ng ilan sa mga dagdag na mga listahan ay maaaring humantong sa mas mataas na posibilidad ng pagkasira ng web site - lalo na ang mga listahan na palaging ginagamit na hosts file.
 

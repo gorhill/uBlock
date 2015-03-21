@@ -1,8 +1,8 @@
 Tõhus blokeerija: kasutab vähe mälu ja protsessorit ning sellegipoolest suudab laadida ja kasutada mitu korda rohkem filtreid kui teised tuntud blokeerijad.
 
-Laienduse kasulikkuse täpne ülevaade: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Laienduse kasulikkuse täpne ülevaade: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Kasutamine: hüpikaknas oleva suure rohelise nupu kaudu on võimalik µBlock praegusel lehel püsivalt keelata/lubada. See käib ainult hetkel avatud lehe, mitte kõikide saitide kohta.
+Kasutamine: hüpikaknas oleva suure rohelise nupu kaudu on võimalik uBlock praegusel lehel püsivalt keelata/lubada. See käib ainult hetkel avatud lehe, mitte kõikide saitide kohta.
 
 ***
 
@@ -24,7 +24,7 @@ Lisaks neile on veel saadaval:
 - Spam404
 - Ja paljud teised
 
-Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab µBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
+Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
 
 Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti domeenilistide puhul.
 

@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Panou de control",
+    "message":"uBlock — Panou de control",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Jurnalul cererilor de rețea",
+    "message":"uBlock — Jurnalul cererilor de rețea",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: dezactivează\/activează µBlock pentru acest sait.\n\nCtrl+clic: dezactivează µBlock doar pe această pagină.",
+    "message":"Clic: dezactivează\/activează uBlock pentru acest sait.\n\nCtrl+clic: dezactivează uBlock doar pe această pagină.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de <i>µBlock<\/i> va crește.<\/p>",
+    "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de <i>uBlock<\/i> va crește.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -408,7 +408,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista ta de nume de gazde unde µBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "message":"Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -432,7 +432,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Poti inspecta detaliile cererilor de retea daca vrei, activand aceasta optiune. Inregistrarea cererilor de retea poate conduce la cresterea gradului de utilizare a memoriei de catre µBlock. Pentru ca multi utilizatori n-or sa foloseasca niciodata aceasta optiune, aceasta este dezactivata implicit.",
+    "message":"Dacă dorești poți inspecta detaliile cererilor de rețea activând această opțiune. Înregistrarea cererilor de rețea poate conduce la creșterea gradului de utilizare a memoriei de către uBlock. Pentru că mulți utilizatori nu vor folosi vreodată această opțiune, aceasta este dezactivată implicit.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -512,7 +512,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și µBlock va fi repornit.\n\nDoriți să suprascrieți toate opțiunile folosind datele salvate?",
+    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și uBlock va fi repornit.\n\nDoriți să suprascrieți toate opțiunile folosind datele salvate?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Toate configurările tale vor fi eliminate și µBlock va reporni.\n\nRestaurează µBlock la configurările din fabrică?",
+    "message":"Toate configurările tale vor fi eliminate și uBlock va reporni.\n\nRestaurează uBlock la configurările din fabrică?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Adaugă următorul URL în lista de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Adaugă următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

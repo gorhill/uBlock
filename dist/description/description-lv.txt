@@ -1,8 +1,8 @@
 Efektīvs reklāmu bloķētājs: nepārslogo procesoru un atmiņu, un var ielādēt un pielietot tūkstošiem filtru vairāk nekā citi populāri bloķētāji.
 
-Ilustrēts apskats par tā efektivitāti: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
+Ilustrēts apskats par tā efektivitāti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
-Izmantošana: nospiediet lielo pogu uznirstošajā logā, lai izslēgtu/ieslēgtu µBlock pašreizējā web vietnē. Šī poga attiecas tikai uz pašreizējo tīmekļa vietni.
+Izmantošana: nospiediet lielo pogu uznirstošajā logā, lai izslēgtu/ieslēgtu uBlock pašreizējā web vietnē. Šī poga attiecas tikai uz pašreizējo tīmekļa vietni.
 
 ***
 
@@ -24,7 +24,7 @@ Ja vēlaties, ir pieejami daudz vairāk sarakstu, no kuriem jūs varat izvēlēt
 - Spam404
 - Un daudzi citi
 
-Protams, jo vairāk papildus filtri tiks lietoti, jo lielāks atmiņas patēriņš. Tomēr pat pēc tam, kad pievienoti Fanboy divi papildu saraksti, hpHosts reklāmas un sekošanas serveriem, µBlock patērē mazāku atmiņas daudzumu, nekā citi populāri bloķētāji.
+Protams, jo vairāk papildus filtri tiks lietoti, jo lielāks atmiņas patēriņš. Tomēr pat pēc tam, kad pievienoti Fanboy divi papildu saraksti, hpHosts reklāmas un sekošanas serveriem, uBlock patērē mazāku atmiņas daudzumu, nekā citi populāri bloķētāji.
 
 Arī jāapzinās, ka izvēloties dažus no šiem papildus sarakstiem, tas var izraisīt lielāku iespējamību, ka tīmekļa vietne tiks nepareizi parādīta — īpaši sarakstos, kurus parasti izmanto kā hosts failu.
 

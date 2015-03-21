@@ -1,8 +1,8 @@
 Účinný blokovač: nezaťažuje CPU a pamäť a dokáže načítať a vynútiť o niekoľko tisíc filtrov viac ako iné populárne blokovače.
 
-Ilustrovaný prehľad o jeho účinnosti: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Ilustrovaný prehľad o jeho účinnosti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Použitie: Veľký vypínač vo vyskakovacom okne natrvalo zakáže/povolí μBlock pre aktuálnu webovú stránku. Vzťahuje sa len na aktuálnu webovú stránku, nie na všeobecný vypínač.
+Použitie: Veľký vypínač vo vyskakovacom okne natrvalo zakáže/povolí uBlock pre aktuálnu webovú stránku. Vzťahuje sa len na aktuálnu webovú stránku, nie na všeobecný vypínač.
 
 ***
 
@@ -24,7 +24,7 @@ Tieto zoznamy filtrov sú predvolene načítané a vynútené:
 - Spam404
 - A mnoho ďalších
 
-Samozrejme, čím viac povolených filtrov, tým vyššie nároky na pamäť. Aj po pridaní dvoch ďalších zoznamov od Fanboya, reklamných a stopovacích serverov od hpHost má µBlock stále menšie nároky na pamäť ako mnohé ďalšie veľmi populárne blockovače.
+Samozrejme, čím viac povolených filtrov, tým vyššie nároky na pamäť. Aj po pridaní dvoch ďalších zoznamov od Fanboya, reklamných a stopovacích serverov od hpHost má uBlock stále menšie nároky na pamäť ako mnohé ďalšie veľmi populárne blockovače.
 
 Ďalej majte na pamäti, že výber viacerých filtrov zvyšuje šancu chybného zobrazenie webov - predovšetkým u zoznamov, ktoré sa normálne používajú ako hosts súbory.
 

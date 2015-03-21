@@ -1,8 +1,8 @@
 Një bllokues efikas: me impakt të vogël te memorja dhe procesori, por mund të hapë dhe të zbatojë mijëra filtra më shumë sesa bllokuesit e tjerë të njohur.
 
-Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Përdorimi: Çelësi i komandimit te dritarja e vogël e bën µBlock përherë joaktiv/aktiv për uebsajtin aktual. Ai vlen vetëm për uebsajtin aktual, nuk është një çelës i përgjithshëm.
+Përdorimi: Çelësi i komandimit te dritarja e vogël e bën uBlock përherë joaktiv/aktiv për uebsajtin aktual. Ai vlen vetëm për uebsajtin aktual, nuk është një çelës i përgjithshëm.
 
 ***
 
@@ -24,7 +24,7 @@ Po të doni, ka edhe shumë lista të tjera të gatshme:
 - Spam404
 - Dhe shumë të tjera
 
-Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memorja. Edhe me shtimin e dy listave shtesë të Fanboy, hpHosts’s Ad and tracking servers, µBlock përsëri ka impakt më të ulët në memorje sesa bllokuesit e tjerë shumë të njohur.
+Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memorja. Edhe me shtimin e dy listave shtesë të Fanboy, hpHosts’s Ad and tracking servers, uBlock përsëri ka impakt më të ulët në memorje sesa bllokuesit e tjerë shumë të njohur.
 
 Por, kujdes, sepse duke përzgjedhur disa prej këtyre listave, gjasat që faqet të shfaqin probleme do të jenë më të mëdha -- sidomos listat që normalisht përdoren si skeda "hosts".
 

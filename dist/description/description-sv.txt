@@ -1,9 +1,9 @@
 En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda och applicera tusentals fler filter jämfört med andra populära blockerare där ute.
 
 Illustrerad översikt av dess effektivitet:
-https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktivera/aktivera µBlock på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
+Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktivera/aktivera uBlock på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
 
 ***
 
@@ -25,7 +25,7 @@ Fler filterlistor finns tillgängliga att använda om du vill:
 - Spam404
 - med flera
 
-Ju fler aktiverade filter, desto högre minnesanvändning. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts' Ad and tracking servers så använder µBlock mindre minne än andra väldigt populära blockerare.
+Ju fler aktiverade filter, desto högre minnesanvändning. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts' Ad and tracking servers så använder uBlock mindre minne än andra väldigt populära blockerare.
 
 Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder - särskilt de listor som i normala fall används som hosts-filer.
 

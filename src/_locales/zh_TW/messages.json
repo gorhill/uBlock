@@ -40,11 +40,11 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"點選：對此網站 停用\/啟用 uBlock。\n\nCtrl + 點擊：僅在此頁面停用 uBlock。",
+    "message":"點擊：對此網站 停用\/啟用 uBlock。\n\nCtrl + 點擊：僅在此頁面停用 uBlock。",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"已封鎖的連線請求數",
+    "message":"已阻擋的連線請求",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"總計",
+    "message":"自安裝後",
     "description":"English: since install"
   },
   "popupOr":{
@@ -76,83 +76,83 @@
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>允許<\/b>",
+    "message":"目前網站的行內 <code>script<\/code> 標籤將被<b>允許<\/b>",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>封鎖<\/b>",
+    "message":"目前網站的行內 <code>script<\/code> 標籤將被<b>阻擋<\/b>",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"目前網頁的第一方腳本將被 <b>允許<\/b>",
+    "message":"目前網站的第一方腳本將被<b>允許<\/b>",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"目前網頁的第一方腳本將被 <b>隱藏<\/b>",
+    "message":"目前網站的第一方腳本將被<b>阻擋<\/b>",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"目前網頁的第三方腳本將被 <b>允許<\/b>",
+    "message":"目前網站的第三方腳本將被<b>允許<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"目前網頁的第三方腳本將被 <b>隱藏<\/b>",
+    "message":"目前網站的第三方腳本將被<b>阻擋<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"目前網頁的第一方框架將被 <b>允許<\/b>",
+    "message":"目前網站的第一方框架將被<b>允許<\/b>",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"目前網頁的第一方框架將被 <b>隱藏<\/b>",
+    "message":"目前網站的第一方框架將被<b>阻擋<\/b>",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"目前網頁的第三方框架將被 <b>允許<\/b>",
+    "message":"目前網站的第三方框架將被<b>允許<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"目前網頁的第三方框架將被 <b>隱藏<\/b>",
+    "message":"目前網站的第三方框架將被<b>阻擋<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何行內的 <code>script<\/code> 標籤在預設情況下都將被<b>允許<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何行內的 <code>script<\/code> 標籤在預設情況下都將被<b>阻擋<\/b>",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"任何第一方腳本在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第一方腳本在預設情況下都將被<b>允許<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"任何第一方腳本在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第一方腳本在預設情況下都將被<b>阻擋<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"任何第三方腳本在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第三方腳本在預設情況下都將被<b>允許<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"任何第三方腳本在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第三方腳本在預設情況下都將被<b>阻擋<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"任何第一方框架在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第一方框架在預設情況下都將被<b>允許<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"任何第一方框架在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第一方框架在預設情況下都將被<b>阻擋<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"任何第三方框架在預設情況下都將被 <b>允許<\/b>",
+    "message":"任何第三方框架在預設情況下都將被<b>允許<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"任何第三方框架在預設情況下都將被 <b>隱藏<\/b>",
+    "message":"任何第三方框架在預設情況下都將被<b>阻擋<\/b>",
     "description":""
   },
   "popupAnyRulePrompt":{
@@ -184,11 +184,11 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"已連結的域名數",
+    "message":"已連結的域名",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} \/ {{total}}",
+    "message":"在 {{total}} 個中，已連結 {{count}} 個",
     "description":"appears in popup"
   },
   "pickerCreate":{
@@ -212,11 +212,11 @@
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"點一下，按住 Ctrl 鍵點一下",
+    "message":"點擊，按住 Ctrl 鍵點擊",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"隱藏元素",
+    "message":"阻擋元素",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -224,7 +224,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"在圖示上顯示已被封鎖的連線請求數量",
+    "message":"在圖示上顯示已被阻擋的連線請求數量",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -280,7 +280,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"已封鎖的主機列表",
+    "message":"已阻擋的主機列表",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -316,7 +316,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"每行一個 URL。以“!”開頭的行將被忽略。無效的 URL 將被忽略。",
+    "message":"每行一個網址。以“!”開頭的行將被忽略。無效的網址將被忽略。",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -332,7 +332,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"已過期",
+    "message":"過時的",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -368,7 +368,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"回復",
+    "message":"還原",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -384,7 +384,7 @@
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"捨棄",
+    "message":"擯棄",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
@@ -436,7 +436,7 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"已封鎖的連線請求",
+    "message":"已阻擋的連線請求",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
@@ -460,15 +460,15 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"本頁面沒有封鎖連線請求的記錄",
+    "message":"本頁面沒有阻擋連線請求的記錄",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"本頁面沒有不封鎖連線請求的記錄",
+    "message":"本頁面沒有不阻擋連線請求的記錄",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"幕後",
+    "message":"背景的網路連線請求",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -508,11 +508,11 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"重置成預設值",
+    "message":"重置為預設設定",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"所有設定將會被備份於 {{time}} 的資料覆蓋，uBlock 將重新啟動。\n確定用備份的資料覆蓋現有的設定嗎？",
+    "message":"所有您的設定將會被備份於 {{time}} 的資料覆蓋，而 uBlock 將會重新啟動。\n\n確定用備份的資料覆蓋所有的現有設定嗎？",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -520,7 +520,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"您的設定將被清除，而 uBlock 將會重新啟動。\n確定要將 uBlock 回復原廠設定？",
+    "message":"所有您的設定將被移除，而 uBlock 將會重新啟動。\n\n確定要將 uBlock 回復原廠設定？",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

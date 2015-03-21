@@ -1,6 +1,6 @@
 Efektivní blokovač: nezanechává velké stopy, nezatěžuje paměť a CPU, a přesto může načítat a využívat o několik tisíc filtrů více, než jiné populární blockery.
 
-Grafický přehled jeho účinnosti: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Grafický přehled jeho účinnosti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Použití: Velký vypínač ve vyskakovacím okně trvale povolí/zakáže uBlock pro otevřenou stránku. Funguje pouze pro aktivní webovou stránku, není to obecný vypínač.
 

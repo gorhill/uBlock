@@ -1,8 +1,8 @@
 En effektiv blocker: let på hukommelse og CPU forbrug,. Kan indlæse og anvende tusindvis af flere filtre end andre populære blockere derude.
 
-Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-compared
+Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
-Anvendelse: Den Store power knap i pop-up-vinduet kan permanent deaktivere/aktivere µBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global afbryderknap.
+Anvendelse: Den Store power knap i pop-up-vinduet kan permanent deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global afbryderknap.
 
 ***
 
@@ -24,7 +24,7 @@ Flere lister er tilgængelige hvis du ønsker det:
 - Spam404
 - Osv.
 
-Selvfølgelig vil flere aktive filtre betyde højere hukommelsesforbrug. Selv efter tilføjelse af Fanboys to ekstra lister, og hpHosts’s Ad and tracking server, har µBlock stadig et lavere hukommelsesforbrug end andre blockere derude.
+Selvfølgelig vil flere aktive filtre betyde højere hukommelsesforbrug. Selv efter tilføjelse af Fanboys to ekstra lister, og hpHosts’s Ad and tracking server, har uBlock stadig et lavere hukommelsesforbrug end andre blockere derude.
 
 Vær desuden opmærksom på, at hvis du vælger nogle af disse ekstra lister kan det føre til højere sandsynlighed for, at webstedet bliver vist forkert - især de lister der normalt anvendes som hosts-fil.
 

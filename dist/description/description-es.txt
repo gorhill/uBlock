@@ -1,8 +1,8 @@
 Un bloqueador eficiente: con bajo consumo de memoria y CPU, es capaz de cargar y aplicar miles más de filtros en comparación con otros bloqueadores populares.
 
-Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Uso: El botón grande de apagado/encendido en la ventana de la aplicación, es para desactivar/activar µBlock permanentemente en el sitio web actual. Aplica solo al sitio web actual, no activa o desactiva la extensión de forma general.
+Uso: El botón grande de apagado/encendido en la ventana de la aplicación, es para desactivar/activar uBlock permanentemente en el sitio web actual. Aplica solo al sitio web actual, no activa o desactiva la extensión de forma general.
 
 ***
 
@@ -24,7 +24,7 @@ Otras listas disponibles pueden ser seleccionadas, si se desea:
 - Spam404
 - Etc.
 
-Por supuesto, mientras más filtros se activen, mayor será el consumo de memoria. No obstante, incluso después de agregar las dos listas adicionales de Fanboy y la 'hpHosts’s Ad and tracking servers', µBlock consume menos memoria que otros bloqueadores similares.
+Por supuesto, mientras más filtros se activen, mayor será el consumo de memoria. No obstante, incluso después de agregar las dos listas adicionales de Fanboy y la 'hpHosts’s Ad and tracking servers', uBlock consume menos memoria que otros bloqueadores similares.
 
 También tenga en cuenta que seleccionar algunas de estas listas adicionales puede conducir a una mayor probabilidad de aparición de problemas al mostrar un sitio web -- especialmente las listas utilizadas normalmente como archivo hosts.
 

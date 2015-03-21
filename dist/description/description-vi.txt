@@ -1,8 +1,8 @@
 Một công cụ chặn quảng cáo hiệu quả: sử dụng ít bộ nhớ, CPU và có thể nạp, áp dụng hàng ngàn bộ lọc so với những công cụ chặn quảng cáo hiện nay.
 
-Minh hoạ tổng quan về tính hiệu quả của µBlock: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+Minh hoạ tổng quan về tính hiệu quả của µBlock: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sử dụng: Nút nguồn lớn trong hộp thoại popup để vô hiệu/kích hoạt vĩnh viễn µBlock cho website hiện tại. Nó chỉ áp dụng cho trang hiện tại, không phải tất cả website.
+Sử dụng: Nút nguồn lớn trong hộp thoại popup để vô hiệu/kích hoạt vĩnh viễn uBlock cho website hiện tại. Nó chỉ áp dụng cho trang hiện tại, không phải tất cả website.
 
 ***
 
@@ -24,7 +24,7 @@ Có thêm nhiều danh sách để bạn lựa chọn:
 - Spam404
 - Và nhiều hơn nữa
 
-Dĩ nhiên, khi kích hoạt thêm bộ lọc, tiện ích sẽ dùng nhiều bộ nhớ hơn. Tuy vậy, sau khi thêm hai danh sách Fanboy, máy chủ quảng cáo và theo dõi của hpHosts, µBlock vẫn dùng ít bộ nhớ hơn so với những công cụ chặn quảng cáo rất phổ biến khác.
+Dĩ nhiên, khi kích hoạt thêm bộ lọc, tiện ích sẽ dùng nhiều bộ nhớ hơn. Tuy vậy, sau khi thêm hai danh sách Fanboy, máy chủ quảng cáo và theo dõi của hpHosts, uBlock vẫn dùng ít bộ nhớ hơn so với những công cụ chặn quảng cáo rất phổ biến khác.
 
 Ngoài ra, lưu ý rằng chọn thêm một số danh sách có thể dẫn đến khả năng một số website hiển thị không đúng cách -- đặc biệt là những danh sách thường được dùng như tập tin hosts.
 

@@ -1,8 +1,8 @@
 Pemblokir yang efisien: ringan penggunaan memori dan CPU, namun dapat memuat dan menjalankan ribuan filter lain dibanding pemblokir populer lain di luar sana.
 
-Ringkasan ilustrasi efisiensi: https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP :-Efficiency-Compared
+Ringkasan ilustrasi efisiensi: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-Compared
 
-Penggunaan: Tombol daya yang besar dalam popup berfungsi menonaktifkan/mengaktifkan µBlock secara permanen untuk situs yang sedang dibuka. Berlaku untuk situs yang sedang dibuka saja, bukan tombol daya global.
+Penggunaan: Tombol daya yang besar dalam popup berfungsi menonaktifkan/mengaktifkan uBlock secara permanen untuk situs yang sedang dibuka. Berlaku untuk situs yang sedang dibuka saja, bukan tombol daya global.
 
 ***
 
@@ -24,7 +24,7 @@ Jika anda ingin, masih banyak tersedia daftar lain untuk anda pilih:
 - Spam404
 - dan banyak lainnya
 
-Tentu saja, semakin banyak filter yang diaktifkan, semakin besar penggunaan memori. Namun, bahkan setelah menambahkan 2 daftar ekstra Fanboy, server iklan dan pelacakan hpHosts, penggunaan memori µBlock masih lebih kecil dibanding pemblokir iklan populer lain di luar sana.
+Tentu saja, semakin banyak filter yang diaktifkan, semakin besar penggunaan memori. Namun, bahkan setelah menambahkan 2 daftar ekstra Fanboy, server iklan dan pelacakan hpHosts, penggunaan memori uBlock masih lebih kecil dibanding pemblokir iklan populer lain di luar sana.
 
 Perlu diketahui juga bahwa memilih beberapa daftar ekstra juga berpeluang lebih tinggi menyebabkan kerusakan situs  -- terutama daftar yang biasanya digunakan sebagai berkas host.
 
