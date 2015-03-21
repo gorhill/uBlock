@@ -141,16 +141,20 @@ vAPI.tabs.registerListeners = function() {
     };
 
     var onBeforeNavigate = function(details) {
-        //console.debug('onBeforeNavigate: popup candidate', details.tabId);
-        popupCandidateTest(details);
+        if ( details.frameId === 0 ) {
+            //console.debug('onBeforeNavigate: popup candidate', details.tabId);
+            popupCandidateTest(details);
+        }
     };
 
     var onCommitted = function(details) {
-        //console.debug('onCommitted: popup candidate', details.tabId);
-        if ( popupCandidateTest(details) === true ) {
-            return;
+        if ( details.frameId === 0 ) {
+            //console.debug('onCommitted: popup candidate', details.tabId);
+            if ( popupCandidateTest(details) === true ) {
+                return;
+            }
+            popupCandidateDestroy(details);
         }
-        popupCandidateDestroy(details);
         onNavigationClient(details);
     };
 
