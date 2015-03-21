@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock",
-    "version": "0.9.1.2",
+    "version": "0.9.2.0",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
