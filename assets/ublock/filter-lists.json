@@ -280,6 +280,12 @@
         "group": "regions",
         "homeURL": "https://www.fanboy.co.nz/fanboy-vietnam.txt"
         },
+    "http://adblock.ee/list.php": {
+        "off": true,
+        "title": "EST: Eesti saitidele kohandatud filter",
+        "group": "regions",
+        "homeURL": ""
+        },
     "www.zoso.ro/pages/rolist.txt": {
         "off": true,
         "title": "ROU: RO-LIST (modified)",
