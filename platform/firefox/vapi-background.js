@@ -1847,6 +1847,11 @@ vAPI.contextMenu.remove = function() {
     for ( var win of vAPI.tabs.getWindows() ) {
         this.unregister(win.document);
     }
+
+    this.menuItemId = null;
+    this.menuLabel = null;
+    this.contexts = null;
+    this.onCommand = null;
 };
 
 /******************************************************************************/
