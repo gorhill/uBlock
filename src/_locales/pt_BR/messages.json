@@ -200,7 +200,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Cancelar",
+    "message":"Sair",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
@@ -228,7 +228,7 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Fazer o uso do menu de contexto onde apropriado",
+    "message":"Utilizar o menu de contexto onde apropriado",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
@@ -556,11 +556,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Exibir Painel",
+    "message":"Mostrar Painel",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar Registo de Pedidos de Rede",
+    "message":"Mostrar Registro de Pedidos de Rede",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
