@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 5Wy15cbmzm/enCjf0zQ8KA
+! Checksum: 5ccFE4TyiLTJVXsnOVIvWQ
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
-! Title: ABP Japanese filters (ONLY for Japanese: see Support Policy)
+! Title: ABP Japanese filters (ONLY for advanced Japanese users: check Support Policy below)
 ! Expires: 6 hours
-! Version: 201503072000
+! Version: 201503160210
 
-! Last modified: 2015-03-07 20:00 JST(UTC+0900)
+! Last modified: 2015-03-16 02:10 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons 3.0 BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
@@ -3765,6 +3765,14 @@
 ^fastpopunder.
 ^fastpopunder^
 ^fastpopunder_
+^fc2ad-
+^fc2ad.
+^fc2ad^
+^fc2ad_
+^fc2web-
+^fc2web.
+^fc2web^
+^fc2web_
 ^fingerprint-$script
 ^fingerprint.$script
 ^fingerprint^$script
@@ -5909,6 +5917,7 @@ _yahooads_
 ||aintere.com^
 ||ainterme.com^
 ||aintes.com^
+||airbrake.io^$third-party
 ||aiueo.bz^
 ||ajaxcdn.org^
 ||akamaihd.net^$popup
@@ -6510,6 +6519,7 @@ _yahooads_
 ||ddrn6tjst80qg.cloudfront.net^
 ||ddts0bzupd01y.cloudfront.net^
 ||df09rp0cm6rp6.cloudfront.net^
+||dfdbz2tdq3k01.cloudfront.net^
 ||dgy6rx5roq02d.cloudfront.net^
 ||djtkh1hova1ix.cloudfront.net^
 ||dnn506yrbagrg.cloudfront.net^
@@ -6769,7 +6779,7 @@ _yahooads_
 ||directerp.ru^
 ||direction-du-credit.com^
 ||direction-x.com^$third-party
-||directrev.com^$third-party
+||directrev.$third-party
 ||directtrack.com^$third-party
 ||dirnema.ru^
 ||dismas.jp^$third-party
@@ -7024,15 +7034,19 @@ _yahooads_
 ||tracking.fathomseo.com^
 ||fbchatplus.com^
 ||fc2-master.sakura.ne.jp^$third-party
+||fc2.com^*/footer-
+||fc2.com^*/footer.
+||fc2.com^*/footer^
+||fc2.com^*/footer_
 ||fc2.com^*/random.$script
 ||fc2.com^*janre.$script
 ||fc2.com/ad/
 ||fc2.com/ana/
 ||fc2.com/ana2/
 ||fc2.com/analyze.$script
+||fc2.com/js/cdom.$script
 ||fc2.com/dctanalyzer.
 ||fc2.com/exchange.
-||fc2.com/footer/footer.php?
 ||fc2.com/header.php?
 ||fc2.com/image/powered
 ||fc2.com/pv.$image,object
@@ -7042,9 +7056,9 @@ _yahooads_
 ||analyzer*.fc2.com*/ana/
 ||analyzer*.fc2.com/analyzercook.
 ||counter*.fc2.com^
+||hypost.fc2.com^
 ||media.fc2.com^
 ||media3.fc2.com^
-||fc2web.com^$third-party
 ||fdgeen.com^
 ||featuredusers.com^$third-party
 ||fedrobi.ru^
@@ -7243,6 +7257,7 @@ _yahooads_
 ||google.*/jsapi?autoload=*%22ads%22
 ! false positive 2011-02-26
 ! ||google.*/realtimepts?
+||google.*/uds/afs/
 ||id.google.*/verify/
 ||video-stats.video.google.com^
 ||googleadservices.com^
@@ -8058,6 +8073,7 @@ _yahooads_
 ||mestersquiz.com^$popup
 ||metanetwork.com^$third-party
 ||meteo-locale-gratuite.fr^
+||metrigo.com^$third-party
 ||mgid.com^$popup
 ||mgid.com^$third-party
 ||mi3u.info^
@@ -8724,6 +8740,7 @@ _yahooads_
 ||realitytraffic.com^
 ||realjs.info^
 ||realmedia.com^$third-party
+||realtime.co^$third-party
 ||realvu.net^$third-party
 ||reasulty.com^
 ||recherchex.com^
@@ -9646,6 +9663,7 @@ _yahooads_
 ||webprotectjs.info^$third-party
 ||webrotator.net^
 ||websearchplusjs.info^
+||webspectator.com^$third-party
 ||webstats4u.com^
 ||websteroidsapp.com^$third-party
 ||webteaser.ru^$third-party
@@ -9675,6 +9693,7 @@ _yahooads_
 ||wikipedia.org^*&cache=/cn.js^
 ||pr.wikiwiki.jp^
 ||williamhill.$popup
+||1app.blob.core.windows.net^
 ||windows-codec.com^$popup
 ||winmycar.de^$popup
 ||winmypc.$popup

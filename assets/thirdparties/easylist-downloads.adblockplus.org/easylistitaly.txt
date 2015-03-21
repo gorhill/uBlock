@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: PNMR5l0QAEBv2FX95822Jw
-! Version: 201503071831
+! Checksum: Mx5ZyGVaIG1VLQ12BbvYDg
+! Version: 201503211221
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 07 Mar 2015 18:31 UTC
+! Ultima modifica: 21 Mar 2015 12:21 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -202,7 +202,7 @@ biancolavoro.it#@#.listad
 corrierecomo.it,corrieredicomo.it#@#.module-ad
 latinomagazine.it#@#.moduletable-advert
 camperonline.it,italiasw.com#@#.pubblicita
-beppegrillo.it,d1khqztmu4w2hg.cloudfront.net,lafucina.it,mmorpgitalia.it#@#div[id^="div-gpt-ad-"]
+beppegrillo.it,d1khqztmu4w2hg.cloudfront.net,lafucina.it,mmorpgitalia.it,tzetze.it#@#div[id^="div-gpt-ad-"]
 ! Anti-Adblock
 dbplanet.net#@##ad_block
 sportube.tv#@#.afs_ads
@@ -393,6 +393,7 @@ sportube.tv#@#.afs_ads
 ||imagerip.net/images/2014/12/14/button_2.png$domain=filmsenzalimiti.co
 ||immobiliagest.it^$subdocument,third-party
 ||immobiliare.it/widget/js/populateexternalform.js$third-party
+||immobilmente.com/Banner/$third-party
 ||immobz.it^*/banner.aspx?
 ||incontripersesso.com/banner/
 ||inetweek.it/comincom/widget/
@@ -981,6 +982,7 @@ sportube.tv#@#.afs_ads
 ||ilcorsaronero.info/js/nopopup.js
 ||ilcrotonese.it^*/promo_
 ||ilcrotonese.it^*_bg.jpg
+||ilfaroonline.it/images/banners/
 ||ilfattoalimentare.it/assets/banners/
 ||ilfattoquotidiano.it/external/assicurazioni_300x100/
 ||ilfattoquotidiano.it^*/banner_casait.jpg
@@ -1313,6 +1315,7 @@ sportube.tv#@#.afs_ads
 ||opinione.it/media/*60x150.
 ||opinione.it/media/*750x50.
 ||orvietosi.it^*298x100.swf
+||ostiatv.it/upl/banner
 ||oxfordparavia.it/img/babylon.gif
 ||padovanews.it/images/banners/
 ||paeimprese.it^*/downloadfilebanner.php?
@@ -2353,7 +2356,7 @@ fantagazzetta.com##.h-box
 quattroruote.it##.halfPageBanner2
 ilgiornaledivicenza.it##.header-box
 newyork-tales.ilsole24ore.com##.header-right
-bow.it,cronacamilano.it##.header_banner
+bow.it,cronacamilano.it,ilfaroonline.it##.header_banner
 bora.la##.headerbtm
 gazzettadasti.it##.homepage-central-ban
 radioitalia.it##.iTunes
@@ -2377,6 +2380,7 @@ ilsole24ore.com##.link_expand
 mymovies.it##.linkblu[style="width:290px; cursor:pointer; margin-top:5px;"]
 giornalettismo.com##.liq-frame
 gazzetta.it##.list-eventi
+diretta.it##.live-betting-strip
 myword.it##.login-container[style="height:92px;border:0px solid red;text-align:center;"]
 julienews.it##.long_banner_row
 rietilife.it##.lshowcase-logos
@@ -2412,6 +2416,7 @@ gazzetta.it##.poker
 videohifi.com##.portlet-static-sponsor
 lastampa.it##.ppn
 film.it##.ppn_h
+itpornovideo.com##.pr-widget
 html.it##.premium-links-container-home-ms
 ciao.it##.priceComp2
 paginegialle.it##.prio
@@ -2810,7 +2815,6 @@ termometropolitico.it##[id^="bsa"]
 @@||ad.smartclip.net/crossdomain.xml$object-subrequest,domain=serviziopubblico.it
 @@||ad.smartclip.net/delivery/tag?$object-subrequest,domain=serviziopubblico.it
 @@||ad2.neodatagroup.com/uploads/js/sid49jq.js$domain=rai.it|rai.tv|rainews.it
-@@||ad49.neodatagroup.com/ad/sipra.jsp?$script,xmlhttprequest,domain=rai.it|rai.tv|rainews.it
 @@||adimg.matrixspa.it/cookie_script/read_crt.html$domain=webmail.virgilio.it
 @@||adimg.matrixspa.it/jsc/advManage.js$domain=webmail.virgilio.it
 @@||adnkronos.com/ign/mediacenter/fotogallery/data_01/img/ad_

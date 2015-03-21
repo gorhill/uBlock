@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.7
+! Version: 7.8
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -22,20 +22,20 @@
 ! if (!awm) { window.location = 'http://adworkmedia.com/help/removeAB.php'; }
 ! if (!awm) { window.location = 'http://loxtk.com/help/removeAB.php'; }
 ! if (!awm) { window.location = 'http://contentlockingnetworks.com/help/removeAB.php'; }
-@@||adworkmedia.com/gLoader.php?GID=*$script,third-party
-@@||adworkmedia.com/gTemplate.php?GID=*$subdocument,third-party
-@@||loxtk.com/gLoader.php?GID=*$script,third-party
-@@||loxtk.com/gTemplate.php?GID=*$subdocument,third-party
-@@||contentlockingnetworks.com/gLoader.php?GID=*$script,third-party
-@@||contentlockingnetworks.com/gTemplate.php?GID=*$subdocument,third-party
+@@||adworkmedia.com/gLoader.php?GID=$script,third-party
+@@||adworkmedia.com/gTemplate.php?GID=$subdocument,third-party
+@@||loxtk.com/gLoader.php?GID=$script,third-party
+@@||loxtk.com/gTemplate.php?GID=$subdocument,third-party
+@@||contentlockingnetworks.com/gLoader.php?GID=$script,third-party
+@@||contentlockingnetworks.com/gTemplate.php?GID=$subdocument,third-party
 ! AdScendMedia
 ! if (gwloaded==false){window.location = "http://adscendmedia.com/gateway_adblock.php?p=4316";}
 ! https://adscendmedia.com/widget_adblock.php?p=12377 --> redirect
 ! http://adscendmedia.com/gwjs.php?aff=4316&prf=18180&sid=
-@@||adscendmedia.com/gwjs.php?aff=*$script,third-party
-!@@||adscendmedia.com/gwframe.php?*$domain=bee4.biz|filesdld.com
+@@||adscendmedia.com/gwjs.php?aff=$script,third-party
+!@@||adscendmedia.com/gwframe.php?$domain=bee4.biz|filesdld.com
 ! cpagrip.com
-@@||cpagrip.com/script_include.php?id=*$script
+@@||cpagrip.com/script_include.php?id=$script
 ! RTK AntiAdblock
 ! http://ryanteck.github.io/RTK-Anti-Adblock/
 /blockcake.js$script
@@ -97,14 +97,13 @@
 /blockBlock.jquery.js$script
 ! WordPress AdBlock Blocker
 ! http://thisismyurl.com/
-@@/plugins/wordpress-adblock-blocker/adframe.js$script
 ! AntiBlock (BukssaAyman)
 ! http://www.bukssaayman.co.za/anti-block/
 /plugins/anti-block/*
 /anti-block-modal.js$script
 ! BlockAlyzer - Adblock counter
 ! https://wordpress.org/plugins/blockalyzer-adblock-counter/
-@@/plugins/blockalyzer-adblock-counter/img/ads/*$image
+@@plugins/blockalyzer-adblock-counter/img/ads/$image
 @@/plugins/blockalyzer-adblock-counter/js/advert.js$script
 ! Ad Blocking Detector
 ! http://adblockingdetector.jtmorris.net/demo/
@@ -115,7 +114,7 @@
 /adblock_detector.
 /adblockdetect.
 /adblockdetection.
-/anti-adblock/*$~stylesheet
+/anti-adblock$~stylesheet
 /anti_ab.
 /antiadblock.
 /wp-content/plugins/anti_ad_blocker/*
@@ -148,7 +147,7 @@
 ! gamespowerita.com
 forum.gamespowerita.com#@##ad_block
 ! backin.net
-@@||action.metaffiliation.com/suivi.php*$domain=backin.net
+@@||action.metaffiliation.com/suivi.php$domain=backin.net
 backin.net#@##adblock
 ! tvdez.com
 tvdez.com,casadossegredos.tv,estadiofutebol.com,televisaofutebol.com#@##pubfooter
@@ -165,7 +164,7 @@ file4go.com#@#.afs_ads
 @@||afreesms.com/js/adblock.js
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=afreesms.com
 ! receive-sms.com
-@@||cpalead.com/mygateway.php?*$domain=receive-sms.com
+@@||cpalead.com/mygateway.php?$domain=receive-sms.com
 ! gamecopyworld domains
 /getads.js$domain=gamecopyworld.com|gamecopyworld.eu
 gamecopyworld.com,gamecopyworld.eu###confirmOverlay
@@ -222,6 +221,7 @@ senmanga.com##P[class="no"]
 @@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=gametrailers.com
 ! hdtvtuga.com
 ||hdtvtuga.com/canais/jsads.js$script
+||vencerocasino.com/$popup
 ! tweaktown.com
 tweaktown.com#@#div[id^="div-gpt-ad"]
 ! tek.no
@@ -231,9 +231,9 @@ tweaktown.com#@#div[id^="div-gpt-ad"]
 ! amobil.no
 ! gamer.no
 ! teknofil.no
-!@@||static.tek.no/js/ads.js?*$script
+!@@||static.tek.no/js/ads.js?$script
 @@||www.hardware.no/js/*.js$script
-||static.tek.no/js/subscription.js?*$script
+||static.tek.no/js/subscription.js?$script
 ! seekingalpha.com
 seekingalpha.com###alphabox-modal-overlay
 seekingalpha.com###readlater_register_login
@@ -262,16 +262,16 @@ go4up.com##IMG[src="http://go4up.com/assets/img/downloadfr.gif"]
 ! dizi-mag.com
 @@||adhood.com^$third-party,domain=dizi-mag.com
 ! hentaistream.com
-@@||syndication.exoclick.com/splash.php?*$popup,domain=hentaistream.com
+@@||syndication.exoclick.com/splash.php?$popup,domain=hentaistream.com
 @@||popunder.fpctraffic.com/pop.js$popup,domain=hentaistream.com
 @@||cdn.popcash.net/pop.js,$popup,domain=hentaistream.com
 ||hentaistream.com^$popup
 ! nation2.com
-@@||cpagrip.com/script_include.php?id=*$domain=nation2.com
+@@||cpagrip.com/script_include.php?id=$domain=nation2.com
 ! videotools.12pings.net
 videotools.12pings.net###chucknorris
 ! viki.com
-@@||pubads.g.doubleclick.net/gampad/*$domain=viki.com
+@@||pubads.g.doubleclick.net/gampad/$domain=viki.com
 @@||imasdk.googleapis.com/flash/core/3.177.0/adsapi.swf$object-subrequest,domain=viki.com
 ! thesimsresource.com
 thesimsresource.com#@##leaderboardad
@@ -285,19 +285,18 @@ snsw.us#@##ad_1
 ! teknofil.no
 !teknofil.no##.tek-black-overlay.subscription-popup-overlay
 !teknofil.no##.subscription-popup.clearfix
-||static.tek.no/js/jquery.colorbox-min.js?*$script
+||static.tek.no/js/jquery.colorbox-min.js?$script
 ! vostfr-vf.com
 vostfr-vf.com##A[href="/100Mbs.html"]
 vostfr-vf.com##.fixe
 vostfr-vf.com##A[href^="http://api.adlure.net/partner/click/"]
 ! video.kooora.com
-@@||zedo.com/ads2/*$object-subrequest,domain=video.kooora.com
-@@||zedo.com/asw/*$object-subrequest,domain=video.kooora.com
+@@||zedo.com/ads2/$object-subrequest,domain=video.kooora.com
+@@||zedo.com/asw/$object-subrequest,domain=video.kooora.com
 ! majorleaguegaming.com
-||pagefair.com/static/adblock_detection/js/*
 ||majorleaguegaming.com/assets/ab.js$script
 ! free-movie-home.com
-@@||mgcashgate.com/cpalocker/?*$domain=free-movie-home.com
+@@||mgcashgate.com/cpalocker/?$domain=free-movie-home.com
 ! allostreaming-fr.com
 @@||zitvk.rpxxv.chickenkiller.com/js/bannerad6.js$domain=allostreaming-fr.com
 ! anisearch.com
@@ -315,17 +314,17 @@ uptobox.com#@#.ad-leader
 uptobox.com#@#.ad-leader > div[id]
 ! dailybitcoins.org
 dailybitcoins.org#@#.ad-img
-@@||dailybitcoins.org/banners/*$image
+@@||dailybitcoins.org/banners/$image
 ! freebitco.in
 freebitco.in#@#.ad-img
 freebitco.in#@#.adsbygoogle
-@@||pagead2.googlesyndication.com/pagead/js/*$domain=freebitco.in
+@@||pagead2.googlesyndication.com/pagead/js/$domain=freebitco.in
 @@||freebitco.in/adsbygoogle.js$script
 @@||freebitco.in/show_ad.js$script
 ! freedoge.co.in
 freedoge.co.in#@#.ad-img
 freedoge.co.in#@#.adsbygoogle
-@@||pagead2.googlesyndication.com/pagead/js/*$domain=freedoge.co.in
+@@||pagead2.googlesyndication.com/pagead/js/$domain=freedoge.co.in
 @@||freedoge.co.in/adsbygoogle.js$script
 @@||freedoge.co.in/show_ad.js$script
 ! 2unlimited.info
@@ -336,7 +335,7 @@ anime-shinden.info#@##ads_video
 beppegrillo.it#@#div[id^="div-gpt-ad-"]
 ! filecore.co.nz / fcore.eu
 filecore.co.nz,fcore.eu#@#div[id^="div-gpt-ad-"]
-@@||partner.googleadservices.com/gpt/*$domain=filecore.co.nz|fcore.eu,script
+@@||partner.googleadservices.com/gpt/$domain=filecore.co.nz|fcore.eu,script
 ! gaijin.at
 gaijin.at##.box_error.box_error_icon
 ! makemehost.com
@@ -346,9 +345,9 @@ ukvarminting.com#@#.ipsAd
 ! tvdesporto.com
 tvdesporto.com#@##ads1
 sporttvdireto.com#@##ads1
-||sporttvdireto.com/ads/popunder.php*$popup
+||sporttvdireto.com/ads/popunder.php$popup
 ! notre-planete.info
-@@||pagead2.googlesyndication.com/pagead/js/*$script,domain=notre-planete.info
+@@||pagead2.googlesyndication.com/pagead/js/$script,domain=notre-planete.info
 notre-planete.info#@##pub_meh
 ! elahmad.com
 elahmad.com#@##adblock
@@ -359,9 +358,9 @@ z0r.de##.adb
 ! forum.pac-rom.com
 forum.pac-rom.com#@#.banner_ads
 ! runningmanengsub.com
-@@||cpalead.com/gwjs.php?*$script,domain=runningmanengsub.com
+@@||cpalead.com/gwjs.php?$script,domain=runningmanengsub.com
 ! pc.online143.com
-@@||mgcashgate.com/cpalocker/?*$script,domain=pc.online143.com
+@@||mgcashgate.com/cpalocker/?$script,domain=pc.online143.com
 ! freedom-ip.com
 freedom-ip.com#@#.pub_vertical ins
 freedom-ip.com#@#.pub_vertical div
@@ -392,7 +391,7 @@ mydisc.net#@#.ad_2
 @@||pagead2.googlesyndication.com/pagead/$script,domain=yellowbridge.com
 ! tv.majorleaguegaming.com
 @@||b.scorecardresearch.com^$xmlhttprequest,object-subrequest,domain=tv.majorleaguegaming.com
-@@||pubads.g.doubleclick.net/gampad/ads?*$object-subrequest,xmlhttprequest,domain=tv.majorleaguegaming.com
+@@||pubads.g.doubleclick.net/gampad/ads?$object-subrequest,xmlhttprequest,domain=tv.majorleaguegaming.com
 ! hentai-flix.net
 hentai-flix.net###wppa-overlay-bg
 hentai-flix.net##.trs_sticky_notice_text_box
@@ -407,7 +406,7 @@ uptobox.com#@##adblocktrap
 @@||advertstream.com/banners/$image,domain=uptobox.com
 ! privateinsta.com
 @@||privateinsta.com/javascript/rqrkrm.js$script
-@@||cpalead.com/mygateway.php?*$domain=privateinsta.com,script
+@@||cpalead.com/mygateway.php?$domain=privateinsta.com,script
 ! javzoo.com & javpee.com
 @@||javzoo.com/*.js|$script
 @@||javpee.com/*.js|$script
@@ -444,7 +443,7 @@ chrissmoove.com#@##adserver
 ddl-search.biz###mc35
 ! tvcatchup.com
 tvcatchup.com#@#.afs_ads
-!@@||adverts.cdn.tvcatchup.com/ads/*$domain=tvcatchup.com,object-subrequest
+!@@||adverts.cdn.tvcatchup.com/ads/$domain=tvcatchup.com,object-subrequest
 ! jeuxactu.com (just hide message)
 jeuxactu.com###infoBlock
 ! gamergen.com
@@ -452,9 +451,8 @@ jeuxactu.com###infoBlock
 @@||static.gamergen.com/img/pubs/ads.html
 @@||static.gamergen.com/img/pubs/ads.gif
 ! aloneteam.net (fake download)
-@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=aloneteam.net
 @@||dammu.tk^$domain=aloneteam.net
-@@||bdv.bidvertiser.com/BidVertiser.dbm?*$domain=vanhut.tk
+@@||bdv.bidvertiser.com/BidVertiser.dbm?$domain=vanhut.tk
 ! maxcheaters.com
 @@||maxcheaters.com/public/js/jsLoader.js$script
 ! straight-world.de
@@ -465,7 +463,7 @@ jeuxactu.com###infoBlock
 online.dramacafe.tv#@#.afs_ads
 ! hln.be + nieuwsblad.be + demorgen.be
 @@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
-@@||pubads.g.doubleclick.net/gampad/ads?*$domain=syndication.vmma.be,object-subrequest
+@@||pubads.g.doubleclick.net/gampad/ads?$domain=syndication.vmma.be,object-subrequest
 ! tvn24.pl
 @@||admin.brightcove.com^$object-subrequest,domain=tvn24.pl
 ! clubedohardware.com.br
@@ -497,8 +495,8 @@ linkshrink.net#@#.overlay_ad
 linkshrink.net#@##overlay_ad
 ! eclypsia.com
 eclypsia.com#@##adv_tester
-@@||adverts.eclypsia.com/www/delivery/spcjs.php*$script
-@@||pagead2.googlesyndication.com/pagead/*$domain=eclypsia.com,script
+@@||adverts.eclypsia.com/www/delivery/spcjs.php$script
+@@||pagead2.googlesyndication.com/pagead/$domain=eclypsia.com,script
 !@@||eclypsia.com/api/adBlock-status-update.html
 !@@||eclypsia.com^$elemhide
 !@@||adverts.eclypsia.com/www/images/*.jpg$image
@@ -508,7 +506,7 @@ eclypsia.com#@##adv_tester
 !cast.coolkora.com###co_holder
 @@||coolkora.com^$elemhide
 ! videomega.tv
-@@||videomega.tv/JWJFfELSbJ/*$script
+@@||videomega.tv/JWJFfELSbJ/$script
 ||goo.gl^$popup,domain=videomega.tv
 ! javso.com
 @@/adblock/adblock.js$script,domain=javso.com
@@ -539,7 +537,7 @@ planetatvonlinehd.blogspot.com###anuncio
 rapeit.net#@#.afs_ads
 ! skiplimite.tv
 @@||skiplimite.tv^$elemhide
-@@||pubdirecte.com/script/banniere.php?*$domain=skiplimite.tv
+@@||pubdirecte.com/script/banniere.php?$domain=skiplimite.tv
 ! tzetze.it
 tzetze.it#@##TzeTze_728x90
 tzetze.it#@#div[id^="div-gpt-ad-"]
@@ -549,9 +547,9 @@ tzetze.it#@#div[id^="div-gpt-ad-"]
 @@||advert.popunder.ru/banners/advert.php$domain=coingamez.com,subdocument,image
 ! banid.pl
 banid.pl#@#.ga
-@@||pagead2.googlesyndication.com/pagead/*$script,domain=banid.pl
+@@||pagead2.googlesyndication.com/pagead/$script,domain=banid.pl
 ! floozycity.com
-||floozycity.com/ad/*$popup
+||floozycity.com/ad/$popup
 redtube.com##.add-blocker-msg
 ! play.novatv.bg
 @@||adm.fwmrm.net/p/MTG_Live/Video2AdRenderer.swf$domain=play.novatv.bg,object-subrequest
@@ -560,20 +558,21 @@ redtube.com##.add-blocker-msg
 ! mackproject.com
 ||mackproject.com/tara.php$subdocument
 ! apkmirror.com
-@@||apkmirror.com/wp-content/themes/APKMirror/js/*$script
+apkmirror.com#@#.adsbygoogle
+@@||pagead2.googlesyndication.com/pagead/js/$script,domain=apkmirror.com
 ! latesthackingnews.com
 latesthackingnews.com#@#.afs_ads
 ! streamlive.to
 streamlive.to###adblockplus
 ! knowlet3389.blogspot.com
 knowlet3389.blogspot.com#@##gAds
-@@||pagead2.googlesyndication.com/pagead/$script,domain=knowlet3389.blogspot.com
+@@||pagead2.googlesyndication.com/pagead/js/$script,domain=knowlet3389.blogspot.com
 ! fantagazzetta.com
 @@||fantagazzetta.com/js/FuckAdBlock-master/fuckadblock.min.js$script
 @@||fantagazzetta.com^$elemhide
 ! gtaxscripting.blogspot.com
 gtaxscripting.blogspot.com#@##AdSense2
-@@||pagead2.googlesyndication.com/pagead/$script,domain=gtaxscripting.blogspot.com
+@@||pagead2.googlesyndication.com/pagead/js/$script,domain=gtaxscripting.blogspot.com
 ! turkdown.com
 ||tekproxy.com/$popup,domain=turkdown.com
 @@||filmyfundaz.googlecode.com/files/google_ads.js
@@ -581,15 +580,15 @@ gtaxscripting.blogspot.com#@##AdSense2
 @@||onvasortir.com/advertisements.js$script
 @@||onvasortir.com/smartadserver.com.js$script
 ! pogocheats.net
-@@||pagead2.googlesyndication.com/pagead/js/*$domain=pogocheats.net
+@@||pagead2.googlesyndication.com/pagead/js/$domain=pogocheats.net
 pogocheats.net#@#.adsbygoogle
 ! torrent-rutor.org
-@@||advert.popunder.ru/banners/advert.php$image,subdocument,document=torrent-rutor.org
+@@||advert.popunder.ru/banners/advert.php$image,subdocument,domain=torrent-rutor.org
 ||activepr.ru^$domain=torrent-rutor.org
 ||stats.tadic.tk^$domain=torrent-rutor.org
 ! rutube.ru
 @@||yast.rutube.ru/crossdomain.xml$object-subrequest
-@@||rutube.ru/dbg/player_stat?*$object-subrequest
+@@||rutube.ru/dbg/player_stat?$object-subrequest
 ! porn-blog.me
 @@||porn-blog.me/ads/banner.jpg$image
 @@||porn-blog.me/?pr_api=true&/ad_holder/$subdocument
@@ -600,10 +599,9 @@ porn-blog.me###dbx_light
 ! goldenboys.fr
 goldenboys.fr#@#.afs_ads
 ! bywarrior.com
-@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=bywarrior.com
 ! filecore.co.nz
 filecore.co.nz#@#.adsense
-@@||enrondev.net/ads/server/www/delivery/*$domain=filecore.co.nz,subdocument
+@@||enrondev.net/ads/server/www/delivery/$domain=filecore.co.nz,subdocument
 ! streaming-foot.info
 ||foot-live.info/images/adblok.mp3$media
 ||streaming-foot.info/images/adblok.mp3$media
@@ -617,7 +615,7 @@ totaldebrid.org,referencemega.com#@#.afs_ads
 @@||quickbitco.in/js/ads.js$script
 ! onemanga.me
 onemanga.me#@#.adblock
-@@||optimized-by.rubiconproject.com/a/10926/26000/*$subdocument,domain=onemanga.me
+@@||optimized-by.rubiconproject.com/a/10926/26000/$subdocument,domain=onemanga.me
 @@||ads.rubiconproject.com/ad/$script,domain=onemanga.me
 ! tyrant.40in.net
 @@||pagead2.googlesyndication.com/pagead/$domain=tyrant.40in.net,script
@@ -638,7 +636,6 @@ hackintosh.zone#@#.adsbygoogle
 ! call-share.ddns.net
 @@||googleads.g.doubleclick.net/favicon.ico$domain=call-share.ddns.net
 ! culo.sourceforge.net
-@@||filmyfundaz.googlecode.com/files/google_ads.js$domain=culo.sourceforge.net
 ! subdocument
 ||comptoir-hardware.com/edi/edi7_sq.php$subdocument
 ||comptoir-hardware.com/edi/edi7_sk.htm$subdocument
@@ -667,12 +664,12 @@ smashboards.com##.premiumContain
 ! tv6play.se
 ! tv8play.se
 ! tv10play.se
-@@||5d3e9.v.fwmrm.net/ad/*$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
+@@||5d3e9.v.fwmrm.net/ad/$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
 @@||adm.fwmrm.net/p/MTG_Live/Video2AdRenderer.swf$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
 @@||adm.fwmrm.net/p/MTG_Live/ExternalHTMLAdRenderer.swf$object-subrequest,domain=tv3play.se,tv6play.se,tv8play.se,tv10play.se
 ! zive.cz
 doupe.zive.cz#@##adblock-leaderboard
-@@||ads.rubiconproject.com/ad/*$script,domain=doupe.zive.cz
+@@||ads.rubiconproject.com/ad/$script,domain=doupe.zive.cz
 ||doupe.zive.cz/Client.Scripts/jquery.onp.sociallocker.1.7.6.js$script
 ! debilizator.tv
 ||debilizator.tv/static/ab.min.js$script
@@ -737,12 +734,44 @@ jetetroll.com#@##adsense
 hack-sat.com#@#.afs_ads
 ! flashback.org
 flashback.org###top-banner-container
-! captchme.net
-@@||api.captchme.net/js/advertisement-min.js$script
 ! toolslib.net
 toolslib.net##.panel.panel-default > .panel-body > .center-table.block-3x2
 ! socialblade.com
 socialblade.com#@##bottomAd
+! kingleech.com
+kingleech.com#@#.afs_ads
+! binbox.io
+binbox.io#@#.banner-ad
+@@||pastes.binbox.io/ad/banner$subdocument
+! vgtv.no
+!@@||aka-cdn.adtech.de/dt/common/DAC.js$script,domain=vgtv.no
+vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .top
+vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .left
+! bitcoinpuddle.com
+@@||bitcoinpuddle.com/show_ads.js$script
+! dogecoinpuddle.com
+@@||dogecoinpuddle.com/show_ads.js$script
+! icebitco.in
+@@||icebitco.in/show_ads.js$script
+! btc-gratis.com
+@@||btc-gratis.com/banner.gif$image
+! btcgratis.com
+@@||btcgratis.com/banner.gif$image
+! omux.ru
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=omux.ru
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=omux.ru
+! lachainemeteo.com + script rule
+||lachainemeteo.com/js/lachainemeteo.js$script
+! bitonplay.com
+@@||bitonplay.com/js/ads.js$script
+! 4shared.com
+@@||4shared.com/show_ad_.xml$script
+! bit-vortex.com
+@@||bit-vortex.com/js/antiadblock.js$script
+! fit.sh
+@@||server1.affiz.net/tracking/ads_display.php$script,domain=fit.sh
+! fosshub.com
+@@||fosshub.com/media/v2/js/ads.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -762,79 +791,79 @@ socialblade.com#@##bottomAd
 !----------------------------------------------------------------------------------------------------!
 ! Advertisers ---------------------------------------------------------------------------------------
 ! linkbucks.com (Visit Script)
-||linkbucks.com/visitScript/*$script,third-party
-||any.gs/visitScript/*$script,third-party
-||cash4links.co/visitScript/*$script,third-party
-||cash4files.com/visitScript/*$script,third-party
-||dyo.gs/visitScript/*$script,third-party
-||filesonthe.net/visitScript/*$script,third-party
-||goneviral.com/visitScript/*$script,third-party
-||megaline.co/visitScript/*$script,third-party
-||miniurls.co/visitScript/*$script,third-party
-||seriousdeals.net/visitScript/*$script,third-party
-||theseblogs.com/visitScript/*$script,third-party
-||theseforums.com/visitScript/*$script,third-party
-||tinylinks.co/visitScript/*$script,third-party
-||tubeviral.com/visitScript/*$script,third-party
-||ultrafiles.net/visitScript/*$script,third-party
-||urlbeat.net/visitScript/*$script,third-party
-||whackyvidz.com/visitScript/*$script,third-party
-||qqc.co/visitScript/*$script,third-party
-||yyv.co/visitScript/*$script,third-party
-||allanalpass.com/visitScript/*$script,third-party
-||amy.gs/visitScript/*$script,third-party
-||deb.gs/visitScript/*$script,third-party
-||drstickyfingers.com/visitScript/*$script,third-party
-||fapoff.com/visitScript/*$script,third-party
-||freean.us/visitScript/*$script,third-party
-||freegaysitepass.com/visitScript/*$script,third-party
-||galleries.bz/visitScript/*$script,third-party
-||hornywood.tv/visitScript/*$script,third-party
-||linkbabes.com/visitScript/*$script,third-party
-||picbucks.com/visitScript/*$script,third-party
-||poontown.net/visitScript/*$script,third-party
-||sexpalace.gs/visitScript/*$script,third-party
-||tnabucks.com/visitScript/*$script,third-party
-||youfap.me/visitScript/*$script,third-party
-||rqq.co/visitScript/*$script,third-party
-||zff.co/visitScript/*$script,third-party
+||linkbucks.com/visitScript/$script,third-party
+||any.gs/visitScript/$script,third-party
+||cash4links.co/visitScript/$script,third-party
+||cash4files.com/visitScript/$script,third-party
+||dyo.gs/visitScript/$script,third-party
+||filesonthe.net/visitScript/$script,third-party
+||goneviral.com/visitScript/$script,third-party
+||megaline.co/visitScript/$script,third-party
+||miniurls.co/visitScript/$script,third-party
+||seriousdeals.net/visitScript/$script,third-party
+||theseblogs.com/visitScript/$script,third-party
+||theseforums.com/visitScript/$script,third-party
+||tinylinks.co/visitScript/$script,third-party
+||tubeviral.com/visitScript/$script,third-party
+||ultrafiles.net/visitScript/$script,third-party
+||urlbeat.net/visitScript/$script,third-party
+||whackyvidz.com/visitScript/$script,third-party
+||qqc.co/visitScript/$script,third-party
+||yyv.co/visitScript/$script,third-party
+||allanalpass.com/visitScript/$script,third-party
+||amy.gs/visitScript/$script,third-party
+||deb.gs/visitScript/$script,third-party
+||drstickyfingers.com/visitScript/$script,third-party
+||fapoff.com/visitScript/$script,third-party
+||freean.us/visitScript/$script,third-party
+||freegaysitepass.com/visitScript/$script,third-party
+||galleries.bz/visitScript/$script,third-party
+||hornywood.tv/visitScript/$script,third-party
+||linkbabes.com/visitScript/$script,third-party
+||picbucks.com/visitScript/$script,third-party
+||poontown.net/visitScript/$script,third-party
+||sexpalace.gs/visitScript/$script,third-party
+||tnabucks.com/visitScript/$script,third-party
+||youfap.me/visitScript/$script,third-party
+||rqq.co/visitScript/$script,third-party
+||zff.co/visitScript/$script,third-party
 ! linkbucks.com (Full Page Script)
-||linkbucks.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||any.gs/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||cash4links.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||cash4files.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||dyo.gs/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||filesonthe.net/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||goneviral.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||megaline.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||miniurls.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||seriousdeals.net/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||theseblogs.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||theseforums.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||tinylinks.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||tubeviral.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||ultrafiles.net/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||urlbeat.net/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||whackyvidz.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||qqc.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||yyv.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||allanalpass.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||amy.gs/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||deb.gs/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||drstickyfingers.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||fapoff.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||freean.us/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||freegaysitepass.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||galleries.bz/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||hornywood.tv/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||linkbabes.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||picbucks.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||poontown.net/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||sexpalace.gs/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||tnabucks.com/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||youfap.me/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||rqq.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
-||zff.co/Webservices/jsParseLinks.aspx?id=*$script,third-party
+||linkbucks.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||any.gs/Webservices/jsParseLinks.aspx?id=$script,third-party
+||cash4links.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||cash4files.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||dyo.gs/Webservices/jsParseLinks.aspx?id=$script,third-party
+||filesonthe.net/Webservices/jsParseLinks.aspx?id=$script,third-party
+||goneviral.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||megaline.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||miniurls.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||seriousdeals.net/Webservices/jsParseLinks.aspx?id=$script,third-party
+||theseblogs.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||theseforums.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||tinylinks.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||tubeviral.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||ultrafiles.net/Webservices/jsParseLinks.aspx?id=$script,third-party
+||urlbeat.net/Webservices/jsParseLinks.aspx?id=$script,third-party
+||whackyvidz.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||qqc.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||yyv.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||allanalpass.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||amy.gs/Webservices/jsParseLinks.aspx?id=$script,third-party
+||deb.gs/Webservices/jsParseLinks.aspx?id=$script,third-party
+||drstickyfingers.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||fapoff.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||freean.us/Webservices/jsParseLinks.aspx?id=$script,third-party
+||freegaysitepass.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||galleries.bz/Webservices/jsParseLinks.aspx?id=$script,third-party
+||hornywood.tv/Webservices/jsParseLinks.aspx?id=$script,third-party
+||linkbabes.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||picbucks.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||poontown.net/Webservices/jsParseLinks.aspx?id=$script,third-party
+||sexpalace.gs/Webservices/jsParseLinks.aspx?id=$script,third-party
+||tnabucks.com/Webservices/jsParseLinks.aspx?id=$script,third-party
+||youfap.me/Webservices/jsParseLinks.aspx?id=$script,third-party
+||rqq.co/Webservices/jsParseLinks.aspx?id=$script,third-party
+||zff.co/Webservices/jsParseLinks.aspx?id=$script,third-party
 ! adf.ly
 ||cdn.adf.ly/js/entry.js$script,third-party
 ||cdn.j.gs/js/entry.js$script,third-party
@@ -846,7 +875,11 @@ socialblade.com#@##bottomAd
 ||cdn.j.gs/js/display.js$script,third-party
 ||cdn.q.gs/js/display.js$script,third-party
 ! shorte.st
-||cdn.shorte.st/link-converter.min.js
+||cdn.shorte.st/link-converter.min.js$script,third-party
+! bc.vc
+||bc.vc/js/link-converter.js$script,third-party
+! gca.sh
+||$subdocument,domain=gca.sh
 ! Torrent --------------------------------------------------------------------------------------
 ! torrentz.eu
 ||torrentz.eu/p/$popup
@@ -918,21 +951,25 @@ rapid8.com##.backk
 @@||cnzz.mmstat.com/*.gif$domain=400gb.com
 ! uploaded-premium.ru
 @@||uploaded-premium.ru/ads/ad.js$script
-@@||ad.sevenads.net/layer.php?p=*$script,domain=uploaded-premium.ru
-@@||ad.sevenads.net/banner.php?*$script,domain=uploaded-premium.ru
+@@||ad.sevenads.net/layer.php?p=$script,domain=uploaded-premium.ru
+@@||ad.sevenads.net/banner.php?$script,domain=uploaded-premium.ru
 ! kingleech.com
-@@||filmyfundaz.googlecode.com/files/google_ads.js$script,domain=kingleech.com
 ! aseanlegacy.net
-@@/antiadblock.js|$script,document=aseanlegacy.net
+@@/antiadblock.js|$script,domain=aseanlegacy.net
 aseanlegacy.net##[id^="box"]
-||amkserver1.com^$subdocument,document=aseanlegacy.net
-||adgila.com^$subdocument,document=aseanlegacy.net
+||amkserver1.com^$subdocument,domain=aseanlegacy.net
+||adgila.com^$subdocument,domain=aseanlegacy.net
 ! referencemega.com
 referencemega.com###hebdotop_t
-||track.effiliation.com/servlet/*$popup,domain=referencemega.com
+||track.effiliation.com/servlet/$popup,domain=referencemega.com
 ||siteunder.unclejeans.com^$popup,domain=referencemega.com
 ! keepfiles.fr
 keepfiles.fr###shadow
+! turkdown.com
+turkdown.com###duyuru
+||p.jwpcdn.com/6/8/jwplayer.flash.swf
+! dada44230.fr
+||nefroto.net^$script,domain=dada44230.fr
 ! Cloud --------------------------------------------------------------------------------------
 ! wawa-film.org
 wawa-film.org##A[href^="http://api.adlure.net/partner/click/"]
@@ -944,7 +981,7 @@ planet-series.tv##IMG[src="http://www.planet-series.tv/images/250-1.png"]
 planet-series.tv##IMG[src="http://www.planet-series.tv/images/728-2.png"]
 ! Streaming --------------------------------------------------------------------------------------
 ! floatLayer
-tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,micast.tv,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv,micast.tv##*[id^="floatLayer"]
+tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,cbox.ws,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv,micast.tv,wowhq.umbb.net##[id^="floatLayer"]
 ! livesoccerhq
 s.m2pub.com###adk2_img
 ! tvportugalhd
@@ -994,7 +1031,7 @@ ilive.to###ad_overlay_countdown
 ! tiv.pw
 cdn.tiv.pw###Advertisement1
 ! pornoshara.tv
-||pornoshara.tv/template/branding/swf/*
+||pornoshara.tv/template/branding/swf/
 ! megaviptv.me
 megaviptv.me###floatLayer
 ! privatecdn.tv
@@ -1006,7 +1043,7 @@ stream2watch.me###moveads
 ! ana1.me
 ana1.me##.videopos
 ! zuuk.net
-cdn.zuuk.net##*[id^="\5f bar_"]
+cdn.zuuk.net##[id^="\5f bar_"]
 cdn.zuuk.net##[style="z-index: 99999; position: fixed; width: 100%; background-color: rgb(251, 236, 173); overflow: hidden; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(112, 112, 112); top: 0px; left: 0px; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: Verdana, Geneva, sans-serif; background-position: initial initial; background-repeat: initial initial;"]
 ! tvdez.com
 cdn.tvdez.com##IFRAME[src^="http://ad.directrev.com/RealMedia/ads/"]
@@ -1015,9 +1052,9 @@ cdn.tvdez.com###cerrar
 tugastream.com##IMG[src="http://i39.tinypic.com/sobxg2.gif"]
 tugastream.com###closediv
 ! antena24.com
-antena24.com##*[id^="layer"]
+antena24.com##[id^="layer"]
 ! thesporttv.eu
-thesporttv.eu,sporttvhdmi.com##*[id^="ad_tlvmedia-"]
+thesporttv.eu,sporttvhdmi.com##[id^="ad_tlvmedia-"]
 ! livesportshd.us
 channel1.livesportshd.us###ai_tapar_content
 ! sportvgratis1.com
@@ -1039,8 +1076,8 @@ pirlotv.tv###ad_overlay
 pirlotv.tv###ad_overlay_content
 pirlotv.tv###ad_overlay_countdown
 ! chatytvgratis.me
-@@||cdn.chatytvgratis.me/ads/ads.php?*$domain=cineplanet21.com
-@@||cdn.chatytvgratis.me/ads/ads2.php?*$domain=cineplanet21.com
+@@||cdn.chatytvgratis.me/ads/ads.php?$domain=cineplanet21.com
+@@||cdn.chatytvgratis.me/ads/ads2.php?$domain=cineplanet21.com
 ! sharecast.to
 sharecast.to###closeb
 ||sharecast.to/stats.php
@@ -1050,16 +1087,11 @@ youmoviz.tv##.plugbarremozi
 ! adbuck.cc
 adbuck.cc###col_publi
 ||adbuck.cc^$third-party
-@@||adbuck.cc/player/*
-! livesoccerhq.com / wowhq.ws
-||wowhq.eu/cms/*.php$subdocument
-||cbox.ws^$domain=wowhq.eu|futeb.altervista.org
-wowhq.eu,futeb.altervista.org###pubclose
-wowhq.eu,futeb.altervista.org###pubclose2
-wowhq.eu,futeb.altervista.org###PUB1-300x250Z
-wowhq.eu,futeb.altervista.org###PUB2-300x250Z
-flexstream.net###timerDiv
-||futeb.altervista.org/streams/pubLista.html
+@@||adbuck.cc/player/
+! wowhq.ws - wowhq.eu - wowhq.info
+wowhq.umbb.net,cbox.ws,fixolas.net##[href="/300x250.php"]
+wowhq.umbb.net,cbox.ws,fixolas.net##[href^="http://porreiropa.com/cms/"]
+wowhq.umbb.net,cbox.ws,fixolas.net##[href="http://fixolas.net/"]
 ! sport-show.fr
 sport-show.fr##DIV[style="padding-top:0px;float:left;width:100%;font-size:13px;line-height:0px;top:4px;text-align:left"]
 ! majax31sport
@@ -1094,7 +1126,7 @@ jjcast.com##IMG[src="close_button.png"]
 aliez.tv###ads
 ! tvfree2.me
 tvfree2.me###adn1
-||tvfree2.me/pub/*
+||tvfree2.me/pub/
 ||tvfree2.me/ads_*.js$script
 ! beinsports24.com
 beinsports24.com###bannerfloat22
@@ -1108,9 +1140,10 @@ liguendirect.com##div[id^="bannerfloat"]
 biggestplayer.me##.cuadrado.rmv
 ! playerhd1.pw
 playerhd1.pw###total
-playerhd1.pw###total_banner 
+playerhd1.pw###total_banner
 playerhd1.pw##.ad
 ! streaming-foot.info
+streaming-foot.info##.fb
 streaming-foot.info###id7d
 streaming-foot.info###timer1
 streaming-foot.info###timer2
@@ -1121,17 +1154,20 @@ foot-live.info###timer2
 foot-live.info###timer3
 ! tvfree.me
 antena.tvfree.me###layer1
-||tvfree.me/pub/*$subdocument,image
+||tvfree.me/pub/$subdocument,image
+! nowwatchtvlive.me
+nowwatchtvlive.me##[id^="bannerfloat"]
+nowwatchtvlive.me##DIV[style="padding-top:5px;float:left;width:100%;font-size:13px;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:left"]
 ! Others ---------------------------------------------------------------------------------------
 ! tvi
-tvi24.iol.pt##iframe[id=barraIOL]
+tvi24.iol.pt##iframe#barraIOL
 tvi24.iol.pt###heightPH
 ! jornal record
-||sportingbet-affiliate.host.bannerflow.com/core_bannerviewer.swf?*
+||sportingbet-affiliate.host.bannerflow.com/core_bannerviewer.swf?
 record.xl.pt##A[href^="http://partner.sbaffiliates.com/"]
-||record.xl.pt/pub/*
-||record.xl.pt/common/images/pub/*
-||js.xl.pt/molduras/record/deco/*
+||record.xl.pt/pub/
+||record.xl.pt/common/images/pub/
+||js.xl.pt/molduras/record/deco/
 pubs.xl.pt###descontos
 record.xl.pt###BannerINQ
 netviagens.com###nvAdForm
@@ -1142,7 +1178,7 @@ androidhellas.com##IMG[src="http://androidhellas.com/wp-content/uploads/2013/08/
 soft98.ir##.shad
 soft98.ir##.shad2
 ! banstex.com
-||script.banstex.com/script/*
+||script.banstex.com/script/
 ! 1fichier.com
 1fichier.com##[style="float:right;width:300px;height:600px"]
 ! coder143.com
@@ -1161,7 +1197,7 @@ mylivesocial.com##.bgimg
 ! assurance-conseil.net
 ||assurance-conseil.net/popup.js
 ! kizu.org
-||kizu.org/adv-*$popup
+||kizu.org/adv-$popup
 ! tvgolo.com
 tvgolo.com###hstp-bg-overlay
 tvgolo.com###hstp_interstitial
@@ -1171,17 +1207,18 @@ mesddl.cc###cboxContent
 urlchecker.net###adchecker
 urlchecker.net###adchecker_btn
 urlchecker.net###ads_notify
-! fake download link
+! Fake --------------------------------------------------------------------------------------
 ##A[href^="http://share.payoneer-affiliates.com/a/clk/"]
 ##A[href="http://goo.gl/jQ9bcz"]
 ##A[href^="http://www.yourfilezone.com/play?lng="]
 ##A[href^="https://action.metaffiliation.com/trk.php?"]
 ##A[href^="http://action.metaffiliation.com/trk.php?"]
-! fake codec
 ###WarningCodec
-! malwares
+! Malwares --------------------------------------------------------------------------------------
 ||getapplicationmy.info^
 ||doremido.com^
+! Popup --------------------------------------------------------------------------------------
+||everydaycarry.com^$popup
 ! File Search Engines ---------------------------------------------------------------------------
 ! sharedir.com
 sharedir.com##IMG[src="http://premiumdl4.me/rseimages/rse_banner64_3.png"]
@@ -1230,16 +1267,15 @@ pregen.net###olayer
 ! bet-at-home.com
 ||affiliates.bet-at-home.com^$popup
 ! ||scorebull.com
-||scorebull.com/adv/*$popup
+||scorebull.com/adv/$popup
 ! rapidgator.net
-||kovla.com/?*$popup,domain=rapidgator.net
+||kovla.com/?$popup,domain=rapidgator.net
 ! antipubfirefox.org
 splash.antipubfirefox.org##DIV[align="center"]
-! 
+! ojogo.pt
 ojogo.pt###moldura_ojogo
-! 
-||flash.banners-service.info/demo.swf?*
-! 
+! banners-service.info
+! europacash.com
 ||europacash.com^$third-party,script
 ! rencontreshard.com
 ||media.rencontreshard.com^$third-party,script
@@ -1250,3 +1286,6 @@ go4up.com##[href^="http://liversely.com/g4u?q="]
 go4up.com##[href^="http://go.ad2up.com/afu.php?id="]
 ! academia.edu
 @@||api.academia.edu/v0/users/*/stats$script
+! uptobox.com
+uptobox.com##[href^="http://ads.uptobox.com/www/delivery/ck.php"]
+

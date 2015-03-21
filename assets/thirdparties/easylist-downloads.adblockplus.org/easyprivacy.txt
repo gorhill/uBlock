@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: UaQkrkGI8ntM8SX1LAdZFw
-! Version: 201503071831
+! Checksum: Mfrxymk4NUDvBOXRUhXi4Q
+! Version: 201503211221
 ! Title: EasyPrivacy
-! Last modified: 07 Mar 2015 18:31 UTC
+! Last modified: 21 Mar 2015 12:21 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2062,6 +2062,7 @@
 /visci-interface.
 /visit-tracker.js
 /visit.gif?
+/visit/log.js?
 /visit/record.gif?
 /visit_pixel?
 /visit_tracking.
@@ -2138,6 +2139,7 @@
 /webTracking.
 /webtracking/*$~subdocument
 /WebTrackingHandler.
+/webtraffic.js
 /webtraxs.
 /wego.farmer.
 /wf/open?upn=$image
@@ -2742,6 +2744,7 @@ http://utm.
 ||demandbase.com^$third-party
 ||demdex.net^$third-party
 ||deqwas.net^$third-party
+||device9.com^$third-party
 ||dgmsearchlab.com^$third-party
 ||dhmtracking.co.za^$third-party
 ||did-it.com^$third-party
@@ -2865,6 +2868,7 @@ http://utm.
 ||fabricww.com^$third-party
 ||factortg.com^$third-party
 ||farmer.wego.com^$third-party
+||fast-thinking.co.uk^$third-party
 ||fastanalytic.com^$third-party
 ||fastly-analytics.com^$third-party
 ||fastonlineusers.com^$third-party
@@ -5637,7 +5641,7 @@ http://utm.
 ||rackcdn.com/easie.js
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
+||rackcdn.com^$script,domain=buysubscriptions.com|cbsnews.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||readcube.com/tracking/
@@ -5703,6 +5707,7 @@ http://utm.
 ||skysa.com/tracker/
 ||sli-spark.com/b.png$third-party
 ||slidedeck.com^$image,third-party
+||smartertravel.com/ext/pixel/
 ||snaps.vidiemi.com^$third-party
 ||snazzyspace.com/generators/viewer-counter/counter.php$third-party
 ||socialreader.com^*?event=email_open^$image
@@ -6240,6 +6245,7 @@ http://utm.
 ||vtrtl.de^
 ||webcounter.goweb.de^
 ||webstatistik.odav.de^$third-party
+||wieistmeineip.de/ip-address/$third-party
 ||wrmwb.7val.com^
 ||x.bloggurat.net^
 ||xnewsletter.de/count/counter.php?
@@ -6643,6 +6649,7 @@ http://utm.
 ||abc.net.au^*/stats/
 ||abebooks.com/timer.gif?
 ||about.me/wf/open?
+||academia.edu/record_hit
 ||accountnow.com/SyslogWriter.ashx
 ||accuradio.com/static/track/
 ||accuratefiles.com/stat
@@ -6755,7 +6762,6 @@ http://utm.
 ||ap.org^*/webtrendsap_hosted.js
 ||api.tinypic.com/api.php?action=track
 ||apphit.com/js/count.js
-||apple.com/global/scripts/view_master_tracker.js
 ||apple.com^*/spacer2.gif?
 ||applegate.co.uk/javascript/dcs/track.js
 ||applifier.com/users/tracking?
@@ -7707,6 +7713,7 @@ http://utm.
 ||nola.com/cgi-bin/stats/
 ||nola.com/content/*/tracklinks.js
 ||nola.com/dhtml/stats/
+||nova.pub/track.php?
 ||novatech.co.uk^*/tracking?
 ||novell.com^*/metrics.js
 ||novinite.com/tz.php
@@ -7811,6 +7818,7 @@ http://utm.
 ||pixel.reddit.com^
 ||pixel.redditmedia.com^
 ||pixel.staging.tree.com^
+||pixels.livingsocial.com^
 ||pixiedust.buzzfeed.com^
 ||play.com/analytics/
 ||play.com/sitetrak/
@@ -8145,6 +8153,7 @@ http://utm.
 ||t.dailymail.co.uk^
 ||t.eharmony.com^
 ||t.hulu.com/beacon/
+||t.kck.st^
 ||t.paypal.com^
 ||t.vimeo.com^
 ||t2.hulu.com^
@@ -8543,7 +8552,7 @@ http://utm.
 ||youtube-nocookie.com/ptracking?
 ||youtube-nocookie.com/robots.txt?
 ||youtube.com/api/stats/ads?
-||youtube.com/gen_204?
+||youtube.com/gen_204?$~xmlhttprequest
 ||youtube.com/get_video?
 ||youtube.com/live_204?
 ||youtube.com/player_204?
@@ -8591,6 +8600,8 @@ http://utm.
 ||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com|tiramillas.net
 ||eltiempo.com/js/produccion/s_code_*.js
 ||expressen.se/static/scripts/s_code.js?
+||gamespot.com/js/compiled/trackingWithCT.js
+||ge.com/sites/all/themes/ge_2012/assets/js/bin/s_code.js
 ||hayneedle.com/js/s_code.min.*.js
 ||images-amazon.com/images/*/wcs-help-omniture/wcs-help-omniture-$script
 ||img-bahn.de/v/*/js/s_code.js$domain=bahn.de
@@ -9086,7 +9097,6 @@ http://utm.
 ||bravo.israelweather.co.il^
 ||cellstats.mako.co.il^
 ||events.walla.co.il/events.asp
-||fus.walla.co.il/script.js
 ||globes.co.il/news/click.ashx
 ||globes.co.il/shared/s.ashx?
 ||inn.co.il/Controls/HPJS.ashx?act=log
@@ -9250,6 +9260,7 @@ http://utm.
 ||estadisticas.lanacion.com.ar^
 ||estadonline.publiguias.cl^
 ||fls-eu.amazon.es^
+||hits.antena3.com^
 ||livetracker.martinoticias.org^
 ||marca.com^*/pixel.gif?
 ||mercadolibre.com.ar/jm/ml.track.me?
@@ -9283,7 +9294,7 @@ http://utm.
 ||hit.meta.ua^
 ||piccy.info/c?
 ||piccy.org.ua/c?
-!-----------------Whitelists-----------------!
+!-----------------------Whitelists to fix broken sites------------------------!
 ! *** easylist:easyprivacy/easyprivacy_whitelist.txt ***
 @@/wp-content/plugins/google-analytics-dashboard-for-wp/*$~third-party
 @@||a.visualrevenue.com/vrs.js$domain=ebaumsworld.com|nydailynews.com
@@ -9316,6 +9327,7 @@ http://utm.
 @@||aolcdn.com/omniunih.js$domain=aim.com|autoblog.com|autos.aol.com|engadget.com|mapquest.com|video.aol.com|www.aol.com
 @@||aolcdn.com/omniunih_int.js$domain=autoblog.com
 @@||aolcdn.com^*/beacon.min.js$domain=autoblog.com|dailyfinance.com
+@@||api.academia.edu^*/stats?callback$script,~third-party
 @@||api.chartbeat.com^$script,domain=betabeat.com|couriermail.com.au|financialpost.com|wcpo.com
 @@||arkadiumhosted.com^*/google-analytics-logger.swf$object-subrequest
 @@||arstechnica.com/services/incr.php?*=interactions.adblock-annoy.click$xmlhttprequest
@@ -9367,7 +9379,7 @@ http://utm.
 @@||cdn-redfin.com^*/clicktracker.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.js$domain=redfin.com
 @@||cdn-redfin.com^*/page_analytics.xd.js
-@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|policymic.com|ricardo.ch|techrepublic.com|zdnet.com
+@@||cdn.optimizely.com/js/*.js$domain=forbes.com|freeshipping.com|heroku.com|hotukdeals.com|imageshack.com|lifelock.com|policymic.com|ricardo.ch|techrepublic.com|zdnet.com
 @@||centurylink.net/images/track/track.gif?track=$xmlhttprequest
 @@||chanel.com/js/chanel-tracking.js$script
 @@||chartbeat.com/*/chartbeat/$~third-party
@@ -9375,6 +9387,7 @@ http://utm.
 @@||chatzy.com/?jsonp:$script
 @@||cio.com/js/demandbase.js?
 @@||cisco.com/web/fw/lib/ntpagetag.js
+@@||cisco.com/web/fw/m/ntpagetag.min.js
 @@||cleananalytics.com/browser.js?$script,domain=cheapflights.com
 @@||clicktale.net/wrb.js$domain=microsoft.com
 @@||clicktale.net^$script,domain=cbc.ca
@@ -9779,7 +9792,7 @@ http://utm.
 @@||walmart.com/b/ss/$image
 ! Whitelists to fix broken pages of tracking companies
 @@||heatmap.it^$domain=heatmap.me
-!-----------------International whitelists-----------------!
+!----------------Whitelists to fix broken international sites-----------------!
 ! *** easylist:easyprivacy/easyprivacy_whitelist_international.txt ***
 ! German
 @@||a.visualrevenue.com/vrs.js$domain=t-online.de

@@ -13,36 +13,15 @@
 !
 !----------------------- Filtres génériques -----------------!
 .ma/ads/
-/ads_90_728.
 /advStatLib.js
 /advStatSettings.js
-/antiadblockmsg.
-/ar/ads/*
-/ara/ads/*
-/bnr468.
-/cdn-cgi/pe/bag*?
 !
 !----------------------- Éléments génériques -----------------!
 ###advBarMars
-###custom-ad
-###pub-730x90
-##.ads_box_home_box
-##.adv-header
-##.adv_cont
 ##.ban-728
 ##.cubes-ads
 ##.custom-advert-banner
 ##.custom-advert-banner-frame
-##.inside_adv_section
-##.large-ad-center
-##.large-ad-center-close
-##.leftSideAds
-##.ltas_adspot
-##.panet-mars-adv-panel
-##.pm-ad-zone
-##.pub-730x90
-##.sidbar-ad1
-##.yourcolor-ads
 ##[href*="ad2games.com/"]
 ##a[href*="/ads/ad_link.php?"]
 ##a[href*="adintop.com/outgoing/click.php?"]
@@ -224,7 +203,9 @@
 ||g44g.com/g44g-games.gif
 ||galileosolutions.net^*/banners_
 ||gamepower7.com/forum/banner.swf
+||gamezek.com/img.png
 ||geek4arab.net/banner/
+||giclub.tv/index.php?action=$image
 ||gulfbase.com/APopUp.
 ||gulfbase.com/Assets/css/AeroWindow
 ||gulfup.com/2012-06-04/133881477241.gif
@@ -292,6 +273,13 @@
 ||multiuploaden.com/do.php?img=6603
 ||multiuploaden.com/uploads/13748786571.png
 ||mycar4ever.blogspot.com^$popup,domain=egyptladies.net
+||n4hr.com/banr/
+||n4hr.com/ups/uploads/2590fc327b.gif
+||n4hr.com/ups/uploads/546f5f6e30.gif
+||n4hr.com/ups/uploads/9c6fe0ea0b.gif
+||n4hr.com/ups/uploads/de989ca55b.gif
+||n4hr.com/ups/uploads/f4ebe53ef5.gif
+||n4hr.org/up/uploads/n4hr_13408663851.gif
 ||nadorhoy.net/pub/
 ||nadorimg.com/photos/faniabiiiii.gif
 ||nadorimg.com/photos/kabdani.gif
@@ -373,12 +361,13 @@
 !
 !----------------------- Sites spécifiques -----------------------!
 !
-|http:$subdocument,third-party,domain=sa.ae
 |http://j.gs^$popup,domain=showsat.org
+|http://sa.ae^$popup,domain=bacdz.org
 ||0sat.net/index/
 ||0zz0.com/e/$image
 ||0zz0.com/e/luna20120131_2.swf
 ||0zz0.com/js.php
+||0zz0.com/template/js/e.min.js
 ||202020.net/abahi/
 ||202020.net/ratteb/asd/
 ||222z.net/banners/
@@ -513,6 +502,7 @@
 ||arablionz.com/left.jpg
 ||arablionz.com/open/
 ||arablionz.com/right.jpg
+||arabmersal.net^$popup,domain=rmoz.cc
 ||arabs-up.com/uploads/12_02_13_13606696151.gif
 ||arabs-up.com/uploads/arabs-up_13510211071.jpg
 ||arabs-up.com/uploads/arabs-up_13510222912.gif
@@ -738,6 +728,9 @@
 ||kazaroza.net^$popup,domain=arablionz.com
 ||khaleejcal.com^*/banners/
 ||kleeja.com/static/images/e3/
+||kora-online.tv/channellist.
+||kora-online.tv/chat.html
+||kora-online.tv/user.html
 ||kora.me/$subdocument,domain=zi-m.com
 ||kora.me^$subdocument,domain=vb.zi-m.com
 ||korabia.com/Content/img/Cocacola.jpg
@@ -884,7 +877,6 @@
 ||s7rny.com/vb/open/
 ||s7rny.com/vb/s/150.png
 ||s7rny.com/vb/s/400.png
-||sa.ae^$popup,domain=bacdz.org
 ||saidaonline.com/flash/di3ayaad.swf
 ||saidaonline.com/gifs/alassaadlogo21.jpg
 ||saidaonline.com/gifs/bsatad2013.jpg
@@ -950,6 +942,8 @@
 ||vbdar.com^$popup,domain=darseries.com
 ||vip4soft.com/draw.swf
 ||vip4soft.com/images/baneers/
+||waraqat.net/*/games-banner.gif
+||waraqat.net/*/thwalel.gif
 ||wiki-net.net/$subdocument,domain=panorama-istanbul.org
 ||xdahk.bihax.com^$popup,domain=bihax.com
 ||xtratube.net/player/*/codes.html
@@ -1081,6 +1075,7 @@ ashwagi.com,fll2.com,mobdi3ine.net,op-arab.com,shofha.com,swarih.com,y4yy.com,ya
 kalemaro.com##.adv2
 n4hr.com##.advactar
 mp3quran.net##.advertising
+al-jazirah.com##.advr
 gololy.com##.advrtising-colum
 roooo3.com##.advs
 arabhardware.net##.avd_display_block
@@ -1142,7 +1137,7 @@ ounousa.com##.newBanner
 now24.net##.pad5
 chat-alriyadh.com##.paner
 hao123.com##.pr
-europages.ma,menara.ma##.pub
+ennaharonline.com,europages.ma,menara.ma##.pub
 hawaaweb.com##.right-banner
 rassoulallah.info##.right_column
 swalif.net##.sab-adPlace
@@ -1203,6 +1198,7 @@ fivesat.net,k1g3.com##a[href="http://www.sharing-sat.com"]
 uiraqi.com##a[href^="/ads.php?"]
 nadorcity.com##a[href^="/ads/"]
 felmedan.com##a[href^="/banners/"]
+n4hr.com##a[href^="/bnnr.php?do="]
 jordanzad.com##a[href^="ad.php?"]
 saidaonline.com##a[href^="advertising.php?"]
 ghnoh.com,l7en.com##a[href^="banner.php?id="]
@@ -1327,11 +1323,12 @@ arbface.co##table[width="800"][height="200"][bgcolor="#FFFFCC"]
 adslgate.com##td[style="border: 1px solid #3878FA; border-top: 0px;background:#fafafa;"]
 7hob.com##td[style="border:2px #EA8336 dotted ; width:336px;height:280px;"]
 forums.7hob.com##td[style="border:2px #EA8610 dotted ; width:750px;height:280px;"]
+arfonts.net##td[style="height: 90px; padding: 0px 0px 0px 0px; text-align:center; border-bottom:1px dashed #336699;"]
 damasgate.com##td[width="160"]
 traidnt.net##td[width="160px"]
 ! Anti-Adblock
 g9g.com#@##myAd
-xaddad.com#@#.afs_ads
+dramacafe.tv,online.dramacafe.in,xaddad.com#@#.afs_ads
 @@||coolkora.com^$elemhide
 !
 !----------------------- Exceptions -----------------------!

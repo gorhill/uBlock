@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 04/03/2015
+! Last change: 19/03/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -83,6 +83,7 @@ exashare.com###player_img
 ||cviceni-doma.cz/images/*banner*
 ||cztorrent.net/images/bannery/
 ||d.lookit.cz/vv.js
+||data.idnes.cz/nocache/DPP/dacan/
 ||data.idnes.cz/soutez/
 ||data.idnes.cz/uni/
 ||devbook.cz/images/banners/
@@ -247,6 +248,7 @@ exashare.com###player_img
 ||img.karaoketexty.cz/img/ad/
 ||img.teevee.sk/img/beangel*.gif
 ||img.teevee.sk/img/TEE-Final2.gif
+||img.zoznam.sk/adimages/
 ||img5.uloz.to/ul3/images/hp_brand_tsbohemia.jpg
 ||kamzakrasou.sk/actions/
 ||mediacentrum.sk/google/
@@ -676,7 +678,9 @@ idnes.cz##.aheadegiobox
 idnes.cz##.ahead
 idnes.cz##.catchbox-dual-l
 idnes.cz##.col-r
+idnes.cz##.fix-m11
 idnes.cz##.m54
+idnes.cz##.r-art.art
 idnes.cz##.r-body
 idnes.cz##.r-head
 idnes.cz##.r-text

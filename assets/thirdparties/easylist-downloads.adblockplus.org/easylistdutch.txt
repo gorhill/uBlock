@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: X6zE9EnR/QbDK2RhS6wSmw
-! Version: 201503071831
+! Checksum: XvLQvauJ6m0XuSygk2SFbg
+! Version: 201503211222
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 07 Mar 2015 18:31 UTC
+! Last modified: 21 Mar 2015 12:22 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -153,6 +153,7 @@ _advertentieleaderboardhome.
 ||api.hebbes.be/widgets/carousels/$third-party
 ||api.skyscanner.net/api.ashx?$domain=viva.nl
 ||babysitster.nl/banners/
+||blablacar.nl/widget-driver/$third-party
 ||bol.com/nl/upload/banners/
 ||booking.com/?aid=$domain=puuropreis.nl
 ||brightcove.com/js/BrightcoveExperiences.js$domain=backpackgek.nl
@@ -282,6 +283,7 @@ _advertentieleaderboardhome.
 ||watch-me-live.be/banner/
 ||wegenerweb.nl/banners/
 ||wegenerweb.nl/sponsors/
+||whentofly.eu/includes/ContentBanner
 ||wildhitz.nl/NLFM/NLFMbanner.html
 ||x0.nl/banners/
 ||xingo.nl/bannermanagement/
@@ -640,6 +642,7 @@ _advertentieleaderboardhome.
 ||vijfzintuigen.nl/banner/
 ||virusalert.nl/img/banners/
 ||vliegtickets.nl/includes/flash/banner.swf
+||voetbalnieuws.be/templates/images/unibet/
 ||volkskrant.nl/static/nmc/prm/box/images/201
 ||vt4.be/upload/acties/bose/
 ||vtm.be^*/images/footer-samsung_2.jpg
@@ -1315,4 +1318,5 @@ bokt.nl#@#.node-ad
 landleven.nl#@#.post-ad
 amonis.be#@#.text-ad
 kamernet.nl#@#.topAdd
+voetbalnieuws.be#@#a[href^="http://adserving.unibet.com/"]
 tweakers.net#@#a[href^="http://pubads.g.doubleclick.net/"]

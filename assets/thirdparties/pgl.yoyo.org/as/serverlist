@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sun, 01 Mar 2015 07:39:13 GMT
-# entries:        2449
+# entries:        2446
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -539,6 +539,7 @@
 127.0.0.1 ads.livenation.com
 127.0.0.1 ads.localnow.com
 127.0.0.1 ads.lvz-online.de
+127.0.0.1 ads.mambocommunities.com
 127.0.0.1 ads.mariuana.it
 127.0.0.1 ads.massinfra.nl
 127.0.0.1 ads.mcafee.com
@@ -673,7 +674,6 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
-127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -950,7 +950,6 @@
 127.0.0.1 affiliates.ige.com
 127.0.0.1 affiliates.internationaljock.com
 127.0.0.1 affiliates.jlist.com
-127.0.0.1 affiliates.quintura.com
 127.0.0.1 affiliates.streamray.com
 127.0.0.1 affiliates.thinkhost.net
 127.0.0.1 affiliates.thrixxx.com
@@ -1694,7 +1693,6 @@
 127.0.0.1 logua.com
 127.0.0.1 lop.com
 127.0.0.1 lucidmedia.com
-127.0.0.1 lynxtrack.com
 127.0.0.1 lzjl.com
 127.0.0.1 m.webtrends.com
 127.0.0.1 m1.webstats4u.com
@@ -2341,7 +2339,6 @@
 127.0.0.1 vertadnet.com
 127.0.0.1 veruta.com
 127.0.0.1 vervewireless.com
-127.0.0.1 vg.ad.asap-asp.net
 127.0.0.1 vibrantmedia.com
 127.0.0.1 video-stats.video.google.com
 127.0.0.1 videoegg.com
@@ -2431,7 +2428,6 @@
 127.0.0.1 xtendmedia.com
 127.0.0.1 xtremetop100.com
 127.0.0.1 xxxcounter.com
-127.0.0.1 xzoomy.com
 127.0.0.1 y.ibsys.com
 127.0.0.1 yab-adimages.s3.amazonaws.com
 127.0.0.1 yabuka.com
@@ -2457,4 +2453,5 @@
 127.0.0.1 zenzuu.com
 127.0.0.1 zeus.developershed.com
 127.0.0.1 zeusclicks.com
+127.0.0.1 zintext.com
 127.0.0.1 zmedia.com
