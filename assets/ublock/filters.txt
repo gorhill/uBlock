@@ -332,3 +332,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # https://github.com/gorhill/uBlock/issues/951
 answers.yahoo.com###ya-center-rail > [id^="ya-q-"][id$="-textads"]
+
+# kissmetrics.com broken
+# To counter `kissmetrics.com` in Peter Lowe's
+@@||kissmetrics.com^$~third-party
