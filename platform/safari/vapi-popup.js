@@ -37,16 +37,16 @@ var onLoaded = function() {
         powerAndStatsPane = panes.children[0],
         dfPane = panes.children[1];
 
-    body.style.setProperty("width", "100%");
-    panes.style.setProperty("width", "100%");
-    dfPane.style.setProperty("display", "inline-block", "important");
-
     var updateSize = function() {
         var dfEnabled = panes.classList.contains(DF_ENABLED_CLASS);
         popover.width = powerAndStatsPane.clientWidth + (dfEnabled ? dfPane.clientWidth : 0);
         popover.height = body.clientHeight;
     };
-    updateSize();
+
+    body.style.setProperty("width", "100%");
+    panes.style.setProperty("width", "100%");
+    dfPane.style.setProperty("display", "inline-block", "important");
+    setTimeout(updateSize, 0);
 };
 window.addEventListener("load", onLoaded);
 })();
