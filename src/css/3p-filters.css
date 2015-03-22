@@ -121,7 +121,8 @@ span.purge {
 span.purge:hover {
     opacity: 1;
     }
-span.obsolete {
+span.obsolete,
+span.new {
     border-color: hsl(36, 100%, 73%);
     color: #222;
     background-color: hsl(36, 100%, 75%);
