@@ -13,13 +13,13 @@ body {
     background-color: white;
     border: 0;
     box-sizing: border-box;
-    height: 36px;
-    left: 1em;
+    height: 40px;
+    left: 0;
     margin: 0;
-    padding: 0;
+    padding: 0 1em;
     position: fixed;
-    text-align: center;
     top: 0;
+    width: 100%;
     }
 #toolbar .button {
     background-color: white;
@@ -47,7 +47,7 @@ input:focus {
     background-color: #ffe;
     }
 #content {
-    margin-top: 36px;
+    margin-top: 40px;
     }
 #content table {
     border: 0;
