@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2014 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -114,11 +114,11 @@ return {
         },
         // uBlock
         'assets/ublock/filters.txt': {
-            title: 'µBlock filters',
+            title: 'uBlock filters',
             group: 'default'
         },
         'assets/ublock/privacy.txt': {
-            title: 'µBlock filters – Privacy',
+            title: 'uBlock filters – Privacy',
             group: 'default'
         }
     },
