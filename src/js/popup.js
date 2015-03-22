@@ -23,46 +23,42 @@
 
 /******************************************************************************/
 
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
 // Ensure the popup is properly sized as soon as possible. It is assume the DOM
 // content is ready at this point, which should be the case given where this
 // script file is included in the HTML file.
 
-(function() {
-    'use strict';
+var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'true';
 
-    var doc = document;
+// Hacky? I couldn't figure a CSS recipe for this problem.
+// I do not want the left pane -- optional and hidden by defaut -- to
+// dictate the height of the popup. The right pane dictates the height
+// of the popup, and the left pane will have a scrollbar if ever its
+// height is more than what is available.
+document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
+    'height',
+    document.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
+);
 
-    // Hacky? I couldn't figure a CSS recipe for this problem.
-    // I do not want the left pane -- optional and hidden by defaut -- to
-    // dictate the height of the popup. The right pane dictates the height
-    // of the popup, and the left pane will have a scrollbar if ever its
-    // height is more than what is available.
-    doc.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
-        'height',
-        doc.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
-    );
+// The padlock must be manually positioned:
+// - It's vertical position depends on the height on the title bar.
+document.getElementById('saveRules').style.setProperty(
+    'top',
+    (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
+);
 
-    // The padlock must be manually positioned:
-    // - It's vertical position depends on the height on the title bar.
-    doc.getElementById('saveRules').style.setProperty(
-        'top',
-        (doc.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
-    );
-
-    // https://github.com/gorhill/uBlock/issues/996
-    // Experimental: mitigate glitchy popup UI: immediately set the firewall pane
-    // visibility to its last known state. By default the pane is hidden.
-    // Will remove if it makes no difference.
-    if ( vAPI.localStorage.getItem('popupFirewallPane') === 'true' ) {
-        doc.getElementById('panes').classList.add('dfEnabled');
-    }
-})();
-
-/******************************************************************************/
-
-(function() {
-
-'use strict';
+// https://github.com/gorhill/uBlock/issues/996
+// Experimental: mitigate glitchy popup UI: immediately set the firewall pane
+// visibility to its last known state. By default the pane is hidden.
+// Will remove if it makes no difference.
+if ( dfPaneVisibleStored ) {
+    document.getElementById('panes').classList.add('dfEnabled');
+}
 
 /******************************************************************************/
 
@@ -440,6 +436,15 @@ var renderPopup = function() {
     // This must be done here, to be sure the popup is resized properly
     var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
 
+    // https://github.com/gorhill/uBlock/issues/1068
+    // Remember the last state of the firewall pane. This allows to
+    // configure the popup size early next time it is opened, which means a
+    // less glitchy popup at open time.
+    if ( dfPaneVisible !== dfPaneVisibleStored ) {
+        dfPaneVisibleStored = dfPaneVisible;
+        vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
+    }
+
     uDom('#panes').toggleClass('dfEnabled', dfPaneVisible);
     uDom('#firewallContainer').toggleClass('minimized', popupData.firewallPaneMinimized);
 
@@ -516,16 +521,18 @@ var toggleFirewallPane = function() {
         value: popupData.dfEnabled
     });
 
+    // https://github.com/gorhill/uBlock/issues/996
+    // Remember the last state of the firewall pane. This allows to
+    // configure the popup size early next time it is opened, which means a
+    // less glitchy popup at open time.
+    dfPaneVisibleStored = popupData.dfEnabled;
+    vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
+
     // Dynamic filtering pane may not have been built yet
     uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
-
-    // https://github.com/gorhill/uBlock/issues/996
-    // Experimental: Remember the last state of the firewall pane.
-    // Will remove if it makes no difference.
-    vAPI.localStorage.setItem('popupFirewallPane', popupData.dfEnabled);
 };
 
 /******************************************************************************/
