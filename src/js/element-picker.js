@@ -248,7 +248,7 @@ var netFilterFromUnion = (function() {
         var from = lastNetFilterUnion;
 
         // Reset reference filter when dealing with unrelated URLs
-        if ( from === '' || a.host !== lastNetFilterHostname ) {
+        if ( from === '' || a.host === '' || a.host !== lastNetFilterHostname ) {
             lastNetFilterHostname = a.host;
             lastNetFilterUnion = to;
             localMessager.send({
