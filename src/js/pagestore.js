@@ -508,11 +508,11 @@ PageStore.prototype.init = function(tabId, pageURL) {
 /******************************************************************************/
 
 PageStore.prototype.reuse = function(pageURL, context) {
-    // This can very well happen under normal circumstances. Leave the context
-    // unchanged when this happens.
-    if ( pageURL === this.pageURL ) {
-        return this;
-    }
+    // We can't do this: when force refreshing a page, the page store data
+    // needs to be reset
+    //if ( pageURL === this.pageURL ) {
+    //    return this;
+    //}
 
     // If URL changes without a page reload (more and more common), then we
     // need to keep all that we collected for reuse. In particular, not
