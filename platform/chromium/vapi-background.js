@@ -149,9 +149,7 @@ vAPI.tabs.registerListeners = function() {
             onNavigationClient(details);
         }
         popupCandidateCreate(details);
-        if ( popupCandidateTest(details) === true ) {
-            return;
-        }
+        popupCandidateTest(details);
     };
 
     var onBeforeNavigate = function(details) {
