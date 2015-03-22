@@ -102,7 +102,7 @@ vAPI.tabs.registerListeners = function() {
         if ( this.selfDestructionTimer !== null ) {
             clearTimeout(this.selfDestructionTimer);
         }
-        this.selfDestructionTimer = setTimeout(this.selfDestruct.bind(this), 1000);
+        this.selfDestructionTimer = setTimeout(this.selfDestruct.bind(this), 10000);
     };
 
     var popupCandidateCreate = function(details) {
