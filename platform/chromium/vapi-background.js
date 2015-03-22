@@ -134,28 +134,44 @@ vAPI.tabs.registerListeners = function() {
         }
     };
 
+    // The chrome.webRequest.onBeforeRequest() won't be called for everything
+    // else than `http`/`https`. Thus, in such case, we will bind the tab as
+    // early as possible in order to increase the likelihood of a context
+    // properly setup if network requests are fired from within the tab.
+    // Example: Chromium + case #6 at
+    //          http://raymondhill.net/ublock/popup.html
+    var reGoodForWebRequestAPI = /^https?:\/\//;
+
     var onCreatedNavigationTarget = function(details) {
-        //console.debug('onCreatedNavigationTarget: popup candidate', details.tabId);
+        //console.debug('onCreatedNavigationTarget: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        if ( reGoodForWebRequestAPI.test(details.url) === false ) {
+            details.frameId = 0;
+            onNavigationClient(details);
+        }
         popupCandidateCreate(details);
-        popupCandidateTest(details);
+        if ( popupCandidateTest(details) === true ) {
+            return;
+        }
     };
 
     var onBeforeNavigate = function(details) {
-        if ( details.frameId === 0 ) {
-            //console.debug('onBeforeNavigate: popup candidate', details.tabId);
-            popupCandidateTest(details);
+        if ( details.frameId !== 0 ) {
+            return;
         }
+        //console.debug('onBeforeNavigate: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        popupCandidateTest(details);
     };
 
     var onCommitted = function(details) {
-        if ( details.frameId === 0 ) {
-            //console.debug('onCommitted: popup candidate', details.tabId);
-            if ( popupCandidateTest(details) === true ) {
-                return;
-            }
-            popupCandidateDestroy(details);
+        if ( details.frameId !== 0 ) {
+            return;
         }
         onNavigationClient(details);
+        //console.debug('onCommitted: popup candidate tab id %d = "%s"', details.tabId, details.url);
+        if ( popupCandidateTest(details) === true ) {
+            return;
+        }
+        popupCandidateDestroy(details);
     };
 
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);

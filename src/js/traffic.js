@@ -65,26 +65,30 @@ var onBeforeRequest = function(details) {
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        if ( mostRecentRootDocURL === '' ) {
-            return;
-        }
         // https://github.com/gorhill/uBlock/issues/1025
         // Google Hangout popup opens without a root frame. So for now we will
         // just discard that best-guess root frame if it is too far in the
         // future, at which point it ceases to be a "best guess".
         if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
             mostRecentRootDocURL = '';
-            return;
         }
         // https://github.com/gorhill/uBlock/issues/1001
         // Not a behind-the-scene request, yet no page store found for the
         // tab id: we will thus bind the last-seen root document to the
         // unbound tab. It's a guess, but better than ending up filtering
         // nothing at all.
-        vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: mostRecentRootDocURL });
-        pageStore = µb.pageStoreFromTabId(tabId);
+        if ( mostRecentRootDocURL !== '' ) {
+            vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: mostRecentRootDocURL });
+            pageStore = µb.pageStoreFromTabId(tabId);
+        }
+        // If all else fail at finding a page store, re-categorize the
+        // request as behind-the-scene. At least this ensures that ultimately
+        // the user can still inspect/filter those net requests which were
+        // about to fall through the cracks.
+        // Example: Chromium + case #12 at
+        //          http://raymondhill.net/ublock/popup.html
         if ( !pageStore ) {
-            return;
+            return onBeforeBehindTheSceneRequest(details);
         }
     }
 
