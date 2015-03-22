@@ -85,7 +85,7 @@ uBlock is also easy on the CPU<br>
 Being lean and efficient doesn't mean blocking less<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201502-16.png" /><br>
 <sup>For details of benchmark, see 
-<a href="https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares">uBlock and others: Blocking ads, trackers, malwares</a>.
+<a href="https://github.com/gorhill/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
 #### Quick tests
