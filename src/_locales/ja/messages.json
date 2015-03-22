@@ -1,10 +1,10 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Chromiumベースブラウザー向けの高効率なブロッカーが遂に登場。CPUとメモリーの負担を抑えます。",
+    "message":"高効率ブロッカーが遂に登場。CPUとメモリーの負担を抑えます。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"マイルール",
+    "message":"Myルール",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -508,15 +508,15 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"デフォルトの設定に戻す",
+    "message":"初期設定にリセット",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"{{time}}のバックアップデータを使用して全ての設定を上書きした後、μBlockが再起動します。\n\nバックアップデータを使用して既存の全ての設定の上書きを実行しますか？",
+    "message":"{{time}}のバックアップデータを使用して全ての設定を上書きした後、μBlockが再起動します。\n\nバックアップデータを使用して既存の全ての設定の上書きしますか？",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"データが無効、または読み込みができませんでした。",
+    "message":"データが無効、または読み込みができませんでした",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
@@ -568,7 +568,7 @@
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"これは最後のエントリである必要があります",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

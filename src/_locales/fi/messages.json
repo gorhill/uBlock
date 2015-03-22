@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock",
+    "message":"uBlock",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -204,7 +204,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"NET suodattimet",
+    "message":"Verkkosuodattimet",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -276,7 +276,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Tämä asetus kytkee päälle parsinnan ja pakottaa käyttöön <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-yhteensopivat &ldquo;elementtejä piilottavat&rdquo; suodattimet<\/a>. Nämä suodattimet ovat pääasiassa ehosteita. Ne piilottavat verkkosivuilta elementtejä jotka ovat visuaalisesti häiritseviä eikä niitä voi estää verkkopyyntöihin pohjautuvalla suodatinmoottorilla. <\/p><p>Tämä ominaisuus nostaa <i>uBlock<\/i>in muistinkäyttöä.<\/p>",
+    "message":"<p>Tämä asetus kytkee päälle <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-yhteensopivat &ldquo;elementtejä piilottavat&rdquo; suodattimet<\/a>. Nämä suodattimet ovat pääasiassa ehosteita. Ne piilottavat verkkosivuilta elementtejä, jotka ovat visuaalisesti häiritseviä eikä niitä voi estää verkkopyyntöihin pohjautuvalla suodatinmoottorilla. <\/p><p>Tämä ominaisuus nostaa <i>uBlock<\/i>in muistinkäyttöä.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Lisää seuraava URL kustomoituihin suodatinlistoihisi\n\nNimi: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

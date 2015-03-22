@@ -164,7 +164,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"ze stron zewnętrznych",
+    "message":"domeny zewnętrzne",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -528,7 +528,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Dodać następujący URL do Twojej niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Dodać następujący URL do niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
