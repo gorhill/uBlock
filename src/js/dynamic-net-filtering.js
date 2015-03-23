@@ -542,7 +542,9 @@ Matrix.prototype.fromString = function(text, append) {
 
         // https://github.com/gorhill/uBlock/issues/1082
         // Discard rules with invalid hostnames
-        if ( reBadHostname.test(srcHostname) || reBadHostname.test(desHostname) ) {
+        if ( (srcHostname !== '*' && reBadHostname.test(srcHostname)) ||
+             (desHostname !== '*' && reBadHostname.test(desHostname))
+        ) {
             continue;
         }
 
