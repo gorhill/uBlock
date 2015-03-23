@@ -448,26 +448,27 @@ var pageStoreJunkyardMax = 10;
 
 /******************************************************************************/
 
-var PageStore = function(tabId, pageURL) {
-    this.init(tabId, pageURL);
+var PageStore = function(tabId, rawURL, pageURL) {
+    this.init(tabId, rawURL, pageURL);
 };
 
 /******************************************************************************/
 
-PageStore.factory = function(tabId, pageURL) {
+PageStore.factory = function(tabId, rawURL, pageURL) {
     var entry = pageStoreJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new PageStore(tabId, pageURL);
+        entry = new PageStore(tabId, rawURL, pageURL);
     } else {
-        entry.init(tabId, pageURL);
+        entry.init(tabId, rawURL, pageURL);
     }
     return entry;
 };
 
 /******************************************************************************/
 
-PageStore.prototype.init = function(tabId, pageURL) {
+PageStore.prototype.init = function(tabId, rawURL, pageURL) {
     this.tabId = tabId;
+    this.rawURL = rawURL;
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
 
@@ -507,7 +508,7 @@ PageStore.prototype.init = function(tabId, pageURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.reuse = function(pageURL, context) {
+PageStore.prototype.reuse = function(rawURL, pageURL, context) {
     // We can't do this: when force refreshing a page, the page store data
     // needs to be reset
     //if ( pageURL === this.pageURL ) {
@@ -520,6 +521,7 @@ PageStore.prototype.reuse = function(pageURL, context) {
     // video thumbnail would not work, because the frame hierarchy structure
     // was flushed from memory, while not really being flushed on the page.
     if ( context === 'tabUpdated' ) {
+        this.rawURL = rawURL;
         this.pageURL = pageURL;
         this.pageHostname = µb.URI.hostnameFromURI(pageURL);
         this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
@@ -535,7 +537,7 @@ PageStore.prototype.reuse = function(pageURL, context) {
     // A new page is completely reloaded from scratch, reset all.
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
-    this.init(this.tabId, pageURL);
+    this.init(this.tabId, rawURL, pageURL);
     return this;
 };
 
@@ -548,7 +550,7 @@ PageStore.prototype.dispose = function() {
     // need to release the memory taken by these, which can amount to
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
-    this.pageURL =
+    this.rawURL = this.pageURL =
     this.pageHostname = this.pageDomain =
     this.rootHostname = this.rootDomain =
     this.requestURL = this.requestHostname = this.requestType = '';
@@ -594,8 +596,13 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 /******************************************************************************/
 
 PageStore.prototype.getNetFilteringSwitch = function() {
+    // https://github.com/gorhill/uBlock/issues/1078
+    // Use both the raw and normalized URLs.
     if ( this.netFilteringReadTime < µb.netWhitelistModifyTime ) {
         this.netFiltering = µb.getNetFilteringSwitch(this.pageURL);
+        if ( this.netFiltering && this.rawURL !== this.pageURL ) {
+            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
+        }
         this.netFilteringReadTime = Date.now();
     }
     return this.netFiltering;

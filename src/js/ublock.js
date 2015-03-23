@@ -66,18 +66,16 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 µBlock.getNetFilteringSwitch = function(url) {
     var netWhitelist = this.netWhitelist;
-    var buckets, i;
-    var pos = url.indexOf('#');
-    var targetURL = pos !== -1 ? url.slice(0, pos) : url;
-    var targetHostname = this.URI.hostnameFromURI(targetURL);
+    var buckets, i, pos;
+    var targetHostname = this.URI.hostnameFromURI(url);
     var key = targetHostname;
     for (;;) {
         if ( netWhitelist.hasOwnProperty(key) ) {
             buckets = netWhitelist[key];
             i = buckets.length;
             while ( i-- ) {
-                if ( matchWhitelistDirective(targetURL, targetHostname, buckets[i]) ) {
-                    // console.log('"%s" matche url "%s"', buckets[i], targetURL);
+                if ( matchWhitelistDirective(url, targetHostname, buckets[i]) ) {
+                    // console.log('"%s" matche url "%s"', buckets[i], url);
                     return false;
                 }
             }
@@ -286,7 +284,6 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.toggleFirewallRule = function(details) {
-    var changed = false;
     if ( details.action !== 0 ) {
         this.sessionFirewall.setCellZ(details.srcHostname, details.desHostname, details.requestType, details.action);
     } else {

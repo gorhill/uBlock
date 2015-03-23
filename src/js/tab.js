@@ -198,7 +198,7 @@ vAPI.tabs.registerListeners();
 
     // Tab is not bound
     if ( !pageStore ) {
-        return this.pageStores[tabId] = this.PageStore.factory(tabId, normalURL);
+        return this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL, normalURL);
     }
 
     // https://github.com/gorhill/uBlock/issues/516
@@ -210,7 +210,7 @@ vAPI.tabs.registerListeners();
     // Rebind according to context. We rebind even if the URL did not change,
     // as maybe the tab was force-reloaded, in which case the page stats must
     // be all reset.
-    pageStore.reuse(normalURL, context);
+    pageStore.reuse(pageURL, normalURL, context);
 
     return pageStore;
 };
@@ -248,6 +248,7 @@ vAPI.tabs.registerListeners();
 
 µb.pageStores[vAPI.noTabId] = µb.PageStore.factory(
     vAPI.noTabId,
+    '',
     µb.normalizePageURL(vAPI.noTabId)
 );
 
