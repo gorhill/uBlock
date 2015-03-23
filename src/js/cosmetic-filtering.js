@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global µBlock */
+/* global punycode, µBlock */
 
 /******************************************************************************/
 
@@ -514,6 +514,8 @@ var FilterContainer = function() {
     this.selectorCacheAgeMax = 20 * 60 * 1000; // 20 minutes
     this.selectorCacheCountMin = 10;
     this.selectorCacheTimer = null;
+    this.reHasUnicode = /[^\x00-\x7F]/;
+    this.punycode = punycode;
     this.reset();
 };
 
@@ -719,6 +721,13 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         hostname = hostname.slice(1);
         unhide ^= 1;
     }
+
+    // punycode if needed
+    if ( this.reHasUnicode.test(hostname) ) {
+        //console.debug('µBlock.cosmeticFilteringEngine/FilterContainer.compileHostnameSelector> punycoding:', hostname);
+        hostname = this.punycode.toASCII(hostname);
+    }
+
     // https://github.com/gorhill/uBlock/issues/188
     // If not a real domain as per PSL, assign a synthetic one
     var hash;
