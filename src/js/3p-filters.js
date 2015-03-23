@@ -142,15 +142,33 @@ var renderFilterLists = function() {
         return li;
     };
 
+    var listEntryCountFromGroup = function(listKeys) {
+        if ( Array.isArray(listKeys) === false ) {
+            return '';
+        }
+        var count = 0;
+        var i = listKeys.length;
+        while ( i-- ) {
+            if ( listDetails.available[listKeys[i]].off !== true ) {
+                count += 1;
+            }
+        }
+        return count === 0 ? '' : '(' + count.toLocaleString() + ')';
+    };
+
     var liFromListGroup = function(groupKey, listKeys) {
         var liGroup = listGroupTemplate.clone();
-        liGroup.descendants('span').text(vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1)));
+        var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+        if ( groupName !== '' ) {
+            liGroup.descendants('span.geName').text(groupName);
+            liGroup.descendants('span.geCount').text(listEntryCountFromGroup(listKeys));
+        }
         var ulGroup = liGroup.descendants('ul');
         if ( !listKeys ) {
             return liGroup;
         }
         listKeys.sort(function(a, b) {
-            return (listDetails.available[a].title || "").localeCompare(listDetails.available[b].title || "");
+            return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
             ulGroup.append(liFromListEntry(listKeys[i]));

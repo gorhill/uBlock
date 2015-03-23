@@ -19,15 +19,18 @@ body[dir=rtl] #lists {
     padding: 0;
     list-style-type: none;
     }
-#lists > .groupEntry > span {
+#lists > .groupEntry > .geName {
     cursor: pointer;
-    font-size: 15px;
+    font-size: 110%;
     }
-#lists > .groupEntry:not(:first-child) > span:before {
+#lists > .groupEntry > .geCount {
+    font-size: 90%;
+    }
+#lists > .groupEntry:not(:first-child) > .geName:before {
     color: #aaa;
     content: '\2212  ';
     }
-#lists > .groupEntry.collapsed > span:before {
+#lists > .groupEntry.collapsed > .geName:before {
     color: #aaa;
     content: '+  ';
     }
