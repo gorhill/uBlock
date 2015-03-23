@@ -248,8 +248,8 @@
     /******************************************************************************/
 
     vAPI.tabs.registerListeners = function() {
-        safari.application.addEventListener('beforeNavigate', function(e) {
-            if(!vAPI.tabs.popupCandidate || !e.target || e.url === 'about:blank') {
+        safari.application.addEventListener("beforeNavigate", function(e) {
+            if(!vAPI.tabs.popupCandidate || !e.target || e.url === "about:blank") {
                 return;
             }
             var url = e.url,
@@ -259,7 +259,6 @@
                 targetTabId: tabId,
                 openerTabId: vAPI.tabs.popupCandidate
             };
-            vAPI.tabs.popupCandidate = false;
             if(vAPI.tabs.onPopup(details)) {
                 e.preventDefault();
                 if(vAPI.tabs.stack[details.openerTabId]) {
@@ -702,9 +701,9 @@
             }
             switch(e.message.type) {
                 case "popup":
-                    if(e.message.url === 'about:blank') {
-                        vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
-                        e.message = true;
+                    vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
+                    if(e.message.url === "about:blank") {
+                        e.message = false;
                         return;
                     }
                     else {
