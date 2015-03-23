@@ -76,6 +76,7 @@ var nameToActionMap = {
 // For performance purpose, as simple tests as possible
 var reHostnameVeryCoarse = /[g-z_-]/;
 var reIPv4VeryCoarse = /\.\d+$/;
+var reBadHostname = /[^0-9a-z_.\[\]:-]/;
 
 // http://tools.ietf.org/html/rfc5952
 // 4.3: "MUST be represented in lowercase"
@@ -538,6 +539,12 @@ Matrix.prototype.fromString = function(text, append) {
 
         srcHostname = punycode.toASCII(fields[0]);
         desHostname = punycode.toASCII(fields[1]);
+
+        // https://github.com/gorhill/uBlock/issues/1082
+        // Discard rules with invalid hostnames
+        if ( reBadHostname.test(srcHostname) || reBadHostname.test(desHostname) ) {
+            continue;
+        }
 
         type = fields[2];
         if ( typeBitOffsets.hasOwnProperty(type) === false ) {
