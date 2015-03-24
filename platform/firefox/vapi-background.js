@@ -295,6 +295,8 @@ var windowWatcher = {
         if ( tabBrowser.deck ) {
             // Fennec
             tabContainer = tabBrowser.deck;
+            tabContainer.addEventListener('DOMTitleChanged', tabWatcher.onFennecLocationChange);
+
         } else if ( tabBrowser.tabContainer ) {
             // desktop Firefox
             tabContainer = tabBrowser.tabContainer;
@@ -375,6 +377,23 @@ var tabWatcher = {
             url: location.asciiSpec
         });
     },
+
+    onFennecLocationChange: function({target: doc}) {
+        // Fennec "equivalent" to onLocationChange
+        // note that DOMTitleChanged is selected as it fires very early
+        // (before DOMContentLoaded), and it does fire even if there is no title
+        var win = doc.defaultView;
+        if ( win !== win.top ) {
+            return;
+        }
+
+        vAPI.tabs.onNavigation({
+            frameId: 0,
+            tabId: vAPI.tabs.getTabId(getOwnerWindow(win).BrowserApp.getTabForWindow(win)),
+            url: Services.io.newURI(win.location.href, null, null).asciiSpec
+        });
+    }
+
 };
 
 /******************************************************************************/
