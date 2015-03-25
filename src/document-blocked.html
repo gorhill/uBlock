@@ -18,8 +18,13 @@ body {
     padding: 2px 4px;
     word-break: break-all;
     }
-a {
+a, button {
     margin: 0 1em;
+    }
+button {
+    cursor: pointer;
+    padding: 0.25em 0.5em;
+    font-size: inherit;
     }
 img {
     height: 60vh;
@@ -38,7 +43,8 @@ img {
 --><img src="img/Caution_sign_used_on_roads_pn.svg" />
 <p data-i18n="docblockedPrompt1" class="label"></p><p class="what code"></p>
 <p data-i18n="docblockedPrompt2" class="label"></p><p class="code" id="why"></p>
-<p><a id="back" data-i18n="docblockedBack" href></a><a id="bye" data-i18n="docblockedClose" href></a></p>
+<p><button id="back" data-i18n="docblockedBack" type="button"></button>
+<button id="bye" data-i18n="docblockedClose" type="button"></button></p>
 <p data-i18n="docblockedProceed" class="label"></p><p class="code"><a id="yolo" class="what" href></a></p>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
