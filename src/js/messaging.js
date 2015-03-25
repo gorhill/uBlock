@@ -217,6 +217,7 @@ var getStats = function(tabId, tabTitle) {
     };
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
+        r.rawURL = pageStore.rawURL;
         r.pageURL = pageStore.pageURL;
         r.pageDomain = pageStore.pageDomain;
         r.pageHostname = pageStore.pageHostname;

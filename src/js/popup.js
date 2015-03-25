@@ -83,6 +83,7 @@ var rowsToRecycle = uDom();
 var cachedPopupHash = '';
 var statsStr = vAPI.i18n('popupBlockedStats');
 var domainsHitStr = vAPI.i18n('popupHitDomainCount');
+var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
@@ -183,12 +184,14 @@ var addFirewallRow = function(des) {
     row.descendants('span:nth-of-type(1)').text(punycode.toUnicode(des));
 
     var hnDetails = popupData.hostnameDict[des] || {};
-
     var isDomain = des === hnDetails.domain;
-    row.toggleClass('isDomain', isDomain);
-    row.toggleClass('isSubDomain', !isDomain);
-    row.toggleClass('allowed', hnDetails.allowCount !== 0);
-    row.toggleClass('blocked', hnDetails.blockCount !== 0);
+    row.toggleClass('isDomain', isDomain)
+       .toggleClass('isSubDomain', !isDomain)
+       .toggleClass('allowed', hnDetails.allowCount !== 0)
+       .toggleClass('blocked', hnDetails.blockCount !== 0)
+       .toggleClass('totalAllowed', hnDetails.totalAllowCount !== 0)
+       .toggleClass('totalBlocked', hnDetails.totalBlockCount !== 0);
+
     row.appendTo('#firewallContainer');
 
     return row;
@@ -362,21 +365,15 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
-    // Domain of the page must always be included
-    if ( allDomains.hasOwnProperty(popupData.pageDomain) === false ) {
+    // Domain of the page must always be included (if there is one)
+    if (
+        allDomains.hasOwnProperty(popupData.pageDomain) === false &&
+        reNetworkRelatedURL.test(popupData.rawURL)
+    ) {
         allHostnameRows.push(popupData.pageDomain);
         allDomains[popupData.pageDomain] = false;
         allDomainCount += 1;
     }
-
-    // The root page domain must always be counted as connected: that's from
-    // where the root document was fetched.
-    // https://github.com/gorhill/uBlock/issues/759
-    // The root page domain must be counted if and only if it was actually
-    // obtained through a network request.
-    //if ( allDomainCount !== 0 && allDomains[popupData.pageDomain] === false ) {
-    //    touchedDomainCount += 1;
-    //}
 
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());

@@ -4,9 +4,9 @@ body {
     float: left;
     font: 13px sans-serif;
     margin: 0;
+    overflow: hidden;
     padding: 0;
     white-space: nowrap;
-    overflow: hidden;
     }
 h2 {
     background-color: #eee;
@@ -210,6 +210,7 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span:nth-of-type(1) {
     border-right: 1px solid white;
     padding-right: 2px;
+    position: relative;
     text-overflow: ellipsis;
     width: 70%;
     }
@@ -245,14 +246,30 @@ body.dirty #refresh:hover {
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(4) {
     display: inline-block;
     }
-#firewallContainer > div.allowed > span:nth-of-type(1) {
-    background-color: rgba(0, 160, 0, 0.1);
+#firewallContainer > div.allowed > span:nth-of-type(1):before,
+#firewallContainer > div.blocked > span:nth-of-type(1):before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+    box-sizing: border-box;
+    content: '';
+    display: inline-block;
+    height: 100%;
+    left: 0;
+    opacity: 0.4;
+    position: absolute;
+    width: 7px;
     }
-#firewallContainer > div.blocked > span:nth-of-type(1) {
-    background-color: rgba(192, 0, 0, 0.1);
+#firewallContainer > div.allowed > span:nth-of-type(1):before,
+#firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+    background-color: rgb(0, 160, 0);
     }
-#firewallContainer > div.allowed.blocked > span:nth-of-type(1) {
-    background-color: rgba(192, 160, 0, 0.1);
+#firewallContainer > div.blocked > span:nth-of-type(1):before,
+#firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+    background-color: rgb(192, 0, 0);
+    }
+#firewallContainer > div.allowed.blocked > span:nth-of-type(1):before,
+#firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
+    background-color: rgb(192, 160, 0);
     }
 #firewallContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
