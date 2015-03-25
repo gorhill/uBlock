@@ -54,15 +54,16 @@ var AnyParty = 0 << 2;
 var FirstParty = 1 << 2;
 var ThirdParty = 2 << 2;
 
-var AnyType = 1 << 4;
+var AnyType = 0 << 4;
 var typeNameToTypeValue = {
-        'stylesheet':  2 << 4,
-             'image':  3 << 4,
-            'object':  4 << 4,
-            'script':  5 << 4,
-    'xmlhttprequest':  6 << 4,
-         'sub_frame':  7 << 4,
-             'other':  8 << 4,
+        'stylesheet':  1 << 4,
+             'image':  2 << 4,
+            'object':  3 << 4,
+            'script':  4 << 4,
+    'xmlhttprequest':  5 << 4,
+         'sub_frame':  6 << 4,
+             'other':  7 << 4,
+        'main_frame': 12 << 4,
 'cosmetic-filtering': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
@@ -71,13 +72,9 @@ var typeOtherValue = typeNameToTypeValue.other;
 
 // All network request types to bitmap
 //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
-//   add 2 = number of left shift to use
 //   left-shift 1 by the above-calculated value
-//   subtract 4 to set all type bits, *except* for 2 lsb
-
-// https://github.com/gorhill/uBlock/issues/723
-// The 2 lsb *must* be zeroed
-var allNetRequestTypesBitmap = (1 << (typeOtherValue >>> 4) + 2) - 4;
+//   subtract 1 to set all type bits
+var allNetRequestTypesBitmap = (1 << (typeOtherValue >>> 4)) - 1;
 
 var BlockAnyTypeAnyParty = BlockAction | AnyType | AnyParty;
 var BlockAnyType = BlockAction | AnyType;
@@ -100,6 +97,8 @@ var reURLPostHostnameAnchors = /[\/?#]/;
 
 var pageHostnameRegister = '';
 var requestHostnameRegister = '';
+var filterRegister = null;
+var categoryRegister = '';
 
 /******************************************************************************/
 
@@ -1192,6 +1191,7 @@ FilterParser.prototype.toNormalizedType = {
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
              'other': 'other',
+          'document': 'main_frame',
           'elemhide': 'cosmetic-filtering',
      'inline-script': 'inline-script',
              'popup': 'popup'
@@ -1227,10 +1227,10 @@ FilterParser.prototype.reset = function() {
 // Be ready to handle multiple negated types
 
 FilterParser.prototype.parseOptType = function(raw, not) {
-    var type = typeNameToTypeValue[this.toNormalizedType[raw]];
+    var typeBit = 1 << ((typeNameToTypeValue[this.toNormalizedType[raw]] >>> 4) - 1);
 
     if ( !not ) {
-        this.types |= 1 << (type >>> 4);
+        this.types |= typeBit;
         return;
     }
 
@@ -1239,7 +1239,7 @@ FilterParser.prototype.parseOptType = function(raw, not) {
         this.types = allNetRequestTypesBitmap;
     }
 
-    this.types &= ~(1 << (type >>> 4));
+    this.types &= ~typeBit;
 };
 
 /******************************************************************************/
@@ -1283,10 +1283,22 @@ FilterParser.prototype.parseOptions = function(s) {
             this.parseOptParty(not);
             continue;
         }
-        if ( opt === 'elemhide' && this.action === AllowAction ) {
-            this.parseOptType('elemhide', false);
-            this.action = BlockAction;
-            continue;
+        if ( opt === 'elemhide' ) {
+            if ( this.action !== AllowAction ) {
+                this.parseOptType('elemhide', false);
+                this.action = BlockAction;
+                continue;
+            }
+            this.unsupported = true;
+            break;
+        }
+        if ( opt === 'document' ) {
+            if ( this.action === BlockAction ) {
+                this.parseOptType('document', false);
+                continue;
+            }
+            this.unsupported = true;
+            break;
         }
         if ( this.toNormalizedType.hasOwnProperty(opt) ) {
             this.parseOptType(opt, not);
@@ -1743,9 +1755,20 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
         party = parsed.firstParty ? FirstParty : ThirdParty;
     }
     var keyShard = parsed.action | parsed.important | party;
-    var type = parsed.types >>> 1 || 1; // bit 0 is unused; also, default to AnyType
+
+    var type = parsed.types;
+    if ( type === 0 ) {
+        out.push(
+            'n\v' +
+            this.makeCategoryKey(keyShard) + '\v' +
+            '.\v' +
+            parsed.f
+        );
+        return true;
+    }
+
     var bitOffset = 1;
-    while ( type !== 0 ) {
+    do {
         if ( type & 1 ) {
             out.push(
                 'n\v' +
@@ -1756,7 +1779,7 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
         }
         bitOffset += 1;
         type >>>= 1;
-    }
+    } while ( type !== 0 );
     return true;
 };
 
@@ -1845,9 +1868,19 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
 
 FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, party, out, hostname) {
     var bits = parsed.action | parsed.important | party;
-    var type = parsed.types >>> 1 || 1; // bit 0 is unused; also, default to AnyType
+    var type = parsed.types;
+    if ( type === 0 ) {
+        out.push(
+            'n\v' +
+            this.makeCategoryKey(bits) + '\v' +
+            parsed.token + '\v' +
+            filterClass.fid + '\v' +
+            filterClass.compile(parsed, hostname)
+        );
+        return;
+    }
     var bitOffset = 1;
-    while ( type !== 0 ) {
+    do {
         if ( type & 1 ) {
             out.push(
                 'n\v' +
@@ -1859,7 +1892,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
         }
         bitOffset += 1;
         type >>>= 1;
-    }
+    } while ( type !== 0 );
 };
 
 /******************************************************************************/
@@ -2008,7 +2041,11 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     var party = isFirstParty(context.pageDomain, requestHostnameRegister) ? FirstParty : ThirdParty;
 
     // Be prepared to support unknown types
-    var type = typeNameToTypeValue[requestType] || typeOtherValue;
+    var type = typeNameToTypeValue[requestType] || 0;
+    if ( type === 0 ) {
+        return '';
+    }
+
     var categories = this.categories;
     var bf = false, bucket;
 
@@ -2069,7 +2106,7 @@ FilterContainer.prototype.matchString = function(context) {
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
     var type = typeNameToTypeValue[context.requestType] || typeOtherValue;
-    if ( type > 8 << 4 ) {
+    if ( type > (7 << 4) ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+body {
+    font-size: large;
+    text-align: center;
+    }
+.label {
+    margin-bottom: 2px;
+    }
+.code {
+    background-color: rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    font-family: monospace;
+    margin: 0;
+    padding: 2px 4px;
+    word-break: break-all;
+    }
+a {
+    margin: 0 1em;
+    }
+img {
+    height: 60vh;
+    left: 10vw;
+    opacity: 0.05;
+    pointer-events: none;
+    position: fixed;
+    bottom: 5vh;
+    width: 80vw;
+    }
+</style>
+</head>
+<body>
+<!-- http://commons.wikimedia.org/wiki/File:Caution_sign_used_on_roads_pn.svg
+     Public domain. I removed the shadow.
+--><img src="img/Caution_sign_used_on_roads_pn.svg" />
+<p data-i18n="docblockedPrompt1" class="label"></p><p class="what code"></p>
+<p data-i18n="docblockedPrompt2" class="label"></p><p class="code" id="why"></p>
+<p><a id="back" data-i18n="docblockedBack" href></a><a id="bye" data-i18n="docblockedClose" href></a></p>
+<p data-i18n="docblockedProceed" class="label"></p><p class="code"><a id="yolo" class="what" href></a></p>
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/document-blocked.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="580.13672"
+   height="484.1875"
+   id="svg2904"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Caution_sign_used_on_roads_pn.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <sodipodi:namedview
+     inkscape:window-height="1030"
+     inkscape:window-width="1635"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="1.508"
+     inkscape:cx="293.52078"
+     inkscape:cy="253.98496"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:current-layer="svg2904"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2950">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2906">
+    <linearGradient
+       id="Grad1"
+       x1="41.194874"
+       y1="616.47717"
+       x2="118.93135"
+       y2="527.55511"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(4.556763,0,0,-4.315033,37.49756,2758.519)">
+      <stop
+         offset="0"
+         id="stop2909"
+         style="stop-color:#f2b600;stop-opacity:1;" />
+      <stop
+         offset="1"
+         id="stop2911"
+         style="stop-color:#f29600;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="Grad2"
+       x1="530.80951"
+       y1="486.63101"
+       x2="529.85413"
+       y2="487.53238"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.960006,0,0,0.960006,22.29079,4.4825252)">
+      <stop
+         offset="0"
+         id="stop2914"
+         style="stop-color:#d88500;stop-opacity:1;" />
+      <stop
+         offset="1"
+         id="stop2916"
+         style="stop-color:#fc3;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="Grad3"
+       x1="187.87357"
+       y1="224.59892"
+       x2="581.83746"
+       y2="483.10001"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.960006,0,0,0.960006,-530.75961,251.16687)">
+      <stop
+         offset="0"
+         id="stop2919"
+         style="stop-color:#ffd657;stop-opacity:1;" />
+      <stop
+         offset="1"
+         id="stop2921"
+         style="stop-color:#f2b600;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="Grad4"
+       x1="250.39845"
+       y1="101.53633"
+       x2="412.0943"
+       y2="264.54187"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.960006,0,0,0.960006,-532.08587,273.71329)">
+      <stop
+         offset="0"
+         id="stop2924"
+         style="stop-color:#fff1c5;stop-opacity:1;" />
+      <stop
+         offset="1"
+         id="stop2926"
+         style="stop-color:#fc3;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+       id="Grad5"
+       cx="512.86597"
+       cy="-10.558988"
+       r="179.55"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.14292e-8,1.531256,-0.876504,-2.165967e-5,462.7486,-245.0023)"
+       fx="512.86597"
+       fy="-10.558988">
+      <stop
+         offset="0"
+         stop-color="#ffffff"
+         id="stop2929" />
+      <stop
+         offset="0.5"
+         stop-color="#ffffff"
+         id="stop2931" />
+      <stop
+         offset="1"
+         stop-color="#d5d5d5"
+         id="stop2933" />
+    </radialGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#Grad1"
+       id="linearGradient3073"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(4.556763,0,0,-4.315033,47.077221,2766.2065)"
+       x1="41.194874"
+       y1="616.47717"
+       x2="118.93135"
+       y2="527.55511" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#Grad1"
+       id="linearGradient3011"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(4.556763,0,0,-4.315033,37.49756,2758.519)"
+       x1="41.194874"
+       y1="616.47717"
+       x2="118.93135"
+       y2="527.55511" />
+  </defs>
+  <path
+     inkscape:connector-curvature="0"
+     d="m 266.00664,15.34815 c 0,0 -260.1615711,427.20245 -260.1615711,427.20245 -4.99203,8.1601 -4.99203,18.2402 0,26.4002 4.8960301,8.0641 14.1120801,13.1521 24.0961401,13.1521 l 520.323031,0 c 9.8881,0 19.1041,-5.088 24.0962,-13.1521 4.896,-8.16 4.896,-18.2401 0,-26.4002 L 314.19884,15.34815 c -4.992,-8.16005 -14.208,-13.248082 -24.0961,-13.248082 -9.8881,0 -19.1041,5.088032 -24.0961,13.248082 z"
+     style="fill:url(#linearGradient3011);stroke:#000000;stroke-width:4.19999981;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path2937" />
+  <path
+     inkscape:connector-curvature="0"
+     d="m 278.99868,452.85066 c -12.43866,-5.95746 -21.9115,-20.28215 -21.9115,-33.13415 0,-23.93002 25.00579,-41.95617 48.66461,-35.08124 15.96067,4.63812 26.80866,19.04141 26.67576,35.41846 -0.11343,13.91176 -6.13472,24.16004 -18.42527,31.36003 -9.40791,5.5111 -25.14823,6.15709 -35.0036,1.4369 z m 2.8271,-94.49217 c -1.55488,-0.85447 -5.21697,-3.82967 -8.13748,-6.61147 -10.20448,-9.71943 -10.19177,-9.63392 -16.84358,-113.63182 -5.91312,-92.44672 -5.96202,-93.8832 -3.42475,-100.52382 5.70796,-14.94056 18.42638,-21.48282 39.60333,-20.37181 13.46097,0.70636 23.82792,5.43359 30.56648,13.93842 5.75591,7.26436 7.00727,11.37103 7.00202,22.97663 -0.006,12.61148 -8.0619,167.26958 -9.20704,176.74725 -1.49934,12.41296 -8.74672,22.48635 -19.36924,26.92167 -6.07007,2.53478 -16.08611,2.81012 -20.18974,0.55495 z"
+     id="path2947" />
+</svg>

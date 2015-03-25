@@ -31,12 +31,17 @@
 
 /******************************************************************************/
 
+var exports = {};
+
 // https://github.com/gorhill/uBlock/issues/1001
 // This is to be used as last-resort fallback in case a tab is found to not
 // be bound while network requests are fired for the tab.
 
 var mostRecentRootDocURLTimestamp = 0;
 var mostRecentRootDocURL = '';
+
+
+var documentWhitelists = Object.create(null);
 
 /******************************************************************************/
 
@@ -165,26 +170,75 @@ var onBeforeRequest = function(details) {
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
 
-    return { 'cancel': true };
+    return { cancel: true };
 };
 
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
+    mostRecentRootDocURL = requestURL;
+    mostRecentRootDocURLTimestamp = Date.now();
+
     // Special handling for root document.
     // https://github.com/gorhill/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
+    var µb = µBlock;
     var requestURL = details.url;
-    var pageStore = µBlock.bindTabToPageStats(details.tabId, requestURL, 'beforeRequest');
-    if ( pageStore !== null ) {
-        pageStore.requestURL = requestURL;
-        pageStore.requestHostname = pageStore.pageHostname;
-        pageStore.requestType = 'main_frame';
-        pageStore.logRequest(pageStore, '');
+    var requestHostname = details.hostname;
+    var requestDomain = µb.URI.domainFromHostname(requestHostname);
+    var context = {
+        rootHostname: requestHostname,
+        rootDomain: requestDomain,
+        pageHostname: requestHostname,
+        pageDomain: requestDomain,
+        requestURL: requestURL,
+        requestHostname: requestHostname,
+        requestType: 'main_frame'
+    };
+
+    var result = '';
+
+    // Temporarily whitelisted?
+    var obsolete = documentWhitelists[requestHostname];
+    if ( obsolete !== undefined ) {
+        if ( obsolete > Date.now() ) {
+            result = 'da:*' + ' ' + requestHostname + ' doc allow';
+        } else {
+            delete documentWhitelists[requestHostname];
+        }
     }
-    mostRecentRootDocURL = requestURL;
-    mostRecentRootDocURLTimestamp = Date.now();
+
+    // Filtering
+    if ( result === '' && µb.getNetFilteringSwitch(requestURL) ) {
+        if ( µb.userSettings.advancedUserEnabled ) {
+            var df = µb.sessionFirewall.evaluateCellZY(requestHostname, requestHostname, '*');
+            if ( df.mustBlockOrAllow() ) {
+                result = df.toFilterString();
+            }
+        }
+        if ( result === '' ) {
+            result = µb.staticNetFilteringEngine.matchString(context);
+        }
+    }
+
+    // Log
+    var pageStore = µb.bindTabToPageStats(details.tabId, requestURL, 'beforeRequest');
+    if ( pageStore ) {
+        pageStore.logRequest(context, result);
+    }
+
+    // Not blocked
+    if ( µb.isAllowResult(result) ) {
+        return;
+    }
+
+    // Blocked
+    var query = btoa(JSON.stringify({
+        url: requestURL,
+        why: result + '$document'
+    }));
+    return { redirectUrl: vAPI.getURL('document-blocked.html?details=') + query };
 };
 
 /******************************************************************************/
@@ -345,6 +399,22 @@ vAPI.net.onHeadersReceived = {
 vAPI.net.registerListeners();
 
 //console.log('traffic.js > Beginning to intercept net requests at %s', (new Date()).toISOString());
+
+/******************************************************************************/
+
+exports.temporarilyWhitelistDocument = function(url) {
+    var µb = µBlock;
+    var hostname = µb.URI.hostnameFromURI(url);
+    if ( hostname === '' ) {
+        return;
+    }
+
+    documentWhitelists[hostname] = Date.now() + 60 * 1000;
+};
+
+/******************************************************************************/
+
+return exports;
 
 /******************************************************************************/
 

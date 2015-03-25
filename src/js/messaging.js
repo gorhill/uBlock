@@ -1204,6 +1204,43 @@ vAPI.messaging.listen('subscriber.js', onMessage);
 
 })();
 
-// https://www.youtube.com/watch?v=3_WcygKJP1k
+/******************************************************************************/
+/******************************************************************************/
+
+// document-blocked.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    switch ( request.what ) {
+        case 'temporarilyWhitelistDocument':
+            µBlock.webRequest.temporarilyWhitelistDocument(request.url);
+            break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('document-blocked.js', onMessage);
+
+/******************************************************************************/
+
+})();
 
 /******************************************************************************/

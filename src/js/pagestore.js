@@ -515,6 +515,12 @@ PageStore.prototype.reuse = function(rawURL, pageURL, context) {
     //    return this;
     //}
 
+    // If the hostname changes, we can't merely just update the context.
+    var pageHostname = µb.URI.hostnameFromURI(pageURL);
+    if ( pageHostname !== this.pageHostname ) {
+        context = '';
+    }
+
     // If URL changes without a page reload (more and more common), then we
     // need to keep all that we collected for reuse. In particular, not
     // doing so was causing a problem in `videos.foxnews.com`: clicking a
@@ -523,10 +529,6 @@ PageStore.prototype.reuse = function(rawURL, pageURL, context) {
     if ( context === 'tabUpdated' ) {
         this.rawURL = rawURL;
         this.pageURL = pageURL;
-        this.pageHostname = µb.URI.hostnameFromURI(pageURL);
-        this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
-        this.rootHostname = this.pageHostname;
-        this.rootDomain = this.pageDomain;
 
         // As part of https://github.com/gorhill/uBlock/issues/405
         // URL changed, force a re-evaluation of filtering switch
