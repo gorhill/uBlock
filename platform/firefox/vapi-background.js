@@ -1119,13 +1119,18 @@ var httpObserver = {
             return true;
         }
 
-        /*if ( result.redirectUrl ) {
-            channel.redirectionLimit = 1;
+        if ( result.redirectUrl ) {
+            if ( type === 'main_frame' ) {
+                channel.cancel(this.ABORT);
+                vAPI.tabs.open({ tabId: details.tabId, url: result.redirectUrl });
+                return true;
+            }
+            /*channel.redirectionLimit = 1;
             channel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
             );
-            return true;
-        }*/
+            return true;*/
+        }
 
         return false;
     },
