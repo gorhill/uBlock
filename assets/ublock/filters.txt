@@ -78,9 +78,6 @@ www.youtube.com##.ad-div
 # https://github.com/gorhill/uBlock/issues/69
 @@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
 
-# https://github.com/gorhill/uBlock/issues/85
-||playhd.eu^$popup
-
 # https://github.com/gorhill/uBlock/issues/119
 # To counter `google-analytics.com` in Peter Lowe's list
 @@||google-analytics.com^$domain=avianca.com
