@@ -7,22 +7,28 @@ body {
     font-size: large;
     text-align: center;
     }
-.label {
-    margin-bottom: 2px;
+body > div {
+    margin: 1.5em 0;
+    }
+body > div > p {
+    margin: 2px 0;
+    }
+body > div > p:first-child {
+    margin: 1.5em 0 0 0;
+    }
+body > div > p:last-child {
+    margin: 0 0 0 1.5em;
     }
 .code {
     background-color: rgba(0, 0, 0, 0.1);
     display: inline-block;
     font-family: monospace;
-    margin: 0;
     padding: 2px 4px;
     word-break: break-all;
     }
-a, button {
-    margin: 0 1em;
-    }
 button {
     cursor: pointer;
+    margin: 0 1em;
     padding: 0.25em 0.5em;
     font-size: inherit;
     }
@@ -41,11 +47,26 @@ img {
 <!-- http://commons.wikimedia.org/wiki/File:Caution_sign_used_on_roads_pn.svg
      Public domain. I removed the shadow.
 --><img src="img/Caution_sign_used_on_roads_pn.svg" />
-<p data-i18n="docblockedPrompt1" class="label"></p><p class="what code"></p>
-<p data-i18n="docblockedPrompt2" class="label"></p><p class="code" id="why"></p>
-<p><button id="back" data-i18n="docblockedBack" type="button"></button>
-<button id="bye" data-i18n="docblockedClose" type="button"></button></p>
-<p data-i18n="docblockedProceed" class="label"></p><p class="code"><a id="yolo" class="what" href></a></p>
+<div>
+    <p data-i18n="docblockedPrompt1"></p>
+    <p class="what code"></p>
+    </div>
+
+<div>
+    <p data-i18n="docblockedPrompt2"></p>
+    <p id="why" class="code"></p>
+    </div>
+
+<div>
+    <p><button id="back" data-i18n="docblockedBack" type="button"></button>
+    <button id="bye" data-i18n="docblockedClose" type="button"></button></p>
+    </div>
+
+<div>
+    <p data-i18n="docblockedProceed"></p>
+    <p><a id="yolo" class="what" href></a></p>
+    </div>
+
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
 <script src="js/udom.js"></script>

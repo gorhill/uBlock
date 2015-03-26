@@ -59,11 +59,11 @@ uDom('#why').text(details.why.slice(3));
 
 if ( window.history.length > 1 ) {
     uDom('#back').on('click', function() { window.history.back(); });
+    uDom('#bye').css('display', 'none');
 } else {
+    uDom('#bye').on('click', function() { window.close(); });
     uDom('#back').css('display', 'none');
 }
-
-uDom('#bye').on('click', function() { window.close(); });
 
 uDom('#yolo').attr('href', details.url)
              .on('click', yolo);
