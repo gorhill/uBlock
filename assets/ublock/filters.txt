@@ -236,7 +236,7 @@ ovh.strim.io#@##tweets
 
 # https://github.com/gorhill/uBlock/issues/602
 # To counter `/ads.css` in EasyList
-@@||css.washingtonpost.com/*/ads.css$stylesheet
+@@||css.washingtonpost.com/*/ads.css$stylesheet,~third-party
 
 # https://github.com/gorhill/uBlock/issues/607
 # To counter `||pcekspert.com^` in Peter Lowe's
@@ -283,14 +283,14 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # Chrome store feedback: "on gaana.com it blocks the site"
 # To counter `_social_tracking.` in EasyPrivacy
-@@||css5.gaanacdn.com/minify-*/min/?$script
+@@||css5.gaanacdn.com/minify-*/min/?$script,domain=gaana.com
 
 # http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
 ||www.notempire.com/js/gridview$script
 
 # https://twitter.com/Urre/status/572742363069714432
 # To counter `/keen.min.js` in EasyPrivacy
-@@||keen.github.io/*/keen.min.js$domain=keen.github.io
+@@||keen.github.io/*/keen.min.js$~third-party
 
 # Feedback from Chrome store: "videos dont work on this site"
 # http://www.okgoals.com/match-highlights-1425491618---41
