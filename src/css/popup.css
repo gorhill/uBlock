@@ -81,7 +81,6 @@ body[dir="rtl"] #panes > div:nth-of-type(2) {
 #panes > div:nth-of-type(1) {
     min-width: 150px;
     padding: 4px 1px;
-    position: relative;
     }
 p {
     text-align: center;
