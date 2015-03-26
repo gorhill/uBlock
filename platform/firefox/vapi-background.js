@@ -296,7 +296,6 @@ var windowWatcher = {
             // Fennec
             tabContainer = tabBrowser.deck;
             tabContainer.addEventListener('DOMTitleChanged', tabWatcher.onFennecLocationChange);
-
         } else if ( tabBrowser.tabContainer ) {
             // desktop Firefox
             tabContainer = tabBrowser.tabContainer;
@@ -471,6 +470,7 @@ vAPI.tabs.registerListeners = function() {
             if ( tabBrowser.deck ) {
                 // Fennec
                 tabContainer = tabBrowser.deck;
+                tabContainer.removeEventListener('DOMTitleChanged', tabWatcher.onFennecLocationChange);
             } else if ( tabBrowser.tabContainer ) {
                 tabContainer = tabBrowser.tabContainer;
                 tabBrowser.removeTabsProgressListener(tabWatcher);
