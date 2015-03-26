@@ -23,10 +23,12 @@
 
 /******************************************************************************/
 
-this.EXPORTED_SYMBOLS = ['contentObserver'];
+this.EXPORTED_SYMBOLS = ['contentObserver', 'LocationChangeListener'];
 
 const {interfaces: Ci, utils: Cu} = Components;
 const {Services} = Cu.import('resource://gre/modules/Services.jsm', null);
+const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
+
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 
 // Cu.import('resource://gre/modules/devtools/Console.jsm');
@@ -65,16 +67,12 @@ const contentObserver = {
                 .getService(Ci.nsICategoryManager);
     },
 
-    QueryInterface: (function() {
-        let {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
-
-        return XPCOMUtils.generateQI([
+    QueryInterface: XPCOMUtils.generateQI([
             Ci.nsIFactory,
             Ci.nsIObserver,
             Ci.nsIContentPolicy,
             Ci.nsISupportsWeakReference
-        ]);
-    })(),
+    ]),
 
     createInstance: function(outer, iid) {
         if ( outer ) {
@@ -305,6 +303,36 @@ const contentObserver = {
             docReady({ target: doc, type: 'DOMContentLoaded' });
         }
     }
+};
+
+/******************************************************************************/
+
+const locationChangedMessageName = hostName + ':locationChanged';
+
+const LocationChangeListener = function(docShell) {
+    if (docShell) {
+        docShell.QueryInterface(Ci.nsIInterfaceRequestor);
+
+        this.docShell = docShell.getInterface(Ci.nsIWebProgress);
+        this.messageManager = docShell.getInterface(Ci.nsIContentFrameMessageManager);
+
+        if (this.messageManager && typeof this.messageManager.sendAsyncMessage === 'function') {
+            this.docShell.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_ALL);
+        }
+    }
+}
+
+LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI(["nsIWebProgressListener", "nsISupportsWeakReference"]);
+
+LocationChangeListener.prototype.onLocationChange = function(webProgress, request, location, flags) {
+    if ( !webProgress.isTopLevel ) {
+        return;
+    }
+    
+    this.messageManager.sendAsyncMessage(locationChangedMessageName, {
+        url: location.asciiSpec,
+        flags: flags,
+    });
 };
 
 /******************************************************************************/
