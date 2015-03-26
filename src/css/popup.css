@@ -328,7 +328,7 @@ body.dirty #refresh:hover {
     background-color: rgba(96, 96, 96, 0.3);
     }
 #firewallContainer > div > span.ownRule {
-    color: white;
+    color: white !important; /* previous definition is slightly more specific */
     }
 #firewallContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
