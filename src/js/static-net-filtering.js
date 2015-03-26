@@ -165,6 +165,11 @@ var isFirstParty = function(firstPartyDomain, hostname) {
 };
 
 var alwaysTruePseudoRegex = {
+    match: { '0': '', index: 0 },
+    exec: function(s) {
+        this.match['0'] = s;
+        return this.match;
+    },
     test: function() {
         return true;
     }
@@ -1380,6 +1385,12 @@ FilterParser.prototype.parse = function(raw) {
                 s = punycode.toASCII(matches[1]) + matches[2];
                 //console.debug('µBlock.staticNetFilteringEngine/FilterParser.parse():', raw, '=', s);
             }
+        }
+
+        // https://github.com/gorhill/uBlock/issues/1096
+        if ( s.charAt(0) === '^' ) {
+            this.unsupported = true;
+            return this;
         }
     }
 
