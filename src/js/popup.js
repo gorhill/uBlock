@@ -47,9 +47,15 @@ document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
 
 // The padlock must be manually positioned:
 // - It's vertical position depends on the height on the title bar.
+var gotoPrefsBottom = document.getElementById('gotoPrefs').getBoundingClientRect().bottom;
 document.getElementById('saveRules').style.setProperty(
     'top',
-    (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
+    (gotoPrefsBottom + 4) + 'px'
+);
+// The scope icons as well.
+document.getElementById('scopeIcons').style.setProperty(
+    'top',
+    (gotoPrefsBottom) + 'px'
 );
 
 // https://github.com/gorhill/uBlock/issues/996
@@ -306,7 +312,7 @@ var buildAllFirewallRows = function() {
 
     // Remove and reuse all rows: the order may have changed, we can't just
     // reuse them in-place.
-    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
+    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(8) ~ div').detach();
 
     var n = allHostnameRows.length;
     for ( var i = 0; i < n; i++ ) {
@@ -320,13 +326,7 @@ var buildAllFirewallRows = function() {
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
         dfPaneBuilt = true;
     }
-
-    // The padlock must be manually positioned:
-    // - Its horizontal position depends on whether there is a vertical
-    //   scrollbar.
-    var rect = document.getElementById('firewallContainer').getBoundingClientRect();
-    document.getElementById('saveRules').style.setProperty('left', (rect.left + 4) + 'px');
-
+    setTimeout(positionDfPaneFloaters, 50);
     updateAllFirewallCells();
 };
 
@@ -381,6 +381,22 @@ var renderPrivacyExposure = function() {
 };
 
 /******************************************************************************/
+
+var positionDfPaneFloaters = function() {
+    // The padlock must be manually positioned:
+    // - Its horizontal position depends on whether there is a vertical
+    //   scrollbar.
+    var firewallContainer = document.getElementById('firewallContainer'),
+        scopeIcons = document.getElementById('scopeIcons'),
+        rect = firewallContainer.getBoundingClientRect(),
+        rectLeft = rect.left,
+        rectWidth = rect.width;
+    document.getElementById('saveRules').style.setProperty('left', (rectLeft + 4) + 'px');
+    // So must be the scope icons.
+    // - They need to match up with the table
+    scopeIcons.style.setProperty('left', rectLeft + 'px');
+    scopeIcons.style.setProperty('width', rectWidth + 'px');
+};
 
 // Assume everything has to be done incrementally.
 
