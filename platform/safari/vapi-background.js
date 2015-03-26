@@ -698,6 +698,17 @@
                     frameId: 0,
                     tabId: vAPI.tabs.getTabId(e.target)
                 });
+                e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
+                e.message.tabId = vAPI.tabs.getTabId(e.target);
+                var blockVerdict = onBeforeRequestClient(e.message);
+                if(blockVerdict && blockVerdict.redirectUrl) {
+                    e.target.url = blockVerdict.redirectUrl;
+                    e.message = false;
+                }
+                else {
+                    e.message = true;
+                }
+                return;
             }
             switch(e.message.type) {
                 case "popup":
