@@ -317,7 +317,7 @@ const LocationChangeListener = function(docShell) {
         this.messageManager = docShell.getInterface(Ci.nsIContentFrameMessageManager);
 
         if (this.messageManager && typeof this.messageManager.sendAsyncMessage === 'function') {
-            this.docShell.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_ALL);
+            this.docShell.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
         }
     }
 }
