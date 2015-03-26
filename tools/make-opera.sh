@@ -18,6 +18,7 @@ cp -R src/lib $DES/
 cp -R src/_locales $DES/
 cp src/*.html $DES/
 cp platform/chromium/*.js $DES/js/
+cp -R platform/chromium/img $DES/
 cp platform/opera/manifest.json $DES/
 cp LICENSE.txt $DES/
 
