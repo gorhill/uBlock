@@ -1058,6 +1058,10 @@ var restoreUserData = function(request) {
         }, onCountdown);
     };
 
+    // https://github.com/gorhill/uBlock/issues/1102
+    // Ensure all currently cached assets are flushed from storage AND memory.
+    µb.assets.rmrf();
+
     // If we are going to restore all, might as well wipe out clean local
     // storage
     µb.XAL.keyvalRemoveAll(onAllRemoved);

@@ -271,6 +271,10 @@ var cachedAssetsManager = (function() {
         getEntries(onEntries);
     };
 
+    exports.rmrf = function() {
+        exports.remove(/./);
+    };
+
     exports.onRemovedListener = null;
 
     return exports;
@@ -468,6 +472,9 @@ var getRepoMetadata = function(callback) {
 /******************************************************************************/
 
 exports.setHomeURL = function(path, homeURL) {
+    if ( typeof homeURL !== 'string' || homeURL === '' ) {
+        return;
+    }
     homeURLs[path] = homeURL;
 };
 
@@ -1025,6 +1032,12 @@ exports.getLocal = readLocalFile;
 
 exports.put = function(path, content, callback) {
     cachedAssetsManager.save(path, content, callback);
+};
+
+/******************************************************************************/
+
+exports.rmrf = function() {
+    cachedAssetsManager.rmrf();
 };
 
 /******************************************************************************/
