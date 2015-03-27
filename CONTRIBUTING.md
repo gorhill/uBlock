@@ -16,9 +16,11 @@ Probably the easiest way to submit an issue.
 
 ### Before you submit
 
+1. Submit bugs/issues only.
+1. Do **not** submit design ideas: any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases). That's good news!
-2. Verify that the issue does **not** occur with uBlock disabled. If it still occurs with uBlock disabled, it's probably not an issue with uBlock.
-
+1. Verify that the issue does **not** occur with uBlock disabled. If it still occurs with uBlock disabled, it's probably not an issue with uBlock.
+ 
 ---
 
 ### What to include
