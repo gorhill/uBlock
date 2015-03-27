@@ -49,6 +49,14 @@ _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are en
 
 Once you install uBlock, you may easily un-select any of the pre-selected filter lists if you think uBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
 
+## Documentation
+
+[Quick guide: popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
+
+<a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png" /></a>
+
+For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [uBlock's wiki](https://github.com/gorhill/uBlock/wiki).
+
 ## Performance
 
 #### Memory
@@ -119,14 +127,6 @@ To benefit from uBlock's higher efficiency, it's advised that you don't use othe
 ## Release History
 
 See the [releases pages](https://github.com/gorhill/uBlock/releases) for a history of releases and highlights for each release.
-
-## Documentation
-
-[Quick guide: popup user interface](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
-
-![Popup](https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png)
-
-For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [uBlock's wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## About
 
