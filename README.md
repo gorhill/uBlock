@@ -25,6 +25,7 @@ uBlock
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**&nbsp;&nbsp;[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)
 
 * [Purpose & General Info](#philosophy)
+* [Documentation](#documentation)
 * [Performance and Efficiency](#performance)
   * [Memory](#memory)
   * [CPU](#cpu)
