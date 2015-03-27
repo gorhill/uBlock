@@ -75,13 +75,13 @@
     "message":"Go to request log",
     "description":"English: Go to request log"
   },
-  "popupTipDoBlockAllPopups":{
-    "message":"Block all popups for this site",
-    "description":"English: Block all popups for this site"
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupTipDontBlockDoc":{
-    "message":"Disable strict blocking for this site",
-    "description":"English: Disable strict blocking for this site"
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"all",
