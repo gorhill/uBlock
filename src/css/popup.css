@@ -71,9 +71,11 @@ body[dir="rtl"] #panes > div {
     }
 body[dir="ltr"] #panes > div:nth-of-type(2) {
     direction: rtl; /* scroll bar to the left */
+    margin-right: 1px;
     }
 body[dir="rtl"] #panes > div:nth-of-type(2) {
     direction: ltr; /* scroll bar to the right */
+    margin-left: 1px;
     }
 #panes:not(.dfEnabled) > div:nth-of-type(2) {
     display: none;
