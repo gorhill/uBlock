@@ -103,7 +103,7 @@ www.youtube.com##.ad-div
 # https://github.com/gorhill/uBlock/issues/227
 # To counter `2mdn.net` in Peter Lowe's
 # To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
-@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com
+@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com|wistv.com
 
 # https://github.com/gorhill/uBlock/issues/243
 # To counter `cdn-i.dmdentertainment.com` in hpHosts
