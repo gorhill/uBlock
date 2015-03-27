@@ -567,6 +567,26 @@
     "message":"pois päältä",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock on estänyt seuraavaa sivua lataamasta:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Seuraavan suodattimen takia",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Mene takaisin",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Sulje tämä ikkuna",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Jatka omalla vastuullasi",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

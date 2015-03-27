@@ -567,6 +567,26 @@
     "message":"desactivat",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"L'ublock ha rebutjat contingut d'aquest web:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Detectat per aquest filtre",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Enrere",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Tanca aquesta finestra",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Continueu sota la vostra responsabilitat",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"Aquesta entrada ha de ser l'última",
     "description":"so we dont need to deal with comma for last entry"

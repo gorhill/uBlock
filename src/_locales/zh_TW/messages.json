@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"自訂過濾規則",
+    "message":"自訂過濾",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"自訂動態過濾規則",
+    "message":"自訂規則",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — 網路連線請求日誌",
+    "message":"µBlock — 網路請求日誌",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -48,7 +48,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"在此頁面上",
+    "message":"本頁",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -60,11 +60,11 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"個或",
+    "message":"或",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"點一下開啟控制台",
+    "message":"按一下打開控制台",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,87 +72,87 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"查看連線請求日誌",
+    "message":"查看請求日誌",
     "description":"English: Go to request log"
   },
   "popupSiteInlineScriptEnabled":{
-    "message":"目前網站的行內 <code>script<\/code> 標籤將被<b>允許<\/b>",
+    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>允許<\/b>",
     "description":""
   },
   "popupSiteInlineScriptDisabled":{
-    "message":"目前網站的行內 <code>script<\/code> 標籤將被<b>阻擋<\/b>",
+    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>封鎖<\/b>",
     "description":""
   },
   "popupSite1pScriptEnabled":{
-    "message":"目前網站的第一方腳本將被<b>允許<\/b>",
+    "message":"目前網頁的第一方腳本將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite1pScriptDisabled":{
-    "message":"目前網站的第一方腳本將被<b>阻擋<\/b>",
+    "message":"目前網頁的第一方腳本將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupSite3pScriptEnabled":{
-    "message":"目前網站的第三方腳本將被<b>允許<\/b>",
+    "message":"目前網頁的協力廠商腳本將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite3pScriptDisabled":{
-    "message":"目前網站的第三方腳本將被<b>阻擋<\/b>",
+    "message":"目前網頁的協力廠商腳本將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupSite1pFrameEnabled":{
-    "message":"目前網站的第一方框架將被<b>允許<\/b>",
+    "message":"目前網頁的第一方框架將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite1pFrameDisabled":{
-    "message":"目前網站的第一方框架將被<b>阻擋<\/b>",
+    "message":"目前網頁的第一方框架將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupSite3pFrameEnabled":{
-    "message":"目前網站的第三方框架將被<b>允許<\/b>",
+    "message":"目前網頁的協力廠商框架將被 <b>允許<\/b>",
     "description":""
   },
   "popupSite3pFrameDisabled":{
-    "message":"目前網站的第三方框架將被<b>阻擋<\/b>",
+    "message":"目前網頁的協力廠商框架將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptEnabled":{
-    "message":"任何行內的 <code>script<\/code> 標籤在預設情況下都將被<b>允許<\/b>",
+    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefaultInlineScriptDisabled":{
-    "message":"任何行內的 <code>script<\/code> 標籤在預設情況下都將被<b>阻擋<\/b>",
+    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefault1pScriptEnabled":{
-    "message":"任何第一方腳本在預設情況下都將被<b>允許<\/b>",
+    "message":"任何第一方腳本在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault1pScriptDisabled":{
-    "message":"任何第一方腳本在預設情況下都將被<b>阻擋<\/b>",
+    "message":"任何第一方腳本在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefault3pScriptEnabled":{
-    "message":"任何第三方腳本在預設情況下都將被<b>允許<\/b>",
+    "message":"任何協力廠商腳本在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault3pScriptDisabled":{
-    "message":"任何第三方腳本在預設情況下都將被<b>阻擋<\/b>",
+    "message":"任何協力廠商腳本在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefault1pFrameEnabled":{
-    "message":"任何第一方框架在預設情況下都將被<b>允許<\/b>",
+    "message":"任何第一方框架在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault1pFrameDisabled":{
-    "message":"任何第一方框架在預設情況下都將被<b>阻擋<\/b>",
+    "message":"任何第一方框架在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupDefault3pFrameEnabled":{
-    "message":"任何第三方框架在預設情況下都將被<b>允許<\/b>",
+    "message":"任何協力廠商框架在預設情況下都將被 <b>允許<\/b>",
     "description":""
   },
   "popupDefault3pFrameDisabled":{
-    "message":"任何第三方框架在預設情況下都將被<b>阻擋<\/b>",
+    "message":"任何協力廠商框架在預設情況下都將被 <b>隱藏<\/b>",
     "description":""
   },
   "popupAnyRulePrompt":{
@@ -184,7 +184,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"已連結的域名",
+    "message":"域名已連結",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -204,7 +204,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"網址過濾規則",
+    "message":"網址過濾",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -236,7 +236,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"啟用實驗性質的功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>關於<\/a>）",
+    "message":"啟用實驗性功能",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -260,7 +260,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"自動更新過濾規則列表",
+    "message":"自動更新過濾規則",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -368,7 +368,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"還原",
+    "message":"回復",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -472,7 +472,7 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"過濾日誌項目",
+    "message":"過濾日誌規則",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
@@ -566,6 +566,26 @@
   "fennecMenuItemBlockingOff":{
     "message":"關閉",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
+  "docblockedPrompt1":{
+    "message":"uBlock 已防止下列的頁面進行讀取：",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"因為下列的過濾",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"返回",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"關閉此視窗",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"自負風險並進行",
+    "description":"English: Proceed at your own risk"
   },
   "dummy":{
     "message":"This entry must be the last one",

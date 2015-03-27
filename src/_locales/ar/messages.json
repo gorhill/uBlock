@@ -567,6 +567,26 @@
     "message":"مطفئ",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock منع الصفحة التالية من التحميل:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"بسبب الفلتر التالي",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"العودة للخلف",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"أغلق هذه النافذة",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"واصل على مسؤوليتك الخاصة",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",
     "description":"so we dont need to deal with comma for last entry"

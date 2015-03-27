@@ -567,6 +567,26 @@
     "message":"uitgeschakeld",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock heeft het laden van de volgende pagina voorkomen:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Vanwege het volgende filter",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Teruggaan",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Venster sluiten",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Doorgaan is op eigen risico",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

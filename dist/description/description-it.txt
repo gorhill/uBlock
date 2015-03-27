@@ -1,8 +1,8 @@
-µBlock è un efficiente ad-blocker: occupa poca memoria e poca cpu, ma può usare migliaia di filtri in più rispetto ad altri software simili.
+uBlock è un efficiente ad-blocker: occupa poca memoria e poca CPU, ma può usare migliaia di filtri in più rispetto ad altri software simili.
 
-Consulta questa pagina (in Inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Consulta questa pagina (in inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Uso: Il pulsante power nel popup serve per disabilitare/abilitare permanentemente uBlock nel sito che stai visitando, e non serve per disabilitare/abilitare l'estensione.
+Uso: il pulsante power nel popup serve per disabilitare/abilitare permanentemente uBlock nel sito che stai visitando. e non serve per disabilitare/abilitare l'estensione.
 
 ***
 
@@ -24,7 +24,7 @@ Puoi anche attivare moltre altre liste:
 - Spam404
 - Ecc.
 
-Ovviamente, più liste attivi, maggiore sarà l'impatto sulla memoria. Anche se aggiungendo altre due liste di Fanboy e hpHosts’s Ad and tracking servers, uBlock userà meno memoria di moltri altri ad-blockers.
+Ovviamente, più liste attivi, maggiore sarà l'impatto sulla memoria. Anche aggiungendo altre due liste di Fanboy, ad di hpHosts e tracking server, uBlock userà meno memoria di molti altri ad-blocker.
 
 Selezionando alcuni di questi filtri può portare ad una maggiore probabilità di problemi nel visualizzare alcuni siti web.
 

@@ -567,6 +567,26 @@
     "message":"关",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock 阻止了下列页面加载：",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"因为下列过滤规则",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"返回",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"关闭此窗口",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"自担风险进行访问：",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"此条目必须是最后一个",
     "description":"so we dont need to deal with comma for last entry"

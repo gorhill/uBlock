@@ -567,6 +567,26 @@
     "message":"av",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock har forhindret lasting av følgende side:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"På grunn av følgende filter",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Gå tilbake",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Lukk dette vinduet",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Fortsett på eget ansvar",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"Denne oppføringen må være den siste",
     "description":"so we dont need to deal with comma for last entry"

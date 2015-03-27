@@ -567,6 +567,26 @@
     "message":"išjungta",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock neleido įkelti šio puslapio:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Dėl šio filtro",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Grįžti",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Užverti langą",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Tęsti savo paties rizika",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

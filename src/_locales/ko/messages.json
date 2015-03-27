@@ -567,6 +567,26 @@
     "message":"끄기",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock이 다음 페이지를 로드하는것을 방지했습니다:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"다음 필터로 인해 방지됨",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"돌아가기",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"이 창을 닫기",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"진행함에 따라 발생하는 책임은 사용자에게 있습니다",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

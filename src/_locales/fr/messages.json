@@ -184,7 +184,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"Nombre de domaines connectés",
+    "message":"Domaines connectés",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -556,16 +556,36 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Voir Tableau de bord",
+    "message":"Afficher le Tableau de bord",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Voir le Journal des Requêtes Réseau",
+    "message":"Afficher le Journal des requêtes réseau",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"Désactivez",
+    "message":"Arrêt",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
+  },
+  "docblockedPrompt1":{
+    "message":"uBlock a empêché le chargement de la page suivante :",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"À cause du filtre suivant :",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Retour",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Fermer cette fenêtre",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Visiter quand même le site (à vos risques et périls)",
+    "description":"English: Proceed at your own risk"
   },
   "dummy":{
     "message":"This entry must be the last one",

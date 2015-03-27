@@ -567,8 +567,28 @@
     "message":"tắt",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock đã chặn tải trang sau:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Vì bộ lọc sau",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Trở lại",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Đóng cửa sổ này",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Tiến hành với rủi ro thuộc về bạn",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Đây là mục cuối",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

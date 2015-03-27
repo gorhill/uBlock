@@ -567,6 +567,26 @@
     "message":"väljas",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock on keelanud järgneva lehe laadimise:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Järgneva filtri tõttu",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Mine tagasi",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Sulge see aken",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Jätka omal vastutusel",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"See sisestus peab olema viimane",
     "description":"so we dont need to deal with comma for last entry"

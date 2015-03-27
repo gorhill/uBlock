@@ -1,6 +1,7 @@
 Etkili bir engelleyici: binlerce popüler engelleyiciye göre bellek ve CPU dostu, ve daha fazla reklam engelleyebiliyor.
 
-Resimli etkililiğe genel bakış: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Karşılaştırması
+Verimliliğinin resmedilen incelemesi:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Kullanımı: Arayüzündeki uBlock büyük güç düğmesi ile mevcut sayfada kalıcı olarak devre dışı bırakıp/etkinleştirilebilir. Bu yalnızca o anki sayfada geçerlidir, eklentinin tüm işlevini sonlandırmaz.
 

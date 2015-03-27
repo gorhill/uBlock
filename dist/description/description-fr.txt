@@ -1,4 +1,4 @@
-µBlock est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire et en utilisation du processeur et qui  pourtant, est capable d'utiliser et de traiter des milliers de filtres de plus que la plupart des autres bloqueurs.
+uBlock est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire et en utilisation du processeur et qui  pourtant, est capable d'utiliser et de traiter des milliers de filtres de plus que la plupart des autres bloqueurs.
 
 Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -6,7 +6,7 @@ Utilisation : Le gros bouton power dans la fenêtre pop-up permet de désactiver
 
 ***
 
-Flexible, µBlock ne prend pas en charge que les filtres de type Adblock, elle peut également lire et créer des filtres depuis des fichiers hosts.
+Flexible, uBlock ne prend pas en charge que les filtres de type Adblock, elle peut également lire et créer des filtres depuis des fichiers hosts.
 
 Par défaut, ces listes de filtrage sont chargées et traitées :
 

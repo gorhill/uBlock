@@ -567,6 +567,26 @@
     "message":"fikur",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock e pengoi hapjen e faqes:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Për shkak të këtij filtri",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Kthehem",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Mbyll dritaren",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Vijoni pavarësisht nga rreziqet",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"

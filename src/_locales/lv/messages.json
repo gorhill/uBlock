@@ -567,6 +567,26 @@
     "message":"izslēgts",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
+  "docblockedPrompt1":{
+    "message":"uBlock novērsa šo lapu no ielādes:",
+    "description":"English: uBlock has prevented the following page from loading:"
+  },
+  "docblockedPrompt2":{
+    "message":"Sakarā ar šādu filtru",
+    "description":"English: Because of the following filter"
+  },
+  "docblockedBack":{
+    "message":"Doties atpakaļ",
+    "description":"English: Go back"
+  },
+  "docblockedClose":{
+    "message":"Aizvērt šo logu",
+    "description":"English: Close this window"
+  },
+  "docblockedProceed":{
+    "message":"Turpināt uz savu risku",
+    "description":"English: Proceed at your own risk"
+  },
   "dummy":{
     "message":"Šim ierakstam ir jābūt pēdējam",
     "description":"so we dont need to deal with comma for last entry"
