@@ -2,6 +2,7 @@
 <html>
 <head>
 <title></title>
+<link rel="stylesheet" href="css/common.css" type="text/css">
 <style>
 body {
     font-family: sans-serif;
@@ -33,21 +34,22 @@ button {
     padding: 0.25em 0.5em;
     font-size: inherit;
     }
-img {
-    height: 60vh;
-    left: 10vw;
-    opacity: 0.05;
+#warningSign {
+    margin: 1e, 0;
+    opacity: 1;
     pointer-events: none;
-    position: fixed;
-    bottom: 5vh;
-    width: 80vw;
+    width: 100%;
+    }
+#warningSign > span {
+    color: #f2a500;
+    font-size: 180px;
     }
 </style>
 </head>
 <body>
 <!-- http://commons.wikimedia.org/wiki/File:Caution_sign_used_on_roads_pn.svg
      Public domain. I removed the shadow.
---><img src="img/Caution_sign_used_on_roads_pn.svg" />
+--><div id="warningSign"><span class="fa">&#xf071;</span></div>
 <div>
     <p data-i18n="docblockedPrompt1"></p>
     <p class="what code"></p>

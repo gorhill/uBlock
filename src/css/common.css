@@ -25,6 +25,7 @@ body:not(.advancedUser) [data-tip]:after {
     box-shadow: 1px 1px 3px gray;
     color: black;
     content: attr(data-tip);
+    display: none;
     font: 12px sans-serif;
     left: 0;
     line-height: 130%;
@@ -38,7 +39,8 @@ body:not(.advancedUser) [data-tip]:after {
     pointer-events: none;
     opacity: 0;
     }
-[data-tip]:hover:after {
+body [data-tip]:hover:after {
+    display: initial;
     opacity: 1 !important;
     -webkit-transition: opacity 0.2s 0.4s;
     transition: opacity 0.2s 0.4s;
@@ -58,6 +60,13 @@ body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
     right: -500%;
+    }
+
+body [data-tip][data-tip-anchor="topcenter"]:hover:after {
+    bottom: 140%;
+    left: -225%;
+    right: -225%;
+    top: auto;
     }
 
 .hiddenFileInput {

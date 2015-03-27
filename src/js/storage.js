@@ -70,8 +70,13 @@
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.userSettings.dynamicFilteringString = this.permanentFirewall.toString();
-    this.XAL.keyvalSetOne('dynamicFilteringString', this.userSettings.dynamicFilteringString);
+    this.XAL.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+};
+
+/******************************************************************************/
+
+µBlock.saveHostnameSwitches = function() {
+    this.XAL.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
 };
 
 /******************************************************************************/

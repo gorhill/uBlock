@@ -88,6 +88,10 @@ var onMessage = function(request, sender, callback) {
             µb.selectFilterLists(request.switches);
             break;
 
+        case 'toggleHostnameSwitch':
+            µb.toggleHostnameSwitch(request);
+            break;
+
         case 'userSettings':
             response = µb.changeUserSettings(request.name, request.value);
             break;
@@ -229,6 +233,8 @@ var getStats = function(tabId, tabTitle) {
         r.firewallRules = getFirewallRules(pageStore.pageHostname, r.hostnameDict);
         r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
+        r.doBlockAllPopups = µb.hnSwitches.evaluateZ('doBlockAllPopups', r.pageHostname);
+        r.dontBlockDoc = µb.hnSwitches.evaluateZ('dontBlockDoc', r.pageHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
@@ -1007,6 +1013,8 @@ var backupUserData = function(callback) {
             userSettings: µb.userSettings,
             filterLists: µb.remoteBlacklists,
             netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            dynamicFilteringString: µb.permanentFirewall.toString(),
+            hostnameSwitchesString: µb.hnSwitches.toString(),
             userFilters: details.content
         };
         var now = new Date();
@@ -1033,7 +1041,7 @@ var backupUserData = function(callback) {
 
 var restoreUserData = function(request) {
     var userData = request.userData;
-    var countdown = 5;
+    var countdown = 7;
     var onCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
@@ -1047,9 +1055,15 @@ var restoreUserData = function(request) {
         µBlock.saveLocalSettings(true);
         µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
         µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
-        µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist, onCountdown);
-        µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
+        µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
 
+        // With versions 0.9.2.4-, dynamic rules were saved within the
+        // `userSettings` object. No longer the case.
+        var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
+        µb.XAL.keyvalSetOne('dynamicFilteringString', s, onCountdown);
+
+        µb.XAL.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
+        µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
         µb.XAL.keyvalSetMany({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),

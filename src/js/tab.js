@@ -111,11 +111,26 @@ vAPI.tabs.onPopup = function(details) {
     };
 
     var targetURL = details.targetURL;
+
+    // If the page URL is that of our "blocked page" URL, extract the URL of
+    // the page which was blocked.
+    if ( targetURL.lastIndexOf(vAPI.getURL('document-blocked.html'), 0) === 0 ) {
+        var matches = /details=([^&]+)/.exec(targetURL);
+        if ( matches !== null ) {
+            targetURL = JSON.parse(atob(matches[1])).url;
+        }
+    }
+
     var result = '';
+
+    // Check user switch first
+    if ( µb.hnSwitches.evaluateZ('doBlockAllPopups', openerHostname) ) {
+        result = 'ub:doBlockAllPopups true';
+    }
 
     // https://github.com/gorhill/uBlock/issues/323
     // If popup URL is whitelisted, do not block it
-    if ( µb.getNetFilteringSwitch(targetURL) ) {
+    if ( result === '' && µb.getNetFilteringSwitch(targetURL) ) {
         result = µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup');
     }
 

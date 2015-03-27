@@ -710,6 +710,24 @@ vAPI.tabs.open = function(details) {
 
 /******************************************************************************/
 
+// Replace the URL of a tab. Noop if the tab does not exist.
+
+vAPI.tabs.replace = function(tabId, url) {
+    var targetURL = url;
+
+    // extension pages
+    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+        targetURL = vAPI.getURL(targetURL);
+    }
+
+    var tab = this.getTabsForIds(tabId);
+    if ( tab ) {
+        getBrowserForTab(tab).loadURI(targetURL);
+    }
+};
+
+/******************************************************************************/
+
 vAPI.tabs._remove = function(tab, tabBrowser) {
     if ( vAPI.fennec ) {
         tabBrowser.closeTab(tab);
@@ -1138,18 +1156,13 @@ var httpObserver = {
             return true;
         }
 
-        if ( result.redirectUrl ) {
-            if ( type === 'main_frame' ) {
-                channel.cancel(this.ABORT);
-                vAPI.tabs.open({ tabId: details.tabId, url: result.redirectUrl });
-                return true;
-            }
-            /*channel.redirectionLimit = 1;
+        /*if ( result.redirectUrl ) {
+            channel.redirectionLimit = 1;
             channel.redirectTo(
                 Services.io.newURI(result.redirectUrl, null, null)
             );
-            return true;*/
-        }
+            return true;
+        }*/
 
         return false;
     },

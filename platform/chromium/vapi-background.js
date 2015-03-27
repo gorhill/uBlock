@@ -55,6 +55,8 @@ vAPI.app.restart = function() {
 
 /******************************************************************************/
 
+// chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
+
 vAPI.storage = chrome.storage.local;
 
 /******************************************************************************/
@@ -74,6 +76,7 @@ vAPI.noTabId = '-1';
 vAPI.tabs.registerListeners = function() {
     var onNavigationClient = this.onNavigation || noopFunc;
     var onPopupClient = this.onPopup || noopFunc;
+    var onUpdatedClient = this.onUpdated || noopFunc;
 
     // https://developer.chrome.com/extensions/webNavigation
     // [onCreatedNavigationTarget ->]
@@ -160,6 +163,13 @@ vAPI.tabs.registerListeners = function() {
         popupCandidateTest(details);
     };
 
+    var onUpdated = function(tabId, changeInfo, tab) {
+        if ( changeInfo.url && popupCandidateTest({ tabId: tabId, url: changeInfo.url }) ) {
+            return;
+        }
+        onUpdatedClient(tabId, changeInfo, tab);
+    };
+
     var onCommitted = function(details) {
         if ( details.frameId !== 0 ) {
             return;
@@ -175,10 +185,7 @@ vAPI.tabs.registerListeners = function() {
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
-
-    if ( typeof this.onUpdated === 'function' ) {
-        chrome.tabs.onUpdated.addListener(this.onUpdated);
-    }
+    chrome.tabs.onUpdated.addListener(onUpdated);
 
     if ( typeof this.onClosed === 'function' ) {
         chrome.tabs.onRemoved.addListener(this.onClosed);
@@ -303,6 +310,37 @@ vAPI.tabs.open = function(details) {
         } else {
             wrapper();
         }
+    });
+};
+
+/******************************************************************************/
+
+// Replace the URL of a tab. Noop if the tab does not exist.
+
+vAPI.tabs.replace = function(tabId, url) {
+    var targetURL = url;
+    if ( typeof targetURL !== 'string' || targetURL === '' ) {
+        return;
+    }
+
+    // extension pages
+    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+        targetURL = vAPI.getURL(targetURL);
+    }
+
+    if ( typeof tabId !== 'number' ) {
+        tabId = parseInt(tabId, 10);
+        if ( isNaN(tabId) ) {
+            return;
+        }
+    }
+
+    chrome.tabs.update(tabId, { url: targetURL }, function() {
+        // this prevent console error
+        if ( chrome.runtime.lastError ) {
+            return;
+        }
+        
     });
 };
 

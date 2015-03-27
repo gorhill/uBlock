@@ -199,11 +199,18 @@ var onBeforeRootFrameRequest = function(details) {
 
     var result = '';
 
+    // Permanently unrestricted?
+    if ( result === '' && µb.hnSwitches.evaluateZ('dontBlockDoc', requestHostname) ) {
+        result = 'ua:dontBlockDoc true';
+    }
+
     // Temporarily whitelisted?
     var obsolete = documentWhitelists[requestHostname];
     if ( obsolete !== undefined ) {
         if ( obsolete > Date.now() ) {
-            result = 'da:*' + ' ' + requestHostname + ' doc allow';
+            if ( result === '' ) {
+                result = 'ta:*' + ' ' + requestHostname + ' doc allow';
+            }
         } else {
             delete documentWhitelists[requestHostname];
         }
@@ -211,15 +218,7 @@ var onBeforeRootFrameRequest = function(details) {
 
     // Filtering
     if ( result === '' && µb.getNetFilteringSwitch(requestURL) ) {
-        if ( µb.userSettings.advancedUserEnabled ) {
-            var df = µb.sessionFirewall.evaluateCellZY(requestHostname, requestHostname, '*');
-            if ( df.mustBlockOrAllow() ) {
-                result = df.toFilterString();
-            }
-        }
-        if ( result === '' ) {
-            result = µb.staticNetFilteringEngine.matchString(context);
-        }
+        result = µb.staticNetFilteringEngine.matchString(context);
     }
 
     // Log
@@ -236,9 +235,12 @@ var onBeforeRootFrameRequest = function(details) {
     // Blocked
     var query = btoa(JSON.stringify({
         url: requestURL,
-        why: result + '$document'
+        why: result
     }));
-    return { redirectUrl: vAPI.getURL('document-blocked.html?details=') + query };
+
+    vAPI.tabs.replace(details.tabId, vAPI.getURL('document-blocked.html?details=') + query);
+
+    return { cancel: true };
 };
 
 /******************************************************************************/

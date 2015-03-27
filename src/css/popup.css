@@ -80,7 +80,7 @@ body[dir="rtl"] #panes > div:nth-of-type(2) {
     }
 #panes > div:nth-of-type(1) {
     min-width: 150px;
-    padding: 4px 1px;
+    padding: 0;
     }
 p {
     text-align: center;
@@ -130,6 +130,33 @@ body.off #switch .fa {
     }
 .tool:hover {
     color: #444;
+    }
+#extraTools {
+    background-color: #eee;
+    border: 0;
+    color: #aaa;
+    font-weight: normal;
+    margin:  1em 0 0 0;
+    padding: 4px 0 2px 0;
+    text-align: center;
+    }
+#extraTools > span {
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 0.5em;
+    position: relative;
+    }
+#extraTools > span.on > span {
+    color: #e00;
+    font-size: 20px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    }
+#extraTools > span.on > span:after {
+    content: '\2715';
     }
 
 body.advancedUser h2 {

@@ -57,7 +57,6 @@ return {
         autoUpdate: true,
         collapseBlocked: true,
         contextMenuEnabled: true,
-        dynamicFilteringString: '',
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
@@ -88,7 +87,7 @@ return {
 
     // read-only
     systemSettings: {
-        compiledMagic: 'squafjaywuba',
+        compiledMagic: 'perhodsoahya',
         selfieMagic: 'spqmeuaftfra'
     },
 

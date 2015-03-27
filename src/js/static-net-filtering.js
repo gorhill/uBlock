@@ -63,7 +63,6 @@ var typeNameToTypeValue = {
     'xmlhttprequest':  5 << 4,
          'sub_frame':  6 << 4,
              'other':  7 << 4,
-        'main_frame': 12 << 4,
 'cosmetic-filtering': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
@@ -2117,7 +2116,7 @@ FilterContainer.prototype.matchString = function(context) {
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
     var type = typeNameToTypeValue[context.requestType] || typeOtherValue;
-    if ( type > (7 << 4) ) {
+    if ( type > typeOtherValue ) {
         return this.matchStringExactType(context, context.requestURL, context.requestType);
     }
 
