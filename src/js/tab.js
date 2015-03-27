@@ -103,13 +103,6 @@ vAPI.tabs.onPopup = function(details) {
     var openerHostname = µburi.hostnameFromURI(openerURL);
     var openerDomain = µburi.domainFromHostname(openerHostname);
 
-    var context = {
-        pageHostname: openerHostname,
-        pageDomain: openerDomain,
-        rootHostname: openerHostname,
-        rootDomain: openerDomain
-    };
-
     var targetURL = details.targetURL;
 
     // If the page URL is that of our "blocked page" URL, extract the URL of
@@ -120,6 +113,16 @@ vAPI.tabs.onPopup = function(details) {
             targetURL = JSON.parse(atob(matches[1])).url;
         }
     }
+
+    var context = {
+        pageHostname: openerHostname,
+        pageDomain: openerDomain,
+        rootHostname: openerHostname,
+        rootDomain: openerDomain,
+        requestURL: targetURL,
+        requestHostname: µb.URI.hostnameFromURI(targetURL),
+        requestType: 'popup'
+    };
 
     var result = '';
 
@@ -136,11 +139,7 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/91
     if ( pageStore ) {
-        pageStore.logRequest({
-            requestURL: targetURL,
-            requestHostname: µb.URI.hostnameFromURI(targetURL),
-            requestType: 'popup'
-        }, result);
+        pageStore.logRequest(context, result);
     }
 
     // Not blocked
