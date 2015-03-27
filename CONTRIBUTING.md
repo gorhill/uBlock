@@ -27,7 +27,7 @@ Probably the easiest way to submit an issue.
 To help us diagnose and fix the problem, please always, always include the following in your report:
 
 * A clear list of steps to reproduce the problem
-  * If uBlock seems to break a website, be sure to include the URL
+  * **Always include a URL**, _even_ if "it happens everywhere".
 * Symptoms of the issue
   * Describe what you observe and consider broken behavior; this is what we'll be looking for after executing the steps
   * Example: video doesn't start playing, page layout broken
