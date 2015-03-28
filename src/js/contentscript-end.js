@@ -135,7 +135,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         var selectors = vAPI.hideCosmeticFilters;
         if ( typeof selectors === 'object' ) {
             injectedSelectors = selectors;
-            //hideElements(Object.keys(selectors));
+            hideElements(Object.keys(selectors));
         }
         // Add exception filters into injected filters collection, in order
         // to force them to be seen as "already injected".
@@ -196,10 +196,11 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        //hideElements(selectors);
+        var selectorStr = selectors.toString();
+        hideElements(selectorStr);
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
-        style.appendChild(document.createTextNode(selectors.toString() + '\n{display:none !important;}'));
+        style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
         var parent = document.body || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
@@ -213,7 +214,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         //console.debug('µBlock> generic cosmetic filters: injecting %d CSS rules:', selectors.length, text);
     };
 
-    /*
     var hideElements = function(selectors) {
         // https://github.com/gorhill/uBlock/issues/207
         // Do not call querySelectorAll() using invalid CSS selectors
@@ -231,7 +231,6 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             elems[i].style.setProperty('display', 'none', 'important');
         }
     };
-    */
 
     // Extract and return the staged nodes which (may) match the selectors.
 
