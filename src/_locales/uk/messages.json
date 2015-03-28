@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Заборонити зринаючі вікна для цього сайту",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Заборонити повне блокування цього сайту",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

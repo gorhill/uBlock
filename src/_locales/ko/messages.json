@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"이 사이트에서 팝업 차단",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"이 사이트에서 강화된 차단기능 끄기",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

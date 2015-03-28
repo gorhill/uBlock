@@ -76,7 +76,7 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Keine Popups auf dieser Seite",
+    "message":"Blockiere Popups auf dieser Seite",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{

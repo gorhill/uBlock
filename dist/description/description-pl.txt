@@ -2,7 +2,7 @@ Wydajny bloker: małe zużycie pamięci i CPU, możliwość załadowania i egzek
 
 Ilustrowany przegląd jego skuteczności: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-Compared
 
-Sposób użycia: Przycisk zasilania w popup służy aby włączyć/wyłączyć uBlocka dla bieżącej witryny sieci web. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
+Sposób użycia: Duży przycisk zasilania w popupie służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
 
 ***
 
@@ -24,7 +24,7 @@ Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:
 - Spam404
 - I wiele innych
 
-Oczywiście, jeśli więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów od fanów, hpHosts Ad i śledzenie serwerów, uBlock ma ciągle niższe zużycie pamięci niż inne bardzo popularne blokery.
+Oczywiście, jeśli więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów Fanboya, listy serwerów reklamowych i śledzących hpHosts, uBlock ma nadal niższe zużycie pamięci niż inne bardzo popularne blokery.
 
 Należy również pamiętać, że niektóre z tych dodatkowych list wyboru mogą prowadzić do większego prawdopodobieństwa uszkodzenia witryny sieci web - zwłaszcza te listy, które są zwykle używane jako plik hosts.
 

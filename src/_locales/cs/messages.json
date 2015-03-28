@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Žádná vyskakovací okna pro tento web",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Žádné striktní blokování pro tento web",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

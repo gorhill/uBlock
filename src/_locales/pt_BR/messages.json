@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Sem popups neste site",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Sem bloqueio estrito neste site",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

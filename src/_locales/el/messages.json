@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Επιτέλους, ένας αποτελεσματικός blocker για τους περιηγητές βασισμένους στο Chromium. Ελαφρύς για τον επεξεργαστή και την μνήμη.",
+    "message":"Επιτέλους, ένας αποτελεσματικός blocker. Ελαφρύς για τον επεξεργαστή και τη μνήμη.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock - Πίνακας ελέγχου",
+    "message":"uBlock - Πίνακας ελέγχου",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -20,7 +20,7 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Τα φίλτρα σου",
+    "message":"Τα φίλτρα μου",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -32,19 +32,19 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"μBlock - Καταγραφή δικτυακής αίτησης",
+    "message":"μBlock - Καταγραφή αιτημάτων δικτύου",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"Σχετικά με",
+    "message":"Σχετικά",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του µBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν τη σελίδα.",
+    "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν τη σελίδα.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"αποκλεισμένες αιτήσεις",
+    "message":"αποκλεισμένα αιτήματα",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Κάντε κλικ για να ανοίξετε τον πίνακα ελέγχου",
+    "message":"Κάντε κλικ για να ανοίξετε τον πίνακα εργαλείων",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Πηγαίνετε στο αρχείο καταγραφής αιτήσεων",
+    "message":"Πηγαίνετε στο αρχείο καταγραφής αιτημάτων",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -84,7 +84,7 @@
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"όλα",
     "description":""
   },
   "popupImageRulePrompt":{
@@ -132,7 +132,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Φίλτρα internet",
+    "message":"Φίλτρα δικτύου",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -144,7 +144,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Μπλοκάρετε το στοιχείο",
+    "message":"Αποκλεισμός στοιχείου",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -152,7 +152,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Εμφάνιση του αριθμού αποκλεισμένων αιτήσεων στο εικονίδιο",
+    "message":"Εμφάνιση του αριθμού αποκλεισμένων αιτημάτων στο εικονίδιο",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -160,7 +160,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Είμαι προχωρημένος χρήστης (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Aπαραίτητη ανάγνωση<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -168,15 +168,15 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Αποθηκευτικός χώρος σε χρήση: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Τελευταία ανάκτηση:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Τελευταίο αντίγραφο ασφαλείας:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -184,7 +184,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"{{used}} σε χρήση από {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Αυτά τα φίλτρα είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήσεις δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων<\/a>. Τα φίλτρα αυτά είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήματα δικτύου, μηχανή φιλτραρίσματος.<\/p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>µBlock<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -264,7 +264,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"Τελευταία ενημέρωση: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -280,7 +280,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "message":"τα-στατικά-ublock-φίλτρα-μου_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -288,47 +288,47 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Permanent rules",
+    "message":"Μόνιμοι κανόνες",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Temporary rules",
+    "message":"Προσωρινοί κανόνες",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"Revert",
+    "message":"Επαναφορά",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"Commit",
+    "message":"Επικύρωση",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"Edit",
+    "message":"Επεξεργασία",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"Save",
+    "message":"Αποθήκευση",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"Discard",
+    "message":"Απόρριψη",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Import from file...",
+    "message":"Εισαγωγή από αρχείο...",
     "description":""
   },
   "rulesExport":{
-    "message":"Export to file",
+    "message":"Εξαγωγή σε αρχείο",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"οι-δυναμικοί-ublock-κανόνες-μου_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"Λίστα των δυναμικών κανόνων φιλτραρίσματός σας.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -344,7 +344,7 @@
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"Export",
+    "message":"Εξαγωγή",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
@@ -388,11 +388,11 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Δεν καταγράφηκαν αποκλεισμένες αιτήσεις για αυτήν τη σελίδα",
+    "message":"Δεν καταγράφηκαν αποκλεισμένα αιτήματα για αυτήν τη σελίδα",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Δεν καταγράφηκαν μη-αποκλεισμένες αιτήσεις για αυτήν τη σελίδα",
+    "message":"Δεν καταγράφηκαν μη-αποκλεισμένα αιτήματα για αυτήν τη σελίδα",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
@@ -424,11 +424,11 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup to file",
+    "message":"Δημιουργία αντιγράφου ασφαλείας σε αρχείο",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"το-ublock-αντίγραφο-ασφαλείας-μου_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -440,15 +440,15 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"All your settings will be overwritten using data backed up on {{time}}, and uBlock will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message":"Όλες οι ρυθμίσεις σας θα αντικατασταθούν χρησιμοποιώντας τα δεδομένα του αντιγράφου ασφαλείας που δημιουργήθηκε κατά ημ\/νία και ώρα: {{time}} και θα ακολουθήσει επανεκκίνηση του uBlock.",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"The data could not be read or is invalid",
+    "message":"Τα δεδομένα ήταν αδύνατο να αναγνωστούν ή είναι άκυρα",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"All your settings will be removed, and uBlock will restart.\n\nReset uBlock to factory settings?",
+    "message":"Όλες οι ρυθμίσεις σας θα καταργηθούν και θα γίνει επανεκκίνηση του uBlock.\n\nΕπαναφορά του uBlock στις εργοστασιακές ρυθμίσεις;",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,63 +456,63 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"a minute ago",
+    "message":"πριν από ένα λεπτό",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"{{value}} minutes ago",
+    "message":"πριν από {{value}} λεπτά",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"an hour ago",
+    "message":"πριν από μια ώρα",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"{{value}} hours ago",
+    "message":"πριν από {{value}} ώρες",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"a day ago",
+    "message":"πριν από μια ημέρα",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"{{value}} days ago",
+    "message":"πριν από {{value}} ημέρες",
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"Προβολή Πίνακα Εργαλείων",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
+    "message":"Προβολή Αρχείου Καταγραφών Αιτημάτων Δικτύου",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"off",
+    "message":"απενεργοποιημένο",
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock has prevented the following page from loading:",
+    "message":"Το uBlock έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"Εξαιτίας του ακόλουθου φίλτρου",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"Επιστροφή",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"Κλείσιμο του παραθύρου",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceed at your own risk",
+    "message":"Προχωρήστε με δική σας ευθύνη",
     "description":"English: Proceed at your own risk"
   },
   "dummy":{

@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Isključi skočne prozore na ovoj stranici",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Isključi strogo blokiranje na ovoj stranici",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

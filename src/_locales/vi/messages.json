@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Không hiện popup của trang này",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Không chặn nghiêm ngặt trang này",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

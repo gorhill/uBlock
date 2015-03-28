@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Keela hüpikaknad sellel saidil",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Keela karm blokeerimine sellel saidil",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

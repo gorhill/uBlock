@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Bloķēt uznirstošos logus šajā vietnē",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Izslēgt stingro bloķēšanu šai vietnei",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

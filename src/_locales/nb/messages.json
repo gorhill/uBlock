@@ -76,7 +76,7 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Ingen popups på denne siden",
+    "message":"Ingen oppsprettsvinduer på denne siden",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
