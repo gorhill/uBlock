@@ -75,85 +75,13 @@
     "message":"Log požadavků",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Řádkové <code>script<\/code> tagy jsou <b>povoleny<\/b> na tomto webu",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Řádkové <code>script<\/code> tagy jsou <b>blokovány<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Skripty první strany jsou <b>povoleny<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Skripty první strany jsou <b>blokovány<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Skripty třetích stran jsou <b>povoleny<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Skripty třetích stran jsou <b>blokovány<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Rámce první strany jsou <b>povoleny<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Rámce první strany jsou <b>blokovány<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Rámce třetích stran jsou <b>povoleny<\/b> na tomto webu",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Rámce třetích stran jsou <b>blokovány<\/b> na tomto webu",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Řádkové <code>script<\/code> tagy jsou <b>povoleny<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Řádkové <code>script<\/code> tagy jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Skripty první strany jsou <b>povoleny<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Skripty první strany jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Skripty třetích stran jsou <b>povoleny<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Skripty třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Rámce první strany jsou <b>povoleny<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Rámce první strany jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Rámce třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Rámce třetích stran jsou <b>blokovány<\/b> všude ve výchozím nastavení",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"vše",

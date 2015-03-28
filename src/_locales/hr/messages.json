@@ -75,85 +75,13 @@
     "message":"Odlazak na zapisnik zahtjeva",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>dozvoljeni<\/b> za ovu stranicu",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>blokirani<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Skripte prve strane su <b>dozvoljene<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Skripte prve strane su <b>blokirane<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Skripte trećih strana su <b>dozvoljene<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Skripte trećih strana su <b>blokirane<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Okviri prve strane su <b>dozvoljeni<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Okviri prve strane su <b>blokirani<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Okviri trećih strana su <b>dozvoljeni<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Okviri trećih strana su <b>blokirani<\/b> za ovu stranicu",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>dozvoljeni<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Tagovi <code>skripte<\/code> u liniji su <b>blokirani<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Skripte prve strane su <b>dozvoljene<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Skripte prve strane su <b>blokirane<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Skripte trećih strana su <b>dozvoljene<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Skripte trećih strana su <b>blokirane<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Okviri prve strane su <b>dozvoljeni<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Okviri prve strane su <b>blokirani<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Okviri trećih strana su <b>dozvoljeni<\/b> posvuda po zadanom",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Okviri trećih strana su <b>blokirani<\/b> posvuda po zadanom",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"sve",

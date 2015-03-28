@@ -75,85 +75,13 @@
     "message":"رفتن به لاگ درخواست",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"تگ های خطی <code>اسکریپت<\/code> در این سایت <b>مجاز<\/b> هستند",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"تگ های خطی <code>اسکریپت<\/code> در این سایت <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"اسکریپت های 1st-party در این سایت <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"اسکریپت های 1st-party در این سایت <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"اسکریپت های 3rd-party در این سایت <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"اسکریپت های 3rd-party در این سایت <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"فریم های 1st-party در این سایت <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"فریم های 1st-party در این سایت <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"فریم های 3rd-party در این سایت <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"فریم های 3rd-party در این سایت <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"تگ های خطی <code>اسکریپت<\/code> بصورت پیشفرض در همه جا <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"تگ های خطی <code>اسکریپت<\/code> بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"اسکریپت های 1st-party بصورت پیشفرض در همه جا <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"اسکریپت های 1st-party بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"اسکریپت های 3rd-party بصورت پیشفرض در همه جا <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"اسکریپت های 3rd-party بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"فریم های 1st-party بصورت پیشفرض در همه جا <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"فریم های 1st-party بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"فریم های 3rd-party بصورت پیشفرض در همه جا <b>مجاز<\/b> هستند",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"فریم های 3rd-party بصورت پیشفرض در همه جا <b>غیرمجاز<\/b> هستند",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"همه",

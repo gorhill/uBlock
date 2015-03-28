@@ -75,85 +75,13 @@
     "message":"Ir para o registo de pedidos",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Etiquetas de <code>script<\/code> em linha são <b>permitidas<\/b> neste site",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Sem popups para este sítio web",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Etiquetas de <code>script<\/code> em linha são <b>bloqueadas<\/b> neste site",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Scripts de primeiros são <b>permitidos<\/b> neste site",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Scripts de primeiros são <b>bloqueados<\/b> neste site",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Scripts de terceiros são <b>permitidos<\/b> neste site",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Scripts de terceiros são <b>bloqueados<\/b> neste site",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Frames de primeiros são <b>permitidos<\/b> neste site",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Frames de primeiros são <b>bloqueados<\/b> neste site",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Frames de terceiros são <b>permitidos<\/b> neste site",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Frames de terceiros são <b>bloqueados<\/b> neste site",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Etiquetas de <code>script<\/code> em linha são <b>permitidas<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Etiquetas de <code>script<\/code> em linha são <b>bloqueadas<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Scripts de primeiros são <b>permitidos<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Scripts de primeiros são <b>bloqueados<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Scripts de terceiros são <b>permitidos<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Scripts de terceiros são <b>bloqueados<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Frames de primeiros são <b>permitidos<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Frames de primeiros são <b>bloqueados<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Frames de terceiros são <b>permitidos<\/b> em todo o lado por predefinição",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Frames de terceiros são <b>bloqueados<\/b> em todo o lado por predefinição",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Sem bloqueio estrito para este sítio web",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"tudo",

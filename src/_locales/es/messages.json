@@ -75,85 +75,13 @@
     "message":"Ir al registro de peticiones",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>habilitadas<\/b> para este sitio",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No permitir pop-ups en este sitio",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>deshabilitadas<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Scripts <b>habilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Scripts <b>deshabilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Scripts de terceros <b>habilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Scripts de terceros <b>deshabilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Frames <b>habilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Frames <b>deshabilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Frames de terceros <b>habilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Frames de terceros <b>deshabilitados<\/b> para este sitio",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>habilitadas<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Etiquetas <code>script<\/code> embebidas <b>deshabilitadas<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Scripts <b>habilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Scripts <b>deshabilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Scripts de terceros <b>habilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Scripts de terceros <b>deshabilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Frames <b>habilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Frames <b>deshabilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Frames de terceros <b>habilitados<\/b> globalmente por defecto",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Frames de terceros <b>deshabilitados<\/b> globalmente por defecto",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Deshabilitar bloqueo estricto para este sitio",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"todo",

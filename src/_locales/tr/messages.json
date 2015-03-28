@@ -75,85 +75,13 @@
     "message":"İstek günlüğüne git",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Kod-içi <code>script<\/code> öğelerine bu sitede <b>izin veriliyor<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Kod-içi <code>script<\/code> öğeleri bu sitede <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"1. parti script'lere bu sitede <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"1. parti script'ler bu sitede <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"3. parti script'lere bu sitede <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"3. parti script'ler bu sitede <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"1. parti çerçevelere bu sitede <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"1. parti çerçeveler bu sitede <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"3. parti çerçevelere bu sitede <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"3. parti çerçeveler bu sitede <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Kod-içi <code>script<\/code> öğelerine heryerde varsayılan olarak <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Kod-içi <code>script<\/code> öğeleri heryerde varsayılan olarak <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"1. parti script'lerine heryerde varsayılan olarak <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"1. parti script'leri heryerde varsayılan olarak <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"3. parti script'lerine heryerde varsayılan olarak <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"3. parti script'leri heryerde varsayılan olarak <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"1. parti çerçevelerine heryerde varsayılan olarak <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"1. parti çerçeveleri heryerde varsayılan olarak <b>engelleniyor<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"3. parti çerçevelere heryerde varsayılan olarak <b>izin veriliyor<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"3. parti çerçeveler heryerde varsayılan olarak <b>engelleniyor<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Tümü",

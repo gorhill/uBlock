@@ -75,85 +75,13 @@
     "message":"Vai al registro delle richieste",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"I tag <code>script<\/code> inline sono <b>consentiti<\/b> su questo sito",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Niente popup per questo sito",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"I tag <code>script<\/code> inline sono <b>bloccati<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Gli script di proprietà del sito sono <b>consentiti<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Gli script di proprietà del sito sono <b>bloccati<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Gli script di terze parti sono <b>consentiti<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Gli script di terze parti sono <b>bloccati<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"I frame di proprietà del sito sono <b>consentiti<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"I frame di proprietà del sito sono <b>bloccati<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"I frame di terze parti sono <b>consentiti<\/b> su questo sito",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"I frame di terze parti sono <b>bloccati<\/b> su questo sito",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"I tag <code>script<\/code> inline sono <b>consentiti<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"I tag <code>script<\/code> inline sono <b>bloccati<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Gli script di proprietà del sito sono <b>consentiti<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Gli script di proprietà del sito sono <b>bloccati<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Gli script di terze parti sono <b>consentiti<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Gli script di terze parti sono <b>bloccati<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"I frame di proprietà del sito sono <b>consentiti<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"I frame di proprietà del sito sono <b>bloccati<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"I frame di terze parti sono <b>consentiti<\/b> ovunque per impostazione predefinita",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"I frame di terze parti sono <b>bloccati<\/b> ovunque per impostazione predefinita",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Niente blocco assoluto per questo sito",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Tutto",

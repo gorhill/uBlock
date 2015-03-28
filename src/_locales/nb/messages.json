@@ -75,85 +75,13 @@
     "message":"Gå til forespørsels-logg",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Integrerte <code>skript<\/code>-koder <b>tillates<\/b> på dette nettstedet",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Ingen popups på denne siden",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Integrerte <code>skript<\/code>-koder <b>blokkeres<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Førsteparts skript <b>tillates<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Førsteparts skript <b>blokkeres<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Tredjeparts skript <b>tillates<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Tredjeparts skript <b>blokkeres<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Førsteparts iframe-koder <b>tillates<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Førsteparts iframe-koder <b>blokkeres<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Tredjeparts iframe-koder <b>tillates<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Tredjeparts iframe-koder <b>blokkeres<\/b> på dette nettstedet",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Integrerte <code>skript<\/code>-koder <b>tillates<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Integrerte <code>skript<\/code>-koder <b>blokkeres<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Førsteparts skript <b>tillates<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Førsteparts skript <b>blokkeres<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Tredjeparts skript <b>tillates<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Tredjeparts skript <b>blokkeres<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Førsteparts iframe-koder <b>tillates<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Førsteparts iframe-koder <b>blokkeres<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Tredjeparts iframe-koder <b>tillates<\/b> overalt som standard",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Tredjeparts iframe-koder <b>blokkeres<\/b> overalt som standard",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Ingen streng blokkering for denne siden",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"alle",

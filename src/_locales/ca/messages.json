@@ -75,85 +75,13 @@
     "message":"Anar al registre de peticions",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>habilitades<\/b> per a aquest lloc",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No permetis finestres emergents en aquest web",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>deshabilitades<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Scripts <b>activats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Scripts <b>desactivats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Scripts de tercers <b>activats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Scripts de tercers <b>desactivats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Marcs <b>activats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Marcs <b>desactivats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Marcs de tercers <b>activats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Marcs de tercers <b>desactivats<\/b> per a aquest lloc",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>habilitades<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Etiquetes incrustades tipus <code>script<\/code> estan <b>deshabilitades<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Scripts <b>activats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Scripts <b>desactivats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Scripts de tercers <b>activats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Scripts de tercers <b>desactivats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Marcs <b>activats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Marcs <b>desactivats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Marcs de tercers <b>activats<\/b> per a qualsevol lloc",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Marcs de tercers <b>desactivats<\/b> per a qualsevol lloc",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No bloquis de forma estricta en aquest web",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"tot",

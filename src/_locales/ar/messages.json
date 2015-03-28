@@ -75,85 +75,13 @@
     "message":"الذهاب الى سجل الطلبات",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"في خط <code>سكربت<\/code> شارات <b>المسموح بها<\/b> على هذا الموقع",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"لا نوافذ منبثقة لهذا الموقع",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"في خط <code>سكربت<\/code> شارات <b>محجوبة<\/b> على هذا الموقع",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"نصوص برمجة الطرف الأول <b>مسموح<\/b> بها على هذا الموقع",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"نصوص برمجة الطرف الأول <b>محظورة<\/b> على هذا الموقع",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"نصوص برمجة الطرف الثالث <b>مسموح<\/b> بها على هذا الموقع",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"نصوص برمجة الطرف الثالث <b>محظورة<\/b> على هذا الموقع",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"إطارات الطرف الأول <b>مسموح<\/b> بها على هذا الموقع",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"إطارات الطرف الأول <b>محظورة<\/b> على هذا الموقع",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"إطارات الطرف الثالث <b>مسموح<\/b> بها على هذا الموقع",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"إطارات الطرف الثالث <b>محظورة<\/b> على هذا الموقع",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"تداخل <code> نصوص برمجية <\/code> ذات  شارات <b>مسموح بها<\/b>  في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"تداخل <code> نصوص برمجية <\/code> ذات  شارات <b> محظورة <\/b>  في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"نصوص برمجة الطرف الاول <b>مسموح<\/b> بها في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"نصوص برمجة الطرف الاول <b>محظورة<\/b> في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"نصوص برمجة الطرف الثالث <b>مسموح<\/b> بها في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"نصوص برمجة الطرف الثالث <b>محظورة<\/b> في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"إطارات الطرف الاول <b>مسموح<\/b> بها في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"إطارات الطرف الاول <b>محظورة<\/b> في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"إطارات الطرف الثالث <b>مسموح<\/b> بها في كل مكان إفتراضيا",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"إطارات الطرف الثالث <b>محظورة<\/b> في كل مكان إفتراضيا",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"لا حجب صارم لهذا الموقع",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"كل",

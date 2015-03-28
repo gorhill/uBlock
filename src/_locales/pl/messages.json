@@ -75,85 +75,13 @@
     "message":"Przejdź do dziennika żądań",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Wbudowane tagi <code>script<\/code> są <b>dozwolone<\/b> na tej stronie",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Wyskakujące okienka na ten stronie są zablokowane",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Wbudowane tagi <code>script<\/code> są <b>zablokowane<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Skrypty pochodzące bezpośrednio z tej strony są <b>dozwolone<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Skrypty pochodzące bezpośrednio z tej strony są <b>zablokowane<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Skrypty pochodzące ze stron zewnętrznych są <b>dozwolone<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Skrypty pochodzące ze stron zewnętrznych są <b>zablokowane<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Ramki pochodzące bezpośrednio z tej strony są <b>dozwolone<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Ramki pochodzące bezpośrednio z tej strony są <b>zablokowane<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Ramki pochodzące ze stron zewnętrznych są <b>dozwolone<\/b> na tej stronie",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Ramki pochodzące ze stron zewnętrznych są <b>zablokowane<\/b> na tej stronie",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Wbudowane tagi <code>script<\/code> są domyślnie wszędzie <b>dozwolone<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Wbudowane tagi <code>script<\/code> są domyślnie wszędzie <b>zablokowane<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Skrypty pochodzące bezpośrednio z tej strony są domyślnie <b>dozwolone<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Skrypty pochodzące bezpośrednio z tej strony są domyślnie <b>zablokowane<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Skrypty pochodzące ze stron zewnętrznych są domyślnie <b>dozwolone<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Skrypty pochodzące ze stron zewnętrznych są domyślnie <b>zablokowane<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Ramki pochodzące bezpośrednio z tej strony są domyślnie <b>dozwolone<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Ramki pochodzące bezpośrednio z tej strony są domyślnie <b>zablokowane<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Ramki pochodzące ze stron zewnętrznych są domyślnie <b>dozwolone<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Ramki pochodzące ze stron zewnętrznych są domyślnie <b>zablokowane<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Rygorystyczne blokowanie dla tej strony jest wyłączone",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"wszystko",

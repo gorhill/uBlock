@@ -75,85 +75,13 @@
     "message":"查看請求日誌",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>允許<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"目前網頁的行內 <code>script<\/code> 標籤將被 <b>封鎖<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"目前網頁的第一方腳本將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"目前網頁的第一方腳本將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"目前網頁的協力廠商腳本將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"目前網頁的協力廠商腳本將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"目前網頁的第一方框架將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"目前網頁的第一方框架將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"目前網頁的協力廠商框架將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"目前網頁的協力廠商框架將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"任何行內的 <code>腳本<\/code> 標籤在預設情況下都將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"任何第一方腳本在預設情況下都將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"任何第一方腳本在預設情況下都將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"任何協力廠商腳本在預設情況下都將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"任何協力廠商腳本在預設情況下都將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"任何第一方框架在預設情況下都將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"任何第一方框架在預設情況下都將被 <b>隱藏<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"任何協力廠商框架在預設情況下都將被 <b>允許<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"任何協力廠商框架在預設情況下都將被 <b>隱藏<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"全部",

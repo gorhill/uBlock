@@ -75,85 +75,13 @@
     "message":"네트워크 요청 로그로 이동",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"인라인 <code>스크립트<\/code> 태그가 이 사이트에서 <b>허용됨<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"인라인 <code>스크립트<\/code> 태그가 이 사이트에서 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"주 스크립트가 이 사이트에서 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"주 스크립트가 이 사이트에서 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"보조 스크립트가 이 사이트에서 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"보조 스크립트가 이 사이트에서 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"주 프레임이 이 사이트에서 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"주 프레임이 이 사이트에서 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"보조 프레임이 이 사이트에서 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"보조 프레임이 이 사이트에서 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"인라인 <code>스크립트<\/code> 태그가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"인라인 <code>스크립트<\/code> 태그가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"주 스크립트가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"주 스크립트가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"보조 스크립트가 모든 곳에서 기본값으로 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"보조 스크립트가 모든 곳에서 기본값으로 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"주 프레임이 모든 곳에서 기본값으로 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"주 프레임이 모든 곳에서 기본값으로 <b>차단됨<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"보조 프레임이 모든 곳에서 기본값으로 <b>허용됨<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"보조 프레임이 모든 곳에서 기본값으로 <b>차단됨<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"전체",

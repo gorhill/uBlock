@@ -75,85 +75,13 @@
     "message":"Aller au journal des requêtes",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Les <code>scripts<\/code> embarqués sont <b>autorisés<\/b> sur ce site",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Interdire les fenêtres pop-ups pour ce site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Les <code>scripts<\/code> embarqués sont <b>bloqués<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Les scripts provenant du domaine de la page sont <b>autorisés<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Les scripts provenant du domaine de la page sont <b>bloqués<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Les scripts de tierce-partie sont <b>autorisés<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Les scripts de tierce-partie sont <b>bloqués<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Les cadres provenant du domaine de la page sont <b>autorisés<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Les cadres provenant du domaine de la page sont <b>bloqués<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Les cadres de tierce-partie sont <b>autorisés<\/b> sur ce site",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Les cadres de tierce-partie sont <b>bloqués<\/b> sur ce site",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Les <code>scripts<\/code> embarqués sont <b>autorisés<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Les <code>scripts<\/code> embarqués sont <b>bloqués<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Les scripts provenant du domaine de la page sont <b>autorisés<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Les scripts provenant du domaine de la page sont <b>bloqués<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Les scripts de tierce-partie sont <b>autorisés<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Les scripts de tierce-partie sont <b>bloqués<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Les cadres provenant du domaine de la page sont <b>autorisés<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Les cadres provenant du domaine de la page sont <b>bloqués<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Les cadres de tierce-partie sont <b>autorisés<\/b> n'importe où par défaut",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Les cadres de tierce-partie sont <b>bloqués<\/b> n'importe où par défaut",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Ne pas employer le blocage strict pour ce site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Tout",

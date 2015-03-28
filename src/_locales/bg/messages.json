@@ -75,85 +75,13 @@
     "message":"Преглед на дневника със заявки",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"За този сайт, вътрешните <code>script<\/code> тагове са <b>позволени<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"За този сайт, вътрешните <code>script<\/code> тагове са <b>блокирани<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"За този сайт, скриптовете от 1-ви лица са <b>позволени<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"За този сайт, скриптовете от 1-ви лица са <b>блокирани<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"За този сайт, скриптовете от 3-ти лица са <b>позволени<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"За този сайт, скриптовете от 3-ти лица са <b>блокирани<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"За този сайт, рамките от 1-ви лица са <b>позволени<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"За този сайт, рамките от 1-ви лица са <b>блокирани<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"За този сайт, рамките от 3-ти лица са <b>позволени<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"За този сайт, рамките от 3-ти лица са <b>блокирани<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"По подразбиране, вмъкнатите <code>script<\/code> тагове са <b>позволени<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"По подразбиране, вмъкнатите <code>script<\/code> тагове са <b>блокирани<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"По подразбиране, скриптовете от 1-ви лица са <b>позволени<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"По подразбиране, скриптовете от 1-ви лица са <b>блокирани<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"По подразбиране, скриптовете от 3-ти лица са <b>позволени<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"По подразбиране, скриптовете от 3-ти лица са <b>блокирани<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"По подразбиране, рамките от 1-ви лица са <b>позволени<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"По подразбиране, рамките от 1-ви лица са <b>блокирани<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"По подразбиране, рамките от 3-ти лица са <b>позволени<\/b> навсякъде",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"По подразбиране, рамките от 3-ти лица са <b>блокирани<\/b> навсякъде",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Всички",

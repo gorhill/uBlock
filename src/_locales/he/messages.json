@@ -75,85 +75,13 @@
     "message":"עבור למתעד הבקשות",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"תגיות <code>script<\/code> מוטמעות <b>מאופשרות<\/b> באתר זה",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"ללא חלונות קופצים לאתר זה",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"תגיות <code>script<\/code> מוטמעות <b>חסומות<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"סקריפטים צד-1 <b>מאופשרים<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"סקריפטים צד-1 <b>חסומים<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"סקריפטים צד-3 <b>מאופשרים<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"סקריפטים צד-3 <b>חסומים<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"מסגרות צד-1 <b>מאופשרות<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"מסגרות צד-1 <b>חסומות<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"מסגרות צד-3 <b>מאופשרות<\/b> באתר זה",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"מסגרות צד-3 <b>חסומות<\/b> באתר זה",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"תגיות <code>script<\/code> מוטמעות <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"תגיות <code>script<\/code> מוטמעות <b>חסומות<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"סקריפטים צד-1 <b>מאופשרים<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"סקריפטים צד-1 <b>חסומים<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"סקריפטים צד-3 <b>מאופשרים<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"סקריפטים צד-3 <b>חסומים<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"מסגרות צד-1 <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"מסגרות צד-1 <b>חסומות<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"מסגרות צד-3 <b>מאופשרות<\/b> בכל מקום כברירת מחדל",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"מסגרות צד-3 <b>חסומות<\/b> בכל מקום כברירת מחדל",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"ללא חסימה נוקשה לאתר זה",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"הכל",

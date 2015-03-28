@@ -75,85 +75,13 @@
     "message":"Naar verzoekenlogboek gaan",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code>-tags zijn <b>toegestaan<\/b> op deze site",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Geen pop-ups voor deze website",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code>-tags zijn <b>geblokkeerd<\/b> op deze site",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"scripts van de site zelf zijn <b>toegestaan<\/b> op deze site",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"scripts van de site zelf worden <b>geblokkeerd<\/b> op deze site",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"scripts van derden zijn <b>toegestaan<\/b> op deze site",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"scripts van derden worden <b>geblokkeerd<\/b> op deze site",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"frames van de site zelf zijn <b>toegestaan<\/b> op deze site",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"frames van de site zelf worden <b>geblokkeerd<\/b> op deze site",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"frames van derden zijn <b>toegestaan<\/b> op deze site",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"frames van derden worden <b>geblokkeerd<\/b> op deze site",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tags zijn standaard overal <b>toegestaan<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tags worden standaard overal <b>geblokkeerd<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"scripts van de sites zelf zijn standaard overal <b>toegestaan<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"scripts van de sites zelf worden standaard overal <b>geblokkeerd<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"scripts van derden zijn standaard overal <b>toegestaan<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"scripts van derden worden standaard overal <b>geblokkeerd<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"frames van de sites zelf zijn standaard overal <b>toegestaan<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"frames van de sites zelf worden standaard overal <b>geblokkeerd<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"frames van derden zijn standaard overal <b>toegestaan<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"frames van derden worden standaard overal <b>geblokkeerd<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Geen strikte blokkering voor deze website",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"alles",

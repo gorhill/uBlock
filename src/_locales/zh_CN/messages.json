@@ -75,85 +75,13 @@
     "message":"查看请求日志",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"此网站的内联<code>脚本<\/code>标签将被<b>允许<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"禁止此网站弹出任何窗口",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"此网站的内联<code>脚本<\/code>标签将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"此网站的第一方脚本将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"此网站的第一方脚本将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"此网站的第三方脚本将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"此网站的第三方脚本将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"此网站的第一方框架将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"此网站的第一方框架将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"此网站的第三方框架将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"此网站的第三方框架将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"任何内联的<code>脚本<\/code>标签在默认情况下都将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"任何内联的<code>脚本<\/code>标签在默认情况下都将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"任何第一方脚本在默认情况下都将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"任何第一方脚本在默认情况下都将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"任何第三方脚本在默认情况下都将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"任何第三方脚本在默认情况下都将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"任何第一方框架在默认情况下都将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"任何第一方框架在默认情况下都将被<b>屏蔽<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"任何第三方框架在默认情况下都将被<b>允许<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"任何第三方框架在默认情况下都将被<b>屏蔽<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"禁用对此网站进行严格屏蔽",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"全部",

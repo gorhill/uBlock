@@ -75,85 +75,13 @@
     "message":"Перейти к списку запросов",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Встроенные теги <code>скриптов<\/code> <b>включены<\/b> для этого сайта",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Выключить всплывающие окна на этом сайте",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Встроенные теги <code>скриптов<\/code> <b>заблокированы<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>разрешены<\/b> на этом сайте",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>заблокированы<\/b> на этом сайте",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Сторонние скрипты <b>разрешены<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Сторонние скрипты <b>отключены<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Пользовательские фреймы <b>разрешены<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Пользовательские фреймы <b>заблокированы<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Сторонние фреймы <b>разрешены<\/b> для этого сайта",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Сторонние фреймы <b>заблокированы<\/b> для этого сайта",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Встроенные теги <code>скриптов<\/code> <b>разрешены<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Встроенные теги <code>скриптов<\/code> <b>заблокированы<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Пользовательские скрипты <b>разрешены<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Пользовательские скрипты <b>заблокированы<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Сторонние скрипты <b>разрешены<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Сторонние скрипты <b>заблокированы<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Пользовательские фреймы <b>разрешены<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Пользовательские фреймы <b>заблокированы<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Сторонние фреймы <b>разрешены<\/b> везде по умолчанию",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Сторонние фреймы <b>заблокированы<\/b> везде по умолчанию",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Выключить строгую блокировку для этого сайта",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"все",

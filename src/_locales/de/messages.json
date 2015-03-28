@@ -75,85 +75,13 @@
     "message":"Gehe zu den protokollierten Anfragen",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>erlaubt<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Keine Popups auf dieser Seite",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden auf dieser Seite <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Skripte der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Skripte von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Skripte von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Frames der aktuellen Seite werden auf dieser Seite <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Frames von Drittseiten werden auf dieser Seite <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Frames von Drittseiten werden auf dieser Seite <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>Skript<\/code> Tags werden standardmäßig überall <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Skripte der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Skripte von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Skripte von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Frames der aktuellen Seite werden überall standardmäßig <b>blockiert<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Frames von Drittseiten werden überall standardmäßig <b>erlaubt<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Frames von Drittseiten werden überall standardmäßig <b>blockiert<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Kein striktes Blockieren dieser Seite",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Alle Ressourcen",

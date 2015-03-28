@@ -75,85 +75,13 @@
     "message":"Перейти до журналу запитів",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Вбудовані теґи <code>script<\/code> <b>дозволені<\/b> на цьому сайті",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Вбудовані теґи <code>script<\/code> <b>блокуються<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Основні скрипти <b>дозволені<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Основні скрипти <b>заблоковані<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Сторонні скрипти <b>дозволені<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Сторонні скрипти <b>заблоковані<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Основні фрейми <b>дозволені<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Основні фрейми <b>заблоковані<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Сторонні фрейми <b>дозволені<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Сторонні фрейми <b>заблоковані<\/b> на цьому сайті",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Вбудовані теґи <code>script<\/code> <b>дозволені<\/b> будь-де за замовченням",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Вбудовані теґи <code>script<\/code> <b>блокуються<\/b> будь-де за замовченням",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Основні скрипти <b>дозволені<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Основні скрипти <b>заблоковані<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Сторонні скрипти <b>дозволені<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Сторонні скрипти <b>заблоковані<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Основні фрейми <b>дозволені<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Основні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Сторонні фрейми <b>дозволені<\/b> будь-де за замовчанням",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Сторонні фрейми <b>заблоковані<\/b> будь-де за замовчанням",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"всі",

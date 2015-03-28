@@ -75,85 +75,13 @@
     "message":"Doties uz pieprasījumu žurnālu",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>skripta<\/code> tagi ir <b>atļauti<\/b> šajā vietnē",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>skripta<\/code> tagi ir <b>bloķēti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"1st-party skripti ir <b>atļauti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"1st-party skripti ir <b>bloķēti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"3rd-party skripti ir <b>atļauti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"3rd-party skripti ir <b>bloķēti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"1st-party freimi ir <b>atļauti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"1st-party freimi ir <b>bloķēti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"3rd-party freimi ir <b>atļauti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"3rd-party freimi ir <b>bloķēti<\/b> šajā vietnē",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>skripta<\/code> tagi ir <b>atļauti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>skripta<\/code> tagi ir <b>bloķēti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"1st-party skripti ir <b>atļauti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"1st-party skripti ir <b>bloķēti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"3rd-party skripti ir <b>atļauti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"3rd-party skripti ir <b>bloķēti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"1st-party freimi ir <b>atļauti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"1st-party freimi ir <b>bloķēti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"3rd-party freimi ir <b>atļauti<\/b> visur pēc noklusējuma",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"3rd-party freimi ir <b>bloķēti<\/b> visur pēc noklusējuma",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Visi",

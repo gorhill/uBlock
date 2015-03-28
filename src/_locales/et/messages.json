@@ -75,85 +75,13 @@
     "message":"Mine taotluste logisse",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Tekstisisese <code>skripti<\/code> märksõnad on sellel saidil <b>lubatud<\/b>",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Tekstisisese <code>skripti<\/code> märksõnad on sellel saidil <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Esimese osapoole skriptid on sellel saidil <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Esimese osapoole skriptid on sellel saidil <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Kolmanda osapoole skriptid on sellel saidil <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Kolmanda osapoole skriptid on sellel saidil <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Esimese osapoole raamid on sellel saidil <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Esimese osapoole raamid on sellel saidil <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Kolmanda osapoole raamid on sellel saidil <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Kolmanda osapoole raamid on sellel saidil <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Tekstisisese <code>skripti<\/code> märksõnad on kõikjal vaikimisi <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Tekstisisese <code>skripti<\/code> märksõnad on kõikjal vaikimisi <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Esimese osapoole skriptid on kõikjal vaikimisi <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Esimese osapoole skriptid on kõikjal vaikimisi <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Kolmanda osapoole skriptid on kõikjal vaikimisi <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Kolmanda osapoole skriptid on kõikjal vaikimisi <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Esimese osapoole raamid on kõikjal vaikimisi <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Esimese osapoole raamid on kõikjal vaikimisi <b>keelatud<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Kolmanda osapoole raamid on kõikjal vaikimisi <b>lubatud<\/b>",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Kolmanda osapoole raamid on kõikjal vaikimisi <b>keelatud<\/b>",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"kõik",

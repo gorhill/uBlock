@@ -75,85 +75,13 @@
     "message":"Gå till logg",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>skript<\/code> taggar är <b>tillåtna<\/b> på denna sida",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Inga popups för den här sidan",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>skript<\/code>-taggar är <b>blockerade<\/b> på denna sida",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"förstapartsskript är <b>tillåtna<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"förstapartsskript är <b>blockerde<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"tredjepartsskript är <b>tillåtna<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"tredjepartsskript är <b>blockerade<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"förstapartsramar är <b>tillåtna<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"förstapartsramar är <b>blockerade<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"tredjepartsramar är <b>tillåtna<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"tredjepartsramar är <b>blockerade<\/b> på denna webbplats",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Inline  <code>skript<\/code>-taggar är <b>tillåtna<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>skript<\/code>-taggar är <b>blockerade<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"förstapartsskript är <b>tillåtna<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"förstapartsskript är <b>blockerade<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"tredjepartsskript är <b>tillåtna<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"tredjepartsskript är <b>blockerade<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"förstapartsramar är <b>tillåtna<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"förstapartsramar är <b>blockerade<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"tredjepartsramar är <b>tillåtna<\/b> överallt som standard",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"tredjepartsramar är <b>blockerade<\/b> överallt som standard",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Inga strikta blockeringar för den här sidan",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"alla",

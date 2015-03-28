@@ -75,85 +75,13 @@
     "message":"Pergi ke catatan permintaan",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Tag <code>script<\/code> inline <b>diizinkan<\/b> di situs ini",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"No popups for this site",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Tag <code>script<\/code> inline <b>diblokir<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Skrip pihak pertama <b>diizinkan<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Skrip pihak pertama <b>diblokir<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Skrip pihak ke-3 <b>diizinkan<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Skrip pihak ke-3 <b>diblokir<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Frame pihak pertama <b>diizinkan<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Frame pihak pertama <b>diblokir<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Frame pihak ke-3 <b>diizinkan<\/b> di situs ini",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Frame pihak ke-3 <b>diblokir<\/b> di situs ini",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Secara bawaan, tag <code>script<\/code> inline <b>diizinkan<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Secara bawaan, tag <code>script<\/code> inline <b>diblokir<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Secara bawaan, skrip pihak pertama <b>diizinkan<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Secara bawaan, skrip pihak pertama <b>diblokir<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Secara bawaan, skrip pihak ke-3 <b>diizinkan<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Secara bawaan, skrip pihak ke-3 <b>diblokir<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Secara bawaan, frame pihak pertama <b>diizinkan<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Secara bawaan, frame pihak pertama <b>diblokir<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Secara bawaan, frame pihak ke-3 <b>diizinkan<\/b> di mana-mana",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Secara bawaan, frame pihak ke-3 <b>diblokir<\/b> di mana-mana",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"No strict blocking for this site",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"semua",

@@ -75,85 +75,13 @@
     "message":"Naplózott lekéréséek megtekintése",
     "description":"English: Go to request log"
   },
-  "popupSiteInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tag-ek <b>engedélyezve<\/b> ezen a webhelyen",
-    "description":""
+  "popupTipNoPopups":{
+    "message":"Nincs előugró ablak ezen a webhelyen",
+    "description":"English: No popups for this site"
   },
-  "popupSiteInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tag-ek <b>letiltva<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite1pScriptEnabled":{
-    "message":"Webhelytől származó scriptek <b>engedélyezve<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite1pScriptDisabled":{
-    "message":"Webhelytől származó scriptek <b>letiltva<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite3pScriptEnabled":{
-    "message":"Külső webhelytől származó scriptek <b>engedélyezve<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite3pScriptDisabled":{
-    "message":"Külső webhelytől származó scriptek <b>letiltva<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite1pFrameEnabled":{
-    "message":"Webhelytől származó frame-ek <b>engedélyezve<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite1pFrameDisabled":{
-    "message":"Webhelytől származó frame-ek <b>letiltva<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite3pFrameEnabled":{
-    "message":"Külső webhelytől származó frame-ek <b>engedélyezve<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupSite3pFrameDisabled":{
-    "message":"Külső webhelytől származó frame-ek <b>letiltva<\/b> ezen a webhelyen",
-    "description":""
-  },
-  "popupDefaultInlineScriptEnabled":{
-    "message":"Inline <code>script<\/code> tag-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefaultInlineScriptDisabled":{
-    "message":"Inline <code>script<\/code> tag-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault1pScriptEnabled":{
-    "message":"Webhelytől származó scriptek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault1pScriptDisabled":{
-    "message":"Webhelytől származó scriptek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault3pScriptEnabled":{
-    "message":"Külső webhelytől származó scriptek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault3pScriptDisabled":{
-    "message":"Külső webhelytől származó scriptek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault1pFrameEnabled":{
-    "message":"Webhelytől származó frame-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault1pFrameDisabled":{
-    "message":"Webhelytől származó frame-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault3pFrameEnabled":{
-    "message":"Külső webhelytől származó frame-ek alapértelmezetten <b>engedélyezve<\/b> minden webhelyen",
-    "description":""
-  },
-  "popupDefault3pFrameDisabled":{
-    "message":"Külső webhelytől származó frame-ek alapértelmezetten <b>letiltva<\/b> minden webhelyen",
-    "description":""
+  "popupTipNoStrictBlocking":{
+    "message":"Nincs szigorú tiltás erre a webhelyre",
+    "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
     "message":"minden",
@@ -568,23 +496,23 @@
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock has prevented the following page from loading:",
+    "message":"uBlock megelőzte a következő lap betöltését:",
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"A következő szűrő miatt",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"Menjen vissza",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"Zárja be ezt az ablakot",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceed at your own risk",
+    "message":"Folytassa a salyát felelőségére",
     "description":"English: Proceed at your own risk"
   },
   "dummy":{
