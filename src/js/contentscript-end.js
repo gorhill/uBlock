@@ -227,7 +227,7 @@ var uBlockCollapser = (function() {
 
     var iframesFromNode = function(node) {
         if ( node.localName === 'iframe' ) {
-            add(node);
+            addIFrame(node);
         }
         var iframes = node.querySelectorAll('iframe');
         var i = iframes.length;
