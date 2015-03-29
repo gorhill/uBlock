@@ -1991,7 +1991,14 @@ FilterContainer.prototype.tokenize = function(url) {
         tokenEntry.beg = matches.index;
         tokenEntry.token = matches[0];
         i += 1;
+
+        // https://github.com/gorhill/uBlock/issues/1118
+        // Crazy case... but I guess we have to expect the worst...
+        if ( i === 2048 ) {
+            break;
+        }
     }
+
     // Sentinel
     tokenEntry = tokens[i];
     if ( tokenEntry === undefined ) {
