@@ -84,6 +84,169 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 })();
 
 /******************************************************************************/
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/7
+
+var uBlockCollapser = (function() {
+    var timer = null;
+    var requestId = 1;
+    var newRequests = [];
+    var pendingRequests = {};
+    var pendingRequestCount = 0;
+    var srcProps = {
+        'embed': 'src',
+        'iframe': 'src',
+        'img': 'src',
+        'object': 'data'
+    };
+
+    var PendingRequest = function(target, tagName, attr) {
+        this.id = requestId++;
+        this.target = target;
+        this.tagName = tagName;
+        this.attr = attr;
+        pendingRequests[this.id] = this;
+        pendingRequestCount += 1;
+    };
+
+    // Because a while ago I have observed constructors are faster than
+    // literal object instanciations.
+    var BouncingRequest = function(id, tagName, url) {
+        this.id = id;
+        this.tagName = tagName;
+        this.url = url;
+        this.collapse = false;
+    };
+
+    var onProcessed = function(requests) {
+        if ( requests === null || Array.isArray(requests) === false ) {
+            return;
+        }
+        var selectors = [];
+        var i = requests.length;
+        var request, entry, target, value;
+        while ( i-- ) {
+            request = requests[i];
+            if ( pendingRequests.hasOwnProperty(request.id) === false ) {
+                continue;
+            }
+            entry = pendingRequests[request.id];
+            delete pendingRequests[request.id];
+            pendingRequestCount -= 1;
+
+            // https://github.com/gorhill/uBlock/issues/869
+            if ( !request.collapse ) {
+                continue;
+            }
+
+            target = entry.target;
+
+            // https://github.com/gorhill/uBlock/issues/399
+            // Never remove elements from the DOM, just hide them
+            target.style.setProperty('display', 'none', 'important');
+
+            // https://github.com/gorhill/uBlock/issues/1048
+            // Use attribute to construct CSS rule
+            if ( value = target.getAttribute(entry.attr) ) {
+                selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
+            }
+        }
+        if ( selectors.length !== 0 ) {
+            messager.send({
+                what: 'injectedSelectors',
+                type: 'net',
+                hostname: window.location.hostname,
+                selectors: selectors
+            });
+        }
+        // Renew map: I believe that even if all properties are deleted, an
+        // object will still use more memory than a brand new one.
+        if ( pendingRequestCount === 0 ) {
+            pendingRequests = {};
+        }
+    };
+
+    var send = function() {
+        timer = null;
+        messager.send({
+            what: 'filterRequests',
+            pageURL: window.location.href,
+            pageHostname: window.location.hostname,
+            requests: newRequests
+        }, onProcessed);
+        newRequests = [];
+    };
+
+    var process = function(delay) {
+        if ( newRequests.length === 0 ) {
+            return;
+        }
+        if ( delay === 0 ) {
+            clearTimeout(timer);
+            send();
+        } else if ( timer === null ) {
+            timer = setTimeout(send, delay || 20);
+        }
+    };
+
+    // If needed eventually, we could listen to `src` attribute changes
+    // for iframes.
+
+    var add = function(target) {
+        var tagName = target.localName;
+        var prop = srcProps[tagName];
+        if ( prop === undefined ) {
+            return;
+        }
+        // https://github.com/gorhill/uBlock/issues/174
+        // Do not remove fragment from src URL
+        var src = target[prop];
+        if ( typeof src !== 'string' || src === '' ) {
+            return;
+        }
+        if ( src.lastIndexOf('http', 0) !== 0 ) {
+            return;
+        }
+        var req = new PendingRequest(target, tagName, prop);
+        newRequests.push(new BouncingRequest(req.id, tagName, src));
+    };
+
+    var addIFrame = function(iframe) {
+        var src = iframe.src;
+        // TODO: niject content script in `about:blank` as well.
+        if ( src === '' || typeof src !== 'string' ) {
+            return;
+        }
+        if ( src.lastIndexOf('http', 0) !== 0 ) {
+            return;
+        }
+        var req = new PendingRequest(iframe, 'iframe', 'src');
+        newRequests.push(new BouncingRequest(req.id, 'iframe', src));
+    };
+
+    var iframesFromNode = function(node) {
+        if ( node.localName === 'iframe' ) {
+            add(node);
+        }
+        var iframes = node.querySelectorAll('iframe');
+        var i = iframes.length;
+        while ( i-- ) {
+            addIFrame(iframes[i]);
+        }
+        process();
+    };
+
+    return {
+        add: add,
+        addIFrame: addIFrame,
+        iframesFromNode: iframesFromNode,
+        process: process
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
 
 // Cosmetic filters
 
@@ -298,7 +461,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                     }
                 }
                 // Candidate 2 = specific form
-                selector = node.tagName.toLowerCase() + selector;
+                selector = node.localName + selector;
                 if ( generics.hasOwnProperty(selector) ) {
                     if ( injectedSelectors.hasOwnProperty(selector) === false ) {
                         injectedSelectors[selector] = true;
@@ -461,20 +624,22 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
         return;
     }
 
+    // https://github.com/gorhill/uBlock/issues/618
+    // Following is to observe dynamically added iframes:
+    // - On Firefox, the iframes fails to fire a `load` event
+
     var ignoreTags = {
         'link': true,
-        'LINK': true,
         'script': true,
-        'SCRIPT': true,
-        'style': true,
-        'STYLE': true
+        'style': true
     };
 
     // Added node lists will be cumulated here before being processed
     var addedNodeLists = [];
     var addedNodeListsTimer = null;
+    var collapser = uBlockCollapser;
 
-    var mutationObservedHandler = function() {
+    var treeMutationObservedHandler = function() {
         var nodeList, iNode, node;
         while ( nodeList = addedNodeLists.pop() ) {
             iNode = nodeList.length;
@@ -483,10 +648,11 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
                 if ( node.nodeType !== 1 ) {
                     continue;
                 }
-                if ( ignoreTags.hasOwnProperty(node.tagName) ) {
+                if ( ignoreTags.hasOwnProperty(node.localName) ) {
                     continue;
                 }
                 contextNodes.push(node);
+                collapser.iframesFromNode(node);
             }
         }
         addedNodeListsTimer = null;
@@ -512,7 +678,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
             // I arbitrarily chose 100 ms for now:
             // I have to compromise between the overhead of processing too few
             // nodes too often and the delay of many nodes less often.
-            addedNodeListsTimer = setTimeout(mutationObservedHandler, 100);
+            addedNodeListsTimer = setTimeout(treeMutationObservedHandler, 100);
         }
     };
 
@@ -529,134 +695,17 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 // Permanent
 
-(function() {
-    // https://github.com/gorhill/uBlock/issues/683
-    // Instead of a closure we use a map to remember the element to collapse
-    var filterRequestId = 1;
-    var filterRequests = {};
+// Listener to collapse blocked resources.
+// - Future requests not blocked yet
+// - Elements dynamically added to the page
+// - Elements which resource URL changes
 
-    var FilterRequest = function(target, tagName, attr) {
-        this.id = filterRequestId++;
-        this.target = target;
-        this.tagName = tagName;
-        this.attr = attr;
-    };
-
-    FilterRequest.send = function(target, tagName, prop, src) {
-        var req = new FilterRequest(target, tagName, prop);
-        filterRequests[req.id] = req;
-        messager.send(
-            {
-                what: 'filterRequest',
-                id: req.id,
-                tagName: tagName,
-                requestURL: src,
-                pageHostname: window.location.hostname,
-                pageURL: window.location.href
-            },
-            onAnswerReceived
-        );
-    };
-
-    // Process answer: collapse, or do nothing.
-
-    var onAnswerReceived = function(details) {
-        // This should not happen under normal circumstances. It probably can
-        // happen if the extension is disabled though.
-        if ( typeof details !== 'object' || details === null ) {
-            return;
-        }
-
-        // This should definitely not happen
-        if ( filterRequests.hasOwnProperty(details.id) === false ) {
-            return;
-        }
-
-        var req = filterRequests[details.id];
-        delete filterRequests[details.id];
-
-        // https://github.com/gorhill/uBlock/issues/869
-        if ( details.collapse !== true ) {
-            return;
-        }
-
-        //console.log('contentscript-end.js > onAnswerReceived(%o)', req);
-
-        // If `!important` is not there, going back using history will
-        // likely cause the hidden element to re-appear.
-        // https://github.com/gorhill/uBlock/issues/399
-
-        // Never remove elements from the DOM, just hide them
-        req.target.style.setProperty('display', 'none', 'important');
-
-        // https://github.com/gorhill/uBlock/issues/1048
-        // We need to use the atrtibute value for the CSS rule
-        var value = req.target.getAttribute(req.attr);
-        if ( !value ) {
-            return;
-        }
-
-        messager.send({
-            what: 'injectedSelectors',
-            type: 'net',
-            hostname: window.location.hostname,
-            selectors:  req.tagName + '[' + req.attr + '="' + value + '"]'
-        });
-    };
-
-    // https://github.com/gorhill/uBlock/issues/174
-    // Do not remove fragment from src URL
-
-    // TODO: Find out whether trying to send more than one filter request per
-    //       message is worth it.
-
-    var onResource = function(target, dict) {
-        if ( !target ) {
-            return;
-        }
-        var tagName = target.tagName.toLowerCase();
-        var prop = dict[tagName];
-        if ( prop === undefined ) {
-            return;
-        }
-        var src = target[prop];
-        if ( typeof src !== 'string' || src === '' ) {
-            return;
-        }
-        if ( src.lastIndexOf('http', 0) !== 0 ) {
-            return;
-        }
-        FilterRequest.send(target, tagName, prop, src);
-    };
-
-    // Listeners to mop up whatever is otherwise missed:
-    // - Future requests not blocked yet
-    // - Elements dynamically added to the page
-    // - Elements which resource URL changes
-
-    var loadedElements = {
-        'iframe': 'src'
-    };
-
-    var failedElements = {
-        'img': 'src',
-        'input': 'src',
-        'object': 'data'
-    };
-
-    var onResourceLoaded = function(ev) {
-        //console.debug('onResourceLoaded(%o)', ev);
-        onResource(ev.target, loadedElements);
-    };
-
-    var onResourceFailed = function(ev) {
-        //console.debug('onResourceFailed(%o)', ev);
-        onResource(ev.target, failedElements);
-    };
-
-    document.addEventListener('load', onResourceLoaded, true);
-    document.addEventListener('error', onResourceFailed, true);
-})();
+var onResourceFailed = function(ev) {
+    //console.debug('onResourceFailed(%o)', ev);
+    uBlockCollapser.add(ev.target);
+    uBlockCollapser.process();
+};
+document.addEventListener('error', onResourceFailed, true);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -666,88 +715,30 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 // Executed only once
 
 (function() {
-    var srcProps = {
-        'embed': 'src',
-        'iframe': 'src',
-        'img': 'src',
-        'object': 'data'
-    };
-    var elements = [];
+    var collapser = uBlockCollapser;
+    var elems, i, elem;
 
-    var onAnswerReceived = function(details) {
-        if ( typeof details !== 'object' || details === null ) {
-            return;
-        }
-        var collapse = details.collapse;
+    elems = document.querySelectorAll('embed, object');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.add(elems[i]);
+    }
 
-        // https://github.com/gorhill/uBlock/issues/869
-        if ( collapse !== true ) {
-            return;
-        }
-
-        var requests = details.requests;
-        var selectors = [];
-        var i = requests.length;
-        var request, elem, attr, value;
-        while ( i-- ) {
-            request = requests[i];
-            elem = elements[request.index];
-            // https://github.com/gorhill/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            elem.style.setProperty('display', 'none', 'important');
-            // https://github.com/gorhill/uBlock/issues/1048
-            // Use attribute to construct CSS rule
-            attr = srcProps[request.tagName];
-            if ( value = elem.getAttribute(attr) ) {
-                selectors.push(request.tagName + '[' + attr + '="' + value + '"]');
-            }
-        }
-        if ( selectors.length !== 0 ) {
-            messager.send({
-                what: 'injectedSelectors',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors: selectors
-            });
-        }
-    };
-
-    var requests = [];
-    var tagNames = ['embed','iframe','img','object'];
-    var elementIndex = 0;
-    var tagName, elems, i, elem, prop, src;
-    while ( tagName = tagNames.pop() ) {
-        elems = document.getElementsByTagName(tagName);
-        i = elems.length;
-        while ( i-- ) {
-            elem = elems[i];
-            prop = srcProps[tagName];
-            if ( prop === undefined ) {
-                continue;
-            }
-            src = elem[prop];
-            if ( typeof src !== 'string' || src === '' ) {
-                continue;
-            }
-            if ( src.lastIndexOf('http', 0) !== 0 ) {
-                continue;
-            }
-            requests.push({
-                index: elementIndex,
-                tagName: tagName,
-                url: src
-            });
-            elements[elementIndex] = elem;
-            elementIndex += 1;
+    elems = document.querySelectorAll('img');
+    i = elems.length;
+    while ( i-- ) {
+        elem = elems[i];
+        if ( elem.complete ) {
+            collapser.add(elem);
         }
     }
-    var details = {
-        what: 'filterRequests',
-        pageURL: window.location.href,
-        pageHostname: window.location.hostname,
-        requests: requests
-    };
-    messager.send(details, onAnswerReceived);
+
+    elems = document.querySelectorAll('iframe');
+    i = elems.length;
+    while ( i-- ) {
+        collapser.addIFrame(elems[i]);
+    }
+    collapser.process(0);
 })();
 
 /******************************************************************************/

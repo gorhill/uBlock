@@ -435,60 +435,42 @@ var tagNameToRequestTypeMap = {
 // Evaluate many requests
 
 var filterRequests = function(pageStore, details) {
+    var requests = details.requests;
+    if ( !pageStore || !pageStore.getNetFilteringSwitch() ) {
+        return requests;
+    }
+    if ( µb.userSettings.collapseBlocked === false ) {
+        return requests;
+    }
+
+    //console.debug('messaging.js/contentscript-end.js: processing %d requests', requests.length);
+
     var µburi = µb.URI;
     var isBlockResult = µb.isBlockResult;
 
     // Create evaluation context
-    details.pageHostname = vAPI.punycodeHostname(details.pageHostname);
-    details.pageDomain = µburi.domainFromHostname(details.pageHostname);
-    details.rootHostname = pageStore.rootHostname;
-    details.rootDomain = pageStore.rootDomain;
-    details.requestHostname = '';
-
-    var inRequests = details.requests;
-    var outRequests = [];
-    var request;
-    var i = inRequests.length;
-    while ( i-- ) {
-        request = inRequests[i];
-        if ( tagNameToRequestTypeMap.hasOwnProperty(request.tagName) === false ) {
-            continue;
-        }
-        details.requestURL = vAPI.punycodeURL(request.url);
-        details.requestHostname = µburi.hostnameFromURI(details.requestURL);
-        details.requestType = tagNameToRequestTypeMap[request.tagName];
-        if ( isBlockResult(pageStore.filterRequest(details)) ) {
-            outRequests.push(request);
-        }
-    }
-    return {
-        collapse: µb.userSettings.collapseBlocked,
-        requests: outRequests
+    var context = {
+        pageHostname: vAPI.punycodeHostname(details.pageHostname),
+        pageDomain: µburi.domainFromHostname(details.pageHostname),
+        rootHostname: pageStore.rootHostname,
+        rootDomain: pageStore.rootDomain,
+        requestURL: '',
+        requestHostname: '',
+        requestType: ''
     };
-};
 
-/******************************************************************************/
-
-// Evaluate a single request
-
-var filterRequest = function(pageStore, details) {
-    if ( tagNameToRequestTypeMap.hasOwnProperty(details.tagName) === false ) {
-        return;
+    var request;
+    var i = requests.length;
+    while ( i-- ) {
+        request = requests[i];
+        context.requestURL = vAPI.punycodeURL(request.url);
+        context.requestHostname = µburi.hostnameFromURI(request.url);
+        context.requestType = tagNameToRequestTypeMap[request.tagName];
+        if ( isBlockResult(pageStore.filterRequest(context)) ) {
+            request.collapse = true;
+        }
     }
-    var µburi = µb.URI;
-    details.pageHostname = vAPI.punycodeHostname(details.pageHostname);
-    details.pageDomain = µburi.domainFromHostname(details.pageHostname);
-    details.rootHostname = pageStore.rootHostname;
-    details.rootDomain = pageStore.rootDomain;
-    details.requestURL = vAPI.punycodeURL(details.requestURL);
-    details.requestHostname = µburi.hostnameFromURI(details.requestURL);
-    details.requestType = tagNameToRequestTypeMap[details.tagName];
-    if ( µb.isBlockResult(pageStore.filterRequest(details)) ) {
-        return {
-            collapse: µb.userSettings.collapseBlocked,
-            id: details.id
-        };
-    }
+    return requests;
 };
 
 /******************************************************************************/
@@ -521,20 +503,7 @@ var onMessage = function(details, sender, callback) {
 
         // Evaluate many requests
         case 'filterRequests':
-            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-                response = filterRequests(pageStore, details);
-            }
-            break;
-
-        // Evaluate a single request
-        case 'filterRequest':
-            if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-                // console.log('contentscript-end.js > filterRequest(%o)', details);
-                response = filterRequest(pageStore, details);
-            }
-            if ( response === undefined ) {
-                response = { id: details.id };
-            }
+            response = filterRequests(pageStore, details);
             break;
 
         default:
