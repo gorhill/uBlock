@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Vezérlőpult",
+    "message":"uBlock — Vezérlőpult",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Hálózati lekérések naplója",
+    "message":"uBlock — Hálózati lekérések naplója",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikk: µBlock tiltása\/engedélyezése ezen a webhelyen.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
+    "message":"Klikk: uBlock tiltása\/engedélyezése ezen a webhelyen.\n\nCtrl+klikk: csak a jelenlegi oldal tiltása\/engedélyezése.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -496,7 +496,7 @@
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock megelőzte a következő lap betöltését:",
+    "message":"uBlock nem engedte a következő lap betöltését:",
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -504,15 +504,15 @@
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Menjen vissza",
+    "message":"Vissza",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Zárja be ezt az ablakot",
+    "message":"Ablak bezárása",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Folytassa a saját felelősségére",
+    "message":"Folytatás saját felelősségre",
     "description":"English: Proceed at your own risk"
   },
   "dummy":{

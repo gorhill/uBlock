@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Ingen oppsprettsvinduer på denne siden",
+    "message":"Ingen oppspretts-vinduer for dette nettstedet",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Ingen streng blokkering for denne siden",
+    "message":"Ingen streng blokkering for dette nettstedet",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -500,7 +500,7 @@
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"På grunn av følgende filter",
+    "message":"På grunn av følgende filter:",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{

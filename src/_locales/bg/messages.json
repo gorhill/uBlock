@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Без изскачащи прозорци за този сайт",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Без строго блокиране за този сайт",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -152,7 +152,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Показване броят на блокираните заявки в иконката",
+    "message":"Показване брояч за блокираните заявки в иконката",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -244,11 +244,11 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"По един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
+    "message":"Един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Разбор",
+    "message":"Анализиране",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -268,7 +268,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"По един филтър на ред. Филтър може да бъде обикновен хост или съвместим с Adblock Plus филтър. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
+    "message":"Един филтър на ред. Това може да бъде обикновен хост или съвместим с Adblock Plus филтър. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -488,7 +488,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Показване на дневника за мрежови заявки",
+    "message":"Показване дневник на мрежовите заявки",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
@@ -496,11 +496,11 @@
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "docblockedPrompt1":{
-    "message":"Зареждането на следната страница е предотвратено от uBlock:",
+    "message":"uBlock предотврати зареждането на страницата:",
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Заради следния филтър",
+    "message":"Блокиращ филтър",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
@@ -508,7 +508,7 @@
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Затваряне на този прозорец",
+    "message":"Затваряне на прозореца",
     "description":"English: Close this window"
   },
   "docblockedProceed":{

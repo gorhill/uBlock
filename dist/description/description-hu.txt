@@ -1,8 +1,8 @@
 Egy hatékony blokkoló: kíméletes a processzorral és a memóriával, mégis képes nagyságrendekkel több szűrő betöltésére és alkalmazására a többi népszerű blokkolóhoz viszonyítva.
 
-Szemléltetett áttekintés a hatékonyságáról: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Áttekintés a hatékonyságáról: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Használat: a nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenleg aktív webhelyre érvényes, nem pedig globálisan.
+Használat: A nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenleg aktív webhelyre érvényes, nem pedig globálisan.
 
 ***
 
