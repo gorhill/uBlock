@@ -342,7 +342,8 @@ var tabWatcher = {
             return;
         }
 
-        if ( browser.webNavigation.busyFlags === 0  /*BUSY_FLAGS_NONE*/ ) {
+        if ( browser.webNavigation.busyFlags === 0 || /*BUSY_FLAGS_NONE*/ 
+             browser.webNavigation.busyFlags === undefined) {
             vAPI.tabs.onNavigation({
                 frameId: 0,
                 tabId: tabId,
