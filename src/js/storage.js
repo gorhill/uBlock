@@ -91,6 +91,26 @@
 
 /******************************************************************************/
 
+// This will remove all unused filter list entries from
+// µBlock.remoteBlacklists`. This helps reduce the size of backup files.
+
+µBlock.extractSelectedFilterLists = function() {
+    var r = JSON.parse(JSON.stringify(this.remoteBlacklists));
+
+    for ( var path in r ) {
+        if ( r.hasOwnProperty(path) === false ) {
+            continue;
+        }
+        if ( r[path].off !== false ) {
+            delete r[path];
+        }
+    }
+
+    return r;
+};
+
+/******************************************************************************/
+
 µBlock.saveUserFilters = function(content, callback) {
     return this.assets.put(this.userFiltersPath, content, callback);
 };

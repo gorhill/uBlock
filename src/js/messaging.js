@@ -980,7 +980,7 @@ var backupUserData = function(callback) {
             timeStamp: Date.now(),
             version: vAPI.app.version,
             userSettings: µb.userSettings,
-            filterLists: µb.remoteBlacklists,
+            filterLists: µb.extractSelectedFilterLists(),
             netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
             dynamicFilteringString: µb.permanentFirewall.toString(),
             hostnameSwitchesString: µb.hnSwitches.toString(),
