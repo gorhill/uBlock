@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Tiến hành với rủi ro thuộc về bạn",
-    "description":"English: Proceed at your own risk"
+    "message":"Vô hiệu chặn nghiêm ngặt cho {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Tạm thời",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Vĩnh viễn",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Đây là mục cuối",

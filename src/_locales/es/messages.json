@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceder, deseo arriesgarme",
-    "description":"English: Proceed at your own risk"
+    "message":"Deshabilitar bloqueo estricto para  {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporalmente",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanentemente",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Esta entrada debe ser la última",

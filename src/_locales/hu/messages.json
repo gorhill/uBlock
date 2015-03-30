@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"blokkolt kérések",
+    "message":"blokkolt lekérések",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Naplózott lekéréséek megtekintése",
+    "message":"Naplózott lekérések megtekintése",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -132,7 +132,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net-szürők",
+    "message":"Hálózati szűrők",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -152,7 +152,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Jelenjen meg a blokkolt kérések száma az ikonon",
+    "message":"Jelenjen meg a blokkolt lekérések száma az ikonon",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -164,7 +164,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Kísérleti funkciók engedélyezése",
+    "message":"Kísérleti funkciók engedélyezése (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Információk<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -180,7 +180,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} net-szűrők ＋ {{cosmeticFilterCount}} kozmetikai szűrők:",
+    "message":"{{netFilterCount}} hálózati szűrők ＋ {{cosmeticFilterCount}} kozmetikai szűrők:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -204,11 +204,11 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy weboldal azon elemeit, amelyek vizuálisan zavaróak, de a hálózati lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>µBlock<\/i> memóriahasználatát.<\/p>",
+    "message":"<p>Ez a beállítás engedélyezi az <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-típusú &ldquo;elemelrejtő&rdquo; szűrőket<\/a>. Ezek kizárólag kozmetikai célokat szolgálnak; elrejtik egy webhely azon elemeit, amelyek vizuálisan zavaróak, de a hálózati lekérések alapján nem szűrhetők ki.<\/p><p>A beállítás engedélyezése megnöveli a <i>uBlock<\/i> memóriahasználatát.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Blokkolt hosztokat tartalmazó listák",
+    "message":"Blokkolt hostokat tartalmazó listák",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -268,7 +268,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Egy sor egy szűrő. A szűrő lehet egy hosztnév, vagy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
+    "message":"Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -356,7 +356,7 @@
     "description":"English: Apply changes"
   },
   "logNetRequestsPrompt":{
-    "message":"Naplózza a hálózati kéréseket",
+    "message":"Naplózza a hálózati lekéréseket",
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
@@ -364,11 +364,11 @@
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
-    "message":"Blokkolt kérések",
+    "message":"Blokkolt lekérések",
     "description":"English: Blocked requests"
   },
   "logAllowedRequestsHeader":{
-    "message":"Engedélyezett kérések",
+    "message":"Engedélyezett lekérések",
     "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
@@ -388,15 +388,15 @@
     "description":"English: Filter"
   },
   "logBlockedRequestsEmpty":{
-    "message":"Nincs blokkolt kérés ezen a lapon",
+    "message":"Nincs blokkolt lekérés naplózva ezen a lapon",
     "description":"English: No blocked requests logged for this page"
   },
   "logAllowedRequestsEmpty":{
-    "message":"Nincs engedélyezett kérés ezen a lapon",
+    "message":"Nincs engedélyezett lekérés naplózva ezen a lapon",
     "description":"English: No non-blocked requests logged for this page"
   },
   "logBehindTheScene":{
-    "message":"Hálózati forgalom a háttérben",
+    "message":"Hálózati lekérések a háttérben",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -436,11 +436,11 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Kezdj mindent előről...",
+    "message":"Alapértelmezett beállítások visszaállítása...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"A jelenlegi beállítások felülíródnak a mentett adatokkal (mentési idő: {{time}}), utána a µBlock újraindul.\n\nFelülírja a jelenlegi beállításokat a biztonsági mentéssel?",
+    "message":"A jelenlegi beállítások felülíródnak a mentett adatokkal (mentési idő: {{time}}), utána a uBlock újraindul.\n\nFelülírja a jelenlegi beállításokat a biztonsági mentéssel?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Az összes beállítás törlődik, utána a µBlock újraindul.\n\nÁllítsa vissza a gyári beállításokat?",
+    "message":"Az összes beállítás törlődik, utána a uBlock újraindul.\n\nÁllítsa vissza a gyári beállításokat?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Hozzáadja a következő URL-t a saját szűrő listákhoz?\n\nNév: \"{{title}}\"\nURL: \"{{url}}\"",
+    "message":"uBlock: Hozzáadja a következő URL-t a saját szűrő listákhoz?\n\nNév: \"{{title}}\"\nURL: \"{{url}}\"",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Folytatás saját felelősségre",
-    "description":"English: Proceed at your own risk"
+    "message":"Kapcsolja ki a szigorú tiltást a {{hostname}} részére",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Ideiglenesen",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Állandoan",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Ez a bejegyzés utolsó kell hogy legyen",

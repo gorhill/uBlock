@@ -80,7 +80,7 @@
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"禁用对此网站进行严格屏蔽",
+    "message":"不对此网站进行严格屏蔽",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"自担风险进行访问：",
-    "description":"English: Proceed at your own risk"
+    "message":"Disable strict blocking for {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporarily",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanently",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"此条目必须是最后一个",

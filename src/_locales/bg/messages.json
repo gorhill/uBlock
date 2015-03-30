@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Най-накрая, ефективен рекламен блокер. С малки изисквания за процесор и памет.",
+    "message":"Най-накрая, ефективен рекламен блокер с малки изисквания за процесор и памет.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -152,7 +152,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Показване брояч за блокираните заявки в иконката",
+    "message":"Показване на брояч в иконката за блокираните заявки",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -244,7 +244,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"Един адрес на ред. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
+    "message":"Един адрес на ред. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -268,7 +268,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Един филтър на ред. Това може да бъде обикновен хост или съвместим с Adblock Plus филтър. Редове с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
+    "message":"Един филтър на ред. Това може да бъде обикновен адрес или съвместим с Adblock Plus филтър. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Вашият списък с хост имена, за които uBlock ще бъде изключен. Едно име на ред. Невалидните хост имена ще бъдат игнорирани.",
+    "message":"Списък на вашите адреси, за които uBlock ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Продължете на свой собствен риск",
-    "description":"English: Proceed at your own risk"
+    "message":"Изключване на строгото блокиране за {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Временно",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Постоянно",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Това поле трябва да бъде последното",

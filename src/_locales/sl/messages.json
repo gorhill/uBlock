@@ -144,7 +144,7 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
+    "message":"Blokiraj element",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"Apply changes",
+    "message":"Uporabi spremembe",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceed at your own risk",
-    "description":"English: Proceed at your own risk"
+    "message":"Disable strict blocking for {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporarily",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanently",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"This entry must be the last one",

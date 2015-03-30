@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Kontrol paneli",
+    "message":"uBlock — Kontrol paneli",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Ağ istek günlüğü",
+    "message":"uBlock — Ağ istek günlüğü",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Bu site için açılır pencere yok",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Bu site için sıkı engelleme yok",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Riski göze alarak devam et",
-    "description":"English: Proceed at your own risk"
+    "message":"{{hostname}} için sıkı engellemeyi devre dışı bırak",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Geçici olarak",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Kalıcı olarak",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Bu giriş sonuncusu olmalıdır",

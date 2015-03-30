@@ -26,7 +26,7 @@ Egyéb listák is kiválaszthatók a felhasználó igénye szerint:
 
 Természetesen, több szűrő használatával a memóriaigény is növekszik. Ennek ellenére Fanboy két extra listája és a hpHosts (reklám és követőszerverek) lista hozzáadásával a uBlock memóriafogyasztása még mindig alacsonyabb, mint a legnépszerűbb blokkolóké.
 
-Emellett, néhány extra lista kiválasztásával megnövekszik az esély arra, hogy a weboldalak használhatatlanná válnak -- főleg azon listákról van szó, melyek normál esetben hosts fájlként használatosak.
+Emellett, néhány extra lista kiválasztásával megnövekszik az esély arra, hogy a webhelyek használhatatlanná válnak -- főleg azon listákról van szó, melyek normál esetben hosts fájlként használatosak.
 
 ***
 

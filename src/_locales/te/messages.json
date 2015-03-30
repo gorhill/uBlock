@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"ఈ వెబ్సైట్ లో పాప్అప్స్ రావు",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"ఈ వెబ్సైట్లో అన్ని ఖచ్చితంగా నిరోధించబడవు",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"హెచ్చరిక: మీ సొంత బాధ్యతతో ముందుకు వెళ్ళండి",
-    "description":"English: Proceed at your own risk"
+    "message":"{{hostname}} లొ నిరోధకాన్ని ఖచ్చితంగా అమలు చెయ్యొద్దు",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"తాత్కాలికంగా",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"శాశ్వతంగా",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"ఇది అంతిమంగా వుండాల్సిన నమోదు",

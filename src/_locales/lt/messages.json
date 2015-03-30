@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"Be iškylančiųjų langų šiame puslapyje",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"Be griežto blokavimo šiame puslapyje",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Tęsti savo paties rizika",
-    "description":"English: Proceed at your own risk"
+    "message":"Išjungti griežtą {{hostname}} blokavimą",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Laikinai",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Negrįžtamai",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"This entry must be the last one",

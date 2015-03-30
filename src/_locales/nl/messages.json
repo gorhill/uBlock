@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Doorgaan op eigen risico",
-    "description":"English: Proceed at your own risk"
+    "message":"Zet strikte blokkering uit voor {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Tijdelijk",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanent",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"This entry must be the last one",

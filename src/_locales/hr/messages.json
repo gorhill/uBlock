@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Nastavite na vlastiti rizik",
-    "description":"English: Proceed at your own risk"
+    "message":"Isključi strogo blokiranje za {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Privremeno",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Trajno",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"This entry must be the last one",

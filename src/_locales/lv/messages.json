@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} no {{percent}}%",
+    "message":"{{count}} vai {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Turpināt uz savu risku",
-    "description":"English: Proceed at your own risk"
+    "message":"Atslēgt satura bloķēšanu saitnei {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Pagaidu",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Paliekoši",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Šim ierakstam ir jābūt pēdējam",

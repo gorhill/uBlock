@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"המשך על אחריותך בלבד",
-    "description":"English: Proceed at your own risk"
+    "message":"בטל חסימה נוקשה עבור {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"זמנית",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"לצמיתות",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"ערך זה חייב להיות האחרון",

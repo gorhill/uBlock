@@ -112,7 +112,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"النطاقات المتصلة",
+    "message":"النطاقات متصلة",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p> هذا الخيار يمكن من تحليل و تطبيق <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">  فلاتر<\/a> &ldquo;إخفاء العناصر&rdquo; المتوافقة مع Adblock Plus. هذه الفلاتر هي تجميلية أساسا، وظيفتها إخفاء العناصر في صفحة الويب التي تعبر مصدر إزعاج بصري، و التي لا يمكن حجبها بإستعمال محرك الفلاتر المبني على طلبات الشبكة. <\/p><p>  تفعيل هذه الخاصية يزيد من  أثر  <i>µBlock<\/i> على الذاكرة.<\/p>",
+    "message":"هذا الخيار يفعل تحليل وتطبيق فلاتر <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a> هذي الفلاتر مخصصه للتجميل الصفحه. هذي الفلاتر تخفي بعض صناديق او اعلانات المزعجه التي لا يمنعها محرك الفلاتر تفعيل هذي الخاصيه سوف يجعل الاضافه تستعمل الذاكره اكثر",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"واصل على مسؤوليتك الخاصة",
-    "description":"English: Proceed at your own risk"
+    "message":"تعطيل الحجب الصارم على {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"مؤقتا",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"بشكل دائم",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"يجب أن يكون هذا الإدخال آخر واحد",

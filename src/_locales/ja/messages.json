@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceed at your own risk",
-    "description":"English: Proceed at your own risk"
+    "message":"Disable strict blocking for {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporarily",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanently",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"これは最後のエントリである必要があります",

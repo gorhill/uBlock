@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"این سایت پاپ آپی ندارد",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"چیزی برای بلاک کردن در این سایت وجود ندارد",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -496,24 +496,32 @@
     "description":"Firefox-specific: appears as 'uBlock (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock has prevented the following page from loading:",
+    "message":"ublock از بارگذاری این صفحات جلوگیری کرده:",
     "description":"English: uBlock has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"بخاطر فیلتر زیر",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"بازگشت به عقب",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"بستن این پنجره",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Proceed at your own risk",
-    "description":"English: Proceed at your own risk"
+    "message":"غیر فعال کردن بلاک برای  {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporarily",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanently",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"این باید آخرین مطلب باشد",

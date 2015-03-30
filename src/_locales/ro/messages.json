@@ -512,8 +512,16 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Continuă pe propriul risc",
-    "description":"English: Proceed at your own risk"
+    "message":"Dezactivează blocarea strictă pentru {{hostname}}",
+    "description":"English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary":{
+    "message":"Temporar",
+    "description":"English: Temporarily"
+  },
+  "docblockedDisablePermanent":{
+    "message":"Permanent",
+    "description":"English: Permanently"
   },
   "dummy":{
     "message":"Aceasta intrare trebuie sa fie ultima",
