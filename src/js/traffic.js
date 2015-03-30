@@ -219,6 +219,11 @@ var onBeforeRootFrameRequest = function(details) {
     // Filtering
     if ( result === '' && µb.getNetFilteringSwitch(requestURL) ) {
         result = µb.staticNetFilteringEngine.matchString(context);
+        // https://github.com/gorhill/uBlock/issues/1128
+        // Do not block if the match begins after the hostname.
+        if ( result !== '' ) {
+            result = toBlockDocResult(requestURL, requestHostname, result);
+        }
     }
 
     // Log
@@ -242,6 +247,60 @@ var onBeforeRootFrameRequest = function(details) {
     vAPI.tabs.replace(details.tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
     return { cancel: true };
+};
+
+/******************************************************************************/
+
+var toBlockDocResult = function(url, hostname, result) {
+    if ( result.charAt(1) !== 'b' ) {
+        return '';
+    }
+
+    // Quick test: if the result starts with `|` or `||`, then this means the
+    // match is before the path part of the URL for sure.
+    // Examples: sb:|http:// sb:||example.com^
+    if ( result.charAt(3) === '|' ) {
+        return result;
+    }
+
+    // Make a regex out of the result
+    var reText = result.slice(3);
+    var pos = reText.indexOf('$');
+    if ( pos > 0 ) {
+        reText = reText.slice(0, pos);
+    }
+
+    // Matches whole URL
+    if ( reText === '*' ) {
+        return result;
+    }
+
+    // We are going to have to take the long way to find out
+    if ( reText.charAt(0) === '/' && reText.slice(-1) === '/' ) {
+        reText = reText.slice(1, -1);
+    } else {
+        reText = reText
+            .replace(/\./g, '\\.')
+            .replace(/\?/g, '\\?')
+            .replace(/^\|\|/, '')
+            .replace(/\^/g, '.')
+            .replace(/^\|/g, '^')
+            .replace(/\|$/g, '$')
+            .replace(/\*/g, '.*');
+    }
+
+    var re = new RegExp(reText, 'gi');
+    var matches = re.exec(url);
+    if ( matches === null ) {
+        return '';
+    }
+
+    // verify that the match starts before the path
+    if ( matches.index < url.indexOf(hostname) + hostname.length ) {
+        return result;
+    }
+
+    return '';
 };
 
 /******************************************************************************/

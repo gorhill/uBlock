@@ -319,9 +319,6 @@ vAPI.tabs.open = function(details) {
 
 vAPI.tabs.replace = function(tabId, url) {
     var targetURL = url;
-    if ( typeof targetURL !== 'string' || targetURL === '' ) {
-        return;
-    }
 
     // extension pages
     if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
@@ -340,7 +337,6 @@ vAPI.tabs.replace = function(tabId, url) {
         if ( chrome.runtime.lastError ) {
             return;
         }
-        
     });
 };
 

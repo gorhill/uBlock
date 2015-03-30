@@ -96,8 +96,8 @@ var reURLPostHostnameAnchors = /[\/?#]/;
 
 var pageHostnameRegister = '';
 var requestHostnameRegister = '';
-var filterRegister = null;
-var categoryRegister = '';
+//var filterRegister = null;
+//var categoryRegister = '';
 
 /******************************************************************************/
 

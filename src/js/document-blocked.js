@@ -96,6 +96,8 @@ if ( window.history.length > 1 ) {
 uDom('#proceedTemporary').attr('href', details.url).on('click', proceedTemporary);
 uDom('#proceedPermanent').attr('href', details.url).on('click', proceedPermanent);
 
+/******************************************************************************/
+
 })();
 
 /******************************************************************************/

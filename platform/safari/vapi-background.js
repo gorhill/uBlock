@@ -377,6 +377,24 @@
 
     /******************************************************************************/
 
+    // Replace the URL of a tab. Noop if the tab does not exist.
+
+    vAPI.tabs.replace = function(tabId, url) {
+        var targetURL = url;
+
+        // extension pages
+        if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+            targetURL = vAPI.getURL(targetURL);
+        }
+
+        var tab = this.stack[tabId];
+        if ( tab ) {
+            tab.url = targetURL;
+        }
+    };
+
+    /******************************************************************************/
+
     vAPI.tabs.remove = function(tabIds) {
         if(tabIds instanceof SafariBrowserTab) {
             tabIds = this.getTabId(tabIds);
