@@ -235,6 +235,7 @@ var onBeforeRootFrameRequest = function(details) {
     // Blocked
     var query = btoa(JSON.stringify({
         url: requestURL,
+        hn: requestHostname,
         why: result
     }));
 

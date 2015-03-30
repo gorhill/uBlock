@@ -13,13 +13,10 @@ body > div {
     margin: 1.5em 0;
     }
 body > div > p {
-    margin: 2px 0;
+    margin: 4px 0;
     }
 body > div > p:first-child {
     margin: 1.5em 0 0 0;
-    }
-body > div > p:last-child {
-    margin: 0 0 1.5em 0;
     }
 .code {
     background-color: rgba(0, 0, 0, 0.1);
@@ -30,7 +27,7 @@ body > div > p:last-child {
     }
 button {
     cursor: pointer;
-    margin: 0 1em;
+    margin: 0 1em 0.25em 1em;
     padding: 0.25em 0.5em;
     font-size: inherit;
     }
@@ -66,8 +63,13 @@ button {
     </div>
 
 <div>
-    <p data-i18n="docblockedProceed"></p>
-    <p><a id="yolo" class="what" href></a></p>
+    <p id="proceed"></p>
+    <p><button id="proceedTemporary" data-i18n="docblockedDisableTemporary" type="button"></button>
+    <button id="proceedPermanent" data-i18n="docblockedDisablePermanent" type="button"></button></p>
+    </div>
+
+<div style="display: none;">
+    <span id="proceedTemplate"><span></span><span class="code"></span><span></span></span>
     </div>
 
 <script src="js/vapi-common.js"></script>

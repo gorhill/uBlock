@@ -30,27 +30,55 @@
 /******************************************************************************/
 
 var messager = vAPI.messaging.channel('document-blocked.js');
+var details = {};
 
-var matches = /details=([^&]+)/.exec(window.location.search);
-if ( matches === null ) {
-    return;
-}
-var details = JSON.parse(atob(matches[1]));
+(function() {
+    var matches = /details=([^&]+)/.exec(window.location.search);
+    if ( matches === null ) {
+        return;
+    }
+    details = JSON.parse(atob(matches[1]));
+})();
 
 /******************************************************************************/
 
-var yolo = function(ev) {
-    var onReady = function() {
-        window.location.replace(details.url);
-    };
+var proceedToURL = function() {
+    window.location.replace(details.url);
+};
 
+/******************************************************************************/
+
+var proceedTemporary = function() {
     messager.send({
         what: 'temporarilyWhitelistDocument',
         url: details.url
-    }, onReady);
-
-    ev.preventDefault();
+    }, proceedToURL);
 };
+
+/******************************************************************************/
+
+var proceedPermanent = function() {
+    messager.send({
+        what: 'toggleHostnameSwitch',
+        name: 'dontBlockDoc',
+        hostname: details.hn,
+        state: true
+    }, proceedToURL);
+};
+
+/******************************************************************************/
+
+(function() {
+    var matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
+    if ( matches === null ) {
+        return;
+    }
+    var proceed = uDom('#proceedTemplate').clone();
+    proceed.descendants('span:nth-of-type(1)').text(matches[1]);
+    proceed.descendants('span:nth-of-type(2)').text(details.hn);
+    proceed.descendants('span:nth-of-type(3)').text(matches[2]);
+    uDom('#proceed').append(proceed);
+})();
 
 /******************************************************************************/
 
@@ -65,8 +93,8 @@ if ( window.history.length > 1 ) {
     uDom('#back').css('display', 'none');
 }
 
-uDom('#yolo').attr('href', details.url)
-             .on('click', yolo);
+uDom('#proceedTemporary').attr('href', details.url).on('click', proceedTemporary);
+uDom('#proceedPermanent').attr('href', details.url).on('click', proceedPermanent);
 
 })();
 
