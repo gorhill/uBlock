@@ -21,13 +21,15 @@
 
 /******************************************************************************/
 
+var locationChangeListener; // Keep alive while frameScript is alive
+
 (function() {
 
 'use strict';
 
 /******************************************************************************/
 
-let {contentObserver} = Components.utils.import(
+let {contentObserver, LocationChangeListener} = Components.utils.import(
     Components.stack.filename.replace('Script', 'Module'),
     null
 );
@@ -53,6 +55,8 @@ let onLoadCompleted = function() {
 };
 
 addMessageListener('ublock-load-completed', onLoadCompleted);
+
+locationChangeListener = new LocationChangeListener(docShell);
 
 /******************************************************************************/
 
