@@ -115,6 +115,8 @@ You can install the latest version [manually](https://github.com/gorhill/uBlock/
 
 Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or you can install by downloading the latest [uBlock.firefox.xpi](https://github.com/gorhill/uBlock/releases) file, and by dragging the downloaded `xpi` file to your add-on page.
 
+<sup>**Note:** When a new version is submitted at _Mozilla Add-ons_ (AMO), it takes **weeks** for that submission to be reviewed and cleared. Any new submission would cancel the pending one, and the new one would be placed at the end of the reviewing queue. So that the version on AMO is way behind the latest release here is completely out of control of the developers.</sup>
+
 #### Safari
 
 Install the latest uBlock for Safari [from its homepage](https://chrismatic.io/ublock/), or a potentially-outdated version from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
