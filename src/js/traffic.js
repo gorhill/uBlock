@@ -176,6 +176,8 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
+    var requestURL = details.url;
+
     mostRecentRootDocURL = requestURL;
     mostRecentRootDocURLTimestamp = Date.now();
 
@@ -184,7 +186,6 @@ var onBeforeRootFrameRequest = function(details) {
     // This must be executed regardless of whether the request is
     // behind-the-scene
     var µb = µBlock;
-    var requestURL = details.url;
     var requestHostname = details.hostname;
     var requestDomain = µb.URI.domainFromHostname(requestHostname);
     var context = {
