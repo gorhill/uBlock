@@ -384,8 +384,8 @@ NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.lookup = function(url) {
-    return this.urls[url];
+NetFilteringResultCache.prototype.lookup = function(context) {
+    return this.urls[context.requestType + ' ' + context.requestURL];
 };
 
 /******************************************************************************/
@@ -645,7 +645,7 @@ PageStore.prototype.filterRequest = function(context) {
         return '';
     }
 
-    var entry = this.netFilteringCache.lookup(context.requestURL);
+    var entry = this.netFilteringCache.lookup(context);
     if ( entry !== undefined ) {
         //console.debug('cache HIT: PageStore.filterRequest("%s")', context.requestURL);
         return entry.result;
