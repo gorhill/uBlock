@@ -512,15 +512,15 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"Keela karm blokeerimine {{hostname}} jaoks",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Ajutiselt",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Püsivalt",
     "description":"English: Permanently"
   },
   "dummy":{

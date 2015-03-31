@@ -20,11 +20,11 @@
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"自訂過濾",
+    "message":"自訂過濾規則",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"自訂規則",
+    "message":"自訂動態過濾規則",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — 網路請求日誌",
+    "message":"uBlock — 網路連線請求日誌",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -48,7 +48,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"本頁",
+    "message":"在此頁面上",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -60,11 +60,11 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"或",
+    "message":"個或",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"按一下打開控制台",
+    "message":"點一下開啟控制台",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,15 +72,15 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"查看請求日誌",
+    "message":"查看連線請求日誌",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No popups for this site",
+    "message":"此網站並無彈出式視窗",
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"No strict blocking for this site",
+    "message":"此網站並無嚴謹的阻擋",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{
@@ -112,7 +112,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"域名已連結",
+    "message":"已連結的域名",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -132,7 +132,7 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"網址過濾",
+    "message":"網址過濾規則",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
@@ -164,7 +164,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"啟用實驗性功能",
+    "message":"啟用實驗性質的功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>關於<\/a>）",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -188,7 +188,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"自動更新過濾規則",
+    "message":"自動更新過濾規則列表",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -260,7 +260,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"過時的",
+    "message":"已過期",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -296,7 +296,7 @@
     "description":"header"
   },
   "rulesRevert":{
-    "message":"回復",
+    "message":"還原",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
@@ -400,7 +400,7 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"過濾日誌規則",
+    "message":"過濾日誌項目",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
@@ -512,15 +512,15 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"關閉針對 {{hostname}} 的嚴謹阻擋",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"暫時地",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"永久地",
     "description":"English: Permanently"
   },
   "dummy":{

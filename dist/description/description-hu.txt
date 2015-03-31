@@ -2,7 +2,7 @@ Egy hatékony blokkoló: kíméletes a processzorral és a memóriával, mégis 
 
 Áttekintés a hatékonyságáról: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Használat: A nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenleg aktív webhelyre érvényes, nem pedig globálisan.
+Használat: A nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenlegi webhelyre érvényes, nem egy globális kapcsoló.
 
 ***
 
@@ -13,7 +13,7 @@ Alapértelmezetten a következő szűrőlisták kerülnek betöltésre és alkal
 - EasyList
 - Peter Lowe hirdetési szerverlistája
 - EasyPrivacy
-- Kártékony domének
+- Kártékony domainek
 
 Egyéb listák is kiválaszthatók a felhasználó igénye szerint:
 
@@ -43,7 +43,7 @@ Közreműködők a Crowdin-en: https://crowdin.net/project/ublock
 
 ***
 
-A kiegészítő még gyerekcipőben jár, amit illik szem előtt tartani vélemény nyilvánításakor.
+Ez még egy elég korai verzió, amit illik szem előtt tartani értékeléskor.
 
 Változások listája:
 https://github.com/gorhill/uBlock/releases

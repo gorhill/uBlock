@@ -512,7 +512,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Skru av altomspennende blokkering for {{hostname}}",
+    "message":"Slå av streng (fullstendig) blokkering for {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
