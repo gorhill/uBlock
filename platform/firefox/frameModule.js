@@ -323,7 +323,7 @@ const LocationChangeListener = function(docShell) {
             this.docShell.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
         }
     }
-}
+};
 
 LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI(["nsIWebProgressListener", "nsISupportsWeakReference"]);
 

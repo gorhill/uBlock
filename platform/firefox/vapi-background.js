@@ -328,7 +328,6 @@ var tabWatcher = {
 
     onTabSelect: function({target}) {
         vAPI.setIcon(vAPI.tabs.getTabId(target), getOwnerWindow(target));
-        return;
     },
 };
 
@@ -408,7 +407,6 @@ vAPI.tabs.registerListeners = function() {
                 tabContainer = tabBrowser.deck;
             } else if ( tabBrowser.tabContainer ) {
                 tabContainer = tabBrowser.tabContainer;
-                tabBrowser.removeTabsProgressListener(tabWatcher);
             }
 
             tabContainer.removeEventListener('TabClose', tabWatcher.onTabClose);
@@ -1348,7 +1346,7 @@ vAPI.net.registerListeners = function() {
             tabId: tabId,
             url: details.url,
         });
-    }
+    };
 
     vAPI.messaging.globalMessageManager.addMessageListener(
         locationChangedListenerMessageName,
