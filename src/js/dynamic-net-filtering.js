@@ -321,11 +321,7 @@ var is3rdParty = function(srcHostname, desHostname) {
     }
     var srcDomain = domainFromHostname(srcHostname);
     if ( srcDomain === '' ) {
-        if ( srcHostname !== '' ) {
-            srcDomain = srcHostname;
-        } else {
-            srcDomain = desHostname;
-        }
+        srcDomain = srcHostname !== '' ? srcHostname : desHostname;
     }
     if ( desHostname.slice(0 - srcDomain.length) !== srcDomain ) {
         return true;
