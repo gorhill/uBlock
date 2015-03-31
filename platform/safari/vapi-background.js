@@ -240,7 +240,7 @@
     /******************************************************************************/
 
     vAPI.isNoTabId = function(tabId) {
-        return tabId.toString() === '-1';
+        return tabId.toString() === this.noTabId;
     };
 
     vAPI.noTabId = '-1';
