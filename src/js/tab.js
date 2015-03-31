@@ -133,7 +133,11 @@ vAPI.tabs.onPopup = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/323
     // If popup URL is whitelisted, do not block it
-    if ( result === '' && µb.getNetFilteringSwitch(targetURL) ) {
+    if (
+        result === '' &&
+        µb.getNetFilteringSwitch(openerURL) &&
+        µb.getNetFilteringSwitch(targetURL)
+    ) {
         result = µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup');
     }
 
