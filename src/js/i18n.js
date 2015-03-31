@@ -52,7 +52,7 @@ uDom('[placeholder]').forEach(function(elem) {
 uDom('[data-i18n-tip]').forEach(function(elem) {
     elem.attr(
         'data-tip',
-        vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '')
+        vAPI.i18n(elem.attr('data-i18n-tip')).replace(/<br>/g, '\n').replace(/\n{3,}/g, '\n\n')
     );
 });
 

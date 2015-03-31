@@ -1,16 +1,16 @@
 @font-face {
     font-family: 'FontAwesome';
-    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
     }
 .fa {
+    display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     vertical-align: baseline;
-    display: inline-block;
     }
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
@@ -23,27 +23,29 @@ body:not(.advancedUser) [data-tip]:after {
     border: 1px solid gray;
     border-radius: 3px;
     box-shadow: 1px 1px 3px gray;
+    box-sizing: border-box;
     color: black;
     content: attr(data-tip);
-    display: none;
     font: 12px sans-serif;
-    left: 0;
+    left: 0.5em;
     line-height: 130%;
-    min-width: 55%;
+    opacity: 0;
     padding: 4px 6px;
-    position: absolute;
+    pointer-events: none;
+    position: fixed;
+    right: 0.5em;
     text-align: left;
     top: 110%;
+    visibility: hidden;
     white-space: pre-line;
     z-index: 20;
-    pointer-events: none;
-    opacity: 0;
     }
 body [data-tip]:hover:after {
-    display: initial;
-    opacity: 1 !important;
-    -webkit-transition: opacity 0.2s 0.4s;
-    transition: opacity 0.2s 0.4s;
+    opacity: 1;
+    position: absolute;
+    transition: visibility 0s 0.6s, opacity 0.2s 0.7s;
+    -webkit-transition: visibility 0s 0.6s, opacity 0.2s 0.7s;
+    visibility: visible;
     }
 body[dir=rtl] [data-tip]:hover:after {
     text-align: right;
@@ -51,22 +53,23 @@ body[dir=rtl] [data-tip]:hover:after {
 
 body [data-tip][data-tip-anchor="top"]:hover:after {
     bottom: 140%;
+    left: initial;
     top: auto;
+    width: 8.5em;
     }
 body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
-    left: -500%;
     right: 0;
     }
 body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
-    right: -500%;
     }
 
 body [data-tip][data-tip-anchor="topcenter"]:hover:after {
     bottom: 140%;
     left: -225%;
-    right: -225%;
+    right: initial;
     top: auto;
+    width: 8.5em;
     }
 
 .hiddenFileInput {
