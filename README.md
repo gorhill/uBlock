@@ -32,6 +32,7 @@ uBlock</a>
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
+  * [General Info](#general-info)
   * [Chrome](#chromium)
   * [Firefox](#firefox)
   * [Safari](#safari)
@@ -45,10 +46,6 @@ uBlock is not an *ad blocker*; it's a general-purpose blocker. uBlock blocks ads
 That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
 
 Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **uBlock's main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/chrisaljoudi/uMatrix)).
-
-_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
-
-Once you install uBlock, you may easily un-select any of the pre-selected filter lists if you think uBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
 
 ## Documentation
 
@@ -105,6 +102,14 @@ Being lean and efficient doesn't mean blocking less<br>
 
 ## Installation
 
+#### General info
+
+_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
+
+Once you install uBlock, you can easily un-select any of the pre-selected filter lists if you think uBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
+
+**To benefit from uBlock's higher efficiency,** it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock will do [as well or better](#blocking) than most popular ad blockers.
+
 Feel free to read [about the extension's required permissions](https://github.com/chrisaljoudi/uBlock/wiki/About-the-required-permissions).
 
 #### Chromium
@@ -122,10 +127,6 @@ Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox
 Install the latest uBlock for Safari [from its homepage](https://chrismatic.io/ublock/), or a potentially-outdated version from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.chrisaljoudi.uBlock-96G4BAKDQ9).
 
 <sup>Safari 6.1 and later (developed on Safari 8/Yosemite; tested on 6.1/Mountain Lion and 7/Mavericks).</sup>
-
-#### Note for all browsers
-
-To benefit from uBlock's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock will do [as well or better](#blocking) than most popular ad blockers.
 
 ## Release History
 
