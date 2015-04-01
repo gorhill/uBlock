@@ -1,12 +1,10 @@
-<h1 align="center">
 <a href = "https://chrismatic.io/ublock/">
 <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/icon64@2x.png"
       height="64"
       width="64">
 </a>
-</h1>
 
-##### [**uBlock**](https://chrismatic.io/ublock/): an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
+[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
 
 * [What is uBlock?](#what-is-ublock)
 * [Installation](#installation)
