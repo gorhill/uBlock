@@ -1,10 +1,10 @@
 <h1 align="center">
-<sub>
+<a href="https://chrismatic.io/ublock/" target="_blank"><sub>
 <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/icon38@2x.png"
       height="38"
       width="38">
 </sub>
-uBlock
+uBlock</a>
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
