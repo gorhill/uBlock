@@ -6,7 +6,7 @@
 </a>
 </h1>
 
-**uBlock:** an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
+[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
 
 * [What is uBlock?](#what-is-ublock)
 * [Documentation](#documentation)
