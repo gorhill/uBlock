@@ -8,7 +8,7 @@ uBlock</a>
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
-      pronounced <i>you-block</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
+      <i>you</i> decide what enters your browser.
 </sup>
 <br>
 <sup> <!-- Languages -->
@@ -22,9 +22,9 @@ uBlock</a>
 </p>
 
 
-**An efficient blocker add-on for various browsers. Fast, potent, and lean.**&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="12">](https://travis-ci.org/chrisaljoudi/uBlock)
+**An efficient blocker add-on for various browsers. Fast, potent, and lean.**&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
 
-* [Purpose & General Info](#philosophy)
+* [What is uBlock?](#what-is-ublock)
 * [Documentation](#documentation)
 * [Performance and Efficiency](#performance)
   * [Memory](#memory)
@@ -39,13 +39,15 @@ uBlock</a>
 * [Release History](#release-history)
 * [Wiki](https://github.com/chrisaljoudi/uBlock/wiki)
 
-## Philosophy
+## What is uBlock?
 
-uBlock is not an *ad blocker*; it's a general-purpose blocker. uBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock [extends](https://github.com/chrisaljoudi/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
+uBlock is a general-purpose blocker — not an *ad blocker* specifically.
 
-That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
+uBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock [extends](https://github.com/chrisaljoudi/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
-Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **uBlock's main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/chrisaljoudi/uMatrix)).
+That said, it's important to note that blocking ads [is *not* theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
+
+uBlock's main goal is to help users neutralize privacy-invading apparatus — ads being one example.
 
 ## Documentation
 
