@@ -7,7 +7,7 @@
 [**uBlock**](https://chrismatic.io/ublock/): an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
 
 * [What is uBlock?](#what-is-ublock)
-* [Installation](#installation)
+* [Getting Started](#getting-started)
 * [Performance & Benchmarks](#performance)
 * [Release History](#release-history)
 * [Tips](#tips)
@@ -21,7 +21,11 @@ uBlock blocks ads through its support of the [Adblock Plus filter syntax](https:
 
 uBlock's main goal is to help users neutralize privacy-invading apparatus — ads being one example.
 
-## Installation
+## Getting started
+
+[Quick guide for basic usage](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
+
+Installation:
 
 * **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.chrisaljoudi.uBlock-96G4BAKDQ9).
 
@@ -30,9 +34,6 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 * **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual]((https://github.com/chrisaljoudi/uBlock/releases)) installation.
 
  * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is often outdated. This isn't in our control.
-
-[Quick guide for basic usage](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
-
 
 ## Performance
 
