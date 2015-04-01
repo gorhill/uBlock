@@ -32,7 +32,7 @@ uBlock
   * [Blocking](#blocking)
   * [Quick tests](#quick-tests)
 * [Installation](#installation)
-  * [Chromium](#chromium)
+  * [Chrome](#chromium)
   * [Firefox](#firefox)
   * [Safari](#safari)
 * [Release History](#release-history)
@@ -109,7 +109,7 @@ Feel free to read [about the extension's required permissions](https://github.co
 
 #### Chromium
 
-You can install the latest version [manually](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
+You can install the latest version from the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn), from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or [manually](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install).
 
 #### Firefox
 
