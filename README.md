@@ -135,12 +135,13 @@ See the [releases pages](https://github.com/chrisaljoudi/uBlock/releases) for a 
 
 [uBlock's manifesto](MANIFESTO.md).
 
-Free. Open source. For users by users. No donations sought.
+Free. Open source. For users by users.
 
-Without the preset lists of filters, this extension is nothing. So if ever you
-really do want to contribute something, think about the people working hard
-to maintain the filter lists you are using, which were made available to use by
-all for free.
+If uBlock is useful to you, [donations to support development are much appreciated](https://chrismatic.io/ublock/).
+
+uBlock is made useful because of the filter lists it utilizes. We deeply appreciate
+the people working hard to maintain the filter lists we're using,
+which were made available to use by all for free.
 
 You can contribute by helping translate uBlock [on Crowdin](https://crowdin.net/project/ublock).
 
