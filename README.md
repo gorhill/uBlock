@@ -5,12 +5,6 @@
       width="64">
 </a>
 </h1>
-<p align="center">
-<sup> <!-- Pronounciation -->
-      <i>you</i> decide what enters your browser.
-</sup>
-</p>
-
 
 **uBlock:** an efficient blocker add-on for various browsers. Fast, potent, and lean.&nbsp;&nbsp;[<img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" height="16">](https://travis-ci.org/chrisaljoudi/uBlock)
 
