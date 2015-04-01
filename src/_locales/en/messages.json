@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Finally, an efficient blocker. Easy on CPU and memory.",
+    "message":"A fast, potent, and lean blocker. Easy on CPU and memory.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
