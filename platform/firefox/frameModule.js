@@ -293,6 +293,13 @@ const contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
+
+            let messageManager = doc.docShell.getInterface(Ci.nsIContentFrameMessageManager);
+
+            messageManager.sendSyncMessage(locationChangedMessageName, {
+                url: loc.href,
+            });
+
             lss(this.contentBaseURI + 'contentscript-end.js', sandbox);
 
             if ( doc.querySelector('a[href^="abp:"]') ) {
