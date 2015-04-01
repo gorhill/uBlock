@@ -6,7 +6,7 @@
 
 [**uBlock**](https://chrismatic.io/ublock/): an efficient blocker add-on for various browsers. Fast, potent, and lean.
 
-[![Build status](https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master)](https://travis-ci.org/chrisaljoudi/uBlock) [![Support Development](https://chrismatic.io/oncedonate.svg)](https://chrismatic.io/donate) [![Support Development](https://img.shields.io/gratipay/chrisaljoudi.svg)](https://gratipay.com/chrisaljoudi/)
+[![Build status](https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master)](https://travis-ci.org/chrisaljoudi/uBlock) [![Support Development](https://chrismatic.io/oncedonate.svg)](https://chrismatic.io/donate)
 
 
 * [What is uBlock?](#what-is-ublock)
