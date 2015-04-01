@@ -9,7 +9,6 @@
 * [What is uBlock?](#what-is-ublock)
 * [Installation](#installation)
 * [Performance & Benchmarks](#performance)
-* [Documentation](#documentation)
 * [Release History](#release-history)
 * [Tips](#tips)
 * [Wiki](https://github.com/chrisaljoudi/uBlock/wiki)
@@ -24,6 +23,8 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 
 ## Installation
 
+[Quick guide: popup user interface](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
+
 * **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.chrisaljoudi.uBlock-96G4BAKDQ9).
 
 * **Chrome**: available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn), the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install) installation.
@@ -31,15 +32,6 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 * **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual]((https://github.com/chrisaljoudi/uBlock/releases)) installation.
 
  * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is often outdated. This isn't in our control.
-
-
-## Documentation
-
-[Quick guide: popup user interface](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface)
-
-<a href="https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/popup-1.png" /></a>
-
-For advanced usage, read about [dynamic filtering](https://github.com/chrisaljoudi/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [uBlock's wiki](https://github.com/chrisaljoudi/uBlock/wiki).
 
 ## Performance
 
