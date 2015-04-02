@@ -36,9 +36,9 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 
 * **Opera**: available on the [Opera Store](https://addons.opera.com/en-gb/extensions/details/ublock/).
 
-* **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual]((https://github.com/chrisaljoudi/uBlock/releases)) installation.
+* **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/releases) installation.
 
- * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is often outdated. This isn't in our control.
+ * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is currently often outdated. This isn't in our control.
 
 ## Performance
 
