@@ -1325,6 +1325,12 @@ vAPI.net.registerListeners = function() {
     var locationChangedListener = function(e) {
         var details = e.data;
         var browser = e.target;
+        
+        if (details.noRefresh && details.url === browser.currentURI.asciiSpec) { // If the location changed message specified not to refresh, and the URL is the same, no need to do anything
+            //console.debug("nsIWebProgressListener: ignoring onLocationChange: " + details.url);
+            return;
+        }
+
         var tabId = vAPI.tabs.getTabId(browser);
         
         //console.debug("nsIWebProgressListener: onLocationChange: " + details.url + " (" + details.flags + ")");        
