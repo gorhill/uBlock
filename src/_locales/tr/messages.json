@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Sonunda, tarayıcılar için verimli bir reklam engelleyici. CPU ve RAM'i fazla yormaz.",
+    "message":"İşlemci ve belleği tüketmeyen, hızlı, güçlü ve hafif bir reklam engelleyici.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Kontrol paneli",
+    "message":"uBlock — Kontrol Paneli",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -16,11 +16,11 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3. parti süzgeçler",
+    "message":"3. parti filtreler",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"Süzgeçlerim",
+    "message":"Filtrelerim",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Tıklama: µBlock'u bu site için kalıcı olarak devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: µBlock'u sadece bu sayfa için devre dışı bırak.",
+    "message":"Tıklama: uBlock'u bu site için kalıcı olarak devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: uBlock'u sadece bu sayfa için devre dışı bırak.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -96,15 +96,15 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"satır içi scriptleri",
+    "message":"satır içi betikler",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1. parti scriptler",
+    "message":"1. parti betikler",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3. parti scriptler",
+    "message":"3. parti betikler",
     "description":""
   },
   "popup3pFrameRulePrompt":{
@@ -112,7 +112,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"bağlanan adresler",
+    "message":"alan adları bağlandı",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -148,7 +148,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Engellenen reklamların yerlerini gizle",
+    "message":"Engellenen reklamların yer tutucularını gizle",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -156,15 +156,15 @@
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"Bağlam menüsüne µBlock'u ekle",
+    "message":"Uygun olduğunda içerik menüsüne uBlock ekle",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Deneyimli kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekir<\/a>)",
+    "message":"Deneyimli kullanıcıyım.",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Test aşamasındaki özellikleri etkinleştir (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Hakkında<\/a>)",
+    "message":"Deneysel özellikleri etkinleştir (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Hakkında<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
