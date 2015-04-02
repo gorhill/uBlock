@@ -180,7 +180,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} ağ filtresi ＋ {{cosmeticFilterCount}} kozmetik filtre:",
+    "message":"{{netFilterCount}} ağ filtresi ＋ {{cosmeticFilterCount}} kozmetik filtreler:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
