@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öğe gizleme&rdquo; filtrelerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu filtreler aslında kozmetiktir, bir web sayfasında istek-tabanlı filtreleme motoru tarafından engellenemeyecek olan ve görsel keyif amacıyla sayfadaki öğelerin gizlenmesine yardım eder.<\/p><p>Bu özellik etkinleştirildiğinde, <i>µBlock<\/i>'un bellek ayak izi artar.<\/p>",
+    "message":"<p>Bu seçenek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öğe gizleme&rdquo; filtrelerinin<\/a> işlenmesini ve uygulanmasını sağlar. Bu filtreler aslında kozmetiktir, bir web sayfasında istek-tabanlı filtreleme motoru tarafından engellenemeyecek olan ve görsel keyif amacıyla sayfadaki öğelerin gizlenmesine yardım eder.<\/p><p>Bu özellik etkinleştirildiğinde, <i>uBlock<\/i>'un bellek ayak izi artar.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tüm ayarlarınız {{time}} tarihinde yedeklenmiş veriler kullanarak değiştirilecek ve µBlock yeniden başlayacak.  Yedeklenmiş verileriniz kullanılarak mevcut tüm ayarlarınız değiştirilsin mi?",
+    "message":"Tüm ayarlarınız {{time}} tarihinde yedeklenmiş veriler kullanarak değiştirilecek ve uBlock yeniden başlayacak.  Yedeklenmiş verileriniz kullanılarak mevcut tüm ayarlarınız değiştirilsin mi?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Tüm ayarlarınızı silinecek, ve µBlock yeniden başlayacak.\n\nµBlock fabrika ayarlarına döndürülsün mü?",
+    "message":"Tüm ayarlarınızı silinecek, ve uBlock yeniden başlayacak.\n\nuBlock fabrika ayarlarına döndürülsün mü?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
