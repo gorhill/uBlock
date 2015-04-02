@@ -47,4 +47,4 @@ Crowdin de ki destekçiler: https://crowdin.net/project/ublock
 Bu çok erken bir sürüm, inceleme yaparken bunu da göz önünde bulundurun.
 
 Proje değişiklik günlüğü:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases
