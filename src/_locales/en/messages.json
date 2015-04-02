@@ -164,7 +164,7 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Enable experimental features (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
