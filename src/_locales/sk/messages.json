@@ -512,15 +512,15 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"Zakázať prísne blokovanie pre {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Dočasne",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Natrvalo",
     "description":"English: Permanently"
   },
   "dummy":{

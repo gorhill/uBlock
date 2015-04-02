@@ -512,7 +512,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"禁用对 {{hostname}} 进行严格屏蔽",
+    "message":"不对 {{hostname}} 进行严格屏蔽",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

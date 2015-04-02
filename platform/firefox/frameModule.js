@@ -275,7 +275,7 @@ const contentObserver = {
 
         let loc = win.location;
 
-        if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' ) {
+        if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' && loc.protocol !== 'file:' ) {
             if ( loc.protocol === 'chrome:' && loc.host === hostName ) {
                 this.initContentScripts(win);
             }

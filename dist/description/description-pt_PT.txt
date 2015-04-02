@@ -16,7 +16,7 @@ Por predefinição, estas listas de filtros são carregadas e aplicadas:
 - EasyPrivacy
 - Malware domains
 
-Mais listas estão disponíveis para seleccionar se desejar:
+Se quiser, estão disponíveis mais listas para seleção:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file

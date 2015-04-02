@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Spustelėjimas: įjungti\/išjungti uBlock šiam puslapiui.\n\nVald+spustelėjimas: i6jungti uBlock tik šiam puslapiui.",
+    "message":"Spustelėjimas: įjungti\/išjungti uBlock šiam puslapiui.\n\nVald+spustelėjimas: išjungti uBlock tik šiam puslapiui.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{

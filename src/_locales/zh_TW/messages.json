@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} 個（{{percent}}%）",
+    "message":"{{count}} 或 {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -60,7 +60,7 @@
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"個或",
+    "message":"或",
     "description":"English: or"
   },
   "popupTipDashboard":{
@@ -116,7 +116,7 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} 個（全部共 {{total}} 個）",
+    "message":"{{count}} \/ {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{

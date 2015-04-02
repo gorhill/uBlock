@@ -80,7 +80,7 @@
     "description":"English: No popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"ఈ వెబ్సైట్లో అన్ని ఖచ్చితంగా నిరోధించబడవు",
+    "message":"ఈ వెబ్సైట్లో అన్ని ఖచ్చితంగా నిరోధించవద్దు",
     "description":"English: No strict blocking for this site"
   },
   "popupAnyRulePrompt":{

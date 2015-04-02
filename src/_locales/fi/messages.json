@@ -516,11 +516,11 @@
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Tilapäisesti",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Pysyvästi",
     "description":"English: Permanently"
   },
   "dummy":{
