@@ -436,7 +436,7 @@
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Tüm ayarları sıfırla...",
+    "message":"Varsayılan ayarlara sıfırla...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
