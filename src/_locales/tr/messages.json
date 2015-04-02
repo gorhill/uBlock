@@ -268,7 +268,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"Satır başına bir süzgeç. Filtre host adı veya Adblock Plus-uyumlu filtre olabilir. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir.",
+    "message":"Satır başına bir filtre. Filtre host adı veya Adblock Plus-uyumlu filtre olabilir. &lsquo;!&rsquo; ile başlayan satırlar göz ardı edilir.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
