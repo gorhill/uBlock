@@ -316,23 +316,17 @@ Matrix.prototype.clearRegisters = function() {
 /******************************************************************************/
 
 var is3rdParty = function(srcHostname, desHostname) {
-    if ( desHostname === '*' ) {
+    // If at least one is party-less, the relation can't be labelled
+    // "3rd-party"
+    if ( desHostname === '*' || srcHostname === '*' || srcHostname === '' ) {
         return false;
     }
 
-    // This case occurs for matrix rendering
-    if ( srcHostname === '*' ) {
-        return false;
-    }
-    var srcDomain = domainFromHostname(srcHostname);
-
-    // This can very well occurs, for examples:
+    // No domain can very well occurs, for examples:
     // - localhost
     // - file-scheme
     // etc.
-    if ( srcDomain === '' ) {
-        srcDomain = srcHostname !== '' ? srcHostname : desHostname;
-    }
+    var srcDomain = domainFromHostname(srcHostname) || srcHostname;
 
     if ( desHostname.slice(0 - srcDomain.length) !== srcDomain ) {
         return true;
