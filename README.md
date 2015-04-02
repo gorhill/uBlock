@@ -113,8 +113,6 @@ uBlock is made useful because of the filter lists it utilizes. We deeply appreci
 the people working hard to maintain the filter lists we're using,
 which were made available to use by all for free.
 
-You can contribute by helping translate uBlock [on Crowdin](https://crowdin.net/project/ublock).
-
 ## License
 
 [GPLv3](https://github.com/chrisaljoudi/uBlock/blob/master/LICENSE.txt).
