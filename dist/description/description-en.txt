@@ -1,6 +1,6 @@
 An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
 
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Illustrated overview of its efficiency: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
 
