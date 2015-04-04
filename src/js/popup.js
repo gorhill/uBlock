@@ -743,7 +743,7 @@ uDom.onLoad(function () {
     var tabId = null; //If there's no tab ID specified in the query string, it will default to current tab.
 
     // Extract the tab id of the page this popup is for
-    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    var matches = window.location && window.location.search.match(/[\?&]tabId=([^&]+)/);
     if (matches && matches.length === 2) {
         tabId = matches[1];
     }
