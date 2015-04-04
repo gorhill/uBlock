@@ -1326,7 +1326,9 @@ vAPI.net.registerListeners = function() {
         var details = e.data;
         var browser = e.target;
         var tabId = vAPI.tabs.getTabId(browser);
-        
+        if (tabId === vAPI.noTabId) {
+            return; // Do not navigate for behind the scenes
+        }
         //console.debug("nsIWebProgressListener: onLocationChange: " + details.url + " (" + details.flags + ")");        
 
         // LOCATION_CHANGE_SAME_DOCUMENT = "did not load a new document"
