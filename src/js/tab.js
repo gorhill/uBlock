@@ -127,8 +127,8 @@ vAPI.tabs.onPopup = function(details) {
     var result = '';
 
     // Check user switch first
-    if ( µb.hnSwitches.evaluateZ('doBlockAllPopups', openerHostname) ) {
-        result = 'ub:doBlockAllPopups true';
+    if ( µb.hnSwitches.evaluateZ('noPopups', openerHostname) ) {
+        result = 'ub:noPopups true';
     }
 
     // https://github.com/gorhill/uBlock/issues/323
@@ -177,7 +177,7 @@ vAPI.tabs.registerListeners();
 //   rules which will apply only to that scheme.
 
 µb.normalizePageURL = function(tabId, pageURL) {
-    if ( vAPI.isNoTabId(tabId) ) {
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return 'http://behind-the-scene/';
     }
     var uri = this.URI.set(pageURL);
@@ -200,7 +200,9 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, pageURL, context) {
-    this.updateBadgeAsync(tabId);
+    if ( vAPI.isBehindTheSceneTabId(tabId) === false ) {
+        this.updateBadgeAsync(tabId);
+    }
 
     // https://github.com/gorhill/httpswitchboard/issues/303
     // Normalize page URL
@@ -218,6 +220,12 @@ vAPI.tabs.registerListeners();
     // Tab is not bound
     if ( !pageStore ) {
         return this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL, normalURL);
+    }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/1176
+    // Never rebind behind-the-scene scope
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+        return pageStore;
     }
 
     // https://github.com/gorhill/uBlock/issues/516
@@ -300,7 +308,7 @@ var pageStoreJanitor = function() {
     for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
         tabId = tabIds[i];
         // Do not remove behind-the-scene page store
-        if ( vAPI.isNoTabId(tabId) ) {
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             continue;
         }
         checkTab(tabId);

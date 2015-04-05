@@ -488,6 +488,7 @@ PageStore.prototype.init = function(tabId, rawURL, pageURL) {
     this.netFilteringReadTime = 0;
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
+    this.hiddenElementCount = ''; // Empty string means "unknown"
     this.skipLocalMirroring = false;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
@@ -614,8 +615,9 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
     return this.getNetFilteringSwitch() &&
-           (µb.userSettings.advancedUserEnabled &&
-            µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+           µb.hnSwitches.evaluateZ('noCosmeticFiltering', this.rootHostname) !== true &&
+          (µb.userSettings.advancedUserEnabled &&
+           µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
 };
 
 /******************************************************************************/
@@ -623,8 +625,9 @@ PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
 PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
     return this.getNetFilteringSwitch() &&
            this.skipCosmeticFiltering === false &&
-           (µb.userSettings.advancedUserEnabled &&
-            µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+           µb.hnSwitches.evaluateZ('noCosmeticFiltering', this.rootHostname) !== true &&
+          (µb.userSettings.advancedUserEnabled &&
+           µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
 };
 
 /******************************************************************************/

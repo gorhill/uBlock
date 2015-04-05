@@ -76,7 +76,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'reloadTab':
-            if ( vAPI.isNoTabId(request.tabId) === false ) {
+            if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
                 vAPI.tabs.reload(request.tabId);
                 if ( request.select && vAPI.tabs.select ) {
                     vAPI.tabs.select(request.tabId);
@@ -233,8 +233,9 @@ var getStats = function(tabId, tabTitle) {
         r.firewallRules = getFirewallRules(pageStore.pageHostname, r.hostnameDict);
         r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
-        r.doBlockAllPopups = µb.hnSwitches.evaluateZ('doBlockAllPopups', r.pageHostname);
-        r.dontBlockDoc = µb.hnSwitches.evaluateZ('dontBlockDoc', r.pageHostname);
+        r.noPopups = µb.hnSwitches.evaluateZ('noPopups', r.pageHostname);
+        r.noStrictBlocking = µb.hnSwitches.evaluateZ('noStrictBlocking', r.pageHostname);
+        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('noCosmeticFiltering', r.pageHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
@@ -284,9 +285,32 @@ var getTargetTabId = function(tab) {
 
 /******************************************************************************/
 
+var getPopupDataLazy = function(tabId, callback) {
+    var r = {
+        hiddenElementCount: ''
+    };
+    var pageStore = µb.pageStoreFromTabId(tabId);
+
+    if ( !pageStore ) {
+        callback(r);
+        return;
+    }
+
+    µb.getHiddenElementCount(tabId, function() {
+        r.hiddenElementCount = pageStore.hiddenElementCount;
+        callback(r);
+    });
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+        case 'getPopupDataLazy':
+            getPopupDataLazy(request.tabId, callback);
+            return;
+
         case 'getPopupData':
             if ( request.tabId === vAPI.noTabId ) {
                 callback(getStats(vAPI.noTabId, ''));
@@ -514,6 +538,56 @@ var onMessage = function(details, sender, callback) {
 };
 
 vAPI.messaging.listen('contentscript-end.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// cosmetic-*.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    var pageStore;
+    if ( sender && sender.tab ) {
+        pageStore = µb.pageStoreFromTabId(sender.tab.id);
+    }
+
+    switch ( request.what ) {
+        case 'hiddenElementCount':
+            if ( pageStore ) {
+                pageStore.hiddenElementCount = request.count;
+            }
+            break;
+
+        default:
+            return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('cosmetic-*.js', onMessage);
 
 /******************************************************************************/
 

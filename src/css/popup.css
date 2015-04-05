@@ -148,7 +148,14 @@ body.off #switch .fa {
     margin: 0 0.5em;
     position: relative;
     }
-#extraTools > span.on > span {
+#extraTools > span > span.badge {
+    color: #000;
+    bottom: -2px;
+    font: 10px sans-serif;
+    left: 100%;
+    position: absolute;
+    }
+#extraTools > span.on > span:last-of-type {
     color: #e00;
     font-size: 20px;
     left: 0;
@@ -157,7 +164,7 @@ body.off #switch .fa {
     top: 0;
     width: 100%;
     }
-#extraTools > span.on > span:after {
+#extraTools > span.on > span:last-of-type:after {
     content: '\2715';
     }
 
@@ -176,7 +183,7 @@ body.advancedUser #panes.dfEnabled h2:before {
     background-color: #ffe;
     border: 1px solid #eec;
     border-radius: 4px;
-    bottom: 4px;
+    bottom: 0.7em;
     color: #888;
     cursor: pointer;
     display: none;

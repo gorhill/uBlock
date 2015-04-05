@@ -53,6 +53,7 @@ if ( vAPI.contentscriptStartInjected ) {
     return;
 }
 vAPI.contentscriptStartInjected = true;
+vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
 
@@ -91,7 +92,6 @@ var cosmeticFilters = function(details) {
     }
     if ( hide.length !== 0 ) {
         var text = hide.join(',\n');
-        hideElements(text);
         var style = vAPI.specificHideStyle = document.createElement('style');
         // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
@@ -99,7 +99,9 @@ var cosmeticFilters = function(details) {
         var parent = document.head || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
+            vAPI.styles.push(style);
         }
+        hideElements(text);
     }
     vAPI.donthideCosmeticFilters = donthideCosmeticFilters;
     vAPI.hideCosmeticFilters = hideCosmeticFilters;

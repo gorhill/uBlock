@@ -55,6 +55,7 @@ if ( vAPI.contentscriptEndInjected ) {
     return;
 }
 vAPI.contentscriptEndInjected = true;
+vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
 
@@ -326,12 +327,12 @@ var uBlockCollapser = (function() {
         nextRetrieveHandler(response);
     };
 
-    var nextRetrieveHandler = function(selectors) {
+    var nextRetrieveHandler = function(response) {
         //var tStart = timer.now();
         //console.debug('µBlock> contextNodes = %o', contextNodes);
         var hideSelectors = [];
-        if ( selectors && selectors.hide.length ) {
-            processLowGenerics(selectors.hide, hideSelectors);
+        if ( response && response.hide.length ) {
+            processLowGenerics(response.hide, hideSelectors);
         }
         if ( highGenerics ) {
             if ( highGenerics.hideLowCount ) {
@@ -360,14 +361,15 @@ var uBlockCollapser = (function() {
 
     var addStyleTag = function(selectors) {
         var selectorStr = selectors.toString();
-        hideElements(selectorStr);
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
         var parent = document.body || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
+            vAPI.styles.push(style);
         }
+        hideElements(selectorStr);
         messager.send({
             what: 'injectedSelectors',
             type: 'cosmetic',

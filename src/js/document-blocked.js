@@ -60,7 +60,7 @@ var proceedTemporary = function() {
 var proceedPermanent = function() {
     messager.send({
         what: 'toggleHostnameSwitch',
-        name: 'dontBlockDoc',
+        name: 'noStrictBlocking',
         hostname: details.hn,
         state: true
     }, proceedToURL);

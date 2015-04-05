@@ -143,9 +143,11 @@ var hashFromPopupData = function(reset) {
             hasher.push(rule);
         }
     }
+    hasher.sort();
     hasher.push(uDom('body').hasClass('off'));
+    hasher.push(uDom('#noCosmeticFiltering').hasClass('on'));
 
-    var hash = hasher.sort().join('');
+    var hash = hasher.join('');
     if ( reset ) {
         cachedPopupHash = hash;
     }
@@ -430,8 +432,9 @@ var renderPopup = function() {
     renderPrivacyExposure();
 
     // Extra tools
-    uDom('#doBlockAllPopups').toggleClass('on', popupData.doBlockAllPopups === true);
-    uDom('#dontBlockDoc').toggleClass('on', popupData.dontBlockDoc === true);
+    uDom('#noPopups').toggleClass('on', popupData.noPopups === true);
+    uDom('#noStrictBlocking').toggleClass('on', popupData.noStrictBlocking === true);
+    uDom('#noCosmeticFiltering').toggleClass('on', popupData.noCosmeticFiltering === true);
 
     // https://github.com/gorhill/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
@@ -453,6 +456,19 @@ var renderPopup = function() {
     if ( dfPaneVisible ) {
         buildAllFirewallRows();
     }
+};
+
+/******************************************************************************/
+
+var renderPopupLazy = function() {
+    var onDataReady = function(data) {
+        uDom('#noCosmeticFiltering > span.badge').text(data.hiddenElementCount);
+    };
+
+    messager.send({
+        what: 'getPopupDataLazy',
+        tabId: popupData.tabId
+    }, onDataReady);
 };
 
 /******************************************************************************/
@@ -666,8 +682,10 @@ var toggleHostnameSwitch = function() {
         what: 'toggleHostnameSwitch',
         name: switchName,
         hostname: popupData.pageHostname,
-        state: elem.hasClass('on')
+        state: elem.hasClass('on'),
+        tabId: popupData.tabId
     });
+    hashFromPopupData();
 };
 
 /******************************************************************************/
@@ -729,6 +747,7 @@ var getPopupData = function(tabId) {
     var onDataReceived = function(response) {
         cachePopupData(response);
         renderPopup();
+        renderPopupLazy(); // low priority rendering
         hashFromPopupData(true);
         pollForContentChange();
     };

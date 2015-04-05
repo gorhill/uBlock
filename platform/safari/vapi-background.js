@@ -239,7 +239,7 @@
 
     /******************************************************************************/
 
-    vAPI.isNoTabId = function(tabId) {
+    vAPI.isBehindTheSceneTabId = function(tabId) {
         return tabId.toString() === this.noTabId;
     };
 

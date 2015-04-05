@@ -62,7 +62,7 @@ var onBeforeRequest = function(details) {
 
     // Special treatment: behind-the-scene requests
     var tabId = details.tabId;
-    if ( vAPI.isNoTabId(tabId) ) {
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return onBeforeBehindTheSceneRequest(details);
     }
 
@@ -201,8 +201,8 @@ var onBeforeRootFrameRequest = function(details) {
     var result = '';
 
     // Permanently unrestricted?
-    if ( result === '' && µb.hnSwitches.evaluateZ('dontBlockDoc', requestHostname) ) {
-        result = 'ua:dontBlockDoc true';
+    if ( result === '' && µb.hnSwitches.evaluateZ('noStrictBlocking', requestHostname) ) {
+        result = 'ua:noStrictBlocking true';
     }
 
     // Temporarily whitelisted?
@@ -351,7 +351,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
     var tabId = details.tabId;
-    if ( vAPI.isNoTabId(tabId) ) {
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         return;
     }
 

@@ -322,6 +322,25 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     if ( this.hnSwitches.toggleZ(details.name, details.hostname, details.state) ) {
         this.saveHostnameSwitches();
     }
+
+    // Take action if needed
+    if ( details.name === 'noCosmeticFiltering' ) {
+        vAPI.tabs.injectScript(details.tabId, {
+            file: 'js/cosmetic-' + (details.state ? 'off' : 'on') + '.js',
+            allFrames: true
+        });
+        return;
+    }
+
+    // Whatever else
+    // ...
+};
+
+/******************************************************************************/
+
+µBlock.getHiddenElementCount = function(tabId, callback) {
+    callback = callback || this.noopFunc;
+    vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-count.js' }, callback);
 };
 
 /******************************************************************************/

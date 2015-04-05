@@ -37,8 +37,14 @@ var HnSwitches = function() {
 /******************************************************************************/
 
 var switchBitOffsets = {
-        'dontBlockDoc': 0,
-    'doBlockAllPopups': 2
+       'noStrictBlocking': 0,
+               'noPopups': 2,
+    'noCosmeticFiltering': 4
+};
+
+var fromLegacySwitchNames = {
+           'dontBlockDoc': 'noStrictBlocking',
+       'doBlockAllPopups': 'noPopups'
 };
 
 var switchStateToNameMap = {
@@ -253,6 +259,7 @@ HnSwitches.prototype.fromString = function(text) {
             continue;
         }
         switchName = switchName.slice(0, pos);
+        switchName = fromLegacySwitchNames[switchName] || switchName;
         if ( switchBitOffsets.hasOwnProperty(switchName) === false ) {
             continue;
         }
