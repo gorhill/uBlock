@@ -54,12 +54,23 @@ function startup(data, reason) {
     let appShell = Components.classes['@mozilla.org/appshell/appShellService;1']
         .getService(Components.interfaces.nsIAppShellService);
 
-    let onReady = function(e) {
-        if ( e ) {
+    let onReady = function (e) {
+        console.log("uBlock> onReady");
+
+        if (e) {
+            console.log("uBlock> removing event listener " + e.type + " from " + this);
+
             this.removeEventListener(e.type, onReady);
         }
 
         let hiddenDoc = appShell.hiddenDOMWindow.document;
+
+        if (hiddenDoc.readyState === 'loading') {
+            console.log("uBlock> hiddenDOMWindow not ready, waiting");
+            hiddenDoc.addEventListener('DOMContentLoaded', onReady);
+            return;
+        }
+
         bgProcess = hiddenDoc.documentElement.appendChild(
             hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
