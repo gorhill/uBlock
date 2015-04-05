@@ -145,9 +145,9 @@ body.off #switch .fa {
     position: relative;
     }
 #extraTools > span > span.badge {
-    color: #000;
+    color: #666;
     bottom: 0;
-    font: 10px sans-serif;
+    font: 10.5px sans-serif;
     position: absolute;
     }
 body[dir="ltr"] #extraTools > span > span.badge {
