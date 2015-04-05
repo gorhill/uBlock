@@ -62,7 +62,8 @@ var typeNameToTypeValue = {
             'script':  4 << 4,
     'xmlhttprequest':  5 << 4,
          'sub_frame':  6 << 4,
-             'other':  7 << 4,
+              'font':  7 << 4,
+             'other':  8 << 4,
 'cosmetic-filtering': 13 << 4,
      'inline-script': 14 << 4,
              'popup': 15 << 4
@@ -1194,8 +1195,8 @@ FilterParser.prototype.toNormalizedType = {
             'script': 'script',
     'xmlhttprequest': 'xmlhttprequest',
        'subdocument': 'sub_frame',
+              'font': 'font',
              'other': 'other',
-          'document': 'main_frame',
           'elemhide': 'cosmetic-filtering',
      'inline-script': 'inline-script',
              'popup': 'popup'
@@ -1291,14 +1292,6 @@ FilterParser.prototype.parseOptions = function(s) {
             if ( this.action !== AllowAction ) {
                 this.parseOptType('elemhide', false);
                 this.action = BlockAction;
-                continue;
-            }
-            this.unsupported = true;
-            break;
-        }
-        if ( opt === 'document' ) {
-            if ( this.action === BlockAction ) {
-                this.parseOptType('document', false);
                 continue;
             }
             this.unsupported = true;
