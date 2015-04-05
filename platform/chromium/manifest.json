@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock",
-    "version": "0.9.3.0",
+    "version": "0.9.3.1",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -26,13 +26,13 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*", "file:///*"],
+            "matches": ["http://*/*", "https://*/*"],
             "js": ["js/vapi-client.js", "js/contentscript-start.js"],
             "run_at": "document_start",
             "all_frames": true
         },
         {
-            "matches": ["http://*/*", "https://*/*", "file:///*"],
+            "matches": ["http://*/*", "https://*/*"],
             "js": ["js/contentscript-end.js"],
             "run_at": "document_end",
             "all_frames": true
