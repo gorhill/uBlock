@@ -13,13 +13,12 @@
 <a href="dashboard.html" target="_blank" id="gotoPrefs" title="popupTipDashboard"><span id="appname">&nbsp;</span><span id="version">&nbsp;</span></a>
 <div id="panes">
     <div>
-        <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
-        <p id="switch-hint"></p>
+        <p id="switch" data-i18n-tip="popupPowerSwitchInfo" data-tip-position="under"><span class="fa">&#xf011;</span></p>
         <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt">&nbsp;</h2>
         <p class="statName">
             <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>&ensp;
-            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
-            <a href="#" target="_blank" id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</a>
+            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker">&#xf1fb;</span>&ensp;
+            <a href="#" target="_blank" id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog">&#xf06e;</a>
             </p>
         <p class="statValue" id="page-blocked">?</p>
         <p class="statName" data-i18n="popupBlockedSinceInstallPrompt">&nbsp;</p>
@@ -27,12 +26,13 @@
         <h2 data-i18n="popupHitDomainCountPrompt">&nbsp;</h2>
         <p class="statValue" id="popupHitDomainCount">&nbsp;</p>
         <div id="extraTools">
-            <span id="noPopups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups" data-tip-anchor="topcenter">&#xf0c5;<span></span></span>
-            <span id="noStrictBlocking" class="hnSwitch fa" data-i18n-tip="popupTipNoStrictBlocking" data-tip-anchor="topcenter">&#xf071;<span></span></span>
-            <span id="noCosmeticFiltering" class="hnSwitch fa" data-i18n-tip="popupTipNoCosmeticFiltering" data-tip-anchor="topcenter">&#xf070;<span class="badge"></span><span></span></span>
-            </div>
+            <span id="noPopups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups">&#xf0c5;<span></span></span>
+            <span id="noStrictBlocking" class="hnSwitch fa" data-i18n-tip="popupTipNoStrictBlocking">&#xf071;<span></span></span>
+            <span id="noCosmeticFiltering" class="hnSwitch fa" data-i18n-tip="popupTipNoCosmeticFiltering">&#xf070;<span class="badge"></span><span></span></span>
+        </div>
         <div id="refresh" class="fa">&#xf021;</div>
-        </div><!-- DO NOT REMOVE --><div>
+        <div id="tooltip"></div>
+    </div><!-- DO NOT REMOVE --><div>
         <div id="firewallContainer">
             <div><span data-i18n="popupAnyRulePrompt"></span><span data-src="/" data-des="*" data-type="*"> </span><span data-src="." data-des="*" data-type="*"> </span></div>
             <div><span data-i18n="popupImageRulePrompt"></span><span data-src="/" data-des="*" data-type="image"> </span><span data-src="." data-des="*" data-type="image"> </span></div>
@@ -41,15 +41,15 @@
             <div><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="1p-script"> </span><span data-src="." data-des="*" data-type="1p-script"> </span></div>
             <div><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-script"> </span><span data-src="." data-des="*" data-type="3p-script"> </span></div>
             <div><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-frame"> </span><span data-src="." data-des="*" data-type="3p-frame"> </span></div>
-            </div><div id="saveRules" class="fa">&#xf13e;</div>
-        </div>
+        </div><div id="saveRules" class="fa">&#xf13e;</div>
     </div>
+</div>
 
 <div id="templates" style="display: none">
     <div><span></span><span data-src="/" data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span><span data-src="." data-des="" data-type="*"> </span></div>
     <div id="actionSelector"><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
     <div id="hotspotTip"></div>
-    </div>
+</div>
 
 <script src="lib/punycode.js"></script>
 <script src="js/vapi-common.js"></script>

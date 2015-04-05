@@ -462,7 +462,10 @@ var renderPopup = function() {
 
 var renderPopupLazy = function() {
     var onDataReady = function(data) {
-        uDom('#noCosmeticFiltering > span.badge').text(data.hiddenElementCount);
+        var v = data.hiddenElementCount;
+        uDom('#noCosmeticFiltering > span.badge').text(
+            typeof v === 'number' ? v.toLocaleString() : v
+        );
     };
 
     messager.send({
@@ -756,6 +759,39 @@ var getPopupData = function(tabId) {
 
 /******************************************************************************/
 
+var onShowTooltip = function() {
+    if ( popupData.advancedUserEnabled ) {
+        return;
+    }
+
+    var tip = document.getElementById('tooltip');
+    var target = this;
+
+    tip.textContent = target.getAttribute('data-tip');
+    tip.style.removeProperty('top');
+    tip.style.removeProperty('bottom');
+
+    // Default is "over"
+    var pos;
+    var over = target.getAttribute('data-tip-position') !== 'under';
+    if ( over ) {
+        pos = document.body.getBoundingClientRect().height -
+              target.getBoundingClientRect().top;
+        tip.style.setProperty('bottom', pos + 'px');
+    } else {
+        pos = target.getBoundingClientRect().bottom;
+        tip.style.setProperty('top', pos + 'px');
+    }
+
+    uDom(tip).addClass('show');
+};
+
+var onHideTooltip = function() {
+    uDom('#tooltip').removeClass('show');
+};
+
+/******************************************************************************/
+
 // Make menu only when popup html is fully loaded
 
 uDom.onLoad(function () {
@@ -776,6 +812,9 @@ uDom.onLoad(function () {
     uDom('.hnSwitch').on('click', toggleHostnameSwitch);
     uDom('#saveRules').on('click', saveFirewallRules);
     uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
+
+    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+                .on('mouseleave', '[data-tip]', onHideTooltip);
 });
 
 /******************************************************************************/

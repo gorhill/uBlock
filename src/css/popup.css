@@ -103,10 +103,6 @@ p {
 body.off #switch .fa {
     color: #ccc;
     }
-#switch-hint {
-    color: #888;
-    font-size: 11px;
-    }
 #page-blocked {
     font-size: 20px;
     }
@@ -150,10 +146,15 @@ body.off #switch .fa {
     }
 #extraTools > span > span.badge {
     color: #000;
-    bottom: -2px;
+    bottom: 0;
     font: 10px sans-serif;
-    left: 100%;
     position: absolute;
+    }
+body[dir="ltr"] #extraTools > span > span.badge {
+    left: 100%;
+    }
+body[dir="rtl"] #extraTools > span > span.badge {
+    right: 100%;
     }
 #extraTools > span.on > span:last-of-type {
     color: #e00;
@@ -201,6 +202,36 @@ body.dirty #refresh {
 body.dirty #refresh:hover {
     color: black;
     }
+
+#tooltip {
+    background-color: #ffffee;
+    border: 1px solid gray;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px gray;
+    box-sizing: border-box;
+    color: black;
+    cursor: pointer;
+    font: 12px sans-serif;
+    left: 5%;
+    line-height: 130%;
+    margin: 0.5em 0;
+    opacity: 0;
+    padding: 4px 6px;
+    pointer-events: none;
+    position: fixed;
+    text-align: center;
+    visibility: hidden;
+    white-space: pre-line;
+    width: 90%;
+    z-index: 100;
+    }
+#tooltip.show {
+    transition: opacity 0.2s 0.7s;
+    -webkit-transition: opacity 0.2s 0.7s;
+    visibility: visible;
+    opacity: 1;
+    }
+
 
 #firewallContainer {
     border: 0;

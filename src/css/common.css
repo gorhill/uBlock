@@ -13,65 +13,6 @@
     vertical-align: baseline;
     }
 
-/* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
-[data-tip] {
-    cursor: pointer;
-    position: relative;
-    }
-body:not(.advancedUser) [data-tip]:after {
-    background-color: #ffffee;
-    border: 1px solid gray;
-    border-radius: 3px;
-    box-shadow: 1px 1px 3px gray;
-    box-sizing: border-box;
-    color: black;
-    content: attr(data-tip);
-    font: 12px sans-serif;
-    left: 0.5em;
-    line-height: 130%;
-    opacity: 0;
-    padding: 4px 6px;
-    pointer-events: none;
-    position: fixed;
-    right: 0.5em;
-    text-align: left;
-    top: 110%;
-    visibility: hidden;
-    white-space: pre-line;
-    z-index: 20;
-    }
-body [data-tip]:hover:after {
-    opacity: 1;
-    position: absolute;
-    transition: visibility 0s 0.6s, opacity 0.2s 0.7s;
-    -webkit-transition: visibility 0s 0.6s, opacity 0.2s 0.7s;
-    visibility: visible;
-    }
-body[dir=rtl] [data-tip]:hover:after {
-    text-align: right;
-    }
-
-body [data-tip][data-tip-anchor="top"]:hover:after {
-    bottom: 140%;
-    left: initial;
-    top: auto;
-    width: 8.5em;
-    }
-body[dir=ltr] [data-tip][data-tip-anchor="top"]:hover:after {
-    right: 0;
-    }
-body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
-    left: 0;
-    }
-
-body [data-tip][data-tip-anchor="topcenter"]:hover:after {
-    bottom: 140%;
-    left: -225%;
-    right: initial;
-    top: auto;
-    width: 8.5em;
-    }
-
 .hiddenFileInput {
     visibility: hidden;
     width: 0;
