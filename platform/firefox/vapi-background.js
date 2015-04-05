@@ -65,7 +65,7 @@ vAPI.app.restart = function() {
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = 7;
+var expectedNumberOfCleanups = 6; // 7 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
 
 window.addEventListener('unload', function() {
     for ( var cleanup of cleanupTasks ) {
