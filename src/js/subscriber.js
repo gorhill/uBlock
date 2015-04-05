@@ -36,13 +36,13 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
-    //console.debug('contentscript-start.js > not a HTLMDocument');
+    //console.debug('subscriber.js > not a HTLMDocument');
     return;
 }
 
 // Because in case
 if ( !vAPI ) {
-    //console.debug('contentscript-start.js > vAPI not found');
+    //console.debug('subscriber.js > vAPI not found');
     return;
 }
 
