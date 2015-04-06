@@ -187,7 +187,7 @@ var onBeforeRootFrameRequest = function(details) {
     // behind-the-scene
     var µb = µBlock;
     var requestHostname = details.hostname;
-    var requestDomain = µb.URI.domainFromHostname(requestHostname);
+    var requestDomain = µb.URI.domainFromHostname(requestHostname) || requestHostname;
     var context = {
         rootHostname: requestHostname,
         rootDomain: requestDomain,
@@ -206,15 +206,9 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Temporarily whitelisted?
-    var obsolete = documentWhitelists[requestHostname];
-    if ( obsolete !== undefined ) {
-        if ( obsolete > Date.now() ) {
-            if ( result === '' ) {
-                result = 'ta:*' + ' ' + requestHostname + ' doc allow';
-            }
-        } else {
-            delete documentWhitelists[requestHostname];
-        }
+    result = isTemporarilyWhitelisted(result, requestHostname);
+    if ( result.charAt(1) === 'a' ) {
+        return;
     }
 
     // Filtering
@@ -242,6 +236,7 @@ var onBeforeRootFrameRequest = function(details) {
     var query = btoa(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
+        dn: requestDomain,
         why: result
     }));
 
@@ -465,10 +460,33 @@ vAPI.net.registerListeners();
 
 /******************************************************************************/
 
-exports.temporarilyWhitelistDocument = function(url) {
-    var µb = µBlock;
-    var hostname = µb.URI.hostnameFromURI(url);
-    if ( hostname === '' ) {
+var isTemporarilyWhitelisted = function(result, hostname) {
+    var obsolete, pos;
+
+    for (;;) {
+        obsolete = documentWhitelists[hostname];
+        if ( obsolete !== undefined ) {
+            if ( obsolete > Date.now() ) {
+                if ( result === '' ) {
+                    return 'ua:*' + ' ' + hostname + ' doc allow';
+                }
+            } else {
+                delete documentWhitelists[hostname];
+            }
+        }
+        pos = hostname.indexOf('.');
+        if ( pos === -1 ) {
+            break;
+        }
+        hostname = hostname.slice(pos + 1);
+    }
+    return result;
+};
+
+/******************************************************************************/
+
+exports.temporarilyWhitelistDocument = function(hostname) {
+    if ( typeof hostname !== 'string' || hostname === '' ) {
         return;
     }
 
@@ -484,4 +502,3 @@ return exports;
 })();
 
 /******************************************************************************/
-

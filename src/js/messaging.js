@@ -1288,7 +1288,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'temporarilyWhitelistDocument':
-            µBlock.webRequest.temporarilyWhitelistDocument(request.url);
+            µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
             break;
 
         default:

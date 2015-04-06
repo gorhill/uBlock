@@ -42,6 +42,17 @@ var details = {};
 
 /******************************************************************************/
 
+var getTargetHostname = function() {
+    var hostname = details.hn;
+    var elem = document.querySelector('#proceed select');
+    if ( elem !== null ) {
+        hostname = elem.value;
+    }
+    return hostname;
+};
+
+/******************************************************************************/
+
 var proceedToURL = function() {
     window.location.replace(details.url);
 };
@@ -51,7 +62,7 @@ var proceedToURL = function() {
 var proceedTemporary = function() {
     messager.send({
         what: 'temporarilyWhitelistDocument',
-        url: details.url
+        hostname: getTargetHostname()
     }, proceedToURL);
 };
 
@@ -61,7 +72,7 @@ var proceedPermanent = function() {
     messager.send({
         what: 'toggleHostnameSwitch',
         name: 'noStrictBlocking',
-        hostname: details.hn,
+        hostname: getTargetHostname(),
         state: true
     }, proceedToURL);
 };
@@ -75,8 +86,17 @@ var proceedPermanent = function() {
     }
     var proceed = uDom('#proceedTemplate').clone();
     proceed.descendants('span:nth-of-type(1)').text(matches[1]);
-    proceed.descendants('span:nth-of-type(2)').text(details.hn);
-    proceed.descendants('span:nth-of-type(3)').text(matches[2]);
+    proceed.descendants('span:nth-of-type(4)').text(matches[2]);
+
+    if ( details.hn === details.dn ) {
+        proceed.descendants('.hn').text(details.hn);
+        proceed.descendants('span:nth-of-type(2)').remove();
+    } else {
+        proceed.descendants('.hn').text(details.hn).attr('value', details.hn);
+        proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
+        proceed.descendants('span:nth-of-type(3)').remove();
+    }
+
     uDom('#proceed').append(proceed);
 })();
 

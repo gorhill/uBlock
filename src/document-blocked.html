@@ -22,6 +22,8 @@ body > div > p:first-child {
     background-color: rgba(0, 0, 0, 0.1);
     display: inline-block;
     font-family: monospace;
+    font-size: large;
+    line-height: 1;
     padding: 2px 4px;
     word-break: break-all;
     }
@@ -40,6 +42,14 @@ button {
 #warningSign > span {
     color: #f2a500;
     font-size: 180px;
+    }
+.proceedChoice {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    }
+select {
+    direction: rtl;
     }
 </style>
 </head>
@@ -69,7 +79,17 @@ button {
     </div>
 
 <div style="display: none;">
-    <span id="proceedTemplate"><span></span><span class="code"></span><span></span></span>
+    <span id="proceedTemplate">
+        <span></span> 
+        <span class="proceedChoice">
+            <select class="code">
+                <option class="hn" value="" selected>
+                <option class="dn" value="">
+            </select> 
+        </span>
+        <span class="proceedChoice code hn"></span>
+        <span></span>
+    </span>
     </div>
 
 <script src="js/vapi-common.js"></script>
