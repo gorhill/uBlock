@@ -89,12 +89,12 @@ var proceedPermanent = function() {
     proceed.descendants('span:nth-of-type(4)').text(matches[2]);
 
     if ( details.hn === details.dn ) {
-        proceed.descendants('.hn').text(details.hn);
         proceed.descendants('span:nth-of-type(2)').remove();
+        proceed.descendants('.hn').text(details.hn);
     } else {
+        proceed.descendants('span:nth-of-type(3)').remove();
         proceed.descendants('.hn').text(details.hn).attr('value', details.hn);
         proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
-        proceed.descendants('span:nth-of-type(3)').remove();
     }
 
     uDom('#proceed').append(proceed);
