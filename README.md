@@ -8,7 +8,7 @@
       height="38"
       width="38">
 </sub>
-uBlock
+uBlock°
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
