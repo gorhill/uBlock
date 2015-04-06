@@ -54,19 +54,14 @@ function startup(data, reason) {
     let appShell = Components.classes['@mozilla.org/appshell/appShellService;1']
         .getService(Components.interfaces.nsIAppShellService);
 
-    let onReady = function (e) {
-        console.log("uBlock> onReady");
-
-        if (e) {
-            console.log("uBlock> removing event listener " + e.type + " from " + this);
-
+    let onReady = function(e) {
+        if ( e ) {
             this.removeEventListener(e.type, onReady);
         }
 
         let hiddenDoc = appShell.hiddenDOMWindow.document;
 
-        if (hiddenDoc.readyState === 'loading') {
-            console.log("uBlock> hiddenDOMWindow not ready, waiting");
+        if ( hiddenDoc.readyState === 'loading' ) {
             hiddenDoc.addEventListener('DOMContentLoaded', onReady);
             return;
         }
