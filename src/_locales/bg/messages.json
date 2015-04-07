@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Дневник на мрежовите заявки",
+    "message":"uBlock₀ — Дневник на мрежовите заявки",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Добавяне на следния адрес към вашият потребителски списък с филтри?\n\nНаименование: \"{{title}}\"\nURL адрес: {{url}}",
+    "message":"uBlock₀: Добавяне на следния адрес към вашият потребителски списък с филтри?\n\nНаименование: \"{{title}}\"\nURL адрес: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

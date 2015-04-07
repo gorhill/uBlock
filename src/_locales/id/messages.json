@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Catatan Permintaan Jaringan",
+    "message":"uBlock₀ — Catatan Permintaan Jaringan",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Tambahkan URL berikut ke daftar filter kustom Anda ?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Tambahkan URL berikut ke daftar filter kustom Anda ?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

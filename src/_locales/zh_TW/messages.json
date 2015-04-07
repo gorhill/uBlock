@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — 網路連線請求日誌",
+    "message":"uBlock₀ — 網路連線請求日誌",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock：新增下列網址至自定義過濾規則列表？\n\n標題：\"{{title}}\"\n網址：{{url}}",
+    "message":"uBlock₀：新增下列網址至自定義過濾規則列表？\n\n標題：\"{{title}}\"\n網址：{{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

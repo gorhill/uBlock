@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Tauler de control",
+    "message":"uBlock₀ — Tauler de control",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Registre de peticions de xarxa",
+    "message":"uBlock₀ — Registre de peticions de xarxa",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: habilita\/inhabilita l'µBlock per a aquest lloc.\n\nCtrl+clic: inhabilita l'µBlock només en aquesta pàgina.",
+    "message":"Clic: habilita\/inhabilita l'uBlock₀ per a aquest lloc.\n\nCtrl+clic: inhabilita l'uBlock₀ només en aquesta pàgina.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>µBlock<\/i>.<\/p>",
+    "message":"<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;<\/a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.<\/p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>uBlock₀<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Llistat dels noms de servidor amb que s'inhabilitarà l'µBlock. Una entrada per línia. S'ignoraran els noms de servidor no vàlid.",
+    "message":"Llistat dels noms de servidor amb que s'inhabilitarà l'uBlock₀. Una entrada per línia. S'ignoraran els noms de servidor no vàlid.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"La configuració es sobreescriurà amb la còpia de seguretat del {{time}}, i es reiniciarà l'µBlock.\n\nVoleu restaurar la configuració amb la còpia de seguretat?",
+    "message":"La configuració es sobreescriurà amb la còpia de seguretat del {{time}}, i es reiniciarà l'uBlock₀.\n\nVoleu restaurar la configuració amb la còpia de seguretat?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"La configuració serà suprimida i es reiniciarà l'µBlock.\n\nVoleu reiniciar l'µBlock als valors per defecte?",
+    "message":"La configuració serà suprimida i es reiniciarà l'uBlock₀.\n\nVoleu reiniciar l'uBlock₀ als valors per defecte?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Voleu afegir aquest enllaç a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Voleu afegir aquest enllaç a la llista de filtres personalitzats?\n\nTítol: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

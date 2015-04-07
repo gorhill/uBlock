@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Instrumentbräda",
+    "message":"uBlock₀ — Instrumentbräda",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Logg för nätverksbegäranden",
+    "message":"uBlock₀ — Logg för nätverksbegäranden",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klick: avaktivera\/aktivera µBlock för denna hemsida permanent.\n\nCtrl+klick: avaktivera µBlock endast för denna sida.",
+    "message":"Klick: avaktivera\/aktivera uBlock₀ för denna hemsida permanent.\n\nCtrl+klick: avaktivera uBlock₀ endast för denna sida.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;<\/a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.<\/p><p>Genom att aktivera denna funktion ökar <i>µBlocks<\/i> minnesanvändning.<\/p>",
+    "message":"<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;<\/a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.<\/p><p>Genom att aktivera denna funktion ökar <i>uBlock₀s<\/i> minnesanvändning.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -360,7 +360,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Om du vill kan du inspektera detaljer över blockerade förfrågningar genom att aktivera detta alternativ. Loggning av nätverksförfrågningar ökar µBlocks minnesanvändning. Eftersom de flesta användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
+    "message":"Om du vill kan du inspektera detaljer över blockerade förfrågningar genom att aktivera detta alternativ. Loggning av nätverksförfrågningar ökar uBlock₀s minnesanvändning. Eftersom de flesta användare aldrig kommer att använda denna funktion är den inaktiverad som standard.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alla dina inställningar kommer överskrivas med data som säkerhetskopierats den {{time}} och µBlock kommer startas om.\n\nVill du skriva över befintliga inställningar med säkerhetskopierade data?",
+    "message":"Alla dina inställningar kommer överskrivas med data som säkerhetskopierats den {{time}} och uBlock₀ kommer startas om.\n\nVill du skriva över befintliga inställningar med säkerhetskopierade data?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alla dina inställningar kommer att raderas, och µBlock kommer att startas om.\n\nÅterställ µBlock till fabriksinställningar?",
+    "message":"Alla dina inställningar kommer att raderas, och uBlock₀ kommer att startas om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Lägg till den följande URLen till din skräddarsydda filter lista?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Lägg till den följande URLen till din skräddarsydda filter lista?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

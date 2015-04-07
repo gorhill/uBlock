@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock 控制面板",
+    "message":"uBlock₀ 控制面板",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock 网络请求日志",
+    "message":"uBlock₀ 网络请求日志",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
+    "message":"uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

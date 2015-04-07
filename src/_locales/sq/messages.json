@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Pulti i programit",
+    "message":"uBlock₀ — Pulti i programit",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Kërkesat e rrjetit",
+    "message":"uBlock₀ — Kërkesat e rrjetit",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikoj: µBlock bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: µBlock bëhet joaktiv vetëm te kjo faqja.",
+    "message":"Klikoj: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nCtrl+klikim: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën e filtrimit standard.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>µBlock<\/i> te memorja e kompjuterit.<\/p>",
+    "message":"<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën e filtrimit standard.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>uBlock₀<\/i> te memorja e kompjuterit.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista juaj me emrat e hosteve për të cilat µBlock do të jetë joaktiv. Një element për rresht. Emrat e pasaktë nuk do të merren parasysh.",
+    "message":"Lista juaj me emrat e hosteve për të cilat uBlock₀ do të jetë joaktiv. Një element për rresht. Emrat e pasaktë nuk do të merren parasysh.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,7 +360,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Aktivizoni këtë opsionin kur doni të kontrolloni kërkesat e rrjetit me hollësi. Mbledhja e këtyre kërkesave rrit impaktin e µBlock te memorja e kompjuterit. Përderisa shumë përdorues nuk do e shfrytëzojnë asnjëherë këtë veçori, ajo normalisht qëndron joaktive.",
+    "message":"Aktivizoni këtë opsionin kur doni të kontrolloni kërkesat e rrjetit me hollësi. Mbledhja e këtyre kërkesave rrit impaktin e uBlock₀ te memorja e kompjuterit. Përderisa shumë përdorues nuk do e shfrytëzojnë asnjëherë këtë veçori, ajo normalisht qëndron joaktive.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe µBlock do të rifillojë.\n\nDo i mbishkruani parametrat aktualë?",
+    "message":"Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të rifillojë.\n\nDo i mbishkruani parametrat aktualë?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Të gjithë parametrat do të fshihen dhe µBlock do të rifillojë.\n\nDo ktheni parametrat origjinalë?",
+    "message":"Të gjithë parametrat do të fshihen dhe uBlock₀ do të rifillojë.\n\nDo ktheni parametrat origjinalë?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

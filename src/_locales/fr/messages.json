@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Journal des requêtes réseau",
+    "message":"uBlock₀ — Journal des requêtes réseau",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{

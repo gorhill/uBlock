@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Hallintapaneeli",
+    "message":"uBlock₀ — Hallintapaneeli",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Verkkopyyntöjen loki",
+    "message":"uBlock₀ — Verkkopyyntöjen loki",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Painallus: poista käytöstä\/ota käyttöön µBlock tällä sivustolla.\n\nCtrl+painallus: poista µBlock käytöstä vain tällä sivulla.",
+    "message":"Painallus: poista käytöstä\/ota käyttöön uBlock₀ tällä sivustolla.\n\nCtrl+painallus: poista uBlock₀ käytöstä vain tällä sivulla.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Oma listasi osoitteista, joissa µBlock on pois päältä. Kirjoita yksi osoite kullekin riville. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
+    "message":"Oma listasi osoitteista, joissa uBlock₀ on pois päältä. Kirjoita yksi osoite kullekin riville. Epäkelvot osoitteet ohitetaan ilman ilmoitusta.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,7 +360,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Laittamalla tämän asetuksen päälle, voit tarkkailla verkkoon tehtäviä pyyntöjä. Tämä nostaa µBlockin muistinkulutusta. Monet käyttäjät eivät koskaan tule käyttämään tätä ominaisuutta, joten se on oletuksena pois päältä.",
+    "message":"Laittamalla tämän asetuksen päälle, voit tarkkailla verkkoon tehtäviä pyyntöjä. Tämä nostaa uBlock₀in muistinkulutusta. Monet käyttäjät eivät koskaan tule käyttämään tätä ominaisuutta, joten se on oletuksena pois päältä.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Kaikki asetuksesi korvataan käyttäen tietoja, jotka on varmuuskopioitu {{time}} ja µBlock käynnistyy uudelleen.\nPäällekirjoitetaanko kaikki nykyiset asetukset käyttäen varmuuskopioituja tietoja?",
+    "message":"Kaikki asetuksesi korvataan käyttäen tietoja, jotka on varmuuskopioitu {{time}} ja uBlock₀ käynnistyy uudelleen.\nPäällekirjoitetaanko kaikki nykyiset asetukset käyttäen varmuuskopioituja tietoja?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Kaikki tallennetut asetuksesi poistetaan ja µBlock käynnistyy uudelleen. \n\nPalauta oletusasetukset?",
+    "message":"Kaikki tallennetut asetuksesi poistetaan ja uBlock₀ käynnistyy uudelleen. \n\nPalauta oletusasetukset?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
+    "message":"uBlock₀: Lisää seuraava URL-osoite mukautettuihin suodatinlistoihisi\n\nNimi: \"{{title}}\"\nURL-osoite: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

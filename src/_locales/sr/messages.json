@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Контролна табла",
+    "message":"uBlock₀ — Контролна табла",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Евиденција мрежних захтева",
+    "message":"uBlock₀ — Евиденција мрежних захтева",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Клик: искључити\/укључити µBlock за ову локацију.\n\nCtrl+клик: искључити\/укључити µBlock само за ову страницу.",
+    "message":"Клик: искључити\/укључити uBlock₀ за ову локацију.\n\nCtrl+клик: искључити\/укључити uBlock₀ само за ову страницу.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Сва ваша подешавања ће бити обрисана и µBlock ће се поново покренути.\n\nВрати µBlock на првобитна подешавања?",
+    "message":"Сва ваша подешавања ће бити обрисана и uBlock₀ ће се поново покренути.\n\nВрати uBlock₀ на првобитна подешавања?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

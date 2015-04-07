@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Tīkla pieprasījumu žurnāls",
+    "message":"uBlock₀ — Tīkla pieprasījumu žurnāls",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

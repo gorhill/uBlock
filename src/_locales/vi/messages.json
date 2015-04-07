@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ — Bảng điều khiển",
+    "message":"uBlock₀ — Bảng điều khiển",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Nhật ký yêu cầu mạng",
+    "message":"uBlock₀ — Nhật ký yêu cầu mạng",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn µBlock cho trang này.\nCtrl + nhấp chuột: vô hiệu µBlock chỉ trên trang này.",
+    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn uBlock₀ cho trang này.\nCtrl + nhấp chuột: vô hiệu uBlock₀ chỉ trên trang này.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Tuỳ chọn này kích hoạt phân tích và áp dụngThis option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">các bộ lọc yếu tố ẩn tương thích với Adblock Plus<\/a>. Những bộ lọc này dùng để ẩn yếu tố trong một trang web được xem là gây phiền hà đến thị giác và không bị chặn bởi công cụ lọc dựa theo yêu cầu mạng.<\/p><p>Kích hoạt tính năng này sẽ tăng mức sử dụng bộ nhớ của <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Tuỳ chọn này kích hoạt phân tích và áp dụngThis option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">các bộ lọc yếu tố ẩn tương thích với Adblock Plus<\/a>. Những bộ lọc này dùng để ẩn yếu tố trong một trang web được xem là gây phiền hà đến thị giác và không bị chặn bởi công cụ lọc dựa theo yêu cầu mạng.<\/p><p>Kích hoạt tính năng này sẽ tăng mức sử dụng bộ nhớ của <i>uBlock₀<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Danh sách tên các máy chủ mà µBlock sẽ bị vô hiệu. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
+    "message":"Danh sách tên các máy chủ mà uBlock₀ sẽ bị vô hiệu. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,7 +360,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Bạn có thể kiểm tra chi tiết của yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng sử dụng bộ nhớ của µBlock. Vì nhiều người sử dụng sẽ không bao giờ sử dụng tính năng này, nó bị tắt theo mặc định.",
+    "message":"Bạn có thể kiểm tra chi tiết của yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng sử dụng bộ nhớ của uBlock₀. Vì nhiều người sử dụng sẽ không bao giờ sử dụng tính năng này, nó bị tắt theo mặc định.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tất cả các thiết lập của bạn sẽ bị ghi đè bởi dữ liệu sao lưu vào lúc {{time}}, và µBlock sẽ khởi động lại. \n\nGhi đè lên tất cả các cài đặt hiện tại bằng cách sử dụng dữ liệu sao lưu?",
+    "message":"Tất cả các thiết lập của bạn sẽ bị ghi đè bởi dữ liệu sao lưu vào lúc {{time}}, và uBlock₀ sẽ khởi động lại. \n\nGhi đè lên tất cả các cài đặt hiện tại bằng cách sử dụng dữ liệu sao lưu?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Tất cả các cấu hình của bạn sẽ bị xóa và µBlock sẽ khởi động lại. \n\nThiết lập µBlock về cấu hình ban đầu?",
+    "message":"Tất cả các cấu hình của bạn sẽ bị xóa và uBlock₀ sẽ khởi động lại. \n\nThiết lập uBlock₀ về cấu hình ban đầu?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Thêm URL dưới đây vào danh sách bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Thêm URL dưới đây vào danh sách bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
