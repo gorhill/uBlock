@@ -12,7 +12,7 @@ uBlock₀
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
-      pronounced <i>you-block<sub>origin</sub></i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
+      pronounced <i>you-block origin</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
 </sup>
 <br>
 <sup> <!-- Languages -->
