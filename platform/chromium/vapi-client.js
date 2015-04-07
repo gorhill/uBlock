@@ -46,6 +46,29 @@ vAPI.chrome = true;
 
 /******************************************************************************/
 
+vAPI.shutdown = (function() {
+    var jobs = [];
+
+    var add = function(job) {
+        jobs.push(job);
+    };
+
+    var exec = function() {
+        //console.debug('Shutting down...');
+        var job;
+        while ( job = jobs.pop() ) {
+            job();
+        }
+    };
+
+    return {
+        add: add,
+        exec: exec
+    };
+})();
+
+/******************************************************************************/
+
 var messagingConnector = function(response) {
     if ( !response ) {
         return;
@@ -143,6 +166,15 @@ vAPI.messaging = {
         return this.channels[channelName];
     }
 };
+
+// No need to have vAPI client linger around after shutdown if
+// we are not a top window (because element picker can still
+// be injected in top window).
+if ( window !== window.top ) {
+    vAPI.shutdown.add(function() {
+        vAPI = null;
+    });
+}
 
 /******************************************************************************/
 

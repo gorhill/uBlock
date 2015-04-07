@@ -38,7 +38,7 @@ if ( document instanceof HTMLDocument === false ) {
 }
 
 // This can happen
-if ( !vAPI || !vAPI.messaging ) {
+if ( !vAPI ) {
     //console.debug('contentscript-end.js > vAPI not found');
     return;
 }
@@ -59,32 +59,11 @@ vAPI.contentscriptEndInjected = true;
 vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
-/******************************************************************************/
-
-var shutdownJobs = (function() {
-    var jobs = [];
-
-    return {
-        add: function(job) {
-            jobs.push(job);
-        },
-        exec: function() {
-            //console.debug('Shutting down...');
-            var job;
-            while ( job = jobs.pop() ) {
-                job();
-            }
-        }
-    };
-})();
-
-/******************************************************************************/
-/******************************************************************************/
 
 var messager = vAPI.messaging.channel('contentscript-end.js');
 
 // https://github.com/gorhill/uMatrix/issues/144
-shutdownJobs.add(function() {
+vAPI.shutdown.add(function() {
     messager.close();
 });
 
@@ -151,7 +130,7 @@ var uBlockCollapser = (function() {
     var onProcessed = function(response) {
         // https://github.com/gorhill/uMatrix/issues/144
         if ( response.shutdown ) {
-            shutdownJobs.exec();
+            vAPI.shutdown.exec();
             return;
         }
 
@@ -368,7 +347,7 @@ var uBlockCollapser = (function() {
     var nextRetrieveHandler = function(response) {
         // https://github.com/gorhill/uMatrix/issues/144
         if ( response && response.shutdown ) {
-            shutdownJobs.exec();
+            vAPI.shutdown.exec();
             return;
         }
 
@@ -740,7 +719,7 @@ var uBlockCollapser = (function() {
     });
 
     // https://github.com/gorhill/uMatrix/issues/144
-    shutdownJobs.add(function() {
+    vAPI.shutdown.add(function() {
         treeObserver.disconnect();
         if ( addedNodeListsTimer !== null ) {
             clearTimeout(addedNodeListsTimer);
@@ -767,7 +746,7 @@ var uBlockCollapser = (function() {
     document.addEventListener('error', onResourceFailed, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
-    shutdownJobs.add(function() {
+    vAPI.shutdown.add(function() {
         document.removeEventListener('error', onResourceFailed, true);
     });
 })();
@@ -831,7 +810,7 @@ var uBlockCollapser = (function() {
     window.addEventListener('contextmenu', onContextMenu, true);
 
     // https://github.com/gorhill/uMatrix/issues/144
-    shutdownJobs.add(function() {
+    vAPI.shutdown.add(function() {
         document.removeEventListener('contextmenu', onContextMenu, true);
     });
 })();

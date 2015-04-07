@@ -36,7 +36,7 @@ if ( document instanceof HTMLDocument === false ) {
 }
 
 // This can happen
-if ( !vAPI || !vAPI.messaging ) {
+if ( !vAPI ) {
     //console.debug('cosmetic-on.js > no vAPI');
     return;
 }
