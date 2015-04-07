@@ -32,7 +32,7 @@
 var resizeFrame = function() {
     var navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
     var viewRect = document.documentElement.getBoundingClientRect();
-    document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height) + 'px');
+    document.getElementById('iframe').style.setProperty('height', (viewRect.bottom - navRect.bottom) + 'px');
 };
 
 /******************************************************************************/
