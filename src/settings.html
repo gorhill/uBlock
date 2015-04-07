@@ -8,12 +8,16 @@
 <style>
 ul {
     padding-left: 1em;
+    margin: 1em 0;
     }
 ul#userSettings {
     padding-left: 0;
     }
 li {
-    margin-top: 0.25em;
+    margin-top: 0.4em;
+    }
+label {
+    margin-left: 7px;
     }
 ul#userSettings {
     list-style-type: none;
@@ -41,8 +45,7 @@ ul#userSettings {
     <!-- <li><input id="experimental-enabled" type="checkbox" disabled><label data-i18n="settingsExperimentalPrompt" for="experimental-enabled"></label> -->
     </ul>
 
-<div id="localData" style="margin: 0 1em;">
-    <div style="margin: 2.5em 0; border-top: 1px solid #ccc;"></div>
+<div id="localData" style="border-top: 1px solid #ccc">
     <ul>
         <li>
         <li style="display: none;"><span data-i18n="settingsLastBackupPrompt"></span><ul>
@@ -55,7 +58,7 @@ ul#userSettings {
         </ul>
     </div>
 
-<div style="margin: 2.5em 1em;">
+<div>
     <p><button type="button" id="export" data-i18n="aboutBackupDataButton"></button>&ensp;
        <button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
        <input id="restoreFilePicker" type="file" accept="text/plain" class="hiddenFileInput">

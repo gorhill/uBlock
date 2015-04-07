@@ -1,11 +1,11 @@
 body {
     margin: 0;
-    padding: 0 0.5em 0.5em 0.5em;
-    font: 14px sans-serif;
+    padding: 0.25em 0.5em;
+    font: 14px Helvetica Neue, Helvetica, sans-serif;
     }
 h2, h3 {
     margin: 1em 0;
-    font-family: sans-serif;
+    font-family: inherit;
     }
 h2 {
     font-size: 18px;
@@ -17,7 +17,22 @@ a {
     text-decoration: none;
     }
 button {
-    padding: 0.33em;
+    padding: 7px;
+    font: inherit;
+    margin: 0;
+    background: #ddd;
+    color: #444;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    -webkit-transition: 0.2s background, 0.2s border-color, 0.2s box-shadow;
+    transition: 0.2s background, 0.2s border-color, 0.2s box-shadow;
+    }
+button:hover {
+    border-color: dodgerblue;
+    background: #fafafa;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    color: black;
     }
 div > p:first-child {
     margin-top: 0;

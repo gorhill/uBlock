@@ -131,10 +131,10 @@ span.new {
     background-color: hsl(36, 100%, 75%);
     }
 #externalListsDiv {
-    margin: 2em auto 0 2em;
+    margin: 2em auto 2em 2em;
     }
 body[dir=rtl] #externalListsDiv {
-    margin: 2em 2em 0;
+    margin: 2em 2em 2em;
     }
 #externalLists {
     box-sizing: border-box;
@@ -147,7 +147,6 @@ body[dir=rtl] #externalListsDiv {
 body #busyOverlay {
     background-color: transparent;
     bottom: 0;
-    cursor: wait;
     display: none;
     left: 0;
     position: fixed;
@@ -185,14 +184,16 @@ body.busy #busyOverlay {
     background-repeat: repeat-x;
     border: 0;
     box-sizing: border-box;
-    color: #222;
     height: 100%;
     left: 0;
     padding: 0;
     position: absolute;
     width: 25%;
+    -webkit-transition:0.5s width;
+    transition:0.5s width;
     }
 #busyOverlay > div:nth-of-type(2) > div:nth-of-type(2) {
+    color: #222;
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
