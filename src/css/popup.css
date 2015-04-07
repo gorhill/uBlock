@@ -1,21 +1,23 @@
 body {
-    background-color: white;
+    background-color: #fafafa;
+    color: #333;
     border: 0;
-    float: left;
-    font: 13px sans-serif;
+    font: 13px Helvetica Neue, Helvetica, sans-serif;
     margin: 0;
-    overflow: hidden;
     padding: 0;
+    overflow: hidden;
     white-space: nowrap;
+    display: inline-block;
     }
 h2 {
     background-color: #eee;
     border: 0;
+    border-top: 1px solid #ccc;
     color: #666;
     font-size: 14px;
     font-weight: normal;
-    margin:  1em 0 0.5em 0;
-    padding: 2px 0;
+    margin:  10px 0 5px 0;
+    padding: 5px 2px 4px 2px;
     text-align: center;
     }
 h2:nth-of-type(1) {
@@ -33,7 +35,8 @@ a {
     margin: 0;
     border: 0;
     padding: 4px;
-    color: white;
+    padding-top: 5px;
+    color: #eee;
     font-weight: bold;
     background-color: #444;
     text-align: center;
@@ -44,14 +47,20 @@ a {
     font-weight: normal;
     margin-left: 1em;
     }
+html {
+    font-size: 0;
+    }
+html, body, #panes {
+    text-align: right;
+    }
+#panes {
+    white-space: nowrap;
+    }
 body[dir="ltr"] #panes {
     direction: rtl;
     }
 body[dir="rtl"] #panes {
     direction: ltr;
-    }
-body, #panes {
-    text-align: right; /* this helps the popup render better at "intermediate" widths */
     }
 #panes > div {
     display: inline-block;
@@ -64,25 +73,26 @@ body[dir="ltr"] #panes > div {
 body[dir="rtl"] #panes > div {
     direction: rtl;
     }
-#panes > div:nth-of-type(2) {
+#panes > #dfPane {
     overflow-y: auto;
     overflow-x: hidden;
     width: 320px;
+    border-right: 1px solid #444;
     }
-body[dir="ltr"] #panes > div:nth-of-type(2) {
+body[dir="ltr"] #panes > #dfPane {
     direction: rtl; /* scroll bar to the left */
     margin-right: 1px;
     }
-body[dir="rtl"] #panes > div:nth-of-type(2) {
+body[dir="rtl"] #panes > #dfPane {
     direction: ltr; /* scroll bar to the right */
     margin-left: 1px;
     }
-#panes:not(.dfEnabled) > div:nth-of-type(2) {
+#panes:not(.dfEnabled) > #dfPane {
     display: none;
     }
-#panes > div:nth-of-type(1) {
+#panes > #switchPane {
+    box-sizing: border-box;
     min-width: 150px;
-    padding: 0;
     }
 p {
     text-align: center;
@@ -90,17 +100,17 @@ p {
     }
 #switch {
     margin: 8px 0;
+    font-size:0;
     }
-#switch .fa {
-    color: #0046ff;
+#switch .icon {
+    color: dodgerblue;
     cursor: pointer;
-    font-size: 96px;
-    margin: 0;
+    font-size:96px;
     }
-#switch .fa:hover {
+#switch .icon:hover {
     opacity: 0.9;
     }
-body.off #switch .fa {
+body.off #switch .icon {
     color: #ccc;
     }
 #switch-hint {
@@ -112,53 +122,25 @@ body.off #switch .fa {
     }
 .statName {
     color: #666;
-    margin: 1em 0.2em 0.2em 0.2em;
+    margin: 0;
+    margin-top: 10px;
     text-align: center;
     }
 .statValue {
     font-size: 14px;
-    margin: 0;
+    margin: 4px 0;
     text-align: center;
     }
 .tool {
     color: #aaa;
     cursor: pointer;
-    display: none;
     font-size: 14px;
-    unicode-bidi: embed;
     }
-.tool.enabled {
-    display: inline;
+.tool:not(.enabled) {
+    display: none;
     }
 .tool:hover {
     color: #444;
-    }
-#extraTools {
-    background-color: #eee;
-    border: 0;
-    color: #aaa;
-    font-weight: normal;
-    margin:  1em 0 0 0;
-    padding: 4px 0 2px 0;
-    text-align: center;
-    }
-#extraTools > span {
-    cursor: pointer;
-    font-size: 18px;
-    margin: 0 0.5em;
-    position: relative;
-    }
-#extraTools > span.on > span {
-    color: #e00;
-    font-size: 20px;
-    left: 0;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 100%;
-    }
-#extraTools > span.on > span:after {
-    content: '\2715';
     }
 
 body.advancedUser h2 {
@@ -173,26 +155,26 @@ body.advancedUser #panes.dfEnabled h2:before {
     }
 
 #refresh {
-    background-color: #ffe;
-    border: 1px solid #eec;
+    background-color: #444;
     border-radius: 4px;
-    bottom: 4px;
-    color: #888;
+    color: #dedede;
+    opacity: 0.7;
     cursor: pointer;
     display: none;
-    font-size: 40px;
-    left: 4px;
-    line-height: 40px;
-    padding: 4px 8px;
+    height: 35px;
+    font-size: 35px;
+    padding: 8px;
     position: absolute;
     right: 4px;
+    left: 4px;
+    bottom: 4px;
     text-align: center;
     }
 body.dirty #refresh {
     display: block;
     }
 body.dirty #refresh:hover {
-    color: black;
+    opacity: 1;
     }
 
 #firewallContainer {
@@ -219,8 +201,8 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span {
     background-color: transparent;
     border: none;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
     color: #000;
     display: inline-block;
     height: 22px;
@@ -354,15 +336,15 @@ body.dirty #refresh:hover {
     }
 
 #saveRules {
-    background-color: #ffe;
-    border: 1px solid #eec;
+    opacity: 0.7;
+    background-color: #444;
     border-radius: 4px;
-    color: #888;
+    color: rgb(255, 213, 123);
     cursor: pointer;
     display: none;
-    font-size: 30px;
-    line-height: 40px;
-    padding: 0.1em 0.4em;
+    font-size: 35px;
+    height: 35px;
+    padding: 8px;
     position: fixed;
     text-align: center;
     }
@@ -370,5 +352,5 @@ body.dirty #refresh:hover {
     display: block;
     }
 #firewallContainer.dirty ~ #saveRules:hover {
-    color: black;
+    opacity: 1;
     }

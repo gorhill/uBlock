@@ -12,26 +12,21 @@
 <body>
 <a href="dashboard.html" target="_blank" id="gotoPrefs" title="popupTipDashboard"><span id="appname">&nbsp;</span><span id="version">&nbsp;</span></a>
 <div id="panes">
-    <div>
-        <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><span class="fa">&#xf011;</span></p>
-        <p id="switch-hint"></p>
+    <div id="switchPane">
+        <p id="switch" data-i18n-tip="popupPowerSwitchInfo"><svg class="icon icon-power"><use xlink:href="img/icons.svg#icon-power"></use></svg></p>
         <h2 id="dfToggler" data-i18n="popupBlockedRequestPrompt">&nbsp;</h2>
         <p class="statName">
             <span data-i18n="popupBlockedOnThisPagePrompt">&nbsp;</span>&ensp;
-            <span id="gotoPick" class="fa tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top">&#xf1fb;</span>&ensp;
-            <a href="#" target="_blank" id="gotoLog" class="fa tool" data-i18n-tip="popupTipLog" data-tip-anchor="top">&#xf06e;</a>
+            <span id="gotoPick" class="tool" data-i18n-tip="popupTipPicker" data-tip-anchor="top"><svg class="icon icon-eyedropper"><use xlink:href="img/icons.svg#icon-eyedropper"></use></svg></span>&ensp;
+            <a href="#" target="_blank" id="gotoLog" class="tool" data-i18n-tip="popupTipLog" data-tip-anchor="top"><svg class="icon icon-view"><use xlink:href="img/icons.svg#icon-view"></use></svg></a>
             </p>
         <p class="statValue" id="page-blocked">?</p>
         <p class="statName" data-i18n="popupBlockedSinceInstallPrompt">&nbsp;</p>
         <p class="statValue" id="total-blocked">?</p>
         <h2 data-i18n="popupHitDomainCountPrompt">&nbsp;</h2>
         <p class="statValue" id="popupHitDomainCount">&nbsp;</p>
-        <div id="extraTools">
-            <span id="doBlockAllPopups" class="hnSwitch fa" data-i18n-tip="popupTipNoPopups" data-tip-anchor="topcenter">&#xf0c5;<span></span></span>
-            <span id="dontBlockDoc" class="hnSwitch fa" data-i18n-tip="popupTipNoStrictBlocking" data-tip-anchor="topcenter">&#xf071;<span></span></span>
-            </div>
-        <div id="refresh" class="fa">&#xf021;</div>
-        </div><!-- DO NOT REMOVE --><div>
+        <div id="refresh"><svg class="icon icon-reload"><use xlink:href="img/icons.svg#icon-reload"></use></svg></div>
+    </div><!--no spaces--><div id="dfPane">
         <div id="firewallContainer">
             <div><span data-i18n="popupAnyRulePrompt"></span><span data-src="/" data-des="*" data-type="*"> </span><span data-src="." data-des="*" data-type="*"> </span></div>
             <div><span data-i18n="popupImageRulePrompt"></span><span data-src="/" data-des="*" data-type="image"> </span><span data-src="." data-des="*" data-type="image"> </span></div>
@@ -40,7 +35,7 @@
             <div><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="1p-script"> </span><span data-src="." data-des="*" data-type="1p-script"> </span></div>
             <div><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-script"> </span><span data-src="." data-des="*" data-type="3p-script"> </span></div>
             <div><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/" data-des="*" data-type="3p-frame"> </span><span data-src="." data-des="*" data-type="3p-frame"> </span></div>
-            </div><div id="saveRules" class="fa">&#xf13e;</div>
+            </div><div id="saveRules"><svg class="icon icon-lock"><use xlink:href="img/icons.svg#icon-lock"></use></svg></div>
         </div>
     </div>
 

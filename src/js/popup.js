@@ -40,9 +40,9 @@ var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'tr
 // dictate the height of the popup. The right pane dictates the height
 // of the popup, and the left pane will have a scrollbar if ever its
 // height is more than what is available.
-document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
+document.getElementById('dfPane').style.setProperty(
     'height',
-    document.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
+    document.getElementById('switchPane').offsetHeight + 'px'
 );
 
 // The padlock must be manually positioned:
@@ -429,10 +429,6 @@ var renderPopup = function() {
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
-    // Extra tools
-    uDom('#doBlockAllPopups').toggleClass('on', popupData.doBlockAllPopups === true);
-    uDom('#dontBlockDoc').toggleClass('on', popupData.dontBlockDoc === true);
-
     // https://github.com/gorhill/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
     var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
@@ -655,23 +651,6 @@ var saveFirewallRules = function() {
 
 /******************************************************************************/
 
-var toggleHostnameSwitch = function() {
-    var elem = uDom(this);
-    var switchName = elem.attr('id');
-    if ( !switchName ) {
-        return;
-    }
-    elem.toggleClass('on');
-    messager.send({
-        what: 'toggleHostnameSwitch',
-        name: switchName,
-        hostname: popupData.pageHostname,
-        state: elem.hasClass('on')
-    });
-};
-
-/******************************************************************************/
-
 // Poll for changes.
 //
 // I couldn't find a better way to be notified of changes which can affect
@@ -754,7 +733,6 @@ uDom.onLoad(function () {
     uDom('a[href]').on('click', gotoURL);
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
-    uDom('.hnSwitch').on('click', toggleHostnameSwitch);
     uDom('#saveRules').on('click', saveFirewallRules);
     uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 });
