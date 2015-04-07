@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ublock-no-glyph.svg"
+   sodipodi:docname="ublock.svg"
    inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/icon_16.png"
    inkscape:export-xdpi="11.25"
    inkscape:export-ydpi="11.25">
@@ -57,15 +57,15 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="2"
-     inkscape:cx="183.23688"
-     inkscape:cy="98.66168"
+     inkscape:cx="75.382623"
+     inkscape:cy="115.10271"
      inkscape:document-units="px"
-     inkscape:current-layer="text3832"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1804"
-     inkscape:window-height="992"
+     inkscape:window-height="1030"
      inkscape:window-x="6"
-     inkscape:window-y="63"
+     inkscape:window-y="25"
      inkscape:window-maximized="0"
      fit-margin-top="5"
      fit-margin-left="5"
@@ -94,7 +94,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:description>Use gray 50% for the &quot;off&quot; color</dc:description>
       </cc:Work>
     </rdf:RDF>
@@ -110,15 +110,39 @@
        id="path3788"
        d="m 19.372554,54.107612 0,54.435488 35.282255,35.28224 54.435491,0 35.28224,-35.28224 0,-54.435488 -35.28224,-35.282256 -54.435491,0 z"
        style="fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:3.00001286999999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       sodipodi:nodetypes="ccccccccc" />
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
+       inkscape:export-xdpi="26.719999"
+       inkscape:export-ydpi="26.719999" />
     <g
        transform="scale(0.95029539,1.0523044)"
        style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.99999976;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
        id="text3832">
       <path
-         d="m 107.19973,102.23448 c -2.13689,0.53625 -4.95933,1.10462 -8.467334,1.70509 -3.508086,0.60048 -7.567162,0.90072 -12.17724,0.90072 -4.00864,0 -7.382622,-0.58417 -10.121957,-1.7525 -2.739372,-1.16833 -4.944007,-2.82193 -6.613909,-4.960813 -1.669927,-2.138872 -2.872409,-4.661075 -3.607448,-7.566618 -0.735057,-2.905516 -1.102581,-6.129125 -1.102573,-9.670835 l 0,-29.263299 9.319113,0 0,27.260011 c -1.7e-5,6.345293 1.002136,10.887604 3.006461,13.626947 2.004286,2.739365 5.378778,4.109041 10.123487,4.109034 1.001103,7e-6 2.036389,-0.03313 3.105861,-0.0994 1.069406,-0.06626 2.071559,-0.149348 3.006461,-0.249265 0.934831,-0.0999 1.78661,-0.200321 2.55534,-0.301257 0.768652,-0.100922 1.320193,-0.217652 1.654624,-0.350194 l 0,-43.995877 9.319114,0 z"
-         style="fill:#ffffff;stroke:#ffffff;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-         id="path2993" />
+         d="m 110.35784,102.23586 c -2.45751,0.53625 -5.70345,1.10462 -9.73782,1.70509 -4.034465,0.60048 -8.702593,0.90072 -14.004398,0.90072 -4.610125,0 -8.490362,-0.58417 -11.640725,-1.7525 -3.150407,-1.16833 -5.68584,-2.82193 -7.606305,-4.960809 -1.920494,-2.138872 -3.303406,-4.661075 -4.148735,-7.566618 -0.84535,-2.905516 -1.268019,-6.129125 -1.26801,-9.670835 l 0,-29.263299 10.717416,0 0,27.260011 c -1.9e-5,6.345293 1.152504,10.887604 3.457572,13.626947 2.305022,2.739365 6.185846,4.109041 11.642483,4.109034 1.151316,7e-6 2.341944,-0.03313 3.571886,-0.0994 1.229867,-0.06626 2.38239,-0.149348 3.457572,-0.249265 1.075098,-0.0999 2.054685,-0.200321 2.93876,-0.301257 0.883986,-0.100922 1.518284,-0.217652 1.902896,-0.350194 l 0,-43.995877 10.717408,0 z"
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:1.99999976;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2993"
+         inkscape:connector-curvature="0" />
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         x="95.5"
+         y="90.5"
+         id="text2992"
+         sodipodi:linespacing="125%"
+         transform="matrix(1.0523044,0,0,0.95029537,18.807361,16.4642)"><tspan
+           sodipodi:role="line"
+           id="tspan2994"></tspan></text>
+      <path
+         sodipodi:type="arc"
+         style="fill:none;stroke:#ffffff;stroke-width:4.04520082;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="path2996"
+         sodipodi:cx="98"
+         sodipodi:cy="90"
+         sodipodi:rx="6.0000024"
+         sodipodi:ry="10"
+         d="M 104,90 A 6.0000024,10 0 1 1 91.999998,90 6.0000024,10 0 1 1 104,90 z"
+         transform="matrix(0.96461157,0,0,0.57017724,25.296644,49.249388)" />
     </g>
   </g>
   <g
