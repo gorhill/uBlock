@@ -34,7 +34,7 @@
 var vAPI = self.vAPI = self.vAPI || {};
 var chrome = self.chrome;
 
-// https://github.com/gorhill/uBlock/issues/456
+// https://github.com/chrisaljoudi/uBlock/issues/456
 // Already injected?
 if ( vAPI.vapiClientInjected ) {
     //console.debug('vapi-client.js already injected: skipping.');

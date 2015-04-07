@@ -545,7 +545,7 @@ Matrix.prototype.fromString = function(text, append) {
         srcHostname = punycode.toASCII(fields[0]);
         desHostname = punycode.toASCII(fields[1]);
 
-        // https://github.com/gorhill/uBlock/issues/1082
+        // https://github.com/chrisaljoudi/uBlock/issues/1082
         // Discard rules with invalid hostnames
         if ( (srcHostname !== '*' && reBadHostname.test(srcHostname)) ||
              (desHostname !== '*' && reBadHostname.test(desHostname))
@@ -558,7 +558,7 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
-        // https://github.com/gorhill/uBlock/issues/840
+        // https://github.com/chrisaljoudi/uBlock/issues/840
         // Discard invalid rules
         if ( desHostname !== '*' && type !== '*' ) {
             continue;

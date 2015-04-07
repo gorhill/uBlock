@@ -66,7 +66,7 @@ var exports = {
     autoUpdate: true,
     autoUpdateDelay: 4 * oneDay,
 
-    // https://github.com/gorhill/uBlock/issues/426
+    // https://github.com/chrisaljoudi/uBlock/issues/426
     remoteFetchBarrier: 0
 };
 
@@ -354,7 +354,7 @@ var updateLocalChecksums = function() {
 var getRepoMetadata = function(callback) {
     callback = callback || nullFunc;
 
-    // https://github.com/gorhill/uBlock/issues/515
+    // https://github.com/chrisaljoudi/uBlock/issues/515
     // Handle re-entrancy here, i.e. we MUST NOT tamper with the waiting list
     // of callers, if any, except to add one at the end of the list.
     if ( repoMetadata !== null && repoMetadata.waiting.length !== 0 ) {
@@ -407,7 +407,7 @@ var getRepoMetadata = function(callback) {
             updateLocalChecksums();
         }
         // Notify all waiting callers
-        // https://github.com/gorhill/uBlock/issues/515
+        // https://github.com/chrisaljoudi/uBlock/issues/515
         // VERY IMPORTANT: because of re-entrancy, we MUST:
         // - process the waiting callers in a FIFO manner
         // - not cache repoMetadata.waiting.length, we MUST use the live
@@ -534,7 +534,7 @@ var readLocalFile = function(path, callback) {
 // Get the repository copy of a built-in asset.
 
 var readRepoFile = function(path, callback) {
-    // https://github.com/gorhill/uBlock/issues/426
+    // https://github.com/chrisaljoudi/uBlock/issues/426
     if ( exports.remoteFetchBarrier !== 0 ) {
         readLocalFile(path, callback);
         return;
@@ -866,7 +866,7 @@ var readExternalAsset = function(path, callback) {
     };
 
     var onExternalFileLoaded = function() {
-        // https://github.com/gorhill/uBlock/issues/708
+        // https://github.com/chrisaljoudi/uBlock/issues/708
         // A successful download should never return an empty file: turn this
         // into an error condition.
         if ( stringIsNotEmpty(this.responseText) === false ) {
@@ -1045,7 +1045,7 @@ exports.rmrf = function() {
 exports.metadata = function(callback) {
     var out = {};
 
-    // https://github.com/gorhill/uBlock/issues/186
+    // https://github.com/chrisaljoudi/uBlock/issues/186
     // We need to check cache obsolescence when both cache and repo meta data
     // has been gathered.
     var checkCacheObsolescence = function() {

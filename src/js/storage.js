@@ -154,7 +154,7 @@
         if ( details.error ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/976
+        // https://github.com/chrisaljoudi/uBlock/issues/976
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
         // duplicates at this point may lead to more issues.
@@ -171,7 +171,7 @@
     var relocationMap = {};
 
     var fixLocation = function(location) {
-        // https://github.com/gorhill/uBlock/issues/418
+        // https://github.com/chrisaljoudi/uBlock/issues/418
         // We now support built-in external filter lists
         if ( /^https?:/.test(location) === false ) {
             location = 'assets/thirdparties/' + location;
@@ -208,7 +208,7 @@
             }
             // This may happen if the list name was pulled from the list
             // content.
-            // https://github.com/gorhill/uBlock/issues/982
+            // https://github.com/chrisaljoudi/uBlock/issues/982
             // There is no guarantee the title was successfully extracted from
             // the list content.
             if ( availableEntry.title === '' &&

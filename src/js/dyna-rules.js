@@ -97,7 +97,7 @@ function handleImportFilePicker() {
         if ( typeof this.result !== 'string' || this.result === '' ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/757
+        // https://github.com/chrisaljoudi/uBlock/issues/757
         // Support RequestPolicy rule syntax
         var result = this.result;
         var matches = /\[origins-to-destinations\]([^\[]+)/.exec(result);
