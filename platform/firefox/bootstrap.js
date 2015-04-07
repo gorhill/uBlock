@@ -60,6 +60,12 @@ function startup(data, reason) {
         }
 
         let hiddenDoc = appShell.hiddenDOMWindow.document;
+
+        if ( hiddenDoc.readyState === 'loading' ) {
+            hiddenDoc.addEventListener('DOMContentLoaded', onReady);
+            return;
+        }
+
         bgProcess = hiddenDoc.documentElement.appendChild(
             hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
