@@ -2,7 +2,6 @@ body {
     border: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    font: 12px monospace;
     margin: 0;
     overflow-x: hidden;
     padding: 0;
@@ -53,6 +52,7 @@ input:focus {
     border: 0;
     border-collapse: collapse;
     direction: ltr;
+    font: 12px monospace;
     width: 100%;
     }
 #content table tr.blocked {

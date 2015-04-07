@@ -12,9 +12,11 @@
     line-height: 1;
     vertical-align: baseline;
     }
-
+body {
+    font: 14px/1.4 'Droid Sans', freesans, sans-serif;
+    }
 .hiddenFileInput {
+    height: 0;
     visibility: hidden;
     width: 0;
-    height: 0;
     }

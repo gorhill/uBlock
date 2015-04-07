@@ -2,7 +2,6 @@ body {
     background-color: white;
     border: 0;
     float: left;
-    font: 13px sans-serif;
     margin: 0;
     overflow: hidden;
     padding: 0;
@@ -29,18 +28,19 @@ a {
     outline: 0;
     }
 #gotoPrefs {
-    display: block;
-    margin: 0;
-    border: 0;
-    padding: 4px;
-    color: white;
-    font-weight: bold;
     background-color: #444;
-    text-align: center;
+    border: 0;
+    color: white;
     cursor: pointer;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    padding: 2px;
+    text-align: center;
     }
 #version {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: normal;
     margin-left: 1em;
     }
@@ -235,7 +235,7 @@ body.dirty #refresh:hover {
 
 #firewallContainer {
     border: 0;
-    font-size: 12px;
+    font-size: 13px;
     margin: 0;
     padding: 0;
     text-align: right;
@@ -291,6 +291,7 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span:nth-of-type(4) {
     border-left: 1px solid white;
     color: #444;
+    font-size: 11.5px;
     text-align: center;
     }
 #firewallContainer > div > span:nth-of-type(4) {
