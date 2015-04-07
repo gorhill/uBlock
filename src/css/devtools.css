@@ -5,69 +5,77 @@ body {
     padding: 0;
     }
 #toolbar {
-    background-color: #eee;
+    background-color: rgba(238, 238, 238, 0.85);
     border: none;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 4em;
     padding: 1em;
-    position: fixed;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 50px;
+    position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
+    z-index: 5;
     }
 #toolbar > * {
     display: inline-block;
     position: relative;
     vertical-align: middle;
     }
-#toolbar button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 2em;
-    margin: 0 0 0 1em;
-    vertical-align: middle;
-    }
 #pageSelector {
     max-width: 80%;
     }
-#toolbar #refresh {
-    margin-left: 4px;
+#toolbar .button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    margin: 0 0 0 1em;
+    }
+#toolbar .button:hover {
+    color: #999;
+    }
+#toolbar #popupToggler {
+    opacity: 0.4;
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    z-index: 9;
+    font-size: 20px;
+    margin: 0;
+    }
+body.popupEnabled #popupToggler {
+    opacity: 1;
     }
 select {
     padding: 2px 0;
     font-size: 14px;
     min-width: 20em;
     max-width: 40em;
+    border: 1px solid #ccc;
     }
 select option {
     max-width: 40em;
     }
-#popupToggler {
-    opacity: 0.25;
-    position: absolute;
-    right: 0;
-    }
-body.popupEnabled #popupToggler {
-    opacity: 1;
-    }
 #content {
-    border: 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: calc(100vh - 4em);
-    margin-top: 4em;
-    overflow-y: auto;
-    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-y: auto;
     }
 #popup {
     border: 1px solid gray;
     display: none;
     position: fixed;
-    right: 2px;
-    top: calc(4em + 2px);
+    right: 3px;
+    top: 53px;
     }
-body.popupEnabled #popup[src^="popup.html"] {
-    display: initial;
+body.popupEnabled #popup {
+    display: block;
     }

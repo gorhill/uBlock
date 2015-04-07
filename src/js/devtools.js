@@ -115,7 +115,7 @@ var resizePopup = function() {
 /******************************************************************************/
 
 var onPopupLoaded = function() {
-    resizePopup();
+    setTimeout(resizePopup, 0);
 
     if ( popupObserver !== null ) {
         popupObserver.disconnect();

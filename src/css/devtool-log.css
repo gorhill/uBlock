@@ -4,35 +4,43 @@ body {
     -moz-box-sizing: border-box;
     font: 12px monospace;
     margin: 0;
-    overflow-x: hidden;
     padding: 0;
     white-space: nowrap;
     width: 100%;
+    overflow: hidden;
     }
 #toolbar {
-    background-color: white;
+    background-color: rgba(238, 238, 238, 0.85);
+    color: #444;
     border: 0;
     box-sizing: border-box;
-    height: 40px;
-    left: 0;
+    height: 41px;
     margin: 0;
     padding: 0 1em;
-    position: fixed;
-    top: 0;
-    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    border-bottom: 1px solid #ccc;
+    }
+#toolbar > * {
+    display: inline-block;
+    vertical-align: middle;
+    }
+#toolbar input {
+    padding: 5px;
     }
 #toolbar .button {
-    background-color: white;
     border: none;
     box-sizing: border-box;
     cursor: pointer;
-    display: inline-block;
     font-size: 20px;
     margin: 0;
     padding: 8px;
     }
 #toolbar .button:hover {
-    background-color: #eee;
+    color: #999;
     }
 body.filterOff #toolbar #filterButton {
     opacity: 0.25;
@@ -40,14 +48,18 @@ body.filterOff #toolbar #filterButton {
 #filterExpression.bad {
     background-color: #fee;
     }
-#maxEntries {
-    margin-left: 3em;
-    }
 input:focus {
     background-color: #ffe;
     }
 #content {
-    margin-top: 40px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    overflow-y: auto;
+    padding-top: 90px;
     }
 #content table {
     border: 0;
