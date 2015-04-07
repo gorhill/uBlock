@@ -316,23 +316,11 @@ Matrix.prototype.clearRegisters = function() {
 /******************************************************************************/
 
 var is3rdParty = function(srcHostname, desHostname) {
-    if ( desHostname === '*' ) {
+    if(desHostname === '*' || srcHostname === '*' || srcHostname === '') {
         return false;
     }
 
-    // This case occurs for matrix rendering
-    if ( srcHostname === '*' ) {
-        return false;
-    }
-    var srcDomain = domainFromHostname(srcHostname);
-
-    // This can very well occurs, for examples:
-    // - localhost
-    // - file-scheme
-    // etc.
-    if ( srcDomain === '' ) {
-        srcDomain = srcHostname !== '' ? srcHostname : desHostname;
-    }
+    var srcDomain = domainFromHostname(srcHostname) || srcHostname; // localhost, etc. don't have domain
 
     if ( desHostname.slice(0 - srcDomain.length) !== srcDomain ) {
         return true;
