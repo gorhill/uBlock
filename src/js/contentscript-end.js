@@ -31,7 +31,7 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/464
+// https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
     //console.debug('contentscript-end.js > not a HTLMDocument');
     return false;
@@ -42,13 +42,13 @@ if ( !vAPI ) {
     return;
 }
 
-// https://github.com/gorhill/uBlock/issues/587
+// https://github.com/chrisaljoudi/uBlock/issues/587
 // Pointless to execute without the start script having done its job.
 if ( !vAPI.contentscriptStartInjected ) {
     return;
 }
 
-// https://github.com/gorhill/uBlock/issues/456
+// https://github.com/chrisaljoudi/uBlock/issues/456
 // Already injected?
 if ( vAPI.contentscriptEndInjected ) {
     //console.debug('contentscript-end.js > content script already injected');
@@ -63,7 +63,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/789
+// https://github.com/chrisaljoudi/uBlock/issues/789
 // Be sure that specific cosmetic filters are still applied.
 // Executed once, then flushed from memory.
 
@@ -87,7 +87,7 @@ var messager = vAPI.messaging.channel('contentscript-end.js');
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/7
+// https://github.com/chrisaljoudi/uBlock/issues/7
 
 var uBlockCollapser = (function() {
     var timer = null;
@@ -136,18 +136,18 @@ var uBlockCollapser = (function() {
             delete pendingRequests[request.id];
             pendingRequestCount -= 1;
 
-            // https://github.com/gorhill/uBlock/issues/869
+            // https://github.com/chrisaljoudi/uBlock/issues/869
             if ( !request.collapse ) {
                 continue;
             }
 
             target = entry.target;
 
-            // https://github.com/gorhill/uBlock/issues/399
+            // https://github.com/chrisaljoudi/uBlock/issues/399
             // Never remove elements from the DOM, just hide them
             target.style.setProperty('display', 'none', 'important');
 
-            // https://github.com/gorhill/uBlock/issues/1048
+            // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
             if ( value = target.getAttribute(entry.attr) ) {
                 selectors.push(entry.tagName + '[' + entry.attr + '="' + value + '"]');
@@ -200,7 +200,7 @@ var uBlockCollapser = (function() {
         if ( prop === undefined ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/174
+        // https://github.com/chrisaljoudi/uBlock/issues/174
         // Do not remove fragment from src URL
         var src = target[prop];
         if ( typeof src !== 'string' || src === '' ) {
@@ -278,7 +278,7 @@ var uBlockCollapser = (function() {
                 },
                 retrieveHandler
             );
-            // https://github.com/gorhill/uBlock/issues/452
+            // https://github.com/chrisaljoudi/uBlock/issues/452
             retrieveHandler = nextRetrieveHandler;
         } else {
             nextRetrieveHandler(null);
@@ -286,13 +286,13 @@ var uBlockCollapser = (function() {
         lowGenericSelectors = [];
     };
 
-    // https://github.com/gorhill/uBlock/issues/452
+    // https://github.com/chrisaljoudi/uBlock/issues/452
     // This needs to be executed *after* the response from our query is
     // received, not at `DOMContentLoaded` time, or else there is a good
     // likeliness to outrun contentscript-start.js, which may still be waiting
     // on a response from its own query.
     var firstRetrieveHandler = function(response) {
-        // https://github.com/gorhill/uBlock/issues/158
+        // https://github.com/chrisaljoudi/uBlock/issues/158
         // Ensure injected styles are enforced
         // rhill 2014-11-16: not sure this is needed anymore. Test case in
         //  above issue was fine without the line below..
@@ -380,7 +380,7 @@ var uBlockCollapser = (function() {
     };
 
     var hideElements = function(selectors) {
-        // https://github.com/gorhill/uBlock/issues/207
+        // https://github.com/chrisaljoudi/uBlock/issues/207
         // Do not call querySelectorAll() using invalid CSS selectors
         if ( selectors.length === 0 ) {
             return;
@@ -388,7 +388,7 @@ var uBlockCollapser = (function() {
         if ( document.body === null ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/158
+        // https://github.com/chrisaljoudi/uBlock/issues/158
         // Using CSSStyleDeclaration.setProperty is more reliable
         var elems = document.querySelectorAll(selectors);
         var i = elems.length;
@@ -626,7 +626,7 @@ var uBlockCollapser = (function() {
         return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/618
+    // https://github.com/chrisaljoudi/uBlock/issues/618
     // Following is to observe dynamically added iframes:
     // - On Firefox, the iframes fails to fire a `load` event
 
@@ -665,7 +665,7 @@ var uBlockCollapser = (function() {
         }
     };
 
-    // https://github.com/gorhill/uBlock/issues/205
+    // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     var treeMutationObservedHandlerAsync = function(mutations) {
         var iMutation = mutations.length;
@@ -712,7 +712,7 @@ document.addEventListener('error', onResourceFailed, true);
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/7
+// https://github.com/chrisaljoudi/uBlock/issues/7
 
 // Executed only once
 

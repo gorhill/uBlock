@@ -407,7 +407,7 @@ SelectorCacheEntry.prototype.add = function(selectors, type) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/420
+// https://github.com/chrisaljoudi/uBlock/issues/420
 SelectorCacheEntry.prototype.remove = function(type) {
     this.lastAccessTime = Date.now();
     if ( type === undefined || type === 'cosmetic' ) {
@@ -561,7 +561,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/1004
+// https://github.com/chrisaljoudi/uBlock/issues/1004
 // Detect and report invalid CSS selectors.
 
 FilterContainer.prototype.div = document.createElement('div');
@@ -612,7 +612,7 @@ FilterContainer.prototype.compile = function(s, out) {
         return true;
     }
 
-    // https://github.com/gorhill/uBlock/issues/151
+    // https://github.com/chrisaljoudi/uBlock/issues/151
     // Negated hostname means the filter applies to all non-negated hostnames
     // of same filter OR globally if there is no non-negated hostnames.
     var applyGlobally = true;
@@ -640,7 +640,7 @@ FilterContainer.prototype.compile = function(s, out) {
 FilterContainer.prototype.compileGenericSelector = function(parsed, out) {
     var selector = parsed.suffix;
 
-    // https://github.com/gorhill/uBlock/issues/497
+    // https://github.com/chrisaljoudi/uBlock/issues/497
     // All generic exception filters are put in the same bucket: they are
     // expected to be very rare.
     if ( parsed.unhide ) {
@@ -715,7 +715,7 @@ FilterContainer.prototype.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\
 /******************************************************************************/
 
 FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, out) {
-    // https://github.com/gorhill/uBlock/issues/145
+    // https://github.com/chrisaljoudi/uBlock/issues/145
     var unhide = parsed.unhide;
     if ( hostname.charAt(0) === '~' ) {
         hostname = hostname.slice(1);
@@ -728,7 +728,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, o
         hostname = this.punycode.toASCII(hostname);
     }
 
-    // https://github.com/gorhill/uBlock/issues/188
+    // https://github.com/chrisaljoudi/uBlock/issues/188
     // If not a real domain as per PSL, assign a synthetic one
     var hash;
     var domain = this.µburi.domainFromHostname(hostname);
@@ -854,7 +854,7 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg, skip) {
             continue;
         }
 
-        // https://github.com/gorhill/uBlock/issues/497
+        // https://github.com/chrisaljoudi/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
         if ( fields[0] === 'g1' ) {
             this.genericDonthide.push(fields[1]);
@@ -1125,7 +1125,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             hideHigh: this.highHighGenericHide,
             hideHighCount: this.highHighGenericHideCount
         };
-        // https://github.com/gorhill/uBlock/issues/497
+        // https://github.com/chrisaljoudi/uBlock/issues/497
         r.donthide = this.genericDonthide;
     }
 
@@ -1170,7 +1170,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     var domain = µb.URI.domainFromHostname(hostname) || hostname;
     var pos = domain.indexOf('.');
 
-    // https://github.com/gorhill/uBlock/issues/587
+    // https://github.com/chrisaljoudi/uBlock/issues/587
     // r.ready will tell the content script the cosmetic filtering engine is
     // up and ready.
 
@@ -1190,7 +1190,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
     if ( bucket = this.hostnameFilters[hash] ) {
         bucket.retrieve(hostname, r.cosmeticHide);
     }
-    // https://github.com/gorhill/uBlock/issues/188
+    // https://github.com/chrisaljoudi/uBlock/issues/188
     // Special bucket for those filters without a valid domain name as per PSL
     if ( bucket = this.hostnameFilters[this.type0NoDomainHash] ) {
         bucket.retrieve(hostname, r.cosmeticHide);
@@ -1207,7 +1207,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(request) {
         bucket.retrieve(hostname, r.cosmeticDonthide);
     }
 
-    // https://github.com/gorhill/uBlock/issues/188
+    // https://github.com/chrisaljoudi/uBlock/issues/188
     // Special bucket for those filters without a valid domain name as per PSL
     if ( bucket = this.hostnameFilters[this.type1NoDomainHash] ) {
         bucket.retrieve(hostname, r.cosmeticDonthide);

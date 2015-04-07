@@ -67,7 +67,7 @@ info##DIV[class="banda-sticky-vp"]
 info##DIV[class="banda-sticky-mini"]
 	
 !Whitelist
-! https://github.com/gorhill/uBlock/issues/693#issuecomment-72928751
+! https://github.com/chrisaljoudi/uBlock/issues/693#issuecomment-72928751
 ! @@||homebank.ro^$document
 ! @@||profitshare.emag.ro/get_ads.php?*
 ! @@||profitshare.ro/get_ads.php?*

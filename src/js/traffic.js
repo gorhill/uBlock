@@ -33,7 +33,7 @@
 
 var exports = {};
 
-// https://github.com/gorhill/uBlock/issues/1001
+// https://github.com/chrisaljoudi/uBlock/issues/1001
 // This is to be used as last-resort fallback in case a tab is found to not
 // be bound while network requests are fired for the tab.
 
@@ -52,7 +52,7 @@ var onBeforeRequest = function(details) {
     //console.debug('µBlock.webRequest/onBeforeRequest(): "type=%s, id=%d, parent id=%d, url=%s', details.type, details.frameId, details.parentFrameId, details.url);
 
     // Special handling for root document.
-    // https://github.com/gorhill/uBlock/issues/1001
+    // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
     var requestType = details.type;
@@ -70,14 +70,14 @@ var onBeforeRequest = function(details) {
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        // https://github.com/gorhill/uBlock/issues/1025
+        // https://github.com/chrisaljoudi/uBlock/issues/1025
         // Google Hangout popup opens without a root frame. So for now we will
         // just discard that best-guess root frame if it is too far in the
         // future, at which point it ceases to be a "best guess".
         if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
             mostRecentRootDocURL = '';
         }
-        // https://github.com/gorhill/uBlock/issues/1001
+        // https://github.com/chrisaljoudi/uBlock/issues/1001
         // Not a behind-the-scene request, yet no page store found for the
         // tab id: we will thus bind the last-seen root document to the
         // unbound tab. It's a guess, but better than ending up filtering
@@ -97,10 +97,10 @@ var onBeforeRequest = function(details) {
         }
     }
 
-    // https://github.com/gorhill/uBlock/issues/114
+    // https://github.com/chrisaljoudi/uBlock/issues/114
     var requestContext = pageStore;
     var frameStore;
-    // https://github.com/gorhill/uBlock/issues/886
+    // https://github.com/chrisaljoudi/uBlock/issues/886
     // For requests of type `sub_frame`, the parent frame id must be used
     // to lookup the proper context:
     // > If the document of a (sub-)frame is loaded (type is main_frame or
@@ -129,7 +129,7 @@ var onBeforeRequest = function(details) {
     if ( µb.isAllowResult(result) ) {
         //console.debug('traffic.js > onBeforeRequest(): ALLOW "%s" (%o) because "%s"', details.url, details, result);
 
-        // https://github.com/gorhill/uBlock/issues/114
+        // https://github.com/chrisaljoudi/uBlock/issues/114
         frameId = details.frameId;
         if ( frameId > 0 ) {
             if ( isFrame  ) {
@@ -141,7 +141,7 @@ var onBeforeRequest = function(details) {
 
         // https://code.google.com/p/chromium/issues/detail?id=387198
         // Not all redirects will succeed, until bug above is fixed.
-        // https://github.com/gorhill/uBlock/issues/540
+        // https://github.com/chrisaljoudi/uBlock/issues/540
         // Disabling local mirroring for the time being
         //var redirectURL = pageStore.toMirrorURL(requestURL);
         //if ( redirectURL !== '' ) {
@@ -160,13 +160,13 @@ var onBeforeRequest = function(details) {
 
     pageStore.logRequest(requestContext, result);
 
-    // https://github.com/gorhill/uBlock/issues/905#issuecomment-76543649
+    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
     // No point updating the badge if it's not being displayed.
     if ( µb.userSettings.showIconBadge ) {
         µb.updateBadgeAsync(tabId);
     }
 
-    // https://github.com/gorhill/uBlock/issues/18
+    // https://github.com/chrisaljoudi/uBlock/issues/18
     // Do not use redirection, we need to block outright to be sure the request
     // will not be made. There can be no such guarantee with redirection.
 
@@ -182,7 +182,7 @@ var onBeforeRootFrameRequest = function(details) {
     mostRecentRootDocURLTimestamp = Date.now();
 
     // Special handling for root document.
-    // https://github.com/gorhill/uBlock/issues/1001
+    // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
     var µb = µBlock;
@@ -214,7 +214,7 @@ var onBeforeRootFrameRequest = function(details) {
     // Filtering
     if ( result === '' && µb.getNetFilteringSwitch(requestURL) ) {
         result = µb.staticNetFilteringEngine.matchString(context);
-        // https://github.com/gorhill/uBlock/issues/1128
+        // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname.
         if ( result !== '' ) {
             result = toBlockDocResult(requestURL, requestHostname, result);
@@ -364,8 +364,8 @@ var onHeadersReceived = function(details) {
         }
     }
 
-    // https://github.com/gorhill/uBlock/issues/384
-    // https://github.com/gorhill/uBlock/issues/540
+    // https://github.com/chrisaljoudi/uBlock/issues/384
+    // https://github.com/chrisaljoudi/uBlock/issues/540
     // Disabling local mirroring for the time being
     //if ( details.parentFrameId === -1 ) {
     //    pageStore.skipLocalMirroring = headerStartsWith(details.responseHeaders, 'content-security-policy') !== '';
@@ -373,7 +373,7 @@ var onHeadersReceived = function(details) {
 
     var requestHostname = details.hostname;
 
-    // https://github.com/gorhill/uBlock/issues/525
+    // https://github.com/chrisaljoudi/uBlock/issues/525
     // When we are dealing with the root frame, due to fix to issue #516, it
     // is likely the root frame has not been bound yet to the tab, and thus
     // we could end up using the context of the previous page for filtering.

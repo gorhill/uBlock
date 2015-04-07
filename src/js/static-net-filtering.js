@@ -176,7 +176,7 @@ var alwaysTruePseudoRegex = {
 };
 
 var strToRegex = function(s, anchor) {
-    // https://github.com/gorhill/uBlock/issues/1038
+    // https://github.com/chrisaljoudi/uBlock/issues/1038
     // Special case: always match.
     if ( s === '*' ) {
         return alwaysTruePseudoRegex;
@@ -533,7 +533,7 @@ FilterPlainRightAnchoredHostname.fromSelfie = function(s) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/235
+// https://github.com/chrisaljoudi/uBlock/issues/235
 // The filter is left-anchored somewhere within the hostname part of the URL.
 
 var FilterPlainHnAnchored = function(s) {
@@ -1228,7 +1228,7 @@ FilterParser.prototype.reset = function() {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/589
+// https://github.com/chrisaljoudi/uBlock/issues/589
 // Be ready to handle multiple negated types
 
 FilterParser.prototype.parseOptType = function(raw, not) {
@@ -1379,7 +1379,7 @@ FilterParser.prototype.parse = function(raw) {
             }
         }
 
-        // https://github.com/gorhill/uBlock/issues/1096
+        // https://github.com/chrisaljoudi/uBlock/issues/1096
         if ( s.charAt(0) === '^' ) {
             this.unsupported = true;
             return this;
@@ -1484,7 +1484,7 @@ FilterParser.prototype.makeToken = function() {
 
     var s = this.f;
 
-    // https://github.com/gorhill/uBlock/issues/1038
+    // https://github.com/chrisaljoudi/uBlock/issues/1038
     // Match any URL.
     if ( s === '*' ) {
         this.token = '*';
@@ -1729,7 +1729,7 @@ FilterContainer.prototype.compile = function(raw, out) {
     }
 
     // Pure hostnames, use more efficient liquid dict
-    // https://github.com/gorhill/uBlock/issues/665
+    // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
     if ( parsed.hostnamePure && this.compileHostnameOnlyFilter(parsed, out) ) {
         return true;
@@ -1838,7 +1838,7 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
         if ( filterClass === null ) {
             return false;
         }
-        // https://github.com/gorhill/uBlock/issues/251
+        // https://github.com/chrisaljoudi/uBlock/issues/251
         // Apply third-party option if it is present
         this.compileToAtomicFilter(filterClass, parsed, party, out);
     }
@@ -1856,7 +1856,7 @@ FilterContainer.prototype.compileFilter = function(parsed, out) {
         if ( filterClass === null ) {
             return false;
         }
-        // https://github.com/gorhill/uBlock/issues/191#issuecomment-53654024
+        // https://github.com/chrisaljoudi/uBlock/issues/191#issuecomment-53654024
         // If it is a block filter, we need to reverse the order of
         // evaluation.
         if ( parsed.action === BlockAction ) {
@@ -1985,7 +1985,7 @@ FilterContainer.prototype.tokenize = function(url) {
         tokenEntry.token = matches[0];
         i += 1;
 
-        // https://github.com/gorhill/uBlock/issues/1118
+        // https://github.com/chrisaljoudi/uBlock/issues/1118
         // Crazy case... but I guess we have to expect the worst...
         if ( i === 2048 ) {
             break;
@@ -2037,7 +2037,7 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 
 // Specialized handlers
 
-// https://github.com/gorhill/uBlock/issues/116
+// https://github.com/chrisaljoudi/uBlock/issues/116
 // Some type of requests are exceptional, they need custom handling,
 // not the generic handling.
 
@@ -2062,7 +2062,7 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // Tokenize only once
     this.tokenize(url);
 
-    // https://github.com/gorhill/uBlock/issues/139
+    // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
     if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
         bf = this.matchTokens(bucket, url);
@@ -2112,7 +2112,7 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 /******************************************************************************/
 
 FilterContainer.prototype.matchString = function(context) {
-    // https://github.com/gorhill/uBlock/issues/519
+    // https://github.com/chrisaljoudi/uBlock/issues/519
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
     var type = typeNameToTypeValue[context.requestType] || typeOtherValue;
@@ -2161,7 +2161,7 @@ FilterContainer.prototype.matchString = function(context) {
 
     var bf = false;
 
-    // https://github.com/gorhill/uBlock/issues/139
+    // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters.
     // The purpose of the `important` option is to reverse the order of
     // evaluation. Normally, it is "evaluate block then evaluate allow", with

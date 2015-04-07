@@ -115,7 +115,7 @@ var renderFilterLists = function() {
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
         elem.text(text);
 
-        // https://github.com/gorhill/uBlock/issues/104
+        // https://github.com/chrisaljoudi/uBlock/issues/104
         var asset = listDetails.cache[listKey] || {};
 
         // Update status

@@ -66,7 +66,7 @@ return {
         showIconBadge: true
     },
 
-    // https://github.com/gorhill/uBlock/issues/180
+    // https://github.com/chrisaljoudi/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
     netWhitelist: {},
     netWhitelistModifyTime: 0,

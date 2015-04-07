@@ -193,7 +193,7 @@ var toUrlKey = function(url) {
         if ( matches === null ) {
             continue;
         }
-        // https://github.com/gorhill/uBlock/issues/301
+        // https://github.com/chrisaljoudi/uBlock/issues/301
         // Use whole URL as key when no regex capture
         return matches.length === 1 ? url : matches[1];
     }
@@ -204,7 +204,7 @@ var toUrlKey = function(url) {
 
 // Ref: http://www.iana.org/assignments/media-types/media-types.xhtml
 
-// https://github.com/gorhill/uBlock/issues/362
+// https://github.com/chrisaljoudi/uBlock/issues/362
 //
 // Using http://dev.w3.org/2006/webapi/FileAPI/#enctype logic, at least it's
 // something... It looks like this is what the browser should be doing with
