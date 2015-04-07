@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Řídící panel",
+    "message":"uBlock₀ — Řídící panel",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Záznamy síťových požadavků",
+    "message":"uBlock₀ — Záznamy síťových požadavků",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Kliknutí: trvale zakázat uBlock pro celý tento web.\n\nCtrl+kliknutí: zakázat µBlock pouze pro tuto stránku.",
+    "message":"Kliknutí: trvale zakázat uBlock pro celý tento web.\n\nCtrl+kliknutí: zakázat uBlock₀ pouze pro tuto stránku.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Přidat následující URL adresu do seznamů vlastních filtrů?\n\nNázev: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Přidat následující URL adresu do seznamů vlastních filtrů?\n\nNázev: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

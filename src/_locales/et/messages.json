@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Töölaud",
+    "message":"uBlock₀ — Töölaud",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Võrgutaotluste logi",
+    "message":"uBlock₀ — Võrgutaotluste logi",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Kõik seaded kustutatakse ning uBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
+    "message":"Kõik seaded kustutatakse ning uBlock taaskäivitatakse.\n\nTaastan uBlock₀'i algseadetele?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

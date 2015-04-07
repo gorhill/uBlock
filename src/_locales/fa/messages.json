@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — داشبورد",
+    "message":"uBlock₀ — داشبورد",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — لاگ درخواست های شبکه",
+    "message":"uBlock₀ — لاگ درخواست های شبکه",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
+    "message":"uBlock₀: لینک زیر به لیست فیلتر ها اضافه شود؟\n\nعنوان: \"{{title}}\"\nآدرس: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

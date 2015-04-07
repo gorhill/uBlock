@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock — Панель керування",
+    "message":"uBlock₀ — Панель керування",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock — Журнал мережевих запитів",
+    "message":"uBlock₀ — Журнал мережевих запитів",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Клік: вимикає\/умикає µBlock для сайту.\n\nCtrl+клік: вимикає µBlock тільки для поточної сторінки.",
+    "message":"Клік: вимикає\/умикає uBlock₀ для сайту.\n\nCtrl+клік: вимикає uBlock₀ тільки для поточної сторінки.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації  мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
+    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації  мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>uBlock₀<\/i>'ом.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -336,7 +336,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ваш список сайтів, які µBlock буде ігнорувати. Один запис на рядок. Невірні запси буде проігноровано без зауважень.",
+    "message":"Ваш список сайтів, які uBlock₀ буде ігнорувати. Один запис на рядок. Невірні запси буде проігноровано без зауважень.",
     "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -360,7 +360,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті µBlock. Через те, що більшість користувачів ніколи не використовують цю функцію, зазвичай її вимкнено.",
+    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті uBlock₀. Через те, що більшість користувачів ніколи не використовують цю функцію, зазвичай її вимкнено.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -440,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Всі ваші налаштування будуть перезаписані з резервної копії від {{time}} та µBlock буде перезапущено.\n\nПерезаписати всі налаштування використовуючи резервну копію?",
+    "message":"Всі ваші налаштування будуть перезаписані з резервної копії від {{time}} та uBlock₀ буде перезапущено.\n\nПерезаписати всі налаштування використовуючи резервну копію?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Ваші налаштування буде видалено та µBlock буде перезапущено.\n\nПовернути µBlock до початкових налаштувань?",
+    "message":"Ваші налаштування буде видалено та uBlock₀ буде перезапущено.\n\nПовернути uBlock₀ до початкових налаштувань?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
+    "message":"uBlock₀: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

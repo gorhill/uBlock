@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Nadzorna ploča",
+    "message":"uBlock₀ — Nadzorna ploča",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Zapisnik mrežnih zahtjeva",
+    "message":"uBlock₀ — Zapisnik mrežnih zahtjeva",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: trajno onemogućiti\/omogućiti uBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock samo za ovu stranicu.",
+    "message":"Klik: trajno onemogućiti\/omogućiti uBlock za ovaj sajt.\n\nCtrl+klik: onemogućiti uBlock₀ samo za ovu stranicu.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Sve vaše postavke će biti obrisane i uBlock će se ponovno pokrenuti.  \n\nVraćanje µBlock tvorničkih postavki?",
+    "message":"Sve vaše postavke će biti obrisane i uBlock će se ponovno pokrenuti.  \n\nVraćanje uBlock₀ tvorničkih postavki?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Dodajte slijedeći izvor u vaš izbor filter lista?\n\nNaslov: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Dodajte slijedeći izvor u vaš izbor filter lista?\n\nNaslov: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

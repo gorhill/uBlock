@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Vadības panelis",
+    "message":"uBlock₀ — Vadības panelis",
     "description":"English: uBlock — Dashboard"
   },
   "settingsPageName":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Tīkla pieprasījumu žurnāls",
+    "message":"uBlock₀ — Tīkla pieprasījumu žurnāls",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -456,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
