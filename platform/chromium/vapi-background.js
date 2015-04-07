@@ -733,7 +733,7 @@ vAPI.onLoadAllCompleted = function() {
     catch(e) {
         chrome.browserAction._setIcon = chrome.browserAction.setIcon; // Nope; looks like older than v23
         chrome.browserAction.setIcon = function(x, clbk){       // Shim
-            this._setIcon({path: x.path[19]}, clbk);
+            this._setIcon({path: x.path[19], tabId: x.tabId}, clbk);
         };
         chrome.browserAction.setIcon({ path: iconPaths }); /* maybe this time... I'll win! */
     };
