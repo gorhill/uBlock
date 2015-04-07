@@ -168,9 +168,6 @@ const contentObserver = {
             type: type,
             url: location.spec
         };
-        if ( type === 7 ) {
-            details.attrSrc = context.frameElement.getAttribute('src');
-        }
 
         if ( typeof messageManager.sendRpcMessage === 'function' ) {
             // https://bugzil.la/1092216
