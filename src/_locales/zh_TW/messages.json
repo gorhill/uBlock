@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"此網站並無彈出式視窗",
-    "description":"English: No popups for this site"
+    "message":"切換是否阻擋此網站的所有彈出型視窗",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"此網站並無嚴謹的阻擋",
-    "description":"English: No strict blocking for this site"
+    "message":"切換是否對此網站進行嚴謹地阻擋",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"切換是否在此網站過濾網頁元素",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"全部",

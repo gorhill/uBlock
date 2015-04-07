@@ -43,7 +43,7 @@ Kontributor @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Masih dalam versi yang amat awal, mohon diperhatikan ketika anda membuat ulasan.
+Masih dalam versi yang sangat awal, mohon diingat ketika anda membuat ulasan.
 
 Catatan perubahan proyek:
 https://github.com/gorhill/uBlock/releases

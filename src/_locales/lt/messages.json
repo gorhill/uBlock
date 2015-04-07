@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Be iškylančiųjų langų šiame puslapyje",
-    "description":"English: No popups for this site"
+    "message":"Perjungti visų iškylančiųjų langų blokavimą šiame puslapyje",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Be griežto blokavimo šiame puslapyje",
-    "description":"English: No strict blocking for this site"
+    "message":"Perjungti griežtą blokavimą šiame puslapyje",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Perjungti kosmetinį filtravimą šiame puslapyje",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"visi",

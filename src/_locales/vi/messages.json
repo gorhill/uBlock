@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Nhấp chuột: vô hiệu\/kích hoạt vĩnh viễn µBlock cho trang này.\nCtrl + nhấp chuột: vô hiệu µBlock chỉ trên trang này.",
+    "message":"Nhấp chuột: vô hiệu\/kích hoạt µBlock cho trang này.\nCtrl + nhấp chuột: chỉ vô hiệu µBlock trên trang này.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Không hiện popup của trang này",
-    "description":"English: No popups for this site"
+    "message":"Bật\/tắt chặn popup của trang này",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Không chặn nghiêm ngặt trang này",
-    "description":"English: No strict blocking for this site"
+    "message":"Bật\/tắt chặn nghiêm ngặt trang này",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Bật\/tắt bộ lọc phần tử trên trang này",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"tất cả",

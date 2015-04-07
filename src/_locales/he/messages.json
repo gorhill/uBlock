@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"ללא חלונות קופצים לאתר זה",
-    "description":"English: No popups for this site"
+    "message":"הפעל\/כבה את החסימה של חלונות קופצים באתר זה",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"ללא חסימה נוקשה לאתר זה",
-    "description":"English: No strict blocking for this site"
+    "message":"הפעל\/כבה חסימה נוקשה באתר זה",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"הפעל\/כבה מסננים קוסמטיים באתר זה",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"הכל",

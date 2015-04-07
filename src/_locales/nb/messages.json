@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Ingen oppspretts-vinduer for dette nettstedet",
-    "description":"English: No popups for this site"
+    "message":"Slå av\/på blokkering av alle oppspretts-vinduer for dette nettstedet",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Ingen streng blokkering for dette nettstedet",
-    "description":"English: No strict blocking for this site"
+    "message":"Slå av\/på streng blokkering for dette nettstedet",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Slå av\/på kosmetisk filtrering for dette nettstedet",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"alle",

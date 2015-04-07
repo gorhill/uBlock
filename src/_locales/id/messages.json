@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Tidak ada popup untuk situs ini",
-    "description":"English: No popups for this site"
+    "message":"Alihkan pemblokiran semua popup untuk situs ini",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Tidak ada pemblokiran ketat untuk situs ini",
-    "description":"English: No strict blocking for this site"
+    "message":"Alihkan pemblokiran ketat untuk situs ini",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Alihkan penyaringan tampilan untuk situs ini",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"semua",
@@ -92,7 +96,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"pihak ke-3",
+    "message":"pihak ketiga",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -104,15 +108,15 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"skrip pihak ke-3",
+    "message":"skrip pihak ketiga",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"frame pihak ke-3",
+    "message":"frame pihak ketiga",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domain tersambung",
+    "message":"domain terhubung",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -264,7 +268,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Pembaharuan terakhir: {{ago}}",
+    "message":"Pembaruan terakhir: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -456,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Tambahkan URL berikut ke daftar filter kustom Anda ?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Tambahkan URL berikut ke daftar filter tersesuai anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

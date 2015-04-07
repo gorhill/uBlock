@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"No permitir pop-ups en este sitio",
-    "description":"English: No popups for this site"
+    "message":"Alternar bloqueo de todos los pop-ups para este sitio",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Deshabilitar bloqueo estricto para este sitio",
-    "description":"English: No strict blocking for this site"
+    "message":"Alternar bloqueo estricto para este sitio",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Alternar filtros cosméticos para este sitio",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"todo",

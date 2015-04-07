@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Bloķēt uznirstošos logus šajā vietnē",
-    "description":"English: No popups for this site"
+    "message":"Ieslēgt\/Izslēgt uznirstošos logus šajā vietnē",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Izslēgt stingro bloķēšanu šai vietnei",
-    "description":"English: No strict blocking for this site"
+    "message":"Ieslēgt\/Izslēgt stingro bloķēšanu šai vietnei",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Ieslēgt\/Izslēgt kosmētikas filtrus šai vietnei",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Visi",

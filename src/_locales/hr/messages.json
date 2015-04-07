@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Isključi skočne prozore na ovoj stranici",
-    "description":"English: No popups for this site"
+    "message":"Uključi\/isključi skočne prozore na ovoj stranici",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Isključi strogo blokiranje na ovoj stranici",
-    "description":"English: No strict blocking for this site"
+    "message":"Uključi\/isključi strogo blokiranje na ovoj stranici",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Uključi\/isključi kozmetičko filtriranje na ovoj stranici",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"sve",

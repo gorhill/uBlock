@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Выключить всплывающие окна на этом сайте",
-    "description":"English: No popups for this site"
+    "message":"Включить блокировку всех всплывающих окон на этом сайте",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Выключить строгую блокировку для этого сайта",
-    "description":"English: No strict blocking for this site"
+    "message":"Переключить строгую блокировку для этого сайта",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Переключить косметические фильтры на этом сайте",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"все",

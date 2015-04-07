@@ -76,12 +76,16 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Без изскачащи прозорци за този сайт",
-    "description":"English: No popups for this site"
+    "message":"Превключване блокирането на всички изскачащи прозорци за този сайт",
+    "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Без строго блокиране за този сайт",
-    "description":"English: No strict blocking for this site"
+    "message":"Превключване на строгото блокиране за този сайт",
+    "description":"English: Toggle strict blocking for this site"
+  },
+  "popupTipNoCosmeticFiltering":{
+    "message":"Превключване на козметичното филтриране за този сайт",
+    "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
     "message":"Всички",
