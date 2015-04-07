@@ -1,38 +1,21 @@
-@font-face {
-    font-family: 'FontAwesome';
-    font-weight: normal;
-    font-style: normal;
-    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-    }
-.fa {
-    display: inline-block;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    }
-
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/::after#Tooltips */
 [data-tip] {
     cursor: pointer;
     position: relative;
     }
-body:not(.advancedUser) [data-tip]:after {
-    background-color: #ffffee;
-    border: 1px solid gray;
+body [data-tip]:after {
+    background-color: #444;
     border-radius: 3px;
-    box-shadow: 1px 1px 3px gray;
     box-sizing: border-box;
-    color: black;
+    color: #eee;
     content: attr(data-tip);
-    font: 12px sans-serif;
+    font-size: 12px;
     left: 0.5em;
     line-height: 130%;
     opacity: 0;
     padding: 4px 6px;
     pointer-events: none;
-    position: fixed;
+    position: absolute;
     right: 0.5em;
     text-align: left;
     top: 110%;
@@ -77,3 +60,9 @@ body [data-tip][data-tip-anchor="topcenter"]:hover:after {
     width: 0;
     height: 0;
     }
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
