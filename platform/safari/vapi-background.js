@@ -262,6 +262,7 @@
             if(vAPI.tabs.onPopup(details)) {
                 e.preventDefault();
                 if(vAPI.tabs.stack[details.openerTabId]) {
+                    vAPI.tabs.popupCandidate = false;
                     vAPI.tabs.stack[details.openerTabId].activate();
                 }
             }
