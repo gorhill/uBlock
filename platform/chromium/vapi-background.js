@@ -49,6 +49,20 @@ vAPI.app = {
 
 /******************************************************************************/
 
+if (!chrome.runtime) {
+    // Chrome 20-21
+    chrome.runtime = chrome.extension;
+}
+else if(!chrome.runtime.onMessage) {
+    // Chrome 22-25
+    chrome.runtime.onMessage = chrome.extension.onMessage;
+    chrome.runtime.sendMessage = chrome.extension.sendMessage;
+    chrome.runtime.onConnect = chrome.extension.onConnect;
+    chrome.runtime.connect = chrome.extension.connect;
+}
+
+/******************************************************************************/
+
 vAPI.app.restart = function() {
     chrome.runtime.reload();
 };
@@ -711,6 +725,18 @@ vAPI.onLoadAllCompleted = function() {
         }
     };
 
+    var iconPaths = { '19': 'img/browsericons/icon19-off.png',
+                        '38': 'img/browsericons/icon38-off.png' };
+    try {
+        chrome.browserAction.setIcon({ path: iconPaths });  // Hello? Is this a recent version of Chrome?
+    }
+    catch(e) {
+        chrome.browserAction._setIcon = chrome.browserAction.setIcon; // Nope; looks like older than v23
+        chrome.browserAction.setIcon = function(x, clbk){       // Shim
+            this._setIcon({path: x.path[19]}, clbk);
+        };
+        chrome.browserAction.setIcon({ path: iconPaths }); /* maybe this time... I'll win! */
+    };
     chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
     chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
 };

@@ -27,6 +27,9 @@ var quickProfiler = (function() {
     'use strict';
 
     var timer = window.performance || Date;
+    if(typeof timer.now === "undefined") {
+        timer.now = timer.webkitNow;
+    }
     var time = 0;
     var count = 0;
     var tstart = 0;
