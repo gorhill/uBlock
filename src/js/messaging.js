@@ -516,8 +516,12 @@ var onMessage = function(details, sender, callback) {
 
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
-            if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
-                response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
+            response = {
+                shutdown: !pageStore || pageStore.getGenericCosmeticFilteringSwitch() === false,
+                result: null
+            };
+            if ( response.shutdown === false ) {
+                response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;
 
@@ -527,7 +531,13 @@ var onMessage = function(details, sender, callback) {
 
         // Evaluate many requests
         case 'filterRequests':
-            response = filterRequests(pageStore, details);
+            response = {
+                shutdown: !pageStore || pageStore.getGenericCosmeticFilteringSwitch() === false,
+                result: null
+            };
+            if ( response.shutdown === false ) {
+                response.result = filterRequests(pageStore, details);
+            }
             break;
 
         default:
