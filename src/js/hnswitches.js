@@ -196,6 +196,15 @@ HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newSta
 
 /******************************************************************************/
 
+HnSwitches.prototype.toggleZ = function(switchName, hostname, deep, newState) {
+    if ( deep === true ) {
+        return this.hnSwitches.toggleBranchZ(switchName, hostname, newState);
+    }
+    return this.hnSwitches.toggleOneZ(switchName, hostname, newState);
+};
+
+/******************************************************************************/
+
 // 0 = inherit from broader scope, up to default state
 // 1 = non-default state
 // 2 = forced default state (to override a broader non-default state)
