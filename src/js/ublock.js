@@ -319,29 +319,12 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.toggleHostnameSwitch = function(details) {
-    var hostname = details.hostname;
-    var fromHostname = details.fromHostname || hostname;
     var changed = false;
 
-    var fromHostnames = [];
-    var pos;
-    for (;;) {
-        fromHostnames.push(fromHostname);
-        if ( fromHostname === hostname ) {
-            break;
-        }
-        pos = fromHostname.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
-        fromHostname = fromHostname.slice(pos + 1);
-    }
-
-    var i = fromHostnames.length;
-    while ( i-- ) {
-        if ( this.hnSwitches.toggleZ(details.name, fromHostnames[i], details.state) ) {
-            changed = true;
-        }
+    if ( details.deep === true ) {
+        changed = this.hnSwitches.toggleBranchZ(details.name, details.hostname, details.state);
+    } else {
+        changed = this.hnSwitches.toggleOneZ(details.name, details.hostname, details.state);
     }
 
     if ( changed ) {

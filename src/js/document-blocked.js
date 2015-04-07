@@ -73,7 +73,7 @@ var proceedPermanent = function() {
         what: 'toggleHostnameSwitch',
         name: 'noStrictBlocking',
         hostname: getTargetHostname(),
-        fromHostname: details.hn,
+        deep: true,
         state: true
     }, proceedToURL);
 };

@@ -126,7 +126,7 @@ HnSwitches.prototype.toggle = function(switchName, hostname, newVal) {
 
 /******************************************************************************/
 
-HnSwitches.prototype.toggleZ = function(switchName, hostname, newState) {
+HnSwitches.prototype.toggleOneZ = function(switchName, hostname, newState) {
     var bitOffset = switchBitOffsets[switchName];
     if ( bitOffset === undefined ) {
         return false;
@@ -151,6 +151,47 @@ HnSwitches.prototype.toggleZ = function(switchName, hostname, newState) {
     }
     this.switches[hostname] = bits | ((newState ? 1 : 2) << bitOffset);
     return true;
+};
+
+/******************************************************************************/
+
+HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newState) {
+    var changed = this.toggleOneZ(switchName, targetHostname, newState);
+
+    var targetLen = targetHostname.length;
+    var hostnames = [];
+
+    for ( var hostname in this.switches ) {
+        if ( this.switches.hasOwnProperty(hostname) === false ) {
+            continue;
+        }
+        if ( hostname === targetHostname ) {
+            continue;
+        }
+        if ( hostname.length <= targetLen ) {
+            continue;
+        }
+        if ( hostname.slice(-targetLen) !== targetHostname ) {
+            continue;
+        }
+        if ( hostname.charAt(hostname.length - targetLen - 1) !== '.' ) {
+            continue;
+        }
+        hostnames.push(hostname);
+    }
+
+    // Decreasing length order so that all switch states are inherited from
+    // targetHostname.
+    hostnames.sort(function(a, b) {
+        return b.length - a.length;
+    });
+
+    var i = hostnames.length;
+    while ( i-- ) {
+        changed = this.toggleOneZ(switchName, hostnames[i], newState) || changed;
+    }
+
+    return changed;
 };
 
 /******************************************************************************/
