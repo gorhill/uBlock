@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
 
-    "name": "uBlock",
+    "name": "uBlock₀",
     "version": "0.9.3.1",
 
     "default_locale": "en",
@@ -16,11 +16,11 @@
             "19": "img/browsericons/icon19-off.png",
             "38": "img/browsericons/icon38-off.png"
         },
-        "default_title": "uBlock",
+        "default_title": "uBlock₀",
         "default_popup": "popup.html"
     },
 
-    "author": "The uBlock Development Team",
+    "author": "The uBlock₀ Development Team",
     "background": {
         "page": "background.html"
     },
@@ -63,7 +63,7 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock",
+    "short_name": "uBlock₀",
     "web_accessible_resources": [
         "document-blocked.html"
     ]
