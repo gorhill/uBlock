@@ -19,34 +19,43 @@
     Home: https://github.com/gorhill/uBlock
 */
 (function() {
-'use strict';
+"use strict";
 
-var DF_ENABLED_CLASS = "dfEnabled";
+if(typeof safari.self === "undefined") {
+    return;
+}
 
 var onLoaded = function() {
     var _toggle = DOMTokenList.prototype.toggle;
-    DOMTokenList.prototype.toggle = function(className) {
+    DOMTokenList.prototype.toggle = function(className, enabled) {
+        if(className === "dfEnabled") {
+            updateSize(enabled);
+        }
         _toggle.apply(this, arguments);
-        if(className === DF_ENABLED_CLASS) {
+        if(className === "dfEnabled") {
             setTimeout(updateSize, 0);
         }
     };
-    var body = document.body, popover = safari.self;
+    var body = document.body,
+        popover = safari.self,
+        panes = document.getElementById("panes"),
+        pane1 = panes.children[0],
+        pane2 = panes.children[1];
     
-    var panes = document.getElementById("panes"),
-        powerAndStatsPane = panes.children[0],
-        dfPane = panes.children[1];
-
-    var updateSize = function() {
-        var dfEnabled = panes.classList.contains(DF_ENABLED_CLASS);
-        popover.width = powerAndStatsPane.clientWidth + (dfEnabled ? dfPane.clientWidth : 0);
+    body.style.width = "100%";
+    panes.style.width = "100%";
+    
+    var updateSize = function(isOpen) {
+        var w = pane2.clientWidth;
+        if(typeof isOpen === "undefined") {
+            isOpen = (w !== 0);
+        }
+        popover.width = (isOpen ? w : 0) + pane1.clientWidth;
         popover.height = body.clientHeight;
     };
 
-    body.style.setProperty("width", "100%");
-    panes.style.setProperty("width", "100%");
-    dfPane.style.setProperty("display", "inline-block", "important");
     setTimeout(updateSize, 0);
 };
+
 window.addEventListener("load", onLoaded);
 })();
