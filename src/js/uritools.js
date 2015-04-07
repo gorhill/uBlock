@@ -49,7 +49,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 // Derived
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
-var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]+)\//;
+var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
