@@ -1,4 +1,4 @@
-**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes. I consider uBlock here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine. If I add anything new, it will be because I decide to do so, for my own coding pleasure, as I do not accept any feature requests.
+**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes. I consider uBlock₀ here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine. If I add anything new, it will be because I decide to do so, for my own coding pleasure, as I do not accept any feature requests.
 
 *** 
 
@@ -12,7 +12,7 @@ uBlock₀
 </h1>
 <p align="center">
 <sup> <!-- Pronounciation -->
-      pronounced <i>you-block</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
+      pronounced <i>you-block<sub>origin</sub></i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
 </sup>
 <br>
 <sup> <!-- Languages -->
@@ -44,15 +44,15 @@ uBlock₀
 
 ## Philosophy
 
-uBlock is not an *ad blocker*; it's a general-purpose blocker. uBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
+uBlock₀ is not an *ad blocker*; it's a general-purpose blocker. uBlock₀ blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock₀ [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
 That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
 
-Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **uBlock's main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/gorhill/uMatrix)).
+Ads, "unintrusive" or not, are just the visible portions of privacy-invading apparatus entering your browser when you visit most sites nowadays. **uBlock₀'s main goal is to help users neutralize such privacy-invading apparatus** — in a way that welcomes those users who don't wish to use more technical, involved means (such as [µMatrix](https://github.com/gorhill/uMatrix)).
 
-_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
+_EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock₀. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
 
-Once you install uBlock, you may easily un-select any of the pre-selected filter lists if you think uBlock blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
+Once you install uBlock₀, you may easily un-select any of the pre-selected filter lists if you think uBlock₀ blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
 
 ## Documentation
 
@@ -60,14 +60,14 @@ Once you install uBlock, you may easily un-select any of the pre-selected filter
 
 <a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/popup-1.png" /></a>
 
-For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [uBlock's wiki](https://github.com/gorhill/uBlock/wiki).
+For advanced usage, read about [dynamic filtering](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide) and more on [uBlock₀'s wiki](https://github.com/gorhill/uBlock/wiki).
 
 ## Performance
 
 #### Memory
 
 <div align="center">
-On average, uBlock <b>really</b> does make your browser run leaner. <sup>[1]</sup><br><br>
+On average, uBlock₀ <b>really</b> does make your browser run leaner. <sup>[1]</sup><br><br>
 
 Chromium <sup>[2]</sup><br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br><br>
@@ -87,7 +87,7 @@ Safari<br>
 #### CPU
 
 <p align="center">
-uBlock is also easy on the CPU<br>
+uBlock₀ is also easy on the CPU<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
 <sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
@@ -98,7 +98,7 @@ uBlock is also easy on the CPU<br>
 Being lean and efficient doesn't mean blocking less<br>
 <img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201502-16.png" /><br>
 <sup>For details of benchmark, see 
-<a href="https://github.com/gorhill/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock and others: Blocking ads, trackers, malwares</a>.
+<a href="https://github.com/gorhill/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock₀ and others: Blocking ads, trackers, malwares</a>.
 </p>
 
 #### Quick tests
@@ -123,13 +123,13 @@ Install from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox
 
 #### Safari
 
-Install the latest uBlock for Safari [from its homepage](https://chrismatic.io/ublock/), or a potentially-outdated version from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
+Install the latest uBlock₀ for Safari [from its homepage](https://chrismatic.io/ublock/), or a potentially-outdated version from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
 
 <sup>Safari 6.1 and later (developed on Safari 8/Yosemite; tested on 6.1/Mountain Lion and 7/Mavericks).</sup>
 
 #### Note for all browsers
 
-To benefit from uBlock's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock will do [as well or better](#blocking) than most popular ad blockers.
+To benefit from uBlock₀'s higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
 
 ## Release History
 
@@ -137,7 +137,7 @@ See the [releases pages](https://github.com/gorhill/uBlock/releases) for a histo
 
 ## About
 
-[uBlock's manifesto](MANIFESTO.md).
+[uBlock₀'s manifesto](MANIFESTO.md).
 
 Free. Open source. For users by users. No donations sought.
 
@@ -146,7 +146,7 @@ really do want to contribute something, think about the people working hard
 to maintain the filter lists you are using, which were made available to use by
 all for free.
 
-You can contribute by helping translate uBlock [on Crowdin](https://crowdin.net/project/ublock).
+You can contribute by helping translate uBlock₀ [on Crowdin](https://crowdin.net/project/ublock).
 
 ## License
 
