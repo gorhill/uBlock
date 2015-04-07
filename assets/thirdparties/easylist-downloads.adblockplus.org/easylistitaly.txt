@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Mx5ZyGVaIG1VLQ12BbvYDg
-! Version: 201503211221
+! Checksum: QyaL9WKUJB6vLJi8E7/5KQ
+! Version: 201504070651
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 21 Mar 2015 12:21 UTC
+! Ultima modifica: 07 Apr 2015 06:51 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1317,6 +1317,7 @@ sportube.tv#@#.afs_ads
 ||orvietosi.it^*298x100.swf
 ||ostiatv.it/upl/banner
 ||oxfordparavia.it/img/babylon.gif
+||p.italia-film.org^
 ||padovanews.it/images/banners/
 ||paeimprese.it^*/downloadfilebanner.php?
 ||palermomania.com/images/banner/
@@ -1629,6 +1630,7 @@ sportube.tv#@#.afs_ads
 ||umbriaingol.it//immagini/File_banner/
 ||unionemonregalese.it/UP_BANNERS/
 ||universfilms.com^*_bluebutton_watchonline_
+||uominietrasporti.it/banner/
 ||uscatanzaro.net/images/banners/
 ||valenza.it/banner/
 ||vallesabbianews.it/files/Image/Banner/
@@ -1807,7 +1809,7 @@ contosulconto.it###banner_content
 tuttobasket.net###banner_head
 laprovinciadicomo.it###banner_header
 palermomania.it###banner_header2
-tuttosport.com###banner_leaderboard
+subito.it,tuttosport.com###banner_leaderboard
 lastampa.it###banner_maxticker
 html.it###banner_piede_articolo
 paginegialle.it###banner_pushbar
@@ -2151,7 +2153,7 @@ oktennis.it##.adv1
 delleconomia.it##.adv200
 virgilio.it##.advTuning
 webnews.it##.adv_01
-addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it##.advert
+addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it,vg247.it##.advert
 loradellacalabria.it##.advertise
 loradellacalabria.it##.advertise2
 internimagazine.it##.advertisement
@@ -2558,6 +2560,7 @@ musicoff.com##a[href^="http://www.musicoff.com/ad/redirect/"]
 zapster.it##a[href^="http://www.paperbox.it/"]
 piratestreaming.com##a[href^="http://www.piratestreaming.com/video"]
 classifichemusica.com##a[href^="http://www.viagogo.it/Biglietti-Concerti?affiliateID="]
+italia-film.org##a[href^="http://x.italia-film.org/get.php"]
 traderlink.it##a[style="display: block; width: 100%; height: 1080px; filter:alpha(opacity=0); -moz-opacity: 0; opacity: 0; background-color: rgb(255, 255, 255);"]
 gpone.com##div[style=" margin:auto; margin-top:0px; margin-bottom:0px; width:730px; height:92px;"]
 gpone.com##div[style=" margin:auto; margin-top:5px; margin-bottom:5px; width:730px; height:92px;"]
@@ -2806,6 +2809,8 @@ mymovies.it##td[style="height:45px; background-color:#FFFFFF; ;"]
 finanzaonline.com,hwupgrade.it##td[style="padding-left:10px; width:300px;"]
 gommeblog.it##td[style="width: 305px; height: 251px; text-align: center;"]
 gommeblog.it##td[style="width: 335px; height: 251px; text-align: center;"]
+clubalfa.it##td[width="305"][height="205"]
+clubalfa.it##td[width="310"][height="255"]
 ! Anti-Adblock
 tomshw.it###notifica_adcont
 termometropolitico.it##[id^="bsa"]
@@ -2926,6 +2931,7 @@ termometropolitico.it##[id^="bsa"]
 @@||tvgratis.altervista.org^*/advertisement.js
 @@||vvvvid.it/img/advertisement.jpg?
 @@||vvvvid.it/img/advertisment.jpg?
+@@||webtvhd.com^$elemhide
 @@||zeb89.altervista.org^$elemhide
 @@||zeb89.altervista.org^*#$image
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_dimensions.txt ***

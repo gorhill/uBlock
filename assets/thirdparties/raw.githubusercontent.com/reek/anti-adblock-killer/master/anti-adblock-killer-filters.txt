@@ -15,6 +15,7 @@
 ! Used to detect this list
 !----------------------------------------------------------------------------------------------------!
 ###k2Uw7isHrMm5JXP1Vwdxc567ZKc1aZ4I
+@@||raw.githubusercontent.com/reek/anti-adblock-killer/
 !----------------------------------------------------------------------------------------------------!
 ! AntiAdblock - Generic
 !----------------------------------------------------------------------------------------------------!
@@ -505,9 +506,6 @@ eclypsia.com#@##adv_tester
 !coolkora.com#@#iframe[id^="advertise"]
 !cast.coolkora.com###co_holder
 @@||coolkora.com^$elemhide
-! videomega.tv
-@@||videomega.tv/JWJFfELSbJ/$script
-||goo.gl^$popup,domain=videomega.tv
 ! javso.com
 @@/adblock/adblock.js$script,domain=javso.com
 ||javso.com/popjs/popred.js$script
@@ -628,6 +626,7 @@ lien-torrent.com###ad_divr
 lien-torrent.com###ad_divl
 ! miniup.com
 @@||miniup.com/images/ads.png$image
+@@||miniup.com/ads/ads.png$image
 ! hackintosh.zone
 hackintosh.zone#@#.adsbygoogle
 @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=hackintosh.zone
@@ -653,6 +652,8 @@ fz.se###AdBlockerInfo
 pencurimovie.cc##.adb_overlay
 pencurimovie.cc###simplemodal-overlay
 pencurimovie.cc###simplemodal-container
+! onemanga2
+onemanga2#@#.afs_ads
 ! mangabird.com
 mangabird.com#@#.afs_ads
 ! sports.ru
@@ -683,11 +684,6 @@ videopremium.tv#@#.text_ad
 videopremium.tv#@#.text_ads
 videopremium.tv#@#.text-ads
 videopremium.tv#@#.text-ad-links
-! filmovizija.com
-@@||filmovizija.com/ads.js$script
-! psarips.com
-@@||psarips.com/wp-content/plugins/@NT1-PSA/js/directrev.com.js$script
-@@||popads2.byethost33.com/directrev.com.js$script,domain=psarips.com
 ! skidrowcrack.com
 ||skidrowcrack.com/adblock-checker.js$script
 ! afdah.com
@@ -770,8 +766,66 @@ vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .left
 @@||bit-vortex.com/js/antiadblock.js$script
 ! fit.sh
 @@||server1.affiz.net/tracking/ads_display.php$script,domain=fit.sh
+@@||c.ad6media.fr/l.js$script,domain=fit.sh
 ! fosshub.com
 @@||fosshub.com/media/v2/js/ads.js$script
+! coinracket.com
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=coinracket.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=coinracket.com
+! faucetofamerica.com
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=faucetofamerica.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=faucetofamerica.com
+! thebitcoinsheep.com
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=thebitcoinsheep.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=thebitcoinsheep.com
+! landofdogecoin.com
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=landofdogecoin.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=landofdogecoin.com
+! usafaucet.tk
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=usafaucet.tk
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=usafaucet.tk
+! flightradar24.com
+flightradar24.com##.noads
+! ville-ideale.com
+ville-ideale.com###espace
+! fan-de-cinema.com
+@@||c.ad6media.fr/l.js$domain=fan-de-cinema.com
+! xiaopan.co
+xiaopan.co#@#.adsbygoogle
+! thebitcoinsheep.com
+thebitcoinsheep.com##.col-md-6 font[size="5"] > font[color="white"] > font[color="white"][size="3"]
+! mobilevids.org
+mobilevids.org#@#.afs_ads
+@@||syndication.exoclick.com/ads-iframe-display.php$subdocument,domain=mobilevids.org
+@@||ads.exoclick.com/ads.js$script,domain=mobilevids.org
+! saikoanimes.net
+saikoanimes.net#@#.afs_ads
+! cryptospout.com
+cryptospout.com#@#.adsbygoogle
+! cmmonitor.com
+cmmonitor.com#@#.adsbygoogle
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=cmmonitor.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=cmmonitor.com
+! 777bitco.in
+@@||777bitco.in/static/js/Controller/Advertise.js$script
+! vipleague.se
+@@||cdn.vipleague.se/js/ads.js$script
+! mangamap.com
+mangamap.com#@#.afs_ads
+! videomega.tv
+@@||adv.videomega.tv/hashverify.php$subdocument
+@@||videomega.tv/vjs/lib/videojs-contrib-ads/videojs.ads.css$stylesheet
+@@||videomega.tv/vjs/plugin/css/ads.css$stylesheet
+! theextopia.com
+theextopia.com##.adsbanner
+theextopia.com##.adsfoot1
+theextopia.com##.adsfoot2
+! filmovizija.com
+||adpro.ml/ncode.js$script,domain=filmovizija.com
+! umahdroid.blogspot.com
+umahdroid.blogspot.com###energysaving
+! streaming-foot.me
+@@||streaming-foot.me/js/adblock.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -878,8 +932,6 @@ vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .left
 ||cdn.shorte.st/link-converter.min.js$script,third-party
 ! bc.vc
 ||bc.vc/js/link-converter.js$script,third-party
-! gca.sh
-||$subdocument,domain=gca.sh
 ! Torrent --------------------------------------------------------------------------------------
 ! torrentz.eu
 ||torrentz.eu/p/$popup
@@ -900,8 +952,7 @@ zetorrents.com##A[href^="http://www.insta-cash.net/tds/?"]
 ! cpasbien.pe
 ||prm.cpasbien.pe/js/ec_connectorDelivery.js$script
 ! rarbg.com
-rarbg.com##A[href^="/download_direct.php"]
-rarbg.com##A[href^="/pub_download_d.php"]
+rarbg.com##A[href^="/w_d_adpub.php?id="]
 ! emule-island.ru##
 emule-island.ru##.newsgroup
 emule-island.ru##.lastnews + A[href^="http://www.downloadmr.com/dmr/download/"]
@@ -920,6 +971,8 @@ torrent-francais.com##A[onclick^="this.href='http://www.FriendlyDuck.com/AF_TA/r
 ! t411.me
 t411.me##IMG[src="http://www.t411.me/images/external/usenet.jpg"]
 t411.me##.ads
+! extratorrent.cc
+||uiqatnpooq.com/0f8b73d477b554394e23077935e1fff4.js$script,domain=extratorrent.cc
 ! Debriders --------------------------------------------------------------------------------------
 ! preemlinks.com
 preemlinks.com#@##divads
@@ -1089,9 +1142,13 @@ adbuck.cc###col_publi
 ||adbuck.cc^$third-party
 @@||adbuck.cc/player/
 ! wowhq.ws - wowhq.eu - wowhq.info
-wowhq.umbb.net,cbox.ws,fixolas.net##[href="/300x250.php"]
-wowhq.umbb.net,cbox.ws,fixolas.net##[href^="http://porreiropa.com/cms/"]
-wowhq.umbb.net,cbox.ws,fixolas.net##[href="http://fixolas.net/"]
+! @@||wowhq.eu^$elemhide
+wowhq.umbb.net##IMG[width="970"][height="90"]
+wowhq.umbb.net##IMG[width="160"][height="600"]
+wowhq.umbb.net##[href^="http://porreiropa.com/cms/"] > IMG
+cbox.ws##[href^="http://secretstory24h.com/cms/"] > IMG
+cbox.ws##[href="http://fixolas.net/"] > IMG
+fixolas.net##[href="http://fixolas.net/"] > IMG
 ! sport-show.fr
 sport-show.fr##DIV[style="padding-top:0px;float:left;width:100%;font-size:13px;line-height:0px;top:4px;text-align:left"]
 ! majax31sport
@@ -1139,7 +1196,7 @@ liguendirect.com##div[id^="bannerfloat"]
 ! biggestplayer.me
 biggestplayer.me##.cuadrado.rmv
 ! playerhd1.pw
-playerhd1.pw###total
+playerhd1.pw##[id^="total"]
 playerhd1.pw###total_banner
 playerhd1.pw##.ad
 ! streaming-foot.info
@@ -1203,10 +1260,13 @@ tvgolo.com###hstp-bg-overlay
 tvgolo.com###hstp_interstitial
 ! mesddl.cc
 mesddl.cc###cboxContent
-! urlchecker.net
+! urlchecker.net & urlchecker.org
 urlchecker.net###adchecker
 urlchecker.net###adchecker_btn
 urlchecker.net###ads_notify
+urlchecker.org###adchecker
+urlchecker.org###adchecker_btn
+urlchecker.org###ads_notify
 ! Fake --------------------------------------------------------------------------------------
 ##A[href^="http://share.payoneer-affiliates.com/a/clk/"]
 ##A[href="http://goo.gl/jQ9bcz"]

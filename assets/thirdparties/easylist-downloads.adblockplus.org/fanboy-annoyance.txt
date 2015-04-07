@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: kWTvqq3Dvp2rXPNUSvFkKg
-! Version: 201503211221
+! Checksum: XKIg6NwyiwygOKze6zMK6g
+! Version: 201504070651
 ! Title: Fanboy's Annoyance List
-! Last modified: 21 Mar 2015 12:21 UTC
+! Last modified: 07 Apr 2015 06:51 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -45,8 +45,10 @@
 /btnRSS.
 /buttons/rss_
 /commentshareicons.
+/conversional-popup.
 /dealsaver/widget/*
 /disablerightclick.
+/downloads.mailchimp.com/*
 /dsv_video_bar.
 /email-icon-
 /email_30.
@@ -370,6 +372,7 @@ _social_rss.
 /ecookie_check/*
 /ee-cookies-min.
 /eu-cookie-
+/eu_cookies.
 /eu_rp_cookie.
 /euc_cookie.js
 /eucookie.
@@ -670,11 +673,13 @@ _eu_cookie_
 /btnShareSprite.
 /btnsSocialMedia.
 /btnTwitter.
+/button-facebook-
 /button-facebook.
 /button-fb.
 /button-linkedin-horiz.png
 /button-linkedIn.
 /button-tumblr.
+/button-twitter-
 /button-twitter.
 /Button-YouTube.
 /button/follow-
@@ -2831,6 +2836,7 @@ _youtube_social_
 ###obog_signup_widget
 ###ody-nextstoryslider
 ###orkut-button
+###ouibounce-modal
 ###outbrain1
 ###outbrainWidget
 ###outbrain_widget_0
@@ -2921,6 +2927,7 @@ _youtube_social_
 ###taboola_wrapper
 ###thehill-blocks-signup-form
 ###toolboxDiv1
+###top_social_rss
 ###topjobssidebar
 ###tw_ico
 ###unb-bar
@@ -3017,6 +3024,7 @@ _youtube_social_
 ##.front-overlay-arrows
 ##.fyre-notifier-container
 ##.genericon-feed
+##.gt-popup
 ##.hellobar-signup
 ##.home-twitterfeed
 ##.i-rss
@@ -3100,6 +3108,7 @@ _youtube_social_
 ##.qs-article_widget
 ##.quick-share
 ##.rate-share
+##.recirc-arrows
 ##.recommended-flyout-wrap
 ##.red-rss
 ##.resoc-rss
@@ -3323,6 +3332,7 @@ _youtube_social_
 ###channelNewsletter
 ###column3_newsletter_signup
 ###container-subscription-newsletter
+###contentBarNewsletter
 ###csm-mailsignup-body-form
 ###ctl00_body1_SignUpNewsletter_divSignUp
 ###data-newsletter
@@ -3610,6 +3620,7 @@ _youtube_social_
 ##.giga-email-subscribe
 ##.go-bsocial-cta
 ##.go_newsletter_widget
+##.h-register-newsletter
 ##.h-subscribe
 ##.hz-newsletter
 ##.icoNewsletterBig
@@ -3714,6 +3725,7 @@ _youtube_social_
 ##.rr_newsletter
 ##.sc-newsletter
 ##.shortcode-inline-newsletter
+##.sidebar-email-signup-container
 ##.sidebar-newsletter
 ##.sidebar-subscribe-box
 ##.sidebarNewsletterAd
@@ -3819,6 +3831,7 @@ _youtube_social_
 ###accept-cookies-div
 ###acceptCookie
 ###acceptCookiesDiv
+###accept_cookies
 ###alertCookies
 ###alerte_cnil
 ###all4nav-cookie-component
@@ -3901,9 +3914,11 @@ _youtube_social_
 ###cookie-modal-bg
 ###cookie-notice
 ###cookie-notification
+###cookie-notification-wrapper
 ###cookie-notifier
 ###cookie-opt-in
 ###cookie-opt-in-footer
+###cookie-overlay
 ###cookie-overlay-footer
 ###cookie-panel
 ###cookie-policy
@@ -4312,6 +4327,7 @@ _youtube_social_
 ##.cookie-law
 ##.cookie-law-overlay
 ##.cookie-message
+##.cookie-message-container
 ##.cookie-monster
 ##.cookie-msg
 ##.cookie-note
@@ -4466,6 +4482,7 @@ _youtube_social_
 ##.j-cookieContainer
 ##.jix_acceptcookies_box
 ##.js-cookie-compliance
+##.js-cookie-disclaimer
 ##.js-cookie-message
 ##.js-cookie-policy
 ##.js-cookie-widget
@@ -4845,7 +4862,9 @@ _youtube_social_
 ###bookmarks-share
 ###bottom-share-buttons
 ###bottom-share-tools
+###bottom-social
 ###bottom-social-share-buttons-container
+###bottom_fb_page_upsell
 ###bottom_share_widget
 ###box-fb
 ###box-gplus
@@ -5271,6 +5290,7 @@ _youtube_social_
 ###ftr-share
 ###ftr-social
 ###g-share
+###gallery_side_share_buttons
 ###gc-facebook
 ###gc-twitter
 ###getSocial
@@ -5289,6 +5309,7 @@ _youtube_social_
 ###google_plus_div
 ###google_share
 ###googleplus
+###googleplus2_2
 ###googleplus_social_sidebar
 ###googleplusone
 ###gplus-follow
@@ -5660,6 +5681,7 @@ _youtube_social_
 ###share-panel
 ###share-panel-vert
 ###share-pinterest
+###share-post
 ###share-reddit
 ###share-retweet
 ###share-services-container
@@ -5675,6 +5697,7 @@ _youtube_social_
 ###share-tweet
 ###share-twitter
 ###share-widget
+###share-wrap
 ###share1
 ###share1_w
 ###share42
@@ -6354,7 +6377,10 @@ _youtube_social_
 ###top_share_widget
 ###top_sharebuttons
 ###top_sharebuttons_placeholder
+###top_social_fb
+###top_social_g
 ###top_social_networks_container
+###top_social_twit
 ###topsharearea
 ###topsharebar
 ###topsocial
@@ -6866,6 +6892,7 @@ _youtube_social_
 ##.brk-sharebar
 ##.brk-sharebar-abcd
 ##.bsocialwidget
+##.bt-social-share
 ##.btFacebook
 ##.btLinkedIn
 ##.btTwitter
@@ -6886,6 +6913,7 @@ _youtube_social_
 ##.btn-instagram
 ##.btn-linkedin
 ##.btn-pinterest
+##.btn-reddit
 ##.btn-share
 ##.btn-social-share
 ##.btn-tw
@@ -7338,6 +7366,7 @@ _youtube_social_
 ##.fb-link
 ##.fb-outer
 ##.fb-pageFeed
+##.fb-popup-rec
 ##.fb-promo
 ##.fb-recommend
 ##.fb-recommendations
@@ -7610,6 +7639,12 @@ _youtube_social_
 ##.footer-follow-text
 ##.footer-follow-us
 ##.footer-followUs
+##.footer-global-social-facebook
+##.footer-global-social-google
+##.footer-global-social-instagram
+##.footer-global-social-pinterest
+##.footer-global-social-twitter
+##.footer-global-social-youtube
 ##.footer-googlep-icon
 ##.footer-gplus
 ##.footer-icon-facebook
@@ -7618,6 +7653,7 @@ _youtube_social_
 ##.footer-icon-youtube
 ##.footer-instagram
 ##.footer-instagram-icon
+##.footer-links-followus
 ##.footer-logos--social
 ##.footer-main-bottom-social
 ##.footer-pin
@@ -8148,6 +8184,11 @@ _youtube_social_
 ##.icon__square--facebook
 ##.icon__square--google
 ##.icon__square--twitter
+##.icon_circle_facebook
+##.icon_circle_instagram
+##.icon_circle_pinterest
+##.icon_circle_twitter
+##.icon_circle_youtube
 ##.icon_delicious
 ##.icon_digg
 ##.icon_facebook
@@ -8533,6 +8574,7 @@ _youtube_social_
 ##.oneall_social_login
 ##.ont-social-networks
 ##.open_share_box
+##.opju_socialmedia_widget
 ##.overfooter-social
 ##.overlay_facebook
 ##.p-button-social
@@ -9281,6 +9323,8 @@ _youtube_social_
 ##.side_social_media
 ##.side_twitter
 ##.side_twitterfollow
+##.sidebar--social-list
+##.sidebar--social-list--ul
 ##.sidebar-bluetweets
 ##.sidebar-facebook
 ##.sidebar-gplus
@@ -9371,6 +9415,7 @@ _youtube_social_
 ##.soc-youtube
 ##.soc-yt
 ##.socButtons
+##.socFbLikeShare
 ##.socFbShare
 ##.socFollowMod
 ##.socIcon
@@ -9806,6 +9851,7 @@ _youtube_social_
 ##.socialWrapper
 ##.social_Gplus
 ##.social_Tab
+##.social__bar
 ##.social__item
 ##.social_actions
 ##.social_b
@@ -10157,6 +10203,8 @@ _youtube_social_
 ##.td-sp-googleplus
 ##.td-sp-ico-social
 ##.td-tags-and-social-wrapper-box
+##.td_social_counter
+##.td_social_type
 ##.teaser-social-share
 ##.teasershare
 ##.ted-share-buttons
@@ -10205,6 +10253,7 @@ _youtube_social_
 ##.top__social
 ##.top__twitter
 ##.top_follow_us
+##.top_share
 ##.top_sharedlinks
 ##.top_socail
 ##.top_social
@@ -11136,6 +11185,7 @@ _youtube_social_
 ||instaemail.net^$third-party
 ||instapaper.com/e2$third-party
 ||instapaper.com/javascript/$third-party
+||insticator.com^$third-party
 ||intern.forskning.no^$third-party
 ||internetdefenseleague.org^$third-party
 ||invite.linescale.com^$third-party
@@ -11534,6 +11584,7 @@ _youtube_social_
 ||netdna-cdn.com/wp-content/plugins/omg-magnific/magnific.min.js?$domain=omgchrome.com
 ||netdna-cdn.com/wp-content/uploads/mySpoonful-Signup-Banner.jpg$domain=myspoonful.com
 ||realstylenetwork.com/celebrities/*&action=inc_popup
+||redbunker.net/images/redb/redyeni.gif
 ||space.com/images/site/social/
 ||thelocal.*/interstitial/
 ||tunein.com/account/newiframe/signup/*conversionPopup
@@ -11691,11 +11742,13 @@ cafemom.com###aboutStir
 hitfix.com###accordion
 beautyhigh.com,dailymakeover.com,stylecaster.com,thevivant.com###acquisition-bar-wrapper
 technologyreview.com###action-bar
+csmonitor.com###action-block-bottom
 themeshreport.com,whiskeyandgunpowder.com###actionBlanket
 themeshreport.com,whiskeyandgunpowder.com###actionPopup
 celebuzz.com###actions
 cbs.com###ad-presented-by
 people.com###adArea
+hughhewitt.com###adbg
 reviversoft.com###add_block
 torrent-finder.info###addon_info
 tribune.com.pk###adjacent
@@ -11873,7 +11926,7 @@ beforeitsnews.com###bottom_float
 beforeitsnews.com###bottom_float_story
 patient.co.uk###bottom_nudge
 academicearth.org###bottom_toolbar
-softpedia.com###bottombubble
+autoevolution.com,softpedia.com###bottombubble
 insidebeer.com###bottomnav
 whistleout.com.au###bottomstrip-wo
 sify.com###box
@@ -12451,6 +12504,7 @@ yahoo.com###mw-ysm-cm-container
 independent.com###my-dt-5
 my.yahoo.com###my-promo-hover
 kevinmd.com###myModal
+hughhewitt.com###myad
 life.com###mylifeToolbarWrapper
 motherjones.com###mymojo
 123tamiltv.com###mysitelogo
@@ -12461,6 +12515,7 @@ celebuzz.com###nav-bar
 allthingsd.com###nav-jobs
 molempire.com###nav-left
 molempire.com###nav-right
+amazon.com###nav-upnav
 thewrap.com###nav-wrapper.fixed
 sparkpeople.com###nav4_ad_bg
 nienhueser.de###navbuttons
@@ -12652,6 +12707,7 @@ fiercecable.com###pusher-ad
 sharecare.com###qa-popout-container
 nybooks.com###quick-signup
 independent.ie###quickSignupDaily
+core77.com###quick_m_wrapper
 findthebest.com###r-c-q
 people.com###rail-social-module
 geforce.com###rateThisPage-button
@@ -13273,6 +13329,7 @@ alluc.org##.bookmarktext
 filefactory.com##.bootstrap-dialog
 brobible.com##.borderBlock
 overclock.net##.bot-affiliate
+geektime.com##.bottom
 chriskresser.com,thedarewall.com##.bottom-bar
 game-debate.com##.bottom-fixed-bar
 patient.co.uk##.bottom-nudge
@@ -13284,6 +13341,7 @@ gizmodo.in##.bottom_story
 ctovision.com,fullepisode.info,medianama.com,phonerpt.com,thinkteletronics.com,umpcportal.com##.bottomcontainerBox
 petapixel.com##.bottommargined
 way2sms.com##.bottomwall
+atlasobscura.com##.box
 mybroadband.co.za##.box-connect
 businessinsider.com##.box-post
 filehippo.com##.box-two-feature
@@ -13460,6 +13518,7 @@ humorhub.org,smhlmao.com##.f-page
 show-techn.com##.fa-angle-up
 chillinpanda.com##.face_popup
 newsok.com##.fadeBack
+core77.com##.fade_in
 realitypod.com##.fan_box
 definitelydiy.com,indexwp.com,panampost.com,rangerup.com,vocativ.com,whenonearth.net##.fancybox-overlay
 clientsfromhell.net,definitelydiy.com,indexwp.com,panampost.com,psdisasters.com,rangerup.com,trailspace.com,vocativ.com,whenonearth.net##.fancybox-wrap
@@ -13784,8 +13843,8 @@ dailymail.co.uk##.mobile-gallery-instruction
 nytimes.com##.mobilePromo
 nola.com##.mobile_lrg
 espn.go.com##.mod-fb-opengraph
-bournemouthecho.co.uk,deals.slashdot.org,jobomas.com,tuaw.com##.modal
-aplus.com,bournemouthecho.co.uk,decalgirl.com,eurocheapo.com,jobomas.com,kevinmd.com,police.uk,upworthy.com##.modal-backdrop
+atlasobscura.com,bournemouthecho.co.uk,deals.slashdot.org,jobomas.com,tuaw.com##.modal
+aplus.com,atlasobscura.com,bournemouthecho.co.uk,decalgirl.com,eurocheapo.com,jobomas.com,kevinmd.com,police.uk,upworthy.com##.modal-backdrop
 popdust.com##.modal-close
 narrative.ly##.modal-content
 popdust.com##.modal-image
@@ -13903,6 +13962,7 @@ stargazette.com##.overlay-arrows-anchor
 politico.com##.overlay-bar
 howtogeek.com,indiatimes.com##.overlay-bg
 espn.go.com##.overlay-wrap
+discovermagazine.com##.overlay-wrapper
 needwant.com##.overlay__content
 foodnetwork.com##.package-overlay
 matadornetwork.com##.padder
@@ -14505,6 +14565,8 @@ news.yahoo.com###Daily-Ticket-newsletter-promo-8U
 advocate.com###block-advocate_general-advocate_general_enewsletter
 infoworld.com###block-infoworld-newsletter_subscribe
 shape.com###block-shape_newsletters-newsletters
+thehill.com###block-thehill-blocks-footer-signup
+thehill.com###block-thehill-blocks-right-rail-signup
 theweek.co.uk###block-theweek_contexts-newsletter-signup
 bossip.com###bossip-newsletter-widget
 maxim.com###boxes-box-maxim_newsletter
@@ -14603,6 +14665,7 @@ potterybarn.com###gototop
 awd-it.co.uk###scroll-up
 indiatimes.com,marketbusinessnews.com###scrollTop
 bbgsite.com###tipGoTop
+popmythology.com###toTop
 glamour.com###topScroll
 gen14.com###topofpage
 listnerd.com###topscroller
@@ -14636,7 +14699,7 @@ msn.com###conditionalbanner
 ft.com###consent
 eurosport.com###container-notifications
 decathlon.co.uk###container-screen
-aflite.co.uk,atom42.co.uk,bbvonline.net,boxnation.com,community-options.org.uk,fasthosts.co.uk,fremantlemedia.com,mdx.ac.uk,opportunitypeterborough.co.uk,out-law.com,paradoxplaza.com,secunia.com,wheatley-group.com###cookie
+aflite.co.uk,atom42.co.uk,bbvonline.net,boxnation.com,community-options.org.uk,fasthosts.co.uk,fremantlemedia.com,mdx.ac.uk,opportunitypeterborough.co.uk,out-law.com,pace.com,paradoxplaza.com,secunia.com,wheatley-group.com###cookie
 anpost.ie,barbican.org.uk,co-operative.coop,forbiddenplanet.co.uk,fulltilt.com,homecinemachoice.com,pokernews.com,private.com,volvocars.com###cookies
 tesco.com###cp
 debenhams.com###debCNwrap
@@ -14658,6 +14721,7 @@ gocompare.com###policyBar
 diabetes.org.uk###policyPopup
 nba.com###policy_wrapper
 aquacard.co.uk###popup
+autoevolution.com###prajiturele
 fedex.com###privacy-notice
 virgin.com###privacy-policy
 leeds.gov.uk###siteStatement
@@ -14680,6 +14744,7 @@ ets2mp.com,festicket.com,redbull.com,royalparks.org.uk,unity3d.com,unknownphone.
 videojug.com##.cp-alert-message
 change.org##.flash-message-announcement
 hattrick.org##.frontPage .container > .alert
+themeflood.com##.gatewayContainer
 play.com##.global-banner
 bing.com##.hpn_top_container
 thehanley.co.uk,twitch.tv##.i-am-new
@@ -15049,7 +15114,7 @@ goibibo.com##.color666666 + .inline
 columbiatribune.com##.commenting_floater
 indiatimes.com##.commonlistwrap
 inyminy.com##.confess
-allafrica.com,callofduty.com,ctvnews.ca,environmentalgraffiti.com,epicurious.com,gap.com,timesnews.net,wolverhamptonhomes.org.uk##.connect
+allafrica.com,callofduty.com,ctvnews.ca,environmentalgraffiti.com,epicurious.com,gap.com,nymag.com,timesnews.net,wolverhamptonhomes.org.uk##.connect
 ppdi.com##.connected
 android4fans.com##.consigliaci_su_google
 gyazo.com##.container > #gyazo + #buttons
@@ -15084,7 +15149,7 @@ doomclan.tv##.fame-icons
 gillette.com##.fan
 conservativepost.com,usatoday.com##.fancybox-overlay
 conservativepost.com,usatoday.com##.fancybox-wrap
-alternativeto.net,cbs.com,clickindia.com,cloudmark.com,dailymail.co.uk,democracyfund.org,esquire.com,fashionmagazine.com,idigitaltimes.com,indiatimes.com,latintimes.com,medicaldaily.com,mp3juices.com,pokertube.com,propublica.org,richersounds.com,scufgaming.com,skybet.com,speedtest.net,yonhapnews.co.kr##.fb
+alternativeto.net,cbs.com,clickindia.com,cloudmark.com,dailymail.co.uk,democracyfund.org,esquire.com,fashionmagazine.com,idigitaltimes.com,indiatimes.com,latintimes.com,medicaldaily.com,mp3juices.com,nymag.com,pokertube.com,propublica.org,richersounds.com,scufgaming.com,skybet.com,speedtest.net,yonhapnews.co.kr##.fb
 afterdawn.com##.fb_connect
 abajournal.com,allthingsd.com,buddytv.com,comingsoon.net,craveonline.com,dailydot.com,digitaljournal.com,elektronista.dk,geekzenith.com,gospelway.com,gpforums.co.nz,harvard.edu,khaleejtimes.com,macworld.co.uk,masslive.com,mentalfloss.com,mlive.com,modamee.com,nationalgeographic.com,onextrapixel.com,revision3.com,rfi.fr,searchengineland.com,shocktillyoudrop.com,smithsonianmag.com,tech2.in.com,theslingshot.com,tnr.com,topsecretwriters.com,zdnet.com##.fb_iframe_widget
 codegeekz.com##.fbwrapper
@@ -15237,6 +15302,7 @@ nymag.com##.promo-follow
 dailymail.co.uk##.puff-follow
 offcon.org##.pull-right
 philly.com##.pw-button
+queerty.com##.q_like_bottom_slider
 europages.co.uk##.rake_rblocktitle
 androidauthority.com##.rank_icon_tab
 moneysense.ca##.rdm_sp_button
@@ -15301,8 +15367,8 @@ myfitnesspal.com##.social_profile
 impactloud.com,technobuffalo.com,thenextweb.com##.socialize
 thevine.com.au##.socialreader
 ex.fm##.song_action_share_icons
-lordofthelasersword.com,newsledge.com##.spu-bg
-lordofthelasersword.com,newsledge.com##.spu-box
+lordofthelasersword.com,newsledge.com,popmythology.com##.spu-bg
+lordofthelasersword.com,newsledge.com,popmythology.com##.spu-box
 virgin.com##.ss-cnnct
 trak.in##.sss_kk_main
 sonymobile.com##.stay-connected
@@ -15623,7 +15689,7 @@ demotywatory.pl##div[style^="position: fixed; width: 750px; margin-left: -375px"
 !
 !---------- Finnish Site Specific Hiding Rules ----------
 !
-k-citymarket.fi##.Pbox-sm
+k-citymarket.fi,k-market.fi##.Pbox-sm
 !
 !---------- Dutch Site Specific Hiding Rules ----------
 !
@@ -16139,10 +16205,10 @@ nextinpact.com#@##socialbar
 lenta.ru#@##socials
 socket.io,strim.io,twitter.com#@##tweets
 asian-u.com#@##twitter_button
-instagram.com#@#.FollowButton
+instagram.com,pinterest.com#@#.FollowButton
 onbeing.org#@#.addthis_32x32_style
 onbeing.org#@#.addthis_default_style
-nrc.gov,onbeing.org,rapgenius.com,tmz.com#@#.addthis_toolbox
+gadgetlove.com,nrc.gov,onbeing.org,rapgenius.com,tmz.com#@#.addthis_toolbox
 onbeing.org#@#.addthisbuttons
 kino-vorschau.com#@#.arqam-widget-counter
 neowin.net#@#.article-share
@@ -16221,6 +16287,8 @@ sap.com#@#.j-social-actions
 sap.com#@#.j-social-button
 forum.albiononline.com,katproxy.com,kickass.to,kickasstor.net,kickassunblock.info,kickassunblock.net#@#.likeButton
 linkedin.com#@#.linkedin.icon
+pan.baidu.com#@#.list-share
+theverge.com#@#.m-article__share-buttons
 renren.com#@#.photo-share
 pinterest.com#@#.pin-it-button
 llbean.com#@#.pinit-overlay
@@ -16275,9 +16343,9 @@ india.com#@#.sharethis-wrapper
 nytimes.com#@#.sharetools
 slate.com#@#.sharing-buttons
 nextinpact.com#@#.sharrre
-adamsund.dk,livinstudio.com,murrayhurps.com,seelectronics.com,squidbikes.com#@#.show-social-icons
+adamsund.dk,ashersbakingco.com,livinstudio.com,murrayhurps.com,seelectronics.com,squidbikes.com#@#.show-social-icons
 500px.com#@#.show_social
-golem.de#@#.social-bar
+dallascowboys.com,golem.de#@#.social-bar
 wat.tv#@#.social-block
 golem.de,moviehole.net,newdaily.info#@#.social-bottom
 bitbucket.org,paypal.com,tvspielfilm.de#@#.social-box
@@ -16291,7 +16359,8 @@ golem.de#@#.social-counter
 4players.de#@#.social-gplus
 attn.com,wonderhowto.com#@#.social-header
 udemy.com#@#.social-icon
-airbnb.cat,airbnb.com,airbnb.de,deathfromabove1979.com,time.com#@#.social-links
+asos.com#@#.social-link
+airbnb.cat,airbnb.com,airbnb.de,deathfromabove1979.com,squarespace.com,time.com#@#.social-links
 technorati.com#@#.social-media
 last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,songkick.com#@#.social-sharing
 golem.de#@#.social-sidebar
@@ -16300,6 +16369,7 @@ tv-kino.net#@#.social-tab
 viralnova.com#@#.social-wrap
 coub.com#@#.socialBlock
 runescape.com,study.163.com#@#.socialBox
+mousehuntgame.com#@#.socialButtons
 answers.microsoft.com#@#.socialIcon
 pbs.org#@#.socialList
 welt.de#@#.socialMedia
@@ -16461,6 +16531,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||aol.com^*/sharrre.js
 @@||aolcdn.com/aboutme/*/icons/socialmedia/$domain=about.me
 @@||apple.com/kb/resources/images/i_facebook.png
+@@||asos.com/Content/images/*-ico
 @@||assets.pinterest.com/js/pinit.js$domain=rafflecopter.com
 @@||assets.pinterest.com/pidget.html$domain=rafflecopter.com
 @@||auth.opera.com/css/img/icons-social.png
@@ -16504,6 +16575,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||draw.io/images/google-drive-logo.svg
 @@||dropbox.com/sm/share_link/$xmlhttprequest
 @@||eceplayground.com^*/plugins/sociable/
+@@||edgesuite.net^*/sharrre.min.js$domain=jules.com
 @@||eff.org/sites/$image
 @@||eleximg.com/*/tmp/hot/Facebook.gif
 @@||elle.com/cm/elle/images/Zd/elle-01-trail-by-twitter-tweet-h-lgn.jpg
@@ -16721,6 +16793,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||yourport.com/logos/$image,~third-party
 @@||yukons.net/share.js$domain=zuuk.net
 @@||zillowstatic.com/*-social-share-
+@@||zillowstatic.com^*-google-plus-$script,domain=zillow.com
 ! "Muzli - Design Breakfast" Chrome new tab extension (https://chrome.google.com/webstore/detail/muzli-design-breakfast/glcipcfhmopcgidicgdociohdoicpdfc)
 @@||aquest.it/images/aq_facebook.jpg
 @@||evil-icons.io/assets/images/social.png

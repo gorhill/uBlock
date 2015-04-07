@@ -5,8 +5,8 @@
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2015-03-04
-! Expires: 7 days (update frequency)
+! Paskutinis atnaujinimas: 2015-03-31
+! Expires: 30 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
 ##.reklamos_tarpas
@@ -34,6 +34,7 @@
 15min.lt##.ads-cnt
 15min.lt##.ap_mm_15min
 15min.lt##.ar-item.bg-border-greywhite.ar-row-29
+15min.lt##.ar-wrapper
 15min.lt##.df-auto-container
 15min.lt##.footer_note
 15min.lt##.fs-banner
@@ -78,6 +79,8 @@
 @@||v.fwmrm.net$domain=tv3play.lt
 @@||vaikutis.lt/image/cache/data/baneriai/
 @@||vaikutis.lt/image/data/baneriai/
+@@.png#^$domain=filmux.org
+@@||filmux.org^$elemhide
 aciu.lt###adrotate_2
 aciu.lt##.parama
 aciu.lt,gydomasismasazas.lt###adrotate_1
@@ -167,18 +170,23 @@ dainos.lt##.standartinisSarasas.sriftas13
 dainos.lt##A[href="http://egu.lt"]
 danguje.lt##A[href^="/component/banners/click/"] > IMG
 danielius.net##DIV[style="width: 80%; font-size: 12px; padding: 5px; border: 1px dashed #CCF5CC; background: #F0FCF0; margin: 0 auto;"]
+daraupats.lt##.delfi-ads-block
 day.lt##[style="line-height: 25px; margin: 15px 8px 2px auto;"]
 degalines.orlenlietuva.lt##.addsBoxFirst
 delfi.lt###banner-box
 delfi.lt###dwidget_6066.dwidget[style="width:250px;height:500px;display:block;overflow:hidden"]
 delfi.lt###glmr
+delfi.lt###leftSideOrder
+delfi.lt###new-partners
 delfi.lt###recipes-section
 delfi.lt###wallpaper
+delfi.lt##.banner
 delfi.lt##.delfi-ads-block
 delfi.lt##.delfi-ads-front-container
 delfi.lt##.delfi-anonsai.category-header-line
 delfi.lt##.delfi-content-ads
 delfi.lt##.delfi-content-container.delfi-category-anonsai-external
+delfi.lt##.news-list-banner
 delfi.lt##A[href="http://kaunas.kasvyksta.lt/"] > *
 delfi.lt##A[rel="nofollow"][href^="http://www.delfi.lt/reklama/"] > *
 delfi.lt##DIV[class$="-infoblock"]

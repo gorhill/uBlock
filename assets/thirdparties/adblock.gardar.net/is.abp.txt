@@ -134,7 +134,7 @@ fotbolti.net###banner23
 ||fotbolti.net/themes/2013/images/vodafone_logo.png
 ||auglysingar.pipar.is/
 ||ads.hun.is/
-gaflari.is##div[class*="auglysingaplass"]
+gaflari.is#div(class*=auglysingaplass)
 1819.is##.augl-wrapper
 1819.is##.side-augl-wrapper
 ||hjartalif.is/banners/

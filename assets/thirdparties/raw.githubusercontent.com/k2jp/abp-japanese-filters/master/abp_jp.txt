@@ -1,14 +1,14 @@
 [Adblock Plus 2.3.1]
-! Checksum: 5ccFE4TyiLTJVXsnOVIvWQ
+! Checksum: 53EAEf69ScnfPy9URiFPMA
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
-! Title: ABP Japanese filters (ONLY for advanced Japanese users: check Support Policy below)
+! Title: ABP Japanese filters (ONLY for advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201503160210
+! Version: 201504071432
 
-! Last modified: 2015-03-16 02:10 JST(UTC+0900)
+! Last modified: 2015-04-07 14:32 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
-! Content license: Creative Commons 3.0 BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
+! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
 ! Support policy:  https://code.google.com/p/adblock-plus-japanese-filter/wiki/Support_Policy
 ! Project owners: k2japan
 ! Project committers: looter, lostincarnation, tanahata
@@ -304,6 +304,7 @@
 &admeld_
 &adpds_
 &AdPlan=
+&adpos=
 &adprovider=
 &adprovider=$popup
 &adsize=
@@ -371,6 +372,8 @@
 &partner=$third-party
 &partner_id=$popup
 &partner_id=$third-party
+&PartnerID=$popup
+&PartnerID=$third-party
 &pop_under=$popup
 &popundersPerIP=
 &promo_type=
@@ -1003,7 +1006,7 @@
 -sponsored.
 -sponsored^
 -sponsored_
-! Commented out to avoid false positives on static: 2011-09-07
+! Commented out to avoid false positives with "static": 2011-09-07
 ! -stat-
 ! -stat.
 ! -stat^
@@ -1670,7 +1673,7 @@
 .sponsored.
 .sponsored^
 .sponsored_
-! Commented out to avoid false positives on static: 2011-09-07
+! Commented out to avoid false positives with "static": 2011-09-07
 ! .stat-
 ! .stat.
 ! .stat^
@@ -1922,6 +1925,46 @@
 ! /ad_view/*
 ! /ad_view?
 ! /ad_view_
+/ad120m/*
+/ad120m/*$popup
+/ad121m/*
+/ad121m/*$popup
+/ad122m/*
+/ad122m/*$popup
+/ad123m/*
+/ad123m/*$popup
+/ad124m/*
+/ad124m/*$popup
+/ad125m/*
+/ad125m/*$popup
+/ad126m/*
+/ad126m/*$popup
+/ad127m/*
+/ad127m/*$popup
+/ad128m/*
+/ad128m/*$popup
+/ad129m/*
+/ad129m/*$popup
+/ad130m/*
+/ad130m/*$popup
+/ad131m/*
+/ad131m/*$popup
+/ad132m/*
+/ad132m/*$popup
+/ad133m/*
+/ad133m/*$popup
+/ad134m/*
+/ad134m/*$popup
+/ad135m/*
+/ad135m/*$popup
+/ad136m/*
+/ad136m/*$popup
+/ad137m/*
+/ad137m/*$popup
+/ad138m/*
+/ad138m/*$popup
+/ad139m/*
+/ad139m/*$popup
 /Ad160x600.
 /Ad300x600.
 /adblock_plus.$domain=kino.to
@@ -2045,7 +2088,9 @@
 /crdr/javascript.$script,third-party
 /csi?v=
 /csm-base/*$domain=amazon.ca|amazon.cn|amazon.co.jp|amazon.co.uk|amazon.com|amazon.de|amazon.es|amazon.fr|amazon.it
+/ctxengine/*$third-party
 /ctxjs.$script,third-party
+/ctxjs/*$third-party
 /customerIsLegality?
 /d2ptoolbar/*
 /dac1.download.akamai.com/*
@@ -2264,6 +2309,7 @@
 /p.e-words.jp/type
 /p_code.$script
 /pageKeywordClickHandle?
+/passthrough?url=*.pluginh=$popup
 /pcad.
 /pcads.
 /ping.*?$image,object
@@ -2346,6 +2392,7 @@
 /s/*.html?b=*&x=*&y=*&s=*&c=*&ref=*&h=*.*&$third-party
 /sa/infospace.
 /sbi_recommend.$script
+/scjs/*$third-party
 /sd/apps/*$popup
 /sd/apps/*$third-party
 /sdc.js
@@ -2392,7 +2439,9 @@
 /sOmni.
 /spacer.*?$image,object
 /srv/delivery.
-! Commented out to avoid false positives on static: 2011-09-07
+/server/delivery/*
+/server/delivery/*$popup
+! Commented out to avoid false positives with "static": 2011-09-07
 ! /stat-
 ! /stat.$domain=~ameblo.jp|~ameba.jp
 ! /stat^
@@ -2529,6 +2578,7 @@
 ?adid=$popup
 ?adpds_
 ?AdPlan=
+?adpos=
 ?adprovider=
 ?adprovider=$popup
 ?adsize=
@@ -2625,6 +2675,8 @@
 ?partner=$third-party
 ?partner_id=$popup
 ?partner_id=$third-party
+?PartnerID=$popup
+?PartnerID=$third-party
 ?promo_type=
 ?Pub_ID=
 ?Pub_ID=$popup
@@ -3526,14 +3578,22 @@
 ^bannerid.
 ^bannerid^
 ^bannerid_
+^banners-$popup
 ^banners-$script,object-subrequest,subdocument
+^banners.$popup
 ^banners.$script,object-subrequest,subdocument
+^banners^$popup
 ^banners^$script,object-subrequest,subdocument
+^banners_$popup
 ^banners_$script,object-subrequest,subdocument
 ^beacon-
 ^beacon.
 ^beacon^
 ^beacon_
+^beaconer-
+^beaconer.
+^beaconer^
+^beaconer_
 ^beacons-
 ^beacons.
 ^beacons^
@@ -4044,6 +4104,86 @@
 ^landing^$third-party
 ^landing_$popup
 ^landing_$third-party
+^landing0-$popup
+^landing0-$third-party
+^landing0.$popup
+^landing0.$third-party
+^landing0^$popup
+^landing0^$third-party
+^landing0_$popup
+^landing0_$third-party
+^landing1-$popup
+^landing1-$third-party
+^landing1.$popup
+^landing1.$third-party
+^landing1^$popup
+^landing1^$third-party
+^landing1_$popup
+^landing1_$third-party
+^landing2-$popup
+^landing2-$third-party
+^landing2.$popup
+^landing2.$third-party
+^landing2^$popup
+^landing2^$third-party
+^landing2_$popup
+^landing2_$third-party
+^landing3-$popup
+^landing3-$third-party
+^landing3.$popup
+^landing3.$third-party
+^landing3^$popup
+^landing3^$third-party
+^landing3_$popup
+^landing3_$third-party
+^landing4-$popup
+^landing4-$third-party
+^landing4.$popup
+^landing4.$third-party
+^landing4^$popup
+^landing4^$third-party
+^landing4_$popup
+^landing4_$third-party
+^landing5-$popup
+^landing5-$third-party
+^landing5.$popup
+^landing5.$third-party
+^landing5^$popup
+^landing5^$third-party
+^landing5_$popup
+^landing5_$third-party
+^landing6-$popup
+^landing6-$third-party
+^landing6.$popup
+^landing6.$third-party
+^landing6^$popup
+^landing6^$third-party
+^landing6_$popup
+^landing6_$third-party
+^landing7-$popup
+^landing7-$third-party
+^landing7.$popup
+^landing7.$third-party
+^landing7^$popup
+^landing7^$third-party
+^landing7_$popup
+^landing7_$third-party
+^landing8-$popup
+^landing8-$third-party
+^landing8.$popup
+^landing8.$third-party
+^landing8^$popup
+^landing8^$third-party
+^landing8_$popup
+^landing8_$third-party
+^landing9-$popup
+^landing9-$third-party
+^landing9.$popup
+^landing9.$third-party
+^landing9^$popup
+^landing9^$third-party
+^landing9_$popup
+^landing9_$third-party
 ^landings-$popup
 ^landings-$third-party
 ^landings.$popup
@@ -5131,7 +5271,7 @@ _sponsored-
 _sponsored.
 _sponsored^
 _sponsored_
-! Commented out to avoid false positives on static: 2011-09-07
+! Commented out to avoid false positives with "static": 2011-09-07
 ! _stat-
 ! _stat.
 ! _stat^
@@ -5188,95 +5328,96 @@ _yahooads-
 _yahooads.
 _yahooads^
 _yahooads_
-||ad-cdn.
+://ad-cdn.
 |http://ad.
 |https://ad.
-||ad0.
-||ad1.
-||ad2.
-||ad3.
-||ad4.
-||ad5.
-||ad6.
-||ad7.
-||ad8.
-||ad9.
-||adcl.
-||adimg.
-||ads.
-||ads0.
-||ads1.
-||ads2.
-||ads3.
-||ads4.
-||ads5.
-||ads6.
-||ads7.
-||ads8.
-||ads9.
-||adcdn.
-||adserver.
-||adserving.
-||adv.
-||aff-images.
-||affiliate.
-||affiliates.
-||amazlink.$third-party
-||analysis.$third-party
-||analytics.$third-party
-||analyze.$third-party
+://ad0.
+://ad1.
+://ad2.
+://ad3.
+://ad4.
+://ad5.
+://ad6.
+://ad7.
+://ad8.
+://ad9.
+://adcl.
+://adimg.
+://ads.
+://ads0.
+://ads1.
+://ads2.
+://ads3.
+://ads4.
+://ads5.
+://ads6.
+://ads7.
+://ads8.
+://ads9.
+://adcdn.
+://adserver.
+://adserving.
+://adv.
+://aff-images.
+://affiliate.
+://affiliates.
+://amazlink.$third-party
+://analysis.$third-party
+://analytics.$third-party
+://analyze.$third-party
 |http://ax-d.
 |https://ax-d.
-||beacon.
+://beacon.
 |http://c.*/c.$image,object
 |https://c.*/c.$image,object
-||campaign.
-||campaign0.
-||campaign1.
-||campaign2.
-||campaign3.
-||campaign4.
-||campaign5.
-||campaign6.
-||campaign7.
-||campaign8.
-||campaign9.
-||creative.ad1*m.com^$script,third-party
-||displayads.
-||dosugcz.
+://campaign.
+://campaign0.
+://campaign1.
+://campaign2.
+://campaign3.
+://campaign4.
+://campaign5.
+://campaign6.
+://campaign7.
+://campaign8.
+://campaign9.
+://creative.$third-party
+://creatives.$third-party
+://displayads.
+://dosugcz.
 |http://dw.c$script
 |https://dw.c$script
-||eulerian.
-||hitlog.
-||iad.
-||im.banner.
-||image.*/bnr.gif?$third-party
-||kanasoku.*/thumb/
-||krxd.
-||landing.$popup
-||landing.$third-party
-||landing0.$popup
-||landing0.$third-party
-||landing1.$popup
-||landing1.$third-party
-||landing2.$popup
-||landing2.$third-party
-||landing3.$popup
-||landing3.$third-party
-||landing4.$popup
-||landing4.$third-party
-||landing5.$popup
-||landing5.$third-party
-||landing6.$popup
-||landing6.$third-party
-||landing7.$popup
-||landing7.$third-party
-||landing8.$popup
-||landing8.$third-party
-||landing9.$popup
-||landing9.$third-party
-||log.$third-party
-||log0.
+://eulerian.
+://hitlog.
+://iad.
+://im.banner.
+://image.*/bnr.gif?$third-party
+://kanasoku.*/thumb/
+://krxd.
+://landing.$popup
+://landing.$third-party
+://landing0.$popup
+://landing0.$third-party
+://landing1.$popup
+://landing1.$third-party
+://landing2.$popup
+://landing2.$third-party
+://landing3.$popup
+://landing3.$third-party
+://landing4.$popup
+://landing4.$third-party
+://landing5.$popup
+://landing5.$third-party
+://landing6.$popup
+://landing6.$third-party
+://landing7.$popup
+://landing7.$third-party
+://landing8.$popup
+://landing8.$third-party
+://landing9.$popup
+://landing9.$third-party
+://log.$third-party
+://log0.
 |http://lp.$popup
 |https://lp.$popup
 |http://lp.$third-party
@@ -5301,57 +5442,57 @@ _yahooads_
 ://lp8.$third-party
 ://lp9.$popup
 ://lp9.$third-party
-||mads.
-||maxymiser.$third-party
-||metrics.
-||ocp.
-||openadext.
-||openxmarket.$third-party
-||optimizedby.$third-party
+://mads.
+://maxymiser.$third-party
+://metrics.
+://ocp.
+://openadext.
+://openxmarket.$third-party
+://optimizedby.$third-party
 |http://ox-d.
 |https://ox-d.
 |http://ox-i.
 |https://ox-i.
-||phpadsnew.
-||ppund.$third-party
-||promo.
-||promo0.
-||promo1.
-||promo2.
-||promo3.
-||promo4.
-||promo5.
-||promo6.
-||promo7.
-||promo8.
-||promo9.
-||reklama.
-||reklame.
-||reklamer.
-||rotator.
-||rotator.$popup
-||smetrics.
-! Commented out to avoid false positives on static: 2011-09-07
-! ||stat.$domain=~ameblo.jp|~ameba.jp
-||static.*00.*/apps/$script,third-party
-||static.*00.*/data/$xmlhttprequest,third-party
-||static.*00.*/partnerconfig/$script,third-party
-||survey.$third-party
-||surveys.$third-party
-||tealium.
-||telemetry.$third-party
-||tizer.
-||tizer0.
-||tizer1.
-||tizer2.
-||tizer3.
-||tizer4.
-||tizer5.
-||tizer6.
-||tizer7.
-||tizer8.
-||tizer9.
-||utm.
+://phpadsnew.
+://ppund.$third-party
+://promo.
+://promo0.
+://promo1.
+://promo2.
+://promo3.
+://promo4.
+://promo5.
+://promo6.
+://promo7.
+://promo8.
+://promo9.
+://reklama.
+://reklame.
+://reklamer.
+://rotator.
+://rotator.$popup
+://smetrics.
+! Commented out to avoid false positives with "static": 2011-09-07
+! ://stat.$domain=~ameblo.jp|~ameba.jp
+://static.*00.*/apps/$script,third-party
+://static.*00.*/data/$xmlhttprequest,third-party
+://static.*00.*/partnerconfig/$script,third-party
+://survey.$third-party
+://surveys.$third-party
+://tealium.
+://telemetry.$third-party
+://tizer.
+://tizer0.
+://tizer1.
+://tizer2.
+://tizer3.
+://tizer4.
+://tizer5.
+://tizer6.
+://tizer7.
+://tizer8.
+://tizer9.
+://utm.
 ! ---------- URL Fragments END ----------
 ! 
 ! ########## Top Level Domains with path START ##########
@@ -5582,46 +5723,46 @@ _yahooads_
 |http://ad0*.ru^
 |https://ad0*.ru^
 ||ad1.ru^$third-party
-||ad120m.com^
-||ad120m.com^$popup
-||ad121m.com^
-||ad121m.com^$popup
-||ad122m.com^
-||ad122m.com^$popup
-||ad123m.com^
-||ad123m.com^$popup
-||ad124m.com^
-||ad124m.com^$popup
-||ad125m.com^
-||ad125m.com^$popup
-||ad126m.com^
-||ad126m.com^$popup
-||ad127m.com^
-||ad127m.com^$popup
-||ad128m.com^
-||ad128m.com^$popup
-||ad129m.com^
-||ad129m.com^$popup
-||ad130m.com^
-||ad130m.com^$popup
-||ad131m.com^
-||ad131m.com^$popup
-||ad132m.com^
-||ad132m.com^$popup
-||ad133m.com^
-||ad133m.com^$popup
-||ad134m.com^
-||ad134m.com^$popup
-||ad135m.com^
-||ad135m.com^$popup
-||ad136m.com^
-||ad136m.com^$popup
-||ad137m.com^
-||ad137m.com^$popup
-||ad138m.com^
-||ad138m.com^$popup
-||ad139m.com^
-||ad139m.com^$popup
+||ad120m.
+||ad120m.$popup
+||ad121m.
+||ad121m.$popup
+||ad122m.
+||ad122m.$popup
+||ad123m.
+||ad123m.$popup
+||ad124m.
+||ad124m.$popup
+||ad125m.
+||ad125m.$popup
+||ad126m.
+||ad126m.$popup
+||ad127m.
+||ad127m.$popup
+||ad128m.
+||ad128m.$popup
+||ad129m.
+||ad129m.$popup
+||ad130m.
+||ad130m.$popup
+||ad131m.
+||ad131m.$popup
+||ad132m.
+||ad132m.$popup
+||ad133m.
+||ad133m.$popup
+||ad134m.
+||ad134m.$popup
+||ad135m.
+||ad135m.$popup
+||ad136m.
+||ad136m.$popup
+||ad137m.
+||ad137m.$popup
+||ad138m.
+||ad138m.$popup
+||ad139m.
+||ad139m.$popup
 ||ad2games.com^$third-party
 ||ad4game.com^$popup
 ||ad4game.com^$third-party
@@ -5692,6 +5833,7 @@ _yahooads_
 ||adlabsretail.ru^
 ||adlantis.jp^$third-party
 ||adlegend.com^$third-party
+||adlivecity.com^
 ||adlooker.ru^
 ||adlpo.com^$third-party
 ||admagnet.net^$popup
@@ -5733,6 +5875,7 @@ _yahooads_
 ||adotic.com^$third-party
 ||adotube.com^$third-party
 ||adpath.net^$third-party
+||adpdx.com^
 ||adperium.com^$third-party
 ||adplan-ds.com^$third-party
 ||adprotected.com^$third-party
@@ -5787,6 +5930,7 @@ _yahooads_
 ||adsrotator.net^
 ||adsrvmedia.net^
 ||adsrvr.org^
+||adstager.com^
 ||adstarter.ru^
 ||adsupply.com^$third-party
 ||adsurve.com^
@@ -5830,6 +5974,7 @@ _yahooads_
 ||advantagz.com^
 ||advd69.net^
 ||advenueplatform.com^$third-party
+||adversal2.com^
 ||adversalservers.com^$third-party
 ||adversni.com^
 ||advertig.com^
@@ -5928,6 +6073,7 @@ _yahooads_
 ||apikozakanet-a.akamaihd.net^
 ||apiscantacknet-a.akamaihd.net^
 ||appnext-a.akamaihd.net^
+||asrv-a.akamaihd.net^
 ||canvas*-a.akamaihd.net^
 ||cdncache-a.akamaihd.net^
 ||cdncache1-a.akamaihd.net^
@@ -5987,12 +6133,14 @@ _yahooads_
 ||amazonaws.com^$popup
 ||amazonaws.com/*.cetrk.com/
 ||amazonaws.com/*.inspectlet.com/
+||amazonaws.com/*.kissinsights.com/
 ||amazonaws.com/*.kissmetrics.com/
 ||amazonaws.com/*.pagefair.com/
 ||amazonaws.com/af-bdaz/
 ||amazonaws.com/ai-img/
 ||amazonaws.com/getsatisfaction.com/
 ||amazonaws.com/hd_streamer/
+||amazonaws.com/ki.
 ||amazonaws.com/lps
 ||amazonaws.com/opbanditcdn/
 ||amazonaws.com/opentag/
@@ -6092,6 +6240,7 @@ _yahooads_
 ||asciimw-apis.jp/ut/
 ||aseadnet.com^$third-party
 ||ashia.to^$third-party
+||ashleymadison.com^$popup
 ||asks.jp^$third-party
 ||asrety.com^
 ||assantie.com^
@@ -6174,6 +6323,7 @@ _yahooads_
 ||ban-ban-boin.com^$popup
 ||bandoo.com^$popup
 ||bangluck.co.jp/blog-parts/
+||bangmychick.com^$third-party
 ||baninj.com^
 ||bannerbank.ru^$third-party
 ||bannerbridge.net^$third-party
@@ -6217,6 +6367,7 @@ _yahooads_
 ||bestbuys.com^$popup
 ||bestoffersjs.info^
 ||bet365.com^$popup
+||bet365.com^$third-party
 ||betrad.com^
 ||bflixjs.info^
 ||bichaty.ru^
@@ -6290,6 +6441,7 @@ _yahooads_
 ||bon-plans-shopping.com^
 ||bon-plans-vip.com^
 ||bonappetit.com^$third-party
+||bongacash.com^$third-party
 ||bonne-affaire-du-net.com^
 ||bonne-affaire-du-web.com^
 ||bonne-affaire-vip.com^
@@ -6448,6 +6600,7 @@ _yahooads_
 ||clickability.com^$third-party
 ||clickanalyzer.jp^$third-party
 ||clickbank.net^
+||clickdealer.$third-party
 ||clickdensity.com^$third-party
 ||clickequations.net^$third-party
 ||clickmedias.com^
@@ -6464,8 +6617,15 @@ _yahooads_
 ||cliennes.com^
 ||clierets.com^
 ||clievise.com^
+||clkads.com^$popup
 ||clkads.com^$third-party
+||clkbid.com^$popup
+||clkbid.com^$third-party
+||clkmon.com^$popup
 ||clkmon.com^$third-party
+||clkoffers.com^$popup
+||clkoffers.com^$third-party
+||clkrev.com^$popup
 ||clkrev.com^$third-party
 ||clo-saison.com^
 ||cloakac.com^
@@ -6474,6 +6634,7 @@ _yahooads_
 ||cloudcnd.com^
 ||ajax.cloudflare.com^
 ||cloudfront.net^$popup
+||cloudfront.net/lps
 ||d1447tq2m68ekg.cloudfront.net^
 ||d1798l6lhp8h4d.cloudfront.net^
 ||d1bzh9wdftmzm0.cloudfront.net^
@@ -6636,6 +6797,7 @@ _yahooads_
 ||crazylead.com^$third-party
 ||crazytall.com^
 ||crbfjs.info^
+||crbsjs.info^
 ||crdrdpjs.info^
 ||crdrjs.info^
 ||creafi-online-media.com^$third-party
@@ -6648,6 +6810,7 @@ _yahooads_
 ||credit-reflexe.com^
 ||creditduweb.net^
 ||credits-taux-reduits.com^
+||creoads.com^$third-party
 ||criteo.com^$third-party
 ||criteo.net^
 ||cross-a.net^$third-party
@@ -6662,6 +6825,7 @@ _yahooads_
 ||csolution.jp^$third-party
 ||cszz.ru^
 ||ctsrda.com^
+||ctx-traffic.com^
 ||cubicleoffers.com^$third-party
 ||cudradi.ru^
 ||cupidon-webcam.com^
@@ -6713,6 +6877,7 @@ _yahooads_
 ||daredac.com^
 ||dartimyl.com^
 ||data-ero-advertising.com^
+||datacardbar.info^
 ||datafastguru.info^
 ||datamind.ru^$third-party
 ||datefree.com^$third-party
@@ -6839,6 +7004,7 @@ _yahooads_
 ||dpcdn.com^
 ||dpmsrv.com^
 ||dpstack.com^
+||dreamhost.com/rewards/
 ||dreamsadnetwork.com^
 ||ad4u.drecom.jp^
 ||rss.drecom.jp/*banner/$third-party
@@ -6967,6 +7133,7 @@ _yahooads_
 ||esdizi.com^
 ||esearchvision.com^$third-party
 ||esecure-transaction.com^
+||eshopcomp.com^
 ||esisternet.com^
 ||estara.com^
 ||estat.com^$third-party
@@ -7399,6 +7566,7 @@ _yahooads_
 ||b4x6p9m7*.hwcdn.net^
 ||b6q3i6c7*.hwcdn.net^
 ||c3d7h8i5*.hwcdn.net^
+||d2a8a4q9*.hwcdn.net^
 ||e4r5k5v8*.hwcdn.net^
 ||i5n8q4p6*.hwcdn.net^
 ||k4j4s7i3*.hwcdn.net^
@@ -7509,6 +7677,8 @@ _yahooads_
 ||imrworldwide.com^$third-party
 ||in-text.jp^
 ||incielle.com^
+||inclk.com^$popup
+||inclk.com^$third-party
 ||incmd06.com^
 ||inctivee.com^
 ||indeed.com^$third-party
@@ -7648,6 +7818,7 @@ _yahooads_
 ||js-kit.com^
 ||jscripts.org^
 ||jsdo.it/js/pushNotification.$script
+||jsloggery.com^
 ||jsrdn.com^
 ||jsticket.net^
 ||jsutils.net^
@@ -7827,6 +7998,7 @@ _yahooads_
 ||link.ru^$third-party
 ||linkad.jp^*preview.$script
 ||linkad.jp/tools/$object
+||linkbolic.com^$third-party
 ||linkbucks.com^$popup
 ||linkbucks.com^$third-party
 ||linkbucksmedia.com^$third-party
@@ -7913,6 +8085,7 @@ _yahooads_
 ||lqw.me^
 ||lsbet.com^$popup
 ||lucastadvertising.com^
+||luckyorange.$third-party
 ||ludo-cado.com^
 ||ludo-cados.com^
 ||ludo-factory.com^
@@ -8112,6 +8285,7 @@ _yahooads_
 ||moatads.com^
 ||mob2web.com^
 ||moba8.net^$third-party
+||mobair.com^$third-party
 ||mobalives.com^
 ||mobalives.com^$popup
 ||mobapeople.com^
@@ -8121,6 +8295,7 @@ _yahooads_
 ||mobbobr.com^
 ||mobicont.com^
 ||mobicow.com^$third-party
+||mobidealer.$third-party
 ||mobidump.com^
 ||mobifiesta.com^$popup
 ||mobifobi.com^
@@ -8525,6 +8700,7 @@ _yahooads_
 ||pharmacyonlinefeed.com^
 ||pheedo.jp^$third-party
 ||philosophere.com^
+||phncdn.com^
 ||phodojs.info^
 ||picadmedia.com^
 ||picbucks.com^$popup
@@ -8671,6 +8847,7 @@ _yahooads_
 ||qrdeom.com^
 ||qrsbjs.info^
 ||qsstats.com^
+||qualaroo.com^$third-party
 ||quality-channel.de^
 ||quantserve.com^$third-party
 ||quantumads.com^$third-party
@@ -9092,6 +9269,7 @@ _yahooads_
 ||skinected.com^$third-party
 ||skyglue.com^$third-party
 ||slidesharecdn.com^*/proCtaBox.
+||slimspots.com^$third-party
 ||slopeac.com^
 ||slsdlkgjlksdg.net^
 ||sm-miracle.com^$third-party
@@ -9381,9 +9559,11 @@ _yahooads_
 ||traffic.ru^$third-party
 ||trafficandrei.ru^
 ||trafficbroker.com^$third-party
+||trafficdna.com^$third-party
 ||trafficfactory.biz^$third-party
 ||trafficgate.net^$third-party
 ||traffichaus.com^
+||traffichunt.com^$third-party
 ||trafficjunky.net^$third-party
 ||trafficmp.com^$third-party
 ||trafficrevenue.net^$third-party
@@ -9421,6 +9601,7 @@ _yahooads_
 ||tsingera.ru^
 ||ttfean.com^
 ||ttinline.com^$third-party
+||tube911.com^$third-party
 ||tubejs.info^
 ||tubemogul.com^$third-party
 ||tuigoo.com^$third-party
@@ -9492,6 +9673,7 @@ _yahooads_
 ! ||userlocal.jp/b
 ||userlocal.jp^$third-party
 ||api.social.userlocal.jp/apis/
+||ushopcomp.com^
 ||uspovo.ru^
 ||ustream.tv^*/images/softbank-
 ||ustream.tv^*/images/special/
@@ -9717,6 +9899,8 @@ _yahooads_
 ||stats.wordpress.com^
 ||worldlogger.com^
 ||worldnow.com/global/js/vendor/
+! ||worldssl.net^$third-party
+||icm.r.worldssl.net^
 ||worthathousandwords.com^$third-party
 ||wowzio.com^$third-party
 ||wowzio.net^$third-party
@@ -9783,6 +9967,7 @@ _yahooads_
 ||xvideos.com^$third-party
 ||s.xvideos.com^
 ||xvideoslive.com^$third-party
+||xvika.com^
 ||xw11.com^$third-party
 ||xwell.ru^
 ||xxxjs.com^$third-party
@@ -9905,6 +10090,7 @@ _yahooads_
 ||lstat.youku.com^
 ||youradexchange.com^$popup
 ||youradexchange.com^$third-party
+||youradslab.com^
 ||youtopry.com^
 ||youtube.com/annotations_invideo?
 ||youtube.com/get_video?

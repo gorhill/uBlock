@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Mar 16th, 2015 at 14:44
+# Last updated: Apr 3rd, 2015 at 23:54
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1605,6 +1605,8 @@
 127.0.0.1 adwords.google.lloymlincs.com
 127.0.0.1 afantispy.com
 127.0.0.1 afdbande.cn
+127.0.0.1 alegratka.eu
+127.0.0.1 ale-gratka.pl
 127.0.0.1 allhqpics.com				# Facebook trojan
 127.0.0.1 alphabirdnetwork.com
 127.0.0.1 antispywareexpert.com
@@ -1766,6 +1768,7 @@
 127.0.0.1 ns2.webwise.net
 127.0.0.1 ns2.webwise.org
 127.0.0.1 nufindings.info
+127.0.0.1 oferty-online.com
 127.0.0.1 office.officenet.co.kr
 127.0.0.1 oix.com
 127.0.0.1 oix.net
@@ -1775,6 +1778,7 @@
 127.0.0.1 ordersildenafil.com
 127.0.0.1 otsserver.com
 127.0.0.1 outerinfo.com
+127.0.0.1 outlets-online.pl
 127.0.0.1 paincake.yoll.net
 127.0.0.1 pc-scanner16.com
 127.0.0.1 personalantispy.com
@@ -1826,6 +1830,8 @@
 127.0.0.1 sverd.net
 127.0.0.1 system-kernel-disk-errorx001dsxx-microsoft-windows.55errors5353.net
 127.0.0.1 tahoesup.com
+127.0.0.1 tanieaukcje.com
+127.0.0.1 taniezakupy.pl
 127.0.0.1 tattooshaha.info			# Facebook trojan
 127.0.0.1 technicalconsumerreports.com
 127.0.0.1 technology-revealed.com
@@ -7295,6 +7301,7 @@
 127.0.0.1 s.ad131m.com
 127.0.0.1 s.admulti.com
 127.0.0.1 sad.sharethis.com
+127.0.0.1 safari-critical-alert.com
 127.0.0.1 safe.hyperpaysys.com
 127.0.0.1 safenyplanet.in
 127.0.0.1 salesforcecom.tt.omtrdc.net

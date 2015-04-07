@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 4996
-! Last modified: 19 Mar 2015
+! Version: 5030
+! Last modified: 07 Apr 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -4991,6 +4991,40 @@ hepimovie.net###login
 ||mondodeitrucchi.net^
 ||filedictation.com^
 ||50nuancesdegrey-lefilm-vf.com^
+||allgametrick.com^
+||whatsappvoiceplus.com^
+||whatsappcl.com^
+||whatsappmy.com^
+||whatsappit.com^
+||livesetwebs.org^
+||centertrust.xyz^
+||reditions.net^
+||westzip.in^
+||databass.info^
+||diriginal.info^
+||loveling.info^
+||settlecruise.org^
+||clashofclans-gen.com^
+||apie-soft.com^
+||hackzcheat.com^
+||hackzcheatz.com^
+||hacker2014.com^
+||pronanchacks.com^
+||lolfreerp.com^
+||techonetium.com^
+||24hoursgifts.com^
+||freeplaygiftcard.com^
+||getmspcodes.com^
+||allgengamingservers.com^
+||gta5moneyglitches.com^
+||clashofclansgemmesillimite.com^
+||270inc.com^
+||filesighting.com^
+||minecraft-premium-gratuit.fr^
+||hackclashofclans2014.com^
+||vodkahack.com^
+||boombeach-cheat.com^
+||instantdownloadsz.com^
 !
 !
 !

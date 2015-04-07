@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: XvLQvauJ6m0XuSygk2SFbg
-! Version: 201503211222
+! Checksum: gb/bBIUcijBHaNWuQwMxpQ
+! Version: 201504070652
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 21 Mar 2015 12:22 UTC
+! Last modified: 07 Apr 2015 06:52 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -209,6 +209,7 @@ _advertentieleaderboardhome.
 ||maffiagame.nl/banner$third-party
 ||media.zie.nl/e/?v=*&ad=false$subdocument,domain=nubijlage.nl
 ||members.home.nl/ajaxf-side/banners/
+||metroonline.nl/bva/
 ||mijnafbeeldingen.net^*/banners/
 ||mijnautobedrijf.nl/nieuwsbanner/$~stylesheet
 ||mijnzusje.nl/banners/
@@ -347,6 +348,7 @@ _advertentieleaderboardhome.
 ||bouwinfo.be/forum/js/jquery.nextup.js
 ||bouwmachineforum.nl/banner/
 ||brandweerspotters.nl/modules/banners/bannerimages/
+||buienalarm.nl/banner_
 ||buienradar.nl/bannerdetails.aspx?
 ||cameranu.nl/images/banner_zoom.gif
 ||camping-frankrijk.nl/Graphics/yelloh2011.swf
@@ -506,6 +508,7 @@ _advertentieleaderboardhome.
 ||nederlandnieuws.nl/scripts/afb_
 ||netonline.be/reizen/ebookers/
 ||netonline.be/slices/banners/
+||nieuwsuitnijmegen.nl/gfx/banners/
 ||nlondertitels.com/img/studentenlening.png
 ||nolensplein.nl/banners/
 ||nsmbl.nl/wp-content/themes/*/campagnes/
@@ -657,6 +660,8 @@ _advertentieleaderboardhome.
 ||weeronline.nl/go/banner/index?
 ||weeronline.nl/go/specialblock/index/
 ||weeronline.nl^*/hoteldeals/
+||weertdegekste.nl^*/coin-slider.js?
+||weertdegekste.nl^*banner
 ||welingelichtekringen.nl/images/overgangster2.gif
 ||wetenschapsforum.nl/bnr/
 ||whatismyip.nl/images/vista_sky2.gif
@@ -976,6 +981,7 @@ zdnet.be###rightwallpaper
 hetkanwel.net###secondary > aside[id^="text-"]:nth-child(2) > .ssc > .textwidget
 hetkanwel.net###secondary > aside[id^="text-"]:nth-child(3) > .ssc > .textwidget
 hetkanwel.net###secondary > aside[id^="text-"]:nth-child(5) > .ssc > .textwidget
+112achterhoek-nieuws.nl###sidebar
 stoerejongenzzz.nl###sidebar .jetpack-image-container > a
 beautylab.nl###sidebar .textwidget > a[target="_blank"]
 skipr.nl###sidebar > .block.special:nth-child(2)
@@ -1004,7 +1010,7 @@ mistermoney.nl###theLayer
 valuta.nl,wisselkoers.nl###theLayerSpaarrenteVergelijken
 valuta.nl,wisselkoers.nl###theLayerZorg
 scholieren.com###top
-marktplaats.nl###top-banner-wrapper
+marktplaats.nl###top-banner-wrapper div[id^="banner-"]
 krapuul.nl###topbanner
 voetbalzone.nl###uniGroot
 pokercollege.nl###verticalbanner
@@ -1034,7 +1040,7 @@ fantv.nl,porntubexl.nl,studio040.nl,tube.nl##.ads
 openingstijden.com##.adsense
 nu.nl##.adsilver
 allradio.nl##.adv
-9292.nl,classicfm.nl,fcupdate.nl,onemorething.nl##.advert
+9292.nl,classicfm.nl,fcupdate.nl,onemorething.nl,weertdegekste.nl##.advert
 computeridee.nl##.advertentie-1korting-nl
 apparata.nl,autoblog.nl,skipr.nl##.advertisement
 biertijd.com##.advertorialtitle ~ *
@@ -1234,6 +1240,7 @@ zie.nl##div[id^="advertisement_"]
 marktplaats.nl##div[id^="google_ads_iframe_"]
 hababam.nl##div[id^="had"]
 binaries4all.nl##div[id^="payserver"]
+weertdegekste.nl##div[id^="sidebar"] a[target="_blank"] > img
 treinreiziger.nl##div[id^="subbanner"]
 phphulp.nl##div[style$="background: #ff0000 url(/img/ads/bhosted.png) top left no-repeat; margin-bottom: 10px;"]
 voetbalzone.nl##div[style*="url(http://static-voetbalzone.nl/images/adfactor/"]
@@ -1262,6 +1269,7 @@ telegraaf.nl##table[width][border="0"][style="border:1px solid #e0e0e0;padding-l
 oops.nl##table[width][cellspacing="30"][align="center"]
 kapsels.net##td[width="164"] a[target="_blank"]
 dreamboxclub.nl##td[width="227"] > a[target="_blank"]
+nieuwsuitnijmegen.nl##tr[height="150"]
 kopen.marktplaats.nl##tr[onclick^="document.location.href=logAdmarktClick"]
 kopen.marktplaats.nl##tr[onclick^="window.open(logAdmarktClick('"]
 ! Anti-Adblock
@@ -1288,7 +1296,7 @@ kinderspelletjes.nl#@##adframe:not(frameset)
 homesearch.nu#@##adsense
 demorgen.be,trouw.nl,volkskrant.nl#@##adv_sky
 comedycentral.nl#@##bannerad
-archiefleeuwardercourant.nl#@##headerAdv
+archiefleeuwardercourant.nl,dekrantvantoen.nl#@##headerAdv
 losseveter.nl#@##mainAd
 schaatsen.nl#@#.HeaderAd
 innerlijk-besef.nl,landleven.nl#@#.ad-block

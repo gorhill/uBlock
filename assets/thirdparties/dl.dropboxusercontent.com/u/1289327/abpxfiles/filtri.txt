@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201503181902
+! Version: 201503241218
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 18-03-2015
+! Last modified: 24-03-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1725,7 +1725,7 @@ http://*.notipedia.it/wp-content/plugins/better-stop-adblock/
 |http://katproxy.com/kata/adx.php
 ||firstmediahub.com^$popup
 ||fmdwbsfxf0.com^$popup
-about:blank$popup,domain=katproxy.com|filmpertutti.eu
+about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it
 |http://*.tomshw.it/kelkoo
 |http://lucca.fantasymagazine.it/img/lucca/banner_lucca2014.jpg
 |http://*.cn24tv.it/public/pubblicita/
@@ -1750,6 +1750,13 @@ about:blank$popup,domain=katproxy.com|filmpertutti.eu
 |http://reytv.co/adds/
 |http://*.cb01.org/120x600_ad
 ||advplace.com^
+|http://x.italia-film.org/1front.png
+|http://creative.readserver.net/1426068502320/4d92bf7ef3075f00960ee467c7368b74.gif
+|http://www.catanzaroinforma.it/wp-content/plugins/themerex-banner-manager/
+|http://www.catanzaroinforma.it/*/unnamed*
+|http://www.catanzaroinforma.it/*/banner*
+|http://www.catanzaroinforma.it/wp-content/uploads/2015/02/guglielmomanchete.png
+||catanzaroinforma.it/public/img/sponsor/*
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 firedrive.com##DIV[id="fdpc_cont"]
 colorburned.com##DIV[class^="singleAd"]
@@ -3488,6 +3495,12 @@ it.answers.yahoo.com##[id$="-textads"]
 aznotizie.com##.ezAdsense
 bitchyf.it##[id^="SC_TBlock"]
 bitchyf.it##[id^="wp_bannerize-"]
+catanzaroinforma.it##.spu-box
+catanzaroinforma.it##.spu-bg
+catanzaroinforma.it##DIV[style="height:115px;"]:first-child
+catanzaroinforma.it##.trex_banner_block[style="width:240px"]
+catanzaroinforma.it##.trex_banner_block[style="width:665px"]
+catanzaroinforma.it##.trex_banner_block[style="width:300px"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
