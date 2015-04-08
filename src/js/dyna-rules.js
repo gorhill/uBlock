@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uMatrix
+    Home: https://github.com/chrisaljoudi/uMatrix
 */
 
 /* global vAPI, uDom */
@@ -97,7 +97,7 @@ function handleImportFilePicker() {
         if ( typeof this.result !== 'string' || this.result === '' ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/757
+        // https://github.com/chrisaljoudi/uBlock/issues/757
         // Support RequestPolicy rule syntax
         var result = this.result;
         var matches = /\[origins-to-destinations\]([^\[]+)/.exec(result);

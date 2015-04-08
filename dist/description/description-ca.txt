@@ -1,6 +1,6 @@
 Un bloquejador eficient: el consum de memòria i de processador és baix però, no obstant això, pot carregar i aplicar milers de filtres més que altres bloquejadors coneguts.
 
-Gràfic de l'eficiència: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Gràfic de l'eficiència: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Ús: El gran botó d'engegada de la finestra emergent serveix per a desactivar/activar permanentment el uBlock per al lloc web actual. No és un botó d'engegada general de l'extensió.
 
@@ -38,7 +38,7 @@ Lliure.
 Codi obert amb llicència pública (GPLv3)
 Per usuaris per a usuaris.
 
-Col·laboradors a Github: https://github.com/gorhill/uBlock/graphs/contributors
+Col·laboradors a Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Col·laboradors a Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Col·laboradors a Crowdin: https://crowdin.net/project/ublock
 Aquesta és, en certa manera, una versió primitiva. Tingueu-ho en compte quan en doneu la vostra opinió.
 
 Registre de canvis del projecte:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

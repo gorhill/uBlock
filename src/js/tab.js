@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global vAPI, µBlock */
@@ -44,7 +44,7 @@ vAPI.tabs.onNavigation = function(details) {
     }
     var pageStore = µb.bindTabToPageStats(details.tabId, details.url, 'afterNavigate');
 
-    // https://github.com/gorhill/uBlock/issues/630
+    // https://github.com/chrisaljoudi/uBlock/issues/630
     // The hostname of the bound document must always be present in the
     // mini-matrix. That's the best place I could find for the fix, all other
     // options had bad side-effects or complications.
@@ -83,7 +83,7 @@ vAPI.tabs.onClosed = function(tabId) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/297
+// https://github.com/chrisaljoudi/uBlock/issues/297
 
 vAPI.tabs.onPopup = function(details) {
     //console.debug('vAPI.tabs.onPopup: details = %o', details);
@@ -131,8 +131,8 @@ vAPI.tabs.onPopup = function(details) {
         result = 'ub:doBlockAllPopups true';
     }
 
-    // https://github.com/gorhill/uBlock/issues/323
-    // https://github.com/gorhill/uBlock/issues/1142
+    // https://github.com/chrisaljoudi/uBlock/issues/323
+    // https://github.com/chrisaljoudi/uBlock/issues/1142
     // If popup OR opener URL is whitelisted, do not block the popup
     if (
         result === '' &&
@@ -142,7 +142,7 @@ vAPI.tabs.onPopup = function(details) {
         result = µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup');
     }
 
-    // https://github.com/gorhill/uBlock/issues/91
+    // https://github.com/chrisaljoudi/uBlock/issues/91
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
@@ -166,7 +166,7 @@ vAPI.tabs.registerListeners();
 /******************************************************************************/
 /******************************************************************************/
 
-// https://github.com/gorhill/httpswitchboard/issues/303
+// https://github.com/chrisaljoudi/httpswitchboard/issues/303
 // Some kind of trick going on here:
 //   Any scheme other than 'http' and 'https' is remapped into a fake
 //   URL which trick the rest of µBlock into being able to process an
@@ -202,7 +202,7 @@ vAPI.tabs.registerListeners();
 µb.bindTabToPageStats = function(tabId, pageURL, context) {
     this.updateBadgeAsync(tabId);
 
-    // https://github.com/gorhill/httpswitchboard/issues/303
+    // https://github.com/chrisaljoudi/httpswitchboard/issues/303
     // Normalize page URL
     var normalURL = this.normalizePageURL(tabId, pageURL);
 
@@ -220,7 +220,7 @@ vAPI.tabs.registerListeners();
         return this.pageStores[tabId] = this.PageStore.factory(tabId, pageURL, normalURL);
     }
 
-    // https://github.com/gorhill/uBlock/issues/516
+    // https://github.com/chrisaljoudi/uBlock/issues/516
     // If context if 'beforeRequest', do not rebind
     if ( context === 'beforeRequest' ) {
         return pageStore;
@@ -275,7 +275,7 @@ vAPI.tabs.registerListeners();
 /******************************************************************************/
 
 // Stale page store entries janitor
-// https://github.com/gorhill/uBlock/issues/455
+// https://github.com/chrisaljoudi/uBlock/issues/455
 
 var pageStoreJanitorPeriod = 15 * 60 * 1000;
 var pageStoreJanitorSampleAt = 0;

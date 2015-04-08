@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* jshint esnext: true, bitwise: false */
@@ -1347,7 +1347,7 @@ vAPI.net.registerListeners = function() {
             return;
         }
 
-        // https://github.com/gorhill/uBlock/issues/105
+        // https://github.com/chrisaljoudi/uBlock/issues/105
         // Allow any kind of pages
         vAPI.tabs.onNavigation({
             frameId: 0,
@@ -1625,7 +1625,7 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
         updateTimer = null;
         var body = iframe.contentDocument.body;
         panel.parentNode.style.maxWidth = 'none';
-        // https://github.com/gorhill/uBlock/issues/730
+        // https://github.com/chrisaljoudi/uBlock/issues/730
         // Voodoo programming: this recipe works
         panel.style.height = iframe.style.height = body.clientHeight.toString() + 'px';
         panel.style.width = iframe.style.width = body.clientWidth.toString() + 'px';
@@ -1721,7 +1721,7 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
     var menuitem = doc.getElementById(vAPI.contextMenu.menuItemId);
     var currentURI = gContextMenu.browser.currentURI;
 
-    // https://github.com/gorhill/uBlock/issues/105
+    // https://github.com/chrisaljoudi/uBlock/issues/105
     // TODO: Should the element picker works on any kind of pages?
     if ( !currentURI.schemeIs('http') && !currentURI.schemeIs('https') ) {
         menuitem.hidden = true;

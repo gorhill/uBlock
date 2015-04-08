@@ -1,6 +1,6 @@
 مانع إعلانات كفوء: خفيف على الذاكرة و المعالج, على الرغم من قدرته  على تحميل و تطبيق الألاف من الفلاتر أكثر من بعض أشهر مانعي الإعلانات.
 
-توضيح عام لكفاءة الإضافة: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+توضيح عام لكفاءة الإضافة: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 الإستخدام: زر التشغيل الكبير في النافذة المنبثقة هو لتعطيل أو تشغيل uBlock للموقع الحالي. هو ينطبق على الموقع الحالي فقط، و ليس زر تشغيل عام.
 
@@ -39,7 +39,7 @@
 للمستخدمين من طرف مستخدمين أخرين.
 
 المساهمون في Github:
-https://github.com/gorhill/uBlock/graphs/contributors
+https://github.com/chrisaljoudi/uBlock/graphs/contributors
 المساهمون في Crowdin:
  https://crowdin.net/project/ublock
 
@@ -48,4 +48,4 @@ https://github.com/gorhill/uBlock/graphs/contributors
 الإضافة في قيد الإنجاز، خذ هذا في عين الإعتبار عندما تستعرضها.
 
 سجل التغييرات للمشروع:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

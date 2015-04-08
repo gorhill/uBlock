@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global self, µBlock */
@@ -396,8 +396,8 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // Must read: https://code.google.com/p/chromium/issues/detail?id=410868#c8
 
-// https://github.com/gorhill/uBlock/issues/19
-// https://github.com/gorhill/uBlock/issues/207
+// https://github.com/chrisaljoudi/uBlock/issues/19
+// https://github.com/chrisaljoudi/uBlock/issues/207
 // Since we may be called asynchronously, the tab id may not exist
 // anymore, so this ensures it does still exist.
 
@@ -562,7 +562,7 @@ CallbackWrapper.prototype.init = function(port, request) {
 };
 
 CallbackWrapper.prototype.proxy = function(response) {
-    // https://github.com/gorhill/uBlock/issues/383
+    // https://github.com/chrisaljoudi/uBlock/issues/383
     if ( this.messaging.ports.hasOwnProperty(this.port.name) ) {
         this.port.postMessage({
             requestId: this.request.requestId,
@@ -599,7 +599,7 @@ vAPI.net.registerListeners = function() {
         var tail = µburi.path.slice(-6);
         var pos = tail.lastIndexOf('.');
 
-        // https://github.com/gorhill/uBlock/issues/862
+        // https://github.com/chrisaljoudi/uBlock/issues/862
         // If no transposition possible, transpose to `object` as per
         // Chromium bug 410382 (see below)
         if ( pos === -1 ) {
@@ -720,7 +720,7 @@ vAPI.onLoadAllCompleted = function() {
         while ( i-- ) {
             tab = tabs[i];
             µb.bindTabToPageStats(tab.id, tab.url);
-            // https://github.com/gorhill/uBlock/issues/129
+            // https://github.com/chrisaljoudi/uBlock/issues/129
             scriptStart(tab.id);
         }
     };

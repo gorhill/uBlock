@@ -1,6 +1,6 @@
 En effektiv blocker: let på hukommelse og CPU forbrug,. Kan indlæse og anvende tusindvis af flere filtre end andre populære blockere derude.
 
-Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
+Illustreret oversigt over effektiviteten: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
 Anvendelse: Den Store power knap i pop-up-vinduet kan permanent deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global afbryderknap.
 
@@ -38,7 +38,7 @@ Gratis.
 Open source med offentlig licens (GPLv3)
 For brugere, af brugere.
 
-Bidragydere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragydere @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Bidragydere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Bidragydere @ Crowdin: https://crowdin.net/project/ublock
 Dette er en tidlig version. Hav dette i tankerne når du skriver en anmeldelse.
 
 Projekt changelog:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

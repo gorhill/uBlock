@@ -1,6 +1,6 @@
 효율적인 차단기: 메모리와 CPU에 부담이 적고, 다른 인기있는 차단기에 비해 수 천 가지의 필터를 사용할 수 있습니다.
 
-효율성에 대한 소개: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+효율성에 대한 소개: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 사용 방법: 해당 웹사이트에서 팝업의 큰 전원 버튼을 눌러 uBlock을 켜고 끌 수 있습니다. 적용은 현재 웹사이트만 적용되며, 전체적으로 적용되지 않습니다.
 
@@ -38,7 +38,7 @@
 오픈소스이며, 공개 라이센스(GPLv3)를 따릅니다.
 유저를 위한, 유저에 의한.
 
-기여자 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+기여자 @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 기여자 @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 이것은 완전히 초기 버전입니다, 리뷰할 때 이 점을 명심하세요.
 
 프로젝트 변경사항:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* jshint bitwise: false */
@@ -484,7 +484,7 @@ PageStore.prototype.init = function(tabId, rawURL, pageURL) {
     this.pageURL = pageURL;
     this.pageHostname = µb.URI.hostnameFromURI(pageURL);
 
-    // https://github.com/gorhill/uBlock/issues/185
+    // https://github.com/chrisaljoudi/uBlock/issues/185
     // Use hostname if no domain can be extracted
     this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
     this.rootHostname = this.pageHostname;
@@ -542,7 +542,7 @@ PageStore.prototype.reuse = function(rawURL, pageURL, context) {
         this.rawURL = rawURL;
         this.pageURL = pageURL;
 
-        // As part of https://github.com/gorhill/uBlock/issues/405
+        // As part of https://github.com/chrisaljoudi/uBlock/issues/405
         // URL changed, force a re-evaluation of filtering switch
         this.netFilteringReadTime = 0;
 
@@ -610,7 +610,7 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 /******************************************************************************/
 
 PageStore.prototype.getNetFilteringSwitch = function() {
-    // https://github.com/gorhill/uBlock/issues/1078
+    // https://github.com/chrisaljoudi/uBlock/issues/1078
     // Use both the raw and normalized URLs.
     if ( this.netFilteringReadTime < µb.netWhitelistModifyTime ) {
         this.netFiltering = µb.getNetFilteringSwitch(this.pageURL);
@@ -772,7 +772,7 @@ PageStore.prototype.logRequest = function(context, result) {
 /******************************************************************************/
 
 PageStore.prototype.toMirrorURL = function(requestURL) {
-    // https://github.com/gorhill/uBlock/issues/351
+    // https://github.com/chrisaljoudi/uBlock/issues/351
     // Bypass experimental features when uBlock is disabled for a site
     if ( µb.userSettings.experimentalEnabled === false ||
          this.getNetFilteringSwitch() === false ||

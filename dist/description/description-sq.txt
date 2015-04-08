@@ -1,6 +1,6 @@
 Një bllokues efikas: me impakt të vogël te memorja dhe procesori, por mund të hapë dhe të zbatojë mijëra filtra më shumë sesa bllokuesit e tjerë të njohur.
 
-Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Përdorimi: Çelësi i komandimit te dritarja e vogël e bën uBlock përherë joaktiv/aktiv për uebsajtin aktual. Ai vlen vetëm për uebsajtin aktual, nuk është një çelës i përgjithshëm.
 
@@ -38,7 +38,7 @@ Falas.
 Material i hapur me licencë publike (GPLv3)
 Krijuar nga përdoruesit për përdoruesit.
 
-Kontributorët @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Kontributorët @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Kontributorët @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Kontributorët @ Crowdin: https://crowdin.net/project/ublock
 Kur të bëni vlerësimin e programit, mos harroni se ky është një version paraprak.
 
 Ditari i projektit:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

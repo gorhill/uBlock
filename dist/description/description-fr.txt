@@ -1,6 +1,6 @@
 uBlock est une extension qui bloque les publicités et les pisteurs, légère en empreinte mémoire et en utilisation du processeur et qui  pourtant, est capable d'utiliser et de traiter des milliers de filtres de plus que la plupart des autres bloqueurs.
 
-Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Utilisation : Le gros bouton power dans la fenêtre pop-up permet de désactiver/activer en permanence uBlock pour le site Web en cours de consultation. Cela s'applique uniquement au site Web actuel, ce n'est pas un bouton power qui affecte entièrement le fonctionnement de l'extension.
 
@@ -38,7 +38,7 @@ GRATUIT.
 Source libre avec une licence publique GPLv3
 Fait par des utilisateurs pour des utilisateurs.
 
-Contributeurs @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contributeurs @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Contributeurs @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Contributeurs @ Crowdin: https://crowdin.net/project/ublock
 Il s'agit d'une version relativement préliminaire, veuillez garder ça à l'esprit lors de votre évaluation de l'extension.
 
 Consultez ici en Anglais le Journal des changements concernant le projet :
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

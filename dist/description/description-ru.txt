@@ -1,6 +1,6 @@
 µBlock — эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, при этом используя больше фильтров, чем другие популярные блокировщики.
 
-Иллюстрированный обзор его эффективности: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Иллюстрированный обзор его эффективности: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Использование: нажмите большую кнопку «Включение» в выпадающем окне, чтобы включить или отключить uBlock для текущего сайта. Это действует только для текущего сайта, а не для всех.
 
@@ -38,7 +38,7 @@
 Открытый исходный код, публичная лицензия (GPLv3).
 Для пользователей от пользователей.
 
-Участники на Github: https://github.com/gorhill/uBlock/graphs/contributors
+Участники на Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Участники на Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 Это ещё очень ранняя версия, имейте это в виду, оценивая программу.
 
 Список изменений:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -1,6 +1,6 @@
 Ефективний блокувальник реклами: сильно не навантажує пам’ять та процесор і може працювати з набагато більшою кількістю фільтрів ніж інші блокувальники.
 
-Ілюстрований огляд ефективності: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Ілюстрований огляд ефективності: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Використання: Ця велика кнопка живлення у виринаючому вікні дозволяє вимкнути або увімкнути uBlock для поточного веб-сайту. Ефект розповсюджується тільки на поточний веб-сайт. Це не глобальна кнопка живлення.
 
@@ -38,7 +38,7 @@
 Відкритий джерельний код та публічна ліцензія (GPLv3)
 Для користувачів від користувачів.
 
-Учасники @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Учасники @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Перекладачі @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 Це ще дуже дочасна версія, тому майте на увазі, коли робите огляд.
 
 Журнал змін проекту:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global vAPI, uDom */
@@ -69,7 +69,7 @@ function allFiltersApplyHandler() {
 /******************************************************************************/
 
 var handleImportFilePicker = function() {
-    // https://github.com/gorhill/uBlock/issues/1004
+    // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
     var abpImporter = function(s) {
         var reAbpExtractor = /\n\[Subscription\]\n+url=~[\x08-\x7E]+?\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;

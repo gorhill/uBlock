@@ -1,7 +1,7 @@
 効率的なブロッカー：コンピュータのメモリとCPUのフットプリントはより少なく
 、別の人気のブロッカーよりも何千ものフィルタをロードし、強制的にブロックができます
 
-他ソフトとの比較は以下のとおり： https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+他ソフトとの比較は以下のとおり： https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 使用法: 大きなボタンは永久にこのエクステンションを現在のサイトで有効か無効にします。 現在のサイトのみに適用されます、グローバルボタンではありません。
 
@@ -39,7 +39,7 @@
 パブリックライセンス(GPLv3)のオープンソース
 ユーザーによって作られた、ユーザーのための物。
 
-貢献者 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+貢献者 @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 貢献者 @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -47,4 +47,4 @@
 これは割と初期のバージョンですので、それを念頭にレビューをお願いします。
 
 プロジェクト変更ログ：
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

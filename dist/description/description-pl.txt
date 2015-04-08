@@ -1,6 +1,6 @@
 Wydajny bloker: małe zużycie pamięci i CPU, możliwość załadowania i egzekwowania tysięcy filtrów więcej niż inne popularne blokery.
 
-Ilustrowany przegląd jego skuteczności: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-Compared
+Ilustrowany przegląd jego skuteczności: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-Compared
 
 Sposób użycia: Duży przycisk zasilania w popupie służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
 
@@ -38,7 +38,7 @@ Darmowe rozszerzenie.
 Otwarte źródło z licencją publiczną (GPLv3)
 Dla użytkowników przez użytkowników.
 
-Współtwórcy rozszerzenia na GitHub: https://github.com/gorhill/uBlock/graphs/contributors
+Współtwórcy rozszerzenia na GitHub: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Współtwórcy tłumaczeń na Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Współtwórcy tłumaczeń na Crowdin: https://crowdin.net/project/ublock
 Jest to dość wczesna wersja, należy o tym pamiętać podczas oceniania.
 
 Lista zmian projektu:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

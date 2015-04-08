@@ -1,6 +1,6 @@
 یک بلاکر موثر: نیاز به پردازش حافظه و سی پی یو کمتر و در عین حال اجرای هزاران فیلتر بیشتر از سایر رقبای بلاکر موجود.
 
-بررسی تصویری از کارایی این محصول: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+بررسی تصویری از کارایی این محصول: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 کاربرد: دکمه ی پاور بزرگ در پنجره برای فعال یا غیر فعال کردن uBlock برای صفحه ی جاری است. فقط برای همین سایت اعمال میشود، دکمه ی پاوری برای تمام سایت ها نیست.
 
@@ -38,7 +38,7 @@
 متن باز با مجوز عمومی (GPLv3)
 برای کاربران توسط کاربران.
 
-مشارکت کنندگان در گیت هاب: https://github.com/gorhill/uBlock/graphs/contributors
+مشارکت کنندگان در گیت هاب: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 مشارکت کنندگان در کرادین https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 این کاملا یک نسخه اولیه است، هنگام بررسی اینرا بخاطر داشته باشید.
 
 تغییرات اخیر پروژه:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

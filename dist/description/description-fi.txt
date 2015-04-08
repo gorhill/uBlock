@@ -1,6 +1,6 @@
 Tehokas mainosten estäjä – käyttää vähän resursseja, mutta silti voit ladata ja pakottaa tuhansia suodatinsääntöjä enemmän kuin muut suositut mainoksia estävät lisäosat.
 
-Kuvitettu yleiskatsaus uBlockin tehokkuudesta (englanniksi): https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Kuvitettu yleiskatsaus uBlockin tehokkuudesta (englanniksi): https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Käyttö: Iso virtanappi ponnahdusikkunassa on tarkoitettu pysyvästi estämään/sallimaan uBlock kyseisellä sivulla. Tämä koskee vain nykyistä sivua, ei kaikkia sivuja.
 
@@ -38,7 +38,7 @@ Ilmainen.
 Avoimen lähdekoodin julkinen lisenssi (GPLv3)
 Käyttäjiltä käyttäjille.
 
-Kehittäjät @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Kehittäjät @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Kehittäjät @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Kehittäjät @ Crowdin: https://crowdin.net/project/ublock
 Otathan huomioon testatessasi, että käytössäsi on varsin varhainen versio.
 
 Projektin muutosloki:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

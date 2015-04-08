@@ -1,6 +1,6 @@
 Účinný blokovač: nezaťažuje CPU a pamäť a dokáže načítať a vynútiť o niekoľko tisíc filtrov viac ako iné populárne blokovače.
 
-Ilustrovaný prehľad o jeho účinnosti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Ilustrovaný prehľad o jeho účinnosti: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Použitie: Veľký vypínač vo vyskakovacom okne natrvalo zakáže/povolí uBlock pre aktuálnu webovú stránku. Vzťahuje sa len na aktuálnu webovú stránku, nie na všeobecný vypínač.
 
@@ -38,7 +38,7 @@ Bezplatný.
 Otvorený zdrojový kód s verejnou licenciou (GPLv3)
 Pre používateľov od používateľov.
 
-Prispievatelia @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Prispievatelia @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Prispievatelia @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Prispievatelia @ Crowdin: https://crowdin.net/project/ublock
 Ide o pomerne skorú verziu, majte to na pamäti pri recenzovaní.
 
 Zoznam zmien projektu:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

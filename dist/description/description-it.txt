@@ -1,6 +1,6 @@
 uBlock è un efficiente ad-blocker: occupa poca memoria e poca CPU, ma può usare migliaia di filtri in più rispetto ad altri software simili.
 
-Consulta questa pagina (in inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Consulta questa pagina (in inglese) per verificare la sua efficacia https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Uso: il pulsante power nel popup serve per disabilitare/abilitare permanentemente uBlock nel sito che stai visitando. e non serve per disabilitare/abilitare l'estensione.
 
@@ -38,7 +38,7 @@ Gratuito.
 Open source with public license (GPLv3)
 Fatto dagli utenti per gli utenti.
 
-Collaboratori @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Collaboratori @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Collaboratori @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Collaboratori @ Crowdin: https://crowdin.net/project/ublock
 Questa è una versione preliminare, ricordalo quando scriverai una recensione.
 
 Per leggere le novità di ogni versione consulta questa pagina (In Inlgese):
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

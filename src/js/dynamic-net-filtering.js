@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global punycode, µBlock */
@@ -539,7 +539,7 @@ Matrix.prototype.fromString = function(text, append) {
         srcHostname = punycode.toASCII(fields[0]);
         desHostname = punycode.toASCII(fields[1]);
 
-        // https://github.com/gorhill/uBlock/issues/1082
+        // https://github.com/chrisaljoudi/uBlock/issues/1082
         // Discard rules with invalid hostnames
         if ( (srcHostname !== '*' && reBadHostname.test(srcHostname)) ||
              (desHostname !== '*' && reBadHostname.test(desHostname))
@@ -552,7 +552,7 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
-        // https://github.com/gorhill/uBlock/issues/840
+        // https://github.com/chrisaljoudi/uBlock/issues/840
         // Discard invalid rules
         if ( desHostname !== '*' && type !== '*' ) {
             continue;

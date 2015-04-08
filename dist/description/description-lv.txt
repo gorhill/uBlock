@@ -1,6 +1,6 @@
 Efektīvs reklāmu bloķētājs: nepārslogo procesoru un atmiņu, un var ielādēt un pielietot tūkstošiem filtru vairāk nekā citi populāri bloķētāji.
 
-Ilustrēts apskats par tā efektivitāti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
+Ilustrēts apskats par tā efektivitāti: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
 Izmantošana: nospiediet lielo pogu uznirstošajā logā, lai izslēgtu/ieslēgtu uBlock pašreizējā web vietnē. Šī poga attiecas tikai uz pašreizējo tīmekļa vietni.
 
@@ -38,7 +38,7 @@ Bezmaksas.
 Pirmkods ar publisko licenci (GPLv3)
 Lietotājiem no lietotājiem.
 
-Autori @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Autori @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Autori @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Autori @ Crowdin: https://crowdin.net/project/ublock
 Šī ir ļoti agrīna versija, paturiet to prātā, kad jūs to lietojat.
 
 Projekta izmaiņu žurnāls:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

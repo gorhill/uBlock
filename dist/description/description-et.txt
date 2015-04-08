@@ -1,6 +1,6 @@
 Tõhus blokeerija: kasutab vähe mälu ja protsessorit ning sellegipoolest suudab laadida ja kasutada mitu korda rohkem filtreid kui teised tuntud blokeerijad.
 
-Illustreeritud ülevaade selle kasulikkusest: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Illustreeritud ülevaade selle kasulikkusest: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Kasutamine: hüpikaknas oleva suure toitenupu abil on võimalik uBlock avatud lehel püsivalt keelata või lubada. See käib ainult hetkel avatud lehe, mitte kõikide saitide kohta.
 
@@ -39,7 +39,7 @@ Avatud lähtekoodiga avaliku litsentsiga (GPLv3)
 Kasutajatelt kasutajaile.
 
 Toetajad Github'is:
-https://github.com/gorhill/uBlock/graphs/contributors
+https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Toetajad Crowdin'is: https://crowdin.net/project/ublock
 
 ***
@@ -47,4 +47,4 @@ Toetajad Crowdin'is: https://crowdin.net/project/ublock
 Laienduse kasutamisel pange tähele, et tegemist on uue laiendusega.
 
 Projekti muudatuste logi:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

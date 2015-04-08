@@ -1,6 +1,6 @@
 Ένας αποτελεσματικός αναστολέας διαφημίσεων: παρόλο το ελαφρύ του αποτύπωμα στη μνήμη και τον επεξεργαστή μπορεί να εφαρμόσει χιλιάδες περισσότερα φίλτρα σε σχέση με άλλους δημοφιλείς blockers.
 
-Απεικονιζόμενη επισκόπηση της αποτελεσματικότητάς του: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-efficiency-compared
+Απεικονιζόμενη επισκόπηση της αποτελεσματικότητάς του: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP :-efficiency-compared
 
 Χρήση: Το μεγάλο πλήκτρο απενεργοποίησης/ενεργοποίησης στο αναδυόμενο παράθυρο, χρησιμεύει στην εναλλαγή κατάστασης του uBlock για τον τρέχοντα ιστότοπο. Η εφαρμογή της ρύθμισης αυτής γίνεται μόνο για τον τρέχοντα ιστότοπο και δεν επιβάλλεται καθολικά.
 
@@ -38,7 +38,7 @@
 Ανοιχτού κώδικα με άδεια δημόσιας χρήσης (GPLv3)
 Από τους χρήστες για τους χρήστες.
 
-Συνεισφέροντες @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Συνεισφέροντες @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Συνεισφέροντες @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 Είναι μια αρκετά πρόωρη έκδοση, κρατήστε το υπόψη κατά την αξιολόγηση.
 
 Αρχείο αλλαγών του έργου:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

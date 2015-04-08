@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global vAPI, µBlock, YaMD5 */
@@ -66,7 +66,7 @@ var exports = {
     autoUpdate: true,
     autoUpdateDelay: 4 * oneDay,
 
-    // https://github.com/gorhill/uBlock/issues/426
+    // https://github.com/chrisaljoudi/uBlock/issues/426
     remoteFetchBarrier: 0
 };
 
@@ -113,7 +113,7 @@ var cachedAssetsManager = (function() {
             return;
         }
         // Flush cached non-user assets if these are from a prior version.
-        // https://github.com/gorhill/httpswitchboard/issues/212
+        // https://github.com/chrisaljoudi/httpswitchboard/issues/212
         var onLastVersionRead = function(store) {
             var currentVersion = vAPI.app.version;
             var lastVersion = store.extensionLastVersion || '0.0.0.0';
@@ -123,7 +123,7 @@ var cachedAssetsManager = (function() {
             callback(entries);
         };
         var onLoaded = function(bin) {
-            // https://github.com/gorhill/httpswitchboard/issues/381
+            // https://github.com/chrisaljoudi/httpswitchboard/issues/381
             // Maybe the index was requested multiple times and already
             // fetched by one of the occurrences.
             if ( entries === null ) {
@@ -285,7 +285,7 @@ var cachedAssetsManager = (function() {
 var getTextFileFromURL = function(url, onLoad, onError) {
     // console.log('µBlock.assets/getTextFileFromURL("%s"):', url);
 
-    // https://github.com/gorhill/uMatrix/issues/15
+    // https://github.com/chrisaljoudi/uMatrix/issues/15
     var onResponseReceived = function() {
         this.onload = this.onerror = this.ontimeout = null;
         // xhr for local files gives status 0, but actually succeeds
@@ -354,7 +354,7 @@ var updateLocalChecksums = function() {
 var getRepoMetadata = function(callback) {
     callback = callback || nullFunc;
 
-    // https://github.com/gorhill/uBlock/issues/515
+    // https://github.com/chrisaljoudi/uBlock/issues/515
     // Handle re-entrancy here, i.e. we MUST NOT tamper with the waiting list
     // of callers, if any, except to add one at the end of the list.
     if ( repoMetadata !== null && repoMetadata.waiting.length !== 0 ) {
@@ -407,7 +407,7 @@ var getRepoMetadata = function(callback) {
             updateLocalChecksums();
         }
         // Notify all waiting callers
-        // https://github.com/gorhill/uBlock/issues/515
+        // https://github.com/chrisaljoudi/uBlock/issues/515
         // VERY IMPORTANT: because of re-entrancy, we MUST:
         // - process the waiting callers in a FIFO manner
         // - not cache repoMetadata.waiting.length, we MUST use the live
@@ -534,7 +534,7 @@ var readLocalFile = function(path, callback) {
 // Get the repository copy of a built-in asset.
 
 var readRepoFile = function(path, callback) {
-    // https://github.com/gorhill/uBlock/issues/426
+    // https://github.com/chrisaljoudi/uBlock/issues/426
     if ( exports.remoteFetchBarrier !== 0 ) {
         readLocalFile(path, callback);
         return;
@@ -553,7 +553,7 @@ var readRepoFile = function(path, callback) {
 
     var onRepoFileLoaded = function() {
         //console.log('µBlock> readRepoFile("%s") / onRepoFileLoaded()', path);
-        // https://github.com/gorhill/httpswitchboard/issues/263
+        // https://github.com/chrisaljoudi/httpswitchboard/issues/263
         if ( this.status === 200 ) {
             reportBack(this.responseText);
         } else {
@@ -866,7 +866,7 @@ var readExternalAsset = function(path, callback) {
     };
 
     var onExternalFileLoaded = function() {
-        // https://github.com/gorhill/uBlock/issues/708
+        // https://github.com/chrisaljoudi/uBlock/issues/708
         // A successful download should never return an empty file: turn this
         // into an error condition.
         if ( stringIsNotEmpty(this.responseText) === false ) {
@@ -1045,7 +1045,7 @@ exports.rmrf = function() {
 exports.metadata = function(callback) {
     var out = {};
 
-    // https://github.com/gorhill/uBlock/issues/186
+    // https://github.com/chrisaljoudi/uBlock/issues/186
     // We need to check cache obsolescence when both cache and repo meta data
     // has been gathered.
     var checkCacheObsolescence = function() {

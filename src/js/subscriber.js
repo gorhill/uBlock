@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global vAPI, HTMLDocument */
@@ -34,7 +34,7 @@
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/464
+// https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
     //console.debug('contentscript-start.js > not a HTLMDocument');
     return;
@@ -109,7 +109,7 @@ var onAbpLinkClicked = function(ev) {
         }
 
         // List already subscribed to?
-        // https://github.com/gorhill/uBlock/issues/1033
+        // https://github.com/chrisaljoudi/uBlock/issues/1033
         // Split on line separators, not whitespaces.
         var externalLists = details.externalLists.trim().split(/\s*[\n\r]+\s*/);
         if ( externalLists.indexOf(location) !== -1 ) {

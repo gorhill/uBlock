@@ -1,6 +1,6 @@
 Pemblokir yang efisien: ringan penggunaan memori dan CPU, namun dapat memuat dan menjalankan ribuan filter lain dibanding pemblokir populer lain di luar sana.
 
-Ringkasan ilustrasi efisiensi: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-Compared
+Ringkasan ilustrasi efisiensi: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-Compared
 
 Penggunaan: Tombol daya yang besar dalam popup berfungsi menonaktifkan/mengaktifkan uBlock secara permanen untuk situs yang sedang dibuka. Berlaku untuk situs yang sedang dibuka saja, bukan tombol daya global.
 
@@ -38,7 +38,7 @@ Gratis.
 Sumber terbuka dengan lisensi publik (GPLv3)
 Untuk pengguna oleh pengguna.
 
-Kontributor @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Kontributor @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Kontributor @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Kontributor @ Crowdin: https://crowdin.net/project/ublock
 Masih dalam versi yang amat awal, mohon diperhatikan ketika anda membuat ulasan.
 
 Catatan perubahan proyek:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

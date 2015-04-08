@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global vAPI, uDom */
@@ -115,7 +115,7 @@ var renderFilterLists = function() {
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
         elem.text(text);
 
-        // https://github.com/gorhill/uBlock/issues/104
+        // https://github.com/chrisaljoudi/uBlock/issues/104
         var asset = listDetails.cache[listKey] || {};
 
         // Update status

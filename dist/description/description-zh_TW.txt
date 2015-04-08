@@ -1,7 +1,7 @@
 一款高效率的廣告攔截工具：只使用超低的記憶體和CPU使用量，和其他常見的廣告攔截工具相比，可以載入並執行上千條過濾規則。
 
 效率概述說明： 
-https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
+https://github.com/chrisaljoudi/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 
 用法：點選快顯視窗中的電源按鈕，μBlock將會在目前正在瀏覽的網頁永久停用/啟用廣告攔截功能。 它只適用於目前正在瀏覽的網頁，而不是全域按鈕。
 
@@ -42,7 +42,7 @@ https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 一切都是為了使用者。
 
 貢獻者@ Github： 
-https://github.com/gorhill/uBlock/graphs/contributors
+https://github.com/chrisaljoudi/uBlock/graphs/contributors
 貢獻者 @ Crowdin： 
 https://crowdin.net/project/ublock
 
@@ -51,4 +51,4 @@ https://crowdin.net/project/ublock
 這還只是一個非常初期的版本，當您留下建議的時候請手下留情。
 
 專案更新日誌：
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

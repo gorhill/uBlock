@@ -1,7 +1,7 @@
 Efektyvus blokatorius: neapkraunantis procesoriaus ir atminties, bet galintis taikyti tūkstančiais daugiau filtrų, nei kiti populiarūs blokatoriai.
 
 Iliustruota efektyvumo apžvalga:
-https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Naudojimas: didelis įjungimo mygtukas iškylančiame lange skirtas įjungti/išjungti uBlock dabartiniam puslapiui. Jis skirtas tik dabartiniam puslapiui ir nėra naudojamas visiškai išjungti plėtinį.
 
@@ -39,7 +39,7 @@ Nemokamas.
 Atviroji programinė įranga su viešąja licencija (GPLv3)
 Naudotojų naudotojams.
 
-Github talkininkai: https://github.com/gorhill/uBlock/graphs/contributors
+Github talkininkai: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Crowdin talkininkai: https://crowdin.net/project/ublock
 
 ***
@@ -47,4 +47,4 @@ Crowdin talkininkai: https://crowdin.net/project/ublock
 Tai pakankamai ankstyva versija, turėkite tai omenyje, kai rašysite apžvalgą.
 
 Projekto pakeitimų žurnalas:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

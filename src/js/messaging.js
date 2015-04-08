@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global µBlock, vAPI */
@@ -38,7 +38,7 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'getAssetContent':
-            // https://github.com/gorhill/uBlock/issues/417
+            // https://github.com/chrisaljoudi/uBlock/issues/417
             µb.assets.get(request.url, callback);
             return;
 
@@ -293,7 +293,7 @@ var onMessage = function(request, sender, callback) {
                 return;
             }
             vAPI.tabs.get(request.tabId, function(tab) {
-                // https://github.com/gorhill/uBlock/issues/1012
+                // https://github.com/chrisaljoudi/uBlock/issues/1012
                 callback(getStats(getTargetTabId(tab), tab ? tab.title : ''));
             });
             return;
@@ -787,7 +787,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'setSessionFirewallRules':
-            // https://github.com/gorhill/uBlock/issues/772
+            // https://github.com/chrisaljoudi/uBlock/issues/772
             µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
 
             µb.sessionFirewall.fromString(request.rules);
@@ -1048,7 +1048,7 @@ var restoreUserData = function(request) {
         }, onCountdown);
     };
 
-    // https://github.com/gorhill/uBlock/issues/1102
+    // https://github.com/chrisaljoudi/uBlock/issues/1102
     // Ensure all currently cached assets are flushed from storage AND memory.
     µb.assets.rmrf();
 

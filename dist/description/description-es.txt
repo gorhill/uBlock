@@ -1,6 +1,6 @@
 Un bloqueador eficiente: con bajo consumo de memoria y CPU, es capaz de cargar y aplicar miles más de filtros en comparación con otros bloqueadores populares.
 
-Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Uso: El botón grande de apagado/encendido en la ventana de la aplicación, es para desactivar/activar uBlock permanentemente en el sitio web actual. Aplica solo al sitio web actual, no activa o desactiva la extensión de forma general.
 
@@ -38,7 +38,7 @@ Libre.
 Código abierto con licencia pública (GPLv3)
 Hecho para usuarios por los usuarios.
 
-Colaboradores @ Github (en inglés): https://github.com/gorhill/uBlock/graphs/contributors
+Colaboradores @ Github (en inglés): https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Colaboradores @ Crowdin (en inglés): https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Colaboradores @ Crowdin (en inglés): https://crowdin.net/project/ublock
 Esta es una versión en desarrollo, por favor tómelo en cuenta a la hora de dar su evaluación.
 
 Registro de cambios del proyecto:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -1,7 +1,7 @@
 一款高效的请求过滤工具：占用极低的内存和CPU，和其他常见的过滤工具相比，它能够加载并执行上千条过滤规则。
 
 效率概述说明： 
-https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 用法：点击弹出窗口中的电源按钮，uBlock 将对当前网页永久禁用/启用过滤功能。 它只控制当前网页的请求过滤，而不是一个全局开关。 它只控制当前网页的请求过滤，而不是一个全局开关。
 
@@ -40,7 +40,7 @@ https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 一切为了用户。
 
 贡献者 @ Github:
-https://github.com/gorhill/uBlock/graphs/contributors
+https://github.com/chrisaljoudi/uBlock/graphs/contributors
 贡献者 @ Crowdin:
 https://crowdin.net/project/ublock
 
@@ -49,4 +49,4 @@ https://crowdin.net/project/ublock
 它还是一个相当早期的版本，在您评论的时候请记住这一点。
 
 项目更新日志：
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

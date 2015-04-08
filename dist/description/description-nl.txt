@@ -1,6 +1,6 @@
 Een efficiënte adblocker: gebruikt weinig processorkracht en geheugen. Toch kan het duizenden filters meer laden en toepassen dan andere populaire adblockers.
 
-Geïllustreerde efficiëntievergelijking: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Geïllustreerde efficiëntievergelijking: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Gebruik: Met de grote aan-uitknop in de popup kan uBlock permanent in- of uitgeschakeld worden voor de huidige website. Het wordt enkel op de huidige website toegepast. Het is geen globale aan-uitknop.
 
@@ -38,7 +38,7 @@ Gratis.
 Open source met publieke licentie (GPLv3)
 Voor gebruikers, door gebruikers.
 
-Bijdragers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bijdragers @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Bijdragers @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Bijdragers @ Crowdin: https://crowdin.net/project/ublock
 Onthoud dat dit een hele vroege verse is wanneer je een review maakt.
 
 Projectwijzigingenlogboek:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global publicSuffixList, vAPI, µBlock */
@@ -42,7 +42,7 @@ var µb = µBlock;
 // - Schedule next update operation.
 
 var onAllReady = function() {
-    // https://github.com/gorhill/uBlock/issues/184
+    // https://github.com/chrisaljoudi/uBlock/issues/184
     // Check for updates not too far in the future.
     µb.assetUpdater.onStart.addEventListener(µb.updateStartHandler.bind(µb));
     µb.assetUpdater.onCompleted.addEventListener(µb.updateCompleteHandler.bind(µb));
@@ -104,10 +104,10 @@ var onSelfieReady = function(selfie) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/226
+// https://github.com/chrisaljoudi/uBlock/issues/226
 // Whitelist in memory.
 // Whitelist parser needs PSL to be ready.
-// gorhill 2014-12-15: not anymore
+// chrisaljoudi 2014-12-15: not anymore
 
 var onNetWhitelistReady = function(netWhitelistRaw) {
     µb.netWhitelist = µb.whitelistFromString(netWhitelistRaw);
@@ -123,13 +123,13 @@ var onUserSettingsReady = function(fetched) {
 
     fromFetch(userSettings, fetched);
 
-    // https://github.com/gorhill/uBlock/issues/426
+    // https://github.com/chrisaljoudi/uBlock/issues/426
     // Important: block remote fetching for when loading assets at launch
     // time.
     µb.assets.autoUpdate = userSettings.autoUpdate;
     µb.assets.autoUpdateDelay = µb.updateAssetsEvery;
 
-    // https://github.com/gorhill/uBlock/issues/540
+    // https://github.com/chrisaljoudi/uBlock/issues/540
     // Disabling local mirroring for the time being
     userSettings.experimentalEnabled = false;
     µb.mirrors.toggle(false /* userSettings.experimentalEnabled */);

@@ -160,11 +160,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura obligatoria<\/a>)",
+    "message":"Soy usuario avanzado (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'> Lectura obligatoria<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
+    "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -332,7 +332,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> documentación completa<\/a>).",
+    "message":"Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> documentación completa<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{

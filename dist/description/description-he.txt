@@ -1,6 +1,6 @@
 חוסם יעיל: חותמת נמוכה של המעבד והזיכרון, ועדיין יכול לטעון ולאפשר אלפי מסננים יותר מאשר חוסמים פופולריים אחרים.
 
-סקירה כוללת על היעילות שלו: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+סקירה כוללת על היעילות שלו: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 שימוש: לחצן ההפעלה הגדול בחלון הפופאפ הוא בשביל לבטל/להפעיל את uBlock עבור האתר הנוכחי. הוא חל על האתר הנוכחי בלבד, זהו לא לחצן הפעלה גלובלי.
 
@@ -38,7 +38,7 @@
 קוד פתוח עם רשיון ציבורי (GPLv3)
 בשביל המשתמשים על ידי המשתמשים.
 
-תורמים @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+תורמים @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 תורמים @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@
 קח בחשבון שזוהי גרסה מוקדמת בזמן הסקירה שלך.
 
 רשימת השינויים של הפרויקט:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -1,6 +1,6 @@
 Một công cụ chặn quảng cáo hiệu quả: sử dụng ít bộ nhớ, CPU và có thể nạp, áp dụng hàng ngàn bộ lọc so với những công cụ chặn quảng cáo hiện nay.
 
-Minh hoạ tổng quan về tính hiệu quả của µBlock: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Minh hoạ tổng quan về tính hiệu quả của µBlock: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Sử dụng: Nút nguồn lớn trong hộp thoại popup để vô hiệu/kích hoạt vĩnh viễn uBlock cho website hiện tại. Nó chỉ áp dụng cho trang hiện tại, không phải tất cả website.
 
@@ -38,7 +38,7 @@ Miễn phí.
 Nguồn mở với giấy phép công cộng (GPLv3)
 Làm vì người dùng bởi người dùng.
 
-Những người đóng góp @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Những người đóng góp @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Những người đóng góp @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Những người đóng góp @ Crowdin: https://crowdin.net/project/ublock
 Đây là một phiên bản khá mới, hãy ghi nhớ điều này khi bạn đánh giá.
 
 Thay đổi của dự án:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

@@ -5,7 +5,7 @@
 # exception filters.
 #
 # I will use data from benchmarks to decide what to add here.
-# https://github.com/gorhill/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
+# https://github.com/chrisaljoudi/uBlock/wiki/%C2%B5Block-and-others:-Blocking-ads,-trackers,-malwares
 
 # https://www.eff.org/deeplinks/2014/07/white-house-website-includes-unique-non-cookie-tracker-despite-privacy-policy
 ||addthis.com^$third-party,important
@@ -16,7 +16,7 @@
 # Commenting it out allows me to enable this one out-of-the-box.
 # ||linkedin.com^$third-party,important
 
-# https://github.com/gorhill/uBlock/issues/289
+# https://github.com/chrisaljoudi/uBlock/issues/289
 # Commented out, breaks to many sites. See:
 #   https://hg.adblockplus.org/easylist/rev/9f6e928c258a#l2.12
 #   Users can still block this one through hpHosts, MVPS, Dan Pollock's or

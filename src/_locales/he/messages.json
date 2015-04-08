@@ -160,11 +160,11 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"אני משתמש מתקדם (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
+    "message":"אני משתמש מתקדם (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
+    "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -332,7 +332,7 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"סינטקס חוק: <code>פעולה סוג יעד מקור<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>תיעוד מלא<\/a>).",
+    "message":"סינטקס חוק: <code>פעולה סוג יעד מקור<\/code> (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>תיעוד מלא<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{

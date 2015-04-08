@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global punycode, vAPI, uDom */
@@ -52,7 +52,7 @@ document.getElementById('saveRules').style.setProperty(
     (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
 );
 
-// https://github.com/gorhill/uBlock/issues/996
+// https://github.com/chrisaljoudi/uBlock/issues/996
 // Experimental: mitigate glitchy popup UI: immediately set the firewall pane
 // visibility to its last known state. By default the pane is hidden.
 // Will remove if it makes no difference.
@@ -87,7 +87,7 @@ var reNetworkRelatedURL = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
-// https://github.com/gorhill/httpswitchboard/issues/345
+// https://github.com/chrisaljoudi/httpswitchboard/issues/345
 
 var messager = vAPI.messaging.channel('popup.js');
 
@@ -244,7 +244,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
     var aCount = hnDetails.allowCount;
     var bCount = hnDetails.blockCount;
     if ( aCount !== 0 || bCount !== 0 ) {
-        // https://github.com/gorhill/uBlock/issues/471
+        // https://github.com/chrisaljoudi/uBlock/issues/471
         aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
         bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
         textNode.nodeValue = threePlus.slice(0, aCount) +
@@ -262,7 +262,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
     aCount = hnDetails.totalAllowCount;
     bCount = hnDetails.totalBlockCount;
     if ( aCount !== 0 || bCount !== 0 ) {
-        // https://github.com/gorhill/uBlock/issues/471
+        // https://github.com/chrisaljoudi/uBlock/issues/471
         aCount = Math.min(Math.ceil(Math.log(aCount + 1) / Math.LN10), 3);
         bCount = Math.min(Math.ceil(Math.log(bCount + 1) / Math.LN10), 3);
         textNode.nodeValue = threePlus.slice(0, aCount) +
@@ -429,11 +429,11 @@ var renderPopup = function() {
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
-    // https://github.com/gorhill/uBlock/issues/470
+    // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
     var dfPaneVisible = popupData.dfEnabled && popupData.advancedUserEnabled;
 
-    // https://github.com/gorhill/uBlock/issues/1068
+    // https://github.com/chrisaljoudi/uBlock/issues/1068
     // Remember the last state of the firewall pane. This allows to
     // configure the popup size early next time it is opened, which means a
     // less glitchy popup at open time.
@@ -518,7 +518,7 @@ var toggleFirewallPane = function() {
         value: popupData.dfEnabled
     });
 
-    // https://github.com/gorhill/uBlock/issues/996
+    // https://github.com/chrisaljoudi/uBlock/issues/996
     // Remember the last state of the firewall pane. This allows to
     // configure the popup size early next time it is opened, which means a
     // less glitchy popup at open time.
@@ -616,7 +616,7 @@ var reloadTab = function() {
 
     // Polling will take care of refreshing the popup content
 
-    // https://github.com/gorhill/uBlock/issues/748
+    // https://github.com/chrisaljoudi/uBlock/issues/748
     // User forces a reload, assume the popup has to be updated regardless if
     // there were changes or not.
     popupData.contentLastModified = -1;

@@ -1,7 +1,7 @@
 En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda och applicera tusentals fler filter jämfört med andra populära blockerare där ute.
 
 Illustrerad översikt av dess effektivitet:
-https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Användning: Den stora strömbrytarikonen i popuprutan är till för att avaktivera/aktivera uBlock på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
 
@@ -39,7 +39,7 @@ Gratis.
 Öppen källkod med offentlig licens (GPLv3)
 För användare, av användare.
 
-Bidragsgivare @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragsgivare @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Bidragsgivare @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -47,4 +47,4 @@ Bidragsgivare @ Crowdin: https://crowdin.net/project/ublock
 Det är en ganska tidig version, tänk på detta när du skriver en recension.
 
 Projektets ändringslogg:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

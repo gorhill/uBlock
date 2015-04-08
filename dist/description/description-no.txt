@@ -1,6 +1,6 @@
 Effektiv blokkering av reklame, sporing mm., lavt CPU- og minnebruk, og kan likevel laste og bruke tusenvis av flere filtre enn andre populære utvidelser for blokkering.
 
-Illustrert oversikt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Illustrert oversikt over effektiviteten: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Anvendelse: Den store av/på-knappen i oppsprettsvinduet er for å permanent deaktivere/aktivere uBlock for det gjeldende nettstedet. Dette gjelder bare for det gjeldende nettstedet, det er ikke en global av/på-knapp.
 
@@ -38,7 +38,7 @@ Gratis.
 Åpen kildekode med offentlig lisens (GPLv3)
 For brukere, av brukere.
 
-Bidragsytere @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragsytere @ Github: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 Dette er en tidlig versjon, ha det i tankene når du bedømmer den.
 
 Endringslogg for prosjektet:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

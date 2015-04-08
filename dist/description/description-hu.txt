@@ -1,6 +1,6 @@
 Egy hatékony blokkoló: kíméletes a processzorral és a memóriával, mégis képes nagyságrendekkel több szűrő betöltésére és alkalmazására a többi népszerű blokkolóhoz viszonyítva.
 
-Áttekintés a hatékonyságáról: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Áttekintés a hatékonyságáról: https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Használat: A nagy bekapcsológomb a kiegészítő tiltására/engedélyezésére szolgál a jelenlegi webhelyen. A gomb kizárólag a jelenlegi webhelyre érvényes, nem egy globális kapcsoló.
 
@@ -38,7 +38,7 @@ Ingyenes.
 Nyílt forráskódú nyilvános licenccel (GPLv3)
 Felhasználóknak felhasználóktól.
 
-Közreműködők a Github-on: https://github.com/gorhill/uBlock/graphs/contributors
+Közreműködők a Github-on: https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Közreműködők a Crowdin-en: https://crowdin.net/project/ublock
 
 ***
@@ -46,4 +46,4 @@ Közreműködők a Crowdin-en: https://crowdin.net/project/ublock
 Ez még egy elég korai verzió, amit illik szem előtt tartani értékeléskor.
 
 Változások listája:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases

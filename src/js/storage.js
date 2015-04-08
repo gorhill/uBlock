@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/gorhill/uBlock
+    Home: https://github.com/chrisaljoudi/uBlock
 */
 
 /* global YaMD5, µBlock, vAPI, punycode, publicSuffixList */
@@ -154,7 +154,7 @@
         if ( details.error ) {
             return;
         }
-        // https://github.com/gorhill/uBlock/issues/976
+        // https://github.com/chrisaljoudi/uBlock/issues/976
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
         // duplicates at this point may lead to more issues.
@@ -171,7 +171,7 @@
     var relocationMap = {};
 
     var fixLocation = function(location) {
-        // https://github.com/gorhill/uBlock/issues/418
+        // https://github.com/chrisaljoudi/uBlock/issues/418
         // We now support built-in external filter lists
         if ( /^https?:/.test(location) === false ) {
             location = 'assets/thirdparties/' + location;
@@ -208,7 +208,7 @@
             }
             // This may happen if the list name was pulled from the list
             // content.
-            // https://github.com/gorhill/uBlock/issues/982
+            // https://github.com/chrisaljoudi/uBlock/issues/982
             // There is no guarantee the title was successfully extracted from
             // the list content.
             if ( availableEntry.title === '' &&
@@ -510,7 +510,7 @@
             line = line.slice(0, pos).trim();
         }
 
-        // https://github.com/gorhill/httpswitchboard/issues/15
+        // https://github.com/chrisaljoudi/httpswitchboard/issues/15
         // Ensure localhost et al. don't end up in the ubiquitous blacklist.
         // With hosts files, we need to remove local IP redirection
         if ( reMaybeLocalIp.test(c) ) {

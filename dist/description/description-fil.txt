@@ -1,7 +1,7 @@
 Isang episyenteng blocker: magaan sa memorya at CPU footprint, pero naka-loload at nag-eenforce ng libo-libong mga filters kaysa sa mga ibang sikat na blockers.
 
 Isinalarawan pangkalahatang-ideya ng kahusayan ng uBlock:
-https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+https://github.com/chrisaljoudi/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Paggamit: Ang malaking button sa sa popup ay upang permanenteng huwag paganahin / paganahin ang uBlock para sa kasalukuyang web site. Nalalapat ito sa kasalukuyang web site lamang , hindi ito pangkalahatang button.
 
@@ -40,7 +40,7 @@ Open source with public license (GPLv3)
 Para sa users by users.
 
 Mga nag-aambag @ Github:
-https://github.com/gorhill/uBlock/graphs/contributors
+https://github.com/chrisaljoudi/uBlock/graphs/contributors
 Mga nag-aambag @ Crowdin: https://crowdin.net/project/ublock
 
 ***
@@ -48,4 +48,4 @@ Mga nag-aambag @ Crowdin: https://crowdin.net/project/ublock
 Kakalabas lang nito kaya't pag-isipan ang mga komentaryo bago magbigay ng review.
 
 Mga pagbabago sa proyekto:
-https://github.com/gorhill/uBlock/releases
+https://github.com/chrisaljoudi/uBlock/releases
