@@ -384,9 +384,9 @@ var onHeadersReceived = function(details) {
     if ( details.parentFrameId === -1 ) {
         var contextDomain = µb.URI.domainFromHostname(requestHostname);
         // https://github.com/chrisaljoudi/uBlock/pull/1209
-        // Adding `rootURL` solves the issue.
+        // Using `overrideStore` solves the issue.
         context = {
-            rootURL: requestURL,
+            overrideStore: true,
             rootHostname: requestHostname,
             rootDomain: contextDomain,
             pageHostname: requestHostname,

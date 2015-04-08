@@ -693,12 +693,10 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
     // https://github.com/chrisaljoudi/uBlock/pull/1209
     // Not ideal, but until something better is figured, this solves the issue.
-    // This works so long as there is no `rootURL` property added to the page
-    // store. Long term, I have some ideas I would like to test to take care
-    // of those cases for which a page store may not have been definitely
-    // bound to a tab.
-    if ( typeof context.rootURL === 'string' ) {
-        if ( µb.getNetFilteringSwitch(context.rootURL) === false ) {
+    // Long term, I have some ideas I would like to test to take care of those
+    // cases for which a page store may not have been definitely bound to a tab.
+    if ( context.overrideStore ) {
+        if ( µb.getNetFilteringSwitch(context.requestURL) === false ) {
             return '';
         }
     } else if ( this.getNetFilteringSwitch() === false ) {
