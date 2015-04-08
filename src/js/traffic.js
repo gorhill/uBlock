@@ -69,14 +69,10 @@ var onBeforeRequest = function(details) {
     // Lookup the page store associated with this tab id.
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
+        mostRecentRootDocURL = '';
+    }
     if ( !pageStore ) {
-        // https://github.com/gorhill/uBlock/issues/1025
-        // Google Hangout popup opens without a root frame. So for now we will
-        // just discard that best-guess root frame if it is too far in the
-        // future, at which point it ceases to be a "best guess".
-        if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
-            mostRecentRootDocURL = '';
-        }
         // https://github.com/gorhill/uBlock/issues/1001
         // Not a behind-the-scene request, yet no page store found for the
         // tab id: we will thus bind the last-seen root document to the
@@ -120,6 +116,9 @@ var onBeforeRequest = function(details) {
     requestContext.requestURL = requestURL;
     requestContext.requestHostname = details.hostname;
     requestContext.requestType = requestType;
+    if(!isFrame && mostRecentRootDocURL !== '') {
+        requestContext.pageHostname = µb.URI.hostnameFromURI(mostRecentRootDocURL);
+    }
 
     var result = pageStore.filterRequest(requestContext);
 
