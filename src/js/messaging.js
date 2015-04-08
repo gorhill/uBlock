@@ -203,6 +203,7 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var getStats = function(tabId, tabTitle) {
+    var tabContext = µb.tabContextManager.lookup(tabId);
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -213,40 +214,38 @@ var getStats = function(tabId, tabTitle) {
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         netFilteringSwitch: false,
-        pageURL: '',
+        rawURL: tabContext.rawURL,
+        pageURL: tabContext.normalURL,
+        pageHostname: tabContext.rootHostname,
+        pageDomain: tabContext.rootDomain,
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         tabId: tabId,
         tabTitle: tabTitle
     };
+
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
-        r.rawURL = pageStore.rawURL;
-        r.pageURL = pageStore.pageURL;
-        r.pageDomain = pageStore.pageDomain;
-        r.pageHostname = pageStore.pageHostname;
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
-        r.firewallRules = getFirewallRules(pageStore.pageHostname, r.hostnameDict);
-        r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
+        r.firewallRules = getFirewallRules(tabContext.rootHostname, r.hostnameDict);
+        r.canElementPicker = tabContext.rootHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
-        r.noPopups = µb.hnSwitches.evaluateZ('noPopups', r.pageHostname);
-        r.noStrictBlocking = µb.hnSwitches.evaluateZ('noStrictBlocking', r.pageHostname);
-        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('noCosmeticFiltering', r.pageHostname);
+        r.noPopups = µb.hnSwitches.evaluateZ('noPopups', tabContext.rootHostname);
+        r.noStrictBlocking = µb.hnSwitches.evaluateZ('noStrictBlocking', tabContext.rootHostname);
+        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('noCosmeticFiltering', tabContext.rootHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
     }
-    if ( r.pageHostname ) {
-        r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
-            µb.permanentFirewall,
-            r.pageHostname,
-            r.hostnameDict
-        );
-    }
+    r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
+        µb.permanentFirewall,
+        tabContext.rootHostname,
+        r.hostnameDict
+    );
     return r;
 };
 
@@ -473,15 +472,7 @@ var filterRequests = function(pageStore, details) {
     var isBlockResult = µb.isBlockResult;
 
     // Create evaluation context
-    var context = {
-        pageHostname: vAPI.punycodeHostname(details.pageHostname),
-        pageDomain: µburi.domainFromHostname(details.pageHostname),
-        rootHostname: pageStore.rootHostname,
-        rootDomain: pageStore.rootDomain,
-        requestURL: '',
-        requestHostname: '',
-        requestType: ''
-    };
+    var context = pageStore.createContextFromFrameHostname(details.pageHostname);
 
     var request;
     var i = requests.length;

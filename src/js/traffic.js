@@ -33,16 +33,6 @@
 
 var exports = {};
 
-// https://github.com/chrisaljoudi/uBlock/issues/1001
-// This is to be used as last-resort fallback in case a tab is found to not
-// be bound while network requests are fired for the tab.
-
-var mostRecentRootDocURLTimestamp = 0;
-var mostRecentRootDocURL = '';
-
-
-var documentWhitelists = Object.create(null);
-
 /******************************************************************************/
 
 // Intercept and filter web requests.
@@ -70,36 +60,14 @@ var onBeforeRequest = function(details) {
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        // https://github.com/chrisaljoudi/uBlock/issues/1025
-        // Google Hangout popup opens without a root frame. So for now we will
-        // just discard that best-guess root frame if it is too far in the
-        // future, at which point it ceases to be a "best guess".
-        if ( (Date.now() - mostRecentRootDocURLTimestamp) >= 500 ) {
-            mostRecentRootDocURL = '';
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/1001
-        // Not a behind-the-scene request, yet no page store found for the
-        // tab id: we will thus bind the last-seen root document to the
-        // unbound tab. It's a guess, but better than ending up filtering
-        // nothing at all.
-        if ( mostRecentRootDocURL !== '' ) {
-            vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: mostRecentRootDocURL });
-            pageStore = µb.pageStoreFromTabId(tabId);
-        }
-        // If all else fail at finding a page store, re-categorize the
-        // request as behind-the-scene. At least this ensures that ultimately
-        // the user can still inspect/filter those net requests which were
-        // about to fall through the cracks.
-        // Example: Chromium + case #12 at
-        //          http://raymondhill.net/ublock/popup.html
-        if ( !pageStore ) {
+        var tabContext = µb.tabContextManager.lookup(tabId);
+        if ( vAPI.isBehindTheSceneTabId(tabContext.tabId) ) {
             return onBeforeBehindTheSceneRequest(details);
         }
+        vAPI.tabs.onNavigation({ tabId: tabId, frameId: 0, url: tabContext.rawURL });
+        pageStore = µb.pageStoreFromTabId(tabId);
     }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/114
-    var requestContext = pageStore;
-    var frameStore;
     // https://github.com/chrisaljoudi/uBlock/issues/886
     // For requests of type `sub_frame`, the parent frame id must be used
     // to lookup the proper context:
@@ -109,11 +77,9 @@ var onBeforeRequest = function(details) {
     // > (ref: https://developer.chrome.com/extensions/webRequest)
     var isFrame = requestType === 'sub_frame';
     var frameId = isFrame ? details.parentFrameId : details.frameId;
-    if ( frameId > 0 ) {
-        if ( frameStore = pageStore.getFrame(frameId) ) {
-            requestContext = frameStore;
-        }
-    }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/114
+    var requestContext = pageStore.createContextFromFrameId(frameId);
 
     // Setup context and evaluate
     var requestURL = details.url;
@@ -124,6 +90,8 @@ var onBeforeRequest = function(details) {
     var result = pageStore.filterRequest(requestContext);
 
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
+
+    pageStore.logRequest(requestContext, result);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -139,26 +107,11 @@ var onBeforeRequest = function(details) {
             }
         }
 
-        // https://code.google.com/p/chromium/issues/detail?id=387198
-        // Not all redirects will succeed, until bug above is fixed.
-        // https://github.com/chrisaljoudi/uBlock/issues/540
-        // Disabling local mirroring for the time being
-        //var redirectURL = pageStore.toMirrorURL(requestURL);
-        //if ( redirectURL !== '' ) {
-        //    pageStore.logRequest(requestContext, 'ma:');
-            //console.debug('traffic.js > "%s" redirected to "%s..."', requestURL.slice(0, 50), redirectURL.slice(0, 50));
-        //    return { redirectUrl: redirectURL };
-        //}
-
-        pageStore.logRequest(requestContext, result);
-
         return;
     }
 
     // Blocked
     //console.debug('traffic.js > onBeforeRequest(): BLOCK "%s" (%o) because "%s"', details.url, details, result);
-
-    pageStore.logRequest(requestContext, result);
 
     // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
     // No point updating the badge if it's not being displayed.
@@ -176,16 +129,16 @@ var onBeforeRequest = function(details) {
 /******************************************************************************/
 
 var onBeforeRootFrameRequest = function(details) {
+    var tabId = details.tabId;
     var requestURL = details.url;
+    var µb = µBlock;
 
-    mostRecentRootDocURL = requestURL;
-    mostRecentRootDocURLTimestamp = Date.now();
+    µb.tabContextManager.push(tabId, requestURL);
 
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    var µb = µBlock;
     var requestHostname = details.hostname;
     var requestDomain = µb.URI.domainFromHostname(requestHostname) || requestHostname;
     var context = {
@@ -222,7 +175,7 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Log
-    var pageStore = µb.bindTabToPageStats(details.tabId, requestURL, 'beforeRequest');
+    var pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
@@ -240,7 +193,7 @@ var onBeforeRootFrameRequest = function(details) {
         why: result
     }));
 
-    vAPI.tabs.replace(details.tabId, vAPI.getURL('document-blocked.html?details=') + query);
+    vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
 
     return { cancel: true };
 };
@@ -302,9 +255,10 @@ var onBeforeBehindTheSceneRequest = function(details) {
         return;
     }
 
-    pageStore.requestURL = details.url;
-    pageStore.requestHostname = details.hostname;
-    pageStore.requestType = details.type;
+    var context = pageStore.createContextFromPage();
+    context.requestURL = details.url;
+    context.requestHostname = details.hostname;
+    context.requestType = details.type;
 
     // Blocking behind-the-scene requests can break a lot of stuff: prevent
     // browser updates, prevent extension updates, prevent extensions from
@@ -312,10 +266,10 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // So we filter if and only if the "advanced user" mode is selected
     var result = '';
     if ( µb.userSettings.advancedUserEnabled ) {
-        result = pageStore.filterRequestNoCache(pageStore);
+        result = pageStore.filterRequestNoCache(context);
     }
 
-    pageStore.logRequest(pageStore, result);
+    pageStore.logRequest(context, result);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -340,56 +294,68 @@ var onHeadersReceived = function(details) {
         return;
     }
 
-    var requestURL = details.url;
+    // Special handling for root document.
+    if ( details.type === 'main_frame' ) {
+        return onRootFrameHeadersReceived(details);
+    }
+
+    // If we reach this point, we are dealing with a sub_frame
 
     // Lookup the page store associated with this tab id.
     var µb = µBlock;
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( !pageStore ) {
-        if ( details.type === 'main_frame' ) {
-            pageStore = µb.bindTabToPageStats(tabId, requestURL, 'beforeRequest');
-        }
-        if ( !pageStore ) {
-            return;
-        }
+        return;
     }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/384
-    // https://github.com/chrisaljoudi/uBlock/issues/540
-    // Disabling local mirroring for the time being
-    //if ( details.parentFrameId === -1 ) {
-    //    pageStore.skipLocalMirroring = headerStartsWith(details.responseHeaders, 'content-security-policy') !== '';
-    //}
+    // Frame id of frame request is the their own id, while the request is made
+    // in the context of the parent.
+    var context = pageStore.createContextFromFrameId(details.parentFrameId);
+    context.requestURL = details.url + '{inline-script}';
+    context.requestHostname = details.hostname;
+    context.requestType = 'inline-script';
 
+    var result = pageStore.filterRequestNoCache(context);
+
+    pageStore.logRequest(context, result);
+
+    // Don't block
+    if ( µb.isAllowResult(result) ) {
+        return;
+    }
+
+    µb.updateBadgeAsync(tabId);
+
+    details.responseHeaders.push({
+        'name': 'Content-Security-Policy',
+        'value': "script-src 'unsafe-eval' *"
+    });
+
+    return { 'responseHeaders': details.responseHeaders };
+};
+
+/******************************************************************************/
+
+var onRootFrameHeadersReceived = function(details) {
+    var tabId = details.tabId;
+    var requestURL = details.url;
     var requestHostname = details.hostname;
+    var µb = µBlock;
 
-    // https://github.com/chrisaljoudi/uBlock/issues/525
-    // When we are dealing with the root frame, due to fix to issue #516, it
-    // is likely the root frame has not been bound yet to the tab, and thus
-    // we could end up using the context of the previous page for filtering.
-    // So when the request is that of a root frame, simply create an
-    // artificial context, this will ensure we are properly filtering
-    // inline scripts.
-    var context;
-    if ( details.parentFrameId === -1 ) {
-        var contextDomain = µb.URI.domainFromHostname(requestHostname);
-        // https://github.com/chrisaljoudi/uBlock/pull/1209
-        // Using `overrideStore` solves the issue.
-        context = {
-            overrideStore: true,
-            rootHostname: requestHostname,
-            rootDomain: contextDomain,
-            pageHostname: requestHostname,
-            pageDomain: contextDomain
-        };
-    } else {
-        context = pageStore;
+    // Check if the main_frame is a download
+    // ...
+    if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
+        µb.tabContextManager.unpush(tabId, requestURL);
     }
 
-    // Concatenating with '{inline-script}' so that the network request cache
-    // can distinguish from the document itself
-    // The cache should do whatever it takes to not confuse same
-    // URLs-different type
+    // Lookup the page store associated with this tab id.
+    var pageStore = µb.pageStoreFromTabId(tabId);
+    if ( !pageStore ) {
+        pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
+    }
+    // I can't think of how pageStore could be null at this point.
+
+    var context = pageStore.createContextFromPage();
     context.requestURL = requestURL + '{inline-script}';
     context.requestHostname = requestHostname;
     context.requestType = 'inline-script';
@@ -411,6 +377,18 @@ var onHeadersReceived = function(details) {
     });
 
     return { 'responseHeaders': details.responseHeaders };
+};
+
+/******************************************************************************/
+
+var headerValue = function(headers, name) {
+    var i = headers.length;
+    while ( i-- ) {
+        if ( headers[i].name.toLowerCase() === name ) {
+            return headers[i].value.trim();
+        }
+    }
+    return '';
 };
 
 /******************************************************************************/
@@ -475,6 +453,8 @@ var isTemporarilyWhitelisted = function(result, hostname) {
     }
     return result;
 };
+
+var documentWhitelists = Object.create(null);
 
 /******************************************************************************/
 

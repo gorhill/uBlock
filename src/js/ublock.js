@@ -340,6 +340,10 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 µBlock.getHiddenElementCount = function(tabId, callback) {
     callback = callback || this.noopFunc;
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+        callback();
+        return;
+    }
     vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-count.js' }, callback);
 };
 

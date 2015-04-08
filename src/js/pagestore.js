@@ -391,6 +391,11 @@ NetFilteringResultCache.prototype.lookup = function(context) {
 /******************************************************************************/
 /******************************************************************************/
 
+// Frame stores are used solely to associate a URL with a frame id. The
+// name `pageHostname` is used because of historical reasons. A more
+// appropriate name is `frameHostname` -- something to do in a future
+// refactoring.
+
 // To mitigate memory churning
 var frameStoreJunkyard = [];
 var frameStoreJunkyardMax = 50;
@@ -419,20 +424,13 @@ FrameStore.prototype.init = function(rootHostname, frameURL) {
     var µburi = µb.URI;
     this.pageHostname = µburi.hostnameFromURI(frameURL);
     this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
-    this.rootHostname = rootHostname;
-    this.rootDomain = µburi.domainFromHostname(rootHostname) || rootHostname;
-    // This is part of the filtering evaluation context
-    this.requestURL = this.requestHostname = this.requestType = '';
-
     return this;
 };
 
 /******************************************************************************/
 
 FrameStore.prototype.dispose = function() {
-    this.pageHostname = this.pageDomain =
-    this.rootHostname = this.rootDomain =
-    this.requestURL = this.requestHostname = this.requestType = '';
+    this.pageHostname = this.pageDomain = '';
     if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
         frameStoreJunkyard.push(this);
     }
@@ -448,39 +446,28 @@ var pageStoreJunkyardMax = 10;
 
 /******************************************************************************/
 
-var PageStore = function(tabId, rawURL, pageURL) {
-    this.init(tabId, rawURL, pageURL);
+var PageStore = function(tabId) {
+    this.init(tabId);
 };
 
 /******************************************************************************/
 
-PageStore.factory = function(tabId, rawURL, pageURL) {
+PageStore.factory = function(tabId) {
     var entry = pageStoreJunkyard.pop();
     if ( entry === undefined ) {
-        entry = new PageStore(tabId, rawURL, pageURL);
+        entry = new PageStore(tabId);
     } else {
-        entry.init(tabId, rawURL, pageURL);
+        entry.init(tabId);
     }
     return entry;
 };
 
 /******************************************************************************/
 
-PageStore.prototype.init = function(tabId, rawURL, pageURL) {
+PageStore.prototype.init = function(tabId) {
+    var tabContext = µb.tabContextManager.lookup(tabId);
     this.tabId = tabId;
-    this.rawURL = rawURL;
-    this.pageURL = pageURL;
-    this.pageHostname = µb.URI.hostnameFromURI(pageURL);
-
-    // https://github.com/chrisaljoudi/uBlock/issues/185
-    // Use hostname if no domain can be extracted
-    this.pageDomain = µb.URI.domainFromHostname(this.pageHostname) || this.pageHostname;
-    this.rootHostname = this.pageHostname;
-    this.rootDomain = this.pageDomain;
-
-    // This is part of the filtering evaluation context
-    this.requestURL = this.requestHostname = this.requestType = '';
-
+    this.tabHostname = tabContext.rootHostname;
     this.hostnameToCountMap = {};
     this.contentLastModified = 0;
     this.frames = {};
@@ -489,13 +476,13 @@ PageStore.prototype.init = function(tabId, rawURL, pageURL) {
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.hiddenElementCount = ''; // Empty string means "unknown"
-    this.skipLocalMirroring = false;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
     // Support `elemhide` filter option. Called at this point so the required
     // context is all setup at this point.
+    var context = this.createContextFromPage();
     this.skipCosmeticFiltering = µb.staticNetFilteringEngine
-                                   .matchStringExactType(this, pageURL, 'cosmetic-filtering')
+                                   .matchStringExactType(context, tabContext.normalURL, 'cosmetic-filtering')
                                    .charAt(1) === 'b';
 
     // Preserve old buffer if there is one already, it may be in use, and
@@ -509,7 +496,7 @@ PageStore.prototype.init = function(tabId, rawURL, pageURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.reuse = function(rawURL, pageURL, context) {
+PageStore.prototype.reuse = function(context) {
     // We can't do this: when force refreshing a page, the page store data
     // needs to be reset
     //if ( pageURL === this.pageURL ) {
@@ -517,8 +504,8 @@ PageStore.prototype.reuse = function(rawURL, pageURL, context) {
     //}
 
     // If the hostname changes, we can't merely just update the context.
-    var pageHostname = µb.URI.hostnameFromURI(pageURL);
-    if ( pageHostname !== this.pageHostname ) {
+    var tabContext = µb.tabContextManager.lookup(this.tabId);
+    if ( tabContext.rootHostname !== this.tabHostname ) {
         context = '';
     }
 
@@ -528,19 +515,16 @@ PageStore.prototype.reuse = function(rawURL, pageURL, context) {
     // video thumbnail would not work, because the frame hierarchy structure
     // was flushed from memory, while not really being flushed on the page.
     if ( context === 'tabUpdated' ) {
-        this.rawURL = rawURL;
-        this.pageURL = pageURL;
-
         // As part of https://github.com/chrisaljoudi/uBlock/issues/405
         // URL changed, force a re-evaluation of filtering switch
         this.netFilteringReadTime = 0;
-
         return this;
     }
+
     // A new page is completely reloaded from scratch, reset all.
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
-    this.init(this.tabId, rawURL, pageURL);
+    this.init(this.tabId);
     return this;
 };
 
@@ -553,10 +537,6 @@ PageStore.prototype.dispose = function() {
     // need to release the memory taken by these, which can amount to
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
-    this.rawURL = this.pageURL =
-    this.pageHostname = this.pageDomain =
-    this.rootHostname = this.rootDomain =
-    this.requestURL = this.requestHostname = this.requestType = '';
     this.hostnameToCountMap = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
@@ -598,36 +578,78 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 
 /******************************************************************************/
 
+PageStore.prototype.createContextFromPage = function() {
+    var context = new µb.tabContextManager.createContext(this.tabId);
+    context.pageHostname = context.rootHostname;
+    context.pageDomain = context.rootDomain;
+    return context;
+};
+
+PageStore.prototype.createContextFromFrameId = function(frameId) {
+    var context = new µb.tabContextManager.createContext(this.tabId);
+    if ( this.frames.hasOwnProperty(frameId) ) {
+        var frameStore = this.frames[frameId];
+        context.pageHostname = frameStore.pageHostname;
+        context.pageDomain = frameStore.pageDomain;
+    } else {
+        context.pageHostname = context.rootHostname;
+        context.pageDomain = context.rootDomain;
+    }
+    return context;
+};
+
+PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
+    var context = new µb.tabContextManager.createContext(this.tabId);
+    context.pageHostname = frameHostname;
+    context.pageDomain = µb.URI.domainFromHostname(frameHostname) || frameHostname;
+    return context;
+};
+
+/******************************************************************************/
+
 PageStore.prototype.getNetFilteringSwitch = function() {
+    var tabContext = µb.tabContextManager.lookup(this.tabId);
+    if (
+        this.netFilteringReadTime > µb.netWhitelistModifyTime &&
+        this.netFilteringReadTime > tabContext.modifyTime
+    ) {
+        return this.netFiltering;
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/1078
     // Use both the raw and normalized URLs.
-    if ( this.netFilteringReadTime < µb.netWhitelistModifyTime ) {
-        this.netFiltering = µb.getNetFilteringSwitch(this.pageURL);
-        if ( this.netFiltering && this.rawURL !== this.pageURL ) {
-            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
-        }
-        this.netFilteringReadTime = Date.now();
+    this.netFiltering = µb.getNetFilteringSwitch(tabContext.normalURL);
+    if ( this.netFiltering && tabContext.rawURL !== tabContext.pageURL ) {
+        this.netFiltering = µb.getNetFilteringSwitch(tabContext.rawURL);
     }
+    this.netFilteringReadTime = Date.now();
     return this.netFiltering;
 };
 
 /******************************************************************************/
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
-    return this.getNetFilteringSwitch() &&
-           µb.hnSwitches.evaluateZ('noCosmeticFiltering', this.rootHostname) !== true &&
-          (µb.userSettings.advancedUserEnabled &&
-           µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+    if ( this.getNetFilteringSwitch() === false ) {
+        return false;
+    }
+
+    var tabContext = µb.tabContextManager.lookup(this.tabId);
+
+    if ( µb.hnSwitches.evaluateZ('noCosmeticFiltering', tabContext.rootHostname) ) {
+        return false;
+    }
+
+    return µb.userSettings.advancedUserEnabled === false ||
+           µb.sessionFirewall.mustAllowCellZY(tabContext.rootHostname, tabContext.rootHostname, '*') === false;
 };
 
 /******************************************************************************/
 
 PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
-    return this.getNetFilteringSwitch() &&
-           this.skipCosmeticFiltering === false &&
-           µb.hnSwitches.evaluateZ('noCosmeticFiltering', this.rootHostname) !== true &&
-          (µb.userSettings.advancedUserEnabled &&
-           µb.sessionFirewall.mustAllowCellZY(this.rootHostname, this.rootHostname, '*')) === false;
+    if ( this.skipCosmeticFiltering ) {
+        return false;
+    }
+    return this.getSpecificCosmeticFilteringSwitch();
 };
 
 /******************************************************************************/
@@ -662,7 +684,11 @@ PageStore.prototype.filterRequest = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        var df = µb.sessionFirewall.evaluateCellZY(
+            context.rootHostname,
+            context.requestHostname,
+            context.requestType
+        );
         if ( df.mustBlockOrAllow() ) {
             result = df.toFilterString();
         }
@@ -690,16 +716,7 @@ var collapsibleRequestTypes = 'image sub_frame object';
 /******************************************************************************/
 
 PageStore.prototype.filterRequestNoCache = function(context) {
-
-    // https://github.com/chrisaljoudi/uBlock/pull/1209
-    // Not ideal, but until something better is figured, this solves the issue.
-    // Long term, I have some ideas I would like to test to take care of those
-    // cases for which a page store may not have been definitely bound to a tab.
-    if ( context.overrideStore ) {
-        if ( µb.getNetFilteringSwitch(context.requestURL) === false ) {
-            return '';
-        }
-    } else if ( this.getNetFilteringSwitch() === false ) {
+    if ( this.getNetFilteringSwitch() === false ) {
         return '';
     }
 
@@ -711,7 +728,11 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        var df = µb.sessionFirewall.evaluateCellZY(
+            context.rootHostname,
+            context.requestHostname,
+            context.requestType
+        );
         if ( df.mustBlockOrAllow() ) {
             result = df.toFilterString();
         }
@@ -733,7 +754,7 @@ PageStore.prototype.logRequest = function(context, result) {
     // be prepared to handle invalid requestHostname, I've seen this
     // happen: http://./
     if ( requestHostname === '' ) {
-        requestHostname = context.pageHostname;
+        requestHostname = context.rootHostname;
     }
     var now = Date.now();
     if ( this.hostnameToCountMap.hasOwnProperty(requestHostname) === false ) {
@@ -752,22 +773,6 @@ PageStore.prototype.logRequest = function(context, result) {
     }
     µb.localSettingsModifyTime = now;
     this.logBuffer.writeOne(context, result);
-};
-
-/******************************************************************************/
-
-PageStore.prototype.toMirrorURL = function(requestURL) {
-    // https://github.com/chrisaljoudi/uBlock/issues/351
-    // Bypass experimental features when uBlock is disabled for a site
-    if ( µb.userSettings.experimentalEnabled === false ||
-         this.getNetFilteringSwitch() === false ||
-         this.skipLocalMirroring ) {
-        return '';
-    }
-
-    // https://code.google.com/p/chromium/issues/detail?id=387198
-    // Not all redirects will succeed, until bug above is fixed.
-    return µb.mirrors.toURL(requestURL, true);
 };
 
 /******************************************************************************/
