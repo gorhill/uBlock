@@ -485,14 +485,19 @@ var onMessage = function(details, sender, callback) {
     // Sync
     var response;
 
-    var pageStore;
+    var pageStore, frameStore = false;
     if ( sender && sender.tab ) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
+        var frameId = sender.frameId;
+        if(frameId && frameId > 0) {
+            frameStore = pageStore.getFrame(frameId);
+        }
     }
 
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
-            if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
+            if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch()
+                && (!frameStore || frameStore.getNetFilteringSwitch()) ) {
                 response = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;
@@ -841,6 +846,8 @@ var onMessage = function(request, sender, callback) {
         case 'setWhitelist':
             µb.netWhitelist = µb.whitelistFromString(request.whitelist);
             µb.saveWhitelist();
+            // #1208
+            µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
             break;
 
         default:
