@@ -38,6 +38,29 @@ vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
 
 /******************************************************************************/
 
+vAPI.shutdown = (function() {
+    var jobs = [];
+
+    var add = function(job) {
+        jobs.push(job);
+    };
+
+    var exec = function() {
+        //console.debug('Shutting down...');
+        var job;
+        while ( job = jobs.pop() ) {
+            job();
+        }
+    };
+
+    return {
+        add: add,
+        exec: exec
+    };
+})();
+
+/******************************************************************************/
+
 var messagingConnector = function(response) {
     if ( !response ) {
         return;
@@ -165,6 +188,15 @@ vAPI.messaging = {
 
 window.addEventListener('pagehide', vAPI.messaging.toggleListener, true);
 window.addEventListener('pageshow', vAPI.messaging.toggleListener, true);
+
+/******************************************************************************/
+
+// No need to have vAPI client linger around after shutdown if
+// we are not a top window (because element picker can still
+// be injected in top window).
+if ( window !== window.top ) {
+	// Can anything be done?
+}
 
 /******************************************************************************/
 

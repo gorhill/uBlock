@@ -167,6 +167,8 @@ vAPI.messaging = {
     }
 };
 
+/******************************************************************************/
+
 // No need to have vAPI client linger around after shutdown if
 // we are not a top window (because element picker can still
 // be injected in top window).

@@ -39,6 +39,27 @@
     vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
         Math.random().toString(36).slice(2);
     /******************************************************************************/
+    vAPI.shutdown = (function() {
+        var jobs = [];
+
+        var add = function(job) {
+            jobs.push(job);
+        };
+
+        var exec = function() {
+            //console.debug('Shutting down...');
+            var job;
+            while ( job = jobs.pop() ) {
+                job();
+            }
+        };
+
+        return {
+            add: add,
+            exec: exec
+        };
+    })();
+    /******************************************************************************/
     var messagingConnector = function(response) {
         if(!response) {
             return;
