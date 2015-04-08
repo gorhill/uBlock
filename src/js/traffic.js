@@ -392,7 +392,8 @@ var onHeadersReceived = function(details) {
             rootHostname: requestHostname,
             rootDomain: contextDomain,
             pageHostname: requestHostname,
-            pageDomain: contextDomain
+            pageDomain: contextDomain,
+            preNavigationHeader: true
         };
     } else {
         context = pageStore;
