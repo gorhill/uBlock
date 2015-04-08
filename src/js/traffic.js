@@ -252,23 +252,11 @@ var toBlockDocResult = function(url, hostname, result) {
         return '';
     }
 
-    // Quick test: if the result starts with `|` or `||`, then this means the
-    // match is before the path part of the URL for sure.
-    // Examples: sb:|http:// sb:||example.com^
-    if ( result.charAt(3) === '|' ) {
-        return result;
-    }
-
     // Make a regex out of the result
     var reText = result.slice(3);
     var pos = reText.indexOf('$');
     if ( pos > 0 ) {
         reText = reText.slice(0, pos);
-    }
-
-    // Matches whole URL
-    if ( reText === '*' ) {
-        return result;
     }
 
     // We are going to have to take the long way to find out
@@ -291,8 +279,10 @@ var toBlockDocResult = function(url, hostname, result) {
         return '';
     }
 
-    // verify that the match starts before the path
-    if ( matches.index < url.indexOf(hostname) + hostname.length ) {
+    // https://github.com/chrisaljoudi/uBlock/issues/1128
+    // https://github.com/chrisaljoudi/uBlock/issues/1212
+    // Relax the rule: verify that the match is completely before the path part
+    if ( re.lastIndex <= url.indexOf(hostname) + hostname.length + 1 ) {
         return result;
     }
 
