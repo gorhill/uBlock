@@ -198,9 +198,9 @@ HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newSta
 
 HnSwitches.prototype.toggleZ = function(switchName, hostname, deep, newState) {
     if ( deep === true ) {
-        return this.hnSwitches.toggleBranchZ(switchName, hostname, newState);
+        return this.toggleBranchZ(switchName, hostname, newState);
     }
-    return this.hnSwitches.toggleOneZ(switchName, hostname, newState);
+    return this.toggleOneZ(switchName, hostname, newState);
 };
 
 /******************************************************************************/
