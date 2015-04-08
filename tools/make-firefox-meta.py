@@ -73,7 +73,7 @@ chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
 with open(chromium_manifest, encoding='utf-8') as m:
     manifest = json.load(m)
 
-manifest['homepage'] = 'https://github.com/gorhill/uBlock'
+manifest['homepage'] = 'https://github.com/chrisaljoudi/uBlock'
 manifest['description'] = descriptions['en']
 del descriptions['en']
 manifest['localized'] = []
