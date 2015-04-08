@@ -315,13 +315,6 @@ housekeep itself.
         }
     };
 
-    var destroy = function(tabId) {
-        var entry = tabContexts[tabId];
-        if ( entry !== undefined ) {
-            entry.destroy();
-        }
-    };
-
     var exists = function(tabId) {
         return tabContexts[tabId] !== undefined;
     };
@@ -357,7 +350,6 @@ housekeep itself.
         unpush: unpush,
         commit: commit,
         lookup: lookup,
-        destroy: destroy,
         exists: exists,
         createContext: createContext
     };
