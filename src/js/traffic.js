@@ -383,7 +383,10 @@ var onHeadersReceived = function(details) {
     var context;
     if ( details.parentFrameId === -1 ) {
         var contextDomain = µb.URI.domainFromHostname(requestHostname);
+        // https://github.com/chrisaljoudi/uBlock/pull/1209
+        // Adding `rootURL` solves the issue.
         context = {
+            rootURL: requestURL,
             rootHostname: requestHostname,
             rootDomain: contextDomain,
             pageHostname: requestHostname,
@@ -401,7 +404,7 @@ var onHeadersReceived = function(details) {
     context.requestHostname = requestHostname;
     context.requestType = 'inline-script';
 
-    var result = pageStore.filterRequest(context);
+    var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
 
