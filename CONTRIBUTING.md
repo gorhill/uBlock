@@ -3,6 +3,7 @@
 ### Before you submit
 
 1. Submit **bugs/issues only**.
+    - Bugs occur, I will fix them.
 1. Do **not** submit:
     - Design ideas.
     - Feature requests.
