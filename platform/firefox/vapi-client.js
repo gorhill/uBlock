@@ -160,7 +160,7 @@ vAPI.messaging = {
                     vAPI.messaging.listeners[message.requestId] = callback;
                 }
 
-                sendAsyncMessage('ublock:background', message);
+                sendAsyncMessage('ublock0:background', message);
             },
             close: function() {
                 delete vAPI.messaging.channels[this.channelName];

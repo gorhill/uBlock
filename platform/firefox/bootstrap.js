@@ -31,7 +31,7 @@
 
 let bgProcess;
 let version;
-const hostName = 'ublock';
+const hostName = 'ublock0';
 const restartListener = {
     get messageManager() {
         return Components.classes['@mozilla.org/parentprocessmessagemanager;1']

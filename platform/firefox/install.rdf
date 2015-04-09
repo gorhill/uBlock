@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.mozilla.org/2004/em-rdf#">
     <r:Description about="urn:mozilla:install-manifest">
-        <id>{{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}}</id>
+        <id>uBlock0@raymondhill.net</id>
         <version>{version}</version>
         <name>{name}</name>
         <description>{description}</description>

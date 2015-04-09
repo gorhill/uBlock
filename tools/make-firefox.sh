@@ -2,9 +2,9 @@
 #
 # This script assumes a linux environment
 
-echo "*** uBlock.firefox: Copying files"
+echo "*** uBlock0.firefox: Copying files"
 
-DES=dist/build/uBlock.firefox
+DES=dist/build/uBlock0.firefox
 rm -rf $DES
 mkdir -p $DES
 
@@ -26,14 +26,14 @@ cp platform/firefox/install.rdf $DES/
 cp platform/firefox/*.xul $DES/
 cp LICENSE.txt $DES/
 
-echo "*** uBlock.firefox: Generating meta..."
+echo "*** uBlock0.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** uBlock.firefox: Creating package..."
+    echo "*** uBlock0.firefox: Creating package..."
     pushd $DES/
-    zip ../uBlock.firefox.xpi -qr *
+    zip ../uBlock0.firefox.xpi -qr *
     popd
 fi
 
-echo "*** uBlock.firefox: Package done."
+echo "*** uBlock0.firefox: Package done."

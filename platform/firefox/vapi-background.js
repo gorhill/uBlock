@@ -44,7 +44,7 @@ vAPI.fennec = Services.appinfo.ID === '{aa3c5121-dab2-40e2-81ca-7ea25febc110}';
 /******************************************************************************/
 
 vAPI.app = {
-    name: 'uBlock',
+    name: 'uBlock₀',
     version: location.hash.slice(1)
 };
 
@@ -1856,7 +1856,7 @@ vAPI.contextMenu.remove = function() {
 /******************************************************************************/
 
 var optionsObserver = {
-    addonId: '{2b10c1c8-a11f-4bad-fe9c-1c11e82cac42}',
+    addonId: 'uBlock0@raymondhill.net',
 
     register: function() {
         Services.obs.addObserver(this, 'addon-options-displayed', false);
