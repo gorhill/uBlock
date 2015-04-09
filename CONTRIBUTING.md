@@ -4,10 +4,11 @@
 
 1. Submit **bugs/issues only**.
     - Bugs occur, I will fix them.
-1. Do **not** submit:
-    - Design ideas.
-    - Feature requests.
-    - Revolutionary ideas.
+1. Do **NOT**:
+    - Submit design ideas.
+    - Submit feature requests.
+    - Submit "revolutionary ideas".
+    - Use issues as thread on a bulletin board.
     - Any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
