@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock - Πίνακας ελέγχου",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ - Πίνακας ελέγχου",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"Ρυθμίσεις",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"μBlock - Καταγραφή αιτημάτων δικτύου",
+    "message":"uBlock₀ - Καταγραφή αιτημάτων δικτύου",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Κλικ: απενεργοποίηση\/ενεργοποίηση του uBlock για αυτόν τον ιστότοπο.\n\nCtrl+κλικ: απενεργοποίηση του µBlock μόνο για αυτήν τη σελίδα.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"αποκλεισμένα αιτήματα",
@@ -341,7 +341,7 @@
   },
   "whitelistPrompt":{
     "message":"Η λίστα σας με τα ονόματα κόμβων (host names) στα οποία το uBlock θα είναι απενεργοποιημένο. Μια καταχώρηση ανά γραμμή. Άκυρα ονόματα κόμβων θα παρακάμπτονται σιωπηλά.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Εισαγωγή και προσάρτηση",
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"απενεργοποιημένο",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
     "message":"Το uBlock έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Εξαιτίας του ακόλουθου φίλτρου",

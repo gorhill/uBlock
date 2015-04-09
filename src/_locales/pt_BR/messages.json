@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Painel",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ — Painel",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"Preferências",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Registro de pedidos de rede",
+    "message":"uBlock₀ — Registro de pedidos de rede",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Clique: desativar\/ativar o uBlock para o site atual.\n\nCtrl+Clique: desativar o uBlock apenas nesta página.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"pedidos bloqueados",
@@ -76,15 +76,15 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"Alternar o bloqueio de todos os popups nesta página",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"Alternar o bloqueio estrito nesta página",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Alternar filtragem cosmética nesta página",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -341,7 +341,7 @@
   },
   "whitelistPrompt":{
     "message":"Sua lista de exceções de nomes de host para qual o uBlock será desativado. Uma entrada por linha. hostnames inválidos serão silenciosamente ignorados.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importar e adicionar",
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"desativado",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
     "message":"uBlock impediu a seguinte página de carregar:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Por causa do seguinte filtro",

@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — నియంత్రణా వేదిక",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ — నియంత్రణా వేదిక",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"ఐచ్చికాలు",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µబ్లాక్ — నెట్వర్క్ అభ్యర్ధనల పట్టిక",
+    "message":"uBlock₀ — నెట్వర్క్ అభ్యర్ధనల పట్టిక",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,8 +40,8 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"ఈ సైట్లో uBlockను చేతనపరచడానికి లేదా అచేతనపరచడానికి క్లిక్ చేయండి.\n\nకేవలం ఈ పేజిలో uBlockను అచేతనపరచడానికి Ctrl కీ వొత్తి పట్టుకొని క్లిక్ చేయండి.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "message":"ఈ సైట్లో uBlock₀ను చేతనపరచడానికి లేదా అచేతనపరచడానికి క్లిక్ చేయండి.\n\nకేవలం ఈ పేజిలో uBlock₀ను అచేతనపరచడానికి Ctrl కీ వొత్తి పట్టుకొని క్లిక్ చేయండి.",
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"నిరోధించబడిన అభ్యర్ధనలు",
@@ -208,7 +208,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases <i>uBlock<\/i>'s memory footprint.<\/p>",
+    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -340,8 +340,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"uBlock అచేతనబడించిన హోస్టూల జాబితా, ఇది మీరు కూర్చినది,. ఒక్కో పంక్తికి ఒక్కో నమోదు. చెల్లని నమోదులు మౌనంగా విస్మరించబడుతాయి.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"uBlock₀ అచేతనబడించిన హోస్టూల జాబితా, ఇది మీరు కూర్చినది,. ఒక్కో పంక్తికి ఒక్కో నమోదు. చెల్లని నమోదులు మౌనంగా విస్మరించబడుతాయి.",
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"దిగుమతిచేసి పోడిగించుము",
@@ -364,7 +364,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"ఈ ఎంపిక ద్వారా మీరు నెట్వర్క్ అభ్యర్దనల గురించి మరిన్ని వివరాలు తెలుసుకోవచ్చు. అయితే ఈ లక్షణం uబ్లాక్ యొక్క మెమరీ వాడుకను రేట్టిస్తుంది. మాములుగా ఈ ఎంపికను ఎవరు వాడారు అందుకే ఇది అప్రమేయంగా అచేతనపరచి వుంటుంది.",
+    "message":"ఈ ఎంపిక ద్వారా మీరు నెట్వర్క్ అభ్యర్దనల గురించి మరిన్ని వివరాలు తెలుసుకోవచ్చు. అయితే ఈ లక్షణం uBlock₀ యొక్క మెమరీ వాడుకను రేట్టిస్తుంది. మాములుగా ఈ ఎంపికను ఎవరు వాడారు అందుకే ఇది అప్రమేయంగా అచేతనపరచి వుంటుంది.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"మీరు పేర్కొన్న ఐచ్చిక్కాలన్ని {{time}}నకు తీసుకున్న నకలు డేటాతో తిరగారాయబడుతాయి, ఆ పిమ్మట uబ్లాక్ పునఃప్రారంభమవుతుంది.\n\nమీ ఐచ్చికాలను తిరగరాయుట మీకు సమ్మతమేనా?",
+    "message":"మీరు పేర్కొన్న ఐచ్చిక్కాలన్ని {{time}}నకు తీసుకున్న నకలు డేటాతో తిరగారాయబడుతాయి, ఆ పిమ్మట uBlock₀ పునఃప్రారంభమవుతుంది.\n\nమీ ఐచ్చికాలను తిరగరాయుట మీకు సమ్మతమేనా?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"ఐచ్చికాలలో మీరు చేసిన మార్పులన్నీ తొలగించనా పిమ్మట uబ్లాక్ పునఃప్రారంభిన్చాబాడును.\n\nమరి సంస్థాపన ఐచ్చికాలను పునరుద్ధరించాలా?",
+    "message":"ఐచ్చికాలలో మీరు చేసిన మార్పులన్నీ తొలగించనా పిమ్మట uBlock₀ పునఃప్రారంభిన్చాబాడును.\n\nమరి సంస్థాపన ఐచ్చికాలను పునరుద్ధరించాలా?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uబ్లాక్: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"అచేతనం",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"ఈ తరువాయి పేజిని uBlock బ్రౌజరులోకి ఎక్కిన్చనివ్వలేదు:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "message":"ఈ తరువాయి పేజిని uBlock₀ బ్రౌజరులోకి ఎక్కిన్చనివ్వలేదు:",
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"ఈది ఈ వడపోత వలన తీసుకోబడిన చర్య",

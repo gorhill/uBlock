@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"म्यूब्लॉक",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -9,7 +9,7 @@
   },
   "dashboardName":{
     "message":"म्यूब्लॉक — डैशबोर्ड",
-    "description":"English: uBlock — Dashboard"
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"सेटिंग्ज",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Network request log",
+    "message":"uBlock₀ — Network request log",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"क्लिक करा : या साइटसाठी म्यूब्लॉक अक्षम\/सक्षम.\n\nCtrl+क्लिक करा: फक्त या पृष्ठावर म्यूब्लॉक अक्षम.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"विनंत्या अवरोधित",
@@ -341,7 +341,7 @@
   },
   "whitelistPrompt":{
     "message":"आपली होस्ट नावांची यादी ज्याचासाठी म्यूब्लॉक अक्षम केले जाईल. प्रति ओळ एक प्रविष्टी. अवैध होस्ट नावांकडे शांतपणे दुर्लक्ष केले जाईल.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"आयात आणि समावेश करा",
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"off",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock has prevented the following page from loading:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "message":"uBlock₀ has prevented the following page from loading:",
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Because of the following filter",

@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — داشبورد",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ — داشبورد",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"تنظیمات",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — لاگ درخواست های شبکه",
+    "message":"uBlock₀ — لاگ درخواست های شبکه",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"کلیک: غیر فعال\/ فعال کردن uBlock برای این سایت.\n\nکنترل+کلیک: غیر فعال کردن uBlock فقط برای همین صفحه.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"درخواست مسدود شده",
@@ -341,7 +341,7 @@
   },
   "whitelistPrompt":{
     "message":"لیستی از هاست هایی که uBlock در آنها غیرفعال خواهد شد. یک مطلب در هر خط. میزبان های نامعتبر در سکوت نادیده گرفته می شوند.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"وارد کردن و الحاق",
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"خاموش",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
     "message":"ublock از بارگذاری این صفحات جلوگیری کرده:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"بخاطر فیلتر زیر",

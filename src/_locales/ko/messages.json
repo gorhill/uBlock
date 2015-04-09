@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — 대쉬보드",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ — 대쉬보드",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"설정",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — 네트워크 요청 로그",
+    "message":"uBlock₀ — 네트워크 요청 로그",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"클릭: 이 사이트에서 uBlock을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서만 uBlock을 끕니다.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"요청 차단됨",
@@ -340,8 +340,8 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"당신의 목록에 있는 호스트들은 µBlock에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"당신의 목록에 있는 호스트들은 uBlock에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"가져오기 및 추가하기",
@@ -497,11 +497,11 @@
   },
   "fennecMenuItemBlockingOff":{
     "message":"끄기",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
     "message":"uBlock이 다음 페이지를 로드하는것을 방지했습니다:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"다음 필터로 인해 방지됨",

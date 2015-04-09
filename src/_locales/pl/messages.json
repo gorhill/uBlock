@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -8,8 +8,8 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock — Kokpit",
-    "description":"English: uBlock — Dashboard"
+    "message":"uBlock₀ — Kokpit",
+    "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
     "message":"Ustawienia",
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock — Dziennik żądań sieciowych",
+    "message":"uBlock₀ — Dziennik żądań sieciowych",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -41,7 +41,7 @@
   },
   "popupPowerSwitchInfo":{
     "message":"Kliknij, aby włączyć\/wyłączyć uBlock dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl, aby wyłączyć uBlock tylko dla tej strony.",
-    "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
+    "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
     "message":"zablokowane żądania",
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} ({{percent}}%)",
+    "message":"{{count}} lub {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Wyskakujące okienka na ten stronie są zablokowane",
+    "message":"Przełącz blokowanie wyskakujących okienek na tej stronie",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Rygorystyczne blokowanie dla tej strony jest wyłączone",
+    "message":"Przełącz rygorystyczne blokowanie dla tej strony",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
@@ -108,7 +108,7 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"skrypty pochodzące ze stron zewnętrznych",
+    "message":"skrypty z domen zewnętrznych",
     "description":""
   },
   "popup3pFrameRulePrompt":{
@@ -268,7 +268,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Zaktualizowano: {{ago}}",
+    "message":"Ostatnia aktualizacja: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -336,12 +336,12 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Składnia reguły: <code>źródło przeznaczenie typ akcja<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>pełna dokumentacja<\/a>).",
+    "message":"Składnia reguły: <code>źródło cel typ akcja<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>pełna dokumentacja<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Twoja lista nazw hostów, na których µBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
-    "description":"English: Your list of host names for which uBlock will be disabled. One host name per line. Invalid host names will be silently ignored."
+    "message":"Twoja lista nazw hostów, na których uBlock zostanie wyłączony. Jeden wpis na linię. Błędne nazwy hostów zostaną zignorowane.",
+    "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
     "message":"Importuj i dołącz",
@@ -404,11 +404,11 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filtruj wpisy w logu",
+    "message":"filtruj wpisy dziennika",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"Maksymalna liczba wpisów do wyświetlenia",
+    "message":"Maksymalna ilość wpisów do wyświetlenia",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "aboutChangelog":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Wszystkie twoje ustawienia zostaną usunięte, µBlock uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
+    "message":"Wszystkie twoje ustawienia zostaną usunięte, uBlock uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Dodać następujący URL do niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Dodać następujący URL do Twojej niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -488,27 +488,27 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Otwórz kokpit",
+    "message":"Pokaż kokpit",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Otwórz dziennik żądań",
+    "message":"Pokaż dziennik żądań śieciowych",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
     "message":"wyłączony",
-    "description":"Firefox-specific: appears as 'uBlock (off)'"
+    "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
     "message":"uBlock zablokował tę stronę przed ładowaniem:",
-    "description":"English: uBlock has prevented the following page from loading:"
+    "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
     "message":"Spowodowane tym filtrem",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Wróć",
+    "message":"Wstecz",
     "description":"English: Go back"
   },
   "docblockedClose":{
