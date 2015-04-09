@@ -53,13 +53,12 @@ input:focus {
     }
 #content {
     position: absolute;
-    top: 0;
+    top: 90px;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 0;
     overflow-y: auto;
-    padding-top: 90px;
     }
 #content table {
     border: 0;
