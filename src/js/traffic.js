@@ -154,8 +154,8 @@ var onBeforeRootFrameRequest = function(details) {
     var result = '';
 
     // Permanently unrestricted?
-    if ( result === '' && µb.hnSwitches.evaluateZ('noStrictBlocking', requestHostname) ) {
-        result = 'ua:noStrictBlocking true';
+    if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+        result = 'ua:no-strict-blocking true';
     }
 
     // Temporarily whitelisted?

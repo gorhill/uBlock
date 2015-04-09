@@ -34,7 +34,23 @@ var messager = vAPI.messaging.channel('dyna-rules.js');
 /******************************************************************************/
 
 var renderRules = function(details) {
+    var liTemplate = uDom('#templates > ul > li');
+    var ulLeft = uDom('#diff > .left ul').empty().remove();
+    var ulRight = uDom('#diff > .right ul').empty().remove();
+    var liLeft, liRight;
     var rules, rule, i;
+
+    // Switches always displayed first -- just like in uMatrix
+    rules = details.hnSwitches.split(/\n+/).sort();
+    for ( i = 0; i < rules.length; i++ ) {
+        rule = rules[i];
+        liLeft = liTemplate.clone().text(rule);
+        liRight = liTemplate.clone().text(rule);
+        ulLeft.append(liLeft);
+        ulRight.append(liRight);
+    }
+
+    // Firewall rules follow
     var allRules = {};
     var permanentRules = {};
     var sessionRules = {};
@@ -62,11 +78,6 @@ var renderRules = function(details) {
     }
     details.permanentRules = rules.sort().join('\n');
 
-    var liTemplate = uDom('#templates > ul > li');
-    var ulLeft = uDom('#diff > .left ul').empty();
-    var ulRight = uDom('#diff > .right ul').empty();
-    var liLeft, liRight;
-
     rules = Object.keys(allRules).sort();
     for ( i = 0; i < rules.length; i++ ) {
         rule = rules[i];
@@ -87,6 +98,8 @@ var renderRules = function(details) {
         ulRight.append(liRight);
     }
 
+    uDom('#diff > .left > .rulesContainer').append(ulLeft);
+    uDom('#diff > .right > .rulesContainer').append(ulRight);
     uDom('#diff').toggleClass('dirty', details.sessionRules !== details.permanentRules);
 };
 

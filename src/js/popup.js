@@ -145,7 +145,7 @@ var hashFromPopupData = function(reset) {
     }
     hasher.sort();
     hasher.push(uDom('body').hasClass('off'));
-    hasher.push(uDom('#noCosmeticFiltering').hasClass('on'));
+    hasher.push(uDom('#no-cosmetic-filtering').hasClass('on'));
 
     var hash = hasher.join('');
     if ( reset ) {
@@ -432,9 +432,9 @@ var renderPopup = function() {
     renderPrivacyExposure();
 
     // Extra tools
-    uDom('#noPopups').toggleClass('on', popupData.noPopups === true);
-    uDom('#noStrictBlocking').toggleClass('on', popupData.noStrictBlocking === true);
-    uDom('#noCosmeticFiltering').toggleClass('on', popupData.noCosmeticFiltering === true);
+    uDom('#no-popups').toggleClass('on', popupData.noPopups === true);
+    uDom('#no-strict-blocking').toggleClass('on', popupData.noStrictBlocking === true);
+    uDom('#no-cosmetic-filtering').toggleClass('on', popupData.noCosmeticFiltering === true);
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
@@ -463,7 +463,7 @@ var renderPopup = function() {
 var renderPopupLazy = function() {
     var onDataReady = function(data) {
         var v = data.hiddenElementCount || '';
-        uDom('#noCosmeticFiltering > span.badge').text(
+        uDom('#no-cosmetic-filtering > span.badge').text(
             typeof v === 'number' ? v.toLocaleString() : v
         );
     };

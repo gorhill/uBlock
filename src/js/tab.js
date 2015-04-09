@@ -413,11 +413,10 @@ vAPI.tabs.onClosed = function(tabId) {
 vAPI.tabs.onPopup = function(details) {
     //console.debug('vAPI.tabs.onPopup: details = %o', details);
 
-    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
+    var tabContext = µb.tabContextManager.lookup(details.openerTabId);
     var openerURL = details.openerURL || '';
-
-    if ( openerURL === '' && pageStore ) {
-        openerURL = pageStore.pageURL;
+    if ( openerURL === '' && tabContext.tabId === details.openerTabId ) {
+        openerURL = tabContext.normalURL;
     }
 
     if ( openerURL === '' ) {
@@ -452,8 +451,8 @@ vAPI.tabs.onPopup = function(details) {
     var result = '';
 
     // Check user switch first
-    if ( µb.hnSwitches.evaluateZ('noPopups', openerHostname) ) {
-        result = 'ub:noPopups true';
+    if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
+        result = 'ub:no-popups true';
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/323
@@ -468,6 +467,7 @@ vAPI.tabs.onPopup = function(details) {
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/91
+    var pageStore = µb.pageStoreFromTabId(details.openerTabId);
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
@@ -545,18 +545,6 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µb.pageUrlFromTabId = function(tabId) {
-    var pageStore = this.pageStores[tabId];
-    return pageStore ? pageStore.pageURL : '';
-};
-
-µb.pageUrlFromPageStats = function(pageStats) {
-    if ( pageStats ) {
-        return pageStats.pageURL;
-    }
-    return '';
-};
-
 µb.pageStoreFromTabId = function(tabId) {
     return this.pageStores[tabId];
 };
@@ -583,7 +571,7 @@ var pageStoreJanitor = function() {
     var checkTab = function(tabId) {
         vapiTabs.get(tabId, function(tab) {
             if ( !tab ) {
-                //console.error('tab.js> pageStoreJanitor(): stale page store found:', µb.pageUrlFromTabId(tabId));
+                //console.error('tab.js> pageStoreJanitor(): stale page store found:', µtabId);
                 µb.unbindTabFromPageStats(tabId);
             }
         });

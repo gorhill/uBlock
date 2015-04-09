@@ -324,7 +324,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     }
 
     // Take action if needed
-    if ( details.name === 'noCosmeticFiltering' ) {
+    if ( details.name === 'no-cosmetic-filtering' ) {
         vAPI.tabs.injectScript(details.tabId, {
             file: 'js/cosmetic-' + (details.state ? 'off' : 'on') + '.js',
             allFrames: true

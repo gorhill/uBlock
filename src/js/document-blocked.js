@@ -71,7 +71,7 @@ var proceedTemporary = function() {
 var proceedPermanent = function() {
     messager.send({
         what: 'toggleHostnameSwitch',
-        name: 'noStrictBlocking',
+        name: 'no-strict-blocking',
         hostname: getTargetHostname(),
         deep: true,
         state: true

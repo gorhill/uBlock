@@ -497,11 +497,7 @@ PageStore.prototype.init = function(tabId) {
 /******************************************************************************/
 
 PageStore.prototype.reuse = function(context) {
-    // We can't do this: when force refreshing a page, the page store data
-    // needs to be reset
-    //if ( pageURL === this.pageURL ) {
-    //    return this;
-    //}
+    // When force refreshing a page, the page store data needs to be reset.
 
     // If the hostname changes, we can't merely just update the context.
     var tabContext = µb.tabContextManager.lookup(this.tabId);
@@ -635,7 +631,7 @@ PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
 
     var tabContext = µb.tabContextManager.lookup(this.tabId);
 
-    if ( µb.hnSwitches.evaluateZ('noCosmeticFiltering', tabContext.rootHostname) ) {
+    if ( µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname) ) {
         return false;
     }
 

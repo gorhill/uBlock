@@ -234,9 +234,9 @@ var getStats = function(tabId, tabTitle) {
         r.firewallRules = getFirewallRules(tabContext.rootHostname, r.hostnameDict);
         r.canElementPicker = tabContext.rootHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
-        r.noPopups = µb.hnSwitches.evaluateZ('noPopups', tabContext.rootHostname);
-        r.noStrictBlocking = µb.hnSwitches.evaluateZ('noStrictBlocking', tabContext.rootHostname);
-        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('noCosmeticFiltering', tabContext.rootHostname);
+        r.noPopups = µb.hnSwitches.evaluateZ('no-popups', tabContext.rootHostname);
+        r.noStrictBlocking = µb.hnSwitches.evaluateZ('no-strict-blocking', tabContext.rootHostname);
+        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
@@ -832,10 +832,44 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-var getFirewallRules = function() {
+var getRules = function() {
     return {
         permanentRules: µb.permanentFirewall.toString(),
-        sessionRules: µb.sessionFirewall.toString()
+        sessionRules: µb.sessionFirewall.toString(),
+        hnSwitches: µb.hnSwitches.toString()
+    };
+};
+
+// Untangle rules and switches.
+var untangle = function(s) {
+    var textEnd = s.length;
+    var lineBeg = 0, lineEnd;
+    var line;
+    var rules = [];
+    var switches = [];
+
+    while ( lineBeg < textEnd ) {
+        lineEnd = s.indexOf('\n', lineBeg);
+        if ( lineEnd < 0 ) {
+            lineEnd = s.indexOf('\r', lineBeg);
+            if ( lineEnd < 0 ) {
+                lineEnd = textEnd;
+            }
+        }
+        line = s.slice(lineBeg, lineEnd).trim();
+        lineBeg = lineEnd + 1;
+
+        // Switches always contain a ':'
+        if ( line.indexOf(':') === -1 ) {
+            rules.push(line);
+        } else {
+            switches.push(line);
+        }
+    }
+
+    return {
+        rules: rules.join('\n'),
+        switches: switches.join('\n')
     };
 };
 
@@ -844,34 +878,40 @@ var getFirewallRules = function() {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
+    var r;
     var response;
 
     switch ( request.what ) {
-        case 'getFirewallRules':
-            response = getFirewallRules();
-            break;
+    case 'getFirewallRules':
+        response = getRules();
+        break;
 
-        case 'setSessionFirewallRules':
-            // https://github.com/chrisaljoudi/uBlock/issues/772
-            µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
+    case 'setSessionFirewallRules':
+        // https://github.com/chrisaljoudi/uBlock/issues/772
+        µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
+        r = untangle(request.rules);
+        µb.sessionFirewall.fromString(r.rules);
+        µb.hnSwitches.fromString(r.switches);
+        µb.saveHostnameSwitches();
+        response = getRules();
+        break;
 
-            µb.sessionFirewall.fromString(request.rules);
-            response = getFirewallRules();
-            break;
+    case 'setPermanentFirewallRules':
+        r = untangle(request.rules);
+        µb.permanentFirewall.fromString(r.rules);
+        µb.savePermanentFirewallRules();
+        µb.hnSwitches.fromString(r.switches);
+        µb.saveHostnameSwitches();
+        response = getRules();
+        break;
 
-        case 'setPermanentFirewallRules':
-            µb.permanentFirewall.fromString(request.rules);
-            µb.savePermanentFirewallRules();
-            response = getFirewallRules();
-            break;
-
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
