@@ -153,19 +153,26 @@ var onBeforeRootFrameRequest = function(details) {
 
     var result = '';
 
+    // If the site is whitelisted, disregard strict blocking
+    if ( µb.getNetFilteringSwitch(requestURL) === false ) {
+        result = 'ua:whitelisted';
+    }
+
     // Permanently unrestricted?
     if ( result === '' && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
-        result = 'ua:no-strict-blocking true';
+        result = 'ua:no-strict-blocking on';
     }
 
     // Temporarily whitelisted?
-    result = isTemporarilyWhitelisted(result, requestHostname);
-    if ( result.charAt(1) === 'a' ) {
-        return;
+    if ( result === '' ) {
+        result = isTemporarilyWhitelisted(result, requestHostname);
+        if ( result.charAt(1) === 'a' ) {
+            result = 'ua:no-strict-blocking on(temporary)';
+        }
     }
 
     // Filtering
-    if ( result === '' && µb.getNetFilteringSwitch(requestURL) ) {
+    if ( result === '' ) {
         result = µb.staticNetFilteringEngine.matchString(context);
         // https://github.com/chrisaljoudi/uBlock/issues/1128
         // Do not block if the match begins after the hostname.

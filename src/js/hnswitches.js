@@ -51,13 +51,15 @@ var fromLegacySwitchNames = {
 };
 
 var switchStateToNameMap = {
-    '1': 'true',
-    '2': 'false'
+    '1': 'on',
+    '2': 'off'
 };
 
 var nameToSwitchStateMap = {
      'true': 1,
-    'false': 2
+    'false': 2,
+       'on': 1,
+      'off': 2
 };
 
 /******************************************************************************/
@@ -160,10 +162,10 @@ HnSwitches.prototype.toggleOneZ = function(switchName, hostname, newState) {
 
 HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newState) {
     var changed = this.toggleOneZ(switchName, targetHostname, newState);
-
     var targetLen = targetHostname.length;
-    var hostnames = [];
 
+    // Turn off all descendant switches, they will inherit the state of the
+    // branch's origin.
     for ( var hostname in this.switches ) {
         if ( this.switches.hasOwnProperty(hostname) === false ) {
             continue;
@@ -180,18 +182,7 @@ HnSwitches.prototype.toggleBranchZ = function(switchName, targetHostname, newSta
         if ( hostname.charAt(hostname.length - targetLen - 1) !== '.' ) {
             continue;
         }
-        hostnames.push(hostname);
-    }
-
-    // Decreasing length order so that all switch states are inherited from
-    // targetHostname.
-    hostnames.sort(function(a, b) {
-        return b.length - a.length;
-    });
-
-    var i = hostnames.length;
-    while ( i-- ) {
-        changed = this.toggleOneZ(switchName, hostnames[i], newState) || changed;
+        changed = this.toggle(switchName, hostname, 0) || changed;
     }
 
     return changed;
