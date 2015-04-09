@@ -1,0 +1,21 @@
+ul {
+    padding-left: 1em;
+    }
+ul#userSettings {
+    padding-left: 0;
+    }
+li {
+    margin-top: 0.25em;
+    }
+ul#userSettings {
+    list-style-type: none;
+    }
+#localData > ul > li {
+    margin-top: 1em;
+    }
+#localData > ul > li > ul > li:nth-of-type(2) {
+    font-family: monospace;
+    }
+#experimental-enabled {
+    margin-top: 1em;
+    }
