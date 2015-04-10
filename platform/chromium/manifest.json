@@ -47,6 +47,7 @@
             "run_at": "document_idle"
         }
     ],
+    "incognito": "split",
     "minimum_chrome_version": "22.0",
     "options_page": "dashboard.html",
     "options_ui": {
