@@ -57,8 +57,34 @@ if ( vAPI.contentscriptEndInjected ) {
 vAPI.contentscriptEndInjected = true;
 
 /******************************************************************************/
+/******************************************************************************/
+
+var shutdownJobs = (function() {
+    var jobs = [];
+
+    return {
+        add: function(job) {
+            jobs.push(job);
+        },
+        exec: function() {
+            //console.debug('Shutting down...');
+            var job;
+            while ( job = jobs.pop() ) {
+                job();
+            }
+        }
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
 
 var messager = vAPI.messaging.channel('contentscript-end.js');
+
+// https://github.com/gorhill/uMatrix/issues/144
+shutdownJobs.add(function() {
+    messager.close();
+});
 
 /******************************************************************************/
 
@@ -119,7 +145,14 @@ var uBlockCollapser = (function() {
         this.collapse = false;
     };
 
-    var onProcessed = function(requests) {
+    var onProcessed = function(response) {
+        // https://github.com/gorhill/uMatrix/issues/144
+        if ( response.shutdown ) {
+            shutdownJobs.exec();
+            return;
+        }
+
+        var requests = response.result;
         if ( requests === null || Array.isArray(requests) === false ) {
             return;
         }
@@ -314,24 +347,32 @@ var uBlockCollapser = (function() {
         firstRetrieveHandler = null;
 
         // These are sent only once
-        if ( response ) {
-            if ( response.highGenerics ) {
-                highGenerics = response.highGenerics;
+        var result = response && response.result;
+        if ( result ) {
+            if ( result.highGenerics ) {
+                highGenerics = result.highGenerics;
             }
-            if ( response.donthide ) {
-                processLowGenerics(response.donthide, nullArray);
+            if ( result.donthide ) {
+                processLowGenerics(result.donthide, nullArray);
             }
         }
 
         nextRetrieveHandler(response);
     };
 
-    var nextRetrieveHandler = function(selectors) {
+    var nextRetrieveHandler = function(response) {
+        // https://github.com/gorhill/uMatrix/issues/144
+        if ( response && response.shutdown ) {
+            shutdownJobs.exec();
+            return;
+        }
+
         //var tStart = timer.now();
         //console.debug('µBlock> contextNodes = %o', contextNodes);
+        var result = response && response.result;
         var hideSelectors = [];
-        if ( selectors && selectors.hide.length ) {
-            processLowGenerics(selectors.hide, hideSelectors);
+        if ( result && result.hide.length ) {
+            processLowGenerics(result.hide, hideSelectors);
         }
         if ( highGenerics ) {
             if ( highGenerics.hideLowCount ) {
@@ -688,6 +729,14 @@ var uBlockCollapser = (function() {
         childList: true,
         subtree: true
     });
+
+    // https://github.com/gorhill/uMatrix/issues/144
+    shutdownJobs.add(function() {
+        treeObserver.disconnect();
+        if ( addedNodeListsTimer !== null ) {
+            clearTimeout(addedNodeListsTimer);
+        }
+    });
 })();
 
 /******************************************************************************/
@@ -700,12 +749,19 @@ var uBlockCollapser = (function() {
 // - Elements dynamically added to the page
 // - Elements which resource URL changes
 
-var onResourceFailed = function(ev) {
-    //console.debug('onResourceFailed(%o)', ev);
-    uBlockCollapser.add(ev.target);
-    uBlockCollapser.process();
-};
-document.addEventListener('error', onResourceFailed, true);
+(function() {
+    var onResourceFailed = function(ev) {
+        //console.debug('onResourceFailed(%o)', ev);
+        uBlockCollapser.add(ev.target);
+        uBlockCollapser.process();
+    };
+    document.addEventListener('error', onResourceFailed, true);
+
+    // https://github.com/gorhill/uMatrix/issues/144
+    shutdownJobs.add(function() {
+        document.removeEventListener('error', onResourceFailed, true);
+    });
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -764,6 +820,11 @@ document.addEventListener('error', onResourceFailed, true);
     };
 
     window.addEventListener('contextmenu', onContextMenu, true);
+
+    // https://github.com/gorhill/uMatrix/issues/144
+    shutdownJobs.add(function() {
+        document.removeEventListener('contextmenu', onContextMenu, true);
+    });
 })();
 
 /******************************************************************************/
