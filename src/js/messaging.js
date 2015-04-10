@@ -459,9 +459,6 @@ var tagNameToRequestTypeMap = {
 
 var filterRequests = function(pageStore, details) {
     var requests = details.requests;
-    if ( !pageStore || !pageStore.getNetFilteringSwitch() ) {
-        return requests;
-    }
     if ( µb.userSettings.collapseBlocked === false ) {
         return requests;
     }
@@ -508,10 +505,10 @@ var onMessage = function(details, sender, callback) {
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
             response = {
-                shutdown: !pageStore || pageStore.getGenericCosmeticFilteringSwitch() === false,
+                shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
                 result: null
             };
-            if ( response.shutdown === false ) {
+            if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
                 response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;
@@ -520,13 +517,12 @@ var onMessage = function(details, sender, callback) {
             µb.cosmeticFilteringEngine.addToSelectorCache(details);
             break;
 
-        // Evaluate many requests
         case 'filterRequests':
             response = {
-                shutdown: !pageStore || pageStore.getGenericCosmeticFilteringSwitch() === false,
+                shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
                 result: null
             };
-            if ( response.shutdown === false ) {
+            if ( !response.shutdown ) {
                 response.result = filterRequests(pageStore, details);
             }
             break;
