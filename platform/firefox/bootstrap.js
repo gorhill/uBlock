@@ -70,9 +70,6 @@ function startup(data, reason) {
             return;
         }
 
-        // I believe this needs to be called in case it was added above.
-        hiddenDoc.removeEventListener('DOMContentLoaded', onReady);
-
         bgProcess = hiddenDoc.documentElement.appendChild(
             hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
