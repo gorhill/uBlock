@@ -84,7 +84,7 @@ AsyncJobManager.prototype.restartTimer = function() {
     // TODO: Maybe use chrome.alarms() API when the next job is at more than
     // one minute in the future... From reading about it, chrome.alarms() is
     // smarter in that it will fire the event only when the browser is not
-    // too busy. (through XAL to abstract API specificities)
+    // too busy.
     if ( when < this.timerWhen ) {
         clearTimeout(this.timerId);
         this.timerWhen = when;

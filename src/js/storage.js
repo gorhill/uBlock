@@ -38,6 +38,20 @@
 
 /******************************************************************************/
 
+µBlock.keyvalSetOne = function(key, val, callback) {
+    var bin = {};
+    bin[key] = val;
+    vAPI.storage.set(bin, callback || this.noopFunc);
+};
+
+/******************************************************************************/
+
+µBlock.keyvalSetMany = function(dict, callback) {
+    vAPI.storage.set(dict, callback || this.noopFunc);
+};
+
+/******************************************************************************/
+
 µBlock.saveLocalSettings = function(force) {
     if ( force ) {
         this.localSettingsModifyTime = Date.now();
@@ -70,13 +84,13 @@
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.XAL.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+    this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
 };
 
 /******************************************************************************/
 
 µBlock.saveHostnameSwitches = function() {
-    this.XAL.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
+    this.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
 };
 
 /******************************************************************************/
