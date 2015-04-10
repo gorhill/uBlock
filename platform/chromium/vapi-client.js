@@ -150,6 +150,9 @@ vAPI.messaging = {
             },
             close: function() {
                 delete vAPI.messaging.channels[this.channelName];
+                if ( Object.keys(vAPI.messaging.channels).length === 0 ) {
+                    vAPI.messaging.close();
+                }
             }
         };
 
