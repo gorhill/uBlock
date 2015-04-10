@@ -65,7 +65,11 @@ vAPI.app.restart = function() {
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = 7;
+
+// Fixed by github.com/AlexVallat:
+//   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
+//   7 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
+var expectedNumberOfCleanups = 6;
 
 window.addEventListener('unload', function() {
     for ( var cleanup of cleanupTasks ) {

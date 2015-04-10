@@ -60,6 +60,19 @@ function startup(data, reason) {
         }
 
         let hiddenDoc = appShell.hiddenDOMWindow.document;
+
+        // https://github.com/gorhill/uBlock/issues/10
+        // Fixed by github.com/AlexVallat:
+        //   https://github.com/chrisaljoudi/uBlock/issues/1149
+        //   https://github.com/AlexVallat/uBlock/commit/e762a29d308caa46578cdc34a9be92c4ad5ecdd0
+        if ( hiddenDoc.readyState === 'loading' ) {
+            hiddenDoc.addEventListener('DOMContentLoaded', onReady);
+            return;
+        }
+
+        // I believe this needs to be called in case it was added above.
+        hiddenDoc.removeEventListener('DOMContentLoaded', onReady);
+
         bgProcess = hiddenDoc.documentElement.appendChild(
             hiddenDoc.createElementNS('http://www.w3.org/1999/xhtml', 'iframe')
         );
