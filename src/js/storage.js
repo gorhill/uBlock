@@ -46,12 +46,6 @@
 
 /******************************************************************************/
 
-µBlock.keyvalSetMany = function(dict, callback) {
-    vAPI.storage.set(dict, callback || this.noopFunc);
-};
-
-/******************************************************************************/
-
 µBlock.saveLocalSettings = function(force) {
     if ( force ) {
         this.localSettingsModifyTime = Date.now();
