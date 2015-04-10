@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Řídící panel",
+    "message":"uBlock₀ — Ovládací panel",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Kliknutí: trvale zakázat uBlock pro celý tento web.\n\nCtrl+kliknutí: zakázat µBlock pouze pro tuto stránku.",
+    "message":"Kliknutí: trvale zakázat uBlock₀ pro celý tento web.\n\nCtrl+kliknutí: zakázat uBlock₀ pouze pro tuto stránku.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{

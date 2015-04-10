@@ -104,7 +104,7 @@
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"skrypty pochodzące bezpośrednio z tej strony",
+    "message":"skrypty tej samej domeny",
     "description":""
   },
   "popup3pScriptRulePrompt":{
@@ -112,7 +112,7 @@
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"ramki pochodzące ze stron zewnętrznych",
+    "message":"ramki z domen zewnętrznych",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -268,7 +268,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Ostatnia aktualizacja: {{ago}}",
+    "message":"Zaktualizowano: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -352,7 +352,7 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-whitelist_{{datetime}}.txt",
+    "message":"my-ublock-whitelist_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Dodać następujący URL do Twojej niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock: Dodać następujący URL do niestandardowej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{

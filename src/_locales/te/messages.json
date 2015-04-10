@@ -84,7 +84,7 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"ఈ వెబ్ సైట్ లో కాస్మెటిక్ వడపోత స్థితిని మార్చండి",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -140,7 +140,7 @@
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"కాస్మెటిక్ వడపోతలు",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -184,7 +184,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"{{netFilterCount}} నెట్వర్క్ వడపోతలు ＋ {{cosmeticFilterCount}} కాస్మెటిక్ వడపోతల ఇందులోనుండి:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -204,11 +204,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Parse and enforce cosmetic filters.",
+    "message":"పదనిరుపనచేసి కాస్మెటిక్ వడపోతను లాగుపరచు.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
+    "message":"<p>ఈ ఎంపిక  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-అనుకూల &ldquo;అంశాల దపరికాన్ని&rdquo; వడపోతలను<\/a> పదనిరుపనచేసి లాగుపరుస్తుంది. ఈ వడపోతలు చాలావరకు కాస్మెటిక్ అయివుంటాయి, అవి నెట్వర్క్ అభ్యర్ధన నిరోదన ద్వారా నిరోధించాబడలేని అవాంఛిథ అంశాలను దాచుటకు ఉపకరిస్తాయి.<\/p><p>ఈ ఎంపిక ను ఎంచుకున్నయేడల uBlock₀ యొక్క మెమరీ వాడుక పెరిగే ఆస్కారమున్నది<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{

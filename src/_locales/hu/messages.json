@@ -84,7 +84,7 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Kozmetikai szűrés ki- és bekapcsolása ehhez a weboldalhoz",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{

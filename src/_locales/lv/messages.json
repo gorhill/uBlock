@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikšķis: atslēgt\/ieslēgt uBlock šajā vietnē.\n\nCtrl+klikšķis: atslēgt uBlock tikai šai lapai.",
+    "message":"Klikšķis: atslēgt\/ieslēgt uBlock₀ šajā vietnē.\n\nCtrl+klikšķis: atslēgt uBlock₀ tikai šai lapai.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -208,7 +208,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Šī opcija iespējo apstrādāt un ieviest ar <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus saderīgus &ldquo;elementu paslēpšanas&rdquo;<\/a> filtrus. Šie filtri ir būtībā kosmētiski, tie kalpo, lai paslēptu tīmekļa lapu elementus, kas tiek uzskatīti par vizuālu traucējumu, un kas nevar būt nobloķēti ar pieprasījumu balstītu filtrēšanas programmu.<\/p><p>Šī līdzekļa iespējošana palielina <i>uBlock<\/i> izmantojamās atmiņas daudzumu.<\/p>",
+    "message":"<p>Šī opcija iespējo apstrādāt un ieviest ar <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus saderīgus &ldquo;elementu paslēpšanas&rdquo;<\/a> filtrus. Šie filtri ir būtībā kosmētiski, tie kalpo, lai paslēptu tīmekļa lapu elementus, kas tiek uzskatīti par vizuālu traucējumu, un kas nevar būt nobloķēti ar pieprasījumu balstītu filtrēšanas programmu.<\/p><p>Šī līdzekļa iespējošana palielina <i>uBlock₀<\/i> izmantojamās atmiņas daudzumu.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -340,7 +340,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
+    "message":"Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock₀. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -364,7 +364,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina uBlock izmantotās atmiņas apjomu. Tā kā daudzi lietotāji nekad neizmantos šo līdzekli, tas pēc noklusējuma ir izslēgts.",
+    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina uBlock₀ izmantotās atmiņas apjomu. Tā kā daudzi lietotāji nekad neizmantos šo iespēju, tā pēc noklusējuma ir izslēgta.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Tiks pārrakstīti visi iestatījumi izmantojot datus, kas balstās uz {{time}}, un µBlock tiks restartēts.  Pārrakstīt visus esošos iestatījumus, izmantojot rezerves kopiju?",
+    "message":"Tiks pārrakstīti visi iestatījumi izmantojot datus, kas saglabāti {{time}}, un µBlock₀ tiks restartēts.  Pārrakstīt visus esošos iestatījumus, izmantojot rezerves kopiju?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Tiks atcelti visi Jūsu iestatījumi, un µBlock tiks restartēts. Atjaunot rūpnīcas iestatījumus?",
+    "message":"Tiks atcelti visi Jūsu iestatījumi, un uBlock₀ tiks restartēts. \nAtjaunot rūpnīcas iestatījumus?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nNosaukums: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -500,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock novērsa šo lapu no ielādes:",
+    "message":"uBlock₀ novērsa šo lapu no ielādes:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

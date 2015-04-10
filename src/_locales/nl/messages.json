@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klikken: uBlock voor deze website in-\/uitschakelen.\n\nCtrl+klikken: uBlock enkel voor deze pagina uitschakelen.",
+    "message":"Klikken: uBlock₀ voor deze website in-\/uitschakelen.\n\nCtrl+klikken: uBlock₀ enkel voor deze pagina uitschakelen.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -208,7 +208,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch: ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van <i>uBlock<\/i>.<\/p>",
+    "message":"<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &ldquo;element hiding&rdquo; filters<\/a> in. Deze filters zijn puur cosmetisch: ze verbergen elementen in de webpagina die visueel storend kunnen zijn en kunnen dus niet geblokkeerd worden door de op netverzoeken gebaseerde filterengine.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -340,7 +340,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Je lijst van hostnamen waarop uBlock uitgeschakeld is. Eén per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
+    "message":"Je lijst van hostnamen waarop uBlock₀ uitgeschakeld is. Eén per regel ingeven. Ongeldige hostnamen worden stilletjes genegeerd.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -364,7 +364,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie in te schakelen. Het loggen van netwerkverzoeken vraagt meer geheugen. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
+    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie in te schakelen. Het loggen van netwerkverzoeken verhoogt het geheugengebruik van uBlock₀. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Al je instellingen zullen worden overschreven met de back-upgegevens van {{time}} en uBlock zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de back-upgegevens?",
+    "message":"Al je instellingen zullen worden overschreven met de back-upgegevens van {{time}} en uBlock₀ zal worden herstart.\n\nWeet u zeker dat u alle bestaande instellingen wil overschrijven met de back-upgegevens?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Al je instellingen zullen worden verwijderd, waarna uBlock zich herstart.\n\nInstellingen toch herstellen naar de standaardwaarden?",
+    "message":"Al je instellingen zullen worden verwijderd, waarna uBlock₀ zich herstart.\n\nInstellingen toch herstellen naar de standaardwaarden?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: De volgende URL aan je aangepaste filterlijsten toevoegen?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: De volgende URL aan je aangepaste filterlijsten toevoegen?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -500,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock heeft het laden van de volgende pagina voorkomen:",
+    "message":"uBlock₀ heeft het laden van de volgende pagina voorkomen:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
