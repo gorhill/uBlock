@@ -7,8 +7,12 @@ ul {
     }
 #lists {
     margin: 0.5em 0 0 0;
+    padding-left: 1em;
+    padding-right: 0em;
     }
 body[dir=rtl] #lists {
+    padding-left: 0em;
+    padding-right: 1em;
     }
 #lists > li {
     margin: 0.5em 0 0 0;
