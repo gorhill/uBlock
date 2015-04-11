@@ -44,7 +44,7 @@ div > p:last-child {
 .para {
     width: 40em;
     }
-.whatisthis {
+button.whatisthis {
     margin: 0 0 0 8px;
     border: 0;
     padding: 0 0 4px 0;
@@ -54,8 +54,10 @@ div > p:last-child {
     cursor: pointer;
     opacity: 0.5;
     vertical-align: middle;
+    -webkit-transition: 0.2s background, 0.2s border-color, 0.2s box-shadow, 0.2s opacity;
+    transition: 0.2s background, 0.2s border-color, 0.2s box-shadow, 0.2s opacity;
     }
-.whatisthis:hover {
+button.whatisthis:hover {
     opacity: 1.0;
     }
 .whatisthis-expandable {

@@ -1,7 +1,7 @@
 f4e2b58298d1d26dd0c65f3db849a15a assets/ublock/filter-lists.json
-f65a01f91142e138acdb147e5442503f assets/ublock/filters.txt
-dcf3e05bae803343c9d632f0baf8bedd assets/ublock/mirror-candidates.txt
-c0ffd2ba7a812912a903a446e2c3699f assets/ublock/privacy.txt
+30f6b52678060ffd497564701f590a5b assets/ublock/filters.txt
+c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
+ba85c7991d208fe26c8f74f57bb5cfe1 assets/ublock/privacy.txt
 0d707b2cee4a38988662107971137d13 assets/thirdparties/abp.mozilla-hispano.org/nauscopio/filtros.txt
 36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 7c0d09fbccd87b5252d3bab3e822f2e4 assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt

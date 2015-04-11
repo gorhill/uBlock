@@ -93,9 +93,13 @@ var renderFilterLists = function() {
         var elem, text;
         var entry = listDetails.available[listKey];
         var li = listEntryTemplate.clone();
-
         if ( entry.off !== true ) {
             li.descendants('input').attr('checked', '');
+        }
+        if(entry.homeURL) {
+            if(entry.homeURL.lastIndexOf("https:", 0) === 0) {
+                li.addClass("secure", true);
+            }
         }
 
         elem = li.descendants('a:nth-of-type(1)');
@@ -158,6 +162,9 @@ var renderFilterLists = function() {
 
     var liFromListGroup = function(groupKey, listKeys) {
         var liGroup = listGroupTemplate.clone();
+        if(groupKey === 'custom') {
+            liGroup.append(uDom('#externalListsDiv'));
+        }
         var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
         if ( groupName !== '' ) {
             liGroup.descendants('span.geName').text(groupName);
@@ -241,6 +248,7 @@ var renderFilterLists = function() {
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
 
+        renderExternalLists();
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
     };
@@ -535,7 +543,6 @@ uDom.onLoad(function() {
     uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 
     renderFilterLists();
-    renderExternalLists();
 });
 
 /******************************************************************************/

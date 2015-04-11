@@ -12,6 +12,7 @@ html, body {
     }
 body {
     padding:8px;
+    box-sizing: border-box;
     }
 #dashboard-nav {
     margin: 0;
@@ -62,7 +63,7 @@ iframe {
     border: 0;
     padding: 0;
     background-color: transparent;
-    width: calc(100% - 16px);
+    width: 100%;
     }
 
 @media (max-width: 600px) {
