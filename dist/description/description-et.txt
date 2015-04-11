@@ -24,7 +24,7 @@ Lisaks neile on veel saadaval:
 - Spam404
 - Ja paljud teised
 
-Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock palju vähem mälu kui ülejäänud tuntud blokeerijad.
+Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock₀ palju vähem mälu kui ülejäänud tuntud blokeerijad.
 
 Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti nende loendite puhul, mida tavaliselt kasutatakse hosts failina.
 
