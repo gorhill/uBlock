@@ -51,8 +51,8 @@ var fromLegacySwitchNames = {
 };
 
 var switchStateToNameMap = {
-    '1': 'on',
-    '2': 'off'
+    '1': 'true',
+    '2': 'false'
 };
 
 var nameToSwitchStateMap = {
