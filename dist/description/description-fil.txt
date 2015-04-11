@@ -25,7 +25,7 @@ Higit pang mga listahan ay magagamit para sa iyo upang piliin kung nanaisin:
 - Spam404
 - At iba pa.
 
-Siyempre, mas maraming pinapaganang mga filter , mas mataas ang memory footprint. Ngunit , kahit ang pagdaragdag ng dalawang extra na mga listahan ng Fanboy , hpHosts’s Ad at tracking servers, ang uBlock pa rin ay may mas mababang memory footprint kaysa sa iba pang mga sikat na blockers.
+Siyempre, mas maraming pinapaganang mga filter , mas mataas ang memory footprint. Ngunit , kahit ang pagdaragdag ng dalawang extra na mga listahan ng Fanboy , hpHosts’s Ad at tracking servers, ang uBlock₀ pa rin ay may mas mababang memory footprint kaysa sa iba pang mga sikat na blockers.
 
 Gayundin, magkaroon ng kamalayan na ang pagpili ng ilan sa mga dagdag na mga listahan ay maaaring humantong sa mas mataas na posibilidad ng pagkasira ng web site - lalo na ang mga listahan na palaging ginagamit na hosts file.
 
