@@ -6,7 +6,7 @@ ul {
     margin-bottom: 0.5em;
     }
 #lists {
-    margin: 0.5em 0 0 0;
+    margin: 0.5em 0 4em 0;
     padding-left: 1em;
     padding-right: 0em;
     }
@@ -37,7 +37,8 @@ body[dir=rtl] #lists {
 #lists > .groupEntry > ul {
     margin: 0.25em 0 0 0;
     }
-#lists > .groupEntry.collapsed > ul {
+#lists > .groupEntry.collapsed > ul,
+#lists > .groupEntry.collapsed > div {
     display: none;
     }
 li.listEntry {
@@ -139,10 +140,10 @@ span.new {
     background-color: hsl(36, 100%, 75%);
     }
 #externalListsDiv {
-    margin: 2em auto 2em 2em;
+    margin: 2em auto 0 2em;
     }
 body[dir=rtl] #externalListsDiv {
-    margin: 2em 2em 2em;
+    margin: 2em 2em 0;
     }
 #externalLists {
     box-sizing: border-box;

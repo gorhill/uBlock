@@ -162,6 +162,9 @@ var renderFilterLists = function() {
 
     var liFromListGroup = function(groupKey, listKeys) {
         var liGroup = listGroupTemplate.clone();
+        if(groupKey === 'custom') {
+            liGroup.append(uDom('#externalListsDiv'));
+        }
         var groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
         if ( groupName !== '' ) {
             liGroup.descendants('span.geName').text(groupName);
@@ -245,6 +248,7 @@ var renderFilterLists = function() {
         uDom('#autoUpdate').prop('checked', listDetails.autoUpdate === true);
         uDom('#parseCosmeticFilters').prop('checked', listDetails.cosmetic === true);
 
+        renderExternalLists();
         renderWidgets();
         renderBusyOverlay(details.manualUpdate, details.manualUpdateProgress);
     };
@@ -539,7 +543,6 @@ uDom.onLoad(function() {
     uDom('#lists').on('click', '.groupEntry > span', groupEntryClickHandler);
 
     renderFilterLists();
-    renderExternalLists();
 });
 
 /******************************************************************************/
