@@ -137,7 +137,7 @@
         "off": true,
         "title": "IDN: ABPindo",
         "group": "regions",
-        "homeURL": "https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt"
+        "homeURL": "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt"
         },
     "liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
         "off": true,
