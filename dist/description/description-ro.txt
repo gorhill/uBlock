@@ -25,7 +25,7 @@ De asemenea, mai sunt disponibile și alte liste precum:
 - Spam404
 - Și multe altele
 
-Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, uBlock tot folosește mai puțină memorie decât restul paravanelor.
+Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, uBlock₀ tot folosește mai puțină memorie decât restul paravanelor.
 
 De ținut minte, că odată cu selectarea în plus a unora dintre liste poate conduce la afectarea aspectului siteurilor -- în special listele care sunt în mod normal fișiere hosts.
 
