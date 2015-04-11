@@ -24,7 +24,7 @@ Pokud chcete, můžete si vybrat tyto další filtry:
 - Spam404
 - A mnoho dalších
 
-Čím více filtrů je povoleno, tím je samozřejmě větší stopa v paměti. I přesto má ale uBlock i po přidání dvou dalších seznamů od Fanboye a "hpHosts’s Ad and tracking servers" menší vliv na paměť než mnohé další velmi populární blockery.
+Čím více filtrů je povoleno, tím je samozřejmě větší stopa v paměti. I přesto má ale uBlock₀ i po přidání dvou dalších seznamů od Fanboye a "hpHosts’s Ad and tracking servers" menší vliv na paměť než mnohé další velmi populární blockery.
 
 Dále mějte na paměti, že vybírání více filtrů zvyšuje šanci chybného zobrazení webů -- především u seznamů, které se normálně používají jako hosts soubory.
 
