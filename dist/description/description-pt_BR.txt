@@ -2,7 +2,7 @@ Um bloqueador eficaz: Com baixo consumo de  memória e CPU e ainda pode carregar
 
 Visão geral ilustrada de sua eficiência: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP :-Efficiency-compared
 
-Utilização: O botão grande de energia no pop-up serve para desativar/ativar o uBlock para o site atual. Isso se aplica apenas ao site atual, não é um botão global.
+Utilização: Use o botão de energia no pop-up para desativar/ativar o uBlock₀ para o site atual. Isso se aplica apenas ao site atual, não é um botão global.
 
 ***
 
@@ -24,7 +24,7 @@ Mais listas estão disponíveis para você escolher, se desejar:
 - Spam404
 - E varios outros
 
-Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, uBlock ainda tem o uso de memória menor do que outros bloqueadores populares lá fora.
+Claro, quanto mais filtros habilitados, maior o consumo de memória. Ainda, mesmo após a adição do Fanboy's duas listas extras, hpHosts’s e servidores de rastreamento, uBlock₀ ainda tem o consumo de memória menor do que outros bloqueadores populares lá fora.
 
 Também, esteja ciente de que selecionar algumas dessas listas extras pode levar à maior probabilidade de quebra do layout do site, especialmente aquelas listas que são normalmente usadas como arquivo hosts.
 
@@ -38,8 +38,8 @@ Gratuito
 Código aberto com licença pública (GPLv3)
 De usuários para usuários.
 
-Colaboradores @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Colaboradores @ Crowdin: https://crowdin.net/project/ublock
+Contribuidores no Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contribuidores @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
