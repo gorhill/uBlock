@@ -28,9 +28,6 @@ body {
     display: inline-block;
     vertical-align: middle;
     }
-#toolbar input {
-    padding: 5px;
-    }
 #toolbar .button {
     border: none;
     box-sizing: border-box;
@@ -48,8 +45,13 @@ body.filterOff #toolbar #filterButton {
 #filterExpression.bad {
     background-color: #fee;
     }
+input {
+    border: 1px solid #ddd;
+    padding: 5px;
+    }
 input:focus {
-    background-color: #ffe;
+    outline: 0;
+    border-color: deepskyblue;
     }
 #content {
     position: absolute;
