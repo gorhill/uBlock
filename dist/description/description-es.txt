@@ -24,7 +24,7 @@ Otras listas disponibles pueden ser seleccionadas, si se desea:
 - Spam404
 - Etc.
 
-Por supuesto, mientras más filtros se activen, mayor será el consumo de memoria. No obstante, incluso después de agregar las dos listas adicionales de Fanboy y la 'hpHosts’s Ad and tracking servers', uBlock consume menos memoria que otros bloqueadores similares.
+Por supuesto, mientras más filtros se activen, mayor será el consumo de memoria. No obstante, incluso después de agregar las dos listas adicionales de Fanboy y la 'hpHosts’s Ad and tracking servers', uBlock₀ consume menos memoria que otros bloqueadores similares.
 
 También tenga en cuenta que seleccionar algunas de estas listas adicionales puede conducir a una mayor probabilidad de aparición de problemas al mostrar un sitio web -- especialmente las listas utilizadas normalmente como archivo hosts.
 
