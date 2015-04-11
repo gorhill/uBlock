@@ -24,7 +24,7 @@
 - Spam404
 - 그리고 무수히 많은 다른 목록들
 
-물론, 더 많은 필터를 활성화하면 할수록, 메모리 사용량도 높아집니다. 하지만 Fanboy's two extra lists와 hpHosts’s Ad and tracking servers 필터를 추가한 후에도 uBlock은 다른 인기있는 차단기에 비해 메모리 사용량이 적습니다.
+물론, 더 많은 필터를 활성화하면 할수록, 메모리 사용량도 높아집니다. 하지만 Fanboy's two extra lists와 hpHosts’s Ad and tracking servers 필터를 추가한 후에도 uBlock₀은 다른 인기있는 차단기에 비해 메모리 사용량이 적습니다.
 
 또, 이러한 일부 추가 목록(특히 일반적으로 사용되는 호스트 파일) 중 선택시 높은 확률로 웹사이트가 파손될 수 있음을 명심해주시기 바랍니다.
 
