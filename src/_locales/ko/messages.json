@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"클릭: 이 사이트에서 uBlock을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서만 uBlock을 끕니다.",
+    "message":"클릭: 이 사이트에서 uBlock₀을 켜고 끕니다.\n\nCtrl+클릭: 이 페이지에서 uBlock₀을 끕니다.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -76,15 +76,15 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"이 사이트에서 팝업 차단",
+    "message":"이 사이트에서 팝업 차단 토글",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"이 사이트에서 강화된 차단기능 끄기",
+    "message":"이 사이트에서 엄격 차단기능 토글",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"이 사이트에서 시각적 필터링 토글",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -208,7 +208,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock<\/i>의 메모리 사용량이 늘어납니다.<\/p>",
+    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock₀<\/i>의 메모리 사용량이 증가합니다.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -340,7 +340,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"당신의 목록에 있는 호스트들은 uBlock에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
+    "message":"당신의 목록에 있는 호스트들은 uBlock₀에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -364,7 +364,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 uBlock의 메모리 사용량을 늘어나게 합니다.\n많은 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
+    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 uBlock₀의 메모리 사용량을 증가하게 만듭니다.\n대부분 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +444,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
+    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock₀이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"당신의 모든 설정이 제거되며, uBlock이 재시작됩니다.\n\nuBlock의 설정을 처음 설정으로 초기화하시겠습니까?",
+    "message":"당신의 모든 설정이 제거되며, uBlock₀이 재시작됩니다.\n\nuBlock₀의 설정을 처음 설정으로 초기화하시겠습니까?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: 선택한 URL을 사용자 지정 필터 목록에 추가하시겠습니까?\n\n제목: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: 선택한 URL을 사용자 지정 필터 목록에 추가하시겠습니까?\n\n제목: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -500,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock이 다음 페이지를 로드하는것을 방지했습니다:",
+    "message":"uBlock₀이 다음 페이지를 로드하는것을 방지했습니다:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -516,7 +516,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"{{hostname}}에서 강화된 차단기능 끄기",
+    "message":"{{hostname}}에서 엄격 차단기능 끄기",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
