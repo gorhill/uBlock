@@ -1855,9 +1855,14 @@ vAPI.toolbarButton.init = function() {
 
     this.defaultArea = CustomizableUI.AREA_NAVBAR;
     this.styleURI = [
-        '#' + this.id + ' {',
+        '#' + this.id + '.off {',
             'list-style-image: url(',
                 vAPI.getURL('img/browsericons/icon16-off.svg'),
+            ');',
+        '}',
+        '#' + this.id + ' {',
+            'list-style-image: url(',
+                vAPI.getURL('img/browsericons/icon16.svg'),
             ');',
         '}',
         '#' + this.viewId + ', #' + this.viewId + ' > iframe {',
@@ -2078,16 +2083,15 @@ vAPI.toolbarButton.updateState = function(win, tabId) {
     }
 
     var icon = this.tabs[tabId];
+
     button.setAttribute('badge', icon && icon.badge || '');
 
     if ( !icon || !icon.img ) {
-        icon = '';
+        button.classList.add('off');
     }
     else {
-        icon = 'url(' + vAPI.getURL('img/browsericons/icon16.svg') + ')';
+        button.classList.remove('off');
     }
-
-    button.style.listStyleImage = icon;
 };
 
 /******************************************************************************/
