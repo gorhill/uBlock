@@ -47,6 +47,18 @@ body[dir=rtl] [data-tip][data-tip-anchor="top"]:hover:after {
     left: 0;
     }
 
+body[dir=ltr] [data-tip][data-tip-anchor="left"]:hover:after {
+    right: 105%;
+    top: initial;
+    left: initial;
+    bottom: -4px;
+    }
+body[dir=rtl] [data-tip][data-tip-anchor="left"]:hover:after {
+    left: 105%;
+    top: initial;
+    right: initial;
+    bottom: -4px;
+    }
 body [data-tip][data-tip-anchor="topcenter"]:hover:after {
     bottom: 140%;
     left: -225%;

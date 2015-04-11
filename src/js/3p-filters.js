@@ -93,9 +93,13 @@ var renderFilterLists = function() {
         var elem, text;
         var entry = listDetails.available[listKey];
         var li = listEntryTemplate.clone();
-
         if ( entry.off !== true ) {
             li.descendants('input').attr('checked', '');
+        }
+        if(entry.homeURL) {
+            if(entry.homeURL.lastIndexOf("https:", 0) === 0) {
+                li.addClass("secure", true);
+            }
         }
 
         elem = li.descendants('a:nth-of-type(1)');
