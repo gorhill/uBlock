@@ -27,7 +27,7 @@ https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 - Spam404
 - 其他
 
-啟用越多的過濾規則就會佔用越多的記憶體。 然而，即使在加入 Fanboy 額外的兩個規則和 hpHosts’s Ad and tracking servers，μBlock 的記憶體佔用依然比其他常見的過濾工具要小的多。
+啟用越多的過濾規則就會佔用越多的記憶體。 然而，即使在加入 Fanboy 額外的兩個規則和 hpHosts’s Ad and tracking servers，uBlock₀ 的記憶體佔用依然比其他常見的過濾工具要小的多。
 
 另外，請注意選擇的一些額外的清單可能會導致網頁破損可能性增高 — — 尤其是那些通常用來當作hosts檔案的清單。
 
