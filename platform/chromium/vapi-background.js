@@ -210,8 +210,9 @@ vAPI.tabs.get = function(tabId, callback) {
         }
         if ( typeof tabId !== 'number' || isNaN(tabId) ) {
             onTabReady(null);
+        } else {
+            chrome.tabs.get(tabId, onTabReady);
         }
-        chrome.tabs.get(tabId, onTabReady);
         return;
     }
     var onTabReceived = function(tabs) {
