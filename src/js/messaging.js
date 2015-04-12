@@ -574,13 +574,12 @@ var onMessage = function(request, sender, callback) {
 
                 callback({
                     frameContent: this.responseText.replace(reStrings, replacer),
-                    target: µb.contextMenuTarget,
+                    targetElementSelector: µb.epickerTargetElementSelector,
                     clientX: µb.contextMenuClientX,
                     clientY: µb.contextMenuClientY,
                     eprom: µb.epickerEprom
                 });
 
-                µb.contextMenuTarget = '';
                 µb.contextMenuClientX = -1;
                 µb.contextMenuClientY = -1;
             };

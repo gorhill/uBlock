@@ -276,8 +276,8 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = function(tabId, targetElement) {
-    this.epickerTarget = targetElement || '';
+µBlock.elementPickerExec = function(tabId, targetElementSelector) {
+    this.epickerTargetElementSelector = targetElementSelector;
     vAPI.tabs.injectScript(tabId, { file: 'js/element-picker.js' });
 };
 

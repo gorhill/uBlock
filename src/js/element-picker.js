@@ -128,7 +128,8 @@ if ( window.top !== window ) {
 var pickerRoot = document.getElementById(vAPI.sessionId);
 
 if ( pickerRoot ) {
-    return;
+    // If it's already running, stop it and then allow it to restart
+    pickerRoot.onload(); // Calls stopPicker
 }
 
 var localMessager = vAPI.messaging.channel('element-picker.js');
@@ -873,53 +874,21 @@ var startPicker = function(details) {
 
     highlightElements([], true);
 
-    var elem;
+    var elem = null;
+
+    // If a target element was provided, use it
+    if (details.targetElementSelector) {
+        elem = document.querySelector(details.targetElementSelector);
+    }
 
     // Try using mouse position
-    if ( details.clientX !== -1 ) {
+    if (!elem && details.clientX !== -1) {
         elem = elementFromPoint(details.clientX, details.clientY);
-        if ( elem !== null ) {
-            filtersFromElement(elem);
-            showDialog();
-            return;
-        }
     }
 
-    // No mouse position available, use suggested target
-    var target = details.target || '';
-    var pos = target.indexOf('\t');
-    if ( pos === -1 ) {
-        return;
-    }
-    var srcAttrMap = {
-        'a': 'href',
-        'img': 'src',
-        'iframe': 'src',
-        'embed': 'src',
-        'video': 'src',
-        'audio': 'src'
-    };
-    var tagName = target.slice(0, pos);
-    var url = target.slice(pos + 1);
-    var attr = srcAttrMap[tagName];
-    if ( attr === undefined ) {
-        return;
-    }
-    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    var i = elems.length;
-    var src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) {
-            continue;
-        }
-        if ( src !== url ) {
-            continue;
-        }
+    if (elem !== null) {
         filtersFromElement(elem);
-        showDialog({ modifier: true });
-        return;
+        showDialog();
     }
 };
 

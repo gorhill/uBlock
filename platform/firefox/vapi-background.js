@@ -65,7 +65,7 @@ vAPI.app.restart = function() {
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = 6; // 7 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
+var expectedNumberOfCleanups = vAPI.fennec ? 7 : 8; // 8 instances of cleanupTasks.push, but one is unique to fennec, and two to desktop.
 
 window.addEventListener('unload', function() {
     for ( var cleanup of cleanupTasks ) {
@@ -392,8 +392,9 @@ vAPI.tabs.registerListeners = function() {
     cleanupTasks.push(function() {
         Services.ww.unregisterNotification(windowWatcher);
 
+        vAPI.contextMenu.remove();
+
         for ( var win of vAPI.tabs.getWindows() ) {
-            vAPI.contextMenu.unregister(win.document);
             win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
 
             var tabContainer;
@@ -1760,6 +1761,15 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 
 /******************************************************************************/
 
+vAPI.contextMenu.createContextMenuItem = function(doc) {
+    var menuitem = doc.createElement('menuitem');
+    menuitem.setAttribute('id', this.menuItemId);
+    menuitem.setAttribute('label', this.menuLabel);
+    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
+    menuitem.setAttribute('class', 'menuitem-iconic');
+    return menuitem;
+}
+
 vAPI.contextMenu.register = function(doc) {
     if ( !this.menuItemId ) {
         return;
@@ -1777,11 +1787,7 @@ vAPI.contextMenu.register = function(doc) {
     }
 
     var contextMenu = doc.getElementById('contentAreaContextMenu');
-    var menuitem = doc.createElement('menuitem');
-    menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
-    menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
-    menuitem.setAttribute('class', 'menuitem-iconic');
+    var menuitem = this.createContextMenuItem(doc);
     menuitem.addEventListener('command', this.onCommand);
     contextMenu.addEventListener('popupshowing', this.displayMenuItem);
     contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
@@ -1805,6 +1811,36 @@ vAPI.contextMenu.unregister = function(doc) {
     contextMenu.removeEventListener('popupshowing', this.displayMenuItem);
     contextMenu.removeChild(menuitem);
 };
+
+/******************************************************************************/
+
+vAPI.contextMenu.registerForWebInspector = function(eventName, toolbox, panel) {
+    var menuPopup = panel.panelDoc.getElementById("inspector-node-popup");
+    var deleteMenuItem = panel.panelDoc.getElementById("node-menu-delete");
+    var tiltButton = toolbox.toolboxButtons.filter(tool => tool.id === "command-button-tilt")[0];
+    tiltButton = tiltButton && tiltButton.button;
+
+    if (menuPopup && deleteMenuItem) {
+        var menuitem = vAPI.contextMenu.createContextMenuItem(panel.panelDoc);
+        menuitem.addEventListener('command', function() {
+            var selectedNodeFront = panel.selection.nodeFront;
+            while (selectedNodeFront && selectedNodeFront.baseURI !== panel.walker.rootNode.baseURI) {
+                // This is an iFrame, so we can't select it directly. Walk up the parent stack until we do
+                selectedNodeFront = selectedNodeFront.parentNode();
+            }
+            if (selectedNodeFront) {
+                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(vAPI.tabs.getTabId(panel.browser), selector));
+
+                // Turn off 3D view, if it's turned on.
+                if (tiltButton && tiltButton.checked) {
+                    tiltButton.click();
+                }
+            }
+        });
+
+        menuPopup.insertBefore(menuitem, deleteMenuItem);
+    }
+}
 
 /******************************************************************************/
 
@@ -1850,6 +1886,19 @@ vAPI.contextMenu.create = function(details, callback) {
         });
     };
 
+    // Also add a context menu to the web inspector
+    if (!vAPI.fennec) {
+        try {
+            this.gDevTools = Cu.import('resource:///modules/devtools/gDevTools.jsm', null).gDevTools;
+        } catch (ex) {
+            // console.error(ex);
+        }
+
+        if (this.gDevTools) {
+            this.gDevTools.on("inspector-ready", this.registerForWebInspector);
+        }
+    }
+
     for ( var win of vAPI.tabs.getWindows() ) {
         this.register(win.document);
     }
@@ -1860,6 +1909,10 @@ vAPI.contextMenu.create = function(details, callback) {
 vAPI.contextMenu.remove = function() {
     for ( var win of vAPI.tabs.getWindows() ) {
         this.unregister(win.document);
+    }
+
+    if (!vAPI.fennec && this.gDevTools) {
+        this.gDevTools.off("inspector-ready", this.registerForWebInspector);
     }
 
     this.menuItemId = null;
