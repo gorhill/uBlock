@@ -208,6 +208,9 @@ vAPI.tabs.get = function(tabId, callback) {
         if ( typeof tabId === 'string' ) {
             tabId = parseInt(tabId, 10);
         }
+        if ( typeof tabId !== 'number' || isNaN(tabId) ) {
+            onTabReady(null);
+        }
         chrome.tabs.get(tabId, onTabReady);
         return;
     }
