@@ -303,3 +303,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # "Found Viewpoint’s site [...] Looks like it might be broken?"
 # To counter hpHosts, Peter Lowe's `viewpoint.com`
 @@||viewpoint.com^$~third-party
+
+# Fixes https://github.com/chrisaljoudi/uBlock/issues/1240
+# CNN
+@@||cdn.turner.com$domain=cnn.com
