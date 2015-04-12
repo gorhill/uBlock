@@ -88,8 +88,8 @@ vAPI.tabs.registerListeners = function() {
     var popupCandidates = Object.create(null);
 
     var PopupCandidate = function(details) {
-        this.targetTabId = details.tabId;
-        this.openerTabId = details.sourceTabId;
+        this.targetTabId = details.tabId.toString();
+        this.openerTabId = details.sourceTabId.toString();
         this.targetURL = details.url;
         this.selfDestructionTimer = null;
     };

@@ -137,7 +137,7 @@ housekeep itself.
     var gcPeriod = 10 * 60 * 1000;
 
     var TabContext = function(tabId) {
-        this.tabId = tabId;
+        this.tabId = tabId.toString();
         this.stack = [];
         this.rawURL =
         this.normalURL =
@@ -414,8 +414,8 @@ vAPI.tabs.onPopup = function(details) {
     //console.debug('vAPI.tabs.onPopup: details = %o', details);
 
     var tabContext = µb.tabContextManager.lookup(details.openerTabId);
-    var openerURL = details.openerURL || '';
-    if ( openerURL === '' && tabContext.tabId === details.openerTabId ) {
+    var openerURL = '';
+    if ( tabContext.tabId === details.openerTabId ) {
         openerURL = tabContext.normalURL;
     }
 
