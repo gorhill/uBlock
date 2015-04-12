@@ -206,6 +206,7 @@
 ||gamezek.com/img.png
 ||geek4arab.net/banner/
 ||giclub.tv/index.php?action=$image
+||giphy.com/yoJC2BNz47Bh7Ya7Dy.gif
 ||gulfbase.com/APopUp.
 ||gulfbase.com/Assets/css/AeroWindow
 ||gulfup.com/2012-06-04/133881477241.gif
@@ -216,6 +217,7 @@
 ||gulfup.com/Qe2Lk.jpg
 ||gulfup.com/SNI11.gif
 ||gulfup.com/U3If1.gif
+||gulfup.com/X53Kbh.gif
 ||hanya.ma/caro
 ||hao123.com^*/ar-banner.
 ||homekw.com/temp/jahrawi_150_167.gif
@@ -288,7 +290,10 @@
 ||nqashalhob.com/sharing.gif
 ||op-arab.net/images/2015/01/04/BYVMon.gif
 ||optionyard.com/l.aspx?
+||postimg.org/7o5uqjk4z/810_80.gif
+||postimg.org/d2mqd9lmh/final_banner.gif
 ||postimg.org/g70xglyjt/banner.png
+||postimg.org/hl6o7kygp/993966453_1.gif
 ||profvb.com/pub/
 ||ps-0.com/vb/$popup,domain=s-ajfan.com
 ||ps-0.com/vb/$subdocument,domain=a7lahmsa.com|s-ajfan.com
@@ -328,6 +333,7 @@
 ||tvgate.tv/tvgate/campaign/
 ||tvmasrnet-javafiles.googlecode.com/files/Ads
 ||tvquran.com/banr/
+||up-00.com/2015-02/1422851395141.gif
 ||up-00.com/2015-02/1424470761543.jpg
 ||up-00.com/2015-02/1424470761776.jpg
 ||up-00.com/2015-02/1424472081151.jpg
@@ -727,6 +733,7 @@
 ||kashta.net^$subdocument,domain=syrcafe.net
 ||kazaroza.net^$popup,domain=arablionz.com
 ||khaleejcal.com^*/banners/
+||kitabatnews.com/images/banners/
 ||kleeja.com/static/images/e3/
 ||kora-online.tv/channellist.
 ||kora-online.tv/chat.html
@@ -933,6 +940,10 @@
 ||tangersport.com/VillArt.gif
 ||top-an.com^$subdocument,domain=vb.zi-m.com
 ||tourism-review.net/banners/
+||travelzad.com/banner-app.gif
+||travelzad.com/e3lanat/
+||travelzad.com/photo/files/50810.gif
+||travelzad.com/vb/storeimg/img_1318589601_108.gif
 ||tvegy.com/open17.js
 ||tvfun.ma/p.js
 ||uob-bh.com/uploadfiles/bahraindir.gif
@@ -1224,7 +1235,6 @@ lakii.com##a[href^="http://www.deraah.com.sa/default.aspx?"]
 djelfa.info##a[href^="http://www.djelfa.info/ar/click/"]
 sedty.com##a[href^="http://www.drsrv.com/adv/"]
 ya3ale.com##a[href^="http://www.google.com/url?"]
-almosafr.com##a[href^="http://www.hotelscombined.com/?a_aid="]
 abotlal.com##a[href^="http://www.izhra.com/?utm_source="]
 maroc-quran.com##a[href^="http://www.maroc-quran.com/vb/bnnr.php?"]
 moonsat.net##a[href^="http://www.moonsat.net/ads.php?"]
@@ -1235,6 +1245,7 @@ qloob.com##a[href^="http://www.qloob.com/adv/"]
 bramjnet.com##a[href^="http://www.ref4bux.com/?ref="]
 almosafr.com##a[href^="http://www.rentalcars.com/Home.do?affiliateCode="]
 sedty.com##a[href^="http://www.sedty.com/adv/"]
+travelzad.com##a[href^="http://www.travelzad.com/vb/ads.php?id="]
 mothhelah.com##a[href^="index.php?op=ad_click"]
 mtwer.com##a[onclick^="_gaq.push(['_trackEvent', 'Outgoing',"]
 elheddaf.com##a[style="width:100%; height:850px; display:block; background:#000 url(/data/pub/pub.jpg) no-repeat center top; position: relative;"]

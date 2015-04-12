@@ -2,7 +2,7 @@
 ! Title: Anti-Adblock Killer | Filters for Adblockers
 ! Author: Reek | http://reeksite.com/
 ! License: Creative Commons BY-NC-SA
-! Version: 7.8
+! Version: 7.9
 ! Expires: 1 days
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
@@ -15,7 +15,11 @@
 ! Used to detect this list
 !----------------------------------------------------------------------------------------------------!
 ###k2Uw7isHrMm5JXP1Vwdxc567ZKc1aZ4I
-@@||raw.githubusercontent.com/reek/anti-adblock-killer/
+!----------------------------------------------------------------------------------------------------!
+! Exclude Anti-Adblock-killer
+!----------------------------------------------------------------------------------------------------!
+@@||githubusercontent.com/reek/anti-adblock-killer/
+@@||github.com/reek/anti-adblock-killer/
 !----------------------------------------------------------------------------------------------------!
 ! AntiAdblock - Generic
 !----------------------------------------------------------------------------------------------------!
@@ -109,7 +113,12 @@
 ! Ad Blocking Detector
 ! http://adblockingdetector.jtmorris.net/demo/
 @@/plugins/ad-blocking-detector/assets/js/advertisement.js$script
+! AdBlock Notify
+! http://b-website.com/plugin-wordpress-adblock-notify
+/plugins/adblock-notify-by-bweb/*
+||b-website.com/wp-content/uploads/an-temp/RrW75pkNMbSB.js$script
 ! Anti-Adblock (from easylist) -------------------------------------------------------------
+/ad-blocking-detector/*
 /adb_detector.
 /adblock-blocker/*
 /adblock_detector.
@@ -627,11 +636,6 @@ lien-torrent.com###ad_divl
 ! miniup.com
 @@||miniup.com/images/ads.png$image
 @@||miniup.com/ads/ads.png$image
-! hackintosh.zone
-hackintosh.zone#@#.adsbygoogle
-@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=hackintosh.zone
-@@||pagead2.googlesyndication.com/pagead/js/*/*/show_ads_impl.js$script,domain=hackintosh.zone
-||coindushopping.fr/public/$popup,script,third-party
 ! call-share.ddns.net
 @@||googleads.g.doubleclick.net/favicon.ico$domain=call-share.ddns.net
 ! culo.sourceforge.net
@@ -808,8 +812,6 @@ cmmonitor.com#@#.adsbygoogle
 @@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=cmmonitor.com
 ! 777bitco.in
 @@||777bitco.in/static/js/Controller/Advertise.js$script
-! vipleague.se
-@@||cdn.vipleague.se/js/ads.js$script
 ! mangamap.com
 mangamap.com#@#.afs_ads
 ! videomega.tv
@@ -826,6 +828,11 @@ theextopia.com##.adsfoot2
 umahdroid.blogspot.com###energysaving
 ! streaming-foot.me
 @@||streaming-foot.me/js/adblock.js$script
+! dirtstyle.tv
+||dirtstyle.tv/img/adblock.jpg
+dirtstyle.tv##.lightbox
+! vg.no
+@@||adserver.adtech.de/multiad/2.0/0/0/0/-1/$script,domain=vg.no
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -1023,6 +1030,8 @@ turkdown.com###duyuru
 ||p.jwpcdn.com/6/8/jwplayer.flash.swf
 ! dada44230.fr
 ||nefroto.net^$script,domain=dada44230.fr
+! generatupremium.biz
+generatupremium.biz##[href="http://www.hostunder.net/windows-rdp/"]
 ! Cloud --------------------------------------------------------------------------------------
 ! wawa-film.org
 wawa-film.org##A[href^="http://api.adlure.net/partner/click/"]
@@ -1034,7 +1043,7 @@ planet-series.tv##IMG[src="http://www.planet-series.tv/images/250-1.png"]
 planet-series.tv##IMG[src="http://www.planet-series.tv/images/728-2.png"]
 ! Streaming --------------------------------------------------------------------------------------
 ! floatLayer
-tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,cbox.ws,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv,micast.tv,wowhq.umbb.net##[id^="floatLayer"]
+tvportugalhd.info,tvportugalhd.com,tvportugalhd.org,tvphd.com,sporttv.pt.am,pogotv.eu,zonatugatv.com,flashstreams.net,cocas.tv,soccertoall.net,tvgente.com,sportvgratis1.com,icasthd.tv,hdtvtuga.com,hdembed.com,streamking.org,championsuefa.tv,canalescp.blogspot.com,miscanales21.blogspot.com,miscanalescp25.blogspot.com,peliculascp.blogspot.com,zeyutvcanales.com,turbocast.tv,torcidatricolor.eu,fixolas.net,wowhq.ws,wowhq.eu,futhd1.blogspot.com,tugastream.com,portugaldesportivo.com,cocas1.com,cbox.ws,uvue.de,sportstvonline.net,portalzuca.net,look-tvs.com,tvgente.eu,kingstreams.tv,micast.tv,wowhq.umbb.net,streaming-foot.me,footdirect24.com##[id^="floatLayer"]
 ! livesoccerhq
 s.m2pub.com###adk2_img
 ! tvportugalhd
@@ -1054,6 +1063,11 @@ megafilmeshd.net##[href^="http://click.afiliados.uol.com.br/Clique"]
 !@@||youwatch.org^$elemhide
 ||youwatch.org^$popup
 ||adcash.com^$popup,third-party
+! live.gtcaster.com
+live.gtcaster.com###adc
+live.gtcaster.com###adc2
+live.gtcaster.com###adc3
+live.gtcaster.com###bbb
 ! nowvideo.ch
 nowvideo.ch###aad
 nowvideo.ch###aad2
@@ -1274,6 +1288,7 @@ urlchecker.org###ads_notify
 ##A[href^="https://action.metaffiliation.com/trk.php?"]
 ##A[href^="http://action.metaffiliation.com/trk.php?"]
 ###WarningCodec
+junksport.com##DIV[style="background-color: rgb(251, 236, 173); position: absolute; margin: 0px 0px 0px -350px; left: 50%; width: 700px; z-index: 999999; height: 22px; font-family: arial; font-weight: bold; font-size: 14px; text-shadow: none; text-align: left; color: black; padding-top: 5px; padding-bottom: 5px; top: 0px;"]
 ! Malwares --------------------------------------------------------------------------------------
 ||getapplicationmy.info^
 ||doremido.com^
