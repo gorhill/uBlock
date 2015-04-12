@@ -580,13 +580,12 @@ var onMessage = function(request, sender, callback) {
 
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.epickerTarget,
+                targetElementSelector: µb.epickerTargetElementSelector,
                 clientX: µb.contextMenuClientX,
                 clientY: µb.contextMenuClientY,
                 eprom: µb.epickerEprom
             });
 
-            µb.epickerTarget = '';
             µb.contextMenuClientX = -1;
             µb.contextMenuClientY = -1;
         };
