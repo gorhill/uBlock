@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: WfYnKGKVib7aI2d2FzqJqQ
-! Version: 201504070651
+! Checksum: 7eJcJFgP6ZWOHsrCcznX+g
+! Version: 201504112331
 ! Title: EasyPrivacy
-! Last modified: 07 Apr 2015 06:51 UTC
+! Last modified: 11 Apr 2015 23:31 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2305,6 +2305,7 @@ _imp_logging?
 _impressions.gif?
 _landingLog/
 _logimpressions.
+_m10banners/tracking.php?
 _metricsTagging.
 _nedstat.js
 _nielsen.js
@@ -4534,7 +4535,6 @@ http://utm.
 ||clickonometrics.pl^$third-party
 ||gemius.pl^$third-party
 ||gostats.pl^$third-party
-||interia.pl^$third-party
 ||legenhit.com^$third-party
 ||ngacm.com^$third-party
 ||ngastatic.com^$third-party
@@ -4956,6 +4956,7 @@ http://utm.
 ||capture.bi.movideo.com/dc?
 ||capture.camify.com/dc?
 ||carambo.la/analytics/
+||caspionlog.appspot.com^
 ||cdn.trafficexchangelist.com^$third-party
 ||cdnma.com/apps/capture.js
 ||cdnplanet.com/static/rum/rum.js
@@ -7604,6 +7605,7 @@ http://utm.
 ||metric.gstatic.com^
 ||metric.inetcore.com^
 ||metrics.aws.sitepoint.com^
+||metrics.cnn.com^
 ||metrics.dailymotion.com^
 ||metrics.ee.co.uk^
 ||metrics.extremetech.com^
@@ -8065,6 +8067,7 @@ http://utm.
 ||sofascore.com/geoip.js
 ||somniture.theglobeandmail.com^
 ||sony-europe.com/tr/p.gif?
+||soonnight.com/stats.htm
 ||sourceforge.net/images/mlopen_post.html?
 ||sourceforge.net/log/
 ||sovereignbank.com/utils/track.asp
@@ -8154,6 +8157,7 @@ http://utm.
 ||storewidesearch.com/imn/mn.gif?
 ||stratfor.com/js/linktracker.js
 ||streamstats1.blinkx.com^
+||streetdirectory.com/tracking/
 ||streetfire.net/flash/trackingutility.swf
 ||streetfire.net/handlers/logstreamfileimpression.ashx?
 ||stribe.com/00/logs?
@@ -8618,6 +8622,7 @@ http://utm.
 ||chip.de/js/omniture_somtr_code_vH.25.js
 ||consumerreports.org^*/s_code.js
 ||csmonitor.com/extension/csm_base/design/csm_design/javascript/omniture/s_code.js
+||csmonitor.com/extension/csm_base/design/standard/javascript/adobe/s_code.js
 ||demandware.edgesuite.net^*/omniture.js$domain=otterbox.com
 ||disneylandparis.fr^*/s_code.js
 ||el-mundo.net/js/s_code.js$domain=elmundo.es|marca.com|tiramillas.net
@@ -9450,6 +9455,7 @@ http://utm.
 @@||descopera.ro/js/addLinkerEvents-ga.js
 @@||diablo3.com/assets/js/jquery.google-analytics.js
 @@||directline.com/touchclarity/$script
+@@||dmeserv.newsinc.com/dpid/*/PPEmbed.js$domain=csmonitor.com
 @@||dmeserv.newsinc.com^*/dynamicWidgets.js$domain=timesfreepress.com
 @@||doubleclick.net/activityi;src=$object-subrequest,domain=cicispizza.com
 @@||dw.cbsi.com/anonc.js$domain=cnet.com
@@ -9484,6 +9490,7 @@ http://utm.
 @@||flipps.com^*/page-tracking.js?
 @@||flurry.com/js/flurry.js$domain=pocketdice.io
 @@||focus.ti.com^*/metrics-min.js
+@@||foodnetwork.com^*/analytics.sitecatalyst.js
 @@||freehostedscripts.net/online/$script,~third-party
 @@||gaanacdn.com/*_social_tracking.js$domain=gaana.com
 @@||gameplayer.io^*/EventTracker.js
@@ -9565,6 +9572,7 @@ http://utm.
 @@||logging.apache.org^
 @@||lp.longtailvideo.com/5/yourlytics/yourlytics-1.js$domain=indiedb.com|indieroyale.com|moddb.com
 @@||lsi.com^*/google-analytics.js
+@@||lufthansa.com^*/mmcore.js
 @@||lynda.com^*/px.gif?$image
 @@||magnify.net^*/magnify_stats.js
 @@||mail-www.baynote.net^$domain=mail.com
@@ -9616,6 +9624,7 @@ http://utm.
 @@||netdna-ssl.com/lib/jquery-google-analytics/jquery.google-analytics.js$domain=homepath.com
 @@||netinsight.travelers.com/scripts/ntpagetaghttps.js
 @@||networkworld.com^*/demandbase.js
+@@||newsinc.com^*/getPlacements.js?pid=$xmlhttprequest,domain=csmonitor.com
 @@||next.co.uk/Scripts/GoogleAnalytics.js?
 @@||nike.com/checkout/analytics/js/analyticFunctions.js$domain=nike.com
 @@||nokia.com/b/ss/$image,domain=here.com
@@ -10002,6 +10011,8 @@ http://utm.
 @@||laredoute.pt/js/byside_webcare.js
 ! Indian
 @@||playwire.com/bolt/js/zeus/$script,domain=desi-tashan.com
+! Romanian
+@@||promozone.ro/wp-content/themes/nielsen/
 ! Russian
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
 @@||dict.rambler.ru/fcgi-bin/$xmlhttprequest,domain=rambler.ru

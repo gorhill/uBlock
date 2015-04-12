@@ -73,9 +73,8 @@ info##DIV[class="banda-sticky-mini"]
 @@||rezitests.ro/advertisement.js
 @@AC_RunActiveContent.js
 @@media.bestauto.ro
-@@||promozone.ro^$document
 @@||olx.ro/i2/ajax/ad/getcontact/*
-@@||emag.ro^$elemhide
+promozone.ro,emag.ro#@#[href*="/promo"] 
 
 !porcarii
 ||24fun.ro/widget/?

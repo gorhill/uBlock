@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Apr 3rd, 2015 at 23:54
+# Last updated: Apr 11th, 2015 at 14:35
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -373,6 +373,7 @@
 127.0.0.1 analytics.prx.org
 127.0.0.1 anm.intelli-direct.com
 127.0.0.1 ant.conversive.nl
+127.0.0.1 antivirus-message.com
 127.0.0.1 apac.rel.msn.com
 127.0.0.1 api.adsymptotic.com
 127.0.0.1 api.bizographics.com
@@ -404,6 +405,7 @@
 127.0.0.1 broadcastpc.tv 
 127.0.0.1 report.broadcastpc.tv 
 127.0.0.1 www.broadcastpc.tv
+127.0.0.1 browser-message.com
 127.0.0.1 bserver.blick.com
 127.0.0.1 bstats.adbrite.com
 127.0.0.1 b.stats.paypal.com
@@ -651,6 +653,7 @@
 127.0.0.1 dclk.themarketer.com
 127.0.0.1 delivery.loopingclick.com
 127.0.0.1 de.sitestat.com
+127.0.0.1 detectorcarecenter.in
 127.0.0.1 didtheyreadit.com		# email bugs
 127.0.0.1 digistats.westjet.com
 127.0.0.1 dimeprice.com		# "spam bugs"
@@ -745,6 +748,7 @@
 127.0.0.1 fastcounter.onlinehoster.net
 127.0.0.1 fastwebcounter.com
 127.0.0.1 fcstats.bcentral.com
+127.0.0.1 fdbdo.com
 127.0.0.1 fi.sitestat.com
 127.0.0.1 fl01.ct2.comclick.com
 127.0.0.1 flycast.com
@@ -774,6 +778,7 @@
 127.0.0.1 gtcc1.acecounter.com
 127.0.0.1 g-wizzads.net
 127.0.0.1 hc2.humanclick.com
+127.0.0.1 highscanprotect.com
 127.0.0.1 hit10.hotlog.ru
 127.0.0.1 hit2.hotlog.ru
 127.0.0.1 hit37.chark.dk
@@ -877,6 +882,7 @@
 127.0.0.1 logv32.xiti.com
 127.0.0.1 logv4.xiti.com
 127.0.0.1 logv.xiti.com
+127.0.0.1 lpcloudsvr302.com
 127.0.0.1 luycos.com
 127.0.0.1 lycoscollect.247realmedia.com
 127.0.0.1 lycoscollect.realmedia.com
@@ -994,6 +1000,7 @@
 127.0.0.1 oss-survey.marketscore.com
 127.0.0.1 ostats.mozilla.com
 127.0.0.1 other.xxxcounter.com
+127.0.0.1 ourtoolbar.com
 127.0.0.1 out.true-counter.com
 127.0.0.1 p.addthis.com
 127.0.0.1 partner.alerts.aol.com
@@ -1164,6 +1171,8 @@
 127.0.0.1 smartstats.com
 127.0.0.1 smetrics.att.com 
 127.0.0.1 softcore.xxxcounter.com
+127.0.0.1 softonic.com
+127.0.0.1 softonic.it
 127.0.0.1 sostats.mozilla.com
 127.0.0.1 sovereign.sitetracker.com
 127.0.0.1 spinbox.maccentral.com
@@ -1295,6 +1304,7 @@
 127.0.0.1 sugoicounter.com
 127.0.0.1 superstats.com
 127.0.0.1 s.youtube.com
+127.0.0.1 systweak.com
 #127.0.0.1 t2.hulu.com		# Uncomment to block Hulu. 
 127.0.0.1 tagging.outrider.com
 127.0.0.1 tags.bkrtx.com
@@ -1418,6 +1428,7 @@
 127.0.0.1 vsii.spindox.net
 127.0.0.1 w1.tcr112.tynt.com
 127.0.0.1 warlog.info
+127.0.0.1 warning-message.com
 127.0.0.1 wau.tynt.com
 127.0.0.1 web1.realtracker.com
 127.0.0.1 web2.realtracker.com
@@ -1437,6 +1448,7 @@
 127.0.0.1 webtrends.telenet.be
 127.0.0.1 webtrends.thisis.co.uk
 127.0.0.1 webtrends.townhall.com
+127.0.0.1 windows-tech-help.com
 127.0.0.1 wtnj.worldnow.com
 127.0.0.1 www.0stats.com
 127.0.0.1 www101.coolsavings.com

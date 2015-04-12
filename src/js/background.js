@@ -136,11 +136,10 @@ return {
     noopFunc: function(){},
 
     apiErrorCount: 0,
-    contextMenuTarget: '',
     contextMenuClientX: -1,
     contextMenuClientY: -1,
 
-    epickerTarget: '',
+    epickerTargetElementSelector: null,
     epickerEprom: null,
 
     // so that I don't have to care for last comma

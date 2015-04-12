@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: heHuHWo1YVmINFuqb4y9Mg
-! Version: 201504070651
+! Checksum: lBkRURtNqGJTb8iyDws0qg
+! Version: 201504112331
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -130,6 +130,9 @@ _Social-Advert-
 ||acces-charme.com^$third-party
 ||acpublicite.fr^$third-party
 ||acxiom-online.com^$third-party
+||ad-1.me^$third-party
+||ad-2.me^$third-party
+||ad-3.me^$third-party
 ||ad.activaweb.fr^
 ||ad.adserverplus.com^
 ||ad.prismamediadigital.com^$third-party
@@ -144,6 +147,7 @@ _Social-Advert-
 ||adk2x.com^$popup,third-party
 ||adk2x.com^$third-party
 ||adlpartner.com^$third-party
+||adm-vids.com^$third-party
 ||admanmedia.fr^$third-party
 ||admark.fr^$third-party
 ||adoptima.com^$third-party
@@ -158,6 +162,7 @@ _Social-Advert-
 ||adsregieonline.com^$third-party
 ||adsrevenue.com^$third-party
 ||adstronic.net^$third-party
+||adtrafic.com^$third-party
 ||adverpub.com^$third-party
 ||adverteasy.fr^$third-party
 ||advertsponsor.com^$third-party
@@ -169,6 +174,7 @@ _Social-Advert-
 ||affiliation-france.com^$popup,third-party
 ||affiliation.hexaweb.net^
 ||affiliaweb.eu^$third-party
+||affiliaweb.fr^$third-party
 ||affilinks.fr^$third-party
 ||affilipub.com^$third-party
 ||affility.com^$third-party
@@ -181,6 +187,7 @@ _Social-Advert-
 ||atedra.com^$third-party
 ||avenir-affiliation.fr^$third-party
 ||ayads.co^$third-party
+||baseandco.com^$third-party
 ||basebanner.com^
 ||beead.fr^$third-party
 ||bizhentai.com^$third-party
@@ -189,6 +196,7 @@ _Social-Advert-
 ||boostsaves.com^$third-party
 ||box.shopoon.fr^$third-party
 ||broadcast.pm^$third-party
+||buporez.com^$third-party
 ||buy-targeted-traffic.com^$third-party
 ||buzzvet.com^$third-party
 ||camsympa.com^$third-party,domain=~camsympa.fr
@@ -203,6 +211,7 @@ _Social-Advert-
 ||clic.reussissonsensemble.fr^$popup,third-party
 ||click-fr.com^$third-party
 ||clicmanager.fr^$third-party
+||coindushopping.fr^$third-party
 ||comandclick.com^$third-party
 ||congruityheterocephalus.info^$third-party
 ||cougar-rencontre.net^$third-party
@@ -257,6 +266,7 @@ _Social-Advert-
 ||hits-exchange.me^$third-party
 ||hopdream.com^$popup,third-party
 ||hopdream.com^$third-party
+||horyzon-clics.com^$third-party
 ||i-promotion.net^$third-party
 ||idhad.com^$popup,third-party
 ||idhad.com^$third-party
@@ -305,6 +315,7 @@ _Social-Advert-
 ||neckermann.be^$third-party
 ||nefroto.net^$third-party
 ||nelads.com^$third-party
+||nepasmanquer.com^$third-party
 ||netclickstats.com^$third-party
 ||netmediaeurope.com^$third-party
 ||netmediaeurope.fr^$third-party
@@ -320,13 +331,16 @@ _Social-Advert-
 ||overlays.next-targeting.com^$third-party
 ||pandad.eu^$third-party
 ||papycash.com$third-party
+||paricileweb.com^$third-party
 ||parlinternet.com^$third-party
 ||partner.uncadeau.com^$third-party
 ||payglad.com^$third-party
 ||pictographpenicillinf.com^$third-party
 ||piximedia.com^$third-party
 ||piximedia.fr^$third-party
+||plaisirsdejouir.fr^$third-party
 ||plusservicepartners.com^$third-party
+||pornego.com^$third-party
 ||pornstreet.com^$popup,third-party
 ||prm-native.com^$third-party
 ||promo.alienbiz.com^$third-party
@@ -346,17 +360,22 @@ _Social-Advert-
 ||puboclic.com^$third-party
 ||quaelead.com^$third-party
 ||quanta.lu^$third-party
+||reactivpub.com^$third-party
 ||reactivpub.fr^$third-party
 ||reflexcash.com^$third-party
 ||regie.audioprint.fr^$third-party
+||regiecpm.com^$third-party
 ||regiedepub.com^$third-party
+||rencontreroulette.com^$third-party
 ||rentacorner.com^$third-party
 ||rgbperf.com^$third-party
 ||rotabann.com^$third-party
 ||rotabann4x.com^$third-party
 ||sascdn.com^
+||sasqos.com^$third-party
 ||say.fr^$third-party
 ||script.banstex.com^$third-party
+||sddan.com^$third-party
 ||sdk-ads.com^$third-party
 ||secretmedia.com^$third-party
 ||sex-affiliation.com^$third-party
@@ -389,6 +408,8 @@ _Social-Advert-
 ||tracking.ecookie.fr^$popup,third-party
 ||trackor.net^$popup,third-party
 ||trackor.net^$third-party
+||tradetracker.com^$third-party
+||tradetracker.net^$third-party
 ||trafic-booster.biz^$third-party
 ||traficmax.com^$third-party
 ||tubemogul.com^$third-party
@@ -400,6 +421,7 @@ _Social-Advert-
 ||wbsadsdel2.com^$third-party
 ||wbusiness.fr^$third-party
 ||webprod.cybertesteurs.com^$popup,third-party,domain=~iss.net
+||webtv-sexe.com^$third-party
 ||wedoo.com^$third-party
 ||wendise.com^$third-party
 ||widespace.com^$third-party
@@ -418,6 +440,7 @@ _Social-Advert-
 !
 !----------------------- Publicités tierces ----------------------!
 !
+|http://*/register_video_impression?token=$image
 ||1-porno.org/atr_template/trade/
 ||1001sondages.com/assets/images/250x250.jpg
 ||11footballclub.com/equipe/indexhomepage.php?$domain=lequipe.fr
@@ -442,6 +465,7 @@ _Social-Advert-
 ||achatventepagefan.com/images/AVPF_
 ||achatventepagefan.com^*/banachat*.gif$third-party
 ||achetezfacile.com/co/widgets/widget.js.php$third-party
+||aduwoc.footeo.com^
 ||aff.bstatic.com^
 ||affiliation-mb.vos-scripts.com^
 ||affiliation.voyance.fr^$third-party
@@ -475,6 +499,7 @@ _Social-Advert-
 ||baise3x.com/ban/
 ||barredesurf.com/includes/images/bannieres/
 ||baseturf.com/bannieres/
+||batman.blogautomobile.fr^
 ||bazardux.com/index.php?$third-party
 ||beaverscripts.com^$popup,third-party
 ||belle-salope.fr/ban/$third-party
@@ -524,6 +549,7 @@ _Social-Advert-
 ||d34eoj4l97gwgh.cloudfront.net/img/geoloc/$domain=france-examen.com
 ||d4.fr/img/af_$third-party
 ||datahc.com/Affiliates/
+||demo.dofusbook.net^
 ||devisprox-media.s3-website-eu-west-1.amazonaws.com^
 ||devisprox.com/ld.js
 ||dhtml.pornravage.com^
@@ -548,6 +574,7 @@ _Social-Advert-
 ||emploicom.com/baniere.
 ||emploipartner.com/moteur_partner/
 ||enfingratuit.com^
+||enucip.spacefoot.com^
 ||equirodi.com/images/pub/
 ||etudiant-podologie.fr/images/banniere_$domain=pedicurie-podologie.fr
 ||eurasie.eu/sponsors-
@@ -599,6 +626,7 @@ _Social-Advert-
 ||hostingpics.net/pics/*ban.png$domain=tonchat.fr
 ||hotel-intime.com/banieres/
 ||hotpix.fr/widget_js.php?
+||hotvines.cc/iframe.php
 ||hqq.tv/js/adb/adb.js
 ||i.imgur.com/X70wDAr.jpg$domain=lesjoiesducode.fr
 ||icpc.tv/banners/$domain=europeplusnet.info
@@ -609,6 +637,7 @@ _Social-Advert-
 ||illiweb.com/fa/partenaires/
 ||images-hentai-paradise.com/ban_vote/
 ||inoutscripts.com/affiliate/
+||instant-gaming.com/affgames/
 ||ioccasion.fr/scripts_perso/getEbay_dev.
 ||iris.ma/themes/maroc/img/pub/
 ||jardindespieux.com/pub/
@@ -723,6 +752,7 @@ _Social-Advert-
 ||pooki.fr/banner/
 ||pouradultes.com^
 ||pourlesmajeurs.com^
+||powersante.com^*_products.php?partner=
 ||premiumpress.com/banner/
 ||pretrachat.fr/popup.php
 ||priceminister.com^*/referral_widget.swf$third-party
@@ -760,6 +790,7 @@ _Social-Advert-
 ||ruedeslibraires.com/livre-affiliation/
 ||rwabe.com/pub/
 ||s-sfr.fr/stats/authMsg.js
+||s-sfr.fr/stats/footer.js
 ||saintseiya.lesite.free.fr/images/bannieres/
 ||salopes.free.fr/ban/
 ||service-factures.fr/bannieres/
@@ -788,6 +819,7 @@ _Social-Advert-
 ||sky-animes.com/public/Partenariat/
 ||skynet.be/freewaooh2/ban.png
 ||sliceblog.com/img/pub/
+||slip.madmoizelle.com^
 ||sm-passion.net/ban/$third-party
 ||social.yoox.it/view.aspx?$third-party
 ||socialboost.fr/promo/$third-party
@@ -830,6 +862,7 @@ _Social-Advert-
 ||uncadeau.com/partner_widgets/$third-party
 ||unifinance.net/images/banners/
 ||untravailadomicile.info/images/banner
+||urafur.clubeo.com^
 ||url.ph/banners/
 ||vernimmen.net/images/flash/300x300_$third-party
 ||videos-de-celebrites.com/CMF_Banners/
@@ -862,6 +895,7 @@ _Social-Advert-
 ||zeusmangax.com/baniere/
 ||zone.*.netdna-cdn.com^
 ||zooplus.fr/affiliate/
+||zp.programme.tv^
 ||zupimages.net/api/scripts/api.php?$domain=ebookdz.com
 ||zupimages.net/up/2/1780414445.gif
 !
@@ -992,6 +1026,7 @@ _Social-Advert-
 ||boursier.com/ui/js/docs-partenaires.js
 ||brain-magazine.com/images/_habillages/
 ||brain-magazine.fr/images/banners/
+||bu2z.com/desktop/pub/
 ||buzzwebzine.fr/wp-content/banners/
 ||ca-centrest.fr/content/binary/*_annonce_*.jpg
 ||ca-centrest.fr/content/binary/980x152.jpg
@@ -1022,7 +1057,9 @@ _Social-Advert-
 ||cdmail.fr/pro/images/ban_
 ||cdn.betacie.com^*/autopromo/
 ||cdn.emule-island.ru/pub/
+||centerblog.net/buyproxies-
 ||centerblog.net/cadre-*?zoneid=$subdocument
+||centerblog.net/your-private-proxy-
 ||cergyvie.fr/wp-content/uploads/*/pub-
 ||cession-commerce.com/images/bandeaux/
 ||cession-commerce.com/images/pub_
@@ -1146,6 +1183,7 @@ _Social-Advert-
 ||ecranlarge.com/js/entree_pub.
 ||ecranlarge.com/pop_under.php$popup
 ||ecrans.fr/pub.
+||edenflirt.co/pdv/*/?comfrom=*&cf2=$popup
 ||edgecastcdn.net/8068BF/cdn-alg360/wp-content/uploads/*/Banner-Tag-
 ||editeurjavascript.com/bans/
 ||editeurjavascript.com/bans2/
@@ -1947,8 +1985,10 @@ _Social-Advert-
 ||webfrance.com/images/*145100.
 ||webfrance.com/images/*300250.
 ||webfrance.com/images/*3002502.
+||webfrance.com/images/*58090.
 ||webfrance.com/images/*72890.
 ||webfrance.com/images/*980250.
+||webfrance.com/images/backaffiliaweb.
 ||webfrance.com/images/backcj.jpg
 ||weblettres.net/@images/pub/
 ||webmarchand.be/js/ov.js.php?
@@ -1997,7 +2037,9 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ||files.macg.co/macgupload/
 ! Anti-Adblock
 ! A l'attention des webmasters : https://easylist.adblockplus.org/blog/2013/05/10/anti-adblock-guide-for-site-admins
+/ad-blocking-detector/*
 /adblock-alerter/*
+/adblock-notify-by-bweb/*
 /antiadblockmsg.
 @@/wp-content/plugins/adblock-notify-by-bweb/js/show_ads.js
 @@||esprit-click.com/*.js|$script,third-party
@@ -2055,7 +2097,9 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###bandeau_publicite
 ###banniere-pub-top
 ###banniere_pub
+###bas_pub
 ###bg_pub
+###bigadvert
 ###bloc-pub
 ###bloc-pub-gauche-160-600
 ###bloc-pub-header
@@ -2067,6 +2111,11 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###block_pub_article
 ###block_regie_pub_bas
 ###bottom_pub
+###box-pub-1
+###box-pub-2
+###box-pub-3
+###box-pub-4
+###box-pub-5
 ###cadre_infoads
 ###cadre_pub_bas
 ###captchmeCapsuleContent
@@ -2119,6 +2168,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###innerpub
 ###j_ads
 ###middle-publicite
+###milieu_pub
 ###module_publicite
 ###msgNoPub
 ###news-droite-publicite
@@ -2212,6 +2262,11 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ###pub_column
 ###pub_contener_right
 ###pub_content
+###pub_droite
+###pub_enbas
+###pub_enbas1
+###pub_entete
+###pub_entete1
 ###pub_footer
 ###pub_geante
 ###pub_haut
@@ -2297,6 +2352,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.ast-block-adslot
 ##.barre_adsense
 ##.bg-adsense
+##.bigadvert
 ##.bloc-pub
 ##.blocPub
 ##.bloc_pub_300
@@ -2345,6 +2401,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.home_pub
 ##.iframe_pub
 ##.innerpad
+##.insert_pub_center
 ##.inside_adv_section
 ##.kadmer-ad
 ##.large-ad-center
@@ -2363,6 +2420,7 @@ igen.fr,macg.co##img[width="1440"][height="1622"]
 ##.outer_ads_right
 ##.padscreen
 ##.panet-mars-adv-panel
+##.partner-pub
 ##.pave-pub
 ##.pave_pub
 ##.pave_pub2
@@ -3033,6 +3091,7 @@ artdeseduire.com##.ads-information
 cvya.dz##.ads-vert
 toilef1.com##.ads615x60Actu
 abrutis.com,pooki.fr##.adsense
+ipadsl.net##.adsl
 la-musique-rai.com##.adsr p[style="background-color:#FFF; text-align:center;"]
 fusac.fr,rajacasablanca.com##.adv
 arabzik.org,korben.info,lesoir.be,midilibre.fr##.advert
@@ -3069,7 +3128,7 @@ liberte-algerie.com##.bannergroup_bannierepub
 liberte-algerie.com##.bannergroup_pave
 maghrebemergent.com##.banneritem
 dvdrip-truefrench.com##.bannertop
-actu-environnement.com,chouf-chouf.com##.banniere
+actu-environnement.com,chouf-chouf.com,webfrance.com##.banniere
 une-recette.com##.banniere1
 une-recette.com##.bannierebas
 oopsbuzz.com##.behincontent
@@ -3194,7 +3253,6 @@ competition.dz##.header-b1-banner
 equirodi.be##.header_adv
 frandroid.com##.header_htr
 ouiounon.net##.headertitrelien[target="_blank"]
-p2pfr.com##.hidden-xs[width="485"]
 lafermeduweb.net##.homePub
 abrutis.com##.home_menu_container
 lo.st##.home_partner_img
@@ -3233,6 +3291,7 @@ courrier-picard.fr##.megaban-top
 frandroid.com,p-nintendo.com##.megabanner
 cmonjour.com##.megaddd
 fan-de-cinema.com##.megasquare
+topsante.com##.menu-btn-pub
 vacheries.fr##.menu_droit_pub
 lesdebiles.com##.menu_droite_partenaire
 lesdebiles.com##.menu_droite_thumb:first-child
@@ -3276,6 +3335,7 @@ lachainemeteo.com##.partenaire_simple_home
 lachainemeteo.com##.partenaire_triple
 caradisiac.com,lesechos.fr,lfp.fr,mangario.fr,sexandtrash.com##.partenaires
 swissquote.ch##.partner
+topsante.com##.partner-block
 youpinet.com##.partner-listing
 forumactif.com,lavenir.net##.partners
 jeuxactu.com##.pbs
@@ -3393,7 +3453,7 @@ lagazettedescommunes.com##.spons
 jeuxvideo.com##.sponso
 forumconstruire.com##.sponso_box
 forumconstruire.com##.sponso_contener
-blogduwebdesign.com##.sponsor
+blogduwebdesign.com,europages.fr##.sponsor
 yahoo.com##.sponsor-dd
 lokan.fr##.sponsors
 msn.com##.sponsorship
@@ -4032,6 +4092,7 @@ notre-planete.info###abp
 ||detachmentoftheretinaclimbingsalamander.net^$third-party
 ||devitalizationhardwareerror.info^$third-party
 ||dirtystorydenationalisation.info^$third-party
+||diskjockeyarraignment.me^$third-party
 ||dizzybakedegg.info^$third-party
 ||dodgerdecoctionprocess.com^$third-party
 ||dollseyesrivalrous.net^$third-party
@@ -4048,6 +4109,7 @@ notre-planete.info###abp
 ||eschrichtiidaepiety.info^$third-party
 ||existentialphilosopherthespesiapopulnea.com^$third-party
 ||faintheartedsharkoil.info^$third-party
+||familycorixidaekeelshaped.org^$third-party
 ||familymycobacteriaceaebariumprotoxide.org^$third-party
 ||familyperipatidaegenusacrocomia.info^$third-party
 ||fastestattractive.in^$third-party
@@ -4067,6 +4129,7 @@ notre-planete.info###abp
 ||genusacinonyxricebeer.com^$third-party
 ||genusaspidistraadopter.info^$third-party
 ||genusbrickeliaparsee.org^$third-party
+||genuscoccothraustesricharderskineleakey.net^$third-party
 ||genusdaleaforcingout.info^$third-party
 ||genushimantoglossumsultanofswat.com^$third-party
 ||genusmonesesoddlegcaliper.org^$third-party
@@ -4110,6 +4173,7 @@ notre-planete.info###abp
 ||initializesportcoat.in^$third-party
 ||interactionracing.com^$third-party
 ||intermittenceairconditioner.info^$third-party
+||irritatingorchidectomy.info^$third-party
 ||jewryhear.info^$third-party
 ||jobinterviewadjustment.info^$third-party
 ||jujuplath.me^$third-party
@@ -4157,6 +4221,7 @@ notre-planete.info###abp
 ||orderequisetalesendeshabille.info^$third-party
 ||outofhandscentedwattle.net^$third-party
 ||oxfordrainy.net^$third-party
+||pacificstandardtimemarut.info^$third-party
 ||palatinetonsilamoristic.in^$third-party
 ||papacarefully.info^$third-party
 ||paraffinscaleraffiavinifera.org^$third-party
@@ -4223,7 +4288,9 @@ notre-planete.info###abp
 ||unbodiediridaceousplant.net^$third-party
 ||underlaymentgallstone.net^$third-party
 ! Adunblock
+|http://*.oneindonesia.co.id^$third-party
 ||accomplir.science^$third-party
+||accorder.science^$third-party
 ||achever.science^$third-party
 ||adunblock.com/?utm_campaign=$popup
 ||adunblock.com^$third-party
@@ -4258,7 +4325,11 @@ notre-planete.info###abp
 ||taper.ovh^$third-party
 ||tournevis.ovh^$third-party
 !
+|http://*.oneindonesia.co.id/$third-party,xmlhttprequest
+!
+@@|http://*.oneindonesia.co.id/*.js|$script,third-party
 @@||accomplir.science/*.js|$script,third-party
+@@||accorder.science/*.js|$script,third-party
 @@||achever.science/*.js|$script,third-party
 @@||adunblock.com/*.js|$script,third-party
 @@||adunblock.fr/*.js|$script,third-party
@@ -4291,11 +4362,11 @@ notre-planete.info###abp
 @@||taper.ovh/*.js|$script,third-party
 @@||tournevis.ovh/*.js|$script,third-party
 !
-|http://*.ovh/$third-party,xmlhttprequest,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|gamewinner.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|rue89strasbourg.com|seomaker.estsurle.net|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
-|http://*.science/$third-party,xmlhttprequest,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|gamewinner.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|rue89strasbourg.com|seomaker.estsurle.net|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|vosforums.com|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
+|http://*.ovh/$third-party,xmlhttprequest,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|dinguerie.com|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|forumtfc.net|gamewinner.fr|geoforum.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|robocraftgame.fr|rue89strasbourg.com|seomaker.estsurle.net|seventy-planes.com|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
+|http://*.science/$third-party,xmlhttprequest,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|dinguerie.com|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|forumtfc.net|gamewinner.fr|geoforum.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|robocraftgame.fr|rue89strasbourg.com|seomaker.estsurle.net|seventy-planes.com|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|vosforums.com|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
 !
-@@|http://*.ovh/*.js|$script,third-party,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|gamewinner.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|rue89strasbourg.com|seomaker.estsurle.net|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
-@@|http://*.science/*.js|$script,third-party,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|gamewinner.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|rue89strasbourg.com|seomaker.estsurle.net|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|vosforums.com|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
+@@|http://*.ovh/*.js|$script,third-party,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|forumtfc.net|gamewinner.fr|geoforum.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|robocraftgame.fr|rue89strasbourg.com|seomaker.estsurle.net|seventy-planes.com|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
+@@|http://*.science/*.js|$script,third-party,domain=123coupedumonde2014.com|5nodes.fr|actu95.net|addons-wow.fr|adunblock.com|adunblock.fr|aeropassion.net|aiguille.ovh|allo-news.com|ampoule.ovh|aneviagaming.com|annuaire-bleu.net|annuaire-email.net|anthonix.fr|applebigmac.fr|arnaques-internet.info|avoir.science|bdcraft.net|breat.me|catswhocode.com|clou.ovh|colle.ovh|comme.science|consoledejeux.info|coolradio.be|developpez.com|developpez.net|etre.science|evoliofly.com|femmes-de-footballeurs.fr|festivalboujdour.com|forumtfc.net|gamewinner.fr|geoforum.fr|geowiki.fr|gogo-films.com|gta69.com|hallucinixxx.fr|imagesia.com|jackieetmicheltv.fr|jbmam.music.free.fr|kboard.fr|kerbalspaceprogram.fr|lebouletdunet.com|lesarbres.fr|lolchat.fr|macworld.fr|mangacity.org|mastakongo.com|monlinker3ds.com|monlinkerdsi.com|nifoune.com|oobby.com|opalenews.com|pcworld.fr|physagreg.fr|pix-geeks.com|planete-astronomie.com|pouvoir.science|pronorugby.fr|qui.science|reef-guardian.com|robocraftgame.fr|rue89strasbourg.com|seomaker.estsurle.net|seventy-planes.com|sos-lettre.fr|space-blogs.net|space-forums.com|space-forums.net|styled-gaming.eu|sucha.net|suchablog.com|technogps.com|teranya.fr|trackr.fr|untourenchine.fr|vonox.fr|vosforums.com|xavbox.com|xavbox.info|xavbox360.com|xavboxcube.com|xavboxds.com|xavboxforum.com|xavboxnews.com|xavboxone.com|xavboxphone.com|xavboxps2.com|xavboxps3.com|xavboxpsp.com|xavboxtuning.com|xavboxwii.com|xavboxwiiu.com|xiaomi-m3.fr|zevpn.net
 !
 #@##bannerAdContainer1_1
 #@##bannerAdFrame
@@ -4358,11 +4429,14 @@ notre-planete.info###abp
 @@||comme.science^$elemhide
 @@||consoledejeux.info^$elemhide
 @@||coolradio.be^$elemhide
+@@||dinguerie.com^$elemhide
 @@||etre.science^$elemhide
 @@||evoliofly.com^$elemhide
 @@||femmes-de-footballeurs.fr^$elemhide
 @@||festivalboujdour.com^$elemhide
+@@||forumtfc.net^$elemhide
 @@||gamewinner.fr^$elemhide
+@@||geoforum.fr^$elemhide
 @@||geowiki.fr^$elemhide
 @@||gogo-films.com^$elemhide
 @@||gta69.com^$elemhide
@@ -4390,8 +4464,10 @@ notre-planete.info###abp
 @@||pronorugby.fr^$elemhide
 @@||qui.science^$elemhide
 @@||reef-guardian.com^$elemhide
+@@||robocraftgame.fr^$elemhide
 @@||rue89strasbourg.com^$elemhide
 @@||seomaker.estsurle.net^$elemhide
+@@||seventy-planes.com^$elemhide
 @@||space-blogs.net^$elemhide
 @@||space-forums.com^$elemhide
 @@||space-forums.net^$elemhide

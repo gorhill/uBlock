@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: QyaL9WKUJB6vLJi8E7/5KQ
-! Version: 201504070651
+! Checksum: J6RzJHGheIeZto1oxiAdUQ
+! Version: 201504112331
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 07 Apr 2015 06:51 UTC
+! Ultima modifica: 11 Apr 2015 23:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -170,6 +170,7 @@ _sito/adv/
 ##.tabellaPubblicita
 ##.tccbanner
 ##.view-pubblicita
+##a[href^="//w.linkwelove.it/urls/"]
 ##a[href^="http://adserver.html.it/"]
 ##a[href^="http://adserver.ilmessaggero.it/"]
 ##a[href^="http://crazylead.com/video/"]
@@ -414,6 +415,7 @@ sportube.tv#@#.afs_ads
 ||locandinebest.net/locandina/$subdocument,third-party
 ||macrolibrarsi.it/banners/
 ||macrolibrarsi.org/banner/
+||macrolibrarsi.s3.amazonaws.com/img/banner_partner/
 ||mediaon.it/objects/deal_list/
 ||mmvid.s3.amazonaws.com^
 ||mondojuventus.it^$third-party
@@ -1809,7 +1811,7 @@ contosulconto.it###banner_content
 tuttobasket.net###banner_head
 laprovinciadicomo.it###banner_header
 palermomania.it###banner_header2
-subito.it,tuttosport.com###banner_leaderboard
+ilroma.net,subito.it,tuttosport.com###banner_leaderboard
 lastampa.it###banner_maxticker
 html.it###banner_piede_articolo
 paginegialle.it###banner_pushbar
@@ -2279,6 +2281,7 @@ corrieredilatina.it,corriereromagna.it,ilmattinodifoggia.it,lanuovaprimapagina.i
 libero.it##.big
 youreporter.it##.bigrectangle600
 ilgiornale.it##.block-ilg-adsense
+ilroma.net##.block-rotating-banner
 ilcapoluogo.com##.block-view-bannerSlide
 risultati.it##.bookmarker-53
 beppegrillo.it##.bottom-banner
@@ -2458,7 +2461,7 @@ radiomontecarlo.net##.side-ban
 style.it##.side-gallery
 youreporter.it##.sidebar_menu_virgilio
 newnotizie.it##.single_sidebar300x250
-omnicorse.it##.skin
+ilroma.net,omnicorse.it##.skin
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_left
 iovivoaroma.org##.skin_link_top
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_right

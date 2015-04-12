@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: gQxDyVVMcirWbbs162Ne4Q
-! Version: 201504070650
-! Last modified: 07 Apr 2015 06:50 UTC
+! Checksum: QyG5bku6+d2tQWT6wyWgpQ
+! Version: 201504112330
+! Last modified: 11 Apr 2015 23:30 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -399,7 +399,6 @@ _vkontakte.png
 /emailshare.
 /facebkiconnet/*
 /facebok-icon.
-/facebook-1.
 /Facebook-128.
 /facebook-16.
 /facebook-16x16.
@@ -1950,7 +1949,6 @@ _vkontakte.png
 /twitt2.gif
 /twittbutton.png
 /Twitter-1-
-/twitter-1.
 /twitter-16px.
 /twitter-16x
 /twitter-32.
@@ -2912,6 +2910,7 @@ _youtube_social_
 ###floating-share
 ###floating-share-box
 ###floating-share-box-wrapper
+###floatingSocialMenu
 ###floaty-facebook
 ###floaty-social-media-icons-bg
 ###floaty-twitter
@@ -7865,6 +7864,7 @@ _youtube_social_
 ##.ssb-share
 ##.ssba_pinterest_share
 ##.ssba_sharecount
+##.sss_shares_block
 ##.st-social-block
 ##.st_digg_custom
 ##.st_facebook_custom
@@ -9964,6 +9964,7 @@ _eu_cookie_
 ###taboola-below-article
 ###taboola-below-article-thumbnails
 ###taboola-below-disco-board
+###taboola-below-main-column
 ###taboola-below-main-column-mix
 ###taboola-below-main-column-sc
 ###taboola-belowarticle
@@ -10811,6 +10812,7 @@ _eu_cookie_
 ##.subscriptionForm
 ##.subwidget
 ##.tl-newsletter-widget
+##.traqli-subscribe
 ##.tsq_sailthru_newsletter_widget
 ##.ui-home-newsletter
 ##.ui-newsletter
@@ -11046,6 +11048,7 @@ _eu_cookie_
 ###cookiePopin
 ###cookiePopup
 ###cookiePopupContainer
+###cookiePrompt
 ###cookiePromptWrapper
 ###cookieTime
 ###cookieView
@@ -11400,6 +11403,7 @@ _eu_cookie_
 ##.cookie-policy-notice
 ##.cookie-policy-statement
 ##.cookie-popup
+##.cookie-prompt
 ##.cookie-warn
 ##.cookie-warn-msg
 ##.cookie-warning
@@ -11889,6 +11893,7 @@ _eu_cookie_
 ||puzyaka.ru/ub/
 ||qip.ru/images/sign/
 ||raptr.com/badge/
+||relap.io^$third-party
 ||retailrocket.ru^$third-party
 ||rolki.ru/project/ubars/
 ||rostovmama.ru/components/com_line/
@@ -12189,7 +12194,6 @@ _eu_cookie_
 ||3dnews.ru/*/images/slider/
 ||a-comics.ru/fw/
 ||advbroker.ru^
-||alexfilm.cc/styles/brand/
 ||asus.com^*/banner/
 ||beeline.ru/pb_500x460.
 ||cbox.*/box/$third-party
@@ -12737,13 +12741,13 @@ allestörungen.de,google.com,jetpack.wordpress.com,live.com,maxthon.com,outlook.
 allestörungen.de,google.com,heise.de,maxthon.com,wikipedia.org#@#a[title="Youtube"]
 aliexpress.com#@#a[title="facebook"]
 digg.com#@#div[id^="digg-widget-"]
-facebook.com,google.com,heise.de,incgamers.com,last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,ludins.fr,maxthon.com,t3n.de,twitter.com,whatthetech.com#@#img[alt="Facebook"]
+disqus.com,facebook.com,google.com,heise.de,incgamers.com,last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,ludins.fr,maxthon.com,t3n.de,twitter.com,whatthetech.com#@#img[alt="Facebook"]
 google.com,youtube.com#@#img[alt="Google+"]
 google.com#@#img[alt="Instagram"]
 google.com,linkedin.com#@#img[alt="LinkedIn"]
 breakoutlist.com,facebook.com,google.com#@#img[alt="Pinterest"]
 acceptableads.org,breakoutlist.com,easyicon.net#@#img[alt="Reddit"]
-breakoutlist.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatthetech.com#@#img[alt="Twitter"]
+breakoutlist.com,disqus.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatthetech.com#@#img[alt="Twitter"]
 theverge.com,twitter.com#@#img[alt="Vine"]
 maxthon.com#@#img[alt="Youtube"]
 uservoice.com#@#img[alt="facebook"]
@@ -12823,6 +12827,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||daddydesign.com/*/wp-social-toolbar/
 @@||depositphotos.com^*/depositphotos_$image,domain=depositphotos.com
 @@||discountsstory.com/image/facebook_icon.png
+@@||disquscdn.com^*/img/icons/$domain=disqus.com
 @@||disquscdn.com^*/social-icons$image
 @@||dmi.dk^*/jquery_cookie.js
 @@||draw.io/images/google-drive-logo.svg
@@ -13117,7 +13122,7 @@ loginza.ru#@#.vkontakte
 @@||vgtimes.ru/img/gplus.png|
 @@||via-midgard.info/min/?$domain=via-midgard.info
 @@||vk.com/images/btns.png$domain=app.tbn.ru
-@@||vkontakte.ru/js/api/openapi.js$domain=app.tbn.ru
+@@||vkontakte.ru/js/api/openapi.js$domain=app.tbn.ru|g2a.com
 @@||webmoney.ru/img/ui/social/$domain=my.webmoney.ru
 @@||ws.audioscrobbler.com^$domain=player.vas3k.ru|tvoeradio.org
 @@||yastatic.net/share/share.js

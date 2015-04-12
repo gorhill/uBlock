@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 53EAEf69ScnfPy9URiFPMA
+! Checksum: xUhvLNqAlNFM0ky0JTRnNA
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY for advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201504071432
+! Version: 201504112021
 
-! Last modified: 2015-04-07 14:32 JST(UTC+0900)
+! Last modified: 2015-04-11 20:21 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -2090,7 +2090,7 @@
 /csm-base/*$domain=amazon.ca|amazon.cn|amazon.co.jp|amazon.co.uk|amazon.com|amazon.de|amazon.es|amazon.fr|amazon.it
 /ctxengine/*$third-party
 /ctxjs.$script,third-party
-/ctxjs/*$third-party
+/ctxjs/*
 /customerIsLegality?
 /d2ptoolbar/*
 /dac1.download.akamai.com/*
@@ -2098,8 +2098,9 @@
 /dart.$script
 ! /data/js/ad
 /dealdo/event-report?$third-party
-/delivery/?zoneid=
-/delivery/?zoneid=$popup
+! merged into ?zoneid= and ?zoneid=$popup, Apr 08, 2015
+! /delivery/?zoneid=
+! /delivery/?zoneid=$popup
 /delivery/afr.
 /delivery/afr.$popup
 /delivery/avw.
@@ -2171,6 +2172,7 @@
 /grack.$script
 /gscf^$subdocument,third-party
 /gscs^$script,third-party
+/gsd.html?d=$third-party
 /gsrs^$script,third-party
 /header_bnr_
 /headline.$script,domain=gizmodo.jp|kotaku.jp|lifehacker.jp
@@ -2392,7 +2394,7 @@
 /s/*.html?b=*&x=*&y=*&s=*&c=*&ref=*&h=*.*&$third-party
 /sa/infospace.
 /sbi_recommend.$script
-/scjs/*$third-party
+/scjs/*
 /sd/apps/*$popup
 /sd/apps/*$third-party
 /sdc.js
@@ -6010,6 +6012,7 @@ _yahooads_
 ||adwolf.ru^$third-party
 ||adxad.jp^$third-party
 ||adxcore.com^
+||adxcore.com^$popup
 ||adxite.com^$popup
 ||adxite.com^$third-party
 ||adxpansion.com^$third-party
@@ -6078,6 +6081,7 @@ _yahooads_
 ||cdncache-a.akamaihd.net^
 ||cdncache1-a.akamaihd.net^
 ||cdnstats-a.akamaihd.net^
+||digitalmore-a.akamaihd.net^
 ||hdapp1003-a.akamaihd.net^
 ||hdapp1008-a.akamaihd.net^
 ||hdsrc-a.akamaihd.net^
@@ -6658,6 +6662,7 @@ _yahooads_
 ||d2oh4tlt9mrke9.cloudfront.net^
 ||d2sj2omw0azr1m.cloudfront.net^
 ||d2uu7l47sbf1ja.cloudfront.net^
+||d2xfe7it842y77.cloudfront.net^
 ||d2zm90ue88koyl.cloudfront.net^
 ||d31qbv1cthcecs.cloudfront.net^
 ||d35tca7vmefkrc.cloudfront.net^
@@ -10007,6 +10012,7 @@ _yahooads_
 ||bc.geocities.yahoo.
 ||bc.ipv6.yahoo.
 ||logoole.yahoo.$third-party
+||logql.yahoo.
 ! False positives with mail folders, Nov 30, 2012
 ! ||mail.yahoo.co.jp/neo/socialmailtop_neo/js/soc.$script
 ||pclick.yahoo.

@@ -45,26 +45,8 @@ var onContextMenuClicked = function(details, tab) {
     if ( /^https?:\/\//.test(tab.url) === false ) {
         return;
     }
-    var tagName = details.tagName || '';
-    var src = details.frameUrl || details.srcUrl || details.linkUrl || '';
 
-    if ( !tagName ) {
-        if ( typeof details.frameUrl === 'string' ) {
-            tagName = 'iframe';
-        } else if ( typeof details.srcUrl === 'string' ) {
-            if ( details.mediaType === 'image' ) {
-                tagName = 'img';
-            } else if ( details.mediaType === 'video' ) {
-                tagName = 'video';
-            } else if ( details.mediaType === 'audio' ) {
-                tagName = 'audio';
-            }
-        } else if ( typeof details.linkUrl === 'string' ) {
-            tagName = 'a';
-        }
-    }
-
-    µb.elementPickerExec(tab.id, tagName + '\t' + src);
+    µb.elementPickerExec(tab.id);
 };
 
 /******************************************************************************/

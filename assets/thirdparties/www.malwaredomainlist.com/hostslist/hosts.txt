@@ -1,6 +1,6 @@
 #               MalwareDomainList.com Hosts List           #
 #   http://www.malwaredomainlist.com/hostslist/hosts.txt   #
-#         Last updated: Sat, 04 Apr 15 12:11:30 +0000      #
+#         Last updated: Sat, 11 Apr 15 14:51:38 +0000      #
 
 
 127.0.0.1  localhost
@@ -691,6 +691,7 @@
 127.0.0.1  sdg-translations.com
 127.0.0.1  security-dtspwoag-check.in
 127.0.0.1  security-siqldspc-check.in
+127.0.0.1  securitywebservices.com
 127.0.0.1  seet10.jino.ru
 127.0.0.1  semengineers.com
 127.0.0.1  semiyun.com
@@ -885,6 +886,7 @@
 127.0.0.1  thcextractor.com
 127.0.0.1  thcvaporizer.com
 127.0.0.1  thefxarchive.com
+127.0.0.1  theweatherspace.com
 127.0.0.1  tibiakeylogger.com
 127.0.0.1  timothycopus.aimoo.com
 127.0.0.1  titon.info

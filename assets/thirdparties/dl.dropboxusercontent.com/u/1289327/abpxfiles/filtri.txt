@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201503241218
+! Version: 201504101806
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 24-03-2015
+! Last modified: 10-04-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -1757,6 +1757,10 @@ about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it
 |http://www.catanzaroinforma.it/*/banner*
 |http://www.catanzaroinforma.it/wp-content/uploads/2015/02/guglielmomanchete.png
 ||catanzaroinforma.it/public/img/sponsor/*
+|http://advs.brznetwork.com/cgi-bin/$domain=cn24tv.it
+|http://media.ultrafastcdn.com/ads/
+||pubted.com^$popup
+|https://readserver.cachefly.net/
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 firedrive.com##DIV[id="fdpc_cont"]
 colorburned.com##DIV[class^="singleAd"]
@@ -3501,6 +3505,21 @@ catanzaroinforma.it##DIV[style="height:115px;"]:first-child
 catanzaroinforma.it##.trex_banner_block[style="width:240px"]
 catanzaroinforma.it##.trex_banner_block[style="width:665px"]
 catanzaroinforma.it##.trex_banner_block[style="width:300px"]
+cn24tv.it###leaderboard
+cn24tv.it###fancybox-overlay
+partnerads.ysm.yahoo.com##.ypaAdBox
+download.cnet.com##[class^="YAD-"]
+download.cnet.com##[src^="/module/cast/main/"]
+download.cnet.com##IFRAME[src^="/module/cast/dre/"]
+download.cnet.com###spotbid
+download.cnet.com##[class^="adnl_"]
+download.cnet.com###spotBidHeader
+enterpriseios.com##.adsense
+it.cinema.yahoo.com##.CAN_ad
+altadefinizione.tv###reklam-468x60
+altadefinizione.tv##[id$="_reklam"]
+altadefinizione.tv##[class$="_gizle"]
+altadefinizione.tv##[id^="reklam"]
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3509,6 +3528,21 @@ theverge.com##.m-ad.m-ad__medrec.vert.vert300
 |http://*.exoclick.com/xhamster-945x100.php
 |http://enoratraffic.com/*/900_xhamster.php
 it.xhamster.com###adTop
+liliputing.com##[id^="backfill_"]
+liliputing.com##.bsap_adhere
+tuttoandroid.net##.adsbygoogle
+macitynet.it###leader-wrapper
+macitynet.it##[id^="div-gpt-ad"]
+macitynet.it##[class^="banner-"]
+macitynet.it##.adsbygoogle
+macitynet.it##.wrap.banner
+m.leggo.it###adv_BannerTop
+blog.bepuppy.com##.top-sidebar-wrapper
+blog.bepuppy.com##.adsbygoogle
+||ad.wingads.com^
+||cineblog01.li^$popup,domain=guardaserie.net
+||a2pub.com^$domain=junkyvideo.com
+blog.bepuppy.com##.ad-inserter
 trakt.tv##[id^="huckster-"]
 rai.tv##.banner300x250
 bgr.com##[id^="google_ads_iframe"]
