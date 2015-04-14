@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="icon16.svg"
-   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/icon_16.png"
-   inkscape:export-xdpi="11.25"
-   inkscape:export-ydpi="11.25">
+   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
+   inkscape:export-xdpi="26.719999"
+   inkscape:export-ydpi="26.719999">
   <defs
      id="defs4">
     <linearGradient
@@ -57,15 +57,15 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="4"
-     inkscape:cx="96.285877"
-     inkscape:cy="-28.655974"
+     inkscape:cx="28.733755"
+     inkscape:cy="-28.763536"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1712"
+     inkscape:window-width="1367"
      inkscape:window-height="977"
-     inkscape:window-x="65"
-     inkscape:window-y="78"
+     inkscape:window-x="41"
+     inkscape:window-y="77"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -85,7 +85,7 @@
        enabled="true"
        snapvisiblegridlinesonly="true"
        dotted="false"
-       originx="5.6216273e-07px"
+       originx="-1e-06px"
        originy="-112px" />
   </sodipodi:namedview>
   <metadata
@@ -106,47 +106,56 @@
      inkscape:groupmode="layer"
      id="layer1"
      style="display:inline"
-     transform="translate(-17.872547,-17.32535)">
-    <path
-       inkscape:connector-curvature="0"
-       id="path3788"
-       d="m 18.060048,21.923133 0,6.804437 4.410282,4.41028 6.804436,0 4.41028,-4.41028 0,-6.804437 -4.410279,-4.410282 -6.804437,0 z"
-       style="fill:#808080;fill-opacity:1;stroke:#ffffff;stroke-width:0.37500164000000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       sodipodi:nodetypes="ccccccccc"
-       inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
-       inkscape:export-xdpi="26.719999"
-       inkscape:export-ydpi="26.719999" />
+     transform="translate(-17.872548,-17.32535)">
+    <g
+       id="g3765"
+       transform="matrix(0.125,0,0,0.125,15.63848,15.159681)"
+       style="fill:#999999">
+      <path
+         inkscape:export-ydpi="26.719999"
+         inkscape:export-xdpi="26.719999"
+         inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
+         sodipodi:nodetypes="ccccccccc"
+         style="fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 19.872548,54.325353 0,54.000017 35,34.99998 54.000012,0 34.99999,-34.99998 0,-54.000017 -34.99999,-35.000003 -54.000012,0 z"
+         id="path3788"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:export-ydpi="26.719999"
+         inkscape:export-xdpi="26.719999"
+         inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/path2996.png"
+         sodipodi:type="arc"
+         style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:3.87298417000000006;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2996"
+         sodipodi:cx="98"
+         sodipodi:cy="90"
+         sodipodi:rx="6.0000024"
+         sodipodi:ry="10"
+         d="m 104,90 c 0,5.522847 -2.68629,10 -6,10 -3.31371,0 -6.000002,-4.477153 -6.000002,-10 0,-5.522847 2.686292,-10 6.000002,-10 3.31371,0 6,4.477153 6,10 z"
+         transform="matrix(2.6666654,0,0,1.6,-151.46067,-50.67465)" />
+    </g>
     <path
        inkscape:connector-curvature="0"
        id="path2993"
-       style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.24999999;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-       d="m 26.747547,28.820847 c -0.29192,0.0781 -0.677495,0.160874 -1.156726,0.248325 -0.479241,0.08745 -1.033754,0.131179 -1.663539,0.131179 -0.547623,0 -1.008544,-0.08508 -1.382766,-0.25523 -0.374227,-0.170154 -0.675403,-0.410981 -0.90353,-0.722483 -0.228129,-0.311502 -0.392401,-0.678831 -0.492815,-1.101989 -0.100417,-0.423155 -0.150624,-0.892635 -0.150623,-1.408444 l 0,-4.261854 1.273089,0 0,3.970099 c -2e-6,0.924117 0.136902,1.585651 0.410714,1.984605 0.273807,0.398956 0.734798,0.598433 1.382975,0.598432 0.136761,1e-6 0.278192,-0.0048 0.424293,-0.01448 0.146092,-0.0097 0.282997,-0.02175 0.410715,-0.0363 0.127707,-0.01455 0.244069,-0.02918 0.349086,-0.04388 0.105006,-0.0147 0.180352,-0.0317 0.226039,-0.051 l 0,-6.40748 1.273088,0 z" />
+       style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.24999997;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       d="m 26.747548,28.820846 c -0.29192,0.0781 -0.677495,0.160874 -1.156726,0.248325 -0.479241,0.08745 -1.033754,0.131179 -1.663539,0.131179 -0.547623,0 -1.008544,-0.08508 -1.382766,-0.25523 -0.374227,-0.170154 -0.675403,-0.410982 -0.90353,-0.722483 -0.228129,-0.311502 -0.392401,-0.678831 -0.492815,-1.101989 -0.100417,-0.423155 -0.150624,-0.892635 -0.150623,-1.408443 l 0,-4.261855 1.273089,0 0,3.970099 c 0,0.924117 0.136902,1.585651 0.410714,1.984605 0.273807,0.398956 0.734798,0.598433 1.382975,0.598432 0.136761,1e-6 0.278192,-0.0048 0.424293,-0.01448 0.146092,-0.0097 0.282997,-0.02175 0.410715,-0.0363 0.127707,-0.01455 0.244069,-0.02917 0.349086,-0.04388 0.105006,-0.0147 0.180352,-0.0317 0.226039,-0.051 l 0,-6.40748 1.273088,0 z"
+       sodipodi:nodetypes="cssssssccssccsccccc" />
     <text
        sodipodi:linespacing="125%"
        id="text2992"
-       y="28.63785"
-       x="29.810049"
-       style="font-size:5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Ubuntu"
+       y="107.82535"
+       x="113.37255"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Ubuntu"
        xml:space="preserve"><tspan
-         y="28.63785"
-         x="29.810049"
+         y="107.82535"
+         x="113.37255"
          id="tspan2994"
          sodipodi:role="line" /></text>
-    <path
-       transform="matrix(0.3645832,0,0,0.25000002,-7.544106,3.8253487)"
-       d="M 104,90 A 6.0000024,10 0 1 1 91.999998,90 6.0000024,10 0 1 1 104,90 z"
-       sodipodi:ry="10"
-       sodipodi:rx="6.0000024"
-       sodipodi:cy="90"
-       sodipodi:cx="98"
-       id="path2996"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#808080;fill-opacity:1;stroke:#ffffff;stroke-width:3.31231522999999983;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-       sodipodi:type="arc" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="text"
      style="display:inline"
-     transform="translate(-17.872547,-17.32535)" />
+     transform="translate(-17.872548,-17.32535)" />
 </svg>

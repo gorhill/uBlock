@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="ublock.svg"
-   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/icon_16.png"
-   inkscape:export-xdpi="11.25"
-   inkscape:export-ydpi="11.25">
+   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/private/badge-920x680.png"
+   inkscape:export-xdpi="358.59"
+   inkscape:export-ydpi="358.59">
   <defs
      id="defs4">
     <linearGradient
@@ -56,16 +56,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="96.285876"
-     inkscape:cy="83.344025"
+     inkscape:zoom="2"
+     inkscape:cx="44.005571"
+     inkscape:cy="61.055578"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1712"
+     inkscape:window-width="1367"
      inkscape:window-height="977"
-     inkscape:window-x="65"
-     inkscape:window-y="78"
+     inkscape:window-x="41"
+     inkscape:window-y="77"
      inkscape:window-maximized="0"
      fit-margin-top="5"
      fit-margin-left="5"
@@ -94,7 +94,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:description>Use gray 50% for the &quot;off&quot; color</dc:description>
       </cc:Work>
     </rdf:RDF>
@@ -108,17 +108,31 @@
     <path
        inkscape:connector-curvature="0"
        id="path3788"
-       d="m 19.372554,54.107612 0,54.435488 35.282255,35.28224 54.435491,0 35.28224,-35.28224 0,-54.435488 -35.28224,-35.282256 -54.435491,0 z"
-       style="fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:3.00001286999999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 19.872548,54.325353 0,54.000017 35,34.99998 54.000012,0 34.99999,-34.99998 0,-54.000017 -34.99999,-35.000003 -54.000012,0 z"
+       style="fill:#0046ff;fill-opacity:1;stroke:#ffffff;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        sodipodi:nodetypes="ccccccccc"
        inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
+       inkscape:export-xdpi="26.719999"
+       inkscape:export-ydpi="26.719999" />
+    <path
+       transform="matrix(2.6666654,0,0,1.6,-151.46067,-50.67465)"
+       d="M 104,90 A 6.0000024,10 0 1 1 91.999998,90 6.0000024,10 0 1 1 104,90 z"
+       sodipodi:ry="10"
+       sodipodi:rx="6.0000024"
+       sodipodi:cy="90"
+       sodipodi:cx="98"
+       id="path2996"
+       style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0046ff;fill-opacity:1;stroke:#ffffff;stroke-width:3.87298417;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/path2996.png"
        inkscape:export-xdpi="26.719999"
        inkscape:export-ydpi="26.719999" />
     <path
        inkscape:connector-curvature="0"
        id="path2993"
        style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.99999976;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-       d="m 88.872548,109.28932 c -2.33536,0.62477 -5.419966,1.28699 -9.253809,1.9866 -3.833933,0.69963 -8.270034,1.04943 -13.308315,1.04943 -4.38098,0 -8.068352,-0.68061 -11.062127,-2.04184 -2.993817,-1.36123 -5.403228,-3.28785 -7.228237,-5.77986 -1.825036,-2.49202 -3.139211,-5.43065 -3.942523,-8.815917 -0.803333,-3.385234 -1.204993,-7.141079 -1.204984,-11.267545 l 0,-34.094835 10.184711,0 0,31.760793 c -1.8e-5,7.392936 1.095219,12.685208 3.285714,15.876836 2.190452,3.191648 5.878381,4.787468 11.063798,4.787458 1.094091,1e-5 2.225539,-0.0387 3.394347,-0.11582 1.168737,-0.0772 2.263974,-0.174 3.285715,-0.29041 1.02166,-0.1164 1.952557,-0.2334 2.79269,-0.35101 0.840048,-0.11758 1.442818,-0.25358 1.808313,-0.40801 l 0,-51.259838 10.184707,0 z" />
+       d="m 88.872548,109.28932 c -2.33536,0.62477 -5.419966,1.28699 -9.253809,1.9866 -3.833933,0.69963 -8.270034,1.04943 -13.308315,1.04943 -4.38098,0 -8.068352,-0.68061 -11.062127,-2.04184 -2.993817,-1.36123 -5.403228,-3.28785 -7.228237,-5.77986 -1.825036,-2.49202 -3.139211,-5.43065 -3.942523,-8.815917 -0.803333,-3.385234 -1.204993,-7.141079 -1.204984,-11.267545 l 0,-34.094838 10.184711,0 0,31.760796 c 0,7.392936 1.095219,12.685208 3.285714,15.876836 2.190452,3.191648 5.878381,4.787468 11.063798,4.787458 1.094091,1e-5 2.225539,-0.0387 3.394347,-0.11582 1.168737,-0.0772 2.263974,-0.174 3.285715,-0.29041 1.02166,-0.1164 1.952557,-0.2334 2.79269,-0.35101 0.840048,-0.11758 1.442818,-0.25358 1.808313,-0.40801 l 0,-51.259838 10.184707,0 z"
+       sodipodi:nodetypes="cssssssccssccsccccc" />
     <text
        sodipodi:linespacing="125%"
        id="text2992"
@@ -130,16 +144,6 @@
          x="113.37255"
          id="tspan2994"
          sodipodi:role="line" /></text>
-    <path
-       transform="matrix(2.9166656,0,0,2,-185.46068,-90.674651)"
-       d="M 104,90 A 6.0000024,10 0 1 1 91.999998,90 6.0000024,10 0 1 1 104,90 z"
-       sodipodi:ry="10"
-       sodipodi:rx="6.0000024"
-       sodipodi:cy="90"
-       sodipodi:cx="98"
-       id="path2996"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#800000;stroke:#ffffff;stroke-width:3.31231522999999983;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill-opacity:1"
-       sodipodi:type="arc" />
   </g>
   <g
      inkscape:groupmode="layer"
