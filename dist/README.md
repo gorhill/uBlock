@@ -1,6 +1,6 @@
 ## INSTALL
 
-- Download and unzip `ublock_{version}.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Download and unzip `ublock_{version}.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases/latest)).
 - Rename the unzipped directory to `ublock`
     - When you later update manually, replace the **content** of the `ublock` folder with the **content** of the latest zipped version.
     - This will ensure that all the extension settings will be preserved
