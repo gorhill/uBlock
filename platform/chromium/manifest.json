@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
 
-    "name": "uBlock₀",
-    "version": "0.9.4.1",
+    "name": "uBlock Origin",
+    "version": "0.9.4.2",
 
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
@@ -16,11 +16,11 @@
             "19": "img/browsericons/icon19-off.png",
             "38": "img/browsericons/icon38-off.png"
         },
-        "default_title": "uBlock₀",
+        "default_title": "uBlock Origin",
         "default_popup": "popup.html"
     },
 
-    "author": "The uBlock₀ Development Team",
+    "author": "The uBlock Origin Development Team",
     "background": {
         "page": "background.html"
     },
