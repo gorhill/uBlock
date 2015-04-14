@@ -140,7 +140,7 @@ var onUserSettingsReady = function(fetched) {
 
     // Remove obsolete setting
     delete userSettings.logRequests;
-    µb.XAL.keyvalRemoveOne('logRequests');
+    vAPI.storage.remove('logRequests');
 };
 
 /******************************************************************************/

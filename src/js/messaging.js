@@ -996,7 +996,7 @@ var backupUserData = function(callback) {
 
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
-        µb.XAL.keyvalSetMany(µb.restoreBackupSettings);
+        µb.keyvalSetMany(µb.restoreBackupSettings);
 
         getLocalData(callback);
     };
@@ -1018,19 +1018,19 @@ var restoreUserData = function(request) {
 
     var onAllRemoved = function() {
         // Be sure to adjust `countdown` if adding/removing anything below
-        µb.XAL.keyvalSetOne('version', userData.version);
+        µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings(true);
-        µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
-        µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
-        µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
+        µb.keyvalSetMany(userData.userSettings, onCountdown);
+        µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
 
         // With versions 0.9.2.4-, dynamic rules were saved within the
         // `userSettings` object. No longer the case.
         var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
-        µb.XAL.keyvalSetOne('dynamicFilteringString', s, onCountdown);
+        µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
 
         µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
-        µb.XAL.keyvalSetMany({
+        µb.keyvalSetMany({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
@@ -1044,13 +1044,13 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    µb.XAL.keyvalRemoveAll(onAllRemoved);
+    vAPI.storage.clear(onAllRemoved);
 };
 
 /******************************************************************************/
 
 var resetUserData = function() {
-    µb.XAL.keyvalRemoveAll();
+    vAPI.storage.clear(onAllRemoved);
 
     // Keep global counts, people can become quite attached to numbers
     µb.saveLocalSettings(true);
