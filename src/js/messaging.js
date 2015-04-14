@@ -76,7 +76,7 @@ var onMessage = function(request, sender, callback) {
             break;
 
         case 'reloadTab':
-            if ( vAPI.isNoTabId(request.tabId) === false ) {
+            if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
                 vAPI.tabs.reload(request.tabId);
                 if ( request.select && vAPI.tabs.select ) {
                     vAPI.tabs.select(request.tabId);
@@ -203,6 +203,7 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var getStats = function(tabId, tabTitle) {
+    var tabContext = µb.tabContextManager.lookup(tabId);
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -213,39 +214,35 @@ var getStats = function(tabId, tabTitle) {
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         netFilteringSwitch: false,
-        pageURL: '',
+        rawURL: tabContext.rawURL,
+        pageURL: tabContext.normalURL,
+        pageHostname: tabContext.rootHostname,
+        pageDomain: tabContext.rootDomain,
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         tabId: tabId,
         tabTitle: tabTitle
     };
+
     var pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
-        r.rawURL = pageStore.rawURL;
-        r.pageURL = pageStore.pageURL;
-        r.pageDomain = pageStore.pageDomain;
-        r.pageHostname = pageStore.pageHostname;
         r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
         r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
         r.hostnameDict = getHostnameDict(pageStore.hostnameToCountMap);
         r.contentLastModified = pageStore.contentLastModified;
-        r.firewallRules = getFirewallRules(pageStore.pageHostname, r.hostnameDict);
-        r.canElementPicker = r.pageHostname.indexOf('.') !== -1;
+        r.firewallRules = getFirewallRules(tabContext.rootHostname, r.hostnameDict);
+        r.canElementPicker = tabContext.rootHostname.indexOf('.') !== -1;
         r.canRequestLog = canRequestLog;
-        r.doBlockAllPopups = µb.hnSwitches.evaluateZ('doBlockAllPopups', r.pageHostname);
-        r.dontBlockDoc = µb.hnSwitches.evaluateZ('dontBlockDoc', r.pageHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
     }
-    if ( r.pageHostname ) {
-        r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
-            µb.permanentFirewall,
-            r.pageHostname,
-            r.hostnameDict
-        );
-    }
+    r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
+        µb.permanentFirewall,
+        tabContext.rootHostname,
+        r.hostnameDict
+    );
     return r;
 };
 
@@ -449,16 +446,7 @@ var filterRequests = function(pageStore, details) {
     var isBlockResult = µb.isBlockResult;
 
     // Create evaluation context
-    var context = {
-        pageHostname: vAPI.punycodeHostname(details.pageHostname),
-        pageDomain: µburi.domainFromHostname(details.pageHostname),
-        rootHostname: pageStore.rootHostname,
-        rootDomain: pageStore.rootDomain,
-        requestURL: '',
-        requestHostname: '',
-        requestType: ''
-    };
-
+    var context = pageStore.createContextFromFrameHostname(details.pageHostname);
     var request;
     var i = requests.length;
     while ( i-- ) {
@@ -485,22 +473,18 @@ var onMessage = function(details, sender, callback) {
     // Sync
     var response;
 
-    var pageStore, frameStore = false;
+    var pageStore;
     if ( sender && sender.tab ) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
-        var frameId = sender.frameId;
-        if(frameId && frameId > 0) {
-            frameStore = pageStore.getFrame(frameId);
-        }
     }
 
     switch ( details.what ) {
         case 'retrieveGenericCosmeticSelectors':
             response = {
-                shutdown: !pageStore || !pageStore.getNetFilteringSwitch() || (frameStore && !frameStore.getNetFilteringSwitch()),
+                shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
                 result: null
             };
-            if(pageStore && pageStore.getGenericCosmeticFilteringSwitch()) {
+            if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
                 response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
             }
             break;
@@ -515,7 +499,7 @@ var onMessage = function(details, sender, callback) {
                 shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
                 result: null
             };
-            if(pageStore) {
+            if(!response.shutdown) {
                 response.result = filterRequests(pageStore, details);
             }
             break;
@@ -998,7 +982,6 @@ var backupUserData = function(callback) {
             filterLists: µb.extractSelectedFilterLists(),
             netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
             dynamicFilteringString: µb.permanentFirewall.toString(),
-            hostnameSwitchesString: µb.hnSwitches.toString(),
             userFilters: details.content
         };
         var now = new Date();
@@ -1013,7 +996,7 @@ var backupUserData = function(callback) {
 
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
-        µb.XAL.keyvalSetMany(µb.restoreBackupSettings);
+        µb.keyvalSetMany(µb.restoreBackupSettings);
 
         getLocalData(callback);
     };
@@ -1035,20 +1018,19 @@ var restoreUserData = function(request) {
 
     var onAllRemoved = function() {
         // Be sure to adjust `countdown` if adding/removing anything below
-        µb.XAL.keyvalSetOne('version', userData.version);
+        µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings(true);
-        µb.XAL.keyvalSetMany(userData.userSettings, onCountdown);
-        µb.XAL.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
-        µb.XAL.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
+        µb.keyvalSetMany(userData.userSettings, onCountdown);
+        µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
 
         // With versions 0.9.2.4-, dynamic rules were saved within the
         // `userSettings` object. No longer the case.
         var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
-        µb.XAL.keyvalSetOne('dynamicFilteringString', s, onCountdown);
+        µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
 
-        µb.XAL.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
         µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
-        µb.XAL.keyvalSetMany({
+        µb.keyvalSetMany({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
@@ -1062,13 +1044,13 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    µb.XAL.keyvalRemoveAll(onAllRemoved);
+    vAPI.storage.clear(onAllRemoved);
 };
 
 /******************************************************************************/
 
 var resetUserData = function() {
-    µb.XAL.keyvalRemoveAll();
+    vAPI.storage.clear(onAllRemoved);
 
     // Keep global counts, people can become quite attached to numbers
     µb.saveLocalSettings(true);
