@@ -79,7 +79,7 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
-vAPI.isNoTabId = function(tabId) {
+vAPI.isBehindTheSceneTabId = function(tabId) {
     return tabId.toString() === '-1';
 };
 
@@ -102,8 +102,8 @@ vAPI.tabs.registerListeners = function() {
     var popupCandidates = Object.create(null);
 
     var PopupCandidate = function(details) {
-        this.targetTabId = details.tabId;
-        this.openerTabId = details.sourceTabId;
+        this.targetTabId = details.tabId.toString();
+        this.openerTabId = details.sourceTabId.toString();
         this.targetURL = details.url;
         this.selfDestructionTimer = null;
     };
@@ -222,7 +222,12 @@ vAPI.tabs.get = function(tabId, callback) {
         if ( typeof tabId === 'string' ) {
             tabId = parseInt(tabId, 10);
         }
-        chrome.tabs.get(tabId, onTabReady);
+        if ( typeof tabId !== 'number' || isNaN(tabId) ) {
+            onTabReady(null);
+        }
+        else {
+            chrome.tabs.get(tabId, onTabReady);
+        }
         return;
     }
     var onTabReceived = function(tabs) {
@@ -719,7 +724,8 @@ vAPI.onLoadAllCompleted = function() {
         var i = tabs.length, tab;
         while ( i-- ) {
             tab = tabs[i];
-            µb.bindTabToPageStats(tab.id, tab.url);
+            µb.tabContextManager.commit(tab.id, tab.url);
+            µb.bindTabToPageStats(tab.id);
             // https://github.com/chrisaljoudi/uBlock/issues/129
             scriptStart(tab.id);
         }

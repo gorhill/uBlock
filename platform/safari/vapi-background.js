@@ -239,7 +239,7 @@
 
     /******************************************************************************/
 
-    vAPI.isNoTabId = function(tabId) {
+    vAPI.isBehindTheSceneTabId = function(tabId) {
         return tabId.toString() === this.noTabId;
     };
 
@@ -256,13 +256,13 @@
                 tabId = vAPI.tabs.getTabId(e.target);
             var details = {
                 targetURL: url,
-                targetTabId: tabId,
+                targetTabId: tabId.toString(),
                 openerTabId: vAPI.tabs.popupCandidate
             };
+            vAPI.tabs.popupCandidate = false;
             if(vAPI.tabs.onPopup(details)) {
                 e.preventDefault();
                 if(vAPI.tabs.stack[details.openerTabId]) {
-                    vAPI.tabs.popupCandidate = false;
                     vAPI.tabs.stack[details.openerTabId].activate();
                 }
             }
@@ -731,17 +731,18 @@
             }
             switch(e.message.type) {
                 case "popup":
-                    vAPI.tabs.popupCandidate = vAPI.tabs.getTabId(e.target);
-                    if(e.message.url === "about:blank") {
+                    var openerTabId = vAPI.tabs.getTabId(e.target).toString();
+                    var shouldBlock = !!vAPI.tabs.onPopup({
+                        targetURL: e.message.url,
+                        targetTabId: "preempt",
+                        openerTabId: openerTabId
+                    });
+                    if(shouldBlock) {
                         e.message = false;
-                        return;
                     }
                     else {
-                        e.message = !vAPI.tabs.onPopup({
-                            targetURL: e.message.url,
-                            targetTabId: 0,
-                            openerTabId: vAPI.tabs.getTabId(e.target)
-                        });
+                        vAPI.tabs.popupCandidate = openerTabId;
+                        e.message = true;
                     }
                     break;
                 case "popstate":

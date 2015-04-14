@@ -75,12 +75,6 @@
 
 /******************************************************************************/
 
-µBlock.saveHostnameSwitches = function() {
-    this.XAL.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
-};
-
-/******************************************************************************/
-
 µBlock.saveWhitelist = function() {
     var bin = {
         'netWhitelist': this.stringFromWhitelist(this.netWhitelist)

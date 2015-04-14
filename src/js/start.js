@@ -137,7 +137,6 @@ var onUserSettingsReady = function(fetched) {
     µb.contextMenu.toggle(userSettings.contextMenuEnabled);
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);
-    µb.hnSwitches.fromString(fetched.hostnameSwitchesString);
 
     // Remove obsolete setting
     delete userSettings.logRequests;
@@ -216,7 +215,6 @@ return function() {
     var fetchableProps = {
         'compiledMagic': '',
         'dynamicFilteringString': '',
-        'hostnameSwitchesString': '',
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
         'lastBackupFile': '',
