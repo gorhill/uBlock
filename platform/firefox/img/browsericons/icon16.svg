@@ -1,12 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-<path fill="#800000" d="M15.7,4.2c-1.3-1.3-2.6-2.6-3.9-3.9C11.6,0.1,11.3,0,11,0C9,0,7,0,5,0C4.6,0,4.4,0.1,4.2,0.3
-	C2.9,1.6,1.6,2.9,0.3,4.2C0.1,4.4,0,4.6,0,4.9C0,7,0,9,0,11c0,0.3,0.1,0.6,0.3,0.8c1.3,1.3,2.6,2.6,3.8,3.8C4.4,15.9,4.7,16,5,16
-	c1,0,2,0,3,0c1,0,2,0,3,0c0.3,0,0.5,0,0.8-0.3c1.3-1.3,2.6-2.6,3.9-3.9c0.2-0.2,0.3-0.4,0.3-0.7C16,9,16,7,16,4.9
-	C16,4.6,15.9,4.4,15.7,4.2z"/>
-<path fill="#FFFFFF" d="M10.8,8c0,1,0,2,0,3c0,0.4-0.1,0.6-0.5,0.7C9.5,11.8,8.8,12,8.1,12c-1.6,0-2.5-0.7-2.7-2.3
-	C5.1,8,5.3,6.3,5.2,4.7c0-0.3,0.1-0.3,0.4-0.3c1-0.1,1.1-0.1,1.1,1c0,1.1,0,2.2,0,3.3c0,1.5,0.6,1.9,2.1,1.8c0.4,0,0.5-0.2,0.5-0.6
-	c0-1.6,0-3.3,0-4.9c0-0.6,0.2-0.7,0.8-0.7c0.5,0,0.8,0,0.7,0.7C10.7,6,10.8,7,10.8,8z"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ublock-16.svg"
+   inkscape:export-filename="/home/rhill/permahome/workshop/ublock/src/img/icon_16.png"
+   inkscape:export-xdpi="11.25"
+   inkscape:export-ydpi="11.25">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3770">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3772" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3774" />
+    </linearGradient>
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect3995"
+       effect="spiro" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3770"
+       id="radialGradient3776"
+       cx="82.145424"
+       cy="81.055199"
+       fx="82.145424"
+       fy="81.055199"
+       r="22.573322"
+       gradientTransform="matrix(1,0,0,1.2584318,0,-20.947238)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#404040"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="96.285877"
+     inkscape:cy="-28.655974"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1712"
+     inkscape:window-height="977"
+     inkscape:window-x="65"
+     inkscape:window-y="78"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:snap-bbox="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     showborder="true"
+     inkscape:showpageshadow="false"
+     borderlayer="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3059"
+       empspacing="8"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       dotted="false"
+       originx="5.6216273e-07px"
+       originy="-112px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:description>Use gray 50% for the &quot;off&quot; color</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="polygon"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline"
+     transform="translate(-17.872547,-17.32535)">
+    <g
+       id="g2994"
+       transform="matrix(0.125,0,0,0.12500001,15.638479,15.159681)">
+      <path
+         inkscape:export-ydpi="26.719999"
+         inkscape:export-xdpi="26.719999"
+         inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
+         sodipodi:nodetypes="ccccccccc"
+         style="fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:3.00001287;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 19.372554,54.107612 0,54.435488 35.282255,35.28224 54.435491,0 35.28224,-35.28224 0,-54.435488 -35.28224,-35.282256 -54.435491,0 z"
+         id="path3788"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 88.872548,109.28932 c -2.33536,0.62477 -5.419966,1.28699 -9.253809,1.9866 -3.833933,0.69963 -8.270034,1.04943 -13.308315,1.04943 -4.38098,0 -8.068352,-0.68061 -11.062127,-2.04184 -2.993817,-1.36123 -5.403228,-3.28785 -7.228237,-5.77986 -1.825036,-2.49202 -3.139211,-5.43065 -3.942523,-8.815917 -0.803333,-3.385234 -1.204993,-7.141079 -1.204984,-11.267545 l 0,-34.094835 10.184711,0 0,31.760793 c -1.8e-5,7.392936 1.095219,12.685208 3.285714,15.876836 2.190452,3.191648 5.878381,4.787468 11.063798,4.787458 1.094091,1e-5 2.225539,-0.0387 3.394347,-0.11582 1.168737,-0.0772 2.263974,-0.174 3.285715,-0.29041 1.02166,-0.1164 1.952557,-0.2334 2.79269,-0.35101 0.840048,-0.11758 1.442818,-0.25358 1.808313,-0.40801 l 0,-51.259838 10.184707,0 z"
+         style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.99999976;stroke-miterlimit:4;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2993"
+         inkscape:connector-curvature="0" />
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Ubuntu"
+         x="113.37255"
+         y="107.82535"
+         id="text2992"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan2994"
+           x="113.37255"
+           y="107.82535" /></text>
+      <path
+         sodipodi:type="arc"
+         style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:3.31231523;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2996"
+         sodipodi:cx="98"
+         sodipodi:cy="90"
+         sodipodi:rx="6.0000024"
+         sodipodi:ry="10"
+         d="m 104,90 c 0,5.522847 -2.68629,10 -6,10 -3.31371,0 -6.000002,-4.477153 -6.000002,-10 0,-5.522847 2.686292,-10 6.000002,-10 3.31371,0 6,4.477153 6,10 z"
+         transform="matrix(2.9166656,0,0,2,-185.46068,-90.674651)" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="text"
+     style="display:inline"
+     transform="translate(-17.872547,-17.32535)" />
 </svg>
