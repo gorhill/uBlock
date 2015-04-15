@@ -20,7 +20,7 @@
         "default_popup": "popup.html"
     },
 
-    "author": "The uBlock Origin Development Team",
+    "author": "All uBlock Origin contributors",
     "background": {
         "page": "background.html"
     },
