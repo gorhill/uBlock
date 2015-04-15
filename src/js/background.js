@@ -74,8 +74,7 @@ return {
         'behind-the-scene',
         'chrome-extension-scheme',
         'chrome-scheme',
-        'opera-scheme',
-        ''
+        'opera-scheme'
     ].join('\n').trim(),
 
     localSettings: {
