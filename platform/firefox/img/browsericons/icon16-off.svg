@@ -10,12 +10,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="128"
-   height="128"
+   width="16"
+   height="16"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ublock.svg"
+   sodipodi:docname="icon16.svg"
    inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
    inkscape:export-xdpi="26.719999"
    inkscape:export-ydpi="26.719999">
@@ -63,11 +63,11 @@
        inkscape:collect="always"
        xlink:href="#linearGradient3770"
        id="radialGradient3776"
-       cx="82.145422"
-       cy="81.055197"
-       fx="82.145422"
-       fy="81.055197"
-       r="22.573323"
+       cx="82.145424"
+       cy="81.055199"
+       fx="82.145424"
+       fy="81.055199"
+       r="22.573322"
        gradientTransform="matrix(1,0,0,1.2584318,0,-20.947238)"
        gradientUnits="userSpaceOnUse" />
   </defs>
@@ -78,16 +78,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="67.237923"
-     inkscape:cy="62.16209"
+     inkscape:zoom="32"
+     inkscape:cx="2.5171908"
+     inkscape:cy="8.4601129"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer5"
      showgrid="true"
-     inkscape:window-width="1049"
+     inkscape:window-width="1419"
      inkscape:window-height="837"
-     inkscape:window-x="457"
-     inkscape:window-y="51"
+     inkscape:window-x="67"
+     inkscape:window-y="122"
      inkscape:window-maximized="0"
      fit-margin-top="5"
      fit-margin-left="5"
@@ -126,7 +126,8 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="polygon 1"
-     style="display:inline;opacity:1">
+     style="display:inline"
+     transform="translate(0,-112)">
     <g
        id="g5639"
        transform="matrix(0.6778654,0,0,0.56141828,-241.07537,-247.27712)"
@@ -134,9 +135,16 @@
        inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon19-off.png"
        inkscape:export-xdpi="26.719999"
        inkscape:export-ydpi="26.719999" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="text"
+     style="display:inline"
+     transform="translate(-17.872548,-129.32535)">
     <g
-       style="fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:1.60191178000000001;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;stroke-linejoin:round"
-       transform="matrix(-0.6945203,0,0,0.56109687,375.02964,-247.42947)"
+       style="fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:1.60191178000000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="matrix(-0.08681534,0,0,0.07049035,64.808725,98.200603)"
        id="g6907">
       <path
          style="fill:#999999;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1.60191178000000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -145,22 +153,15 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccc" />
     </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer5"
-     inkscape:label="text"
-     style="display:inline"
-     transform="translate(-17.872548,-17.32535)">
     <path
        inkscape:connector-curvature="0"
        id="path2993-3"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-linejoin:miter"
-       d="m 84.872548,101.68104 c -1.726136,0.54418 -4.006062,1.12095 -6.839774,1.73029 -2.833776,0.60935 -6.112632,0.91402 -9.836581,0.91402 -3.238118,0 -5.963564,-0.59279 -8.176356,-1.77839 -2.212821,-1.1856 -3.99369,-2.863606 -5.342612,-5.034065 -1.348939,-2.170471 -2.320284,-4.729921 -2.914038,-7.678379 -0.593768,-2.948431 -0.890649,-6.219648 -0.890641,-9.81367 l 0,-29.695495 7.527831,0 0,27.662624 c 0,6.439008 0.809508,11.048406 2.42857,13.82821 1.61903,2.779823 4.344892,4.16973 8.177594,4.169722 0.808675,8e-6 1.644962,-0.03369 2.508865,-0.100879 0.863849,-0.06722 1.673373,-0.151548 2.428573,-0.252937 0.755139,-0.101397 1.443194,-0.203286 2.064161,-0.305721 0.620903,-0.102413 1.066432,-0.22086 1.336581,-0.355362 l 0,-44.645658 7.527827,0 z"
+       style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.25062919;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       d="m 26.304887,139.88262 c -0.215768,0.0684 -0.500759,0.14083 -0.854975,0.21738 -0.354223,0.0765 -0.764081,0.11483 -1.229577,0.11483 -0.404766,0 -0.745448,-0.0745 -1.022048,-0.22342 -0.276603,-0.14895 -0.499213,-0.35976 -0.667828,-0.63243 -0.168618,-0.27267 -0.290037,-0.59422 -0.364256,-0.96463 -0.07422,-0.37041 -0.111332,-0.78137 -0.111331,-1.23289 l 0,-3.73063 0.940982,0 0,3.47524 c 0,0.80893 0.101189,1.38801 0.303573,1.73724 0.202379,0.34922 0.543113,0.52384 1.022202,0.52384 0.101085,0 0.205621,-0.004 0.31361,-0.0127 0.107981,-0.008 0.209172,-0.019 0.303572,-0.0318 0.09439,-0.0127 0.1804,-0.0255 0.258021,-0.0384 0.07761,-0.0129 0.133305,-0.0277 0.167073,-0.0447 l 0,-5.60881 0.940982,0 z"
        sodipodi:nodetypes="cssssssccssccsccccc" />
     <ellipse
        id="path2996-3"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:6.30270818999999971;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#999999;fill-opacity:1;stroke:#ffffff;stroke-width:6.30270814999999995;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
        inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/path2996.png"
        inkscape:export-xdpi="26.719999"
        inkscape:export-ydpi="26.719999"
@@ -173,6 +174,6 @@
        sodipodi:cy="81.325356"
        sodipodi:rx="11.999999"
        sodipodi:ry="12"
-       transform="matrix(1.2083335,0,0,1.3333334,-28.025543,-23.108461)" />
+       transform="matrix(0.15104221,0,0,0.16750608,12.192577,124.20537)" />
   </g>
 </svg>

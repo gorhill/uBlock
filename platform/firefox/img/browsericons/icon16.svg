@@ -10,12 +10,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="128"
-   height="128"
+   width="16"
+   height="16"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="icon16-off.svg"
+   sodipodi:docname="icon16.svg"
    inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon38-off.png"
    inkscape:export-xdpi="26.719999"
    inkscape:export-ydpi="26.719999">
@@ -63,11 +63,11 @@
        inkscape:collect="always"
        xlink:href="#linearGradient3770"
        id="radialGradient3776"
-       cx="82.145422"
-       cy="81.055197"
-       fx="82.145422"
-       fy="81.055197"
-       r="22.573323"
+       cx="82.145424"
+       cy="81.055199"
+       fx="82.145424"
+       fy="81.055199"
+       r="22.573322"
        gradientTransform="matrix(1,0,0,1.2584318,0,-20.947238)"
        gradientUnits="userSpaceOnUse" />
   </defs>
@@ -78,16 +78,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="67.237923"
-     inkscape:cy="62.16209"
+     inkscape:zoom="32"
+     inkscape:cx="2.5171908"
+     inkscape:cy="8.4601129"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer5"
      showgrid="true"
-     inkscape:window-width="1049"
+     inkscape:window-width="1419"
      inkscape:window-height="837"
-     inkscape:window-x="457"
-     inkscape:window-y="51"
+     inkscape:window-x="67"
+     inkscape:window-y="122"
      inkscape:window-maximized="0"
      fit-margin-top="5"
      fit-margin-left="5"
@@ -117,7 +117,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:description>Use gray 50% for the &quot;off&quot; color</dc:description>
       </cc:Work>
     </rdf:RDF>
@@ -126,7 +126,8 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="polygon 1"
-     style="display:inline;opacity:1">
+     style="display:inline"
+     transform="translate(0,-112)">
     <g
        id="g5639"
        transform="matrix(0.6778654,0,0,0.56141828,-241.07537,-247.27712)"
@@ -134,45 +135,49 @@
        inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/icon19-off.png"
        inkscape:export-xdpi="26.719999"
        inkscape:export-ydpi="26.719999" />
-    <g
-       style="fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:1.60191178000000001;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;stroke-linejoin:round"
-       transform="matrix(-0.6945203,0,0,0.56109687,375.02964,-247.42947)"
-       id="g6907">
-      <path
-         style="fill:#800000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1.60191178000000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="M 447.83376,669.09921 C 367.20257,612.06806 367.20257,540.77912 367.9225,468.82184 c 33.8363,0.66834 45.35504,0.66834 79.91126,-27.84724 m 0,228.12461 c 80.6312,-57.03115 81.35113,-128.98843 81.35113,-200.27737 -35.27616,0.66834 -46.7949,0.66834 -81.35113,-27.84724"
-         id="path6909"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cccccc" />
-    </g>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="text"
      style="display:inline"
-     transform="translate(-17.872548,-17.32535)">
-    <path
-       inkscape:connector-curvature="0"
-       id="path2993-3"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;stroke-linejoin:miter"
-       d="m 84.872548,101.68104 c -1.726136,0.54418 -4.006062,1.12095 -6.839774,1.73029 -2.833776,0.60935 -6.112632,0.91402 -9.836581,0.91402 -3.238118,0 -5.963564,-0.59279 -8.176356,-1.77839 -2.212821,-1.1856 -3.99369,-2.863606 -5.342612,-5.034065 -1.348939,-2.170471 -2.320284,-4.729921 -2.914038,-7.678379 -0.593768,-2.948431 -0.890649,-6.219648 -0.890641,-9.81367 l 0,-29.695495 7.527831,0 0,27.662624 c 0,6.439008 0.809508,11.048406 2.42857,13.82821 1.61903,2.779823 4.344892,4.16973 8.177594,4.169722 0.808675,8e-6 1.644962,-0.03369 2.508865,-0.100879 0.863849,-0.06722 1.673373,-0.151548 2.428573,-0.252937 0.755139,-0.101397 1.443194,-0.203286 2.064161,-0.305721 0.620903,-0.102413 1.066432,-0.22086 1.336581,-0.355362 l 0,-44.645658 7.527827,0 z"
-       sodipodi:nodetypes="cssssssccssccsccccc" />
-    <ellipse
-       id="path2996-3"
-       style="font-size:100.21945952999999463px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:6.30270819;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
-       inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/path2996.png"
-       inkscape:export-xdpi="26.719999"
-       inkscape:export-ydpi="26.719999"
-       cx="102.12254"
-       cy="81.325356"
-       rx="11.999999"
-       ry="12"
-       d="m 114.12254,81.325356 c 0,6.627417 -5.37258,12 -12,12 -6.627413,0 -11.999996,-5.372583 -11.999996,-12 0,-6.627417 5.372583,-12 11.999996,-12 6.62742,0 12,5.372583 12,12 z"
-       sodipodi:cx="102.12254"
-       sodipodi:cy="81.325356"
-       sodipodi:rx="11.999999"
-       sodipodi:ry="12"
-       transform="matrix(1.2083335,0,0,1.3333334,-28.025543,-23.108461)" />
+     transform="translate(-17.872548,-129.32535)">
+    <g
+       id="g3046"
+       transform="matrix(0.12500043,0,0,0.12562955,15.695782,127.10848)">
+      <g
+         id="g6907"
+         transform="matrix(-0.6945203,0,0,0.56109687,392.90219,-230.10412)"
+         style="fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:1.60191178;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline">
+        <path
+           sodipodi:nodetypes="cccccc"
+           inkscape:connector-curvature="0"
+           id="path6909"
+           d="M 447.83376,669.09921 C 367.20257,612.06806 367.20257,540.77912 367.9225,468.82184 c 33.8363,0.66834 45.35504,0.66834 79.91126,-27.84724 m 0,228.12461 c 80.6312,-57.03115 81.35113,-128.98843 81.35113,-200.27737 -35.27616,0.66834 -46.7949,0.66834 -81.35113,-27.84724"
+           style="fill:#800000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1.60191178;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      </g>
+      <path
+         sodipodi:nodetypes="cssssssccssccsccccc"
+         d="m 84.872548,101.68104 c -1.726136,0.54418 -4.006062,1.12095 -6.839774,1.73029 -2.833776,0.60935 -6.112632,0.91402 -9.836581,0.91402 -3.238118,0 -5.963564,-0.59279 -8.176356,-1.77839 -2.212821,-1.1856 -3.99369,-2.863606 -5.342612,-5.034065 -1.348939,-2.170471 -2.320284,-4.729921 -2.914038,-7.678379 -0.593768,-2.948431 -0.890649,-6.219648 -0.890641,-9.81367 l 0,-29.695495 7.527831,0 0,27.662624 c 0,6.439008 0.809508,11.048406 2.42857,13.82821 1.61903,2.779823 4.344892,4.16973 8.177594,4.169722 0.808675,8e-6 1.644962,-0.03369 2.508865,-0.100879 0.863849,-0.06722 1.673373,-0.151548 2.428573,-0.252937 0.755139,-0.101397 1.443194,-0.203286 2.064161,-0.305721 0.620903,-0.102413 1.066432,-0.22086 1.336581,-0.355362 l 0,-44.645658 7.527827,0 z"
+         style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2993-3"
+         inkscape:connector-curvature="0" />
+      <ellipse
+         transform="matrix(1.2083335,0,0,1.3333334,-28.025543,-23.108461)"
+         sodipodi:ry="12"
+         sodipodi:rx="11.999999"
+         sodipodi:cy="81.325356"
+         sodipodi:cx="102.12254"
+         d="m 114.12254,81.325356 c 0,6.627417 -5.37258,12 -12,12 -6.627413,0 -11.999996,-5.372583 -11.999996,-12 0,-6.627417 5.372583,-12 11.999996,-12 6.62742,0 12,5.372583 12,12 z"
+         ry="12"
+         rx="11.999999"
+         cy="81.325356"
+         cx="102.12254"
+         inkscape:export-ydpi="26.719999"
+         inkscape:export-xdpi="26.719999"
+         inkscape:export-filename="/home/rhill/permahome/workshop/ublock/platform/chromium/img/browsericons/path2996.png"
+         style="font-size:100.21945953px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#800000;fill-opacity:1;stroke:#ffffff;stroke-width:6.30270815;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         id="path2996-3" />
+    </g>
   </g>
 </svg>
