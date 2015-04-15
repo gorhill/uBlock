@@ -1,4 +1,4 @@
-**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes (update: they already [started to diverge](https://github.com/chrisaljoudi/uBlock/issues/1259) feature-wise.
+**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes (update: they already [started to diverge](https://github.com/chrisaljoudi/uBlock/issues/1259) feature-wise).
 
 I consider uBlock₀ here to be mature feature-wise.
 
