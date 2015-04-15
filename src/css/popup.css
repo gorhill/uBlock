@@ -168,6 +168,9 @@ body[dir="rtl"] #extraTools > span > span.badge {
 #extraTools > span.on > span:last-of-type:after {
     content: '\2715';
     }
+#extraTools > span:hover {
+    color: #444;
+    }
 
 body.advancedUser h2 {
     cursor: pointer;
