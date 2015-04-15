@@ -1,6 +1,12 @@
 **Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes (update: they already [started to diverge](https://github.com/chrisaljoudi/uBlock/issues/1259) feature-wise.
 
-I consider uBlock₀ here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part. I may add features whenever I feel the need to do so -- I use the extension myself, so if I feel it definitely needs something more, I will just go ahead and add it.
+I consider uBlock₀ here to be mature feature-wise.
+
+To stop adding features at a fast pace does not make a software automatically obsolete. If you believe so, find out how many features were added to Adblock Plus in the last months. New features were added almost every week for months to uBlock.
+
+I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part. Stability and reliability has priority at this point.
+
+I may add features whenever I feel the need to do so -- I use the extension myself, so if I feel it definitely needs something more, I will just go ahead and add it.
 
 The filter lists will continue to update themselves at regular interval, as usual.
 
