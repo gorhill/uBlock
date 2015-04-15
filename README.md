@@ -1,5 +1,7 @@
 **Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes. I consider uBlock₀ here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part.
 
+To the recurring question: "Why did you handover the original project?", [answer is here](https://github.com/gorhill/uBlock/issues/38#issuecomment-91871802).
+
 *** 
 
 <h1 align="center">
