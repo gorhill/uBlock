@@ -1,4 +1,4 @@
-**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes. I consider uBlock₀ here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part. I may add features whenever I feel an urge to do so.
+**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes. I consider uBlock₀ here to be feature-complete. I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part. I may add features whenever I feel the need to do so.
 
 The filter lists will continue to update themselves at regular interval, as usual.
 
