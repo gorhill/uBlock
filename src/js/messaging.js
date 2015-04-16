@@ -974,16 +974,19 @@ var getLocalData = function(callback) {
 /******************************************************************************/
 
 var backupUserData = function(callback) {
-    var onUserFiltersReady = function(details) {
-        var userData = {
-            timeStamp: Date.now(),
-            version: vAPI.app.version,
-            userSettings: µb.userSettings,
-            filterLists: µb.extractSelectedFilterLists(),
-            netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
-            dynamicFilteringString: µb.permanentFirewall.toString(),
-            userFilters: details.content
-        };
+    var userData = {
+        timeStamp: Date.now(),
+        version: vAPI.app.version,
+        userSettings: µb.userSettings,
+        filterLists: {},
+        netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
+        dynamicFilteringString: µb.permanentFirewall.toString(),
+        userFilters: ''
+    };
+
+    var onSelectedListsReady = function(filterLists) {
+        userData.filterLists = filterLists;
+
         var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', now.toLocaleString())
@@ -1000,6 +1003,12 @@ var backupUserData = function(callback) {
 
         getLocalData(callback);
     };
+
+    var onUserFiltersReady = function(details) {
+        userData.userFilters = details.content;
+        µb.extractSelectedFilterLists(onSelectedListsReady);
+    };
+
 
     µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
 };
@@ -1050,7 +1059,7 @@ var restoreUserData = function(request) {
 /******************************************************************************/
 
 var resetUserData = function() {
-    vAPI.storage.clear(onAllRemoved);
+    vAPI.storage.clear();
 
     // Keep global counts, people can become quite attached to numbers
     µb.saveLocalSettings(true);
