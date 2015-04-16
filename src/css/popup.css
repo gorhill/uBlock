@@ -107,7 +107,8 @@ body.off #switch .fa {
     font-size: 20px;
     }
 .statName {
-    color: #666;
+    color: #888;
+    font-size: small;
     margin: 1em 0.2em 0.2em 0.2em;
     text-align: center;
     }
