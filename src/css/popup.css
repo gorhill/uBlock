@@ -33,13 +33,13 @@ a {
     color: white;
     cursor: pointer;
     display: block;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
     margin: 0;
     padding: 2px;
     text-align: center;
     }
 #version {
+    color: #ddd;
     font-size: 10px;
     font-weight: normal;
     margin-left: 1em;
