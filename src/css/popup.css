@@ -303,30 +303,6 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
     }
-#firewallContainer > div > span.aRule:,
-#firewallContainer > div > span.bRule,
-#firewallContainer > div > span.nRule {
-    position: relative;
-    }
-#firewallContainer > div > span.aRule:before,
-#firewallContainer > div > span.bRule:before,
-#firewallContainer > div > span.nRule:before {
-    top: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    display: block;
-    opacity: 1;
-    }
-#firewallContainer > div > span.aRule:before {
-    content: "allow";
-    }
-#firewallContainer > div > span.bRule:before {
-    content: "block";
-    }
-#firewallContainer > div > span.nRule:before {
-    content: "no-op";
-    }
 
 #actionSelector {
     bottom: 0;
