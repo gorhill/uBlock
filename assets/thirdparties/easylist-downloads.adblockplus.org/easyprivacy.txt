@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 7eJcJFgP6ZWOHsrCcznX+g
-! Version: 201504112331
+! Checksum: wsf8af2BYrlUhvZPhsA8Jg
+! Version: 201504160211
 ! Title: EasyPrivacy
-! Last modified: 11 Apr 2015 23:31 UTC
+! Last modified: 16 Apr 2015 02:11 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -969,6 +969,7 @@
 /hit_count?
 /hit_counter
 /hit_img.cfm?
+/HitAdvert
 /hitbox.js
 /hitCount.
 /hitcount?
@@ -982,6 +983,7 @@
 /hitslink.
 /hittrack.cgi?
 /HitTracker/*
+/HitTracking.
 /hlog.asp
 /homeCounter.
 /homepage_pixels.
@@ -1877,6 +1879,7 @@
 /tracker/log?
 /tracker/p.gif?
 /tracker/ping/*
+/tracker/pixel.gif?
 /tracker/referrer/*
 /tracker/story.jpg?
 /tracker/t.php?
@@ -3341,6 +3344,7 @@ http://utm.
 ||nowinteract.com^$third-party
 ||npario-inc.net^$third-party
 ||nprove.com^$third-party
+||nr-data.net^$third-party
 ||nr7.us^$third-party
 ||nstracking.com^$third-party
 ||nuconomy.com^$third-party
@@ -4358,6 +4362,7 @@ http://utm.
 ||pixanalytics.com^$third-party
 ||sitebot.cn^$third-party
 ||top-bloggers.com^$third-party
+||topsem.com^$third-party
 ||tovery.net^$third-party
 ||users.51.la^$third-party
 ||vamaker.com^$third-party
@@ -4745,6 +4750,7 @@ http://utm.
 ||addthisedge.com/live/
 ||addtoany.com/menu/transparent.gif
 ||adf.ly/ad/conv?
+||adg.bzgint.com^
 ||adlog.com.com^
 ||admission.net^*/displaytracker.js
 ||ads.bridgetrack.com^$image
@@ -4895,7 +4901,6 @@ http://utm.
 ||bazaarvoice.com/sid.gif
 ||bazaarvoice.com^*/magpie.js
 ||bc.geocities.
-||bcanalytics.bigcommerce.com^
 ||beacon.errorception.com^
 ||beacon.gcion.com^
 ||beacon.guim.co.uk^
@@ -5022,6 +5027,7 @@ http://utm.
 ||cms-pixel.crowdreport.com^
 ||cnetcontent.com/log?
 ||cnevids.com/metrics/
+||cnpapers.com/scripts/library/
 ||cnt.3dmy.net^
 ||cnt.mastorage.net^
 ||coinbase.com/assets/application-*.js$third-party
@@ -5658,7 +5664,7 @@ http://utm.
 ||rackcdn.com/easie.js
 ||rackcdn.com/icon2.gif?
 ||rackcdn.com/knotice.api.js
-||rackcdn.com^$script,domain=buysubscriptions.com|cbsnews.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk
+||rackcdn.com^$script,domain=buysubscriptions.com|cbsnews.com|dailystar.co.uk|express.co.uk|gamerant.com|metrolyrics.com|rotoworld.com|sh.st|thesun.co.uk|thesundaytimes.co.uk|thetimes.co.uk|zdnet.com
 ||rackcdn.com^*/analytics.js
 ||radiocompanion.com/count.php?
 ||readcube.com/tracking/
@@ -7116,6 +7122,8 @@ http://utm.
 ||dw.de^*/run.dw?
 ||dx.com/?utm_rid=
 ||dyo.gs/track/
+||ea.pixmania.co.uk^
+||ea.pixmania.ie^
 ||easy2.com^*/logging/
 ||ebay-us.com/fp/
 ||ebay.com/op/t.do?event
@@ -8127,6 +8135,7 @@ http://utm.
 ||stats.propublica.org^
 ||stats.pusher.com^
 ||stats.radiostreamlive.com^
+||stats.redditmedia.com^
 ||stats.searchftps.org^
 ||stats.searchsight.com^
 ||stats.sharenet.co.za^
@@ -8743,6 +8752,7 @@ http://utm.
 ||dsltarife.net/ddd.js
 ||dsltarife.net/statistik/
 ||dw-eu.com.com^
+||ea.pixmania.de^
 ||ef-magazin.de/adtrk/
 ||elektromobil-dresden.de/tinc?
 ||elitepartner.de/km/tcnt.do?
@@ -8924,6 +8934,8 @@ http://utm.
 ||ea.clubic.com^
 ||ea.jeuxvideopc.com^
 ||ea.monsieurmanuel.com^
+||ea.pixmania.be^
+||ea.pixmania.fr^
 ||ea.rueducommerce.fr^
 ||editeurjavascript.com/hit-parade.php
 ||eultech.fnac.com^
@@ -9093,8 +9105,10 @@ http://utm.
 ||kbmg.cz/tracker.js
 ||o2.cz^*-ga_o2cz_bundle.js?
 ! Danish
+||ea.pixmania.dk^
 ||track.zalando.dk^
 ! Dutch
+||ea.pixmania.nl^
 ||klik.nrc.nl/ping?
 ||logs.ggweb.nl^
 ||marktplaats.nl/add_counter_image.
@@ -9111,6 +9125,7 @@ http://utm.
 ||3t.fi^*/zig.js
 ||analytics.sanoma.fi^
 ||autobild.fi/zig.js
+||ea.pixmania.fi^
 ||huuto.net/js/analytic/
 ||iltasanomat.fi^*/zig_c.min.js
 ||mtv3.fi/remarketing.js
@@ -9148,6 +9163,7 @@ http://utm.
 ||ciao.it/flextag/
 ||click.tv.repubblica.it^
 ||deagostinipassion.it/collezioni/analytics.js
+||ea.pixmania.it^
 ||emng.libero.it^
 ||fls-eu.amazon.it^
 ||gazzetta.it^*/stats.php?
@@ -9229,6 +9245,7 @@ http://utm.
 ||tanks.lv/top/stats.php
 ! Norwegian
 ||click.vgnett.no^
+||ea.pixmania.no^
 ||fusion.nettavisen.no^
 ||nrk.no^*/stats/
 ||track.zalando.no^
@@ -9241,6 +9258,7 @@ http://utm.
 |http://x.o2.pl^
 ||analytics.gazeta.pl^
 ||dot.wp.pl^
+||ea.pixmania.pl^
 ||kropka.onet.pl^
 ||mklik.gazeta.pl^
 ||nasza-klasa.pl^*/pp_gemius
@@ -9250,6 +9268,7 @@ http://utm.
 ||track.zalando.pl^
 ! Portuguese
 ||dejavu.mercadolivre.com.br^
+||ea.pixmania.pt^
 ||lancenet.com.br/pw.js
 ||log.r7.com^
 ||metrics.uol.com.br^
@@ -9286,6 +9305,7 @@ http://utm.
 ||anapixel.expansion.com^
 ||anapixel.marca.com^
 ||anapixel.telva.com^
+||ea.pixmania.es^
 ||esmas.com/scripts/esmas_stats.js
 ||estadisticas.lanacion.com.ar^
 ||estadonline.publiguias.cl^
@@ -9315,6 +9335,7 @@ http://utm.
 ! Swedish
 ||beacon.mtgx.tv^
 ||blocket.se/js/trafikfonden.js
+||ea.pixmania.se^
 ||fusion.bonniertidskrifter.se^
 ||microreporting.metro.se^
 ||prisjakt.nu/js.php?p=trafikfonden
@@ -9428,6 +9449,7 @@ http://utm.
 @@||cloudfront.net/bugsnag-*.min.js$domain=storenvy.com|tvguide.com
 @@||cloudfront.net/js/reach.js$domain=zap2it.com
 @@||cloudfront.net^*/jquery.google-analytics.js$domain=homepath.com
+@@||cloudfront.net^*/keen.min.js$domain=foodnetwork.co.uk
 @@||collegeboard.org/webanalytics/
 @@||computerworld.com/resources/scripts/lib/demandbase.js$script
 @@||constantcontact.com/js/WebTracking/
@@ -9509,14 +9531,14 @@ http://utm.
 @@||go.com/stat/flash/analyticreportingas3.swf
 @@||goldbet.com/Scripts/googleAnalytics.js
 @@||goldmansachs.com/a/pg/js/prod/gs-analytics-init.js
-@@||google-analytics.com/analytics.js$domain=afternic.com|amctv.com|bebo.com|ch10.co.il|cliphunter.com|daemon-tools.cc|deviantart.com|greentoe.com|housing.wisc.edu|infogr.am|jackbox.tv|sbnation.com|sci2.tv|seatgeek.com|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|vox.com|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
+@@||google-analytics.com/analytics.js$domain=afternic.com|amctv.com|bebo.com|ch10.co.il|cliphunter.com|daemon-tools.cc|deviantart.com|greentoe.com|housing.wisc.edu|infogr.am|jackbox.tv|sbnation.com|sci2.tv|seatgeek.com|tagheuer.com.au|tv10play.se|tv3play.se|tv6play.se|tv8play.se|video.pbs.org|vox.com|weather.gov|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg|www.google.com
 @@||google-analytics.com/plugins/ga/inpage_linkid.js$domain=lovehoney.co.uk|opendns.com|openshift.com|vimeo.com|westernunion.at|westernunion.be|westernunion.ca|westernunion.ch|westernunion.cl|westernunion.co.jp|westernunion.co.nz|westernunion.co.uk|westernunion.co.za|westernunion.com|westernunion.com.au|westernunion.com.co|westernunion.com.hk|westernunion.com.my|westernunion.com.pe|westernunion.de|westernunion.fr|westernunion.ie|westernunion.it|westernunion.nl|westernunion.ph|westernunion.pl|westernunion.se|westernunion.sg
 @@||google-analytics.com/plugins/ua/linkid.js$domain=bebo.com|vox.com
 @@||google-analytics.com/urchin.js$domain=chocomaru.com|denverbroncos.com|muselive.com|streetfire.net|wickedthemusical.com
 @@||google.*/mapmaker/gen_204?$subdocument,xmlhttprequest
 @@||google.com/js/gweb/analytics/$domain=google.com
 @@||google.com/js/gweb/analytics/doubletrack.js$domain=android.com
-@@||googletagmanager.com/gtm.js?$domain=drumstick.com|ebuyer.com|google.com|rollingstone.com|techradar.com|toto.co.jp|usmagazine.com
+@@||googletagmanager.com/gtm.js?$domain=drumstick.com|ebuyer.com|google.com|rollingstone.com|rozetka.com.ua|techradar.com|toto.co.jp|usmagazine.com
 @@||gorillanation.com/js/triggertag.js$domain=comingsoon.net|playstationlifestyle.net
 @@||grapeshot.co.uk/image-resize/$image
 @@||grapeshot.co.uk/sare-api/
@@ -9935,12 +9957,12 @@ http://utm.
 @@||aolcdn.com/omniunih_int.js$domain=engadget.com
 @@||google-analytics.com/analytics.js$domain=news.gamme.com.tw
 @@||hk.on.cc/hk/bkn/hitcount/web/js/hitCount_$~third-party,xmlhttprequest
-@@||hk.on.cc/js/urchin.js$~third-party
 @@||hm.baidu.com/h.js?$domain=weaku.com
 @@||ijinshan.com/static/js/analyse.js
 @@||imrworldwide.com/novms/js/2/ggcmb353.js$domain=nexttv.com.tw
 @@||itc.cn/v2/asset/*/pageView.js
 @@||linezing.com^$domain=lz.taobao.com
+@@||on.cc/js/urchin.js
 @@||pingjs.qq.com/ping_tcss_ied.js$domain=dnf.qq.com
 @@||s-msn.com^*/udctrack*.js$domain=ynet.com
 @@||streaming.cri.com.hk/geo.php?
@@ -10029,6 +10051,8 @@ http://utm.
 ! Anti-Adblock
 @@|http://r.i.ua/s?*&p*&l$image,domain=swordmaster.org
 ! Swedish
+@@||google-analytics.com/analytics.js$domain=tradera.com
+@@||googletagmanager.com/gtm.js?id=$domain=tradera.com
 @@||picsearch.com/js/comscore.js$domain=dn.se
 @@||reseguiden.se^*.siteCatalyst.js
 ! Turkey

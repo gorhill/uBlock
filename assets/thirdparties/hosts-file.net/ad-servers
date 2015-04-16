@@ -1149,6 +1149,7 @@
 127.0.0.1	a04.korrelate.net
 127.0.0.1	a05.korrelate.net
 127.0.0.1	a1-m1.doublepimp.com
+127.0.0.1	a1.admaster.net
 127.0.0.1	a1.cdnpark.com
 127.0.0.1	a1.cdnprk.com
 127.0.0.1	a1.dnbizcdn.com
@@ -8496,7 +8497,6 @@
 127.0.0.1	c.woopic.com
 127.0.0.1	c.wrating.com
 127.0.0.1	c.x.oanda.com
-127.0.0.1	c.xkcd.com
 127.0.0.1	c.zeroredirect1.com
 127.0.0.1	c01.brickoffers.com
 127.0.0.1	c02.smaato.net
@@ -8928,6 +8928,7 @@
 127.0.0.1	cdn.popcash.net
 127.0.0.1	cdn.popmyads.com
 127.0.0.1	cdn.psdvault.com
+127.0.0.1	cdn.puatraffic.com
 127.0.0.1	cdn.pubexchange.com
 127.0.0.1	cdn.qservz.com
 127.0.0.1	cdn.rooktemplate.com
@@ -23783,6 +23784,7 @@
 127.0.0.1	webtrackerplus.com
 127.0.0.1	webtracking.touchclarity.com
 127.0.0.1	webtraffic.ttinet.com
+127.0.0.1	webtrafficllc.co
 127.0.0.1	webtraxx.de
 127.0.0.1	webtrekk.com
 127.0.0.1	webtrekk.de
@@ -26168,6 +26170,7 @@
 127.0.0.1	www.webstat.com
 127.0.0.1	www.webstat.net
 127.0.0.1	www.webstat.no
+127.0.0.1	www.webtrafficllc.co
 127.0.0.1	www.webtrends.com
 127.0.0.1	www.webtrends.net
 127.0.0.1	www.webtrendslive.com
@@ -26746,4 +26749,4 @@
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	zz.zeroredirect1.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 26738
+# Hosts: 26741

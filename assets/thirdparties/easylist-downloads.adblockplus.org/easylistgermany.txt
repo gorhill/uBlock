@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: hhGJ05gn1fDWDOJOC2MyCQ
-! Version: 201504112331
+! Checksum: 7XAT259ymZG6Q9nT3nMF6g
+! Version: 201504160211
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 11 Apr 2015 23:31 UTC
+! Last modified: 16 Apr 2015 02:11 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -890,7 +890,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||shorkads.de^$third-party
 ||siyl.net^$third-party
 ||siylvi.de^$third-party
-||slimspots.com^$third-party
 ||smartaffiliate.de^$third-party
 ||smartclip.net^$~object-subrequest,third-party
 ||smartredirect.de^$third-party
@@ -974,7 +973,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||insta-cash.net^$popup,third-party
 ||jinkads.com^$popup,third-party
 ||sevenads.net^$popup,third-party
-||slimspots.com^$popup,third-party
 ||websc.org^$popup,third-party
 ||xx00.info^$popup,third-party
 !-----------------------------Third-party Werbung-----------------------------!
@@ -1151,6 +1149,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||free-toplisten.at^$third-party
 ||freenet.de^*&affiliate=$script
 ||freepremium.de/?ref=$third-party
+||fritzdyn.de/banner.gif
 ||fs-location.de/img/partner/
 ||fuckmetube.org^$subdocument,third-party
 ||fuckshow.org^$subdocument,third-party
@@ -1265,6 +1264,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||mobile360.de/feedbox/inline$third-party
 ||mobilefun.de^*/cpgf4m.gif$third-party
 ||modellplan.de/banner/$third-party
+||momentblick.de/promotion/
 ||mondrian.twyn.com^$third-party
 ||moneyspecial.de^*/banner/
 ||monsterdealz.de/images/$third-party
@@ -1417,7 +1417,6 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||saarland-deals.de/*-widget/$subdocument,third-party
 ||safeterms.de/images/public/banner/$third-party
 ||sandra-messer.info/wp-content/uploads/*/video-newsletter.gif$third-party
-||sapi.edelight.biz/api/
 ||sat-bay.de/Shop/$domain=sat-erotik.de|satindex.de
 ||sat1.de/ran/clsponsor_opener_short_$object-subrequest
 ||satchef.de/banner/$third-party
@@ -2266,7 +2265,9 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||freeload.to^*/lovedate160.gif
 ||freenet.de/www/export/$script
 ||freizeitparks.de/fileadmin/user_upload/banner/
+||fremdwort.de/image/$subdocument
 ||fremdwort.de/images/banner_
+||fremdwort.de^*/image/$subdocument
 ||frischauf-gp.de/fileadmin/images/banner-extern/
 ||fscklog.typepad.com/heise_mac.gif
 ||fscklog.typepad.com/ms_imovie.jpg
@@ -2798,6 +2799,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||morgenweb.de^*/banner/
 ||morgfx.de/banner/
 ||motorsport-total.com/i/dunlop_flash.gif
+||motorsport-total.com/image/
+||motorsport-total.com^*/image/
 ||motorsport-xl.de^*/werbung/
 ||mototreff.ch/Banner/
 ||mov-world.net^*/fidel.js
@@ -3165,6 +3168,7 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||safeyourlink.com/partner/
 ||salve-tv.net/datenbank/image/motive_startseite/flug7.jpg
 ||salve-tv.net^*/salve-anzeigen.jpg
+||sapi.edelight.biz/api/$domain=gala.de
 ||sat-erotik.de/banner/
 ||sat-ulc.eu/images/misc/ebay_logo.gif
 ||sat1.de^*/adbridgeplugin.swf$object-subrequest
@@ -3972,6 +3976,7 @@ kress.de###banderole
 anderes-wort.de,apotheke-adhoc.de,bos-fahrzeuge.info,chaoz.ws,cine4home.de,ehrensenf.de,eisenbahn-kurier.de,elektrischer-reporter.de,fettspielen.de,ff-online.com,finanzen.net,forum.worldofplayers.de,frischauf-gp.de,gamekeyfinder.de,gamingjunkies.de,handballworld.com,holidaycheck.at,holidaycheck.ch,holidaycheck.de,horseweb.de,isarszene.de,it-sa.de,kath.ch,koelschwasser.eu,meproxsoft.de,neuigkeitendienst.com,rollingplanet.net,see-online.info,sodbrennen-welt.de,softguide.de,suxedoo.ch,vhs-ol.de,we-mod-it.com,xp-antispy.org###banner
 macgadget.de###banner-floater
 sportnews.bz###banner-leaderboard
+fremdwort.de###banner-rectangle
 autozeitung.de###banner-region
 deutsche-wirtschafts-nachrichten.de,doppelpunkt.de###banner-right
 swz.it###banner-side
@@ -4015,6 +4020,7 @@ hallescherfc.de,linguee.de,versicherungsjournal.de,wahretabelle.de,webfail.at###
 rtl-west.de,rtlnord.de###banner_wrapper
 haustechnikdialog.de###bannerdiv
 radiohamburg.de###bannerleiste
+fremdwort.de###bannerright
 breakpoint.untergrund.net,eiskaltmacher.de###banners
 handball-world.com###bannersky
 maerkischeallgemeine.de,saz-aktuell.com,webfail.at###bannertop
@@ -4027,7 +4033,7 @@ gizmodo.de###big-mega
 ichspiele.cc###big-sky
 heinertown.de###bigSliderFrame0
 benm.at,berliner-rundfunk.de,buchmarkt.de###bigbanner
-tikonline.de###bigsize
+fremdwort.de,tikonline.de###bigsize
 magistrix.de###bigsize-top
 pcpraxis.de,rund-magazin.de###bigsizebanner
 prad.de,volksfreund.de###billboard
@@ -6467,7 +6473,7 @@ ebay.de##div[id^="rtm_html_"][style="width: 300px; height: 265px; overflow: hidd
 ebay.de##div[id^="rtm_html_"][style="width: 640px; height: 495px; overflow: hidden; display: block;"]
 ebay.de##div[id^="rtm_html_"][style="width: 728px; height: 105px; text-align: left; display: block;"]
 ebay.de##div[id^="rtm_html_"][style="width: 970px; height: 90px; overflow: hidden; display: block;"]
-formel1.de##div[id^="sas_"]
+formel1.de,motorsport-total.com##div[id^="sas_"]
 unser-star-fuer-baku.tv##div[id^="sponsor_overlay_"]
 oberpfalznetz.de##div[id^="teaser_spbanner_"]
 t-online.de##div[id^="tsc_google_adsense_1"]
@@ -6534,6 +6540,9 @@ pcgameshardware.de##div[style="clear:both; margin:5px 0px 0px 0px; border: 1px s
 e-recht24.de##div[style="clear:both;height:300px;min-width:760px;"]:last-child
 titanic-magazin.de##div[style="clear:left; font-family: Verdana,Tahoma,Geneva,Verdana,sans-serif; font-size:11px;width:285px;"]
 ibash.de##div[style="clear:left; font-family: Verdana,Tahoma,Geneva,Verdana,sans-serif; font-size:11px;width:380px;"]
+formel1.de##div[style="cursor: pointer; height: 90px; width: 940px; text-align: center; margin-left: 10px;"]
+formel1.de##div[style="cursor: pointer; width: 160px; height: 600px; position: absolute; left: 960px; margin-top: 10px;"]
+formel1.de##div[style="cursor: pointer; width: 300px; height: 250px; text-align: center;"]
 satempfang-magazin.de##div[style="display: block; position: absolute; overflow: hidden; z-index: 1001; outline: 0px none; height: auto; width: 800px; top: 216px; left: 551.5px;"]
 suedtirolnews.it##div[style="display: table; position: static;background: none repeat scroll 0px 0px rgb(252, 252, 251); border: 1px solid rgb(239, 238, 236); padding:5px; float: right; width: 418px; text-align: center; margin: 0px 10px 10px 0px; height:356px;"]
 magistrix.de##div[style="display:inline-block; width:728px; height:90px"]
@@ -7271,6 +7280,7 @@ r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 @@||liverail.com^*/liverail_preroll.swf$object,domain=jam.fm|paradiso.de
 @@||lovefilm.de/ajax/widgets/advertising/competitions_data.html?$xmlhttprequest
 @@||magenschmerzen.net/wp-content/themes/zeemagazine_adtech/$~third-party
+@@||maps.gstatic.com/maps-api-*/adsense.js$domain=wg-gesucht.de
 @@||markt.de^*/advert_search_results.gif
 @@||marktplatzservice.de/ads/$image,domain=local24.de
 @@||master.captchaad.com/www/delivery/$script,domain=winload.de
@@ -7438,91 +7448,6 @@ r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 @@||zanox-affiliate.de/images/$domain=sunsteps.org
 @@||zanox-affiliate.de/ppc/?$subdocument,domain=eule.de|gutscheindoktor.de|notenbuch24.de|preismafia.com
 @@||zanox.com/images/programs/$domain=sunsteps.org
-!
-@@|http://*.com/$image,third-party,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@|http://*.de/$image,third-party,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@|http://*.de/*/*.js|$third-party,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||4wheelfun.de^$elemhide
-@@||alysson.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||atonato.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||auto-motor-und-sport.de^$elemhide
-@@||autostrassenverkehr.de^$elemhide
-@@||benelph.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||blubroid.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||boerse-online.de^$elemhide
-@@||brigitte.de^$elemhide
-@@||brigitte.de^$image,domain=brigitte.de
-@@||builfico.de^$image,domain=itectale.de|uobsoe.com
-@@||cuiron.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||cussixia.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||digentu.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||eltelmis.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||ethnarc.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||expepp.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||fem.com^$elemhide
-@@||fem.com^$image,domain=fem.com
-@@||feropt.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||finanzen.net^$elemhide
-@@||focus.de^$elemhide
-@@||frantro.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||fribre.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||fruited.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||gala.de^$elemhide
-@@||gamepro.de^$elemhide
-@@||gamestar.de^$elemhide
-@@||gamona.de^$elemhide
-@@||gamona.de^$image,domain=gamona.de
-@@||gearwom.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||hirsung.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||hobodoka.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||idlity.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||image.gala.de^$image,domain=gala.de
-@@||images.boerse-online.de^$image,domain=boerse-online.de
-@@||images.idgentertainment.de/images/*.jpg/$image,domain=gamestar.de
-@@||images.idgentertainment.de/images/*.png/$image,domain=gamestar.de
-@@||img1.auto-motor-und-sport.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|motor-klassik.de|sportal.de|sportauto.de
-@@||inciteb.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||incown.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||indalam.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||intectwo.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||itectale.de^$elemhide
-@@||itectale.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||jubbie.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||kabeleins.de^$elemhide
-@@||kabeleins.de^$image,domain=kabeleins.de
-@@||letiva.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||liferd.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||ls1.wettercomassets.com^$image,domain=wetter.com
-@@||lustich.de^$elemhide
-@@||manughl.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||mename.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||motor-klassik.de^$elemhide
-@@||odillees.de^$image,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-@@||p5.focus.de^$image,domain=focus.de
-@@||pcwelt.de^$elemhide
-@@||prosieben.de^$elemhide
-@@||prosieben.de^$image,domain=prosieben.de
-@@||prosiebenmaxx.de^$elemhide
-@@||prosiebenmaxx.de^$image,domain=prosiebenmaxx.de
-@@||sat1.de^$elemhide
-@@||sat1.de^$image,domain=sat1.de
-@@||sat1gold.de^$elemhide
-@@||sat1gold.de^$image,domain=sat1gold.de
-@@||sixx.de^$elemhide
-@@||sixx.de^$image,domain=sixx.de
-@@||sportal.de^$elemhide
-@@||sportauto.de^$elemhide
-@@||stern.de^$elemhide
-@@||the-voice-of-germany.de^$elemhide
-@@||the-voice-of-germany.de^$image,domain=the-voice-of-germany.de
-@@||tvspielfilm.de^$elemhide
-@@||tvspielfilm.de^$image,domain=tvspielfilm.de
-@@||wetter.com^$elemhide
-@@||wetteronline.de^$elemhide
-@@||wetteronline.de^$image,domain=wetteronline.de
-@@||www.sportal.de^$image,domain=sportal.de
-|http://*.de/*.html|$subdocument,third-party,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
-|http://*.de/*.htm|$subdocument,third-party,domain=4wheelfun.de|auto-motor-und-sport.de|autostrassenverkehr.de|boerse-online.de|brigitte.de|fem.com|finanzen.net|focus.de|gala.de|gamepro.de|gamestar.de|gamona.de|itectale.de|kabeleins.de|lustich.de|motor-klassik.de|pcwelt.de|prosieben.de|prosiebenmaxx.de|sat1.de|sat1gold.de|sixx.de|sportal.de|sportauto.de|stern.de|the-voice-of-germany.de|tvspielfilm.de|wetter.com|wetteronline.de
 ! Anti-Adblock
 @@.com^*.js$script,domain=ul-load.com|uploaded-premium.ru
 @@.gif#$domain=java-forum.org|loads7.com|schweizer-abgeltungssteuer.ch|startup-connection.de
