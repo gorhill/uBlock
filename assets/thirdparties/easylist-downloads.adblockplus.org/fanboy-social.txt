@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: 5XSldFBy4ZlFUi1hzfXPqQ
-! Version: 201504112331
+! Checksum: zYH4vqjaRLU7e56vmUc1aQ
+! Version: 201504160211
 ! Title: Fanboy's Social Blocking List
-! Last modified: 11 Apr 2015 23:31 UTC
+! Last modified: 16 Apr 2015 02:11 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -3619,6 +3619,7 @@ _youtube_social_
 ###social-float-block
 ###social-floater
 ###social-floating
+###social-follow
 ###social-follow-article-body
 ###social-foot
 ###social-footer
@@ -5178,6 +5179,7 @@ _youtube_social_
 ##.floatingSocial
 ##.floatredesSociales
 ##.flyout-facebook
+##.fn-social-followus
 ##.fnb-social
 ##.fng-social
 ##.fodicon-facebook
@@ -7893,6 +7895,7 @@ _youtube_social_
 ##.toggleSocialBox
 ##.tool-share
 ##.toolbar-sharing
+##.toolbar_button_list_social
 ##.tools-share
 ##.toolsShare
 ##.toolsbar-share
@@ -9146,6 +9149,7 @@ runnersconnect.net###floating-menu-blog
 oilprice.com###floaty-email
 allfacebook.com,amateurgourmet.com,annyas.com,csgolounge.com,glogster.com,mediabistro.com,metoffice.gov.uk,recombu.com,socialtimes.com,the-scientist.com,thehairpin.com,thenextweb.com,usatoday.com###follow
 socialitelife.com###follow-list
+tmz.com###follow-tmz
 wired.com###follow-wired
 diffen.com###followDfn
 thisoldhouse.com###followToh
@@ -9408,7 +9412,7 @@ upi.com##.f
 classicalite.com,newseveryday.com##.f-sns
 megashare.com##.fa-circle
 aquarius.org.uk##.fa-square
-9gag.tv,absoluteradio.co.uk,al-shorfa.com,alternet.org,backstage.com,chacha.com,comicrelief.com,computingunleashed.com,dailymail.co.uk,deathandtaxesmag.com,designroyale.com.au,digitimes.com,discountsstory.com,eater.com,enom.com,eurogamer.net,everfi.com,fightthesmears.com,fixya.com,flippinawesome.org,forvo.com,geeksandbeats.com,gizmodo.com,grooveshark.com,hallels.com,happycoins.com,healthymagination.com,huffingtonpost.ca,huffingtonpost.co.uk,huffingtonpost.com,independent.ie,iveybusinessreview.ca,kickstarter.com,lifehacker.com,luta.co.uk,macrumors.com,mademan.com,messynessychic.com,myunidays.com,mzhiphop.com,nationofchange.org,npr.org,pcworld.in,perpetual-solutions.com,pinknews.co.uk,proboards.com,ravpower.com,recode.net,reuters.com,saturn.de,sci2.tv,sciencenews.org,scion.com,scroll.in,si.com,slate.com,smashingmagazine.com,sourcefednews.com,stepstone.be,t3.com,take.fm,techradar.com,techspot.com,theatlantic.com,thedailyshow.com,thedigitalfix.com,thenewstribe.com,thesun.co.uk,tineye.com,triangleoffense.com,tvland.com,tvnz.co.nz,tweaktown.com,usvsth3m.com,vine.co,washingtonpost.com,yahoo.com,yoink.com,yourdailymedia.com##.facebook
+9gag.tv,absoluteradio.co.uk,al-shorfa.com,alternet.org,backstage.com,chacha.com,comicrelief.com,computingunleashed.com,dailymail.co.uk,deathandtaxesmag.com,designroyale.com.au,digitimes.com,discountsstory.com,eater.com,enom.com,eurogamer.net,everfi.com,fightthesmears.com,fixya.com,flippinawesome.org,forvo.com,geeksandbeats.com,gizmodo.com,grooveshark.com,hallels.com,happycoins.com,healthymagination.com,huffingtonpost.ca,huffingtonpost.co.uk,huffingtonpost.com,independent.ie,iveybusinessreview.ca,kickstarter.com,lifehacker.com,luta.co.uk,macrumors.com,mademan.com,messynessychic.com,moneysavingexpert.com,myunidays.com,mzhiphop.com,nationofchange.org,npr.org,pcworld.in,perpetual-solutions.com,pinknews.co.uk,proboards.com,ravpower.com,recode.net,reuters.com,saturn.de,sci2.tv,sciencenews.org,scion.com,scroll.in,si.com,slate.com,smashingmagazine.com,sourcefednews.com,stepstone.be,t3.com,take.fm,techradar.com,techspot.com,theatlantic.com,thedailyshow.com,thedigitalfix.com,thenewstribe.com,thesun.co.uk,tineye.com,triangleoffense.com,tvland.com,tvnz.co.nz,tweaktown.com,usvsth3m.com,vine.co,washingtonpost.com,yahoo.com,yoink.com,yourdailymedia.com##.facebook
 lovefilm.com##.facebook-title
 cracked.com##.facebookLogo
 singularityhub.com##.facebook_connect
@@ -10221,6 +10225,7 @@ wonderhowto.com#@#.share-widget
 linkedin.com#@#.share-wrap
 vimeo.com#@#.share-wrapper
 scan.co.uk#@#.shareContainer
+hootsuite.com#@#.shareCount
 pscufs.com#@#.shareLeft
 facebook.com#@#.shareLink
 photobucket.com#@#.shareLinks
@@ -10273,6 +10278,7 @@ welt.de#@#.socialMedia
 iq-student-accommodation.com#@#.social_bar
 pinterest.com,wat.tv#@#.social_buttons
 academia.edu#@#.social_container
+maximumpc.com#@#.social_links_top
 neoseeker.com#@#.social_share
 leica-camera.com#@#.social_toolbar
 wuala.com#@#.socialbox

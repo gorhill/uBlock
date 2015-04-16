@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: /vz9TXA9PI4sRWiFatZxkQ
+! Checksum: GbA+++8s9RAoXnKlubBi3g
 ! Title: EasyList Hebrew
-! Last modified: 12/04/15 00:41
+! Last modified: 13/04/15 18:15
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -930,7 +930,6 @@ ynet.co.il##.MRec_main
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
-ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
 ynet.co.il##.ghciPromoLightbox1

@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: QyG5bku6+d2tQWT6wyWgpQ
-! Version: 201504112330
-! Last modified: 11 Apr 2015 23:30 UTC
+! Checksum: jShHdn+wUN3ismU9F96cgQ
+! Version: 201504160210
+! Last modified: 16 Apr 2015 02:10 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -3702,6 +3702,7 @@ _youtube_social_
 ###social-float-block
 ###social-floater
 ###social-floating
+###social-follow
 ###social-follow-article-body
 ###social-foot
 ###social-footer
@@ -5261,6 +5262,7 @@ _youtube_social_
 ##.floatingSocial
 ##.floatredesSociales
 ##.flyout-facebook
+##.fn-social-followus
 ##.fnb-social
 ##.fng-social
 ##.fodicon-facebook
@@ -7976,6 +7978,7 @@ _youtube_social_
 ##.toggleSocialBox
 ##.tool-share
 ##.toolbar-sharing
+##.toolbar_button_list_social
 ##.tools-share
 ##.toolsShare
 ##.toolsbar-share
@@ -11081,6 +11084,7 @@ _eu_cookie_
 ###cookie_policies
 ###cookie_policy
 ###cookie_policy_alert
+###cookie_policy_popup
 ###cookie_popup
 ###cookie_privacy_holder
 ###cookie_privacy_popup
@@ -11174,6 +11178,7 @@ _eu_cookie_
 ###cookies_warning
 ###cookiesdirective
 ###cookieshit
+###cookiespolicy
 ###cookiesribbon
 ###cookiestatement
 ###cookietext
@@ -11533,6 +11538,7 @@ _eu_cookie_
 ##.gn-cookie-alert
 ##.header-cookie-content
 ##.headerCookies
+##.ib-m-cookie-banner
 ##.imPolicycookiemessage
 ##.info-cookie
 ##.infoCookies
@@ -11574,6 +11580,7 @@ _eu_cookie_
 ##.storm-cookie
 ##.sys_cc-cookies
 ##.tcCookiesDialogWrapper
+##.tesco-cookie
 ##.texteAlerteCookie
 ##.toast-type-newCookie
 ##.tre-cookie-disclaimer
@@ -12303,6 +12310,7 @@ aliexpress.com###top-banner-container
 russian-fiancee.com###top_logo
 lenta.ru###up
 experts-exchange.com##.answerOverlayContainer
+etc-com.ru##.arendalink
 anidub.com##.art-header
 news.nur.kz##.aside > .animated
 livejournal.com##.b-fader
@@ -12337,6 +12345,7 @@ vsekino.su##.lenta
 21region.org##.logo
 lib.rus.ec##.lsp-overlay
 sports.ru##.m-state_loading
+etc-com.ru##.mainbanner
 slavyanskaya-kultura.ru##.mod_inshop_front
 newsdozor.ru##.news.normaltext .bbc_img
 ozon.ru##.news_block
@@ -12629,6 +12638,7 @@ wonderhowto.com#@#.share-widget
 linkedin.com#@#.share-wrap
 vimeo.com#@#.share-wrapper
 scan.co.uk#@#.shareContainer
+hootsuite.com#@#.shareCount
 pscufs.com#@#.shareLeft
 facebook.com#@#.shareLink
 photobucket.com#@#.shareLinks
@@ -12681,6 +12691,7 @@ welt.de#@#.socialMedia
 iq-student-accommodation.com#@#.social_bar
 pinterest.com,wat.tv#@#.social_buttons
 academia.edu#@#.social_container
+maximumpc.com#@#.social_links_top
 neoseeker.com#@#.social_share
 leica-camera.com#@#.social_toolbar
 wuala.com#@#.socialbox

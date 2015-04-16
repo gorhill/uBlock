@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: nJc3Eau5gytkMIroIqd8+g
-! Version: 201504101014
+! Checksum: VzgjBn/0gNnbYotKs4O0Ow
+! Version: 201504130039
 ! Title: EasyList Lite
 ! Only for chinese language websites.
-! Last modified: 2015/04/10 10:14 +0800
+! Last modified: 2015/04/13 00:39 +0800
 ! Expires: 10 days (update frequency)
 ! Fork of: EasyList https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -59,7 +59,6 @@
 ###ad_C
 ###Ad_Center1
 ###ad_container
-###ad_content
 ###ad_D
 ###ad_E
 ###ad_F
