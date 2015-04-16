@@ -102,19 +102,40 @@
 // This will remove all unused filter list entries from
 // µBlock.remoteBlacklists`. This helps reduce the size of backup files.
 
-µBlock.extractSelectedFilterLists = function() {
-    var r = JSON.parse(JSON.stringify(this.remoteBlacklists));
+µBlock.extractSelectedFilterLists = function(callback) {
+    var µb = this;
 
-    for ( var path in r ) {
-        if ( r.hasOwnProperty(path) === false ) {
-            continue;
+    var onBuiltinListsLoaded = function(details) {
+        var builtin;
+        try {
+            builtin = JSON.parse(details.content);
+        } catch (e) {
+            builtin = {};
         }
-        if ( r[path].off !== false ) {
-            delete r[path];
-        }
-    }
 
-    return r;
+        var result = JSON.parse(JSON.stringify(µb.remoteBlacklists));
+        var builtinPath;
+        var defaultState;
+
+        for ( var path in result ) {
+            if ( result.hasOwnProperty(path) === false ) {
+                continue;
+            }
+            builtinPath = path.replace(/^assets\/thirdparties\//, '');
+            defaultState = builtin.hasOwnProperty(builtinPath) === false ||
+                           builtin[builtinPath].off === true;
+            if ( result[path].off === true && result[path].off === defaultState ) {
+                delete result[path];
+            }
+        }
+
+        callback(result);
+    };
+
+    // https://github.com/gorhill/uBlock/issues/63
+    // Get built-in block lists: this will help us determine whether a
+    // specific list must be included in the result.
+    this.assets.get('assets/ublock/filter-lists.json', onBuiltinListsLoaded);
 };
 
 /******************************************************************************/

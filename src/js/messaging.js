@@ -1086,17 +1086,20 @@ var getLocalData = function(callback) {
 /******************************************************************************/
 
 var backupUserData = function(callback) {
-    var onUserFiltersReady = function(details) {
-        var userData = {
-            timeStamp: Date.now(),
-            version: vAPI.app.version,
-            userSettings: µb.userSettings,
-            filterLists: µb.extractSelectedFilterLists(),
-            netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
-            dynamicFilteringString: µb.permanentFirewall.toString(),
-            hostnameSwitchesString: µb.hnSwitches.toString(),
-            userFilters: details.content
-        };
+    var userData = {
+        timeStamp: Date.now(),
+        version: vAPI.app.version,
+        userSettings: µb.userSettings,
+        filterLists: {},
+        netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
+        dynamicFilteringString: µb.permanentFirewall.toString(),
+        hostnameSwitchesString: µb.hnSwitches.toString(),
+        userFilters: ''
+    };
+
+    var onSelectedListsReady = function(filterLists) {
+        userData.filterLists = filterLists;
+
         var now = new Date();
         var filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', now.toLocaleString())
@@ -1112,6 +1115,11 @@ var backupUserData = function(callback) {
         vAPI.storage.set(µb.restoreBackupSettings);
 
         getLocalData(callback);
+    };
+
+    var onUserFiltersReady = function(details) {
+        userData.userFilters = details.content;
+        µb.extractSelectedFilterLists(onSelectedListsReady);
     };
 
     µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
