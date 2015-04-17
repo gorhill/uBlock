@@ -464,9 +464,6 @@ vAPI.tabs.onPopup = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
-    if ( µb.userSettings.showIconBadge ) {
-        µb.updateBadgeAsync(details.openerTabId);
-    }
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -474,6 +471,9 @@ vAPI.tabs.onPopup = function(details) {
     }
 
     // Blocked
+    if ( µb.userSettings.showIconBadge ) {
+        µb.updateBadgeAsync(details.openerTabId);
+    }
 
     // It is a popup, block and remove the tab.
     if(details.targetTabId !== "preempt") {
