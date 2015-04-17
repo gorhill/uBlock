@@ -26,7 +26,7 @@ code {
     padding: 0;
     position: relative;
     white-space: normal;
-    width: 50%;
+    width: 47.5%;
     }
 #diff .pane .rulesContainer {
     position: relative;
@@ -36,7 +36,11 @@ code {
     padding: 0 0 1em 0;
     text-align: center;
     }
-body[dir="ltr"] #revertButton:after {
+#diff .pane.center{
+    width: 5%;
+    min-width: 35px;
+    }
+body[dir="ltr"] .revertButton:after {
     content: '\2009\f061';
     font-family: FontAwesome;
     font-style: normal;
@@ -45,7 +49,7 @@ body[dir="ltr"] #revertButton:after {
     vertical-align: baseline;
     display: inline-block;
     }
-body[dir="rtl"] #revertButton:after {
+body[dir="rtl"] .revertButton:after {
     content: '\2009\f060';
     font-family: FontAwesome;
     font-style: normal;
@@ -54,7 +58,7 @@ body[dir="rtl"] #revertButton:after {
     vertical-align: baseline;
     display: inline-block;
     }
-body[dir="ltr"] #commitButton:before {
+body[dir="ltr"] .commitButton:before {
     content: '\f060\2009';
     font-family: FontAwesome;
     font-style: normal;
@@ -63,7 +67,7 @@ body[dir="ltr"] #commitButton:before {
     vertical-align: baseline;
     display: inline-block;
     }
-body[dir="rtl"] #commitButton:before {
+body[dir="rtl"] .commitButton:before {
     content: '\f061\2009';
     font-family: FontAwesome;
     font-style: normal;
@@ -109,6 +113,9 @@ body[dir="rtl"] #commitButton:before {
 #diff .left {
     border-right: 1px solid #eee;
     }
+#diff .right {
+    border-left: 1px solid #eee;
+    }
 #diff .right > ul {
     color: #888;
     }
@@ -128,17 +135,26 @@ body[dir="rtl"] #commitButton:before {
     }
 #diff .right li:hover {
     }
-#diff .right li.notLeft {
+#diff li.notLeft {
     color: #000;
     opacity: 1;
     }
-#diff .right li.notRight {
+#diff li.notRight {
     color: #000;
     }
-#diff .right li.toRemove {
+#diff li.toRemove {
     color: #000;
     text-decoration: line-through;
     opacity: 1;
+    }
+#diff .center li {
+    background-color: #fff;
+    padding: 0;
+    text-align: center;
+    }
+#diff .center li button{
+    padding: 0;
+    width: 50%;
     }
 #diff textarea {
     background-color: #f8f8ff;
