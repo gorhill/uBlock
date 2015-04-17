@@ -119,7 +119,6 @@ span.unsecure {
     border-color: #fcc;
     color: #f00;
     text-decoration: line-through;
-    text-decoration-style: dotted;
     }
 span.purge {
     border-color: #ddd;
