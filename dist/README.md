@@ -30,3 +30,8 @@ Although uBlock Origin is a restartless addon, I found that **installing** a new
 - Launch Firefox
 - Drag and drop the previously downloaded `ublock0.{version}.xpi` into Firefox
 
+uBlock<sub>0</sub> settings are kept intact even after you uninstall the addon.
+
+On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
+
+On Windows, I don't know. Feel free to submit a pull request if you do know.
