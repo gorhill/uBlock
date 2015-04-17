@@ -37,15 +37,18 @@ a {
     padding: 4px;
     padding-top: 5px;
     color: #eee;
-    font-weight: bold;
     background-color: #444;
     text-align: center;
     cursor: pointer;
     }
+#appname {
+    margin-left: 3px;
+    font-weight: bold;
+    }
 #version {
-    font-size: 11px;
-    font-weight: normal;
-    margin-left: 1em;
+    font-size: 75%;
+    opacity: 0.8;
+    margin-left: 5px;
     }
 html {
     font-size: 0;
