@@ -41,19 +41,19 @@ var hasCachedContent = false;
 
 var onMessage = function(msg) {
     switch ( msg.what ) {
-        case 'allFilterListsReloaded':
-            renderFilterLists();
-            break;
+    case 'allFilterListsReloaded':
+        renderFilterLists();
+        break;
 
-        case 'forceUpdateAssetsProgress':
-            renderBusyOverlay(true, msg.progress);
-            if ( msg.done ) {
-                messager.send({ what: 'reloadAllFilters' });
-            }
-            break;
+    case 'forceUpdateAssetsProgress':
+        renderBusyOverlay(true, msg.progress);
+        if ( msg.done ) {
+            messager.send({ what: 'reloadAllFilters' });
+        }
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 };
 
@@ -115,10 +115,20 @@ var renderFilterLists = function() {
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
         elem.text(text);
 
+        // https://github.com/gorhill/uBlock/issues/78
+        // Badge for non-secure connection
+        var remoteURL = listKey;
+        if ( remoteURL.lastIndexOf('http:', 0) !== 0 ) {
+            remoteURL = entry.homeURL || '';
+        }
+        if ( remoteURL.lastIndexOf('http:', 0) === 0 ) {
+            li.descendants('span.status.unsecure').css('display', '');
+        }
+
         // https://github.com/chrisaljoudi/uBlock/issues/104
         var asset = listDetails.cache[listKey] || {};
 
-        // Update status
+        // Badge for update status
         if ( entry.off !== true ) {
             if ( asset.repoObsolete ) {
                 li.descendants('span.status.new').css('display', '');
