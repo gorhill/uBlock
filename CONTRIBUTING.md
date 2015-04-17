@@ -1,5 +1,7 @@
 # Submitting issues
 
+**Must read:** [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html).
+
 ### Before you submit
 
 1. Submit **bugs/issues only**.
