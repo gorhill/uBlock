@@ -9,7 +9,7 @@
 
 
 * [What is uBlock?](#what-is-ublock)
-* [Getting Started](#getting-started)
+* [Getting Started & Installation](#getting-started)
 * [Performance & Benchmarks](#performance)
 * [Release History](#release-history)
 * [Tips](#tips)
