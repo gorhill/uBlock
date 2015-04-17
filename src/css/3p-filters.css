@@ -140,10 +140,10 @@ span.new {
     background-color: hsl(36, 100%, 75%);
     }
 #externalListsDiv {
-    margin: 2em auto 0 2em;
+    margin: 2em auto 0 1em;
     }
 body[dir=rtl] #externalListsDiv {
-    margin: 2em 2em 0;
+    margin: 2em 1em 0;
     }
 #externalLists {
     box-sizing: border-box;
