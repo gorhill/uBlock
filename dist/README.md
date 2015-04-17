@@ -34,4 +34,4 @@ uBlock<sub>0</sub> settings are kept intact even after you uninstall the addon.
 
 On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
 
-On Windows, I don't know where that SQlite file is located. Feel free to submit a pull request if you do know.
+On Windows, the settings are saved in a SQLite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
