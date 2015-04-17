@@ -22,7 +22,7 @@ Remember that you have to update manually also. For some users, updating manuall
 
 #### Firefox
 
-Although uBlock Origin is a restartless addon, I found installing a newer version over an older one often will glitch the installation. These steps always worked fine:
+Although uBlock Origin is a restartless addon, I found that **installing** a newer version over an older one often will glitch the installation. These steps always worked fine:
 
 - Download `ublock0_{version}.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Uninstall current uBlock Origin if already installed
