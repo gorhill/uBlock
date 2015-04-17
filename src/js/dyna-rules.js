@@ -36,8 +36,9 @@ var messager = vAPI.messaging.channel('dyna-rules.js');
 var renderRules = function(details) {
     var liTemplate = uDom('#templates > ul > li');
     var ulLeft = uDom('#diff > .left ul').empty().remove();
+    var ulCenter = uDom('#diff > .center ul').empty().remove();
     var ulRight = uDom('#diff > .right ul').empty().remove();
-    var liLeft, liRight;
+    var liLeft, liCenter, liRight;
     var rules, rule, i;
 
     // Switches always displayed first -- just like in uMatrix
@@ -45,8 +46,10 @@ var renderRules = function(details) {
     for ( i = 0; i < rules.length; i++ ) {
         rule = rules[i];
         liLeft = liTemplate.clone().text(rule);
+        liCenter = liTemplate.clone();
         liRight = liTemplate.clone().text(rule);
         ulLeft.append(liLeft);
+        ulCenter.append(liCenter);
         ulRight.append(liRight);
     }
 
@@ -84,22 +87,30 @@ var renderRules = function(details) {
         onLeft = permanentRules.hasOwnProperty(rule);
         onRight = sessionRules.hasOwnProperty(rule);
         liLeft = liTemplate.clone();
+        liCenter = liTemplate.clone();
         liRight = liTemplate.clone();
         if ( onLeft && onRight ) {
             liLeft.text(rule);
             liRight.text(rule);
         } else if ( onLeft ) {
-            liLeft.text(rule);
+            liLeft.text(rule).addClass('notRight');
+            liCenter.html('<button type="button" class="commitButton"></button><button type="button" class="revertButton"></button>');
             liRight.text(rule).addClass('notRight toRemove');
         } else {
+            liCenter.html('<button type="button" class="commitButton"></button><button type="button" class="revertButton"></button>');
             liRight.text(rule).addClass('notLeft');
+            liLeft.text(rule).addClass('notLeft toRemove');
         }
         ulLeft.append(liLeft);
+        ulCenter.append(liCenter);
         ulRight.append(liRight);
     }
 
     uDom('#diff > .left > .rulesContainer').append(ulLeft);
+    uDom('#diff > .center > .rulesContainer').append(ulCenter);
     uDom('#diff > .right > .rulesContainer').append(ulRight);
+    uDom('.rulesContainer .revertButton').on('click', singleRevertHandler);
+    uDom('.rulesContainer .commitButton').on('click', singleCommitHandler);
     uDom('#diff').toggleClass('dirty', details.sessionRules !== details.permanentRules);
 };
 
@@ -168,9 +179,18 @@ var rulesFromHTML = function(selector) {
     var rules = [];
     var lis = uDom(selector);
     var li;
+    var singleAction = uDom('.singleAction').length;
     for ( var i = 0; i < lis.length; i++ ) {
         li = lis.at(i);
-        if ( li.hasClassName('toRemove') ) {
+        if ( !singleAction && li.hasClassName('toRemove') ) {
+            rules.push('');
+        } else if ( li.hasClassName('singleAction') && li.hasClassName('toRemove') && ( li.hasClassName('notRight') || li.hasClassName('notLeft') ) ) {
+            rules.push('');
+        } else if ( li.hasClassName('singleAction') && ( li.hasClassName('notRight') || li.hasClassName('notLeft') ) ) {
+            rules.push(li.text());
+        } else if ( singleAction && li.hasClassName('toRemove') && ( li.hasClassName('notRight') || li.hasClassName('notLeft') ) ) {
+            rules.push(li.text());
+        } else if ( singleAction && ( li.hasClassName('notRight') || li.hasClassName('notLeft') ) ) {
             rules.push('');
         } else {
             rules.push(li.text());
@@ -191,7 +211,33 @@ var revertHandler = function() {
 
 /******************************************************************************/
 
+var singleRevertHandler = function() {
+    var i = [].indexOf.call(this.parentNode.parentNode.children, this.parentNode);
+    var li = uDom('#diff .left li').at(i);
+    li.addClass('singleAction');
+    var request = {
+        'what': 'setSessionFirewallRules',
+        'rules': rulesFromHTML('#diff .left li')
+    };
+    messager.send(request, renderRules);
+};
+
+/******************************************************************************/
+
 var commitHandler = function() {
+    var request = {
+        'what': 'setPermanentFirewallRules',
+        'rules': rulesFromHTML('#diff .right li')
+    };
+    messager.send(request, renderRules);
+};
+
+/******************************************************************************/
+
+var singleCommitHandler = function() {
+    var i = [].indexOf.call(this.parentNode.parentNode.children, this.parentNode);
+    var li = uDom('#diff .right li').at(i);
+    li.addClass('singleAction');
     var request = {
         'what': 'setPermanentFirewallRules',
         'rules': rulesFromHTML('#diff .right li')
