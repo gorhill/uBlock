@@ -1,6 +1,8 @@
 ## INSTALL
 
-- Download and unzip `ublock_{version}.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+#### Chromium
+
+- Download and unzip `ublock0_{version}.zip` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
 - Rename the unzipped directory to `ublock`
     - When you later update manually, replace the **content** of the `ublock` folder with the **content** of the latest zipped version.
     - This will ensure that all the extension settings will be preserved
@@ -17,3 +19,14 @@ The extension will now be available in your chromium/chromium-based browser.
 Remember that you have to update manually also. For some users, updating manually is actually an advantage because:
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
+
+#### Firefox
+
+Although uBlock Origin is a restartless addon, I found installing a newer version over an older one often will glitch the installation. These steps always worked fine:
+
+- Download `ublock0_{version}.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
+- Uninstall current uBlock Origin if already installed
+- Quit Firefox completely
+- Launch Firefox
+- Drag and drop the previously downloaded `ublock0_{version}.xpi` into Firefox
+
