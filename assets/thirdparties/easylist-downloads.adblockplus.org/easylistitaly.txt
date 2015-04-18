@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: Mx5ZyGVaIG1VLQ12BbvYDg
-! Version: 201503211221
+! Checksum: xywO6xyuPH7sO/3IiP/eog
+! Version: 201504180411
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 21 Mar 2015 12:21 UTC
+! Ultima modifica: 18 Apr 2015 04:11 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -170,6 +170,7 @@ _sito/adv/
 ##.tabellaPubblicita
 ##.tccbanner
 ##.view-pubblicita
+##a[href^="//w.linkwelove.it/urls/"]
 ##a[href^="http://adserver.html.it/"]
 ##a[href^="http://adserver.ilmessaggero.it/"]
 ##a[href^="http://crazylead.com/video/"]
@@ -414,6 +415,7 @@ sportube.tv#@#.afs_ads
 ||locandinebest.net/locandina/$subdocument,third-party
 ||macrolibrarsi.it/banners/
 ||macrolibrarsi.org/banner/
+||macrolibrarsi.s3.amazonaws.com/img/banner_partner/
 ||mediaon.it/objects/deal_list/
 ||mmvid.s3.amazonaws.com^
 ||mondojuventus.it^$third-party
@@ -700,6 +702,7 @@ sportube.tv#@#.afs_ads
 ||cheauto.it/asset/img/prestitionline.gif
 ||chiamarsibomber.com^*/img_banner/
 ||chievocalcio.tv^*/full-sponsor.png
+||chimerarevo.com^*/banner-
 ||ciaocomo.it/box-assicurazioni/
 ||ciaocomo.it/images/banners/
 ||ciclonline.com/images/banners/
@@ -1317,6 +1320,7 @@ sportube.tv#@#.afs_ads
 ||orvietosi.it^*298x100.swf
 ||ostiatv.it/upl/banner
 ||oxfordparavia.it/img/babylon.gif
+||p.italia-film.org^
 ||padovanews.it/images/banners/
 ||paeimprese.it^*/downloadfilebanner.php?
 ||palermomania.com/images/banner/
@@ -1629,6 +1633,7 @@ sportube.tv#@#.afs_ads
 ||umbriaingol.it//immagini/File_banner/
 ||unionemonregalese.it/UP_BANNERS/
 ||universfilms.com^*_bluebutton_watchonline_
+||uominietrasporti.it/banner/
 ||uscatanzaro.net/images/banners/
 ||valenza.it/banner/
 ||vallesabbianews.it/files/Image/Banner/
@@ -1807,7 +1812,7 @@ contosulconto.it###banner_content
 tuttobasket.net###banner_head
 laprovinciadicomo.it###banner_header
 palermomania.it###banner_header2
-tuttosport.com###banner_leaderboard
+ilroma.net,subito.it,tuttosport.com###banner_leaderboard
 lastampa.it###banner_maxticker
 html.it###banner_piede_articolo
 paginegialle.it###banner_pushbar
@@ -2059,6 +2064,7 @@ ilgiornale.it###tab_annunci
 ladyradio.it###table128[width="492"]
 datamanager.it,techvideo.tv###takeover
 datamanager.it,techvideo.tv###takeover-spazio
+gamesvillage.it###takeover_gv
 genova24.it###takeover_left
 genova24.it###takeover_right
 tomshw.it###testata_giu
@@ -2144,14 +2150,14 @@ caserta24ore.it,fantagazzetta.com,gamemag.it,ilikepuglia.it,phicatube.net,radios
 meteowebcam.it##.ads_menu
 corriereadriatico.it,ilgazzettino.it,ilmattino.it,ilmessaggero.it,ilsecoloxix.it,leggo.it,pcprofessionale.it,pubblicitaitalia.it,quotidianodipuglia.it##.adsense
 meteowebcam.it##.adsense_menu
-a-realestate.it,adessoin.tv,animalidalmondo.it,ansa.it,beauty.it,dagospia.com,esseresani.it,faidatemania.it,gay.it,giornalettismo.com,guidecucina.it,ideeviaggi.it,ilsole24ore.com,iobloggo.com,iogames.it,iomobile.it,lavoroefinanza.it,mammaebambino.it,mtv.it,nonsolocultura.it,odiami.it,outcast.it,pianetagreen.it,pianetamotori.it,radiolina.it,radiomontecarlo.net,repubblica.it,romagnaoggi.it,sky.it,sportpower.it,tuttopercasa.it,verytech.it,virgilio.it,vivalascuola.it,vocenuova.tv##.adv
+a-realestate.it,adessoin.tv,animalidalmondo.it,ansa.it,beauty.it,dagospia.com,esseresani.it,faidatemania.it,gay.it,giornalettismo.com,guidecucina.it,ideeviaggi.it,ilfattoquotidiano.it,ilsole24ore.com,iobloggo.com,iogames.it,iomobile.it,lavoroefinanza.it,mammaebambino.it,mtv.it,nonsolocultura.it,odiami.it,outcast.it,pianetagreen.it,pianetamotori.it,radiolina.it,radiomontecarlo.net,repubblica.it,romagnaoggi.it,sky.it,sportpower.it,tuttopercasa.it,verytech.it,virgilio.it,vivalascuola.it,vocenuova.tv##.adv
 famigliacristiana.it##.adv-box
 motori.it##.adv-items
 oktennis.it##.adv1
 delleconomia.it##.adv200
 virgilio.it##.advTuning
 webnews.it##.adv_01
-addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it##.advert
+addicted2play.com,amonapoli.it,eurogamer.it,giardini.biz,morningstar.it,tvtv.it,vg247.it##.advert
 loradellacalabria.it##.advertise
 loradellacalabria.it##.advertise2
 internimagazine.it##.advertisement
@@ -2181,7 +2187,7 @@ lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
 advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,diretta.it,finanzaonline.com,gazzettadiavellino.it,gazzettadinapoli.it,gazzettadisalerno.it,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,secoloditalia.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
 rollingstonemagazine.it##.banner-abbonamenti
-lacrocequotidiano.it##.banner-container
+lacrocequotidiano.it,mtv.it##.banner-container
 telesud3.com##.banner-destra
 telesud3.com##.banner-destra-tyf
 algheroeco.com##.banner-header-dx
@@ -2277,6 +2283,7 @@ corrieredilatina.it,corriereromagna.it,ilmattinodifoggia.it,lanuovaprimapagina.i
 libero.it##.big
 youreporter.it##.bigrectangle600
 ilgiornale.it##.block-ilg-adsense
+ilroma.net##.block-rotating-banner
 ilcapoluogo.com##.block-view-bannerSlide
 risultati.it##.bookmarker-53
 beppegrillo.it##.bottom-banner
@@ -2373,7 +2380,7 @@ vivastreet.it##.kiwii-box-300x250
 corrieredellosport.it##.label_sponsor_sp
 alessandrianews.it##.leader-board-225x90
 alessandrianews.it##.leader-board-728x90
-close-up.it,foxtv.it,guidasicilia.it,la7.it,meteovista.it,radiospeaker.it,today.it##.leaderboard
+close-up.it,foxtv.it,guidasicilia.it,la7.it,meteovista.it,mtv.it,radiospeaker.it,today.it##.leaderboard
 blastingnews.com##.leaderboard-article
 erbanotizie.com,lecconotizie.com##.leaderboard-bottom
 ilsole24ore.com##.link_expand
@@ -2456,7 +2463,7 @@ radiomontecarlo.net##.side-ban
 style.it##.side-gallery
 youreporter.it##.sidebar_menu_virgilio
 newnotizie.it##.single_sidebar300x250
-omnicorse.it##.skin
+ilroma.net,omnicorse.it##.skin
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_left
 iovivoaroma.org##.skin_link_top
 agrigentonotizie.it,anconatoday.it,baritoday.it,bolognatoday.it,bresciatoday.it,cataniatoday.it,cesenatoday.it,chietitoday.it,firenzetoday.it,foggiatoday.it,forlitoday.it,genovatoday.it,ilpescara.it,ilpiacenza.it,latinatoday.it,milanotoday.it,modenatoday.it,monzatoday.it,napolitoday.it,novaratoday.it,padovaoggi.it,palermotoday.it,parmatoday.it,perugiatoday.it,pisatoday.it,ravennatoday.it,riminitoday.it,romatoday.it,salernotoday.it,today.it,torinotoday.it,trentotoday.it,trevisotoday.it,udinetoday.it,veneziatoday.it,veronasera.it,vicenzatoday.it##.skin_right
@@ -2494,7 +2501,6 @@ genova24.it,ivg.it##.takeover
 panorama.it##.teaser-immobiliare
 tiscali.it##.teaserDx
 ansa.it##.text-link
-ilfattoquotidiano.it##.textlink
 excite.it##.textlink_content
 ilfattonisseno.it##.top
 allsongs.tv,dica33.it,radionbc.it##.top-banner
@@ -2529,7 +2535,6 @@ gazzettadiavellino.it,gazzettadisalerno.it##.widget-6
 insegreto.it##.widget-banner
 fxempire.it##.widget_banner
 fxempire.it##.widget_brokers
-ilfattoquotidiano.it##.widget_ifqbooks
 fxempire.it##.widget_latest_promotions
 fxempire.it##.widget_latest_promotions_right
 fxempire.it##.widget_recommended_brokers
@@ -2558,6 +2563,7 @@ musicoff.com##a[href^="http://www.musicoff.com/ad/redirect/"]
 zapster.it##a[href^="http://www.paperbox.it/"]
 piratestreaming.com##a[href^="http://www.piratestreaming.com/video"]
 classifichemusica.com##a[href^="http://www.viagogo.it/Biglietti-Concerti?affiliateID="]
+italia-film.org##a[href^="http://x.italia-film.org/get.php"]
 traderlink.it##a[style="display: block; width: 100%; height: 1080px; filter:alpha(opacity=0); -moz-opacity: 0; opacity: 0; background-color: rgb(255, 255, 255);"]
 gpone.com##div[style=" margin:auto; margin-top:0px; margin-bottom:0px; width:730px; height:92px;"]
 gpone.com##div[style=" margin:auto; margin-top:5px; margin-bottom:5px; width:730px; height:92px;"]
@@ -2649,7 +2655,6 @@ tiscali.it##div[style="width: 300px; height: 250px; vertical-align: top; text-al
 libero.it,paginebianche.it##div[style="width: 300px; height: 250px;"]
 blogo.it##div[style="width: 300px;height: 250px;"]
 articolotre.com##div[style="width: 500px; min-height: 50px; border-bottom: 1px dotted rgb(205, 23, 19); padding: 0px 0px 5px; margin: 0px; background-color: rgb(232, 239, 252);"]
-ilfattoquotidiano.it##div[style="width: 600px; min-height: 42px; border: 0px none; margin: 0px 10px 10px; padding: 0px; background-color: rgb(239, 239, 239);"]
 regginacalcio.com##div[style="width: 702px; height:300px; border: 4px solid #fff; margin-bottom: 0px;"]
 foxlife.it##div[style="width: 728px; height: 90px; margin: 0px auto 10px auto; background:none;"]
 videohifi.com##div[style="width: 740px;height: 110px;"]
@@ -2669,12 +2674,6 @@ mmorpgitalia.it##div[style="width:120px; height:600px;"]
 cronachemaceratesi.it##div[style="width:160px; float:none; height:600px; margin:30px auto;"]
 beppegrillo.it##div[style="width:160px; height:600px;"]
 orgoglionerd.it##div[style="width:227px;height:315px"]
-ilfattoquotidiano.it##div[style="width:235px; height:75px; margin-top: 10px; overflow:hidden; float:left"]
-ilfattoquotidiano.it##div[style="width:235px; height:75px; margin-top: 10px; overflow:hidden; float:left;line-height: 12px;"]
-ilfattoquotidiano.it##div[style="width:235px; height:75px; overflow:hidden; float:left"]
-ilfattoquotidiano.it##div[style="width:235px; height:75px; overflow:hidden; float:left;line-height: 12px;"]
-ilfattoquotidiano.it##div[style="width:235px; height:85px; margin-top: 10px; overflow:hidden; float:left"]
-ilfattoquotidiano.it##div[style="width:235px; height:85px; margin-top: 10px; overflow:hidden; float:left;line-height: 12px;"]
 cronachemaceratesi.it##div[style="width:250px; height:250px; overflow:hidden; margin:5px auto; text-align:center; border:1px solid #aaa;"]
 cronachemaceratesi.it##div[style="width:250px; height:250px; overflow:hidden; margin:5px auto;"]
 gelocal.it##div[style="width:294px; height:74px; border:3px solid #90c539; display:block; background-color:#90c539; cursor:pointer; margin:0 0 10px;"]
@@ -2689,10 +2688,6 @@ sologossip.it##div[style="width:300px; height:250px; margin:0 auto; margin-botto
 beppegrillo.it,giallozafferano.it,mmorpgitalia.it,siciliainformazioni.com,tomshw.it##div[style="width:300px; height:250px;"]
 palermomania.it##div[style="width:300px; height:300px; float:left; margin: 0 10px 10px 0;"]
 lafucina.it##div[style="width:300px; height:600px;"]
-ilfattoquotidiano.it##div[style="width:300px; height:75px; margin-top: 10px; overflow:hidden; float:left"]
-ilfattoquotidiano.it##div[style="width:300px; height:75px; margin-top: 10px; overflow:hidden; float:left;line-height:15px;"]
-ilfattoquotidiano.it##div[style="width:300px; height:75px; overflow:hidden; float:left; margin-top: 10px;"]
-ilfattoquotidiano.it##div[style="width:300px; height:75px; overflow:hidden; float:left; margin-top: 10px;line-height:15px;"]
 xvideoscopate.com##div[style="width:300px;float:right;margin-right:15px;border: 4px solid rgb(85, 85, 85);padding: 40px 40px;"]
 outune.net##div[style="width:300px;height:180px; background:#fff;"]
 affaritaliani.it##div[style="width:300px;height:200px;border:solid 5px #afb2b4 ; background-image:url('http://www.affaritaliani.it/includes/files/affari/fondo.png');font-family:Verdana; color:white"]
@@ -2806,6 +2801,8 @@ mymovies.it##td[style="height:45px; background-color:#FFFFFF; ;"]
 finanzaonline.com,hwupgrade.it##td[style="padding-left:10px; width:300px;"]
 gommeblog.it##td[style="width: 305px; height: 251px; text-align: center;"]
 gommeblog.it##td[style="width: 335px; height: 251px; text-align: center;"]
+clubalfa.it##td[width="305"][height="205"]
+clubalfa.it##td[width="310"][height="255"]
 ! Anti-Adblock
 tomshw.it###notifica_adcont
 termometropolitico.it##[id^="bsa"]
@@ -2926,6 +2923,7 @@ termometropolitico.it##[id^="bsa"]
 @@||tvgratis.altervista.org^*/advertisement.js
 @@||vvvvid.it/img/advertisement.jpg?
 @@||vvvvid.it/img/advertisment.jpg?
+@@||webtvhd.com^$elemhide
 @@||zeb89.altervista.org^$elemhide
 @@||zeb89.altervista.org^*#$image
 ! *** easylistitaly:easylistitaly/easylistitaly_whitelist_dimensions.txt ***

@@ -5,7 +5,7 @@
 !Homepage: https://github.com/szpeter80/hufilter/wiki
 !Title: hufilter
 !Expires: 16 hours
-!Version: 201501312137
+!Version: 201503221510
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Magyar Adblock Plus szurolista
 ! 
@@ -1437,15 +1437,8 @@ epresso.hu##[class*="banner"]
 ! A szabaly bekuldoje vallalja erte teljes felelosseget                  !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
-!||ncore.cc/art/index.php
-ncore.cc##IFRAME
 ncore.cc##DIV[id="fej_csik_felso"]
 ncore.cc##A[href*="2coal.com"]
-!ncore.cc##OBJECT[id="ncore_banner"]
-!ncore.cc##[id="hirdetes"]
-!ncore.cc##IMG[src*="yayo.hu/static/banner"]
-!||ncore.cc/images/banner/
-!ncore.cc##IMG[width="800"]
 !
 teracod.com##DIV[class*="banner"]
 !

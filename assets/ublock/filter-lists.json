@@ -1,10 +1,4 @@
 {
-    "abp.mozilla-hispano.org/nauscopio/filtros.txt": {
-        "off": true,
-        "title": "ESP: Filtros Nauscopicos",
-        "group": "regions",
-        "homeURL": "http://abp.mozilla-hispano.org/nauscopio/filtros.txt"
-        },
     "adblock.gardar.net/is.abp.txt": {
         "off": true,
         "title": "ISL: Icelandic ABP List",
@@ -14,12 +8,6 @@
         "off": true,
         "title": "DNK: Schacks Adblock Plus liste",
         "group": "regions"
-        },
-    "cjxlist1.googlecode.com/svn/cjxlist.txt": {
-        "off": true,
-        "title": "CHN: China: cjxlist (obsolete, will be removed)",
-        "group": "regions",
-        "homeURL": "https://cjxlist1.googlecode.com/svn/cjxlist.txt"
         },
     "dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": {
         "off": true,
@@ -103,6 +91,12 @@
         "group": "regions",
         "homeURL": "https://gitorious.org/adblock-latvian/adblock-latvian/raw/master%3Alists/latvian-list.txt"
         },
+    "gnuzilla.gnu.org/filters/blacklist.txt": {
+        "off": true,
+        "title": "Block all well known privacy trackers",
+        "group": "privacy",
+        "homeURL": ""
+        },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
         "title": "NOR: Norsk adblockliste",
@@ -115,11 +109,32 @@
         "group": "multipurpose",
         "homeURL": "http://hosts-file.net/.%5Cad_servers.txt"
         },
+    "http://abp.mozilla-hispano.org/nauscopio/filtros.txt": {
+        "off": true,
+        "title": "ESP: Filtros Nauscopicos",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "abp.mozilla-hispano.org/nauscopio/filtros.txt"
+        },
+    "https://cjxlist1.googlecode.com/svn/cjxlist.txt": {
+        "off": true,
+        "title": "CHN: China: cjxlist (obsolete, will be removed)",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "cjxlist1.googlecode.com/svn/cjxlist.txt"
+        },
     "http://adblock.ee/list.php": {
         "off": true,
         "title": "EST: Eesti saitidele kohandatud filter",
         "group": "regions",
         "homeURL": ""
+        },
+    "http://www.certyficate.it/adblock/adblock.txt": {
+        "off": true,
+        "title": "POL: Adblock polskie reguly",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
         },
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
         "off": true,
@@ -127,17 +142,32 @@
         "group": "ads",
         "homeURL": ""
         },
+    "https://iadb.azurewebsites.net/Finland_adb.txt": {
+        "off": true,
+        "title": "FIN: Finnish Addition to Easylist",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
+        },
+    "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": {
+        "off": true,
+        "title": "JPN: ABP Japanese filters (日本用フィルタ)",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt"
+        },
     "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": {
         "off": true,
         "title": "EU: Prebake - Filter Obtrusive Cookie Notices",
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
         },
-    "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt": {
+    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": {
         "off": true,
         "title": "IDN: ABPindo",
         "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt"
+        "homeURL": "",
+        "oldLocation": "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt"
         },
     "liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
         "off": true,
@@ -173,23 +203,11 @@
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/AdBlockPlusIsrael/EasyListHebrew/master/EasyListHebrew.txt"
         },
-    "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt": {
-        "off": true,
-        "title": "POL: Adblock Polska",
-        "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
-        },
     "raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": {
         "off": true,
         "title": "CHN: China: cjxlist (main focus on Chinese sites)",
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
-        },
-    "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt": {
-        "off": true,
-        "title": "JPN: ABP Japanese filters (日本用フィルタ)",
-        "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt"
         },
     "raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
         "off": true,
@@ -208,12 +226,6 @@
         "title": "CZE, SVK: EasyList Czech and Slovak",
         "group": "regions",
         "homeURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt"
-        },
-    "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt": {
-        "off": true,
-        "title": "FIN: Wiltteri",
-        "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
         },
     "someonewhocares.org/hosts/hosts": {
         "off": true,
@@ -274,12 +286,6 @@
         "title": "VIE: Fanboy's Vietnamese",
         "group": "regions",
         "homeURL": "https://www.fanboy.co.nz/fanboy-vietnam.txt"
-        },
-    "www.hufilter.hu/hufilter.txt": {
-        "off": true,
-        "title": "HUN: hufilter (obsolete, will be removed)",
-        "group": "regions",
-        "homeURL": ""
         },
     "www.malwaredomainlist.com/hostslist/hosts.txt": {
         "title": "Malware Domain List",

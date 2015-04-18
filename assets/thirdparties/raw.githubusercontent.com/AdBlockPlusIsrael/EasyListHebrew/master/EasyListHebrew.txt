@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: kNYtr6uA1NbKaZoHYPMirg
+! Checksum: GbA+++8s9RAoXnKlubBi3g
 ! Title: EasyList Hebrew
-! Last modified: 19/03/15 22:50
+! Last modified: 13/04/15 18:15
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -16,10 +16,8 @@
 !
 .co.il/adv/$~object-subrequest
 /pirsum/*$script,object
-|http://ad.$domain=co.il
 ||campaign.*.co.il^$popup,third-party
 ||dcampaigns.*.co.il^$popup,third-party
-
 !
 !--------------------------3rd party blocking rules---------------------------!
 !
@@ -31,6 +29,7 @@
 ||adland.co.il^$third-party
 ||adson.biz^$popup,third-party
 ||adtv.me^$popup
+||adventuredigital.co.il^$popup,third-party
 ||ahituv.biz^$popup,third-party
 ||akamaihd.net^$image,third-party,domain=fxp.co.il
 ||albar.co.il/ads$popup,third-party
@@ -38,6 +37,7 @@
 ||asafnewcalc.mataniphone.tempurl.co.il/calculator3/$popup
 ||ashleymadison.com^$popup,third-party
 ||ashleyrnadison.com^$popup,third-party
+||asakimerp.co.il^$popup,third-party
 ||beauty-place.co.il^$popup,third-party
 ||best-offers.co.il^$popup
 ||bizportal.co.il/web/secur/redirreklama.asp*213.8.137.51/Erate/LinkTo$popup
@@ -50,7 +50,9 @@
 ||expert-offers.com^$popup
 ||fattal-alazman.co.il/?a_aid$popup,third-party
 ||forifiha.com/null^$popup
+||gin.co.il^$popup,third-party
 ||gitam.co.il^$popup,third-party
+||gnsdigital.co.il^$popup,third-party
 ||great-offers.co.il^$popup
 ||greenlead.co.il^$popup
 ||ha-deal.co.il^$popup
@@ -62,9 +64,9 @@
 ||infomed.co.il^$third-party
 ||internet-bee.com^$third-party
 ||jdate.co.il^$third-party
+||lastpage.pw^$popup,third-party
 ||layer.co.il^$popup
 ||mako.buy2.co.il^$third-party
-||mapi.co.il^$popup,third-party
 ||media.foxweb.co.il^$third-party
 ||merlin.co.il^$third-party
 ||mini-sites.net^$popup,third-party
@@ -77,16 +79,16 @@
 ||mysupermarket.co.il/landingpage$popup,third-party
 ||newclio.co.il/sep$popup,third-party
 ||next-net.co.il^$third-party
-||oceanmedia.co.il/landingpages/$popup
-||onclickads.net^$popup
+||oceanmedia.co.il^$popup,third-party
+||onclickads.net^$popup,third-party
 ||onlineproxyfree.com^$popup,third-party
-||osef.co.il^$third-party
-||pera.co.il^$third-party
+||osef.co.il^$popup,third-party
+||pera.co.il^$popup,third-party
 ||pigment-adv.co.il^$popup,third-party
 ||pisrael.com/Campaign$popup,third-party
 ||psakdin.co.il^$domain=calcalist.co.il
 ||rateonclick.com^$popup,third-party
-||rpe.co.il/landing_^$popup,third-party
+||rpe.co.il^$popup,third-party
 ||s.tool-site.com^$third-party
 ||sekindo.com^$popup,third-party
 ||sex-party.co.il^$popup,third-party
@@ -111,8 +113,11 @@
 !
 !-Walla!-!
 ||a.walla.co.il^
+||fus.walla.co.il/js/
+||fus.walla.co.il/report/
 ||fus.walla.co.il/vast/
 ||live.sekindo.com/uploads/users/$domain=walla.co.il
+||xwbe.wcdn.co.il/$image
 ||xwne.wcdn.co.il^$domain=walla.co.il
 !-ynet-!
 /CdaMarketingLink/*
@@ -138,7 +143,6 @@
 ||common.nana10.co.il/JScript/GeneralModules/Banner/
 ||nana10.co.il/SiteServicePromotion/
 !-Haaretz/TheMarker/Mouse.co.il-!
-|http://dclk.$domain=haaretz.co.il|themarker.com|mouse.co.il
 ||haaretz.co.il/htz/images/bg/Ad_bg.gif
 ||haaretz.co.il^*/Banners/
 ||themarker.com/dclk/
@@ -257,6 +261,7 @@
 ||psakdin.co.il/Pictures/Banners/
 ||raddar.co.il/bannersa.php
 ||rol.co.il/files/banners/
+||rotter.net/banners/
 ||rotter.net/edit/text/
 ||scity.co.il/scity_728_sdarot.swf
 ||sdarot.*/banner
@@ -408,7 +413,7 @@ bizportal.co.il,bursagraph.co.il,saloona.co.il###top_banner
 bhol-forums.co.il,bhol.co.il###top_banner_ph
 fun-city.co.il,popcorate.co.il###videoImage1_login
 beok.co.il,winwin.co.il##.TopBanners
-haaretz.co.il,infomed.co.il,mako.co.il,pcmagazine.co.il,rest.co.il##.ad
+haaretz.co.il,infomed.co.il,mako.co.il,pcmagazine.co.il,rest.co.il,themarker.com##.ad
 globes.co.il,onlife.co.il,sport5.co.il##.banner
 haaretz.co.il,themarker.com##.border-box.bottomStripBanners
 bhol-forums.co.il,bhol.co.il##.centered.padt10 > .clear
@@ -426,6 +431,7 @@ almadar.co.il,marmar.co.il##IMG[src^="VIRARTICLES/shadv/"]
 aiwa.co.il,bladna.co.il,karmelna.net##[class*="banner"]
 hwzone.co.il,shoofoo.co.il##[class^="banner"]
 doctors.co.il,globes.co.il##[id^="ads."]
+haaretz.co.il,themarker.com##div[id^="dclk_objects_"]
 !
 !----------------------------Element hiding rules-----------------------------!
 !
@@ -561,8 +567,8 @@ globes.co.il##div[style="border:0px solid #cacaca; padding:0px 25px; direction:r
 google.co.il###mbEnd
 google.co.il###tads
 haaretz.co.il###comments_banner_wrapper
+haaretz.co.il##.t-sec-head-ad
 haaretz.co.il##DIV[style="font-size:19px; font-weight:bold;margin-bottom:10px;"]
-haaretz.co.il##div[id^="dclk_objects_"]
 haaretz.co.il##div[style="background: url(/htz/images/bg/Ad_bg.gif) repeat; padding:10px 0; text-align:center;"]
 hashekel.co.il###block-13
 hashekel.co.il###block-14
@@ -642,10 +648,8 @@ maariv.co.il##.article-bottom-banner
 maariv.co.il##.article-box-banner-wrap
 maariv.co.il##.box-banner-wrap
 maariv.co.il##.horizontal-banner-wrap
-maariv.co.il##.level-6-horizontal-banner-wrap
 maariv.co.il##.news-feed-banner
 maariv.co.il##.xl-banner-wrap
-maariv.co.il##TABLE[width="748"][height="110"][style="background-color:#e8e8e8"]
 madas.co.il##.AdsContainer
 madas.co.il##.LeftColumn_container.Floater
 madas.co.il##.TextLinkBanner
@@ -695,9 +699,7 @@ nadlan.com##.wrapshedbox
 nadlan.com##table[width="192"][bgcolor="#dcdcdc"]
 nadlan.com##table[width="980"][bgcolor="#dcdcdc"]
 nana10.co.il###ArticleBanner2x2
-nana10.co.il###CM8ShowAd_Ozen_160x600
-nana10.co.il###CM8ShowAd_Box_180x150_1
-nana10.co.il###CM8ShowAd_Box_250x250_1
+nana10.co.il##[id^="CM8ShowAd"]
 nana10.co.il###GoogleAds400x223
 nana10.co.il###IndexPromotions
 nana10.co.il###bottomBannerBlock
@@ -740,6 +742,7 @@ nrg.co.il##IFRAME[style="height:250px;width:300px;"]
 one.co.il###Adv2
 one.co.il###WinnnerRacer
 one.co.il###adBomba
+one.co.il###adWallaDeals
 one.co.il###divAdChance
 one.co.il###divEventCounter
 one.co.il###divFarzda
@@ -750,6 +753,7 @@ one.co.il##.adBg1
 one.co.il##.divZedoAd
 one.co.il##DIV[style="width:100%;height:25px;text-align:left;direction:rtl;"]
 one.co.il##DIV[style="width:300px;height:250px;padding:10px 12px 10px 12px;text-align:center;background:#ebebeb;"]
+one.co.il##DIV[style="width:775px;text-align:center;background:#ebebeb;padding:10px auto 10px auto;margin:0;clear:both;"]
 one.co.il##div[style="height:43px;padding-bottom:18px"]
 one.co.il##div[style="text-align:right;border:solid 1px #d5d5d5;"]
 one.co.il##div[style="width: 636px; height: 32px; margin: 5px 0px 5px -340px;"]
@@ -794,6 +798,7 @@ solitaire.co.il##.viv
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_3
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_4
 sport5.co.il##.article-holder > .alt
+sport5.co.il##.aside > .banner-container
 sport5.co.il##.banner-list
 sport5.co.il##.inner_adv
 sport5.co.il##.iphone
@@ -846,18 +851,18 @@ timeout.co.il##[class^="to_ad_"]
 themarker.com###floatingBannerDepPage
 themarker.com###floatingBannerHomePage
 themarker.com##.CutTransperetLine + .border-box
-themarker.com##.ad.h-hidden--s-and-m
-themarker.com##.ad[style="margin-bottom: 30px; margin-top: 30px;"]
 themarker.com##.banner-area
 themarker.com##.banner_92008
 themarker.com##.border-box.noSourceList
 themarker.com##.click-tracker-banner.tadmit_300x100
 themarker.com##.sdera-banners
 themarker.com##.slideShowBannerGroup
+themarker.com##.t-sec-head.t-sec-head--b.c-pale
 themarker.com##IFRAME[id^="google"]
 themarker.com##[name="txtlnk"] + .border-box
+themarker.com###RelevantiWidget
 upf.co.il##.bgbanner
-walla.co.il###ARKIA_CONTAINER
+vefun.net##.fblogin.lockoverlay.ng-scope
 walla.co.il###navbar
 walla.co.il###sec_jobcity_906
 walla.co.il###sec_kama_910
@@ -925,7 +930,6 @@ ynet.co.il##.MRec_main
 ynet.co.il##.art_tkb_talkback_advert
 ynet.co.il##.art_video_samsung_top
 ynet.co.il##.bigdeal
-ynet.co.il##.element.B3.ghcite.noBottomPadding + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite + .element.B3.ghcite
 ynet.co.il##.ghciClickablePicture1
 ynet.co.il##.ghciClickablePicture3
 ynet.co.il##.ghciPromoLightbox1
@@ -936,10 +940,10 @@ ynet.co.il##.leshonitMain.leshonitBorderRectangle
 ynet.co.il##.shMainDiv
 ynet.co.il##DIV[style="width:256px;height:66px;background-color:#FFFFFF;"]
 ynet.co.il##[style="DISPLAY: block; FLOAT: left"] > DIV[style="PADDING-BOTTOM: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"]
+ynet.co.il##IFRAME[name="ExternalWebpageIframe"][src^="http://go.ynet.co.il/short/commerce/"]
 ynet.co.il##iframe[style="width:770px;height:191px;"]
 zap.co.il###dgBan_t12x1
 zap.co.il##.BannerBox
 zap.co.il##.Martef
 zap.co.il##.headerBannerCenter
 zap.co.il##.leftSideBanner
-zone.walla.co.il##.w2.wp-0-b

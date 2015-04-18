@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: 6m+lDTt0lu8J5Us0kwaATQ
+! Checksum: lHSImtYbPmZblSbkcYhAjQ
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 21 Mar 2015
+! Updated: 18 Apr 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -368,7 +368,9 @@ _wtInit.js
 ! ---------- Cookie/Subscription Checking ------
 !
 ###issuem-leaky-paywall-articles-zero-remaining-nag
+###pianoMediaBar
 ##.acn-zero-remaining-overlay
+##.piano-subscribe
 /article-countdown-nag.js
 /paywall.min.js
 @@||torontosun.com/assets/js/paywall.min.js
@@ -407,7 +409,10 @@ wolframalpha.com###subpod_zoom
 !
 ! Adblock Warnings
 !
+flightradar24.com###responsiveBottomPanel
+flightradar24.com##.noads
 game-debate.com##.loadIn300by250
+unlimited-recipes.com#@##adsense
 youporn.com###adblock_1
 !
 ! ---------- 1st party blocking rules ----------
@@ -525,6 +530,7 @@ youporn.com###adblock_1
 ||google.com/cse/$third-party,~stylesheet
 ||googlecommerce.com/trustedstores/$third-party,domain=~google.com
 ||googletagmanager.com/gtm.js$third-party
+||googletagservices.com/tag/js/check*.js
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||images.dmca.com^$third-party
 ||images.scanalert.com^$third-party
@@ -649,14 +655,14 @@ youporn.com###adblock_1
 @@/mbox.js$domain=dominos.com|aol.com|hrblock.com|live.com|movieweb.com|rd.com|skypeassets.com|superpages.com|wdpromedia.com
 @@/omniture.js$domain=apple.com|mlb.com|newyorker.com|ae.com|couponcabin.com|corbisimages.com|delvenetworks.com|shop.puma.com|gq.com|healthgrades.com|pogo.com|nfl.com|slacker.com|teenvogue.com|veer.com|zdnet.com
 @@/ots_omniture_code.js
-@@/s_code.$domain=bodybuilding.com|gatesnotes.com|dice.com|hbogo.com|channel4.com|sephora.fr|syfy.com|cio.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com|experian.com|sonypictures.com|qz.com
+@@/s_code.$domain=bodybuilding.com|gatesnotes.com|dice.com|greenbot.com|hbogo.com|channel4.com|sephora.fr|syfy.com|cio.com|car2go.com|cbc.ca|simyo.de|nbc.com|debenhams.com|abcnews.go.com|abc.go.com|aetv.com|afl.com.au|americanexpress.com|disneyinternational.com|anz.com|blackberry.com|boostmobile.com|canon.com.au|caranddriver.com|nba.com|cfnews13.com|cinemax.com|countryliving.com|dhgate.com|diy.com|eonline.com|esquire.com|fandango.com|filemaker.com|filmmagic.com|goodhousekeeping.com|here.com|hasbro.com|homedepot.com|lg.com|landsend.com|infoworld.com|nwolb.com|laptopmag.com|ksl.com|shop.puma.com|beatsbydre.com|macworld.com|madcatz.com|marieclaire.com|msacademicverify.com|marthastewart.com|marthastewartweddings.com|nintendo.com|nbcdfw.com|nbclosangeles.com|nbcmiami.com|networkworld.com|news12.com|nike.com|olivegarden.com|online.citibank.com|oreillyauto.com|pcworld.com|randomhouse.com|redbookmag.com|rolandgarros.com|samsung.com|stamfordadvocate.com|staples.com|starz.com|move.com|192.com|style.com|symantec.com|techhive.com|nflcdn.com|overstock.com|sho.com|sprint.com|teenvogue.com|telecom.co.nz|theglobeandmail.com|theweathernetwork.com|vendaria.com|verizonwireless.com|wdpromedia.com|wholeliving.com|wireimage.com|workingmother.com|yellow.co.nz|yellowpages.com.au|zdnet.com|experian.com|sonypictures.com|qz.com
 @@/s_code_$domain=lg.com|adobe.com|apple.com|autodesk.com|deseretnews.com|beautyoftheweb.com|norton.com|eonline.com|eweek.com|frontdoor.com|kaspersky.co.uk|lego.com|lenovo.com|nflcdn.com|nvidia.com|optimum.net|pepperidgefarm.com|resources.ea.com|restaurant.com|samsung.com|kmart.com|style.com|walgreens.com|wiley.com|abc.go.com|forbes.com
 @@/thePlatform-omniture-core.js
 @@/webtrends.js$domain=usps.com|canon.com|horizon-bcbsnj.com|logitech.com|reuters.com|telegraph.co.uk
 @@||aarp.net/etc/aarp/statics/global/js/omniture*.js
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
 @@||actiris.be/urchin.js
-@@||adobe.com/uber/js/omniture_s_code_rm.js
+@@||adobe.com/uber/js/*s_code
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
 @@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com|lenovo.com|oprah.com
 @@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com|lenovo.com|oprah.com|laredoute.fr

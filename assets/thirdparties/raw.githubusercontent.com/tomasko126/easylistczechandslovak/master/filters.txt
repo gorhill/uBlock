@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 19/03/2015
+! Last change: 10/04/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -437,6 +437,8 @@ zive.cz#@#.box-adsense
 @@||img.aaaauto.eu/thumb/
 @@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
 @@/moje-konto/inzeraty/
+@@||pcforum.sk$elemhide
+@@||pcforum.sk/styles/*/advertisement.js
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
 @@||tpd.sk/ads/rotator/
 ulozisko.sk#@##reklama_big
@@ -924,6 +926,7 @@ blickclick.webnoviny.sk##.ads.center.clr
 bmwklub.sk##DIV[id^="ad"]
 centrum.sk##.h2.grad2.kupons_games
 centrum.sk##.banner
+dobre-recepty.sk#@##ad_skin
 dsl.sk##.header_info_text
 etrend.sk###trendtip
 etrend.sk##.reality

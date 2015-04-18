@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sun, 01 Mar 2015 07:39:13 GMT
-# entries:        2446
+# entries:        2432
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -257,7 +257,6 @@
 127.0.0.1 adimg1.chosun.com
 127.0.0.1 adimgs.sapo.pt
 127.0.0.1 adimpact.com
-127.0.0.1 adincl.gopher.com
 127.0.0.1 adinjector.net
 127.0.0.1 adinterax.com
 127.0.0.1 adisfy.com
@@ -539,8 +538,6 @@
 127.0.0.1 ads.livenation.com
 127.0.0.1 ads.localnow.com
 127.0.0.1 ads.lvz-online.de
-127.0.0.1 ads.mambocommunities.com
-127.0.0.1 ads.mariuana.it
 127.0.0.1 ads.massinfra.nl
 127.0.0.1 ads.mcafee.com
 127.0.0.1 ads.mediaodyssey.com
@@ -674,6 +671,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -866,7 +864,6 @@
 127.0.0.1 adtrading.de
 127.0.0.1 adtrak.net
 127.0.0.1 adtriplex.com
-127.0.0.1 adult-adv.com
 127.0.0.1 adultadvertising.com
 127.0.0.1 adv-adserver.com
 127.0.0.1 adv-banner.libero.it
@@ -934,7 +931,6 @@
 127.0.0.1 affiliate.doubleyourdating.com
 127.0.0.1 affiliate.dtiserv.com
 127.0.0.1 affiliate.gamestop.com
-127.0.0.1 affiliate.kitapyurdu.com
 127.0.0.1 affiliate.mercola.com
 127.0.0.1 affiliate.mogs.com
 127.0.0.1 affiliate.offgamers.com
@@ -972,7 +968,6 @@
 127.0.0.1 amazingcounters.com
 127.0.0.1 amung.us
 127.0.0.1 an.tacoda.net
-127.0.0.1 anahtars.com
 127.0.0.1 analytics.live.com
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
@@ -1298,7 +1293,6 @@
 127.0.0.1 counter.rambler.ru
 127.0.0.1 counter.search.bg
 127.0.0.1 counter.sparklit.com
-127.0.0.1 counter.times.lv
 127.0.0.1 counter.yadro.ru
 127.0.0.1 counters.honesty.com
 127.0.0.1 counting.kmindex.ru
@@ -1345,7 +1339,6 @@
 127.0.0.1 di1.shopping.com
 127.0.0.1 dialerporn.com
 127.0.0.1 didtheyreadit.com
-127.0.0.1 digits.com
 127.0.0.1 direct-xxx-access.com
 127.0.0.1 directaclick.com
 127.0.0.1 directivepub.com
@@ -1797,7 +1790,6 @@
 127.0.0.1 nedstatpro.net
 127.0.0.1 nend.net
 127.0.0.1 neocounter.neoworx-blog-tools.net
-127.0.0.1 neocounter.net
 127.0.0.1 neoffic.com
 127.0.0.1 net-filter.com
 127.0.0.1 netaffiliation.com
@@ -1966,7 +1958,6 @@
 127.0.0.1 promos.fling.com
 127.0.0.1 promote.pair.com
 127.0.0.1 promotion-campaigns.com
-127.0.0.1 promozia.de
 127.0.0.1 pronetadvertising.com
 127.0.0.1 propellerads.com
 127.0.0.1 proranktracker.com
@@ -2072,7 +2063,6 @@
 127.0.0.1 ru4.com
 127.0.0.1 rubiconproject.com
 127.0.0.1 s2d6.com
-127.0.0.1 sageanalyst.net
 127.0.0.1 sbx.pagesjaunes.fr
 127.0.0.1 scambiobanner.aruba.it
 127.0.0.1 scanscout.com
@@ -2096,7 +2086,6 @@
 127.0.0.1 service1.adten.de
 127.0.0.1 services.hearstmags.com
 127.0.0.1 serving-sys.com
-127.0.0.1 sexaddpro.de
 127.0.0.1 sexcounter.com
 127.0.0.1 sexinyourcity.com
 127.0.0.1 sexlist.com
@@ -2391,7 +2380,6 @@
 127.0.0.1 whaleads.com
 127.0.0.1 whenu.com
 127.0.0.1 whispa.com
-127.0.0.1 whoisonline.net
 127.0.0.1 wholesaletraffic.info
 127.0.0.1 widespace.com
 127.0.0.1 widgetbucks.com
@@ -2440,8 +2428,6 @@
 127.0.0.1 yieldmanager.net
 127.0.0.1 yoc.mobi
 127.0.0.1 yoggrt.com
-127.0.0.1 yourtracking.net
-127.0.0.1 z.times.lv
 127.0.0.1 z5x.net
 127.0.0.1 zangocash.com
 127.0.0.1 zanox-affiliate.de
