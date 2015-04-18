@@ -76,6 +76,9 @@ var renderFilterLists = function() {
     var renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString;
     var lastUpdateString = vAPI.i18n('3pLastUpdate');
 
+    // Don't lose the custom filter textbox
+    uDom('#templates').append(uDom('#externalListsDiv'));
+
     // Assemble a pretty blacklist name if possible
     var listNameFromListKey = function(listKey) {
         if ( listKey === listDetails.userFiltersPath ) {
