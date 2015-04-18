@@ -214,20 +214,25 @@
         var lists = store.remoteBlacklists;
         var locations = Object.keys(lists);
         var location, availableEntry, storedEntry;
+        var off;
 
         while ( location = locations.pop() ) {
             storedEntry = lists[location];
+            off = storedEntry.off === true;
             // New location?
             if ( relocationMap.hasOwnProperty(location) ) {
                 µb.purgeFilterList(location);
                 location = relocationMap[location];
+                if ( off && lists.hasOwnProperty(location) ) {
+                    off = lists[location].off === true;
+                }
             }
             availableEntry = availableLists[location];
             if ( availableEntry === undefined ) {
                 µb.purgeFilterList(location);
                 continue;
             }
-            availableEntry.off = storedEntry.off || false;
+            availableEntry.off = off;
             µb.assets.setHomeURL(location, availableEntry.homeURL);
             if ( storedEntry.entryCount !== undefined ) {
                 availableEntry.entryCount = storedEntry.entryCount;
