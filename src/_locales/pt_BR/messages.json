@@ -12,7 +12,7 @@
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
-    "message":"Preferências",
+    "message":"Configurações",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
@@ -132,7 +132,7 @@
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Sair",
+    "message":"Cancelar",
     "description":"English: Quit"
   },
   "pickerNetFilters":{

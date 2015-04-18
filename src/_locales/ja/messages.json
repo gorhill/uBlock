@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"このサイトのすべてのポップアップのブロックを切り替えます",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"このサイトの厳格なブロックを切り替えます",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
@@ -500,31 +500,31 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ has prevented the following page from loading:",
+    "message":"uBlock₀は、以下のページのローディングを防いでいます:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"以下のフィルターによる",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"戻る",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"このウィンドウを閉じる",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"{{hostname}}の厳格なブロックを無効にする",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"一時的",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"恒久的",
     "description":"English: Permanently"
   },
   "dummy":{

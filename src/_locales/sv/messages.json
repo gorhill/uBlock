@@ -4,11 +4,11 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Äntligen en effektiv reklamblockerare! Snäll mot processor och minne.",
+    "message":"Äntligen en effektiv blockerare! Snäll mot processor och minne.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Instrumentbräda",
+    "message":"uBlock₀ — Kontrollpanel",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Klicka för att öppna instrumentbrädan",
+    "message":"Klicka för att öppna kontrollpanelen",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -176,7 +176,7 @@
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Senaste återställning:",
+    "message":"Senast återställd:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
@@ -200,7 +200,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Rensa alla cachar",
+    "message":"Rensa all cache",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -264,7 +264,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"utdaterad",
+    "message":"föråldrad",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -320,7 +320,7 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importera från fil...",
+    "message":"Importera från fil",
     "description":""
   },
   "rulesExport":{
@@ -428,19 +428,19 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Backup till fil...",
+    "message":"Säkerhetskopiera till fil",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"min-ublock-säkerhetskopia_{{datetime}}.txt",
+    "message":"min-ublock-backup_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Återställ från fil...",
+    "message":"Återställ från fil",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Återställ standardinställningar...",
+    "message":"Återställ fabriksinställningar",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -452,7 +452,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alla dina inställningar kommer att raderas, och uBlock₀ kommer att startas om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
+    "message":"Alla dina inställningar kommer att raderas, och uBlock₀ kommer att starta om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -488,7 +488,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Visa instrumentbrädan",
+    "message":"Visa kontrollpanel",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
