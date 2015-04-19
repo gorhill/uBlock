@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: jShHdn+wUN3ismU9F96cgQ
-! Version: 201504160210
-! Last modified: 16 Apr 2015 02:10 UTC
+! Checksum: lr3SI5broZ6m6GTjH9AA7A
+! Version: 201504190450
+! Last modified: 19 Apr 2015 04:50 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -1043,7 +1043,6 @@ _vkontakte.png
 /images/*twitter-
 /images/*twitter.jpg
 /images/*twitter.png
-/images/*youtube.gif
 /images/*youtube.jpg
 /images/*youtube.png
 /images/facebook
@@ -2386,6 +2385,7 @@ _youtube_social_
 ##.addzakl
 ##.b-col_share
 ##.b-service-tabs__share
+##.b-share__container
 ##.facebook
 ##.fb_iframe_widget
 ##.g_plus
@@ -3137,6 +3137,7 @@ _youtube_social_
 ###icon_twitter_small
 ###icon_youtube
 ###imgShare
+###imgSocial
 ###in_icon
 ###in_line_story_sharing
 ###incsharebox
@@ -4535,6 +4536,7 @@ _youtube_social_
 ##.avia_socialcount
 ##.b-article-share__buttons
 ##.b-buttons_social
+##.b-fb_share
 ##.b-follow-us
 ##.b-header__nav-social
 ##.b-share-btn__count
@@ -4543,6 +4545,7 @@ _youtube_social_
 ##.b-social
 ##.b-social-icons
 ##.b-social-share
+##.b-ss-share
 ##.b2jsocial
 ##.bI-topnav-stationsocialfb
 ##.bI-topnav-stationsocialtw
@@ -5560,6 +5563,7 @@ _youtube_social_
 ##.global-social
 ##.global_sharing_controls
 ##.gmt-social-buttons
+##.gn_social-container
 ##.go-twit
 ##.google-btn
 ##.google-plus
@@ -5661,6 +5665,7 @@ _youtube_social_
 ##.header_fb_icon
 ##.header_nav_social
 ##.header_social
+##.header_social-row
 ##.header_social_buttons
 ##.header_social_icon
 ##.header_social_img
@@ -5700,6 +5705,7 @@ _youtube_social_
 ##.horizontal-social-links
 ##.hp-main-pane-social
 ##.hp-right-pane-social
+##.hp-social
 ##.hp-ss-share
 ##.hp-ss-text-info-bar-share
 ##.hp_share
@@ -6412,6 +6418,7 @@ _youtube_social_
 ##.post-fb-like
 ##.post-header-section-social
 ##.post-header_sharing-counter
+##.post-header_social-row
 ##.post-meta-share
 ##.post-meta-social
 ##.post-on-social-media
@@ -6551,6 +6558,7 @@ _youtube_social_
 ##.sc--facebook
 ##.sc--google-plus
 ##.sc--twitter
+##.sc-social
 ##.scShareBoxRow
 ##.scShareText
 ##.sc_sns
@@ -7185,6 +7193,7 @@ _youtube_social_
 ##.sociable_tagline
 ##.sociables
 ##.social--share_btn
+##.social-1303
 ##.social-16
 ##.social-apps
 ##.social-area
@@ -7919,6 +7928,7 @@ _youtube_social_
 ##.stwitter
 ##.sub_buzz_share
 ##.sub_sns
+##.subpost_share
 ##.subscribe-buttons-container
 ##.subscribe-follow
 ##.subscribe-option-facebook
@@ -9482,6 +9492,7 @@ _userbar_$image
 /iphoneapp-icon.
 /itpsocialbuttons/*
 /jquery.snow.js
+/leadin-subscribe.
 /logo_eskup.
 /mobile_top_icon.
 /modules/sharetools/*$script
@@ -9901,6 +9912,7 @@ _eu_cookie_
 ###page-header-rss
 ###persistNotif
 ###pmocntr2
+###popup-box-sxzw-1
 ###popupad-fixed
 ###post-fly-in
 ###posterous_footerbar
@@ -10947,6 +10959,7 @@ _eu_cookie_
 ###cookie-bar-main
 ###cookie-block
 ###cookie-cnil-box
+###cookie-compliance
 ###cookie-compliance-bottom
 ###cookie-compliance-bottom-overlay
 ###cookie-consent
@@ -12427,6 +12440,7 @@ wired.com#@#.rss-widget
 mozillamessaging.com#@#.rss.icon
 newinhomes.com#@#.rssFeed
 scribol.com#@#.scribol
+paperless-insurance.com#@#.scroll-to-top
 scan.co.uk#@#.scroll_top
 dj-extensions.com#@#.top-of-page
 twellow.com#@#a[href="http://www.twellow.com/"]
@@ -12527,8 +12541,10 @@ onbeing.org#@#.addthisbuttons
 kino-vorschau.com#@#.arqam-widget-counter
 neowin.net#@#.article-share
 opposingviews.com#@#.block-socialmedia
-crowdin.net,deezer.com,magine.com#@#.btn-facebook
+crowdin.net,deezer.com,magine.com,spotify.com#@#.btn-facebook
 crowdin.net,magine.com,qz.com#@#.btn-twitter
+rockstargames.com#@#.btnFacebook
+rockstargames.com#@#.btnTwitter
 nationalgeographic.com#@#.btn_fb
 terravision.eu#@#.button-share
 smzdm.com#@#.comment_share
@@ -12754,13 +12770,13 @@ aliexpress.com#@#a[title="facebook"]
 digg.com#@#div[id^="digg-widget-"]
 disqus.com,facebook.com,google.com,heise.de,incgamers.com,last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,ludins.fr,maxthon.com,t3n.de,twitter.com,whatthetech.com#@#img[alt="Facebook"]
 google.com,youtube.com#@#img[alt="Google+"]
-google.com#@#img[alt="Instagram"]
+google.com,whatculture.com#@#img[alt="Instagram"]
 google.com,linkedin.com#@#img[alt="LinkedIn"]
 breakoutlist.com,facebook.com,google.com#@#img[alt="Pinterest"]
 acceptableads.org,breakoutlist.com,easyicon.net#@#img[alt="Reddit"]
-breakoutlist.com,disqus.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatthetech.com#@#img[alt="Twitter"]
+breakoutlist.com,disqus.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatculture.com,whatthetech.com#@#img[alt="Twitter"]
 theverge.com,twitter.com#@#img[alt="Vine"]
-maxthon.com#@#img[alt="Youtube"]
+maxthon.com,whatculture.com#@#img[alt="Youtube"]
 uservoice.com#@#img[alt="facebook"]
 allestörungen.de,marketplace.firefox.com#@#img[title="Facebook"]
 allestörungen.de#@#img[title="LinkedIn"]
@@ -12854,6 +12870,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||facebook.com/plugins/like.php?$domain=archivedbook.com|gmx.net|gu-facebook.appspot.com|home.1und1.de|web.de
 @@||facebook.com/plugins/likebox.php?$domain=colbertnation.com|rafflecopter.com|thedailyshow.com
 @@||facebook.com/plugins/recommendations.php?$subdocument,domain=techcrunch.com
+@@||facebook.com/share/share_now_menu/$xmlhttprequest,domain=facebook.com
 @@||facebook.com/widgets/like.php?$domain=farmville.com|likearea.com
 @@||fbcdn.net/connect.php/js/FB.Share$domain=jamendo.com
 @@||filmstarts.de^*/picto_social.png

@@ -6879,6 +6879,7 @@
 127.0.0.1	az413505.vo.msecnd.net
 127.0.0.1	az7t8.com
 127.0.0.1	azads.net
+127.0.0.1	azalead.com
 127.0.0.1	aznmedia.go2cloud.org
 127.0.0.1	azubi.adition.com
 127.0.0.1	azweb.ivwbox.de
@@ -9507,7 +9508,10 @@
 127.0.0.1	clkads.com
 127.0.0.1	clkax.tradedoubler.com
 127.0.0.1	clkde.tradedoubler.com
+127.0.0.1	clkerr.com
+127.0.0.1	clkmg.com
 127.0.0.1	clkmon.com
+127.0.0.1	clkmr.com
 127.0.0.1	clkrev.com
 127.0.0.1	clkstat.qihoo.com
 127.0.0.1	clkuk.tradedoubler.com
@@ -14068,6 +14072,7 @@
 127.0.0.1	gm.mmstat.com
 127.0.0.1	gmads.mookie1.com
 127.0.0.1	gmads.net
+127.0.0.1	gmagictrk.com
 127.0.0.1	gmonitor.aliimg.com
 127.0.0.1	gmtdmp.mookie1.com
 127.0.0.1	gmtracker.com
@@ -15418,7 +15423,6 @@
 127.0.0.1	j.adlooxtracking.com
 127.0.0.1	j.clickdensity.com
 127.0.0.1	j.kissinsights.com
-127.0.0.1	j.mp
 127.0.0.1	j.ophan.co.uk
 127.0.0.1	j.sahcdn.com
 127.0.0.1	j.zeroredirect.com
@@ -24429,6 +24433,7 @@
 127.0.0.1	www.awin2.com
 127.0.0.1	www.axf8.net
 127.0.0.1	www.azads.net
+127.0.0.1	www.azalead.com
 127.0.0.1	www.b1d.org
 127.0.0.1	www.b23.ru
 127.0.0.1	www.baciotti.com
@@ -24621,7 +24626,10 @@
 127.0.0.1	www.cliximages.com
 127.0.0.1	www.clixsense.com
 127.0.0.1	www.clkads.com
+127.0.0.1	www.clkerr.com
+127.0.0.1	www.clkmg.com
 127.0.0.1	www.clkmon.com
+127.0.0.1	www.clkmr.com
 127.0.0.1	www.clkrev.com
 127.0.0.1	www.cloudhot.net
 127.0.0.1	www.cloudixconnection.com
@@ -25011,6 +25019,7 @@
 127.0.0.1	www.glb.livejasmin.com
 127.0.0.1	www.global-adsrv.com
 127.0.0.1	www.globirank.com
+127.0.0.1	www.gmagictrk.com
 127.0.0.1	www.gmtracker.com
 127.0.0.1	www.go.by
 127.0.0.1	www.go2web20.net
@@ -25189,7 +25198,6 @@
 127.0.0.1	www.itrckr.com
 127.0.0.1	www.ivwbox.de
 127.0.0.1	www.iwebimg.net
-127.0.0.1	www.j.mp
 127.0.0.1	www.jade-aultman.us
 127.0.0.1	www.jadina-counter.de
 127.0.0.1	www.jag.vmsn.de
@@ -26749,4 +26757,4 @@
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	zz.zeroredirect1.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 26741
+# Hosts: 26749

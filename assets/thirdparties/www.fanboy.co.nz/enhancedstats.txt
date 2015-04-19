@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: W63mXVp/K1U45P3U402Qhw
+! Checksum: VvyiVgUi8r6AzTZMpQOwjA
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 8 Apr 2015
+! Updated: 19 Apr 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -530,6 +530,7 @@ youporn.com###adblock_1
 ||google.com/cse/$third-party,~stylesheet
 ||googlecommerce.com/trustedstores/$third-party,domain=~google.com
 ||googletagmanager.com/gtm.js$third-party
+||googletagservices.com/tag/js/check*.js
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||images.dmca.com^$third-party
 ||images.scanalert.com^$third-party
@@ -644,6 +645,7 @@ youporn.com###adblock_1
 !
 @@||canada.com^*/advertisement.js
 @@||forums.qrz.com/js/advertisement.js
+@@||ps4news.com/ad/adframe.js
 @@||tnwcdn.com/assets/js/advertising.js$domain=thenextweb.com
 @@||vice.com/assets/js/vmp/adblocker/
 @@||vox-cdn.com/javascripts/lib/advertisement.
@@ -661,7 +663,7 @@ youporn.com###adblock_1
 @@||aarp.net/etc/aarp/statics/global/js/omniture*.js
 @@||abcnews.com/assets/flash/kdp/omniturePlugin.swf
 @@||actiris.be/urchin.js
-@@||adobe.com/uber/js/omniture_s_code_rm.js
+@@||adobe.com/uber/js/*s_code
 @@||adobe.com/www.adobe.com/uber/js/pdc_s_code.js
 @@||adobedtm.com^*/mbox-contents-$script,domain=newyorker.com|lenovo.com|oprah.com
 @@||adobedtm.com^*/satelliteLib-$script,domain=newyorker.com|lenovo.com|oprah.com|laredoute.fr

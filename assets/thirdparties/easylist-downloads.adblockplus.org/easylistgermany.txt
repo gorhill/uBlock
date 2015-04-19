@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 7XAT259ymZG6Q9nT3nMF6g
-! Version: 201504160211
+! Checksum: ugbGrx7jmWWbEEkQ7DGAOQ
+! Version: 201504190451
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 16 Apr 2015 02:11 UTC
+! Last modified: 19 Apr 2015 04:51 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -466,6 +466,7 @@ kijiji.at,kijiji.ch#@#.adImg
 delamar.de#@#.adModule
 o2online.de#@#.adSpace
 stadtlist.de#@#.adTitle
+sueddeutsche.de#@#.ad_Right
 dewezet.de#@#.ad_block
 wg-gesucht.de#@#.ad_click
 dewezet.de#@#.ad_content
@@ -5833,6 +5834,7 @@ bild.de##a[href*="/partner/"]
 20min.ch##a[href*="/sponsored/story/"]
 emfis.de##a[href*="/uebersicht.html?tx_ricrotation_"]
 xp-antispy.org##a[href*="com_partner&link="]
+3dl.tv##a[href*="downloadboutique.com"]
 hd-vidz.net##a[href*="filesonthe.net"]
 movie-blog.org##a[href*="http://ul.to/ref/"]
 absenden.net##a[href="../weiter/3-4"]
@@ -6031,7 +6033,6 @@ mygully.com##a[href^="http://dl1.mygully.com"]
 duckcrypt.info##a[href^="http://download.duckcrypt.info"]
 movie-stream.to##a[href^="http://download.movie-stream.to"]
 serienjunkies.org##a[href^="http://download.serienjunkies.org/md-"]
-3dl.tv##a[href^="http://downloadboutique.com/"]
 sdx.cc##a[href^="http://eads.to"]
 movie-blog.org##a[href^="http://ebrix.me/"]
 wetter.com##a[href^="http://exlog.wetter.com/v2/exlog/adclick.php?bannerid="]

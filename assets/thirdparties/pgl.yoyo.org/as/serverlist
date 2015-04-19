@@ -3,7 +3,7 @@
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
 # last updated:   Sun, 01 Mar 2015 07:39:13 GMT
-# entries:        2440
+# entries:        2432
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -243,7 +243,6 @@
 127.0.0.1 adgridwork.com
 127.0.0.1 adhese.be
 127.0.0.1 adhese.com
-127.0.0.1 adhostcenter.com
 127.0.0.1 adi.mainichi.co.jp
 127.0.0.1 adimage.asiaone.com.sg
 127.0.0.1 adimage.guardian.co.uk
@@ -539,7 +538,6 @@
 127.0.0.1 ads.livenation.com
 127.0.0.1 ads.localnow.com
 127.0.0.1 ads.lvz-online.de
-127.0.0.1 ads.mambocommunities.com
 127.0.0.1 ads.massinfra.nl
 127.0.0.1 ads.mcafee.com
 127.0.0.1 ads.mediaodyssey.com
@@ -673,6 +671,7 @@
 127.0.0.1 ads.verticalresponse.com
 127.0.0.1 ads.vgchartz.com
 127.0.0.1 ads.videosz.com
+127.0.0.1 ads.viewx.co.uk
 127.0.0.1 ads.virtual-nights.com
 127.0.0.1 ads.virtualcountries.com
 127.0.0.1 ads.vnumedia.com
@@ -969,7 +968,6 @@
 127.0.0.1 amazingcounters.com
 127.0.0.1 amung.us
 127.0.0.1 an.tacoda.net
-127.0.0.1 anahtars.com
 127.0.0.1 analytics.live.com
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
@@ -1295,7 +1293,6 @@
 127.0.0.1 counter.rambler.ru
 127.0.0.1 counter.search.bg
 127.0.0.1 counter.sparklit.com
-127.0.0.1 counter.times.lv
 127.0.0.1 counter.yadro.ru
 127.0.0.1 counters.honesty.com
 127.0.0.1 counting.kmindex.ru
@@ -1793,7 +1790,6 @@
 127.0.0.1 nedstatpro.net
 127.0.0.1 nend.net
 127.0.0.1 neocounter.neoworx-blog-tools.net
-127.0.0.1 neocounter.net
 127.0.0.1 neoffic.com
 127.0.0.1 net-filter.com
 127.0.0.1 netaffiliation.com
@@ -1962,7 +1958,6 @@
 127.0.0.1 promos.fling.com
 127.0.0.1 promote.pair.com
 127.0.0.1 promotion-campaigns.com
-127.0.0.1 promozia.de
 127.0.0.1 pronetadvertising.com
 127.0.0.1 propellerads.com
 127.0.0.1 proranktracker.com
@@ -2068,7 +2063,6 @@
 127.0.0.1 ru4.com
 127.0.0.1 rubiconproject.com
 127.0.0.1 s2d6.com
-127.0.0.1 sageanalyst.net
 127.0.0.1 sbx.pagesjaunes.fr
 127.0.0.1 scambiobanner.aruba.it
 127.0.0.1 scanscout.com
@@ -2386,7 +2380,6 @@
 127.0.0.1 whaleads.com
 127.0.0.1 whenu.com
 127.0.0.1 whispa.com
-127.0.0.1 whoisonline.net
 127.0.0.1 wholesaletraffic.info
 127.0.0.1 widespace.com
 127.0.0.1 widgetbucks.com
@@ -2435,7 +2428,6 @@
 127.0.0.1 yieldmanager.net
 127.0.0.1 yoc.mobi
 127.0.0.1 yoggrt.com
-127.0.0.1 z.times.lv
 127.0.0.1 z5x.net
 127.0.0.1 zangocash.com
 127.0.0.1 zanox-affiliate.de

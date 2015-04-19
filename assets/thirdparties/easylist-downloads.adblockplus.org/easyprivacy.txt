@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: wsf8af2BYrlUhvZPhsA8Jg
-! Version: 201504160211
+! Checksum: 4DsKad2Q3yAu73azXuK8pQ
+! Version: 201504190451
 ! Title: EasyPrivacy
-! Last modified: 16 Apr 2015 02:11 UTC
+! Last modified: 19 Apr 2015 04:51 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -1147,6 +1147,7 @@
 /log.php?*http
 /log.php?id
 /log.php?owa_timestamp=
+/log/log.php?
 /log2.php?
 /Log?entry=
 /log?id=
@@ -1205,6 +1206,7 @@
 /m1x1.jpg
 /m360lib.js
 /magiq-
+/mail_tracking-cg.php
 /mapstats.
 /marketing-analytics.js
 /maxymiser.
@@ -3106,7 +3108,6 @@ http://utm.
 ||intervigil.com^$third-party
 ||invitemedia.com^$third-party
 ||invoc.us^$third-party
-||invodo.com^$third-party
 ||ip-api.com^$third-party
 ||ip-label.net^$third-party
 ||ip2location.com^$third-party
@@ -3578,6 +3579,7 @@ http://utm.
 ||sarevtop.com^$third-party
 ||sayutracking.co.uk^$third-party
 ||sbdtds.com^$third-party
+||scaledb.com^$third-party
 ||scastnet.com^$third-party
 ||schoolyeargo.com^$third-party
 ||sciencerevenue.com^$third-party
@@ -5434,6 +5436,7 @@ http://utm.
 ||log-*.previewnetworks.com^
 ||log.adap.tv^$object-subrequest
 ||log.ideamelt.com^
+||log.invodo.com^
 ||log.kibboko.com^
 ||log.kukuplay.com^$third-party
 ||log.liverail.com^
@@ -8645,6 +8648,7 @@ http://utm.
 ||loc.gov/js/global/metrics/*/s_code.js
 ||mercedes-benz.ca/js/omniture.js
 ||mercola.com/Assets/js/omniture/sitecatalyst/mercola_s_code.js
+||mercuryinsurance.com/static/js/s_code.js
 ||michaelkors.com/common/js/extern/omniture/s_code.js
 ||mnginteractive.com/live/js/omniture/SiteCatalystCode_H_22_1_NC.js
 ||mnginteractive.com/live/omniture/custom_scripts/omnicore-blogs.js$domain=mercurynews.com
@@ -9480,6 +9484,7 @@ http://utm.
 @@||dmeserv.newsinc.com/dpid/*/PPEmbed.js$domain=csmonitor.com
 @@||dmeserv.newsinc.com^*/dynamicWidgets.js$domain=timesfreepress.com
 @@||doubleclick.net/activityi;src=$object-subrequest,domain=cicispizza.com
+@@||dpm.demdex.net/id?$script,domain=gamespot.com
 @@||dw.cbsi.com/anonc.js$domain=cnet.com
 @@||dw.cbsi.com/js/dw.js$domain=cnet.com
 @@||dw.com.com/js/dw.js$domain=cbsnews.com|cnet.com|gamespot.com|tv.com
@@ -9972,6 +9977,7 @@ http://utm.
 @@||wrating.com/a1.js$domain=tudou.com|ynet.com
 ! Czech
 @@||adobetag.com/d2/vodafonecz/live/VodafoneCZ.js
+@||googletagmanager.com/gtm.js?$domain=autorevue.cz|e15.cz|mobilmania.cz|sportrevue.cz|zive.cz
 ! Danish
 @@||msecnd.net^*/site-tracker.js$domain=momondo.dk
 ! Dutch

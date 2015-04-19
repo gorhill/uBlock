@@ -5,7 +5,7 @@
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2015-04-15
+! Paskutinis atnaujinimas: 2015-04-17
 ! Expires: 30 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
@@ -386,6 +386,7 @@ menoerdve.lt##A[href^="/component/flexbanners/?task=click&id="]
 miske.lt##.box_outer.widget_awpcp-latest-ads + * + * *
 miskobirza.lt##.index_ads1
 miskobirza.lt##IMG[width="160"][src^="/images/texts/"]
+moteris.lt##A[href^="http://zurnalai.delfi.lt/index.php?page=pasiulymai"] > *
 moteris.lt##.moteris-article-banner
 motersgrozis.lt##.module-outer
 musupaveldas.lt###categories-3 + * A[target="_blank"]
@@ -490,6 +491,7 @@ skelbiu.lt##DIV.result
 skelbiu.lt##DIV[style="padding: 1px; border-bottom: 1px solid #E3E3E3; margin-top: -10px;"]
 skelbiu.lt##DIV[style="text-align: center; padding: 0px 0px; height: 200px; margin-bottom: 10px;"]
 skelbiu.lt##DIV[style="width: 980px; height: 200px;"]
+skelbiu.lt##LI[style="height: 240px;"]
 skrastas.lt##[src^="images/drawflash.php"] + * > *
 skrastas.lt||A[href^="go.php?lt="]
 skytech.lt###banner
@@ -1110,6 +1112,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||ziurimtv.eu/images/hostingas.png
 ||ziurimtv.eu/images/iv.png
 ||zvejokliai.lt/images/banners/
+||skelbiu-static.dgn.lt/static/5/smspinigai-v2.html
 ~telikaz.biz#@##ad
 ~telikaz.biz#@##ad-cube-top
 ~telikaz.biz#@##ad-space-2
