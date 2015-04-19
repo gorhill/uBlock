@@ -1,0 +1,23 @@
+﻿/* Overrides to popup.css for display in a vertical panel, such as the firefox panel menu */
+body {
+	width: 100%;
+}
+
+#panes > div {
+	display: block;
+}
+
+#panes > #dfPane {
+	width: 100%;
+	border-right: none;
+}
+
+body[dir="ltr"] #panes > #dfPane {
+	direction: ltr; /* reset scroll bar to the right */
+	margin-right: 0;
+}
+
+body[dir="rtl"] #panes > #dfPane {
+	direction: rtl; /* reset scroll bar to the left */
+	margin-left: 0;
+}
