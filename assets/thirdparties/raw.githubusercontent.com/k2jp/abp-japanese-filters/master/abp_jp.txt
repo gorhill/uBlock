@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 5v1x4mLTiPRAB0kpGphv7w
+! Checksum: PASQlQIa0uLXNe2xxkQJOg
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
-! Title: ABP Japanese filters (ONLY for advanced Japanese users: read Support Policy)
+! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201504141923
+! Version: 201504182241
 
-! Last modified: 2015-04-14 19:23 JST(UTC+0900)
+! Last modified: 2015-04-18 22:41 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -342,8 +342,12 @@
 &banner_url=
 &campaign=
 &campaign=$popup
+&campaign_Code=
+&campaign_Code=$popup
 &campaign_ID=
 &campaign_ID=$popup
+&campaignCode=
+&campaignCode=$popup
 &campaignID=
 &campaignID=$popup
 &click=$third-party
@@ -2360,6 +2364,7 @@
 /rakulog.$script
 /ranking/js/*$third-party
 /RealMedia/*
+/report_queries?engine=$third-party
 ! /res/js/ad-
 ! /res/js/ad.
 ! /res/js/ad^
@@ -2395,6 +2400,7 @@
 /sa/infospace.
 /sbi_recommend.$script
 /scjs/*
+/scripts/sj_$script,third-party
 /sd/apps/*$popup
 /sd/apps/*$third-party
 /sdc.js
@@ -2635,8 +2641,12 @@
 ?banner_url=
 ?campaign=
 ?campaign=$popup
+?campaign_Code=
+?campaign_Code=$popup
 ?campaign_ID=
 ?campaign_ID=$popup
+?campaignCode=
+?campaignCode=$popup
 ?campaignID=
 ?campaignID=$popup
 ?cellcast-media-
@@ -6967,6 +6977,7 @@ _yahooads_
 ||dl-rms.com^$third-party
 ||dlqm.net^$third-party
 ||dlsite.com^$third-party
+||dmcdn.net/behavior/
 ! False positives at dailymotion.com reported via Issue Report 2011-11-30
 ! ||dmcdn.net/flash/dmplayer*/plugins/
 ||dmcdn.net/js/gen/lib/feature_promotion.
@@ -7084,7 +7095,10 @@ _yahooads_
 ! Commented out to avoid false positives with ooyala.com embeded movie player at jp.techcrunch.com 2011-10-17
 ! ||edgefcs.net^
 ||yieldmanager.edgesuite.net^$third-party
+||edigitalsurvey.com^
 ||edomz.com^$third-party
+||edrsurvey.com^
+||edrsurveys.com^
 ||eemt.se^$third-party
 ||effectivemeasure.net^$third-party
 ||effiliation.com^$third-party
@@ -7449,6 +7463,7 @@ _yahooads_
 ||gqgzasaodz.ru^
 ||gratuit-porno-xxx.com^
 ||gravity.com^$third-party
+||gravityrd-services.com^
 ||gravure-dvd.net^
 ||gremz.com^$third-party
 ||gripmedia.co^$third-party
@@ -8469,6 +8484,7 @@ _yahooads_
 ! ||netdna-cdn.com^$third-party
 ||netdna-cdn.com/scores/
 ||adperformance.netdna-cdn.com
+||petametricsinc.netdna-cdn.com^
 ||s2hd-plugincom-maynemyltf.netdna-ssl.com^
 ||netgy.com^$third-party
 ||netmng.com^$third-party
@@ -8659,6 +8675,7 @@ _yahooads_
 ||ourstats.de^$third-party
 ||ousns.com^
 ||outbrain.com^$third-party
+||outfluenza.com^
 ||outwitch.com^
 ||overclockers.co.uk/home_banners/
 ||overture.com^$third-party
@@ -8703,6 +8720,7 @@ _yahooads_
 ! False positives at goal.com with eplayer modules, May 18, 2012
 ! ||performgroup.com^$third-party
 ||periodicodeldia.com^$popup
+||petametrics.com^
 ||pgmediaserve.com^
 ||pharmacyonlinefeed.com^
 ||pheedo.jp^$third-party

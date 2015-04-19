@@ -117,7 +117,6 @@
 ||zwaar.net^$popup,third-party
 ||zwaar.net^$third-party
 ||zwaar.org^$popup,third-party
-||zwaar.org^$third-party
 !
 !----------------------- Publicités tierces ----------------------!
 !
@@ -201,6 +200,7 @@
 ||dramacafe.tv/Adblock_
 ||dubizzle.com^*/?utm_source=$popup
 ||dzautos.com/data/dzauto.swf
+||educdz.com/*/1544484_770455529632171_2442609755761839667_n.jpg
 ||egyup.com/300.png
 ||egyup.com/banner-990x90.png
 ||el-balad.com/balad.js
@@ -238,6 +238,8 @@
 ||hanya.ma/caro
 ||hao123.com^*/ar-banner.
 ||homekw.com/temp/jahrawi_150_167.gif
+||host-image.net/images/56070naja7host.png
+||host-image.net/images/91089games-banner.gif
 ||hostgator.com^*/banners/
 ||hotelscombined.com/Affiliate/Widgets/
 ||i7dollar.com/i1dollar.jpg
@@ -356,7 +358,6 @@
 ||up07.net/open*.js
 ||up700.net/affiliates/
 ||upxmedia.com/$subdocument,domain=shofonline.net
-||videobam.com/this-pays-for-bandwidth/
 ||vip600.com/aaa/
 ||wadize2ab.com^$subdocument,domain=a7lahmsa.com
 ||waffarnalk.com/widget/
@@ -1035,6 +1036,7 @@ iq-vb.net###layer1
 contactcars.com###leaderBoard
 7s5.net###light[style="position: absolute; left: 9px; top: 31px; display: block;"]
 alwatannews.net###lnkMainAdver3
+educdz.com###main-header-content
 baitkebeer.com###makingdifferentpopup
 contactcars.com###mediumRectangle
 techarabi.com###mpu-in-post
@@ -1044,7 +1046,6 @@ lakome.com###outside-left
 mazika2day.com###page_end_bans
 qalansuwa.com###pathway
 alwatannews.net###pnlAdv12
-elkhabar.com###pub_entete
 okanime.com###pubbbbbbb
 alarab.net###secncom
 arabia.com###showcase
@@ -1278,7 +1279,6 @@ jordanzad.com##div[style="width:306px;height:63px;"]
 jordanzad.com##div[style="width:600px;height:80px;"]
 5foq.com##div[style="width:680px;height:180px;float:left;margin-left:5px;margin-top:25px"]
 echoroukonline.com##div[style="width:728px;height:90px;margin: 10px auto;"]
-showsport-tv.com##div[style^="height: 250px; left: 50%; margin-left: -150px; margin-top: -45px; position: absolute; top: 20%;"]
 darseries.com##div[style^="width:325px;height:275px;"]
 arabnet5.com##div[style^="width:728px; height:90px;"]
 ##div[style^="z-index: 99999; position: fixed; width: 100%; background-color: rgb(251, 236, 173);"]
