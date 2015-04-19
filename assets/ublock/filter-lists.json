@@ -116,13 +116,6 @@
         "homeURL": "",
         "oldLocation": "abp.mozilla-hispano.org/nauscopio/filtros.txt"
         },
-    "https://cjxlist1.googlecode.com/svn/cjxlist.txt": {
-        "off": true,
-        "title": "CHN: China: cjxlist (obsolete, will be removed)",
-        "group": "regions",
-        "homeURL": "",
-        "oldLocation": "cjxlist1.googlecode.com/svn/cjxlist.txt"
-        },
     "http://adblock.ee/list.php": {
         "off": true,
         "title": "EST: Eesti saitidele kohandatud filter",
@@ -207,7 +200,8 @@
         "off": true,
         "title": "CHN: China: cjxlist (main focus on Chinese sites)",
         "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
+        "homeURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
+        "oldLocation": "cjxlist1.googlecode.com/svn/cjxlist.txt"
         },
     "raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": {
         "off": true,
