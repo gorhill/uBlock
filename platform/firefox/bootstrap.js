@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global APP_SHUTDOWN, APP_STARTUP */
+/* global ADDON_UNINSTALL, APP_SHUTDOWN, APP_STARTUP */
 /* exported startup, shutdown, install, uninstall */
 
 'use strict';
@@ -99,7 +99,7 @@ function startup(data, reason) {
             }
 
             try {
-                appShell.hiddenDOMWindow;
+                void appShell.hiddenDOMWindow;
             } catch (ex) {
                 return;
             }
@@ -132,7 +132,7 @@ function shutdown(data, reason) {
 
 /******************************************************************************/
 
-function install() {
+function install(/*aData, aReason*/) {
     // https://bugzil.la/719376
     Components.classes['@mozilla.org/intl/stringbundle;1']
         .getService(Components.interfaces.nsIStringBundleService)
@@ -141,6 +141,23 @@ function install() {
 
 /******************************************************************************/
 
-function uninstall() {}
+// https://developer.mozilla.org/en-US/Add-ons/Bootstrapped_extensions#uninstall
+//   "if you have code in uninstall it will not run, you MUST run some code
+//   "in the install function, at the least you must set arguments on the
+//   "install function so like: function install(aData, aReason) {} then
+//   "uninstall WILL WORK."
+
+function uninstall(aData, aReason) {
+    if ( aReason !== ADDON_UNINSTALL ) {
+        return;
+    }
+    // https://github.com/gorhill/uBlock/issues/84
+    // "Add cleanup task to remove local storage settings when uninstalling"
+    // To cleanup vAPI.localStorage in vapi-common.js
+    // As I get more familiar with FF API, will find out whetehr there was
+    // a better way to do this.
+    Components.utils.import('resource://gre/modules/Services.jsm', null)
+        .Services.prefs.getBranch('extensions.' + hostName + '.').deleteBranch('');
+}
 
 /******************************************************************************/
