@@ -1470,6 +1470,8 @@ vAPI.toolbarButton.init = function() {
         return;
     }
 
+    this.CustomizableUI = CustomizableUI;
+
     this.defaultArea = CustomizableUI.AREA_NAVBAR;
     this.styleURI = [
         '#' + this.id + '.off {',
@@ -1482,7 +1484,7 @@ vAPI.toolbarButton.init = function() {
                 vAPI.getURL('img/browsericons/icon16.svg'),
             ');',
         '}',
-        '#' + this.viewId + ', #' + this.viewId + ' > iframe {',
+        '#' + this.viewId + ' {',
             'width: 160px;',
             'height: 290px;',
             'overflow: hidden !important;',
@@ -1639,11 +1641,21 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             delayedResize();
         }
     };
+
+    var CustomizableUI = this.CustomizableUI;
+    var widgetId = this.id;
     var onPopupReady = function() {
         var win = this.contentWindow;
 
         if ( !win || win.location.host !== location.host ) {
             return;
+        }
+
+        var placement = CustomizableUI.getPlacementOfWidget(widgetId);
+        if (placement.area === CustomizableUI.AREA_PANEL) {
+            // Add some overrides for displaying the popup correctly in a panel
+            win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils)
+                .loadSheet(Services.io.newURI(vAPI.getURL("css/popup-vertical.css"), null, null), Ci.nsIDOMWindowUtils.AUTHOR_SHEET);
         }
 
         new win.MutationObserver(delayedResize).observe(win.document.body, {
