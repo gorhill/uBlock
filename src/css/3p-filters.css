@@ -116,9 +116,8 @@ span.status {
     padding: 1px 2px;
 }
 span.unsecure {
-    background-color: hsl(360, 100%, 85%);
-    border-color: hsl(360, 100%, 80%);
-    text-decoration: line-through;
+    background-color: hsl(0, 100%, 88%);
+    border-color: hsl(0, 100%, 83%);
     }
 span.purge {
     border-color: #ddd;
@@ -130,8 +129,8 @@ span.purge:hover {
     }
 span.obsolete,
 span.new {
-    background-color: hsl(36, 100%, 75%);
-    border-color: hsl(36, 100%, 70%);
+    background-color: hsl(36, 100%, 80%);
+    border-color: hsl(36, 100%, 75%);
     }
 #externalListsDiv {
     margin: 2em auto 0 2em;
