@@ -190,7 +190,7 @@ return asyncJobManager;
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
+        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 0);
     };
 
     return updateBadgeAsync;

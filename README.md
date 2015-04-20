@@ -29,7 +29,7 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 
 #### Installation:
 
-* **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.chrisaljoudi.uBlock-96G4BAKDQ9).
+* **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
 
 * **Chrome**: available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn) or for [manual](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install) installation.
 
