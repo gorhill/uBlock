@@ -106,23 +106,22 @@ body[dir=rtl] #buttonApply {
     display: none;
     }
 span.status {
-    margin: 0 0 0 0.5em;
     border: 1px solid transparent;
-    padding: 1px 2px;
+    color: #444;
     display: inline-block;
     font-size: smaller;
     line-height: 1;
-    opacity: 0.7;
+    margin: 0 0 0 0.5em;
+    opacity: 0.8;
+    padding: 1px 2px;
 }
 span.unsecure {
-    background-color: #fee;
-    border-color: #fcc;
-    color: #f00;
+    background-color: hsl(360, 100%, 85%);
+    border-color: hsl(360, 100%, 80%);
     text-decoration: line-through;
     }
 span.purge {
     border-color: #ddd;
-    color: #444;
     background-color: #eee;
     cursor: pointer;
     }
@@ -131,9 +130,8 @@ span.purge:hover {
     }
 span.obsolete,
 span.new {
-    border-color: hsl(36, 100%, 73%);
-    color: #222;
     background-color: hsl(36, 100%, 75%);
+    border-color: hsl(36, 100%, 70%);
     }
 #externalListsDiv {
     margin: 2em auto 0 2em;
