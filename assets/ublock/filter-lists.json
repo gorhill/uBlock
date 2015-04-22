@@ -93,9 +93,9 @@
         },
     "gnuzilla.gnu.org/filters/blacklist.txt": {
         "off": true,
-        "title": "Block all well known privacy trackers (gnu.org)",
+        "title": "Block all well known privacy trackers",
         "group": "privacy",
-        "homeURL": ""
+        "homeURL": "http://gnuzilla.gnu.org/filters/blacklist.txt"
         },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
@@ -142,6 +142,13 @@
         "homeURL": "",
         "oldLocation": "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
         },
+    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": {
+        "off": true,
+        "title": "IDN: ABPindo",
+        "group": "regions",
+        "homeURL": "",
+        "oldLocation": "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt"
+        },
     "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": {
         "off": true,
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
@@ -153,14 +160,7 @@
         "off": true,
         "title": "EU: Prebake - Filter Obtrusive Cookie Notices",
         "group": "regions",
-        "homeURL": "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
-        },
-    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": {
-        "off": true,
-        "title": "IDN: ABPindo",
-        "group": "regions",
-        "homeURL": "",
-        "oldLocation": "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt"
+        "homeURL": ""
         },
     "liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
         "off": true,
