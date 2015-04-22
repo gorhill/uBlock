@@ -306,3 +306,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # http://www.reddit.com/r/ublock/comments/32k908/cnncom_videos_wont_load_w_%C2%B5block_enabled/
 @@||i.cdn.turner.com/xslo/cvp/ads/freewheel/bundles/2/*$domain=cnn.com
+
+# https://github.com/chrisaljoudi/uBlock/issues/1013
+||mac-system-alert.com^
