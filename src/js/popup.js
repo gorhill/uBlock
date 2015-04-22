@@ -47,7 +47,7 @@ document.getElementById('dfPane').style.setProperty(
 
 // The padlock must be manually positioned:
 // - It's vertical position depends on the height on the title bar.
-document.getElementById('saveRules').style.setProperty(
+document.getElementById('saveflushButtonGroup').style.setProperty(
     'top',
     (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
 );
@@ -325,7 +325,7 @@ var buildAllFirewallRows = function() {
     // - Its horizontal position depends on whether there is a vertical
     //   scrollbar.
     var rect = document.getElementById('firewallContainer').getBoundingClientRect();
-    document.getElementById('saveRules').style.setProperty('left', (rect.left + 4) + 'px');
+    document.getElementById('saveflushButtonGroup').style.setProperty('left', (rect.left + 4) + 'px');
 
     updateAllFirewallCells();
 };
@@ -651,6 +651,17 @@ var saveFirewallRules = function() {
 
 /******************************************************************************/
 
+var flushFirewallRules = function() {
+    messager.send({
+        what: 'flushFirewallRules',
+        srcHostname: popupData.pageHostname,
+        desHostnames: popupData.hostnameDict
+    });
+    popupData.contentLastModified = -1;
+    uDom('#firewallContainer').removeClass('dirty');
+};
+
+/******************************************************************************/
 // Poll for changes.
 //
 // I couldn't find a better way to be notified of changes which can affect
@@ -734,6 +745,7 @@ uDom.onLoad(function () {
     uDom('h2').on('click', toggleFirewallPane);
     uDom('#refresh').on('click', reloadTab);
     uDom('#saveRules').on('click', saveFirewallRules);
+    uDom('#flushRules').on('click', flushFirewallRules);
     uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 });
 

@@ -338,22 +338,26 @@ body.dirty #refresh:hover {
     visibility: hidden;
     }
 
-#saveRules {
+#saveflushButtonGroup {
+    display: none;
+    position: fixed;
+}
+#saveRules,
+#flushRules {
     opacity: 0.7;
     background-color: #444;
     border-radius: 4px;
     color: rgb(255, 213, 123);
     cursor: pointer;
-    display: none;
     font-size: 35px;
     height: 35px;
     padding: 8px;
-    position: fixed;
     text-align: center;
     }
-#firewallContainer.dirty ~ #saveRules {
+#firewallContainer.dirty ~ #saveflushButtonGroup {
     display: block;
     }
-#firewallContainer.dirty ~ #saveRules:hover {
+#firewallContainer.dirty ~ #saveRules:hover,
+#firewallContainer.dirty ~ #flushRules:hover {
     opacity: 1;
     }
