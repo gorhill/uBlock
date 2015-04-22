@@ -353,10 +353,6 @@ body.dirty #refresh:hover {
 #firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
     background-color: rgb(192, 160, 0);
     }
-#firewallContainer.colorBlind > div.allowed.blocked > span:nth-of-type(1):before,
-#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
-    background-color: rgb(153, 124, 78);
-    }
 
 /* Rule cells */
 #firewallContainer > div > span.aRule {
