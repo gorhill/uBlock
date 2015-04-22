@@ -315,10 +315,10 @@ var onHeadersReceived = function(details) {
         return;
     }
 
-    // Frame id of frame request is the their own id, while the request is made
+    // Frame id of frame request is their own id, while the request is made
     // in the context of the parent.
     var context = pageStore.createContextFromFrameId(details.parentFrameId);
-    context.requestURL = details.url + '{inline-script}';
+    context.requestURL = details.url;
     context.requestHostname = details.hostname;
     context.requestType = 'inline-script';
 
@@ -345,14 +345,12 @@ var onHeadersReceived = function(details) {
 
 var onRootFrameHeadersReceived = function(details) {
     var tabId = details.tabId;
-    var requestURL = details.url;
-    var requestHostname = details.hostname;
     var µb = µBlock;
 
     // Check if the main_frame is a download
     // ...
     if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
-        µb.tabContextManager.unpush(tabId, requestURL);
+        µb.tabContextManager.unpush(tabId, details.url);
     }
 
     // Lookup the page store associated with this tab id.
@@ -363,8 +361,8 @@ var onRootFrameHeadersReceived = function(details) {
     // I can't think of how pageStore could be null at this point.
 
     var context = pageStore.createContextFromPage();
-    context.requestURL = requestURL + '{inline-script}';
-    context.requestHostname = requestHostname;
+    context.requestURL = details.url;
+    context.requestHostname = details.hostname;
     context.requestType = 'inline-script';
 
     var result = pageStore.filterRequestNoCache(context);
