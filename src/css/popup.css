@@ -333,6 +333,9 @@ body.dirty #refresh:hover {
     position: absolute;
     width: 7px;
     }
+/* Source for color-blind color scheme from https://github.com/WyohKnott:
+   https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
+ */
 #firewallContainer > div.allowed > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
     background-color: rgb(0, 160, 0);
@@ -353,7 +356,6 @@ body.dirty #refresh:hover {
 #firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
     background-color: rgb(192, 160, 0);
     }
-
 /* Rule cells */
 #firewallContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
