@@ -302,7 +302,9 @@ var updateAllFirewallCells = function() {
 var buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots = uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
+        dfHotspots = uDom('#actionSelector')
+            .toggleClass('colorBlind', popupData.colorBlindFriendly)
+            .on('click', 'span', setFirewallRuleHandler);
     }
     dfHotspots.detach();
 
@@ -393,14 +395,14 @@ var renderPopup = function() {
 
     uDom('#appname').text(popupData.appName);
     uDom('#version').text(popupData.appVersion);
-    uDom('body').toggleClass('advancedUser', popupData.advancedUserEnabled);
-
-    uDom('body').toggleClass(
-        'off',
-        (popupData.pageURL === '') ||
-        (!popupData.netFilteringSwitch) ||
-        (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled)
-    );
+    uDom('body')
+        .toggleClass('advancedUser', popupData.advancedUserEnabled)
+        .toggleClass(
+            'off',
+            (popupData.pageURL === '') ||
+            (!popupData.netFilteringSwitch) ||
+            (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled)
+        );
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom('#gotoLog').toggleClass('enabled', popupData.canRequestLog === true)
@@ -450,7 +452,9 @@ var renderPopup = function() {
     }
 
     uDom('#panes').toggleClass('dfEnabled', dfPaneVisible);
-    uDom('#firewallContainer').toggleClass('minimized', popupData.firewallPaneMinimized);
+    uDom('#firewallContainer')
+        .toggleClass('minimized', popupData.firewallPaneMinimized)
+        .toggleClass('colorBlind', popupData.colorBlindFriendly);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {

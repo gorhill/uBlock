@@ -318,6 +318,8 @@ body.dirty #refresh:hover {
 #firewallContainer.minimized > div.isDomain > span:nth-of-type(4) {
     display: inline-block;
     }
+
+/* Small coloured label at the left of a row */
 #firewallContainer > div.allowed > span:nth-of-type(1):before,
 #firewallContainer > div.blocked > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before,
@@ -335,19 +337,35 @@ body.dirty #refresh:hover {
 #firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
     background-color: rgb(0, 160, 0);
     }
+#firewallContainer.colorBlind > div.allowed > span:nth-of-type(1):before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {
+    background-color: rgb(255, 194, 57);
+    }
 #firewallContainer > div.blocked > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
     background-color: rgb(192, 0, 0);
+    }
+#firewallContainer.colorBlind > div.blocked > span:nth-of-type(1):before,
+#firewallContainer.colorBlind.minimized > div.isDomain.totalBlocked > span:nth-of-type(1):before {
+    background-color: rgb(0, 19, 110);
     }
 #firewallContainer > div.allowed.blocked > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalAllowed.totalBlocked > span:nth-of-type(1):before {
     background-color: rgb(192, 160, 0);
     }
+
+/* Rule cells */
 #firewallContainer > div > span.aRule {
     background-color: rgba(0, 160, 0, 0.3);
     }
+#firewallContainer.colorBlind > div > span.aRule {
+    background-color: rgba(255, 194, 57, 0.4);
+    }
 #firewallContainer > div > span.bRule {
     background-color: rgba(192, 0, 0, 0.3);
+    }
+#firewallContainer.colorBlind > div > span.bRule {
+    background-color: rgba(0, 19, 110, 0.4);
     }
 #firewallContainer > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.3);
@@ -358,8 +376,14 @@ body.dirty #refresh:hover {
 #firewallContainer > div > span.aRule.ownRule {
     background-color: rgba(0, 160, 0, 1);
     }
+#firewallContainer.colorBlind > div > span.aRule.ownRule {
+    background-color: rgba(255, 194, 57, 1);
+    }
 #firewallContainer > div > span.bRule.ownRule {
     background-color: rgba(192, 0, 0, 1);
+    }
+#firewallContainer.colorBlind > div > span.bRule.ownRule {
+    background-color: rgba(0, 19, 110, 1);
     }
 #firewallContainer > div > span.nRule.ownRule {
     background-color: rgba(108, 108, 108, 1);
@@ -384,11 +408,17 @@ body.dirty #refresh:hover {
 #actionSelector > span:nth-of-type(1) {
     background-color: rgb(0, 160, 0);
     }
+#actionSelector.colorBlind > span:nth-of-type(1) {
+    background-color: rgb(255, 194, 57);
+    }
 #actionSelector > span:nth-of-type(2) {
     background-color: rgb(108, 108, 108);
     }
 #actionSelector > span:nth-of-type(3) {
     background-color: rgb(192, 0, 0);
+    }
+#actionSelector.colorBlind > span:nth-of-type(3) {
+    background-color: rgb(0, 19, 110);
     }
 #firewallContainer span.aRule #actionSelector > span:nth-of-type(1),
 #firewallContainer span.nRule #actionSelector > span:nth-of-type(2),

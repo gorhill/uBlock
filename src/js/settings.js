@@ -180,6 +180,12 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('contextMenuEnabled', this.checked);
         });
 
+    uDom('#color-blind-friendly')
+        .prop('checked', details.colorBlindFriendly === true)
+        .on('change', function(){
+            changeUserSettings('colorBlindFriendly', this.checked);
+        });
+
     uDom('#advanced-user-enabled')
         .prop('checked', details.advancedUserEnabled === true)
         .on('change', function(){

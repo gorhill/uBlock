@@ -208,6 +208,7 @@ var getStats = function(tabId, tabTitle) {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
+        colorBlindFriendly: µb.userSettings.colorBlindFriendly,
         cosmeticFilteringSwitch: false,
         dfEnabled: µb.userSettings.dynamicFilteringEnabled,
         firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,

@@ -56,6 +56,7 @@ return {
         advancedUserEnabled: false,
         autoUpdate: true,
         collapseBlocked: true,
+        colorBlindFriendly: false,
         contextMenuEnabled: true,
         dynamicFilteringEnabled: false,
         experimentalEnabled: false,
