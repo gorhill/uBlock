@@ -11,18 +11,18 @@ Esnek, bir "reklam engelleyici"den daha fazlası: Alan adları  dosyanızı okuy
 
 Hazır olarak şu filtre listeleri yüklenmiştir ve uygulanır:
 
--EasyList
--Peter Lowe'un reklam sunucu listesi
--EasyPrivacy
--Malware domains
+- EasyList
+- Peter Lowe'un reklam sunucu listesi
+- EasyPrivacy
+- Malware domains
 
 İsterseniz seçebileceğiniz daha fazla liste var:
 
 - Fanboy’un Gelişmiş İzleyici Listesi
 - Dan Pollock’un alan adları dosyası
--hpHosts'un Reklam ve izleme sunucuları
--MVPS HOSTS
--Spam404
+- hpHosts'un Reklam ve izleme sunucuları
+- MVPS HOSTS
+- Spam404
 - Ve daha birçoğu
 
 Tabii ki,  daha fazla filtre etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleme sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.

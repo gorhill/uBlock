@@ -163,6 +163,10 @@
     "message":"Utilitzar el menú contextual quan sigui possible",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Configuració per a persones daltòniques",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Sóc un usuari avançat (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lectura necessària<\/a>)",
     "description":"English: "

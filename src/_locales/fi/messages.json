@@ -163,6 +163,10 @@
     "message":"Käytä sisältövalikkoa, kun mahdollista",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Olen edistynyt käyttäjä (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lue tämä<\/a>)",
     "description":"English: "

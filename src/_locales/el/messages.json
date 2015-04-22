@@ -163,6 +163,10 @@
     "message":"Να γίνεται χρήση του αναδυόμενου μενού, όπου ενδείκνυται",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Είμαι προχωρημένος χρήστης (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Aπαραίτητη ανάγνωση<\/a>)",
     "description":"English: "

@@ -368,7 +368,7 @@ body.dirty #refresh:hover {
     background-color: rgba(0, 19, 110, 0.4);
     }
 #firewallContainer > div > span.nRule {
-    background-color: rgba(96, 96, 96, 0.3);
+    background-color: rgba(108, 108, 108, 0.3);
     }
 #firewallContainer.colorBlind > div > span.nRule {
     background-color: rgba(96, 96, 96, 0.4);

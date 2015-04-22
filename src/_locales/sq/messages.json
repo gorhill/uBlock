@@ -163,6 +163,10 @@
     "message":"Përdor menynë kontekstuale kur duhet",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Ngjyra të qarta për daltonikët",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
     "description":"English: "

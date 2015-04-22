@@ -163,6 +163,10 @@
     "message":"استفاده از منوی متنی در زمانهای لازم",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"من کاربر حرفه ای هستم (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>لازم است بخوانید<\/a>)",
     "description":"English: "

@@ -163,6 +163,10 @@
     "message":"Dùng menu ngữ cảnh nơi thích hợp",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Tôi là một người dùng có kinh nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Yêu cầu đọc qua<\/a>)",
     "description":"English: "

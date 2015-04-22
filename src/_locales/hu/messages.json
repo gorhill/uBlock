@@ -163,6 +163,10 @@
     "message":"Környezeti menü alkalmazása, ahol lehetséges",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Vakbarát",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Haladó felhasználó vagyok (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>További tudnivalók<\/a>)",
     "description":"English: "

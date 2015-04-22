@@ -163,6 +163,10 @@
     "message":"Uygun olduğunda içerik menüsünü kullan",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Renk körü dostu",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Deneyimli bir kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekli<\/a>)",
     "description":"English: "

@@ -163,6 +163,10 @@
     "message":"Utilizar o menu de contexto quando apropriado",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Modo daltónico",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Eu sou um utilizador avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura obrigatória<\/a>)",
     "description":"English: "
@@ -264,7 +268,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"desatualizado",
+    "message":"desatualizada",
     "description":"English: outdated"
   },
   "3pLastUpdate":{

@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klõps: keela\/luba uBlock sellel saidil.\n\nCtrl+klõps: keela uBlock ainult sellel lehel.",
+    "message":"Klõps: keela\/luba uBlock₀ sellel saidil.\n\nCtrl+klõps: keela uBlock₀ ainult sellel lehel.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -163,6 +163,10 @@
     "message":"Kasuta sobivusel kontekstmenüüd",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Värvipimeduse sõbralik",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Olen kogenud kasutaja (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vajalik lugemus<\/a>)",
     "description":"English: "
@@ -208,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>uBlock<\/i>'i mälu kasutavust.<\/p>",
+    "message":"<p>See valik lubab <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite<\/a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.<\/p><p>Selle valiku lubamine suurendab <i>uBlock₀<\/i>'i mälu kasutavust.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -340,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Nimekiri domeenidest, millel uBlock keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
+    "message":"Nimekiri domeenidest, millel uBlock₀ keelatakse. Üks domeen rea kohta, vigaseid domeeninimesid eiratakse.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -364,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab uBlock'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
+    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab uBlock₀'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +448,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning uBlock taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
+    "message":"Kõik seaded kirjutatakse üle, kasutades varundust kuupäevast {{time}} ning uBlock₀ taaskäivitatakse.\n\nKirjutan üle kõik praegused seaded varundusandmetega?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Kõik seaded kustutatakse ning uBlock taaskäivitatakse.\n\nTaastan µBlock'i algseadetele?",
+    "message":"Kõik seaded kustutatakse ning uBlock₀ taaskäivitatakse.\n\nTaastan uBlock₀'i algseadetele?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +464,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -500,7 +504,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock on keelanud järgneva lehe laadimise:",
+    "message":"uBlock₀ on keelanud järgneva lehe laadimise:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

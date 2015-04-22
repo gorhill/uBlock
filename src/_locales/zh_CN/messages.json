@@ -163,6 +163,10 @@
     "message":"加入右键菜单",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"适合色盲人士",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"我是高级用户（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必读<\/a>）",
     "description":"English: "

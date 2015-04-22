@@ -163,6 +163,10 @@
     "message":"అనువైనచోట్లలో కుడి-క్లిక్ మెనూని ఉపయోగించుము",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
     "description":"English: "

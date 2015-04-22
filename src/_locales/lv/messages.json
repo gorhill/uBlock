@@ -163,6 +163,10 @@
     "message":"Izmantot konteksta izvēlni vajadzības gadījumā",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Daltoniķiem draudzīgs",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vēlams izlasīt<\/a>)",
     "description":"English: "

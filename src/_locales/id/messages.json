@@ -163,6 +163,10 @@
     "message":"Pergunakan menu konteks jika sesuai",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Bacaan wajib<\/a>)",
     "description":"English: "

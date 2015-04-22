@@ -163,6 +163,10 @@
     "message":"Использовать контекстное меню, где оно уместно",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Режим для дальтоников",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Я опытный пользователь (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обязательно к прочтению<\/a>)",
     "description":"English: "

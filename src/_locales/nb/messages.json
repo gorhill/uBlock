@@ -163,6 +163,10 @@
     "message":"Gjør bruk av høyreklikkmeny der det er hensiktsmessig",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
     "description":"English: "

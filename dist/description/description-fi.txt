@@ -24,7 +24,7 @@ Halutessasi voit valita käyttöösi lisää listoja:
 - Spam404
 - Ja monia muita
 
-Jos sinulla on useita listoja käytössä, keskusmuistia kuluu enemmän. Tästä huolimatta, vaikka lisäisit Fanboyn kaksi lisälistaa ja hpHostsin listan, uBlock₀illa on silti pienempi muistinkulutus kuin muilla suosituilla mainosten estäjillä.
+Jos sinulla on useita listoja käytössä, keskusmuistia kuluu enemmän. Tästä huolimatta, vaikka lisäisit Fanboyn kaksi lisälistaa ja hpHostsin listan, uBlockilla on silti pienempi muistinkulutus kuin muilla suosituilla mainosten estäjillä.
 
 Useiden listojen lisääminen saattaa aiheuttaa sivujen kaatumisen tai hajoamisen. Etenkin listat, joita käytetään normaalisti hosts-tiedostona, voivat aiheuttaa ongelmia.
 

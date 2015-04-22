@@ -163,6 +163,10 @@
     "message":"הצגת הפריט 'חסום אלמנט' בתפריט הלחצן הימני איפה שאפשר",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"אני משתמש מתקדם (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
     "description":"English: "

@@ -163,6 +163,10 @@
     "message":"Користи контекстни мени где је прикладно",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Ја сам напредни корисник (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Обавезна литература<\/a>)",
     "description":"English: "

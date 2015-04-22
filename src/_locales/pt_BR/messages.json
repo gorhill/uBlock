@@ -28,7 +28,7 @@
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Lista Branca",
+    "message":"Lista branca",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
@@ -162,6 +162,10 @@
   "settingsContextMenuPrompt":{
     "message":"Utilizar o menu de contexto onde apropriado",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsColorBlindPrompt":{
+    "message":"Cor amigável para daltônicos",
+    "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
     "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",

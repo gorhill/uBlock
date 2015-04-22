@@ -163,6 +163,10 @@
     "message":"Verwende das Kontextmenü, falls möglich",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Anzeige für farbenblinde Benutzer",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Ich bin ein erfahrener Benutzer (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Pflichtlektüre<\/a>)",
     "description":"English: "

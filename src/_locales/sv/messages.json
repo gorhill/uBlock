@@ -163,6 +163,10 @@
     "message":"Utnyttja kontextmenyn där så är lämpligt",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Färgblinds vänliga",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Jag är en avancerad användare (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>obligatorisk läsning<\/a>)",
     "description":"English: "

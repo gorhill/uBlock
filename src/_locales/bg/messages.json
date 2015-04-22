@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Щракване: забранява\/разрешава uBlock₀ за този сайт.\n\nCtrl + щракване: забранява uBlock₀ само за тази страница.",
+    "message":"Щракване: изключва\/включва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Режим за избиране на отделен елемент",
+    "message":"Блокиране на отделен елемент",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -162,6 +162,10 @@
   "settingsContextMenuPrompt":{
     "message":"Използване на контекстното меню, когато е възможно",
     "description":"English: Make use of context menu where appropriate"
+  },
+  "settingsColorBlindPrompt":{
+    "message":"Режим за хора с цветна слепота",
+    "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
     "message":"Аз съм опитен потребител (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Допълнително четиво<\/a>)",
@@ -260,7 +264,7 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"Налична нова версия",
+    "message":"Налична актуализация",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
@@ -340,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Списък на вашите адреси, за които uBlock ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
+    "message":"Списък на вашите адреси, за които uBlock₀ ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

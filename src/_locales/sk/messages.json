@@ -163,6 +163,10 @@
     "message":"Používať kontextovú ponuku v prípade potreby",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Režim pre farboslepých",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Som pokročilý používateľ (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Povinne prečítať<\/a>)",
     "description":"English: "

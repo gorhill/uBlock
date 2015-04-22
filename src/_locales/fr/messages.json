@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock₀",
+    "message":"uBlock Origin",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Journal des requêtes réseau",
+    "message":"uBlock Origin — Journal des requêtes réseau",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Cliquez pour désactiver\/activer uBlock₀ pour le site courant.\n\nCtrl+cliquez pour désactiver uBlock₀ sur cette page uniquement.",
+    "message":"Clic : Désactiver\/activer uBlock Origin pour ce site.\n\nCtrl+clic : Désactiver uBlock Origin uniquement sur cette page.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -163,6 +163,10 @@
     "message":"Utiliser le menu contextuel si possible",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Mode Daltonien",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Je suis un utilisateur expérimenté (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>)",
     "description":"English: "
@@ -208,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock₀.<\/p>",
+    "message":"<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;element hiding&rdquo;<\/a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.<\/p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock Origin.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -364,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock₀. Puisque bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock Origin. Puisque bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -444,7 +448,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis uBlock₀ redémarrera.\n\nProcéder à l'importation ?",
+    "message":"Vos paramètres seront remplacés par les données sauvegardées le {{time}}, puis uBlock Origin redémarrera.\n\nProcéder à l'importation ?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -452,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Vos paramètres seront effacés, puis uBlock₀ redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
+    "message":"Vos paramètres seront effacés, puis uBlock Origin redémarrera.\n\nProcéder à la réinitialisation des paramètres ?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -460,7 +464,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀ : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",
+    "message":"uBlock Origin : Ajouter la ressource Web suivante à votre sélection de listes de filtrage ?\n\nTitre : \"{{title}}\"\nURL : {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -500,7 +504,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ a empêché le chargement de la page suivante :",
+    "message":"uBlock Origin a empêché le chargement de la page suivante :",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

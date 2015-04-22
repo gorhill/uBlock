@@ -163,6 +163,10 @@
     "message":"Koristite kontekstni izbornik gdje je prikladno",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Ugodan za daltoniste",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Ja sam napredni korisnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Obavezna literatura<\/a>)",
     "description":"English: "
@@ -452,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Sve vaše postavke će biti obrisane i uBlock će se ponovno pokrenuti.  \n\nVraćanje µBlock₀ tvorničkih postavki?",
+    "message":"Sve vaše postavke će biti obrisane i µBlock₀ će se ponovno pokrenuti.  \n\nVraćanje µBlock₀ tvorničkih postavki?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -528,7 +532,7 @@
     "description":"English: Permanently"
   },
   "dummy":{
-    "message":"This entry must be the last one",
+    "message":"Ova stavka mora biti posljednja",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

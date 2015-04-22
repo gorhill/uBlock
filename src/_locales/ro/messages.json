@@ -163,6 +163,10 @@
     "message":"Folosește meniul contextual unde este cazul",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"Color-blind friendly",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"Sunt un utilizator avansat (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lectură obligatorie<\/a>)",
     "description":"English: "

@@ -163,6 +163,10 @@
     "message":"إستخدم لائحة السياق في المكان المناسب",
     "description":"English: Make use of context menu where appropriate"
   },
+  "settingsColorBlindPrompt":{
+    "message":"وضع عمى الألوان",
+    "description":"English: Color-blind friendly"
+  },
   "settingsAdvancedUserPrompt":{
     "message":"إظهار الإعدادات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يجب القراءة<\/a>)",
     "description":"English: "
@@ -340,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"لستتك الخاصه فيك التي سوف يتم منعها من قبل الاداة. رابط واحد كل سطر, الروابط الغير صحيحه سوف يتم تجاهلها.",
+    "message":"القائمة الخاصه فيك التي سوف يتم منعها من قبل الاداة. رابط واحد كل سطر, الروابط الغير صحيحه سوف يتم تجاهلها.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -364,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذي الاخاصيه سوف تستعمل من الذاكره قوه اكثر",
+    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذه الخاصيه سوف ستسخدم هذه الخاصية موارد الذاكرة بشكل أكبر. وبما أنه لن يكون هناك كثير من سيستخدم هذه الخاصية, سوف يتم تعطيلها بشكل افتراضي.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -496,7 +500,7 @@
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"مطفئ",
+    "message":"مغلق",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
@@ -524,7 +528,7 @@
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"بشكل دائم",
+    "message":"دائم",
     "description":"English: Permanently"
   },
   "dummy":{
