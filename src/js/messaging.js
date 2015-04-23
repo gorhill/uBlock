@@ -1248,10 +1248,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'readLogBuffer':
-            var pageStore = µb.pageStoreFromTabId(request.tabId);
-            if ( pageStore ) {
-                response = pageStore.logBuffer.readAll();
-            }
+            response = µb.logger.readAll(request.tabId);
             break;
 
         default:

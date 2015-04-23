@@ -471,6 +471,7 @@ vAPI.tabs.onPopup = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
+    µb.logger.writeOne(details.openerTabId, context, result);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {

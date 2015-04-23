@@ -19,7 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false */
 /* global vAPI, µBlock */
 
 /*******************************************************************************
@@ -41,178 +40,6 @@ To create a log of net requests
 /******************************************************************************/
 
 var µb = µBlock;
-
-/******************************************************************************/
-/******************************************************************************/
-
-var LogEntry = function(details, result) {
-    this.init(details, result);
-};
-
-/******************************************************************************/
-
-var logEntryFactory = function(details, result) {
-    var entry = logEntryJunkyard.pop();
-    if ( entry ) {
-        return entry.init(details, result);
-    }
-    return new LogEntry(details, result);
-};
-
-var logEntryJunkyard = [];
-var logEntryJunkyardMax = 100;
-
-/******************************************************************************/
-
-LogEntry.prototype.init = function(details, result) {
-    this.tstamp = Date.now();
-    this.url = details.requestURL;
-    this.hostname = details.requestHostname;
-    this.type = details.requestType;
-    this.result = result;
-    return this;
-};
-
-/******************************************************************************/
-
-LogEntry.prototype.dispose = function() {
-    this.url = this.hostname = this.type = this.result = '';
-    if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
-        logEntryJunkyard.push(this);
-    }
-};
-
-/******************************************************************************/
-
-var LogBuffer = function() {
-    this.lastReadTime = 0;
-    this.size = 50;
-    this.buffer = null;
-    this.readPtr = 0;
-    this.writePtr = 0;
-};
-
-/******************************************************************************/
-
-var logBufferFactory = function() {
-    return new LogBuffer();
-};
-
-var liveLogBuffers = [];
-
-/******************************************************************************/
-
-LogBuffer.prototype.dispose = function() {
-    if ( this.buffer === null ) {
-        return null;
-    }
-    var entry;
-    var i = this.buffer.length;
-    while ( i-- ) {
-        entry = this.buffer[i];
-        if ( entry instanceof LogEntry ) {
-            entry.dispose();
-        }
-    }
-    this.buffer = null;
-    return null;
-};
-
-/******************************************************************************/
-
-LogBuffer.prototype.start = function() {
-    if ( this.buffer === null ) {
-        this.buffer = new Array(this.size);
-        this.readPtr = 0;
-        this.writePtr = 0;
-        liveLogBuffers.push(this);
-    }
-};
-
-/******************************************************************************/
-
-LogBuffer.prototype.stop = function() {
-    this.dispose();
-    this.buffer = null;
-    // The janitor will remove us from the live pool eventually.
-};
-
-/******************************************************************************/
-
-LogBuffer.prototype.writeOne = function(details, result) {
-    if ( this.buffer === null ) {
-        return;
-    }
-    // Reusing log entry = less memory churning
-    var entry = this.buffer[this.writePtr];
-    if ( entry instanceof LogEntry === false ) {
-        this.buffer[this.writePtr] = logEntryFactory(details, result);
-    } else {
-        entry.init(details, result);
-    }
-    this.writePtr += 1;
-    if ( this.writePtr === this.size ) {
-        this.writePtr = 0;
-    }
-    // Grow the buffer between 1.5x-2x the current size
-    if ( this.writePtr === this.readPtr ) {
-        var toMove = this.buffer.slice(0, this.writePtr);
-        var minSize = Math.ceil(this.size * 1.5);
-        this.size += toMove.length;
-        if ( this.size < minSize ) {
-            this.buffer = this.buffer.concat(toMove, new Array(minSize - this.size));
-            this.writePtr = this.size;
-        } else {
-            this.buffer = this.buffer.concat(toMove);
-            this.writePtr = 0;
-        }
-        this.size = this.buffer.length;
-    }
-};
-
-/******************************************************************************/
-
-LogBuffer.prototype.readAll = function() {
-    var out;
-    if ( this.buffer === null ) {
-        this.start();
-        out = [];
-    } else if ( this.readPtr < this.writePtr ) {
-        out = this.buffer.slice(this.readPtr, this.writePtr);
-    } else if ( this.writePtr < this.readPtr ) {
-        out = this.buffer.slice(this.readPtr).concat(this.buffer.slice(0, this.writePtr));
-    } else {
-        out = [];
-    }
-    this.readPtr = this.writePtr;
-    this.lastReadTime = Date.now();
-    return out;
-};
-
-/******************************************************************************/
-
-var logBufferJanitor = function() {
-    var logBuffer;
-    var obsolete = Date.now() - logBufferObsoleteAfter;
-    var i = liveLogBuffers.length;
-    while ( i-- ) {
-        logBuffer = liveLogBuffers[i];
-        if ( logBuffer.lastReadTime < obsolete ) {
-            logBuffer.stop();
-            liveLogBuffers.splice(i, 1);
-        }
-    }
-    setTimeout(logBufferJanitor, logBufferJanitorPeriod);
-};
-
-// The janitor will look for stale log buffer every 2 minutes.
-var logBufferJanitorPeriod = 2 * 60 * 1000;
-
-// After 30 seconds without being read, a buffer will be considered unused, and
-// thus removed from memory.
-var logBufferObsoleteAfter = 30 * 1000;
-
-setTimeout(logBufferJanitor, logBufferJanitorPeriod);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -485,12 +312,6 @@ PageStore.prototype.init = function(tabId) {
                                    .matchStringExactType(context, tabContext.normalURL, 'cosmetic-filtering')
                                    .charAt(1) === 'b';
 
-    // Preserve old buffer if there is one already, it may be in use, and
-    // overwritting it would required another read to restart it.
-    if ( this.logBuffer instanceof LogBuffer === false ) {
-        this.logBuffer = logBufferFactory();
-    }
-
     return this;
 };
 
@@ -536,7 +357,6 @@ PageStore.prototype.dispose = function() {
     this.hostnameToCountMap = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();
-    this.logBuffer = this.logBuffer.dispose();
     if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
         pageStoreJunkyard.push(this);
     }
@@ -705,7 +525,6 @@ PageStore.prototype.filterRequest = function(context) {
     return result;
 };
 
-// Cache only what is worth it if logging is disabled
 // http://jsperf.com/string-indexof-vs-object
 var collapsibleRequestTypes = 'image sub_frame object';
 
@@ -768,7 +587,6 @@ PageStore.prototype.logRequest = function(context, result) {
         µb.localSettings.blockedRequestCount++;
     }
     µb.localSettingsModifyTime = now;
-    this.logBuffer.writeOne(context, result);
 };
 
 /******************************************************************************/
