@@ -164,7 +164,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"వర్ణ అంధులకనుకూలమైన",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{

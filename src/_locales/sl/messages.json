@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Network request log",
+    "message":"uBlock₀ — Omrežna dnevniška datoteka zahtev",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -44,11 +44,11 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"requests blocked",
+    "message":"zahteva preprečena",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"on this page",
+    "message":"na tej strani",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"since install",
+    "message":"od namestitve",
     "description":"English: since install"
   },
   "popupOr":{
@@ -88,11 +88,11 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
-    "message":"all",
+    "message":"vse",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"images",
+    "message":"slike",
     "description":""
   },
   "popup3pAnyRulePrompt":{
@@ -120,31 +120,31 @@
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} out of {{total}}",
+    "message":"{{count}} od {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Create",
+    "message":"Ustvari",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Pick",
+    "message":"Izberi",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"Quit",
+    "message":"Končaj",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Net filters",
+    "message":"Omrežni filtri",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Cosmetic filters",
+    "message":"Vizualni filtri",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"Click, Ctrl-click",
+    "message":"Klik, Ctrl-klik",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{

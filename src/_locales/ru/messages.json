@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Клик: отключить\/включить µBlock для этого сайта.\n\nCTRL+Клик: отключить µBlock для этой страницы.",
+    "message":"ЛКМ: отключить\/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ для этой страницы.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Эта опция включает анализ и применение <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых &ldquo;element hiding&rdquo; фильтров<\/a>. По сути это косметические фильтры - скрывают визуально раздражающие элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Включение этой опции увеличивает использование памяти <i>µBlock<\/i>.<\/p>",
+    "message":"<p>Эта опция включает использование анализатора <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-совместимых фильтров &ldquo;скрытия элементов&rdquo;<\/a>. Это косметические фильтры, дающие возможность скрыть ненужные элементы страницы, которые не могут быть заблокированы механизмом фильтрации сетевых запросов.<\/p><p>Использование данной опции увеличивает потребление памяти uBlock₀.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -344,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ваш список адресов сайтов, для которых µBlock будет неактивен. Одна запись на строку. Некорректные адреса будут проигнорированы без уведомлений.",
+    "message":"Ваш список адресов сайтов, для которых uBlock₀ будет неактивен. Одна запись на строку. Некорректные адреса будут проигнорированы без уведомлений.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -368,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Вы можете анализировать данные сетевых запросов, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти µBlock.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
+    "message":"Вы можете анализировать данные сетевых запросов, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти uBlock₀.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -448,7 +448,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Текущие настройки будут заменены данными из резервной копии от {{time}}, µBlock будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
+    "message":"Текущие настройки будут заменены данными из резервной копии от {{time}}, и uBlock₀ будет перезапущен.\n\nПерезаписать все существующие параметры данными из резервной копии?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -456,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Все ваши настройки будут удалены, µBlock будет перезапущен. \n\nВосстановить настройки по умолчанию?",
+    "message":"Все ваши настройки будут удалены, uBlock₀ будет перезапущен. \n\nВосстановить настройки по умолчанию?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -464,7 +464,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock: Добавить этот адрес в список ваших фильтров?\n\nНазвание: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: добавить следующий адрес в ваш список фильтров?\n\nНазвание: \"{{title}}\"\nURL-адрес: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -504,7 +504,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock предотвратил загрузку следующей страницы:",
+    "message":"uBlock₀ предотвратил загрузку следующей страницы:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
