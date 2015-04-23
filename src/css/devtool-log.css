@@ -58,11 +58,14 @@ input:focus {
 #content table tr.blocked {
     background-color: rgba(192, 0, 0, 0.1)
     }
+body.colorBlind #content table tr.blocked {
+    background-color: rgba(0, 19, 110, 0.1)
+    }
 #content table tr.allowed {
     background-color: rgba(0, 160, 0, 0.1)
     }
-#content table tr.allowed.mirrored {
-    background-color: rgba(255, 255, 0, 0.3)
+body.colorBlind #content table tr.allowed {
+    background-color: rgba(255, 194, 57, 0.1)
     }
 #content table tr.maindoc {
     background-color: #eee;
@@ -103,6 +106,12 @@ body:not(.filterOff) #content table tr.hidden {
 #content table tr.blocked td:nth-of-type(4) b {
     background-color: rgba(192, 0, 0, 0.2);
     }
+body.colorBlind #content table tr.blocked td:nth-of-type(4) b {
+    background-color: rgba(0, 19, 110, 0.2);
+    }
 #content table tr.allowed td:nth-of-type(4) b {
     background-color: rgba(0, 160, 0, 0.2);
+    }
+body.colorBlind #content table tr.allowed td:nth-of-type(4) b {
+    background-color: rgba(255, 194, 57, 0.2);
     }

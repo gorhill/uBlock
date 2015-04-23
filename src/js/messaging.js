@@ -1248,7 +1248,10 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'readLogBuffer':
-            response = µb.logger.readAll(request.tabId);
+            response = {
+                colorBlind: µb.userSettings.colorBlindFriendly,
+                entries: µb.logger.readAll(request.tabId)
+            };
             break;
 
         default:

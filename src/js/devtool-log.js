@@ -151,7 +151,10 @@ var renderLogEntry = function(entry) {
 
 /******************************************************************************/
 
-var renderLogBuffer = function(buffer) {
+var renderLogBuffer = function(response) {
+    body.classList.toggle('colorBlind', response.colorBlind);
+
+    var buffer = response.entries;
     if ( buffer.length === 0 ) {
         return;
     }
@@ -205,10 +208,8 @@ var truncateLog = function(size) {
 
 /******************************************************************************/
 
-var onBufferRead = function(buffer) {
-    if ( Array.isArray(buffer) ) {
-        renderLogBuffer(buffer);
-    }
+var onBufferRead = function(response) {
+    renderLogBuffer(response);
     setTimeout(readLogBuffer, 1000);
 };
 
