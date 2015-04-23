@@ -699,10 +699,10 @@
         // Until Safari has more specific events, those are instead handled
         // in the onBeforeRequestAdapter; clean them up so they're garbage-collected
         vAPI.net.onBeforeSendHeaders = null;
-        vAPI.net.onHeadersReceived = null;
 
         var onBeforeRequest = vAPI.net.onBeforeRequest,
             onBeforeRequestClient = onBeforeRequest.callback,
+            onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback,
             blockableTypes = onBeforeRequest.types;
 
         var onBeforeRequestAdapter = function(e) {
@@ -718,9 +718,10 @@
                 });
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
-                var blockVerdict = onBeforeRequestClient(e.message);
-                if(blockVerdict && blockVerdict.redirectUrl) {
-                    e.target.url = blockVerdict.redirectUrl;
+                e.message.responseHeaders = [];
+                onBeforeRequestClient(e.message);
+                var blockVerdict = onHeadersReceivedClient(e.message);
+                if(blockVerdict && blockVerdict.responseHeaders) {
                     e.message = false;
                 }
                 else {
