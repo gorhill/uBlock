@@ -230,8 +230,13 @@
             var meta = document.createElement('meta');
             meta.setAttribute("http-equiv", "content-security-policy");
             meta.setAttribute("content", "script-src 'unsafe-eval' *");
+            if(document.documentElement.firstChild) {
+                document.documentElement.insertBefore(meta, document.documentElement.firstChild);
+            }
+            else {
+                document.documentElement.appendChild(meta);
+            }
         }
-        document.documentElement.insertBefore(meta, document.documentElement.firstChild);
         document.addEventListener(vAPI.sessionId, function(e) {
             if(shouldBlockDetailedRequest(e.detail)) {
                 e.detail.url = false;
