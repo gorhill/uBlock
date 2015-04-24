@@ -45,13 +45,6 @@ document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
     document.querySelector('#panes > div:nth-of-type(1)').offsetHeight + 'px'
 );
 
-// The padlock must be manually positioned:
-// - It's vertical position depends on the height on the title bar.
-document.getElementById('rulesetTools').style.setProperty(
-    'top',
-    (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
-);
-
 // https://github.com/chrisaljoudi/uBlock/issues/996
 // Experimental: mitigate glitchy popup UI: immediately set the firewall pane
 // visibility to its last known state. By default the pane is hidden.
@@ -324,12 +317,6 @@ var buildAllFirewallRows = function() {
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
         dfPaneBuilt = true;
     }
-
-    // The padlock must be manually positioned:
-    // - Its horizontal position depends on whether there is a vertical
-    //   scrollbar.
-    var rect = document.getElementById('firewallContainer').getBoundingClientRect();
-    document.getElementById('rulesetTools').style.setProperty('left', (rect.left + 4) + 'px');
 
     updateAllFirewallCells();
 };

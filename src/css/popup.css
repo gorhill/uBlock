@@ -69,6 +69,7 @@ body, #panes {
     }
 body.portrait #panes > div {
     display: block;
+    width: 100%;
     }
 body[dir="ltr"] #panes > div {
     direction: ltr;
@@ -320,6 +321,10 @@ body.dirty #refresh:hover {
     font-size: 11.5px;
     text-align: center;
     }
+body.portrait #firewallContainer > div > span:nth-of-type(3),
+body.portrait #firewallContainer > div > span:nth-of-type(4) {
+    font-size: 9px;
+    }
 #firewallContainer > div > span:nth-of-type(4) {
     display: none;
     }
@@ -461,8 +466,10 @@ body.dirty #refresh:hover {
     border: 0;
     color: #888;
     display: none;
+    left: 4px;
     padding: 0;
-    position: fixed;
+    position: absolute;
+    top: 4px;
     }
 #rulesetTools > span {
     background-color: #ffe;
