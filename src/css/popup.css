@@ -7,6 +7,14 @@ body {
     padding: 0;
     white-space: nowrap;
     }
+/**
+ https://github.com/gorhill/uBlock/issues/83
+ .portrait = portrait mode = width is constrained = optimize layout accordingly.
+ */
+body.portrait {
+    width: 100%;
+    }
+
 h2 {
     background-color: #eee;
     border: 0;
@@ -53,10 +61,14 @@ body[dir="rtl"] #panes {
 body, #panes {
     text-align: right; /* this helps the popup render better at "intermediate" widths */
     }
+
 #panes > div {
     display: inline-block;
     position: relative;
     vertical-align: top;
+    }
+body.portrait #panes > div {
+    display: block;
     }
 body[dir="ltr"] #panes > div {
     direction: ltr;
@@ -69,12 +81,22 @@ body[dir="rtl"] #panes > div {
     overflow-x: hidden;
     width: 320px;
     }
+/**
+ Scroll bar to the left.
+ */
 body[dir="ltr"] #panes > div:nth-of-type(2) {
-    direction: rtl; /* scroll bar to the left */
+    direction: rtl;
     margin-right: 1px;
     }
-body[dir="rtl"] #panes > div:nth-of-type(2) {
-    direction: ltr; /* scroll bar to the right */
+/**
+ Scroll bar to the right.
+ Firefox bug: when popup is rendered inside hamburger menu panel, Firefox is
+              unable to render the scroll bar to the left.
+              Maybe <https://bugzilla.mozilla.org/show_bug.cgi?id=1139306>?
+ */
+body[dir="rtl"] #panes > div:nth-of-type(2),
+body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
+    direction: ltr;
     margin-left: 1px;
     }
 #panes:not(.dfEnabled) > div:nth-of-type(2) {
@@ -319,7 +341,9 @@ body.dirty #refresh:hover {
     display: inline-block;
     }
 
-/* Small coloured label at the left of a row */
+/**
+ Small coloured label at the left of a row
+ */
 #firewallContainer > div.allowed > span:nth-of-type(1):before,
 #firewallContainer > div.blocked > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before,
@@ -333,8 +357,9 @@ body.dirty #refresh:hover {
     position: absolute;
     width: 7px;
     }
-/* Source for color-blind color scheme from https://github.com/WyohKnott:
-   https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
+/**
+ Source for color-blind color scheme from https://github.com/WyohKnott:
+ https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
  */
 #firewallContainer > div.allowed > span:nth-of-type(1):before,
 #firewallContainer.minimized > div.isDomain.totalAllowed > span:nth-of-type(1):before {

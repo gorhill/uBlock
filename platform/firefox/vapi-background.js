@@ -1517,7 +1517,10 @@ vAPI.toolbarButton.init = function() {
             // Anonymous elements need some time to be reachable
             setTimeout(this.updateBadgeStyle, 250);
         }.bind(this.CUIEvents);
+
+        // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/CustomizableUI.jsm#Listeners
         this.CUIEvents.onCustomizeEnd = updateBadge;
+        this.CUIEvents.onWidgetAdded = updateBadge;
         this.CUIEvents.onWidgetUnderflow = updateBadge;
 
         this.CUIEvents.updateBadgeStyle = function() {
@@ -1631,6 +1634,18 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
 
         if ( !win || win.location.host !== location.host ) {
             return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/83
+        // Add `portrait` class if width is constrained.
+        try {
+            var CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+            iframe.contentDocument.body.classList.toggle(
+                'portrait',
+                CustomizableUI.getWidget(vAPI.toolbarButton.id).areaType === CustomizableUI.TYPE_MENU_PANEL
+            );
+        } catch (ex) {
+            /* noop */
         }
 
         new win.MutationObserver(delayedResize).observe(win.document.body, {

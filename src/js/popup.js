@@ -62,7 +62,7 @@ if ( dfPaneVisibleStored ) {
 
 /******************************************************************************/
 
-var popupData;
+var popupData = {};
 var dfPaneBuilt = false;
 var reIP = /^\d+(?:\.\d+){1,3}$/;
 var reSrcHostnameFromRule = /^d[abn]:([^ ]+) ([^ ]+) ([^ ]+)/;
