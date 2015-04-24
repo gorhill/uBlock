@@ -47,7 +47,7 @@ document.querySelector('#panes > div:nth-of-type(2)').style.setProperty(
 
 // The padlock must be manually positioned:
 // - It's vertical position depends on the height on the title bar.
-document.getElementById('saveRules').style.setProperty(
+document.getElementById('rulesetTools').style.setProperty(
     'top',
     (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
 );
@@ -329,7 +329,7 @@ var buildAllFirewallRows = function() {
     // - Its horizontal position depends on whether there is a vertical
     //   scrollbar.
     var rect = document.getElementById('firewallContainer').getBoundingClientRect();
-    document.getElementById('saveRules').style.setProperty('left', (rect.left + 4) + 'px');
+    document.getElementById('rulesetTools').style.setProperty('left', (rect.left + 4) + 'px');
 
     updateAllFirewallCells();
 };
@@ -678,6 +678,23 @@ var saveFirewallRules = function() {
 
 /******************************************************************************/
 
+var revertFirewallRules = function() {
+    var onFirewallRuleChanged = function(response) {
+        cachePopupData(response);
+        updateAllFirewallCells();
+        hashFromPopupData();
+    };
+    messager.send({
+        what: 'revertFirewallRules',
+        srcHostname: popupData.pageHostname,
+        desHostnames: popupData.hostnameDict,
+        tabId: popupData.tabId
+    }, onFirewallRuleChanged);
+    uDom('#firewallContainer').removeClass('dirty');
+};
+
+/******************************************************************************/
+
 var toggleHostnameSwitch = function() {
     var elem = uDom(this);
     var switchName = elem.attr('id');
@@ -815,6 +832,7 @@ uDom.onLoad(function () {
     uDom('#refresh').on('click', reloadTab);
     uDom('.hnSwitch').on('click', toggleHostnameSwitch);
     uDom('#saveRules').on('click', saveFirewallRules);
+    uDom('#revertRules').on('click', revertFirewallRules);
     uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 
     uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)

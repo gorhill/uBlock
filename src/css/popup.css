@@ -186,15 +186,15 @@ body.advancedUser #panes.dfEnabled h2:before {
 
 #refresh {
     background-color: #ffe;
-    border: 1px solid #eec;
+    border: 1px solid #ddc;
     border-radius: 4px;
     bottom: 0.7em;
     color: #888;
     cursor: pointer;
     display: none;
-    font-size: 40px;
+    font-size: 42px;
     left: 4px;
-    line-height: 40px;
+    line-height: 1;
     padding: 4px 8px;
     position: absolute;
     right: 4px;
@@ -431,22 +431,31 @@ body.dirty #refresh:hover {
     visibility: hidden;
     }
 
-#saveRules {
-    background-color: #ffe;
-    border: 1px solid #eec;
-    border-radius: 4px;
+#rulesetTools {
+    background-color: transparent;
+    border: 0;
     color: #888;
-    cursor: pointer;
     display: none;
-    font-size: 30px;
-    line-height: 40px;
-    padding: 0.1em 0.4em;
+    padding: 0;
     position: fixed;
-    text-align: center;
     }
-#firewallContainer.dirty ~ #saveRules {
+#rulesetTools > span {
+    background-color: #ffe;
+    border: 1px solid #ddc;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.7em;
+    line-height: 1.0;
+    margin: 0;
+    margin-right: 0.1em;
+    padding: 0.2em 0.4em;
+    text-align: center;
+    width: 1em;
+    }
+#firewallContainer.dirty ~ #rulesetTools {
     display: block;
     }
-#firewallContainer.dirty ~ #saveRules:hover {
+#firewallContainer.dirty ~ #rulesetTools > span:hover {
     color: black;
     }

@@ -307,23 +307,23 @@ var getPopupDataLazy = function(tabId, callback) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'getPopupDataLazy':
-            getPopupDataLazy(request.tabId, callback);
-            return;
+    case 'getPopupDataLazy':
+        getPopupDataLazy(request.tabId, callback);
+        return;
 
-        case 'getPopupData':
-            if ( request.tabId === vAPI.noTabId ) {
-                callback(getStats(vAPI.noTabId, ''));
-                return;
-            }
-            vAPI.tabs.get(request.tabId, function(tab) {
-                // https://github.com/chrisaljoudi/uBlock/issues/1012
-                callback(getStats(getTargetTabId(tab), tab ? tab.title : ''));
-            });
+    case 'getPopupData':
+        if ( request.tabId === vAPI.noTabId ) {
+            callback(getStats(vAPI.noTabId, ''));
             return;
+        }
+        vAPI.tabs.get(request.tabId, function(tab) {
+            // https://github.com/chrisaljoudi/uBlock/issues/1012
+            callback(getStats(getTargetTabId(tab), tab ? tab.title : ''));
+        });
+        return;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
@@ -331,46 +331,55 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'gotoPick':
-            // Picker launched from popup: clear context menu args
-            µb.contextMenuClientX = -1;
-            µb.contextMenuClientY = -1;
-            µb.elementPickerExec(request.tabId);
-            if ( request.select && vAPI.tabs.select ) {
-                vAPI.tabs.select(request.tabId);
-            }
-            break;
+    case 'gotoPick':
+        // Picker launched from popup: clear context menu args
+        µb.contextMenuClientX = -1;
+        µb.contextMenuClientY = -1;
+        µb.elementPickerExec(request.tabId);
+        if ( request.select && vAPI.tabs.select ) {
+            vAPI.tabs.select(request.tabId);
+        }
+        break;
 
-        case 'hasPopupContentChanged':
-            pageStore = µb.pageStoreFromTabId(request.tabId);
-            var lastModified = pageStore ? pageStore.contentLastModified : 0;
-            response = lastModified !== request.contentLastModified;
-            break;
+    case 'hasPopupContentChanged':
+        pageStore = µb.pageStoreFromTabId(request.tabId);
+        var lastModified = pageStore ? pageStore.contentLastModified : 0;
+        response = lastModified !== request.contentLastModified;
+        break;
 
-        case 'saveFirewallRules':
-            µb.permanentFirewall.copyRules(
-                µb.sessionFirewall,
-                request.srcHostname,
-                request.desHostnames
-            );
-            µb.savePermanentFirewallRules();
-            break;
+    case 'revertFirewallRules':
+        µb.sessionFirewall.copyRules(
+            µb.permanentFirewall,
+            request.srcHostname,
+            request.desHostnames
+        );
+        response = getStats(request.tabId);
+        break;
 
-        case 'toggleFirewallRule':
-            µb.toggleFirewallRule(request);
-            response = getStats(request.tabId);
-            break;
+    case 'saveFirewallRules':
+        µb.permanentFirewall.copyRules(
+            µb.sessionFirewall,
+            request.srcHostname,
+            request.desHostnames
+        );
+        µb.savePermanentFirewallRules();
+        break;
 
-        case 'toggleNetFiltering':
-            pageStore = µb.pageStoreFromTabId(request.tabId);
-            if ( pageStore ) {
-                pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
-                µb.updateBadgeAsync(request.tabId);
-            }
-            break;
+    case 'toggleFirewallRule':
+        µb.toggleFirewallRule(request);
+        response = getStats(request.tabId);
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    case 'toggleNetFiltering':
+        pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore ) {
+            pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+            µb.updateBadgeAsync(request.tabId);
+        }
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
