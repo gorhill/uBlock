@@ -59,13 +59,18 @@ vAPI.app.restart = function() {
 
 /******************************************************************************/
 
+// Set default preferences for user to find in about:config
+vAPI.localStorage.setDefaultBool("forceLegacyToolbarButton", false);
+
+/******************************************************************************/
+
 // List of things that needs to be destroyed when disabling the extension
 // Only functions should be added to it
 
 var cleanupTasks = [];
 
 // This must be updated manually, every time a new task is added/removed
-var expectedNumberOfCleanups = vAPI.fennec ? 7 : 8; // 8 instances of cleanupTasks.push, but one is unique to fennec, and two to desktop.
+var expectedNumberOfCleanups = vAPI.fennec ? 7 : 9; // several instances of cleanupTasks.push, but one is unique to fennec, and three to desktop.
 
 window.addEventListener('unload', function() {
     for ( var cleanup of cleanupTasks ) {
@@ -285,28 +290,42 @@ var windowWatcher = {
             return;
         }
 
-        var tabContainer;
-        var tabBrowser = getTabBrowser(this);
+        var attachToTabBrowser = function(window, tabBrowser) {
+            if (!tabBrowser) {
+                return;
+            }
 
+            var tabContainer;
+            if ( tabBrowser.deck ) {
+                // Fennec
+                tabContainer = tabBrowser.deck;
+            } else if ( tabBrowser.tabContainer ) {
+                // desktop Firefox
+                tabContainer = tabBrowser.tabContainer;
+                vAPI.contextMenu.register(window.document);
+                if (vAPI.toolbarButton.attachToNewWindow) {
+                    vAPI.toolbarButton.attachToNewWindow(window);
+                }
+            } else {
+                return;
+            }
+
+            tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
+            tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
+            // when new window is opened TabSelect doesn't run on the selected tab?
+        }
+
+        var win = this;
+        var tabBrowser = getTabBrowser(win);
         if ( !tabBrowser ) {
-            return;
-        }
-
-        if ( tabBrowser.deck ) {
-            // Fennec
-            tabContainer = tabBrowser.deck;
-        } else if ( tabBrowser.tabContainer ) {
-            // desktop Firefox
-            tabContainer = tabBrowser.tabContainer;
-            vAPI.contextMenu.register(this.document);
+            // On some platforms, the tab browser isn't immediately available, try waiting a bit
+            win.setTimeout(function() {
+                attachToTabBrowser(win, getTabBrowser(win));
+            }, 250);
         } else {
-            return;
+            attachToTabBrowser(win, tabBrowser);
         }
-
-        tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
-        tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
-
-        // when new window is opened TabSelect doesn't run on the selected tab?
+        
     },
 
     observe: function(win, topic) {
@@ -1463,10 +1482,136 @@ vAPI.toolbarButton.init = function() {
         return;
     }
 
+    vAPI.messaging.globalMessageManager.addMessageListener(
+        location.host + ':closePopup',
+        vAPI.toolbarButton.onPopupCloseRequested
+    );
+
+    cleanupTasks.push(function() {
+       vAPI.messaging.globalMessageManager.removeMessageListener(
+            location.host + ':closePopup',
+            vAPI.toolbarButton.onPopupCloseRequested
+        );
+    });
+
     var CustomizableUI;
-    try {
-        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
-    } catch (ex) {
+
+    var forceLegacyToolbarButton = vAPI.localStorage.getBool("forceLegacyToolbarButton");
+    if (!forceLegacyToolbarButton) {
+        try {
+            CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+        } catch (ex) {
+        }
+    }
+
+    if (!CustomizableUI) {
+        // Create a fallback non-customizable UI button
+        var sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+        var styleSheetUri = Services.io.newURI(vAPI.getURL("css/legacy-toolbar-button.css"), null, null);
+        var legacyButtonId = "uBlock-legacy-button"; // NOTE: must match legacy-toolbar-button.css
+        this.id = legacyButtonId;
+        this.viewId = legacyButtonId + "-panel";
+                
+        if (!sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
+            sss.loadAndRegisterSheet(styleSheetUri, sss.AUTHOR_SHEET); // Register global so it works in all windows, including palette
+        }
+
+        var addLegacyToolbarButton = function(window) {
+            var document = window.document;
+            var toolbox = document.getElementById('navigator-toolbox') || document.getElementById('mail-toolbox');
+            
+            if (toolbox) {
+                var palette = toolbox.palette;
+
+                if (!palette) {
+                    // palette might take a little longer to appear on some platforms, give it a small delay and try again
+                    window.setTimeout(function() {
+                        if (toolbox.palette) {
+                            addLegacyToolbarButton(window);
+                        }
+                    }, 250);
+                    return;
+                }
+
+                var toolbarButton = document.createElement('toolbarbutton');
+                toolbarButton.setAttribute('id', legacyButtonId);
+                toolbarButton.setAttribute('type', 'panel');
+                toolbarButton.setAttribute('removable', 'true');
+                toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
+                toolbarButton.setAttribute('label', vAPI.toolbarButton.label);
+
+                var toolbarButtonPanel = document.createElement("panel");
+                toolbarButtonPanel.setAttribute('level', 'parent');
+                vAPI.toolbarButton.populatePanel(document, toolbarButtonPanel);
+                toolbarButtonPanel.addEventListener('popupshowing', vAPI.toolbarButton.onViewShowing);
+                toolbarButtonPanel.addEventListener('popuphiding', vAPI.toolbarButton.onViewHiding);
+                toolbarButton.appendChild(toolbarButtonPanel);
+                
+                palette.appendChild(toolbarButton);
+
+                vAPI.toolbarButton.closePopup = function() {
+                    toolbarButtonPanel.hidePopup();
+                }
+
+                if (!vAPI.localStorage.getBool('legacyToolbarButtonAdded')) {
+                    // No button yet so give it a default location. If forcing the button, just put in in the palette rather than on any specific toolbar (who knows what toolbars will be available or visible!)
+                    var toolbar = !forceLegacyToolbarButton && document.getElementById('nav-bar');
+                    if (toolbar) {
+                        toolbar.appendChild(toolbarButton);
+                        toolbar.setAttribute('currentset', toolbar.currentSet);
+                        document.persist(toolbar.id, 'currentset');
+                    }
+                    vAPI.localStorage.setBool('legacyToolbarButtonAdded', 'true');
+                } else {
+                    // Find the place to put the button
+                    var toolbars = toolbox.externalToolbars.slice();
+                    for (var child of toolbox.children) {
+                        if (child.localName === 'toolbar') {
+                            toolbars.push(child);
+                        }
+                    }
+
+                    for (var toolbar of toolbars) {
+                        var currentsetString = toolbar.getAttribute('currentset');
+                        if (currentsetString) {
+                            var currentset = currentsetString.split(',');
+                            var index = currentset.indexOf(legacyButtonId);
+                            if (index >= 0) {
+                                // Found our button on this toolbar - but where on it?
+                                var before = null;
+                                for (var i = index + 1; i < currentset.length; i++) {
+                                    before = document.getElementById(currentset[i]);
+                                    if (before) {
+                                        toolbar.insertItem(legacyButtonId, before);
+                                        break;
+                                    }
+                                }
+                                if (!before) {
+                                    toolbar.insertItem(legacyButtonId);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        vAPI.toolbarButton.attachToNewWindow = function(win) {
+            addLegacyToolbarButton(win);
+        }
+
+        cleanupTasks.push(function() {
+            for ( var win of vAPI.tabs.getWindows() ) {
+                var toolbarButton = win.document.getElementById(legacyButtonId);
+                if (toolbarButton) {
+                    toolbarButton.parentNode.removeChild(toolbarButton);
+                }
+            }
+
+            if (sss.sheetRegistered(styleSheetUri, sss.AUTHOR_SHEET)) {
+                sss.unregisterSheet(styleSheetUri, sss.AUTHOR_SHEET);
+            }
+        }.bind(this));
         return;
     }
 
@@ -1573,17 +1718,14 @@ vAPI.toolbarButton.init = function() {
         null
     );
 
-    this.closePopup = function({target}) {
+    this.closePopup = function(tabBrowser) {
         CustomizableUI.hidePanelForNode(
-            target.ownerDocument.getElementById(vAPI.toolbarButton.viewId)
+            tabBrowser.ownerDocument.getElementById(vAPI.toolbarButton.viewId)
         );
     };
 
     CustomizableUI.createWidget(this);
-    vAPI.messaging.globalMessageManager.addMessageListener(
-        location.host + ':closePopup',
-        this.closePopup
-    );
+    
 
     cleanupTasks.push(function() {
         if ( this.CUIEvents ) {
@@ -1591,11 +1733,7 @@ vAPI.toolbarButton.init = function() {
         }
 
         CustomizableUI.destroyWidget(this.id);
-        vAPI.messaging.globalMessageManager.removeMessageListener(
-            location.host + ':closePopup',
-            this.closePopup
-        );
-
+        
         for ( var win of vAPI.tabs.getWindows() ) {
             var panel = win.document.getElementById(this.viewId);
             panel.parentNode.removeChild(panel);
@@ -1610,35 +1748,67 @@ vAPI.toolbarButton.init = function() {
 
 /******************************************************************************/
 
+vAPI.toolbarButton.onPopupCloseRequested = function({target}) {
+    if (vAPI.toolbarButton.closePopup) {
+        vAPI.toolbarButton.closePopup(target);
+    }
+}
+
+/******************************************************************************/
+
 vAPI.toolbarButton.onBeforeCreated = function(doc) {
     var panel = doc.createElement('panelview');
+    
+    vAPI.toolbarButton.populatePanel(doc, panel);
+
+    doc.getElementById('PanelUI-multiView').appendChild(panel);
+
+    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
+        .getInterface(Ci.nsIDOMWindowUtils)
+        .loadSheet(this.styleURI, 1);
+};
+
+vAPI.toolbarButton.populatePanel = function(doc, panel) {
     panel.setAttribute('id', this.viewId);
 
     var iframe = doc.createElement('iframe');
     iframe.setAttribute('type', 'content');
 
-    doc.getElementById('PanelUI-multiView')
-        .appendChild(panel)
-        .appendChild(iframe);
+    panel.appendChild(iframe);
 
     var updateTimer = null;
-    var delayedResize = function() {
+    var delayedResize = function(attempts) {
         if ( updateTimer ) {
             return;
         }
 
-        updateTimer = setTimeout(resizePopup, 10);
+        // Sanity check
+        attempts = (attempts || 0) + 1;
+        if (attempts > 1000) {
+            console.error('uBlock> delayedResize: giving up after too many attemps');
+            return;
+        }
+
+        updateTimer = setTimeout(resizePopup, 10, attempts);
     };
-    var resizePopup = function() {
+    var resizePopup = function(attempts) {
         updateTimer = null;
         var body = iframe.contentDocument.body;
         panel.parentNode.style.maxWidth = 'none';
         // https://github.com/chrisaljoudi/uBlock/issues/730
         // Voodoo programming: this recipe works
-        panel.style.height = iframe.style.height = body.clientHeight.toString() + 'px';
-        panel.style.width = iframe.style.width = body.clientWidth.toString() + 'px';
+        var toPixelString = pixels => pixels.toString() + 'px';
+
+        var clientHeight = body.clientHeight;
+        iframe.style.height = toPixelString(clientHeight);
+        panel.style.height = toPixelString(clientHeight + (panel.boxObject.height - panel.clientHeight));
+
+        var clientWidth = body.clientWidth;
+        iframe.style.width = toPixelString(clientWidth);
+        panel.style.width = toPixelString(clientWidth + (panel.boxObject.width - panel.clientWidth));
+
         if ( iframe.clientHeight !== body.clientHeight || iframe.clientWidth !== body.clientWidth ) {
-            delayedResize();
+            delayedResize(attempts);
         }
     };
 
@@ -1651,11 +1821,13 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        var placement = CustomizableUI.getPlacementOfWidget(widgetId);
-        if (placement.area === CustomizableUI.AREA_PANEL) {
-            // Add some overrides for displaying the popup correctly in a panel
-            win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils)
-                .loadSheet(Services.io.newURI(vAPI.getURL("css/popup-vertical.css"), null, null), Ci.nsIDOMWindowUtils.AUTHOR_SHEET);
+        if (CustomizableUI) {
+            var placement = CustomizableUI.getPlacementOfWidget(widgetId);
+            if (placement.area === CustomizableUI.AREA_PANEL) {
+                // Add some overrides for displaying the popup correctly in a panel
+                win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils)
+                    .loadSheet(Services.io.newURI(vAPI.getURL("css/popup-vertical.css"), null, null), Ci.nsIDOMWindowUtils.AUTHOR_SHEET);
+            }
         }
 
         new win.MutationObserver(delayedResize).observe(win.document.body, {
@@ -1668,10 +1840,6 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
     };
 
     iframe.addEventListener('load', onPopupReady, true);
-
-    doc.defaultView.QueryInterface(Ci.nsIInterfaceRequestor)
-        .getInterface(Ci.nsIDOMWindowUtils)
-        .loadSheet(this.styleURI, 1);
 };
 
 /******************************************************************************/

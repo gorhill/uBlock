@@ -1,0 +1,37 @@
+﻿#uBlock-legacy-button {
+	list-style-image: url('../img/browsericons/icon32.svg');
+}
+#uBlock-legacy-button.off {
+	list-style-image: url('../img/browsericons/icon32-off.svg');
+}
+
+toolbar[iconsize="small"] #uBlock-legacy-button {
+	list-style-image: url('../img/browsericons/icon16.svg');
+}
+toolbar[iconsize="small"] #uBlock-legacy-button.off {
+	list-style-image: url('../img/browsericons/icon16-off.svg');
+}
+#uBlock-legacy-button[badge]::before {
+    position: fixed;
+    margin-top: -2px;
+    padding: 1px 2px;
+    font-size: 9px;
+    font-weight: bold;
+    color: #fff;
+    background: #666;
+    content: attr(badge);
+}
+/* This hack required because if the before content changes it de-pops the popup (without firing any events). So just hide it instead. Note, can't actually *hide* it, or the same thing happens. '*/
+#uBlock-legacy-button[badge=""]::before {
+	padding: 0;
+}
+
+/* Override off state when in palette */
+toolbarpaletteitem #uBlock-legacy-button.off {
+	list-style-image: url('../img/browsericons/icon32.svg');
+}
+
+/* Override badge when in palette */
+toolbarpaletteitem #uBlock-legacy-button[badge]::before {
+	content: none;
+}
