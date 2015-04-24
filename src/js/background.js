@@ -120,6 +120,10 @@ return {
         'assets/ublock/privacy.txt': {
             title: 'uBlock filters – Privacy',
             group: 'default'
+        },
+        'assets/ublock/unbreak.txt': {
+            title: 'uBlock filters – Unbreak',
+            group: 'default'
         }
     },
 
