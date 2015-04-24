@@ -195,3 +195,8 @@ ovh.strim.io#@##tweets
 
 # http://www.reddit.com/r/ublock/comments/32k908/cnncom_videos_wont_load_w_%C2%B5block_enabled/
 @@||i.cdn.turner.com/xslo/cvp/ads/freewheel/bundles/2/*$domain=cnn.com
+
+# Ebay UK sabotaging itself. From Chrome store:
+# "UK's eBay site won't load if uBlock is ON"
+# It loads, but the body element has the `pushdown-ad` class name.
+ebay.co.uk#@#.pushdown-ad
