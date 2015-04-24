@@ -23,6 +23,8 @@ uBlock blocks ads through its support of the [Adblock Plus filter syntax](https:
 
 uBlock's main goal is to help users neutralize privacy-invading apparatus — ads being one example.
 
+[Feel free to read about uBlock's development philosophy](https://chrismatic.io/ublock/philosophy).
+
 ## Getting started
 
 [Quick guide for basic usage](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
