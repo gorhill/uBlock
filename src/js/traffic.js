@@ -353,7 +353,7 @@ var onRootFrameHeadersReceived = function(details) {
 
     // Check if the main_frame is a download
     // ...
-    if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
+    if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('application/x-', 0) === 0 ) {
         µb.tabContextManager.unpush(tabId, details.url);
     }
 
