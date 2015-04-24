@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: lr3SI5broZ6m6GTjH9AA7A
-! Version: 201504190450
-! Last modified: 19 Apr 2015 04:50 UTC
+! Checksum: uIZ6vvXGgbPjBTQFfLs1KA
+! Version: 201504242200
+! Last modified: 24 Apr 2015 22:00 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: http://ruadlist.googlecode.com/
 !
@@ -9058,7 +9058,7 @@ _youtube_social_
 ||socialproof.it^$third-party
 ||socialrest.com^$third-party
 ||socialtools.fm^$third-party
-||spiceworks.com^$third-party
+||spiceworks.com/share/$third-party
 ||spotify.com/follow/$third-party
 ||static*.linkedin.com/scds/common/$image,third-party
 ||static.delicious.com^$third-party
@@ -10676,6 +10676,7 @@ _eu_cookie_
 ##.email_subscribe_container
 ##.email_subscribe_option
 ##.enewsletter
+##.entry-footer-subscribe
 ##.entryNewsletter
 ##.flyout-newsletter-rr
 ##.foo-newsletter
@@ -10699,6 +10700,7 @@ _eu_cookie_
 ##.ione-widget-bp_newsletter_signup
 ##.item-newsletter
 ##.item-subscribe
+##.js-newsletter
 ##.js-newsletter-signup
 ##.lon-newsletter-tout
 ##.m-rock-newsletter
@@ -11393,6 +11395,7 @@ _eu_cookie_
 ##.cookie-consent
 ##.cookie-container
 ##.cookie-content
+##.cookie-disclaimer
 ##.cookie-footer
 ##.cookie-header
 ##.cookie-info
@@ -11664,6 +11667,7 @@ _eu_cookie_
 ##.TopGoTop
 ##.axScrollToTop
 ##.back-to-top
+##.back-to-top-link
 ##.back-to-top-wrap
 ##.backToTop
 ##.back_to_top
@@ -12267,6 +12271,7 @@ _eu_cookie_
 ||snippets.mozilla.com^
 ||static.newsru.*/img/bg.gif
 ||tree.tv/js/snow
+||tvz.im/video/promo.
 ||ukranekdot.com/logo/
 ||uppod.ru/player/logo/
 ||ura.ru/jsb/
@@ -12506,6 +12511,7 @@ facebook.com#@##facebook_like_button_holder
 match.com,match.com.au#@##fb-connect
 blickinsbuch.de,faberlic.kiev.ua,facebook.com#@##fbContainer
 facebook.com#@##fb_header
+163.com#@##layout-social
 facebook.com#@##likebtn
 digg.com#@##module_digg
 linkedin.com#@##share-box
@@ -12852,6 +12858,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||curelost.com/logo/$image,~third-party
 @@||dadaviz.com/static/bower_components/core-icons/social-icons.html
 @@||daddydesign.com/*/wp-social-toolbar/
+@@||datacolor.com/wp-content/plugins/easy-social-share-buttons/assets/js/$script,domain=datacolor.com
 @@||depositphotos.com^*/depositphotos_$image,domain=depositphotos.com
 @@||discountsstory.com/image/facebook_icon.png
 @@||disquscdn.com^*/img/icons/$domain=disqus.com
@@ -12952,6 +12959,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||ninemsn.com.au/share/js/global/$script,~third-party
 @@||notebookcheck.com^*/jquery.socialshareprivacy.min.js
 @@||nouvelobs.com/sites/all/themes/rue89base/css/img/share/bg-tools.png
+@@||nutshell.com/media/images-landing/integration-logo-$~third-party
 @@||nyt.com^*/sharetools.js$domain=nytimes.com
 @@||onesecond.designly.com/img/*.gif$~third-party
 @@||panzi.github.io/SocialSharePrivacy/

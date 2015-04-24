@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: 4DsKad2Q3yAu73azXuK8pQ
-! Version: 201504190451
+! Checksum: b8Iy7dNl2i/aslpKyAEGpw
+! Version: 201504242201
 ! Title: EasyPrivacy
-! Last modified: 19 Apr 2015 04:51 UTC
+! Last modified: 24 Apr 2015 22:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -694,7 +694,6 @@
 /DynamicAnalytics.
 /dynaTraceMonitor?
 /e086ec.aspx?q=l3mkwgak
-/e107_plugins/log/log.php?
 /ea-analytics/*
 /eae-logger/*
 /ecblank.gif?
@@ -1207,6 +1206,7 @@
 /m360lib.js
 /magiq-
 /mail_tracking-cg.php
+/mail_tracking.php
 /mapstats.
 /marketing-analytics.js
 /maxymiser.
@@ -1789,6 +1789,7 @@
 /survey_invite_
 /surveyoverlay/*
 /swfaddress.js?tracker=
+/syn/mail_s.php?
 /syndication/metrics/*
 /szm_mclient.js
 /tacoda.
@@ -2980,7 +2981,7 @@ http://utm.
 ||goneviral.com^$third-party
 ||goodcounter.org^$third-party
 ||google-analytics.com/analytics.js
-||google-analytics.com/collect?
+||google-analytics.com/collect
 ||google-analytics.com/cx/api.js
 ||google-analytics.com/ga_exp.js
 ||google-analytics.com/plugins/
@@ -3667,7 +3668,6 @@ http://utm.
 ||splyt.com^$third-party
 ||spn-twr-14.com^$third-party
 ||spn.ee^$third-party
-||spotilocal.com^$third-party
 ||spotmx.com^$third-party
 ||spring.de^$third-party
 ||springmetrics.com^$third-party
@@ -5465,7 +5465,6 @@ http://utm.
 ||mail-app.com/pvtracker/
 ||mail.ebay.com/img/*.gif
 ||mailmax.co.nz/login/open.php$third-party
-||manager.tagcommander.com/utils/hit.php?$third-party
 ||manager.tagcommander.com/utils/privacyHit.php?$third-party
 ||mandrillapp.com/track/
 ||mansion.com/mts.tracker.js
@@ -6507,7 +6506,6 @@ http://utm.
 ! Polish
 ||cafenews.pl/mpl/static/static.js?
 ||liczniki.org/hit.php
-||nextclick.pl/widget/s.gif?
 ||stats.asp24.pl^
 ||stats.media.onet.pl^
 ||statystyki.panelek.com^
@@ -6733,7 +6731,6 @@ http://utm.
 ||alliance-leicester.co.uk/assets/jslib/sitetracker21.js
 ||allmodern.com^*/sessioned_reqs.asp?
 ||allmovieportal.com/hostpagescript.js
-||allmyvideos.net/ajaxlog.txt?
 ||allvoices.com/track_page
 ||alot.com/js/tracking.js
 ||alot.com/tb/cookiewriter.php?
@@ -7548,7 +7545,6 @@ http://utm.
 ||lipsy.co.uk/_assets/images/skin/tracking/
 ||live.com/handlers/watson.mvc?
 ||live.philips.com^
-||live365.com/trkr/
 ||livedoor.com/counter/
 ||livejournal.com/ljcounter/?
 ||liveperson.net/hc/*/?visitor=
@@ -7841,6 +7837,7 @@ http://utm.
 ||pings.blip.tv^
 ||pipeline.realtime.active.com^
 ||pipl.com/rd/?
+||pix.gfycat.com^
 ||pixazza.com/track/
 ||pixel.digitalspy.co.uk^
 ||pixel.facebook.com^
@@ -8247,7 +8244,6 @@ http://utm.
 ||thesmokinggun.com^*/jsmd.js
 ||theweek.com/decor/track/
 ||thinkgeek.com/js/rts.js
-||thiswebsiterules.com^*/log/log.php?
 ||thrillist.com/track
 ||ti.com/assets/js/headerfooter/$script
 ||tiaa-cref.org^*/js_tiaacref_analytics.
@@ -8386,7 +8382,6 @@ http://utm.
 ||u.bb/omni*.swf|
 ||u.tv/utvplayer/everywhere/tracking.aspx?
 ||ucoz.com/stat/
-||ucoz.net/stat/dspixel.js
 ||ui-portal.com/1and1/mailcom/s?
 ||ultimedia.com/deliver/statistiques/
 ||ultra-gamerz-zone.cz.cc/b/stats?
@@ -8439,7 +8434,6 @@ http://utm.
 ||videoplaza.com/proxy/tracker?
 ||videopremium.tv/dev/tr.js
 ||videotracker.washingtonpost.com^
-||vidspot.net/ajaxlog.txt?
 ||vidx.to/php/count.php?
 ||vidxden.com^*/tracker.js
 ||vietnamnet.vn^*/tracking.js
@@ -8907,7 +8901,6 @@ http://utm.
 ||tvcommunity.at/filmpicture.aspx?count=1&
 ||ui-portal.de/brbtpixel/
 ||unser-star-fuer-oslo.de^*/stats.php
-||vfd2dyn.vodafone.de^
 ||vip.de^*/tracking.js
 ||visitors.dooyoo.de^
 ||viviano.de/cgi-bin/stat_gateway.cgi?
@@ -9190,7 +9183,6 @@ http://utm.
 ||paginegialle.it/cgi-bin/jimpres.cgi?
 ||pornolupo.org/track.js
 ||quattroruote.it/log.htm?
-||rmastri.it/plugins/log/log.php?
 ||seat.it/cgi-bin/getcod.cgi?
 ||servizi.unionesarda.it/controlli/
 ||siteinfo.libero.it^
@@ -9461,6 +9453,7 @@ http://utm.
 @@||coremetrics.com/eluminate.js
 @@||count.ly^$~third-party
 @@||cqcounter.com^$domain=cqcounter.com
+@@||craveonline.com/wp-content/plugins/bwp-minify/$script
 @@||craveonline.com^*/google-analytics.min.js
 @@||crowdscience.com/max-$script,domain=everydayhealth.com
 @@||crowdscience.com/start-$script,domain=everydayhealth.com
@@ -9515,6 +9508,7 @@ http://utm.
 @@||firstdirect.com^*/logging-code.js
 @@||fitloop.co/packages/GAnalytics.js?
 @@||flipps.com^*/page-tracking.js?
+@@||fls-na.amazon.*/aiv-web-player/$xmlhttprequest
 @@||flurry.com/js/flurry.js$domain=pocketdice.io
 @@||focus.ti.com^*/metrics-min.js
 @@||foodnetwork.com^*/analytics.sitecatalyst.js
@@ -9977,7 +9971,7 @@ http://utm.
 @@||wrating.com/a1.js$domain=tudou.com|ynet.com
 ! Czech
 @@||adobetag.com/d2/vodafonecz/live/VodafoneCZ.js
-@||googletagmanager.com/gtm.js?$domain=autorevue.cz|e15.cz|mobilmania.cz|sportrevue.cz|zive.cz
+@@||googletagmanager.com/gtm.js?$domain=autorevue.cz|e15.cz|mobilmania.cz|sportrevue.cz|zive.cz
 ! Danish
 @@||msecnd.net^*/site-tracker.js$domain=momondo.dk
 ! Dutch

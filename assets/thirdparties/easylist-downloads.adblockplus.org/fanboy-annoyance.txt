@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Checksum: jziZD7Qaqh+vZrZlBBzKSQ
-! Version: 201504190451
+! Checksum: n2ECEuOI/hsk2NycjwTsaA
+! Version: 201504242201
 ! Title: Fanboy's Annoyance List
-! Last modified: 19 Apr 2015 04:51 UTC
+! Last modified: 24 Apr 2015 22:01 UTC
 ! Expires: 4 days (update frequency)
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Please report any unblocked content or problems by email or in our forums
@@ -3606,6 +3606,7 @@ _youtube_social_
 ##.email_subscribe_container
 ##.email_subscribe_option
 ##.enewsletter
+##.entry-footer-subscribe
 ##.entryNewsletter
 ##.flyout-newsletter-rr
 ##.foo-newsletter
@@ -3629,6 +3630,7 @@ _youtube_social_
 ##.ione-widget-bp_newsletter_signup
 ##.item-newsletter
 ##.item-subscribe
+##.js-newsletter
 ##.js-newsletter-signup
 ##.lon-newsletter-tout
 ##.m-rock-newsletter
@@ -4323,6 +4325,7 @@ _youtube_social_
 ##.cookie-consent
 ##.cookie-container
 ##.cookie-content
+##.cookie-disclaimer
 ##.cookie-footer
 ##.cookie-header
 ##.cookie-info
@@ -4594,6 +4597,7 @@ _youtube_social_
 ##.TopGoTop
 ##.axScrollToTop
 ##.back-to-top
+##.back-to-top-link
 ##.back-to-top-wrap
 ##.backToTop
 ##.back_to_top
@@ -11519,7 +11523,7 @@ _youtube_social_
 ||socialproof.it^$third-party
 ||socialrest.com^$third-party
 ||socialtools.fm^$third-party
-||spiceworks.com^$third-party
+||spiceworks.com/share/$third-party
 ||spotify.com/follow/$third-party
 ||static*.linkedin.com/scds/common/$image,third-party
 ||static.delicious.com^$third-party
@@ -13062,6 +13066,7 @@ softonic.com###toolbar_promotion
 tucsonsentinel.com###toolbarwrap
 channel4.com###toolbox
 stuff.co.nz###toolbox-gigya
+kinguin.net###top-banner
 fronttowardsgamer.com###top-bar
 techi.com###top-icons
 badassdigest.com###top-link
@@ -13609,7 +13614,7 @@ guanabee.com##.followUsSubColPod
 fin24.com##.follow_fin
 businessnewsdaily.com##.follow_us_rn_links
 businessnewsdaily.com##.follow_us_rn_section
-pcpro.co.uk##.foobar-wrapper
+pcpro.co.uk,the-line-up.com##.foobar-wrapper
 tv.com,washingtonian.com##.footer
 trust.org##.footer-base
 10news.dk##.footer-cta
@@ -14288,6 +14293,7 @@ cafemom.com##.stirFanBoxes
 iol.co.za##.storify-this
 politico.com##.story-embed
 heraldsun.com.au,howaboutwe.com##.story-footer
+reuters.com##.story-nav-fixed
 phillyburbs.com##.story-tools-sprite
 theaustralian.com.au##.story-widget
 csmonitor.com##.storyEmbed
@@ -14641,6 +14647,7 @@ mensxp.com##.SignUpBlock
 narrative.ly##.Signup
 ifc.com##.amcn_newsletter_widget_module
 ibtimes.com##.block-ibtimes-newsletters
+the-line-up.com##.branded
 time.com##.cartoon-newsletter-container
 coconuts.co##.coconuts-newsletter-subscribe-container
 fiercecable.com##.content-subscribe
@@ -15040,7 +15047,7 @@ abc.net.au###smfollow
 prlog.org###smx
 prlog.org###smx2
 worldreview.info###sn
-amartus.com,amazinglytimedphotos.com,androidzoom.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,damnlol.com,distance-calculator.co.uk,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,goutsa.com,haydenplanetarium.org,hccs.edu,hollywire.com,hostcabi.net,humorhub.org,humourtube.org,imgur.com,inkscape.org,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,mtv.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,ratemyprofessors.com,ryot.org,sfchamber.com,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,systemrequirementslab.com,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,theepochtimes.com,theparisreview.org,thepiratebay.se,ucl.ac.uk,virginactive.co.uk,virginactive.co.za,washingtonblade.com,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
+amartus.com,amazinglytimedphotos.com,androidzoom.com,ask.com,barneys.com,beefjack.com,bitcoinblackfriday.com,bubblews.com,businessinsider.com,businessinsider.com.au,cnalicense.org,consumerist.com,damnlol.com,distance-calculator.co.uk,dogandponyshowwebsite.com,electrictoolbox.com,g2a.com,gamrreview.com,geekosystem.com,giantfreakinrobot.com,gizmodo.com.au,globes.co.il,goutsa.com,haydenplanetarium.org,hccs.edu,hollywire.com,hostcabi.net,humorhub.org,humourtube.org,imgur.com,inkscape.org,kinguin.net,kotaku.com.au,latimes.com,lawyersweekly.com.au,legitreviews.com,lifehacker.com.au,mail.opera.com,makeuseof.com,mayoclinic.com,mtv.com,musicfeeds.com.au,namecheap.com,nzmusicmonth.co.nz,onlineeducation.net,openculture.com,penny-arcade.com,pixiq.com,play-asia.com,producersguild.org,ratemyprofessors.com,ryot.org,sfchamber.com,smhlmao.com,stileproject.com,stoppress.co.nz,swapit.co.uk,systemrequirementslab.com,talkingpointsmemo.com,tesco.com,the-diplomat.com,theedge.co.nz,theepochtimes.com,theparisreview.org,thepiratebay.se,ucl.ac.uk,virginactive.co.uk,virginactive.co.za,washingtonblade.com,webglearth.com,whatpeoplesayonline.com,xda-developers.com###social
 christianpost.com###social-apps
 omgchrome.com###social-listing
 seibertron.com###social-networking
@@ -16215,6 +16222,7 @@ facebook.com#@##facebook_like_button_holder
 match.com,match.com.au#@##fb-connect
 blickinsbuch.de,faberlic.kiev.ua,facebook.com#@##fbContainer
 facebook.com#@##fb_header
+163.com#@##layout-social
 facebook.com#@##likebtn
 digg.com#@##module_digg
 linkedin.com#@##share-box
@@ -16609,6 +16617,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||curelost.com/logo/$image,~third-party
 @@||dadaviz.com/static/bower_components/core-icons/social-icons.html
 @@||daddydesign.com/*/wp-social-toolbar/
+@@||datacolor.com/wp-content/plugins/easy-social-share-buttons/assets/js/$script,domain=datacolor.com
 @@||depositphotos.com^*/depositphotos_$image,domain=depositphotos.com
 @@||discountsstory.com/image/facebook_icon.png
 @@||disquscdn.com^*/img/icons/$domain=disqus.com
@@ -16709,6 +16718,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||ninemsn.com.au/share/js/global/$script,~third-party
 @@||notebookcheck.com^*/jquery.socialshareprivacy.min.js
 @@||nouvelobs.com/sites/all/themes/rue89base/css/img/share/bg-tools.png
+@@||nutshell.com/media/images-landing/integration-logo-$~third-party
 @@||nyt.com^*/sharetools.js$domain=nytimes.com
 @@||onesecond.designly.com/img/*.gif$~third-party
 @@||panzi.github.io/SocialSharePrivacy/
