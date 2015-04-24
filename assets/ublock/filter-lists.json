@@ -105,7 +105,7 @@
         },
     "gnuzilla.gnu.org/filters/blacklist.txt": {
         "off": true,
-        "title": "Blacklist of known privacy trackers (from gnu.org)",
+        "title": "Blacklist of known trackers (from gnu.org)",
         "group": "privacy",
         "homeURL": ""
         },
