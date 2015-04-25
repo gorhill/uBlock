@@ -103,6 +103,12 @@
         "group": "regions",
         "homeURL": "https://gitorious.org/adblock-latvian/adblock-latvian/raw/master%3Alists/latvian-list.txt"
         },
+    "gnuzilla.gnu.org/filters/blacklist.txt": {
+        "off": true,
+        "title": "Blacklist of known trackers (from gnu.org)",
+        "group": "privacy",
+        "homeURL": ""
+        },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
         "title": "NOR: Norsk adblockliste",
@@ -241,7 +247,7 @@
         },
     "www.fanboy.co.nz/enhancedstats.txt": {
         "off": true,
-        "title": "Fanboy’s Enhanced Tracking List",
+        "title": "Fanboy's Enhanced Tracking List",
         "group": "privacy",
         "homeURL": "https://www.fanboy.co.nz/enhancedstats.txt"
         },

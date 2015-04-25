@@ -309,3 +309,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # Also fixes https://github.com/chrisaljoudi/uBlock/issues/1271
 # NBA.com
 @@||cdn.turner.com/*/AdManager.js$domain=cnn.com|nba.com,script
+
+
+# To deal with https://github.com/chrisaljoudi/uBlock/issues/1013
+||mac-system-alert.com^

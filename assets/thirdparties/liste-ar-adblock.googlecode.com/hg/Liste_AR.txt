@@ -817,6 +817,8 @@
 ||mobtada.com/files/banners_days/
 ||montadaphp.net/hamada_banner.png
 ||montadaphp.net/images/banner.gif
+||mp3quran.net/fr/key2islam.gif
+||mp3quran.net/fr/womeninislam.gif
 ||mshaweer.net/images/majed.gif
 ||mshaweer.net/images/quikbus.gif
 ||mshaweer.net/images/ramah.gif
@@ -1131,6 +1133,7 @@ firstlady99.com##.forumline td.row1 > span > a > img
 filfan.com##.gads_MR
 almasryalyoum.com##.gam-holder
 moheet.com##.gplus
+star7arab.com##.grid[style="width: 770px; height: 69px;"]
 graaam.com##.haw
 bramj.co,qwled.com##.headerbanner
 msryh.com##.indexbnrleft

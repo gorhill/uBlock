@@ -12,12 +12,9 @@
 ! RedundantRules: https://arestwo.org/famlam/redundantRuleChecker.html
 ! RegExpVisualizer http://www.regexper.com/
 !----------------------------------------------------------------------------------------------------!
-! Used to detect this list
+! Anti-Adblock killer
 !----------------------------------------------------------------------------------------------------!
 ###k2Uw7isHrMm5JXP1Vwdxc567ZKc1aZ4I
-!----------------------------------------------------------------------------------------------------!
-! Exclude Anti-Adblock-killer
-!----------------------------------------------------------------------------------------------------!
 @@||githubusercontent.com/reek/anti-adblock-killer/
 @@||github.com/reek/anti-adblock-killer/
 !----------------------------------------------------------------------------------------------------!
@@ -851,6 +848,8 @@ proboards.com,freeforums.net,boards.net###support-message
 plej.tv#@#.advert_box
 ! danslescoulisses.com
 @@||danslescoulisses.com/fr/min/$stylesheet
+! vipleague
+vipleague.ws,vipleague.tv,vipleague.se,vipleague.me,vipleague.co,vipleague.sx,vipbox.tv,vipbox.co,vipbox.sx,vipboxsa.co,strikeout.co,homerun.re##SCRIPT + SCRIPT + SCRIPT + STYLE + div[id]
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

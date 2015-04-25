@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: PASQlQIa0uLXNe2xxkQJOg
+! Checksum: 3ECN9Mr0r3sh9wuE6dVqGQ
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201504182241
+! Version: 201504241653
 
-! Last modified: 2015-04-18 22:41 JST(UTC+0900)
+! Last modified: 2015-04-24 16:53 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -2162,6 +2162,7 @@
 /getmarquee.$domain=live.nicovideo.jp|www.nicovideo.jp
 /getmarquee^$domain=live.nicovideo.jp|www.nicovideo.jp
 /getmarquee_$domain=live.nicovideo.jp|www.nicovideo.jp
+/google.html?cb=$subdocument
 ! Commented out duplicated filters, Feb 26, 2012
 ! /google_ads-
 ! /google_ads.
@@ -6164,6 +6165,7 @@ _yahooads_
 ||amazonaws.com/saaspulse-cdn/
 ||amazonaws.com/sniffer/
 ||amazonaws.com/totango-cdn/
+||6607129fd4ee493fbcb7f8f4d3e0f606.s3.amazonaws.com^
 ||analyticsengine.s3.amazonaws.com^
 ||cd-ladsp-com.s3.amazonaws.com^
 ||charmsavings-production.s3.amazonaws.com^
@@ -6235,6 +6237,8 @@ _yahooads_
 ||appnext.com^$third-party
 ||appround.biz^$third-party
 ||apps-stats.com^
+||geoapi123.appspot.com^
+||liwiosarl.appspot.com^
 ||apreces.com^
 ||aprelite.com^
 ||aprement.com^
@@ -6300,6 +6304,7 @@ _yahooads_
 ||avantage-du-net.com^
 ||avantage-online.com^
 ||avantagedunet.com^
+||avantlink.com^$third-party
 ||avazu.net^
 ||avazudsp.net^$third-party
 ||avenseo.com^$third-party
@@ -6870,6 +6875,7 @@ _yahooads_
 ||d2pass.com^$third-party
 ||d9ae99824.se^
 ||d9ae99824.se^$popup
+||da-ads.com^
 ||daccroi.com^
 ||daccrois.com^
 ||daccroit.com^
@@ -7593,6 +7599,7 @@ _yahooads_
 ||i5n8q4p6*.hwcdn.net^
 ||k4j4s7i3*.hwcdn.net^
 ||m5q5w5n5*.hwcdn.net^
+||q2u3z6t7*.hwcdn.net^
 ||w6w4d3q2*.hwcdn.net^
 ||hype-ads.com^
 ||hyper-text.org/static/img/bnr/
@@ -8064,7 +8071,6 @@ _yahooads_
 ||t.blog.livedoor.jp^
 ||livejasmin.com^$popup
 ||livejasmin.com^$third-party
-||liwiosarl.appspot.com^
 ||lphbs.com^
 ||liverail.com^$third-party
 ||liveundnackt.com^$third-party
@@ -9733,6 +9739,7 @@ _yahooads_
 ||waladon.com^
 ||wedgeac.com^
 ||weropiy.com^
+||v-bates.com^$third-party
 ||wf1.vagos.es^
 ||valentinehookup.com^$popup
 ||valuecommerce.com^$third-party

@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Sun, 01 Mar 2015 07:39:13 GMT
-# entries:        2432
+# last updated:   Thu, 23 Apr 2015 16:28:01 GMT
+# entries:        2433
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -58,6 +58,7 @@
 127.0.0.1 acsseo.com
 127.0.0.1 actionsplash.com
 127.0.0.1 actualdeals.com
+127.0.0.1 ad-center.com
 127.0.0.1 ad-flow.com
 127.0.0.1 ad-images.suntimes.com
 127.0.0.1 ad-pay.de
@@ -844,6 +845,7 @@
 127.0.0.1 adsrevenue.net
 127.0.0.1 adsrv.deviantart.com
 127.0.0.1 adsrv.iol.co.za
+127.0.0.1 adsrvr.org
 127.0.0.1 adsstat.com
 127.0.0.1 adstat.4u.pl
 127.0.0.1 adstest.weather.com
@@ -912,7 +914,6 @@
 127.0.0.1 adworx.be
 127.0.0.1 adworx.nl
 127.0.0.1 adx.allstar.cz
-127.0.0.1 adx.arip.co.th
 127.0.0.1 adx.atnext.com
 127.0.0.1 adx.gainesvillesun.com
 127.0.0.1 adxpansion.com
@@ -1348,7 +1349,6 @@
 127.0.0.1 discountclick.com
 127.0.0.1 displayadsmedia.com
 127.0.0.1 displaypagerank.com
-127.0.0.1 dist.belnk.com
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
@@ -1599,7 +1599,6 @@
 127.0.0.1 infinityads.com
 127.0.0.1 infolinks.com
 127.0.0.1 information.com
-127.0.0.1 infra-ad.com
 127.0.0.1 initgroup.com
 127.0.0.1 inringtone.com
 127.0.0.1 insightexpress.com
@@ -2063,6 +2062,7 @@
 127.0.0.1 ru4.com
 127.0.0.1 rubiconproject.com
 127.0.0.1 s2d6.com
+127.0.0.1 sageanalyst.net
 127.0.0.1 sbx.pagesjaunes.fr
 127.0.0.1 scambiobanner.aruba.it
 127.0.0.1 scanscout.com
@@ -2380,6 +2380,7 @@
 127.0.0.1 whaleads.com
 127.0.0.1 whenu.com
 127.0.0.1 whispa.com
+127.0.0.1 whoisonline.net
 127.0.0.1 wholesaletraffic.info
 127.0.0.1 widespace.com
 127.0.0.1 widgetbucks.com

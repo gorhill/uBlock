@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Apr 11th, 2015 at 14:35
+# Last updated: Apr 24th, 2015 at 12:56
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -3136,6 +3136,7 @@
 127.0.0.1 ad12.bannerbank.ru
 127.0.0.1 ad12.focalink.com
 127.0.0.1 ad131m.adk2.co
+127.0.0.1 ad132m.adpdx.com
 127.0.0.1 ad13.focalink.com
 127.0.0.1 ad14.focalink.com
 127.0.0.1 ad15.focalink.com
@@ -4830,6 +4831,7 @@
 127.0.0.1 ad.thehill.com
 127.0.0.1 ad.thetyee.ca
 127.0.0.1 ad.thewheelof.com
+127.0.0.1 ad.thoughtsondance.info
 127.0.0.1 adthru.com
 127.0.0.1 adtigerpl.adspirit.net
 127.0.0.1 ad.tiscali.com
@@ -4999,6 +5001,7 @@
 127.0.0.1 analytics.percentmobile.com
 127.0.0.1 analyzer51.fc2.com
 127.0.0.1 ANDpolice.com
+127.0.0.1 anetit.tradedoubler.com
 127.0.0.1 ankieta-online.pl
 127.0.0.1 annuaire-autosurf.com
 127.0.0.1 anrtx.tacoda.net
@@ -5269,6 +5272,7 @@
 127.0.0.1 bitcast-d.bitgravity.com
 127.0.0.1 bizad.nikkeibp.co.jp
 127.0.0.1 biz-offer.com
+127.0.0.1 bizographics.com
 127.0.0.1 bizopprewards.com
 127.0.0.1 blabla4u.adserver.co.il
 127.0.0.1 blasphemysfhs.info
@@ -5643,6 +5647,7 @@
 127.0.0.1 c.pt.msn.com
 127.0.0.1 cpu.firingsquad.com
 127.0.0.1 creatiby1.unicast.com
+127.0.0.1 creative.ad121m.com
 127.0.0.1 creative.adshuffle.com
 127.0.0.1 creative.ak.facebook.com
 127.0.0.1 creatives.livejasmin.com
@@ -6406,6 +6411,7 @@
 127.0.0.1 js.adserverpub.com
 127.0.0.1 js.adsonar.com
 127.0.0.1 js.betburdaaffiliates.com
+127.0.0.1 js.bizographics.com
 127.0.0.1 jsc.dt07.net
 127.0.0.1 js.goods.redtram.com
 127.0.0.1 js.himediads.com
@@ -6921,6 +6927,7 @@
 127.0.0.1 oz.valueclick.ne.jp
 127.0.0.1 p0rnuha.com
 127.0.0.1 p1.adhitzads.com
+127.0.0.1 p.adpdx.com
 127.0.0.1 pagead1.googlesyndication.com
 127.0.0.1 pagead2.googlesyndication.com
 127.0.0.1 pagead3.googlesyndication.com
@@ -7014,6 +7021,7 @@
 127.0.0.1 pix522.adtech.de
 127.0.0.1 pix522.adtech.fr
 127.0.0.1 pix522.adtech.us
+127.0.0.1 pixel.adsafeprotected.com
 127.0.0.1 pixel.everesttech.net
 127.0.0.1 pixel.mathtag.com
 127.0.0.1 pixel.quantserve.com
@@ -7310,6 +7318,7 @@
 127.0.0.1 s3.buysellads.com
 127.0.0.1 s5.addthis.com
 127.0.0.1 s7.addthis.com
+127.0.0.1 s.ad121m.com
 127.0.0.1 s.ad131m.com
 127.0.0.1 s.admulti.com
 127.0.0.1 sad.sharethis.com
@@ -7836,6 +7845,7 @@
 127.0.0.1 vclick.adbrite.com
 127.0.0.1 venus.goclick.com
 127.0.0.1 ve.tscapeplay.com
+127.0.0.1 vht.tradedoubler.com
 127.0.0.1 vibrantmedia.com
 127.0.0.1 videocop.com
 127.0.0.1 videoegg.adbureau.net
@@ -8252,6 +8262,7 @@
 127.0.0.1 www.biggestgiftrewards.com
 127.0.0.1 www.binarysystem4u.com
 127.0.0.1 www.biz-offer.com
+127.0.0.1 www.bizographics.com
 127.0.0.1 www.bizopprewards.com
 127.0.0.1 www.blasphemysfhs.info
 127.0.0.1 www.blatant8jh.info
@@ -8871,6 +8882,7 @@
 127.0.0.1 x86adserve006.adtech.de
 127.0.0.1 xads.zedo.com
 127.0.0.1 x.azjmp.com
+127.0.0.1 x.bidswitch.net
 127.0.0.1 x.iasrv.com
 127.0.0.1 x.interia.pl
 127.0.0.1 xlivehost.com
@@ -8923,6 +8935,7 @@
 127.0.0.1 zemgo.com
 127.0.0.1 zevents.com
 127.0.0.1 zhalehziba.com
+127.0.0.1 zlothonline.info
 127.0.0.1 zuzzer5.com
 #</ad-sites>
 
