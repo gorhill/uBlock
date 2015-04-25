@@ -135,13 +135,13 @@ Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisalj
 
 #### Safari
 
-There is no support for Safari for uBlock Origin. It may or may not work, I just don't know.
+There is no support for Safari for uBlock Origin.
 
 Best is that you install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock), which has official support for Safari.
 
 #### Note for all browsers
 
-To benefit from uBlock₀'s higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
+To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other inefficient blockers at the same time (such as AdBlock or Adblock Plus). uBlock₀ will do [as well or better](#blocking) than most popular ad blockers.
 
 ## Release History
 
@@ -149,7 +149,7 @@ See the [releases pages](https://github.com/gorhill/uBlock/releases) for a histo
 
 ## About
 
-[uBlock₀'s manifesto](MANIFESTO.md).
+[uBlock Origin's manifesto](MANIFESTO.md).
 
 Free. Open source. For users by users. No donations sought.
 
