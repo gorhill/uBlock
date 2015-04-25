@@ -580,7 +580,7 @@ var logCosmeticFilters = function(tabId, details) {
     }
 
     var context = {
-        requestURL: '',
+        requestURL: details.pageURL,
         requestHostname: µb.URI.hostnameFromURI(details.pageURL),
         requestType: 'dom'
     };
