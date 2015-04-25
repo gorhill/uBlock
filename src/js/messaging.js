@@ -62,10 +62,9 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'cosmeticFiltersInjected':
-        // Is this a request to cache selectors?
-        if ( Array.isArray(request.selectors) ) {
-            µb.cosmeticFilteringEngine.addToSelectorCache(request);
-        }
+        µb.cosmeticFilteringEngine.addToSelectorCache(request);
+        /* falls through */
+    case 'cosmeticFiltersActivated':
         // Net-based cosmetic filters are of no interest for logging purpose.
         if ( µb.logger.isObserved(tabId) && request.type !== 'net' ) {
             µb.logCosmeticFilters(tabId);

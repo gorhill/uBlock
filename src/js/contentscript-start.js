@@ -140,7 +140,7 @@ var filteringHandler = function(details) {
     // This is just to inform the background process that cosmetic filters were
     // actually injected.
     if ( vAPI.styles.length !== styleTagCount ) {
-        localMessager.send({ what: 'cosmeticFiltersInjected' });
+        localMessager.send({ what: 'cosmeticFiltersActivated' });
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/587

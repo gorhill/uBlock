@@ -68,10 +68,10 @@ while ( i-- ) {
     if ( loggedSelectors.hasOwnProperty(selector) ) {
         continue;
     }
-    loggedSelectors[selector] = true;
     if ( document.querySelector(selector) === null ) {
         continue;
     }
+    loggedSelectors[selector] = true;
     matchedSelectors.push(selector);
 }
 

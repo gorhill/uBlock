@@ -370,7 +370,7 @@ var uBlockCollapser = (function() {
                 processHighHighGenericsAsync();
             }
         }
-        if ( hideSelectors.length ) {
+        if ( hideSelectors.length !== 0 ) {
             addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
@@ -687,6 +687,12 @@ var uBlockCollapser = (function() {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
             retrieveGenericSelectors();
+
+            // This is required: a new element could be matching an already
+            // injected but otherwise inactive cosmetic filter. This means
+            // the already injected cosmetic filter become active (has an
+            // effect on the document), and thus must be logged if needed.
+            messager.send({ what: 'cosmeticFiltersActivated' });
         }
     };
 
