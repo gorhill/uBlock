@@ -104,6 +104,7 @@ HnSwitches.toBroaderHostname = toBroaderHostname;
 
 HnSwitches.prototype.reset = function() {
     this.switches = {};
+    this.z = '';
 };
 
 /******************************************************************************/
@@ -229,6 +230,7 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
         if ( bits !== 0 ) {
             bits = bits >> bitOffset & 3;
             if ( bits !== 0 ) {
+                this.z = s;
                 return bits === 1;
             }
         }

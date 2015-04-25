@@ -452,7 +452,7 @@ vAPI.tabs.onPopup = function(details) {
 
     // Check user switch first
     if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
-        result = 'ub:no-popups true';
+        result = 'ub:no-popups: ' + µb.hnSwitches.z + ' true';
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/323
