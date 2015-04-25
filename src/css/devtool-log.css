@@ -55,23 +55,30 @@ input:focus {
     font: 12px monospace;
     width: 100%;
     }
+#content table tr.docBoundary {
+    background-color: #666;
+    color: white;
+    text-align: center;
+    }
+#content table tr.docBoundary > td:nth-of-type(1) {
+    padding: 1em 0;
+    }
 #content table tr.blocked {
-    background-color: rgba(192, 0, 0, 0.1)
+    background-color: rgba(192, 0, 0, 0.1);
     }
 body.colorBlind #content table tr.blocked {
-    background-color: rgba(0, 19, 110, 0.1)
+    background-color: rgba(0, 19, 110, 0.1);
     }
 #content table tr.allowed {
-    background-color: rgba(0, 160, 0, 0.1)
+    background-color: rgba(0, 160, 0, 0.1);
     }
 body.colorBlind #content table tr.allowed {
     background-color: rgba(255, 194, 57, 0.1)
     }
 #content table tr.maindoc {
-    background-color: #eee;
     }
 #content table tr.cosmetic {
-    background-color: rgba(255, 255, 0, 0.1)
+    background-color: rgba(255, 255, 0, 0.1);
     }
 body:not(.filterOff) #content table tr.hidden {
     display: none;

@@ -121,8 +121,27 @@ var createRow = function() {
 
 /******************************************************************************/
 
+var insertGap = function(url) {
+    var tr = doc.createElement('tr');
+    tr.classList.add('docBoundary');
+    var td = doc.createElement('td');
+    td.setAttribute('colspan', '4');
+    td.textContent = url;
+    tr.appendChild(td);
+    tbody.insertBefore(tr, tbody.firstChild);
+};
+
+/******************************************************************************/
+
 var renderLogEntry = function(entry) {
     var tr = createRow();
+
+    // If the request is that of a root frame, insert a gap in the table
+    // in order to visually separate entries for different documents. 
+    if ( entry.type === 'main_frame' ) {
+        insertGap(entry.url);
+        tr.classList.add('maindoc');
+    }
 
     // Cosmetic filter?
     if ( entry.result.charAt(0) === 'c' ) {
