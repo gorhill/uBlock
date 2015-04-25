@@ -60,7 +60,7 @@ input:focus {
     color: white;
     text-align: center;
     }
-#content table tr.docBoundary > td:nth-of-type(1) {
+#content table tr.docBoundary > td:first-child {
     padding: 1em 0;
     }
 #content table tr.blocked {

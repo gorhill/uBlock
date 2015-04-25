@@ -37,7 +37,8 @@ var inspectedTabId = '';
 var doc = document;
 var body = doc.body;
 var tbody = doc.querySelector('#content tbody');
-var rowJunkyard = [];
+var row1Junkyard = [];
+var row4Junkyard = [];
 var reFilter = null;
 var filterTargetTestResult = true;
 var maxEntries = 0;
@@ -106,7 +107,7 @@ var renderURL = function(url, filter) {
 /******************************************************************************/
 
 var createRow = function() {
-    var tr = rowJunkyard.pop();
+    var tr = row4Junkyard.pop();
     if ( tr ) {
         tr.className = '';
         return tr;
@@ -121,13 +122,15 @@ var createRow = function() {
 
 /******************************************************************************/
 
-var insertGap = function(url) {
-    var tr = doc.createElement('tr');
-    tr.classList.add('docBoundary');
-    var td = doc.createElement('td');
-    td.setAttribute('colspan', '4');
-    td.textContent = url;
-    tr.appendChild(td);
+var createGap = function(url) {
+    var tr = row1Junkyard.pop();
+    if ( !tr ) {
+        tr = doc.createElement('tr');
+        tr.classList.add('docBoundary');
+        tr.appendChild(doc.createElement('td'));
+        tr.cells[0].setAttribute('colspan', '4');
+    }
+    tr.cells[0].textContent = url;
     tbody.insertBefore(tr, tbody.firstChild);
 };
 
@@ -139,7 +142,7 @@ var renderLogEntry = function(entry) {
     // If the request is that of a root frame, insert a gap in the table
     // in order to visually separate entries for different documents. 
     if ( entry.type === 'main_frame' ) {
-        insertGap(entry.url);
+        createGap(entry.url);
         tr.classList.add('maindoc');
     }
 
@@ -229,8 +232,17 @@ var truncateLog = function(size) {
         size = 25000;
     }
     size = Math.min(size, 25000);
+    var tr;
     while ( tbody.childElementCount > size ) {
-        rowJunkyard.push(tbody.removeChild(tbody.lastElementChild));
+        tr = tbody.lastElementChild;
+        // https://github.com/gorhill/uBlock/issues/123
+        // Triage according to row type.
+        if ( tr.cells.length === 1 ) {
+            row1Junkyard.push(tr);
+        } else {
+            row4Junkyard.push(tr);
+        }
+        tbody.removeChild(tr);
     }
 };
 
@@ -254,8 +266,17 @@ var readLogBuffer = function() {
 /******************************************************************************/
 
 var clearBuffer = function() {
+    var tr;
     while ( tbody.firstChild !== null ) {
-        rowJunkyard.push(tbody.removeChild(tbody.firstChild));
+        tr = tbody.lastElementChild;
+        // https://github.com/gorhill/uBlock/issues/123
+        // Triage according to row type.
+        if ( tr.cells.length === 1 ) {
+            row1Junkyard.push(tr);
+        } else {
+            row4Junkyard.push(tr);
+        }
+        tbody.removeChild(tr);
     }
 };
 
