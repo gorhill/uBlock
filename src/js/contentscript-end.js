@@ -169,7 +169,7 @@ var uBlockCollapser = (function() {
         }
         if ( selectors.length !== 0 ) {
             messager.send({
-                what: 'injectedSelectors',
+                what: 'cosmeticFiltersInjected',
                 type: 'net',
                 hostname: window.location.hostname,
                 selectors: selectors
@@ -385,7 +385,7 @@ var uBlockCollapser = (function() {
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        var selectorStr = selectors.toString();
+        var selectorStr = selectors.join(',\n');
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
         style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
@@ -396,7 +396,7 @@ var uBlockCollapser = (function() {
         }
         hideElements(selectorStr);
         messager.send({
-            what: 'injectedSelectors',
+            what: 'cosmeticFiltersInjected',
             type: 'cosmetic',
             hostname: window.location.hostname,
             selectors: selectors

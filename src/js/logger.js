@@ -152,7 +152,7 @@ var logBufferObsoleteAfter = 30 * 1000;
 
 /******************************************************************************/
 
-var loggerWriteOne = function(tabId, details, result) {
+var writeOne = function(tabId, details, result) {
     if ( logBuffers.hasOwnProperty(tabId) === false ) {
         return;
     }
@@ -162,11 +162,17 @@ var loggerWriteOne = function(tabId, details, result) {
 
 /******************************************************************************/
 
-var loggerReadAll = function(tabId) {
+var readAll = function(tabId) {
     if ( logBuffers.hasOwnProperty(tabId) === false ) {
         logBuffers[tabId] = new LogBuffer();
     }
     return logBuffers[tabId].readAll();
+};
+
+/******************************************************************************/
+
+var isObserved = function(tabId) {
+    return logBuffers.hasOwnProperty(tabId);
 };
 
 /******************************************************************************/
@@ -195,8 +201,9 @@ setTimeout(loggerJanitor, loggerJanitorPeriod);
 /******************************************************************************/
 
 return {
-    writeOne: loggerWriteOne,
-    readAll: loggerReadAll
+    writeOne: writeOne,
+    readAll: readAll,
+    isObserved: isObserved
 };
 
 /******************************************************************************/

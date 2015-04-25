@@ -31,13 +31,13 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
-    //console.debug('cosmetic-on.js > not a HTLMDocument');
+    //console.debug('cosmetic-survey.js > not a HTLMDocument');
     return;
 }
 
 // This can happen
 if ( !vAPI ) {
-    //console.debug('cosmetic-count.js > no vAPI');
+    //console.debug('cosmetic-survey.js > vAPI not found');
     return;
 }
 
@@ -45,23 +45,20 @@ if ( !vAPI ) {
 
 // Insert all cosmetic filtering-related style tags in the DOM
 
-var selectors = [];
+var injectedSelectors = [];
+var filteredElementCount = 0;
+
 var reProperties = /\s*\{[^}]+\}\s*/;
 var i;
 
 var styles = vAPI.styles || [];
 i = styles.length;
 while ( i-- ) {
-    selectors.push(styles[i].textContent.replace(reProperties, ''));
+    injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
 }
 
-var elems = [];
-
-if ( selectors.length !== 0 ) {
-    try {
-        elems = document.querySelectorAll(selectors.join(','));
-    } catch (e) {
-    }
+if ( injectedSelectors.length !== 0 ) {
+    filteredElementCount = document.querySelectorAll(injectedSelectors.join(',')).length;
 }
 
 /******************************************************************************/
@@ -69,8 +66,10 @@ if ( selectors.length !== 0 ) {
 var localMessager = vAPI.messaging.channel('cosmetic-*.js');
 
 localMessager.send({
-    what: 'hiddenElementCount',
-    count: elems.length
+    what: 'liveCosmeticFilteringData',
+    pageURL: window.location.href,
+    filteredElementCount: filteredElementCount,
+    injectedSelectors: injectedSelectors
 }, function() {
     localMessager.close();
 });

@@ -123,6 +123,12 @@ var createRow = function() {
 
 var renderLogEntry = function(entry) {
     var tr = createRow();
+
+    // Cosmetic filter?
+    if ( entry.result.charAt(0) === 'c' ) {
+        tr.classList.add('cosmetic');
+    }
+
     if ( entry.result.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
         tr.cells[0].textContent = ' -\u00A0';
@@ -135,13 +141,16 @@ var renderLogEntry = function(entry) {
     } else {
         tr.cells[0].textContent = '';
     }
+
     if ( entry.type === 'main_frame' ) {
         tr.classList.add('maindoc');
     }
+
     var filterText = entry.result.slice(3);
     if ( entry.result.lastIndexOf('sa', 0) === 0 ) {
         filterText = '@@' + filterText;
     }
+
     tr.cells[1].textContent = filterText + '\t';
     tr.cells[2].textContent = (prettyRequestTypes[entry.type] || entry.type) + '\t';
     vAPI.insertHTML(tr.cells[3], renderURL(entry.url, entry.result));

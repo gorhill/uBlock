@@ -37,67 +37,80 @@ var onMessage = function(request, sender, callback) {
 
     // Async
     switch ( request.what ) {
-        case 'getAssetContent':
-            // https://github.com/chrisaljoudi/uBlock/issues/417
-            µb.assets.get(request.url, callback);
-            return;
+    case 'getAssetContent':
+        // https://github.com/chrisaljoudi/uBlock/issues/417
+        µb.assets.get(request.url, callback);
+        return;
 
-        case 'reloadAllFilters':
-            µb.reloadAllFilters(callback);
-            return;
+    case 'reloadAllFilters':
+        µb.reloadAllFilters(callback);
+        return;
 
-        default:
-            break;
+    default:
+        break;
     }
+
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'contextMenuEvent':
-            µb.contextMenuClientX = request.clientX;
-            µb.contextMenuClientY = request.clientY;
-            break;
+    case 'contextMenuEvent':
+        µb.contextMenuClientX = request.clientX;
+        µb.contextMenuClientY = request.clientY;
+        break;
 
-        case 'forceUpdateAssets':
-            µb.assetUpdater.force();
-            break;
+    case 'cosmeticFiltersInjected':
+        // Is this a request to cache selectors?
+        if ( Array.isArray(request.selectors) ) {
+            µb.cosmeticFilteringEngine.addToSelectorCache(request);
+        }
+        // Net-based cosmetic filters are of no interest for logging purpose.
+        if ( µb.logger.isObserved(tabId) && request.type !== 'net' ) {
+            µb.logCosmeticFilters(tabId);
+        }
+        break;
 
-        case 'getAppData':
-            response = {name: vAPI.app.name, version: vAPI.app.version};
-            break;
+    case 'forceUpdateAssets':
+        µb.assetUpdater.force();
+        break;
 
-        case 'getUserSettings':
-            response = µb.userSettings;
-            break;
+    case 'getAppData':
+        response = {name: vAPI.app.name, version: vAPI.app.version};
+        break;
 
-        case 'gotoURL':
-            vAPI.tabs.open(request.details);
-            break;
+    case 'getUserSettings':
+        response = µb.userSettings;
+        break;
 
-        case 'reloadTab':
-            if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
-                vAPI.tabs.reload(request.tabId);
-                if ( request.select && vAPI.tabs.select ) {
-                    vAPI.tabs.select(request.tabId);
-                }
+    case 'gotoURL':
+        vAPI.tabs.open(request.details);
+        break;
+
+    case 'reloadTab':
+        if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
+            vAPI.tabs.reload(request.tabId);
+            if ( request.select && vAPI.tabs.select ) {
+                vAPI.tabs.select(request.tabId);
             }
-            break;
+        }
+        break;
 
-        case 'selectFilterLists':
-            µb.selectFilterLists(request.switches);
-            break;
+    case 'selectFilterLists':
+        µb.selectFilterLists(request.switches);
+        break;
 
-        case 'toggleHostnameSwitch':
-            µb.toggleHostnameSwitch(request);
-            break;
+    case 'toggleHostnameSwitch':
+        µb.toggleHostnameSwitch(request);
+        break;
 
-        case 'userSettings':
-            response = µb.changeUserSettings(request.name, request.value);
-            break;
+    case 'userSettings':
+        response = µb.changeUserSettings(request.name, request.value);
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -296,7 +309,7 @@ var getPopupDataLazy = function(tabId, callback) {
         return;
     }
 
-    µb.getHiddenElementCount(tabId, function() {
+    µb.surveyCosmeticFilters(tabId, function() {
         r.hiddenElementCount = pageStore.hiddenElementCount;
         callback(r);
     });
@@ -497,11 +510,11 @@ var filterRequests = function(pageStore, details) {
 
 /******************************************************************************/
 
-var onMessage = function(details, sender, callback) {
+var onMessage = function(request, sender, callback) {
     // Async
-    switch ( details.what ) {
-        default:
-            break;
+    switch ( request.what ) {
+    default:
+        break;
     }
 
     // Sync
@@ -512,33 +525,29 @@ var onMessage = function(details, sender, callback) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
 
-    switch ( details.what ) {
-        case 'retrieveGenericCosmeticSelectors':
-            response = {
-                shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
-                result: null
-            };
-            if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
-                response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
-            }
-            break;
+    switch ( request.what ) {
+    case 'retrieveGenericCosmeticSelectors':
+        response = {
+            shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
+            result: null
+        };
+        if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
+            response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(request);
+        }
+        break;
 
-        case 'injectedSelectors':
-            µb.cosmeticFilteringEngine.addToSelectorCache(details);
-            break;
+    case 'filterRequests':
+        response = {
+            shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
+            result: null
+        };
+        if ( !response.shutdown ) {
+            response.result = filterRequests(pageStore, request);
+        }
+        break;
 
-        case 'filterRequests':
-            response = {
-                shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
-                result: null
-            };
-            if ( !response.shutdown ) {
-                response.result = filterRequests(pageStore, details);
-            }
-            break;
-
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -565,6 +574,28 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var logCosmeticFilters = function(tabId, details) {
+    if ( µb.logger.isObserved(tabId) === false ) {
+        return;
+    }
+
+    var context = {
+        requestURL: '',
+        requestHostname: µb.URI.hostnameFromURI(details.pageURL),
+        requestType: 'dom'
+    };
+
+    var selectors = details.matchedSelectors;
+
+    selectors.sort();
+
+    for ( var i = 0; i < selectors.length; i++ ) {
+        µb.logger.writeOne(tabId, context, 'cb:##' + selectors[i]);
+    }
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -575,20 +606,22 @@ var onMessage = function(request, sender, callback) {
     // Sync
     var response;
 
-    var pageStore;
-    if ( sender && sender.tab ) {
-        pageStore = µb.pageStoreFromTabId(sender.tab.id);
-    }
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
 
     switch ( request.what ) {
-        case 'hiddenElementCount':
-            if ( pageStore ) {
-                pageStore.hiddenElementCount = request.count;
-            }
-            break;
+    case 'liveCosmeticFilteringData':
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore ) {
+            pageStore.hiddenElementCount = request.filteredElementCount;
+        }
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    case 'logCosmeticFilteringData':
+        logCosmeticFilters(tabId, request);
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);

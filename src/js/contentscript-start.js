@@ -123,6 +123,8 @@ var netFilters = function(details) {
 };
 
 var filteringHandler = function(details) {
+    var styleTagCount = vAPI.styles.length;
+
     vAPI.skipCosmeticFiltering = !details || details.skipCosmeticFiltering;
     if ( details ) {
         if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
@@ -133,6 +135,12 @@ var filteringHandler = function(details) {
         }
         // The port will never be used again at this point, disconnecting allows
         // the browser to flush this script from memory.
+    }
+
+    // This is just to inform the background process that cosmetic filters were
+    // actually injected.
+    if ( vAPI.styles.length !== styleTagCount ) {
+        localMessager.send({ what: 'cosmeticFiltersInjected' });
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/587

@@ -338,14 +338,37 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
-µBlock.getHiddenElementCount = function(tabId, callback) {
+µBlock.surveyCosmeticFilters = function(tabId, callback) {
     callback = callback || this.noopFunc;
     if ( vAPI.isBehindTheSceneTabId(tabId) ) {
         callback();
         return;
     }
-    vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-count.js' }, callback);
+    vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-survey.js' }, callback);
 };
+
+/******************************************************************************/
+
+µBlock.logCosmeticFilters = (function() {
+    var tabIdToTimerMap = {};
+
+    var injectNow = function(tabId) {
+        delete tabIdToTimerMap[tabId];
+        vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-logger.js' });
+    };
+
+    var injectAsync = function(tabId) {
+        if ( tabIdToTimerMap.hasOwnProperty(tabId) ) {
+            return;
+        }
+        tabIdToTimerMap[tabId] = setTimeout(
+            injectNow.bind(null, tabId),
+            100
+        );
+    };
+
+    return injectAsync;
+})();
 
 /******************************************************************************/
 

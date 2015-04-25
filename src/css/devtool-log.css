@@ -70,6 +70,9 @@ body.colorBlind #content table tr.allowed {
 #content table tr.maindoc {
     background-color: #eee;
     }
+#content table tr.cosmetic {
+    background-color: rgba(255, 255, 0, 0.1)
+    }
 body:not(.filterOff) #content table tr.hidden {
     display: none;
     }
