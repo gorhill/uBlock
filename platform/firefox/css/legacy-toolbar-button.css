@@ -1,8 +1,8 @@
 ﻿#uBlock-legacy-button {
-	list-style-image: url('../img/browsericons/icon32.svg');
+	list-style-image: url('../img/browsericons/icon-large.svg');
 }
 #uBlock-legacy-button.off {
-	list-style-image: url('../img/browsericons/icon32-off.svg');
+	list-style-image: url('../img/browsericons/icon-large-off.svg');
 }
 
 toolbar[iconsize="small"] #uBlock-legacy-button {
@@ -28,10 +28,15 @@ toolbar[iconsize="small"] #uBlock-legacy-button.off {
 
 /* Override off state when in palette */
 toolbarpaletteitem #uBlock-legacy-button.off {
-	list-style-image: url('../img/browsericons/icon32.svg');
+	list-style-image: url('../img/browsericons/icon-large.svg');
 }
 
 /* Override badge when in palette */
 toolbarpaletteitem #uBlock-legacy-button[badge]::before {
 	content: none;
+}
+
+/* Prevent pale moon from showing the arrow underneath the button */
+#uBlock-legacy-button .toolbarbutton-menu-dropmarker {
+	-moz-box-orient: horizontal;
 }
