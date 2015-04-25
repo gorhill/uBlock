@@ -47,7 +47,7 @@ html, body {
     outline: 0;
     }
 .tabButton:active,.tabButton:visited {
-    color: inherited;
+    color: inherit;
     }
 .tabButton.selected {
     background-color: white;
