@@ -62,6 +62,9 @@ input:focus {
     }
 #content table tr.docBoundary > td:first-child {
     padding: 1em 0;
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
     }
 #content table tr.blocked {
     background-color: rgba(192, 0, 0, 0.1);
