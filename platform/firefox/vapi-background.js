@@ -643,8 +643,12 @@ vAPI.tabs.get = function(tabId, callback) {
     var browser;
 
     if ( tabId === null ) {
-        browser = tabWatcher.currentBrowser();
-        tabId = tabWatcher.tabIdFromTarget(browser);
+        win = Services.wm.getMostRecentWindow('navigator:browser');
+        var tabBrowser = getTabBrowser(win);
+        if (tabBrowser) {
+            tab = tabBrowser.selectedTab;
+            tabId = this.getTabId(tab);
+        }
     } else {
         browser = tabWatcher.browserFromTabId(tabId);
     }
@@ -1986,13 +1990,13 @@ vAPI.toolbarButton.init = function() {
 
                 var toolbarButton = document.createElement('toolbarbutton');
                 toolbarButton.setAttribute('id', legacyButtonId);
-                toolbarButton.setAttribute('type', 'panel');
+                toolbarButton.setAttribute('type', 'menu'); // type = panel would be more accurate, but doesn't look as good
                 toolbarButton.setAttribute('removable', 'true');
                 toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
                 toolbarButton.setAttribute('label', vAPI.toolbarButton.label);
 
                 var toolbarButtonPanel = document.createElement("panel");
-                toolbarButtonPanel.setAttribute('level', 'parent');
+                // toolbarButtonPanel.setAttribute('level', 'parent'); NOTE: Setting level to parent breaks the popup for PaleMoon under linux (mouse pointer misaligned with content). For some reason.
                 vAPI.toolbarButton.populatePanel(document, toolbarButtonPanel);
                 toolbarButtonPanel.addEventListener('popupshowing', vAPI.toolbarButton.onViewShowing);
                 toolbarButtonPanel.addEventListener('popuphiding', vAPI.toolbarButton.onViewHiding);
