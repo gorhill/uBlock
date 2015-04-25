@@ -2087,11 +2087,18 @@ vAPI.contextMenu.register = function(doc) {
         return;
     }
 
+    if (doc.getElementById(this.menuItemId)) {
+        // Context menu already registered for this window
+        return;
+    }
+
     var contextMenu = doc.getElementById('contentAreaContextMenu');
-    var menuitem = this.createContextMenuItem(doc);
-    menuitem.addEventListener('command', this.onCommand);
-    contextMenu.addEventListener('popupshowing', this.displayMenuItem);
-    contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    if (contextMenu) {
+        var menuitem = this.createContextMenuItem(doc);
+        menuitem.addEventListener('command', this.onCommand);
+        contextMenu.addEventListener('popupshowing', this.displayMenuItem);
+        contextMenu.insertBefore(menuitem, doc.getElementById('inspect-separator'));
+    }
 };
 
 /******************************************************************************/
