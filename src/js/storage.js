@@ -152,22 +152,26 @@
 
 /******************************************************************************/
 
-µBlock.appendUserFilters = function(filter) {
-    if ( filter.length === 0 ) {
+µBlock.appendUserFilters = function(filters) {
+    if ( filters.length === 0 ) {
         return;
     }
 
     var µb = this;
 
-    var onCompiledListLoaded = function(details) {
+    var onCompiledListLoaded = function() {
+        var compiledFilters = µb.compileFilters(filters);
         var snfe = µb.staticNetFilteringEngine;
         var cfe = µb.cosmeticFilteringEngine;
         var acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
         var duplicateCount = snfe.duplicateCount + cfe.duplicateCount;
-        µb.applyCompiledFilters(details.content);
+        µb.applyCompiledFilters(compiledFilters);
         var entry = µb.remoteBlacklists[µb.userFiltersPath];
-        entry.entryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
-        entry.entryUsedCount = entry.entryCount - snfe.duplicateCount - cfe.duplicateCount + duplicateCount;
+        var deltaEntryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount;
+        var deltaEntryUsedCount = deltaEntryCount - (snfe.duplicateCount + cfe.duplicateCount - duplicateCount);
+        entry.entryCount += deltaEntryCount;
+        entry.entryUsedCount += deltaEntryUsedCount;
+        vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
     };
@@ -187,7 +191,7 @@
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
         // duplicates at this point may lead to more issues.
-        µb.saveUserFilters(details.content.trim() + '\n\n' + filter.trim(), onSaved);
+        µb.saveUserFilters(details.content.trim() + '\n\n' + filters.trim(), onSaved);
     };
 
     this.loadUserFilters(onLoaded);
