@@ -117,6 +117,13 @@ var toggleTool = function() {
 /******************************************************************************/
 
 var evaluateStaticFiltering = (function() {
+    var uglyTypeNames = {
+          'css': 'stylesheet',
+          'doc': 'main_frame',
+        'frame': 'sub_frame',
+          'xhr': 'xmlhttprequest'
+    };
+
     var onResultReceived = function(response) {
         var result = response && response.result.slice(3);
         uDom('#filteringResult')
@@ -134,13 +141,14 @@ var evaluateStaticFiltering = (function() {
         timer = null;
 
         var inputs = uDom('#filterMatcher input');
+        var prettyTypeName = inputs.at(2).val().trim();
 
         messager.send({
             what: 'evaluateStaticFiltering',
             tabId: uDom('#pageSelector').val() || '',
             contextURL: inputs.at(0).val().trim(),
             requestURL: inputs.at(1).val().trim(),
-            requestType: inputs.at(2).val().trim(),
+            requestType: uglyTypeNames[prettyTypeName] || prettyTypeName,
         }, onResultReceived);
     };
 
