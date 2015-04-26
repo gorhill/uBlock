@@ -618,6 +618,11 @@ var uBlockCollapser = (function() {
         var i = nodes.length;
         while ( i-- ) {
             node = nodes[i];
+            // http://jsperf.com/enumerate-classes
+            // Chromium: classList a bit faster than manually enumerating
+            // class names.
+            // Firefox: classList quite slower than manually enumerating
+            // class names.
             vv = node.classList;
             if ( typeof vv !== 'object' ) { continue; }
             j = vv.length || 0;
