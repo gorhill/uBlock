@@ -326,13 +326,18 @@ var netFilterFromElement = function(elem, out) {
     if ( src.length === 0 ) {
         return;
     }
+
+    netFilterFromUrl(src, out);
+}
+
+var netFilterFromUrl = function(url, out) {
     // Remove fragment
-    var pos = src.indexOf('#');
+    var pos = url.indexOf('#');
     if ( pos !== -1 ) {
-        src = src.slice(0, pos);
+        url = url.slice(0, pos);
     }
 
-    var filter = src.replace(/^https?:\/\//, '||');
+    var filter = url.replace(/^https?:\/\//, '||');
 
     // Anchor absolute filter to hostname
     out.push(filter);
@@ -344,7 +349,7 @@ var netFilterFromElement = function(elem, out) {
     }
 
     // Suggest a filter which is a result of combining more than one URL.
-    netFilterFromUnion(src, out);
+    netFilterFromUnion(url, out);
 };
 
 var netFilterSources = {
@@ -468,6 +473,14 @@ var filtersFromElement = function(elem) {
     if ( i !== 0 && cosmeticFilterCandidates[i-1].indexOf(':nth-of-type(') !== -1 ) {
         cosmeticFilterCandidates.push('##body');
     }
+};
+
+/******************************************************************************/
+
+var filtersFromUrl = function(url) {
+    netFilterCandidates.length = 0;
+    cosmeticFilterCandidates.length = 0;
+    netFilterFromUrl(url, netFilterCandidates);
 };
 
 /******************************************************************************/
@@ -874,20 +887,23 @@ var startPicker = function(details) {
 
     highlightElements([], true);
 
-    var elem = null;
-
-    // If a target element was provided, use it
-    if (details.targetElementSelector) {
-        elem = document.querySelector(details.targetElementSelector);
+    // If a target was provided, use it
+    if (details.target) {
+        if (details.target.type === 'element') {
+            filtersFromElement(document.querySelector(details.target.value));
+        } else if (details.target.type === 'url') {
+            filtersFromUrl(details.target.value);
+        } else {
+            console.error('uBlock> unknown element picker target details type: %s', details.target.type);
+        }
+    } else {
+        // Try using mouse position
+        if (details.clientX !== -1) {
+            filtersFromElement(elementFromPoint(details.clientX, details.clientY));
+        }
     }
 
-    // Try using mouse position
-    if (!elem && details.clientX !== -1) {
-        elem = elementFromPoint(details.clientX, details.clientY);
-    }
-
-    if (elem !== null) {
-        filtersFromElement(elem);
+    if (netFilterCandidates.length > 0 || cosmeticFilterCandidates.length > 0) {
         showDialog();
     }
 };
