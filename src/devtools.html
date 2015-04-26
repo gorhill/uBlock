@@ -14,10 +14,31 @@
 <div id="toolbar">
     <select id="pageSelector"></select>
     <button id="refresh" class="fa" type="button">&#xf021;</button>
-    <button id="popupToggler" class="fa" type="button">&#xf0c8;</button>
+    <span id="extras">
+        <span>
+            <button class="fa toolToggler" type="button">&#xf0ad;</button>
+            <div>
+                <div id="filterMatcher">
+                    <p><label>URL of context</label><br>
+                       <input type="text" size="40">
+                    <p><label>URL of resource</label><br>
+                       <input type="text" size="40">
+                    <p><label>Type of resource</label><br>
+                       <input type="text" size="40">
+                    <p><label>Matching static filter</label><br>
+                       <span id="filteringResult" class="empty">&nbsp;</span>
+                </div>
+            </div>
+        </span>
+        <span>
+            <button id="popupToggler" class="fa toolToggler" type="button">&#xf0c8;</button>
+            <div>
+                <iframe id="popup" src=""></iframe>
+            </div>
+        </span>
+    </span>
 </div>
 <iframe id="content"></iframe>
-<iframe id="popup" src=""></iframe>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

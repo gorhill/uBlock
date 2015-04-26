@@ -1067,23 +1067,58 @@ var getPageDetails = function(callback) {
 
 /******************************************************************************/
 
+var evaluateStaticFiltering = function(details) {
+    // URL of context not provided, try to use the one for the given tab id.
+    var contextURL = details.contextURL;
+    if ( contextURL === '' ) {
+        var tabContext = µb.tabContextManager.lookup(details.tabId || 0);
+        if ( tabContext ) {
+            contextURL = tabContext.rawURL;
+        }
+    }
+
+    var pageHostname = µb.URI.hostnameFromURI(contextURL);
+    var pageDomain = µb.URI.domainFromHostname(pageHostname);
+
+    var context = {
+        rootHostname: pageHostname,
+        rootDomain: pageDomain,
+        pageHostname: pageHostname,
+        pageDomain: pageDomain,
+        requestURL: details.requestURL,
+        requestHostname: µb.URI.hostnameFromURI(details.requestURL),
+        requestType: details.requestType
+    };
+
+    return {
+        contextURL: contextURL,
+        result: µb.staticNetFilteringEngine.matchString(context)
+    };
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'getPageDetails':
-            getPageDetails(callback);
-            return;
+    case 'getPageDetails':
+        getPageDetails(callback);
+        return;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        default:
-            return vAPI.messaging.UNHANDLED;
+    case 'evaluateStaticFiltering':
+        response = evaluateStaticFiltering(request);
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);

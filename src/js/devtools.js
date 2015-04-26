@@ -94,15 +94,62 @@ var selectPage = function() {
 
 /******************************************************************************/
 
-var togglePopup = function() {
-    var tabId = uDom('#pageSelector').val() || '';
-    var body = uDom('body');
-    body.toggleClass('popupEnabled');
-    if ( body.hasClass('popupEnabled') === false ) {
-        tabId = '';
+var toggleTool = function() {
+    var button = uDom(this);
+    button.toggleClass('enabled', !button.hasClass('enabled'));
+
+    // Special case: we want the frame of the popup to be filled-in if and
+    // only if the popup is visible.
+    if ( this.id === 'popupToggler' ) {
+        var tabId = uDom('#pageSelector').val() || '';
+        var body = uDom('body');
+        body.toggleClass('popupEnabled');
+        if ( body.hasClass('popupEnabled') === false ) {
+            tabId = '';
+        }
+        uDom('#popup').attr(
+            'src',
+            button.hasClass('enabled') && tabId ? 'popup.html?tabId=' + tabId : ''
+        );
     }
-    uDom('#popup').attr('src', tabId ? 'popup.html?tabId=' + tabId : '');
 };
+
+/******************************************************************************/
+
+var evaluateStaticFiltering = (function() {
+    var onResultReceived = function(response) {
+        var result = response && response.result.slice(3);
+        uDom('#filteringResult')
+            .text(result || '\u00A0')
+            .toggleClass('empty', result === '');
+
+        var input = uDom('#filterMatcher input').at(0);
+        if ( input.val().trim() === '' ) {
+            input.val(response && response.contextURL || '');
+        }
+    };
+
+    var timer = null;
+    var onTimerElapsed = function() {
+        timer = null;
+
+        var inputs = uDom('#filterMatcher input');
+
+        messager.send({
+            what: 'evaluateStaticFiltering',
+            tabId: uDom('#pageSelector').val() || '',
+            contextURL: inputs.at(0).val().trim(),
+            requestURL: inputs.at(1).val().trim(),
+            requestType: inputs.at(2).val().trim(),
+        }, onResultReceived);
+    };
+
+    return function() {
+        if ( timer === null ) {
+            setTimeout(onTimerElapsed, 750);
+        }
+    };
+})();
 
 /******************************************************************************/
 
@@ -160,13 +207,14 @@ uDom.onLoad(function() {
         tabId = matches[1];
     }
 
-    uDom('#popupToggler').on('click', togglePopup);
+    uDom('.toolToggler').on('click', toggleTool);
     uDom('#popup').on('load', onPopupLoaded);
 
     renderPageSelector(tabId);
 
     uDom('#pageSelector').on('change', pageSelectorChanged);
-    uDom('#refresh').on('click', function() { renderPageSelector(); } );
+    uDom('#refresh').on('click', function() { renderPageSelector(); });
+    uDom('#filterMatcher input').on('input', evaluateStaticFiltering);
 });
 
 /******************************************************************************/
