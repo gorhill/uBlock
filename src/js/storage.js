@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/chrisaljoudi/uBlock
+    Home: https://github.com/gorhill/uBlock
 */
 
 /* global YaMD5, µBlock, vAPI, punycode, publicSuffixList */
@@ -42,12 +42,6 @@
     var bin = {};
     bin[key] = val;
     vAPI.storage.set(bin, callback || this.noopFunc);
-};
-
-/******************************************************************************/
-
-µBlock.keyvalSetMany = function(dict, callback) {
-    vAPI.storage.set(dict, callback || this.noopFunc);
 };
 
 /******************************************************************************/
@@ -211,20 +205,25 @@
         var lists = store.remoteBlacklists;
         var locations = Object.keys(lists);
         var location, availableEntry, storedEntry;
+        var off;
 
         while ( location = locations.pop() ) {
             storedEntry = lists[location];
+            off = storedEntry.off === true;
             // New location?
             if ( relocationMap.hasOwnProperty(location) ) {
                 µb.purgeFilterList(location);
                 location = relocationMap[location];
+                if ( off && lists.hasOwnProperty(location) ) {
+                    off = lists[location].off === true;
+                }
             }
             availableEntry = availableLists[location];
             if ( availableEntry === undefined ) {
                 µb.purgeFilterList(location);
                 continue;
             }
-            availableEntry.off = storedEntry.off || false;
+            availableEntry.off = off;
             µb.assets.setHomeURL(location, availableEntry.homeURL);
             if ( storedEntry.entryCount !== undefined ) {
                 availableEntry.entryCount = storedEntry.entryCount;
@@ -536,7 +535,7 @@
             line = line.slice(0, pos).trim();
         }
 
-        // https://github.com/chrisaljoudi/httpswitchboard/issues/15
+        // https://github.com/gorhill/httpswitchboard/issues/15
         // Ensure localhost et al. don't end up in the ubiquitous blacklist.
         // With hosts files, we need to remove local IP redirection
         if ( reMaybeLocalIp.test(c) ) {
