@@ -910,10 +910,9 @@ FilterHostnameDict.prototype.freeze = function() {
     var bucket;
     for ( var key in buckets ) {
         bucket = buckets[key];
-        if ( typeof bucket !== 'object' ) {
-            continue;
+        if ( typeof bucket === 'object' ) {
+            buckets[key] = this.freezeBucket(bucket);
         }
-        buckets[key] = this.freezeBucket(bucket);
     }
 };
 

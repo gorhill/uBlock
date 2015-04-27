@@ -159,7 +159,7 @@
 
     var µb = this;
 
-    var onCompiledListLoaded = function() {
+    var onSaved = function() {
         var compiledFilters = µb.compileFilters(filters);
         var snfe = µb.staticNetFilteringEngine;
         var cfe = µb.cosmeticFilteringEngine;
@@ -174,13 +174,6 @@
         vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
-    };
-
-    var onSaved = function(details) {
-        if ( details.error ) {
-            return;
-        }
-        µb.getCompiledFilterList(µb.userFiltersPath, onCompiledListLoaded);
     };
 
     var onLoaded = function(details) {
