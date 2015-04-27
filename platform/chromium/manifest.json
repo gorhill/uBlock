@@ -60,8 +60,5 @@
         "http://*/*",
         "https://*/*"
     ],
-    "short_name": "uBlock",
-    "web_accessible_resources": [
-        "document-blocked.html"
-    ]
+    "short_name": "uBlock"
 }
