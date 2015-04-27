@@ -71,9 +71,11 @@ return {
     netWhitelist: {},
     netWhitelistModifyTime: 0,
     netWhitelistDefault: [
+        'about-scheme',
         'behind-the-scene',
         'chrome-extension-scheme',
         'chrome-scheme',
+        'loopconversation.about-scheme',
         'opera-scheme'
     ].join('\n').trim(),
 

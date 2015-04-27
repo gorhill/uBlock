@@ -55,13 +55,15 @@ var µb = µBlock;
         return uri.normalizedURI();
     }
 
-    var url = 'http://' + scheme + '-scheme/';
+    var fakeHostname = scheme + '-scheme';
 
     if ( uri.hostname !== '' ) {
-        url += uri.hostname + '/';
+        fakeHostname = uri.hostname + '.' + fakeHostname;
+    } else if ( scheme === 'about' && uri.path !== '' ) {
+        fakeHostname = uri.path + '.' + fakeHostname;
     }
 
-    return url;
+    return 'http://' + fakeHostname + '/';
 };
 
 /******************************************************************************/

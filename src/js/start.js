@@ -81,6 +81,16 @@ var onVersionReady = function(lastVersion) {
         );
         µb.saveWhitelist();
     }
+    // https://github.com/gorhill/uBlock/issues/135#issuecomment-96677379
+    // `about:loopconversation` is used by Firefox for its Hello service
+    if ( lastVersion.localeCompare('0.9.3.5') <= 0 ) {
+        µb.netWhitelist = µb.whitelistFromString(
+            µb.stringFromWhitelist(µb.netWhitelist) +
+            '\n' +
+            'loopconversation.about-scheme'
+        );
+        µb.saveWhitelist();
+    }
     if ( lastVersion !== vAPI.app.version ) {
         vAPI.storage.set({ version: vAPI.app.version });
     }
