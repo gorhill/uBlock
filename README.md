@@ -129,9 +129,9 @@ You can install the latest version [manually](https://github.com/gorhill/uBlock/
 
 #### Firefox
 
-[Firefox Add-ons web site](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/), or install manually by downloading the latest [uBlock0.firefox.xpi](https://github.com/gorhill/uBlock/releases) file, and by dragging the downloaded `xpi` file to your add-on page.
+[Firefox Add-ons web site](https://addons.mozilla.org/firefox/addon/ublock-origin/), or install manually by downloading the latest [uBlock0.firefox.xpi](https://github.com/gorhill/uBlock/releases) file, and by dragging the downloaded `xpi` file to your add-on page.
 
-Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) (different feature set) from [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/).
+Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) (different feature set) from [Firefox Add-ons homepage](https://addons.mozilla.org/firefox/addon/ublock/).
 
 #### Safari
 
