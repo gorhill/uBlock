@@ -571,6 +571,47 @@ FilterPlainHnAnchored.fromSelfie = function(s) {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/142
+
+var FilterPlainHnAnchoredHostname = function(s, hostname) {
+    this.s = s;
+    this.hostname = hostname;
+};
+
+FilterPlainHnAnchoredHostname.prototype.match = function(url, tokenBeg) {
+    if ( pageHostnameRegister.slice(-this.hostname.length) !== this.hostname ) {
+        return false;
+    }
+    if ( url.substr(tokenBeg, this.s.length) !== this.s ) {
+        return false;
+    }
+    // Valid only if hostname-valid characters to the left of token
+    var pos = url.indexOf('://');
+    return pos !== -1 &&
+           reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
+};
+
+FilterPlainHnAnchoredHostname.fid = FilterPlainHnAnchoredHostname.prototype.fid = '||ah';
+
+FilterPlainHnAnchoredHostname.prototype.toString = function() {
+    return '||' + this.s;
+};
+
+FilterPlainHnAnchoredHostname.prototype.toSelfie = function() {
+    return this.s + '\t' + this.hostname;
+};
+
+FilterPlainHnAnchoredHostname.compile = function(details, hostname) {
+    return details.f + '\t' + hostname;
+};
+
+FilterPlainHnAnchoredHostname.fromSelfie = function(s) {
+    var pos = s.indexOf('\t');
+    return new FilterPlainHnAnchoredHostname(s.slice(0, pos), s.slice(pos + 1));
+};
+
+/******************************************************************************/
+
 // Generic filter
 
 var FilterGeneric = function(s, anchor) {
@@ -1143,6 +1184,9 @@ var getHostnameBasedFilterClass = function(details) {
     if ( details.anchor > 0 ) {
         return FilterPlainRightAnchoredHostname;
     }
+    if ( details.hostnameAnchored ) {
+        return FilterPlainHnAnchoredHostname;
+    }
     if ( details.tokenBeg === 0 ) {
         return FilterPlainPrefix0Hostname;
     }
@@ -1594,6 +1638,7 @@ FilterContainer.prototype.factories = {
      'a|': FilterPlainRightAnchored,
     'a|h': FilterPlainRightAnchoredHostname,
     '||a': FilterPlainHnAnchored,
+   '||ah': FilterPlainHnAnchoredHostname,
      '//': FilterRegex,
     '//h': FilterRegexHostname,
     '{h}': FilterHostnameDict,
