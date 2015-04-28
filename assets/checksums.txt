@@ -3,7 +3,6 @@ b8fd6f6a836d34e0629dca07424d7bd8 assets/ublock/privacy.txt
 93a56996f9cbd501ee764938536f77cb assets/ublock/filters.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
 77516c4443fb629fc6b1b91b26004cc9 assets/ublock/filter-lists.json
-132b3ecc9da8a68c3faf740c00af734b assets/thirdparties/adblock-plus-japanese-filter.googlecode.com/hg/abp_jp.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 1888a9521b2a138699ec01c654e35118 assets/thirdparties/www.zoso.ro/pages/rolist.txt
 72373316d0e7ad22604d307c2d93e7cc assets/thirdparties/adblock.gardar.net/is.abp.txt
@@ -15,8 +14,6 @@ c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
 5471b40cfefa128a133b993e5ef2f555 assets/thirdparties/raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 068ceb3b1d8ce5ef155d6bdd30ec9d53 assets/thirdparties/raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt
 cbde6559e6100aca9690fd01f2a93ad3 assets/thirdparties/raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
-d8c58f5bb8072907ae361bc14dbbd28f assets/thirdparties/cjxlist1.googlecode.com/svn/cjxlist.txt
-7720856eb1b1d15d0ab415b1f19d2345 assets/thirdparties/www.hufilter.hu/hufilter.txt
 09e1c1c863d214eef38205246342573f assets/thirdparties/gnuzilla.gnu.org/filters/blacklist.txt
 7755619a576f2479dcf26ef1c2753182 assets/thirdparties/spam404bl.com/spam404scamlist.txt
 3e2db0fac70b22f4cbc38a17db7b03c7 assets/thirdparties/easylist-downloads.adblockplus.org/easylistchina.txt
@@ -31,18 +28,15 @@ b59481605795a475afde1853557aac77 assets/thirdparties/easylist-downloads.adblockp
 8dcbd15e6c63c4b7a8faa606b2795f51 assets/thirdparties/easylist-downloads.adblockplus.org/easylistitaly.txt
 e2d38d67a4dc89793535544c7b39afe7 assets/thirdparties/easylist-downloads.adblockplus.org/easylistgermany.txt
 37daa26c4cb00c20c7342a39a64acf2c assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt
-36a285b3ef9aadad4529d40153364013 assets/thirdparties/adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 b2823c07be0286782cc72c2355425a67 assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt
 adc945b82aec20f53ea31c36468b3759 assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
 ba4188d849adb7f4f04b6474f0328b94 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
 e63f51b30304ddca0337c8eba3bff101 assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
-0d707b2cee4a38988662107971137d13 assets/thirdparties/abp.mozilla-hispano.org/nauscopio/filtros.txt
 dea183551bca4d87e6c5ecee3bbe0c82 assets/thirdparties/margevicius.lt/easylistlithuania.txt
 334579f692c60ceb0a4e6450f1d5ed35 assets/thirdparties/someonewhocares.org/hosts/hosts
 d960765d2489db4f6038d3032cbd988c assets/thirdparties/winhelp2002.mvps.org/hosts.txt
 81fb33375814d8fb1653ba721ffd6a01 assets/thirdparties/adblock.schack.dk/block.txt
-7c0d09fbccd87b5252d3bab3e822f2e4 assets/thirdparties/adblock-czechoslovaklist.googlecode.com/svn/filters.txt
 77c51f92dfa23dc56a934965bdb7df8c assets/thirdparties/liste-ar-adblock.googlecode.com/hg/Liste_AR.txt
 e68acbf09f22a8ac0650907fdd45a669 assets/thirdparties/www.fanboy.co.nz/fanboy-korean.txt
 8833c8e6b8207563f4d1b2b50277e2bc assets/thirdparties/www.fanboy.co.nz/enhancedstats.txt
@@ -53,7 +47,6 @@ faf479000090920441f1f01a664e0aca assets/thirdparties/www.fanboy.co.nz/fanboy-vie
 042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
 5e58a7da33d0f5688287c6420a7a844d assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
 c95fd7804f199ddc7aa5cd56a61a32ec assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt
-c4ae5f259bbff543637bba359d439182 assets/thirdparties/indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt
 72ae2048c0201c940978d27cda361891 assets/thirdparties/stanev.org/abp/adblock_bg.txt
 94dbff349310d086e9c5b17ac7834f1d assets/thirdparties/hosts-file.net/ad-servers
 6fe55d727901e97b8cf6d56be0ba4604 assets/thirdparties/pgl.yoyo.org/as/serverlist
