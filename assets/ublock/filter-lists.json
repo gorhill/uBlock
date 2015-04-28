@@ -93,7 +93,7 @@
         },
     "gnuzilla.gnu.org/filters/blacklist.txt": {
         "off": true,
-        "title": "Block all well known privacy trackers",
+        "title": "Block all well known privacy trackers (warning: can break web pages)",
         "group": "privacy",
         "homeURL": "http://gnuzilla.gnu.org/filters/blacklist.txt"
         },
