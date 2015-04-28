@@ -1,4 +1,4 @@
-d9402b3eccf04a354740082de1df1128 assets/ublock/filter-lists.json
+e42e13e07117589d46671e876c787cc2 assets/ublock/filter-lists.json
 7ef50e668ccfdd4de56af0003f575e93 assets/ublock/filters.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
 ba85c7991d208fe26c8f74f57bb5cfe1 assets/ublock/privacy.txt
@@ -23,7 +23,6 @@ f58ca4633056194a1350ebfa90a7f9d3 assets/thirdparties/easylist-downloads.adblockp
 def19717429aaeee2331cb797d5e240e assets/thirdparties/easylist-downloads.adblockplus.org/fanboy-social.txt
 d7a5ce9f655e43cd6026fa31356b8161 assets/thirdparties/easylist-downloads.adblockplus.org/liste_fr.txt
 c95fd7804f199ddc7aa5cd56a61a32ec assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt
-862430633a07769483f51ac07250a9ea assets/thirdparties/gnuzilla.gnu.org/filters/blacklist.txt
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 c0b6983add2393e18defcbda28fecec1 assets/thirdparties/hosts-file.net/ad-servers
 d12fbce40c55bdea5d8c7ef6b0d0202d assets/thirdparties/indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt
