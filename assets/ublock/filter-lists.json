@@ -107,7 +107,7 @@
         "off": true,
         "title": "Blacklist of known trackers (from gnu.org)",
         "group": "privacy",
-        "homeURL": ""
+        "homeURL": "http://gnuzilla.gnu.org/filters/blacklist.txt"
         },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
