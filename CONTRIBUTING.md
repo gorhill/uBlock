@@ -10,7 +10,8 @@
     - Submit design ideas.
     - Submit feature requests.
     - Submit "revolutionary ideas".
-    - Use issues as replacement for threads on a bulletin board.
+    - Post comments like "+1" or "me too!" without providing new relevant info on the issue.
+    - Use issues as replacement for threads on a bulletin board. [You can use Reddit](https://www.reddit.com/r/ublock+ublockorigin) for general discussion among users.
     - Any such issue will be closed without comment.
 1. Make sure your issue [hasn't already been fixed in a recent release](https://github.com/gorhill/uBlock/releases).
 1. Verify that the issue does **not** occur with uBlock disabled.
@@ -19,6 +20,7 @@
     - If it is the case, report to the list maintainer(s).
     - It helps to also test with Adblock Plus, with **same** filter lists.
         - If issue also occurs with ABP, it's most likely a filter list issue.
+1. Verify that the issue is not caused by another extension, such as HTTPS Everywhere.
 1. Any issue opened with no effort to provide the required details will be closed without comment.
 
 ---
