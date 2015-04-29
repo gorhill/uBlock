@@ -33,6 +33,8 @@
 
 ;(function(root) {
 
+'use strict';
+
 /******************************************************************************/
 
 var exceptions = {};
@@ -44,6 +46,8 @@ var selfieMagic = 'iscjsfsaolnm';
 //   >= this.cutoffLength = binary search
 var cutoffLength = 256;
 var mustPunycode = /[^a-z0-9.-]/;
+
+var onModifyListeners = [];
 
 /******************************************************************************/
 
@@ -234,6 +238,8 @@ function parse(text, toAscii) {
     }
     crystallize(exceptions);
     crystallize(rules);
+
+    callListeners(onModifyListeners);
 }
 
 /******************************************************************************/
@@ -302,8 +308,36 @@ function fromSelfie(selfie) {
     }
     rules = selfie.rules;
     exceptions = selfie.exceptions;
+    callListeners(onModifyListeners);
     return true;
 }
+
+/******************************************************************************/
+
+var callListeners = function(listeners) {
+    for ( var i = 0; i < listeners.length; i++ ) {
+        listeners[i]();
+    }
+};
+
+/******************************************************************************/
+
+var onModified = {
+    addListener: function(callback) {
+        if (
+            typeof callback === 'function' &&
+            onModifyListeners.indexOf(callback) === -1
+        ) {
+            onModifyListeners.push(callback);
+        }
+    },
+    removeListener: function(callback) {
+        var pos = onModifyListeners.indexOf(callback);
+        if ( pos !== -1 ) {
+            onModifyListeners.splice(pos, 1);
+        }
+    }
+};
 
 /******************************************************************************/
 
@@ -317,7 +351,8 @@ root.publicSuffixList = {
     'getDomain': getDomain,
     'getPublicSuffix': getPublicSuffix,
     'toSelfie': toSelfie,
-    'fromSelfie': fromSelfie
+    'fromSelfie': fromSelfie,
+    'onModified': onModified
 };
 
 /******************************************************************************/
