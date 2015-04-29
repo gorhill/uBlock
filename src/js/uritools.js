@@ -376,7 +376,7 @@ var domainCacheCount = 0;
 var domainCacheCountLowWaterMark = 75;
 var domainCacheCountHighWaterMark = 100;
 
-psl.onModified.addListener(domainCacheReset);
+psl.onChanged.addListener(domainCacheReset);
 
 /******************************************************************************/
 

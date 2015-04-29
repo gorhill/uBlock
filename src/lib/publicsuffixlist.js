@@ -47,7 +47,7 @@ var selfieMagic = 'iscjsfsaolnm';
 var cutoffLength = 256;
 var mustPunycode = /[^a-z0-9.-]/;
 
-var onModifyListeners = [];
+var onChangedListeners = [];
 
 /******************************************************************************/
 
@@ -238,8 +238,7 @@ function parse(text, toAscii) {
     }
     crystallize(exceptions);
     crystallize(rules);
-
-    callListeners(onModifyListeners);
+    callListeners(onChangedListeners);
 }
 
 /******************************************************************************/
@@ -308,11 +307,27 @@ function fromSelfie(selfie) {
     }
     rules = selfie.rules;
     exceptions = selfie.exceptions;
-    callListeners(onModifyListeners);
+    callListeners(onChangedListeners);
     return true;
 }
 
 /******************************************************************************/
+
+var addListener = function(listeners, callback) {
+    if ( typeof callback !== 'function' ) {
+        return;
+    }
+    if ( listeners.indexOf(callback) === -1 ) {
+        listeners.push(callback);
+    }
+};
+
+var removeListener = function(listeners, callback) {
+    var pos = listeners.indexOf(callback);
+    if ( pos !== -1 ) {
+        listeners.splice(pos, 1);
+    }
+};
 
 var callListeners = function(listeners) {
     for ( var i = 0; i < listeners.length; i++ ) {
@@ -322,20 +337,12 @@ var callListeners = function(listeners) {
 
 /******************************************************************************/
 
-var onModified = {
+var onChanged = {
     addListener: function(callback) {
-        if (
-            typeof callback === 'function' &&
-            onModifyListeners.indexOf(callback) === -1
-        ) {
-            onModifyListeners.push(callback);
-        }
+        addListener(onChangedListeners, callback);
     },
     removeListener: function(callback) {
-        var pos = onModifyListeners.indexOf(callback);
-        if ( pos !== -1 ) {
-            onModifyListeners.splice(pos, 1);
-        }
+        removeListener(onChangedListeners, callback);
     }
 };
 
@@ -352,7 +359,7 @@ root.publicSuffixList = {
     'getPublicSuffix': getPublicSuffix,
     'toSelfie': toSelfie,
     'fromSelfie': fromSelfie,
-    'onModified': onModified
+    'onChanged': onChanged
 };
 
 /******************************************************************************/
