@@ -359,6 +359,8 @@ var onRootFrameHeadersReceived = function(details) {
     //   https://github.com/chrisaljoudi/uBlock/issues/516
     if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('application/x-', 0) === 0 ) {
         µb.tabContextManager.unpush(tabId, details.url);
+    } else {
+        µb.tabContextManager.push(tabId, details.url);
     }
 
     // Lookup the page store associated with this tab id.
