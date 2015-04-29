@@ -287,6 +287,9 @@ var onHeadersReceived = function(details) {
 
     return { 'responseHeaders': details.responseHeaders };
 };
+
+/******************************************************************************/
+
 var onRootFrameHeadersReceived = function(details) {
     var tabId = details.tabId;
     var requestURL = details.url;
@@ -297,6 +300,8 @@ var onRootFrameHeadersReceived = function(details) {
     // ...
     if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
         µb.tabContextManager.unpush(tabId, requestURL);
+    } else {
+        µb.tabContextManager.push(tabId, requestURL);
     }
 
     // Lookup the page store associated with this tab id.
@@ -304,7 +309,6 @@ var onRootFrameHeadersReceived = function(details) {
     if ( !pageStore ) {
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
     }
-    // I can't think of how pageStore could be null at this point.
 
     var context = pageStore.createContextFromPage();
     context.requestURL = requestURL + '{inline-script}';
