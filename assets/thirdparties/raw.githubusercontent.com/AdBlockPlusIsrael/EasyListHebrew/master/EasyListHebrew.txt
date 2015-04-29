@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: GbA+++8s9RAoXnKlubBi3g
+! Checksum: qblGtKzhYvoGe7crDsh1ag
 ! Title: EasyList Hebrew
-! Last modified: 13/04/15 18:15
+! Last modified: 21/04/15 11:15
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -301,6 +301,7 @@
 !--------------Whitelists Rules (caused by EasyList / EasyPrivacy )-----------!
 !
 @@||10tv.nana10.co.il/Video/advert.png
+@@||adline.co.il^$~third-party
 @@||adnxs.com^$object-subrequest,domain=mako.co.il
 @@||ads.one.co.il/images/ads/2014/01/21/1400/home.png
 @@||ads.one.co.il/images/Ads/2014/05/22/1500/51x20.gif
@@ -379,6 +380,15 @@ foodsdictionary.co.il#@#.Adsense
 foodsdictionary.co.il#@#.adSense
 homeless.co.il#@#.postad
 junkyard.co.il#@#.ad-body
+kikar.co.il#@#.pub_300x250m
+kikar.co.il#@#.pub_728x90
+kikar.co.il#@#.text-ad
+kikar.co.il#@#.text-ad-links
+kikar.co.il#@#.text-ads
+kikar.co.il#@#.textAd
+kikar.co.il#@#.text_ad
+kikar.co.il#@#.text_ads
+kikar.co.il#@#.pub_300x250
 kml.co.il#@#div[id^="div-gpt-ad-"]
 lavender.co.il#@##topAds
 one.co.il#@#a[href^="http://xads.zedo.com/"]

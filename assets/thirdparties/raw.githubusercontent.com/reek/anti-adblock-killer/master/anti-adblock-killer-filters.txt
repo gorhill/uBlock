@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Title: Anti-Adblock Killer | Filters for Adblockers
+! Title: AakList (Anti-Adblock Killer)
 ! Author: Reek | http://reeksite.com/
-! License: Creative Commons BY-NC-SA
 ! Version: 7.9
 ! Expires: 1 days
+! License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
 ! Contact: https://github.com/reek/anti-adblock-killer/issues
 ! Report: https://github.com/reek/anti-adblock-killer/wiki/Report-Guide
@@ -12,12 +12,9 @@
 ! RedundantRules: https://arestwo.org/famlam/redundantRuleChecker.html
 ! RegExpVisualizer http://www.regexper.com/
 !----------------------------------------------------------------------------------------------------!
-! Used to detect this list
+! Anti-Adblock killer
 !----------------------------------------------------------------------------------------------------!
 ###k2Uw7isHrMm5JXP1Vwdxc567ZKc1aZ4I
-!----------------------------------------------------------------------------------------------------!
-! Exclude Anti-Adblock-killer
-!----------------------------------------------------------------------------------------------------!
 @@||githubusercontent.com/reek/anti-adblock-killer/
 @@||github.com/reek/anti-adblock-killer/
 !----------------------------------------------------------------------------------------------------!
@@ -92,6 +89,9 @@
 /aadb/script.js|$script
 ! Better Stop Adblock
 ||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3$media
+/plugins/better-stop-adblock/*
+/js/bsa-script-doctype.js$script
+/js/bsa-script-no-doctype.js$script
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
 ! StopAdBlock
@@ -116,8 +116,11 @@
 ! http://adblockingdetector.jtmorris.net/demo/
 @@/plugins/ad-blocking-detector/assets/js/advertisement.js$script
 ! AdBlock Notify
-! http://b-website.com/plugin-wordpress-adblock-notify
+! http://b-website.com/adblock-notify-plugin-for-wordpress
 /plugins/adblock-notify-by-bweb/*
+/js/an-detect.min.js$script
+/js/an-scripts.js$script
+/js/an-scripts.min.js$script
 ||b-website.com/wp-content/uploads/an-temp/RrW75pkNMbSB.js$script
 ! Anti-Adblock (from easylist) -------------------------------------------------------------
 /ad-blocking-detector/*
@@ -472,6 +475,9 @@ jeuxactu.com###infoBlock
 !||c.hqq.tv/js/adb/adb.js$script
 ! online.dramacafe.tv
 online.dramacafe.tv#@#.afs_ads
+online.dramacafe.in##.pm-ad-zone
+online.dramacafe.in##BODY > DIV[style^="background-color: rgb(251, 236, 173); position: fixed;"]
+||wafmedia3.com^$script,domain=online.dramacafe.in
 ! hln.be + nieuwsblad.be + demorgen.be
 @@||imasdk.googleapis.com/flash/*.swf$domain=syndication.vmma.be,object-subrequest
 @@||pubads.g.doubleclick.net/gampad/ads?$domain=syndication.vmma.be,object-subrequest
@@ -848,6 +854,25 @@ proboards.com,freeforums.net,boards.net###support-message
 plej.tv#@#.advert_box
 ! danslescoulisses.com
 @@||danslescoulisses.com/fr/min/$stylesheet
+! vipleague
+! Solution 3
+vipleague.ws,vipleague.tv,vipleague.se,vipleague.me,vipleague.co,vipleague.sx,vipleague.ch,vipbox.tv,vipbox.co,vipbox.sx,vipboxsa.co,strikeout.co,homerun.re##script + script + script + style + div[id]
+! linkdrop.net
+linkdrop.net#@#.afs_ads
+! stream4free.eu
+@@||stream4free.eu/modules/mod_jpayday/js/doubleclick.js$script,domain=stream4free.eu
+! forums.openpli.org
+forums.openpli.org###content > [style="text-align:center;"] > DIV[style="margin 0 auto;display:inline-block;width:728px; height:84px; border:1px solid #000000; text-align:center; font-family:century gothic, arial, helvetica, sans serif;padding:4px;font-weight:bold;"]
+! simply-debrid.com
+simply-debrid.com#@##adsense
+! onvasortir.com
+@@||onvasortir.com^$elemhide
+@@||onvasortir.com/publicite.html$script
+@@||onvasortir.com/fuckadblock.js$script
+! urbeez.com
+@@||urbeez.com^$elemhide
+@@||urbeez.com/publicite.html$script
+@@||urbeez.com/fuckadblock.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -861,14 +886,13 @@ plej.tv#@#.advert_box
 !----------------------------------------------------------------------------------------------------!
 ||js.sapo.pt/SAPOWebAnalytics/
 ||flash.banners-service.info^
-||compteur-visite.com^$script,third-party
+! compteur-visite.com
+||compteur-visite.com^$third-party
+! histats.com
+||histats.com^$third-party
 ! pagefair.com (Measure ads blocked)
-||pagefair.com/measure.min.js$script,third-party
-||pagefair.com/ads.min.js$script,third-party
-||pagefair.com/static/adblock_detection/js/d.min.js$script,third-party
-||pagefair.net/measure.min.js$script,third-party
-||pagefair.net/ads.min.js$script,third-party
-||pagefair.net/static/adblock_detection/js/d.min.js$script,third-party
+||pagefair.com^$third-party
+||pagefair.net^$third-party
 !----------------------------------------------------------------------------------------------------!
 ! Ads
 !----------------------------------------------------------------------------------------------------!
