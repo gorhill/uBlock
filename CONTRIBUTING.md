@@ -35,7 +35,7 @@ To help diagnose and fix the bug/issue, please always, **always**, **ALWAYS** in
 * Symptoms of the issue
   * Describe what you observe and consider broken behavior; this is what we'll be looking for after executing the steps
   * Example: video doesn't start playing, page layout broken
-* A screenshot of **any** of uBlock's preferences that differ from the defaults
+* A screenshot or transcription of **any of uBlock's preferences that differ from the defaults**
   * This includes a whitelisted website, enabled/disabled filter list, anything
   * Please do include everything different from the defaults whether or not it seems relevant to your issue
 * The version of uBlock you're having the issue with; you can find this in [uBlock's popup UI](https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface)
