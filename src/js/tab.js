@@ -209,6 +209,10 @@ housekeep itself.
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
+        var count = this.stack.length;
+        if ( count !== 0 && this.stack[count - 1] === url ) {
+            return;
+        }
         this.stack.push(url);
         this.update();
     };

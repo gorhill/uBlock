@@ -873,11 +873,19 @@ FilterHostnameDict.prototype.meltBucket = function(len, bucket) {
     } else {
         var offset = 0;
         while ( offset < bucket.length ) {
-            map[bucket.substring(offset, len)] = true;
+            map[bucket.substr(offset, len)] = true;
             offset += len;
         }
     }
     return map;
+};
+
+FilterHostnameDict.prototype.freezeBucket = function(bucket) {
+    var hostnames = Object.keys(bucket);
+    if ( hostnames[0].length * hostnames.length < this.cutoff ) {
+        return ' ' + hostnames.join(' ') + ' ';
+    }
+    return hostnames.sort().join('');
 };
 
 // How the key is derived dictates the number and size of buckets:
@@ -927,7 +935,7 @@ FilterHostnameDict.prototype.add = function(hn) {
         return true;
     }
     if ( typeof bucket === 'string' ) {
-        bucket = this.dict[key] = this.meltBucket(hn.len, bucket);
+        bucket = this.dict[key] = this.meltBucket(hn.length, bucket);
     }
     if ( bucket.hasOwnProperty(hn) ) {
         return false;
@@ -939,19 +947,13 @@ FilterHostnameDict.prototype.add = function(hn) {
 
 FilterHostnameDict.prototype.freeze = function() {
     var buckets = this.dict;
-    var bucket, hostnames, len;
+    var bucket;
     for ( var key in buckets ) {
         bucket = buckets[key];
         if ( typeof bucket !== 'object' ) {
             continue;
         }
-        hostnames = Object.keys(bucket);
-        len = hostnames[0].length * hostnames.length;
-        if ( hostnames[0].length * hostnames.length < this.cutoff ) {
-            buckets[key] = ' ' + hostnames.join(' ') + ' ';
-        } else {
-            buckets[key] = hostnames.sort().join('');
-        }
+        buckets[key] = this.freezeBucket(bucket);
     }
 };
 
@@ -964,7 +966,7 @@ FilterHostnameDict.prototype.matchesExactly = function(hn) {
         return false;
     }
     if ( typeof bucket === 'object' ) {
-        return bucket.hasOwnProperty(hn);
+        bucket = this.dict[key] = this.freezeBucket(bucket);
     }
     if ( bucket.charAt(0) === ' ' ) {
         return bucket.indexOf(' ' + hn + ' ') !== -1;
@@ -1624,26 +1626,26 @@ FilterContainer.prototype.freeze = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.factories = {
-      '[]': FilterBucket,
-       'a': FilterPlain,
-      'ah': FilterPlainHostname,
-      '0a': FilterPlainPrefix0,
-     '0ah': FilterPlainPrefix0Hostname,
-      '1a': FilterPlainPrefix1,
-     '1ah': FilterPlainPrefix1Hostname,
-      '|a': FilterPlainLeftAnchored,
-     '|ah': FilterPlainLeftAnchoredHostname,
-      'a|': FilterPlainRightAnchored,
-     'a|h': FilterPlainRightAnchoredHostname,
-     '||a': FilterPlainHnAnchored,
-    '||ah': FilterPlainHnAnchoredHostname,
-      '//': FilterRegex,
-     '//h': FilterRegexHostname,
-     '{h}': FilterHostnameDict,
-       '_': FilterGeneric,
-      '_h': FilterGenericHostname,
-     '||_': FilterGenericHnAnchored,
-    '||_h': FilterGenericHnAnchoredHostname
+     '[]': FilterBucket,
+      'a': FilterPlain,
+     'ah': FilterPlainHostname,
+     '0a': FilterPlainPrefix0,
+    '0ah': FilterPlainPrefix0Hostname,
+     '1a': FilterPlainPrefix1,
+    '1ah': FilterPlainPrefix1Hostname,
+     '|a': FilterPlainLeftAnchored,
+    '|ah': FilterPlainLeftAnchoredHostname,
+     'a|': FilterPlainRightAnchored,
+    'a|h': FilterPlainRightAnchoredHostname,
+    '||a': FilterPlainHnAnchored,
+   '||ah': FilterPlainHnAnchoredHostname,
+     '//': FilterRegex,
+    '//h': FilterRegexHostname,
+    '{h}': FilterHostnameDict,
+      '_': FilterGeneric,
+     '_h': FilterGenericHostname,
+    '||_': FilterGenericHnAnchored,
+   '||_h': FilterGenericHnAnchoredHostname
 };
 
 /******************************************************************************/
