@@ -125,13 +125,15 @@ Feel free to read [about the extension's required permissions](https://github.co
 
 #### Chromium
 
-You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
+You can install the latest version [manually](https://github.com/gorhill/uBlock/tree/master/dist#install), from the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), or from the [Opera store](https://addons.opera.com/en-gb/extensions/details/ublock/).
+
+Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) from [Chrome store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn). Slightly different feature set, same performance.
 
 #### Firefox
 
 [Firefox Add-ons web site](https://addons.mozilla.org/firefox/addon/ublock-origin/), or install manually by downloading the latest [uBlock0.firefox.xpi](https://github.com/gorhill/uBlock/releases) file, and by dragging the downloaded `xpi` file to your add-on page.
 
-Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) (different feature set) from [Firefox Add-ons homepage](https://addons.mozilla.org/firefox/addon/ublock/).
+Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) from [Firefox Add-ons homepage](https://addons.mozilla.org/firefox/addon/ublock/). Slightly different feature set, same performance, proper support for legacy Firefox-based browsers.
 
 #### Safari
 
