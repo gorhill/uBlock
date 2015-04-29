@@ -5,12 +5,13 @@
 ! Licencija: šis turinys yra pateikiamas pagal GNU GPL3 licenciją.
 ! Licencijos url: http://www.gnu.org/licenses/gpl-3.0.txt
 ! Homepage: http://margevicius.lt/easylist_lithuania/
-! Paskutinis atnaujinimas: 2015-04-17
+! Paskutinis atnaujinimas: 2015-04-29
 ! Expires: 30 days (update frequency)
 ###delfi-front-right-column
 ##.reklamos_nuorodos
 ##.reklamos_tarpas
 ##.top_reklama
+##A[href*="index.php?page=pasiulymai"] > IMG
 ##A[href="http://igrovieavtomationline.net"]
 ##A[href="http://www.moteris.lt/didieji-grozio-pokyciai/"]
 ##A[href="http://www.netcredit.lt/"]
@@ -26,7 +27,6 @@
 /baneriukai/*
 /baneriukas/*
 /skydeliai/*
-@@|http://telikas.biz/file/*/*/*.png#/ad_side./adbox_/add728./adping./adv/mobile/ad/blogad./commspace_ad./EmreAds./tmo/ads/ad.468x80-
 1000receptu.lt###gpt-block
 118.lt##.adnet-add
 1588.lt###headerBanner
@@ -45,7 +45,6 @@
 15min.lt##.plius-base-box.plius-base-box-domo
 15min.lt##.plius-base-box.plius-base-box-plius
 15min.lt##.top-banner
-15min.lt##.top-banner *
 15min.lt##A[href="http://www.vistienakitaip.lt/fiesta"] > IMG
 15min.lt##DIV[class^="pi_base_box pi_base_"]
 15min.lt##IMG[alt="Klasikinės muzikos gerbėjams dovana – „Vivace Vilnius“ festivalio koncertai"]
@@ -53,13 +52,16 @@
 15min.lt##pi_one_ad
 7min.lt##A[href="http://1920x1080wallpapers.eu/"]
 7min.lt##A[href="http://www.tvlietuviskai.eu/"]
+@@.png#^$domain=filmux.org
 @@|http://skelbimai.one.lt/uploads/modules/ads/
+@@|http://telikas.biz/file/*/*/*.png#/ad_side./adbox_/add728./adping./adv/mobile/ad/blogad./commspace_ad./EmreAds./tmo/ads/ad.468x80-
 @@||9menesiai.lt/image/cache/data/Baneriai/
 @@||apatinukai.lt/image/cache/data/baneriai/
 @@||banners.adnet.lt/i/euro_1_490x270_3.swf
 @@||banners.adnet.lt/i/euro_game_1.js
 @@||eurovaistine.lt/uploads/banners/
 @@||google.com/ads/popudner/banner.jpg
+@@||googleapis.com/js/sdkloader/ima3.js$domain=lrytas.lt
 @@||grozionamai.lt/images/sobipro/adv/
 @@||jaunatvesnamai.lt/wp-content/uploads/2013/01/baneriukas-20-proc-kuno-pirminiems.jpg
 @@||kvt.lt/ebilet.cup.static/img/header/
@@ -72,6 +74,7 @@
 @@||post.lt/bin/banners/
 @@||post.lt/files/resized/*x*/banners/
 @@||simpsonaionline.net/js/advertisement.js
+@@||smailas.net/baneriai/
 @@||tavovaikams.lt//images/goods/$domain=~tavovaikams.lt
 @@||teatras.lt/uploads/img/banners/
 @@||technologijos.lt/iframe_komentarai
@@ -79,10 +82,6 @@
 @@||v.fwmrm.net$domain=tv3play.lt
 @@||vaikutis.lt/image/cache/data/baneriai/
 @@||vaikutis.lt/image/data/baneriai/
-@@.png#^$domain=filmux.org
-@@||smailas.net/baneriai/*
-@@||filmux.org^$elemhide
-@@||googleapis.com/js/sdkloader/ima3.js$domain=lrytas.lt
 aciu.lt###adrotate_2
 aciu.lt##.parama
 aciu.lt,gydomasismasazas.lt###adrotate_1
@@ -102,9 +101,6 @@ alio.proxy.dlf.lt###inner_b
 alio.proxy.dlf.lt###zaveReader_b
 alio.proxy.dlf.lt##DIV[style="width: 210px; padding: 5px 19px 0px; height: 503px;"]
 alytus-tourism.lt###banner_cont
-andrejus.eu##IMG[alt="Gyvūnų prieglauda Būk mano draugas"]
-andrejus.eu##IMG[alt="VPS serveriai"]
-andrejus.eu##IMG[alt="versliukai"]
 anglija.lt###weather
 anglija.lt,kamane.lt##.right_banner
 ant-bangos.lt###linkcat-16
@@ -159,6 +155,7 @@ chatas.lt##[src^="http://draugaukime.lt/banner/db.js.php"] + * *
 chatas.lt##a[href="http://www.100skelbimu.lt/"]
 ciurlioniopaveldas.lt##.bx-viewport
 cosmopolitan.lt##.cosmo-article-banner
+cs-servers.lt##.banner
 cust.lt##.footer_banners
 cvzona.lt###top-b
 cvzona.lt##.b-group
@@ -183,7 +180,6 @@ delfi.lt###new-partners
 delfi.lt###recipes-section
 delfi.lt###wallpaper
 delfi.lt##.banner
-delfi.lt##.delfi-ads-block
 delfi.lt##.delfi-ads-front-container
 delfi.lt##.delfi-anonsai.category-header-line
 delfi.lt##.delfi-content-ads
@@ -219,6 +215,7 @@ dumblas.com##.content.citems.banner
 ecoland.lt###sotewsadds *
 edoro.lt##A[style="Overflow: hidden; Position: relative; width:180px; height:60px; font-size: 10px; display:block;"]
 efarma.lt##.footer-container > *
+ekonomika.tv3.lt##A[href="http://www.lexpro.lt/lt?utm_source=ekonomika-lt&utm_medium=ekonomika-lt&utm_content=ekonomika&utm_campaign=300x350"] > *
 ekopirk.lt###friends_block
 ekopirk.lt###lojalumas_block
 ekspresas.co.uk##.hometakeover.gofollow
@@ -293,11 +290,6 @@ kabutes.kasvyksta.lt##.miestasreng *
 kabutes.lt###reklama-desine
 kamane.lt##.left_banner
 katiluturgus.lt##a[href^="/banners/"]
-kaunas.cvzona.lt###top-b
-kaunas.cvzona.lt##.b-group
-kaunas.cvzona.lt##.no-print[style="background: #eee; padding: 3px 3px 3px 12px; margin-top: 7px; line-height: 0; text-align: center; position: relative; width: 750px; margin-left: 40px"]
-kaunas.cvzona.lt##DIV[style="position: absolute; text-align: center; height: 100px; width: 750px; border:1px solid #F1F1F1; border-top:none; background: #F7F7F7"]
-kaunas.cvzona.lt##[style="position: absolute; bottom:6px; left: 2px; font-size: 10px; background: url(/img/icon-reklama.gif) no-repeat; width: 7px; height: 41px"] + #fl-embd-736
 kaunas.lt##TD[style="PADDING-BOTTOM: 13px; PADDING-LEFT: 0px; BACKGROUND: url(/kaunas/m/m_images/wfiles/il4sk332.jpg) #faf6f5 no-repeat left top; PADDING-TOP: 13px"]
 kaunieciai.lt##.mod_mtc_container *
 kaunieciai.lt,panevezieciai.lt###zoro-offers-mod-container *
@@ -320,6 +312,8 @@ ksi.lt##IMG.aligncenter
 ktromuva.lt##.banners-125
 kudikiuprekes.lt###minic_slider.theme-default *
 kuliesius.jimdo.com###cc-m-imagesubtitle-image-3868849257
+kulturizmas.net##.home.blog .homeslider.rotator
+kulturizmas.net##.rightbar *
 kupi.lt##.greitasis_menu
 kupi.lt##IMG[alt="OZO estetinės odontologijos ir implantologijos klinika"]
 kupi.lt##SECTION#akcijos_wrapper.akcijos > IMG
@@ -370,7 +364,6 @@ manoekonamai.lt##.tb-content-block.tb-content-block-banners-sidebar
 maps.lt##.title-right-banner
 maps.lt##DIV[style="background: url('client/img/sep-1.gif') repeat-x center;"]
 marijampolieciai.lt##A[href] > IMG[src^="/images/stories/Logotipai/"]
-marijampolieciai.lt##A[href^=""] > IMG[src^="/images/stories/Logotipai/"]
 marijosradijas.lt##A > IMG[src^="/images/banners/"]
 martens.lt##.squarebanner
 masazonamai.lt###imagecontainer.header-image-container
@@ -386,8 +379,8 @@ menoerdve.lt##A[href^="/component/flexbanners/?task=click&id="]
 miske.lt##.box_outer.widget_awpcp-latest-ads + * + * *
 miskobirza.lt##.index_ads1
 miskobirza.lt##IMG[width="160"][src^="/images/texts/"]
-moteris.lt##A[href^="http://zurnalai.delfi.lt/index.php?page=pasiulymai"] > *
 moteris.lt##.moteris-article-banner
+moteris.lt##A[href^="http://zurnalai.delfi.lt/index.php?page=pasiulymai"] > *
 motersgrozis.lt##.module-outer
 musupaveldas.lt###categories-3 + * A[target="_blank"]
 mūsųlaikas.lt,miegantysdrambliai.lt,skytech.lt##.partners
@@ -619,8 +612,9 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||automedia.lt/resources/_banners/
 ||autotaurage.lt/images/jau_at.png
 ||autotaurage.lt/images/salvage_lt.jpg
-||b.inbox.lt/b/*
+||b.inbox.lt/b/
 ||baidare.com/images/gera_dovana.png
+||balsas.lt/Uploads/UGallery/photos/5b/b5/cd/d1/5bb5cdd1b45c90d9f39bbc6c2fc8b3c7.jpg
 ||balsas.lt/Uploads/image/baneriams/
 ||balsas.lt/Uploads/image/logo/1/baneris1.jpg
 ||balsas.lt/iframe/orams
@@ -656,6 +650,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||cdn.torrent.ai/lt/advise/
 ||church.lt/t/files/u5/kiekvienamstudentui.gif
 ||church.lt/t/files/u5/rlc_banner1.gif
+||content.tvprograma.lt/banner/
 ||daiktai.eu/images/banners/
 ||darnipora.lt^$third-party
 ||dazasvydis.lt/images/laz_ban.gif
@@ -667,6 +662,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||delfi.lt/misc/ebooks.php
 ||delfi.lt/newsfeed/?p=
 ||delfi.lt/video/sporto-tv/widgets/250px/
+||demesioskelbimas.lt/images/banners/
 ||depiliacija.eu/wp-content/uploads/2011/12/fotoepiliacija-namuose.png
 ||depiliacija.eu/wp-content/uploads/2012/06/fotoepiliatorius-silkn-flashngo.png
 ||depiliacija.eu/wp-content/uploads/2013/09/HF-depiliacija-baneris180x500.jpg
@@ -1007,6 +1003,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||skaiciuokle.gf.lt/calculators/display
 ||skaidrasalonas.lt/uploads/banner/
 ||skelbimai.lrytas.lt/rimaro/rinka/media/Mokejimai_baneris.swf
+||skelbiu-static.dgn.lt/static/5/smspinigai-v2.html
 ||skelbiu-static.dgn.lt/static/html/banners/credit24.html
 ||skrastas.lt/galery/_skrastas/banners/
 ||skydiniunamustatyba.lt/flash/180x150.swf
@@ -1030,9 +1027,9 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||sveikatosabc.lt/vidpadziai200x229.swf
 ||tavovaikams.lt//cshowimage/augantys_rasomieji_stalai_vaikams_akcija6264s.jpg/165/170
 ||tavovaikams.lt//cshowimage/mamairvaik._180_5207s.jpg/165/170
-||tavovaikams.lt//images/goods/baneris_180_180_2753s.swf
 ||tavovaikas.lt/newsfeed/?p=
 ||technologijos.lt/archyvas/skydeliai_mainams/
+||technologijos.lt/infoBlockEN
 ||technologijos.lt/n/iframe_baneris
 ||technologijos.lt/n/url/straipsnio_viduje/iframe_baneris
 ||technologijos.lt/upload/image/n/iliustracijos/skelbimu_logotipai/ban/
@@ -1058,6 +1055,7 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||triada.lt/image/data/Lazer-250x250-1.jpg
 ||triada.lt/image/data/image001.png
 ||tv-internetu.eu/images/transfergo250x250.jpg
+||tv3.lt/Uploads/image/000/indeliaiLT_baneris__300x200.jpg
 ||tvenkiniu-projektai.lt/baseinai.swf
 ||twickerz.com/banner/125x125.gif
 ||ubl.lt/skaiciuokle/calculator.php
@@ -1112,7 +1110,6 @@ zurnalai.lt##IMG[alt="Informacija ir pagalba telefonu 1588"]
 ||ziurimtv.eu/images/hostingas.png
 ||ziurimtv.eu/images/iv.png
 ||zvejokliai.lt/images/banners/
-||skelbiu-static.dgn.lt/static/5/smspinigai-v2.html
 ~telikaz.biz#@##ad
 ~telikaz.biz#@##ad-cube-top
 ~telikaz.biz#@##ad-space-2

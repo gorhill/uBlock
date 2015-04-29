@@ -91,12 +91,6 @@
         "group": "regions",
         "homeURL": "https://gitorious.org/adblock-latvian/adblock-latvian/raw/master%3Alists/latvian-list.txt"
         },
-    "gnuzilla.gnu.org/filters/blacklist.txt": {
-        "off": true,
-        "title": "Block all well known privacy trackers (warning: can break web pages)",
-        "group": "privacy",
-        "homeURL": "http://gnuzilla.gnu.org/filters/blacklist.txt"
-        },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
         "title": "NOR: Norsk adblockliste",

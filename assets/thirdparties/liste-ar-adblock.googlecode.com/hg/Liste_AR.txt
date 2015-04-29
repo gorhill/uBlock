@@ -200,6 +200,7 @@
 ||dramacafe.tv/Adblock_
 ||dubizzle.com^*/?utm_source=$popup
 ||dzautos.com/data/dzauto.swf
+||educdz.com/*/1544484_770455529632171_2442609755761839667_n.jpg
 ||egyup.com/300.png
 ||egyup.com/banner-990x90.png
 ||el-balad.com/balad.js
@@ -237,6 +238,8 @@
 ||hanya.ma/caro
 ||hao123.com^*/ar-banner.
 ||homekw.com/temp/jahrawi_150_167.gif
+||host-image.net/images/56070naja7host.png
+||host-image.net/images/91089games-banner.gif
 ||hostgator.com^*/banners/
 ||hotelscombined.com/Affiliate/Widgets/
 ||i7dollar.com/i1dollar.jpg
@@ -788,6 +791,7 @@
 ||marocannonces.com^*/bannier_
 ||masrawysat.com/img/505.gif
 ||masrawysat.com/img/astra.gif
+||masrawysat.com/img/Eaj06zD.gif
 ||masrawysat.com/img/LNB.gif
 ||masrawysat.com/img/omix.gif
 ||masrawysat.com/vb/images/alsharingbanner.gif
@@ -814,6 +818,8 @@
 ||mobtada.com/files/banners_days/
 ||montadaphp.net/hamada_banner.png
 ||montadaphp.net/images/banner.gif
+||mp3quran.net/fr/key2islam.gif
+||mp3quran.net/fr/womeninislam.gif
 ||mshaweer.net/images/majed.gif
 ||mshaweer.net/images/quikbus.gif
 ||mshaweer.net/images/ramah.gif
@@ -1033,6 +1039,7 @@ iq-vb.net###layer1
 contactcars.com###leaderBoard
 7s5.net###light[style="position: absolute; left: 9px; top: 31px; display: block;"]
 alwatannews.net###lnkMainAdver3
+educdz.com###main-header-content
 baitkebeer.com###makingdifferentpopup
 contactcars.com###mediumRectangle
 techarabi.com###mpu-in-post
@@ -1127,6 +1134,7 @@ firstlady99.com##.forumline td.row1 > span > a > img
 filfan.com##.gads_MR
 almasryalyoum.com##.gam-holder
 moheet.com##.gplus
+star7arab.com##.grid[style="width: 770px; height: 69px;"]
 graaam.com##.haw
 bramj.co,qwled.com##.headerbanner
 msryh.com##.indexbnrleft
@@ -1178,6 +1186,7 @@ almesryoon.com##.topad
 bokra.net##.tower
 bokra.net##.towerBanner
 bokra.net##.twoBanners
+dzjobs.net##.wiki
 arabia.com##.ykaleader
 dreambox-tunisie.com##.yourcolor-main
 2flam.net##A[href="http://shwqna.at.ua/ADs.htm"]
