@@ -147,6 +147,10 @@
     "message":"Block element",
     "description":"English: Block element"
   },
+  "netMonitorContextMenuEntry":{
+    "message":"Block resource",
+    "description":"English: Block resource"
+  },
   "settingsCollapseBlockedPrompt":{
     "message":"Hide placeholders of blocked elements",
     "description":"English: Hide placeholders of blocked elements"

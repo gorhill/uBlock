@@ -1944,10 +1944,10 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 
 /******************************************************************************/
 
-vAPI.contextMenu.createContextMenuItem = function(doc) {
+vAPI.contextMenu.createContextMenuItem = function(doc, labelOverride) {
     var menuitem = doc.createElement('menuitem');
     menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
+    menuitem.setAttribute('label', labelOverride || this.menuLabel);
     menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
     menuitem.setAttribute('class', 'menuitem-iconic');
     return menuitem;
@@ -2038,7 +2038,7 @@ vAPI.contextMenu.registerForNetMonitor = function(eventName, toolbox, panel) {
     var insertBeforeMenuItem = doc.getElementById("request-menu-context-separator");
     
     if (menuPopup && insertBeforeMenuItem) {
-        var menuitem = vAPI.contextMenu.createContextMenuItem(doc);
+        var menuitem = vAPI.contextMenu.createContextMenuItem(doc, vAPI.i18n('netMonitorContextMenuEntry'));
         menuitem.addEventListener('command', function() {
             var selectedRequest = panel.panelWin.NetMonitorView.RequestsMenu.selectedAttachment;
             if (selectedRequest) {
