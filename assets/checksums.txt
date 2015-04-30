@@ -1,4 +1,4 @@
-c5a79ffeed6bed35118fd31d3350116e assets/ublock/unbreak.txt
+a2c9977b7661d7c423eec85961a0d00c assets/ublock/unbreak.txt
 b8fd6f6a836d34e0629dca07424d7bd8 assets/ublock/privacy.txt
 93a56996f9cbd501ee764938536f77cb assets/ublock/filters.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
