@@ -26,9 +26,12 @@ body {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    font-size: 20px;
     margin: 0;
     padding: 8px;
+    vertical-align: middle;
+    }
+#toolbar .button .fa {
+    font-size: 20px;
     }
 #toolbar .button:hover {
     background-color: #eee;
