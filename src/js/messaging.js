@@ -1075,7 +1075,7 @@ var backupUserData = function(callback) {
 
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
-        µb.keyvalSetMany(µb.restoreBackupSettings);
+        vAPI.storage.set(µb.restoreBackupSettings);
 
         getLocalData(callback);
     };
@@ -1105,7 +1105,7 @@ var restoreUserData = function(request) {
         // Be sure to adjust `countdown` if adding/removing anything below
         µb.keyvalSetOne('version', userData.version);
         µBlock.saveLocalSettings(true);
-        µb.keyvalSetMany(userData.userSettings, onCountdown);
+        vAPI.storage.set(userData.userSettings, onCountdown);
         µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
         µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
 
@@ -1115,7 +1115,7 @@ var restoreUserData = function(request) {
         µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
 
         µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
-        µb.keyvalSetMany({
+        vAPI.storage.set({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
