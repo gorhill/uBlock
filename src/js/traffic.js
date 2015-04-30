@@ -92,6 +92,7 @@ var onBeforeRequest = function(details) {
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
     pageStore.logRequest(requestContext, result);
+    µb.logger.writeOne(tabId, requestContext, result);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -152,7 +153,7 @@ var onBeforeRootFrameRequest = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
-    return;
+    µb.logger.writeOne(tabId, context, result);
 };
 
 /******************************************************************************/
@@ -225,6 +226,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     pageStore.logRequest(context, result);
+    µb.logger.writeOne(vAPI.noTabId, context, result);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -272,6 +274,7 @@ var onHeadersReceived = function(details) {
     var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
+    µb.logger.writeOne(tabId, context, result);
 
     // Don't block
     if ( µb.isAllowResult(result) ) {
@@ -318,6 +321,7 @@ var onRootFrameHeadersReceived = function(details) {
     var result = pageStore.filterRequest(context);
 
     pageStore.logRequest(context, result);
+    µb.logger.writeOne(tabId, context, result);
 
     // Don't block
     if ( µb.isAllowResult(result) ) {

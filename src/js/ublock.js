@@ -318,4 +318,27 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
 /******************************************************************************/
 
+µBlock.logCosmeticFilters = (function() {
+    var tabIdToTimerMap = {};
+
+    var injectNow = function(tabId) {
+        delete tabIdToTimerMap[tabId];
+        vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-logger.js' });
+    };
+
+    var injectAsync = function(tabId) {
+        if ( tabIdToTimerMap.hasOwnProperty(tabId) ) {
+            return;
+        }
+        tabIdToTimerMap[tabId] = setTimeout(
+            injectNow.bind(null, tabId),
+            100
+        );
+    };
+
+    return injectAsync;
+})();
+
+/******************************************************************************/
+
 })();

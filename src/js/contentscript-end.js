@@ -55,6 +55,7 @@ if ( vAPI.contentscriptEndInjected ) {
     return;
 }
 vAPI.contentscriptEndInjected = true;
+vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
 /******************************************************************************/
@@ -187,7 +188,7 @@ var uBlockCollapser = (function() {
         }
         if ( selectors.length !== 0 ) {
             messager.send({
-                what: 'injectedSelectors',
+                what: 'cosmeticFiltersInjected',
                 type: 'net',
                 hostname: window.location.hostname,
                 selectors: selectors
@@ -385,7 +386,7 @@ var uBlockCollapser = (function() {
                 processHighHighGenericsAsync();
             }
         }
-        if ( hideSelectors.length ) {
+        if ( hideSelectors.length !== 0 ) {
             addStyleTag(hideSelectors);
         }
         contextNodes.length = 0;
@@ -400,7 +401,7 @@ var uBlockCollapser = (function() {
     // - Injecting a style tag
 
     var addStyleTag = function(selectors) {
-        var selectorStr = selectors.toString();
+        var selectorStr = selectors.join(',\n');
         hideElements(selectorStr);
         var style = document.createElement('style');
         // The linefeed before the style block is very important: do no remove!
@@ -408,9 +409,10 @@ var uBlockCollapser = (function() {
         var parent = document.body || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
+            vAPI.styles.push(style);
         }
         messager.send({
-            what: 'injectedSelectors',
+            what: 'cosmeticFiltersInjected',
             type: 'cosmetic',
             hostname: window.location.hostname,
             selectors: selectors
@@ -701,6 +703,7 @@ var uBlockCollapser = (function() {
             idsFromNodeList(selectNodes('[id]'));
             classesFromNodeList(selectNodes('[class]'));
             retrieveGenericSelectors();
+            messager.send({ what: 'cosmeticFiltersActivated' });
         }
     };
 

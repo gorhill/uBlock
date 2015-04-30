@@ -313,3 +313,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 
 # To deal with https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^
+
+# Video playback broken on lastminutegoals.org
+# To counter `intergi.com` in Peter Lowe's
+@@||cdn.phoenix.intergi.com^$domain=lastminutegoals.org

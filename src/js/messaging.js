@@ -50,6 +50,8 @@ var onMessage = function(request, sender, callback) {
             break;
     }
 
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
+
     // Sync
     var response;
 
@@ -57,6 +59,17 @@ var onMessage = function(request, sender, callback) {
         case 'contextMenuEvent':
             µb.contextMenuClientX = request.clientX;
             µb.contextMenuClientY = request.clientY;
+            break;
+
+        case 'cosmeticFiltersInjected':
+            // Is this a request to cache selectors?
+            µb.cosmeticFilteringEngine.addToSelectorCache(request);
+            /* falls through */
+        case 'cosmeticFiltersActivated':
+            // Net-based cosmetic filters are of no interest for logging purpose.
+            if ( µb.logger.isObserved(tabId) && request.type !== 'net' ) {
+                µb.logCosmeticFilters(tabId);
+            }
             break;
 
         case 'forceUpdateAssets':
@@ -463,9 +476,9 @@ var filterRequests = function(pageStore, details) {
 
 /******************************************************************************/
 
-var onMessage = function(details, sender, callback) {
+var onMessage = function(request, sender, callback) {
     // Async
-    switch ( details.what ) {
+    switch ( request.what ) {
         default:
             break;
     }
@@ -478,19 +491,15 @@ var onMessage = function(details, sender, callback) {
         pageStore = µb.pageStoreFromTabId(sender.tab.id);
     }
 
-    switch ( details.what ) {
+    switch ( request.what ) {
         case 'retrieveGenericCosmeticSelectors':
             response = {
                 shutdown: !pageStore || !pageStore.getNetFilteringSwitch(),
                 result: null
             };
             if ( !response.shutdown && pageStore.getGenericCosmeticFilteringSwitch() ) {
-                response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(details);
+                response.result = µb.cosmeticFilteringEngine.retrieveGenericSelectors(request);
             }
-            break;
-
-        case 'injectedSelectors':
-            µb.cosmeticFilteringEngine.addToSelectorCache(details);
             break;
 
         // Evaluate many requests
@@ -500,7 +509,7 @@ var onMessage = function(details, sender, callback) {
                 result: null
             };
             if(!response.shutdown) {
-                response.result = filterRequests(pageStore, details);
+                response.result = filterRequests(pageStore, request);
             }
             break;
 
@@ -512,6 +521,73 @@ var onMessage = function(details, sender, callback) {
 };
 
 vAPI.messaging.listen('contentscript-end.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// cosmetic-*.js
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var logCosmeticFilters = function(tabId, details) {
+    if ( µb.logger.isObserved(tabId) === false ) {
+        return;
+    }
+
+    var context = {
+        requestURL: details.pageURL,
+        requestHostname: µb.URI.hostnameFromURI(details.pageURL),
+        requestType: 'dom'
+    };
+
+    var selectors = details.matchedSelectors;
+
+    selectors.sort();
+
+    for ( var i = 0; i < selectors.length; i++ ) {
+        µb.logger.writeOne(tabId, context, 'cb:##' + selectors[i]);
+    }
+};
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+        default:
+            break;
+    }
+
+    // Sync
+    var response;
+
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
+
+    switch ( request.what ) {
+    case 'logCosmeticFilteringData':
+        logCosmeticFilters(tabId, request);
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('cosmetic-*.js', onMessage);
 
 /******************************************************************************/
 
@@ -1134,10 +1210,7 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'readLogBuffer':
-            var pageStore = µb.pageStoreFromTabId(request.tabId);
-            if ( pageStore ) {
-                response = pageStore.logBuffer.readAll();
-            }
+            response = µb.logger.readAll(request.tabId);
             break;
 
         default:
