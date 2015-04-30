@@ -300,8 +300,12 @@ var onRootFrameHeadersReceived = function(details) {
     var µb = µBlock;
 
     // Check if the main_frame is a download
-    // ...
-    if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
+    // https://github.com/gorhill/uBlock/issues/111
+    // We will assume that whatever root document is of type
+    //   'application/x-[...]' is a download operation.
+    // I confirmed this also work with original issue:
+    //   https://github.com/chrisaljoudi/uBlock/issues/516
+    if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('application/x-', 0) === 0 ) {
         µb.tabContextManager.unpush(tabId, requestURL);
     } else {
         µb.tabContextManager.push(tabId, requestURL);
