@@ -267,7 +267,7 @@ var onHeadersReceived = function(details) {
     // Frame id of frame request is the their own id, while the request is made
     // in the context of the parent.
     var context = pageStore.createContextFromFrameId(details.parentFrameId);
-    context.requestURL = details.url + '{inline-script}';
+    context.requestURL = details.url;
     context.requestHostname = details.hostname;
     context.requestType = 'inline-script';
 
@@ -300,8 +300,12 @@ var onRootFrameHeadersReceived = function(details) {
     var µb = µBlock;
 
     // Check if the main_frame is a download
-    // ...
-    if ( headerValue(details.responseHeaders, 'content-disposition').lastIndexOf('attachment', 0) === 0 ) {
+    // https://github.com/gorhill/uBlock/issues/111
+    // We will assume that whatever root document is of type
+    //   'application/x-[...]' is a download operation.
+    // I confirmed this also work with original issue:
+    //   https://github.com/chrisaljoudi/uBlock/issues/516
+    if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('application/x-', 0) === 0 ) {
         µb.tabContextManager.unpush(tabId, requestURL);
     } else {
         µb.tabContextManager.push(tabId, requestURL);
@@ -314,11 +318,11 @@ var onRootFrameHeadersReceived = function(details) {
     }
 
     var context = pageStore.createContextFromPage();
-    context.requestURL = requestURL + '{inline-script}';
+    context.requestURL = requestURL;
     context.requestHostname = requestHostname;
     context.requestType = 'inline-script';
 
-    var result = pageStore.filterRequest(context);
+    var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
     µb.logger.writeOne(tabId, context, result);
