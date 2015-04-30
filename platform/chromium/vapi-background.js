@@ -49,11 +49,10 @@ vAPI.app = {
 
 /******************************************************************************/
 
-if (!chrome.runtime) {
+if ( !chrome.runtime ) {
     // Chrome 20-21
     chrome.runtime = chrome.extension;
-}
-else if(!chrome.runtime.onMessage) {
+} else if ( !chrome.runtime.onMessage ) {
     // Chrome 22-25
     chrome.runtime.onMessage = chrome.extension.onMessage;
     chrome.runtime.sendMessage = chrome.extension.sendMessage;
@@ -72,6 +71,21 @@ vAPI.app.restart = function() {
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = chrome.storage.local;
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/101
+// chrome API expects tab id to be a number, not a string.
+
+var toChromiumTabId = function(tabId) {
+    if ( typeof tabId === 'string' ) {
+        tabId = parseInt(tabId, 10);
+    }
+    if ( typeof tabId !== 'number' || isNaN(tabId) || tabId === -1 ) {
+        return 0;
+    }
+    return tabId;
+};
 
 /******************************************************************************/
 
@@ -204,7 +218,6 @@ vAPI.tabs.registerListeners = function() {
     if ( typeof this.onClosed === 'function' ) {
         chrome.tabs.onRemoved.addListener(this.onClosed);
     }
-
 };
 
 /******************************************************************************/
@@ -218,11 +231,10 @@ vAPI.tabs.get = function(tabId, callback) {
         // Caller must be prepared to deal with nil tab value
         callback(tab);
     };
+
     if ( tabId !== null ) {
-        if ( typeof tabId === 'string' ) {
-            tabId = parseInt(tabId, 10);
-        }
-        if ( typeof tabId !== 'number' || isNaN(tabId) ) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) {
             onTabReady(null);
         }
         else {
@@ -230,6 +242,7 @@ vAPI.tabs.get = function(tabId, callback) {
         }
         return;
     }
+
     var onTabReceived = function(tabs) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
@@ -289,7 +302,7 @@ vAPI.tabs.open = function(details) {
             }
 
             // update doesn't accept index, must use move
-            chrome.tabs.update(parseInt(details.tabId, 10), _details, function(tab) {
+            chrome.tabs.update(toChromiumTabId(details.tabId), _details, function(tab) {
                 // if the tab doesn't exist
                 if ( vAPI.lastError() ) {
                     chrome.tabs.create(_details, focusWindow);
@@ -337,6 +350,11 @@ vAPI.tabs.open = function(details) {
 // Replace the URL of a tab. Noop if the tab does not exist.
 
 vAPI.tabs.replace = function(tabId, url) {
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        return;
+    }
+
     var targetURL = url;
 
     // extension pages
@@ -344,17 +362,10 @@ vAPI.tabs.replace = function(tabId, url) {
         targetURL = vAPI.getURL(targetURL);
     }
 
-    if ( typeof tabId !== 'number' ) {
-        tabId = parseInt(tabId, 10);
-        if ( isNaN(tabId) ) {
-            return;
-        }
-    }
-
     chrome.tabs.update(tabId, { url: targetURL }, function() {
-        // this prevent console error
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
-            return;
+            /* noop */
         }
     });
 };
@@ -362,20 +373,36 @@ vAPI.tabs.replace = function(tabId, url) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabId) {
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        return;
+    }
+
     var onTabRemoved = function() {
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( vAPI.lastError() ) {
+            /* noop */
         }
     };
-    chrome.tabs.remove(parseInt(tabId, 10), onTabRemoved);
+    chrome.tabs.remove(tabId, onTabRemoved);
 };
 
 /******************************************************************************/
 
 vAPI.tabs.reload = function(tabId /*, flags*/) {
-    if ( typeof tabId === 'string' ) {
-        tabId = parseInt(tabId, 10);
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        return;
     }
-    chrome.tabs.reload(tabId);
+
+    var onReloaded = function() {
+        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
+        if ( chrome.runtime.lastError ) {
+            /* noop */
+        }
+    };
+
+    chrome.tabs.reload(tabId, onReloaded);
 };
 
 /******************************************************************************/
@@ -384,14 +411,14 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         if ( chrome.runtime.lastError ) {
+            /* noop */
         }
         if ( typeof callback === 'function' ) {
             callback();
         }
     };
     if ( tabId ) {
-        tabId = parseInt(tabId, 10);
-        chrome.tabs.executeScript(tabId, details, onScriptExecuted);
+        chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
     } else {
         chrome.tabs.executeScript(details, onScriptExecuted);
     }
@@ -407,7 +434,11 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // anymore, so this ensures it does still exist.
 
 vAPI.setIcon = function(tabId, iconStatus, badge) {
-    tabId = parseInt(tabId, 10);
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        return;
+    }
+
     var onIconReady = function() {
         if ( vAPI.lastError() ) {
             return;
@@ -731,18 +762,26 @@ vAPI.onLoadAllCompleted = function() {
         }
     };
 
-    var iconPaths = { '19': 'img/browsericons/icon19-off.png',
-                        '38': 'img/browsericons/icon38-off.png' };
+    var iconPaths = {
+        '19': 'img/browsericons/icon19-off.png',
+        '38': 'img/browsericons/icon38-off.png'
+    };
+
     try {
-        chrome.browserAction.setIcon({ path: iconPaths });  // Hello? Is this a recent version of Chrome?
+        // Hello? Is this a recent version of Chrome?
+        chrome.browserAction.setIcon({ path: iconPaths });
     }
     catch(e) {
-        chrome.browserAction._setIcon = chrome.browserAction.setIcon; // Nope; looks like older than v23
-        chrome.browserAction.setIcon = function(x, clbk){       // Shim
+        // Nope; looks like older than v23
+        chrome.browserAction._setIcon = chrome.browserAction.setIcon;
+        // Shim
+        chrome.browserAction.setIcon = function(x, clbk) {
             this._setIcon({path: x.path[19], tabId: x.tabId}, clbk);
         };
-        chrome.browserAction.setIcon({ path: iconPaths }); /* maybe this time... I'll win! */
-    };
+        // maybe this time... I'll win!
+        chrome.browserAction.setIcon({ path: iconPaths });
+    }
+
     chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
     chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
 };
