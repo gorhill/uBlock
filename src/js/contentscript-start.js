@@ -53,6 +53,7 @@ if ( vAPI.contentscriptStartInjected ) {
     return;
 }
 vAPI.contentscriptStartInjected = true;
+vAPI.styles = vAPI.styles || [];
 
 /******************************************************************************/
 
@@ -99,6 +100,7 @@ var cosmeticFilters = function(details) {
         var parent = document.head || document.documentElement;
         if ( parent ) {
             parent.appendChild(style);
+            vAPI.styles.push(style);
         }
     }
     vAPI.donthideCosmeticFilters = donthideCosmeticFilters;
@@ -121,6 +123,8 @@ var netFilters = function(details) {
 };
 
 var filteringHandler = function(details) {
+    var styleTagCount = vAPI.styles.length;
+
     vAPI.skipCosmeticFiltering = !details || details.skipCosmeticFiltering;
     if ( details ) {
         if ( details.cosmeticHide.length !== 0 || details.cosmeticDonthide.length !== 0 ) {
@@ -129,8 +133,12 @@ var filteringHandler = function(details) {
         if ( details.netHide.length !== 0 ) {
             netFilters(details);
         }
-        // The port will never be used again at this point, disconnecting allows
-        // the browser to flush this script from memory.
+    }
+
+    // This is just to inform the background process that cosmetic filters were
+    // actually injected.
+    if ( vAPI.styles.length !== styleTagCount ) {
+        localMessager.send({ what: 'cosmeticFiltersActivated' });
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
@@ -139,7 +147,8 @@ var filteringHandler = function(details) {
     // cleaned right after browser launch.
     vAPI.contentscriptStartInjected = details && details.ready;
 
-    // Cleanup before leaving
+    // The port will never be used again at this point, disconnecting allows
+    // the browser to flush this script from memory.
     localMessager.close();
 };
 
