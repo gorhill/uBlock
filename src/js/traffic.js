@@ -267,7 +267,7 @@ var onHeadersReceived = function(details) {
     // Frame id of frame request is the their own id, while the request is made
     // in the context of the parent.
     var context = pageStore.createContextFromFrameId(details.parentFrameId);
-    context.requestURL = details.url + '{inline-script}';
+    context.requestURL = details.url;
     context.requestHostname = details.hostname;
     context.requestType = 'inline-script';
 
@@ -314,11 +314,11 @@ var onRootFrameHeadersReceived = function(details) {
     }
 
     var context = pageStore.createContextFromPage();
-    context.requestURL = requestURL + '{inline-script}';
+    context.requestURL = requestURL;
     context.requestHostname = requestHostname;
     context.requestType = 'inline-script';
 
-    var result = pageStore.filterRequest(context);
+    var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
     µb.logger.writeOne(tabId, context, result);
