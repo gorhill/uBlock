@@ -170,28 +170,34 @@ return asyncJobManager;
 /******************************************************************************/
 
 // Update visual of extension icon.
-// A time out is used to coalesce adjacent requests to update badge.
 
-µBlock.updateBadgeAsync = (function(){
+µBlock.updateBadgeAsync = (function() {
     var µb = µBlock;
+    var tabIdToTimer = {};
 
-    // Cache callback definition, it was a bad idea to define this one inside
-    // updateBadgeAsync
     var updateBadge = function(tabId) {
+        delete tabIdToTimer[tabId];
+
         var pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore ) {
-            pageStore.updateBadge();
+        if ( pageStore === null ) {
             return;
         }
-        vAPI.setIcon(tabId, 'off', '');
+
+        var netFiltering = pageStore.getNetFilteringSwitch();
+        var badge = '';
+        if ( µb.userSettings.showIconBadge && netFiltering && pageStore.perLoadBlockedRequestCount ) {
+            badge = µb.utils.formatCount(pageStore.perLoadBlockedRequestCount);
+        }
+        vAPI.setIcon(tabId, netFiltering ? 'on' : 'off', badge);
     };
 
-    var updateBadgeAsync = function(tabId) {
+    return function(tabId) {
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
+        if ( tabIdToTimer.hasOwnProperty(tabId) ) {
+            return;
+        }
+        tabIdToTimer[tabId] = setTimeout(updateBadge.bind(null, tabId), 500);
     };
-
-    return updateBadgeAsync;
 })();

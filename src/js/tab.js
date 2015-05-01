@@ -556,7 +556,7 @@ vAPI.tabs.registerListeners();
 /******************************************************************************/
 
 µb.pageStoreFromTabId = function(tabId) {
-    return this.pageStores[tabId];
+    return this.pageStores[tabId] || null;
 };
 
 /******************************************************************************/

@@ -589,17 +589,6 @@ PageStore.prototype.logRequest = function(context, result) {
     µb.localSettingsModifyTime = now;
 };
 
-/******************************************************************************/
-
-PageStore.prototype.updateBadge = function() {
-    var netFiltering = this.getNetFilteringSwitch();
-    var badge = '';
-    if ( µb.userSettings.showIconBadge && netFiltering && this.perLoadBlockedRequestCount ) {
-        badge = µb.utils.formatCount(this.perLoadBlockedRequestCount);
-    }
-    vAPI.setIcon(this.tabId, netFiltering ? 'on' : 'off', badge);
-};
-
 // https://www.youtube.com/watch?v=drW8p_dTLD4
 
 /******************************************************************************/
