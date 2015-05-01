@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Apr 24th, 2015 at 12:56
+# Last updated: Apr 29th, 2015 at 18:40
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -2008,12 +2008,12 @@
 127.0.0.1 ad2.doubleclick.net
 127.0.0.1 ad.3au.doubleclick.net
 127.0.0.1 ad.ae.doubleclick.net
-127.0.0.1 ad.au.doubleclick.net
 127.0.0.1 ad.be.doubleclick.net
 127.0.0.1 ad.br.doubleclick.net
 127.0.0.1 adclick.g.doubleclick.net
 127.0.0.1 ad.de.doubleclick.net
 127.0.0.1 ad.dk.doubleclick.net
+127.0.0.1 ad.doubleclick.net
 127.0.0.1 ad-emea.doubleclick.net
 127.0.0.1 ad.es.doubleclick.net
 127.0.0.1 ad.fi.doubleclick.net
@@ -3063,6 +3063,7 @@
 127.0.0.1 4.adbrite.com
 127.0.0.1 4c28d6.r.axf8.net
 127.0.0.1 4qinvite.4q.iperceptions.com
+127.0.0.1 6159.genieessp.com
 127.0.0.1 7500.com
 127.0.0.1 76.a.boom.ro
 127.0.0.1 7adpower.com
@@ -4936,6 +4937,7 @@
 127.0.0.1 adzone.ro
 127.0.0.1 adzone.stltoday.com
 127.0.0.1 adzservice.theday.com
+127.0.0.1 ae-gb.mgid.com
 127.0.0.1 ae.goodsblock.marketgid.com
 127.0.0.1 afe2.specificclick.net
 127.0.0.1 afe.specificclick.net
@@ -5549,6 +5551,7 @@
 127.0.0.1 cmap.pub.ace.advertising.com
 127.0.0.1 cmap.rm.ace.advertising.com
 127.0.0.1 cmap.rub.ace.advertising.com
+127.0.0.1 c.mgid.com
 127.0.0.1 cmhtml.overture.com
 127.0.0.1 cmn1lsm2.beliefnet.com
 127.0.0.1 cm.npc-hearst.overture.com
@@ -5797,6 +5800,7 @@
 127.0.0.1 ds.onet.pl
 127.0.0.1 ds.serving-sys.com
 127.0.0.1 dt.linkpulse.com
+127.0.0.1 dtm.advertising.com
 127.0.0.1 dub.mobileads.msn.com
 127.0.0.1 e0.extreme-dm.com
 127.0.0.1 e1.addthis.com
@@ -5976,6 +5980,7 @@
 127.0.0.1 g3t4d5.madison.com
 127.0.0.1 g4p.grt02.com
 127.0.0.1 gadgeteer.pdamart.com
+127.0.0.1 g.adnxs.com
 127.0.0.1 gam.adnxs.com
 127.0.0.1 gameconsolerewards.com
 127.0.0.1 games-toys-bonuspath.com
@@ -6213,6 +6218,7 @@
 127.0.0.1 iad.anm.co.uk
 127.0.0.1 iadc.qwapi.com
 #127.0.0.1 iadsdk.apple.com	#may interfere with iTunes radio
+127.0.0.1 ialaddin.genieesspv.jp
 127.0.0.1 ib.adnxs.com
 127.0.0.1 ibis.lgappstv.com
 127.0.0.1 i.blogads.com
@@ -6390,6 +6396,7 @@
 127.0.0.1 iwantmyfree-laptop.com
 127.0.0.1 iwantmyfreelaptop.com
 127.0.0.1 iwantmygiftcard.com
+127.0.0.1 j.adlooxtracking.com
 127.0.0.1 jambocast.com
 127.0.0.1 jb9clfifs6.s.ad6media.fr
 127.0.0.1 jcarter.spinbox.net
@@ -6558,6 +6565,7 @@
 127.0.0.1 macads.net
 127.0.0.1 mackeeperapp1.zeobit.com
 127.0.0.1 mad2.brandreachsys.com
+127.0.0.1 madadsmedia.com
 127.0.0.1 m.adbridge.de
 127.0.0.1 mads.aol.com
 127.0.0.1 mads.cnet.com
@@ -7662,6 +7670,7 @@
 127.0.0.1 tag.regieci.com
 127.0.0.1 tags.bluekai.com
 127.0.0.1 tags.hypeads.org
+127.0.0.1 tags.toroadvertising.com
 127.0.0.1 tag.webcompteur.com
 127.0.0.1 tag.yieldoptimizer.com
 127.0.0.1 taking-technology.com
@@ -7872,6 +7881,7 @@
 127.0.0.1 vms.boldchat.com
 127.0.0.1 vnu.eu-adcenter.net
 127.0.0.1 vodafoneit.solution.weborama.fr
+127.0.0.1 vox-static.liverail.com
 127.0.0.1 vp.tscapeplay.com
 127.0.0.1 vu.veoxa.com
 127.0.0.1 v.vomedia.tv

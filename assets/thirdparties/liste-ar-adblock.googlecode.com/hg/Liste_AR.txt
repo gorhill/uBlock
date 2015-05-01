@@ -791,6 +791,7 @@
 ||marocannonces.com^*/bannier_
 ||masrawysat.com/img/505.gif
 ||masrawysat.com/img/astra.gif
+||masrawysat.com/img/Eaj06zD.gif
 ||masrawysat.com/img/LNB.gif
 ||masrawysat.com/img/omix.gif
 ||masrawysat.com/vb/images/alsharingbanner.gif
@@ -1185,6 +1186,7 @@ almesryoon.com##.topad
 bokra.net##.tower
 bokra.net##.towerBanner
 bokra.net##.twoBanners
+dzjobs.net##.wiki
 arabia.com##.ykaleader
 dreambox-tunisie.com##.yourcolor-main
 2flam.net##A[href="http://shwqna.at.ua/ADs.htm"]

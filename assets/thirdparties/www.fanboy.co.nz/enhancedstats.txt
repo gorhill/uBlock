@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: Xkn/EqkEr+nhOv7veGaFIQ
+! Checksum: vxSvW/ow69nl/6OEittgQg
 ! Title: Fanboy's Enhanced Tracking List
-! Updated: 20 Apr 2015
+! Updated: 30 Apr 2015
 ! This list expires after 2 days
 ! License: http://creativecommons.org/licenses/by/3.0/
 ! Homepage: http://www.fanboy.co.nz/
@@ -365,6 +365,11 @@ _wtBase.js
 _wtbaseV2.
 _wtInit.js
 !
+! CDN scripts (Ad and Tracking scripts) Test filters.
+!
+/cdn-cgi/pe/bag2?*atrk.js
+/cdn-cgi/pe/bag2?*pagead2.googlesyndication.com
+!
 ! ---------- Cookie/Subscription Checking ------
 !
 ###issuem-leaky-paywall-articles-zero-remaining-nag
@@ -412,6 +417,7 @@ wolframalpha.com###subpod_zoom
 flightradar24.com###responsiveBottomPanel
 flightradar24.com##.noads
 game-debate.com##.loadIn300by250
+hopesandfears.com##.adblock-message
 unlimited-recipes.com#@##adsense
 youporn.com###adblock_1
 !
@@ -516,6 +522,7 @@ youporn.com###adblock_1
 ||consent-st.truste.com^$third-party
 ||consent.truste.com^$third-party
 ||content.webcollage.net^$third-party
+||doctortrusted.org^$third-party
 ||doubleclick.net^$third-party
 ||dsr.livefyre.com/livecountping/
 ||etrust.pro^$third-party
@@ -534,6 +541,7 @@ youporn.com###adblock_1
 ||gstatic.com/pub-config/ca-pub-*.js$third-party,domain=~google.com
 ||images.dmca.com^$third-party
 ||images.scanalert.com^$third-party
+||instantssl.com^$image,third-party
 ||joinbot.com^$third-party
 ||kalooga.com^$third-party
 ||lockerdome.com^$third-party
@@ -551,6 +559,7 @@ youporn.com###adblock_1
 ||privacy-policy.truste.com^$third-party
 ||pubnub.com/time/*uuid=$third-party
 ||resellerratings.com^$third-party
+||richrelevance.com^$third-party
 ||salecycle.com^$third-party
 ||seal.alphassl.com^$third-party
 ||seal.digicert.com^$third-party
@@ -730,7 +739,7 @@ youporn.com###adblock_1
 @@||google-analytics.com/urchin.js$domain=expresspcparts.com.au|roblox.com
 @@||google.com/coop/cse/brand?form=searchbox_$script,domain=wellness.com
 @@||google.com/cse/*/sayt.js$domain=ebuyer.com
-@@||google.com/cse/cse.js$domain=collegehumor.com|techspot.com|movie-list.com|howtogeek.com|toorgle.net|inman.com|eurogamer.de
+@@||google.com/cse/cse.js$domain=collegehumor.com|techspot.com|movie-list.com|howtogeek.com|toorgle.net|inman.com|eurogamer.de|tvtropes.org
 @@||googletagmanager.com/gtm.js?$domain=rockstargames.com
 @@||gq.com/js/ecomfw.min.js
 @@||greenbaypressgazette.com/odygel/lib/vendor/omniture/sitecatalyst.js
@@ -758,6 +767,7 @@ youporn.com###adblock_1
 @@||kentucky.com/mistats/products/pubsys_s_code.js
 @@||libs.coremetrics.com^$domain=boscovs.com
 @@||marilyn.ca/jsHandler.aspx?*omniture
+@@||mfcreative.com^*/mbox.js
 @@||microsoft.com/Areas/Global/Content/Omniture/
 @@||microsoft.com/Combined.js?*/Omniture/
 @@||microsofttranslator.com^*/SiteCatalyst.js$domain=bing.com

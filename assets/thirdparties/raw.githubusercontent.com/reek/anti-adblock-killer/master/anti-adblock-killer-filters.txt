@@ -89,6 +89,9 @@
 /aadb/script.js|$script
 ! Better Stop Adblock
 ||codeclan.altervista.org/wp-content/uploads/*/*/*.mp3$media
+/plugins/better-stop-adblock/*
+/js/bsa-script-doctype.js$script
+/js/bsa-script-no-doctype.js$script
 ! Adblock Detector 
 /AdblockDetector/handler.min.js$script
 ! StopAdBlock
@@ -113,8 +116,11 @@
 ! http://adblockingdetector.jtmorris.net/demo/
 @@/plugins/ad-blocking-detector/assets/js/advertisement.js$script
 ! AdBlock Notify
-! http://b-website.com/plugin-wordpress-adblock-notify
+! http://b-website.com/adblock-notify-plugin-for-wordpress
 /plugins/adblock-notify-by-bweb/*
+/js/an-detect.min.js$script
+/js/an-scripts.js$script
+/js/an-scripts.min.js$script
 ||b-website.com/wp-content/uploads/an-temp/RrW75pkNMbSB.js$script
 ! Anti-Adblock (from easylist) -------------------------------------------------------------
 /ad-blocking-detector/*
@@ -427,8 +433,8 @@ anime4fun.com###hover
 eveskunk.com#@#.adsbygoogle
 ! anisubsia.com
 anisubsia.com#@#.adsantilok
-! play44.net / videobug.net
-video44.net,play44.net,videobug.net,videofun.me,byzoo.org###flowplayer_api + .jhasvdjhas
+! flowplayer_api
+videofun.me,videobug.net,video44.net,play44.net,byzoo.org,playbb.me,videowing.me,videozoo.me,easyvideo.me,playpanda.net##.jhasvdjhas
 ! prod.static.cardinals.clubs.nfl.com
 azcardinals.com###adblock-notice
 @@/js/detect-blocked-ads.js$script,domain=prod.static.cardinals.clubs.nfl.com
@@ -849,7 +855,44 @@ plej.tv#@#.advert_box
 ! danslescoulisses.com
 @@||danslescoulisses.com/fr/min/$stylesheet
 ! vipleague
-vipleague.ws,vipleague.tv,vipleague.se,vipleague.me,vipleague.co,vipleague.sx,vipbox.tv,vipbox.co,vipbox.sx,vipboxsa.co,strikeout.co,homerun.re##SCRIPT + SCRIPT + SCRIPT + STYLE + div[id]
+! Solution 3
+vipleague.ws,vipleague.tv,vipleague.se,vipleague.me,vipleague.co,vipleague.sx,vipleague.ch,vipbox.tv,vipbox.co,vipbox.sx,vipboxsa.co,strikeout.co,homerun.re##script + script + script + style + div[id]
+! linkdrop.net
+linkdrop.net#@#.afs_ads
+! stream4free.eu
+@@||stream4free.eu/modules/mod_jpayday/js/doubleclick.js$script,domain=stream4free.eu
+! forums.openpli.org
+forums.openpli.org###content > [style="text-align:center;"] > DIV[style="margin 0 auto;display:inline-block;width:728px; height:84px; border:1px solid #000000; text-align:center; font-family:century gothic, arial, helvetica, sans serif;padding:4px;font-weight:bold;"]
+! simply-debrid.com
+simply-debrid.com#@##adsense
+! onvasortir.com
+@@||onvasortir.com^$elemhide
+@@||onvasortir.com/publicite.html$script
+@@||onvasortir.com/fuckadblock.js$script
+! urbeez.com
+@@||urbeez.com^$elemhide
+@@||urbeez.com/publicite.html$script
+@@||urbeez.com/fuckadblock.js$script
+! movie-box.pl + excluded AakScript
+@@||movie-box.pl^$elemhide
+@@||movie-box.pl/js/fuckadblock.js$script
+! WP.tv
+!@@||rek.www.wp.pl/vad.xml$xmlhttprequest
+!@@||rek.www.wp.pl/?rekid=$script
+!@@||rek.www.wp.pl/pliki/*_*.js$script
+!@@||adv.wp.pl/RM/Box/*/advertisement.js$script
+!@@||adv.wp.pl/RM/Box/*/x.gif$image
+! sparkylinux.org
+@@||sparkylinux.org/images/ad/$image
+! captchme.com
+@@||api.captchme.net/js/advertisement-min.js$script
+@@||api.captchme.net/ads.html$subdocument
+! demonoid.pw
+@@||demonoid.pw/show_ads_.js$script
+! carambatv.ru
+@@||adv.gpm-digital.com/crossdomain.xml$object-subrequest,domain=carambatv.ru
+! rookie.com.pl
+@@||rookie.com.pl/jscripts/ads.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

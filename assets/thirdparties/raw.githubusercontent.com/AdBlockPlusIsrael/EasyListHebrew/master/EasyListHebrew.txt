@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: qblGtKzhYvoGe7crDsh1ag
+! Checksum: mkZu7rm8uZp0sS+YXq4aaw
 ! Title: EasyList Hebrew
-! Last modified: 21/04/15 11:15
+! Last modified: 30/04/15 09:30
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -368,6 +368,7 @@
 @@||xads.zedo.com^$popup,domain=one.co.il
 @@||yad2.co.il/ajax/click_stat.php?BannerID=$xmlhttprequest
 @@||zvz.co.il/AdImages/$~third-party,image
+@@||צפייהישירה.net/js/ads/popunder.js
 !
 !------Whitelists Element Hiding Rules (caused by EasyList / EasyPrivacy )----!
 !

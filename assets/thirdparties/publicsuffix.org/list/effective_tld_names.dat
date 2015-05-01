@@ -932,6 +932,11 @@ org.gi
 // gl : http://en.wikipedia.org/wiki/.gl
 // http://nic.gl
 gl
+co.gl
+com.gl
+edu.gl
+net.gl
+org.gl
 
 // gm : http://www.nic.gm/htmlpages%5Cgm-policy.htm
 gm
@@ -4412,9 +4417,9 @@ mobi.ng
 // ni : http://www.nic.ni/dominios.htm
 *.ni
 
-// nl : http://www.domain-registry.nl/ace.php/c,728,122,,,,Home.html
-// Confirmed by registry <Antoin.Verschuren@sidn.nl> (with technical
-// reservations) 2008-06-08
+// nl : http://en.wikipedia.org/wiki/.nl
+//      https://www.sidn.nl/
+//      ccTLD for the Netherlands
 nl
 
 // BV.nl will be a registry for dutch BV's (besloten vennootschap)
@@ -5304,14 +5309,11 @@ gos.pk
 info.pk
 
 // pl http://www.dns.pl/english/index.html
-// confirmed on 26.09.2014 from Bogna Tchórzewska <partner@dns.pl>
+// updated by .PL registry on 2015-04-28
 pl
 com.pl
 net.pl
 org.pl
-info.pl
-waw.pl
-gov.pl
 // pl functional domains (http://www.dns.pl/english/index.html)
 aid.pl
 agro.pl
@@ -5321,6 +5323,7 @@ biz.pl
 edu.pl
 gmina.pl
 gsm.pl
+info.pl
 mail.pl
 miasta.pl
 media.pl
@@ -5342,16 +5345,55 @@ tm.pl
 tourism.pl
 travel.pl
 turystyka.pl
-// Government domains (administred by ippt.gov.pl)
-uw.gov.pl
-um.gov.pl
+// Government domains
+gov.pl
+ap.gov.pl
+ic.gov.pl
+is.gov.pl
+us.gov.pl
+kmpsp.gov.pl
+kppsp.gov.pl
+kwpsp.gov.pl
+psp.gov.pl
+wskr.gov.pl
+kwp.gov.pl
+mw.gov.pl
 ug.gov.pl
+um.gov.pl
+umig.gov.pl
+ugim.gov.pl
 upow.gov.pl
+uw.gov.pl
 starostwo.gov.pl
+pa.gov.pl
+po.gov.pl
+psse.gov.pl
+pup.gov.pl
+rzgw.gov.pl
+sa.gov.pl
 so.gov.pl
 sr.gov.pl
-po.gov.pl
-pa.gov.pl
+wsa.gov.pl
+sko.gov.pl
+uzs.gov.pl
+wiih.gov.pl
+winb.gov.pl
+pinb.gov.pl
+wios.gov.pl
+witd.gov.pl
+wzmiuw.gov.pl
+piw.gov.pl
+wiw.gov.pl
+griw.gov.pl
+wif.gov.pl
+oum.gov.pl
+sdn.gov.pl
+zp.gov.pl
+uppo.gov.pl
+mup.gov.pl
+wuoz.gov.pl
+konsulat.gov.pl
+oirm.gov.pl
 // pl regional domains (http://www.dns.pl/english/index.html)
 augustow.pl
 babia-gora.pl
@@ -5459,6 +5501,7 @@ ustka.pl
 walbrzych.pl
 warmia.pl
 warszawa.pl
+waw.pl
 wegrow.pl
 wielun.pl
 wlocl.pl
@@ -9908,6 +9951,66 @@ webhop.org
 worse-than.tv
 writesthisblog.com
 
+// EU.org https://eu.org/
+// Submitted by Pierre Beyssac <hostmaster@eu.org> 2015-04-17
+
+eu.org
+al.eu.org
+asso.eu.org
+at.eu.org
+au.eu.org
+be.eu.org
+bg.eu.org
+ca.eu.org
+cd.eu.org
+ch.eu.org
+cn.eu.org
+cy.eu.org
+cz.eu.org
+de.eu.org
+dk.eu.org
+edu.eu.org
+ee.eu.org
+es.eu.org
+fi.eu.org
+fr.eu.org
+gr.eu.org
+hr.eu.org
+hu.eu.org
+ie.eu.org
+il.eu.org
+in.eu.org
+int.eu.org
+is.eu.org
+it.eu.org
+jp.eu.org
+kr.eu.org
+lt.eu.org
+lu.eu.org
+lv.eu.org
+mc.eu.org
+me.eu.org
+mk.eu.org
+mt.eu.org
+my.eu.org
+net.eu.org
+ng.eu.org
+nl.eu.org
+no.eu.org
+nz.eu.org
+paris.eu.org
+pl.eu.org
+pt.eu.org
+q-a.eu.org
+ro.eu.org
+ru.eu.org
+se.eu.org
+si.eu.org
+sk.eu.org
+tr.eu.org
+uk.eu.org
+us.eu.org
+
 // Fastly Inc. http://www.fastly.com/
 // Submitted by Vladimir Vuksan <vladimir@fastly.com> 2013-05-31
 a.ssl.fastly.net
@@ -10010,6 +10113,10 @@ co.pl
 azurewebsites.net
 azure-mobile.net
 cloudapp.net
+
+// Neustar Inc.
+// Submitted by Trung Tran <Trung.Tran@neustar.biz> 2015-04-23
+4u.com
 
 // NFSN, Inc. : https://www.NearlyFreeSpeech.NET/
 // Submitted by Jeff Wheelhouse <support@nearlyfreespeech.net> 2014-02-02

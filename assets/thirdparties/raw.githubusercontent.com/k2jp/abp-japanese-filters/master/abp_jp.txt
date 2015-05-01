@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 3ECN9Mr0r3sh9wuE6dVqGQ
+! Checksum: jd+/Gzk9TfTVexSB3h37Bw
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201504241653
+! Version: 201505011943
 
-! Last modified: 2015-04-24 16:53 JST(UTC+0900)
+! Last modified: 2015-05-01 19:43 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -5394,6 +5394,7 @@ _yahooads_
 ://campaign7.
 ://campaign8.
 ://campaign9.
+://creative.$popup
 ://creative.$third-party
 ://creatives.$third-party
 ://delivery.$third-party
@@ -5662,7 +5663,7 @@ _yahooads_
 ||888.com^$popup
 ||888casino.com^$popup
 ||888media.net^$third-party
-||888poker.com^$popup
+||888poker.$popup
 ||8cnd.com^$third-party
 ||99widgets.com/counters/
 ||9sport.net^$third-party
@@ -5725,6 +5726,7 @@ _yahooads_
 ||ad-maker.info^
 ||ad-mastering.net^
 ||ad-recommend.com^
+||ad-s.org^$third-party
 ||ad-stir.com^$third-party
 ||ad-sys.com^$third-party
 ||ad-traffic.jp^
@@ -8583,6 +8585,7 @@ _yahooads_
 ||novoteka.ru^$third-party
 ||nowvisitors.com^$third-party
 ||npario-inc.net^$third-party
+||nr-data.net^
 ||nrelate.com^$third-party
 ||ns-cdn.com^
 ||ns-img.com^
@@ -10125,7 +10128,8 @@ _yahooads_
 ||youradexchange.com^$third-party
 ||youradslab.com^
 ||youtopry.com^
-||youtube.com/annotations_invideo?
+! Commented out to avoid the false positive preventing users from change its playing position on the progress bar of HTML5 player, reported by zanderzhng, May 01, 2015
+! ||youtube.com/annotations_invideo?
 ||youtube.com/get_video?
 ||youtube.com/ptracking?
 ||youtube.com/set_awesome?

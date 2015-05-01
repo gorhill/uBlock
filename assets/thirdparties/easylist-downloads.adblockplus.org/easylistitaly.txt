@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: ySOqVYcaKx1Uxeuvm/ZrZw
-! Version: 201504242201
+! Checksum: V2l7ZMcpBLzAOmdZKjhdGA
+! Version: 201505011701
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 24 Apr 2015 22:01 UTC
+! Ultima modifica: 01 May 2015 17:01 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -340,8 +340,7 @@ sportube.tv#@#.afs_ads
 ||blogspot.com^*/download_728.gif
 ||blogspot.com^*/download_728_2.gif
 ||blogspot.com^*/downloadnow_it_468.png
-||booking.com/general.html?$subdocument,domain=quattroruote.it|tuttobaviera.it
-||booking.com^*;tmpl=banners;$subdocument,domain=trombodromo.com
+||booking.com^$subdocument,domain=iltempo.it|quattroruote.it|trombodromo.com|tuttobaviera.it
 ||booking.fioccovacanze.it^$third-party
 ||bt.rcs.it^
 ||caniaddestrati.org^$third-party
@@ -1282,6 +1281,7 @@ sportube.tv#@#.afs_ads
 ||newslinet.it^*/banner_
 ||newslinet.it^*_247x56.gif
 ||newz.it^*/sponsor/
+||nocturno.it^*/banner/
 ||noiporno.com/slide/
 ||nordesteuropa.it^*/adv/
 ||notebookitalia.it/images/stories/*_wallpaper_jpg.jpg
@@ -1916,6 +1916,8 @@ xvideoscopate.com###footertop
 lega-pro.com###fpssContainer381
 ansa.it###fwnetC300
 ilcap.it###gadsense
+mondoplay.it,mondoxbox.com###gameBlock_amazon
+mondoplay.it,mondoxbox.com###gameBlock_amazon_noboxart
 rdf.it###gkBanner2
 paginegialle.it###glamoo-box
 telefonino.net###google300x250
@@ -1966,6 +1968,7 @@ viterbopost.it###manchette-sx
 laroma24.it###marketingRotator
 it.msn.com###markette
 max.rcs.it###max_ppn
+ilfattoquotidiano.it###meetic_quad
 itespresso.it###megabanner
 metalitalia.com###middle-home
 mymovies.it###middle1_companion
@@ -1976,6 +1979,7 @@ ebay.it###mpu-container
 vivicool.it###navpages
 kveeniland.com,poseidonbistro.com###nebanner
 telefonino.net###news336x280GoogleBox
+mondoplay.it,mondoxbox.com###offersbox
 agimondo.it###overhp
 studiocataldi.it###overlayer
 globalist.it###pCollar_c

@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 0faTu5sL0h5U3MAL4NkFBw
-! Version: 201504242201
+! Checksum: ZX25YOVakzh3ahNX/hr+LA
+! Version: 201505011701
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 24 Apr 2015 22:01 UTC
+! Last modified: 01 May 2015 17:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -547,7 +547,8 @@ netzkino.de#@#.advertising-top
 smsgott.de#@#.adword1
 formel1.de,fremdwort.de,inside-handy.de,motorsport-total.com#@#.banner-ad
 netzkino.de#@#.contentAdBox
-transfermarkt.de#@#.werbung
+formel1.de,fremdwort.de,inside-handy.de,motorsport-total.com#@#.reklame
+formel1.de,fremdwort.de,inside-handy.de,motorsport-total.com,transfermarkt.de#@#.werbung
 iphone-tricks.de#@#.widget_adsensewidget
 mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 !---------------------------Third-party Werbeserver---------------------------!
@@ -4411,6 +4412,7 @@ jobrapido.de###modalBackground[style="width: 1903px; height: 1059px; opacity: 0.
 jobrapido.de###modalDialog[style="display: block; top: 355.5px; left: 686.5px;"]
 orf.at###monsterdiv
 berlin-nutten.com,deutsche-erotikfilme.com###more-sex
+stadtradio-goettingen.de###mp3ads
 radio-teddy.de###mpl
 gamigo.de###mrbox
 visions.de###mrect
@@ -5609,6 +5611,7 @@ bild.de##.servicelinks
 hoerzu.de##.shades-of-grey-banner
 kleinezeitung.at##.si_adv_win2day
 kleinezeitung.at##.si_topli
+curved.de##.side-products--deals
 informelles.de##.side2
 allround-pc.com##.side_banner
 downloadstube.net##.side_frame
@@ -5693,6 +5696,7 @@ biallo.de##.stdspezialteaseranzeige
 spieletipps.de##.stiYsmLink
 serienjunkies.org##.streams + #content > .post:first-child > .post-title:first-child + p[align="center"]
 fernsehserien.de##.stroeer-container
+stadtradio-goettingen.de##.subfoot
 fuw.ch##.suche_sponsor
 sdx.cc##.suggestionList > a[href^="http://www.sdx.cc/file="]
 frankenpost.de,freies-wort.de,gentleman-blog.de,horizont.net,itopnews.de,mediabiz.de,neon.de,np-coburg.de,radiopsr.de,schlagerhoelle.de,stz-online.de,tvspielfilm.de,volksfreund.de##.superbanner
@@ -5876,8 +5880,6 @@ filmpalast.to##a[href="http://filmpalast.to/route"]
 bild.de##a[href="http://finanzservice.bild.de/banken/kredite-vergleich/"]
 bild.de##a[href="http://finanzservice.bild.de/banken/tagesgeld-vergleich/"]
 bild.de##a[href="http://finanzservice.bild.de/versicherungen"]
-gload.cc##a[href="http://gload.cc/images/freeuser.html"]
-gload.cc##a[href="http://gload.cc/images/highspeed.html"]
 bild.de##a[href="http://gutscheine.bild.de"]
 prad.de##a[href="http://links.prad.de/lgcurved"]
 livestreamfussball.org##a[href="http://livetv.ru/de/allupcomingsports/1/"]
@@ -6060,6 +6062,7 @@ omega-music.com##a[href^="http://freakshare.net/?ref="]
 byte.to,movie-blog.org##a[href^="http://fur.ly/"]
 g-stream.in##a[href^="http://g-stream.in/mirror/"]
 movie-blog.org##a[href^="http://gg.gg/"]
+gload.cc##a[href^="http://gload.cc/images/freeuser"]
 movie-blog.org##a[href^="http://goo.by/"]
 drop-games.org##a[href^="http://goo.gl"]
 cinebee.org,ebook-hell.to,goldesel.to,leave.to,movie-blog.org,porn2you.org,prad.de,torrent.to,trendhure.com,warezking.in,zensiert.to##a[href^="http://goo.gl/"]
