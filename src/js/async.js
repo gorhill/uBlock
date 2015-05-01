@@ -190,7 +190,7 @@ return asyncJobManager;
             return;
         }
         tabIdToUpdate = tabId;
-        setTimeout(updateBadge, 0);
+        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
     };
 
     return updateBadgeAsync;
