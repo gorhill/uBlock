@@ -21,7 +21,7 @@
 (function() {
 "use strict";
 
-if(typeof safari.self === "undefined") {
+if(typeof safari.self === "undefined" || window.top !== window) {
     return;
 }
 
