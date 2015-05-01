@@ -73,6 +73,9 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/101
+// chrome API expects tab id to be a number, not a string.
+
 var toChromiumTabId = function(tabId) {
     if ( typeof tabId === 'string' ) {
         tabId = parseInt(tabId, 10);
