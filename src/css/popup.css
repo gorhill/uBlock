@@ -215,13 +215,14 @@ body.advancedUser #panes.dfEnabled h2:before {
     color: #888;
     cursor: pointer;
     display: none;
-    font-size: 42px;
     left: 4px;
-    line-height: 1;
     padding: 4px 8px;
     position: absolute;
     right: 4px;
     text-align: center;
+    }
+#refresh .fa {
+    font-size: 42px;
     }
 body.dirty #refresh {
     display: block;

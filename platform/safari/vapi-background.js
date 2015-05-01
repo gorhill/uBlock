@@ -506,17 +506,22 @@
     /******************************************************************************/
 
     vAPI.toolbarItem = false;
-    safari.application.addEventListener("validate", function(event) {
-        if(vAPI.toolbarItem === event.target) {
-            return;
+    var getIconForWindow = function(target) {
+        var items = safari.extension.toolbarItems;
+        for(var i = 0, n = items.length; i < n; i++) {
+            if(items[i].browserWindow === target) {
+                return items[i];
+            }
         }
-        vAPI.toolbarItem = event.target;
-    }, true);
+    };
     safari.application.addEventListener("activate", function(event) {
-        if(!(event.target instanceof SafariBrowserTab)) {
-            return;
+        var target = event.target;
+        if(target instanceof SafariBrowserTab) {
+            vAPI.updateIcon(vAPI.tabs.getTabId(target));
         }
-        vAPI.updateIcon(vAPI.toolbarItem);
+        else if(target instanceof SafariBrowserWindow) {
+            vAPI.toolbarItem = getIconForWindow(target);
+        }
     }, true);
 
     /******************************************************************************/
@@ -537,9 +542,12 @@
     TabIconState.prototype.img = "";
 
     vAPI.tabIconState = { /*tabId: {badge: 0, img: suffix}*/ };
-    vAPI.updateIcon = function(icon) {
-        var tabId = vAPI.tabs.getTabId(icon.browserWindow.activeTab),
-            state = vAPI.tabIconState[tabId];
+    vAPI.updateIcon = function(tabId) {
+        var icon = vAPI.toolbarItem;
+        if(icon === false) {
+            icon = getIconForWindow(vAPI.tabs.stack[tabId].browserWindow);
+        }
+        var state = vAPI.tabIconState[tabId];
         if(typeof state === "undefined") {
             state = vAPI.tabIconState[tabId] = new TabIconState();
         }
@@ -553,7 +561,7 @@
         }
         state.badge = badge || 0;
         state.img = (iconStatus === "on" ? "" : "-off");
-        vAPI.updateIcon(vAPI.toolbarItem);
+        vAPI.updateIcon(tabId);
     };
 
     /******************************************************************************/
@@ -699,10 +707,10 @@
         // Until Safari has more specific events, those are instead handled
         // in the onBeforeRequestAdapter; clean them up so they're garbage-collected
         vAPI.net.onBeforeSendHeaders = null;
-        vAPI.net.onHeadersReceived = null;
 
         var onBeforeRequest = vAPI.net.onBeforeRequest,
             onBeforeRequestClient = onBeforeRequest.callback,
+            onHeadersReceivedClient = vAPI.net.onHeadersReceived.callback,
             blockableTypes = onBeforeRequest.types;
 
         var onBeforeRequestAdapter = function(e) {
@@ -718,9 +726,10 @@
                 });
                 e.message.hostname = µb.URI.hostnameFromURI(e.message.url);
                 e.message.tabId = vAPI.tabs.getTabId(e.target);
-                var blockVerdict = onBeforeRequestClient(e.message);
-                if(blockVerdict && blockVerdict.redirectUrl) {
-                    e.target.url = blockVerdict.redirectUrl;
+                e.message.responseHeaders = [];
+                onBeforeRequestClient(e.message);
+                var blockVerdict = onHeadersReceivedClient(e.message);
+                if(blockVerdict && blockVerdict.responseHeaders) {
                     e.message = false;
                 }
                 else {

@@ -195,8 +195,9 @@
     }
 
     // Inform that we've navigated
+    var shouldBlockScript = false;
     if(frameId === 0) {
-        safari.self.tab.canLoad(beforeLoadEvent, {
+        shouldBlockScript = !safari.self.tab.canLoad(beforeLoadEvent, {
             url: location.href,
             type: "main_frame"
         });
@@ -246,6 +247,17 @@
     var firstMutation = function() {
         document.removeEventListener("DOMContentLoaded", firstMutation, true);
         firstMutation = false;
+        if(shouldBlockScript) {
+            var meta = document.createElement('meta');
+            meta.setAttribute("http-equiv", "content-security-policy");
+            meta.setAttribute("content", "script-src 'unsafe-eval' *");
+            if(document.documentElement.firstChild) {
+                document.documentElement.insertBefore(meta, document.documentElement.firstChild);
+            }
+            else {
+                document.documentElement.appendChild(meta);
+            }
+        }
         document.addEventListener(vAPI.sessionId, function(e) {
             if(shouldBlockDetailedRequest(e.detail)) {
                 e.detail.url = false;

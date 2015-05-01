@@ -1,16 +1,8 @@
-@font-face {
-    font-family: 'FontAwesome';
-    font-weight: normal;
-    font-style: normal;
-    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-    }
 .fa {
     display: inline-block;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
     }
 body {
     font: 14px/1.3 sans-serif;
