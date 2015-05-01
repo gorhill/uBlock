@@ -457,18 +457,160 @@
 
     /******************************************************************************/
 
+    // reload the popup when it's opened
+    safari.application.addEventListener("popover", function(event) {
+        var w = event.target.contentWindow, body = w.document.body, child;
+        while(child = body.firstChild) {
+            body.removeChild(child);
+        }
+        w.location.reload();
+    }, true);
+
+    /******************************************************************************/
+
+    var ICON_URLS = {
+        "on": vAPI.getURL("img/browsericons/safari-icon16.png"),
+        "off": vAPI.getURL("img/browsericons/safari-icon16-off.png")
+    };
+
+    var IconState = function(badge, img, icon) {
+        this.badge = badge;
+            // ^ a number -- the badge 'value'
+        this.img = img;
+            // ^ a string -- 'on' or 'off'
+        this.active = false;
+            // ^ is this IconState active for rendering?
+        this.icon = typeof icon !== "undefined" ? icon : null;
+            // ^ the corresponding browser toolbar-icon object
+        this.dirty = (1 << 1) | (1 << 0);
+            /* ^ bitmask AB: two bits, A and B
+                    where A is whether img has changed and needs render
+                    and B is whether badge has changed and needs render */
+    };
+
+    var iconStateForTabId = {}; // {tabId: IconState}
+
+    var getIconForWindow = function(whichWindow) {
+        // do we already have the right icon cached?
+        if(typeof whichWindow.uBlockIcon !== "undefined") {
+            return whichWindow.uBlockIcon;
+        }
+
+        // iterate through the icons to find the one which
+        // belongs to this window (whichWindow)
+        var items = safari.extension.toolbarItems;
+        for(var i = 0; i < items.length; i++) {
+            if(items[i].browserWindow === whichWindow) {
+                return (whichWindow.uBlockIcon = items[i]);
+            }
+        }
+    };
+
+    safari.application.addEventListener("activate", function(event) {
+        if(!(event.target instanceof SafariBrowserTab)) {
+            return;
+        }
+
+        // when a tab is activated...
+        var tab = event.target;
+        if(tab.browserWindow !== tab.oldBrowserWindow) {
+            // looks like tab is now associated with a new window
+            tab.oldBrowserWindow = tab.browserWindow;
+            // so, unvalidate icon
+            tab.uBlockKnowsIcon = false;
+        }
+
+        var tabId = vAPI.tabs.getTabId(tab),
+            state = iconStateForTabId[tabId];
+        if(typeof state === "undefined") {
+            state = iconStateForTabId[tabId] = new IconState(0, "on");
+            // need to get the icon for this newly-encountered tab...
+            // uBlockKnowsIcon should be undefined here, so in theory
+            // we don't need this -- but to be sure,
+            // go ahead and explicitly unvalidate
+            tab.uBlockKnowsIcon = false;
+        }
+
+        if(!tab.uBlockKnowsIcon) {
+            // need to find the icon for this tab's window
+            state.icon = getIconForWindow(tab.browserWindow);
+            tab.uBlockKnowsIcon = true;
+        }
+        state.active = true;
+        // force re-render since we probably switched tabs
+        state.dirty = (1 << 1) | (1 << 0);
+
+        renderIcon(state);
+    }, true);
+
+    safari.application.addEventListener("deactivate", function(event) {
+        if(!(event.target instanceof SafariBrowserTab)) {
+            return;
+        }
+        // when a tab is deactivated...
+        var tabId = vAPI.tabs.getTabId(event.target),
+            state = iconStateForTabId[tabId];
+        if(typeof state === "undefined") {
+            return;
+        }
+        // mark its iconState as inactive so we don't visually
+        // render changes for now
+        state.active = false;
+    }, true);
+
+    var renderIcon = function(iconState) {
+        if(iconState.dirty === 0) {
+            // quit if we don't need to touch the "DOM"
+            return;
+        }
+        var icon = iconState.icon;
+        icon.badge = iconState.badge;
+        // only update the image if needed:
+        if(iconState.dirty & 1) {
+            icon.image = ICON_URLS[iconState.img];
+        }
+        iconState.dirty = 0;
+    };
+
+    vAPI.setIcon = function(tabId, iconStatus, badge) {
+        badge = badge || 0;
+
+        var state = iconStateForTabId[tabId];
+        if(typeof state === "undefined") {
+            state = iconStateForTabId[tabId] = new IconState(badge, iconStatus);
+        }
+        else {
+            state.dirty = ((state.badge !== badge) << 1) | ((state.img !== iconStatus) << 0);
+            state.badge = badge;
+            state.img = iconStatus;
+        }
+        if(state.active === true) {
+            renderIcon(state);
+        }
+    };
+
+    /******************************************************************************/
+
     // bind tabs to unique IDs
 
     (function() {
         var wins = safari.application.browserWindows,
             i = wins.length,
-            j;
-
-        while(i --) {
-            j = wins[i].tabs.length;
-
+            j,
+            curTab,
+            curTabId,
+            curWindow;
+        while(i--) {
+            curWindow = wins[i];
+            j = curWindow.tabs.length;
             while(j--) {
-                vAPI.tabs.stack[vAPI.tabs.stackId++] = wins[i].tabs[j];
+                curTab = wins[i].tabs[j], curTabId = vAPI.tabs.stackId++;
+                iconStateForTabId[curTabId] = new IconState(0, "on", getIconForWindow(curWindow));
+                curTab.uBlockKnowsIcon = true;
+                if(curWindow.activeTab === curTab) {
+                    iconStateForTabId[curTabId].active = true;
+                }
+                vAPI.tabs.stack[curTabId] = curTab;
             }
         }
     })();
@@ -499,74 +641,12 @@
                 vAPI.tabs.onClosed(tabId);
             }
 
-            delete vAPI.tabIconState[tabId];
             delete vAPI.tabs.stack[tabId];
+            delete iconStateForTabId[tabId];
         }
     }, true);
 
     /******************************************************************************/
-
-    vAPI.toolbarItem = false;
-    var getIconForWindow = function(target) {
-        var items = safari.extension.toolbarItems;
-        for(var i = 0, n = items.length; i < n; i++) {
-            if(items[i].browserWindow === target) {
-                return items[i];
-            }
-        }
-    };
-    safari.application.addEventListener("activate", function(event) {
-        var target = event.target;
-        if(target instanceof SafariBrowserTab) {
-            vAPI.updateIcon(vAPI.tabs.getTabId(target));
-        }
-        else if(target instanceof SafariBrowserWindow) {
-            vAPI.toolbarItem = getIconForWindow(target);
-        }
-    }, true);
-
-    /******************************************************************************/
-
-    // reload the popup when it's opened
-    safari.application.addEventListener("popover", function(event) {
-        var w = event.target.contentWindow, body = w.document.body, child;
-        while(child = body.firstChild) {
-            body.removeChild(child);
-        }
-        w.location.reload();
-    }, true);
-
-    /******************************************************************************/
-
-    function TabIconState() {}
-    TabIconState.prototype.badge = 0;
-    TabIconState.prototype.img = "";
-
-    vAPI.tabIconState = { /*tabId: {badge: 0, img: suffix}*/ };
-    vAPI.updateIcon = function(tabId) {
-        var icon = vAPI.toolbarItem;
-        if(icon === false) {
-            icon = getIconForWindow(vAPI.tabs.stack[tabId].browserWindow);
-        }
-        var state = vAPI.tabIconState[tabId];
-        if(typeof state === "undefined") {
-            state = vAPI.tabIconState[tabId] = new TabIconState();
-        }
-        icon.badge = state.badge;
-        icon.image = vAPI.getURL("img/browsericons/safari-icon16" + state.img + ".png");
-    };
-    vAPI.setIcon = function(tabId, iconStatus, badge) {
-        var state = vAPI.tabIconState[tabId];
-        if(typeof state === "undefined") {
-            state = vAPI.tabIconState[tabId] = new TabIconState();
-        }
-        state.badge = badge || 0;
-        state.img = (iconStatus === "on" ? "" : "-off");
-        vAPI.updateIcon(tabId);
-    };
-
-    /******************************************************************************/
-
     vAPI.messaging = {
         listeners: {},
         defaultHandler: null,
