@@ -21,7 +21,9 @@
 (function() {
 'use strict';
 
-var DF_ENABLED_CLASS = "dfEnabled";
+if(typeof safari.self === "undefined" || window.top !== window) {
+    return;
+}
 
 var onLoaded = function() {
     var _toggle = DOMTokenList.prototype.toggle;
