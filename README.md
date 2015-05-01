@@ -26,7 +26,7 @@
 
 > uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>.
 <br>
-<sup>slightly different feature sets — <strong>same astounding performance</strong></sup><br>
+<sup>slightly different feature sets — <strong>same performance</strong></sup><br>
 Both are free, open-source, and share the contributions of many.
 
 
