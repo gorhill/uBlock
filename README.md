@@ -1,32 +1,34 @@
 <table width="100%">
-<tr>
-<td align="left" width="70">
-      <a href = "https://chrismatic.io/ublock/">
-      <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
-            height="64">
-      </a>
-</td>
-<td align="right" width="20%">
-      <a href="https://travis-ci.org/chrisaljoudi/uBlock">
-            <img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status">
-      </a>
-      <a href="https://chrismatic.io/donate">
-            <img src="https://chrismatic.io/oncedonate.svg" alt="Support development">
-      </a>
-</td>
-</tr>
-<tr>
-<td colspan="2">
-      <strong><a href="https://chrismatic.io/ublock/">uBlock</a></strong>: an efficient blocker extension for your browser. Fast, potent, and lean.
-</td>
-</tr>
+      <tr>
+      <td align="left" width="70">
+            <a href = "https://chrismatic.io/ublock/">
+            <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
+                  height="64">
+            </a>
+      </td>
+      <td align="right" width="20%">
+            <a href="https://travis-ci.org/chrisaljoudi/uBlock">
+                  <img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status">
+            </a>
+            <a href="https://chrismatic.io/donate">
+                  <img src="https://chrismatic.io/oncedonate.svg" alt="Support development">
+            </a>
+      </td>
+      </tr>
+      <tr>
+      <td colspan="2">
+            <strong><a href="https://chrismatic.io/ublock/">uBlock</a></strong>: an efficient blocker extension for your browser. Fast, potent, and lean.
+      </td>
+      </tr>
 </table>
-> #### Have your flavor!
 
-> <p align="center">uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a><br>
-slightly differing feature sets — <strong>same astounding performance.</strong></p>
+#### Have your flavor!
 
-> Both are free, open-source, and share the contributions of many.
+uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>
+<br>
+... slightly differing feature sets — <strong>same astounding performance.</strong><br>
+
+Both are free, open-source, and share the contributions of many.
 
 
 * [What is uBlock?](#what-is-ublock)
