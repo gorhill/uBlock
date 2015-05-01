@@ -3,9 +3,14 @@
       height="64">
 </a>
 
-[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker extension for your browser. Fast, potent, and lean.
+[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker extension for your browser. Fast, potent, and lean. &nbsp;&nbsp;<sub>[![Build status](https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master)](https://travis-ci.org/chrisaljoudi/uBlock) [![Support Development](https://chrismatic.io/oncedonate.svg)](https://chrismatic.io/donate)</sub>
 
-[![Build status](https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master)](https://travis-ci.org/chrisaljoudi/uBlock) [![Support Development](https://chrismatic.io/oncedonate.svg)](https://chrismatic.io/donate)
+
+> #### Have your flavor!
+
+> uBlock comes in two sibling flavors: this project, and [uBlock Origin](https://github.com/gorhill/uBlock).
+
+> With slightly different feature sets curated for people's unique preferences — but the **same astounding performance.** Both are free, open-source, and share the contributions of many.
 
 
 * [What is uBlock?](#what-is-ublock)
