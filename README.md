@@ -1,13 +1,25 @@
-<table width="100%"><tr><td width="70"><a href = "https://chrismatic.io/ublock/">
-<img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
-      height="64">
-</a>
-</td><td width="25%" align="right">
-<a href="https://travis-ci.org/chrisaljoudi/uBlock"><img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status"></a> <a href="https://chrismatic.io/donate" info="Support development"><img src="https://chrismatic.io/oncedonate.svg"></a>
-</td></tr><tr><td colspan="2" width="100%">
+<table width="100%">
+<tr>
+<td align="left" width="70">
+      <a href = "https://chrismatic.io/ublock/">
+      <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
+            height="64">
+      </a>
+</td>
+<td align="right" width="20%">
+      <a href="https://travis-ci.org/chrisaljoudi/uBlock">
+      <img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status">
+      </a>
+      <a href="https://chrismatic.io/donate" info="Support development">
+      <img src="https://chrismatic.io/oncedonate.svg"></a>
+</td>
+</tr>
+<tr>
+<td colspan="2">
 <strong><a href="https://chrismatic.io/ublock/">uBlock</a></strong>: an efficient blocker extension for your browser. Fast, potent, and lean.
 </td>
-</tr></table>
+</tr>
+</table>
 > #### Have your flavor!
 
 > uBlock comes in two sibling flavors: this project, and [uBlock Origin](https://github.com/gorhill/uBlock).
