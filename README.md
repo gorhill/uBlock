@@ -2,9 +2,12 @@
 <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
       height="64">
 </a>
+<p align="right" vspace="0">
+<a href="https://travis-ci.org/chrisaljoudi/uBlock"><img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status"></a> <a href="https://chrismatic.io/donate" info="Support development"><img src="https://chrismatic.io/oncedonate.svg"></a>
+</p>
 
-[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker extension for your browser. Fast, potent, and lean. &nbsp;&nbsp;<sub>[![Build status](https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master)](https://travis-ci.org/chrisaljoudi/uBlock) [![Support Development](https://chrismatic.io/oncedonate.svg)](https://chrismatic.io/donate)</sub>
 
+[**uBlock**](https://chrismatic.io/ublock/): an efficient blocker extension for your browser. Fast, potent, and lean.
 
 > #### Have your flavor!
 
