@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
-    Home: https://github.com/chrisaljoudi/uBlock
+    Home: https://github.com/gorhill/uBlock
 */
 
 /* global µBlock */
@@ -173,24 +173,31 @@ return asyncJobManager;
 
 µBlock.updateBadgeAsync = (function() {
     var µb = µBlock;
+    var tabIdToTimer = {};
 
-    // Cache callback definition, it was a bad idea to define this one inside
-    // updateBadgeAsync
-    var updateBadge = function() {
-        var pageStore = µb.pageStoreFromTabId(tabIdToUpdate);
-        if ( pageStore ) {
-            pageStore.updateBadge();
+    var updateBadge = function(tabId) {
+        delete tabIdToTimer[tabId];
+
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) {
             return;
         }
-        vAPI.setIcon(tabIdToUpdate, 'off', '');
+
+        var netFiltering = pageStore.getNetFilteringSwitch();
+        var badge = '';
+        if ( µb.userSettings.showIconBadge && netFiltering && pageStore.perLoadBlockedRequestCount ) {
+            badge = µb.utils.formatCount(pageStore.perLoadBlockedRequestCount);
+        }
+        vAPI.setIcon(tabId, netFiltering ? 'on' : 'off', badge);
     };
 
-    var updateBadgeAsync = function(tabId) {
+    return function(tabId) {
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
+        if ( tabIdToTimer.hasOwnProperty(tabId) ) {
+            return;
+        }
+        tabIdToTimer[tabId] = setTimeout(updateBadge.bind(null, tabId), 500);
     };
-
-    return updateBadgeAsync;
 })();
