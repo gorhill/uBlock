@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     µBlock - a browser extension to block requests.
-    Copyright (C) 2014 The µBlock authors
+    Copyright (C) 2014-2015 The µBlock authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -74,8 +74,17 @@ vAPI.storage = chrome.storage.local;
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/101
-// chrome API expects tab id to be a number, not a string.
+vAPI.tabs = {};
+
+/******************************************************************************/
+
+vAPI.isBehindTheSceneTabId = function(tabId) {
+    return tabId.toString() === '-1';
+};
+
+vAPI.noTabId = '-1';
+
+/******************************************************************************/
 
 var toChromiumTabId = function(tabId) {
     if ( typeof tabId === 'string' ) {
@@ -89,22 +98,11 @@ var toChromiumTabId = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs = {};
-
-/******************************************************************************/
-
-vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId.toString() === '-1';
-};
-
-vAPI.noTabId = '-1';
-
-/******************************************************************************/
-
 vAPI.tabs.registerListeners = function() {
     var onNavigationClient = this.onNavigation || noopFunc;
     var onPopupClient = this.onPopup || noopFunc;
     var onUpdatedClient = this.onUpdated || noopFunc;
+    var onClosedClient = this.onClosed || noopFunc;
 
     // https://developer.chrome.com/extensions/webNavigation
     // [onCreatedNavigationTarget ->]
@@ -203,21 +201,23 @@ vAPI.tabs.registerListeners = function() {
             return;
         }
         onNavigationClient(details);
+        delete iconStateForTabId[details.tabId];
         //console.debug('onCommitted: popup candidate tab id %d = "%s"', details.tabId, details.url);
         if ( popupCandidateTest(details) === true ) {
             return;
         }
         popupCandidateDestroy(details);
     };
+    var onClosed = function(tabId) {
+        delete iconStateForTabId[tabId];
+        onClosedClient(tabId);
+    };
 
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
     chrome.tabs.onUpdated.addListener(onUpdated);
-
-    if ( typeof this.onClosed === 'function' ) {
-        chrome.tabs.onRemoved.addListener(this.onClosed);
-    }
+    chrome.tabs.onRemoved.addListener(onClosed);
 };
 
 /******************************************************************************/
@@ -236,8 +236,7 @@ vAPI.tabs.get = function(tabId, callback) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) {
             onTabReady(null);
-        }
-        else {
+        } else {
             chrome.tabs.get(tabId, onTabReady);
         }
         return;
@@ -380,10 +379,11 @@ vAPI.tabs.remove = function(tabId) {
 
     var onTabRemoved = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( vAPI.lastError() ) {
+        if ( chrome.runtime.lastError ) {
             /* noop */
         }
     };
+
     chrome.tabs.remove(tabId, onTabRemoved);
 };
 
@@ -426,6 +426,23 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 /******************************************************************************/
 
+var IconState = function(badge, img) {
+    this.badge = badge;
+        // ^ a number -- the badge 'value'
+    this.img = img;
+        // ^ a string -- 'on' or 'off'
+    this.dirty = (1 << 1) | (1 << 0);
+        /* ^ bitmask AB: two bits, A and B
+                where A is whether img has changed and needs render
+                and B is whether badge has changed and needs render */
+};
+var iconStateForTabId = {}; // {tabId: IconState}
+
+var ICON_PATHS = {
+    "on": { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' },
+    "off": { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' }
+};
+
 // Must read: https://code.google.com/p/chromium/issues/detail?id=410868#c8
 
 // https://github.com/chrisaljoudi/uBlock/issues/19
@@ -444,19 +461,26 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
             return;
         }
         chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
-        if ( badge !== '' ) {
-            chrome.browserAction.setBadgeBackgroundColor({
-                tabId: tabId,
-                color: '#666'
-            });
-        }
+        chrome.browserAction.setBadgeBackgroundColor({
+            tabId: tabId,
+            color: '#666'
+        });
     };
-
-    var iconPaths = iconStatus === 'on' ?
-        { '19': 'img/browsericons/icon19.png',     '38': 'img/browsericons/icon38.png' } :
-        { '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-
-    chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
+    var state = iconStateForTabId[tabId];
+    if(typeof state === "undefined") {
+        state = iconStateForTabId[tabId] = new IconState(badge, iconStatus);
+    }
+    else {
+        state.dirty = ((state.badge !== badge) << 1) | ((state.img !== iconStatus) << 0);
+        state.badge = badge;
+        state.img = iconStatus;
+    }
+    if(state.dirty & 1) { // got a new icon?
+        chrome.browserAction.setIcon({ tabId: tabId, path: ICON_PATHS[iconStatus] }, onIconReady);
+    }
+    else if(state.dirty & 2) {
+        chrome.browserAction.setBadgeText({ tabId: tabId, text: badge });
+    }
 };
 
 /******************************************************************************/
@@ -762,21 +786,16 @@ vAPI.onLoadAllCompleted = function() {
         }
     };
 
-    var iconPaths = {
-        '19': 'img/browsericons/icon19-off.png',
-        '38': 'img/browsericons/icon38-off.png'
-    };
-
     try {
         // Hello? Is this a recent version of Chrome?
-        chrome.browserAction.setIcon({ path: iconPaths });
+        chrome.browserAction.setIcon({ path: ICON_PATHS.off });
     }
     catch(e) {
         // Nope; looks like older than v23
         chrome.browserAction._setIcon = chrome.browserAction.setIcon;
         // Shim
-        chrome.browserAction.setIcon = function(x, clbk) {
-            this._setIcon({path: x.path[19], tabId: x.tabId}, clbk);
+        chrome.browserAction.setIcon = function(x, callback) {
+            this._setIcon({path: x.path[19], tabId: x.tabId}, callback);
         };
         // maybe this time... I'll win!
         chrome.browserAction.setIcon({ path: iconPaths });
