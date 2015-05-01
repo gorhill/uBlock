@@ -86,6 +86,9 @@ vAPI.noTabId = '-1';
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/101
+// chrome API expects tab id to be a number, not a string.
+
 var toChromiumTabId = function(tabId) {
     if ( typeof tabId === 'string' ) {
         tabId = parseInt(tabId, 10);
@@ -797,8 +800,8 @@ vAPI.onLoadAllCompleted = function() {
         chrome.browserAction.setIcon = function(x, callback) {
             this._setIcon({path: x.path[19], tabId: x.tabId}, callback);
         };
-        // maybe this time... I'll win!
-        chrome.browserAction.setIcon({ path: iconPaths });
+        // maybe this time... I'll win
+        chrome.browserAction.setIcon({ path: ICON_PATHS.off });
     }
 
     chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
