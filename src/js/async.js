@@ -172,7 +172,7 @@ return asyncJobManager;
 // Update visual of extension icon.
 
 µBlock.updateBadgeAsync = (function() {
-    var µb = µBlock, tabIdToUpdate;
+    var µb = µBlock;
 
     // Cache callback definition, it was a bad idea to define this one inside
     // updateBadgeAsync
@@ -189,7 +189,6 @@ return asyncJobManager;
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        tabIdToUpdate = tabId;
         µb.asyncJobs.add('updateBadge-' + tabId, tabId, updateBadge, 250);
     };
 
