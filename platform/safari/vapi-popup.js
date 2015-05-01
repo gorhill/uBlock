@@ -27,13 +27,23 @@ if(typeof safari.self === "undefined" || window.top !== window) {
 
 var onLoaded = function() {
     var _toggle = DOMTokenList.prototype.toggle;
+    var unchainPane2Timeout = false;
+    var unchainPane2 = function() {
+        pane2.style.removeProperty("display");
+    };
     DOMTokenList.prototype.toggle = function(className, enabled) {
         if(className === "dfEnabled") {
+            if(unchainPane2Timeout !== false) {
+                clearTimeout(unchainPane2Timeout);
+                unchainPane2Timeout = false;
+            }
+            _toggle.apply(this, arguments);
+            pane2.style.setProperty("display", "inline-block", "important");
+            unchainPane2Timeout = setTimeout(unchainPane2, 700);
             updateSize(enabled);
         }
-        _toggle.apply(this, arguments);
-        if(className === "dfEnabled") {
-            setTimeout(updateSize, 0);
+        else {
+            _toggle.apply(this, arguments);
         }
     };
     var body = document.body,
