@@ -23,9 +23,10 @@
 </table>
 > #### Have your flavor!
 
-> uBlock comes in two sibling flavors: this project, and [uBlock Origin](https://github.com/gorhill/uBlock).
+> <p align="center">uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a><br>
+slightly differing feature sets — <strong>same astounding performance.</strong></p>
 
-> With slightly different feature sets curated for people's unique preferences — but the **same astounding performance.** Both are free, open-source, and share the contributions of many.
+> Both are free, open-source, and share the contributions of many.
 
 
 * [What is uBlock?](#what-is-ublock)
