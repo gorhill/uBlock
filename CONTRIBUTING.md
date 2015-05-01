@@ -8,7 +8,7 @@ First of all, thank you for taking the time to help improve uBlock!
 
 ### **Please only submit bugs/issues to the GitHub issue tracker.**
 
-The [uBlock subreddit /r/ublock](https://reddit.com/r/ublock) is the appropriate place to ask for specific help/advice/troubleshooting.
+The [uBlock subreddit /r/ublock](https://reddit.com/r/ublock) is the appropriate place to make suggestions or ask for specific help/advice/troubleshooting.
 
 ---
 
