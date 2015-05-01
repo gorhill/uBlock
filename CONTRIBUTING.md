@@ -14,11 +14,16 @@ The [uBlock subreddit /r/ublock](https://reddit.com/r/ublock) is the appropriate
 
 ### What to include
 
+#### Always include a URL!
 
-To help us diagnose and fix the problem, please always, always include the following in your report:
+Even if the issue "occurs everywhere." This is so important it deserves its own header.
+
+---
+
+To help us diagnose and fix the problem, please *always, always* include the following in your report:
 
 * A clear list of steps to reproduce the problem
-  * **Always include a URL**, _even_ if "it happens everywhere".
+  * Again, **always include a URL**, _even_ if "it happens everywhere".
 * Symptoms of the issue
   * Describe what you observe and consider broken behavior; this is what we'll be looking for after executing the steps
   * Example: video doesn't start playing, page layout broken
