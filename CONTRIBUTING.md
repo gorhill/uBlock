@@ -14,7 +14,10 @@ The [uBlock subreddit /r/ublock](https://reddit.com/r/ublock) is the appropriate
 
 ### What to include
 
-#### Always include a URL!
+<table><tr><td>
+<h4>Always include a URL!</h4></td><td>
+<img src ="http://i.imgur.com/K7nOuGdt.jpg" height="80">
+</td></tr></table>
 
 Even if the issue "occurs everywhere." This is so important it deserves its own header.
 
