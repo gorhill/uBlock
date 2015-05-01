@@ -227,9 +227,27 @@ var uBlockCollapser = (function() {
         newRequests.push(new BouncingRequest(req.id, tagName, src));
     };
 
-    var addIFrame = function(iframe) {
+    var iframeSourceModified = function(mutations) {
+        var i = mutations.length;
+        while ( i-- ) {
+            addIFrame(mutations[i].target, true);
+        }
+        process();
+    };
+    var iframeSourceObserver = new MutationObserver(iframeSourceModified);
+    var iframeSourceObserverOptions = {
+        attributes: true,
+        attributeFilter: [ 'src' ]
+    };
+
+    var addIFrame = function(iframe, dontObserve) {
+        // https://github.com/gorhill/uBlock/issues/162
+        // Be prepared to deal with possible change of src attribute.
+        if ( dontObserve !== true ) {
+            iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
+        }
+
         var src = iframe.src;
-        // TODO: niject content script in `about:blank` as well.
         if ( src === '' || typeof src !== 'string' ) {
             return;
         }
