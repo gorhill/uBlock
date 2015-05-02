@@ -13,8 +13,8 @@
 
     "browser_action": {
         "default_icon": {
-            "19": "img/browsericons/icon19-off.png",
-            "38": "img/browsericons/icon38-off.png"
+            "19": "img/browsericons/icon19.png",
+            "38": "img/browsericons/icon38.png"
         },
         "default_title": "uBlock Origin",
         "default_popup": "popup.html"

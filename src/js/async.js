@@ -172,32 +172,32 @@ return asyncJobManager;
 // Update visual of extension icon.
 
 µBlock.updateBadgeAsync = (function() {
-    var µb = µBlock;
-    var tabIdToTimer = {};
+    var tabIdToTimer = Object.create(null);
 
     var updateBadge = function(tabId) {
         delete tabIdToTimer[tabId];
 
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore === null ) {
-            return;
+        var state = false;
+        var badge = '';
+
+        var pageStore = this.pageStoreFromTabId(tabId);
+        if ( pageStore !== null ) {
+            state = pageStore.getNetFilteringSwitch();
+            if ( state && this.userSettings.showIconBadge && pageStore.perLoadBlockedRequestCount ) {
+                badge = this.utils.formatCount(pageStore.perLoadBlockedRequestCount);
+            }
         }
 
-        var netFiltering = pageStore.getNetFilteringSwitch();
-        var badge = '';
-        if ( µb.userSettings.showIconBadge && netFiltering && pageStore.perLoadBlockedRequestCount ) {
-            badge = µb.utils.formatCount(pageStore.perLoadBlockedRequestCount);
-        }
-        vAPI.setIcon(tabId, netFiltering ? 'on' : 'off', badge);
+        vAPI.setIcon(tabId, state ? 'on' : 'off', badge);
     };
 
     return function(tabId) {
+        if ( tabIdToTimer[tabId] ) {
+            return;
+        }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
-        if ( tabIdToTimer.hasOwnProperty(tabId) ) {
-            return;
-        }
-        tabIdToTimer[tabId] = setTimeout(updateBadge.bind(null, tabId), 500);
+        tabIdToTimer[tabId] = setTimeout(updateBadge.bind(this, tabId), 500);
     };
 })();

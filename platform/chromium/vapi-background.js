@@ -747,8 +747,7 @@ vAPI.onLoadAllCompleted = function() {
         }
     };
 
-    chrome.tabs.query({ url: 'http://*/*' }, bindToTabs);
-    chrome.tabs.query({ url: 'https://*/*' }, bindToTabs);
+    chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
 };
 
 /******************************************************************************/
