@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global vAPI, µBlock */
+/* global µBlock */
 
 /*******************************************************************************
 
@@ -435,7 +435,7 @@ PageStore.prototype.getNetFilteringSwitch = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/1078
     // Use both the raw and normalized URLs.
     this.netFiltering = µb.getNetFilteringSwitch(tabContext.normalURL);
-    if ( this.netFiltering && tabContext.rawURL !== tabContext.pageURL ) {
+    if ( this.netFiltering && tabContext.rawURL !== tabContext.normalURL ) {
         this.netFiltering = µb.getNetFilteringSwitch(tabContext.rawURL);
     }
     this.netFilteringReadTime = Date.now();
