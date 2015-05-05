@@ -57,11 +57,11 @@ uBlock's main goal is to help users neutralize privacy-invading apparatus — ad
 
 * **Chrome**: available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn) or for [manual](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install) installation.
 
-* **Opera**: available on the [Opera Store](https://addons.opera.com/en-gb/extensions/details/ublock/).
-
 * **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/releases) installation.
 
  * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is currently often outdated. This isn't in our control.
+
+* **Opera**: Opera shares Chrome's underlying engine, so you can install uBlock simply by grabbing the [latest release for Chrome](https://github.com/chrisaljoudi/uBlock/releases/latest).
 
 ## Performance
 
