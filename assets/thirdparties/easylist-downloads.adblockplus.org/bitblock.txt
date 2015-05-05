@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: JYXhxkVVvfL4G3jFqy1ekg
-! Version: 201505011700
-! Last modified: 01 May 2015 17:00 UTC
+! Checksum: WF1rE703h+kjo5Yc6fKI7Q
+! Version: 201505052300
+! Last modified: 05 May 2015 23:00 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: https://forums.lanik.us/viewforum.php?f=102
 !
@@ -2761,6 +2761,7 @@ _youtube_social_
 ###facebook-module
 ###facebook-panel
 ###facebook-share
+###facebook-share-bot
 ###facebook-slider
 ###facebook-twitter-block
 ###facebook-twitter-block-bottom
@@ -4344,6 +4345,7 @@ _youtube_social_
 ##.SocialButtons
 ##.SocialFollow
 ##.SocialGoogle
+##.SocialGroupIcon
 ##.SocialIcon
 ##.SocialIconsBlock
 ##.SocialLiksFooter
@@ -4518,6 +4520,7 @@ _youtube_social_
 ##.article__footer__sharing
 ##.article__sharing
 ##.article_content_share_text
+##.article_facebook
 ##.article_pageshare_add
 ##.article_pinterest
 ##.article_share
@@ -5903,8 +5906,12 @@ _youtube_social_
 ##.icon-plusone-mini
 ##.icon-reddit
 ##.icon-share
+##.icon-share-facebook
+##.icon-share-instagram
 ##.icon-share-linkedin
+##.icon-share-tumblr
 ##.icon-share-twitter
+##.icon-share-vine
 ##.icon-social
 ##.icon-social-facebook
 ##.icon-social-googleplus
@@ -6254,6 +6261,7 @@ _youtube_social_
 ##.minimal-nav__social
 ##.minimalshare
 ##.minitwitter-widget
+##.mod-facebook
 ##.mod-facebook-fanbox
 ##.mod-fb-connect
 ##.mod-fb-share
@@ -6265,6 +6273,7 @@ _youtube_social_
 ##.mod-social-bar
 ##.mod-social-bar-item
 ##.mod-socialmedia
+##.mod-twitter
 ##.mod_facebook
 ##.mod_follow_us
 ##.mod_social
@@ -6303,6 +6312,7 @@ _youtube_social_
 ##.n-shares
 ##.n-twitter
 ##.nSF_recentShares
+##.nationalsocialshare
 ##.native-share-wrapper
 ##.nav--social
 ##.nav--stay-connected
@@ -6496,6 +6506,7 @@ _youtube_social_
 ##.public-share
 ##.pull-quote-share
 ##.pullquote_shares_wrapper
+##.pw-button-facebook
 ##.pw-facebook
 ##.pw-googleplus
 ##.pw-share-popups
@@ -7013,6 +7024,8 @@ _youtube_social_
 ##.sharethisButton
 ##.sharetip-wrap
 ##.shareto
+##.sharetool__item
+##.sharetool__list
 ##.sharetool_bg
 ##.sharetools
 ##.sharetools-overlay
@@ -7693,6 +7706,7 @@ _youtube_social_
 ##.social_icon_set
 ##.social_icons
 ##.social_images
+##.social_ioc
 ##.social_island
 ##.social_item
 ##.social_layer
@@ -7914,6 +7928,7 @@ _youtube_social_
 ##.st_googleplus_custom
 ##.st_googleplus_large
 ##.st_linkedin_custom
+##.st_pinterest_custom
 ##.st_sharethis
 ##.st_sharethis_custom
 ##.st_sharethis_large
@@ -8344,6 +8359,7 @@ _youtube_social_
 ##.widget-facebook
 ##.widget-facebook-2
 ##.widget-facebook-box
+##.widget-fb
 ##.widget-fb-recommendations
 ##.widget-follow-us
 ##.widget-followus
@@ -9343,8 +9359,6 @@ mail.ru##.s-sharelist
 ! Данные правила относятся к категории "медленных" и потенциально слишком
 ! общих, а потому либо вовсе не подходят для основной подписки, либо требуют
 ! некоторой предварительной обкатки.
-! Popunder
-/^[a-z]+://[^/]+/[a-z0-9]{15,}$/$script
 ! Что-то ещё. MediaRich?
 /^[a-z]+://[a-z-]{10,}\.[a-z]{2,4}/[a-zA-Z0-9/-]{10,16}/$/$third-party,script
 ! http://consultsystems.ru/script/10726/
@@ -9525,6 +9539,7 @@ _userbar_$image
 /interstitial.js
 /iphoneapp-icon.
 /itpsocialbuttons/*
+/jquery.androidbanner.js
 /jquery.snow.js
 /leadin-subscribe.
 /logo_eskup.
@@ -11132,6 +11147,8 @@ _eu_cookie_
 ###cookie_box
 ###cookie_cnil
 ###cookie_consent
+###cookie_disclaimer
+###cookie_disclaimer_wrapper
 ###cookie_header
 ###cookie_info
 ###cookie_law
@@ -11609,6 +11626,7 @@ _eu_cookie_
 ##.js-cookie-message
 ##.js-cookie-policy
 ##.js-cookie-widget
+##.js-cookieComply
 ##.js-cookies
 ##.js-message-cookies
 ##.layerCookie
@@ -11651,6 +11669,9 @@ _eu_cookie_
 ##.warningCookieWrap
 ##.wrapper--cookies
 ##.wrapperCookies
+! Various uk Football splashes
+###splash_mask
+###splash_mask + #splash_box
 ! cartoonnetwork.es/cartoonnetwork.fr
 ##.front-page > #sliding-popup
 ! Ebay European Coookies
@@ -12340,6 +12361,7 @@ lols.ru###dle-content td[style="padding-left:20px;"] > noindex
 turbobit.net###download-top-note
 lockerz.com###exposeMask
 biglion.ru###form_popup_id
+free-torrents.org###forums_list_wrap > br
 autovisio.com.ua###globallasttd > div[class$="-block"] + div[style^="padding:250px"]
 master-css.com###header1 > h2 > span
 alexfilm.cc###headerProxy
@@ -12358,6 +12380,8 @@ fullgames.ru###main > noindex
 rambler.ru###notification.r__distribution-fixed-banner
 autoclub-cerato.ru###outer_forum
 lockerz.com###overlay
+free-torrents.org###page_container > ul > a[style]
+free-torrents.org###page_container > ul > table[style]
 allforpeople.net###pichead
 rbc.ru###popup_box
 rbc.ru###popup_inner
@@ -12475,7 +12499,7 @@ health.mail.ru,news.mail.ru##.s-partners
 ! = Исключения ================================================================
 ! *** easylist:fanboy-addon/fanboy_annoyance_whitelist_general_hide.txt ***
 nasa.gov#@##backToTop
-nasa.gov#@##backtotop
+gcnlive.com,nasa.gov#@##backtotop
 arma3.com,dayz.com#@##go-top
 libcom.org#@##main-share
 carbonads.net#@##mc-embedded-subscribe-form
@@ -12827,24 +12851,24 @@ twitter.com#@#a[href^="https://twitter.com/intent/follow?"]
 pewinternet.org,yellosoft.us#@#a[href^="https://twitter.com/intent/tweet?"]
 facebook.com#@#a[href^="https://www.facebook.com/sharer.php?"]
 stumbleupon.com#@#a[href^="https://www.stumbleupon.com/submit?url="]
-allestörungen.de,facebook.com,google.com,jetpack.wordpress.com,ludins.fr,maxthon.com,twitter.com,wikipedia.org#@#a[title="Facebook"]
+allestörungen.de,facebook.com,google.com,jetpack.wordpress.com,ludins.fr,maxthon.com,opendatacity.de,twitter.com,wikipedia.org#@#a[title="Facebook"]
 google.com,wikipedia.org#@#a[title="Google Plus"]
 google.com,wikipedia.org#@#a[title="Google+"]
 allestörungen.de,google.com,linkedin.com,wikipedia.org#@#a[title="LinkedIn"]
 google.com,wikipedia.org#@#a[title="Pinterest"]
-allestörungen.de,google.com,jetpack.wordpress.com,live.com,maxthon.com,outlook.com,twitter.com,wikipedia.org#@#a[title="Twitter"]
-allestörungen.de,google.com,heise.de,maxthon.com,wikipedia.org#@#a[title="Youtube"]
+allestörungen.de,google.com,jetpack.wordpress.com,live.com,maxthon.com,opendatacity.de,outlook.com,twitter.com,wikipedia.org#@#a[title="Twitter"]
+allestörungen.de,google.com,heise.de,maxthon.com,opendatacity.de,wikipedia.org#@#a[title="Youtube"]
 aliexpress.com#@#a[title="facebook"]
 digg.com#@#div[id^="digg-widget-"]
-disqus.com,facebook.com,google.com,heise.de,incgamers.com,last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,ludins.fr,maxthon.com,t3n.de,twitter.com,whatthetech.com#@#img[alt="Facebook"]
+disqus.com,facebook.com,google.com,heise.de,incgamers.com,last.fm,lastfm.com.br,lastfm.com.tr,lastfm.de,lastfm.es,lastfm.fr,lastfm.it,lastfm.jp,lastfm.pl,lastfm.ru,lastfm.se,ludins.fr,maxthon.com,opendatacity.de,t3n.de,twitter.com,whatthetech.com#@#img[alt="Facebook"]
 google.com,youtube.com#@#img[alt="Google+"]
 google.com,whatculture.com#@#img[alt="Instagram"]
 google.com,linkedin.com#@#img[alt="LinkedIn"]
 breakoutlist.com,facebook.com,google.com#@#img[alt="Pinterest"]
 acceptableads.org,breakoutlist.com,easyicon.net#@#img[alt="Reddit"]
-breakoutlist.com,disqus.com,google.com,hackerone.com,incgamers.com,maxthon.com,twitter.com,whatculture.com,whatthetech.com#@#img[alt="Twitter"]
+breakoutlist.com,disqus.com,google.com,hackerone.com,incgamers.com,maxthon.com,opendatacity.de,twitter.com,whatculture.com,whatthetech.com#@#img[alt="Twitter"]
 theverge.com,twitter.com#@#img[alt="Vine"]
-maxthon.com,whatculture.com#@#img[alt="Youtube"]
+maxthon.com,opendatacity.de,whatculture.com#@#img[alt="Youtube"]
 uservoice.com#@#img[alt="facebook"]
 allestörungen.de,marketplace.firefox.com#@#img[title="Facebook"]
 allestörungen.de#@#img[title="LinkedIn"]
@@ -13026,6 +13050,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||nutshell.com/media/images-landing/integration-logo-$~third-party
 @@||nyt.com^*/sharetools.js$domain=nytimes.com
 @@||onesecond.designly.com/img/*.gif$~third-party
+@@||opendatacity.de/prism/assets/img/logos/logo_facebook_$image
 @@||panzi.github.io/SocialSharePrivacy/
 @@||passets-cdn.pinterest.com^
 @@||patreon.com/images/fb_login_large.png
@@ -13140,6 +13165,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||wsj.net^*/social_icons.png$domain=marketwatch.com
 @@||www.google.*/images/*google.png
 @@||www.google.*/images/*googleplus.png
+@@||www.google.*/landing/now/images/integrations/$image,~third-party
 @@||www.google.*/tv/images/*youtube.png
 @@||www.google.*/tv/images/youtube.jpg
 @@||xda-developers.com^*/google-plus-login-small.png

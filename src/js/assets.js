@@ -19,7 +19,7 @@
     Home: https://github.com/chrisaljoudi/uBlock
 */
 
-/* global vAPI, µBlock, YaMD5 */
+/* global vAPI, µBlock */
 
 /*******************************************************************************
 
@@ -778,11 +778,6 @@ var readRepoOnlyAsset = function(path, callback) {
     var onRepoFileLoaded = function() {
         if ( typeof this.responseText !== 'string' ) {
             console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): no response', path, repositoryURL);
-            cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
-            return;
-        }
-        if ( YaMD5.hashStr(this.responseText) !== assetEntry.repoChecksum ) {
-            console.error('µBlock> readRepoOnlyAsset("%s") / onRepoFileLoaded("%s"): bad md5 checksum', path, repositoryURL);
             cachedAssetsManager.load(path, onCachedContentLoaded, onCachedContentError);
             return;
         }

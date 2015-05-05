@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: jd+/Gzk9TfTVexSB3h37Bw
+! Checksum: oau9amFfmLuo4wNcrNebeQ
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201505011943
+! Version: 201505060030
 
-! Last modified: 2015-05-01 19:43 JST(UTC+0900)
+! Last modified: 2015-05-06 00:30 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -4293,6 +4293,7 @@
 ^mutual_link.$script,subdocument
 ^mutual_link^$script,subdocument
 ^mutual_link_$script,subdocument
+^MyAffiliatesID^$popup
 ^nielsen-
 ^nielsen.
 ^nielsen^
@@ -5822,6 +5823,7 @@ _yahooads_
 ! ||adf.ly^$third-party
 ||adfoc.us^$popup
 ||adforce.ru^$third-party
+||adforgeinc.com^$third-party
 ||adform.net^$third-party
 ||adfox.ru^$third-party
 ||adfunky.com^$third-party
@@ -6405,7 +6407,7 @@ _yahooads_
 ||go.biglobe.ne.jp^
 ||bigmir.net^$third-party
 ||binaryprofessional.com$popup
-||bing.com/c.$image,object
+||bing.com/c.$image,object,subdocument
 ||bing.com/fd/ls/
 ||binlayer.com^$third-party
 ||binmedia.ru^$third-party
@@ -7597,6 +7599,7 @@ _yahooads_
 ||b6q3i6c7*.hwcdn.net^
 ||c3d7h8i5*.hwcdn.net^
 ||d2a8a4q9*.hwcdn.net^
+||d7z6w5f5*.hwcdn.net^
 ||e4r5k5v8*.hwcdn.net^
 ||i5n8q4p6*.hwcdn.net^
 ||k4j4s7i3*.hwcdn.net^
@@ -7737,6 +7740,7 @@ _yahooads_
 ||insightexpressai.com^
 ||inskinmedia.com^$third-party
 ||inspectlet.com^$third-party
+||inspsearchapi.com^
 ||installerdatauk.info^
 ||installstate.com^$popup
 ||instant-download.net^
@@ -8861,6 +8865,7 @@ _yahooads_
 ||pubgears.com^$third-party
 ||publicidees.com^$third-party
 ||pubmatic.com^$third-party
+||pubnub.com^$third-party
 ||pubsqrd.com^$third-party
 ||pubted.com^
 ||pulse360.com^$third-party
@@ -9211,9 +9216,11 @@ _yahooads_
 ||shendu.cc^$third-party
 ||shibkoshu.ru^
 ||shinobi.jp/analyze/
+||shinobi.jp/asumi/
 ||shinobi.jp/tadaima/
 ||adm.shinobi.jp^
 ||analysis.shinobi.jp^$domain=~analysis.shinobi.jp
+||asumi.shinobi.jp
 ||dumbo.shinobi.jp^
 ||nsm.shinobi.jp^
 ||axad.shinobi.jp^
@@ -9248,6 +9255,7 @@ _yahooads_
 ||rcm.shinobi.jp^
 ||samurai.shinobi.jp^
 ||st.shinobi.jp^
+||v2st.shinobi.jp
 ||vis1.shinobi.jp^
 ||vis2.shinobi.jp^
 ||vis3.shinobi.jp^

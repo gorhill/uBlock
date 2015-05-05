@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: A9PICowBUXxez2XZ1q7Qwg
-! Version: 201505011700
-! Last modified: 01 May 2015 17:00 UTC
+! Checksum: 3V7dYpBjE5kgmkONcFABcg
+! Version: 201505052300
+! Last modified: 05 May 2015 23:00 UTC
 ! Homepage: https://forums.lanik.us/viewforum.php?f=102
 !
 ! Дополнительная региональная подписка RU AdList к подписке EasyList
@@ -350,6 +350,7 @@ by,ru,ua##.banner_box
 /?t=*&noadult=1&pid=$script
 /?t=b&blockids=$script
 /?t=rot&pid=$script
+/^https?://[^/]+/[a-z0-9]{15,}$/$script
 /abnl/?ucozads^
 /ad_click/*$object
 /adfox/*$image,object,script,subdocument
@@ -1862,6 +1863,7 @@ _tizers.
 ||adgamble.net^
 ||adlabs.ru^$third-party
 ||adlift.ru^$third-party
+||admitlead.ru^$third-party
 ||admixercreatives.blob.core.windows.net^$third-party
 ||adname.ru^$third-party
 ||adpod.in^
@@ -2129,6 +2131,7 @@ _tizers.
 ||excalatom.com^
 ||exchangenews.ru^$third-party
 ||extronext.ru^
+||eznagi.ru^
 ||fafggde.net^
 ||faggrim.com^
 ||fastsearcher.ru^
@@ -2523,6 +2526,7 @@ _tizers.
 ||nolix.ru^
 ||nonoqcm.net^
 ||noptes.ru^
+||nostushi.ru^
 ||nrged.com^
 ||nuigyin.net^
 ||numberia.com^
@@ -3145,6 +3149,7 @@ spbit.ru###banners > a
 unionpeer.org###bg-banner
 delo.ua###bg-brander-promo
 topgame.su###bg_img
+allboxing.ru###block-block-89
 bigpicture.ru###bn_top_2
 tapochek.net###body_container > span
 biwork.ru###bottompos
@@ -3183,6 +3188,7 @@ kino-teatr.ru###header_banner
 ekabu.ru###hpizza
 novosti.dn.ua###infobar_2
 inoe.name###inoe-banner
+free-torrents.org###latest_news > .spacer_8 + div[style]
 fast-torrent.ru###leftmenu h1 > span[style]
 noteru.com###lenta > .wt
 now.ru###lightbox
@@ -3264,6 +3270,7 @@ post-tracker.ru##.aimage
 mediapapa.org##.am
 hdkinomax.com##.argo-bg
 nick-name.ru##.articles
+free-torrents.org##.attach ~ .tCenter
 auto.e1.ru##.au-main-container_e1 > noindex
 nn.ru##.au-top-ads-container
 siliconrus.com##.b-adv
@@ -3418,6 +3425,7 @@ afisha.ru##.page_block_content_adv-header
 msn.com##.paging-container > .ad
 ain.ua##.post_ads_full
 talkwebber.ru##.post_block ~ table
+free-torrents.org##.post_body > .tCenter
 virusinfo.info##.postcontainer[id^="yui-gen"]
 allmoldova.com,rentv-smolensk.ru##.promo
 4pda.ru##.promo-box
@@ -3455,6 +3463,7 @@ kanobu.ru##.side-banner
 kanobu.ru##.sidebar-banner
 fast-torrent.ru,unionpeer.org##.site-brand
 gorodvkusa.ru##.slider-wrapper
+free-torrents.org##.spacer_8
 2ip.ru##.speed_banner
 satsis.info##.st-allbanners
 tod-news.com##.stamp_main ~ .item
@@ -3578,7 +3587,6 @@ newsvl.ru##div[id][style="height: 80px;"]
 exler.ru##div[id^="Banner"]
 poiskvps.ru##div[id^="FlashBanner-"]
 brb.to,cxz.to,fs.to##div[id^="admixer_async_"]
-allboxing.ru##div[id^="block-block-"] .ext
 all-episodes.com,cwer.ws,hdrezka.tv,history.vn.ua,kino-dom.tv,maccentre.ru,seedoff.net,ukrlit.vn.ua,uniongang.tv##div[id^="bn_"]
 lewi.ru##div[id^="news-id-"] ~ *
 sport-express.ru##div[id^="rdminfrm_"]
@@ -3590,6 +3598,7 @@ mega-tracker.net##div[style$="#CCCCCC;"]
 yablyk.com##div[style*="-ad-bg-"]
 multik-online.net##div[style*=".am15."]
 censor.net.ua##div[style*="/branding/"]
+bikepost.ru##div[style*="block"][style*="center"][style*="width:"][style*="height:"]
 vpk.name##div[style*="border:1px solid #f00;"]
 brb.to,cxz.to,fs.to##div[style*="min-height: 274px;"]
 binmovie.org##div[style*="width: 240px; height: 600px"]
@@ -3601,8 +3610,10 @@ adme.ru##div[style="min-height:138px;"]
 oper.ru##div[style="width: 100%; height: 290px; min-width: 1000px; text-align: center;"]
 softobase.com##div[style="width:336px; height:280px;"]
 appstudio.org##div[style^="width:100%; height:90px;"]
+free-torrents.org##fieldset.attach
 pise4ka.com##iframe[src="/site/in"]
 goldroyal.net##img[width="140"][height="30"]
+bikepost.ru##img[width="240px"][height="240px"]
 prankota.com##img[width="250"][height="250"]
 giclub.tv##img[width="484"][height="62"]
 prankota.com##img[width="728px"][height="90px"]
@@ -3859,8 +3870,6 @@ qip.ru###rightPanelBanner
 brd24.com###right_col > br
 mors-barnaul.sibnet.ru###right_place_wrapper
 oszone.net###rightcol-c > div > noindex
-bikepost.ru###rolm
-bikepost.ru###rolm2
 forzajuve.ru###root-wrapper > .top-module-container
 ekranka.tv###rrrFooter
 ekranka.tv###rrrHeader
@@ -3895,7 +3904,6 @@ tnt-online.ru###tegA3
 zh24.com###test
 forum-profit.ru###threadslist > tbody:not([id]):last-child
 livelib.ru,shkolazhizni.ru,zadolba.li###top
-bikepost.ru###top + div[style$="height: 90px;"]
 all-episodes.com###top-b
 macovod.net###top-band-2
 kinopod.ru###top-banner
@@ -4703,7 +4711,7 @@ rl-team.net##noindex > .search_result
 siteua.org##noindex > [class$="-block"]
 macosworld.ru##noindex > a > [width="250"][height="250"]
 vp.donetsk.ua##noindex > a[rel="nofollow"] > img[width="255"]
-allboxing.ru,compress.ru##noindex > a[rel="nofollow"][target="_blank"]
+compress.ru##noindex > a[rel="nofollow"][target="_blank"]
 animemaga.ru##noindex > a[style][target="_blank"]
 free-torrents.org##noindex > center
 obnimau.ru##noindex > center > table
@@ -6722,7 +6730,7 @@ internetsms.org##.fade[class^="modal"]
 ! - Против "бесконечной загрузки страниц" -------------------------------------
 !#excompat.bookmark
 @@/getCodeTest?$script,domain=echo.msk.ru|kakprosto.ru|lenta.ru|livejournal.com|meduza.io|motor.ru|now.ru|sovsport.ru|vesti.ru
-@@/prepareCode?$script,domain=echo.msk.ru|eljur.ru|livejournal.com|meduza.io|rg.ru|sovsport.ru|tnt-online.ru
+@@/prepareCode?$script,domain=ctc.ru|echo.msk.ru|eljur.ru|livejournal.com|meduza.io|rg.ru|sovsport.ru|tnt-online.ru
 @@/prepareCode?*&pct=a&$script,domain=7days.ru|championat.com|now.ru|rambler.ru|vesti.ru
 @@/prepareCode?*&prr=*&dl=$script,domain=aif.ru|diary.ru|irr.ru|kakprosto.ru|lenta.ru|motor.ru|rosbalt.ru|soccer.ru|sport-express.ru|vesti.ru
 @@/prepareCode?*&puid1=|$domain=rg.ru

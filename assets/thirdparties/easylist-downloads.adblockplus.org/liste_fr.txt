@@ -1,6 +1,6 @@
 [Adblock Plus 2.0]
-! Checksum: 6D6VzTx19l1Ftk63KgPhMg
-! Version: 201505011702
+! Checksum: Evtl76h6TvWHMyZKB59WGQ
+! Version: 201505052302
 ! Liste FR ~ Filtres francophones complémentaires à EasyList
 ! Title: Liste FR
 ! Licence : http://www.adblock-listefr.com/A_propos
@@ -64,6 +64,7 @@
 /doubleclick_dmm/*
 /EpubDelivery/*
 /fod_ad_
+/generateAds.
 /iframe_pub_
 /IFrameStoreReciever.
 /images/sponsored?
@@ -83,6 +84,7 @@
 /pub728x90.
 /pub_428x90.
 /pub_72890_
+/pubdirecte_
 /publ1c1te.
 /publicite-
 /publicite.
@@ -96,6 +98,7 @@
 /publisher_configurations.
 /regie_pub/*
 /regiepub/*
+/script/campagne.php?cp=$popup
 /sdk-ads.
 /sdk-ads/*
 /ttn_adspaces
@@ -123,6 +126,7 @@ _Social-Advert-
 !
 !----------------------- Annonceurs -----------------------!
 !
+||146.148.85.61^$third-party
 ||188.165.253.6^$popup,third-party
 ||1sponsor.com^$third-party
 ||2mdn.net^$object-subrequest,domain=dhnet.be
@@ -222,6 +226,8 @@ _Social-Advert-
 ||comandclick.com^$third-party
 ||comoclic.net^$third-party
 ||congruityheterocephalus.info^$third-party
+||coolood.biz^$popup
+||coolood.biz^$third-party
 ||cougar-rencontre.net^$third-party
 ||ctpsrv.com^$third-party
 ||danstonfion.com^$popup,third-party
@@ -317,6 +323,7 @@ _Social-Advert-
 ||monetize-me.com^$third-party
 ||moneytize.fr^$third-party
 ||motorsregie.com^$third-party
+||multiupload.com/$popup,third-party
 ||myspot.fr^$third-party
 ||myxpub.com^$third-party
 ||n1.webedia.fr^$third-party
@@ -408,6 +415,7 @@ _Social-Advert-
 ||t4b.tv^$third-party
 ||teads.fr^$third-party
 ||the-adult-company.com^$popup,third-party
+||theadgateway.com^$third-party
 ||themoneytizer.com^$third-party
 ||tmcregie.fr^$third-party
 ||tnx.net^$third-party
@@ -424,6 +432,10 @@ _Social-Advert-
 ||tradetracker.net^$third-party
 ||trafic-booster.biz^$third-party
 ||traficmax.com^$third-party
+||video1404.info^$popup
+||video1404.info^$third-party
+||videoroow.com^$popup
+||videoroow.com^$third-party
 ||videos-x.me^$third-party
 ||videostep.com^$third-party
 ||vshop.fr^$third-party
@@ -2119,6 +2131,8 @@ igen.fr,macg.co,refurbgeneration.com##a[href^="http://ad.zanox.com/"]
 ###adsHaut
 ###adsense_haut
 ###adspave
+###advertise1
+###advertise2
 ###annonce_pub
 ###annonce_pub2
 ###annonce_pub_contenu
@@ -2638,9 +2652,11 @@ zonebourse.com###Middle2_id
 mypornmotion.com###Pub
 mypornmotion.com###VideoPub300x250
 porn-tube-sexe.com,sexytout.com###\5f email_catcher
+commentcamarche.net###a0
 mappy.com###a300x600
 ecranlarge.com###aNePasManquer
 xboxunlimited.fr###abos
+hqq.tv###ad
 liveradio.fr###ad1
 meteomedia.com###ad300x250 + * + * + * + *
 mediatntsat.com###ad_archive_above_content1
@@ -2653,7 +2669,7 @@ courrierlaval.com###add_bottom
 courrierlaval.com,letraitdunion.com###add_top
 mistergoodmovies.net###addspace
 streamingvideos.fr###adpanel\ fr
-ecogine.org,full-stream.net,telechargementgratuits.com###ads
+ecogine.org,full-stream.me,full-stream.net,telechargementgratuits.com###ads
 ustart.org###ads_tall
 algerie360.com###adssouspost
 nowvideo.eu###adv1
@@ -3622,6 +3638,7 @@ fullanimes.free.fr##a[href^="http://www.allopass.com/check/red.php"] > img
 alsacreations.com##a[href^="http://www.amazon.fr/gp/product/"]
 usbfix.net##a[href^="http://www.bitdefender.fr/media/"]
 centre-audition.com##a[href^="http://www.centre-audition.com/catalog/redirect.php?action=banner&"]
+dzsat.org##a[href^="http://www.dzsat.org/forum/rbs_banner.php?"]
 gizmodo.fr##a[href^="http://www.ebuyclub.com/operations/gizmodo/entreeGizmodo.jsp?"]
 forumconstruire.com##a[href^="http://www.forumconstruire.com/torm3/click.php?"]
 9rayti.com##a[href^="http://www.ilycee.com/?utm_source="]
@@ -3702,6 +3719,7 @@ douniamusic.com##div[style="margin-top:10px;float:left;height:250px;width:250px;
 moov.mg##div[style="margin-top:5px;float:auto;width:100%;height:250px;text-align:center"]
 webrankinfo.com##div[style="margin: 0; padding: 5px 8px 5px 8px; background: url(http://www.webrankinfo.com/images/design/fd_blockquote.png) no-repeat 0 100%; font-size: 1.3em; color: black; width: 615px;"]
 supportduweb.com##div[style="margin:auto;margin-top:2px;width:728px;height:90px;"]
+coolkora.com##div[style="max-width: 302px;overflow:hidden;margin: 0 auto;"]
 lafermeduweb.net##div[style="overflow: hidden; width: 300px; height: 280px; margin: 0 auto;"]
 lafermeduweb.net##div[style="overflow: hidden; width: 336px; height: 280px; margin: 0 auto;"]
 regarder-film-gratuit.com##div[style="padding-top:5px;float:left;width:100%;font-size:13px;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:left"]
@@ -3753,6 +3771,7 @@ developpez.net,piratertelecharger.fr##iframe[width="300"][height="250"]
 developpez.net,piratertelecharger.fr##iframe[width="728"][height="90"]
 freemindparlexemple.fr##img[alt="Banniere_ENI"]
 dl.free.fr##img[onclick^="window.open('http://logiciel.telechargement.fr/redirprod.html?"]
+sh.st##img[src^="data:image/png;base64,"]
 sortir.eu##img[src^="http://www.lille.sortir.eu/portal_banneradmin/"]
 zataz.com##img[style="border: 0px solid ; width: 300px; height: 250px;"]
 zataz.com##img[style="border: 0px solid; width: 300px; height: 250px;"]
@@ -4021,9 +4040,8 @@ lien-torrent.com##u > a:not([href*="lien-torrent.com"]):not([href*="../"]):not([
 ! Anti-Adblock
 ! A l'attention des webmasters : https://easylist.adblockplus.org/blog/2013/05/10/anti-adblock-guide-for-site-admins
 ! onvasortir.com
-@@||onvasortir.com/fuckadblock.js
-@@||onvasortir.com/publicite.html?
-@@||onvasortir.com^$elemhide
+@@|http://r.sascdn.com/diff/js/smart.js$script,domain=onvasortir.com
+@@||ww62.smartadserver.com/config.js?$script,domain=onvasortir.com
 ||onvasortir.com/fondnivea.jpg
 ||onvasortir.com/habillage_$image
 ||onvasortir.com/pub/
@@ -4097,6 +4115,7 @@ ville-ideale.com###sp
 ||calicomacrocosmic.org^$third-party
 ||cambodianmonetaryunitmalthus.org^$third-party
 ||capitalofuruguaygazellasubgutturosa.ws^$third-party
+||cappedmacaqueoleandramollis.me^$third-party
 ||captiousmagnoliasoulangiana.org^$third-party
 ||cardueliscarduelisselaginellaceae.org^$third-party
 ||cdgibsonblackbirch.com^$third-party
@@ -4122,6 +4141,7 @@ ville-ideale.com###sp
 ||counterparthaberdashery.com^$third-party
 ||creationsciencelinesquall.com^$third-party
 ||ctenocephalidesfelisaxolotl.org^$third-party
+||cumulativelymeclofenamate.me^$third-party
 ||cysticgenuscoeloglossum.org^$third-party
 ||davenportbowmanscapsule.net^$third-party
 ||debonnairenuclearfusion.org^$third-party
@@ -4142,6 +4162,7 @@ ville-ideale.com###sp
 ||electricheaterlymphangiectasis.info^$third-party
 ||elegistgenusptilocercus.info^$third-party
 ||emmyballade.org^$third-party
+||endstoppedoutthrust.net^$third-party
 ||envelopeonocleasensibilis.com^$third-party
 ||equilibriumlawcampanulaaparinoides.info^$third-party
 ||eroticnewsprogram.info^$third-party
@@ -4275,6 +4296,7 @@ ville-ideale.com###sp
 ||patrilineagefashion.biz^$third-party
 ||perspirercetacea.info^$third-party
 ||phytophagoustransferee.info^$third-party
+||pinusnigradiabolize.info^$third-party
 ||polypeptidetoea.info^$third-party
 ||portepartheniumhysterophorus.net^$third-party
 ||posingfamilymustelidae.org^$third-party
@@ -4345,9 +4367,6 @@ ville-ideale.com###sp
 ||unbodiediridaceousplant.net^$third-party
 ||underlaymentgallstone.net^$third-party
 ! Adunblock
-|http://*.onair-o.com^$third-party
-|http://*.oneindonesia.co.id^$third-party
-|http://*.womenclothingtoday.com^$third-party
 ||accomplir.science^$third-party
 ||accorder.science^$third-party
 ||achever.science^$third-party
@@ -4362,6 +4381,8 @@ ville-ideale.com###sp
 ||ampoule.ovh^$third-party
 ||amuser.science^$third-party
 ||anglais.science^$third-party
+||anticyclone.science^$third-party
+||appartement.science^$third-party
 ||arome.science^$third-party
 ||arriere.science^$third-party
 ||attirer.science^$third-party
@@ -4395,10 +4416,7 @@ ville-ideale.com###sp
 ||taper.ovh^$third-party
 ||tournevis.ovh^$third-party
 !
-@@|http://*.onair-o.com/*.js|$script,third-party
-@@|http://*.oneindonesia.co.id/*.js|$script,third-party
-@@|http://*.womenclothingtoday.com/*.js|$script,third-party
-@@||accomplir.science/*.js|$script,third-party
+@@|http://*.science/*.js|$script,third-party
 @@||accorder.science/*.js|$script,third-party
 @@||achever.science/*.js|$script,third-party
 @@||adunblock.com/*.js|$script,third-party
@@ -4410,6 +4428,8 @@ ville-ideale.com###sp
 @@||ampoule.ovh/*.js|$script,third-party
 @@||amuser.science/*.js|$script,third-party
 @@||anglais.science/*.js|$script,third-party
+@@||anticyclone.science/*.js|$script,third-party
+@@||appartement.science/*.js|$script,third-party
 @@||arome.science/*.js|$script,third-party
 @@||arriere.science/*.js|$script,third-party
 @@||attirer.science/*.js|$script,third-party

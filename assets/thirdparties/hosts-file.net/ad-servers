@@ -386,6 +386,7 @@
 127.0.0.1	1829.bitterstrawberry.com
 127.0.0.1	183.6.87.194.dynamic.dol.ru
 127.0.0.1	184.6.87.194.dynamic.dol.ru
+127.0.0.1	18439.rejectclick.com
 127.0.0.1	1846.bitterstrawberry.com
 127.0.0.1	185.6.87.194.dynamic.dol.ru
 127.0.0.1	186.6.87.194.dynamic.dol.ru
@@ -14394,6 +14395,7 @@
 127.0.0.1	h2.msn.com
 127.0.0.1	hab3n.trackvoluum.com
 127.0.0.1	hadj1-a.akamaihd.net
+127.0.0.1	hairg.biz
 127.0.0.1	hal9000.redintelligence.net
 127.0.0.1	halc.iadvize.com
 127.0.0.1	haley-seeber.us
@@ -14562,6 +14564,7 @@
 127.0.0.1	hittrack.org
 127.0.0.1	hitweb.org
 127.0.0.1	hitweb2.chosun.com
+127.0.0.1	hitwebcounter.com
 127.0.0.1	hitx.net
 127.0.0.1	hitzr.com
 127.0.0.1	hiwire.com
@@ -15999,6 +16002,7 @@
 127.0.0.1	lifetoyou.justclick.ru
 127.0.0.1	lift.openx.com
 127.0.0.1	liftopia.go2cloud.org
+127.0.0.1	lightedpages.com
 127.0.0.1	lijit.com
 127.0.0.1	likebtn.com
 127.0.0.1	liliana-prokop.us
@@ -17156,6 +17160,10 @@
 127.0.0.1	mngidmn.112.2o7.net
 127.0.0.1	mngirockymtnnews.112.2o7.net
 127.0.0.1	mngislctrib.112.2o7.net
+127.0.0.1	mno1.hairg.biz
+127.0.0.1	mno2.hairg.biz
+127.0.0.1	mno3.hairg.biz
+127.0.0.1	mno4.hairg.biz
 127.0.0.1	mnstat.com
 127.0.0.1	mntr.babcdn.com
 127.0.0.1	moadnet.com
@@ -18007,6 +18015,7 @@
 127.0.0.1	omg247.us4.list-manage2.com
 127.0.0.1	omg247.us5.list-manage1.com
 127.0.0.1	omg247.us5.list-manage2.com
+127.0.0.1	omnaling.com
 127.0.0.1	omni.canadiantire.ca
 127.0.0.1	omni.finanzen100.de
 127.0.0.1	omni.holidaycheck.com
@@ -18037,6 +18046,7 @@
 127.0.0.1	onepassnetwork.com
 127.0.0.1	onespot-tracking.herokuapp.com
 127.0.0.1	onestat.com
+127.0.0.1	onestatfree.com
 127.0.0.1	onet.hit.stat.pl
 127.0.0.1	online-dohod.justclick.ru
 127.0.0.1	online.adservicemedia.dk
@@ -19492,6 +19502,7 @@
 127.0.0.1	reichelt02.webtrekk.net
 127.0.0.1	reina-petty.us
 127.0.0.1	reisprei.ivwbox.de
+127.0.0.1	rejectclick.com
 127.0.0.1	reklam.rfsl.se
 127.0.0.1	reklama.internet.cz
 127.0.0.1	reklama.reflektor.cz
@@ -24169,6 +24180,7 @@
 127.0.0.1	www.160tracker.com
 127.0.0.1	www.1ad.de
 127.0.0.1	www.1clickdownloader.com
+127.0.0.1	www.1empiredirect.com
 127.0.0.1	www.1phads.com
 127.0.0.1	www.1worldmarket.com
 127.0.0.1	www.2.livejasmin.com
@@ -25120,6 +25132,7 @@
 127.0.0.1	www.guestbook.superstats.com
 127.0.0.1	www.guid.org
 127.0.0.1	www.hab3n.trackvoluum.com
+127.0.0.1	www.hairg.biz
 127.0.0.1	www.haley-seeber.us
 127.0.0.1	www.handyseek.com
 127.0.0.1	www.hardcoretraffic.com
@@ -25153,6 +25166,7 @@
 127.0.0.1	www.hitslink.com
 127.0.0.1	www.hitsniffer.com
 127.0.0.1	www.hittrack.org
+127.0.0.1	www.hitwebcounter.com
 127.0.0.1	www.hitwise.co.uk
 127.0.0.1	www.hitx.net
 127.0.0.1	www.hkik.ru
@@ -25393,6 +25407,7 @@
 127.0.0.1	www.liana-carls.us
 127.0.0.1	www.liana-millican.us
 127.0.0.1	www.liczniki.org
+127.0.0.1	www.lightedpages.com
 127.0.0.1	www.likebtn.com
 127.0.0.1	www.liliana-prokop.us
 127.0.0.1	www.lily-mcnamara.us
@@ -25683,12 +25698,14 @@
 127.0.0.1	www.olivia-dibenedetto.us
 127.0.0.1	www.olizyr.com
 127.0.0.1	www.omarsys.com
+127.0.0.1	www.omnaling.com
 127.0.0.1	www.omniture.com
 127.0.0.1	www.omtrdc.net
 127.0.0.1	www.onclickads.net
 127.0.0.1	www.oneandonlynetwork.com
 127.0.0.1	www.onelouder.com
 127.0.0.1	www.onestat.com
+127.0.0.1	www.onestatfree.com
 127.0.0.1	www.onlineemailmarketing.com
 127.0.0.1	www.onlinetraffic.info
 127.0.0.1	www.onyarysh.ru
@@ -25838,6 +25855,7 @@
 127.0.0.1	www.redir04mail.com
 127.0.0.1	www.reduxmediia.com
 127.0.0.1	www.reformal.ru
+127.0.0.1	www.rejectclick.com
 127.0.0.1	www.renata-winstead.us
 127.0.0.1	www.renee-gratton.us
 127.0.0.1	www.renee-neubauer.us
@@ -26847,4 +26865,4 @@
 127.0.0.1	zz.cqcounter.com
 127.0.0.1	zz.zeroredirect1.com
 127.0.0.1	_thums.ero-advertising.com
-# Hosts: 26839
+# Hosts: 26857

@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: rMc99bdlI4m26AqUNFdg8w
-! Version: 201505011701
+! Checksum: td85BN+BUkec4ma7y4Re+w
+! Version: 201505052301
 ! Title: EasyPrivacy
-! Last modified: 01 May 2015 17:01 UTC
+! Last modified: 05 May 2015 23:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2546,6 +2546,7 @@ http://utm.
 ||bigstats.net^$third-party
 ||bigtracker.com^$third-party
 ||bionicclick.com^$third-party
+||bitrix.info^$third-party
 ||bizible.com^$third-party
 ||bizo.com^$third-party
 ||bizspring.net^$third-party
@@ -3655,6 +3656,7 @@ http://utm.
 ||smart-ip.net^$third-party
 ||smarterremarketer.net^$third-party
 ||smartracker.net^$third-party
+||smartzonessva.com^$third-party
 ||smfsvc.com^$third-party
 ||smileyhost.net^$third-party
 ||smrtlnks.com^$third-party
@@ -4876,6 +4878,7 @@ http://utm.
 ||app.bronto.com^
 ||app.cdn-cs.com/__t.png?
 ||app.insightgrit.com^
+||app.pendo.io/data/ptm.gif
 ||app.yesware.com/t/$third-party
 ||appdynamics.com/geo/$third-party
 ||appliedsemantics.com/images/x.gif
@@ -5708,6 +5711,7 @@ http://utm.
 ||rokt.com/pixel/
 ||royalecms.com/statistics.php?
 ||rtt.campanja.com^
+||ru4.com/click?
 ||s.clickability.com^
 ||s.sniphub.com^
 ||s3-tracking.synthasite.net.s3.amazonaws.com^
@@ -5784,6 +5788,7 @@ http://utm.
 ||stats.cdn.playfair.co.za^
 ||stats.clickability.com^
 ||stats.clipprtv.com^$third-party
+||stats.cnevids.com^
 ||stats.complex.com^
 ||stats.datahjaelp.net^
 ||stats.directnic.com^
@@ -6122,6 +6127,7 @@ http://utm.
 ||woolik.com^*^tracker^
 ||wopweb.net/services/counters/
 ||worldssl.net/reporting.js$third-party
+||wp-stat.s3.amazonaws.com^
 ||wpdigital.net/metrics/
 ||ws.amazon.com/widgets/*=gettrackingid|
 ||wsf.com/tracking/$third-party
@@ -7490,6 +7496,7 @@ http://utm.
 ||issuu.com/pixel.gif?
 ||itp.net/ga.js
 ||itv.com/_app/cmn/js/bcm.js
+||ixquick.com/do/avt?$image
 ||ixs1.net/s/
 ||jack.allday.com^
 ||jakpost.net/jptracker/
@@ -8111,6 +8118,7 @@ http://utm.
 ||squidoo.com/track/
 ||srt.pch.com^
 ||ssl-stats.wordpress.com^
+||startpage.com/do/avt?$image
 ||stat.alibaba.com^
 ||stat.dealtime.com^
 ||stat.ruvr.ru^
@@ -8558,6 +8566,7 @@ http://utm.
 ||yahoo.com/__perf_log_
 ||yahoo.com/_td_api/beacon/
 ||yahoo.com/b?
+||yahoo.com/beacon/
 ||yahoo.com/neo/stat
 ||yahoo.com/neo/ygbeacon/
 ||yahoo.com/neo/ymstat
@@ -9475,6 +9484,7 @@ http://utm.
 @@||craveonline.com^*/google-analytics.min.js
 @@||crowdscience.com/max-$script,domain=everydayhealth.com
 @@||crowdscience.com/start-$script,domain=everydayhealth.com
+@@||cschat.ebay.com^*/scripts/log.js
 @@||csdata1.com/data/js/$domain=acehardware.com
 @@||csid.com/wp-content/plugins/bwp-minify/min/?*/google-analyticator/$script
 @@||csoonline.com/js/demandbase.js
@@ -9855,6 +9865,7 @@ http://utm.
 @@||112.2o7.net/b/ss/$image,domain=espn.com.br
 @@||122.2o7.net/b/ss/$image,domain=billetnet.dk|billettservice.no|citibank.co.in|goal.com|lippupalvelu.fi|pcworld.com|riverisland.com|techhive.com|ticketmaster.ae|ticketmaster.co.uk|ticketmaster.de|ticketmaster.ie|ticketmaster.nl|ticnet.se
 @@||amazoncustomerservice.d2.sc.omtrdc.net/b/ss/*/H.25.1/$image
+@@||castorama.fr/b/ss/$image
 @@||fandango.com/b/ss/$image
 @@||globalnews.ca/b/ss/$image
 @@||info.seek.com/b/ss/$image,domain=seek.com.au
@@ -9990,6 +10001,7 @@ http://utm.
 @@||s-msn.com^*/udctrack*.js$domain=ynet.com
 @@||streaming.cri.com.hk/geo.php?
 @@||uwants.com/include/*/swfaddress.js
+@@||v.blog.sohu.com/dostat.do?*&n=videoList_vids&$script
 @@||vanclimg.com/js.ashx?*/google-analytics.js$domain=vancl.com
 @@||wenxuecity.com/data/newscount/$image,domain=wenxuecity.com
 @@||wrating.com/a1.js$domain=tudou.com|ynet.com

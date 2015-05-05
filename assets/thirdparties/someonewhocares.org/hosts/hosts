@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Apr 29th, 2015 at 18:40
+# Last updated: May 2nd, 2015 at 02:41
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -5721,6 +5721,7 @@
 #127.0.0.1 da.feedsportal.com	# interferes with TechRepublic email newsletters
 127.0.0.1 d.agkn.com
 127.0.0.1 daily-saver.com
+127.0.0.1 damamaty.tk
 127.0.0.1 damavandkuh.com
 127.0.0.1 darakht.com
 127.0.0.1 darmowe-liczniki.info
@@ -7032,7 +7033,7 @@
 127.0.0.1 pixel.adsafeprotected.com
 127.0.0.1 pixel.everesttech.net
 127.0.0.1 pixel.mathtag.com
-127.0.0.1 pixel.quantserve.com
+#127.0.0.1 pixel.quantserve.com		# Interferes with Video on CBS and Comcast
 127.0.0.1 pixel.sitescout.com
 127.0.0.1 plasmatv4free.com
 127.0.0.1 plasmatvreward.com

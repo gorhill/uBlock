@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: mkZu7rm8uZp0sS+YXq4aaw
+! Checksum: OvP3fEan73ZClwrVlA1xKQ
 ! Title: EasyList Hebrew
-! Last modified: 30/04/15 09:30
+! Last modified: 05/05/15 15:23
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -319,16 +319,14 @@
 @@||banners.hosting-il.com^$domain=cinema-city.co.il
 @@||bhol.co.il/imagebank/400x250
 @@||bipbip.co.il/Images/Ads/$~third-party
-@@||blogspot.com$image,domain=goalim4u.org|goalim4u.pw|goalim4you.com
+@@||blogspot.com$image,domain=goalim4you.net
 @@||bs.serving-sys.com/BurstingPipe/adServer.bs?cn=is&c=*VAST$object-subrequest
 @@||bs.serving-sys.com/crossdomain.xml$object-subrequest
 @@||c04dl.vds-is.castup.net/crossdomain.net
 @@||cbci16.b1.cdn.co.il^
 @@||ds.serving-sys.com/BurstingRes/$object-subrequest,domain=one.co.il
 @@||easy.co.il/adsense.js
-@@||goalim4u.org^$elemhide
-@@||goalim4u.pw^$elemhide
-@@||goalim4you.com^$elemhide
+@@||goalim4you.net^$elemhide
 @@||googleadservices.com/gpt/pubads_$domain=m.ynet.co.il
 @@||googleapis.com/flash$object-subrequest,domain=globes.co.il
 @@||googlesyndication.com/safeframe/$domain=m.ynet.co.il
@@ -353,7 +351,6 @@
 @@||one.co.il/images/Ads/2011/12/26/1015/logo_51x20.gif
 @@||one.co.il/images/Ads/2013/10/20/2230/racer_51x20hp.png
 @@||one.co.il/images/ads/2014/06/02/1415/MNDL2.swf
-@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=goalim4u.org
 @@||parkinson.org.il/_Uploads/dbsBanners/
 @@||players.edgesuite.net/flash/analytics/qos$domain=mako.co.il
 @@||pubads.g.doubleclick.net/gampad/ad$domain=m.ynet.co.il
@@ -381,15 +378,7 @@ foodsdictionary.co.il#@#.Adsense
 foodsdictionary.co.il#@#.adSense
 homeless.co.il#@#.postad
 junkyard.co.il#@#.ad-body
-kikar.co.il#@#.pub_300x250m
-kikar.co.il#@#.pub_728x90
-kikar.co.il#@#.text-ad
-kikar.co.il#@#.text-ad-links
-kikar.co.il#@#.text-ads
-kikar.co.il#@#.textAd
-kikar.co.il#@#.text_ad
-kikar.co.il#@#.text_ads
-kikar.co.il#@#.pub_300x250
+kikar.co.il#@#.adunit
 kml.co.il#@#div[id^="div-gpt-ad-"]
 lavender.co.il#@##topAds
 one.co.il#@#a[href^="http://xads.zedo.com/"]
@@ -805,6 +794,7 @@ seret.co.il##DIV[style="width:100%;text-align:center;"]
 seret.co.il##SPAN[style="line-height:192px;height:192px;clear:both;display:block;"]
 seretil.me###ads516516as
 shironet.mako.co.il###playerAdArea
+simania.co.il##[style="clear:both;width:936px;text-align:center;padding:10px;margin:auto;margin-top:10px;margin-bottom:10px;background-color: rgb(244, 243, 238);text-align:center;"]
 solitaire.co.il##.viv
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_3
 sport5.co.il###ucHeader_rptLinks_lnkAnchor_4

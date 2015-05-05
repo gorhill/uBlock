@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Thu, 23 Apr 2015 16:28:01 GMT
-# entries:        2427
+# last updated:   Sat, 02 May 2015 15:49:19 GMT
+# entries:        2428
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -277,6 +277,7 @@
 127.0.0.1 adlog.com.com
 127.0.0.1 adloox.com
 127.0.0.1 adlooxtracking.com
+127.0.0.1 adlure.net
 127.0.0.1 adm.ad.asap-asp.net
 127.0.0.1 admagnet.net
 127.0.0.1 admailtiser.com

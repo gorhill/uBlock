@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: AakList (Anti-Adblock Killer)
 ! Author: Reek | http://reeksite.com/
-! Version: 7.9
+! Version: 8.0
 ! Expires: 1 days
 ! License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
@@ -869,6 +869,8 @@ simply-debrid.com#@##adsense
 @@||onvasortir.com^$elemhide
 @@||onvasortir.com/publicite.html$script
 @@||onvasortir.com/fuckadblock.js$script
+@@||smartadserver.com/config.js?$script,domain=onvasortir.com
+@@||r.sascdn.com/diff/js/smart.js$script,domain=onvasortir.com
 ! urbeez.com
 @@||urbeez.com^$elemhide
 @@||urbeez.com/publicite.html$script
@@ -893,6 +895,23 @@ simply-debrid.com#@##adsense
 @@||adv.gpm-digital.com/crossdomain.xml$object-subrequest,domain=carambatv.ru
 ! rookie.com.pl
 @@||rookie.com.pl/jscripts/ads.js$script
+! cwtv.com
+||dzxxxg6ij9u99.cloudfront.net/wb.js$script,domain=cwtv.com
+! worldofgnome.org
+worldofgnome.org#@#.google-ad
+worldofgnome.org#@##wog-300x250-ads
+! bitzfree.com
+@@||bitzfree.com/js/*.js$script
+@@||go.padsdel.com/lg.php$image,domain=bitzfree.com
+@@||cdn.adshexa.com/show_ads.php$image,domain=bitzfree.com
+@@||padsdel.cdnads.com^$image,domain=bitzfree.com
+@@||adsrvmedia.adpdx.com^$image,domain=bitzfree.com
+@@||cdn.adnxs.com^$image,domain=bitzfree.com
+@@||cdn.adk2.co^$image,domain=bitzfree.com
+@@||cdn.adshexa.com^$image,domain=bitzfree.com
+@@||www.adhexa.com^$image,domain=bitzfree.com
+@@||rhtag.com^$image,domain=bitzfree.com
+@@||cdn.adnxs.com^$image,domain=bitzfree.com
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
