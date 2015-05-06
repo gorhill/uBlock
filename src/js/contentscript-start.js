@@ -94,6 +94,7 @@ var cosmeticFilters = function(details) {
         var text = hide.join(',\n');
         hideElements(text);
         var style = vAPI.specificHideStyle = document.createElement('style');
+        // The linefeed before the style block is very important: do not remove!
         style.appendChild(document.createTextNode(text + '\n{display:none !important;}'));
         //console.debug('µBlock> "%s" cosmetic filters: injecting %d CSS rules:', details.domain, details.hide.length, hideStyleText);
         var parent = document.head || document.documentElement;
