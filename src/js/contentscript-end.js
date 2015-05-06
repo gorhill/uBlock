@@ -786,19 +786,10 @@ var uBlockCollapser = (function() {
     var collapser = uBlockCollapser;
     var elems, i, elem;
 
-    elems = document.querySelectorAll('embed, object');
+    elems = document.querySelectorAll('img, embed, object');
     i = elems.length;
     while ( i-- ) {
         collapser.add(elems[i]);
-    }
-
-    elems = document.querySelectorAll('img');
-    i = elems.length;
-    while ( i-- ) {
-        elem = elems[i];
-        if ( elem.complete ) {
-            collapser.add(elem);
-        }
     }
 
     elems = document.querySelectorAll('iframe');
