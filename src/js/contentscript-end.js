@@ -193,6 +193,15 @@ var uBlockCollapser = (function() {
                 hostname: window.location.hostname,
                 selectors: selectors
             });
+            var selectorStr = selectors.join(',\n'),
+                style = document.createElement('style');
+            // The linefeed before the style block is very important: do no remove!
+            style.appendChild(document.createTextNode(selectorStr + '\n{display:none !important;}'));
+            var parent = document.body || document.documentElement;
+            if ( parent ) {
+                parent.appendChild(style);
+                vAPI.styles.push(style);
+            }
         }
         // Renew map: I believe that even if all properties are deleted, an
         // object will still use more memory than a brand new one.
