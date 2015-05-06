@@ -422,12 +422,8 @@ var buttonApplyHandler = function() {
 
     renderBusyOverlay(true);
 
-    var onReloadDone = function() {
-        messager.send({ what: 'reloadAllFilters' });
-    };
-
     var onSelectionDone = function() {
-        messager.send({ what: 'reloadAllFilters' }, onReloadDone);
+        messager.send({ what: 'reloadAllFilters' });
     };
 
     selectFilterLists(onSelectionDone);

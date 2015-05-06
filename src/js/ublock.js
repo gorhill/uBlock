@@ -180,6 +180,12 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     var line, matches, key, directive;
     for ( var i = 0; i < lines.length; i++ ) {
         line = lines[i].trim();
+        // https://github.com/gorhill/uBlock/issues/171
+        // Skip empty lines
+        if ( line === '' ) {
+            continue;
+        }
+
         // Don't throw out commented out lines: user might want to fix them
         if ( line.charAt(0) === '#' ) {
             key = '#';
@@ -208,9 +214,14 @@ var matchWhitelistDirective = function(url, hostname, directive) {
             }
         }
 
+        // https://github.com/gorhill/uBlock/issues/171
+        // Skip empty keys
+        if ( key === '' ) {
+            continue;
+        }
+
         // Be sure this stays fixed:
         // https://github.com/chrisaljoudi/uBlock/issues/185
-
         if ( whitelist.hasOwnProperty(key) === false ) {
             whitelist[key] = [];
         }
