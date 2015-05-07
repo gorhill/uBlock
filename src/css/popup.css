@@ -342,7 +342,7 @@ body.dirty #refresh:hover {
     opacity: 0.7;
     background-color: #444;
     border-radius: 4px;
-    color: rgb(255, 213, 123);
+    color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
     display: none;
     font-size: 35px;
