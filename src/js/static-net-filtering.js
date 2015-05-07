@@ -1334,7 +1334,7 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         if ( opt === 'elemhide' ) {
-            if ( this.action !== AllowAction ) {
+            if ( this.action === AllowAction ) {
                 this.parseOptType('elemhide', false);
                 this.action = BlockAction;
                 continue;
