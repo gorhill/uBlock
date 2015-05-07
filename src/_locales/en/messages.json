@@ -407,13 +407,45 @@
     "message":"Behind the scene",
     "description":"Pretty name for behind-the-scene network requests"
   },
+  "logClearTip":{
+    "message":"Clear",
+    "description":"English: A button to clear log entries"
+  },
+  "logFilterButtonTip":{
+    "message":"Toggle Filter",
+    "description":"English: on/off filter for the log view"
+  },
+  "logFilterMatcherTip":{
+    "message":"Toggle Filter Matcher",
+    "description":"English: A button in the upper right corner of the view"
+  },
   "logFilterPrompt":{
     "message":"filter log entries",
     "description": "English: filter log entries"
   },
+  "logMaxEntriesPrompt":{
+    "message":"Max",
+    "description":"English: The maximum number of log entries"
+  },
   "logMaxEntriesTip":{
     "message":"Maximum number of log entries",
-    "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+    "description":"Tooltip informing that the input field is to set the maximum number of entries in the log"
+  },
+  "logPageSelectorTip":{
+    "message":"Select while tab to be process",
+    "description":"English: A dropdown list to select a browser tab or 'Behind the scene'"
+  },
+  "logPopupTogglerTip":{
+    "message":"Show uBlock₀ popup",
+    "description":"English: A button in the upper right corner of the view"
+  },
+  "logRefreshTip":{
+    "message":"Refresh",
+    "description":"English: Refresh the dropdown list for select tab"
+  },
+  "logReloadTip":{
+    "message":"Reload",
+    "description":"English: Reload the selected tab of dropdown list"
   },
   "aboutChangelog":{
     "message":"Change log",
