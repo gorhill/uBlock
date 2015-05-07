@@ -69,10 +69,6 @@
 # To counter `inc.com` in Peter Lowe's, hpHosts
 @@||inc.com^$~third-party
 
-# Chrome store feedback
-# To counter Peter Lowe's `intergi.com`
-@@||intergi.com^$domain=tvgolo.com
-
 # https://github.com/chrisaljoudi/uBlock/issues/336
 # To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
 @@||flurry.com^$~third-party
@@ -179,10 +175,14 @@ ovh.strim.io#@##tweets
 # To counter `/keen.min.js` in EasyPrivacy
 @@||keen.github.io/*/keen.min.js$~third-party
 
-# Feedback from Chrome store: "videos dont work on this site"
+# https://github.com/gorhill/uBlock/issues/182
 # http://www.okgoals.com/match-highlights-1425491618---41
-# To counter `intergi.com` in Peter Lowe's
-@@||cdn.phoenix.intergi.com^$domain=okgoals.com
+# To counter `intergi.com` in Peter Lowe's. For example, breaks:
+# explosm.net
+# lastminutegoals.org
+# okgoals.com
+# tvgolo.com
+@@||cdn.phoenix.intergi.com^
 
 # kissmetrics.com broken
 # To counter `kissmetrics.com` in Peter Lowe's
@@ -200,7 +200,3 @@ ovh.strim.io#@##tweets
 # "UK's eBay site won't load if uBlock is ON"
 # It loads, but the body element has the `pushdown-ad` class name.
 ebay.co.uk#@#.pushdown-ad
-
-# Video playback broken on lastminutegoals.org
-# To counter `intergi.com` in Peter Lowe's
-@@||cdn.phoenix.intergi.com^$domain=lastminutegoals.org
