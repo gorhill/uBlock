@@ -342,6 +342,14 @@ var onMessage = function(request, sender, callback) {
             µb.savePermanentFirewallRules();
             break;
 
+        case 'flushFirewallRules':
+            µb.sessionFirewall.copyRules(
+                µb.permanentFirewall,
+                request.srcHostname,
+                request.desHostnames
+            );
+            break;
+
         case 'toggleFirewallRule':
             µb.toggleFirewallRule(request);
             response = getStats(request.tabId);
