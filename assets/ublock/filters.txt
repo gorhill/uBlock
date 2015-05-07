@@ -290,11 +290,6 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # To counter `/keen.min.js` in EasyPrivacy
 @@||keen.github.io/*/keen.min.js$~third-party
 
-# Feedback from Chrome store: "videos dont work on this site"
-# http://www.okgoals.com/match-highlights-1425491618---41
-# To counter `intergi.com` in Peter Lowe's
-@@||cdn.phoenix.intergi.com^$domain=okgoals.com
-
 # kissmetrics.com broken
 # To counter `kissmetrics.com` in Peter Lowe's
 @@||kissmetrics.com^$~third-party
@@ -310,10 +305,13 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # NBA.com
 @@||cdn.turner.com/*/AdManager.js$domain=cnn.com|nba.com,script
 
-
 # To deal with https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^
+||mac-system-alert.com^$inline-script
 
-# Video playback broken on lastminutegoals.org
-# To counter `intergi.com` in Peter Lowe's
-@@||cdn.phoenix.intergi.com^$domain=lastminutegoals.org
+# To mitigate breakages from `intergi.com` in Peter Lowe's; ex.:
+# explosm.net
+# lastminutegoals.org
+# okgoals.com
+# tvgolo.com
+@@||cdn.phoenix.intergi.com^
