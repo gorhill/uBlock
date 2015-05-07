@@ -539,7 +539,6 @@
         state.active = true;
         // force re-render since we probably switched tabs
         state.dirty = (1 << 1) | (1 << 0);
-
         renderIcon(state);
     }, true);
 
@@ -564,9 +563,11 @@
             return;
         }
         var icon = iconState.icon;
-        icon.badge = iconState.badge;
         // only update the image if needed:
-        if(iconState.dirty & 1) {
+        if(iconState.dirty & 2) {
+            icon.badge = iconState.badge;
+        }
+        if(iconState.dirty & 1 && icon.image !== ICON_URLS[iconState.img]) {
             icon.image = ICON_URLS[iconState.img];
         }
         iconState.dirty = 0;
