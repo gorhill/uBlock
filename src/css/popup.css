@@ -341,23 +341,25 @@ body.dirty #refresh:hover {
 #saveflushButtonGroup {
     display: none;
     position: fixed;
+    left: 4px;
 }
 #saveRules,
 #flushRules {
+    display: inline-block;
     opacity: 0.7;
     background-color: #444;
     border-radius: 4px;
     color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
-    font-size: 35px;
-    height: 35px;
+    font-size: 30px;
+    height: 30px;
     padding: 8px;
     text-align: center;
     }
 #firewallContainer.dirty ~ #saveflushButtonGroup {
     display: block;
     }
-#firewallContainer.dirty ~ #saveRules:hover,
-#firewallContainer.dirty ~ #flushRules:hover {
+#saveRules:hover,
+#flushRules:hover {
     opacity: 1;
     }

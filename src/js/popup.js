@@ -325,12 +325,6 @@ var buildAllFirewallRows = function() {
     // - Its horizontal position depends on whether there is a vertical
     //   scrollbar.
     updateAllFirewallCells();
-    setTimeout(updateDfButtonsPosition, 500);
-};
-
-var updateDfButtonsPosition = function() {
-    var rect = document.getElementById('firewallContainer').getBoundingClientRect();
-    document.getElementById('saveflushButtonGroup').style.setProperty('left', (rect.left + 4) + 'px');
 };
 
 /******************************************************************************/
