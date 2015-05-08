@@ -276,6 +276,8 @@ vAPI.storage = {
     }
 };
 
+vAPI.storage.preferences = vAPI.storage;
+
 /******************************************************************************/
 
 var windowWatcher = {

@@ -105,16 +105,7 @@
         size: storageQuota,
         storeName: "keyvaluepairs"
     });
-    var oldSettings = safari.extension.settings; // To smoothly transition users
-    if(oldSettings.hasOwnProperty("version")) { // Old 'storage'!
-        for(var key in oldSettings) {
-            if(!oldSettings.hasOwnProperty(key) || key === "open_prefs") {
-                continue;
-            }
-            localforage.setItem(key, oldSettings[key]);
-        }
-        oldSettings.clear();
-    }
+    
     vAPI.storage = {
         QUOTA_BYTES: storageQuota, // copied from Info.plist
 
@@ -212,6 +203,7 @@
         },
 
         clear: function(callback) {
+            this.preferences.clear();
             localforage.clear(function() {
                 callback();
             });
@@ -228,6 +220,124 @@
                 callback(size);
             });
         }
+    };
+    /******************************************************************************/
+
+    if(!safari.extension.settings.migratedStorage) {
+        var migrationMap = {
+            "cached_asset_content://assets/user/filters.txt": "userFilters"
+        };
+
+        var delayed = [];
+        
+        vAPI.storage.preferences = {
+            get: function(a, b) {
+                delayed.push(settingsStorage.get.bind(settingsStorage, a, b));
+            },
+            set: function(a, b) {
+                delayed.push(settingsStorage.set.bind(settingsStorage, a, b));
+            },
+            remove: function(a, b) {
+                delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
+            },
+            clear: function() {
+                delayed.push(settingsStorage.clear.bind(settingsStorage));
+            },
+        };
+
+        localforage.iterate(function(value, key) {
+            if(migrationMap[key]) {
+                safari.extension.settings[migrationMap[key]] = value;
+                return;
+            }
+            if(key.lastIndexOf("cached_asset", 0) === 0) {
+                return;
+            }
+            safari.extension.settings[key] = value;
+            localforage.removeItem(key);
+        }, function() {
+            var func;
+            while(func = delayed.pop()) {
+                func();
+            }
+            delayed = null;
+            vAPI.storage.preferences = settingsStorage;
+        });
+        safari.extension.settings.migratedStorage = true;
+    }
+
+    var settingsStorage = {
+        _storage: safari.extension.settings,
+        get: function(keys, callback) {
+            if(typeof callback !== "function") {
+                return;
+            }
+
+            var i, value, result = {};
+
+            if(keys === null) {
+                for(i in this._storage) {
+                    if(!this._storage.hasOwnProperty(i)) continue;
+                    value = this._storage[i];
+                    if(typeof value === "string") {
+                        result[i] = JSON.parse(value);
+                    }
+                }
+            }
+            else if(typeof keys === "string") {
+                value = this._storage[keys];
+                if(typeof value === "string") {
+                    result[keys] = JSON.parse(value);
+                }
+            }
+            else if(Array.isArray(keys)) {
+                for(i = 0; i < keys.length; i++) {
+                    value = this._storage[i];
+
+                    if(typeof value === "string") {
+                        result[keys[i]] = JSON.parse(value);
+                    }
+                }
+            }
+            else if(typeof keys === "object") {
+                for(i in keys) {
+                    if(!keys.hasOwnProperty(i)) {
+                        continue;
+                    }
+                    value = this._storage[i];
+
+                    if(typeof value === "string") {
+                        result[i] = JSON.parse(value);
+                    }
+                    else {
+                        result[i] = keys[i];
+                    }
+                }
+            }
+            callback(result);
+        },
+        set: function(details, callback) {
+            for(var key in details) {
+                if(!details.hasOwnProperty(key)) {
+                    continue;
+                }
+                this._storage.setItem(key, JSON.stringify(details[key]));
+            }
+            if(typeof callback === "function") {
+                callback();
+            }
+        },
+        remove: function(keys) {
+            if(typeof keys === "string") {
+                keys = [keys];
+            }
+            for(var i = 0; i < keys.length; i++) {
+                this._storage.removeItem(keys[i]);
+            }
+        },
+        clear: function() {
+            this._storage.clear();
+        } 
     };
 
     /******************************************************************************/
@@ -567,7 +677,7 @@
         if(iconState.dirty & 2) {
             icon.badge = iconState.badge;
         }
-        if(iconState.dirty & 1 && icon.image !== ICON_URLS[iconState.img]) {
+        if((iconState.dirty & 1) && icon.image !== ICON_URLS[iconState.img]) {
             icon.image = ICON_URLS[iconState.img];
         }
         iconState.dirty = 0;

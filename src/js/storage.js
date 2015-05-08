@@ -38,10 +38,10 @@
 
 /******************************************************************************/
 
-µBlock.keyvalSetOne = function(key, val, callback) {
+µBlock.keyvalSetOnePref = function(key, val, callback) {
     var bin = {};
     bin[key] = val;
-    vAPI.storage.set(bin, callback || this.noopFunc);
+    vAPI.storage.preferences.set(bin, callback || this.noopFunc);
 };
 
 /******************************************************************************/
@@ -54,7 +54,7 @@
         return;
     }
     this.localSettingsSaveTime = Date.now();
-    vAPI.storage.set(this.localSettings);
+    vAPI.storage.preferences.set(this.localSettings);
 };
 
 /******************************************************************************/
@@ -72,13 +72,13 @@
 /******************************************************************************/
 
 µBlock.saveUserSettings = function() {
-    vAPI.storage.set(this.userSettings);
+    vAPI.storage.preferences.set(this.userSettings);
 };
 
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+    this.keyvalSetOnePref('dynamicFilteringString', this.permanentFirewall.toString());
 };
 
 /******************************************************************************/
@@ -87,7 +87,7 @@
     var bin = {
         'netWhitelist': this.stringFromWhitelist(this.netWhitelist)
     };
-    vAPI.storage.set(bin);
+    vAPI.storage.preferences.set(bin);
     this.netWhitelistModifyTime = Date.now();
 };
 
@@ -135,7 +135,9 @@
 /******************************************************************************/
 
 µBlock.saveUserFilters = function(content, callback) {
-    return this.assets.put(this.userFiltersPath, content, callback);
+    vAPI.storage.preferences.set({"userFilters": content});
+    this.assets.put(this.userFiltersPath, content, callback);
+    return;
 };
 
 /******************************************************************************/
@@ -165,15 +167,12 @@
         var deltaEntryUsedCount = deltaEntryCount - (snfe.duplicateCount + cfe.duplicateCount - duplicateCount);
         entry.entryCount += deltaEntryCount;
         entry.entryUsedCount += deltaEntryUsedCount;
-        vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
+        vAPI.storage.preferences.set({ 'remoteBlacklists': µb.remoteBlacklists });
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
     };
 
     var onLoaded = function(details) {
-        if ( details.error ) {
-            return;
-        }
         // https://github.com/chrisaljoudi/uBlock/issues/976
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
@@ -270,7 +269,7 @@
         }
 
         // Now get user's selection of lists
-        vAPI.storage.get(
+        vAPI.storage.preferences.get(
             { 'remoteBlacklists': availableLists },
             onSelectedListsLoaded
         );
@@ -342,7 +341,7 @@
 
         µb.staticNetFilteringEngine.freeze();
         µb.cosmeticFilteringEngine.freeze();
-        vAPI.storage.set({ 'remoteBlacklists': µb.remoteBlacklists });
+        vAPI.storage.preferences.set({ 'remoteBlacklists': µb.remoteBlacklists });
 
         //quickProfiler.stop(0);
 
@@ -600,7 +599,7 @@
         filterLists[location].off = state;
     }
 
-    vAPI.storage.set({ 'remoteBlacklists': filterLists });
+    vAPI.storage.preferences.set({ 'remoteBlacklists': filterLists });
 };
 
 /******************************************************************************/

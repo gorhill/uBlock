@@ -169,11 +169,15 @@ var onSystemSettingsReady = function(fetched) {
     if ( mustSaveSystemSettings ) {
         fetched.selfie = null;
         µb.destroySelfie();
-        vAPI.storage.set(µb.systemSettings, µb.noopFunc);
+        vAPI.storage.preferences.set(µb.systemSettings, µb.noopFunc);
     }
 };
 
 /******************************************************************************/
+
+var onUserFiltersReady = function(userFilters) {
+    µb.saveUserFilters(userFilters); // we need this because of migration
+};
 
 var onFirstFetchReady = function(fetched) {
     // Order is important -- do not change:
@@ -182,6 +186,7 @@ var onFirstFetchReady = function(fetched) {
     onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
+    onUserFiltersReady(fetched.userFilters);
     onVersionReady(fetched.version);
 
     // If we have a selfie, skip loading PSL, filters
@@ -191,6 +196,16 @@ var onFirstFetchReady = function(fetched) {
     }
 
     µb.loadPublicSuffixList(onPSLReady);
+};
+
+/******************************************************************************/
+
+var onPrefFetchReady = function(fetched) {
+    fetched.userFilters = fetched.userFilters || fetched["cached_asset_content://assets/user/filters.txt"];
+    vAPI.storage.get({"selfie": null}, function(res) {
+        fetched["selfie"] = res["selfie"];
+        onFirstFetchReady(fetched);
+    });
 };
 
 /******************************************************************************/
@@ -230,7 +245,8 @@ return function() {
         'lastBackupFile': '',
         'lastBackupTime': 0,
         'netWhitelist': '',
-        'selfie': null,
+        'userFilters': '',
+        'cached_asset_content://assets/user/filters.txt': '',
         'selfieMagic': '',
         'version': '0.0.0.0'
     };
@@ -239,7 +255,7 @@ return function() {
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
 
-    vAPI.storage.get(fetchableProps, onFirstFetchReady);
+    vAPI.storage.preferences.get(fetchableProps, onPrefFetchReady);
 };
 
 /******************************************************************************/

@@ -63,7 +63,7 @@ return {
         firewallPaneMinimized: true,
         parseAllABPHideFilters: true,
         requestLogMaxEntries: 1000,
-        showIconBadge: true
+        showIconBadge: true,
     },
 
     // https://github.com/chrisaljoudi/uBlock/issues/180
@@ -78,6 +78,8 @@ return {
         'loopconversation.about-scheme',
         'opera-scheme'
     ].join('\n').trim(),
+    
+    userFiltersPath: "assets/user/filters.txt",
 
     localSettings: {
         blockedRequestCount: 0,
@@ -103,7 +105,6 @@ return {
     // as per list headers.
     updateAssetsEvery: 97 * oneHour,
     projectServerRoot: 'https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/',
-    userFiltersPath: 'assets/user/filters.txt',
     pslPath: 'assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat',
 
     // permanent lists

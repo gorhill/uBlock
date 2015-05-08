@@ -797,10 +797,10 @@ var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
         case 'readUserFilters':
-            return µb.assets.get(µb.userFiltersPath, callback);
+            return µb.loadUserFilters(callback);
 
         case 'writeUserFilters':
-            return µb.assets.put(µb.userFiltersPath, request.content, callback);
+            return µb.saveUserFilters(request.content, callback);
 
         default:
             break;
@@ -1083,7 +1083,7 @@ var backupUserData = function(callback) {
 
         µb.restoreBackupSettings.lastBackupFile = filename;
         µb.restoreBackupSettings.lastBackupTime = Date.now();
-        vAPI.storage.set(µb.restoreBackupSettings);
+        vAPI.storage.preferences.set(µb.restoreBackupSettings);
 
         getLocalData(callback);
     };
@@ -1093,8 +1093,7 @@ var backupUserData = function(callback) {
         µb.extractSelectedFilterLists(onSelectedListsReady);
     };
 
-
-    µb.assets.get('assets/user/filters.txt', onUserFiltersReady);
+    µb.loadUserFilters(onUserFiltersReady);
 };
 
 /******************************************************************************/
@@ -1111,19 +1110,19 @@ var restoreUserData = function(request) {
 
     var onAllRemoved = function() {
         // Be sure to adjust `countdown` if adding/removing anything below
-        µb.keyvalSetOne('version', userData.version);
+        µb.keyvalSetOnePref('version', userData.version);
         µBlock.saveLocalSettings(true);
-        vAPI.storage.set(userData.userSettings, onCountdown);
-        µb.keyvalSetOne('remoteBlacklists', userData.filterLists, onCountdown);
-        µb.keyvalSetOne('netWhitelist', userData.netWhitelist || '', onCountdown);
+        vAPI.storage.preferences.set(userData.userSettings, onCountdown);
+        µb.keyvalSetOnePref('remoteBlacklists', userData.filterLists, onCountdown);
+        µb.keyvalSetOnePref('netWhitelist', userData.netWhitelist || '', onCountdown);
 
         // With versions 0.9.2.4-, dynamic rules were saved within the
         // `userSettings` object. No longer the case.
         var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
-        µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
+        µb.keyvalSetOnePref('dynamicFilteringString', s, onCountdown);
 
-        µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
-        vAPI.storage.set({
+        µb.keyvalSetOnePref('userFilters', userData.userFilters, onCountdown);
+        vAPI.storage.preferences.set({
             lastRestoreFile: request.file || '',
             lastRestoreTime: Date.now(),
             lastBackupFile: '',
