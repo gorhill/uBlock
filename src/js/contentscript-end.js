@@ -34,7 +34,12 @@
 // https://github.com/chrisaljoudi/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
     //console.debug('contentscript-end.js > not a HTLMDocument');
-    return false;
+    return;
+}
+
+// I've seen this happens on Firefox
+if ( window.location === null ) {
+    return;
 }
 
 // This can happen

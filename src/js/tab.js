@@ -477,7 +477,13 @@ vAPI.tabs.onPopup = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
-    µb.logger.writeOne(details.openerTabId, context, result);
+    µb.logger.writeOne(
+        details.openerTabId,
+        'net',
+        result,
+        'popup',
+        targetURL
+    );
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {

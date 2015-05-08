@@ -66,7 +66,7 @@ var onMessage = function(request, sender, callback) {
         /* falls through */
     case 'cosmeticFiltersActivated':
         // Net-based cosmetic filters are of no interest for logging purpose.
-        if ( µb.logger.isObserved(tabId) && request.type !== 'net' ) {
+        if ( µb.logger.isObserved() && request.type !== 'net' ) {
             µb.logCosmeticFilters(tabId);
         }
         break;
@@ -273,10 +273,6 @@ var getTargetTabId = function(tab) {
 
     if ( !tab ) {
         return '';
-    }
-
-    if ( tab.url.lastIndexOf(vAPI.getURL('devtools.html'), 0) !== 0 ) {
-        return tab.id;
     }
 
     // If the URL is that of the network request logger, fill the popup with
@@ -574,22 +570,22 @@ var µb = µBlock;
 /******************************************************************************/
 
 var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isObserved(tabId) === false ) {
+    if ( µb.logger.isObserved() === false ) {
         return;
     }
-
-    var context = {
-        requestURL: details.pageURL,
-        requestHostname: µb.URI.hostnameFromURI(details.pageURL),
-        requestType: 'dom'
-    };
 
     var selectors = details.matchedSelectors;
 
     selectors.sort();
 
     for ( var i = 0; i < selectors.length; i++ ) {
-        µb.logger.writeOne(tabId, context, 'cb:##' + selectors[i]);
+        µb.logger.writeOne(
+            tabId,
+            'cosmetic',
+            'cb:##' + selectors[i],
+            'dom',
+            details.pageURL
+        );
     }
 };
 
@@ -1009,126 +1005,6 @@ vAPI.messaging.listen('whitelist.js', onMessage);
 
 })();
 
-/******************************************************************************/
-/******************************************************************************/
-
-// devtools.js
-
-(function() {
-
-'use strict';
-
-/******************************************************************************/
-
-var µb = µBlock;
-
-/******************************************************************************/
-
-var getPageDetails = function(callback) {
-    var out = {};
-    var tabIds = Object.keys(µb.pageStores);
-
-    // Special case: behind-the-scene virtual tab (does not really exist)
-    var pos = tabIds.indexOf(vAPI.noTabId);
-    if ( pos !== -1 ) {
-        tabIds.splice(pos, 1);
-        out[vAPI.noTabId] = vAPI.i18n('logBehindTheScene');
-    }
-
-    // This can happen
-    if ( tabIds.length === 0 ) {
-        callback(out);
-        return;
-    }
-
-    var countdown = tabIds.length;
-    var doCountdown = function() {
-        countdown -= 1;
-        if ( countdown === 0 ) {
-            callback(out);
-        }
-    };
-
-    // Let's not populate the page selector with reference to self
-    var devtoolsURL = vAPI.getURL('devtools.html');
-
-    var onTabDetails = function(tab) {
-        if ( tab && tab.url.lastIndexOf(devtoolsURL, 0) !== 0 ) {
-            out[tab.id] = tab.title;
-        }
-        doCountdown();
-    };
-
-    var i = countdown;
-    while ( i-- ) {
-        vAPI.tabs.get(tabIds[i], onTabDetails);
-    }
-};
-
-/******************************************************************************/
-
-var evaluateStaticFiltering = function(details) {
-    // URL of context not provided, try to use the one for the given tab id.
-    var contextURL = details.contextURL;
-    if ( contextURL === '' ) {
-        var tabContext = µb.tabContextManager.lookup(details.tabId || 0);
-        if ( tabContext ) {
-            contextURL = tabContext.rawURL;
-        }
-    }
-
-    var pageHostname = µb.URI.hostnameFromURI(contextURL);
-    var pageDomain = µb.URI.domainFromHostname(pageHostname);
-
-    var context = {
-        rootHostname: pageHostname,
-        rootDomain: pageDomain,
-        pageHostname: pageHostname,
-        pageDomain: pageDomain,
-        requestURL: details.requestURL,
-        requestHostname: µb.URI.hostnameFromURI(details.requestURL),
-        requestType: details.requestType
-    };
-
-    return {
-        contextURL: contextURL,
-        result: µb.staticNetFilteringEngine.matchString(context)
-    };
-};
-
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-    // Async
-    switch ( request.what ) {
-    case 'getPageDetails':
-        getPageDetails(callback);
-        return;
-
-    default:
-        break;
-    }
-
-    // Sync
-    var response;
-
-    switch ( request.what ) {
-    case 'evaluateStaticFiltering':
-        response = evaluateStaticFiltering(request);
-        break;
-
-    default:
-        return vAPI.messaging.UNHANDLED;
-    }
-
-    callback(response);
-};
-
-vAPI.messaging.listen('devtools.js', onMessage);
-
-/******************************************************************************/
-
-})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1300,7 +1176,7 @@ vAPI.messaging.listen('settings.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
-// devtool-log.js
+// logger-ui.js
 
 (function() {
 
@@ -1323,10 +1199,19 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'readLogBuffer':
+        case 'readAll':
+            var tabIds = {};
+            for ( var tabId in µb.pageStores ) {
+                if ( µb.pageStores.hasOwnProperty(tabId) ) {
+                    tabIds[tabId] = true;
+                }
+            }
             response = {
                 colorBlind: µb.userSettings.colorBlindFriendly,
-                entries: µb.logger.readAll(request.tabId)
+                entries: µb.logger.readAll(),
+                maxEntries: µb.userSettings.requestLogMaxEntries,
+                noTabId: vAPI.noTabId,
+                tabIds: tabIds
             };
             break;
 
@@ -1337,7 +1222,7 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('devtool-log.js', onMessage);
+vAPI.messaging.listen('logger-ui.js', onMessage);
 
 /******************************************************************************/
 

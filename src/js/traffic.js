@@ -92,7 +92,7 @@ var onBeforeRequest = function(details) {
     // Possible outcomes: blocked, allowed-passthru, allowed-mirror
 
     pageStore.logRequest(requestContext, result);
-    µb.logger.writeOne(tabId, requestContext, result);
+    µb.logger.writeOne(tabId, 'net', result, requestType, requestURL);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -187,7 +187,7 @@ var onBeforeRootFrameRequest = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
-    µb.logger.writeOne(tabId, context, result);
+    µb.logger.writeOne(tabId, 'net', result, 'main_frame', requestURL);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -279,7 +279,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
     }
 
     pageStore.logRequest(context, result);
-    µb.logger.writeOne(vAPI.noTabId, context, result);
+    µb.logger.writeOne(vAPI.noTabId, 'net', result, details.type, details.url);
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {
@@ -328,7 +328,7 @@ var onHeadersReceived = function(details) {
     var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
-    µb.logger.writeOne(tabId, context, result);
+    µb.logger.writeOne(tabId, 'net', result, 'inline-script', details.url);
 
     // Don't block
     if ( µb.isAllowResult(result) ) {
@@ -378,7 +378,7 @@ var onRootFrameHeadersReceived = function(details) {
     var result = pageStore.filterRequestNoCache(context);
 
     pageStore.logRequest(context, result);
-    µb.logger.writeOne(tabId, context, result);
+    µb.logger.writeOne(tabId, 'net', result, 'inline-script', details.url);
 
     // Don't block
     if ( µb.isAllowResult(result) ) {

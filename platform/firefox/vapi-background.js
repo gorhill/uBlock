@@ -1908,7 +1908,7 @@ var optionsObserver = {
         }
 
         this.setupOptionsButton(doc, 'showDashboardButton', 'dashboard.html');
-        this.setupOptionsButton(doc, 'showNetworkLogButton', 'devtools.html');
+        this.setupOptionsButton(doc, 'showNetworkLogButton', 'logger-ui.html');
     }
 };
 

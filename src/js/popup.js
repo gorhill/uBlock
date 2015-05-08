@@ -393,7 +393,7 @@ var renderPopup = function() {
 
     // If you think the `=== true` is pointless, you are mistaken
     uDom('#gotoLog').toggleClass('enabled', popupData.canRequestLog === true)
-                    .attr('href', 'devtools.html?tabId=' + popupData.tabId);
+                    .attr('href', 'logger-ui.html');
     uDom('#gotoPick').toggleClass('enabled', popupData.canElementPicker === true);
 
     var text;

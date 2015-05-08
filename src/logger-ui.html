@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/logger-ui.css">
+<title>uMatrix log</title>
+</head>
+<body class="compactView f">
+
+<div id="toolbar">
+    <span id="compactViewToggler" class="button fa"></span>
+    <span id="clear" class="button fa disabled">&#xf12d;</span>
+    <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
+    <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+    </div>
+
+<div id="content">
+    <style></style>
+    <table>
+        <colgroup><col><col><col><col><col></colgroup>
+        <tbody></tbody>
+        </table>
+    </div>
+
+<div id="popupContainer">
+    <div><span>&#xf00d;</span></div>
+    </div>
+<div id="movingOverlay"></div>
+
+<div style="display: none;">
+    <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
+    </div>
+
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/logger-ui.js"></script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock Origin - a browser extension to block requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -31,18 +31,18 @@
 /******************************************************************************/
 /******************************************************************************/
 
-var LogEntry = function(details, result) {
-    this.init(details, result);
+var LogEntry = function(args) {
+    this.init(args);
 };
 
 /******************************************************************************/
 
-var logEntryFactory = function(details, result) {
+var logEntryFactory = function(args) {
     var entry = logEntryJunkyard.pop();
     if ( entry ) {
-        return entry.init(details, result);
+        return entry.init(args);
     }
-    return new LogEntry(details, result);
+    return new LogEntry(args);
 };
 
 var logEntryJunkyard = [];
@@ -50,19 +50,23 @@ var logEntryJunkyardMax = 100;
 
 /******************************************************************************/
 
-LogEntry.prototype.init = function(details, result) {
+LogEntry.prototype.init = function(args) {
     this.tstamp = Date.now();
-    this.url = details.requestURL;
-    this.hostname = details.requestHostname;
-    this.type = details.requestType;
-    this.result = result;
+    this.tab = args[0] || '';
+    this.cat = args[1] || '';
+    this.d0 = args[2];
+    this.d1 = args[3];
+    this.d2 = args[4];
+    this.d3 = args[5];
     return this;
 };
 
 /******************************************************************************/
 
 LogEntry.prototype.dispose = function() {
-    this.url = this.hostname = this.type = this.result = '';
+    this.tstamp = 0;
+    this.tab = this.cat = '';
+    this.d0 = this.d1 = this.d2 = this.d3 = undefined;
     if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
         logEntryJunkyard.push(this);
     }
@@ -96,13 +100,13 @@ LogBuffer.prototype.dispose = function() {
 
 /******************************************************************************/
 
-LogBuffer.prototype.writeOne = function(details, result) {
+LogBuffer.prototype.writeOne = function(args) {
     // Reusing log entry = less memory churning
     var entry = this.buffer[this.writePtr];
     if ( entry instanceof LogEntry === false ) {
-        this.buffer[this.writePtr] = logEntryFactory(details, result);
+        this.buffer[this.writePtr] = logEntryFactory(args);
     } else {
-        entry.init(details, result);
+        entry.init(args);
     }
     this.writePtr += 1;
     if ( this.writePtr === this.size ) {
@@ -144,59 +148,49 @@ LogBuffer.prototype.readAll = function() {
 /******************************************************************************/
 
 // Tab id to log buffer instances
-var logBuffers = {};
+var logBuffer = null;
 
-// After 30 seconds without being read, a buffer will be considered unused, and
+// After 60 seconds without being read, a buffer will be considered unused, and
 // thus removed from memory.
-var logBufferObsoleteAfter = 30 * 1000;
+var logBufferObsoleteAfter = 60 * 1000;
 
 /******************************************************************************/
 
-var writeOne = function(tabId, details, result) {
-    if ( logBuffers.hasOwnProperty(tabId) === false ) {
-        return;
+var janitor = function() {
+    if (
+        logBuffer !== null &&
+        logBuffer.lastReadTime < (Date.now() - logBufferObsoleteAfter)
+    ) {
+        logBuffer = logBuffer.dispose();
     }
-    var logBuffer = logBuffers[tabId];
-    logBuffer.writeOne(details, result);
-};
-
-/******************************************************************************/
-
-var readAll = function(tabId) {
-    if ( logBuffers.hasOwnProperty(tabId) === false ) {
-        logBuffers[tabId] = new LogBuffer();
+    if ( logBuffer !== null ) {
+        setTimeout(janitor, logBufferObsoleteAfter);
     }
-    return logBuffers[tabId].readAll();
 };
 
 /******************************************************************************/
 
-var isObserved = function(tabId) {
-    return logBuffers.hasOwnProperty(tabId);
-};
-
-/******************************************************************************/
-
-var loggerJanitor = function() {
-    var logBuffer;
-    var obsolete = Date.now() - logBufferObsoleteAfter;
-    for ( var tabId in logBuffers ) {
-        if ( logBuffers.hasOwnProperty(tabId) === false ) {
-            continue;
-        }
-        logBuffer = logBuffers[tabId];
-        if ( logBuffer.lastReadTime < obsolete ) {
-            logBuffer.dispose();
-            delete logBuffers[tabId];
-        }
+var writeOne = function() {
+    if ( logBuffer !== null ) {
+        logBuffer.writeOne(arguments);
     }
-    setTimeout(loggerJanitor, loggerJanitorPeriod);
 };
 
-// The janitor will look for stale log buffer every 2 minutes.
-var loggerJanitorPeriod = 2 * 60 * 1000;
+/******************************************************************************/
 
-setTimeout(loggerJanitor, loggerJanitorPeriod);
+var readAll = function() {
+    if ( logBuffer === null ) {
+        logBuffer = new LogBuffer();
+        setTimeout(janitor, logBufferObsoleteAfter);
+    }
+    return logBuffer.readAll();
+};
+
+/******************************************************************************/
+
+var isObserved = function() {
+    return logBuffer !== null;
+};
 
 /******************************************************************************/
 
