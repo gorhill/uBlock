@@ -246,7 +246,6 @@ var getStats = function(tabId, tabTitle) {
         r.contentLastModified = pageStore.contentLastModified;
         r.firewallRules = getFirewallRules(tabContext.rootHostname, r.hostnameDict);
         r.canElementPicker = tabContext.rootHostname.indexOf('.') !== -1;
-        r.canRequestLog = canRequestLog;
         r.noPopups = µb.hnSwitches.evaluateZ('no-popups', tabContext.rootHostname);
         r.noStrictBlocking = µb.hnSwitches.evaluateZ('no-strict-blocking', tabContext.rootHostname);
         r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', tabContext.rootHostname);
@@ -262,15 +261,9 @@ var getStats = function(tabId, tabTitle) {
     return r;
 };
 
-// Not the most elegant approach, but it does keep everything simple:
-// This will be set by getTargetTabId() and used by getStats().
-var canRequestLog = true;
-
 /******************************************************************************/
 
 var getTargetTabId = function(tab) {
-    canRequestLog = true;
-
     if ( !tab ) {
         return '';
     }
@@ -279,8 +272,6 @@ var getTargetTabId = function(tab) {
     // the data from the tab being observed by the logger.
     // This allows a user to actually modify filtering profile for
     // behind-the-scene requests.
-
-    canRequestLog = false;
 
     // Extract the target tab id from the URL
     var matches = tab.url.match(/[\?&]tabId=([^&]+)/);
