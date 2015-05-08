@@ -80,7 +80,8 @@
         size: storageQuota,
         storeName: "keyvaluepairs"
     });
-    vAPI.storage = vAPI.cacheStorage = {
+
+    vAPI.cacheStorage = {
         QUOTA_BYTES: storageQuota, // copied from Info.plist
 
         get: function(keys, callback) {
@@ -177,7 +178,6 @@
         },
 
         clear: function(callback) {
-            this.preferences.clear();
             localforage.clear(function() {
                 callback();
             });
@@ -195,6 +195,139 @@
             });
         }
     };
+
+    var settingsStorage = {
+        _storage: safari.extension.settings,
+        get: function(keys, callback) {
+            if(typeof callback !== "function") {
+                return;
+            }
+
+            var i, value, result = {};
+
+            if(keys === null) {
+                for(i in this._storage) {
+                    if(!this._storage.hasOwnProperty(i)) continue;
+                    value = this._storage[i];
+                    if(typeof value === "string") {
+                        result[i] = JSON.parse(value);
+                    }
+                }
+            }
+            else if(typeof keys === "string") {
+                value = this._storage[keys];
+                if(typeof value === "string") {
+                    result[keys] = JSON.parse(value);
+                }
+            }
+            else if(Array.isArray(keys)) {
+                for(i = 0; i < keys.length; i++) {
+                    value = this._storage[i];
+
+                    if(typeof value === "string") {
+                        result[keys[i]] = JSON.parse(value);
+                    }
+                }
+            }
+            else if(typeof keys === "object") {
+                for(i in keys) {
+                    if(!keys.hasOwnProperty(i)) {
+                        continue;
+                    }
+                    value = this._storage[i];
+
+                    if(typeof value === "string") {
+                        result[i] = JSON.parse(value);
+                    }
+                    else {
+                        result[i] = keys[i];
+                    }
+                }
+            }
+            callback(result);
+        },
+        set: function(details, callback) {
+            for(var key in details) {
+                if(!details.hasOwnProperty(key)) {
+                    continue;
+                }
+                this._storage.setItem(key, JSON.stringify(details[key]));
+            }
+            if(typeof callback === "function") {
+                callback();
+            }
+        },
+        remove: function(keys) {
+            if(typeof keys === "string") {
+                keys = [keys];
+            }
+            for(var i = 0; i < keys.length; i++) {
+                this._storage.removeItem(keys[i]);
+            }
+        },
+        clear: function() {
+            this._storage.clear();
+        },
+        getBytesInUse: function(keys, callback) {
+            if(typeof callback !== "function") {
+                return;
+            }
+            var i, size = 0;
+            for (i in this._storage) {
+                if (!this._storage.hasOwnProperty(i)) continue;
+                size += (this._storage[i] || '').length;
+            }
+            callback(size);
+        }
+    };
+
+    vAPI.storage = settingsStorage;
+
+    if(!safari.extension.settings.migratedStorage) {
+        var migrationMap = {
+            "cached_asset_content://assets/user/filters.txt": "userFilters"
+        };
+
+        var delayed = [];
+
+        vAPI.storage = {
+            get: function(a, b) {
+                delayed.push(settingsStorage.get.bind(settingsStorage, a, b));
+            },
+            set: function(a, b) {
+                delayed.push(settingsStorage.set.bind(settingsStorage, a, b));
+            },
+            remove: function(a, b) {
+                delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
+            },
+            clear: function() {
+                delayed.push(settingsStorage.clear.bind(settingsStorage));
+            },
+            getBytesInUse: function(a, b) {
+                delayed.push(settingsStorage.getBytesInUse.bind(settingsStorage, a, b));
+            }
+        };
+
+        localforage.iterate(function(value, key) {
+            if(migrationMap[key]) {
+                safari.extension.settings[migrationMap[key]] = value;
+                return;
+            }
+            if(key.lastIndexOf("cached_asset", 0) === 0) {
+                return;
+            }
+            safari.extension.settings[key] = value;
+            localforage.removeItem(key);
+        }, function() {
+            var func;
+            while(func = delayed.pop()) {
+                func();
+            }
+            delayed = null;
+            vAPI.storage = settingsStorage;
+        });
+        safari.extension.settings.migratedStorage = true;
+    }
 
     /******************************************************************************/
 
@@ -222,7 +355,7 @@
                 tabId = vAPI.tabs.getTabId(e.target);
             var details = {
                 targetURL: url,
-                targetTabId: tabId,
+                targetTabId: tabId.toString(),
                 openerTabId: vAPI.tabs.popupCandidate
             };
             if(vAPI.tabs.onPopup(details)) {
