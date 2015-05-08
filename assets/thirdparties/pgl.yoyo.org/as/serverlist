@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Thu, 23 Apr 2015 16:28:01 GMT
-# entries:        2433
+# last updated:   Sat, 02 May 2015 15:49:19 GMT
+# entries:        2428
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -277,6 +277,7 @@
 127.0.0.1 adlog.com.com
 127.0.0.1 adloox.com
 127.0.0.1 adlooxtracking.com
+127.0.0.1 adlure.net
 127.0.0.1 adm.ad.asap-asp.net
 127.0.0.1 admagnet.net
 127.0.0.1 admailtiser.com
@@ -511,7 +512,6 @@
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
-127.0.0.1 ads.incgamers.com
 127.0.0.1 ads.indiatimes.com
 127.0.0.1 ads.infi.net
 127.0.0.1 ads.internic.co.il
@@ -820,13 +820,11 @@
 127.0.0.1 adserverplus.com
 127.0.0.1 adserversolutions.com
 127.0.0.1 adserveuk.com
-127.0.0.1 adserving.eleven-agency.com
 127.0.0.1 adservinginternational.com
 127.0.0.1 adsfac.eu
 127.0.0.1 adsfac.net
 127.0.0.1 adsfac.us
 127.0.0.1 adshost1.com
-127.0.0.1 adshuffle.com
 127.0.0.1 adside.com
 127.0.0.1 adskape.ru
 127.0.0.1 adsklick.de
@@ -969,6 +967,7 @@
 127.0.0.1 amazingcounters.com
 127.0.0.1 amung.us
 127.0.0.1 an.tacoda.net
+127.0.0.1 anahtars.com
 127.0.0.1 analytics.live.com
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
@@ -990,7 +989,6 @@
 127.0.0.1 at-adserver.alltop.com
 127.0.0.1 atdmt.com
 127.0.0.1 athena-ads.wikia.com
-127.0.0.1 atopsites.com
 127.0.0.1 atwola.com
 127.0.0.1 auctionads.com
 127.0.0.1 auctionads.net
@@ -1202,7 +1200,6 @@
 127.0.0.1 checkstat.nl
 127.0.0.1 chestionar.ro
 127.0.0.1 chitika.net
-127.0.0.1 ciaoclick.com
 127.0.0.1 cibleclick.com
 127.0.0.1 cityads.telus.net
 127.0.0.1 cj.com
@@ -1462,7 +1459,6 @@
 127.0.0.1 freelogs.com
 127.0.0.1 freeonlineusers.com
 127.0.0.1 freepay.com
-127.0.0.1 freestat.pl
 127.0.0.1 freestats.com
 127.0.0.1 freestats.tv
 127.0.0.1 freewebcounter.com
@@ -1798,7 +1794,6 @@
 127.0.0.1 netdirect.nl
 127.0.0.1 netflame.cc
 127.0.0.1 netincap.com
-127.0.0.1 netpool.netbookia.net
 127.0.0.1 netshelter.net
 127.0.0.1 network.business.com
 127.0.0.1 network.realmedia.com
@@ -1881,7 +1876,6 @@
 127.0.0.1 pageranktop.com
 127.0.0.1 partage-facile.com
 127.0.0.1 partner-ads.com
-127.0.0.1 partner.gonamic.de
 127.0.0.1 partner.pelikan.cz
 127.0.0.1 partner.topcities.com
 127.0.0.1 partnerad.l.google.com
@@ -2086,6 +2080,7 @@
 127.0.0.1 service1.adten.de
 127.0.0.1 services.hearstmags.com
 127.0.0.1 serving-sys.com
+127.0.0.1 sexaddpro.de
 127.0.0.1 sexcounter.com
 127.0.0.1 sexinyourcity.com
 127.0.0.1 sexlist.com

@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 10/04/2015
+! Last change: 06/05/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -67,7 +67,10 @@ exashare.com###player_img
 ||ab-forum.info/animation.swf
 ||ab-forum.info/astrasat.gif
 ||ab-forum.info/*banner*.gif
+||ab-forum.info/bannery/
 ||ab-forum.info/Ferguson_NEW.jpg
+||ab-forum.info/lx3-maly.jpg
+||ab-forum.info/odbojna.sk.jpg
 ||ab-forum.info/xpeed.jpg
 ||abecedaher.cz/index_banner_
 ||adx.fotoaparat.cz/www/images/
@@ -278,6 +281,7 @@ exashare.com###player_img
 ||static.itnews.sk/branding/
 ||tailormysuit.sk/wp-content/uploads/banner*.jpg
 ||techbox.sk/*colorbox
+||img.teevee.sk/img/comm/
 ||totalpozicky.sk/images/banners/
 ||tu-ke.com/certovskezlavy.jpg
 ||tu-ke.com/jozko.png
@@ -414,6 +418,7 @@ exashare.com###player_img
 @@||*.nova.cz/static/shared/app/videojs/plugins/adblock/
 @@||*.nova.cz/static/shared/app/videojs/plugins/ads/
 @@||ocko.tv/content/adv/flash/
+@@||openload.io/assets/js/advertisement.js
 @@|http://pagead2.googlesyndication.com/pagead/show_ads.js$domain=pismenkuje.cz|pise.cz|blbne.cz|bonzuje.cz|sdeluje.cz|svetu.cz|vzpomina.cz
 @@||reklama-*.cz
 @@||smartmania.cz/advertisment.js
@@ -437,9 +442,11 @@ zive.cz#@#.box-adsense
 @@||img.aaaauto.eu/thumb/
 @@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
 @@/moje-konto/inzeraty/
+@@||openload.io/deliverad/2
 @@||pcforum.sk$elemhide
 @@||pcforum.sk/styles/*/advertisement.js
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
+@@||spusti.net/data/advertisement.js$domain=spusti.net
 @@||tpd.sk/ads/rotator/
 ulozisko.sk#@##reklama_big
 @@||yukata.cz/banners/banner_88_31.png$domain=anime-kool.webnode.sk
@@ -762,6 +769,7 @@ nasepenize.cz##.ks-detail-clanku
 nasepenize.cz##.latest-hypertext
 navratdoreality.cz##IMG[src="pub/naprivat-250x250-02.jpg"]
 nejlevnejsiramy.cz###banner_overlay
+netu.tv###this-pays-for-bandwidth-container-hor
 nova.cz###banner_nestandard
 nova.cz###bb_wallpaper
 nova.cz###bbbanner_big_1
@@ -813,6 +821,7 @@ search.seznam.cz###sklik-right
 search.seznam.cz##.sklik-right
 search.seznam.cz##.skliktop
 serialycz.cz##CENTER
+serialycz.cz##IFRAME[src^="http://vk.com/"]
 serialycz.cz##P[style="text-align: center;"]
 securityworld.cz##.banner
 serialkeys.svetu.cz###menu_rozdel_mene
@@ -957,6 +966,7 @@ onlinefilmy.tv###bg_right
 onlinefilmy.tv##.ads
 onlinefilmy.tv##.ads_new
 onlinevidea.tv##.ads_new
+openload.io###videooverlay
 pcforum.sk##td[style="cursor: pointer; padding: 10px; background: rgb(255, 255, 255);"]
 pocasie.pozri.sk/nba2.gif
 pokec.azet.sk##.c_banner300x300
@@ -971,6 +981,9 @@ sport.aktuality.sk###skin_link_left
 sport.aktuality.sk###skin_link_right
 techbox.sk##.anotacia-sponsored
 techbox.sk##.inzercia
+teevee.sk##A[href^="https://www.tipsport.sk/PartnerRedirectAction.do?"]
+teevee.sk###colorbox
+teevee.sk###cboxOverlay
 topky.sk##.ad
 topky.sk##.addbox.avizo
 topky.sk##.box_advertisment.addbox.recycle
@@ -978,6 +991,7 @@ topky.sk##.nastip
 topky.sk##.takeoverKlik
 topky.sk###top-offers-slider
 topnovinky.sk###rekl_left_banner
+topserialy.sk##BODY > div:last-child
 tv-program.sk##.stn.stns > a[target="_blank"]
 tv-program.sk##.stn.stnu > a[target="_blank"]
 tv-program.sk##.dragobj > div:nth-of-type(2)

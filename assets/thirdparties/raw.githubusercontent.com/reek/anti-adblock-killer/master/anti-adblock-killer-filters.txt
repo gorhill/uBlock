@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: AakList (Anti-Adblock Killer)
 ! Author: Reek | http://reeksite.com/
-! Version: 7.9
+! Version: 8.0
 ! Expires: 1 days
 ! License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
@@ -433,8 +433,8 @@ anime4fun.com###hover
 eveskunk.com#@#.adsbygoogle
 ! anisubsia.com
 anisubsia.com#@#.adsantilok
-! play44.net / videobug.net
-video44.net,play44.net,videobug.net,videofun.me,byzoo.org###flowplayer_api + .jhasvdjhas
+! flowplayer_api
+videofun.me,videobug.net,video44.net,play44.net,byzoo.org,playbb.me,videowing.me,videozoo.me,easyvideo.me,playpanda.net##.jhasvdjhas
 ! prod.static.cardinals.clubs.nfl.com
 azcardinals.com###adblock-notice
 @@/js/detect-blocked-ads.js$script,domain=prod.static.cardinals.clubs.nfl.com
@@ -867,12 +867,60 @@ forums.openpli.org###content > [style="text-align:center;"] > DIV[style="margin 
 simply-debrid.com#@##adsense
 ! onvasortir.com
 @@||onvasortir.com^$elemhide
-@@||onvasortir.com/publicite.html$script
-@@||onvasortir.com/fuckadblock.js$script
+@@||onvasortir.com^$script
 ! urbeez.com
 @@||urbeez.com^$elemhide
-@@||urbeez.com/publicite.html$script
-@@||urbeez.com/fuckadblock.js$script
+@@||urbeez.com^$script
+! movie-box.pl + excluded AakScript
+@@||movie-box.pl^$elemhide
+@@||movie-box.pl/js/fuckadblock.js$script
+! WP.tv
+!@@||rek.www.wp.pl/vad.xml$xmlhttprequest
+!@@||rek.www.wp.pl/?rekid=$script
+!@@||rek.www.wp.pl/pliki/*_*.js$script
+!@@||adv.wp.pl/RM/Box/*/advertisement.js$script
+!@@||adv.wp.pl/RM/Box/*/x.gif$image
+! sparkylinux.org
+@@||sparkylinux.org/images/ad/$image
+! captchme.com
+@@||api.captchme.net/js/advertisement-min.js$script
+@@||api.captchme.net/ads.html$subdocument
+! demonoid.pw
+@@||demonoid.pw/show_ads_.js$script
+! carambatv.ru
+@@||adv.gpm-digital.com/crossdomain.xml$object-subrequest,domain=carambatv.ru
+! rookie.com.pl
+@@||rookie.com.pl/jscripts/ads.js$script
+! cwtv.com
+||dzxxxg6ij9u99.cloudfront.net/wb.js$script,domain=cwtv.com
+! worldofgnome.org
+worldofgnome.org#@#.google-ad
+worldofgnome.org#@##wog-300x250-ads
+! bitzfree.com
+@@||bitzfree.com/js/*.js$script
+@@||go.padsdel.com/lg.php$image,domain=bitzfree.com
+@@||cdn.adshexa.com/show_ads.php$image,domain=bitzfree.com
+@@||padsdel.cdnads.com^$image,domain=bitzfree.com
+@@||adsrvmedia.adpdx.com^$image,domain=bitzfree.com
+@@||cdn.adnxs.com^$image,domain=bitzfree.com
+@@||cdn.adk2.co^$image,domain=bitzfree.com
+@@||cdn.adshexa.com^$image,domain=bitzfree.com
+@@||www.adhexa.com^$image,domain=bitzfree.com
+@@||rhtag.com^$image,domain=bitzfree.com
+@@||cdn.adnxs.com^$image,domain=bitzfree.com
+! rdio.com
+!rdio.com#@#.ad_background
+!rdio.com#@#.ad_bottom
+!rdio.com#@#.ad_container
+!rdio.com#@#.ad_text
+! trafictube.ro
+trafictube.ro#@#.widget-adv
+! uptobox.com - http://paste2.org/GLBaKYC7
+@@||uptobox.com^$elemhide
+@@||uptostream.com^$elemhide
+@@||pagead2.googlesyndication.com/simgad/$image,domain=uptobox.com|uptostream.com
+! bitcoiner.net
+litecoiner.net,bitcoiner.net#@##ad-top
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!

@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 5030
-! Last modified: 07 Apr 2015
+! Version: 5066
+! Last modified: 06 May 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -15,6 +15,7 @@
 !-_-_-_-_-_-_-_-External Link Survey Scams-_-_-_-_-_-_-_-!
 ##[href^="http://cleanfiles.net/"]
 ##[href^="https://cleanfiles.net/"]
+##[href^="http://clnks.co/"]
 ##[href^="http://downloadity.net/"]
 ##[href^="http://dream-file.com/"]
 ##[href^="http://fileice.net/"]
@@ -33,6 +34,7 @@
 ##[href^="http://filenix.com/"]
 ##[href^="http://mgjmp.com/"]
 ##[href^="http://jlyse.net/"]
+##[href^="https://jlyse.net/"]
 ##[href^="http://getfiles.co/"]
 ##[href^="http://gripped.biz/"]
 ##[href^="http://dollarupload.com/"]
@@ -44,7 +46,11 @@
 ##[href^="http://saveftp.com/"]
 ##[href^="http://oceanfiles.me/"]
 ##[href^="http://www.firecash.org/"]
+##[href^="http://firecash.org/"]
+##[href^="http://mwfiles.net/"]
 ##[href^="http://up-flow.org/"]
+##[href^="http://filecom.net/"]
+##[href^="http://gigup.pl/"]
 ##[href^="http://gotlinks.co/"]
 ##[href^="http://file-speedy.com/"]
 ##[href^="http://fileblckr.com/"]
@@ -65,6 +71,7 @@
 ##[href^="http://quelldateien.de/"]
 ##[href^="http://fichierload.fr/"]
 ##[href^="http://okfiles.net/"]
+##[href^="http://filesquick.net/"]
 ##[href^="http://clixtk.com/"]
 ##[href^="http://jofiles.com/"]
 ##[href^="http://yourfreesoftonline.com/"]
@@ -94,7 +101,9 @@
 ##[href^="http://upshare.org/"]
 ##[href^="http://skippyfile.com/"]
 ##[href^="http://xtremgenerators.com/"]
+##[href^="http://www.xtremgenerators.com/"]
 ##[href^="http://topgamehax.com/"]
+##[href^="http://www.topgamehax.com/"]
 ##[href^="http://verallohacks.com/"]
 ##[href^="http://filebandit.net/"]
 ##[href^="http://fileml.com/"]
@@ -104,12 +113,12 @@
 ##[href^="http://lnkgt.com/"]
 ##[href^="http://filesrightnow.com/"]
 ##[href^="http://gripdownload.com/"]
+##[href^="http://www.gripdownload.com/"]
 ##[href^="http://speedyfiles.net/"]
 ##[href^="https://www.lockredirect.com/"]
 ##[href^="http://www.mannesoth.com/"]
 ##[href^="http://www.downloadthesefiles.com/"]
 ##[href^="http://downloadsfreesoftwares.com/"]
-##[href^="http://www.gripdownload.com/"]
 ##[href^="http://fileskeep.com/"]
 ##[href^="http://www.boltfiles.com/"]
 ##[href^="http://filespeedy.org/"]
@@ -149,6 +158,10 @@
 ##[href^="http://grabclicks.com/"]
 ##[href^="http://fileconfirmation.com/"]
 ##[href^="http://gripclix.com/"]
+##[href^="http://flamefolders.com/"]
+##[href^="http://grptrker.com/"]
+##[href^="http://mayukefile.com/"]
+##[href^="http://filesyncing.net/"]
 !
 !
 !
@@ -5025,6 +5038,29 @@ hepimovie.net###login
 ||vodkahack.com^
 ||boombeach-cheat.com^
 ||instantdownloadsz.com^
+||clnks.co^
+||flamefolders.com^
+||cardsfree.net^
+||showmeflix.com^
+||sernoodmovies.com^
+||dirtgame.net^
+||piraterhotmail.website^
+||piraterhotmail.fr^
+||place-telechargement.com^
+||gmodfree.com^
+||newtoolset.com^
+||tmpgames.com^
+||robloxrobux-generator.com^
+||bestonlinegamecheats.net^
+||mayukefile.com^
+||grptrker.com^
+||websworld.net^
+||boombeachhacktools.com^
+||safe-cheats.com^
+||cotelia.com^
+||zebracheats.com^
+||socialwarshack.org^
+||ps4jailbreaker.com^
 !
 !
 !

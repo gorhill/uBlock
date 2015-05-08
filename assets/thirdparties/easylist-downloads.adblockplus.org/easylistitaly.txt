@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: DcRateEQzNJ+9aKEMDXIoA
-! Version: 201504291701
+! Checksum: B/8HIz8A6GJuX+PkVUnh0g
+! Version: 201505081531
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 29 Apr 2015 17:01 UTC
+! Ultima modifica: 08 May 2015 15:31 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -1107,6 +1107,7 @@ sportube.tv#@#.afs_ads
 ||julienews.it/upload/banner/
 ||juventus.com^*/bannerscene?
 ||juventus.com^*/sponsor_
+||kisskissnapoli.it/images/banners/
 ||kveeniland.com/dwnd.png
 ||kveeniland.com/guarda.png
 ||kveeniland.com/scarica.png
@@ -1831,6 +1832,8 @@ freemodding.it###bannerini
 cwi.it###banners
 siracusanews.it###banners-top
 si24.it###banners_middle
+linguee.it###banners_right
+linguee.it###banners_top
 cmnews.it###bannersdx
 telefonino.net###bannerstrip
 stadiotardini.it###bannertesta
@@ -2190,6 +2193,7 @@ avmagazine.it,corrierediragusa.it,ilcrotonese.it,tomshw.it##.background-link
 lavorincasa.it##.bak
 milanofinanza.it,oggitreviso.it##.ban
 advertiser.it,agi.it,agichina24.it,airdave.it,alessandrianews.it,america24.com,casateonline.it,chiamarsibomber.com,corrieredelgiorno.com,corrieremercantile.it,dagospia.com,diretta.it,finanzaonline.com,gazzettadiavellino.it,gazzettadinapoli.it,gazzettadisalerno.it,gazzettahockey.it,giochidicalcio.com,html.it,ilcambiamento.it,ilfriuli.it,ilgiornale.it,insegreto.it,lindro.it,lipari.biz,macitynet.it,merateonline.it,meteoweb.eu,oggitreviso.it,orangedropdesign.com,orvietosi.it,pmi.it,programmitv.com,pubblicitaitalia.it,r101.it,rcdc.it,rockit.it,secoloditalia.it,softonic.it,strettoweb.com,tenews.it,ticinolibero.ch,ultimouomo.com,vocenuova.tv##.banner
+m100.it##.banner-1
 rollingstonemagazine.it##.banner-abbonamenti
 lacrocequotidiano.it,mtv.it##.banner-container
 telesud3.com##.banner-destra
@@ -2504,6 +2508,7 @@ ciao.it##.tableSponsLinks
 genova24.it,ivg.it##.takeover
 panorama.it##.teaser-immobiliare
 tiscali.it##.teaserDx
+edidomus.it##.telecamera-address
 ansa.it##.text-link
 excite.it##.textlink_content
 ilfattonisseno.it##.top
@@ -2548,6 +2553,7 @@ allandroidnews.it##.wp_skyscraper_c2
 bergamosera.com##.wpbrbanner
 petizionionline.it##.yahoo
 notizie.it##.yahoo-white-bg
+millecanali.it##.zedo
 cittaceleste.it##.zodiak
 windowsblogitalia.com##[id^="bsa"]
 tgcom24.mediaset.it##a[href*=".ad.dotandad.com/clicktracker.jsp?"]
