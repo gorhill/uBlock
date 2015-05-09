@@ -658,7 +658,7 @@ vAPI.net.registerListeners = function() {
         //},
         {
             'urls': this.onBeforeRequest.urls || ['<all_urls>'],
-            'types': this.onBeforeRequest.types || []
+            'types': this.onBeforeRequest.types || undefined
         },
         this.onBeforeRequest.extra
     );
