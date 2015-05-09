@@ -352,6 +352,8 @@ var onMessage = function(request, sender, callback) {
             request.srcHostname,
             request.desHostnames
         );
+        // https://github.com/gorhill/uBlock/issues/188
+        µb.cosmeticFilteringEngine.removeFromSelectorCache(request.srcHostname, 'net');
         response = getStats(request.tabId);
         break;
 
