@@ -1071,7 +1071,7 @@ var httpObserver = {
         var onBeforeRequest = vAPI.net.onBeforeRequest;
         var type = this.typeMap[details.type] || 'other';
 
-        if ( onBeforeRequest.types.has(type) === false ) {
+        if ( onBeforeRequest.types && onBeforeRequest.types.has(type) === false ) {
             return false;
         }
 
@@ -1270,7 +1270,9 @@ vAPI.net.registerListeners = function() {
     // Since it's not used
     this.onBeforeSendHeaders = null;
 
-    this.onBeforeRequest.types = new Set(this.onBeforeRequest.types);
+    this.onBeforeRequest.types = this.onBeforeRequest.types ?
+        new Set(this.onBeforeRequest.types) :
+        null;
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
