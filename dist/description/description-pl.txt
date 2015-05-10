@@ -1,49 +1,49 @@
-Wydajny bloker: małe zużycie pamięci i CPU, możliwość załadowania i egzekwowania tysięcy filtrów więcej niż inne popularne blokery.
+Wydajny bloker: małe zużycie pamięci RAM i procesora, a nawet możliwość wczytania i egzekwowania tysięcy filtrów więcej niż inne popularne blokery.
 
 Ilustrowany przegląd jego skuteczności: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-Efficiency-Compared
 
-Sposób użycia: Duży przycisk zasilania w popupie służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Przycisk dotyczy tylko bieżącej witryny sieci web, nie działa ogólnie na wszystkie.
+Sposób użycia: duży przycisk zasilania w małym wyskakującym, ale  nieszkodliwym oknie służy do trwałego włączenia/wyłączenia uBlock Origina na bieżącej stronie internetowej. Przycisk dotyczy tylko bieżącej strony. Nie jest globalny.
 
 ***
 
-Elastyczny, to coś więcej niż "ad blocker": może także czytać i tworzyć filtry plików z hostów.
+Elastyczny, to coś więcej niż "bloker reklam": może także czytać i tworzyć filtry z plików hostów.
 
-Po zainstalowaniu te listy filtrów są ładowane i egzekwowane:
+Po zainstalowaniu te listy filtrów są wczytywane i egzekwowane:
 
 - EasyList
 - Serwer listy reklam Peter Lowe'a
 - EasyPrivacy
-- Domeny malware
+- Domeny ze złośliwym oprogramowaniem
 
-Więcej list jest dostępnych dla Ciebie do wyboru, jeśli chcesz:
+Dostępnych jest więcej list dla Ciebie do wyboru, jeśli chcesz:
 
-- Ulepszone śledzenie listy dla fanboy'ów
-- Plik hosts Dan Pollocka
+- Ulepszona lista śledzenia dla fanboy'ów
+- Plik hostów Dan Pollocka
 - Serwery reklam i śledzenia hpHosts
 - MVPS HOSTS
 - Spam404
 - I wiele innych
 
-Oczywiście, jeśli więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci. Jednak nawet po dodaniu dwóch dodatkowych list filtrów Fanboya, listy serwerów reklamowych i śledzących hpHosts, uBlock ma nadal niższe zużycie pamięci niż inne bardzo popularne blokery.
+Oczywiście, im więcej filtrów jest włączonych, tym wyższe jest zużycie pamięci RAM. Jednak nawet po dodaniu dwóch dodatkowych list filtrów dla fanboy'ów, listy serwerów reklamowych i śledzących hpHosts, uBlock₀ ma nadal niższe zużycie pamięci RAM niż inne bardzo popularne blokery.
 
-Należy również pamiętać, że niektóre z tych dodatkowych list wyboru mogą prowadzić do większego prawdopodobieństwa uszkodzenia witryny sieci web - zwłaszcza te listy, które są zwykle używane jako plik hosts.
+Należy również pamiętać, że niektóre z tych dodatkowych list wyboru mogą prowadzić do większego prawdopodobieństwa uszkodzenia witryny internetowej - zwłaszcza te listy, które są zwykle używane jako plik hostów.
 
 ***
 
-Bez zaprogramowanej listy filtrów to rozszerzenie jest niczym. Więc jeśli kiedykolwiek naprawdę chcesz wnieść coś, pomyśl o osobach, które ciężko pracują, aby utrzymać listy filtrów, które używasz, aby zostały one udostępnione do wykorzystania przez wszystkich za darmo.
+Bez zaprogramowanej listy filtrów, to rozszerzenie jest niczym. Jeśli więc kiedykolwiek naprawdę chcesz wnieść coś, pomyśl o osobach, które ciężko pracują, aby utrzymać listy filtrów, które używasz, aby były one dostępne do wykorzystania przez wszystkich za darmo.
 
 ***
 
 Darmowe rozszerzenie.
-Otwarte źródło z licencją publiczną (GPLv3)
+Otwarto-źródłowe z licencją publiczną (GPLv3)
 Dla użytkowników przez użytkowników.
 
-Współtwórcy rozszerzenia na GitHub: https://github.com/gorhill/uBlock/graphs/contributors
-Współtwórcy tłumaczeń na Crowdin: https://crowdin.net/project/ublock
+Współtwórcy rozszerzenia na GitHubie: https://github.com/gorhill/uBlock/graphs/contributors
+Współtwórcy tłumaczeń na Crowdinie: https://crowdin.net/project/ublock
 
 ***
 
-Jest to dość wczesna wersja, należy o tym pamiętać podczas oceniania.
+Pamiętaj podczas oceniania, że jest to jego wczesna wersja.
 
-Lista zmian projektu:
+Dziennik zmian projektu:
 https://github.com/gorhill/uBlock/releases

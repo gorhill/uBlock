@@ -12,7 +12,7 @@
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
-    "message":"Configurações",
+    "message":"Preferências",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{

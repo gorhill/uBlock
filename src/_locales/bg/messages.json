@@ -164,7 +164,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Режим за хора с цветна слепота",
+    "message":"Достъпност за хора с цветна слепота",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{

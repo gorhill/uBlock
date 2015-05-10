@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"이 확장기능은 효율적인 차단기입니다. CPU와 메모리에 주는 부담이 적습니다.",
+    "message":"이 부가 기능은 효율적인 차단기입니다. CPU와 메모리에 주는 부담이 적습니다.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -212,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock₀<\/i>의 메모리 사용량이 증가합니다.<\/p>",
+    "message":"<p>이 옵션은 <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">애드블록 플러스-호환 &ldquo;구성 요소 감추기&rdquo; 필터<\/a>를 분석하고 적용하는 것을 활성화합니다. 이 필터는 기본적으로 웹 페이지에서 시각적 방해 요소들을 숨기는 역할을 하며, 네트워크 요청에 기반한 필터링 엔진에서 차단될 수 없습니다.<\/p><p>이 기능을 활성화하면 <i>uBlock₀<\/i>의 메모리 사용량이 증가합니다.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{

@@ -40,6 +40,7 @@ Hecho para usuarios por los usuarios.
 
 Colaboradores @ Github (en inglés): https://github.com/gorhill/uBlock/graphs/contributors
 Colaboradores @ Crowdin (en inglés): https://crowdin.net/project/ublock
+Puede contribuir con la traducción al español, es libre!
 
 ***
 

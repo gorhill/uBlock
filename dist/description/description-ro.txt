@@ -1,15 +1,15 @@
-Un paravan de protecție eficient: folosește procesorul și memoria foarte puțin și totuși poate încărca și aplica filtre cu mii în plus față de alte paravane.
+Un blocant (paravan) eficient: folosește foarte puțin procesorul și memoria și totuși poate încărca și aplica mii de filtre în plus față de alte paravane populare.
 
 O ilustrare a eficienței poate fi observată la:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Utilizare: Acel buton de pornire/oprire în fereastra paravanului este pentru a activa/debloca uBlock pentru saitul curent. Funcția este valabilă doar pentru saitul curent, nu la nivel global.
+Utilizare: Butonul mare de pornire/oprire în fereastra paravanului este pentru a activa/dezactiva uBlock pentru saitul curent. Funcția este valabilă doar pentru saitul curent, nu la nivel global.
 
 ***
 
-Flexibil, mai mult decât un „paravan de protecție”: acesta poate citi și crea filtre din fișierele hosts.
+Flexibil, mai mult decât un „blocant de reclame”: acesta poate citi și crea filtre din fișierele de gazde (hosts).
 
-În mod implicit, aceste liste și filtre sunt încărcate și aplicate:
+În mod implicit, aceste liste de filtre sunt încărcate și aplicate:
 
 - EasyList
 - Lista serverelor de reclame a lui Peter Lowe
@@ -25,9 +25,9 @@ De asemenea, mai sunt disponibile și alte liste precum:
 - Spam404
 - Și multe altele
 
-Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși chiar și după adăugarea în plus a două liste Fanboy și hPhosts Ad, uBlock₀ tot folosește mai puțină memorie decât restul paravanelor.
+Desigur, cu cât sunt mai multe filtre active cu atât mai mult este utilizată memoria.  Totuși, chiar și după adăugarea în plus a două liste Fanboy și lista de reclame și urmărire hPhosts, uBlock₀ tot folosește mai puțină memorie decât restul paravanelor.
 
-De ținut minte, că odată cu selectarea în plus a unora dintre liste poate conduce la afectarea aspectului siteurilor -- în special listele care sunt în mod normal fișiere hosts.
+De ținut minte, că odată cu selectarea în plus a unora dintre liste se poate ajunge la afectarea aspectului saiturilor -- în special listele care sunt în mod normal liste de gazde.
 
 ***
 
@@ -44,7 +44,7 @@ Contribuitori pe Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Este încă o aplicație recentă, gândiți-vă la acest lucru când lăsați un comentariu.
+Este încă o aplicație recentă, gândiți-vă la acest lucru când scrieți o recenzie.
 
 Lista de schimbări a proiectului:
 https://github.com/gorhill/uBlock/releases

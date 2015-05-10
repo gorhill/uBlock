@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Pergi ke catatan permintaan",
+    "message":"Kunjungi catatan permintaan",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -208,11 +208,11 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Baca dan jalankan filter tampilan.",
+    "message":"Uraikan dan paksa jalankan filter tampilan.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Opsi ini mengaktifkan pembacaan dan menjalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar filter tampilan, berfungsi untuk menyembunyikan elemen di laman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Mengaktifkan fitur ini akan meningkatkan penggunaan memori <i>uBlock₀<\/i>.<\/p>",
+    "message":"<p>Opsi ini mengaktifkan penguraian dan memaksa-jalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar penyaring tampilan, berfungsi untuk menyembunyikan elemen di laman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Mengaktifkan fitur ini akan meningkatkan penggunaan memori <i>uBlock₀<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -256,7 +256,7 @@
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"Baca",
+    "message":"Uraikan",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
@@ -468,7 +468,7 @@
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"satu menit yang lalu",
+    "message":"semenit yang lalu",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
@@ -476,7 +476,7 @@
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"satu jam yang lalu",
+    "message":"sejam yang lalu",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
@@ -484,7 +484,7 @@
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"satu hari yang lalu",
+    "message":"sehari yang lalu",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{

@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clic: dezactivează\/activează uBlock pentru acest sait.\n\nCtrl+clic: dezactivează uBlock doar pe această pagină.",
+    "message":"Clic: dezactivează\/activează uBlock₀ pentru acest sait.\n\nCtrl+clic: dezactivează uBlock₀ doar pe această pagină.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -164,7 +164,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"Accesibil pentru daltonism",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -204,7 +204,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Golește cacheurile",
+    "message":"Golește tot din memoria tampon",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -212,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de <i>uBlock<\/i> va crește.<\/p>",
+    "message":"<p>Această opțiune permite citirea și aplicarea <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;<\/a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.<\/p><p>Activând această opțiune memoria utilizată de uBlock₀ va crește.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -260,7 +260,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"golește cacheul",
+    "message":"golește memoria tampon",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -344,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "message":"Lista ta de nume de gazde unde uBlock₀ va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -368,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Dacă dorești poți inspecta detaliile cererilor de rețea activând această opțiune. Înregistrarea cererilor de rețea poate conduce la creșterea gradului de utilizare a memoriei de către uBlock. Pentru că mulți utilizatori nu vor folosi vreodată această opțiune, aceasta este dezactivată implicit.",
+    "message":"Dacă dorești poți inspecta detaliile cererilor de rețea activând această opțiune. Înregistrarea cererilor de rețea poate conduce la creșterea gradului de utilizare a memoriei de către uBlock₀. Pentru că mulți utilizatori nu vor folosi vreodată această opțiune, aceasta este dezactivată implicit.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -448,7 +448,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și uBlock va fi repornit.\n\nDoriți să suprascrieți toate opțiunile folosind datele salvate?",
+    "message":"Toate opțiunile vor fi suprascrise cu datele din {{time}} și uBlock₀ va fi repornit.\n\nDorești să suprascrii toate opțiunile folosind datele salvate?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -456,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Toate configurările tale vor fi eliminate și uBlock va reporni.\n\nRestaurează uBlock la configurările din fabrică?",
+    "message":"Toate configurările tale vor fi eliminate și uBlock₀ va reporni.\n\nRestaurează uBlock₀ la configurările din fabrică?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -464,7 +464,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Adaugă următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Adaug următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -504,7 +504,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock a prevenit încărcarea acestei pagini:",
+    "message":"uBlock₀ a prevenit încărcarea acestei pagini:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

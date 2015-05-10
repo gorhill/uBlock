@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: Aktiver\/deaktiver µBlock på dette websted.\n\nCtrl+Klik: Slå µBlock fra på den nuværende side.",
+    "message":"Klik: Aktiver\/deaktiver uBlock₀ på dette websted.\n\nCtrl+Klik: Slå uBlock₀ fra på den nuværende side.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -76,15 +76,15 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"Aktiver\/Deaktiver blokering af alle popups på denne side",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"Aktiver\/Deaktiver streng blokering på denne side",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Aktiver\/Deaktiver kosmetiske filtre på denne side",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -164,7 +164,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Color-blind friendly",
+    "message":"Optimeret til farveblindhed",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -344,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Din liste over sider hvor µBlock vil være deaktiveret. Kun én adresse pr. linje. Ugyldige værtsnavne ignoreres lydløst.",
+    "message":"Brugerdefineret liste over værtsnavne hvor uBlock₀ vil være deaktiveret. Kun et værtsnavn pr. linje. Ugyldige værtsnavne ignoreres.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -368,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Opsamling af netværksforespørgsler forøger uBlocks brug af  hukommelse. Funktionen er som udgangspunkt slået fra da mange brugere aldrig vil komme til at gøre brug af den.",
+    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Logging af netværksforespørgsler forøger uBlock₀ hukommelsesforbrug. Da de fleste bruger ikke finder disse oplysninger interessante, er funktionen som standard slået fra.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -448,7 +448,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Alle dine indstillinger vil blive overskrevet med data sikkerhedskopieret {{time}}, og µBlock vil genstarte.\n\nOverskriv alle indstillinger med sikkerhedskopieret data?",
+    "message":"Alle indstillinger vil blive erstattet af sikkerhedskopien fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nErstat alle indstillinger med indstillingerne fra sikkerhedskopien?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -456,7 +456,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Alle dine indstillinger bliver fjernet, og µBlock genstarter.\n\nNulstil µBlock til fabriksindstillinger?",
+    "message":"Alle personlige indstillinger vil blive nulstillet, hvorefter uBlock₀ vil genstarte.\n\nGendan alle indstillinger i uBlock₀ til standard?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -464,7 +464,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Tilføj den følgende URL til dine brugerdefinerede filterlister?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Tilføj det følgende URL til din personlige filterliste?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -492,43 +492,43 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Vis oversigt",
+    "message":"Vis Dashboard",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Vis log over netværksanmodninger",
+    "message":"Vis netværkslog",
     "description":"Firefox\/Fennec-specific: Show Network Request Log"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"off",
+    "message":"Slået fra",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ has prevented the following page from loading:",
+    "message":"uBlock₀ har blokeret den følgende hjemmeside:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"Because of the following filter",
+    "message":"På grund af det følgende filter",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"Go back",
+    "message":"Gå tilbage",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"Close this window",
+    "message":"Luk vinduet",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Disable strict blocking for {{hostname}}",
+    "message":"Deaktiver streng blokering af {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Midlertidig",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Permanent",
     "description":"English: Permanently"
   },
   "dummy":{

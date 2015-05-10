@@ -36,7 +36,7 @@
 
 완전히 무료입니다.
 오픈소스이며, 공개 라이센스(GPLv3)를 따릅니다.
-사용자를 위한, 사용자에 의한.
+사용자를 위해, 사용자에 의해 만들어졌습니다.
 
 기여자 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 기여자 @ Crowdin: https://crowdin.net/project/ublock
