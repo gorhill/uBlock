@@ -157,7 +157,10 @@ body.compactView #content td {
     font: 1em FontAwesome;
     }
 #content table tr.tab:not(.canMtx) {
-    opacity: 0.2;
+    opacity: 0.3;
+    }
+#content table tr.tab:not(.canMtx):hover {
+    opacity: 0.7;
     }
 #content table tr.tab:not(.canMtx) > td:nth-of-type(2):before {
     content: '\f00d';

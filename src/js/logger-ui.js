@@ -343,7 +343,8 @@ var onLogBufferRead = function(response) {
 
     // Neuter rows for which a tab does not exist anymore
     // TODO: sort to avoid using indexOf
-    var rowVoided = false;
+    var autoDeleteVoidRows = vAPI.localStorage.getItem('loggerAutoDeleteVoidRows');
+    var rowVoided = false, trs;
     for ( var tabId in allTabIds ) {
         if ( allTabIds.hasOwnProperty(tabId) === false ) {
             continue;
@@ -351,15 +352,27 @@ var onLogBufferRead = function(response) {
         if ( response.tabIds.hasOwnProperty(tabId) ) {
             continue;
         }
-        toJunkyard(uDom('.tab_' + tabId));
+        trs = uDom('.tab_' + tabId);
+        if ( autoDeleteVoidRows ) {
+            toJunkyard(trs);
+        } else {
+            trs.removeClass('canMtx');
+            rowVoided = true;
+        }
         if ( tabId === popupManager.tabId ) {
             popupManager.toggleOff();
         }
-        rowVoided = true;
     }
     allTabIds = response.tabIds;
 
     renderLogEntries(response);
+
+    if ( rowVoided ) {
+        uDom('#clean').toggleClass(
+            'disabled',
+            tbody.querySelector('tr.tab:not(.canMtx)') === null
+        );
+    }
 
     // Synchronize toolbar with content of log
     uDom('#clear').toggleClass(
@@ -550,6 +563,18 @@ var clearBuffer = function() {
         trJunkyard.push(tbody.removeChild(tr));
     }
     uDom('#clear').addClass('disabled');
+    uDom('#clean').addClass('disabled');
+};
+
+/******************************************************************************/
+
+var cleanBuffer = function() {
+    var rows = uDom('#content tr.tab:not(.canMtx)').remove();
+    var i = rows.length;
+    while ( i-- ) {
+        trJunkyard.push(rows.nodeAt(i));
+    }
+    uDom('#clean').addClass('disabled');
 };
 
 /******************************************************************************/
@@ -677,6 +702,7 @@ uDom.onLoad(function() {
     readLogBuffer();
 
     uDom('#compactViewToggler').on('click', toggleCompactView);
+    uDom('#clean').on('click', cleanBuffer);
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
