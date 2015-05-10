@@ -567,7 +567,6 @@ var popupManager = (function() {
     var realTabId = null;
     var localTabId = null;
     var container = null;
-    var movingOverlay = null;
     var popup = null;
     var popupObserver = null;
     var style = null;
@@ -578,94 +577,21 @@ var popupManager = (function() {
         '}'
     ].join('\n');
 
-    // Related to moving the popup around
-    var xnormal, ynormal, crect, dx, dy, vw, vh;
-
-    // Viewport data assumed to be properly set up
-    var positionFromNormal = function(x, y) {
-        if ( typeof x === 'number' ) {
-            if ( x < 0.5 ) {
-                container.style.setProperty('left', (x * vw) + 'px');
-                container.style.removeProperty('right');
-            } else {
-                container.style.removeProperty('left');
-                container.style.setProperty('right', ((1 - x) * vw) + 'px');
-            }
-        }
-        if ( typeof y === 'number' ) {
-            if ( y < 0.5 ) {
-                container.style.setProperty('top', (y * vh) + 'px');
-                container.style.removeProperty('bottom');
-            } else {
-                container.style.removeProperty('top');
-                container.style.setProperty('bottom', ((1 - y) * vh) + 'px');
-            }
-        }
-        // TODO: adjust size
-    };
-    var updateViewportData = function() {
-        crect = container.getBoundingClientRect();
-        vw = document.documentElement.clientWidth - crect.width;
-        vh = document.documentElement.clientHeight - crect.height;
-    };
-    var toNormalX = function(x) {
-        return xnormal = Math.max(Math.min(x / vw, 1), 0);
-    };
-    var toNormalY = function(y) {
-        return ynormal = Math.max(Math.min(y / vh, 1), 0);
-    };
-
-    var onMouseMove = function(ev) {
-        updateViewportData();
-        positionFromNormal(
-            toNormalX(ev.clientX + dx),
-            toNormalY(ev.clientY + dy)
-        );
-        ev.stopPropagation();
-        ev.preventDefault();
-    };
-
-    var onMouseUp = function(ev) {
-        updateViewportData();
-        positionFromNormal(
-            toNormalX(ev.clientX + dx),
-            toNormalY(ev.clientY + dy)
-        );
-        movingOverlay.removeEventListener('mouseup', onMouseUp);
-        movingOverlay.removeEventListener('mousemove', onMouseMove);
-        movingOverlay = null;
-        container.classList.remove('moving');
-        vAPI.localStorage.setItem('popupLastPosition', JSON.stringify({
-            xnormal: xnormal,
-            ynormal: ynormal
-        }));
-        ev.stopPropagation();
-        ev.preventDefault();
-    };
-
-    var onMouseDown = function(ev) {
-        if ( ev.target !== ev.currentTarget ) {
+    var resizePopup = function() {
+        if ( popup === null ) {
             return;
         }
-        container.classList.add('moving');
-        updateViewportData();
-        dx = crect.left - ev.clientX;
-        dy = crect.top - ev.clientY;
-        movingOverlay = document.getElementById('movingOverlay');
-        movingOverlay.addEventListener('mousemove', onMouseMove, true);
-        movingOverlay.addEventListener('mouseup', onMouseUp, true);
-        ev.stopPropagation();
-        ev.preventDefault();
-    };
-
-    var resizePopup = function() {
         var popupBody = popup.contentWindow.document.body;
         if ( popupBody.clientWidth !== 0 && container.clientWidth !== popupBody.clientWidth ) {
-            container.style.width = popupBody.clientWidth + 'px';
+            container.style.setProperty('width', popupBody.clientWidth + 'px');
         }
         if ( popupBody.clientHeight !== 0 && popup.clientHeight !== popupBody.clientHeight ) {
-            popup.style.height = popupBody.clientHeight + 'px';
+            popup.style.setProperty('height', popupBody.clientHeight + 'px');
         }
+    };
+
+    var toggleSize = function() {
+        container.classList.toggle('hide');
     };
 
     var onLoad = function() {
@@ -687,26 +613,10 @@ var popupManager = (function() {
             realTabId = noTabId;
         }
 
-        // Use last normalized position if one is defined.
-        // Default to top-right.
-        var x = 1, y = 0;
-        var json = vAPI.localStorage.getItem('popupLastPosition');
-        if ( json ) {
-            try {
-                var popupLastPosition = JSON.parse(json);
-                x = popupLastPosition.xnormal;
-                y = popupLastPosition.ynormal;
-            }
-            catch (e) {
-            }
-        }
         container = document.getElementById('popupContainer');
-        updateViewportData();
-        positionFromNormal(x, y);
 
-        // Window controls
-        container.querySelector('div > span:first-child').addEventListener('click', toggleOff);
-        container.querySelector('div').addEventListener('mousedown', onMouseDown);
+        container.querySelector('div > span:nth-of-type(1)').addEventListener('click', toggleSize);
+        container.querySelector('div > span:nth-of-type(2)').addEventListener('click', toggleOff);
 
         popup = document.createElement('iframe');
         popup.addEventListener('load', onLoad);
@@ -723,16 +633,9 @@ var popupManager = (function() {
     var toggleOff = function() {
         document.body.classList.remove('popupOn');
 
-        // Just in case
-        if ( movingOverlay !== null ) {
-            movingOverlay.removeEventListener('mousemove', onMouseMove, true);
-            movingOverlay.removeEventListener('mouseup', onMouseUp, true);
-            movingOverlay = null;
-        }
-
-        // Window controls
-        container.querySelector('div > span:first-child').removeEventListener('click', toggleOff);
-        container.querySelector('div').removeEventListener('mousedown', onMouseDown);
+        container.querySelector('div > span:nth-of-type(1)').removeEventListener('click', toggleSize);
+        container.querySelector('div > span:nth-of-type(2)').removeEventListener('click', toggleOff);
+        container.classList.remove('hide');
 
         popup.removeEventListener('load', onLoad);
         popupObserver.disconnect();

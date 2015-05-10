@@ -145,7 +145,7 @@ body.compactView #content td {
     }
 
 #content table tr td:nth-of-type(1) {
-    text-align: center;
+    text-align: right;
     white-space: nowrap;
     }
 #content table tr td:nth-of-type(2) {
@@ -167,7 +167,7 @@ body:not(.popupOn) #content table tr.canMtx td:nth-of-type(2) {
     cursor: zoom-in;
     }
 body:not(.popupOn) #content table tr.canMtx td:nth-of-type(2):hover {
-    background: white;
+    background: #ccc;
     }
 #content table tr.cat_net td:nth-of-type(3),
 #content table tr.cat_cosmetic td:nth-of-type(3) {
@@ -198,9 +198,12 @@ body.colorBlind #content table tr.allowed td:nth-of-type(6) b {
     background: white;
     border: 1px solid gray;
     border-radius: 3px;
+    box-sizing: border-box;
     display: none;
     overflow: hidden;
     position: fixed;
+    right: 0;
+    top: 0;
     z-index: 200;
     }
 body.popupOn #popupContainer {
@@ -209,15 +212,12 @@ body.popupOn #popupContainer {
 #popupContainer > div {
     background: #aaa;
     border: 0;
-    cursor: -webkit-grab;
-    cursor: grab;
-    height: 1.2em;
     }
 body[dir="ltr"] #popupContainer > div {
-    direction: rtl;
+    text-align: right;
     }
 body[dir="rtl"] #popupContainer > div {
-    direction: ltr;
+    text-align: left;
     }
 #popupContainer > div > span {
     color: #eee;
@@ -235,17 +235,9 @@ body[dir="rtl"] #popupContainer > div {
     margin: 0;
     width: 100%;
     }
-#movingOverlay {
-    bottom: 0;
-    display: none;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 300;
+#popupContainer.hide {
+    width: 6em !important;
     }
-#popupContainer.moving ~ #movingOverlay {
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
-    display: block;
+#popupContainer.hide > iframe {
+    display: none;
     }
