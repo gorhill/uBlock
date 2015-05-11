@@ -22,9 +22,9 @@
       </tr>
 </table>
 
-> #### Have your flavor!
+> Have your flavor!
 
-> uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>.
+> <sub>uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>.</sub>
 <br>
 <sup>slightly different feature sets — <strong>same performance</strong></sup><br>
 Both are free, open-source, and share the contributions of many.
