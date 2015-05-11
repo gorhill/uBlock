@@ -45,11 +45,17 @@ document.getElementById('dfPane').style.setProperty(
     document.getElementById('switchPane').offsetHeight + 'px'
 );
 
-// The padlock must be manually positioned:
+// The save/flush must be manually positioned:
 // - It's vertical position depends on the height on the title bar.
+var gotoPrefsBottom = document.getElementById('gotoPrefs').getBoundingClientRect().bottom;
 document.getElementById('saveflushButtonGroup').style.setProperty(
     'top',
-    (document.getElementById('gotoPrefs').getBoundingClientRect().bottom + 4) + 'px'
+    (gotoPrefsBottom + 4) + 'px'
+);
+// The scope icons as well.
+document.getElementById('scopeIcons').style.setProperty(
+    'top',
+    (gotoPrefsBottom) + 'px'
 );
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
@@ -320,10 +326,7 @@ var buildAllFirewallRows = function() {
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
         dfPaneBuilt = true;
     }
-
-    // The padlock must be manually positioned:
-    // - Its horizontal position depends on whether there is a vertical
-    //   scrollbar.
+    setTimeout(positionDfPaneFloaters, 50);
     updateAllFirewallCells();
 };
 
@@ -378,6 +381,22 @@ var renderPrivacyExposure = function() {
 };
 
 /******************************************************************************/
+
+var positionDfPaneFloaters = function() {
+    // The padlock must be manually positioned:
+    // - Its horizontal position depends on whether there is a vertical
+    //   scrollbar.
+    var firewallContainer = document.getElementById('firewallContainer'),
+        scopeIcons = document.getElementById('scopeIcons'),
+        rect = firewallContainer.getBoundingClientRect(),
+        rectLeft = rect.left,
+        rectWidth = rect.width;
+    document.getElementById('saveRules').style.setProperty('left', (rectLeft + 4) + 'px');
+    // So must be the scope icons.
+    // - They need to match up with the table
+    scopeIcons.style.setProperty('left', rectLeft + 'px');
+    scopeIcons.style.setProperty('width', rectWidth + 'px');
+};
 
 // Assume everything has to be done incrementally.
 
