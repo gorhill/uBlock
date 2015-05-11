@@ -223,49 +223,6 @@
     };
     /******************************************************************************/
 
-    if(!safari.extension.settings.migratedStorage) {
-        var migrationMap = {
-            "cached_asset_content://assets/user/filters.txt": "userFilters"
-        };
-
-        var delayed = [];
-        
-        vAPI.storage.preferences = {
-            get: function(a, b) {
-                delayed.push(settingsStorage.get.bind(settingsStorage, a, b));
-            },
-            set: function(a, b) {
-                delayed.push(settingsStorage.set.bind(settingsStorage, a, b));
-            },
-            remove: function(a, b) {
-                delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
-            },
-            clear: function() {
-                delayed.push(settingsStorage.clear.bind(settingsStorage));
-            },
-        };
-
-        localforage.iterate(function(value, key) {
-            if(migrationMap[key]) {
-                safari.extension.settings[migrationMap[key]] = value;
-                return;
-            }
-            if(key.lastIndexOf("cached_asset", 0) === 0) {
-                return;
-            }
-            safari.extension.settings[key] = value;
-            localforage.removeItem(key);
-        }, function() {
-            var func;
-            while(func = delayed.pop()) {
-                func();
-            }
-            delayed = null;
-            vAPI.storage.preferences = settingsStorage;
-        });
-        safari.extension.settings.migratedStorage = true;
-    }
-
     var settingsStorage = {
         _storage: safari.extension.settings,
         get: function(keys, callback) {
@@ -339,6 +296,51 @@
             this._storage.clear();
         } 
     };
+
+    vAPI.storage.preferences = settingsStorage;
+
+    if(!safari.extension.settings.migratedStorage) { // if we haven't already migrated
+        var migrationMap = {
+            "cached_asset_content://assets/user/filters.txt": "userFilters"
+        };
+
+        var delayed = [];
+        
+        vAPI.storage.preferences = {
+            get: function(a, b) {
+                delayed.push(settingsStorage.get.bind(settingsStorage, a, b));
+            },
+            set: function(a, b) {
+                delayed.push(settingsStorage.set.bind(settingsStorage, a, b));
+            },
+            remove: function(a, b) {
+                delayed.push(settingsStorage.remove.bind(settingsStorage, a, b));
+            },
+            clear: function() {
+                delayed.push(settingsStorage.clear.bind(settingsStorage));
+            },
+        };
+
+        localforage.iterate(function(value, key) {
+            if(migrationMap[key]) {
+                safari.extension.settings[migrationMap[key]] = value;
+                return;
+            }
+            if(key.lastIndexOf("cached_asset", 0) === 0) {
+                return;
+            }
+            safari.extension.settings[key] = value;
+            localforage.removeItem(key);
+        }, function() {
+            var func;
+            while(func = delayed.pop()) {
+                func();
+            }
+            delayed = null;
+            vAPI.storage.preferences = settingsStorage;
+        });
+        safari.extension.settings.migratedStorage = true;
+    }
 
     /******************************************************************************/
 
