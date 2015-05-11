@@ -28,7 +28,7 @@
 
 
 * [What is uBlock?](#what-is-ublock)
-* [Getting Started & Installation](#getting-started)
+* [Installing uBlock](#getting-started)
 * [Performance & Benchmarks](#performance)
 * [Release History](#release-history)
 * [Tips](#tips)
