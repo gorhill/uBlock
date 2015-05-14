@@ -22,70 +22,51 @@
       </tr>
 </table>
 
-> <sub>uBlock comes in two sibling flavors: this project, and <a href="https://github.com/gorhill/uBlock">uBlock Origin</a>.</sub>
-<br>
-<sup>Differing features — same performance. Both free, open-source, and share the contributions of many.</sup>
-
-
-* [What is uBlock?](#what-is-ublock)
-* [Installing uBlock](#getting-started)
+* [Getting Started & Installation](#getting-started)
 * [Performance & Benchmarks](#performance)
-* [Release History](#release-history)
 * [Tips](#tips)
-* [Wiki](https://github.com/chrisaljoudi/uBlock/wiki)
-
-## What is uBlock?
-
-uBlock is a general-purpose blocker — not an *ad blocker* specifically.
-
-uBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock [extends](https://github.com/chrisaljoudi/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
-
-uBlock's main goal is to help users neutralize privacy-invading apparatus — ads being one example.
-
-[Feel free to read about uBlock's development philosophy](https://chrismatic.io/ublock/philosophy).
+* [About](#about-ublock)
 
 ## Getting started
 
-[Quick guide for basic usage](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
-
 #### Installation:
-
-* **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
 
 * **Chrome**: available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn) or for [manual](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install) installation.
 
-* **Firefox**: available on the [Firefox Add-ons homepage](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/releases) installation.
+* **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
+
+* **Firefox**: available on the [Firefox Add-ons site](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/releases) installation.
 
  * Due to Mozilla's review process, the version of uBlock available from the Add-ons homepage is currently often outdated. This isn't in our control.
 
 * **Opera**: Opera shares Chrome's underlying engine, so you can install uBlock simply by grabbing the [latest release for Chrome](https://github.com/chrisaljoudi/uBlock/releases/latest).
 
+uBlock has tooltips throughout its UI to help you along. But just in case you need it, [here's a quick guide for basic usage](https://github.com/chrisaljoudi/uBlock/wiki/Quick-guide:-popup-user-interface).
+
 ## Performance
 
 #### Memory
 
-<div align="center">
+<p align="center">
 On average, uBlock <b>really</b> does make your browser run leaner. <sup>[1]</sup><br><br>
 
-Chromium <sup>[2]</sup><br>
+Chrome <br>
 <img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20141224.png" /><br><br>
-
-Firefox<br>
-<img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20150205.png" /><br><br>
 
 Safari<br>
 <img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/benchmarks/mem-usage-overall-chart-safari-20150205.png" /><br><br>
 
-</div>
+Firefox<br>
+<img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/benchmarks/mem-usage-overall-chart-20150205.png" /><br><br>
 
-<sup>[1] Details of the benchmark available at <a href="https://github.com/chrisaljoudi/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">Firefox version: benchmarking memory footprint</a>.</sup><br>
+</p>
 
-<sup>[2] Important note: There is currently a [bug in Chromium 39+ which causes a new memory leak each time the popup UI of an extension is opened](https://code.google.com/p/chromium/issues/detail?id=441500). This affects <i>all</i> extensions. Keep this in mind when measuring Chromium's memory usage. In the benchmarks, I avoided opening the popups completely.</sup><br>
+<sup>[1] An overview of the benchmark is available at <a href="https://github.com/chrisaljoudi/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">this wiki page</a>.</sup><br>
 
 #### CPU
 
 <p align="center">
-uBlock is also easy on the CPU<br>
+uBlock is also CPU-efficient<br>
 <img src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
 <sup>Details of the benchmark available in <a href="https://github.com/chrisaljoudi/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
 </p>
@@ -99,15 +80,13 @@ Being lean and efficient doesn't mean blocking less<br>
 <a href="https://github.com/chrisaljoudi/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock and others: Blocking ads, trackers, malwares</a>.
 </p>
 
-#### Quick tests
+**Some quick tests:**
+
+<sub>These tests are by no means complete or comprehensive, but do remain helpful.</sub>
 
 - [Index](http://raymondhill.net/ublock/tests.html)
 - [Web page components](http://raymondhill.net/ublock/tiles1.html)
 - [Popups](http://raymondhill.net/ublock/popup.html)
-
-## Release History
-
-See the [releases pages](https://github.com/chrisaljoudi/uBlock/releases) for a history of releases and highlights for each release.
 
 ## Tips
 
@@ -121,17 +100,19 @@ See the [releases pages](https://github.com/chrisaljoudi/uBlock/releases) for a 
 
 * Feel free to read [about the extension's required permissions](https://github.com/chrisaljoudi/uBlock/wiki/About-the-required-permissions).
 
-## About
+## About uBlock
 
-[uBlock's manifesto](MANIFESTO.md).
+Some users might want to check out [uBlock Origin](https://github.com/gorhill/uBlock): a noteworthy personal fork of uBlock from @gorhill with a slightly different featureset.
 
-Free. Open source. For users by users.
+uBlock is a general-purpose blocker — not an *ad blocker* specifically. uBlock's main goal is to help users neutralize privacy-invading apparatus — ads being one example.
 
-If uBlock is useful to you, [donations to support development are much appreciated](https://chrismatic.io/ublock/).
+uBlock blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock [extends](https://github.com/chrisaljoudi/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters.
 
-uBlock is made useful because of the filter lists it utilizes. We deeply appreciate
-the people working hard to maintain the filter lists we're using,
-which were made available to use by all for free.
+Free and open-source. For users, by users. If uBlock is useful to you, [donations to support development are much appreciated](https://chrismatic.io/ublock/).
+
+[Feel free to read about uBlock's development philosophy](https://chrismatic.io/ublock/philosophy) and [uBlock's manifesto](MANIFESTO.md).
+
+*Acknowledgment:* uBlock comes with several filter lists ready to use out-of-the-box (including but not limited to: EasyList, Peter Lowe's, several malware filter lists). We deeply appreciate the people working hard to maintain those lists which are available to use by all for free.
 
 ## License
 
