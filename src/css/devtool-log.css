@@ -85,11 +85,11 @@ input:focus {
 #content table tr.allowed {
     background-color: rgba(0, 160, 0, 0.1);
     }
-#content table tr.allowed.mirrored {
-    background-color: rgba(255, 255, 0, 0.3);
+#content table tr.neutral {
+    cursor: pointer;
     }
-#content table tr.maindoc {
-    background-color: #eee;
+#content table tr.neutral:hover {
+    background-color: rgba(80, 80, 80, 0.1);
     }
 #content table tr.cosmetic {
     background-color: rgba(255, 255, 0, 0.1);

@@ -156,11 +156,9 @@ var renderLogEntry = function(entry) {
         tr.cells[0].textContent = ' -\u00A0';
     } else if ( entry.result.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
-        if ( entry.result.charAt(0) === 'm' ) {
-            tr.classList.add('mirrored');
-        }
         tr.cells[0].textContent = ' +\u00A0';
     } else {
+        tr.classList.add('neutral');
         tr.cells[0].textContent = '';
     }
 
