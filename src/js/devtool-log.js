@@ -158,7 +158,6 @@ var renderLogEntry = function(entry) {
         tr.classList.add('allowed');
         tr.cells[0].textContent = ' +\u00A0';
     } else {
-        tr.classList.add('neutral');
         tr.cells[0].textContent = '';
     }
 
