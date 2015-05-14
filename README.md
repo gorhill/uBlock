@@ -61,7 +61,7 @@ Firefox<br>
 
 </p>
 
-<sup>[1] An overview of the benchmark is available at <a href="https://github.com/chrisaljoudi/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">this wiki page</a>.</sup><br>
+<sup>[1] An overview of the benchmark is available at <a href="https://github.com/chrisaljoudi/uBlock/wiki/Benchmarking-memory-footprint">this wiki page</a>.</sup><br>
 
 #### CPU
 
