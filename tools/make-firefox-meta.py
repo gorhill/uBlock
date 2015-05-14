@@ -24,7 +24,7 @@ source_locale_dir = pj(build_dir, '_locales')
 target_locale_dir = pj(build_dir, 'locale')
 language_codes = []
 descriptions = OrderedDict({})
-title_case_strings = ['pickerContextMenuEntry']
+title_case_strings = ['pickerContextMenuEntry', 'netMonitorContextMenuEntry']
 
 for alpha2 in sorted(os.listdir(source_locale_dir)):
     locale_path = pj(source_locale_dir, alpha2, 'messages.json')

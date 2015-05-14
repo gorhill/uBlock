@@ -1943,10 +1943,10 @@ vAPI.contextMenu.displayMenuItem = function({target}) {
 
 /******************************************************************************/
 
-vAPI.contextMenu.createContextMenuItem = function(doc) {
+vAPI.contextMenu.createContextMenuItem = function(doc, labelOverride) {
     var menuitem = doc.createElement('menuitem');
     menuitem.setAttribute('id', this.menuItemId);
-    menuitem.setAttribute('label', this.menuLabel);
+    menuitem.setAttribute('label', labelOverride || this.menuLabel);
     menuitem.setAttribute('image', vAPI.getURL('img/browsericons/icon16.svg'));
     menuitem.setAttribute('class', 'menuitem-iconic');
     return menuitem;
@@ -2018,7 +2018,7 @@ vAPI.contextMenu.registerForWebInspector = function(eventName, toolbox, panel) {
                 selectedNodeFront = selectedNodeFront.parentNode();
             }
             if (selectedNodeFront) {
-                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(vAPI.tabs.getTabId(panel.browser), selector));
+                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(vAPI.tabs.getTabId(panel.browser), { type: 'element', value: selector}));
 
                 // Turn off 3D view, if it's turned on.
                 if (tiltButton && tiltButton.checked) {
@@ -2028,6 +2028,24 @@ vAPI.contextMenu.registerForWebInspector = function(eventName, toolbox, panel) {
         });
 
         menuPopup.insertBefore(menuitem, deleteMenuItem);
+    }
+}
+
+vAPI.contextMenu.registerForNetMonitor = function(eventName, toolbox, panel) {
+    var doc = panel.panelWin.document;
+    var menuPopup = doc.getElementById("network-request-popup");
+    var insertBeforeMenuItem = doc.getElementById("request-menu-context-separator");
+    
+    if (menuPopup && insertBeforeMenuItem) {
+        var menuitem = vAPI.contextMenu.createContextMenuItem(doc, vAPI.i18n('netMonitorContextMenuEntry'));
+        menuitem.addEventListener('command', function() {
+            var selectedRequest = panel.panelWin.NetMonitorView.RequestsMenu.selectedAttachment;
+            if (selectedRequest) {
+                µBlock.elementPickerExec(vAPI.tabs.getTabId(toolbox.target.tab), { type: 'url', value: selectedRequest.url });
+            }
+        });
+
+        menuPopup.insertBefore(menuitem, insertBeforeMenuItem);
     }
 }
 
@@ -2085,6 +2103,7 @@ vAPI.contextMenu.create = function(details, callback) {
 
         if (this.gDevTools) {
             this.gDevTools.on("inspector-ready", this.registerForWebInspector);
+            this.gDevTools.on("netmonitor-ready", this.registerForNetMonitor);
         }
     }
 
@@ -2102,6 +2121,7 @@ vAPI.contextMenu.remove = function() {
 
     if (!vAPI.fennec && this.gDevTools) {
         this.gDevTools.off("inspector-ready", this.registerForWebInspector);
+        this.gDevTools.off("netmonitor-ready", this.registerForNetMonitor);
     }
 
     this.menuItemId = null;
