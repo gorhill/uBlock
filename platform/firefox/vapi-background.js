@@ -2037,7 +2037,7 @@ vAPI.contextMenu.registerForNetMonitor = function(eventName, toolbox, panel) {
     var insertBeforeMenuItem = doc.getElementById("request-menu-context-separator");
     
     if (menuPopup && insertBeforeMenuItem) {
-        var menuitem = vAPI.contextMenu.createContextMenuItem(doc, vAPI.i18n('netMonitorContextMenuEntry'));
+        var menuitem = vAPI.contextMenu.createContextMenuItem(doc, vAPI.i18n('netLoggerBlockResourcePrompt'));
         menuitem.addEventListener('command', function() {
             var selectedRequest = panel.panelWin.NetMonitorView.RequestsMenu.selectedAttachment;
             if (selectedRequest) {
