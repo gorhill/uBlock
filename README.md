@@ -2,9 +2,9 @@
 
 > ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
 
-**Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevent network requests from being made so that your browser does not connect to remote servers, period.
+**Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevents network requests from being made according to filter lists so that your browser does not connect to remote servers, period.
 
-**uBlock's purpose is to only serve users' interests.** See [uBlock's Manifesto](https://github.com/gorhill/uBlock/blob/master/MANIFESTO.md).
+**uBlock's purpose is to only serve users' interests, and nothing else**. See [uBlock's Manifesto](https://github.com/gorhill/uBlock/blob/master/MANIFESTO.md).
 
 *** 
 
