@@ -1,16 +1,10 @@
-**Important note:** This is a fork of the [new official repo](https://github.com/chrisaljoudi/uBlock). Although both projects are essentially the same as of 0.9.3.0, they will probably start to diverge as time goes (update: they already [started to diverge](https://github.com/chrisaljoudi/uBlock/issues/1259) feature-wise).
+**Yet another myth to dispel**: I've seen in many places lately the following assertion:
 
-I consider uBlock₀ here to be mature feature-wise.
+> ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
 
-To stop adding features at a fast pace does not make a software automatically obsolete. If you believe so, find out how many features were added to Adblock Plus in the last months. New features were added almost every week for months to uBlock.
+**Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevent network requests from being made so that your browser does not connect to remote servers, period.
 
-I will keep maintaining the project here though so as to ensure it works just fine, i.e. bug fixing for the most part. Stability and reliability has priority at this point.
-
-I may add features whenever I feel the need to do so -- I use the extension myself, so if I feel it definitely needs something more, I will just go ahead and add it.
-
-The filter lists will continue to update themselves at regular interval, as usual.
-
-To the recurring question: "Why did you handover the original project?", [answer is here](https://github.com/gorhill/uBlock/issues/38#issuecomment-91871802).
+**uBlock's purpose is to only serve users' interests.** See [uBlock's Manifesto](https://github.com/gorhill/uBlock/blob/master/MANIFESTO.md).
 
 *** 
 
