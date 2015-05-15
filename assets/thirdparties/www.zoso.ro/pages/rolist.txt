@@ -4,35 +4,25 @@
 ! A more agressive list is here www.zoso.ro/pages/rolist2.txt
 
 !hosts
-||2mdn.net^
 ||ad.dc2.adtech.de^
 ||ad2.ip.ro^
 ||ado.icorp.ro^
-||ads.flanco.ro^
-||ads.iforex.com^
-||ads.softure.com^
 ||ads.tradeads.eu^
-||ads2.cancan.ro^
 ||akamai.smartadserver.com^
-||arboperformance.ro^
 ||bbcdn.ad2.ip.ro
 ||bbcdn.go.adevolution.bbelements.com^
 ||bbcdn.go.cz.bbelements.com^
 ||bride.ru^
 ||content.ad20.net^
-||content.beyond.ro^
 ||core.ad20.net^
 ||ctx.inin.ro^
 ||da.feedsportal.com^
 ||data.tradeville.eu^
 ||digital4ro.adocean.pl^
-||ds.f5xmedia.ro^
-||emission.leftclick.ro^
 ||ewatch.ro^
 ||feedads.g.doubleclick.net^
-||fliptab.ro^
+||gdero.hit.gemius.pl^
 ||intactro.adocean.pl^
-||leftclick.ro^
 ||linkweb.ro^
 ||media.leftclick.ro^
 ||realitatero.adocean.pl^
@@ -40,8 +30,6 @@
 ||ro.noprimetime.com^
 ||ro.search.etargetnet.com
 ||rogde.adocean.pl^
-||textads.f5xmedia.ro^
-||textads.gruprc.ro^
 ||www4.smartadserver.com^
 
 !wildcard hosts
@@ -81,6 +69,7 @@ promozone.ro,emag.ro#@#[href*="/promo"]
 ||annemariedesign.ro/file.wma
 ||b365.realitatea.net/wp-content/themes/b/ads/
 ||bestmusic.ro/external/banners/*
+||capital.ro/js/scripts.js?*
 ||digi24.ro/js/libs/jquery/plugins/fancybox/*
 ||drive-test.ro/documents/RCA*.swf
 ||forum.computergames.ro/extra/
@@ -90,15 +79,14 @@ promozone.ro,emag.ro#@#[href*="/promo"]
 ||l.yimg.com/g/images/spaceball.gif
 ||libertatea.ro/usr/casete/
 ||paginademedia.ro/wp-content/plugins/fancybox-for-wordpress/*
+||priceexpert.com/detect.js
 ||reportervirtual.ro/wp-content/plugins/facebook-page-promoter-lightbox-premium/*
 ||res3.feedsportal.com/images/
 ||romanialibera.ro/images/2banda%20green%20city%20980x50.swf
 ||subs.ro/layout/img/head_xs.png
 ||titrari.ro/*.swf
-||web3.protv.ro/assets/protv/widgets/newsletter.swf?
 ||turcescu.ro/wp-content/uploads/myfragrancero72890.jpg?v=2
-||capital.ro/js/scripts.js?*
-||priceexpert.com/detect.js
+||web3.protv.ro/assets/protv/widgets/newsletter.swf?
 
 !div rules
 220.ro##DIV#nql_optiuni
@@ -111,6 +99,7 @@ adevarul.ro##.part.part-left
 adevarul.ro##.sport.subcategory.sport
 adevarul.ro##.tl-content.clearfix
 adevarul.ro##DIV.article-box.alte-stiri.related
+adevarul.ro##DIV[class="prezidentiale-ban-wrapper"]
 antena3.ro###footer
 antena3.ro##DIV[style="margin:0 0 0 176px;border:2px solid #9f1010;width:550px;height:115px;"]
 antena3.ro##OBJECT[data="/media/510x97_quick2.swf"]
@@ -122,13 +111,17 @@ cancan.ro##.caseta_html.w1_1
 cancan.ro##DIV#top_side *
 cancan.ro##DIV.col_300 *
 cancan.ro##DIV.highslide-container + *
+catavencii.ro##IMG[src="/bnr/volk_larg.gif"]
 daciaclub.ro##.signature
 devicer.ro##a[href^="http://bit.ly/"]
 devicer.ro##a[href^="http://goo.gl/aXGFm"]
 digital.iqads.ro##.ez-last.ez-oh
 digital.iqads.ro##DIV#facebox
 digital.iqads.ro##DIV.hd
+distanta.ro##DIV[style$="width: 336px; height: 280px;"]
+distanta.ro##DIV[style*="display: block; background-color: white;"]
 evenimentul.ro##TD[width="160"]
+executari.com##.promohide
 forum.computergames.ro###navbar_notice_1
 forum.computergames.ro###navbar_notice_7
 gandul.info##.ad
@@ -145,7 +138,7 @@ iqads.ro##DIV.bd
 iqads.ro#@##adcontainer
 laptopnews.ro##a[href^="http://bit.ly/"]
 laptopnews.ro##a[href^="http://profitshare.emag.ro/"]
-lovendal.net##DIV[class="left"]
+lovendal.ro##.left
 manager.ro###breakingNewsSticky
 manager.ro##DIV#PopUp *
 mediamemo.allthingsd.com##DIV.video-right
@@ -166,16 +159,9 @@ subs.ro##DIV[class="rclm_table"]
 subs.ro##IMG[src="/layout/rclm/mynotebook.png"]
 subs.ro##IMG[src="/layout/rclm/vplay.png"]
 techcrunch.com##DIV.post_subheader_right.snap_nopreview
-tolo.ro##DIV.news_1
+timesnewroman.ro#@#DIV[class^="banner"]
+vplowlive.m.ro###myLive
 wall-street.ro##DIV#qra_popup_wrapper *
 web3.protv.ro##BODY[style="margin: 0px;"]
 webtv.realitatea.net##DIV#mainChannelContent
 webtv.realitatea.net##DIV#ve_logo
-lovendal.ro##.left
-executari.com##.promohide
-distanta.ro##DIV[style$="width: 336px; height: 280px;"]
-distanta.ro##DIV[style*="display: block; background-color: white;"]
-adevarul.ro##DIV[class="prezidentiale-ban-wrapper"]
-timesnewroman.ro#@#DIV[class^="banner"]
-vplowlive.m.ro###myLive
-catavencii.ro##IMG[src="/bnr/volk_larg.gif"]

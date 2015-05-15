@@ -1,8 +1,8 @@
 [Adblock Plus 1.1]
-! Checksum: td85BN+BUkec4ma7y4Re+w
-! Version: 201505052301
+! Checksum: 72crKcZEUhP7Yx+a6vCmag
+! Version: 201505150101
 ! Title: EasyPrivacy
-! Last modified: 05 May 2015 23:01 UTC
+! Last modified: 15 May 2015 01:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -332,6 +332,8 @@
 /asyncggtracking.
 /atapixel.js
 /atlas_track.
+/atrk.gif?
+/atrk.js
 /audience-meter.
 /audience-science.
 /audience_science-
@@ -1172,6 +1174,7 @@
 /logclick.
 /logcollect.
 /logcollect_
+/logcollectscript_
 /logcounter.
 /logevent.action?
 /logEvent?
@@ -1356,6 +1359,7 @@
 /opentag-
 /opentag/*
 /openxblank.gif?
+/openxtargeting.js
 /opinionlab.js
 /optimost-
 /optimost.
@@ -1447,7 +1451,9 @@
 /pixel-manager.js?
 /pixel-page.html
 /pixel.cgi?
+/pixel.gif?b=
 /pixel.gif?d=
+/pixel.gif?key=
 /pixel.jsp?
 /pixel.php?
 /pixel.swf?
@@ -1747,6 +1753,7 @@
 /stats.gif?
 /stats.hitbox.com/*
 /stats.php?*http
+/stats.php?type=
 /stats/?js
 /stats/collector.js
 /stats/counter.
@@ -1924,6 +1931,7 @@
 /tracking.vidt
 /tracking/*/agof-
 /tracking/addview/*
+/tracking/ads.
 /tracking/beacon/?
 /tracking/clicks
 /tracking/create?
@@ -1937,6 +1945,7 @@
 /tracking/tag_commander.php?
 /tracking/track.jsp?
 /tracking/track.php?
+/tracking/tracking_
 /tracking/tynt_
 /tracking/views/*
 /tracking/widget/*
@@ -3171,6 +3180,7 @@ http://utm.
 ||komtrack.com^$third-party
 ||kontagent.net^$third-party
 ||kopsil.com^$third-party
+||krxd.net^$third-party
 ||ksyrium0014.com^$third-party
 ||l2.visiblemeasures.com^$object-subrequest,third-party
 ||landingpg.com^$third-party
@@ -4506,6 +4516,7 @@ http://utm.
 ||fout.jp^$third-party
 ||gmodmp.jp^$third-party
 ||hitgraph.jp^$third-party
+||i2i.jp^$third-party
 ||japanmetrix.jp^$third-party
 ||mobylog.jp^$third-party
 ||omiki.com^$third-party
@@ -4746,6 +4757,7 @@ http://utm.
 ||activecommerce.net/collector.gif
 ||activetracker.activehotels.com^$third-party
 ||activities.niagara.comedycentral.com^
+||ad.aloodo.com^$third-party
 ||ad.atdmt.com/c/
 ||ad.atdmt.com/e/
 ||ad.atdmt.com/i/*=
@@ -4907,7 +4919,6 @@ http://utm.
 ||aweber.com/form/displays.htm?$image
 ||axislogger.appspot.com^
 ||b.bedop.com^
-||b.grvcdn.com^
 ||b5media.com/bbpixel.php
 ||babm.texthelp.com^
 ||bango.net/exid/*.gif?
@@ -4933,6 +4944,7 @@ http://utm.
 ||bid.g.doubleclick.net^
 ||bidsystem.com/ppc/sendtracker.aspx?
 ||bin.clearspring.*/b.swf
+||bing-int.com/bat.js
 ||bing.com/bat.js
 ||bit.ly/stats?
 ||bitgravity.com/b.gif$third-party
@@ -4977,6 +4989,7 @@ http://utm.
 ||capture.camify.com/dc?
 ||carambo.la/analytics/
 ||caspionlog.appspot.com^
+||cdn.pubexchange.com/modules/partner/$script
 ||cdn.trafficexchangelist.com^$third-party
 ||cdnma.com/apps/capture.js
 ||cdnplanet.com/static/rum/rum.js
@@ -5022,8 +5035,6 @@ http://utm.
 ||cloudfront.net*/trk.js
 ||cloudfront.net/analytics.js
 ||cloudfront.net/analyticsengine/
-||cloudfront.net/atrk.gif?
-||cloudfront.net/atrk.js
 ||cloudfront.net/code/keen-2.1.0-min.js
 ||cloudfront.net/dough/*/recipe.js
 ||cloudfront.net/js/reach.js
@@ -5048,6 +5059,7 @@ http://utm.
 ||coinbase.com/assets/application-*.js$third-party
 ||collect.igodigital.com^
 ||collection.acromas.com^
+||collector.air.tv^
 ||collector.nextguide.tv^
 ||comet.ibsrv.net^
 ||comic-rocket.com/metrics.js
@@ -5604,6 +5616,7 @@ http://utm.
 ||pg.buzzfeed.com^
 ||phncdn.com/js/ssig_helper.js
 ||phoenix.untd.com^
+||piano-media.com/auth/index.php?
 ||piano-media.com/bucket/novosense.swf$third-party
 ||piano-media.com/ping
 ||piano-media.com/uid/$third-party
@@ -5998,6 +6011,7 @@ http://utm.
 ||traffic.acwebconnecting.com^
 ||traffic.belaydevelopment.com^$third-party
 ||traffic.prod.cobaltgroup.com^
+||traffic.pubexchange.com^
 ||traffic.shareaholic.com^
 ||trakksocial.googlecode.com^$third-party
 ||traq.li/tracker/
@@ -6984,6 +6998,7 @@ http://utm.
 ||cclickvidservgs.com/mattel/cclick.js
 ||cctv.com^*/SnoopStat?
 ||cd.musicmass.com^
+||cdnstats.tube8.com^
 ||cellstores.com/tracking/
 ||cert.org/images/1pxinv.gif
 ||cfr.org/js/ga.*js
@@ -7092,7 +7107,7 @@ http://utm.
 ||dailymail.co.uk/tracking/
 ||dailymotion.com/logger/$object-subrequest
 ||dailymotion.com/track-
-||dailymotion.com/track/$object-subrequest
+||dailymotion.com/track/
 ||dailymotion.com^*/tag.gif?
 ||data.ninemsn.com.au/*GetAdCalls
 ||datacollector.coin.scribol.com^
@@ -9606,6 +9621,7 @@ http://utm.
 @@||keremerkan.net/wp-content/plugins/wp-minify/min/*/google-analyticator/
 @@||koalabeast.com/stats?$script
 @@||koldcast.tv/mint/*/tracker.php?
+@@||krxd.net^$script,domain=nbcnews.com
 @@||l.yimg.com/g/combo/*/comscore.$script
 @@||latimes.com/hive/javascripts/loggingService.js
 @@||lenovo.com^*/GoogleAnalytics.js
@@ -9702,11 +9718,12 @@ http://utm.
 @@||patrick-wied.at/static/heatmapjs/src/heatmap.js
 @@||paypalobjects.com^*/opinionLab.js$domain=paypal.com
 @@||pbskids.org/js/ga-current.js
-@@||periscope.tv/w/assets/bugsnag-*.min.js
+@@||periscope.tv^*/bugsnag-*.min.js
 @@||pillsbury.com/Shared/StarterKit/Javascript/ntpagetag.js
 @@||pillsbury.com/Shared/StarterKit/Javascript/UnicaTag.js
 @@||ping.hellobar.com/?*&_e=click&$image
 @@||piwik.pro/images/
+@@||pixel.facebook.com/ajax/gigaboxx/endpoint/UpdateLastSeenTime.php?$image
 @@||pixel.facebook.com/ajax/notifications/mark_read.php?*&alert_ids%$image
 @@||pixel.fetchback.com^$subdocument,domain=sears.com
 @@||pixel.quantserve.com/api/segments.json?$domain=ap.org|newsinc.com
@@ -9764,7 +9781,7 @@ http://utm.
 @@||static.chartbeat.com/crossdomain.xml$object-subrequest
 @@||static.rpxnow.com/js/lib/rpx.js$domain=colbertnation.com|thedailyshow.com
 @@||statics.cfmcdn.net/*/scripts/webtrends-$script,domain=cheapflights.com
-@@||stats.g.doubleclick.net/dc.js$domain=lifehack.org|toto.co.jp|tripinsurance.ru|vimeo.com
+@@||stats.g.doubleclick.net/dc.js$domain=doverdowns.com|lifehack.org|toto.co.jp|tripinsurance.ru|vimeo.com
 @@||stats.jtvnw.net/crossdomain.xml$object-subrequest
 @@||stippleit.com/stipple.js$domain=photos.toofab.com
 @@||sundaysky.com/coastal/embedded/sundaysky.js$domain=clearlycontacts.ca
@@ -9778,13 +9795,14 @@ http://utm.
 @@||tags.crwdcntrl.net^$script,domain=weather.com
 @@||tags.w55c.net/rs?*&t=marketing$image
 @@||tc.bankofamerica.com/c?
+@@||ted.com/decor/javascript/magnify_stats.js
 @@||teenvogue.com/js/eventTracker.js
 @@||telegraph.co.uk/template/ver1-0/js/webtrends/live/wtid.js
 @@||texasroadhouse.com/common/javascript/google-analytics.js
 @@||thebrighttag.com/tag?site=$script,domain=macys.com
 @@||theplatform.com^*/comScore.swf$object-subrequest
 @@||thestreet-static.com/video/js/kGoogleAnalytics.js?
-@@||ticketm.net^*/click_track.js$domain=ticketmaster.com
+@@||ticketm.net^*/click_track.js
 @@||track.mybloglog.com/js/jsserv.php?$domain=egotastic.com
 @@||track2.royalmail.com^
 @@||tracker.mattel.com/tracker.aspx?site=$script

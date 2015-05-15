@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: LRuoeQYrfh/YUsP7wdsBAQ
-! Version: 201505052301
+! Checksum: qLIXxBjcvrTHkaT6TDiXqQ
+! Version: 201505150101
 ! Title: EasyList Germany
 ! EasyList Germany - Deutsche Ergänzung zu EasyList
-! Last modified: 05 May 2015 23:01 UTC
+! Last modified: 15 May 2015 01:01 UTC
 ! Expires: 1 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -2010,6 +2010,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||ddl-warez.in/images/och_buttons/
 ||ddl-warez.in/images/och_infobuttons/
 ||ddl-warez.in/images/och_logos/
+||ddl-warez.in/smoozed.
+||ddl-warez.in/smoozed/
 ||ddl-warez.in^*.php|$script
 ||ddl-warez.in^*_js.js
 ||ddl-warez.in^*_popup.js
@@ -3776,6 +3778,8 @@ mov-world.net#@#a[href^="http://www.FriendlyDuck.com/AF_"]
 ||count.shopping.t-online.de/RE?ID=$popup,domain=t-online.de
 ||damoh.spiegel.tv^$popup
 ||damoh.sueddeutsche.de^$popup
+||ddl-warez.in/smoozed.$popup
+||ddl-warez.in/smoozed/$popup
 ||ddl.me^$popup,domain=c1neon.com
 ||def.filecrypt.cc^$popup
 ||doubleclick.net^$popup,domain=gamestar.de|gamona.de
@@ -4184,6 +4188,7 @@ deutsche-mittelstands-nachrichten.de###euroconf-banner
 immobilo.de###expose-promo-links-wrapper
 spielen.com###fakebody
 newsroom.de###far_right > div[style="height:600px"]
+3dl.tv###fb-root + script + center + br + .content_box[cellspacing="1"][cellpadding="0"] > tbody:first-child:last-child
 fck.de###fck_bannerTop
 3min.de###featured_site_bg
 3min.de###featured_superbanner
@@ -5189,6 +5194,7 @@ mobile.de##.d-05-opromo_de
 winload.de##.darklayer
 3dl.tv##.ddl-mirnor-box.button[href*="="]
 3dl.tv##.ddl-mirnor-box.button[target="_blank"][href*=".3dl.tv/"][href*="="]
+3dl.tv##.ddl-mirror-box[target="blank_"]
 fail.to##.dealheader
 gesichtskirmes.net##.deals
 filmpalast.to##.detail > li > span > a
@@ -5426,6 +5432,7 @@ svs-seligenporten.de##.main_sponsor
 eeepc.de##.mainpage > .tableinborder[cellspacing="1"][cellpadding="1"][border="0"][style="width: 96%"]
 welt.de##.marginalTeaser
 gamepro.de,gamestar.de##.marketbox_brace
+pcwelt.de##.marketplace
 mobilfunk-talk.de##.md1
 t-online.de##.med_anz
 myvideo.de##.med_reg_box
@@ -5826,7 +5833,7 @@ german-bash.org##.zitat > div[style="width:300px;"]
 npage.at,npage.ch,npage.de,~www.npage.at,~www.npage.ch,~www.npage.de##[class] > a[target="_blank"][href*=".npage.de/"][href$=".html"]
 npage.at,npage.ch,npage.de,~www.npage.at,~www.npage.ch,~www.npage.de##[class] > a[target="_blank"][href^="/"][href$=".html"]
 npage.at,npage.ch,npage.de,~www.npage.at,~www.npage.ch,~www.npage.de##[id] > a[target="_blank"][href^="/"][href$=".html"]
-filecrypt.cc##[onclick$="', this);"][href="javascript:;"]
+filecrypt.cc##[onmouseup$="', this);"][href^="javascript:"]
 forum-sachsen.com##[width="425"][height="600"][style="position: absolute; top: 100px; left: 550px; empty-cells: hide;"]
 ebook-hell.to##[width="620"][bordercolor="#808080"] td[height="60"][align="CENTER"] > a > img
 sat-erotik.de##[width="800"][cellspacing="0"][cellpadding="4"][border="0"]
@@ -6284,6 +6291,7 @@ movie-blog.org##a[href^="http://yi.tl/"]
 hd-world.org,movie-blog.org##a[href^="http://zip5.de/"]
 livestreamfussball.org##a[href^="http://zolanis.com/landingpage"]
 movie-blog.org##a[href^="http://zzb.bz/"]
+freenet.de##a[href^="https://ad1.adfarm1.adition.com/redi?sid="]
 gamepro.de,gamestar.de##a[href^="https://itunes.apple.com/"][href*="&affId="]
 ddl-warez.in##a[href^="https://share-online.biz/affiliate/"]
 ddl-warez.in##a[href^="https://uploaded.net/ref/"]
@@ -6418,6 +6426,7 @@ rtl.de##button[onclick^="verivox_go("]
 rsd-store.com##button[onclick^="visitPartner("]
 g-stream.in##button[onclick^="window.open('http://g-stream.in/mirror/"]
 g-stream.in##button[onclick^="window.open('http://www.g-stream.in/mirror"]
+filecrypt.cc##button[onmouseup$="', this);"]
 hornoxe.com##center > a[target="_blank"][href^="http://amzn.to/"] > img
 repage.de##center > br + table[style="background-color:FFFFCC;border:1px solid;border-color:;table-layout:visible;width:468px;height:60px;padding-top:0px;padding-left:5px;padding-right:5px;padding-bottom:0px;"]
 englische-briefe.de##center > table[width="574"][cellspacing="0"][cellpadding="0"][border="0"]
@@ -7050,6 +7059,38 @@ ddl-warez.in##tr[style="background:#D0F5A9"]
 radforum.de##ul[class^="ebayitems"]
 r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 ! Anti-Adblock
+pcwelt.de##aside#sidebar > :not(.box)
+pcwelt.de##aside#sidebar > :not(div)
+prosieben.de##body > div#container[class]
+prosieben.de##body > div:not(#container):not(#fb-root)
+stern.de##div#MenuEvent > div#top_navigation > div[id]:not(#login_logout_links)
+stern.de##div#MenuEvent > div:not(#main_navigation):not(#top_navigation):not(#top_navigation2)
+prosieben.de##div#aside-zone > div:not([id^="container_aside_"])
+prosieben.de##div#container > div:not(#main):not(#site_footer)
+focus.de##div#footerv2-head > div:not(.frame)
+prosieben.de##div#left-zone > div#mobile_rectangle[class]
+prosieben.de##div#left-zone > div:not(#mobile_rectangle):not(.grid_620):not([id^="container_left_"])
+pcwelt.de##div#main > :not(#outer)
+stern.de##div#main > div#mainTopteaser > div:not(#gridContentXLTop)
+pcwelt.de##div#main > div#outer > [id]:not(div):not(span)
+pcwelt.de##div#main > div#outer > div[id]:not(#twocolumns)
+stern.de##div#main > div:not(#mainResidue):not(#mainTopteaser):not(#primary):not(#secondary):not(#videoCenter):not(#wrapper):not(.boxArchiveHeadline):not(.boxArchiveRow1):not(.boxFormularHead):not(.contentXL):not(.gridColLeft):not(.gridColRight):not(.gridContentArticle):not(.gridContentRubric)
+prosieben.de##div#main > div:not(#top-zone):not(#left-zone):not(#aside-zone):not(#bottom-zone):not(#top-fixed-zone)
+stern.de##div#page > div:not(#MenuEvent):not(#main):not(#main-wrapper):not(#footer)
+focus.de##div#page-container > div#main > div:not(#catchline):not(#content):not(#sidebar):not(#teaser_slider_container):not(.teaserList-1)
+focus.de##div#page-container > div:not(#main):not(#mediaBar):not(#ressortTeaser):not(#footerTicker)
+focus.de##div#page-container ~ div:not(#footerv2-frame)
+focus.de##div#sidebar > div:not(.block)
+pcwelt.de##div#wrapper > div:not(.w1)
+focus.de##div.articleContent > div:not(.center):not(.clearfix):not(.leadIn):not(.mediaBlock):not(.navigation):not(.textBlock)
+pcwelt.de##div.comments-block ~ *
+stern.de##div.moduleM > :not(div)
+stern.de##div.moduleM ~ div:not(.moduleM):not(.moduleMIframeTeaser)
+focus.de##div.tft_ads
+stern.de##div[id^="snippet_politik_col1_"] ~ div
+pcwelt.de##header#header ~ :not(#footer):not(#main):not(.vbcontent)
+prosieben.de##header#site_header > :not(#main_nav)
+prosieben.de##section#main_nav > div
 !------------------Ausnahmeregeln zum Beheben von Problemen-------------------!
 ! *** easylistgermany:easylistgermany/easylistgermany_whitelist.txt ***
 @@/adverts.js$domain=tape.tv
@@ -7065,7 +7106,6 @@ r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 @@||71iv.nuggad.net/crossdomain.xml$object-subrequest
 @@||ab-in-den-urlaub.de^*.popunder.js
 @@||abacomuenchensued.de/pageear/$object,object-subrequest,script
-@@||ad-emea.doubleclick.net/ad/qtom.generic.smartclip/$object-subrequest,domain=qtom.tv
 @@||ad-emea.doubleclick.net/ad/tonline.app.smartclip/$object-subrequest,domain=iam.t-online.de
 @@||ad-emea.doubleclick.net/crossdomain.xml$domain=iam.t-online.de
 @@||ad-tuning.de^*/ad-tuning-footer.png
@@ -7476,7 +7516,7 @@ r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 @@.jpg/$~third-party,domain=pcwelt.de
 @@.net^*.js$script,domain=ul-load.com|uploaded-premium.ru
 @@.org^$script,domain=ul-load.com|uploaded-premium.ru
-@@.png#$domain=aktuelles-handelsrecht.info|aussenwirtschaftslupe.de|dastandard.at|derstandard.at|diestandard.at|energielupe.de|europalupe.eu|finanzmarkttransaktionssteuer.de|gerichtsboulevard.de|grundrechteschutz.de|hartzbote.de|jagdlupe.de|kirchensteuerinfo.de|live-stream.tv|mediationslupe.de|medienrechtsnews.de|mutterschutz-rechner.de|rappers.in|rechtslupe.de|rechtslupe.net|rechtsschutzversicherunginfo.de|rentenbote.de|schuetzenrecht.de|sozialrechtsnews.de|steuerschmiede-aktuell.de|teamspeak-ts.com|tobinsteuer.de|twixzo.de|ul-load.com|uploaded-premium.ru|vereinslupe.de|vorsorgebote.de|wintotal-forum.de|wirtschaft-recht-aktuell.de
+@@.png#$domain=aktuelles-handelsrecht.info|aussenwirtschaftslupe.de|dastandard.at|derstandard.at|diestandard.at|energielupe.de|europalupe.eu|finanzmarkttransaktionssteuer.de|gamestar.de|gerichtsboulevard.de|grundrechteschutz.de|hartzbote.de|jagdlupe.de|kirchensteuerinfo.de|live-stream.tv|mediationslupe.de|medienrechtsnews.de|mutterschutz-rechner.de|rappers.in|rechtslupe.de|rechtslupe.net|rechtsschutzversicherunginfo.de|rentenbote.de|schuetzenrecht.de|sozialrechtsnews.de|steuerschmiede-aktuell.de|teamspeak-ts.com|tobinsteuer.de|twixzo.de|ul-load.com|uploaded-premium.ru|vereinslupe.de|vorsorgebote.de|wintotal-forum.de|wirtschaft-recht-aktuell.de
 @@.png/$image,~third-party,domain=pcwelt.de
 @@.png?$domain=mobilfunk-geschichte.de
 @@/^https?\:\/\/(?!(ad\.de\.doubleclick\.net)\/)/$object-subrequest,third-party,domain=golem.de
@@ -7531,7 +7571,7 @@ r-b-a.de##ul[style="padding: 0px; margin: 0px; border: 0px none;"]
 @@||alle-news.com^$image,script,domain=news.feed-reader.net
 @@||altfarm.mediaplex.com/ad/js/*?mpt=*&mpvc=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de
 @@||alysson.de^$document,subdocument,domain=gamona.de
-@@||amazonaws.com/bucket-ad/ad-image.png$domain=formel1.de|fremdwort.de|inside-handy.de|motorsport-total.com
+@@||amazonaws.com^$image,domain=formel1.de|fremdwort.de|inside-handy.de|motorsport-total.com
 @@||amazonaws.com^$object-subrequest,domain=gmx.net|homerj.de|spiegel.tv|sueddeutsche.de|web.de
 @@||amgdgt.com/ads?$object-subrequest,domain=clipfish.de
 @@||apmebf.com/ad/js/*&mpvc=http://ad.de.doubleclick.net/click%$script,domain=n-tv.de

@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Sat, 02 May 2015 15:49:19 GMT
-# entries:        2428
+# last updated:   Thu, 14 May 2015 18:18:33 GMT
+# entries:        2429
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -512,7 +512,6 @@
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
-127.0.0.1 ads.incgamers.com
 127.0.0.1 ads.indiatimes.com
 127.0.0.1 ads.infi.net
 127.0.0.1 ads.internic.co.il
@@ -968,6 +967,7 @@
 127.0.0.1 amazingcounters.com
 127.0.0.1 amung.us
 127.0.0.1 an.tacoda.net
+127.0.0.1 anahtars.com
 127.0.0.1 analytics.live.com
 127.0.0.1 analytics.yahoo.com
 127.0.0.1 anm.intelli-direct.com
@@ -1153,6 +1153,7 @@
 127.0.0.1 brandreachsys.com
 127.0.0.1 bravenet.com
 127.0.0.1 bridgetrack.com
+127.0.0.1 british-banners.com
 127.0.0.1 bs.yandex.ru
 127.0.0.1 budsinc.com
 127.0.0.1 bullseye.backbeatmedia.com
@@ -1345,7 +1346,6 @@
 127.0.0.1 discountclick.com
 127.0.0.1 displayadsmedia.com
 127.0.0.1 displaypagerank.com
-127.0.0.1 dist.belnk.com
 127.0.0.1 dmtracker.com
 127.0.0.1 dmtracking.alibaba.com
 127.0.0.1 dmtracking2.alibaba.com
@@ -1646,6 +1646,7 @@
 127.0.0.1 layer-ads.de
 127.0.0.1 lbn.ru
 127.0.0.1 lct.salesforce.com
+127.0.0.1 leadaffiliates.com
 127.0.0.1 leadboltads.net
 127.0.0.1 leadclick.com
 127.0.0.1 leadingedgecash.com
@@ -1794,7 +1795,6 @@
 127.0.0.1 netdirect.nl
 127.0.0.1 netflame.cc
 127.0.0.1 netincap.com
-127.0.0.1 netpool.netbookia.net
 127.0.0.1 netshelter.net
 127.0.0.1 network.business.com
 127.0.0.1 network.realmedia.com
@@ -2081,6 +2081,7 @@
 127.0.0.1 service1.adten.de
 127.0.0.1 services.hearstmags.com
 127.0.0.1 serving-sys.com
+127.0.0.1 sexaddpro.de
 127.0.0.1 sexcounter.com
 127.0.0.1 sexinyourcity.com
 127.0.0.1 sexlist.com

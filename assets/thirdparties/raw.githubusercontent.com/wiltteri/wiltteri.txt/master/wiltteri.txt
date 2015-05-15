@@ -1,10 +1,10 @@
 [Adblock Plus 2.0]
-! Checksum: r2K9ugH9AxR1FtRHelovEA
-! Version: 201504281600
+! Checksum: EoxqnRuJiC9SHZkc892NYw
+! Version: 201505081744
 ! Title: Wiltteri
 ! Description: Finnish supplement list for EasyList
 ! Redirect: https://raw.githubusercontent.com/wiltteri/subscriptions/master/wiltteri.txt
-! Last modified: 28 Apr 2015 16:00 UTC
+! Last modified: 08 May 2015 17:44 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/wiltteri/
 ! License: http://unlicense.org/
@@ -92,6 +92,7 @@ _mainosnappi.
 ||riverball.fi^*/banners/
 ||takilta.fi^*/banners/
 ||tekniikkaparkki.fi/wp-content/uploads/*_banneri_
+||telkku.com^*/images/nostot/
 ||vuokralaiset.fi/bannerit2012/
 ||xracing.fi/tiedostot/
 ||193.93.132.142/*ads
@@ -115,7 +116,6 @@ _mainosnappi.
 ||acoulu.faarao.org/files/images/bannerit/
 ||acoulu.fi/files/images/bannerit/
 ||adcampaigns.sharewood.org^
-||adhost.telkku.com^
 ||adoptioperheet.fi/banner
 ||afrikka.net/gfx/*banner
 ||afterdawn.fi/partner/
@@ -188,7 +188,6 @@ _mainosnappi.
 ||autot.oikotie.fi/commercial/iframe?
 ||autot.oikotie.fi/nosto/$domain=hs.fi
 ||autotalli.com/autotalli_upotus/
-||autotalli.com/bannerdata/
 ||avain.net/banner
 ||baarihaku.fi^*/banner
 ||bajahill.net/banner/
@@ -1437,7 +1436,6 @@ _mainosnappi.
 ||teatterikesa.fi^*/footerRoller.js
 ||teivonravit.fi/banner/
 ||tekniikanmaailma.fi^*/bannerit/
-||telkku.com^*/images/nostot/
 ||tennis.fi^*/img/sitebanner/
 ||tenojoki.fi/tenopaasivut/images/logot/
 ||terassilehti.fi/images/stories/*banner*/
@@ -1651,12 +1649,14 @@ nesteoilrallyfinland.fi###bannerRoulette
 foreca.fi###box-banner
 autolomat.fi###colu3
 liike.fi###footer-right
+telkku.com###footerBoxAdWrapper
 finlandiamarathon.fi###partners
 jokipojat.com###right
 runoviikko.fi###right .sidebar-text:last-of-type
 como.fi,hifimaailma.fi,inferno.fi,rumba.fi,rytmi.com,soundi.fi,tilt.fi###secondary a[target="_blank"]
 foreca.fi###side-banners
 pesaysit.fi###top
+telkku.com###topBannerWrapper
 mbnet.fi###topbanner
 mbnet.fi###tyopaikat-joblift--avainpaikat
 tivi.fi##.ad
@@ -2021,7 +2021,6 @@ martinlaaksonsahko.fi,putkiset.fi###jsn-puser9_inner
 hs.fi###kampanja-banneri-980
 oikotie.fi###kavijaohjaus
 xz.fi###kilpailuLinkki
-telkka.com,telkku.com,telkku.fi###klFrame
 iltalehti.fi###kl_nosto_13
 kotikokki.net###kokkiscreen
 radiopooki.fi###konsernipalkki
@@ -2307,7 +2306,6 @@ saipa.fi###top-sponsors
 plaza.fi###top-wide-ad
 kauppakamarikauppa.fi###top3_bannerarea
 kaupunkilehtiankkuri.fi###topBanner
-telkka.com,telkku.com,telkku.fi###topBannerWrapper
 mediuutiset.fi###topBanners
 vuokraovi.com###topBarBanner
 sahkovertailu.fi###topSection
@@ -2509,7 +2507,6 @@ alfmix.fi##.campaign
 kev.fi##.caption
 ibbf.fi##.cell3 > a[target="_blank"]
 tanssipelit.fi##.center
-telkka.com,telkku.com,telkku.fi##.centerAreaAds
 xhackerbox.com##.center_1 > .leftsidebox:last-of-type
 sukol.fi##.center_banners
 viu.fi##.centered
@@ -2620,7 +2617,6 @@ hengenveto.fi##.hv_banner_image
 hengenveto.fi##.hv_footer
 alibi.fi##.hymy-nosto
 turkumodern.com##.icons img
-telkka.com,telkku.com,telkku.fi##.il-movie-widget
 puolankainfo.fi##.ilmo
 isoomena.fi##.image-link
 suomalainenkylpyla.fi##.img_large_right
@@ -3573,6 +3569,12 @@ seksitreffit.fi##table[width="1024"][bgcolor="#d31517"]
 ||helskv.com^*/Logot/$third-party,domain=helsinginkisaveikot.fi
 ||uratie.fi^$third-party
 ||veikkaus.info/message.html$subdocument,third-party,domain=avoimet.com
+! Alma Media
+||autotalli.com^$subdocument,third-party
+||eas.almamedia.fi^$script,third-party
+||etuovi.com^$subdocument,third-party
+||iltalehti.fi^$subdocument,third-party
+||jdn.monster.com^$script,third-party
 ! Sanoma
 ||ko.snstatic.fi^$subdocument,third-party
 ||oikotie.fi/ext/$third-party
@@ -3585,21 +3587,13 @@ seksitreffit.fi##table[width="1024"][bgcolor="#d31517"]
 ||afterdawn.com/edukas_nosto_$subdocument,third-party
 ||aller.fi/banner/$third-party
 ||almamedia.fi/mp/$subdocument
-||autotalli.com/externalquicksearch?$subdocument
-||autotalli.com^*/html_multibanner/$third-party
-||autotalli.com^*/htmlbanners/$subdocument
 ||bmm.fi^$third-party
 ||cromet.fi/commercials/$third-party
 ||diilit.com/vkl_video.html$subdocument,third-party
-||eas.almamedia.fi^
 ||etuovi.com/etuovi/flash/*_300x355.swf
-||etuovi.com^*/htmlbanners/$subdocument
 ||faarao.org^$third-party
 ||hotellimaailma.fi^$third-party
-||iltalehti.fi/nostot/$subdocument
-||iltalehti.fi/uutisboksi/$subdocument
 ||indiedays.com/sidebar-$third-party
-||jdn.monster.com/render/$subdocument,third-party
 ||kannet.kuvalehdet.fi^*/w100_
 ||kauppalehti.fi/asc/$subdocument
 ||kauppalehti.fi^*/nosto/index.jsp$subdocument

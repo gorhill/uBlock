@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: NVUaBf+hJE92ka018kP1nQ
-! Version: 201505052253
+! Checksum: +BbVJxhlB9e+yPiOuH+vjA
+! Version: 201505150101
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 05 May 2015 22:53 UTC
+! Last modified: 15 May 2015 01:01 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -368,6 +368,7 @@ _advertentieleaderboardhome.
 ||dutchcharts.nl/images/sky_
 ||dutchcharts.nl/images/the-voice-kids-banner.swf
 ||dutchcowboys.nl/images/*-takeover.png
+||duurzaam-actueel.nl^*banner
 ||dvdboxshop.nl/images/leesklantbeoordelingen.jpg
 ||dvn.nl/images/site/banners/
 ||easylist.nl/125x125.swf
@@ -509,6 +510,7 @@ _advertentieleaderboardhome.
 ||onlineluisteren.nl^*-banner.png
 ||ontdek-amerika.nl/marketing/
 ||onzetaal.nl/banners/
+||openingsurengids.be/includes/js/checkblock.js
 ||optimaalfm.nl/upload/files/banner-left/
 ||optimalegezondheid.com/wp-content/plugins/mowpop/
 ||opwindend.net/*.php?$subdocument
@@ -758,6 +760,8 @@ _advertentieleaderboardhome.
 @@||ad.nl/static/nmc/prm/frameset/overlay/imago/v2/728x90.jpg?
 @@||adhese.standaard.be/jsonp/callback/sl_test_dso_ipad_optimized_avondeditie_-interstitial/?$script
 @@||adverteer-gratis.nl/ads/$domain=adverteer-gratis.nl
+@@||aludex.com/themes/ad/css/
+@@||aludex.com/themes/ad/img/
 @@||bibliotheek.be/detail/*-advertise/$subdocument,~third-party,xmlhttprequest
 @@||cinema.nl/ads/mediaplayer.jsp?$subdocument
 @@||doopsgezind.nl/templates/ads/$domain=doopsgezind.nl
@@ -962,6 +966,7 @@ pu.nl###skin_container
 vdab.be###sky
 voetbalzone.nl###skyCrapp
 fok.nl,koopplein.nl,mokkels.nl,vakantiebellen.com###skyscraper
+duurzaam-actueel.nl###slideshowwidget-2
 blikopnieuws.nl###spaar
 waarbenjij.nu###spanEbookersContainer
 uu.nl###sponsor_rotating_block
@@ -1102,6 +1107,7 @@ hln.be##.poweredAz
 marktplaats.nl##.premium-content-box
 moviemeter.nl,musicmeter.nl##.price_compare
 moviemeter.nl##.price_compare_large
+openingsurengids.be##.promSidebar
 dumpert.nl,omroep.nl##.promo
 vastgoedjournaal.nl##.randomcontent
 kijkshop.nl##.rechterkolom-banner
@@ -1189,6 +1195,7 @@ rijnmond.nl##a[onclick^="HitCountAjax('/Banners/"]
 dutchattraction.nl##a[onclick^="countAdClick("]
 opwindend.net##a[rel="nofollow"][target="_blank"]
 leukstespel.nl##a[target="_blank"] > img
+duurzaam-actueel.nl##a[target="_blank"][href^="http"] > img:not([alt^="duurzaam-actueel"])
 hln.be##a[title="Powered by Autozone.be"]
 moviemeter.nl##div[class^="banner"]
 startpagina.nl##div[class^="banner-"]

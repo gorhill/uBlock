@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: oau9amFfmLuo4wNcrNebeQ
+! Checksum: 0ji0DDB0p7zyI4hNhk5Y9w
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201505060030
+! Version: 201505130209
 
-! Last modified: 2015-05-06 00:30 JST(UTC+0900)
+! Last modified: 2015-05-13 02:09 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -2032,6 +2032,7 @@
 /applibar.$domain=live.nicovideo.jp|www.nicovideo.jp
 /applibar_$domain=live.nicovideo.jp|www.nicovideo.jp
 /AppMeasurementExtension.
+/apu.php?id=
 /arj?o=
 /artisan/sns_park/*$script
 /AS3AdPlayer.
@@ -2539,6 +2540,7 @@
 /www/delivery/*$popup
 /X_Store/*$script
 /xaLogger.
+/xbanner.$script
 /xenoLogger.
 /xgemius.
 /xt_click.$script
@@ -2998,6 +3000,10 @@
 ^adk2.$third-party
 ^adk2^$third-party
 ^adk2_$third-party
+^adk2x-$third-party
+^adk2x.$third-party
+^adk2x^$third-party
+^adk2x_$third-party
 ^adlayer-
 ^adlayer.
 ^adlayer^
@@ -4612,6 +4618,10 @@
 ^urchin^
 ^urchin_
 ^watchtcm^$popup
+^xbanner-$third-party
+^xbanner.$third-party
+^xbanner^$third-party
+^xbanner_$third-party
 ^yad-
 ^yad.
 ^yad^
@@ -5405,7 +5415,6 @@ _yahooads_
 |https://dw.c$script
 ://eulerian.
 ://hitlog.
-://iad.
 ://im.banner.
 ://image.*/bnr.gif?$third-party
 ://kanasoku.*/thumb/
@@ -5509,6 +5518,7 @@ _yahooads_
 ://tizer8.
 ://tizer9.
 ://utm.
+||iad.
 ! ---------- URL Fragments END ----------
 ! 
 ! ########## Top Level Domains with path START ##########
@@ -5608,6 +5618,7 @@ _yahooads_
 ||2ch.io/getf.cgi?
 ||count.2ch.net^
 ||find.2ch.net/*_banner_
+||2chb.net^
 ||2leep.com^$third-party
 ||2mdn.net^$popup
 ||2mdn.net^$third-party
@@ -5844,6 +5855,8 @@ _yahooads_
 ||adjustnetwork.com^$third-party
 ||adk2.$popup
 ||adk2.$third-party
+||adk2x.$popup
+||adk2x.$third-party
 ||adkontekst.pl^$third-party
 ||adlabs.ru^$third-party
 ||adlabs-retail.ru^
@@ -5896,6 +5909,8 @@ _yahooads_
 ||adpdx.com^
 ||adperium.com^$third-party
 ||adplan-ds.com^$third-party
+||adplxmd.com^
+||adplxmd.com^$popup
 ||adprotected.com^$third-party
 ||adpv.com^$third-party
 ||adr.st^
@@ -6156,6 +6171,7 @@ _yahooads_
 ||amazonaws.com/*.inspectlet.com/
 ||amazonaws.com/*.kissinsights.com/
 ||amazonaws.com/*.kissmetrics.com/
+||amazonaws.com/*.megacpm.com/
 ||amazonaws.com/*.pagefair.com/
 ||amazonaws.com/af-bdaz/
 ||amazonaws.com/ai-img/
@@ -6292,6 +6308,7 @@ _yahooads_
 ||attiveri.com^
 ||attivertura.com^
 ||atwola.com^
+||audience.network^
 ||auditude.com^$third-party
 ||ac.auone-net.jp/~thumb/
 ||autoblog.com/traffic/
@@ -6660,6 +6677,7 @@ _yahooads_
 ||ajax.cloudflare.com^
 ||cloudfront.net^$popup
 ||cloudfront.net/lps
+||d13xa9aa1tga7e.cloudfront.net^
 ||d1447tq2m68ekg.cloudfront.net^
 ||d1798l6lhp8h4d.cloudfront.net^
 ||d1bzh9wdftmzm0.cloudfront.net^
@@ -6679,6 +6697,7 @@ _yahooads_
 ||d2bbvl6dq48fa6.cloudfront.net^
 ||d2dq2ahtl5zl1z.cloudfront.net^
 ||d2l29aklexcvhg.cloudfront.net^
+||d2nq0f8d9ofdwv.cloudfront.net^
 ||d2o7lat8cdoi27.cloudfront.net^
 ||d2oh4tlt9mrke9.cloudfront.net^
 ||d2sj2omw0azr1m.cloudfront.net^
@@ -7374,6 +7393,7 @@ _yahooads_
 ||geniee.$third-party
 ||genieesspv.jp^
 ||genorithm.com^
+||cnt.geo.jp^
 ||feel.geo.jp^
 ||geoplugin.net^
 ||germanbankersecrets.org$popup
@@ -7521,6 +7541,7 @@ _yahooads_
 ||hdstreamerjs.info^
 ||hdvidcodecs.com^
 ||heapanalytics.com^$third-party
+||heatsync.com^$third-party
 ||heavy-r.com^$popup
 ||hebdotop.com^$third-party
 ||heelwork.com^
@@ -8250,6 +8271,7 @@ _yahooads_
 ||meetme-tonight.info^$third-party
 ||meetrics.$third-party
 ||megaclick.com^$third-party
+||megacpm.com^$third-party
 ||megagong.fr^$popup
 ||megainjs.info^
 ||megaplugin.ru^
@@ -8850,6 +8872,7 @@ _yahooads_
 ||profilespartners.com^
 ||profitwizard.net^
 ||program3.com^$third-party
+||programresolver.net^
 ||projectsunblock.com^$third-party
 ||projectwonderful.com^$third-party
 ||proligtb.com^
@@ -9034,6 +9057,7 @@ _yahooads_
 ||rezovideo.com^
 ||rezovideos.com^
 ||rfihub.com^
+||rhtag.com^
 ||richmediaadspot.info^$third-party
 ||richrelevance.$third-party
 ||richthof.com^
@@ -9583,6 +9607,7 @@ _yahooads_
 ||tracking101.com^
 ||tracksitetraffic1.com^
 ||trackstatsnow.com^
+||trackstormalert.com^$third-party
 ||trackvoluum.com^$popup
 ||trackwind.com^$third-party
 ||trackword.biz^$third-party
@@ -10100,6 +10125,7 @@ _yahooads_
 ||yimg.*/images/*/pr/
 ||yimg.*/images/account/sp/*/reg/ccc/
 ||yimg.*/images/analytics/
+||yimg.*/images/ds/
 ||yimg.*/images/listing/
 ||yimg.*/images/market/
 ||yimg.*/images/news/newsSearch/
@@ -10113,10 +10139,10 @@ _yahooads_
 ||yimg.*/lib/3pm/$script
 ||yimg.*/lib/bc/$script
 ||yimg.com/cv/
-||yimg.jp/cv/
 ||yimg.com/iv/
-||yimg.jp/iv/
 ||yimg.com/qb/
+||yimg.jp/cv/
+||yimg.jp/iv/
 ||yimg.jp/qb/
 ! ||ads.yimg.
 ||yiqiwin.com^$third-party

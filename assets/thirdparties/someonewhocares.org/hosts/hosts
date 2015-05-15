@@ -8,7 +8,7 @@
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: May 2nd, 2015 at 02:41
+# Last updated: May 14th, 2015 at 15:03
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1995,6 +1995,7 @@
 127.0.0.1 ymail-activate1.bugs3.com
 127.0.0.1 yrwap.cn
 127.0.0.1 zarozinski.info
+127.0.0.1 zb1.zeroredirect1.com
 127.0.0.1 zettapetta.com
 127.0.0.1 zfotos.fromru.su
 127.0.0.1 zip.er.cz
@@ -5434,7 +5435,6 @@
 127.0.0.1 cdn.nearbyad.com
 127.0.0.1 cdn.nsimg.net
 127.0.0.1 cdn.onescreen.net
-127.0.0.1 cdns.gigya.com
 127.0.0.1 cdns.mydirtyhobby.com
 127.0.0.1 cdns.privatamateure.com
 127.0.0.1 cdn.stat.easydate.biz
@@ -8708,6 +8708,7 @@
 127.0.0.1 www.productopinionpanel.com
 127.0.0.1 www.productresearchpanel.com
 127.0.0.1 www.producttestpanel.com
+127.0.0.1 www.projectwonderful.com
 127.0.0.1 www.psclicks.com
 127.0.0.1 www.pubdirecte.com
 127.0.0.1 www.qitrck.com

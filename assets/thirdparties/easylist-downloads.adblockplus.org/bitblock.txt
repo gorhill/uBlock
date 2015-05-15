@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: WF1rE703h+kjo5Yc6fKI7Q
-! Version: 201505052300
-! Last modified: 05 May 2015 23:00 UTC
+! Checksum: BxIjTDUXAf/C+1/833zn9g
+! Version: 201505150100
+! Last modified: 15 May 2015 01:00 UTC
 ! Expires: 5 days (подписка обновляется автоматически каждые 5 дней)
 ! Homepage: https://forums.lanik.us/viewforum.php?f=102
 !
@@ -4393,6 +4393,7 @@ _youtube_social_
 ##.aboutSocialLinks
 ##.above-nav-social
 ##.abtlikebox
+##.action-box-social
 ##.actions_facebook
 ##.actions_sharethis
 ##.actions_twitter
@@ -4492,6 +4493,7 @@ _youtube_social_
 ##.article-share-count-container
 ##.article-share-link-items
 ##.article-share-top
+##.article-sharer
 ##.article-shares-links
 ##.article-sharing
 ##.article-sharing-top
@@ -6048,6 +6050,7 @@ _youtube_social_
 ##.intro-share-container
 ##.ione-widget-facebook-activity
 ##.ione-widget-youtube_playlist
+##.is-social
 ##.ishare
 ##.isocial
 ##.it-social-tabs
@@ -6507,6 +6510,7 @@ _youtube_social_
 ##.pull-quote-share
 ##.pullquote_shares_wrapper
 ##.pw-button-facebook
+##.pw-button-twitter
 ##.pw-facebook
 ##.pw-googleplus
 ##.pw-share-popups
@@ -7183,6 +7187,7 @@ _youtube_social_
 ##.sm4WidgetArticleShare
 ##.sm_share_badge
 ##.small-facebook
+##.small-sharing-btn
 ##.small-twitter
 ##.smallsocial
 ##.smallsocialbutton
@@ -7255,6 +7260,7 @@ _youtube_social_
 ##.social-block
 ##.social-block-content
 ##.social-blocks
+##.social-bookmakrs-container
 ##.social-bookmark
 ##.social-bookmark-links
 ##.social-bookmarks
@@ -7953,6 +7959,7 @@ _youtube_social_
 ##.story-share-buttons
 ##.story-social-bar
 ##.story-tools-social
+##.storySocial_lng
 ##.storySocial_short
 ##.story_allsocial
 ##.story_share
@@ -9016,6 +9023,7 @@ _youtube_social_
 ||facebook.com^*/plugins/like.php?$third-party
 ||facebook.com^*/plugins/like_box.php?$third-party
 ||facebook.com^*/plugins/likebox/$third-party
+||facebook.com^*/plugins/page.php?$third-party
 ||facebook.com^*/plugins/recommendations.php?$third-party
 ||facebook.com^*/plugins/recommendations_bar.php?$third-party
 ||facebook.com^*/plugins/send.php?$third-party
@@ -9293,6 +9301,7 @@ google.com##.entry-author > .entry-likers
 macradar.ru##.essb_links
 navitel.su##.extra_append:last-child
 evtifeev.com##.fones
+europaplus.ru##.footer-social-widgets
 mobiledevice.ru##.icons_bar_placeholder
 km.ru##.km-shares
 echomsk.spb.ru##.like_wrp
@@ -9827,13 +9836,14 @@ _eu_cookie_
 ###pushdown.pdp-psy
 ##.b-head-universal-wrapper
 ##.b-noncontext-banner
-##.forum-user-signature
+##.forum-user-signature img
 ##.orakul-grey-block
-##.sig
-##.signature
-##.signatureView
-##.user_signature
-##.usersig
+##.postsignature img
+##.sig img
+##.signature img
+##.signatureView img
+##.user_signature img
+##.usersig img
 ~dfm.ru,~rusradio.ru##marquee
 ! Bongacams domains
 ###CamsOverlayTootip ~ .chatbox_green
@@ -10092,6 +10102,7 @@ _eu_cookie_
 ##.btn__subscribe
 ##.btrss
 ##.cb_ads
+##.cfsnip-widget
 ##.circ-signup-form
 ##.circ-slider-module
 ##.cls_xswdg_feedburner
@@ -10413,6 +10424,8 @@ _eu_cookie_
 ##img[alt="Watch Us on You Tube"]
 ##img[alt="Watch us on YouTube"]
 ##img[title="Subscribe to Email Updates"]
+! Mobile Apps
+###mn-app-banner
 ! Gannett close buttons
 ###back-to-home > .back-to-home-button
 ###close-btn-wrapper > #close-back-btn
@@ -10669,6 +10682,7 @@ _eu_cookie_
 ###subscriptionModal
 ###subscription_box
 ###subsribe_right
+###tc_newsletter
 ###widget-newsletter-signup
 ###widgetNewsletter
 ##.ALS_IL_Holder
@@ -10704,6 +10718,7 @@ _eu_cookie_
 ##.btn_newsletter
 ##.cS-newsletter
 ##.cambeywest-subscribe
+##.chive-newsletter
 ##.cm_newsletter
 ##.connect_newsletter
 ##.content-mod-newsletter-right
@@ -10733,6 +10748,7 @@ _eu_cookie_
 ##.enewsletter
 ##.entry-footer-subscribe
 ##.entryNewsletter
+##.fixed-overlay-subscription
 ##.flyout-newsletter-rr
 ##.foo-newsletter
 ##.footer-email-signup-container
@@ -11987,7 +12003,6 @@ _eu_cookie_
 ||qip.ru/images/sign/
 ||raptr.com/badge/
 ||relap.io^$third-party
-||retailrocket.ru^$third-party
 ||rolki.ru/project/ubars/
 ||rostovmama.ru/components/com_line/
 ||ruler.autoserv.ru^
@@ -12345,6 +12360,7 @@ _eu_cookie_
 ||ukranekdot.com/logo/
 ||uppod.ru/player/logo/
 ||ura.ru/jsb/
+||v.obozrevatel.ua/*/?autoplay=true&mute=true
 ||xyya.net/uploads/medals/
 ||yatv.ru/storage/userdata/*/banner_
 ||yatv.ru/storage/userdata/*/page_background_
@@ -12363,6 +12379,7 @@ lockerz.com###exposeMask
 biglion.ru###form_popup_id
 free-torrents.org###forums_list_wrap > br
 autovisio.com.ua###globallasttd > div[class$="-block"] + div[style^="padding:250px"]
+reactor.cc###header
 master-css.com###header1 > h2 > span
 alexfilm.cc###headerProxy
 hidemyass.com###hma-survey-button
@@ -12382,6 +12399,7 @@ autoclub-cerato.ru###outer_forum
 lockerz.com###overlay
 free-torrents.org###page_container > ul > a[style]
 free-torrents.org###page_container > ul > table[style]
+tapochek.net###page_content fieldset[style]
 allforpeople.net###pichead
 rbc.ru###popup_box
 rbc.ru###popup_inner
@@ -13119,6 +13137,7 @@ marketplace.firefox.com#@#img[title="YouTube"]
 @@||style.aliunicorn.com/js/$script,domain=alibaba.com
 @@||symantec.com/content/*/about/images/social/b-$image
 @@||syndication.twitter.com/tweets.json?*&callback=$script
+@@||syndication.twitter.com/tweets.json?callback=$script
 @@||t3n.de/news/wp-content/uploads/*/social_media_
 @@||telia.se/tse/js/socialmedia/
 @@||theinterview-movie.com/images/btn_youtube.png

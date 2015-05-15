@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
 ! Title: AakList (Anti-Adblock Killer)
 ! Author: Reek | http://reeksite.com/
-! Version: 8.0
+! Version: 8.1
 ! Expires: 1 days
 ! License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 ! Homepage: https://github.com/reek/anti-adblock-killer#anti-adblock-killer--reek
@@ -70,7 +70,7 @@
 ! FuckAdBlock
 ! http://www.sitexw.fr/fuckadblock/
 ! https://github.com/sitexw/FuckAdBlock
-/fuckadblock.js|$script
+@@/fuckadblock.js$script
 ! AdBlock Alerter
 ! https://github.com/wp-plugins/adblock-alerter
 ! +rules on aakscript
@@ -122,6 +122,8 @@
 /js/an-scripts.js$script
 /js/an-scripts.min.js$script
 ||b-website.com/wp-content/uploads/an-temp/RrW75pkNMbSB.js$script
+! AdUnBlock - http://adunblock.com
+||adunblock.com/code/*.html
 ! Anti-Adblock (from easylist) -------------------------------------------------------------
 /ad-blocking-detector/*
 /adb_detector.
@@ -324,9 +326,6 @@ anisearch.com##.box-error
 @@||aniroleplay.com/adframe_*.js$script
 ! roleplayer.me
 @@||roleplayer.me/adframe_*.js$script
-! uptobox.com
-uptobox.com#@#.ad-leader
-uptobox.com#@#.ad-leader > div[id]
 ! dailybitcoins.org
 dailybitcoins.org#@#.ad-img
 @@||dailybitcoins.org/banners/$image
@@ -415,9 +414,6 @@ hentai-flix.net##.trs_sticky_notice_text_box
 ftlwiki.com###top-banner-advert
 ! watcharab.com
 watcharab.com#@##adblock
-! uptobox.com
-uptobox.com#@##adblocktrap
-@@||advertstream.com/banners/$image,domain=uptobox.com
 ! privateinsta.com
 @@||privateinsta.com/javascript/rqrkrm.js$script
 @@||cpalead.com/mygateway.php?$domain=privateinsta.com,script
@@ -867,14 +863,10 @@ forums.openpli.org###content > [style="text-align:center;"] > DIV[style="margin 
 simply-debrid.com#@##adsense
 ! onvasortir.com
 @@||onvasortir.com^$elemhide
-@@||onvasortir.com/publicite.html$script
-@@||onvasortir.com/fuckadblock.js$script
-@@||smartadserver.com/config.js?$script,domain=onvasortir.com
-@@||r.sascdn.com/diff/js/smart.js$script,domain=onvasortir.com
+@@||onvasortir.com^$script
 ! urbeez.com
 @@||urbeez.com^$elemhide
-@@||urbeez.com/publicite.html$script
-@@||urbeez.com/fuckadblock.js$script
+@@||urbeez.com^$script
 ! movie-box.pl + excluded AakScript
 @@||movie-box.pl^$elemhide
 @@||movie-box.pl/js/fuckadblock.js$script
@@ -912,6 +904,35 @@ worldofgnome.org#@##wog-300x250-ads
 @@||www.adhexa.com^$image,domain=bitzfree.com
 @@||rhtag.com^$image,domain=bitzfree.com
 @@||cdn.adnxs.com^$image,domain=bitzfree.com
+! rdio.com
+!rdio.com#@#.ad_background
+!rdio.com#@#.ad_bottom
+!rdio.com#@#.ad_container
+!rdio.com#@#.ad_text
+! trafictube.ro
+trafictube.ro#@#.widget-adv
+! uptobox.com
+uptobox.com#@##adblocktrap
+uptobox.com#@#.ad-leader
+uptobox.com#@#.ad-leader > div[id]
+! bitcoiner.net
+litecoiner.net,bitcoiner.net#@##ad-top
+! mangasproject.com.br (http://brazilunblock.info/)
+@@/ads.js$domain=mangasproject.com.br
+@@||mangasproject.com.br/assets/js/lib/controllers/Leitor/ads.js
+! softpedia.com
+softpedia.com#@#.ad
+! gamejolt.com
+gamejolt.com###pre-roll-ad-container
+! ogmods.net
+@@||yllix.com/banner_show.php$subdocument,domain=ogmods.net
+yllix.com##[href^="http://click2.yllix.com/"]
+! sharecash.org
+@@||widget.sharecash.org/jsclick.php$script
+! naekranie.pl
+naekranie.pl###niceMessage
+! turbogenerator.info
+@@||turbogenerator.info/adblock.js$script
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -1117,6 +1138,16 @@ turkdown.com###duyuru
 ||nefroto.net^$script,domain=dada44230.fr
 ! generatupremium.biz
 generatupremium.biz##[href="http://www.hostunder.net/windows-rdp/"]
+! generatorlinkpremium.com
+@@||generatorlinkpremium.com/js/ads.js$script
+generatorlinkpremium.com##.thirdsky
+generatorlinkpremium.com##.secondsky
+! game-state.com
+@@||static.game-state.com/js/adblock.js$script
+! gamejolt.com
+gamejolt.com###ima-ad-container
+! mangasproject.net.br
+@@||mangasproject.net.br/assets/js/lib/controllers/Leitor/ads.js$script
 ! Cloud --------------------------------------------------------------------------------------
 ! wawa-film.org
 wawa-film.org##A[href^="http://api.adlure.net/partner/click/"]
@@ -1449,6 +1480,4 @@ go4up.com##[href^="http://liversely.com/g4u?q="]
 go4up.com##[href^="http://go.ad2up.com/afu.php?id="]
 ! academia.edu
 @@||api.academia.edu/v0/users/*/stats$script
-! uptobox.com
-uptobox.com##[href^="http://ads.uptobox.com/www/delivery/ck.php"]
 

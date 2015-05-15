@@ -1,7 +1,7 @@
  [Adblock Plus 2.0]
 ! Homepage: http://adblock.sk
 ! Title: Easylist Czech and Slovak filter list
-! Last change: 03/05/2015
+! Last change: 06/05/2015
 ! List maintainers: Fanboy, Moskoe, tomasko126
 ! Expires: 3 days
 ! License: CC-BY-SA v4.0
@@ -281,6 +281,7 @@ exashare.com###player_img
 ||static.itnews.sk/branding/
 ||tailormysuit.sk/wp-content/uploads/banner*.jpg
 ||techbox.sk/*colorbox
+||img.teevee.sk/img/comm/
 ||totalpozicky.sk/images/banners/
 ||tu-ke.com/certovskezlavy.jpg
 ||tu-ke.com/jozko.png
@@ -441,6 +442,7 @@ zive.cz#@#.box-adsense
 @@||img.aaaauto.eu/thumb/
 @@||maps.gstatic.com/maps-api-v3/api/js/$domain=mapa-mapy.info.sk
 @@/moje-konto/inzeraty/
+@@||openload.io/deliverad/2
 @@||pcforum.sk$elemhide
 @@||pcforum.sk/styles/*/advertisement.js
 @@||reklama.hiking.sk/lib/HikingMaps-3.0.2.js
@@ -964,6 +966,7 @@ onlinefilmy.tv###bg_right
 onlinefilmy.tv##.ads
 onlinefilmy.tv##.ads_new
 onlinevidea.tv##.ads_new
+openload.io###videooverlay
 pcforum.sk##td[style="cursor: pointer; padding: 10px; background: rgb(255, 255, 255);"]
 pocasie.pozri.sk/nba2.gif
 pokec.azet.sk##.c_banner300x300
@@ -978,6 +981,9 @@ sport.aktuality.sk###skin_link_left
 sport.aktuality.sk###skin_link_right
 techbox.sk##.anotacia-sponsored
 techbox.sk##.inzercia
+teevee.sk##A[href^="https://www.tipsport.sk/PartnerRedirectAction.do?"]
+teevee.sk###colorbox
+teevee.sk###cboxOverlay
 topky.sk##.ad
 topky.sk##.addbox.avizo
 topky.sk##.box_advertisment.addbox.recycle

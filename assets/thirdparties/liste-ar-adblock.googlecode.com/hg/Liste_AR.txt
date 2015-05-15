@@ -29,6 +29,7 @@
 /images/e3lan.
 /images/e3lan/*
 /images/e3lan3.
+/pop_packcpm.$popup
 /vb/e3lan/*
 /vb/e3lanat/*
 |http://e3lanat.
@@ -192,6 +193,7 @@
 ||cnbcarabia.com/top_banner.php
 ||cs-proton.tv/images/banner-*.
 ||ctn-abbas.com/*_ads.
+||d3b3e6340.website^
 ||d3oyytf0n6db9a.cloudfront.net^
 ||daralakhbar.com/widgetgen/$third-party
 ||darendeal.com/widgets/recommendation_box?
@@ -1371,3 +1373,7 @@ dramacafe.tv,online.dramacafe.in,xaddad.com#@#.afs_ads
 !----------------------- Exceptions d'éléments -----------------------!
 !
 risalaradio.com#@#.ad-cell
+!
+!---------------------------- Anti-Adblock ---------------------------!
+!
+@@||showsport-tv.com/advert.js

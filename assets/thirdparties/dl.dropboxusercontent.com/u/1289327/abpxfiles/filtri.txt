@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201504101806
+! Version: 201505110913
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 10-04-2015
+! Last modified: 11-05-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -440,7 +440,6 @@ http://ads.niceadv.com
 http://ads.planetamd64.com
 http://ads.redmoonstudios.de
 http://ads.webhosting.info
-http://ads1.itadnetwork.co.uk
 http://adsence.sogou.com
 http://adserv.free6.com
 http://adserver*.20below.eu
@@ -1761,6 +1760,9 @@ about:blank$popup,domain=katproxy.com|filmpertutti.eu|catanzaroinforma.it
 |http://media.ultrafastcdn.com/ads/
 ||pubted.com^$popup
 |https://readserver.cachefly.net/
+|http://*.33universal.com/data/flash/*_ad_*
+|http://*.techtimes.com/iframe_video/ad.php
+||ad6media.fr^$popup
 ! [Gruppo di filtri per nascondere elementi]/elemhide
 firedrive.com##DIV[id="fdpc_cont"]
 colorburned.com##DIV[class^="singleAd"]
@@ -3520,6 +3522,34 @@ altadefinizione.tv###reklam-468x60
 altadefinizione.tv##[id$="_reklam"]
 altadefinizione.tv##[class$="_gizle"]
 altadefinizione.tv##[id^="reklam"]
+giardiniblog.com##.adsbygoogle
+repubblica.it##[id^="taboola"]
+gottabemobile.com##[id^="google_ads_iframe"]
+gottabemobile.com##.adsbygoogle
+gottabemobile.com##.ad-inserter
+techtimes.com##[id^="google_ads_iframe"]
+techtimes.com##[class^="adunit"]
+techtimes.com##[id^="adunit_"]
+graphberry.com##.ads
+graphberry.com##.adsbygoogle
+delicious.com##[class$="ad-container"]
+delicious.com##.ad-container
+dailyblogtips.com##.adsbygoogle
+aranzulla.it##[id^="google_ads_iframe"]
+technipages.com##.adsbygoogle
+getemoji.com##[id^="aswift_"]
+getemoji.com##IFRAME[src^="//banners.itunes.apple.com/"]
+getemoji.com##[id*="ad_banner"]
+online-tech-tips.com##[id^="adsense-"]
+askvg.com##.adsbygoogle
+blog.firmwareumbrella.com##.adsbygoogle
+blog.firmwareumbrella.com##[id^="aswift_"]
+exchangetips.us##.ezAdsense
+searchdisasterrecovery.techtarget.com##.sign-up-wrapper.inline-reg.page1
+searchdisasterrecovery.techtarget.com##.ad.ad-hp
+searchdisasterrecovery.techtarget.com###inlineRegistration
+searchdisasterrecovery.techtarget.com##.ad-wrapper
+chimerarevo.com##.adv-top-container
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3528,12 +3558,19 @@ theverge.com##.m-ad.m-ad__medrec.vert.vert300
 |http://*.exoclick.com/xhamster-945x100.php
 |http://enoratraffic.com/*/900_xhamster.php
 it.xhamster.com###adTop
+/ads1.
+||rad.msn.com^
+###adcontainer
 liliputing.com##[id^="backfill_"]
 liliputing.com##.bsap_adhere
 tuttoandroid.net##.adsbygoogle
 macitynet.it###leader-wrapper
 macitynet.it##[id^="div-gpt-ad"]
 macitynet.it##[class^="banner-"]
+google.it##.ads-ad
+google.it###rhs_block
+google.it###\5f Ltg
+google.it###\5f Ktg
 macitynet.it##.adsbygoogle
 macitynet.it##.wrap.banner
 m.leggo.it###adv_BannerTop
@@ -3750,7 +3787,6 @@ http://www.cultura.rai.it/$popup
 ||bitterstrawberry.org^$popup,domain=simply-hentai.com
 ||plugrush.com^$popup,domain=simply-hentai.com
 ||n99adshostnet.com^$popup,domain=simply-hentai.com
-||ad6media.fr^$popup,domain=rapidvideo.org
 ||topstoreoffers.com^$popup,domain=rapidvideo.org
 ||thebrowsergame.com^$popup,domain=firedrive.com
 ||cpmterra.com^$popup,domain=firedrive.com

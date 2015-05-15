@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: OvP3fEan73ZClwrVlA1xKQ
+! Checksum: qspNKXI6i4su0w/trvpuxw
 ! Title: EasyList Hebrew
-! Last modified: 05/05/15 15:23
+! Last modified: 06/05/15 17:10
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -336,6 +336,7 @@
 @@||ilgde.adocean.pl/$object-subrequest,domain=mako.co.il
 @@||kamaze.co.il/Advertisement/Image/callme/$~third-party,image
 @@||kamaze.co.il/Advertisement/Logos/$~third-party,image
+@@||kikar.co.il/js/ads.js
 @@||lips.co.il/ads/$image,~third-party
 @@||mako.checkm8.com/adam/em/$object-subrequest
 @@||mako.checkm8.com/adam/inline?*=HEAVY_PIC_$object-subrequest
@@ -403,10 +404,10 @@ feeder.co.il,rest.co.il###banner
 rateonclick.com,view-movies.co.il###connect
 bhol-forums.co.il,bhol.co.il###divBanner_Plazma
 ladaat.info,tapuz.co.il###divTopBanner
-kikar.co.il,kikarhashabat.co.il###exposeMask
+kikar.co.il###exposeMask
 sdarot.pl,sdarot.pm,sdarot.tv,sdarot.wf,sdarot.ws###extra
 ori-diamonds.co.il,popcorate.co.il###hoverConnect
-kikar.co.il,kikarhashabat.co.il###maavaron_overlay
+kikar.co.il###maavaron_overlay
 bhol-forums.co.il,bhol.co.il###sdera.width100pc
 nana10.co.il,nrg.co.il,wallashops.co.il###topBanner
 bizportal.co.il,bursagraph.co.il,saloona.co.il###top_banner
@@ -616,14 +617,6 @@ junkyard.co.il##DIV[id^="banner"]
 kafe.co.il###adv
 kikar.co.il##.logo
 kikar.co.il##[id^="takeover"]
-kikarhashabat.co.il###jumbo
-kikarhashabat.co.il###takeover_wrapper
-kikarhashabat.co.il##.ads_category_box
-kikarhashabat.co.il##.ads_category_header.subcat_cap
-kikarhashabat.co.il##.comments_inner_banner
-kikarhashabat.co.il##.frontal_ad430x60
-kikarhashabat.co.il##.kikar_trade_links
-kikarhashabat.co.il##DIV[style="margin: 16px 0;width:990px;overflow: hidden;position: relative;left: 1px;height: 100px;"]
 kipa.co.il##.PirsumList
 kipa.co.il##.bannerJambo
 kipa.co.il##.homeCol3.PirsumList.col

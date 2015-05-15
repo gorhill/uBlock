@@ -5,7 +5,7 @@
 !Homepage: https://github.com/szpeter80/hufilter/wiki
 !Title: hufilter
 !Expires: 16 hours
-!Version: 201503221510
+!Version: 201505081118
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Magyar Adblock Plus szurolista
 ! 
@@ -879,6 +879,7 @@ mfor.hu##[class="article-textlinkbox"]
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!    egyszabalyos oldalak          !!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ketkes.com##A[href^="http://goo.gl"]
 ||filmvilag.com/style/rl-szexpartner-970x60szolid.gif
 gphirek.hu##DIV.ad
 feliratok.info##DIV#advert
@@ -1130,8 +1131,6 @@ borsa.hu##[class="blockright"]
 !x-message-20130104
 kislexikon.hu/swf/
 hir24.hu##[id*="vid4"]
-||vid4u.org^$third-party
-##[id^="v4u_"]
 chat.hu##A[href*="biztositok.hu"]
 hupont.hu/hirdetes/
 hupont.hu##DIV[id="szupertorony"]
