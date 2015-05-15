@@ -1,4 +1,4 @@
-**Yet another myth to dispel**: I've seen in many places lately the following assertion:
+**Yet another myth to dispel**: I've seen in many places lately the following assertion ([example](https://fr.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6):
 
 > ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
 
