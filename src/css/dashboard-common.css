@@ -21,19 +21,23 @@ button {
     padding: 7px;
     font: inherit;
     margin: 0;
-    background: #ddd;
-    color: #444;
+    background: dimgray;
+    color: #eee;
     border-radius: 5px;
-    border: 1px solid #aaa;
+    border: 1px solid dimgray;
     cursor: pointer;
-    -webkit-transition: 0.2s background, 0.2s border-color, 0.2s box-shadow;
-    transition: 0.2s background, 0.2s border-color, 0.2s box-shadow;
+    -webkit-transition: 0.2s background, 0.2s border, 0.2s box-shadow;
+    transition: 0.2s background, 0.2s border, 0.2s box-shadow;
     }
 button:hover {
     border-color: dodgerblue;
-    background: #fafafa;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    color: black;
+    background: dodgerblue;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    border-radius: 0;
+    color: white;
+    }
+label {
+    cursor: pointer;
     }
 div > p:first-child {
     margin-top: 0;

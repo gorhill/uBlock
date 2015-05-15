@@ -7,7 +7,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background:#fafafa;
+    background:#fdfdfd;
     color:#444;
     }
 body {
@@ -32,6 +32,13 @@ body {
     padding: 0 0.5em;
     font-size: larger;
     font-weight: bold;
+    }
+.homepageLink {
+    text-decoration: none;
+    color: inherit;
+    }
+.homepageLink:hover {
+    color: dodgerblue;
     }
 .tabButton {
     background-color: #ddd;

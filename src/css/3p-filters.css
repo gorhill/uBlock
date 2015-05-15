@@ -2,8 +2,14 @@ ul {
     padding: 0;
     list-style-type: none;
     }
+label {
+    margin-left: 0.5em;
+    }
 #options li {
     margin-bottom: 0.5em;
+    }
+#3pActionButtons {
+    margin-top: 5px;
     }
 #lists {
     margin: 0.5em 0 4em 0;
@@ -71,34 +77,6 @@ li.listEntry > a:nth-of-type(2) {
 .dim {
     opacity: 0.5;
     }
-/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button.custom {
-    padding: 5px;
-    border: 1px solid transparent;
-    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
-    border-radius: 3px;
-    background-color: hsl(216, 100%, 75%);
-    background-image: linear-gradient(#a8cbff, #80b3ff);
-    background-repeat: repeat-x;
-    color: #222;
-    cursor: pointer;
-    opacity: 0.8;
-    }
-button.custom.disabled {
-    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
-    background-color: hsl(36, 0%, 72%);
-    background-image: linear-gradient(#f2f2f2, #dddddd);
-    color: #aaa;
-    pointer-events: none;
-    }
-button.custom:hover {
-    opacity: 1.0;
-    }
-button.custom.reloadAll:not(.disabled) {
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
-    }
 #buttonApply {
     display: initial;
     margin: 1em 0;
@@ -114,6 +92,10 @@ body[dir=rtl] #buttonApply {
     }
 #buttonApply.disabled {
     display: none;
+    }
+button.disabled {
+    opacity: 0.6;
+    pointer-events: none;
     }
 span.status {
     margin: 0 0 0 1em;
@@ -176,10 +158,8 @@ body.busy #busyOverlay {
     top: 0;
     }
 #busyOverlay > div:nth-of-type(2) {
-    background-color: #eee;
-    border: 1px solid transparent;
-    border-color: #80b3ff #80b3ff hsl(216, 100%, 75%);
-    border-radius: 3px;
+    background-color: dimgray;
+    border-radius: 1.5em;
     box-sizing: border-box;
     height: 3em;
     left: 10%;
@@ -188,10 +168,9 @@ body.busy #busyOverlay {
     width: 80%;
     }
 #busyOverlay > div:nth-of-type(2) > div:nth-of-type(1) {
-    background-color: hsl(216, 100%, 75%);
-    background-image: linear-gradient(#a8cbff, #80b3ff);
-    background-repeat: repeat-x;
+    background: dodgerblue;
     border: 0;
+    border-radius: 1.5em;
     box-sizing: border-box;
     height: 100%;
     left: 0;
@@ -202,7 +181,7 @@ body.busy #busyOverlay {
     transition:0.5s width;
     }
 #busyOverlay > div:nth-of-type(2) > div:nth-of-type(2) {
-    color: #222;
+    color: #eee;
     background-color: transparent;
     border: 0;
     box-sizing: border-box;

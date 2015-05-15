@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page.",
+    "message":"Click: disable\/enable uBlock for this site.",
     "description":"English: Click: disable\/enable uBlock for this site.\n\nCtrl+click: disable uBlock only on this page."
   },
   "popupBlockedRequestPrompt":{
