@@ -727,12 +727,12 @@ vAPI.onLoadAllCompleted = function() {
         vAPI.tabs.injectScript(tabId, {
             file: 'js/vapi-client.js',
             allFrames: true,
-            runAt: 'document_start'
+            runAt: 'document_idle'
         }, function(){ });
         vAPI.tabs.injectScript(tabId, {
             file: 'js/contentscript-start.js',
             allFrames: true,
-            runAt: 'document_start'
+            runAt: 'document_idle'
         }, function(){ scriptEnd(tabId); });
     };
     var bindToTabs = function(tabs) {
