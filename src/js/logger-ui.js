@@ -30,6 +30,15 @@
 
 /******************************************************************************/
 
+// Adjust top padding of content table, to match that of toolbar height.
+
+document.getElementById('content').style.setProperty(
+    'margin-top',
+    document.getElementById('toolbar').offsetHeight + 'px'
+);
+
+/******************************************************************************/
+
 var messager = vAPI.messaging.channel('logger-ui.js');
 var tbody = document.querySelector('#content tbody');
 var trJunkyard = [];
@@ -39,6 +48,8 @@ var lastVarDataIndex = 4; // currently, d0-d3
 var maxEntries = 5000;
 var noTabId = '';
 var allTabIds = {};
+
+var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
@@ -57,6 +68,18 @@ var timeOptions = {
 var dateOptions = {
     month: 'short',
     day: '2-digit'
+};
+
+/******************************************************************************/
+
+var classNameFromTabId = function(tabId) {
+    if ( tabId === noTabId ) {
+        return 'tab_bts';
+    }
+    if ( tabId !== '' ) {
+        return 'tab_' + tabId;
+    }
+    return '';
 };
 
 /******************************************************************************/
@@ -165,6 +188,14 @@ var createRow = function(layout) {
 
 /******************************************************************************/
 
+var createHiddenTextNode = function(text) {
+    var node = hiddenTemplate.cloneNode(true);
+    node.textContent = text;
+    return node;
+};
+
+/******************************************************************************/
+
 var createGap = function(tabId, url) {
     var tr = createRow('1');
     tr.classList.add('tab');
@@ -246,11 +277,9 @@ var renderLogEntry = function(entry) {
     tr.cells[0].title = time.toLocaleDateString('fullwide', dateOptions);
 
     if ( entry.tab ) {
-        tr.classList.add('tab');
+        tr.classList.add('tab', classNameFromTabId(entry.tab));
         if ( entry.tab === noTabId ) {
-            tr.classList.add('tab_bts');
-        } else if ( entry.tab !== '' ) {
-            tr.classList.add('tab_' + entry.tab);
+            tr.cells[1].appendChild(createHiddenTextNode('bts'));
         }
     }
     if ( entry.cat !== '' ) {
@@ -316,6 +345,78 @@ var renderLogEntries = function(response) {
 
 /******************************************************************************/
 
+var synchronizeTabIds = function(newTabIds) {
+    var oldTabIds = allTabIds;
+
+    // Neuter rows for which a tab does not exist anymore
+    // TODO: sort to avoid using indexOf
+
+    var autoDeleteVoidRows = !!vAPI.localStorage.getItem('loggerAutoDeleteVoidRows');
+    var rowVoided = false;
+    var trs;
+    for ( var tabId in oldTabIds ) {
+        if ( oldTabIds.hasOwnProperty(tabId) === false ) {
+            continue;
+        }
+        if ( newTabIds.hasOwnProperty(tabId) ) {
+            continue;
+        }
+        // Mark or remove voided rows
+        trs = uDom('.tab_' + tabId);
+        if ( autoDeleteVoidRows ) {
+            toJunkyard(trs);
+        } else {
+            trs.removeClass('canMtx');
+            rowVoided = true;
+        }
+        // Remove popup if it is currently bound to a removed tab.
+        if ( tabId === popupManager.tabId ) {
+            popupManager.toggleOff();
+        }
+    }
+
+    var select = document.getElementById('pageSelector');
+    var selectValue = select.value;
+    var tabIds = Object.keys(newTabIds).sort(function(a, b) {
+        return newTabIds[a].localeCompare(newTabIds[b]);
+    });
+    var option;
+    for ( var i = 0, j = 2; i < tabIds.length; i++ ) {
+        tabId = tabIds[i];
+        if ( tabId === noTabId ) {
+            continue;
+        }
+        option = select.options[j];
+        j += 1;
+        if ( !option ) {
+            option = document.createElement('option');
+            select.appendChild(option);
+        }
+        option.textContent = newTabIds[tabId];
+        option.value = classNameFromTabId(tabId);
+        if ( option.value === selectValue ) {
+            option.setAttribute('selected', '');
+        } else {
+            option.removeAttribute('selected');
+        }
+    }
+    while ( j < select.options.length ) {
+        select.removeChild(select.options[j]);
+    }
+    if ( select.value !== selectValue ) {
+        select.selectedIndex = 0;
+        select.value = '';
+        select.options[0].setAttribute('selected', '');
+        pageSelectorChanged();
+    }
+
+    allTabIds = newTabIds;
+
+    return rowVoided;
+};
+
+/******************************************************************************/
+
 var truncateLog = function(size) {
     if ( size === 0 ) {
         size = 5000;
@@ -343,28 +444,7 @@ var onLogBufferRead = function(response) {
 
     // Neuter rows for which a tab does not exist anymore
     // TODO: sort to avoid using indexOf
-    var autoDeleteVoidRows = vAPI.localStorage.getItem('loggerAutoDeleteVoidRows');
-    var rowVoided = false, trs;
-    for ( var tabId in allTabIds ) {
-        if ( allTabIds.hasOwnProperty(tabId) === false ) {
-            continue;
-        }
-        if ( response.tabIds.hasOwnProperty(tabId) ) {
-            continue;
-        }
-        trs = uDom('.tab_' + tabId);
-        if ( autoDeleteVoidRows ) {
-            toJunkyard(trs);
-        } else {
-            trs.removeClass('canMtx');
-            rowVoided = true;
-        }
-        if ( tabId === popupManager.tabId ) {
-            popupManager.toggleOff();
-        }
-    }
-    allTabIds = response.tabIds;
-
+    var rowVoided = synchronizeTabIds(response.tabIds);
     renderLogEntries(response);
 
     if ( rowVoided ) {
@@ -391,6 +471,41 @@ var onLogBufferRead = function(response) {
 
 var readLogBuffer = function() {
     messager.send({ what: 'readAll' }, onLogBufferRead);
+};
+
+/******************************************************************************/
+
+var pageSelectorChanged = function() {
+    var style = document.getElementById('tabFilterer');
+    var tabClass = document.getElementById('pageSelector').value;
+    var sheet = style.sheet;
+    while ( sheet.cssRules.length !== 0 )  {
+        sheet.deleteRule(0);
+    }
+    if ( tabClass !== '' ) {
+        sheet.insertRule(
+            '#content table tr:not(.' + tabClass + ') { display: none; }',
+            0
+        );
+    }
+    uDom('#refresh').toggleClass(
+        'disabled',
+        tabClass === '' || tabClass === 'tab_bts'
+    );
+};
+
+/******************************************************************************/
+
+var reloadTab = function() {
+    var tabClass = document.getElementById('pageSelector').value;
+    var matches = tabClass.match(/^tab_(.+)$/);
+    if ( matches === null ) {
+        return;
+    }
+    if ( matches[1] === 'bts' ) {
+        return;
+    }
+    messager.send({ what: 'reloadTab', tabId: matches[1] });
 };
 
 /******************************************************************************/
@@ -649,7 +764,7 @@ var popupManager = (function() {
         popupObserver = new MutationObserver(resizePopup);
         container.appendChild(popup);
 
-        style = document.querySelector('#content > style');
+        style = document.getElementById('popupFilterer');
         style.textContent = styleTemplate.replace('{{tabId}}', localTabId);
 
         document.body.classList.add('popupOn');
@@ -701,6 +816,8 @@ var popupManager = (function() {
 uDom.onLoad(function() {
     readLogBuffer();
 
+    uDom('#pageSelector').on('change', pageSelectorChanged);
+    uDom('#refresh').on('click', reloadTab);
     uDom('#compactViewToggler').on('click', toggleCompactView);
     uDom('#clean').on('click', cleanBuffer);
     uDom('#clear').on('click', clearBuffer);

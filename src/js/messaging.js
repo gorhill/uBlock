@@ -1193,11 +1193,17 @@ var onMessage = function(request, sender, callback) {
 
     switch ( request.what ) {
         case 'readAll':
-            var tabIds = {};
+            var tabIds = {}, pageStore;
+            var loggerURL = vAPI.getURL('logger-ui.html');
             for ( var tabId in µb.pageStores ) {
-                if ( µb.pageStores.hasOwnProperty(tabId) ) {
-                    tabIds[tabId] = true;
+                pageStore = µb.pageStoreFromTabId(tabId);
+                if ( pageStore === null ) {
+                    continue;
                 }
+                if ( pageStore.rawURL.lastIndexOf(loggerURL, 0) === 0 ) {
+                    continue;
+                }
+                tabIds[tabId] = pageStore.title;
             }
             response = {
                 colorBlind: µb.userSettings.colorBlindFriendly,

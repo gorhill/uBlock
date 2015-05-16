@@ -9,15 +9,25 @@
 <body class="compactView f">
 
 <div id="toolbar">
-    <span id="compactViewToggler" class="button fa"></span>
-    <span id="clean" class="button fa disabled">&#xf00d;</span>
-    <span id="clear" class="button fa disabled">&#xf12d;</span>
-    <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
-    <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+    <div>
+        <select id="pageSelector">
+            <option value="" data-i18n="logAll">
+            <option value="tab_bts" data-i18n="logBehindTheScene">
+            </select>
+        <span id="refresh" class="button disabled fa">&#xf021;</span>
+        </div>
+    <div>
+        <span id="compactViewToggler" class="button fa"></span>
+        <span id="clean" class="button fa disabled">&#xf00d;</span>
+        <span id="clear" class="button fa disabled">&#xf12d;</span>
+        <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
+        <input id="maxEntries" type="text" size="5" title="logMaxEntriesTip">
+        </div>
     </div>
 
 <div id="content">
-    <style></style>
+    <style id="tabFilterer"></style>
+    <style id="popupFilterer"></style>
     <table>
         <colgroup><col><col><col><col><col></colgroup>
         <tbody></tbody>
@@ -30,6 +40,7 @@
 
 <div style="display: none;">
     <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
+    <div id="hiddenTemplate"><span style="display:none;"></span></div>
     </div>
 
 <script src="js/vapi-common.js"></script>

@@ -295,6 +295,8 @@ PageStore.prototype.init = function(tabId) {
     var tabContext = µb.tabContextManager.lookup(tabId);
     this.tabId = tabId;
     this.tabHostname = tabContext.rootHostname;
+    this.title = tabContext.rawURL;
+    this.rawURL = tabContext.rawURL;
     this.hostnameToCountMap = {};
     this.contentLastModified = 0;
     this.frames = {};
@@ -334,6 +336,7 @@ PageStore.prototype.reuse = function(context) {
     if ( context === 'tabUpdated' ) {
         // As part of https://github.com/chrisaljoudi/uBlock/issues/405
         // URL changed, force a re-evaluation of filtering switch
+        this.rawURL = tabContext.rawURL;
         this.netFilteringReadTime = 0;
         return this;
     }
@@ -354,6 +357,9 @@ PageStore.prototype.dispose = function() {
     // need to release the memory taken by these, which can amount to
     // sizeable enough chunks (especially requests, through the request URL
     // used as a key).
+    this.tabHostname = '';
+    this.title = '';
+    this.rawURL = '';
     this.hostnameToCountMap = null;
     this.disposeFrameStores();
     this.netFilteringCache = this.netFilteringCache.dispose();

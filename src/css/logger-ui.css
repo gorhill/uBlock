@@ -7,7 +7,6 @@ body {
     margin: 0;
     overflow-x: hidden;
     padding: 0;
-    white-space: nowrap;
     width: 100%;
     }
 #toolbar {
@@ -16,7 +15,7 @@ body {
     box-sizing: border-box;
     left: 0;
     margin: 0;
-    padding: 0 1em;
+    padding: 0.5em 1em;
     position: fixed;
     top: 0;
     width: 100%;
@@ -28,7 +27,7 @@ body {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    font-size: 20px;
+    font-size: 150%;
     margin: 0;
     padding: 8px;
     }
@@ -38,6 +37,19 @@ body {
     }
 #toolbar .button:hover {
     background-color: #eee;
+    }
+#toolbar > div {
+    white-space: nowrap;
+    }
+#toolbar > div:first-of-type {
+    font-size: 120%;
+    }
+#toolbar > div > * {
+    vertical-align: middle;
+    }
+#pageSelector {
+    width: 28em;
+    padding: 0.2em 0;
     }
 body #compactViewToggler.button:before {
     content: '\f102';
@@ -55,14 +67,13 @@ body.f #filterButton {
     background-color: #fee;
     }
 #maxEntries {
-    margin-left: 3em;
+    margin: 0 2em;
     }
 input:focus {
     background-color: #ffe;
     }
 #content {
     font: 13px sans-serif;
-    margin-top: 3.5em;
     width: 100%;
     }
 

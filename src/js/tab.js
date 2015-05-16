@@ -510,9 +510,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    if ( vAPI.isBehindTheSceneTabId(tabId) === false ) {
-        this.updateBadgeAsync(tabId);
-    }
+    this.updateBadgeAsync(tabId);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
@@ -539,6 +537,8 @@ vAPI.tabs.registerListeners();
     if ( context === 'beforeRequest' ) {
         return pageStore;
     }
+
+    this.updateTitle(tabId);
 
     // Rebind according to context. We rebind even if the URL did not change,
     // as maybe the tab was force-reloaded, in which case the page stats must
@@ -570,8 +570,65 @@ vAPI.tabs.registerListeners();
 // Permanent page store for behind-the-scene requests. Must never be removed.
 
 µb.pageStores[vAPI.noTabId] = µb.PageStore.factory(vAPI.noTabId);
+µb.pageStores[vAPI.noTabId].title = vAPI.i18n('logBehindTheScene');
 
 /******************************************************************************/
+
+µb.updateTitle = (function() {
+    var tabIdToTimer = Object.create(null);
+    var tabIdToTryCount = Object.create(null);
+    var delay = 499;
+
+    var tryNoMore = function(tabId) {
+        delete tabIdToTryCount[tabId];
+    };
+
+    var tryAgain = function(tabId) {
+        var count = tabIdToTryCount[tabId];
+        if ( count === undefined ) {
+            return false;
+        }
+        if ( count === 1 ) {
+            delete tabIdToTryCount[tabId];
+            return false;
+        }
+        tabIdToTryCount[tabId] = count - 1;
+        tabIdToTimer[tabId] = setTimeout(updateTitle.bind(µb, tabId), delay);
+        return true;
+    };
+
+    var onTabReady = function(tabId, tab) {
+        if ( !tab ) {
+            return tryNoMore(tabId);
+        }
+        var pageStore = this.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) {
+            return tryNoMore(tabId);
+        }
+        if ( !tab.title && tryAgain(tabId) ) {
+            return;
+        }
+        tryNoMore(tabId);
+        pageStore.title = tab.title || tab.url || '';
+    };
+
+    var updateTitle = function(tabId) {
+        delete tabIdToTimer[tabId];
+        vAPI.tabs.get(tabId, onTabReady.bind(this, tabId));
+    };
+
+    return function(tabId) {
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+            return;
+        }
+        if ( tabIdToTimer[tabId] ) {
+            clearTimeout(tabIdToTimer[tabId]);
+        }
+        tabIdToTimer[tabId] = setTimeout(updateTitle.bind(this, tabId), delay);
+        tabIdToTryCount[tabId] = 5;
+    };
+})();
+
 /******************************************************************************/
 
 // Stale page store entries janitor
@@ -612,7 +669,6 @@ var pageStoreJanitor = function() {
 
 setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
 
-/******************************************************************************/
 /******************************************************************************/
 
 })();
