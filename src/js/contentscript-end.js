@@ -43,7 +43,7 @@ if ( window.location === null ) {
 }
 
 // This can happen
-if ( !vAPI ) {
+if ( typeof vAPI !== 'object' ) {
     //console.debug('contentscript-end.js > vAPI not found');
     return;
 }
