@@ -284,8 +284,12 @@ const contentObserver = {
         let lss = Services.scriptloader.loadSubScript;
         let sandbox = this.initContentScripts(win, true);
 
-        lss(this.contentBaseURI + 'vapi-client.js', sandbox);
-        lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
+        try {
+            lss(this.contentBaseURI + 'vapi-client.js', sandbox);
+            lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
+        } catch (ex) {
+            return;
+        }
 
         let docReady = (e) => {
             let doc = e.target;
@@ -328,7 +332,7 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
     if ( !webProgress.isTopLevel ) {
         return;
     }
-    
+
     this.messageManager.sendAsyncMessage(locationChangedMessageName, {
         url: location.asciiSpec,
         flags: flags,
