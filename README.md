@@ -25,6 +25,7 @@
 * [Getting Started & Installation](#getting-started)
 * [Performance & Benchmarks](#performance)
 * [Tips](#tips)
+* [FAQ](https://chrismatic.io/ublock/faq/)
 * [About](#about-ublock)
 
 ## Getting started
