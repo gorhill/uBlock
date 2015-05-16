@@ -13,6 +13,8 @@
     vertical-align: baseline;
     }
 body {
+    background-color: white;
+    color: black;
     font: 14px/1.3 sans-serif;
     }
 .hiddenFileInput {
