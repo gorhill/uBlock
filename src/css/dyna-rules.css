@@ -143,6 +143,7 @@ body[dir="rtl"] #commitButton:before {
 #diff textarea {
     background-color: #f8f8ff;
     border: 0;
+    color: black;
     margin: 0;
     border-top: 1px solid #eee;
     direction: ltr;
