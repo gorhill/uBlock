@@ -176,7 +176,7 @@ var rulesFromHTML = function(selector) {
             rules.push(li.text());
         }
     }
-    return rules.join('\n');
+    return rules.join('\n').trim();
 };
 
 /******************************************************************************/
