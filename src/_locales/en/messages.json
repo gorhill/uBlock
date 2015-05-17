@@ -328,8 +328,8 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "List of your dynamic filtering rules.",
-    "description": "English: List of your dynamic filtering rules."
+    "message": "<b>This is only relevant if you have Advanced User mode enabled.</b><br><br>List of your dynamic filtering rules.",
+    "description": "English: This is only relevant if you have Advanced User mode enabled. List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
     "message": "Rule syntax: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/chrisaljoudi\/uBlock\/wiki\/Dynamic-filtering'>full documentation<\/a>).",
