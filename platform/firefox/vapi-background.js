@@ -1209,7 +1209,7 @@ var httpObserver = {
             // Carry data for behind-the-scene redirects
             channel.setProperty(
                 this.REQDATAKEY,
-                [lastRequest.type, vAPI.noTabId, null, 0, -1]
+                [0, -1, null, vAPI.noTabId, lastRequest.type]
             );
             return;
         }
