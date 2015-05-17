@@ -962,7 +962,8 @@ var httpObserver = {
     REQDATAKEY: location.host + 'reqdata',
     ABORT: Components.results.NS_BINDING_ABORTED,
     ACCEPT: Components.results.NS_SUCCEEDED,
-    // Request types: https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIContentPolicy#Constants
+    // Request types:
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIContentPolicy#Constants
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
     VALID_CSP_TARGETS: 1 << Ci.nsIContentPolicy.TYPE_DOCUMENT |
                        1 << Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
@@ -979,7 +980,6 @@ var httpObserver = {
         14: 'font',
         21: 'image'
     },
-    lastRequest: [{}, {}],
 
     get componentRegistrar() {
         return Components.manager.QueryInterface(Ci.nsIComponentRegistrar);
@@ -1010,6 +1010,8 @@ var httpObserver = {
     },
 
     register: function() {
+        this.pendingRingBufferInit();
+
         Services.obs.addObserver(this, 'http-on-opening-request', true);
         Services.obs.addObserver(this, 'http-on-examine-response', true);
 
@@ -1049,6 +1051,79 @@ var httpObserver = {
         );
     },
 
+    PendingRequest: function() {
+        this.frameId = 0;
+        this.parentFrameId = 0;
+        this.rawtype = 0;
+        this.sourceTabId = null;
+        this.tabId = 0;
+        this._key = ''; // key is url, from URI.spec
+    },
+    // If all work fine, this map should not grow indefinitely. It can have
+    // stale items in it, but these will be taken care of when entries in
+    // the ring buffer are overwritten.
+    pendingURLToIndex: new Map(),
+    pendingWritePointer: 0,
+    pendingRingBuffer: new Array(32),
+    pendingRingBufferInit: function() {
+        // Use and reuse pre-allocated PendingRequest objects = less memory
+        // churning.
+        var i = this.pendingRingBuffer.length;
+        while ( i-- ) {
+            this.pendingRingBuffer[i] = new this.PendingRequest();
+        }
+    },
+    createPendingRequest: function(url) {
+        var bucket;
+        var i = this.pendingWritePointer;
+        this.pendingWritePointer = i + 1 & 31;
+        var preq = this.pendingRingBuffer[i];
+        // Cleanup unserviced pending request
+        if ( preq._key !== '' ) {
+            bucket = this.pendingURLToIndex.get(preq._key);
+            if ( Array.isArray(bucket) ) {
+                // Assuming i in array
+                var pos = bucket.indexOf(i);
+                bucket.splice(pos, 1);
+                if ( bucket.length === 1 ) {
+                    this.pendingURLToIndex.set(preq._key, bucket[0]);
+                }
+            } else if ( typeof bucket === 'number' ) {
+                // Assuming bucket === i
+                this.pendingURLToIndex.delete(preq._key);
+            }
+        }
+        // Would be much simpler if a url could not appear more than once.
+        bucket = this.pendingURLToIndex.get(url);
+        if ( bucket === undefined ) {
+            this.pendingURLToIndex.set(url, i);
+        } else if ( Array.isArray(bucket) ) {
+            bucket = bucket.push(i);
+        } else {
+            bucket = [bucket, i];
+        }
+        preq._key = url;
+        return preq;
+    },
+    lookupPendingRequest: function(url) {
+        var i = this.pendingURLToIndex.get(url);
+        if ( i === undefined ) {
+            return null;
+        }
+        if ( Array.isArray(i) ) {
+            var bucket = i;
+            i = bucket.shift();
+            if ( bucket.length === 1 ) {
+                this.pendingURLToIndex.set(url, bucket[0]);
+            }
+        } else {
+            this.pendingURLToIndex.delete(url);
+        }
+        var preq = this.pendingRingBuffer[i];
+        preq._key = ''; // mark as "serviced"
+        return preq;
+    },
+
     handlePopup: function(URI, tabId, sourceTabId) {
         if ( !sourceTabId ) {
             return false;
@@ -1069,7 +1144,7 @@ var httpObserver = {
 
     handleRequest: function(channel, URI, details) {
         var onBeforeRequest = vAPI.net.onBeforeRequest;
-        var type = this.typeMap[details.type] || 'other';
+        var type = this.typeMap[details.rawtype] || 'other';
 
         if ( onBeforeRequest.types && onBeforeRequest.types.has(type) === false ) {
             return false;
@@ -1092,14 +1167,6 @@ var httpObserver = {
             channel.cancel(this.ABORT);
             return true;
         }
-
-        /*if ( result.redirectUrl ) {
-            channel.redirectionLimit = 1;
-            channel.redirectTo(
-                Services.io.newURI(result.redirectUrl, null, null)
-            );
-            return true;
-        }*/
 
         return false;
     },
@@ -1160,55 +1227,37 @@ var httpObserver = {
 
         // http-on-opening-request
 
-        var lastRequest = this.lastRequest[0];
+        //console.log('http-on-opening-request:', URI.spec);
 
-        if ( lastRequest.url !== URI.spec ) {
-            if ( this.lastRequest[1].url === URI.spec ) {
-                lastRequest = this.lastRequest[1];
-            } else {
-                lastRequest.url = null;
-            }
-        }
+        var pendingRequest = this.lookupPendingRequest(URI.spec);
 
-        if ( lastRequest.url === null ) {
-            lastRequest.type = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
-            result = this.handleRequest(channel, URI, {
-                tabId: vAPI.noTabId,
-                type: lastRequest.type
-            });
-
-            if ( result === true ) {
-                return;
-            }
-
-            if ( channel instanceof Ci.nsIWritablePropertyBag === false ) {
+        // Behind-the-scene request
+        if ( pendingRequest === null ) {
+            var rawtype = channel.loadInfo && channel.loadInfo.contentPolicyType || 1;
+            if ( this.handleRequest(channel, URI, { tabId: vAPI.noTabId, rawtype: rawtype }) ) {
                 return;
             }
 
             // Carry data for behind-the-scene redirects
-            channel.setProperty(
-                this.REQDATAKEY,
-                [lastRequest.type, vAPI.noTabId, null, 0, -1]
-            );
+            if ( channel instanceof Ci.nsIWritablePropertyBag ) {
+                channel.setProperty( this.REQDATAKEY, [0, -1, null, vAPI.noTabId, rawtype]);
+            }
+
             return;
         }
 
-        // Important! When loading file via XHR for mirroring,
-        // the URL will be the same, so it could fall into an infinite loop
-        lastRequest.url = null;
-
-        if ( this.handleRequest(channel, URI, lastRequest) ) {
+        if ( this.handleRequest(channel, URI, pendingRequest) ) {
             return;
         }
 
         // If request is not handled we may use the data in on-modify-request
         if ( channel instanceof Ci.nsIWritablePropertyBag ) {
             channel.setProperty(this.REQDATAKEY, [
-                lastRequest.frameId,
-                lastRequest.parentFrameId,
-                lastRequest.sourceTabId,
-                lastRequest.tabId,
-                lastRequest.type
+                pendingRequest.frameId,
+                pendingRequest.parentFrameId,
+                pendingRequest.sourceTabId,
+                pendingRequest.tabId,
+                pendingRequest.rawtype
             ]);
         }
     },
@@ -1240,7 +1289,7 @@ var httpObserver = {
                 frameId: channelData[0],
                 parentFrameId: channelData[1],
                 tabId: channelData[3],
-                type: channelData[4]
+                rawtype: channelData[4]
             };
 
             if ( this.handleRequest(newChannel, URI, details) ) {
@@ -1276,6 +1325,10 @@ vAPI.net.registerListeners = function() {
 
     var shouldLoadListenerMessageName = location.host + ':shouldLoad';
     var shouldLoadListener = function(e) {
+        // Non blocking: it is assumed that the http observer is fired after
+        // shouldLoad recorded the pending requests. If this is not the case,
+        // a request would end up being categorized as a behind-the-scene
+        // requests.
         var details = e.data;
         var tabId = vAPI.tabs.getTabId(e.target);
         var sourceTabId = null;
@@ -1307,16 +1360,14 @@ vAPI.net.registerListeners = function() {
             }
         }
 
-        var lastRequest = httpObserver.lastRequest;
-        lastRequest[1] = lastRequest[0];
-        lastRequest[0] = {
-            frameId: details.frameId,
-            parentFrameId: details.parentFrameId,
-            sourceTabId: sourceTabId,
-            tabId: tabId,
-            type: details.type,
-            url: details.url
-        };
+        //console.log('shouldLoadListener:', details.url);
+
+        var pendingReq = httpObserver.createPendingRequest(details.url);
+        pendingReq.frameId = details.frameId;
+        pendingReq.parentFrameId = details.parentFrameId;
+        pendingReq.rawtype = details.rawtype;
+        pendingReq.sourceTabId = sourceTabId;
+        pendingReq.tabId = tabId;
     };
 
     vAPI.messaging.globalMessageManager.addMessageListener(

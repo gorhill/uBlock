@@ -195,7 +195,7 @@ window.addEventListener('pageshow', vAPI.messaging.toggleListener, true);
 // we are not a top window (because element picker can still
 // be injected in top window).
 if ( window !== window.top ) {
-	// Can anything be done?
+    // Can anything be done?
 }
 
 /******************************************************************************/

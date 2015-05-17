@@ -53,6 +53,7 @@ const contentObserver = {
     contractID: '@' + hostName + '/content-policy;1',
     ACCEPT: Ci.nsIContentPolicy.ACCEPT,
     MAIN_FRAME: Ci.nsIContentPolicy.TYPE_DOCUMENT,
+    SUB_FRAME: Ci.nsIContentPolicy.TYPE_SUBDOCUMENT,
     contentBaseURI: 'chrome://' + hostName + '/content/js/',
     cpMessageName: hostName + ':shouldLoad',
     ignoredPopups: new WeakMap(),
@@ -132,12 +133,14 @@ const contentObserver = {
 
         if ( type === this.MAIN_FRAME ) {
             context = context.contentWindow || context;
-
-            if ( context.opener && context.opener !== context
-                && this.ignoredPopups.has(context) === false ) {
+            if (
+                context.opener &&
+                context.opener !== context &&
+                this.ignoredPopups.has(context) === false
+            ) {
                 openerURL = context.opener.location.href;
             }
-        } else if ( type === 7 ) { // SUB_DOCUMENT
+        } else if ( type === this.SUB_FRAME ) {
             context = context.contentWindow;
         } else {
             context = (context.ownerDocument || context).defaultView;
@@ -151,7 +154,6 @@ const contentObserver = {
 
         let isTopLevel = context === context.top;
         let parentFrameId;
-
         if ( isTopLevel ) {
             parentFrameId = -1;
         } else if ( context.parent === context.top ) {
@@ -165,7 +167,7 @@ const contentObserver = {
             frameId: isTopLevel ? 0 : this.getFrameId(context),
             openerURL: openerURL,
             parentFrameId: parentFrameId,
-            type: type,
+            rawtype: type,
             url: location.spec
         };
 
