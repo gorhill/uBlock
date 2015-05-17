@@ -46,6 +46,10 @@ vAPI.chrome = true;
 
 /******************************************************************************/
 
+vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+
+/******************************************************************************/
+
 vAPI.shutdown = (function() {
     var jobs = [];
 

@@ -38,6 +38,12 @@ vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
 
 /******************************************************************************/
 
+vAPI.setTimeout = vAPI.setTimeout || function(callback, delay) {
+    setTimeout(function() { callback(); }, delay);
+};
+
+/******************************************************************************/
+
 vAPI.shutdown = (function() {
     var jobs = [];
 

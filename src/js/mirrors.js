@@ -332,7 +332,7 @@ var updateMetadataNow = function() {
 
 var updateMetadataAsync = function() {
     if ( metadataPersistTimer === null ) {
-        metadataPersistTimer = setTimeout(updateMetadata, 60 * 1000);
+        metadataPersistTimer = vAPI.setTimeout(updateMetadata, 60 * 1000);
     }
 };
 

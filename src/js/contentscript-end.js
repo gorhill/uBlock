@@ -206,7 +206,7 @@ var uBlockCollapser = (function() {
             clearTimeout(timer);
             send();
         } else if ( timer === null ) {
-            timer = setTimeout(send, delay || 20);
+            timer = vAPI.setTimeout(send, delay || 20);
         }
     };
 
@@ -599,7 +599,7 @@ var uBlockCollapser = (function() {
         if ( processHighHighGenericsTimer !== null ) {
             clearTimeout(processHighHighGenericsTimer);
         }
-        processHighHighGenericsTimer = setTimeout(processHighHighGenerics, 300);
+        processHighHighGenericsTimer = vAPI.setTimeout(processHighHighGenerics, 300);
     };
 
     // Extract all ids: these will be passed to the cosmetic filtering
@@ -739,7 +739,7 @@ var uBlockCollapser = (function() {
             // I arbitrarily chose 100 ms for now:
             // I have to compromise between the overhead of processing too few
             // nodes too often and the delay of many nodes less often.
-            addedNodeListsTimer = setTimeout(treeMutationObservedHandler, 100);
+            addedNodeListsTimer = vAPI.setTimeout(treeMutationObservedHandler, 100);
         }
     };
 

@@ -165,7 +165,7 @@ housekeep itself.
 
     TabContext.prototype.onTab = function(tab) {
         if ( tab ) {
-            this.timer = setTimeout(this.onTimerCallback, gcPeriod);
+            this.timer = vAPI.setTimeout(this.onTimerCallback, gcPeriod);
         } else {
             this.destroy();
         }
@@ -188,7 +188,7 @@ housekeep itself.
         }
         this.onTabCallback = this.onTab.bind(this);
         this.onTimerCallback = this.onTimer.bind(this);
-        this.timer = setTimeout(this.onTimerCallback, gcPeriod);
+        this.timer = vAPI.setTimeout(this.onTimerCallback, gcPeriod);
     };
 
     // Update just force all properties to be updated to match the most current
@@ -593,7 +593,7 @@ vAPI.tabs.registerListeners();
             return false;
         }
         tabIdToTryCount[tabId] = count - 1;
-        tabIdToTimer[tabId] = setTimeout(updateTitle.bind(µb, tabId), delay);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateTitle.bind(µb, tabId), delay);
         return true;
     };
 
@@ -624,7 +624,7 @@ vAPI.tabs.registerListeners();
         if ( tabIdToTimer[tabId] ) {
             clearTimeout(tabIdToTimer[tabId]);
         }
-        tabIdToTimer[tabId] = setTimeout(updateTitle.bind(this, tabId), delay);
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateTitle.bind(this, tabId), delay);
         tabIdToTryCount[tabId] = 5;
     };
 })();
@@ -664,10 +664,10 @@ var pageStoreJanitor = function() {
     }
     pageStoreJanitorSampleAt = n;
 
-    setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
+    vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
 };
 
-setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
+vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
 
 /******************************************************************************/
 

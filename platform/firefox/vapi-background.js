@@ -747,7 +747,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     );
 
     if ( typeof callback === 'function' ) {
-        setTimeout(callback, 13);
+        vAPI.setTimeout(callback, 13);
     }
 };
 
@@ -1568,7 +1568,7 @@ vAPI.toolbarButton.init = function() {
             }
 
             // Anonymous elements need some time to be reachable
-            setTimeout(this.updateBadgeStyle, 250);
+            vAPI.setTimeout(this.updateBadgeStyle, 250);
         }.bind(this.CUIEvents);
 
         // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/CustomizableUI.jsm#Listeners
@@ -1602,7 +1602,7 @@ vAPI.toolbarButton.init = function() {
 
         this.onCreated = function(button) {
             button.setAttribute('badge', '');
-            setTimeout(updateBadge, 250);
+            vAPI.setTimeout(updateBadge, 250);
         };
 
         CustomizableUI.addListener(this.CUIEvents);
@@ -1668,7 +1668,7 @@ vAPI.toolbarButton.onBeforeCreated = function(doc) {
             return;
         }
 
-        updateTimer = setTimeout(resizePopup, 10);
+        updateTimer = vAPI.setTimeout(resizePopup, 10);
     };
     var resizePopup = function() {
         updateTimer = null;

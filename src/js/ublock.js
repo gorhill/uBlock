@@ -372,7 +372,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         if ( tabIdToTimerMap.hasOwnProperty(tabId) ) {
             return;
         }
-        tabIdToTimerMap[tabId] = setTimeout(
+        tabIdToTimerMap[tabId] = vAPI.setTimeout(
             injectNow.bind(null, tabId),
             100
         );

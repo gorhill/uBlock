@@ -200,7 +200,7 @@ NetFilteringResultCache.prototype.prune = function() {
 
 NetFilteringResultCache.prototype.pruneAsync = function() {
     if ( this.timer === null ) {
-        this.timer = setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
+        this.timer = vAPI.setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
     }
 };
 

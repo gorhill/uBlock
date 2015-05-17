@@ -744,7 +744,7 @@ var pollForContentChange = (function() {
         if ( pollTimer !== null ) {
             return;
         }
-        pollTimer = setTimeout(pollCallback, 1500);
+        pollTimer = vAPI.setTimeout(pollCallback, 1500);
     };
 
     return poll;

@@ -36,7 +36,13 @@ const {Services} = Components.utils.import(
     null
 );
 
-self.vAPI = self.vAPI || {};
+var vAPI = self.vAPI = self.vAPI || {};
+
+/******************************************************************************/
+
+vAPI.setTimeout = vAPI.setTimeout || function(callback, delay) {
+    setTimeout(function() { callback(); }, delay);
+};
 
 /******************************************************************************/
 

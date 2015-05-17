@@ -164,7 +164,7 @@ var janitor = function() {
         logBuffer = logBuffer.dispose();
     }
     if ( logBuffer !== null ) {
-        setTimeout(janitor, logBufferObsoleteAfter);
+        vAPI.setTimeout(janitor, logBufferObsoleteAfter);
     }
 };
 
@@ -181,7 +181,7 @@ var writeOne = function() {
 var readAll = function() {
     if ( logBuffer === null ) {
         logBuffer = new LogBuffer();
-        setTimeout(janitor, logBufferObsoleteAfter);
+        vAPI.setTimeout(janitor, logBufferObsoleteAfter);
     }
     return logBuffer.readAll();
 };

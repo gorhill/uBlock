@@ -460,7 +460,7 @@ var onLogBufferRead = function(response) {
         tbody.querySelector('tr') === null
     );
 
-    setTimeout(readLogBuffer, 1200);
+    vAPI.setTimeout(readLogBuffer, 1200);
 };
 
 /******************************************************************************/
@@ -640,7 +640,7 @@ var rowFilterer = (function() {
             if ( timer !== null ) {
                 clearTimeout(timer);
             }
-            timer = setTimeout(commit, 750);
+            timer = vAPI.setTimeout(commit, 750);
         };
     })();
 

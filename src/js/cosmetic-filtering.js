@@ -1012,7 +1012,7 @@ FilterContainer.prototype.triggerSelectorCachePruner = function() {
     }
     // Of interest: http://fitzgeraldnick.com/weblog/40/
     // http://googlecode.blogspot.ca/2009/07/gmail-for-mobile-html5-series-using.html
-    this.selectorCacheTimer = setTimeout(
+    this.selectorCacheTimer = vAPI.setTimeout(
         this.pruneSelectorCacheAsync.bind(this),
         this.selectorCachePruneDelay
     );
