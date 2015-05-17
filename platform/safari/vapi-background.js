@@ -181,15 +181,16 @@
                 }
                 toSatisfy++;
             }
+            var callbackCaller = function() {
+                if (--toSatisfy === 0) {
+                    callback && callback();
+                }
+            };
             for(var key in details) {
                 if(!details.hasOwnProperty(key)) {
                     continue;
                 }
-                localforage.setItem(key, JSON.stringify(details[key]), function() {
-                    if(--toSatisfy === 0) {
-                        callback && callback();
-                    }
-                });
+                localforage.setItem(key, JSON.stringify(details[key]), callbackCaller);
             }
         },
 
