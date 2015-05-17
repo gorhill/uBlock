@@ -31,7 +31,7 @@ const {XPCOMUtils} = Cu.import('resource://gre/modules/XPCOMUtils.jsm', null);
 
 const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 
-// Cu.import('resource://gre/modules/devtools/Console.jsm');
+//Cu.import('resource://gre/modules/devtools/Console.jsm');
 
 /******************************************************************************/
 
@@ -316,19 +316,25 @@ const contentObserver = {
 const locationChangedMessageName = hostName + ':locationChanged';
 
 const LocationChangeListener = function(docShell) {
-    if (docShell) {
-        docShell.QueryInterface(Ci.nsIInterfaceRequestor);
+    if ( !docShell ) {
+        return;
+    }
 
-        this.docShell = docShell.getInterface(Ci.nsIWebProgress);
-        this.messageManager = docShell.getInterface(Ci.nsIContentFrameMessageManager);
+    var requestor = docShell.QueryInterface(Ci.nsIInterfaceRequestor);
+    var ds = requestor.getInterface(Ci.nsIWebProgress);
+    var mm = requestor.getInterface(Ci.nsIContentFrameMessageManager);
 
-        if (this.messageManager && typeof this.messageManager.sendAsyncMessage === 'function') {
-            this.docShell.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
-        }
+    if ( ds && mm && typeof mm.sendAsyncMessage === 'function' ) {
+        this.docShell = ds;
+        this.messageManager = mm;
+        ds.addProgressListener(this, Ci.nsIWebProgress.NOTIFY_LOCATION);
     }
 };
 
-LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI(["nsIWebProgressListener", "nsISupportsWeakReference"]);
+LocationChangeListener.prototype.QueryInterface = XPCOMUtils.generateQI([
+    'nsIWebProgressListener',
+    'nsISupportsWeakReference'
+]);
 
 LocationChangeListener.prototype.onLocationChange = function(webProgress, request, location, flags) {
     if ( !webProgress.isTopLevel ) {
