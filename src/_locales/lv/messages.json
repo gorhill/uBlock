@@ -403,6 +403,10 @@
     "message":"Šai lapai nav reģistrēti nebloķētie pieprasījumi",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Viss",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Aizkulisēs",
     "description":"Pretty name for behind-the-scene network requests"

@@ -403,6 +403,10 @@
     "message":"Nema neblokiranih zahtjeva zapisanih za ovu stranicu",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Sve",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Iza scene",
     "description":"Pretty name for behind-the-scene network requests"

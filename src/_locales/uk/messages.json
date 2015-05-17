@@ -403,6 +403,10 @@
     "message":"На цій сторінці блокуються всі запити",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Все",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"За лаштунками",
     "description":"Pretty name for behind-the-scene network requests"

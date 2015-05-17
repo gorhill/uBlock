@@ -403,6 +403,10 @@
     "message":"Voor deze pagina zijn geen toegelaten verzoeken gelogd",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Alles",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Achter de schermen",
     "description":"Pretty name for behind-the-scene network requests"

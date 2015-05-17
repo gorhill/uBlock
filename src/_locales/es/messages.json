@@ -403,6 +403,10 @@
     "message":"No hay peticiones no bloqueadas registradas para esta página",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Todas",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Peticiones ocultas",
     "description":"Pretty name for behind-the-scene network requests"

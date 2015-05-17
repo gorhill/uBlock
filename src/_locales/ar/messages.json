@@ -403,6 +403,10 @@
     "message":"لا يوجد اي طلب غير ممنوع في هذي الصفحه.",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"كل",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"خلف الكواليس",
     "description":"Pretty name for behind-the-scene network requests"

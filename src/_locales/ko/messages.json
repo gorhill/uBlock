@@ -336,7 +336,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"당신의 동적 필터링 규칙 목록입니다.",
+    "message":"동적 필터링 규칙 목록입니다.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -344,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"당신의 목록에 있는 호스트들은 uBlock₀에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
+    "message":"목록에 있는 호스트들은 uBlock₀에서 비활성화됩니다. 한 줄에 한 개씩 입력하세요. 존재하지 않는 호스트는 자동으로 무시됩니다.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -403,6 +403,10 @@
     "message":"이 페이지에 차단되지 않은 요청 로그가 없음",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"전체",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"숨겨진 구성 요소",
     "description":"Pretty name for behind-the-scene network requests"
@@ -448,7 +452,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"모든 당신의 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock₀이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
+    "message":"모든 설정은 {{time}}에 백업된 데이터에 덮어씌워지며, uBlock₀이 재시작됩니다.\n\n모든 존재하는 설정을 백업 데이터로 덮어씌우시겠습니까?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -456,7 +460,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"당신의 모든 설정이 제거되며, uBlock₀이 재시작됩니다.\n\nuBlock₀의 설정을 처음 설정으로 초기화하시겠습니까?",
+    "message":"모든 설정이 제거되며, uBlock₀이 재시작됩니다.\n\nuBlock₀의 설정을 처음 설정으로 초기화하시겠습니까?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

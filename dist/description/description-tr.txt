@@ -14,7 +14,7 @@ Hazır olarak şu filtre listeleri yüklenmiştir ve uygulanır:
 - EasyList
 - Peter Lowe'un reklam sunucu listesi
 - EasyPrivacy
-- Malware domains
+- Zararlı alan adları
 
 İsterseniz seçebileceğiniz daha fazla liste var:
 

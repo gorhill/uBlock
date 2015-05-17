@@ -403,6 +403,10 @@
     "message":"Për këtë faqe nuk raportohet asnjë kërkesë e pabllokuar",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"All",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Në prapaskenë",
     "description":"Pretty name for behind-the-scene network requests"

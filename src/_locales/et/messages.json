@@ -403,6 +403,10 @@
     "message":"Sellel lehel pole logitud ühtegi blokeerimata päringut",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Kõik",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Telgitagus",
     "description":"Pretty name for behind-the-scene network requests"

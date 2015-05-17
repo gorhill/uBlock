@@ -403,6 +403,10 @@
     "message":"このページでブロックされたリクエストは在りません",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"All",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"バックグラウンド通信",
     "description":"Pretty name for behind-the-scene network requests"

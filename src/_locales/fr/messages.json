@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Voici un bloqueur de nuisances efficace, qui ne sollicitera pas outre mesure votre processeur et votre mémoire vive.",
+    "message":"Un bloqueur de nuisances efficace, qui ménagera votre processeur et votre mémoire vive.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -24,7 +24,7 @@
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"Mes règles",
+    "message":"Mon filtrage dynamique",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
@@ -168,7 +168,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Je suis un utilisateur expérimenté (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>)",
+    "message":"Activer le mode pour personnes expérimentées (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>, page en Anglais)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -176,7 +176,7 @@
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Stockage utilisé : {{value}} octet(s)",
+    "message":"Espace de stockage utilisé : {{value}} octet(s)",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -188,7 +188,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} filtre(s) réseau et {{cosmeticFilterCount}} filtre(s) esthétique(s) actuellement en action :",
+    "message":"{{netFilterCount}} filtre(s) réseau et {{cosmeticFilterCount}} filtre(s) esthétique(s) sont actuellement en vigueur :",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -196,7 +196,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Mise à jour automatique des listes de filtres",
+    "message":"Mettre à jour les listes de filtres sélectionnées automatiquement",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -288,7 +288,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"mes-filtres-personnalises-ublock-{{datetime}}.txt",
+    "message":"mes-filtres-statiques-ublock_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -332,7 +332,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"mes-regles-dynamiques-ublock-{{datetime}}.txt",
+    "message":"mes-regles-de-filtrage-dynamique-ublock_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -340,11 +340,11 @@
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"Syntaxe des règles : <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>Documentation complète en Anglais<\/a>)",
+    "message":"Syntaxe : <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>Documentation complète en Anglais<\/a>)",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Ici se trouve votre liste d'hôtes à autoriser. Un nom d'hôte par ligne. Les noms d'hôte invalides seront ignorés et vous n'en serez pas averti(e).",
+    "message":"Renseignez ici votre liste d'hôtes à autoriser. Un nom d'hôte par ligne. Les noms d'hôte invalides seront ignorés et vous n'en serez pas averti(e).",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -368,7 +368,7 @@
     "description":"English: Enable the logging of network requests"
   },
   "logNetRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock Origin. Puisque bon nombre d'utilisateurs n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
+    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock Origin. Puisque bon nombre de gens n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
     "description":"English: see _locales\/en\/messages.log"
   },
   "logBlockedRequestsHeader":{
@@ -403,6 +403,10 @@
     "message":"Aucune requête non-bloquée sur cette page n'a été consignée dans le journal",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Tout",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Requêtes en coulisses",
     "description":"Pretty name for behind-the-scene network requests"
@@ -436,7 +440,7 @@
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ma-sauvegarde-des-donnees-ublock-{{datetime}}.txt",
+    "message":"mes-donnees-ublock_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{

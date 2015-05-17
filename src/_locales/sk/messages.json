@@ -403,6 +403,10 @@
     "message":"Žiadne nezablokované požiadavky pre túto stránku",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Všetky",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Za oponou",
     "description":"Pretty name for behind-the-scene network requests"

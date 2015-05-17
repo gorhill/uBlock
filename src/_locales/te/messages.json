@@ -403,6 +403,10 @@
     "message":"ఈ వెబ్ పేజి నుండి అనుమతించబడిన అభ్యర్దనలు వున్నట్టు చిట్టాలొ దాఖలాలు లేవు",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"All",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"తేర వెనుక",
     "description":"Pretty name for behind-the-scene network requests"

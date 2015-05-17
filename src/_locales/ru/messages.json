@@ -403,6 +403,10 @@
     "message":"Нет незаблокированных запросов на этой странице",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Все",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"За кулисами",
     "description":"Pretty name for behind-the-scene network requests"

@@ -403,6 +403,10 @@
     "message":"Nėra registruota neblokuotų užklausų šiame puslapyje",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Visos",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Užkulisiai",
     "description":"Pretty name for behind-the-scene network requests"

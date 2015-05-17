@@ -403,6 +403,10 @@
     "message":"该页面没有未拦截记录",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"全部",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"后台",
     "description":"Pretty name for behind-the-scene network requests"

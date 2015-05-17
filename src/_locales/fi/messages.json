@@ -76,7 +76,7 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Aktivoi popuppien estäminen tälle sivulle",
+    "message":"Aktivoi pop-uppien estäminen tälle sivulle",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
@@ -402,6 +402,10 @@
   "logAllowedRequestsEmpty":{
     "message":"Ei ei-estettyjä pyyntöjä havaittu tällä sivulla",
     "description":"English: No non-blocked requests logged for this page"
+  },
+  "logAll":{
+    "message":"Kaikki",
+    "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
     "message":"Kulissien takana",

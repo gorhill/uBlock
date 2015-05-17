@@ -403,6 +403,10 @@
     "message":"Δεν καταγράφηκαν μη-αποκλεισμένα αιτήματα για αυτήν τη σελίδα",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"All",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Παρασκήνιο",
     "description":"Pretty name for behind-the-scene network requests"

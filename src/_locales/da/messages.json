@@ -403,6 +403,10 @@
     "message":"Ingen ikke-blokerede forespørgsler fra denne side er blevet logget",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"All",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Bag kulisserne",
     "description":"Pretty name for behind-the-scene network requests"

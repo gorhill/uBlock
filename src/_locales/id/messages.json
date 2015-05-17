@@ -403,6 +403,10 @@
     "message":"Permintaan yang tidak diblokir di laman ini tidak ada yang di catat",
     "description":"English: No non-blocked requests logged for this page"
   },
+  "logAll":{
+    "message":"Semua",
+    "description":"Appears in the logger's tab selector"
+  },
   "logBehindTheScene":{
     "message":"Di balik layar",
     "description":"Pretty name for behind-the-scene network requests"
