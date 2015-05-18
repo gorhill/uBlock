@@ -1210,7 +1210,8 @@ var onMessage = function(request, sender, callback) {
                 entries: µb.logger.readAll(),
                 maxEntries: µb.userSettings.requestLogMaxEntries,
                 noTabId: vAPI.noTabId,
-                tabIds: tabIds
+                tabIds: tabIds,
+                tabIdsToken: µb.pageStoresToken
             };
             break;
 

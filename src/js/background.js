@@ -136,6 +136,7 @@ return {
     selfieAfter: 23 * oneMinute,
 
     pageStores: {},
+    pageStoresToken: 0,
 
     storageQuota: vAPI.storage.QUOTA_BYTES,
     storageUsed: 0,

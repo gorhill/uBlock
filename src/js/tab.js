@@ -523,6 +523,8 @@ vAPI.tabs.registerListeners();
 
     // Tab is not bound
     if ( !pageStore ) {
+        this.updateTitle(tabId);
+        this.pageStoresToken = Date.now();
         return this.pageStores[tabId] = this.PageStore.factory(tabId);
     }
 
@@ -538,12 +540,13 @@ vAPI.tabs.registerListeners();
         return pageStore;
     }
 
-    this.updateTitle(tabId);
-
     // Rebind according to context. We rebind even if the URL did not change,
     // as maybe the tab was force-reloaded, in which case the page stats must
     // be all reset.
     pageStore.reuse(context);
+
+    this.updateTitle(tabId);
+    this.pageStoresToken = Date.now();
 
     return pageStore;
 };
@@ -556,6 +559,7 @@ vAPI.tabs.registerListeners();
     if ( pageStore !== undefined ) {
         pageStore.dispose();
         delete this.pageStores[tabId];
+        this.pageStoresToken = Date.now();
     }
 };
 
@@ -605,11 +609,18 @@ vAPI.tabs.registerListeners();
         if ( pageStore === null ) {
             return tryNoMore(tabId);
         }
+        // Firefox needs this: if you detach a tab, the new tab won't have
+        // its rawURL set. Concretely, this causes the logger to report an
+        // entry to itself in the logger's tab selector.
+        // TODO: Investigate for a fix vAPI-side.
+        pageStore.rawURL = tab.url;
+        this.pageStoresToken = Date.now();
         if ( !tab.title && tryAgain(tabId) ) {
             return;
         }
         tryNoMore(tabId);
         pageStore.title = tab.title || tab.url || '';
+        this.pageStoresToken = Date.now();
     };
 
     var updateTitle = function(tabId) {

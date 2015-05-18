@@ -48,7 +48,7 @@ var lastVarDataIndex = 4; // currently, d0-d3
 var maxEntries = 5000;
 var noTabId = '';
 var allTabIds = {};
-
+var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 
 var prettyRequestTypes = {
@@ -347,10 +347,6 @@ var renderLogEntries = function(response) {
 
 var synchronizeTabIds = function(newTabIds) {
     var oldTabIds = allTabIds;
-
-    // Neuter rows for which a tab does not exist anymore
-    // TODO: sort to avoid using indexOf
-
     var autoDeleteVoidRows = !!vAPI.localStorage.getItem('loggerAutoDeleteVoidRows');
     var rowVoided = false;
     var trs;
@@ -443,8 +439,12 @@ var onLogBufferRead = function(response) {
     }
 
     // Neuter rows for which a tab does not exist anymore
-    // TODO: sort to avoid using indexOf
-    var rowVoided = synchronizeTabIds(response.tabIds);
+    var rowVoided = false;
+    if ( response.tabIdsToken !== allTabIdsToken ) {
+        rowVoided = synchronizeTabIds(response.tabIds);
+        allTabIdsToken = response.tabIdsToken;
+    }
+
     renderLogEntries(response);
 
     if ( rowVoided ) {
