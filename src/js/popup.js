@@ -801,15 +801,17 @@ var onHideTooltip = function() {
 // Make menu only when popup html is fully loaded
 
 uDom.onLoad(function () {
-    var tabId = null; //If there's no tab ID specified in the query string, it will default to current tab.
+    // If there's no tab id specified in the query string,
+    // it will default to current tab.
+    var tabId = null;
 
     // Extract the tab id of the page this popup is for
     var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
-    if (matches && matches.length === 2) {
+    if ( matches && matches.length === 2 ) {
         tabId = matches[1];
     }
-
     getPopupData(tabId);
+
     uDom('#switch').on('click', toggleNetFilteringSwitch);
     uDom('#gotoPick').on('click', gotoPick);
     uDom('a[href]').on('click', gotoURL);

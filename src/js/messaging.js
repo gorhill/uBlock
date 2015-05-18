@@ -214,7 +214,7 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 
 /******************************************************************************/
 
-var getStats = function(tabId, tabTitle) {
+var popupDataFromTabId = function(tabId, tabTitle) {
     var tabContext = µb.tabContextManager.lookup(tabId);
     var r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
@@ -263,23 +263,22 @@ var getStats = function(tabId, tabTitle) {
 
 /******************************************************************************/
 
-var getTargetTabId = function(tab) {
-    if ( !tab ) {
-        return '';
+var popupDataFromRequest = function(request, callback) {
+    if ( request.tabId ) {
+        callback(popupDataFromTabId(request.tabId, ''));
+        return;
     }
 
-    // If the URL is that of the network request logger, fill the popup with
-    // the data from the tab being observed by the logger.
-    // This allows a user to actually modify filtering profile for
-    // behind-the-scene requests.
-
-    // Extract the target tab id from the URL
-    var matches = tab.url.match(/[\?&]tabId=([^&]+)/);
-    if ( matches && matches.length === 2 ) {
-        return matches[1];
-    }
-
-    return tab.id;
+    // Still no target tab id? Use currently selected tab.
+    vAPI.tabs.get(null, function(tab) {
+        var tabId = '';
+        var tabTitle = '';
+        if ( tab ) {
+            tabId = tab.id;
+            tabTitle = tab.title || '';
+        }
+        callback(popupDataFromTabId(tabId, tabTitle));
+    });
 };
 
 /******************************************************************************/
@@ -311,14 +310,7 @@ var onMessage = function(request, sender, callback) {
         return;
 
     case 'getPopupData':
-        if ( request.tabId === vAPI.noTabId ) {
-            callback(getStats(vAPI.noTabId, ''));
-            return;
-        }
-        vAPI.tabs.get(request.tabId, function(tab) {
-            // https://github.com/chrisaljoudi/uBlock/issues/1012
-            callback(getStats(getTargetTabId(tab), tab ? tab.title : ''));
-        });
+        popupDataFromRequest(request, callback);
         return;
 
     default:
@@ -354,7 +346,7 @@ var onMessage = function(request, sender, callback) {
         );
         // https://github.com/gorhill/uBlock/issues/188
         µb.cosmeticFilteringEngine.removeFromSelectorCache(request.srcHostname, 'net');
-        response = getStats(request.tabId);
+        response = popupDataFromTabId(request.tabId);
         break;
 
     case 'saveFirewallRules':
@@ -368,7 +360,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'toggleFirewallRule':
         µb.toggleFirewallRule(request);
-        response = getStats(request.tabId);
+        response = popupDataFromTabId(request.tabId);
         break;
 
     case 'toggleNetFiltering':
