@@ -80,7 +80,7 @@
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Заборонити повне блокування цього сайту",
+    "message":"Переключити повне блокування цього сайту",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
@@ -164,7 +164,7 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Для дальтоніків",
+    "message":"Підтримка дальтонізму",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
@@ -212,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p> Ця опція вмикає розбір та задіяння <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів<\/a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
+    "message":"<p>Ця опція вмикає аналіз та застосування <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; <\/a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації  мережевих запитів.<\/p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock<\/i>'ом.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{

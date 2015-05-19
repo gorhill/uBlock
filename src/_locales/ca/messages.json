@@ -404,7 +404,7 @@
     "description":"English: No non-blocked requests logged for this page"
   },
   "logAll":{
-    "message":"All",
+    "message":"Tot",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
