@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock - a browser extension to block requests.
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ var onMessage = function(request, sender, callback) {
         /* falls through */
     case 'cosmeticFiltersActivated':
         // Net-based cosmetic filters are of no interest for logging purpose.
-        if ( µb.logger.isObserved() && request.type !== 'net' ) {
+        if ( µb.logger.isEnabled() && request.type !== 'net' ) {
             µb.logCosmeticFilters(tabId);
         }
         break;
@@ -402,8 +402,8 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
@@ -415,14 +415,14 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
-        case 'retrieveDomainCosmeticSelectors':
-            if ( pageStore && pageStore.getSpecificCosmeticFilteringSwitch() ) {
-                response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
-            }
-            break;
+    case 'retrieveDomainCosmeticSelectors':
+        if ( pageStore && pageStore.getSpecificCosmeticFilteringSwitch() ) {
+            response = µb.cosmeticFilteringEngine.retrieveDomainSelectors(request);
+        }
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -555,7 +555,7 @@ var µb = µBlock;
 /******************************************************************************/
 
 var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isObserved() === false ) {
+    if ( µb.logger.isEnabled() === false ) {
         return;
     }
 
@@ -631,60 +631,60 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'elementPickerArguments':
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'epicker.html', true);
-            xhr.overrideMimeType('text/html;charset=utf-8');
-            xhr.responseType = 'text';
-            xhr.onload = function() {
-                this.onload = null;
-                var i18n = {
-                    bidi_dir: document.body.getAttribute('dir'),
-                    create: vAPI.i18n('pickerCreate'),
-                    pick: vAPI.i18n('pickerPick'),
-                    quit: vAPI.i18n('pickerQuit'),
-                    netFilters: vAPI.i18n('pickerNetFilters'),
-                    cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
-                    cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
-                };
-                var reStrings = /\{\{(\w+)\}\}/g;
-                var replacer = function(a0, string) {
-                    return i18n[string];
-                };
-
-                callback({
-                    frameContent: this.responseText.replace(reStrings, replacer),
-                    target: µb.contextMenuTarget,
-                    clientX: µb.contextMenuClientX,
-                    clientY: µb.contextMenuClientY,
-                    eprom: µb.epickerEprom
-                });
-
-                µb.contextMenuTarget = '';
-                µb.contextMenuClientX = -1;
-                µb.contextMenuClientY = -1;
+    case 'elementPickerArguments':
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'epicker.html', true);
+        xhr.overrideMimeType('text/html;charset=utf-8');
+        xhr.responseType = 'text';
+        xhr.onload = function() {
+            this.onload = null;
+            var i18n = {
+                bidi_dir: document.body.getAttribute('dir'),
+                create: vAPI.i18n('pickerCreate'),
+                pick: vAPI.i18n('pickerPick'),
+                quit: vAPI.i18n('pickerQuit'),
+                netFilters: vAPI.i18n('pickerNetFilters'),
+                cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
+                cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
             };
-            xhr.send();
-            return;
+            var reStrings = /\{\{(\w+)\}\}/g;
+            var replacer = function(a0, string) {
+                return i18n[string];
+            };
 
-        default:
-            break;
+            callback({
+                frameContent: this.responseText.replace(reStrings, replacer),
+                target: µb.contextMenuTarget,
+                clientX: µb.contextMenuClientX,
+                clientY: µb.contextMenuClientY,
+                eprom: µb.epickerEprom
+            });
+
+            µb.contextMenuTarget = '';
+            µb.contextMenuClientX = -1;
+            µb.contextMenuClientY = -1;
+        };
+        xhr.send();
+        return;
+
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'createUserFilter':
-            µb.appendUserFilters(request.filters);
-            break;
+    case 'createUserFilter':
+        µb.appendUserFilters(request.filters);
+        break;
 
-        case 'elementPickerEprom':
-            µb.epickerEprom = request;
-            break;
+    case 'elementPickerEprom':
+        µb.epickerEprom = request;
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -760,26 +760,26 @@ var getLists = function(callback) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'getLists':
-            return getLists(callback);
+    case 'getLists':
+        return getLists(callback);
 
-        case 'purgeAllCaches':
-            return µb.assets.purgeAll(callback);
+    case 'purgeAllCaches':
+        return µb.assets.purgeAll(callback);
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'purgeCache':
-            µb.assets.purge(request.path);
-            break;
+    case 'purgeCache':
+        µb.assets.purge(request.path);
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -809,22 +809,22 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'readUserFilters':
-            return µb.assets.get(µb.userFiltersPath, callback);
+    case 'readUserFilters':
+        return µb.assets.get(µb.userFiltersPath, callback);
 
-        case 'writeUserFilters':
-            return µb.assets.put(µb.userFiltersPath, request.content, callback);
+    case 'writeUserFilters':
+        return µb.assets.put(µb.userFiltersPath, request.content, callback);
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -960,25 +960,25 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'getWhitelist':
-            response = µb.stringFromWhitelist(µb.netWhitelist);
-            break;
+    case 'getWhitelist':
+        response = µb.stringFromWhitelist(µb.netWhitelist);
+        break;
 
-        case 'setWhitelist':
-            µb.netWhitelist = µb.whitelistFromString(request.whitelist);
-            µb.saveWhitelist();
-            break;
+    case 'setWhitelist':
+        µb.netWhitelist = µb.whitelistFromString(request.whitelist);
+        µb.saveWhitelist();
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -1123,30 +1123,30 @@ var resetUserData = function() {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        case 'backupUserData':
-            return backupUserData(callback);
+    case 'backupUserData':
+        return backupUserData(callback);
 
-        case 'getLocalData':
-            return getLocalData(callback);
+    case 'getLocalData':
+        return getLocalData(callback);
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'restoreUserData':
-            restoreUserData(request);
-            break;
+    case 'restoreUserData':
+        restoreUserData(request);
+        break;
 
-        case 'resetUserData':
-            resetUserData();
-            break;
+    case 'resetUserData':
+        resetUserData();
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -1176,39 +1176,39 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'readAll':
-            var tabIds = {}, pageStore;
-            var loggerURL = vAPI.getURL('logger-ui.html');
-            for ( var tabId in µb.pageStores ) {
-                pageStore = µb.pageStoreFromTabId(tabId);
-                if ( pageStore === null ) {
-                    continue;
-                }
-                if ( pageStore.rawURL.lastIndexOf(loggerURL, 0) === 0 ) {
-                    continue;
-                }
-                tabIds[tabId] = pageStore.title;
+    case 'readAll':
+        var tabIds = {}, pageStore;
+        var loggerURL = vAPI.getURL('logger-ui.html');
+        for ( var tabId in µb.pageStores ) {
+            pageStore = µb.pageStoreFromTabId(tabId);
+            if ( pageStore === null ) {
+                continue;
             }
-            response = {
-                colorBlind: µb.userSettings.colorBlindFriendly,
-                entries: µb.logger.readAll(),
-                maxEntries: µb.userSettings.requestLogMaxEntries,
-                noTabId: vAPI.noTabId,
-                tabIds: tabIds,
-                tabIdsToken: µb.pageStoresToken
-            };
-            break;
+            if ( pageStore.rawURL.lastIndexOf(loggerURL, 0) === 0 ) {
+                continue;
+            }
+            tabIds[tabId] = pageStore.title;
+        }
+        response = {
+            colorBlind: µb.userSettings.colorBlindFriendly,
+            entries: µb.logger.readAll(),
+            maxEntries: µb.userSettings.requestLogMaxEntries,
+            noTabId: vAPI.noTabId,
+            tabIds: tabIds,
+            tabIdsToken: µb.pageStoresToken
+        };
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -1244,15 +1244,15 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-        case 'subscriberData':
-            response = {
-                confirmStr: vAPI.i18n('subscriberConfirm'),
-                externalLists: µBlock.userSettings.externalLists
-            };
-            break;
+    case 'subscriberData':
+        response = {
+            confirmStr: vAPI.i18n('subscriberConfirm'),
+            externalLists: µBlock.userSettings.externalLists
+        };
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
@@ -1278,20 +1278,20 @@ vAPI.messaging.listen('subscriber.js', onMessage);
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Sync
     var response;
 
     switch ( request.what ) {
-        case 'temporarilyWhitelistDocument':
-            µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
-            break;
+    case 'temporarilyWhitelistDocument':
+        µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
+        break;
 
-        default:
-            return vAPI.messaging.UNHANDLED;
+    default:
+        return vAPI.messaging.UNHANDLED;
     }
 
     callback(response);
