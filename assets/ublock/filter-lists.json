@@ -85,11 +85,11 @@
         "group": "regions",
         "homeURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt"
         },
-    "gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt": {
+    "notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": {
         "off": true,
         "title": "LVA: Latvian List",
         "group": "regions",
-        "homeURL": "https://gitorious.org/adblock-latvian/adblock-latvian/raw/master%3Alists/latvian-list.txt"
+        "homeURL": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt"
         },
     "home.fredfiber.no/langsholt/adblock.txt": {
         "off": true,
