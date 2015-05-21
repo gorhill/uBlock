@@ -1,7 +1,7 @@
 <table width="100%">
       <tr>
       <td align="left" width="70">
-            <a href = "https://chrismatic.io/ublock/">
+            <a href = "https://www.ublock.org/">
             <img  src="https://raw.githubusercontent.com/chrisaljoudi/uBlock/master/doc/img/gh-header.png"
                   height="64">
             </a>
@@ -17,7 +17,7 @@
       </tr>
       <tr>
       <td colspan="2">
-            <strong><a href="https://chrismatic.io/ublock/">uBlock</a></strong>: an efficient blocker extension for your browser. Fast, potent, and lean.
+            <strong><a href="https://www.ublock.org/">uBlock</a></strong>: an efficient blocker extension for your browser. Fast, potent, and lean.
       </td>
       </tr>
 </table>
@@ -25,7 +25,7 @@
 * [Getting Started & Installation](#getting-started)
 * [Performance & Benchmarks](#performance)
 * [Tips](#tips)
-* [FAQ](https://chrismatic.io/ublock/faq/)
+* [FAQ](https://www.ublock.org/faq/)
 * [About](#about-ublock)
 
 ## Getting started
