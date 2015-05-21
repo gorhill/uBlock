@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock - a browser extension to block requests.
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -498,26 +498,21 @@ PageStore.prototype.filterRequest = function(context) {
         return entry.result;
     }
 
-    var result = '';
+    µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, context.requestType);
+    var result = µb.sessionURLFiltering.toFilterString();
 
     // Given that:
     // - Dynamic filtering override static filtering
     // - Evaluating dynamic filtering is much faster than static filtering
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
-    if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.sessionFirewall.evaluateCellZY(
-            context.rootHostname,
-            context.requestHostname,
-            context.requestType
-        );
-        if ( df.mustBlockOrAllow() ) {
-            result = df.toFilterString();
-        }
+    if ( result === '' && µb.userSettings.advancedUserEnabled ) {
+        µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, context.requestType);
+        result = µb.sessionFirewall.toFilterString();
     }
 
     // Static filtering never override dynamic filtering
-    if ( result === '' ) {
+    if ( result === '' || result.charAt(1) === 'n' ) {
         result = µb.staticNetFilteringEngine.matchString(context);
     }
 
@@ -541,26 +536,21 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         return '';
     }
 
-    var result = '';
+    µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, context.requestType);
+    var result = µb.sessionURLFiltering.toFilterString();
 
     // Given that:
     // - Dynamic filtering override static filtering
     // - Evaluating dynamic filtering is much faster than static filtering
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
-    if ( µb.userSettings.advancedUserEnabled ) {
-        var df = µb.sessionFirewall.evaluateCellZY(
-            context.rootHostname,
-            context.requestHostname,
-            context.requestType
-        );
-        if ( df.mustBlockOrAllow() ) {
-            result = df.toFilterString();
-        }
+    if ( result === '' && µb.userSettings.advancedUserEnabled ) {
+        µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        result = µb.sessionFirewall.toFilterString();
     }
 
     // Static filtering never override dynamic filtering
-    if ( result === '' ) {
+    if ( result === '' || result.charAt(1) === 'n' ) {
         result = µb.staticNetFilteringEngine.matchString(context);
     }
 

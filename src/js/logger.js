@@ -161,6 +161,7 @@ var janitor = function() {
         logBuffer !== null &&
         logBuffer.lastReadTime < (Date.now() - logBufferObsoleteAfter)
     ) {
+        api.writeOne = writeOneNoop;
         logBuffer = logBuffer.dispose();
     }
     if ( logBuffer !== null ) {
@@ -170,16 +171,18 @@ var janitor = function() {
 
 /******************************************************************************/
 
+var writeOneNoop = function() {
+};
+
 var writeOne = function() {
-    if ( logBuffer !== null ) {
-        logBuffer.writeOne(arguments);
-    }
+    logBuffer.writeOne(arguments);
 };
 
 /******************************************************************************/
 
 var readAll = function() {
     if ( logBuffer === null ) {
+        api.writeOne = writeOne;
         logBuffer = new LogBuffer();
         vAPI.setTimeout(janitor, logBufferObsoleteAfter);
     }
@@ -188,17 +191,19 @@ var readAll = function() {
 
 /******************************************************************************/
 
-var isObserved = function() {
+var isEnabled = function() {
     return logBuffer !== null;
 };
 
 /******************************************************************************/
 
-return {
-    writeOne: writeOne,
+var api = {
+    writeOne: writeOneNoop,
     readAll: readAll,
-    isObserved: isObserved
+    isEnabled: isEnabled
 };
+
+return api;
 
 /******************************************************************************/
 /******************************************************************************/

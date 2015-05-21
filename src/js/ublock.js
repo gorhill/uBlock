@@ -254,8 +254,8 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // Pre-change
     switch ( name ) {
-        default:
-            break;
+    default:
+        break;
     }
 
     // Change
@@ -263,23 +263,18 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // Post-change
     switch ( name ) {
-        case 'collapseBlocked':
-            if ( value === false ) {
-                this.cosmeticFilteringEngine.removeFromSelectorCache('*', 'net');
-            }
-            break;
-        case 'contextMenuEnabled':
-            this.contextMenu.toggle(value);
-            break;
-        case 'experimentalEnabled':
-            if ( typeof this.mirrors === 'object' ) {
-                // https://github.com/chrisaljoudi/uBlock/issues/540
-                // Disabling local mirroring for the time being
-                this.mirrors.toggle(false /* value */);
-            }
-            break;
-        default:
-            break;
+    case 'collapseBlocked':
+        if ( value === false ) {
+            this.cosmeticFilteringEngine.removeFromSelectorCache('*', 'net');
+        }
+        break;
+    case 'contextMenuEnabled':
+        this.contextMenu.toggle(value);
+        break;
+    case 'experimentalEnabled':
+        break;
+    default:
+        break;
     }
 
     this.saveUserSettings();
@@ -313,6 +308,23 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/420
     this.cosmeticFilteringEngine.removeFromSelectorCache(details.srcHostname, 'net');
+};
+
+/******************************************************************************/
+
+µBlock.toggleURLFilteringRule = function(details) {
+    var changed = this.sessionURLFiltering.setRule(
+        details.context,
+        details.url,
+        details.type,
+        details.action
+    );
+
+    if ( !changed ) {
+        return;
+    }
+
+    this.cosmeticFilteringEngine.removeFromSelectorCache(details.context, 'net');
 };
 
 /******************************************************************************/

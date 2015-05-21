@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -79,6 +79,12 @@
 
 µBlock.savePermanentFirewallRules = function() {
     this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+};
+
+/******************************************************************************/
+
+µBlock.savePermanentURLFilteringRules = function() {
+    this.keyvalSetOne('urlFilteringString', this.permanentURLFiltering.toString());
 };
 
 /******************************************************************************/

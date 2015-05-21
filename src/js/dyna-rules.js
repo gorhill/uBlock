@@ -41,7 +41,9 @@ var renderRules = function(details) {
     var rules, rule, i;
 
     // Switches always displayed first -- just like in uMatrix
+    // Merge url rules and switches: they just look the same
     rules = details.hnSwitches.split(/\n+/).sort();
+
     for ( i = 0; i < rules.length; i++ ) {
         rule = rules[i];
         liLeft = liTemplate.clone().text(rule);
@@ -120,7 +122,7 @@ function handleImportFilePicker() {
                                .replace(/\n/g, ' * noop\n');
         }
         var request = {
-            'what': 'setSessionFirewallRules',
+            'what': 'setSessionRules',
             'rules': rulesFromHTML('#diff .right li') + '\n' + result
         };
         messager.send(request, renderRules);
@@ -183,7 +185,7 @@ var rulesFromHTML = function(selector) {
 
 var revertHandler = function() {
     var request = {
-        'what': 'setSessionFirewallRules',
+        'what': 'setSessionRules',
         'rules': rulesFromHTML('#diff .left li')
     };
     messager.send(request, renderRules);
@@ -193,7 +195,7 @@ var revertHandler = function() {
 
 var commitHandler = function() {
     var request = {
-        'what': 'setPermanentFirewallRules',
+        'what': 'setPermanentRules',
         'rules': rulesFromHTML('#diff .right li')
     };
     messager.send(request, renderRules);
@@ -217,7 +219,7 @@ var editStopHandler = function() {
     var parent = uDom(this).ancestors('#diff');
     parent.toggleClass('edit', false);
     var request = {
-        'what': 'setSessionFirewallRules',
+        'what': 'setSessionRules',
         'rules': uDom('#diff .right textarea').val()
     };
     messager.send(request, renderRules);
@@ -245,7 +247,7 @@ uDom.onLoad(function() {
     uDom('#editStopButton').on('click', editStopHandler);
     uDom('#editCancelButton').on('click', editCancelHandler);
 
-    messager.send({ what: 'getFirewallRules' }, renderRules);
+    messager.send({ what: 'getRules' }, renderRules);
 });
 
 /******************************************************************************/

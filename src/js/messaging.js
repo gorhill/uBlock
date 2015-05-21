@@ -183,30 +183,30 @@ var getHostnameDict = function(hostnameToCountMap) {
 
 var getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
-    var dFiltering = µb.sessionFirewall;
-    r['/ * *'] = dFiltering.evaluateCellZY('*', '*', '*').toFilterString();
-    r['/ * image'] = dFiltering.evaluateCellZY('*', '*', 'image').toFilterString();
-    r['/ * 3p'] = dFiltering.evaluateCellZY('*', '*', '3p').toFilterString();
-    r['/ * inline-script'] = dFiltering.evaluateCellZY('*', '*', 'inline-script').toFilterString();
-    r['/ * 1p-script'] = dFiltering.evaluateCellZY('*', '*', '1p-script').toFilterString();
-    r['/ * 3p-script'] = dFiltering.evaluateCellZY('*', '*', '3p-script').toFilterString();
-    r['/ * 3p-frame'] = dFiltering.evaluateCellZY('*', '*', '3p-frame').toFilterString();
+    var df = µb.sessionFirewall;
+    r['/ * *'] = df.evaluateCellZY('*', '*', '*').toFilterString();
+    r['/ * image'] = df.evaluateCellZY('*', '*', 'image').toFilterString();
+    r['/ * 3p'] = df.evaluateCellZY('*', '*', '3p').toFilterString();
+    r['/ * inline-script'] = df.evaluateCellZY('*', '*', 'inline-script').toFilterString();
+    r['/ * 1p-script'] = df.evaluateCellZY('*', '*', '1p-script').toFilterString();
+    r['/ * 3p-script'] = df.evaluateCellZY('*', '*', '3p-script').toFilterString();
+    r['/ * 3p-frame'] = df.evaluateCellZY('*', '*', '3p-frame').toFilterString();
     if ( typeof srcHostname !== 'string' ) {
         return r;
     }
 
-    r['. * *'] = dFiltering.evaluateCellZY(srcHostname, '*', '*').toFilterString();
-    r['. * image'] = dFiltering.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
-    r['. * 3p'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p').toFilterString();
-    r['. * inline-script'] = dFiltering.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
-    r['. * 1p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
-    r['. * 3p-script'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
-    r['. * 3p-frame'] = dFiltering.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
+    r['. * *'] = df.evaluateCellZY(srcHostname, '*', '*').toFilterString();
+    r['. * image'] = df.evaluateCellZY(srcHostname, '*', 'image').toFilterString();
+    r['. * 3p'] = df.evaluateCellZY(srcHostname, '*', '3p').toFilterString();
+    r['. * inline-script'] = df.evaluateCellZY(srcHostname, '*', 'inline-script').toFilterString();
+    r['. * 1p-script'] = df.evaluateCellZY(srcHostname, '*', '1p-script').toFilterString();
+    r['. * 3p-script'] = df.evaluateCellZY(srcHostname, '*', '3p-script').toFilterString();
+    r['. * 3p-frame'] = df.evaluateCellZY(srcHostname, '*', '3p-frame').toFilterString();
 
     for ( var desHostname in desHostnames ) {
         if ( desHostnames.hasOwnProperty(desHostname) ) {
-            r['/ ' + desHostname + ' *'] = dFiltering.evaluateCellZY('*', desHostname, '*').toFilterString();
-            r['. ' + desHostname + ' *'] = dFiltering.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
+            r['/ ' + desHostname + ' *'] = df.evaluateCellZY('*', desHostname, '*').toFilterString();
+            r['. ' + desHostname + ' *'] = df.evaluateCellZY(srcHostname, desHostname, '*').toFilterString();
         }
     }
     return r;
@@ -853,18 +853,19 @@ var µb = µBlock;
 
 var getRules = function() {
     return {
-        permanentRules: µb.permanentFirewall.toString(),
-        sessionRules: µb.sessionFirewall.toString(),
+        permanentRules: µb.permanentFirewall.toString() + '\n' + µb.permanentURLFiltering.toString(),
+        sessionRules: µb.sessionFirewall.toString() + '\n' + µb.sessionURLFiltering.toString(),
         hnSwitches: µb.hnSwitches.toString()
     };
 };
 
-// Untangle rules and switches.
+// Untangle firewall rules, url rules and switches.
 var untangle = function(s) {
     var textEnd = s.length;
     var lineBeg = 0, lineEnd;
     var line;
-    var rules = [];
+    var firewallRules = [];
+    var urlRules = [];
     var switches = [];
 
     while ( lineBeg < textEnd ) {
@@ -878,16 +879,18 @@ var untangle = function(s) {
         line = s.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
 
-        // Switches always contain a ':'
-        if ( line.indexOf(':') === -1 ) {
-            rules.push(line);
+        if ( line.indexOf('://') !== -1 ) {
+            urlRules.push(line);
+        } else if ( line.indexOf(':') === -1 ) {
+            firewallRules.push(line);
         } else {
             switches.push(line);
         }
     }
 
     return {
-        rules: rules.join('\n'),
+        firewallRules: firewallRules.join('\n'),
+        urlRules: urlRules.join('\n'),
         switches: switches.join('\n')
     };
 };
@@ -906,24 +909,27 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'getFirewallRules':
+    case 'getRules':
         response = getRules();
         break;
 
-    case 'setSessionFirewallRules':
+    case 'setSessionRules':
         // https://github.com/chrisaljoudi/uBlock/issues/772
         µb.cosmeticFilteringEngine.removeFromSelectorCache('*');
         r = untangle(request.rules);
-        µb.sessionFirewall.fromString(r.rules);
+        µb.sessionFirewall.fromString(r.firewallRules);
+        µb.sessionURLFiltering.fromString(r.urlRules);
         µb.hnSwitches.fromString(r.switches);
         µb.saveHostnameSwitches();
         response = getRules();
         break;
 
-    case 'setPermanentFirewallRules':
+    case 'setPermanentRules':
         r = untangle(request.rules);
-        µb.permanentFirewall.fromString(r.rules);
+        µb.permanentFirewall.fromString(r.firewallRules);
         µb.savePermanentFirewallRules();
+        µb.permanentURLFiltering.fromString(r.urlRules);
+        µb.savePermanentURLFilteringRules();
         µb.hnSwitches.fromString(r.switches);
         µb.saveHostnameSwitches();
         response = getRules();
@@ -1031,6 +1037,7 @@ var backupUserData = function(callback) {
         filterLists: {},
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
+        urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.hnSwitches.toString(),
         userFilters: ''
     };
@@ -1067,7 +1074,7 @@ var backupUserData = function(callback) {
 
 var restoreUserData = function(request) {
     var userData = request.userData;
-    var countdown = 7;
+    var countdown = 8;
     var onCountdown = function() {
         countdown -= 1;
         if ( countdown === 0 ) {
@@ -1088,6 +1095,7 @@ var restoreUserData = function(request) {
         var s = userData.dynamicFilteringString || userData.userSettings.dynamicFilteringString || '';
         µb.keyvalSetOne('dynamicFilteringString', s, onCountdown);
 
+        µb.keyvalSetOne('urlFilteringString', userData.urlFilteringString || '', onCountdown);
         µb.keyvalSetOne('hostnameSwitchesString', userData.hostnameSwitchesString || '', onCountdown);
         µb.assets.put('assets/user/filters.txt', userData.userFilters, onCountdown);
         vAPI.storage.set({
@@ -1173,6 +1181,66 @@ var µb = µBlock;
 
 /******************************************************************************/
 
+var getURLFilteringData = function(details) {
+    var colors = {};
+    var response = {
+        dirty: false,
+        colors: colors
+    };
+    var suf = µb.sessionURLFiltering;
+    var puf = µb.permanentURLFiltering;
+    var urls = details.urls,
+        context = details.context,
+        type = details.type;
+    var url, colorEntry;
+    var i = urls.length;
+    while ( i-- ) {
+        url = urls[i];
+        colorEntry = colors[url] = { r: 0, own: false };
+        if ( suf.evaluateZ(context, url, type).r !== 0 ) {
+            colorEntry.r = suf.r;
+            colorEntry.own = suf.context === context && suf.url === url && suf.type === type;
+        }
+        if ( response.dirty ) {
+            continue;
+        }
+        puf.evaluateZ(context, url, type);
+        response.dirty = colorEntry.own !== (puf.context === context && puf.url === url && puf.type === type);
+    }
+    return response;
+};
+
+/******************************************************************************/
+
+var saveTemporaryURLFilteringRules = function(details) {
+    var changed = false;
+    var suf = µb.sessionURLFiltering;
+    var puf = µb.permanentURLFiltering;
+    var urls = details.urls,
+        context = details.context,
+        type = details.type;
+    var url, sOwn, pOwn;
+    var i = urls.length;
+    while ( i-- ) {
+        url = urls[i];
+        suf.evaluateZ(context, url, type);
+        sOwn = suf.context === context && suf.url === url && suf.type === type;
+        puf.evaluateZ(context, url, type);
+        pOwn = puf.context === context && puf.url === url && puf.type === type;
+        if ( sOwn && !pOwn ) {
+            puf.setRule(context, url, type, suf.r);
+            changed = true;
+        }
+        if ( !sOwn && pOwn ) {
+            puf.removeRule(context, url, type);
+            changed = true;
+        }
+    }
+    return changed;
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -1205,6 +1273,20 @@ var onMessage = function(request, sender, callback) {
             tabIds: tabIds,
             tabIdsToken: µb.pageStoresToken
         };
+        break;
+
+    case 'saveURLFilteringRules':
+        if ( saveTemporaryURLFilteringRules(request) ) {
+            µb.savePermanentURLFilteringRules();
+        }
+        break;
+
+    case 'setURLFilteringRule':
+        µb.toggleURLFilteringRule(request);
+        break;
+
+    case 'getURLFilteringData':
+        response = getURLFilteringData(request);
         break;
 
     default:

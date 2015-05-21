@@ -440,19 +440,21 @@ Matrix.prototype.mustAbort = function() {
 /******************************************************************************/
 
 Matrix.prototype.toFilterString = function() {
+    if ( this.r === 0 ) {
+        return '';
+    }
     if ( this.type === '' ) {
         return '';
     }
+    var body = this.z + ' ' + this.y + ' ' + this.type;
     if ( this.r === 1 ) {
-        return 'db:' + this.z + ' ' + this.y + ' ' + this.type + ' block';
+        return 'db:' + body + ' block';
     }
     if ( this.r === 2 ) {
-        return 'da:' + this.z + ' ' + this.y + ' ' + this.type + ' allow';
+        return 'da:' + body + ' allow';
     }
-    if ( this.r === 3 ) {
-        return 'dn:' + this.z + ' ' + this.y + ' ' + this.type + ' noop';
-    }
-    return '';
+    /* this.r === 3 */
+    return 'dn:' + body + ' noop';
 };
 
 /******************************************************************************/
@@ -529,6 +531,11 @@ Matrix.prototype.fromString = function(text, append) {
             continue;
         }
 
+        // URL net filtering rules
+        if ( line.indexOf('://') !== -1 ) {
+            continue;
+        }
+
         // Valid rule syntax:
 
         // srcHostname desHostname type state
@@ -539,6 +546,12 @@ Matrix.prototype.fromString = function(text, append) {
 
         fields = line.split(/\s+/);
         if ( fields.length !== 4 ) {
+            continue;
+        }
+
+        // Ignore special rules:
+        //   hostname-based switch rules
+        if ( fields[0].slice(-1) === ':' ) {
             continue;
         }
 

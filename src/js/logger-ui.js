@@ -50,12 +50,20 @@ var noTabId = '';
 var allTabIds = {};
 var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
+var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
     'stylesheet': 'css',
     'sub_frame': 'frame',
     'xmlhttprequest': 'xhr'
+};
+
+var uglyRequestTypes = {
+    'doc': 'main_frame',
+    'css': 'stylesheet',
+    'frame': 'sub_frame',
+    'xhr': 'xmlhttprequest'
 };
 
 var timeOptions = {
@@ -84,40 +92,65 @@ var classNameFromTabId = function(tabId) {
 
 /******************************************************************************/
 
+var retextFromStaticFilteringResult = function(result) {
+    var retext = result.slice(3);
+    var pos = retext.indexOf('$');
+    if ( pos > 0 ) {
+        retext = retext.slice(0, pos);
+    }
+    if ( retext === '*' ) {
+        return '^.*$';
+    }
+    if ( retext.charAt(0) === '/' && retext.slice(-1) === '/' ) {
+        return retext.slice(1, -1);
+    }
+    return retext
+        .replace(/\./g, '\\.')
+        .replace(/\?/g, '\\?')
+        .replace('||', '')
+        .replace(/\^/g, '.')
+        .replace(/^\|/g, '^')
+        .replace(/\|$/g, '$')
+        .replace(/\*/g, '.*')
+        ;
+};
+
+/******************************************************************************/
+
+var retextFromURLFilteringResult = function(result) {
+    var beg = result.indexOf(' ');
+    var end = result.indexOf(' ', beg + 1);
+    var url = result.slice(beg + 1, end);
+    if ( url === '*' ) {
+        return '^.*$';
+    }
+    return '^' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+/******************************************************************************/
+
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
 var nodeFromURL = function(url, filter) {
-    if ( filter.charAt(0) !== 's' ) {
+    var filterType = filter.charAt(0);
+    if ( filterType !== 's' && filterType !== 'l' ) {
         return document.createTextNode(url);
     }
-
     // make a regex out of the filter
-    var reText = filter.slice(3);
-    var pos = reText.indexOf('$');
-    if ( pos > 0 ) {
-        reText = reText.slice(0, pos);
+    var retext = '';
+    if ( filterType === 's' ) {
+        retext = retextFromStaticFilteringResult(filter);
+    } else if ( filterType === 'l' ) {
+        retext = retextFromURLFilteringResult(filter);
     }
-    if ( reText === '*' ) {
-        reText = '\\*';
-    } else if ( reText.charAt(0) === '/' && reText.slice(-1) === '/' ) {
-        reText = reText.slice(1, -1);
-    } else {
-        reText = reText
-            .replace(/\./g, '\\.')
-            .replace(/\?/g, '\\?')
-            .replace('||', '')
-            .replace(/\^/g, '.')
-            .replace(/^\|/g, '^')
-            .replace(/\|$/g, '$')
-            .replace(/\*/g, '.*')
-            ;
+    if ( retext === '' ) {
+        return document.createTextNode(url);
     }
-    var re = new RegExp(reText, 'gi');
+    var re = new RegExp(retext, 'gi');
     var matches = re.exec(url);
     if ( matches === null || matches[0].length === 0 ) {
         return document.createTextNode(url);
     }
-
     var node = renderedURLTemplate.cloneNode(true);
     node.childNodes[0].textContent = url.slice(0, matches.index);
     node.childNodes[1].textContent = url.slice(matches.index, re.lastIndex);
@@ -153,6 +186,7 @@ var createRow = function(layout) {
     var tr = trJunkyard.pop();
     if ( tr ) {
         tr.className = '';
+        tr.removeAttribute('data-context');
     } else {
         tr = document.createElement('tr');
     }
@@ -212,6 +246,7 @@ var renderNetLogEntry = function(tr, entry) {
     var filter = entry.d0;
     var type = entry.d1;
     var url = entry.d2;
+    var td;
 
     tr.classList.add('canMtx');
 
@@ -221,19 +256,26 @@ var renderNetLogEntry = function(tr, entry) {
         createGap(entry.tab, url);
     }
 
-    // Cosmetic filter?
-    if ( filter.charAt(0) === 'c' ) {
-        tr.classList.add('cosmetic');
+    // Root hostname
+    if ( entry.d3 ) {
+        tr.setAttribute('data-context', entry.d3);
     }
 
+    // Cosmetic filter?
+    var filterCat = filter.slice(0, 3);
+    if ( filterCat.charAt(2) === ':' ) {
+        tr.classList.add(filterCat.slice(0, 2));
+    }
+
+    td = tr.cells[2];
     if ( filter.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
-        tr.cells[2].textContent = ' --';
+        td.textContent = '--';
     } else if ( filter.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
-        tr.cells[2].textContent = ' ++';
+        td.textContent = '++';
     } else {
-        tr.cells[2].textContent = '';
+        td.textContent = '';
     }
 
     var filterText = filter.slice(3);
@@ -241,8 +283,8 @@ var renderNetLogEntry = function(tr, entry) {
         filterText = '@@' + filterText;
     }
 
-    tr.cells[3].textContent = filterText + '\t';
-    tr.cells[4].textContent = (prettyRequestTypes[type] || type) + '\t';
+    tr.cells[3].textContent = filterText;
+    tr.cells[4].textContent = (prettyRequestTypes[type] || type);
     tr.cells[5].appendChild(nodeFromURL(url, filter));
 };
 
@@ -530,6 +572,236 @@ var onMaxEntriesChanged = function() {
     truncateLog(maxEntries);
 };
 
+/******************************************************************************/
+/******************************************************************************/
+
+var urlFilteringMenu = (function() {
+    var menu = document.querySelector('#urlFilteringMenu');
+    var menuDialog = menu.querySelector('.dialog');
+    var selectContext = menuDialog.querySelector('.context');
+    var selectType = menuDialog.querySelector('.type');
+    var menuEntries = menu.querySelector('.entries');
+    var menuURLs = [];
+
+    var removeAllChildren = function(node) {
+        while ( node.firstChild ) {
+            node.removeChild(node.firstChild);
+        }
+    };
+
+    var uglyTypeFromSelector = function() {
+        var prettyType = selectType.value;
+        return uglyRequestTypes[prettyType] || prettyType;
+    };
+
+    var onColorsReady = function(response) {
+        document.body.classList.toggle('dirty', response.dirty);
+        var colorEntries = response.colors;
+        var colorEntry, node;
+        for ( var url in colorEntries ) {
+            if ( colorEntries.hasOwnProperty(url) === false ) {
+                continue;
+            }
+            colorEntry = colorEntries[url];
+            node = menu.querySelector('.entries [data-url="' + url + '"]');
+            if ( node === null ) {
+                continue;
+            }
+            node.classList.toggle('allow', colorEntry.r === 2);
+            node.classList.toggle('noop', colorEntry.r === 3);
+            node.classList.toggle('block', colorEntry.r === 1);
+            node.classList.toggle('own', colorEntry.own);
+        }
+    };
+
+    var colorize = function() {
+        messager.send({
+            what: 'getURLFilteringData',
+            context: selectContext.value,
+            urls: menuURLs,
+            type: uglyTypeFromSelector()
+        }, onColorsReady);
+    };
+
+    var onClick = function(ev) {
+        var target = ev.target;
+
+        // click outside the url filtering menu
+        if ( target.id === 'urlFilteringMenu' ) {
+            toggleOff();
+            return;
+        }
+
+        ev.stopPropagation();
+
+        // Save url filtering rule(s)
+        if ( target.classList.contains('save') ) {
+            messager.send({
+                what: 'saveURLFilteringRules',
+                context: selectContext.value,
+                urls: menuURLs,
+                type: uglyTypeFromSelector()
+            }, colorize);
+            return;
+        }
+
+        // Remove url filtering rule
+        if ( target.classList.contains('action') ) {
+            messager.send({
+                what: 'setURLFilteringRule',
+                context: selectContext.value,
+                url: target.getAttribute('data-url'),
+                type: uglyTypeFromSelector(),
+                action: 0
+            }, colorize);
+            return;
+        }
+
+        // add "allow" url filtering rule
+        if ( target.classList.contains('allow') ) {
+            messager.send({
+                what: 'setURLFilteringRule',
+                context: selectContext.value,
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector(),
+                action: 2
+            }, colorize);
+            return;
+        }
+
+        // add "block" url filtering rule
+        if ( target.classList.contains('noop') ) {
+            messager.send({
+                what: 'setURLFilteringRule',
+                context: selectContext.value,
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector(),
+                action: 3
+            }, colorize);
+            return;
+        }
+
+        // add "block" url filtering rule
+        if ( target.classList.contains('block') ) {
+            messager.send({
+                what: 'setURLFilteringRule',
+                context: selectContext.value,
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector(),
+                action: 1
+            }, colorize);
+            return;
+        }
+    };
+
+    var toggleOn = function(ev) {
+        var td = ev.target;
+        var tr = td.parentElement;
+        var cells = tr.cells;
+
+        var context = tr.getAttribute('data-context');
+        if ( !context ) {
+            return;
+        }
+
+        var type = cells[4].textContent.trim();
+        if ( !type ) {
+            return;
+        }
+
+        var pos, option;
+
+        // Fill context selector
+        removeAllChildren(selectContext);
+        for (;;) {
+            option = document.createElement('option');
+            option.textContent = context;
+            option.setAttribute('value', context);
+            pos = context.indexOf('.');
+            selectContext.appendChild(option);
+            if ( pos === -1 ) {
+                break;
+            }
+            context = context.slice(pos + 1);
+        }
+        option = document.createElement('option');
+        option.textContent = '*';
+        option.setAttribute('value', '*');
+        selectContext.appendChild(option);
+
+        // Fill type selector
+        selectType.options[0].textContent = type;
+        selectType.options[0].setAttribute('value', type);
+        selectType.selectedIndex = 0;
+
+        // Extract data needed to build URL filtering menu
+        var candidateURL = cells[5].textContent;
+        var matches = reRFC3986.exec(candidateURL);
+        if ( matches === null || !matches[1] || !matches[2] ) {
+            return;
+        }
+
+        // Shortest URL which for a valid URL filtering rule
+        var candidateRootURL = matches[1] + matches[2];
+        menuURLs.push(candidateRootURL);
+        var candidatePath = matches[3] || '';
+        pos = candidatePath.charAt(0) === '/' ? 1 : 0;
+        while ( pos < candidatePath.length ) {
+            pos = candidatePath.indexOf('/', pos + 1);
+            if ( pos === -1 ) {
+                pos = candidatePath.length;
+            }
+            menuURLs.push(candidateRootURL + candidatePath.slice(0, pos));
+        }
+        var candidateQuery = matches[4] || '';
+        if ( candidateQuery !== '') {
+            menuURLs.push(candidateRootURL + candidatePath + candidateQuery);
+        }
+
+        // Fill menu
+        var menuEntryTemplate = document.querySelector('#templates .urlFilteringMenuEntry');
+
+        // Adding URL filtering rules
+        var i = menuURLs.length;
+        var url, menuEntry;
+        while ( i-- ) {
+            url = menuURLs[i];
+            menuEntry = menuEntryTemplate.cloneNode(true);
+            menuEntry.children[0].setAttribute('data-url', url);
+            menuEntry.children[1].textContent = url;
+            menuEntries.appendChild(menuEntry);
+        }
+
+        colorize();
+
+        var rect = td.getBoundingClientRect();
+        menuDialog.style.setProperty('left', rect.left + 'px');
+        menuDialog.style.setProperty('top', rect.bottom + 'px');
+        document.body.appendChild(menu);
+
+        menu.addEventListener('click', onClick, true);
+        selectContext.addEventListener('change', colorize);
+        selectType.addEventListener('change', colorize);
+    };
+
+    var toggleOff = function() {
+        if ( menu.parentNode === null ) {
+            return;
+        }
+        removeAllChildren(menuEntries);
+        selectContext.removeEventListener('change', colorize);
+        selectType.removeEventListener('change', colorize);
+        menu.removeEventListener('click', onClick, true);
+        menu.parentNode.removeChild(menu);
+        menuURLs = [];
+    };
+
+    return {
+        toggleOn: toggleOn
+    };
+})();
+
+/******************************************************************************/
 /******************************************************************************/
 
 var rowFilterer = (function() {
@@ -823,6 +1095,7 @@ uDom.onLoad(function() {
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
+    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(3)', urlFilteringMenu.toggleOn);
 });
 
 /******************************************************************************/

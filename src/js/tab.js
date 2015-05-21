@@ -482,7 +482,8 @@ vAPI.tabs.onPopup = function(details) {
         'net',
         result,
         'popup',
-        targetURL
+        targetURL,
+        openerHostname
     );
 
     // Not blocked

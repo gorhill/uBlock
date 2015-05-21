@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -142,11 +142,12 @@ var onUserSettingsReady = function(fetched) {
     // https://github.com/chrisaljoudi/uBlock/issues/540
     // Disabling local mirroring for the time being
     userSettings.experimentalEnabled = false;
-    µb.mirrors.toggle(false /* userSettings.experimentalEnabled */);
 
     µb.contextMenu.toggle(userSettings.contextMenuEnabled);
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);
+    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
+    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
     µb.hnSwitches.fromString(fetched.hostnameSwitchesString);
 
     // Remove obsolete setting
@@ -226,6 +227,7 @@ return function() {
     var fetchableProps = {
         'compiledMagic': '',
         'dynamicFilteringString': '',
+        'urlFilteringString': '',
         'hostnameSwitchesString': '',
         'lastRestoreFile': '',
         'lastRestoreTime': 0,

@@ -9,7 +9,7 @@
    xmlns="http://www.w3.org/2000/svg"
    version="1.1"
    width="732"
-   height="1540.3398"
+   height="1740.3398"
    id="svg2">
   <defs
      id="defs4">
@@ -517,6 +517,66 @@
          id="path11883"
          style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
     </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="TriangleOutMW-2"
+       style="overflow:visible">
+      <path
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         transform="scale(0.4,0.4)"
+         id="path9001-1"
+         style="fill:#00aa00;fill-rule:evenodd;stroke:#00aa00;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="DotMc-3"
+       style="overflow:visible">
+      <path
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         id="path10345-9"
+         style="fill:#cc0000;fill-rule:evenodd;stroke:#cc0000;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="TriangleOutM-03"
+       style="overflow:visible">
+      <path
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         transform="scale(0.4,0.4)"
+         id="path4034-0"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="DiamondSPd-4"
+       style="overflow:visible">
+      <path
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 0,-7.0710768 z"
+         transform="scale(0.2,0.2)"
+         id="path11517-1"
+         style="fill:#b0b0b0;fill-rule:evenodd;stroke:#b0b0b0;stroke-width:1pt" />
+    </marker>
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="TriangleOutM-9"
+       style="overflow:visible">
+      <path
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         transform="scale(0.4,0.4)"
+         id="path4034-2"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt" />
+    </marker>
   </defs>
   <metadata
      id="metadata7">
@@ -603,15 +663,15 @@
        rx="0.5"
        ry="0.49999997"
        x="240"
-       y="-97.637817"
+       y="102.36218"
        id="rect3783-4"
        style="fill:#ffeeaa;fill-opacity:1;fill-rule:nonzero;stroke:none" />
     <path
-       d="m 280,-857.63782 -180,0 0,1200"
+       d="m 280,-857.63782 -180,0 0,1399.99999"
        id="path4799"
        style="fill:none;stroke:#b0b0b0;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       d="m 710,-507.63782 c 0,346.66667 0,623.33333 0,970 l -280,0"
+       d="m 710,-507.63782 c 0,346.66667 0,823.33332 0,1169.99999 l -280,0"
        id="path4987"
        style="fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#DotM7);marker-end:url(#TriangleOutM-2n)" />
     <text
@@ -628,28 +688,28 @@
          id="tspan7956">whitelisted?</tspan></text>
     <text
        x="390"
-       y="-47.637821"
+       y="152.36218"
        id="text5171-7"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="390"
-         y="-47.637821"
+         y="152.36218"
          id="tspan5384">local dynamic</tspan><tspan
          x="390"
-         y="-17.637821"
+         y="182.36218"
          id="tspan5388">filtering rule?</tspan></text>
     <path
-       d="m 519.99999,-57.637827 180,0"
+       d="m 519.99999,142.36217 180,0"
        id="path5390"
        style="opacity:0.95999995;fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutMW)" />
     <text
        x="550"
-       y="-67.637817"
+       y="132.36218"
        id="text5574"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="550"
-         y="-67.637817"
+         y="132.36218"
          id="tspan5576">allow</tspan></text>
     <path
        d="m 420,-607.63782 0,100"
@@ -665,26 +725,26 @@
          y="-357.86438"
          id="tspan5948">no</tspan></text>
     <text
-       x="550"
-       y="2.36218"
+       x="548.48438"
+       y="201.3231"
        id="text5946-2"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
-         x="550"
-         y="2.36218"
+         x="548.48438"
+         y="201.3231"
          id="tspan5948-1">noop</tspan></text>
     <path
-       d="m 610,-507.63782 c 0,173.33333 0,596.66667 0,770 l -180,0"
+       d="m 610,-507.63782 c 0,173.33333 0,796.66666 0,969.99999 l -180,0"
        id="path5390-8"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#DotM);marker-end:url(#TriangleOutM)" />
     <text
        x="440"
-       y="42.362179"
+       y="242.36218"
        id="text5946-8"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="440"
-         y="42.362179"
+         y="242.36218"
          id="tspan5948-6">no</tspan></text>
     <rect
        width="280"
@@ -692,59 +752,59 @@
        rx="0.5"
        ry="0.49999997"
        x="240"
-       y="102.36218"
+       y="302.36218"
        id="rect3783-4-3"
        style="fill:#ffeeaa;fill-opacity:1;fill-rule:nonzero;stroke:none" />
     <path
-       d="M 419.99999,22.362173 420,92.36218"
+       d="M 419.99999,222.36217 420,292.36218"
        id="path5762-6"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#TriangleOutM)" />
     <text
        x="390"
-       y="152.36217"
+       y="352.36218"
        id="text5171-7-9"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="390"
-         y="152.36217"
+         y="352.36218"
          id="tspan5384-4">global dynamic</tspan><tspan
          x="390"
-         y="182.36217"
+         y="382.36218"
          id="tspan5388-3">filtering rule?</tspan></text>
     <path
-       d="m 519.89843,142.13559 180.10156,0.22658"
+       d="m 519.89843,342.13559 180.10156,0.22658"
        id="path5390-1"
        style="fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM9)" />
     <text
        x="550"
-       y="132.36218"
+       y="332.36218"
        id="text5574-8"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="550"
-         y="132.36218"
+         y="332.36218"
          id="tspan5576-4">allow</tspan></text>
     <text
-       x="550"
-       y="202.36218"
+       x="548.48438"
+       y="401.32312"
        id="text5946-2-9"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
-         x="550"
-         y="202.36218"
+         x="548.48438"
+         y="401.32312"
          id="tspan5948-1-9">noop</tspan></text>
     <path
-       d="M 519.99999,182.36216 600,182.36218"
+       d="M 519.99999,382.36216 600,382.36218"
        id="path5390-8-2"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM-6)" />
     <text
        x="440"
-       y="242.36218"
+       y="442.36218"
        id="text5946-8-3"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="440"
-         y="242.36218"
+         y="442.36218"
          id="tspan6526">no</tspan></text>
     <rect
        width="280"
@@ -752,24 +812,24 @@
        rx="0.5"
        ry="0.49999997"
        x="240"
-       y="302.36218"
+       y="502.36218"
        id="rect3783-4-31"
        style="fill:#ffeeaa;fill-opacity:1;fill-rule:nonzero;stroke:none" />
     <path
-       d="M 419.99999,222.36216 420,292.36218"
+       d="M 419.99999,422.36216 420,492.36218"
        id="path5762-6-3"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM)" />
     <text
        x="380"
-       y="362.36218"
+       y="562.36218"
        id="text5171-7-1"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="380"
-         y="362.36218"
+         y="562.36218"
          id="tspan5388-5">static filtering?</tspan></text>
     <path
-       d="m 99.999995,-57.637827 139.999995,0"
+       d="m 99.999995,142.36217 139.999995,0"
        id="path8567"
        style="fill:none;stroke:#b0b0b0;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#DiamondSPd)" />
     <path
@@ -783,59 +843,54 @@
        rx="0.5"
        ry="0.49999997"
        x="240"
-       y="-297.63782"
+       y="-97.637817"
        id="rect3783-7"
        style="fill:#ffeeaa;fill-opacity:1;fill-rule:nonzero;stroke:none" />
-    <path
-       d="m 420,-377.63782 0,70"
-       id="path5762"
-       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM)" />
     <text
        x="380"
-       y="-247.63782"
+       y="-47.637817"
        id="text5171-8"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="380"
-         y="-247.63782"
+         y="-47.637817"
          id="tspan5175-2"
          style="font-style:italic;-inkscape-font-specification:Sans Italic">advanced user</tspan><tspan
          x="380"
-         y="-217.63782"
+         y="-17.637817"
          id="tspan5410">mode?</tspan></text>
     <text
        x="440"
-       y="-157.63782"
+       y="42.362183"
        id="text5946-9"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="440"
-         y="-157.63782"
+         y="42.362183"
          id="tspan5948-62">yes</tspan></text>
     <path
-       d="m 420,-177.63782 0,70"
+       d="m 420,22.36218 0,70"
        id="path5762-0"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM)" />
     <path
-       d="m 520,-17.63782 80,0"
+       d="m 520,182.36218 80,0"
        id="path5390-5"
        style="opacity:0.95999995;fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM)" />
     <text
-       x="540"
-       y="-197.63782"
+       x="538.51562"
+       y="1.3231113"
        id="text5946-7"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
-         x="540"
-         y="-197.63782"
+         x="538.51562"
+         y="1.3231113"
          id="tspan5948-9">no</tspan></text>
     <path
-       d="m 520,730 80,0"
-       transform="translate(0,-947.63782)"
+       d="m 520,-17.63782 80,0"
        id="path5695"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM-6)" />
     <path
-       d="m 100,342.36218 140,0"
+       d="m 100,542.36218 140,0"
        id="path8567-7"
        style="fill:none;stroke:#b0b0b0;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#DiamondSOI)" />
     <path
@@ -844,17 +899,17 @@
        id="path6779"
        style="fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM-6b)" />
     <path
-       d="m 420,422.36218 0,150"
+       d="m 420,622.36218 0,150"
        id="path5762-6-3-1"
        style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutMe9)" />
     <text
        x="460"
-       y="442.36218"
+       y="642.36218"
        id="text5946-8-3-5"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
          x="460"
-         y="442.36218"
+         y="642.36218"
          id="tspan6526-8">no filter</tspan></text>
     <text
        x="180"
@@ -887,65 +942,65 @@
          y="-847.63782"
          id="tspan5175-3-2">URL of page</tspan></text>
     <path
-       d="m 340,22.36218 0,40"
+       d="m 340,222.36218 0,40"
        id="path5762-6-9"
        style="fill:none;stroke:#cc0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#DotMc);display:inline" />
     <text
        x="310"
-       y="42.362179"
+       y="242.36218"
        id="text5946-8-7"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
          x="310"
-         y="42.362179"
+         y="242.36218"
          id="tspan5948-6-0">block</tspan></text>
     <path
-       d="m 340,222.36218 0,40"
+       d="m 340,422.36218 0,40"
        id="path5762-6-9-0"
        style="fill:none;stroke:#cc0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#DotMA);display:inline" />
     <text
        x="310"
-       y="242.36218"
+       y="442.36218"
        id="text5946-8-7-3"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
          x="310"
-         y="242.36218"
+         y="442.36218"
          id="tspan5948-6-0-3">block</tspan></text>
     <path
-       d="m 520,342.36218 180,0"
+       d="m 520,542.36218 180,0"
        id="path5390-1-2"
        style="fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutMx);display:inline" />
     <text
        x="590"
-       y="332.36218"
+       y="532.36218"
        id="text5946-2-9-9"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
          x="590"
-         y="332.36218"
+         y="532.36218"
          id="tspan5948-1-9-5">exception filter</tspan></text>
     <path
-       d="m 340,422.36218 0,40"
+       d="m 340,622.36218 0,40"
        id="path5762-6-9-0-9"
        style="fill:none;stroke:#cc0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#DotMf);display:inline" />
     <text
        x="290"
-       y="442.36218"
+       y="642.36218"
        id="text5946-8-7-3-2"
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
          x="290"
-         y="442.36218"
+         y="642.36218"
          id="tspan5948-6-0-3-0">block filter</tspan></text>
     <text
        x="420"
-       y="602.36218"
+       y="802.36218"
        id="text5946-8-7-3-2-4"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
          x="420"
-         y="602.36218"
+         y="802.36218"
          id="tspan5948-6-0-3-0-2">remote server</tspan></text>
     <text
        x="540"
@@ -957,8 +1012,7 @@
          y="-467.63782"
          id="tspan5948-62-1">yes</tspan></text>
     <path
-       d="m 750,1450 -690,0"
-       transform="translate(0,-947.63782)"
+       d="m 750,702.36218 -690,0"
        id="path12147"
        style="fill:#cccccc;stroke:#808080;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0" />
     <path
@@ -966,13 +1020,91 @@
        id="path12147-5"
        style="fill:#cccccc;stroke:#808080;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0;display:inline" />
     <text
-       x="638.15234"
-       y="-869.40344"
+       x="620"
+       y="-867.63782"
        id="text5171-77-67"
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
-         x="638.15234"
-         y="-869.40344"
+         x="620"
+         y="-867.63782"
          id="tspan5175-3-1">your browser</tspan></text>
+    <rect
+       width="280"
+       height="120"
+       rx="0.5"
+       ry="0.49999997"
+       x="240"
+       y="-297.63782"
+       id="rect3783-7-4"
+       style="fill:#ffeeaa;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline" />
+    <path
+       d="m 420,-377.63782 0,70"
+       id="path5762"
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM)" />
+    <text
+       x="380"
+       y="-247.63783"
+       id="text5171-8-9"
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+         x="380"
+         y="-247.63783"
+         id="tspan5410-4">url filtering rule?</tspan></text>
+    <path
+       d="m 520,-257.63783 180,0"
+       id="path5390-2"
+       style="opacity:0.95999995;fill:none;stroke:#00aa00;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutMW);display:inline" />
+    <text
+       x="550"
+       y="-267.63782"
+       id="text5574-7"
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+         x="550"
+         y="-267.63782"
+         id="tspan5576-8">allow</tspan></text>
+    <path
+       d="m 340,-177.63783 0,40"
+       id="path5762-6-9-9"
+       style="fill:none;stroke:#cc0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#DotMc);display:inline" />
+    <text
+       x="310"
+       y="-157.63783"
+       id="text5946-8-7-7"
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+         x="310"
+         y="-157.63783"
+         id="tspan5948-6-0-4">block</tspan></text>
+    <text
+       x="440.89844"
+       y="-157.8644"
+       id="text5946-5"
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+         x="440.89844"
+         y="-157.8644"
+         id="tspan5948-8">no</tspan></text>
+    <path
+       d="m 420,-177.63783 0,70"
+       id="path5762-3"
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM);display:inline" />
+    <path
+       d="m 100,-257.63782 140,0"
+       id="path8567-2"
+       style="fill:none;stroke:#b0b0b0;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#DiamondSPd);display:inline" />
+    <text
+       x="548.48438"
+       y="-198.6769"
+       id="text5946-2-8"
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+         x="548.48438"
+         y="-198.6769"
+         id="tspan5948-1-5">noop</tspan></text>
+    <path
+       d="m 520,-217.63783 80,0"
+       id="path5390-5-3"
+       style="opacity:0.95999995;fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutM);display:inline" />
   </g>
 </svg>

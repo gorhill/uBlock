@@ -38,10 +38,21 @@
     <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
     </div>
 
-<div style="display: none;">
+<div id="templates" style="display: none;">
     <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
     <div id="hiddenTemplate"><span style="display:none;"></span></div>
+    <div id="urlFilteringMenu">
+        <div class="dialog">
+            <div>
+                <span class="fa save">&#xf023;</span>
+                <label>Context: <select class="context"></select></label>&emsp;
+                <label>Type: <select class="type"><option><option value="*">*</select></label>
+            </div>
+            <div class="entries"></div>
+        </div>
     </div>
+    <div class="urlFilteringMenuEntry"><span class="action"><span class="allow"></span><span class="noop"></span><span class="block"></span></span><span class="url"></span></div>
+</div>
 
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
