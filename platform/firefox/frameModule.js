@@ -36,13 +36,27 @@ const hostName = Services.io.newURI(Components.stack.filename, null, null).host;
 /******************************************************************************/
 
 const getMessageManager = function(win) {
-    return win
+    let iface = win
         .QueryInterface(Ci.nsIInterfaceRequestor)
         .getInterface(Ci.nsIDocShell)
         .sameTypeRootTreeItem
         .QueryInterface(Ci.nsIDocShell)
-        .QueryInterface(Ci.nsIInterfaceRequestor)
-        .getInterface(Ci.nsIContentFrameMessageManager);
+        .QueryInterface(Ci.nsIInterfaceRequestor);
+
+    try {
+        return iface.getInterface(Ci.nsIContentFrameMessageManager);
+    } catch (ex) {
+        // This can throw. It appears `shouldLoad` can be called *after*  a
+        // tab has been closed. For example, a case where this happens all
+        // the time (FF38):
+        // - Open twitter.com (assuming you have an account and are logged in)
+        // - Close twitter.com
+        // There will be an exception raised when `shouldLoad` is called
+        // to process a XMLHttpRequest with URL `https://twitter.com/i/jot`
+        // fired from `https://twitter.com/`, *after*  the tab is closed.
+        // In such case, `win` is `about:blank`.
+    }
+    return null;
 };
 
 /******************************************************************************/
@@ -163,6 +177,10 @@ const contentObserver = {
         }
 
         let messageManager = getMessageManager(context);
+        if ( messageManager === null ) {
+            return this.ACCEPT;
+        }
+
         let details = {
             frameId: isTopLevel ? 0 : this.getFrameId(context),
             openerURL: openerURL,
