@@ -32,7 +32,7 @@
 
 /*******************************************************************************
 
-buckets: map of [origin + urlkey]
+buckets: map of [origin + urlkey + type]
      bucket: array of rule entry, sorted from shorter to longer url
 
 rule entry: { url, action }
@@ -127,6 +127,10 @@ var addRuleEntry = function(urls, url, action) {
 /******************************************************************************/
 
 var urlKeyFromURL = function(url) {
+    // Experimental: running benchmarks first
+    //if ( url === '*' ) {
+    //    return url;
+    //}
     var match = reURLKey.exec(url);
     return match !== null ? match[0] : '';
 };
@@ -142,7 +146,7 @@ var URLNetFiltering = function() {
 /******************************************************************************/
 
 // rules:
-//   hostname + urlkey => urls
+//   origin + urlkey + type => urls
 //     urls = collection of urls to match
 
 URLNetFiltering.prototype.reset = function() {
@@ -243,12 +247,12 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
         return this;
     }
 
-    var urls, pos, i, entry, prefixKey;
+    var urls, pos, i, entry, keyShard;
 
     for (;;) {
         this.context = context;
-        prefixKey = context + ' ' + urlKey;
-        if ( urls = this.rules[prefixKey + ' ' + type] ) {
+        keyShard = context + ' ' + urlKey;
+        if ( urls = this.rules[keyShard + ' ' + type] ) {
             i = indexOfMatch(urls, target);
             if ( i !== -1 ) {
                 entry = urls[i];
@@ -258,7 +262,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 return this;
             }
         }
-        if ( urls = this.rules[prefixKey + ' *'] ) {
+        if ( urls = this.rules[keyShard + ' *'] ) {
             i = indexOfMatch(urls, target);
             if ( i !== -1 ) {
                 entry = urls[i];
@@ -268,6 +272,21 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
                 return this;
             }
         }
+        /* Experimental: running benchmarks first
+        if ( urls = this.rules[context + ' * ' + type] ) {
+            entry = urls[0];
+            this.url = '*';
+            this.type = type;
+            this.r = entry.action;
+            return this;
+        }
+        if ( urls = this.rules[context + ' * *'] ) {
+            entry = urls[0];
+            this.url = this.type = '*';
+            this.r = entry.action;
+            return this;
+        }
+        */
         if ( context === '*' ) {
             break;
         }
@@ -300,6 +319,30 @@ URLNetFiltering.prototype.toFilterString = function() {
     }
     /* this.r === 3 */
     return 'ln:' + body + ' noop';
+};
+
+/******************************************************************************/
+
+URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
+    var changed = false;
+    var url, otherOwn, thisOwn;
+    var i = urls.length;
+    while ( i-- ) {
+        url = urls[i];
+        other.evaluateZ(context, url, type);
+        otherOwn = other.context === context && other.url === url && other.type === type;
+        this.evaluateZ(context, url, type);
+        thisOwn = this.context === context && this.url === url && this.type === type;
+        if ( otherOwn && !thisOwn ) {
+            this.setRule(context, url, type, other.r);
+            changed = true;
+        }
+        if ( !otherOwn && thisOwn ) {
+            this.removeRule(context, url, type);
+            changed = true;
+        }
+    }
+    return changed;
 };
 
 /******************************************************************************/

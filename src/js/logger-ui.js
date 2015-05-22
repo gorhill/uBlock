@@ -645,6 +645,8 @@ var urlFilteringMenu = (function() {
             return;
         }
 
+        var persist = !!ev.ctrlKey || !!ev.metaKey;
+
         // Remove url filtering rule
         if ( target.classList.contains('action') ) {
             messager.send({
@@ -652,7 +654,8 @@ var urlFilteringMenu = (function() {
                 context: selectContext.value,
                 url: target.getAttribute('data-url'),
                 type: uglyTypeFromSelector(),
-                action: 0
+                action: 0,
+                persist: persist
             }, colorize);
             return;
         }
@@ -664,7 +667,8 @@ var urlFilteringMenu = (function() {
                 context: selectContext.value,
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector(),
-                action: 2
+                action: 2,
+                persist: persist
             }, colorize);
             return;
         }
@@ -676,7 +680,8 @@ var urlFilteringMenu = (function() {
                 context: selectContext.value,
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector(),
-                action: 3
+                action: 3,
+                persist: persist
             }, colorize);
             return;
         }
@@ -688,7 +693,8 @@ var urlFilteringMenu = (function() {
                 context: selectContext.value,
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector(),
-                action: 1
+                action: 1,
+                persist: persist
             }, colorize);
             return;
         }

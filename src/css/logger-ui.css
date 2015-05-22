@@ -277,6 +277,7 @@ body[dir="rtl"] #popupContainer > div {
 #urlFilteringMenu .dialog {
     background-color: white;
     border: 1px solid gray;
+    max-width: 70%;
     padding: 0.2em;
     position: fixed;
     }
@@ -310,7 +311,6 @@ body.dirty #urlFilteringMenu .save {
 #urlFilteringMenu .entries {
     font-size: 13px;
     max-height: 12em;
-    max-width: 70vw;
     overflow-y: auto;
     }
 #urlFilteringMenu .entries > div {

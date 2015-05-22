@@ -1212,35 +1212,6 @@ var getURLFilteringData = function(details) {
 
 /******************************************************************************/
 
-var saveTemporaryURLFilteringRules = function(details) {
-    var changed = false;
-    var suf = µb.sessionURLFiltering;
-    var puf = µb.permanentURLFiltering;
-    var urls = details.urls,
-        context = details.context,
-        type = details.type;
-    var url, sOwn, pOwn;
-    var i = urls.length;
-    while ( i-- ) {
-        url = urls[i];
-        suf.evaluateZ(context, url, type);
-        sOwn = suf.context === context && suf.url === url && suf.type === type;
-        puf.evaluateZ(context, url, type);
-        pOwn = puf.context === context && puf.url === url && puf.type === type;
-        if ( sOwn && !pOwn ) {
-            puf.setRule(context, url, type, suf.r);
-            changed = true;
-        }
-        if ( !sOwn && pOwn ) {
-            puf.removeRule(context, url, type);
-            changed = true;
-        }
-    }
-    return changed;
-};
-
-/******************************************************************************/
-
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -1276,7 +1247,13 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'saveURLFilteringRules':
-        if ( saveTemporaryURLFilteringRules(request) ) {
+        response = µb.permanentURLFiltering.copyRules(
+            µb.sessionURLFiltering,
+            request.context,
+            request.urls,
+            request.type
+        );
+        if ( response ) {
             µb.savePermanentURLFilteringRules();
         }
         break;

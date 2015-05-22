@@ -325,6 +325,21 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     }
 
     this.cosmeticFilteringEngine.removeFromSelectorCache(details.context, 'net');
+
+    if ( !details.persist ) {
+        return;
+    }
+
+    changed = this.permanentURLFiltering.setRule(
+        details.context,
+        details.url,
+        details.type,
+        details.action
+    );
+
+    if ( changed ) {
+        this.savePermanentFirewallRules();
+    }
 };
 
 /******************************************************************************/
