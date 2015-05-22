@@ -72,19 +72,24 @@ var handleImportFilePicker = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
     var abpImporter = function(s) {
-        var reAbpExtractor = /\n\[Subscription\]\n+url=~[\x08-\x7E]+?\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
-        var matches = reAbpExtractor.exec(s);
+        var reAbpSubscriptionExtractor = /\n\[Subscription\]\n+url=~[^\n]+([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
+        var reAbpFilterExtractor = /\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/i;
+        var matches = reAbpSubscriptionExtractor.exec(s);
         // Not an ABP backup file
         if ( matches === null ) {
             return s;
         }
+        // 
         var out = [];
+        var filterMatch;
         while ( matches !== null ) {
-            if ( matches.length !== 2 ) {
-                continue;
+            if ( matches.length === 2 ) {
+                filterMatch = reAbpFilterExtractor.exec(matches[1].trim());
+                if ( filterMatch !== null && filterMatch.length === 2 ) {
+                    out.push(filterMatch[1].trim().replace(/\\\[/g, '['));
+                }
             }
-            out.push(matches[1].trim().replace(/\\\[/g, '['));
-            matches = reAbpExtractor.exec(s);
+            matches = reAbpSubscriptionExtractor.exec(s);
         }
         return out.join('\n');
     };

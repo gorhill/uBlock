@@ -500,8 +500,8 @@
     "description":"Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
-    "description":"Firefox/Fennec-specific: Show Network Request Log"
+    "message":"Show Logger",
+    "description":"Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "off",
