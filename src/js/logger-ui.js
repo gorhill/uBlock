@@ -816,12 +816,19 @@ var rowFilterer = (function() {
     var parseInput = function() {
         filters = [];
 
-        var rawPart, not, hardBeg, hardEnd, reStr;
+        var rawPart, hardBeg, hardEnd;
         var raw = uDom('#filterInput').val().trim();
         var rawParts = raw.split(/\s+/);
+        var reStr, reStrs = [], not = false;
         var i = rawParts.length;
         while ( i-- ) {
             rawPart = rawParts[i];
+            if ( rawPart.charAt(0) === '!' ) {
+                if ( reStrs.length === 0 ) {
+                    not = true;
+                }
+                rawPart = rawPart.slice(1);
+            }
             not = rawPart.charAt(0) === '!';
             if ( not ) {
                 rawPart = rawPart.slice(1);
@@ -846,10 +853,17 @@ var rowFilterer = (function() {
             if ( hardEnd ) {
                 reStr += '(?:\\s|$)';
             }
+            reStrs.push(reStr);
+            if ( i !== 0 && rawParts[i-1] === '||' ) {
+                continue;
+            }
+            reStr = reStrs.length === 1 ? reStrs[0] : reStrs.join('|');
             filters.push({
                 re: new RegExp(reStr, 'i'),
                 r: !not
             });
+            reStrs = [];
+            not = false;
         }
     };
 
