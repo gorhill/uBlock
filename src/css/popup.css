@@ -468,7 +468,7 @@ body.portrait #firewallContainer > div > span:nth-of-type(4) {
     display: none;
     left: 4px;
     padding: 0;
-    position: absolute;
+    position: fixed;
     top: 4px;
     }
 #rulesetTools > span {
