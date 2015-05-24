@@ -283,8 +283,14 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 /******************************************************************************/
 
 µBlock.elementPickerExec = function(tabId, targetElement) {
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+        return;
+    }
     this.epickerTarget = targetElement || '';
-    vAPI.tabs.injectScript(tabId, { file: 'js/element-picker.js' });
+    vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/element-picker.js' });
+    if ( typeof vAPI.tabs.select === 'function' ) {
+        vAPI.tabs.select(tabId);
+    }
 };
 
 /******************************************************************************/
@@ -364,7 +370,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
     // Take action if needed
     if ( details.name === 'no-cosmetic-filtering' ) {
         vAPI.tabs.injectScript(details.tabId, {
-            file: 'js/cosmetic-' + (details.state ? 'off' : 'on') + '.js',
+            file: 'js/scriptlets/cosmetic-' + (details.state ? 'off' : 'on') + '.js',
             allFrames: true
         });
         return;
@@ -382,7 +388,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         callback();
         return;
     }
-    vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-survey.js' }, callback);
+    vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/cosmetic-survey.js' }, callback);
 };
 
 /******************************************************************************/
@@ -392,7 +398,7 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     var injectNow = function(tabId) {
         delete tabIdToTimerMap[tabId];
-        vAPI.tabs.injectScript(tabId, { file: 'js/cosmetic-logger.js' });
+        vAPI.tabs.injectScript(tabId, { file: 'js/scriptlets/cosmetic-logger.js' });
     };
 
     var injectAsync = function(tabId) {
@@ -407,6 +413,16 @@ var matchWhitelistDirective = function(url, hostname, directive) {
 
     return injectAsync;
 })();
+
+/******************************************************************************/
+
+µBlock.scriptletGotoImageURL = function(details) {
+    if ( vAPI.isBehindTheSceneTabId(details.tabId) ) {
+        return;
+    }
+    this.scriptlets.gotoImageURL = details.url;
+    vAPI.tabs.injectScript(details.tabId, { file: 'js/scriptlets/goto-img.js' });
+};
 
 /******************************************************************************/
 

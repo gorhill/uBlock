@@ -144,12 +144,13 @@ return {
     noopFunc: function(){},
 
     apiErrorCount: 0,
-    contextMenuTarget: '',
     contextMenuClientX: -1,
     contextMenuClientY: -1,
-
     epickerTarget: '',
     epickerEprom: null,
+
+    scriptlets: {
+    },
 
     // so that I don't have to care for last comma
     dummy: 0

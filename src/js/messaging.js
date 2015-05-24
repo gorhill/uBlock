@@ -83,8 +83,18 @@ var onMessage = function(request, sender, callback) {
         response = µb.userSettings;
         break;
 
+    case 'launchElementPicker':
+        // Launched from some auxiliary pages, clear context menu coords.
+        µb.contextMenuClientX = µb.contextMenuClientY = -1;
+        µb.elementPickerExec(request.tabId, request.targetURL);
+        break;
+
     case 'gotoURL':
         vAPI.tabs.open(request.details);
+        break;
+
+    case 'scriptletGotoImageURL':
+        µb.scriptletGotoImageURL(request);
         break;
 
     case 'reloadTab':
@@ -322,16 +332,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'gotoPick':
-        // Picker launched from popup: clear context menu args
-        µb.contextMenuClientX = -1;
-        µb.contextMenuClientY = -1;
-        µb.elementPickerExec(request.tabId);
-        if ( request.select && vAPI.tabs.select ) {
-            vAPI.tabs.select(request.tabId);
-        }
-        break;
-
     case 'hasPopupContentChanged':
         pageStore = µb.pageStoreFromTabId(request.tabId);
         var lastModified = pageStore ? pageStore.contentLastModified : 0;
@@ -542,80 +542,6 @@ vAPI.messaging.listen('contentscript-end.js', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
-// cosmetic-*.js
-
-(function() {
-
-'use strict';
-
-/******************************************************************************/
-
-var µb = µBlock;
-
-/******************************************************************************/
-
-var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isEnabled() === false ) {
-        return;
-    }
-
-    var selectors = details.matchedSelectors;
-
-    selectors.sort();
-
-    for ( var i = 0; i < selectors.length; i++ ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            'cb:##' + selectors[i],
-            'dom',
-            details.pageURL
-        );
-    }
-};
-
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-    // Async
-    switch ( request.what ) {
-        default:
-            break;
-    }
-
-    // Sync
-    var response;
-
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
-
-    switch ( request.what ) {
-    case 'liveCosmeticFilteringData':
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore ) {
-            pageStore.hiddenElementCount = request.filteredElementCount;
-        }
-        break;
-
-    case 'logCosmeticFilteringData':
-        logCosmeticFilters(tabId, request);
-        break;
-
-    default:
-        return vAPI.messaging.UNHANDLED;
-    }
-
-    callback(response);
-};
-
-vAPI.messaging.listen('cosmetic-*.js', onMessage);
-
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
 // element-picker.js
 
 (function() {
@@ -654,13 +580,13 @@ var onMessage = function(request, sender, callback) {
 
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.contextMenuTarget,
+                target: µb.epickerTarget,
                 clientX: µb.contextMenuClientX,
                 clientY: µb.contextMenuClientY,
                 eprom: µb.epickerEprom
             });
 
-            µb.contextMenuTarget = '';
+            µb.epickerTarget = '';
             µb.contextMenuClientX = -1;
             µb.contextMenuClientY = -1;
         };
@@ -1357,6 +1283,83 @@ var onMessage = function(request, sender, callback) {
 };
 
 vAPI.messaging.listen('document-blocked.js', onMessage);
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// scriptlets
+
+(function() {
+
+'use strict';
+
+/******************************************************************************/
+
+var µb = µBlock;
+
+/******************************************************************************/
+
+var logCosmeticFilters = function(tabId, details) {
+    if ( µb.logger.isEnabled() === false ) {
+        return;
+    }
+
+    var selectors = details.matchedSelectors;
+
+    selectors.sort();
+
+    for ( var i = 0; i < selectors.length; i++ ) {
+        µb.logger.writeOne(
+            tabId,
+            'cosmetic',
+            'cb:##' + selectors[i],
+            'dom',
+            details.pageURL
+        );
+    }
+};
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+    default:
+        break;
+    }
+
+    // Sync
+    var response;
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
+
+    switch ( request.what ) {
+    case 'gotoImageURL':
+        response = µb.scriptlets.gotoImageURL;
+        break;
+
+    case 'liveCosmeticFilteringData':
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore ) {
+            pageStore.hiddenElementCount = request.filteredElementCount;
+        }
+        break;
+
+    case 'logCosmeticFilteringData':
+        logCosmeticFilters(tabId, request);
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen('scriptlets', onMessage);
 
 /******************************************************************************/
 

@@ -504,10 +504,9 @@ var toggleNetFilteringSwitch = function(ev) {
 
 var gotoPick = function() {
     messager.send({
-        what: 'gotoPick',
-        tabId: popupData.tabId,
-        select: true
-});
+        what: 'launchElementPicker',
+        tabId: popupData.tabId
+    });
 
     vAPI.closePopup();
 };

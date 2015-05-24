@@ -917,10 +917,17 @@ var startPicker = function(details) {
         if ( src !== url ) {
             continue;
         }
+        elem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
         filtersFromElement(elem);
         showDialog({ modifier: true });
         return;
     }
+
+    // A target was specified, but it wasn't found: abort.
+    stopPicker();
 };
 
 /******************************************************************************/

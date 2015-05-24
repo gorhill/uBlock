@@ -508,12 +508,14 @@ PageStore.prototype.filterRequest = function(context) {
     // evaluation of static filtering.
     if ( result === '' && µb.userSettings.advancedUserEnabled ) {
         µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, context.requestType);
-        result = µb.sessionFirewall.toFilterString();
+        if ( µb.sessionFirewall.mustBlockOrAllow() ) {
+            result = µb.sessionFirewall.toFilterString();
+        }
     }
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        result = µb.staticNetFilteringEngine.matchString(context);
+        result = µb.staticNetFilteringEngine.matchString(context) || result;
     }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
@@ -546,12 +548,14 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     // evaluation of static filtering.
     if ( result === '' && µb.userSettings.advancedUserEnabled ) {
         µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
-        result = µb.sessionFirewall.toFilterString();
+        if ( µb.sessionFirewall.mustBlockOrAllow() ) {
+            result = µb.sessionFirewall.toFilterString();
+        }
     }
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        result = µb.staticNetFilteringEngine.matchString(context);
+        result = µb.staticNetFilteringEngine.matchString(context) || result;
     }
 
     return result;

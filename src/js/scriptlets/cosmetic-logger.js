@@ -31,45 +31,60 @@
 
 // https://github.com/gorhill/uBlock/issues/464
 if ( document instanceof HTMLDocument === false ) {
-    //console.debug('cosmetic-survey.js > not a HTLMDocument');
+    //console.debug('cosmetic-logger.js > not a HTLMDocument');
     return;
 }
 
 // This can happen
-if ( !vAPI ) {
-    //console.debug('cosmetic-survey.js > vAPI not found');
+if ( typeof vAPI !== 'object' ) {
+    //console.debug('cosmetic-logger.js > vAPI not found');
     return;
 }
 
 /******************************************************************************/
 
-// Insert all cosmetic filtering-related style tags in the DOM
+var loggedSelectors = vAPI.loggedSelectors || {};
 
 var injectedSelectors = [];
-var filteredElementCount = 0;
-
 var reProperties = /\s*\{[^}]+\}\s*/;
 var i;
-
 var styles = vAPI.styles || [];
+
 i = styles.length;
 while ( i-- ) {
     injectedSelectors = injectedSelectors.concat(styles[i].textContent.replace(reProperties, '').split(/\s*,\n\s*/));
 }
 
-if ( injectedSelectors.length !== 0 ) {
-    filteredElementCount = document.querySelectorAll(injectedSelectors.join(',')).length;
+if ( injectedSelectors.length === 0 ) {
+    return;
 }
+
+var matchedSelectors = [];
+var selector;
+
+i = injectedSelectors.length;
+while ( i-- ) {
+    selector = injectedSelectors[i];
+    if ( loggedSelectors.hasOwnProperty(selector) ) {
+        continue;
+    }
+    if ( document.querySelector(selector) === null ) {
+        continue;
+    }
+    loggedSelectors[selector] = true;
+    matchedSelectors.push(selector);
+}
+
+vAPI.loggedSelectors = loggedSelectors;
 
 /******************************************************************************/
 
-var localMessager = vAPI.messaging.channel('cosmetic-*.js');
+var localMessager = vAPI.messaging.channel('scriptlets');
 
 localMessager.send({
-    what: 'liveCosmeticFilteringData',
+    what: 'logCosmeticFilteringData',
     pageURL: window.location.href,
-    filteredElementCount: filteredElementCount,
-    injectedSelectors: injectedSelectors
+    matchedSelectors: matchedSelectors
 }, function() {
     localMessager.close();
 });

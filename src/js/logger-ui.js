@@ -92,6 +92,16 @@ var classNameFromTabId = function(tabId) {
 
 /******************************************************************************/
 
+var tabIdFromClassName = function(className) {
+    var matches = className.match(/(?:^| )tab_([^ ]+)(?: |$)/);
+    if ( matches === null ) {
+        return '';
+    }
+    return matches[1];
+};
+
+/******************************************************************************/
+
 var retextFromStaticFilteringResult = function(result) {
     var retext = result.slice(3);
     var pos = retext.indexOf('$');
@@ -267,23 +277,26 @@ var renderNetLogEntry = function(tr, entry) {
         tr.classList.add(filterCat.slice(0, 2));
     }
 
-    td = tr.cells[2];
+    var filterText = filter.slice(3);
+    if ( filter.lastIndexOf('sa', 0) === 0 ) {
+        filterText = '@@' + filterText;
+    }
+    tr.cells[2].textContent = filterText;
+
+    td = tr.cells[3];
     if ( filter.charAt(1) === 'b' ) {
         tr.classList.add('blocked');
         td.textContent = '--';
     } else if ( filter.charAt(1) === 'a' ) {
         tr.classList.add('allowed');
         td.textContent = '++';
+    } else if ( filter.charAt(1) === 'n' ) {
+        tr.classList.add('nooped');
+        td.textContent = '**';
     } else {
         td.textContent = '';
     }
 
-    var filterText = filter.slice(3);
-    if ( filter.lastIndexOf('sa', 0) === 0 ) {
-        filterText = '@@' + filterText;
-    }
-
-    tr.cells[3].textContent = filterText;
     tr.cells[4].textContent = (prettyRequestTypes[type] || type);
     tr.cells[5].appendChild(nodeFromURL(url, filter));
 };
@@ -540,14 +553,11 @@ var pageSelectorChanged = function() {
 
 var reloadTab = function() {
     var tabClass = document.getElementById('pageSelector').value;
-    var matches = tabClass.match(/^tab_(.+)$/);
-    if ( matches === null ) {
+    var tabId = tabIdFromClassName(tabClass);
+    if ( tabId === 'bts' || tabId === '' ) {
         return;
     }
-    if ( matches[1] === 'bts' ) {
-        return;
-    }
-    messager.send({ what: 'reloadTab', tabId: matches[1] });
+    messager.send({ what: 'reloadTab', tabId: tabId });
 };
 
 /******************************************************************************/
@@ -577,11 +587,11 @@ var onMaxEntriesChanged = function() {
 
 var urlFilteringMenu = (function() {
     var menu = document.querySelector('#urlFilteringMenu');
-    var menuDialog = menu.querySelector('.dialog');
-    var selectContext = menuDialog.querySelector('.context');
-    var selectType = menuDialog.querySelector('.type');
-    var menuEntries = menu.querySelector('.entries');
+    var dialog = menu.querySelector('.dialog');
+    var selectContext = dialog.querySelector('.context');
+    var selectType = dialog.querySelector('.type');
     var menuURLs = [];
+    var tabId = '';
 
     var removeAllChildren = function(node) {
         while ( node.firstChild ) {
@@ -603,7 +613,7 @@ var urlFilteringMenu = (function() {
                 continue;
             }
             colorEntry = colorEntries[url];
-            node = menu.querySelector('.entries [data-url="' + url + '"]');
+            node = menu.querySelector('.entry .action[data-url="' + url + '"]');
             if ( node === null ) {
                 continue;
             }
@@ -698,6 +708,45 @@ var urlFilteringMenu = (function() {
             }, colorize);
             return;
         }
+
+        // Force a reload of the tab
+        if ( target.classList.contains('reload') ) {
+            messager.send({
+                what: 'reloadTab',
+                tabId: tabId
+            });
+            return;
+        }
+
+        // Hightlight corresponding element in target web page
+        if ( target.classList.contains('picker') ) {
+            messager.send({
+                what: 'launchElementPicker',
+                tabId: tabId,
+                targetURL: 'img\t' + menuURLs[0],
+                select: true
+            });
+            return;
+        }
+    };
+
+    // Enable interactive tools if resource was not blocked
+    var createPreviewIf = function(type, url) {
+        var preview = null;
+
+        if ( type === 'image' ) {
+            preview = document.createElement('img');
+            preview.setAttribute('src', url);
+        }
+
+        // More...
+
+        var container = dialog.querySelector('table.toolbar td.preview');
+        container.classList.toggle('hide', preview === null);
+        if ( preview === null ) {
+            return;
+        }
+        container.appendChild(preview);
     };
 
     var toggleOn = function(ev) {
@@ -714,6 +763,8 @@ var urlFilteringMenu = (function() {
         if ( !type ) {
             return;
         }
+
+        tabId = tabIdFromClassName(tr.className);
 
         var pos, option;
 
@@ -747,9 +798,14 @@ var urlFilteringMenu = (function() {
             return;
         }
 
+        uDom(dialog).descendants('.picker').toggleClass(
+            'hide',
+            type !== 'image' || /(?:^| )[dlsu]b(?: |$)/.test(tr.className)
+        );
+
         // Shortest URL which for a valid URL filtering rule
         var candidateRootURL = matches[1] + matches[2];
-        menuURLs.push(candidateRootURL);
+        menuURLs.unshift(candidateRootURL);
         var candidatePath = matches[3] || '';
         pos = candidatePath.charAt(0) === '/' ? 1 : 0;
         while ( pos < candidatePath.length ) {
@@ -757,34 +813,33 @@ var urlFilteringMenu = (function() {
             if ( pos === -1 ) {
                 pos = candidatePath.length;
             }
-            menuURLs.push(candidateRootURL + candidatePath.slice(0, pos));
+            menuURLs.unshift(candidateRootURL + candidatePath.slice(0, pos));
         }
         var candidateQuery = matches[4] || '';
         if ( candidateQuery !== '') {
-            menuURLs.push(candidateRootURL + candidatePath + candidateQuery);
+            menuURLs.unshift(candidateRootURL + candidatePath + candidateQuery);
         }
 
+        // Create preview whenever possible
+        createPreviewIf(type, menuURLs[0]);
+
         // Fill menu
-        var menuEntryTemplate = document.querySelector('#templates .urlFilteringMenuEntry');
+        var menuEntryTemplate = dialog.querySelector('table.toolbar tr.entry');
+        var tbody = dialog.querySelector('div.entries tbody');
 
         // Adding URL filtering rules
-        var i = menuURLs.length;
         var url, menuEntry;
-        while ( i-- ) {
+        for ( var i = 0; i < menuURLs.length; i++ ) {
             url = menuURLs[i];
             menuEntry = menuEntryTemplate.cloneNode(true);
-            menuEntry.children[0].setAttribute('data-url', url);
-            menuEntry.children[1].textContent = url;
-            menuEntries.appendChild(menuEntry);
+            menuEntry.cells[0].children[0].setAttribute('data-url', url);
+            menuEntry.cells[1].textContent = url;
+            tbody.appendChild(menuEntry);
         }
 
         colorize();
 
-        var rect = td.getBoundingClientRect();
-        menuDialog.style.setProperty('left', rect.left + 'px');
-        menuDialog.style.setProperty('top', rect.bottom + 'px');
         document.body.appendChild(menu);
-
         menu.addEventListener('click', onClick, true);
         selectContext.addEventListener('change', colorize);
         selectType.addEventListener('change', colorize);
@@ -794,7 +849,8 @@ var urlFilteringMenu = (function() {
         if ( menu.parentNode === null ) {
             return;
         }
-        removeAllChildren(menuEntries);
+        uDom('table.toolbar td.preview > *').remove();
+        uDom(dialog).descendants('div.entries tr').remove();
         selectContext.removeEventListener('change', colorize);
         selectType.removeEventListener('change', colorize);
         menu.removeEventListener('click', onClick, true);
@@ -845,8 +901,7 @@ var rowFilterer = (function() {
                 continue;
             }
             // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
-            reStr = rawPart.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
-                           .replace(/\*/g, '.*');
+            reStr = rawPart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             if ( hardBeg ) {
                 reStr = '(?:^|\\s)' + reStr;
             }
@@ -1003,7 +1058,7 @@ var popupManager = (function() {
     var popupObserver = null;
     var style = null;
     var styleTemplate = [
-        'tr:not(.tab_{{tabId}}) {',
+        '#content tr:not(.tab_{{tabId}}) {',
             'cursor: not-allowed;',
             'opacity: 0.2;',
         '}'
@@ -1036,11 +1091,10 @@ var popupManager = (function() {
 
     var toggleOn = function(td) {
         var tr = td.parentNode;
-        var matches = tr.className.match(/(?:^| )tab_([^ ]+)/);
-        if ( matches === null ) {
+        realTabId = localTabId = tabIdFromClassName(tr.className);
+        if ( realTabId === '' ) {
             return;
         }
-        realTabId = localTabId = matches[1];
         if ( localTabId === 'bts' ) {
             realTabId = noTabId;
         }
@@ -1115,7 +1169,7 @@ uDom.onLoad(function() {
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(3)', urlFilteringMenu.toggleOn);
+    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', urlFilteringMenu.toggleOn);
 });
 
 /******************************************************************************/

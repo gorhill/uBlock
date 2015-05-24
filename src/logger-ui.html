@@ -26,8 +26,8 @@
     </div>
 
 <div id="content">
-    <style id="tabFilterer"></style>
-    <style id="popupFilterer"></style>
+    <style id="tabFilterer" scoped></style>
+    <style id="popupFilterer" scoped></style>
     <table>
         <colgroup><col><col><col><col><col></colgroup>
         <tbody></tbody>
@@ -43,15 +43,31 @@
     <div id="hiddenTemplate"><span style="display:none;"></span></div>
     <div id="urlFilteringMenu">
         <div class="dialog">
-            <div>
-                <span class="fa save">&#xf023;</span>
-                <label>Context: <select class="context"></select></label>&emsp;
-                <label>Type: <select class="type"><option><option value="*">*</select></label>
+            <table class="toolbar">
+                <colgroup><col><col></colgroup>
+                <tbody>
+                <tr>
+                    <td colspan="2" class="hide preview">
+                <tr>
+                    <td><span class="fa save">&#xf023;</span>
+                    <td><label>Context: <select class="context"></select></label>&emsp;
+                        <label>Type: <select class="type"><option><option value="*">*</select></label>&emsp;
+                        <span class="fa reload">&#xf021;</span>&emsp;<span class="fa picker">&#xf1fb;</span>
+                <tr class="entry">
+                    <td><div class="action"><span class="allow">&nbsp;</span><span class="noop">&nbsp;</span><span class="block">&nbsp;</span></div>
+                    <td class="url">
+                </tbody>
+            </table>
+            <div class="header">Dynamic URL filtering</div>
+            <div class="entries">
+                <table>
+                    <colgroup><col><col></colgroup>
+                    <tbody></tbody>
+                </table>
             </div>
-            <div class="entries"></div>
+            <!-- <div class="header">Static URL filtering (TBD)</div> -->
         </div>
     </div>
-    <div class="urlFilteringMenuEntry"><span class="action"><span class="allow"></span><span class="noop"></span><span class="block"></span></span><span class="url"></span></div>
 </div>
 
 <script src="js/vapi-common.js"></script>

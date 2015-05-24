@@ -392,6 +392,27 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
 
 /******************************************************************************/
 
+// Select a specific tab.
+
+vAPI.tabs.select = function(tabId) {
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        return;
+    }
+
+    chrome.tabs.update(tabId, { active: true }, function(tab) {
+        if ( chrome.runtime.lastError ) {
+            /* noop */
+        }
+        if ( !tab ) {
+            return;
+        }
+        chrome.windows.update(tab.windowId, { focused: true });
+    });
+};
+
+/******************************************************************************/
+
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
