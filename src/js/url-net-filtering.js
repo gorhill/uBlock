@@ -347,7 +347,7 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
 
 /******************************************************************************/
 
-// "url-filtering:" hostname url action
+// "url-filtering:" hostname url type action
 
 URLNetFiltering.prototype.toString = function() {
     var out = [];

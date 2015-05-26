@@ -342,7 +342,7 @@ body[dir="rtl"] #popupContainer > div {
     }
 #urlFilteringMenu .dialog > table.toolbar select {
     font: 14px;
-    height: 1.8em;
+    height: 2em;
     }
 #urlFilteringMenu .dialog > table.toolbar .fa {
     cursor: pointer;
