@@ -51,6 +51,7 @@ var allTabIds = {};
 var allTabIdsToken;
 var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+var urlFilteringMenu = document.querySelector('#urlFilteringMenu');
 
 var prettyRequestTypes = {
     'main_frame': 'doc',
@@ -585,12 +586,11 @@ var onMaxEntriesChanged = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var urlFilteringMenu = (function() {
-    var menu = document.querySelector('#urlFilteringMenu');
-    var dialog = menu.querySelector('.dialog');
-    var selectContext = dialog.querySelector('.context');
-    var selectType = dialog.querySelector('.type');
-    var menuURLs = [];
+var urlFilteringDialog = (function() {
+    var dialog = null;
+    var selectContext = null;
+    var selectType = null;
+    var targetURLs = [];
     var tabId = '';
 
     var removeAllChildren = function(node) {
@@ -613,7 +613,7 @@ var urlFilteringMenu = (function() {
                 continue;
             }
             colorEntry = colorEntries[url];
-            node = menu.querySelector('.entry .action[data-url="' + url + '"]');
+            node = urlFilteringMenu.querySelector('.entry .action[data-url="' + url + '"]');
             if ( node === null ) {
                 continue;
             }
@@ -628,7 +628,7 @@ var urlFilteringMenu = (function() {
         messager.send({
             what: 'getURLFilteringData',
             context: selectContext.value,
-            urls: menuURLs,
+            urls: targetURLs,
             type: uglyTypeFromSelector()
         }, onColorsReady);
     };
@@ -644,12 +644,14 @@ var urlFilteringMenu = (function() {
 
         ev.stopPropagation();
 
+        var tcl = target.classList;
+
         // Save url filtering rule(s)
-        if ( target.classList.contains('save') ) {
+        if ( tcl.contains('save') ) {
             messager.send({
                 what: 'saveURLFilteringRules',
                 context: selectContext.value,
-                urls: menuURLs,
+                urls: targetURLs,
                 type: uglyTypeFromSelector()
             }, colorize);
             return;
@@ -658,7 +660,7 @@ var urlFilteringMenu = (function() {
         var persist = !!ev.ctrlKey || !!ev.metaKey;
 
         // Remove url filtering rule
-        if ( target.classList.contains('action') ) {
+        if ( tcl.contains('action') ) {
             messager.send({
                 what: 'setURLFilteringRule',
                 context: selectContext.value,
@@ -671,7 +673,7 @@ var urlFilteringMenu = (function() {
         }
 
         // add "allow" url filtering rule
-        if ( target.classList.contains('allow') ) {
+        if ( tcl.contains('allow') ) {
             messager.send({
                 what: 'setURLFilteringRule',
                 context: selectContext.value,
@@ -684,7 +686,7 @@ var urlFilteringMenu = (function() {
         }
 
         // add "block" url filtering rule
-        if ( target.classList.contains('noop') ) {
+        if ( tcl.contains('noop') ) {
             messager.send({
                 what: 'setURLFilteringRule',
                 context: selectContext.value,
@@ -697,7 +699,7 @@ var urlFilteringMenu = (function() {
         }
 
         // add "block" url filtering rule
-        if ( target.classList.contains('block') ) {
+        if ( tcl.contains('block') ) {
             messager.send({
                 what: 'setURLFilteringRule',
                 context: selectContext.value,
@@ -710,7 +712,7 @@ var urlFilteringMenu = (function() {
         }
 
         // Force a reload of the tab
-        if ( target.classList.contains('reload') ) {
+        if ( tcl.contains('reload') ) {
             messager.send({
                 what: 'reloadTab',
                 tabId: tabId
@@ -719,19 +721,18 @@ var urlFilteringMenu = (function() {
         }
 
         // Hightlight corresponding element in target web page
-        if ( target.classList.contains('picker') ) {
+        if ( tcl.contains('picker') ) {
             messager.send({
                 what: 'launchElementPicker',
                 tabId: tabId,
-                targetURL: 'img\t' + menuURLs[0],
+                targetURL: 'img\t' + targetURLs[0],
                 select: true
             });
             return;
         }
     };
 
-    // Enable interactive tools if resource was not blocked
-    var createPreviewIf = function(type, url) {
+    var createPreview = function(type, url) {
         var preview = null;
 
         if ( type === 'image' ) {
@@ -750,18 +751,25 @@ var urlFilteringMenu = (function() {
     };
 
     var toggleOn = function(ev) {
+        if ( dialog !== null ) {
+            return toggleOff();
+        }
+        dialog = urlFilteringMenu.querySelector('.dialog');
+        selectContext = dialog.querySelector('.context');
+        selectType = dialog.querySelector('.type');
+
         var td = ev.target;
         var tr = td.parentElement;
         var cells = tr.cells;
 
         var context = tr.getAttribute('data-context');
         if ( !context ) {
-            return;
+            return toggleOff();
         }
 
         var type = cells[4].textContent.trim();
         if ( !type ) {
-            return;
+            return toggleOff();
         }
 
         tabId = tabIdFromClassName(tr.className);
@@ -795,7 +803,7 @@ var urlFilteringMenu = (function() {
         var candidateURL = cells[5].textContent;
         var matches = reRFC3986.exec(candidateURL);
         if ( matches === null || !matches[1] || !matches[2] ) {
-            return;
+            return toggleOff();
         }
 
         uDom(dialog).descendants('.picker').toggleClass(
@@ -805,7 +813,7 @@ var urlFilteringMenu = (function() {
 
         // Shortest URL which for a valid URL filtering rule
         var candidateRootURL = matches[1] + matches[2];
-        menuURLs.unshift(candidateRootURL);
+        targetURLs.unshift(candidateRootURL);
         var candidatePath = matches[3] || '';
         pos = candidatePath.charAt(0) === '/' ? 1 : 0;
         while ( pos < candidatePath.length ) {
@@ -813,15 +821,15 @@ var urlFilteringMenu = (function() {
             if ( pos === -1 ) {
                 pos = candidatePath.length;
             }
-            menuURLs.unshift(candidateRootURL + candidatePath.slice(0, pos));
+            targetURLs.unshift(candidateRootURL + candidatePath.slice(0, pos));
         }
         var candidateQuery = matches[4] || '';
         if ( candidateQuery !== '') {
-            menuURLs.unshift(candidateRootURL + candidatePath + candidateQuery);
+            targetURLs.unshift(candidateRootURL + candidatePath + candidateQuery);
         }
 
         // Create preview whenever possible
-        createPreviewIf(type, menuURLs[0]);
+        createPreview(type, targetURLs[0]);
 
         // Fill menu
         var menuEntryTemplate = dialog.querySelector('table.toolbar tr.entry');
@@ -829,8 +837,8 @@ var urlFilteringMenu = (function() {
 
         // Adding URL filtering rules
         var url, menuEntry;
-        for ( var i = 0; i < menuURLs.length; i++ ) {
-            url = menuURLs[i];
+        for ( var i = 0; i < targetURLs.length; i++ ) {
+            url = targetURLs[i];
             menuEntry = menuEntryTemplate.cloneNode(true);
             menuEntry.cells[0].children[0].setAttribute('data-url', url);
             menuEntry.cells[1].textContent = url;
@@ -839,23 +847,29 @@ var urlFilteringMenu = (function() {
 
         colorize();
 
-        document.body.appendChild(menu);
-        menu.addEventListener('click', onClick, true);
+        document.body.appendChild(urlFilteringMenu);
+        urlFilteringMenu.addEventListener('click', onClick, true);
         selectContext.addEventListener('change', colorize);
         selectType.addEventListener('change', colorize);
     };
 
     var toggleOff = function() {
-        if ( menu.parentNode === null ) {
-            return;
+        if ( selectContext !== null ) {
+            selectContext.removeEventListener('change', colorize);
+            selectContext = null;
         }
-        uDom('table.toolbar td.preview > *').remove();
-        uDom(dialog).descendants('div.entries tr').remove();
-        selectContext.removeEventListener('change', colorize);
-        selectType.removeEventListener('change', colorize);
-        menu.removeEventListener('click', onClick, true);
-        menu.parentNode.removeChild(menu);
-        menuURLs = [];
+        if ( selectType !== null ) {
+            selectType.removeEventListener('change', colorize);
+            selectType = null;
+        }
+        if ( dialog !== null ) {
+            uDom(dialog).descendants('table.toolbar td.preview > *').remove();
+            uDom(dialog).descendants('div.entries tr').remove();
+            dialog = null;
+        }
+        urlFilteringMenu.removeEventListener('click', onClick, true);
+        document.body.removeChild(urlFilteringMenu);
+        targetURLs = [];
     };
 
     return {
@@ -1169,7 +1183,7 @@ uDom.onLoad(function() {
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', urlFilteringMenu.toggleOn);
+    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', urlFilteringDialog.toggleOn);
 });
 
 /******************************************************************************/

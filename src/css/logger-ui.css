@@ -226,7 +226,7 @@ body.colorBlind #content tr.nooped td:nth-of-type(6) b {
 body.colorBlind #content tr.allowed td:nth-of-type(6) b {
     background-color: rgba(255, 194, 57, 0.2);
     }
-    
+
 #popupContainer {
     background: white;
     border: 1px solid gray;
@@ -310,6 +310,7 @@ body[dir="rtl"] #popupContainer > div {
 
 #urlFilteringMenu .dialog td {
     border: 0;
+    padding: 0;
     vertical-align: middle;
     }
 #urlFilteringMenu .dialog > table.toolbar td.preview {
@@ -392,7 +393,6 @@ body.dirty #urlFilteringMenu .dialog > table.toolbar .fa.save {
 #urlFilteringMenu .dialog > div.entries tr.entry > td:first-of-type {
     border: 0;
     border-right: 1px solid white;
-    padding: 0;
     text-align: center;
     }
 #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action {
