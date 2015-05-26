@@ -10,7 +10,7 @@
             <a href="https://travis-ci.org/chrisaljoudi/uBlock">
                   <img src="https://travis-ci.org/chrisaljoudi/uBlock.svg?branch=master" alt="Build status">
             </a>
-            <a href="https://chrismatic.io/donate">
+            <a href="https://www.ublock.org/donate">
                   <img src="https://chrismatic.io/oncedonate.svg" alt="Support development">
             </a>
       </td>
@@ -34,7 +34,7 @@
 
 * **Chrome**: available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/ublock/epcnnfbjfcgphgdmggkamkmgojdagdnn) or for [manual](https://github.com/chrisaljoudi/uBlock/tree/master/dist#install) installation.
 
-* **Safari**: available to install [from the homepage](https://chrismatic.io/ublock/safari/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
+* **Safari**: available to install [from the homepage](https://www.ublock.org/), or from the [Safari Extension Gallery](https://extensions.apple.com/details/?id=net.gorhill.uBlock-96G4BAKDQ9).
 
 * **Firefox**: available on the [Firefox Add-ons site](https://addons.mozilla.org/en-US/firefox/addon/ublock/), or for [manual](https://github.com/chrisaljoudi/uBlock/releases) installation.
 
