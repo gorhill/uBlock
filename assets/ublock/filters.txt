@@ -1,16 +1,4 @@
 # Filters optimized for uBlock
-# TODO: after a transition period, all exception filters to unbreak pages
-# will be corralled into `unbreak.txt`, so that *only* block filters are
-# present in this list. Transition period: let's say 2-3 weeks after I
-# update Chrome/Opera store.
-
-# https://github.com/chrisaljoudi/uBlock/issues/20
-# => blocking counterpart in Peter Lowe's Ad Server
-@@||www.google-analytics.com/ga.js^$domain=xda-developers.com
-
-# To fix tweetdeck
-# => blocking counterpart in EasyPrivacy & Fanboy Annoyance: `||twitter.com/i/jot`
-@@||twitter.com/i/jot^$domain=tweetdeck.twitter.com
 
 # Zerohedge: ref: http://forums.lanik.us/viewtopic.php?f=62&t=17307
 www.zerohedge.com##.similar-box
@@ -76,57 +64,6 @@ google.*###center_col > #tads
 www.youtube.com##.masthead-ad-control
 www.youtube.com##.ad-div
 
-# https://github.com/chrisaljoudi/uBlock/issues/63
-@@||adf.ly^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/69
-@@||widget-cdn.rpxnow.com^$domain=foxnews.com,script
-
-# https://github.com/chrisaljoudi/uBlock/issues/119
-# To counter `google-analytics.com` in Peter Lowe's list
-@@||google-analytics.com^$domain=avianca.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/141
-# Videos broken on weather.com
-# To counter `tags.tiqcdn.com` in  MVPS
-@@||tags.tiqcdn.com/utag/*.js$script,domain=cnet.com|weather.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/17#issuecomment-51625306
-# To counter `extras.mnginteractive.com` in hpHosts
-@@||extras.mnginteractive.com^$domain=mercurynews.com|denverpost.com|twincities.com
-
-# http://forums.lanik.us/viewtopic.php?f=64&t=17842&sid=46bd7065193153fe46efe816b7cd32c9&start=30#p59663
-# To counter `statcounter.com` in Peter Lowe's, MVPS, Dan Pollock's and hpHosts
-@@||statcounter.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/166
-# To counter `liverail.com` in Peter Lowe's, MVPS, and hpHosts
-@@||cdn-static.liverail.com^$object-subrequest
-
-# cnet.com needs this for video players
-# https://github.com/chrisaljoudi/uBlock/issues/227
-# To counter `2mdn.net` in Peter Lowe's
-# To counter `s0.2mdn.net` in MVPS, hpHosts, Dan Pollock's
-@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com|wistv.com
-@@||s0.2mdn.net/instream/flash/v3/adsapi_3.swf$object
-
-# https://github.com/chrisaljoudi/uBlock/issues/243
-# To counter `cdn-i.dmdentertainment.com` in hpHosts
-@@||cdn-i.dmdentertainment.com^$domain=cracked.com
-
-# EasyList/EasyPrivacy fixes
-# https://github.com/chrisaljoudi/uBlock/issues/373
-@@||omtrdc.net^$domain=www.amazon.com
-# To counter `/b/ss/*&aqe=` and `||scorecardresearch.com^$third-party` in
-# EasyPrivacy: "cant click on next picture on this adreess ... "
-# "... http://www.expansion.com/albumes/2014/10/30/casa_bruce_willis_bedford/index.html?cid=SIN8901"
-@@||b.scorecardresearch.com^$domain=www.expansion.com
-# http://forums.whatthetech.com/index.php?showtopic=129096
-@@||googleusercontent.com/*_social_icons.css$stylesheet,domain=whatthetech.com
-# Report at: http://sigmundsims.tumblr.com/post/105738323480/so-some-changes-tsr-is-making-to-their-download
-# Problem at: http://www.thesimsresource.com/downloads/download/itemId/1275968/format/zip/sess/1419175209
-@@||googleadservices.com^$domain=www.thesimsresource.com
-@@||pubads.g.doubleclick.net^$domain=www.thesimsresource.com
 www.thesimsresource.com##.ad-topleader
 # http://www.reddit.com/r/chromeos/comments/2q4q3s/im_not_sure_if_this_belongs_here_but_adblock/
 # Following needed for http://putlocker.is/
@@ -135,86 +72,6 @@ www.thesimsresource.com##.ad-topleader
 # This needs to be in EasyList Germany
 # url = http://www.click-learn.de/ (right vertical banner)
 ||click-learn.de^*_155x420.swf
-
-# https://twitter.com/ethanveres/status/527122036649639936
-# Fortunately, further connections to `mxpnl.com` are blocked
-@@||cdn.vurb.com/*/mixpanel.
-
-# https://adblockplus.org/forum/viewtopic.php?f=2&t=25772
-@@||target.122.2o7.net^$domain=target.com
-
-# To counter `adm.fwmrm.net` from hpHosts, MVPS, Dan Pollock's
-@@||adm.fwmrm.net^$domain=go.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/274
-# To counter `mopub.com` in Peter Lowe's
-@@||mopub.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/293
-# To counter `safelinking.net` in hpHosts
-@@||safelinking.net^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/302
-# To counter `outbrain.com` in hpHosts
-@@||outbrain.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/316
-# To counter `inc.com` in Peter Lowe's, hpHosts
-@@||inc.com^$~third-party
-
-# Chrome store feedback
-# To counter Peter Lowe's `intergi.com`
-@@||intergi.com^$domain=tvgolo.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/336
-# To counter `flurry.com` in Peter Lowe's, hpHosts, MVPS
-@@||flurry.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/374
-# To counter `2mdn.net` in Peter Lowe's, `s0.2mdn.net` in hpHosts
-@@||s0.2mdn.net/instream/*$object,script,domain=wsmv.com
-
-# https://twitter.com/JarkkoRytkonen/status/540052376015888385
-# To counter `google-analytics.com` in Peter Lowe's
-@@||google-analytics.com^$domain=jackbox.tv
-
-# Videos broken on weather.com
-# To counter `www.googletagservices.com` in MVPS, hpHosts, Dan Pollock's
-@@||www.googletagservices.com/tag/js/gpt.js^$script,domain=weather.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/409
-@@||c.speedtest.net^$~third-party
-
-# To counter Peter Lowe's, hpHosts
-@@||boldchat.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/463
-# To counter Peter Lowe's, hpHosts
-@@||mixpanel.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/466
-# Until fixed in EasyPrivacy
-@@/google-analytics-dashboard
-
-# https://twitter.com/poroot/status/554300983472574465
-charlie.strim.io#@##tweets
-ovh.strim.io#@##tweets
-
-# https://adblockplus.org/forum/viewtopic.php?f=10&t=24896&start=15#p114675
-# Until fixed in EasyList
-@@||cdn.turner.com/ads/nba/adfuel.js$domain=www.nba.com
-
-# From Chrome store: Go to site http://www.vd.nl/ ... links from dropdown top menu do not work
-# To counter Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com/analytics.js$domain=www.vd.nl
-
-# https://github.com/chrisaljoudi/uBlock/issues/570
-# To counter `yui.yahooapis.com` in hpHosts
-@@||yui.yahooapis.com^
-
-# Chrome store feedback
-# To counter `top.mail.ru` in Peter Lowe's
-@@||top.mail.ru^$~third-party
 
 # https://github.com/chrisaljoudi/uBlock/issues/510#issuecomment-71050211
 ||racksauce.com^$domain=promptfile.com
@@ -232,84 +89,11 @@ ovh.strim.io#@##tweets
 ||lsg.sharesix.com/*/*$script
 ||nvy.sharesix.com/*/*$script
 
-# https://github.com/chrisaljoudi/uBlock/issues/580
-# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||cdn-static.liverail.com$domain=9to5mac.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/602
-# To counter `/ads.css` in EasyList
-@@||css.washingtonpost.com/*/ads.css$stylesheet,~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/607
-# To counter `||pcekspert.com^` in Peter Lowe's
-@@||pcekspert.com^$~third-party
-
-# https://twitter.com/yo_0/status/559748330390323200
-# To counter `||clickbank.com^` in Dan Pollock's, Peter Lowe's
-@@||clickbank.com^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/614
-# To counter `awaps.yandex.ru` in hpHosts
-# To counter `mc.yandex.ru` in hpHosts, MVPS
-@@||awaps.yandex.ru^$domain=market.yandex.ru
-@@||mc.yandex.ru^$domain=market.yandex.ru
-@@||yastatic.net/market-export/*/advert.js$domain=market.yandex.ru
-
 # https://github.com/chrisaljoudi/uBlock/issues/618
 deviantart.com##.dp-ad-chrome.dp-ad-visible
 
-# https://github.com/chrisaljoudi/uBlock/issues/650
-# https://github.com/chrisaljoudi/uBlock/issues/821
-# To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||www.google-analytics.com/ga.js$domain=onlinetv.ru|zie.nl
-
-# https://github.com/chrisaljoudi/uBlock/issues/774
-# To counter `carbonads.net` in Peter Lowe's
-@@||carbonads.net^$~third-party
-
-# This enables twitch.tv to work in HTML5
-@@||imasdk.googleapis.com$domain=twitch.tv
-
-# Chrome store feedback: "totaljobs.com [...] with μBlock enabled, I can't click any links"
-# To counter `2o7.net` in Peter Lowe's
-@@||2o7.net^$domain=totaljobs.com
-
-# https://github.com/chrisaljoudi/uBlock/issues/822
-# https://github.com/chrisaljoudi/uBlock/issues/940
-# To counter `google-analytics.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||google-analytics.com^$domain=musixmatch.com|bikstok.sonymusicshop.dk
-
-# https://github.com/chrisaljoudi/uBlock/issues/841
-# To counter `quantcast.com` in hpHosts, Peter Lowe's
-@@||quantcast.com^$~third-party
-
-# Chrome store feedback: "on gaana.com it blocks the site"
-# To counter `_social_tracking.` in EasyPrivacy
-@@||css5.gaanacdn.com/minify-*/min/?$script,domain=gaana.com
-
 # http://support.getadblock.com/discussions/problems/73955-specific-web-site-causes-thousands-infinite-blocks-locks-up-chrome
 ||www.notempire.com/js/gridview$script
-
-# https://twitter.com/Urre/status/572742363069714432
-# To counter `/keen.min.js` in EasyPrivacy
-@@||keen.github.io/*/keen.min.js$~third-party
-
-# Feedback from Chrome store: "videos dont work on this site"
-# http://www.okgoals.com/match-highlights-1425491618---41
-# To counter `intergi.com` in Peter Lowe's
-@@||cdn.phoenix.intergi.com^$domain=okgoals.com
-
-# kissmetrics.com broken
-# To counter `kissmetrics.com` in Peter Lowe's
-@@||kissmetrics.com^$~third-party
-
-# Twitter: https://twitter.com/swashcap/status/578413787323056128
-# "Found Viewpoint’s site [...] Looks like it might be broken?"
-# To counter hpHosts, Peter Lowe's `viewpoint.com`
-@@||viewpoint.com^$~third-party
-
-# http://www.reddit.com/r/ublock/comments/32k908/cnncom_videos_wont_load_w_%C2%B5block_enabled/
-@@||i.cdn.turner.com/xslo/cvp/ads/freewheel/bundles/2/*$domain=cnn.com
 
 # https://github.com/chrisaljoudi/uBlock/issues/1013
 ||mac-system-alert.com^

@@ -116,6 +116,24 @@
         "group": "regions",
         "homeURL": ""
         },
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": {
+        "off": true,
+        "title": "Malvertising filter list by Disconnect",
+        "group": "malware",
+        "homeURL": ""
+        },
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": {
+        "off": true,
+        "title": "Malware filter list by Disconnect",
+        "group": "malware",
+        "homeURL": ""
+        },
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": {
+        "off": true,
+        "title": "Basic tracking list by Disconnect",
+        "group": "privacy",
+        "homeURL": ""
+        },
     "http://www.certyficate.it/adblock/adblock.txt": {
         "off": true,
         "title": "POL: Adblock polskie reguly",
