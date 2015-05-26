@@ -1,10 +1,16 @@
-**Yet another myth to dispel**: I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6)):
+**Couple of ongoing myths to dispel**:
+
+I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6)):
 
 > ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
 
 **Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevents network requests from being made according to filter lists so that your browser does not connect to remote servers, period.
 
-**uBlock's purpose is to only serve users' interests, and nothing else**. See [uBlock's Manifesto](https://github.com/gorhill/uBlock/blob/master/MANIFESTO.md).
+Also, another myth to dispel: as opposed to what [_uBlock FAQ_ suggests](https://www.ublock.org/faq/):
+
+> [...] **In contrast**, the uBlock project will be moving forward with awesome new features, refinements, and enhancements [...]
+
+uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements.
 
 *** 
 
