@@ -363,22 +363,6 @@
     "message":"変更を適用",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"ネットワークリクエストのログを有効にする",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"このオプションを有効にすることで、ネットワークリクエストの詳細を調べられます。ネットワークリクエストのログ収集は使用メモリーを増やすので、大半のユーザーはこの機能を使いません。よって、初期設定では無効になっています。",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"ブロックされたリクエスト",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"許可されたリクエスト",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"タイプ",
     "description":"English: Type"
@@ -395,16 +379,8 @@
     "message":"フィルター",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"このページでブロックされたリクエストは在りません",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"このページでブロックされたリクエストは在りません",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
-    "message":"All",
+    "message":"全て",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"ログの最大件数",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"バージョン更新履歴 (Change log)",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"ネットワークリクエストログを表示",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"オフ",

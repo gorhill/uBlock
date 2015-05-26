@@ -363,22 +363,6 @@
     "message":"Застосувати зміни",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Задіяти журналювання мережевих запитів",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Задіявши цю опцію, ви можете переглядати деталі мережевих запитів. Журналювання  мережевих запитів збільшує використання пам’яті µBlock. Через те, що більшість користувачів ніколи не використовують цю функцію, зазвичай її вимкнено.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Заблоковані запити",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Дозволені запити",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Тип",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Фільтр",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"На цій сторінці відсутні заблоковані запити",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"На цій сторінці блокуються всі запити",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Все",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Максимальна кількість записів в журналі",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Контекст:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Тип:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Динамічна фільтрація URL",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Журнал змін",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Показати журнал мережевих запитів",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"Відключений",

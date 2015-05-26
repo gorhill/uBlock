@@ -363,22 +363,6 @@
     "message":"변경사항 적용",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"네트워크 요청들에 대한 로깅 활성화",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"이 옵션을 활성화하면 네트워크 요청들의 세부정보를 검사할 수 있습니다. 네트워크 요청의 로깅은 uBlock₀의 메모리 사용량을 증가하게 만듭니다.\n대부분 사용자들은 이 기능을 사용하지 않기 때문에, 기본적으로 비활성화 되어 있습니다.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"차단된 요청",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"허용된 요청",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"유형",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"필터",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"이 페이지에서 차단된 요청 로그가 없음",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"이 페이지에 차단되지 않은 요청 로그가 없음",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"전체",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"로그 항목의 최대 갯수",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"변경사항",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"네트워크 요청 로그 보기",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"로그 보기",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"끄기",

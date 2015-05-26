@@ -363,22 +363,6 @@
     "message":"Terapkan perubahan",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Aktifkan pencatatan permintaan jaringan",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Jika ingin, Anda dapat memeriksa secara rinci permintaan jaringan dengan mengaktifkan opsi ini. Pencatatan permintaan jaringan akan meningkatkan penggunaan memori uBlock₀. Karena kebanyakan pengguna tidak akan pernah menggunakan fitur ini, secara bawaan fitur ini dinonaktifkan.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Permintaan diblokir",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Permintaan diizinkan",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Jenis",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Permintaan yang diblokir di laman ini tidak ada yang dicatat",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Permintaan yang tidak diblokir di laman ini tidak ada yang di catat",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Semua",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Jumlah maximum entri catatan",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Konteks:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Jenis:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Penyaring URL Dinamis",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Catatan perubahan",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Tampilkan Permintaan Catatan Jaringan",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Tampilkan Pencatat",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"mati",

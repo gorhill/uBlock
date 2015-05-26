@@ -363,22 +363,6 @@
     "message":"Примени промене",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Омогући записивање мрежних захтева",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"You can inspect the details of network requests if you wish by enabling this option. The logging of network requests increases the memory footprint of uBlock₀. Since many users will never use this feature, it is disabled by default.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Блокирани захтеви",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Дозвољени захтеви",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Тип",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Филтер",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Нема блокираних захтева на овој страници",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Нема неблокираних захтева за ову страницу",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"All",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maximum number of log entries",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Change log",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Show Logger",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"off",

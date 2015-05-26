@@ -1,0 +1,50 @@
+Un bloqueador eficiente: baixo consumo da memoria e da CPU, é capaz de cargar e aplicar unha morea de filtros máis que outros famosos bloqueadores.
+
+Ilustración da súa eficiencia: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Uso: o botón grande da xanela emerxente activa/desactiva o uBlock para a páxina en uso. Isto só afecta a páxina na que estés, non ten un efecto global.
+
+***
+
+É flexible, é máis que un "bloqueador de anuncios": pode tamén ler e crear filtros dende os arquivos hosts.
+
+As seguintes listas de filtros veñen cargadas por defecto:
+
+- A EasyList
+- A lista de servidores de anuncios do Peter Lowe
+- A EasyPrivacy
+- A Malware domains
+
+Hai máis listas para seleccionar se o queres:
+
+- A Fanboy’s Enhanced Tracking List
+- A lista de hosts do Dan Pollock
+- A hpHosts’s Ad and tracking servers
+- A MVPS HOSTS
+- A Spam404
+- E unha morea máis delas
+
+Ten en conta que cantos máis listos teñas activos, más memoria comerá o programa. Aínda así, despois de engadir dúas listas extra (a <i>hpHosts’s Ad</i> e a <i>tracking servers</i>, o uBlock consume aínda menos memoria que outros famosos bloqueadores.
+
+Ten en conta tamén que seleccionar todas estas listas extra pode xenerar problemas ó visualizar unha páxina web — sobre todo nas listas empregadas normalmente como arquivo host.
+
+***
+
+Sen as listas de filtros predeterminadas, esta extensión non serviría para moito. Polo que se de verdade queres contribuir nalgo, pensa na xente que traballa duro para manter as listas de filtros que estás a empregar, e que son dispoñibles de balde.
+
+***
+
+Libre.
+Código aberto con licencia pública (GPLv3)
+Feito por e para os usuarios.
+
+Colaboradores @ Github (en inglés): https://github.com/gorhill/uBlock/graphs/contributors
+Colaboradores @ Crowdin (en inglés): https://crowdin.net/project/ublock
+Podes botar unha man coa traducción ó galego, é de balde!
+
+***
+
+Esta é unha versión en desenvolvemento, telo en conta cando a evalúes.
+
+Rexistro de cambios do proxecto:
+https://github.com/gorhill/uBlock/releases

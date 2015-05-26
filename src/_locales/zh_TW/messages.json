@@ -363,22 +363,6 @@
     "message":"套用變更",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"啟用網路連線請求記錄",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"開啟此選項後將可以查看網路請求的詳細資訊。這個功能會增加 uBlock 的記憶體使用量。由於多數使用者不需要此功能，預設是停用的。",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"已阻擋的連線請求",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"已允許的連線請求",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"類型",
     "description":"English: Type"
@@ -395,16 +379,8 @@
     "message":"過濾規則",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"本頁面沒有阻擋連線請求的記錄",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"本頁面沒有不阻擋連線請求的記錄",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
-    "message":"All",
+    "message":"全部",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"最大日誌項目的數量",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"環境:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"類型:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"動態網址過濾",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"更新日誌",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"顯示網路連線請求日誌",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"關閉",

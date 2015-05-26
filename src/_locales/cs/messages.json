@@ -363,22 +363,6 @@
     "message":"Použít změny",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Povolit protokolování síťových požadavků",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Pokud chcete kontrolovat detaily síťových požadavků, povolte tuto možnost. Protokolování síťových požadavků zvětšuje stopu uBlocku₀ v paměti. Jelikož tuto funkci mnoho uživatelů nikdy nepoužije, je ve výchozím nastavení zakázána.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokované požadavky",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Povolené požadavky",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Typ",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtr",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Žádné blokované požadavky pro tuto stránku",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Žádné nezablokované požadavky pro tuto stránku",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Všechny stránky",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maximální počet záznamů",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Kontext:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Typ:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamické filtrování URL adres",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Change log",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Zobrazit protokol síťových požadavků",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"vypnutý",

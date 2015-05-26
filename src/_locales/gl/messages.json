@@ -4,527 +4,527 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"סוף סוף, חוסם יעיל. קל על המעבד והזיכרון.",
+    "message":"Ó fin, un bloqueador eficiente que non chupa toda a memoria e o procesador.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — פאנל הקונפיגורציות",
+    "message":"uBlock₀ — Panel de control",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
-    "message":"הגדרות",
+    "message":"Preferencias",
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"מסננים צד-3",
+    "message":"Filtros de terceiros",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
-    "message":"המסננים שלי",
+    "message":"Os meus filtros",
     "description":"appears as tab name in dashboard"
   },
   "rulesPageName":{
-    "message":"החוקים שלי",
+    "message":"As miñas regras",
     "description":"appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"רשימה לבנה",
+    "message":"Lista branca",
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — מתעד בקשות רשת",
+    "message":"uBlock₀ — Rexistro de peticións de rede",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"אודות",
+    "message":"Sobre",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"לחיצה: כבה\/הפעל את uBlock₀ לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
+    "message":"Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: desactivar o uBlock₀ só nesta páxina.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"בקשות שנחסמו",
+    "message":"peticións bloqueadas",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"בדף זה",
+    "message":"nesta páxina",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} או {{percent}}%",
+    "message":"{{count}} ou {{percent}}%",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"מאז ההתקנה",
+    "message":"dende a instalación",
     "description":"English: since install"
   },
   "popupOr":{
-    "message":"או",
+    "message":"ou",
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"לחץ כדי לפתוח את פאנל הקונפיגורציות",
+    "message":"Fai click para abrir o panel de control",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"היכנס למצב בחירת אלמנט",
+    "message":"Ir ó modo do selector de elementos",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"עבור למתעד הבקשות",
+    "message":"Ir ó rexistro de peticións",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"הפעל\/כבה את החסימה של חלונות קופצים באתר זה",
+    "message":"Activar todas as xanelas emerxentes nesta páxina",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"הפעל\/כבה חסימה נוקשה באתר זה",
+    "message":"Activar o bloqueo estricto nesta páxina",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"הפעל\/כבה מסננים קוסמטיים באתר זה",
+    "message":"Activar o filtrado cosmético nesta páxina",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
-    "message":"הכל",
+    "message":"todo",
     "description":""
   },
   "popupImageRulePrompt":{
-    "message":"תמונות",
+    "message":"imaxes",
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"צד-3",
+    "message":"de terceiros",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"סקריפטים מוטמעים",
+    "message":"Scripts embebidos",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"סקריפטים צד-1",
+    "message":"Scripts de dominio",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"סקריפטים צד-3",
+    "message":"Scripts de terceiros",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"מסגרות צד-3",
+    "message":"Frames de terceiros",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"דומיינים שהתחברת אליהם",
+    "message":"dominios conectados",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
-    "message":"{{count}} מתוך {{total}}",
+    "message":"{{count}} de {{total}}",
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"צור",
+    "message":"Crear",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"בחר",
+    "message":"Escoller",
     "description":"English: Pick"
   },
   "pickerQuit":{
-    "message":"צא",
+    "message":"Saír",
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"מסנני רשת",
+    "message":"Filtros da rede",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"מסננים קוסמטיים",
+    "message":"Filtros cosméticos",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
-    "message":"לחיצה, Ctrl+לחיצה",
+    "message":"Click, Ctrl-click",
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"חסום אלמנט",
+    "message":"Bloquear elemento",
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"הסתר את המקום שנשאר מחסימה של אלמנטים",
+    "message":"Agochar marcadores de posición dos elementos bloqueados",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"הראה את מספר הבקשות החסומות על האייקון",
+    "message":"Amosar o número de peticións bloqueadas no icono",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
-    "message":"הצגת הפריט 'חסום אלמנט' בתפריט הלחצן הימני איפה שאפשר",
+    "message":"Empregar o menú contextual cando sexa posible",
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"ידידותי לעיוורי צבעים",
+    "message":"Accesible para daltónicos",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"אני משתמש מתקדם (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
+    "message":"Sonche un usuario experto (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Precisas ler isto<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
+    "message":"Activar funcións experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"אחסון בשימוש: {{value}} בתים",
+    "message":"Almacenamento empregado: {{value}} bytes",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"שחזור אחרון:",
+    "message":"Última recuperación:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"גיבוי אחרון:",
+    "message":"Última copia de seguridade:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} מסנני רשת + {{cosmeticFilterCount}} מסננים קוסמטיים מתוך:",
+    "message":"{{netFilterCount}} filtros de rede ＋ {{cosmeticFilterCount}} filtros cosméticos:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} בשימוש מתוך {{total}}",
+    "message":"Empregados {{used}} de {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"עדכן אוטומטית את רשימות המסננים.",
+    "message":"Actualización automática das listas de filtros.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"עדכן כעת",
+    "message":"Actualizar agora",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"נקה את כל זיכרוני המטמון",
+    "message":"Vaciar todas as cachés",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"פרסר ואפשר מסננים קוסמטיים.",
+    "message":"Analizar e aplicar filtros cosméticos.",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus<\/a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.<\/p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>uBlock₀<\/i><\/p>",
+    "message":"<p>Esta opción permitirache a análise e a aplicación de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">&ldquo;filtros de ocultación de elementos&rdquo; compatibles co Adblock Plus<\/a>. \nEstes filtros sonche sobre todo cosméticos, serven para agochar elementos visualmente molestos nunha determinada páxina, non sendo posible a súa eliminación cun motor de bloqueo baseado en peticións.<\/p><p>Activar esta opción incrementará o uso de memoria do <i>uBlock₀<\/i>.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"רשימה של דומיינים חסומים",
+    "message":"Lista dos servidores bloqueados",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
-    "message":"החל שינויים",
+    "message":"Aplicar os cambios",
     "description":"English: Apply changes"
   },
   "3pGroupAds":{
-    "message":"פרסומות",
+    "message":"Anuncios",
     "description":"English: Ads"
   },
   "3pGroupPrivacy":{
-    "message":"פרטיות",
+    "message":"Privacidade",
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"דומיינים של תוכנות זדוניות",
+    "message":"Dominios de <i>malware<\/i>",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"חברתי",
+    "message":"Social",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"רב תכליתי",
+    "message":"Multipropósito",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"אזורים, שפות",
+    "message":"Rexións, linguaxes",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"מותאם אישית",
+    "message":"Personalizado",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"כתובת אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ולא תהיה התראה לכך.",
+    "message":"Un enderezo por liña. As liñas prefixadas con &lsquo;!&rsquo; seranche ignoradas, así como os enderezos inválidos.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
-    "message":"החל",
+    "message":"Aplicar",
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"נקה זיכרון מטמון",
+    "message":"baleirar a caché",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"גרסה חדשה זמינה",
+    "message":"unha nova versión está dispoñible",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"לא עדכני",
+    "message":"desactualizado",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"עדכון אחרון: {{ago}}",
+    "message":"Última actualización: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
+    "message":"Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con &lsquo;!&rsquo; seranche ignoradas.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
-    "message":"ייבא וצרף",
+    "message":"Importar e anexar",
     "description":"English: Import and append"
   },
   "1pExport":{
-    "message":"ייצוא",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "message":"o-meu-ublock-filtros-estaticos_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
-    "message":"החל שינויים",
+    "message":"Aplicar cambios",
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"חוקים קבועים",
+    "message":"Regras permanentes",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"חוקים זמניים",
+    "message":"Regras temporais",
     "description":"header"
   },
   "rulesRevert":{
-    "message":"החזר למצב הקודם",
+    "message":"Reverter",
     "description":"This will remove all temporary rules"
   },
   "rulesCommit":{
-    "message":"החל",
+    "message":"Estabelecer",
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"ערוך",
+    "message":"Editar",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
-    "message":"שמור",
+    "message":"Gardar",
     "description":"Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard":{
-    "message":"בטל",
+    "message":"Descartar",
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"ייבא מקובץ...",
+    "message":"Importar dun arquivo...",
     "description":""
   },
   "rulesExport":{
-    "message":"ייצא לקובץ...",
+    "message":"Exportar a un arquivo",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"o-meu-ublock-regras-dinamicas_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"רשימת חוקי המסננים הדינאמיים שלך.",
+    "message":"Listado coas túas regras de filtrado dinámico.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
-    "message":"סינטקס חוק: <code>פעולה סוג יעד מקור<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>תיעוד מלא<\/a>).",
+    "message":"Sintaxe das regras: <code>orixe destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentación completa<\/a>).",
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"רשימת שמות המתחם שלך בהם uBlock₀ לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
+    "message":"A túa lista de nomes de servidor nos que o uBlock₀ estará desactivado. Unha entrada por cada liña. Os nomes de servidor non válidos serán ignorados.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
-    "message":"ייבא וצרף",
+    "message":"Importar e anexar",
     "description":"English: Import and append"
   },
   "whitelistExport":{
-    "message":"ייצוא",
+    "message":"Exportar",
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"my-ublock-whitelist_{{datetime}}.txt",
+    "message":"o-meu-ublock-lista-branca_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
-    "message":"החל שינויים",
+    "message":"Aplicar os cambios",
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{
-    "message":"סוג",
+    "message":"Tipo",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"דומיין",
+    "message":"Dominio",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
-    "message":"כתובת",
+    "message":"Enderezo",
     "description":"English: URL"
   },
   "logRequestsHeaderFilter":{
-    "message":"מסנן",
+    "message":"Filtro",
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"כל הטאבים",
+    "message":"Todas",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"מאחורי הקלעים",
+    "message":"Peticións ocultas",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"סנן רשומות",
+    "message":"filtras as entradas de rexistro",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
-    "message":"מספר רשומות מקסימליות",
+    "message":"Número máximo de entradas de rexistro",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"קונטקטס:",
+    "message":"Contexto:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"סוג:",
+    "message":"Tipo:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"סינון URL דינאמי",
+    "message":"Filtrado dinámico de enderezo",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
-    "message":"רשימת שינויים",
+    "message":"Rexistro de cambios",
     "description":"English: Change log"
   },
   "aboutWiki":{
-    "message":"ויקי",
+    "message":"Wiki",
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"קוד מקור (GPLv3)",
+    "message":"Código fonte (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
-    "message":"תורמים",
+    "message":"Colaboradores",
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"גבה לקובץ",
+    "message":"Facer copia de seguridade nun arquivo",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"my-ublock-backup_{{datetime}}.txt",
+    "message":"ublock-copia-seguridade_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"שחזר מקובץ...",
+    "message":"Recuperar dende arquivo...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"אפס להגדרות ברירת מחדל...",
+    "message":"Restabelecer os axustes por defecto...",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"כל ההגדרות שלך יוחלפו בנתונים שגובו ב {{time}}, ו uBlock₀ יופעל מחדש.\n\nהאם להחליף את כל ההגדרות הקיימות בנתונים המגובים?",
+    "message":"Todas as túas preferencias serán rescritas, usando os datos rexistrados no {{time}}, e o uBlock₀ reiniciará. Queres sobrescribir toda a configuración existente empregando os datos da copia de seguridade?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
-    "message":"לא הוצלח לקרוא את המידע או שהוא פגום",
+    "message":"Os datos son inválidos ou non poden ser lidos",
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"כל ההגדרות שלך יימחקו, ו uBlock₀ יופעל מחדש.\n\nלאפס את uBlock₀ להגדרות ברירת מחדל?",
+    "message":"Eliminaranse todas as túas preferencias, e reiniciará o uBlock₀. Queres resetear o uBlock₀ á configuración por defecto?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
-    "message":"אין אפשרות להתחבר ל {{url}}",
+    "message":"Non foi posible conectar con {{url}}",
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
+    "message":"uBlock₀: Engadir o seguinte enderezo á túa lista de filtros personalizados?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
-    "message":"לפני דקה",
+    "message":"fai un minuto",
     "description":"English: a minute ago"
   },
   "elapsedManyMinutesAgo":{
-    "message":"לפני {{value}} דקות",
+    "message":"fai {{value}} minutos",
     "description":"English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo":{
-    "message":"לפני שעה",
+    "message":"fai unha hora",
     "description":"English: an hour ago"
   },
   "elapsedManyHoursAgo":{
-    "message":"לפני {{value}} שעות",
+    "message":"fai {{value}} horas",
     "description":"English: {{value}} hours ago"
   },
   "elapsedOneDayAgo":{
-    "message":"לפני יום",
+    "message":"fai un día",
     "description":"English: a day ago"
   },
   "elapsedManyDaysAgo":{
-    "message":"לפני {{value}} ימים",
+    "message":"fai {{value}} días",
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"הצג את פאנל הקונפיגורציות",
+    "message":"Amosar no Panel de control",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"הצג את המתעד",
+    "message":"Amosar o rexistro de peticións da rede",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"מכובה",
+    "message":"desactivado",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ מנע מהעמוד הבא להיטען:",
+    "message":"O uBlock₀ impediu cargar a seguinte páxina:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"בגלל המסנן הבא",
+    "message":"Por mor deste filtro:",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
-    "message":"חזור אחורה",
+    "message":"Retroceder",
     "description":"English: Go back"
   },
   "docblockedClose":{
-    "message":"סגור חלון זה",
+    "message":"Pechar esta xanela",
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"בטל חסימה נוקשה עבור {{hostname}}",
+    "message":"Desactivar o bloqueo estricto en {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"זמנית",
+    "message":"Temporalmente",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"לצמיתות",
+    "message":"Permanentemente",
     "description":"English: Permanently"
   },
   "dummy":{
-    "message":"ערך זה חייב להיות האחרון",
+    "message":"Esta ten que ser a derradeira entrada",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

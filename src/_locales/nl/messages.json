@@ -363,22 +363,6 @@
     "message":"Veranderingen toepassen",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Het loggen van netwerkverzoeken inschakelen",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Indien je wilt kan je de details van netwerkverzoeken bekijken door deze optie in te schakelen. Het loggen van netwerkverzoeken verhoogt het geheugengebruik van uBlock₀. Deze optie is standaard uitgeschakeld omdat de meeste gebruikers dit niet gebruiken.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Geblokkeerde verzoeken",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Toegelaten verzoeken",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Type",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Voor deze pagina zijn geen geblokkeerde verzoeken gelogd",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Voor deze pagina zijn geen toegelaten verzoeken gelogd",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Alles",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maximum aantal logboekitems",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Soort:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamische URL-filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Veranderingenlogboek",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Toon netwerkverzoeken-logboek",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Netwerkverzoeken-logboek tonen",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"uitgeschakeld",

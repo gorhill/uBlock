@@ -80,7 +80,7 @@
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Bu site için sıkı engellemeyi aç\/kapa",
+    "message":"Bu site için katı engellemeyi aç\/kapa",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
@@ -363,22 +363,6 @@
     "message":"Değişiklikleri uygula",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Ağ isteklerinin kaydını tut",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Bu seçeneği etkinleştirerek isterseniz yapılan ağ isteklerinin detaylarını inceleyebiliriz. Yapılan ağ isteklerinin kaydını tutmak uBlock₀'in bellek kullanımını artırır. Birçok kullanıcı bu özelliği hiç kullanmayacağından, varsayılan olarak devre dışıdır.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Engellenen istekler",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"İzin verilen istekler",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tür",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtre",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Bu sayfa için kayıtlı engellenmiş istek yok",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Bu sayfa için kayıtlı engellenmemiş istek yok",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Tümü",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimum günlük kayıt sayısı",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Değişiklikler",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Ağ İstek Günlüğünü Göster",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Günlüğü Göster",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"kapalı",
@@ -524,7 +512,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"{{hostname}} için sıkı engellemeyi devre dışı bırak",
+    "message":"{{hostname}} için katı engellemeyi devre dışı bırak",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

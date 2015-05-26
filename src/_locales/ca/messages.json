@@ -363,22 +363,6 @@
     "message":"Aplicar canvis",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Habilitar el registre de sol·licituds de xarxa",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Podeu inspeccionar els detalls de les peticions blocades habilitant aquesta opció. El registre de peticions blocades augmenta el consum de memòria. Per defecte està inhabilitada, atès que normalment no s'utilitza.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Sol·licituds bloquejades",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Sol·licituds permeses",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tipus",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtre",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"No hi ha peticions bloquejades per a aquesta pàgina",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"No hi ha peticions no bloquejades per a aquesta pàgina",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Tot",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Nombre màxim d'entrades del registre",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Tipus:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Filtre dinàmic d'URL",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Registre de canvis",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar registre de peticions de xarxa",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Mostra el registre de peticions de la xarxa",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"desactivat",

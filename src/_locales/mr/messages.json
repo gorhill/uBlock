@@ -363,22 +363,6 @@
     "message":"बदल लागू करा",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"नेटवर्क विनंत्या लॉगिंग सक्षम करा",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"हा पर्याय सक्षम केला, तर आपण नेटवर्क विनंत्यांची तपशील यांची तपासणी घेऊ शकतात. नेटवर्क विनंत्यांच्या लॉगिंग ने म्यूब्लॉकच्या स्मृती पावलाचा ठसा वाढतो. अनेक वापरकर्ते हे वैशिष्ट्य न वापरणार असल्याने ते मुलभूतरित्या अकार्यान्वीत केले आहे.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"अवरोधित विनंत्या",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"अनुमत विनंत्या",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"प्रकार",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"फिल्टर",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"या पृष्ठावर कोणतेही अवरोधित विनंत्या लॉग होत नाही",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"या पृष्ठावर कोणतेही न-अवरोधित विनंत्या लॉग होत नाही",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"All",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maximum number of log entries",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"बदल नोंदी",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Show Network Request Log",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Show Logger",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"off",

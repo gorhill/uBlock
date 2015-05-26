@@ -363,22 +363,6 @@
     "message":"应用更改",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"启用网络请求记录",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"开启此选项后，您将可以看到网络请求的详细信息。这个网络请求记录功能会增加 uBlock₀ 的内存使用量。由于多数用户永远用不到此功能，它默认是禁用的。",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"拦截的请求",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"允许的请求",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"类型",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"过滤",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"该页面没有拦截记录",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"该页面没有未拦截记录",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"全部",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"日志条目最大数量",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"上下文:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"类型:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"动态 URL 过滤",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"更新日志",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"显示网络请求日志",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"关",

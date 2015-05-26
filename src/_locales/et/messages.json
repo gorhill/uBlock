@@ -363,22 +363,6 @@
     "message":"Kinnita muudatused",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Luba võrgupäringute logimine",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Selle valiku lubamisel on sul võimalik võrgupäringuid detailselt uurida. Võrgupäringute logimine suurendab uBlock₀'i mälukasutust. Kuna enamik kasutajaid ei kasuta seda, on valik vaikimisi keelatud.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokeeritud taotlused",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Lubatud taotlused",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tüüp",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Sellel lehel pole logitud ühtegi blokeeritud päringut",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Sellel lehel pole logitud ühtegi blokeerimata päringut",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Kõik",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimaalne logikirjete arv",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Kontekst:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Tüüp:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dünaamiline URL'i filter",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Muudatuste logi",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Kuva võrgupäringute logi",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Kuva logija",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"väljas",

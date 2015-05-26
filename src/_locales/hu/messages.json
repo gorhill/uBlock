@@ -363,22 +363,6 @@
     "message":"Módosítások alkalmazása",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Naplózza a hálózati lekéréseket",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"A hálózati lekérések részletei tekinthetőek meg ennek az opciónak a bekapcsolásával.\nA hálózati lekérések naplózása megnöveli a memóriahasználatot. Alapértelmezetten ki van kapcsolva, mivel a legtöbb felhasználónak nem lesz szüksége erre a funkcióra.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokkolt lekérések",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Engedélyezett lekérések",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Típus",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Szűrő",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Nincs blokkolt lekérés naplózva ezen a lapon",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Nincs engedélyezett lekérés naplózva ezen a lapon",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Összes",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Naplóbejegyzések maximális száma",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Változások listája",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Naplózott hálozati lekérések megtekintése",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"kikapcsolva",

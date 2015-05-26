@@ -363,22 +363,6 @@
     "message":"Εφαρμογή αλλαγών",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Ενεργοποίηση καταγραφής των αιτημάτων δικτύου",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Μπορείτε να επιθεωρείτε τις λεπτομέρειες των αιτημάτων δικτύου, εάν το επιθυμείτε, ενεργοποιώντας αυτήν την επιλογή. Λόγω του ότι οι περισσότεροι χρήστες δεν θα χρησιμοποιήσουν ποτέ αυτήν τη λειτουργία, αυτή είναι απενεργοποιημένη από προεπιλογή.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Αποκλεισμένες αιτήσεις",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Επιτρεπόμενες αιτήσεις",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Τύπος",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Φίλτρο",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Δεν καταγράφηκαν αποκλεισμένα αιτήματα για αυτήν τη σελίδα",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Δεν καταγράφηκαν μη-αποκλεισμένα αιτήματα για αυτήν τη σελίδα",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"All",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Μέγιστος αριθμός καταχωρήσεων στο αρχείο καταγραφών",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Αρχείο καταγραφής αλλαγών",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Προβολή Αρχείου Καταγραφών Αιτημάτων Δικτύου",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"απενεργοποιημένο",

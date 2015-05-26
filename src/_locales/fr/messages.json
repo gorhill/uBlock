@@ -363,22 +363,6 @@
     "message":"Appliquer",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Activer la journalisation des requêtes réseau",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Vous pouvez inspecter les détails des requêtes en activant cette option. La journalisation des requêtes augmente l'empreinte mémoire utilisée par uBlock Origin. Puisque bon nombre de gens n'utiliseront jamais cette fonctionnalité, elle est désactivée par défaut.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Requêtes bloquées",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Requêtes autorisées",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Type",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtre",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Aucune requête bloquée sur cette page n'a été consignée dans le journal",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Aucune requête non-bloquée sur cette page n'a été consignée dans le journal",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Tout",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Nombre maximum d'entrées à conserver dans le journal",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Contexte :",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type :",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Filtrage dynamique de l'URL",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Journal des changements (en Anglais)",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Afficher le Journal des requêtes réseau",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Voir le Journal",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"Arrêt",

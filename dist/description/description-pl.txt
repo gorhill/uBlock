@@ -2,13 +2,13 @@ Skutecznie blokuje reklamy. Używa mało pamięci RAM i zasobów procesora, a pr
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sposób użycia. Wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia dodatku na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
+Sposób użycia: wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia rozszerzenia na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
 ***
 
 Elastyczny. Jest czymś więcej niż „blokerem reklam”. Może czytać i tworzyć filtry z plików hostów.
 
-Po zainstalowaniu są wczytywane następujące listy filtrów i filtry są stosowane:
+Po zainstalowaniu są  wczytywane i stosowane następujące listy filtrów:
 
 - EasyList
 - Lista serwerów reklam Petera Lowe'a
@@ -24,22 +24,22 @@ Można wybrać więcej list filtrów:
 - Spam404
 - I wiele innych
 
-Im więcej filtrów jest włączonych, tym większe jest użycie pamięci RAM. Nawet po dodaniu dwóch dodatkowych list filtrów dla fanboyów, listy serwerów reklamowych i śledzących hpHosts, µBlock₀ ma nadal niższe użycie pamięci RAM niż inne popularne dodatki do blokowania reklam.
+Im więcej filtrów jest włączonych, tym większe jest użycie pamięci RAM. Nawet po dodaniu dwóch dodatkowych list filtrów dla fanboyów – listy serwerów reklamowych i śledzących hpHosts – µBlock₀ używa mniej pamięci RAM niż inne popularne dodatki do blokowania reklam.
 
-Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić do wzrostu prawdopodobieństwa uszkodzenia witryny internetowej - zwłaszcza tych list, które są zwykle używane jako plik hostów.
-
-***
-
-Bez ustawionych list filtrów ten dodatek jest bezwartościowy. Zatem czasami pomyśl o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić do wzrostu prawdopodobieństwa uszkodzenia witryny internetowej – zwłaszcza tych list, które są zwykle używane jako plik hostów.
 
 ***
 
-Darmowy dodatek.
+Bez zaprogramowanych list filtrów ten dodatek jest bezwartościowy. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+
+***
+
+Darmowe rozszerzenie.
 Kod źródłowy udostępniany na otwartej licencji (GPLv3)
 Dla użytkowników przez użytkowników.
 
 Współtwórcy dodatku: https://github.com/gorhill/uBlock/graphs/contributors
-Autorzy tłumaczeń: https://crowdin.com/project/ublock/translators
+Współtwórcy tłumaczeń: https://crowdin.com/project/ublock/translators
 
 ***
 

@@ -363,22 +363,6 @@
     "message":"Bruk endringer",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Aktiver logging av nettverksforespørsler",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Du kan inspisere detaljer om nettverksforespørsler ved å aktivere dette alternativet. Logging av nettverksforespørsler øker minnebruken til uBlock₀. Siden mange brukere aldri vil bruke denne funksjonen er den deaktivert som standard.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokkerte forespørsler",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Tillatte forespørsler",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Type",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Ingen blokkerte forespørsler logget for denne siden",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Ingen ikke-blokkerte forespørsler logget for denne siden",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Alle",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimum antall loggoppføringer",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Endringslogg",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Vis nettverkforespørselslogg",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Vis loggeren",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"av",

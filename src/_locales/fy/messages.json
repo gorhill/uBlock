@@ -363,22 +363,6 @@
     "message":"Wizigingen tapasse",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"It loggen fan netwurkfersiken ynskeakelje",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"As jo wolle kinne jo de details fan netwurkfersiken besjen troch dizze opsje yn te skeakeljen. It loggen fan netwurkfersiken ferheget it ûnthâldgebrûk fan uBlock₀. Dizze opsje is standert útskeakele, omdat de measte brûkers dit net brûke.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokkearre fersiken",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Talitten fersiken",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Type",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Foar dizze side binne gjin blokkearre fersiken logd",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Faor dizze side binne gjin talitten fersiken logd",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Alles",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimum oantal lochboekitems",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Kontekst:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamyske URL-filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Wizigingenlochboek",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Netwurkfersiken-logboek toane",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Netwurkfersiken-lochboek toane",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"útskeakele",

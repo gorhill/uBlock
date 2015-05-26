@@ -363,22 +363,6 @@
     "message":"Áp dụng các thay đổi",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Cho phép ghi lại các yêu cầu mạng",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Bạn có thể kiểm tra chi tiết của yêu cầu mạng nếu bạn muốn bằng cách kích hoạt tùy chọn này. Nhật kí của các yêu cầu mạng làm tăng bộ nhớ sử dụng của uBlock₀. Vì nhiều người sử dụng không sử dụng, tính năng này bị tắt theo mặc định.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Những yêu cầu bị chặn",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Những yêu cầu được cho phép",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Loại",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Bộ lọc",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Không có những yêu cầu bị chặn được ghi lại cho trang này",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Không có yêu cầu không bị chặn được ghi lại cho trang này",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Tất cả",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Số mục ghi nhận tối đa",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Thay đổi",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Hiện nhật ký yêu cầu mạng",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"tắt",

@@ -312,7 +312,7 @@
     "description":"This will persist temporary rules"
   },
   "rulesEdit":{
-    "message":"Editează",
+    "message":"Modifică",
     "description":"Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave":{
@@ -363,22 +363,6 @@
     "message":"Aplică modificările",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Activează înregistrarea cererilor de rețea",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Dacă dorești poți inspecta detaliile cererilor de rețea activând această opțiune. Înregistrarea cererilor de rețea poate conduce la creșterea gradului de utilizare a memoriei de către uBlock₀. Pentru că mulți utilizatori nu vor folosi vreodată această opțiune, aceasta este dezactivată implicit.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Cereri blocate",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Cereri permise",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tip",
     "description":"English: Type"
@@ -395,16 +379,8 @@
     "message":"Filtru",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Nu s-au înregistrat cereri blocate pe această pagină",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Nicio cerere ne-blocată pentru această pagină",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
-    "message":"All",
+    "message":"Tot",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Numărul maxim de intrări în jurnal",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Jurnalul de modificări",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Deschide jurnalul cererilor de rețea",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Arată jurnalul",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"dezactivat",

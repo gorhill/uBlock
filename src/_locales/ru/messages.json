@@ -363,22 +363,6 @@
     "message":"Применить изменения",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Включить ведение журнала сетевых запросов",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Вы можете анализировать данные сетевых запросов, включив эту опцию. Журналирование сетевых запросов увеличивает расход памяти uBlock₀.  Функция по умолчанию отключена, поскольку большинство пользователей не используют её.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Заблокированные запросы",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Разрешённые запросы",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Тип",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Фильтр",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Нет заблокированных запросов на этой странице",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Нет незаблокированных запросов на этой странице",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Все",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Максимальное количество записей в журнале",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Контекст:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Тип:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Динамическая фильтрация URL",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Список изменений",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Показать журнал сетевых запросов",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"выключен",

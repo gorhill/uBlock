@@ -212,7 +212,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Denne indstilling giver mulighed for analyse og anvendelse af  <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibel &ldquo;skjulnings filtre&rdquo;<\/a>. Disse filtre er i sidste ende kosmetiske, da de skjuler elementer på sider der normalt ville være visuelt irriterende, og som ikke kan blokeres med den netforespørgselsbaserede motor.<\/p><p>Ved at aktivere denne funktion bliver <i>µBlock<\/i>s hukkomelsesforbrug større.<\/p>",
+    "message":"<p>Denne indstilling gør det muligt at parse og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Ablock Plus kompatible &ldquo;element skjulnings&rdquo; filtre<\/a>. Disse filtre har hovedsageligt et kosmetisk formål, da de skjuler irriterende visualle elementer på diverse web-sider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -363,22 +363,6 @@
     "message":"Anvend ændringer",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Aktiver logføring af netværksanmodninger",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Du kan inspicere netværksforespørgslerne nærmere ved at slå denne funktion til. Logging af netværksforespørgsler forøger uBlock₀ hukommelsesforbrug. Da de fleste bruger ikke finder disse oplysninger interessante, er funktionen som standard slået fra.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Blokerede forespørgsler",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Tilladte forespørgsler",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Type",
     "description":"English: Type"
@@ -395,16 +379,8 @@
     "message":"Filter",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Ingen blokerede forespørgsler fra denne side er blevet logget",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Ingen ikke-blokerede forespørgsler fra denne side er blevet logget",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
-    "message":"All",
+    "message":"Alle",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimalt antal elementer i log",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Changelog",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Vis netværkslog",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"Slået fra",

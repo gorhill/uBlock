@@ -363,22 +363,6 @@
     "message":"اعمال تغییرات",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"فعال کردن لاگ درخواست های شبکه",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"اگر می خواهید با فعال کردن این گزینه شما می توانید جزئیات شبکه را بازرسی کنید. لاگ کردن درخواست های شبکه مصرف حافظه های uBlock را افزایش می دهد. از آنجا که بسیاری از کاربران هرگز از این ویژگی استفاده نمیکنند، به طور پیش فرض غیرفعال شده است.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"درخواست های مسدود شده",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"درخواست های مجاز",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"نوع",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"فیلتر",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"هیچ درخواست مسدود شده ای برای این صفحه ثبت نشده",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"هیچ درخواست غیر-مسدود کننده ای برای این صفحه ثبت نشده",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"All",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"بیشترین تعداد مطالب لاگ",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"تغییرات اخیر",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"نمایش درخواست ثبت شبکه",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"خاموش",

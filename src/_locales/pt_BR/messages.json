@@ -363,22 +363,6 @@
     "message":"Aplicar alterações",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Ativar o registro de pedidos de rede",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Ativando essa opção você pode inspecionar os detalhes dos pedidos de rede. O registro de pedidos de rede aumenta o consumo de memória do uBlock₀. Uma vez que muitos usuários pararem de usar esse recurso ele será desativado por padrão.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Pedidos bloqueados",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Pedidos permitidos",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tipo",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtro",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Não há pedidos bloqueados registrado nesta página",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Não há pedidos não-bloqueados registrado nesta página",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Tudo",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Número máximo de entradas de registro",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Contexto:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Tipo:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Filtragem de URL dinâmica",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Registro de alterações",
@@ -500,8 +488,8 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Mostrar Registro de Pedidos de Rede",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "message":"Mostrar Registro",
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"desativado",

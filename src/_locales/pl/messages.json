@@ -1,14 +1,14 @@
 {
   "extName":{
-    "message":"µBlock₀",
+    "message":"uBlock Origin",
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Nareszcie skuteczne blokowanie reklam. Niskie użycie procesora i pamięci.",
+    "message":"Nareszcie skuteczne blokowanie reklam. Niskie użycie procesora i pamięci RAM.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"µBlock₀ – Panel sterowania",
+    "message":"uBlock Origin – Panel sterowania",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -32,19 +32,19 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"µBlock₀ – Dziennik żądań sieciowych",
+    "message":"uBlock Origin – Dziennik żądań sieciowych",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
-    "message":"O dodatku",
+    "message":"O rozszerzeniu",
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Kliknij, aby włączyć\/wyłączyć µBlock₀ na tej witrynie.\n\nKliknij z wciśniętym klawiszem Ctrl, aby włączyć\/wyłączyć µBlock₀ tylko na tej stronie.",
+    "message":"Kliknij, aby włączyć\/wyłączyć uBlock Origina na tej witrynie.\n\nKliknij z wciśniętym klawiszem Ctrl, aby włączyć\/wyłączyć uBlock Origina tylko na tej stronie.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"Zablokowane żądania",
+    "message":"żądań zablokowanych",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -68,7 +68,7 @@
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
-    "message":"Przejdź do trybu zaznaczania elementów",
+    "message":"Wejdź w tryb zaznaczania elementów",
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
@@ -108,15 +108,15 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"skrypty zewnętrznej domeny",
+    "message":"skrypty z zewnętrznej domeny",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"ramki zewnętrznej domeny",
+    "message":"ramki z zewnętrznej domeny",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"podłączonych domen",
+    "message":"domen podłączonych",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -136,11 +136,11 @@
     "description":"English: Quit"
   },
   "pickerNetFilters":{
-    "message":"Filtry sieciowe",
+    "message":"Sieciowe filtry",
     "description":"English: Net filters"
   },
   "pickerCosmeticFilters":{
-    "message":"Filtry kosmetyczne",
+    "message":"Kosmetyczne filtry",
     "description":"English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint":{
@@ -152,11 +152,11 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ukryj symbole zastępcze zablokowanych elementów",
+    "message":"Ukryj pozostałości zablokowanych elementów",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Wyświetlaj liczbę zablokowanych żądań na ikonie dodatku",
+    "message":"Wyświetlaj liczbę zablokowanych żądań na ikonie rozszerzenia",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -168,11 +168,11 @@
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>funkcje zaawansowane<\/a>)",
+    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>więcej informacji<\/a>)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informacje<\/a>)",
+    "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>więcej informacji<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -188,7 +188,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"Filtry sieciowe: {{netFilterCount}} ÷ Filtry kosmetyczne: {{cosmeticFilterCount}} z:",
+    "message":"{{netFilterCount}} sieciowych filtrów ÷ {{cosmeticFilterCount}} kosmetycznych filtrów z:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -196,7 +196,7 @@
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Automatycznie aktualizuj listy filtrów.",
+    "message":"Automatycznie aktualizuj listy filtrów",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
@@ -212,11 +212,11 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Włączenie tej funkcji skutkuje przetwarzaniem i używaniem <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrów kompatybilnych z dodatkiem Adblock Plus służących do ukrywania elementów<\/a>. Są to filtry kosmetyczne i służą do ukrycia elementów uważanych za wizualnie uciążliwe, których nie można zablokować przez filtry sieciowe.<\/p><p>Włączenie tej funkcji powoduje zwiększenie użycia pamięci przez µBlock₀.<\/p>",
+    "message":"<p>Ta opcja włącza przetwarzanie i używanie <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrów kompatybilnych z rozszerzeniem AdBlock Plus służących do ukrywania elementów<\/a>. Są one kosmetyczne i ukrywają elementy uważane za wizualnie uciążliwe, których nie można zablokować przez sieciowe filtry.<\/p><p>Włączenie tej opcji zwiększa użycie pamięci RAM przez uBlock Origina.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lista blokowanych hostów",
+    "message":"Listy zablokowanych hostów",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -248,11 +248,11 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Specjalne",
+    "message":"Własne",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika [ ! ] będą pomijane. Błędne adresy URL zostaną zignorowane.",
+    "message":"W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika &lsquo;!&rsquo; i błędne adresy URL zostaną zignorowane.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -264,19 +264,19 @@
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
-    "message":"jest dostępna nowa wersja",
+    "message":"nowa wersja jest dostępna",
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"nieaktualna",
+    "message":"nieaktualny",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Ostatnio zaktualizowano: {{ago}}",
+    "message":"Ostatnia aktualizacja: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem AdBlock Plus. Wiersze poprzedzone znakiem wykrzyknika [ ! ] będą pomijane.",
+    "message":"W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z rozszerzeniem AdBlock Plus. Wiersze poprzedzone znakiem wykrzyknika &lsquo;!&rsquo; będą pomijane.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -288,7 +288,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"ublock-wlasne-filtry_{{datetime}}.txt",
+    "message":"ublock0-moje-statyczne-filtry_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -296,11 +296,11 @@
     "description":"English: Apply changes"
   },
   "rulesPermanentHeader":{
-    "message":"Reguły stałe",
+    "message":"Stałe reguły",
     "description":"header"
   },
   "rulesTemporaryHeader":{
-    "message":"Reguły tymczasowe",
+    "message":"Tymczasowe reguły",
     "description":"header"
   },
   "rulesRevert":{
@@ -324,19 +324,19 @@
     "description":"Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport":{
-    "message":"Importuj z pliku…",
+    "message":"Importuj z pliku...",
     "description":""
   },
   "rulesExport":{
-    "message":"Eksportuj do pliku",
+    "message":"Eksportuj do pliku...",
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"ublock-dynamiczne-reguly_{{datetime}}.txt",
+    "message":"ublock0-moje-dynamiczne-reguly_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Lista reguł dynamicznego filtrowania.",
+    "message":"Lista Twoich reguł dynamicznego filtrowania.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -344,7 +344,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"Lista nazw hostów, na których µBlock₀ zostanie wyłączony. W jednym wierszu może być tylko jeden wpis. Błędne nazwy hostów zostaną pominięte.",
+    "message":"Lista nazw hostów, na których uBlock Origin zostanie wyłączony. W jednym wierszu może być tylko jeden wpis. Błędne nazwy hostów zostaną zignorowane.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -356,28 +356,12 @@
     "description":"English: Export"
   },
   "whitelistExportFilename":{
-    "message":"ublock-biala-lista_{{datetime}}.txt",
+    "message":"ublock0-moja-biala-lista_{{datetime}}.txt",
     "description":"English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply":{
     "message":"Zastosuj zmiany",
     "description":"English: Apply changes"
-  },
-  "logNetRequestsPrompt":{
-    "message":"Włącz rejestrowanie żądań sieciowych",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Włączając tę funkcję możesz zobaczyć dokładne informacje o blokowanych żądaniach. Zapisywanie tych żądań zwiększa użycie pamięci przez µBlock₀. Ponieważ większość użytkowników nie używa tej opcji, domyślnie jest ona wyłączona.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Zablokowane żądania",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Dozwolone żądania",
-    "description":"English: Allowed requests"
   },
   "logRequestsHeaderType":{
     "message":"Typ",
@@ -395,14 +379,6 @@
     "message":"Filtr",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Nie zarejestrowano zablokowanych żądań na tej stronie",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Nie zarejestrowano nieblokowanych żądań na tej stronie",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Wszystkie",
     "description":"Appears in the logger's tab selector"
@@ -412,12 +388,24 @@
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
-    "message":"filtruj wpisy",
+    "message":"filtruj wpisy dziennika",
     "description":"English: filter log entries"
   },
   "logMaxEntriesTip":{
     "message":"Maksymalna liczba wpisów w dzienniku",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Kontekst:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Typ:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamiczne filtrowanie adresu URL",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Dziennik zmian",
@@ -436,11 +424,11 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Utwórz kopię zapasową…",
+    "message":"Utwórz kopię zapasową ustawień",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
-    "message":"ublock-kopia-zapasowa_{{datetime}}.txt",
+    "message":"ublock0-moja-kopia-zapasowa_{{datetime}}.txt",
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
@@ -452,7 +440,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"Wszystkie twoje ustawienia zostaną zastąpione ustawieniami z kopii stworzonej {{time}}. Po zakończeniu µBlock₀ zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
+    "message":"Wszystkie Twoje ustawienia zostaną zastąpione ustawieniami z kopii zapasowej stworzonej {{time}}. Po zakończeniu tego procesu, uBlock Origin zostanie uruchomiony ponownie.\n\nPrzywrócić ustawienia z kopii zapasowej?",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -460,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Wszystkie twoje ustawienia zostaną usunięte i µBlock₀ uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
+    "message":"Wszystkie Twoje ustawienia zostaną usunięte, a uBlock Origin uruchomi się ponownie.\n\nCzy chcesz przywrócić domyślne ustawienia?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{
@@ -468,7 +456,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock₀: Dodać następujący URL do twojej własnej listy filtrów?\n\nTytuł: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock Origin: Dodać następujący adres URL do Twojej własnej listy filtrów?\n\nTytuł: \"{{title}}\"\nAdres URL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -501,14 +489,14 @@
   },
   "showNetworkLogButton":{
     "message":"Wyświetl dziennik żądań sieciowych",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"wyłączony",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"µBlock₀ zablokował wczytywanie tej strony:",
+    "message":"uBlock Origin zablokował tę stronę przed wczytywaniem:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

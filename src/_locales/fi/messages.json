@@ -363,22 +363,6 @@
     "message":"Vahvista muutokset",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Ota käyttöön verkon pyyntöjen kirjaaminen lokiin",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Laittamalla tämän asetuksen päälle, voit tarkkailla verkkoon tehtäviä pyyntöjä. Tämä nostaa µBlockin muistinkulutusta. Monet käyttäjät eivät koskaan tule käyttämään tätä ominaisuutta, joten se on oletuksena pois päältä.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Estetyt pyynnöt",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Sallitut pyynnöt",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tyyppi",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Suodatin",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Ei estettyjä pyyntöjä havaittu tällä sivulla",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Ei ei-estettyjä pyyntöjä havaittu tällä sivulla",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Kaikki",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Maksimi määrä lokimerkintöjä",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Konteksti:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Tyyppi:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynaaminen URL-suodatus",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Muutosloki",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Näytä Verkkopyyntöjen Loki",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"pois päältä",

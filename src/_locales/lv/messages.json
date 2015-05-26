@@ -363,22 +363,6 @@
     "message":"Lietot izmaiņas",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Iespējot tīkla pieprasījumu reģistrēšanu",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Iespējojot šo opciju, tiks pārbaudīta informācija par tīkla pieprasījumiem. Tīkla pieprasījumu reģistrēšana palielina uBlock₀ izmantotās atmiņas apjomu. Tā kā daudzi lietotāji nekad neizmantos šo iespēju, tā pēc noklusējuma ir izslēgta.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Bloķētie pieprasījumi",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Atļautie pieprasījumi",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Tips",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtrs",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Šai lapai nav reģistrēti bloķētie pieprasījumi",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Šai lapai nav reģistrēti nebloķētie pieprasījumi",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"Viss",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Žurnāla ierakstu maksimālais skaits",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Konteksts:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Tips:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dinamiskā URL filtrēšana",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Izmaiņu žurnāls",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Parādīt tīkla pieprasījumu žurnālu",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"izslēgts",

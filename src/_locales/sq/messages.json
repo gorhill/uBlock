@@ -363,22 +363,6 @@
     "message":"Ruaj ndryshimet",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"Mbaj shënime për kërkesat e rrjetit",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"Aktivizoni këtë opsionin kur doni të kontrolloni kërkesat e rrjetit me hollësi. Mbledhja e këtyre kërkesave rrit impaktin e uBlock te memorja e kompjuterit. Përderisa shumë përdorues nuk do e shfrytëzojnë asnjëherë këtë veçori, ajo normalisht qëndron joaktive.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"Kërkesa të bllokuara",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"Kërkesa të lejuara",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"Lloji",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"Filtri",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"Për këtë faqe nuk raportohet asnjë kërkesë e bllokuar",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"Për këtë faqe nuk raportohet asnjë kërkesë e pabllokuar",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"All",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"Numri maksimal i elementeve të ditarit",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"Ditari i ndryshimeve",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"Ditari i kërkesave të rrjetit",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"fikur",

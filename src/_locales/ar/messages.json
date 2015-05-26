@@ -363,22 +363,6 @@
     "message":"حفظ التغيرات",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"تفعيل تسجيل الطلبات المحظوره",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"بإمكانك رؤية تفاصيل الطلبات التي تم منعها اذا تم اختيار تفعيل هذا الخيار. ولكن عند تفعيل هذه الخاصيه سوف ستسخدم هذه الخاصية موارد الذاكرة بشكل أكبر. وبما أنه لن يكون هناك كثير من سيستخدم هذه الخاصية, سوف يتم تعطيلها بشكل افتراضي.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"الطلبات المحظوره",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"طلبات المسموحه",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"النوع",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"فلتر",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"لا يوجد اي طلب ممنوع في هذي الصفحه.",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"لا يوجد اي طلب غير ممنوع في هذي الصفحه.",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"كل",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"العدد الأقصى للإدخالات في السجلات",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"حالة:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"نوع:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"تصفية ديناميكية للروابط",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"سجل التغيير",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"اعرض سجل طلبات الإتصال بالشبكة",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"مغلق",

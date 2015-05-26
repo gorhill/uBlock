@@ -363,22 +363,6 @@
     "message":"మార్పులను భద్రపరచు",
     "description":"English: Apply changes"
   },
-  "logNetRequestsPrompt":{
-    "message":"నెట్వర్క్ అభ్యర్ధనలను చిట్టాలో పొందుపరచుము",
-    "description":"English: Enable the logging of network requests"
-  },
-  "logNetRequestsHelp":{
-    "message":"ఈ ఎంపిక ద్వారా మీరు నెట్వర్క్ అభ్యర్దనల గురించి మరిన్ని వివరాలు తెలుసుకోవచ్చు. అయితే ఈ లక్షణం uBlock₀ యొక్క మెమరీ వాడుకను రేట్టిస్తుంది. మాములుగా ఈ ఎంపికను ఎవరు వాడారు అందుకే ఇది అప్రమేయంగా అచేతనపరచి వుంటుంది.",
-    "description":"English: see _locales\/en\/messages.log"
-  },
-  "logBlockedRequestsHeader":{
-    "message":"నిరోధించబడిన అభ్యర్ధనలు",
-    "description":"English: Blocked requests"
-  },
-  "logAllowedRequestsHeader":{
-    "message":"అనుమతించబడిన అభ్యర్ధనలు",
-    "description":"English: Allowed requests"
-  },
   "logRequestsHeaderType":{
     "message":"రకం",
     "description":"English: Type"
@@ -395,14 +379,6 @@
     "message":"జల్లెడ",
     "description":"English: Filter"
   },
-  "logBlockedRequestsEmpty":{
-    "message":"ఈ వెబ్ పేజిలొ అభ్యర్దనలను నిరోధించబడినట్టు దాఖలాలు లేవు",
-    "description":"English: No blocked requests logged for this page"
-  },
-  "logAllowedRequestsEmpty":{
-    "message":"ఈ వెబ్ పేజి నుండి అనుమతించబడిన అభ్యర్దనలు వున్నట్టు చిట్టాలొ దాఖలాలు లేవు",
-    "description":"English: No non-blocked requests logged for this page"
-  },
   "logAll":{
     "message":"అన్ని",
     "description":"Appears in the logger's tab selector"
@@ -418,6 +394,18 @@
   "logMaxEntriesTip":{
     "message":"చిట్టాలోని గరిష్ట నమోదుల సంఖ్య",
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  },
+  "loggerURLFilteringContextLabel":{
+    "message":"Context:",
+    "description":"Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel":{
+    "message":"Type:",
+    "description":"Label for the type selector"
+  },
+  "loggerURLFilteringHeader":{
+    "message":"Dynamic URL filtering",
+    "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
     "message":"మార్పుల సంచిక",
@@ -501,7 +489,7 @@
   },
   "showNetworkLogButton":{
     "message":"నెట్వర్క్ అభ్యర్ధనల చిట్టాను చూపు",
-    "description":"Firefox\/Fennec-specific: Show Network Request Log"
+    "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
     "message":"అచేతనం",
