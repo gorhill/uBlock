@@ -10,9 +10,7 @@ Also, as opposed to what [_uBlock FAQ_ suggests](https://www.ublock.org/faq/):
 
 > [...] **In contrast**, the uBlock project will be moving forward with awesome new features, refinements, and enhancements [...]
 
-uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements and stability work.
-
-For an unbiased assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock).
+uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements and stability work. For an unbiased assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock).
 
 *** 
 
