@@ -6,13 +6,13 @@ I've seen in many places lately the following assertion ([example](https://np.re
 
 **Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevents network requests from being made according to filter lists so that your browser does not connect to remote servers, period.
 
-Also, another myth to dispel: as opposed to what [_uBlock FAQ_ suggests](https://www.ublock.org/faq/):
+Also, as opposed to what [_uBlock FAQ_ suggests](https://www.ublock.org/faq/):
 
 > [...] **In contrast**, the uBlock project will be moving forward with awesome new features, refinements, and enhancements [...]
 
-uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements.
+uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements and stability work.
 
-For an unbiased assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock) (I do not contribute and never contributed to this article as I consider this would be [unethical](http://en.wikipedia.org/wiki/Wikipedia:Conflict_of_interest)).
+For an unbiased assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock).
 
 *** 
 
