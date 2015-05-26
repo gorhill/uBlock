@@ -619,9 +619,14 @@ vAPI.tabs.registerListeners();
         if ( !tab.title && tryAgain(tabId) ) {
             return;
         }
-        tryNoMore(tabId);
+        // https://github.com/gorhill/uMatrix/issues/225
+        // Sometimes title changes while page is loading.
+        var settled = tab.title && tab.title === pageStore.title;
         pageStore.title = tab.title || tab.url || '';
         this.pageStoresToken = Date.now();
+        if ( settled || !tryAgain(tabId) ) {
+            tryNoMore(tabId);
+        }
     };
 
     var updateTitle = function(tabId) {
