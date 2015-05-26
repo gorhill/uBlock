@@ -12,6 +12,8 @@ Also, another myth to dispel: as opposed to what [_uBlock FAQ_ suggests](https:/
 
 uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements.
 
+For an unbiased assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock) (I do not contribute and never contributed to this article as I consider this would be [unethical](http://en.wikipedia.org/wiki/Wikipedia:Conflict_of_interest)).
+
 *** 
 
 <h1 align="center">
