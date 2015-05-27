@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Nareszcie skuteczne blokowanie reklam. Niskie użycie procesora i pamięci RAM.",
+    "message":"Nareszcie skuteczne blokowanie reklam. Niskie użycie procesora i pamięci.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -208,7 +208,7 @@
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
-    "message":"Przetwarzaj i stosuj filtry kosmetyczne",
+    "message":"Przetwarzaj i stosuj kosmetyczne filtry",
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
@@ -276,7 +276,7 @@
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
-    "message":"W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z rozszerzeniem AdBlock Plus. Wiersze poprzedzone znakiem wykrzyknika &lsquo;!&rsquo; będą pomijane.",
+    "message":"W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z rozszerzeniem Adblock Plus. Wiersze poprzedzone znakiem wykrzyknika &lsquo;!&rsquo; zostaną zignorowane.",
     "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
   },
   "1pImport":{
@@ -424,7 +424,7 @@
     "description":"English: Contributors"
   },
   "aboutBackupDataButton":{
-    "message":"Utwórz kopię zapasową ustawień",
+    "message":"Utwórz kopię zapasową ustawień do pliku...",
     "description":"English: Backup to file"
   },
   "aboutBackupFilename":{
@@ -432,11 +432,11 @@
     "description":"English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton":{
-    "message":"Przywróć z pliku…",
+    "message":"Przywróć kopię zapasową z pliku...",
     "description":"English: Restore from file..."
   },
   "aboutResetDataButton":{
-    "message":"Przywróć ustawienia domyślne…",
+    "message":"Przywróć domyślne ustawienia",
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
@@ -484,11 +484,11 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Wyświetl panel sterowania",
+    "message":"Przejdź do panelu sterowania",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Wyświetl dziennik żądań sieciowych",
+    "message":"Przejdź do dziennika żądań sieciowych",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

@@ -2,7 +2,7 @@ Skutecznie blokuje reklamy. Używa mało pamięci RAM i zasobów procesora, a pr
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sposób użycia: wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia rozszerzenia na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
+Sposób użycia. Wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia dodatku na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
 ***
 
@@ -30,16 +30,16 @@ Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić d
 
 ***
 
-Bez zaprogramowanych list filtrów ten dodatek jest bezwartościowy. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+Bez ustawionych list filtrów ten dodatek jest bezwartościowy. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
 
 ***
 
-Darmowe rozszerzenie.
+Darmowy dodatek.
 Kod źródłowy udostępniany na otwartej licencji (GPLv3)
 Dla użytkowników przez użytkowników.
 
 Współtwórcy dodatku: https://github.com/gorhill/uBlock/graphs/contributors
-Współtwórcy tłumaczeń: https://crowdin.com/project/ublock/translators
+Autorzy tłumaczeń: https://crowdin.com/project/ublock/translators
 
 ***
 

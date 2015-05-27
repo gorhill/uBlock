@@ -396,15 +396,15 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"페이지:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"유형:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"동적 URL 필터링",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

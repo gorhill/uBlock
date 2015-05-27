@@ -396,7 +396,7 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Kontekst:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
@@ -404,7 +404,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Dynamisk adressefiltrering",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

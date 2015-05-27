@@ -404,7 +404,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Динамическая фильтрация URL",
+    "message":"Динамическая фильтрация URL-адресов",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

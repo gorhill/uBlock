@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — registro richieste di rete",
+    "message":"uBlock₀ — Cronologia richieste di rete",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Click: disabilita\/abilita permanentemente uBlock per questo sito.\n\nCtrl+click: disabilita uBlock solo su questa pagina.",
+    "message":"Click: disabilita\/abilita permanentemente uBlock₀ per questo sito.\n\nCtrl+click: disabilita uBlock₀ solo su questa pagina.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -396,15 +396,15 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Contesto:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Tipo:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Filtraggio dinamico dell'URL",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

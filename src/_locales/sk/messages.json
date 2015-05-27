@@ -396,15 +396,15 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Kontext:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Typ:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Dynamické filtrovanie URL",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
@@ -488,7 +488,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Zobraziť záznam sieťových požiadavok",
+    "message":"Zobraziť Zaznamenávač",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
