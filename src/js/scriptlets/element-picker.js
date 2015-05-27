@@ -735,10 +735,28 @@ var elementFromPoint = function(x, y) {
 
 /******************************************************************************/
 
-var onSvgHovered = function(ev) {
-    var elem = elementFromPoint(ev.clientX, ev.clientY);
-    highlightElements(elem ? [elem] : []);
-};
+var onSvgHovered = (function() {
+    var timer = null;
+    var position = { x: 0, y: 0 };
+
+    var onTimer = function() {
+        timer = null;
+        var elem = elementFromPoint(position.x, position.y);
+        highlightElements(elem ? [elem] : []);
+    };
+
+    var onMove = function(ev) {
+        position.x = ev.clientX;
+        position.y = ev.clientY;
+        if ( timer !== null ) {
+            return;
+        }
+
+        timer = vAPI.setTimeout(onTimer, 40);
+    };
+
+    return onMove;
+})();
 
 /******************************************************************************/
 
