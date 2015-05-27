@@ -488,7 +488,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Zobrazit protokol síťových požadavků",
+    "message":"Zobrazit Zaznamenávač",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
