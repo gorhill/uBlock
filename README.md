@@ -1,3 +1,8 @@
+[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="18">](https://travis-ci.org/gorhill/uBlock)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/ublock/localized.png)](https://crowdin.com/project/ublock)
+
+***
+
 **Couple of ongoing myths to dispel**:
 
 I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6)):
@@ -38,7 +43,7 @@ uBlock Origin
 </p>
 
 
-**An efficient blocker add-on for various browsers. Fast, potent, and lean.**&nbsp;&nbsp;[<img src="https://travis-ci.org/gorhill/uBlock.svg?branch=master" height="12">](https://travis-ci.org/gorhill/uBlock)
+**An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
 * [Purpose & General Info](#philosophy)
 * [Documentation](#documentation)
