@@ -808,7 +808,9 @@ var urlFilteringDialog = (function() {
 
         uDom(dialog).descendants('.picker').toggleClass(
             'hide',
-            type !== 'image' || /(?:^| )[dlsu]b(?: |$)/.test(tr.className)
+            tr.classList.contains('tab_bts') ||
+            type !== 'image' ||
+            /(?:^| )[dlsu]b(?: |$)/.test(tr.className)
         );
 
         // Shortest URL which for a valid URL filtering rule
