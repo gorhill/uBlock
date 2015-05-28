@@ -351,17 +351,7 @@ var onRootFrameHeadersReceived = function(details) {
     var tabId = details.tabId;
     var µb = µBlock;
 
-    // Check if the main_frame is a download
-    // https://github.com/gorhill/uBlock/issues/111
-    // We will assume that whatever root document is of type
-    //   'application/x-[...]' is a download operation.
-    // I confirmed this also work with original issue:
-    //   https://github.com/chrisaljoudi/uBlock/issues/516
-    if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('application/x-', 0) === 0 ) {
-        µb.tabContextManager.unpush(tabId, details.url);
-    } else {
-        µb.tabContextManager.push(tabId, details.url);
-    }
+    µb.tabContextManager.push(tabId, details.url);
 
     // Lookup the page store associated with this tab id.
     var pageStore = µb.pageStoreFromTabId(tabId);
@@ -393,18 +383,6 @@ var onRootFrameHeadersReceived = function(details) {
     });
 
     return { 'responseHeaders': details.responseHeaders };
-};
-
-/******************************************************************************/
-
-var headerValue = function(headers, name) {
-    var i = headers.length;
-    while ( i-- ) {
-        if ( headers[i].name.toLowerCase() === name ) {
-            return headers[i].value.trim();
-        }
-    }
-    return '';
 };
 
 /******************************************************************************/

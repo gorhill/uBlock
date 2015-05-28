@@ -138,6 +138,14 @@ housekeep itself.
 
     var gcPeriod = 10 * 60 * 1000;
 
+    // A pushed entry is removed from the stack unless it is committed with
+    // a set time.
+    var StackEntry = function(url, commit) {
+        this.url = url;
+        this.committed = commit;
+        this.tstamp = Date.now();
+    };
+
     var TabContext = function(tabId) {
         this.tabId = tabId.toString();
         this.stack = [];
@@ -145,9 +153,8 @@ housekeep itself.
         this.normalURL =
         this.rootHostname =
         this.rootDomain = '';
-        this.timer = null;
-        this.onTabCallback = null;
-        this.onTimerCallback = null;
+        this.commitTimer = null;
+        this.gcTimer = null;
 
         tabContexts[tabId] = this;
     };
@@ -156,27 +163,49 @@ housekeep itself.
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
-        if ( this.timer !== null ) {
-            clearTimeout(this.timer);
-            this.timer = null;
+        if ( this.gcTimer !== null ) {
+            clearTimeout(this.gcTimer);
+            this.gcTimer = null;
         }
         delete tabContexts[this.tabId];
     };
 
     TabContext.prototype.onTab = function(tab) {
         if ( tab ) {
-            this.timer = vAPI.setTimeout(this.onTimerCallback, gcPeriod);
+            this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
         } else {
             this.destroy();
         }
     };
 
-    TabContext.prototype.onTimer = function() {
-        this.timer = null;
+    TabContext.prototype.onGC = function() {
+        this.gcTimer = null;
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
-        vAPI.tabs.get(this.tabId, this.onTabCallback);
+        vAPI.tabs.get(this.tabId, this.onTab.bind(this));
+    };
+
+    // https://github.com/gorhill/uBlock/issues/248
+    // Stack entries have to be committed to stick. Non-committed stack
+    // entries are removed after a set delay.
+    TabContext.prototype.onCommit = function() {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
+            return;
+        }
+        this.commitTimer = null;
+        // Remove uncommitted entries at the top of the stack.
+        var i = this.stack.length;
+        while ( i-- ) {
+            if ( this.stack[i].committed ) {
+                break;
+            }
+        }
+        i += 1;
+        if ( i < this.stack.length ) {
+            this.stack.length = i;
+            this.update();
+        }
     };
 
     // This takes care of orphanized tab contexts. Can't be started for all
@@ -186,22 +215,21 @@ housekeep itself.
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
-        this.onTabCallback = this.onTab.bind(this);
-        this.onTimerCallback = this.onTimer.bind(this);
-        this.timer = vAPI.setTimeout(this.onTimerCallback, gcPeriod);
+        this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
     };
 
-    // Update just force all properties to be updated to match the most current
+    // Update just force all properties to be updated to match the most recent
     // root URL.
     TabContext.prototype.update = function() {
         if ( this.stack.length === 0 ) {
             this.rawURL = this.normalURL = this.rootHostname = this.rootDomain = '';
-        } else {
-            this.rawURL = this.stack[this.stack.length - 1];
-            this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
-            this.rootHostname = µb.URI.hostnameFromURI(this.normalURL);
-            this.rootDomain = µb.URI.domainFromHostname(this.rootHostname);
+            return;
         }
+        var stackEntry = this.stack[this.stack.length - 1];
+        this.rawURL = stackEntry.url;
+        this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
+        this.rootHostname = µb.URI.hostnameFromURI(this.normalURL);
+        this.rootDomain = µb.URI.domainFromHostname(this.rootHostname);
     };
 
     // Called whenever a candidate root URL is spotted for the tab.
@@ -210,11 +238,15 @@ housekeep itself.
             return;
         }
         var count = this.stack.length;
-        if ( count !== 0 && this.stack[count - 1] === url ) {
+        if ( count !== 0 && this.stack[count - 1].url === url ) {
             return;
         }
-        this.stack.push(url);
+        this.stack.push(new StackEntry(url));
         this.update();
+        if ( this.commitTimer === null ) {
+            clearTimeout(this.commitTimer);
+        }
+        this.commitTimer = vAPI.setTimeout(this.onCommit.bind(this), 1000);
     };
 
     // Called when a former push is a false positive:
@@ -225,22 +257,20 @@ housekeep itself.
         }
         // We are not going to unpush if there is no other candidate, the
         // point of unpush is to make space for a better candidate.
-        if ( this.stack.length === 1 ) {
+        var i = this.stack.length;
+        if ( i === 1 ) {
             return;
         }
-        var pos = this.stack.indexOf(url);
-        if ( pos === -1 ) {
+        while ( i-- ) {
+            if ( this.stack[i].url !== url ) {
+                continue;
+            }
+            this.stack.splice(i, 1);
+            if ( i === this.stack.length ) {
+                this.update();
+            }
             return;
         }
-        this.stack.splice(pos, 1);
-        if ( this.stack.length === 0 ) {
-            this.destroy();
-            return;
-        }
-        if ( pos !== this.stack.length ) {
-            return;
-        }
-        this.update();
     };
 
     // This tells that the url is definitely the one to be associated with the
@@ -250,7 +280,7 @@ housekeep itself.
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
-        this.stack = [url];
+        this.stack = [new StackEntry(url, true)];
         this.update();
     };
 
@@ -328,7 +358,7 @@ housekeep itself.
     // Behind-the-scene tab context
     (function() {
         var entry = new TabContext(vAPI.noTabId);
-        entry.stack.push('');
+        entry.stack.push(new StackEntry('', true));
         entry.rawURL = '';
         entry.normalURL = µb.normalizePageURL(entry.tabId);
         entry.rootHostname = µb.URI.hostnameFromURI(entry.normalURL);
