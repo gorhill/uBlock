@@ -84,11 +84,6 @@ button.custom.disabled {
 button.custom:hover {
     opacity: 1.0;
     }
-button.custom.reloadAll:not(.disabled) {
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
-    }
 #buttonApply {
     display: initial;
     margin: 1em 0;

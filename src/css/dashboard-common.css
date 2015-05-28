@@ -25,6 +25,29 @@ div > p:last-child {
     margin-bottom: 0;
     }
 
+button.important {
+    padding: 5px;
+    border: 1px solid transparent;
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    border-radius: 3px;
+    background-color: hsl(36, 100%, 75%);
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    background-repeat: repeat-x;
+    color: #222;
+    opacity: 0.8;
+    }
+button.important[disabled],
+button.important.disabled {
+    border-color: #dddddd #dddddd hsl(36, 0%, 85%);
+    background-color: hsl(36, 0%, 72%);
+    background-image: linear-gradient(#f2f2f2, #dddddd);
+    color: #888;
+    pointer-events: none;
+    }
+button.important:hover {
+    opacity: 1.0;
+    }
+
 .para {
     width: 40em;
     }
