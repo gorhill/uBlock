@@ -99,7 +99,9 @@ var renderFilterLists = function() {
         }
 
         elem = li.descendants('a:nth-of-type(1)');
-        elem.attr('href', encodeURI(listKey));
+        elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
+        elem.attr('type', 'text/html');
+        elem.attr('data-listkey', listKey);
         elem.text(listNameFromListKey(listKey) + '\u200E');
 
         elem = li.descendants('a:nth-of-type(2)');
@@ -344,7 +346,7 @@ var listsContentChanged = function() {
 /******************************************************************************/
 
 var onListCheckboxChanged = function() {
-    var href = uDom(this).parent().descendants('a').first().attr('href');
+    var href = uDom(this).parent().descendants('a').first().attr('data-listkey');
     if ( typeof href !== 'string' ) {
         return;
     }
@@ -357,24 +359,10 @@ var onListCheckboxChanged = function() {
 
 /******************************************************************************/
 
-var onListLinkClicked = function(ev) {
-    messager.send({
-        what: 'gotoURL',
-        details: {
-            url: 'asset-viewer.html?url=' + uDom(this).attr('href'),
-            select: true,
-            index: -1
-        }
-    });
-    ev.preventDefault();
-};
-
-/******************************************************************************/
-
 var onPurgeClicked = function() {
     var button = uDom(this);
     var li = button.parent();
-    var href = li.descendants('a').first().attr('href');
+    var href = li.descendants('a').first().attr('data-listkey');
     if ( !href ) {
         return;
     }
@@ -403,7 +391,7 @@ var selectFilterLists = function(callback) {
     while ( i-- ) {
         li = lis.at(i);
         switches.push({
-            location: li.descendants('a').attr('href'),
+            location: li.descendants('a').attr('data-listkey'),
             off: li.descendants('input').prop('checked') === false
         });
     }
@@ -534,7 +522,6 @@ uDom.onLoad(function() {
     uDom('#buttonUpdate').on('click', buttonUpdateHandler);
     uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
     uDom('#lists').on('change', '.listEntry > input', onListCheckboxChanged);
-    uDom('#lists').on('click', '.listEntry > a:nth-of-type(1)', onListLinkClicked);
     uDom('#lists').on('click', 'span.purge', onPurgeClicked);
     uDom('#externalLists').on('input', externalListsChangeHandler);
     uDom('#externalListsApply').on('click', externalListsApplyHandler);
