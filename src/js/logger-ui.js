@@ -892,17 +892,13 @@ var rowFilterer = (function() {
         var raw = uDom('#filterInput').val().trim();
         var rawParts = raw.split(/\s+/);
         var reStr, reStrs = [], not = false;
-        var i = rawParts.length;
-        while ( i-- ) {
+        var n = rawParts.length;
+        for ( var i = 0; i < n; i++ ) {
             rawPart = rawParts[i];
             if ( rawPart.charAt(0) === '!' ) {
                 if ( reStrs.length === 0 ) {
                     not = true;
                 }
-                rawPart = rawPart.slice(1);
-            }
-            not = rawPart.charAt(0) === '!';
-            if ( not ) {
                 rawPart = rawPart.slice(1);
             }
             hardBeg = rawPart.charAt(0) === '|';
@@ -925,7 +921,8 @@ var rowFilterer = (function() {
                 reStr += '(?:\\s|$)';
             }
             reStrs.push(reStr);
-            if ( i !== 0 && rawParts[i-1] === '||' ) {
+            if ( i < (n - 1) && rawParts[i + 1] === '||' ) {
+                i += 1;
                 continue;
             }
             reStr = reStrs.length === 1 ? reStrs[0] : reStrs.join('|');
