@@ -5,7 +5,7 @@
 
 **Couple of ongoing myths to dispel**:
 
-I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6)):
+I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6), [example](http://www.reddit.com/r/leagueoflegends/comments/37e8ed/want_to_support_your_favorite_content_producers/)):
 
 > ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
 
