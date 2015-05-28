@@ -56,7 +56,16 @@ let onLoadCompleted = function() {
 
 addMessageListener('ublock-load-completed', onLoadCompleted);
 
-locationChangeListener = new LocationChangeListener(docShell);
+if ( docShell ) {
+    let Ci = Components.interfaces;
+    let wp = docShell.QueryInterface(Ci.nsIInterfaceRequestor)
+                     .getInterface(Ci.nsIWebProgress);
+    let dw = wp.DOMWindow;
+
+    if ( dw === dw.top ) {
+        locationChangeListener = new LocationChangeListener(docShell);
+    }
+}
 
 /******************************************************************************/
 

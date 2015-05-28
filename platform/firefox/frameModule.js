@@ -218,7 +218,13 @@ const contentObserver = {
             });
 
             sandbox.injectScript = function(script) {
-                Services.scriptloader.loadSubScript(script, sandbox);
+                if ( Services !== undefined ) {
+                    Services.scriptloader.loadSubScript(script, sandbox);
+                } else {
+                    // Sandbox appears void.
+                    // I've seen this happens, need to investigate why.
+                    
+                }
             };
         }
         else {
@@ -358,7 +364,6 @@ LocationChangeListener.prototype.onLocationChange = function(webProgress, reques
     if ( !webProgress.isTopLevel ) {
         return;
     }
-
     this.messageManager.sendAsyncMessage(locationChangedMessageName, {
         url: location.asciiSpec,
         flags: flags,
