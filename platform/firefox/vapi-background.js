@@ -103,14 +103,14 @@ vAPI.storage = (function() {
         if ( db === null ) {
             return;
         }
-        db.createStatement('VACUUM').executeAsync();
+        db.createAsyncStatement('VACUUM').executeAsync();
         db.asyncClose();
         db = null;
     };
 
     var open = function() {
         if ( db !== null ) {
-            return;
+            return db;
         }
 
         // Create path
@@ -125,7 +125,18 @@ vAPI.storage = (function() {
         path.append(location.host + '.sqlite');
 
         // Open database
-        db = Services.storage.openDatabase(path);
+        try {
+            db = Services.storage.openDatabase(path);
+            if ( db.connectionReady === false ) {
+                db.asyncClose();
+                db = null;
+            }
+        } catch (ex) {
+        }
+
+        if ( db === null ) {
+            return null;
+        }
 
         // Database was opened, register cleanup task
         cleanupTasks.push(close);
@@ -133,6 +144,8 @@ vAPI.storage = (function() {
         // Setup database
         db.createAsyncStatement('CREATE TABLE IF NOT EXISTS settings(name TEXT PRIMARY KEY NOT NULL, value TEXT);')
           .executeAsync();
+
+        return db;
     };
 
     // Execute a query
@@ -160,6 +173,10 @@ vAPI.storage = (function() {
             },
             handleError: function(error) {
                 console.error('SQLite error ', error.result, error.message);
+                // Caller expects an answer regardless of failure.
+                if ( typeof callback === 'function' ) {
+                    callback(null);
+                }
             }
         });
     };
@@ -179,10 +196,13 @@ vAPI.storage = (function() {
     };
 
     var clear = function(callback) {
-        if ( db === null ) {
-            open();
+        if ( open() === null ) {
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+            return;
         }
-        runStatement(db.createStatement('DELETE FROM settings; VACUUM;'), callback);
+        runStatement(db.createAsyncStatement('DELETE FROM settings; VACUUM;'), callback);
     };
 
     var getBytesInUse = function(keys, callback) {
@@ -190,16 +210,17 @@ vAPI.storage = (function() {
             return;
         }
 
-        if ( db === null ) {
-            open();
+        if ( open() === null ) {
+            callback(0);
+            return;
         }
 
         var stmt;
         if ( Array.isArray(keys) ) {
-            stmt = db.createStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings WHERE name = :name');
+            stmt = db.createAsyncStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings WHERE name = :name');
             bindNames(keys);
         } else {
-            stmt = db.createStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings');
+            stmt = db.createAsyncStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings');
         }
 
         runStatement(stmt, function(result) {
@@ -212,8 +233,27 @@ vAPI.storage = (function() {
             return;
         }
 
-        if ( db === null ) {
-            open();
+        var prepareResult = function(result) {
+            var key;
+            for ( key in result ) {
+                if ( result.hasOwnProperty(key) === false ) {
+                    continue;
+                }
+                result[key] = JSON.parse(result[key]);
+            }
+            if ( typeof details === 'object' && details !== null ) {
+                for ( key in details ) {
+                    if ( result.hasOwnProperty(key) === false ) {
+                        result[key] = details[key];
+                    }
+                }
+            }
+            callback(result);
+        };
+
+        if ( open() === null ) {
+            prepareResult({});
+            return;
         }
 
         var names = [];
@@ -229,43 +269,36 @@ vAPI.storage = (function() {
 
         var stmt;
         if ( names.length === 0 ) {
-            stmt = db.createStatement('SELECT * FROM settings');
+            stmt = db.createAsyncStatement('SELECT * FROM settings');
         } else {
-            stmt = db.createStatement('SELECT * FROM settings WHERE name = :name');
+            stmt = db.createAsyncStatement('SELECT * FROM settings WHERE name = :name');
             bindNames(stmt, names);
         }
 
-        runStatement(stmt, function(result) {
-            var key;
-            for ( key in result ) {
-                result[key] = JSON.parse(result[key]);
-            }
-            if ( typeof details === 'object' && details !== null ) {
-                for ( key in details ) {
-                    if ( result.hasOwnProperty(key) === false ) {
-                        result[key] = details[key];
-                    }
-                }
-            }
-            callback(result);
-        });
+        runStatement(stmt, prepareResult);
     };
 
     var remove = function(keys, callback) {
-        if ( db === null ) {
-            open();
+        if ( open() === null ) {
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+            return;
         }
-        var stmt = db.createStatement('DELETE FROM settings WHERE name = :name');
+        var stmt = db.createAsyncStatement('DELETE FROM settings WHERE name = :name');
         bindNames(stmt, typeof keys === 'string' ? [keys] : keys);
         runStatement(stmt, callback);
     };
 
     var write = function(details, callback) {
-        if ( db === null ) {
-            open();
+        if ( open() === null ) {
+            if ( typeof callback === 'function' ) {
+                callback();
+            }
+            return;
         }
 
-        var stmt = db.createStatement('INSERT OR REPLACE INTO settings (name, value) VALUES(:name, :value)');
+        var stmt = db.createAsyncStatement('INSERT OR REPLACE INTO settings (name, value) VALUES(:name, :value)');
         var params = stmt.newBindingParamsArray(), bp;
         for ( var key in details ) {
             if ( details.hasOwnProperty(key) === false ) {
@@ -1080,6 +1113,7 @@ var httpObserver = {
         this.tabId = 0;
         this._key = ''; // key is url, from URI.spec
     },
+
     // If all work fine, this map should not grow indefinitely. It can have
     // stale items in it, but these will be taken care of when entries in
     // the ring buffer are overwritten.
@@ -1094,6 +1128,7 @@ var httpObserver = {
             this.pendingRingBuffer[i] = new this.PendingRequest();
         }
     },
+
     createPendingRequest: function(url) {
         var bucket;
         var i = this.pendingWritePointer;
@@ -1126,6 +1161,7 @@ var httpObserver = {
         preq._key = url;
         return preq;
     },
+
     lookupPendingRequest: function(url) {
         var i = this.pendingURLToIndex.get(url);
         if ( i === undefined ) {
@@ -1232,6 +1268,7 @@ var httpObserver = {
                 parentFrameId: channelData[1],
                 responseHeaders: result ? [{name: topic, value: result}] : [],
                 tabId: channelData[3],
+                type: this.typeMap[channelData[4]] || 'other',
                 url: URI.asciiSpec
             });
 
@@ -1401,6 +1438,11 @@ vAPI.net.registerListeners = function() {
         var details = e.data;
         var browser = e.target;
         var tabId = vAPI.tabs.getTabId(browser);
+
+        // Ignore notifications related to our popup
+        if ( details.url.lastIndexOf(vAPI.getURL('popup.html'), 0) === 0 ) {
+            return;
+        }
 
         //console.debug("nsIWebProgressListener: onLocationChange: " + details.url + " (" + details.flags + ")");        
 
