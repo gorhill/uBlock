@@ -27,7 +27,7 @@
 /******************************************************************************/
 
 // Accessing the context of the background page:
-// var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock]').contentWindow;
+// var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
 let bgProcess;
 let version;
