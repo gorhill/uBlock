@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"Nareszcie skuteczne blokowanie reklam. Niskie użycie procesora i pamięci.",
+    "message":"Nareszcie skuteczne blokowanie reklam, niskie użycie procesora i pamięci.",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -152,7 +152,7 @@
     "description":"English: Block element"
   },
   "settingsCollapseBlockedPrompt":{
-    "message":"Ukryj symbole zastępcze zablokowanych elementów",
+    "message":"Ukrywaj symbole zastępcze zablokowanych elementów",
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
@@ -252,7 +252,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika [ ! ] będą pomijane. Błędne adresy URL zostaną zignorowane.",
+    "message":"W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika [ ! ] i błędne adresy URL będą pomijane.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -448,7 +448,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"Wszystkie twoje ustawienia zostaną usunięte i uBlock₀ uruchomi się ponownie.\n\nCzy chcesz przywrócić ustawienia domyślne?",
+    "message":"Wszystkie twoje ustawienia zostaną usunięte i uBlock₀ zostanie ponownie uruchomiony.\n\nCzy chcesz przywrócić ustawienia domyślne?",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

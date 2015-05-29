@@ -1,4 +1,4 @@
-Skutecznie blokuje reklamy: używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne rozszerzenia do blokowania reklam.
+Skutecznie blokuje reklamy, używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne rozszerzenia do blokowania reklam.
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
