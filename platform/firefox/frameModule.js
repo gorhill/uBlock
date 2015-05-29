@@ -296,6 +296,17 @@ const contentObserver = {
             win.addEventListener('mousedown', this.ignorePopup, true);
         }
 
+        // https://github.com/gorhill/uBlock/issues/260
+        // https://developer.mozilla.org/en-US/docs/Web/API/Document/contentType
+        //   "Non-standard, only supported by Gecko. To be used in 
+        //   "chrome code (i.e. Extensions and XUL applications)."
+        // TODO: We may have to exclude more types, for now let's be
+        //   conservative and focus only on the one issue reported, i.e. let's
+        //   not test against 'text/html'.
+        if ( doc.contentType.startsWith('image/') ) {
+            return;
+        }
+
         let loc = win.location;
 
         if ( loc.protocol !== 'http:' && loc.protocol !== 'https:' && loc.protocol !== 'file:' ) {
