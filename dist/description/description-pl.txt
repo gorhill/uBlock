@@ -1,8 +1,8 @@
-Skutecznie blokuje reklamy. Używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne dodatki do blokowania reklam.
+Skutecznie blokuje reklamy: używa mało pamięci RAM i zasobów procesora, a przy tym może wczytywać i stosować o wiele więcej filtrów niż inne popularne rozszerzenia do blokowania reklam.
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sposób użycia. Wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia dodatku na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
+Sposób użycia: wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia rozszerzenia na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
 ***
 
@@ -30,20 +30,20 @@ Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić d
 
 ***
 
-Bez ustawionych list filtrów ten dodatek jest bezwartościowy. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+Bez zaprogramowanej listy filtrów, to rozszerzenie jest bezwartościowe. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez Ciebie listy filtrów.
 
 ***
 
-Darmowy dodatek.
+Darmowe rozszerzenie.
 Kod źródłowy udostępniany na otwartej licencji (GPLv3)
 Dla użytkowników przez użytkowników.
 
-Współtwórcy dodatku: https://github.com/gorhill/uBlock/graphs/contributors
+Współtwórcy rozszerzenia: https://github.com/gorhill/uBlock/graphs/contributors
 Autorzy tłumaczeń: https://crowdin.com/project/ublock/translators
 
 ***
 
-Oceniając dodatek pamiętaj, że jest to jego wczesna wersja.
+Oceniając rozszerzenie pamiętaj, że jest to jego wczesna wersja.
 
 Dziennik zmian:
 https://github.com/gorhill/uBlock/releases

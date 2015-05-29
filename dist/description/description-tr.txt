@@ -1,4 +1,4 @@
-Etkili bir engelleyici: Belleği ve işlemciyi zorlamaz, yine de diğer popüler engelleyicilere göre binlerce daha çok filtreyi yükleyip uygulayabilir.
+Etkili bir engelleyici: Belleği ve işlemciyi zorlamaz, yine de diğer popüler engelleyicilere göre binlerce daha çok süzgeci yükleyip uygulayabilir.
 
 Verimliliğinin resmedilen genel bakışı:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
@@ -7,9 +7,9 @@ Kullanımı: Arayüzdeki büyük güç düğmesi mevcut web sitesinde uBlock'u k
 
 ***
 
-Esnek, bir "reklam engelleyici"den daha fazlası: Alan adları  dosyanızı okuyabilir ve de ondan filtreler oluşturabilir.
+Esnek, bir "reklam engelleyici"den daha fazlası: Alan adları  dosyalarınızdan süzgeçleri okuyabilir ve oluşturabilir.
 
-Hazır olarak şu filtre listeleri yüklenmiştir ve uygulanır:
+Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 
 - EasyList
 - Peter Lowe'un reklam sunucu listesi
@@ -25,13 +25,13 @@ Hazır olarak şu filtre listeleri yüklenmiştir ve uygulanır:
 - Spam404
 - Ve daha birçoğu
 
-Tabii ki,  daha fazla filtre etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleme sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.
+Tabii ki,  daha fazla süzgeç etkinleştirildikçe, bellek kullanımı da yükselir. Ama, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleme sunucuları ekledikten sonra dahi uBlock diğer oldukça popüler olan engelleyicilere göre daha az bellek kullanır.
 
-Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olasılığını artırabileceğini unutmayın -- özellikle normalde alan adları dosyası olarak kullanılan listeler.
+Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olasılığını artırabileceğini unutmayın -- özellikle normalde alan adları dosyası olarak kullanılan listelerin.
 
 ***
 
-Ön yüklü gelen filtre listeleri olmadan, bu eklenti hiçbir işe yaramaz. Eğer gerçekten bir şekilde katkıda bulunmak isterseniz, herkes tarafından özgürce kullanıma imkan veren, kullandığınız filtre listelerini oluşturmak için uğraşan insanları düşünün.
+Ön yüklü gelen süzgeç listeleri olmadan, bu eklenti hiçbir işe yaramaz. Eğer gerçekten bir şekilde katkıda bulunmak isterseniz, herkes tarafından özgürce kullanıma imkan veren, kullandığınız süzgeç listelerini oluşturmak için uğraşan insanları düşünün.
 
 ***
 
