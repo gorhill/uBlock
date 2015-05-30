@@ -38,8 +38,8 @@ vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
 
 /******************************************************************************/
 
-vAPI.setTimeout = vAPI.setTimeout || function(callback, delay) {
-    return setTimeout(function() { callback(); }, delay);
+vAPI.setTimeout = vAPI.setTimeout || function(callback, delay, args) {
+    return setTimeout(function(args) { callback(args); }, delay, args);
 };
 
 /******************************************************************************/

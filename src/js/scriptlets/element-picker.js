@@ -902,7 +902,7 @@ var startPicker = function(details) {
     // Try using mouse position
     if (!elem && details.clientX !== -1) {
         elem = elementFromPoint(details.clientX, details.clientY);
-        }
+    }
 
     if (elem !== null) {
         elem.scrollIntoView({
@@ -912,9 +912,6 @@ var startPicker = function(details) {
         filtersFromElement(elem);
         showDialog();
     }
-
-    // A target was specified, but it wasn't found: abort.
-    stopPicker();
 };
 
 /******************************************************************************/
