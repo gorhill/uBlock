@@ -42,6 +42,13 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uMatrix/issues/234
+// https://developer.chrome.com/extensions/privacy#property-network
+
+chrome.privacy.network.networkPredictionEnabled.set({ value: false });
+
+/******************************************************************************/
+
 vAPI.app = {
     name: manifest.name,
     version: manifest.version
