@@ -498,26 +498,26 @@ var windowWatcher = {
 
         var attachToTabBrowser = function(window, tabBrowser) {
             if (!tabBrowser) {
-            return;
-        }
+                return;
+            }
 
             var tabContainer;
-        if ( tabBrowser.deck ) {
-            // Fennec
-            tabContainer = tabBrowser.deck;
-        } else if ( tabBrowser.tabContainer ) {
-            // desktop Firefox
-            tabContainer = tabBrowser.tabContainer;
+            if ( tabBrowser.deck ) {
+                // Fennec
+                tabContainer = tabBrowser.deck;
+            } else if (tabBrowser.tabContainer) {
+                // desktop Firefox
+                tabContainer = tabBrowser.tabContainer;
                 vAPI.contextMenu.register(window.document);
                 if (vAPI.toolbarButton.attachToNewWindow) {
                     vAPI.toolbarButton.attachToNewWindow(window);
                 }
-        } else {
-            return;
-        }
+            } else {
+                return;
+            }
 
-        tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
-        tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
+            tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
+            tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
             // when new window is opened TabSelect doesn't run on the selected tab?
         }
 
@@ -1953,9 +1953,9 @@ vAPI.toolbarButton.init = function() {
 
     var forceLegacyToolbarButton = vAPI.localStorage.getBool("forceLegacyToolbarButton");
     if (!forceLegacyToolbarButton) {
-    try {
-        CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
-    } catch (ex) {
+        try {
+            CustomizableUI = Cu.import('resource:///modules/CustomizableUI.jsm', null).CustomizableUI;
+        } catch (ex) {
         }
     }
 
@@ -1985,8 +1985,8 @@ vAPI.toolbarButton.init = function() {
                             addLegacyToolbarButton(window);
                         }
                     }, 250);
-        return;
-    }
+                    return;
+                }
 
                 var toolbarButton = document.createElement('toolbarbutton');
                 toolbarButton.setAttribute('id', legacyButtonId);
@@ -2183,7 +2183,6 @@ vAPI.toolbarButton.init = function() {
     };
 
     CustomizableUI.createWidget(this);
-    
 
     cleanupTasks.push(function() {
         if ( this.CUIEvents ) {
@@ -2242,12 +2241,14 @@ vAPI.toolbarButton.populatePanel = function(doc, panel) {
 
         // Sanity check
         attempts = (attempts || 0) + 1;
-        if (attempts > 1000) {
-            console.error('uBlock> delayedResize: giving up after too many attemps');
+        if (attempts > 1/*000*/) {
+            debugger;
+            console.error('uBlock> delayedResize: giving up after too many attempts');
             return;
         }
 
-        updateTimer = vAPI.setTimeout(resizePopup, 10, attempts);    };
+        updateTimer = vAPI.setTimeout(resizePopup, 10, attempts);
+    };
     var resizePopup = function(attempts) {
         updateTimer = null;
         var body = iframe.contentDocument.body;
@@ -2268,6 +2269,8 @@ vAPI.toolbarButton.populatePanel = function(doc, panel) {
             delayedResize(attempts);
         }
     };
+
+    var CustomizableUI = this.CustomizableUI;
     var onPopupReady = function() {
         var win = this.contentWindow;
 
@@ -2276,7 +2279,6 @@ vAPI.toolbarButton.populatePanel = function(doc, panel) {
         }
 
         if (CustomizableUI) {
-
             // https://github.com/gorhill/uBlock/issues/83
             // Add `portrait` class if width is constrained.
             try {
@@ -2287,11 +2289,6 @@ vAPI.toolbarButton.populatePanel = function(doc, panel) {
             } catch (ex) {
                 /* noop */
             }
-            var placement = CustomizableUI.getPlacementOfWidget(widgetId);
-            if (placement.area === CustomizableUI.AREA_PANEL) {
-                // Add some overrides for displaying the popup correctly in a panel
-                win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils)
-                    .loadSheet(Services.io.newURI(vAPI.getURL("css/popup-vertical.css"), null, null), Ci.nsIDOMWindowUtils.AUTHOR_SHEET);
         }
 
         new win.MutationObserver(delayedResize).observe(win.document.body, {
