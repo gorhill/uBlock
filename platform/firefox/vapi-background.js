@@ -98,12 +98,16 @@ window.addEventListener('unload', function() {
 
 vAPI.storage = (function() {
     var db = null;
+    var vacuumTimer = null;
 
     var close = function() {
+        if ( vacuumTimer !== null ) {
+            clearTimeout(vacuumTimer);
+            vacuumTimer = null;
+        }
         if ( db === null ) {
             return;
         }
-        db.createAsyncStatement('VACUUM').executeAsync();
         db.asyncClose();
         db = null;
     };
@@ -142,10 +146,31 @@ vAPI.storage = (function() {
         cleanupTasks.push(close);
 
         // Setup database
-        db.createAsyncStatement('CREATE TABLE IF NOT EXISTS settings(name TEXT PRIMARY KEY NOT NULL, value TEXT);')
+        db.createAsyncStatement('CREATE TABLE IF NOT EXISTS "settings" ("name" TEXT PRIMARY KEY NOT NULL, "value" TEXT);')
           .executeAsync();
 
+        if ( vacuum !== null ) {
+            vacuumTimer = vAPI.setTimeout(vacuum, 60000);
+        }
+
         return db;
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Storage/Performance#Vacuuming_and_zero-fill
+    // Vacuum only once, and only while idle
+    var vacuum = function() {
+        vacuumTimer = null;
+        if ( db === null ) {
+            return;
+        }
+        var idleSvc = Cc['@mozilla.org/widget/idleservice;1']
+                       .getService(Ci.nsIIdleService);
+        if ( idleSvc.idleTime < 60000 ) {
+            vacuumTimer = vAPI.setTimeout(vacuum, 60000);
+            return;
+        }
+        db.createAsyncStatement('VACUUM').executeAsync();
+        vacuum = null;
     };
 
     // Execute a query
@@ -202,7 +227,7 @@ vAPI.storage = (function() {
             }
             return;
         }
-        runStatement(db.createAsyncStatement('DELETE FROM settings; VACUUM;'), callback);
+        runStatement(db.createAsyncStatement('DELETE FROM "settings";'), callback);
     };
 
     var getBytesInUse = function(keys, callback) {
@@ -217,10 +242,10 @@ vAPI.storage = (function() {
 
         var stmt;
         if ( Array.isArray(keys) ) {
-            stmt = db.createAsyncStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings WHERE name = :name');
+            stmt = db.createAsyncStatement('SELECT "size" AS "size", SUM(LENGTH("value")) FROM "settings" WHERE "name" = :name');
             bindNames(keys);
         } else {
-            stmt = db.createAsyncStatement('SELECT "size" AS size, SUM(LENGTH(value)) FROM settings');
+            stmt = db.createAsyncStatement('SELECT "size" AS "size", SUM(LENGTH("value")) FROM "settings"');
         }
 
         runStatement(stmt, function(result) {
@@ -269,9 +294,9 @@ vAPI.storage = (function() {
 
         var stmt;
         if ( names.length === 0 ) {
-            stmt = db.createAsyncStatement('SELECT * FROM settings');
+            stmt = db.createAsyncStatement('SELECT * FROM "settings"');
         } else {
-            stmt = db.createAsyncStatement('SELECT * FROM settings WHERE name = :name');
+            stmt = db.createAsyncStatement('SELECT * FROM "settings" WHERE "name" = :name');
             bindNames(stmt, names);
         }
 
@@ -285,7 +310,7 @@ vAPI.storage = (function() {
             }
             return;
         }
-        var stmt = db.createAsyncStatement('DELETE FROM settings WHERE name = :name');
+        var stmt = db.createAsyncStatement('DELETE FROM "settings" WHERE "name" = :name');
         bindNames(stmt, typeof keys === 'string' ? [keys] : keys);
         runStatement(stmt, callback);
     };
@@ -298,7 +323,7 @@ vAPI.storage = (function() {
             return;
         }
 
-        var stmt = db.createAsyncStatement('INSERT OR REPLACE INTO settings (name, value) VALUES(:name, :value)');
+        var stmt = db.createAsyncStatement('INSERT OR REPLACE INTO "settings" ("name", "value") VALUES(:name, :value)');
         var params = stmt.newBindingParamsArray(), bp;
         for ( var key in details ) {
             if ( details.hasOwnProperty(key) === false ) {
