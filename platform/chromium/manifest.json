@@ -55,6 +55,7 @@
     },
     "permissions": [
         "contextMenus",
+        "privacy",
         "storage",
         "tabs",
         "unlimitedStorage",
