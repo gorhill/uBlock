@@ -587,7 +587,11 @@ var userFilterFromCandidate = function() {
 
 var onCandidateChanged = function() {
     var elems = elementsFromFilter(taCandidate.value);
-    dialog.querySelector('#create').disabled = elems.length === 0;
+    // Allow creation of filters that may not match elements (may filter non-visual requests)
+    //dialog.querySelector('#create').disabled = elems.length === 0;
+
+    // TODO: syntax validation of taCandidate.value
+    dialog.querySelector('#create').disabled = taCandidate.value.length === 0;
     highlightElements(elems);
 };
 
