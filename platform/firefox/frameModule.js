@@ -332,7 +332,7 @@ const contentObserver = {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
 
-            if (doc.docShell) {
+            if (doc.docShell && typeof doc.docShell.getInterface === 'function') {
                 // It is possible, in some cases (#1140) for document-element-inserted to occur *before* nsIWebProgressListener.onLocationChange, so ensure that the URL is correct before continuing
                 let messageManager = doc.docShell.getInterface(Ci.nsIContentFrameMessageManager);
 

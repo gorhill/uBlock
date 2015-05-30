@@ -73,8 +73,8 @@ var cleanupTasks = [];
 
 // Fixed by github.com/AlexVallat:
 //   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
-//   several instances of cleanupTasks.push, but one is unique to fennec, and three to desktop.
-var expectedNumberOfCleanups = vAPI.fennec ? 7 : 9;
+//   several instances of cleanupTasks.push, but some are mutually exclusive. When counting by searching for cleanup.push, take account of "-only" comments indicating when they apply
+var expectedNumberOfCleanups = vAPI.fennec ? 6 : 7;
 
 window.addEventListener('unload', function() {
     for ( var cleanup of cleanupTasks ) {
@@ -1587,7 +1587,7 @@ vAPI.toolbarButton.init = function() {
             tb.menuItemIds.set(win, id);
         }
 
-        cleanupTasks.push(function() {
+        cleanupTasks.push(function() { // Fennec-only cleanup
             for ( var win of vAPI.tabs.getWindows() ) {
                 var id = tb.menuItemIds.get(win);
                 if ( id ) {
@@ -1605,7 +1605,7 @@ vAPI.toolbarButton.init = function() {
         vAPI.toolbarButton.onPopupCloseRequested
     );
 
-    cleanupTasks.push(function() {
+    cleanupTasks.push(function() { // Desktop-only cleanup
        vAPI.messaging.globalMessageManager.removeMessageListener(
             location.host + ':closePopup',
             vAPI.toolbarButton.onPopupCloseRequested
@@ -1718,7 +1718,7 @@ vAPI.toolbarButton.init = function() {
             addLegacyToolbarButton(win);
         }
 
-        cleanupTasks.push(function() {
+        cleanupTasks.push(function() {  // Desktop-legacy-only cleanup
             for ( var win of vAPI.tabs.getWindows() ) {
                 var toolbarButton = win.document.getElementById(legacyButtonId);
                 if (toolbarButton) {
@@ -1847,7 +1847,7 @@ vAPI.toolbarButton.init = function() {
 
     CustomizableUI.createWidget(this);
 
-    cleanupTasks.push(function() {
+    cleanupTasks.push(function() {  // Desktop-CustomizableUI-only cleanup
         if ( this.CUIEvents ) {
             CustomizableUI.removeListener(this.CUIEvents);
         }
