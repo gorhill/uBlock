@@ -315,3 +315,7 @@ deviantart.com##.dp-ad-chrome.dp-ad-visible
 # okgoals.com
 # tvgolo.com
 @@||cdn.phoenix.intergi.com^
+
+# https://github.com/chrisaljoudi/uBlock/issues/1421
+# To counter hpHost, MVPS, Peter Lowe: `woopra.com`
+@@||woopra.com^$~third-party
