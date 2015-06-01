@@ -1,9 +1,9 @@
 [Adblock Plus 1.1]
-! Checksum: 0r71r0TnmVJQtXG9HJmczw
-! Version: 201505150101
+! Checksum: nHg6t3uhdV62O5DqgUrgcQ
+! Version: 201506010041
 ! Title: EasyList Italy
 ! EasyList Italy - Complemento italiano per EasyList
-! Ultima modifica: 15 May 2015 01:01 UTC
+! Ultima modifica: 01 Jun 2015 00:41 UTC
 ! Expires: 4 days (frequenza di aggiornamento)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licenza: https://easylist-downloads.adblockplus.org/COPYING
@@ -81,6 +81,8 @@ _sito/adv/
 ###adv-skin-colonnasx
 ###advAutopromo1
 ###advAutopromo2
+###adv_ManchetteDx
+###adv_ManchetteSx
 ###adv_annuncio_promo_1
 ###adv_gda
 ###adv_in_post
@@ -147,6 +149,7 @@ _sito/adv/
 ##.googleAnnunci
 ##.home-rubriche-adv
 ##.inews_adv_top
+##.jadv_leoadv_pd
 ##.linksponsorizzati
 ##.modPubblicita
 ##.post_pubblicita
@@ -377,6 +380,7 @@ sportube.tv#@#.afs_ads
 ||enoleggioauto.it/affiliatexmlstylesheets/
 ||eurobet.it/adynit/$third-party
 ||excite.it/ad/
+||fantagenius.com^*/banner/
 ||favolefantasia.com/banner/
 ||feed.yoodeal.net^
 ||fideliux.com/fideliux/banners/
@@ -1009,6 +1013,10 @@ sportube.tv#@#.afs_ads
 ||ilgiornale.it^*/paddy_power_sport.gif
 ||ilgiornale.it^*_125x125.jpg
 ||ilgiornale.it^*_65x65.jpg
+||ilgiornaledabruzzo.it/IMG-pri/Cantina-Sangro-2014-IlGdA.png
+||ilgiornaledabruzzo.it/wp-content/uploads/2013/05/Ai-Viali-Lanciano.png
+||ilgiornaledabruzzo.it/wp-content/uploads/2013/06/Ferrovia-Adriatico-Sangritana-1912-20121.png
+||ilgiornaledabruzzo.it/wp-content/uploads/2014/07/PremioDonnaBonta2014-web1.png
 ||ilgiornaledellaprotezionecivile.it^*_banners/
 ||ilgiornaledelmolise.it/img/bannerlungo/
 ||ilgiornaledelpiemonte.com/pubb/
@@ -2115,6 +2123,7 @@ oggitreviso.it###views-banner_pop_up-95-926
 lattemiele.com###vipre
 italpress.com###virgilio-banner
 lastampa.it###webdoc_sponsor
+transfermarkt.it###werbung_superbanner
 internazionale.it###wideSkinWrapper
 italiaoggi.it,milanofinanza.it###widget_ticketcrociere
 animeclick.it###wrapper
@@ -2204,6 +2213,7 @@ telesud3.com##.banner-destra-tyf
 algheroeco.com##.banner-header-dx
 algheroeco.com##.banner-header-sx
 genova24.it,ivg.it##.banner-middle-board
+corrieredinovara.com##.banner-mix
 ilikepuglia.it##.banner-placeholder
 milanofinanza.it##.banner-sfondo
 telesud3.com##.banner-sidebar
@@ -2391,7 +2401,7 @@ vivastreet.it##.kiwii-box-300x250
 corrieredellosport.it##.label_sponsor_sp
 alessandrianews.it##.leader-board-225x90
 alessandrianews.it##.leader-board-728x90
-close-up.it,foxtv.it,guidasicilia.it,la7.it,meteovista.it,mtv.it,radiospeaker.it,today.it##.leaderboard
+close-up.it,foxtv.it,guidasicilia.it,la7.it,meteovista.it,mtv.it,radiospeaker.it,serviziopubblico.it,today.it##.leaderboard
 blastingnews.com##.leaderboard-article
 erbanotizie.com,lecconotizie.com##.leaderboard-bottom
 ilsole24ore.com##.link_expand
@@ -2539,7 +2549,8 @@ vivastreet.it##.vs-summary-300x250
 tiscali.it##.w304.mB20
 tiscali.it##.w312.mB25
 algheroeco.com##.wallpaper-link
-fc-suedtirol.com##.werbung
+fc-suedtirol.com,transfermarkt.it##.werbung
+transfermarkt.it##.werbung-skyscraper
 gazzettadinapoli.it##.widget-12
 gazzettadiavellino.it##.widget-4
 gazzettadinapoli.it,gazzettadisalerno.it##.widget-5
@@ -2556,6 +2567,8 @@ allandroidnews.it##.wp_skyscraper_c2
 bergamosera.com##.wpbrbanner
 petizionionline.it##.yahoo
 notizie.it##.yahoo-white-bg
+corrieredinovara.com##.z-banner
+corrieredinovara.com##.z-bannerpub
 millecanali.it##.zedo
 cittaceleste.it##.zodiak
 windowsblogitalia.com##[id^="bsa"]
@@ -2566,14 +2579,17 @@ ipadevice.com,ispazio.net##a[href^="http://adserver.ispazio.net/"]
 ilsole24ore.com##a[href^="http://adv.ilsole24ore.it/"]
 multiplayer.it##a[href^="http://adv.multiplayer.it/"]
 guardaserie.net##a[href^="http://bit.ly/"]
+dasolo.info##a[href^="http://creative.m2pub.com/"]
 lifegate.it##a[href^="http://goo.gl/"]
 milanodabere.it##a[href^="http://ib.adnxs.com/clktrb?id="]
 film-mkv.net##a[href^="http://netload.in/index.php?refer_id="]
 quotidiano.net##a[href^="http://redirect.rainbowtgx.com/"]
 film-stream.org##a[href^="http://www.aznotizie.com/"]
 catania46.net##a[href^="http://www.clickpoint.it/db/goto.cp?"]
+filmsenzalimiti.co##a[href^="http://www.filmsenzalimiti.co/4k/"]
 musicoff.com##a[href^="http://www.musicoff.com/ad/redirect/"]
 zapster.it##a[href^="http://www.paperbox.it/"]
+piratestreaming.co##a[href^="http://www.piratestreaming.co/4k/"]
 piratestreaming.com##a[href^="http://www.piratestreaming.com/video"]
 classifichemusica.com##a[href^="http://www.viagogo.it/Biglietti-Concerti?affiliateID="]
 italia-film.org##a[href^="http://x.italia-film.org/get.php"]
@@ -2630,6 +2646,7 @@ horsemoonpost.com##div[style="margin: 0 auto; width: 728px; height: 90px; backgr
 donnamoderna.com##div[style="margin: 10px 0px 0px 0px; padding: 0px 15px 9px 15px; width: 285px; height:90px; background-image:url('http://www.donnamoderna.com/extension/donnamoderna/design/donnamoderna/images/bg-immobiliare.png'); background-repeat: no-repeat; "]
 globalist.it##div[style="margin: 5px 0;padding: 9px; border: 1px solid #ccc; zoom:1;overflow:hidden;height:80px;width:280px;font: normal 12px/14px arial, sans-serif"]
 ultimissime.net##div[style="margin:auto; background-image:url('/images/stories/professionecasinO.jpg'); height: 153px; width: 287px"]
+fantagazzetta.com##div[style="max-width:300px;width:300px;min-height:250px;height:250px; height: auto !important"]
 serviziopubblico.it##div[style="min-height:90px;"]
 agichina24.it##div[style="overflow: hidden; width: 459px; height: 27px;"]
 liguriawebcam.com##div[style="overflow:hidden;height:90px;margin:4px 0;"]
@@ -2768,6 +2785,7 @@ elaborare.info##img[style="height: 960px;\a             margin-left: 970px;\a   
 rietilife.it##img[style="width: 205px; height: 82px;"]
 frosinoneweb.net##img[style="width: 930px; height: 115px;"]
 ilsalvagente.it##img[width="120"][height="60"]
+ilsaronno.it##img[width="120px"][height="600px"]
 melamorsicata.it##img[width="160"][height="300"]
 romanews.eu##img[width="180"][height="240"]
 romanews.eu##img[width="180"][height="280"]
@@ -2776,8 +2794,10 @@ romanews.eu##img[width="250"][height="90"]
 automobili.it##img[width="256"][height="170"]
 parmaquotidiano.info##img[width="290"][height="90"]
 romanews.eu##img[width="300"][height="150"]
-radiolombardia.it,siciliainrosa.it##img[width="300"][height="250"]
+radioinblu.it##img[width="300"][height="200"]
+radioinblu.it,radiolombardia.it,siciliainrosa.it##img[width="300"][height="250"]
 romanews.eu##img[width="300"][height="300"]
+ilsaronno.it##img[width="300px"][height="250px"]
 gazzettadinapoli.it##img[width="460"][height="60"]
 gazzettadisalerno.it##img[width="468"][height="60"]
 mmorpgitalia.it##img[width="500"][height="122"]
@@ -2928,6 +2948,7 @@ termometropolitico.it##[id^="bsa"]
 @@||codeclan.altervista.org^$elemhide
 @@||dataok.altervista.org^$elemhide
 @@||hostingtv.org^$elemhide
+@@||italiatv.org/advertisement.js
 @@||italiatv.org^$elemhide
 @@||mtv.it/advertisement.js
 @@||naturaselvaggia2.altervista.org^$elemhide

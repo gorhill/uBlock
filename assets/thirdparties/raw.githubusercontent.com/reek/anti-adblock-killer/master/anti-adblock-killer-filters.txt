@@ -242,15 +242,21 @@ senmanga.com##P[class="no"]
 ! tweaktown.com
 tweaktown.com#@#div[id^="div-gpt-ad"]
 ! tek.no
-! akam.no
-! teknojobb.no
-! hardware.no
-! amobil.no
 ! gamer.no
 ! teknofil.no
-!@@||static.tek.no/js/ads.js?$script
-@@||www.hardware.no/js/*.js$script
-||static.tek.no/js/subscription.js?$script
+! insidetelecom.no
+! prisguide.no
+! diskusjon.no
+! teknojobb.no
+! akam.no
+! hardware.no
+! amobil.no
+! http://pastebin.com/dryhZfmP
+tek.no,gamer.no,teknofil.no,insidetelecom.no,prisguide.no,diskusjon.no,teknojobb.no,akam.no,hardware.no,amobil.no#@#.ad-primary
+tek.no,gamer.no,teknofil.no,insidetelecom.no,prisguide.no,diskusjon.no,teknojobb.no,akam.no,hardware.no,amobil.no#@#.ad-place-holder
+tek.no,gamer.no,teknofil.no,insidetelecom.no,prisguide.no,diskusjon.no,teknojobb.no,akam.no,hardware.no,amobil.no#@#.ad-placeholder
+tek.no,gamer.no,teknofil.no,insidetelecom.no,prisguide.no,diskusjon.no,teknojobb.no,akam.no,hardware.no,amobil.no#@#.ad-post
+tek.no,gamer.no,teknofil.no,insidetelecom.no,prisguide.no,diskusjon.no,teknojobb.no,akam.no,hardware.no,amobil.no#@#.ad-poster
 ! seekingalpha.com
 seekingalpha.com###alphabox-modal-overlay
 seekingalpha.com###readlater_register_login
@@ -299,10 +305,6 @@ thesimsresource.com#@##leaderboardad
 snsw.us#@##ad_1
 ! revision3.com
 @@||m.v.fwmrm.net/p/release/latest-JS/adm/prd/AdManager.js$domain=revision3.com
-! teknofil.no
-!teknofil.no##.tek-black-overlay.subscription-popup-overlay
-!teknofil.no##.subscription-popup.clearfix
-||static.tek.no/js/jquery.colorbox-min.js?$script
 ! vostfr-vf.com
 vostfr-vf.com##A[href="/100Mbs.html"]
 vostfr-vf.com##.fixe
@@ -360,8 +362,6 @@ ukvarminting.com#@#.ipsAd
 tvdesporto.com#@##ads1
 sporttvdireto.com#@##ads1
 ||sporttvdireto.com/ads/popunder.php$popup
-! notre-planete.info
-notre-planete.info###abp1
 ! elahmad.com
 elahmad.com#@##adblock
 ! z0r.de
@@ -747,6 +747,12 @@ binbox.io#@#.banner-ad
 !@@||aka-cdn.adtech.de/dt/common/DAC.js$script,domain=vgtv.no
 vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .top
 vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .left
+! vg.no,aftenposten.no,bt.no,aftenbladet.no,fvn.no
+vg.no,aftenposten.no,bt.no,aftenbladet.no,fvn.no###topAd + #content > [style="left: auto; position: relative; right: auto; width: 100%; height: 150px; margin-top: 0px; background-image: none; cursor: pointer;"]
+vg.no,aftenposten.no,bt.no,aftenbladet.no,fvn.no###topAd + #content > [style="right: -180px; left: auto; cursor: pointer;"]
+vg.no,aftenposten.no,bt.no,aftenbladet.no,fvn.no###topAd + #content > [style="right: -180px; left: auto; cursor: pointer;"] + [style="cursor: pointer;"]
+! e24.no
+@@||adserver.adtech.de/multiad/$script,domain=e24.no
 ! bitcoinpuddle.com
 @@||bitcoinpuddle.com/show_ads.js$script
 ! dogecoinpuddle.com
@@ -792,6 +798,10 @@ vgtv.no##.vgtv-advert.horseshoe.message.advert-visible .left
 flightradar24.com##.noads
 ! ville-ideale.com
 ville-ideale.com###espace
+ville-ideale.com###enc
+ville-ideale.com###antyp
+! notre-planete.info
+notre-planete.info###abp1
 ! fan-de-cinema.com
 @@||c.ad6media.fr/l.js$domain=fan-de-cinema.com
 ! xiaopan.co
@@ -823,7 +833,11 @@ theextopia.com##.adsbanner
 theextopia.com##.adsfoot1
 theextopia.com##.adsfoot2
 ! filmovizija.com
-||adpro.ml/ncode.js$script,domain=filmovizija.com
+||filmovizija.com/popads-adblock.js$script
+||filmovizija.com/parent.js$xmlhttprequest
+! filmovizija.in
+||filmovizija.in/popads-adblock.js$script
+||filmovizija.in/parent.js$xmlhttprequest
 ! umahdroid.blogspot.com
 umahdroid.blogspot.com###energysaving
 ! streaming-foot.me
@@ -831,10 +845,6 @@ umahdroid.blogspot.com###energysaving
 ! dirtstyle.tv
 ||dirtstyle.tv/img/adblock.jpg
 dirtstyle.tv##.lightbox
-! vg.no
-@@||adserver.adtech.de/multiad/$script,domain=vg.no
-! e24.no
-@@||adserver.adtech.de/multiad/$script,domain=e24.no
 ! viki domains
 @@/google-ad-block-test-googleadservices-gpt-pubads.js$script,domain=viki.mx|viki.com
 @@||pubads.g.doubleclick.net/gampad/ads?$object-subrequest,domain=viki.mx|viki.com
@@ -894,16 +904,15 @@ worldofgnome.org#@#.google-ad
 worldofgnome.org#@##wog-300x250-ads
 ! bitzfree.com
 @@||bitzfree.com/js/*.js$script
-@@||go.padsdel.com/lg.php$image,domain=bitzfree.com
-@@||cdn.adshexa.com/show_ads.php$image,domain=bitzfree.com
-@@||padsdel.cdnads.com^$image,domain=bitzfree.com
-@@||adsrvmedia.adpdx.com^$image,domain=bitzfree.com
-@@||cdn.adnxs.com^$image,domain=bitzfree.com
-@@||cdn.adk2.co^$image,domain=bitzfree.com
-@@||cdn.adshexa.com^$image,domain=bitzfree.com
-@@||www.adhexa.com^$image,domain=bitzfree.com
-@@||rhtag.com^$image,domain=bitzfree.com
-@@||cdn.adnxs.com^$image,domain=bitzfree.com
+@@||adpdx.com^$image,subdocument,domain=bitzfree.com
+@@||adk2.co^$image,subdocument,domain=bitzfree.com
+@@||adhexa.com^$image,subdocument,domain=bitzfree.com
+@@||adshexa.com^$image,subdocument,domain=bitzfree.com
+@@||adnxs.com^$image,subdocument,domain=bitzfree.com
+@@||cdnads.com^$image,subdocument,domain=bitzfree.com
+@@||padsdel.com^$image,subdocument,domain=bitzfree.com
+@@||padstm.com^$image,subdocument,domain=bitzfree.com
+@@||rhtag.com^$image,subdocument,domain=bitzfree.com
 ! rdio.com
 !rdio.com#@#.ad_background
 !rdio.com#@#.ad_bottom
@@ -933,6 +942,81 @@ yllix.com##[href^="http://click2.yllix.com/"]
 naekranie.pl###niceMessage
 ! turbogenerator.info
 @@||turbogenerator.info/adblock.js$script
+! givemesome.tips
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=givemesome.tips
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=givemesome.tips
+! fontsquirrel.com
+fontsquirrel.com###bottom_banner_ad_container
+! zerozero.pt
+@@||zerozero.pt/script/ads.js$script
+! seansik.tv (fuckadblockmod)
+seansik.tv#@#.pub_300x250
+seansik.tv#@#.pub_300x250m
+seansik.tv#@#.pub_728x90
+seansik.tv#@#.text-ad
+seansik.tv#@#.textAd
+seansik.tv#@#.text_ad
+seansik.tv#@#.text_ads
+seansik.tv#@#.text-ads
+seansik.tv#@#.text-ad-links
+! annuaire-bleu.net
+annuaire-bleu.net#@##adblocktest
+@@||pagead2.googlesyndication.com/pagead/$image,domain=annuaire-bleu.net
+! playbitco.in
+@@||playbitco.in/show_ads.js$script
+! prizebitcoins.com
+@@||prizebitcoins.com/banner.gif$image
+! mojevideo.sk
+@@||pagead2.googlesyndication.com/pagead/show_ads.js$domain=mojevideo.sk
+mojevideo.sk#@##video_ad
+! zeperfs.com
+@@||zeperfs.com/adsbygoogle.js$script
+! tusmangas.net
+tusmangas.net#@##adsense
+||tusmangas.net/ama/oso.js$script
+! youtubeproxy.info
+@@||pagead2.googlesyndication.com/pagead/show_ads.js$script,domain=youtubeproxy.info
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=youtubeproxy.info
+! opitz-online.com
+opitz-online.com#@#.adsbygoogle
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,domain=opitz-online.com
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=opitz-online.com
+! audipassion.com
+@@||forums.audipassion.com/public/js/jsLoader.js$script
+! shqip-tv.info
+@@||shqip-tv.info/webmasters/adblock.js$script
+! razem.tv
+@@||razem.tv/Scripts/InsysPlayer.v0.1.0/adTest.png$image,domain=razem.tv
+! robcoins.eu
+! elenabitco.in
+! freebetco.in
+! qoinfaucet.com
+@@/show_ads.js$script,domain=bithourly.com|dailyfreebits.com|jewelrybitco.in|welovebtc.com
+! hdkinoteatr.com
+@@||moonwalk.cc/assets/fuckadblock-*.js$script
+! player.pl (hide just notice but fixed by AakScript)
+player.pl###vod
+! onet.pl
+||lib.onet.pl/s.csr/adp/adp.js$script
+! t3n.de
+t3n.de##.abContentMsg
+t3n.de##.adb
+! bricozone.fr
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=bricozone.fr
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=bricozone.fr
+! heavenly-blue.net
+@@||heavenly-blue.net^$elemhide
+! find-my-search.com
+@@||find-my-search.com/includes/js/adblockDetect/_advertisement.js$script
+! vide-greniers.org
+@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=vide-greniers.org
+@@||pagead2.googlesyndication.com/pagead/js/r*/r*/show_ads_impl.js$script,domain=vide-greniers.org
+vide-greniers.org##A[class^="replacement_"]
+! comics-sanctuary.com
+@@||smartadserver.com/config.js$script,domain=comics-sanctuary.com
+@@||r.sascdn.com/diff/js/smart.js$script,domain=comics-sanctuary.com
+! planete205.com / planete-205.com
+@@||googleads.g.doubleclick.net^$image,domain=planete205.com|planete-205.com
 !----------------------------------------------------------------------------------------------------!
 ! Social Network (overlay like box)
 !----------------------------------------------------------------------------------------------------!
@@ -956,6 +1040,20 @@ naekranie.pl###niceMessage
 !----------------------------------------------------------------------------------------------------!
 ! Ads
 !----------------------------------------------------------------------------------------------------!
+! Malwares --------------------------------------------------------------------------------------
+||getapplicationmy.info^
+||doremido.com^
+! Popup --------------------------------------------------------------------------------------
+||everydaycarry.com^$popup
+||bet-at-home.com^$popup
+||scorebull.com/adv/$popup
+||sender.contentjs.com^$popup
+||sports747.com^$popup
+||sexgangsters.com^$popup
+||atrx7.com^$popup
+||dealxplorer.org^$popup
+||aliexpress.com^$popup
+||offer.alibaba.com^$popup
 ! Advertisers ---------------------------------------------------------------------------------------
 ! linkbucks.com (Visit Script)
 ||linkbucks.com/visitScript/$script,third-party
@@ -1045,6 +1143,8 @@ naekranie.pl###niceMessage
 ||cdn.shorte.st/link-converter.min.js$script,third-party
 ! bc.vc
 ||bc.vc/js/link-converter.js$script,third-party
+! gca.sh
+||gca.sh/static/linkreplacer.js$script,third-party
 ! Torrent --------------------------------------------------------------------------------------
 ! torrentz.eu
 ||torrentz.eu/p/$popup
@@ -1342,6 +1442,9 @@ foot-live.info###timer3
 ! tvfree.me
 antena.tvfree.me###layer1
 ||tvfree.me/pub/$subdocument,image
+! mytvfree.me
+antena.mytvfree.me###adn1
+antena.mytvfree.me###template01_border
 ! nowwatchtvlive.me
 nowwatchtvlive.me##[id^="bannerfloat"]
 nowwatchtvlive.me##DIV[style="padding-top:5px;float:left;width:100%;font-size:13px;line-height:26px;height:31px;top: 12px;z-index:9999;text-align:left"]
@@ -1408,11 +1511,6 @@ urlchecker.org###ads_notify
 ##A[href^="http://get.d3b3e6340.website/as/clk?id="]
 ###WarningCodec
 junksport.com##DIV[style="background-color: rgb(251, 236, 173); position: absolute; margin: 0px 0px 0px -350px; left: 50%; width: 700px; z-index: 999999; height: 22px; font-family: arial; font-weight: bold; font-size: 14px; text-shadow: none; text-align: left; color: black; padding-top: 5px; padding-bottom: 5px; top: 0px;"]
-! Malwares --------------------------------------------------------------------------------------
-||getapplicationmy.info^
-||doremido.com^
-! Popup --------------------------------------------------------------------------------------
-||everydaycarry.com^$popup
 ! File Search Engines ---------------------------------------------------------------------------
 ! sharedir.com
 sharedir.com##IMG[src="http://premiumdl4.me/rseimages/rse_banner64_3.png"]
@@ -1454,14 +1552,8 @@ ddl-search.biz##.wpbanner_superlenny
 ||tmserver-1.com^$domain=pronpic.org
 ||zinzimo.info^$domain=pronpic.org
 ||avitya.ru^$domain=pronpic.org
-! pregen.net
-pregen.net###olayer
 ! s3-sa-east-1.amazonaws.com
 ||s3-sa-east-1.amazonaws.com^$third-party
-! bet-at-home.com
-||affiliates.bet-at-home.com^$popup
-! ||scorebull.com
-||scorebull.com/adv/$popup
 ! rapidgator.net
 ||kovla.com/?$popup,domain=rapidgator.net
 ! antipubfirefox.org

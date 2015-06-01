@@ -1,10 +1,10 @@
 [Adblock Plus 2.0]
-! Checksum: EoxqnRuJiC9SHZkc892NYw
-! Version: 201505081744
+! Checksum: 76N+VyVz9+HLcmfdnEnpBA
+! Version: 201505161523
 ! Title: Wiltteri
 ! Description: Finnish supplement list for EasyList
 ! Redirect: https://raw.githubusercontent.com/wiltteri/subscriptions/master/wiltteri.txt
-! Last modified: 08 May 2015 17:44 UTC
+! Last modified: 16 May 2015 15:23 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/wiltteri/
 ! License: http://unlicense.org/
@@ -3628,8 +3628,8 @@ seksitreffit.fi##table[width="1024"][bgcolor="#d31517"]
 @@||imasdk.googleapis.com/js/core/bridge3.$subdocument,third-party,domain=foxplay.fi
 @@||imasdk.googleapis.com^*/ima3.js$third-party,domain=foxplay.fi
 ! Ruutu.fi
-@@||adtech.de/?adrawdata/$object-subrequest,third-party,domain=groovefm.fi|hs.fi|iltasanomat.fi|istv.fi|jimtv.fi|livtv.fi|loop.fi|metrohelsinki.fi|nelonen.fi|radioaalto.fi|radiorock.fi|radiosuomipop.fi|ruutu.fi
-@@||nelonenmedia.fi^*/logo/$object-subrequest,third-party,domain=groovefm.fi|hs.fi|iltasanomat.fi|istv.fi|jimtv.fi|livtv.fi|loop.fi|metrohelsinki.fi|nelonen.fi|radioaalto.fi|radiorock.fi|radiosuomipop.fi|ruutu.fi
+@@||adtech.de/?adrawdata/$object-subrequest,third-party,domain=groovefm.fi|hs.fi|iltasanomat.fi|istv.fi|jimtv.fi|livtv.fi|loop.fi|metrohelsinki.fi|nelonen.fi|radioaalto.fi|radiorock.fi|radiosuomipop.fi|ruutu.fi|sykesport.fi
+@@||nelonenmedia.fi^*/logo/$object-subrequest,third-party,domain=groovefm.fi|hs.fi|iltasanomat.fi|istv.fi|jimtv.fi|livtv.fi|loop.fi|metrohelsinki.fi|nelonen.fi|radioaalto.fi|radiorock.fi|radiosuomipop.fi|ruutu.fi|sykesport.fi
 ! -------------------- whitelist-hide.txt -------------------- !
 tilannehuone.fi#@#.mainos
 lamminveto.com#@#.sponsorit

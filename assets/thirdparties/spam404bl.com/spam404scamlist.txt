@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 5080
-! Last modified: 14 May 2015
+! Version: 5089
+! Last modified: 30 May 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -167,6 +167,8 @@
 ##[href^="http://stream.mobig.gr/"]
 ##[href^="http://grippedfiles.com/"]
 ##[href^="https://grippedfiles.com/"]
+##[href^="http://epctrking.com/"]
+##[href^="https://epctrking.com/"]
 !
 !
 !
@@ -5075,6 +5077,13 @@ hepimovie.net###login
 ||moviescollections.net^
 ||sht7.com^
 ||grippedfiles.com^
+||epctrking.com^
+||celebrity-numbers.com^
+||csgojackpot.su^
+||snaggy.su^
+||sxeanticheat.su^
+||snaggy-screen.su^
+||dota2tool.su^
 !
 !
 !

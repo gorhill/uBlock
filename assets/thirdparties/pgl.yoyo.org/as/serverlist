@@ -2,8 +2,8 @@
 #
 # For more information about this list, see: http://pgl.yoyo.org/adservers/
 # ----
-# last updated:   Thu, 14 May 2015 18:18:33 GMT
-# entries:        2429
+# last updated:   Fri, 29 May 2015 07:55:34 GMT
+# entries:        2422
 # format:         hosts (hosts -- in hosts file format)
 # credits:        Peter Lowe - pgl@yoyo.org - http://pgl.yoyo.org/
 # this URL:       http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
@@ -33,7 +33,6 @@
 127.0.0.1 777partner.com
 127.0.0.1 777seo.com
 127.0.0.1 77tracking.com
-127.0.0.1 7adpower.com
 127.0.0.1 7bpeople.com
 127.0.0.1 7search.com
 127.0.0.1 99count.com
@@ -110,7 +109,6 @@
 127.0.0.1 ad.gate24.ch
 127.0.0.1 ad.globe7.com
 127.0.0.1 ad.grafika.cz
-127.0.0.1 ad.harmony-central.com
 127.0.0.1 ad.hbv.de
 127.0.0.1 ad.hodomobile.com
 127.0.0.1 ad.httpool.com
@@ -157,7 +155,6 @@
 127.0.0.1 ad.thewheelof.com
 127.0.0.1 ad.top50.to
 127.0.0.1 ad.tv2.no
-127.0.0.1 ad.tweakpc.de
 127.0.0.1 ad.twitchguru.com
 127.0.0.1 ad.usatoday.com
 127.0.0.1 ad.virtual-nights.com
@@ -233,7 +230,6 @@
 127.0.0.1 adexpose.com
 127.0.0.1 adext.inkclub.com
 127.0.0.1 adf.ly
-127.0.0.1 adfair.se
 127.0.0.1 adfarm.mediaplex.com
 127.0.0.1 adflight.com
 127.0.0.1 adfly.com
@@ -278,7 +274,6 @@
 127.0.0.1 adloox.com
 127.0.0.1 adlooxtracking.com
 127.0.0.1 adlure.net
-127.0.0.1 adm.ad.asap-asp.net
 127.0.0.1 admagnet.net
 127.0.0.1 admailtiser.com
 127.0.0.1 adman.gr
@@ -418,7 +413,6 @@
 127.0.0.1 ads.cybersales.cz
 127.0.0.1 ads.dada.it
 127.0.0.1 ads.datinggold.com
-127.0.0.1 ads.datingyes.com
 127.0.0.1 ads.dazoot.ro
 127.0.0.1 ads.deltha.hu
 127.0.0.1 ads.dennisnet.co.uk
@@ -512,6 +506,7 @@
 127.0.0.1 ads.ign.com
 127.0.0.1 ads.img.co.za
 127.0.0.1 ads.imgur.com
+127.0.0.1 ads.incgamers.com
 127.0.0.1 ads.indiatimes.com
 127.0.0.1 ads.infi.net
 127.0.0.1 ads.internic.co.il
@@ -539,6 +534,7 @@
 127.0.0.1 ads.livenation.com
 127.0.0.1 ads.localnow.com
 127.0.0.1 ads.lvz-online.de
+127.0.0.1 ads.mariuana.it
 127.0.0.1 ads.massinfra.nl
 127.0.0.1 ads.mcafee.com
 127.0.0.1 ads.mediaodyssey.com
@@ -772,8 +768,6 @@
 127.0.0.1 adserver.freecity.de
 127.0.0.1 adserver.freenet.de
 127.0.0.1 adserver.friendfinder.com
-127.0.0.1 adserver.gb2.motorpresse.de
-127.0.0.1 adserver.gb3.motorpresse.de
 127.0.0.1 adserver.hardsextube.com
 127.0.0.1 adserver.hardwareanalysis.com
 127.0.0.1 adserver.html.it
@@ -813,7 +807,6 @@
 127.0.0.1 adserver1.mindshare.de
 127.0.0.1 adserver1.mokono.com
 127.0.0.1 adserver1.ogilvy-interactive.de
-127.0.0.1 adserver1.shareconnector.com
 127.0.0.1 adserver1.w00tmedia.net
 127.0.0.1 adserver2.mindshare.de
 127.0.0.1 adserver2.popdata.de
@@ -1252,6 +1245,7 @@
 127.0.0.1 clients.tbo.com
 127.0.0.1 clixgalore.com
 127.0.0.1 clkads.com
+127.0.0.1 clkrev.com
 127.0.0.1 cluster.adultworld.com
 127.0.0.1 clustrmaps.com
 127.0.0.1 cmpstar.com
@@ -1298,6 +1292,7 @@
 127.0.0.1 coupling-media.de
 127.0.0.1 cpalead.com
 127.0.0.1 cpays.com
+127.0.0.1 cpmaffiliation.com
 127.0.0.1 cpmstar.com
 127.0.0.1 cpxadroit.com
 127.0.0.1 cpxinteractive.com
@@ -1366,7 +1361,6 @@
 127.0.0.1 e-planning.net
 127.0.0.1 e.kde.cz
 127.0.0.1 eadexchange.com
-127.0.0.1 easyad.info
 127.0.0.1 easyhits4u.com
 127.0.0.1 ebuzzing.com
 127.0.0.1 ecircle-ag.com
@@ -1614,7 +1608,6 @@
 127.0.0.1 iperceptions.com
 127.0.0.1 ipro.com
 127.0.0.1 ireklama.cz
-127.0.0.1 itbannerexchange.com
 127.0.0.1 itfarm.com
 127.0.0.1 itop.cz
 127.0.0.1 its-that-easy.com
@@ -1795,6 +1788,7 @@
 127.0.0.1 netdirect.nl
 127.0.0.1 netflame.cc
 127.0.0.1 netincap.com
+127.0.0.1 netpool.netbookia.net
 127.0.0.1 netshelter.net
 127.0.0.1 network.business.com
 127.0.0.1 network.realmedia.com
@@ -1808,7 +1802,6 @@
 127.0.0.1 newt1.adultworld.com
 127.0.0.1 newtopsites.com
 127.0.0.1 ng3.ads.warnerbros.com
-127.0.0.1 ngadcenter.net
 127.0.0.1 ngs.impress.co.jp
 127.0.0.1 nitroclicks.com
 127.0.0.1 novem.pl
@@ -2114,7 +2107,6 @@
 127.0.0.1 snoobi.com
 127.0.0.1 socialspark.com
 127.0.0.1 softclick.com.br
-127.0.0.1 spa.snap.com
 127.0.0.1 spacash.com
 127.0.0.1 sparkstudios.com
 127.0.0.1 specificmedia.co.uk
@@ -2423,6 +2415,7 @@
 127.0.0.1 yieldlab.net
 127.0.0.1 yieldmanager.com
 127.0.0.1 yieldmanager.net
+127.0.0.1 yieldtraffic.com
 127.0.0.1 yoc.mobi
 127.0.0.1 yoggrt.com
 127.0.0.1 z5x.net

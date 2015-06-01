@@ -1,11 +1,11 @@
 [Adblock Plus 2.3.1]
-! Checksum: 0ji0DDB0p7zyI4hNhk5Y9w
+! Checksum: 6ym5Z6CUCIwjpvJdRz2yfw
 ! Homepage: https://code.google.com/p/adblock-plus-japanese-filter/
 ! Title: ABP Japanese filters (ONLY FOR advanced Japanese users: read Support Policy)
 ! Expires: 6 hours
-! Version: 201505130209
+! Version: 201505291504
 
-! Last modified: 2015-05-13 02:09 JST(UTC+0900)
+! Last modified: 2015-05-29 15:04 JST(UTC+0900)
 ! Change log: https://code.google.com/p/adblock-plus-japanese-filter/wiki/FilterChangeLog
 ! Code license: GNU GPL v3: http://www.gnu.org/licenses/gpl.html
 ! Content license: Creative Commons BY-NC-SA 4.0 http://creativecommons.org/licenses/by-nc-sa/4.0/
@@ -228,6 +228,8 @@
 @@||researchmap.jp^*/counter/$stylesheet
 ! False positive with domain names to investigate, like adv-first.ru, June 17, 2014
 @@||robtex.com^*/advisory/
+! False positives with combined scripts or stylesheets conflicting with ^teaser^ filter, May 27, 2015
+@@||s-msft.com/Combined.*?resources=*,$script,stylesheet,domain=microsoft.com
 ! False positive with combined stylesheet with the ^ads. filter, reported via Issue Report, Sep 16, 2014
 @@||salon.com/combo/css?*&$stylesheet
 ! False positive with combined JavaScript with the -ads.$domain=~retweet-ads.net filter, reported via Issue Report, Sep 16, 2014
@@ -2213,7 +2215,10 @@
 |http:*/is_sc_$script
 |https:*/is_sc_$script
 /ivw/CP/*
-/javascript.js^$script,third-party
+/javascript.js^$script,subdocument,third-party
+! Fake third-party jQuery reported at https://blog.malwarebytes.org/exploits-2/2015/05/unusual-exploit-kit-targets-chinese-users-part-1/
+/jquery.js^$subdocument,third-party
+/jquery.min.js^$subdocument,third-party
 |http:*/js.ng/
 |https:*/js.ng/
 |http:*/js/dw.js
@@ -2285,6 +2290,7 @@
 /meebo.$script
 /?merchant=$third-party
 /metrika/*
+/min.inject.js?id=$third-party
 /moat-$script
 /moatad.$script
 /moatcontent.$script
@@ -4078,6 +4084,14 @@
 ^InjectPopunderAd.
 ^InjectPopunderAd^
 ^InjectPopunderAd_
+^injectScript-$third-party
+^injectScript.$third-party
+^injectScript^$third-party
+^injectScript_$third-party
+^injectScripts-$third-party
+^injectScripts.$third-party
+^injectScripts^$third-party
+^injectScripts_$third-party
 ^intellitxt-
 ^intellitxt.
 ^intellitxt^
@@ -7217,6 +7231,7 @@ _yahooads_
 ||adimpkwd.excite.co.jp^
 ||nc-log.excite.co.jp^
 ||p4p.excite.co.jp^
+||exciteco.com^
 ||excitemoi.com^
 ||exelator.com^
 ||exgfnetwork.com^
@@ -7323,6 +7338,7 @@ _yahooads_
 ||focus-marketing.net^$third-party
 ||follolin.com^$third-party
 ||footballmedia.com^$third-party
+||footprintlive.com^$third-party
 ! ||ads.forbes.com^
 ||foreveryboxzip.net^
 ||forexwebtools.com^$third-party
@@ -7400,6 +7416,7 @@ _yahooads_
 ||gestionpub.com^$third-party
 ||getchu.com/*banner^
 ||getclicky.com^$third-party
+||getdrip.com^$third-party
 ||getfoxyproxy.org/mozilla/standard/update.html^$popup
 ||getiton.com^$popup
 ||getiton.com^$third-party
@@ -8002,6 +8019,7 @@ _yahooads_
 ||le-visio-chat.com^
 ||le-visiochat.com^
 ||lead-soft.com^
+||leadboxer.com^$third-party
 ||leadforce1.com^
 ||leadformix.com^$third-party
 ||leagueoflegends.com^$popup
@@ -8188,6 +8206,7 @@ _yahooads_
 ||mail.ru^$third-party
 ||rs.mail.ru^
 ||mail3x.com^
+||mailchimp.com^$third-party
 ||mainichi.jp/js/an.$script
 ||ad.mainichi.jp^
 ||an.mainichi.jp^
@@ -8219,6 +8238,7 @@ _yahooads_
 ||mate-sa-cam.com^
 ||mateast.com^
 ||matesacam.com^
+||matrixinner.info^
 ||mature-salope.com^
 ||matures-rencontre.com^
 ||maxforta.com^
@@ -8257,6 +8277,7 @@ _yahooads_
 ||mediatraffic.com.ua^$third-party
 ||mediaunder.$third-party
 ||mediavoice.com^$third-party
+||mediav.com^$third-party
 ! for Android, reporeted by 名無し a.k.a. 匿名 via blog, Apr 6, 2013, updated Apr 27, 2013
 ||mediba.jp^$third-party
 ! for Android, reporeted by 名無し a.k.a. 匿名 via blog, Apr 6, 2013, updated Apr 27, 2013
@@ -8547,6 +8568,7 @@ _yahooads_
 ||newsweekjapan.jp/images/common/sideAd.$image,object
 ||newzia.jp^$third-party
 ||nexac.com^
+||nfobeat.com^
 ||ngbn.net^$third-party
 ||bc.nhk.jp^
 ||nhncorp.jp^$third-party
@@ -8685,6 +8707,7 @@ _yahooads_
 ||openetray.com^
 ||openmace.net^$popup
 ||openstat.net^$third-party
+||opentracker.net^$third-party
 ||openx.$third-party
 ||openxenterprise.com^
 ||servedby.openxmarket.
@@ -8735,6 +8758,7 @@ _yahooads_
 ||pasadserver.com^$third-party
 ||pass4sex.net^
 ||passion.com^$third-party
+||pastaleads.com^$third-party
 ||pastilon.com^
 ||pay-click.ru^$third-party
 ||pay-hit.com^$third-party
@@ -8854,6 +8878,7 @@ _yahooads_
 ||premiumcollect.com^$third-party
 ||premiumcomputerupgrades.org$popup
 ||premiumhdv.com^$third-party
+||prf.hn^
 ||price.ru^$third-party
 ||pricedetect.com^$third-party
 ||pricegong.com^$third-party
@@ -9063,6 +9088,7 @@ _yahooads_
 ||richthof.com^
 ||rides.ac^$third-party
 ||right-ads.com^$third-party
+||rightlyads.in^
 ||rikiki.biz^
 ||rinad.jp^$third-party
 ||ringtonepartner.com^
@@ -9362,6 +9388,7 @@ _yahooads_
 ||socdm.com^
 ||socialbit.com^
 ||socialgrowthtechnologies.com^
+||socialhoney.co^$third-party
 ||sociomantic.com^$third-party
 ||sockosoft.com^
 ||sodomie-anale.biz^
@@ -9599,6 +9626,7 @@ _yahooads_
 ||touslesfilmsx.com^
 ||toutapp.com^$third-party
 ||toutiles.com^
+||tpucdn.com/images/b/$object,domain=techpowerup.com
 ||tracer.jp^$third-party
 ||trackalyzer.com^
 ||trackfeed.com^$third-party
@@ -10125,7 +10153,8 @@ _yahooads_
 ||yimg.*/images/*/pr/
 ||yimg.*/images/account/sp/*/reg/ccc/
 ||yimg.*/images/analytics/
-||yimg.*/images/ds/
+! Moved to the Paranoid subscription to avoid a false positive blocking loading comments on each news at headlines.yahoo.co.jp. I think this is a tight-coupled bug because the filter is correctly blocking beacons or loggings. YAHOO JAPAN is essentially responsible for fixing it, May 16, 2015
+! ||yimg.*/images/ds/
 ||yimg.*/images/listing/
 ||yimg.*/images/market/
 ||yimg.*/images/news/newsSearch/

@@ -1,5 +1,5 @@
 [Adblock Plus 2.0]
-! Checksum: IFigFzsyqA63eW9uc9dqWg
+! Checksum: MSHx1nn69ZIRZCfkdw8pMA
 ! Title: Anti-Facebook List
 ! Expires: 4 days (update frequency)
 ! Homepage: http://www.fanboy.co.nz
@@ -77,3 +77,8 @@
 @@||connect.facebook.net*/all.js$domain=salon.com|damnyouautocorrect.com|southpark.cc.com|sci2.tv|pogo.com|adultswim.com|interviewmagazine.com
 @@||google.com/js/plusone.js$domain=abcnews.go.com|watch.nba.com
 @@||graph.facebook.com^$xmlhttprequest,domain=theguardian.com
+!
+! Cloudflare CDN
+!
+/cdn-cgi/pe/bag2?*connect.facebook.com
+/cdn-cgi/pe/bag2?*connect.facebook.net

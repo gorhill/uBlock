@@ -1,7 +1,7 @@
 [Adblock Plus 2.0]
-! Checksum: qspNKXI6i4su0w/trvpuxw
+! Checksum: XrJkgljV3/WaxFlvmAYN0A
 ! Title: EasyList Hebrew
-! Last modified: 06/05/15 17:10
+! Last modified: 25/05/15 23:59
 ! Expires: 4 days (update frequency)
 ! Homepage: https://github.com/AdBlockPlusIsrael/EasyListHebrew/
 ! Forums: https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues
@@ -206,6 +206,7 @@
 ||0404.co.il/public/assets/images/*banner
 ||212.129.12.90/zivlin/*.swf
 ||2eat.co.il/banner/
+||93fm.co.il/wp-content/uploads/2015/05/21523.jpg
 ||ads.one.co.il^
 ||ashdodnet.com/dyncontent/t_ad/
 ||auto.co.il/Banner
@@ -392,7 +393,18 @@ one.co.il#@#a[href^="http://xads.zedo.com/"]
 ||fus.walla.co.il/json/5804468/mint.walla_android.homepage/spons
 ||images.yad2.co.il/Pic/yad2new/homepage_promotions/prom
 ||live.sekindo.com/uploads/users/*/ads/
+||m.sport5.co.il/Images/DreamTeam320X40.png
+||m.ynet.co.il/Services/MaavaronData.aspx
+||mob-server.com^$script,domain=m.nrg.co.il
 ||sport5.co.il/cm8ads/
+!
+!---------------------------------Mobile element hiding rules-----------------!
+!
+m.sport5.co.il##.ad
+!
+!---------------------------------Mobile Whitelist----------------------------!
+!
+@@||g.doubleclick.net/gampad/$domain=m.ynet.co.il
 !
 !------------------------General element hiding rules-------------------------!
 !
@@ -415,7 +427,7 @@ bhol-forums.co.il,bhol.co.il###top_banner_ph
 fun-city.co.il,popcorate.co.il###videoImage1_login
 beok.co.il,winwin.co.il##.TopBanners
 haaretz.co.il,infomed.co.il,mako.co.il,pcmagazine.co.il,rest.co.il,themarker.com##.ad
-globes.co.il,onlife.co.il,sport5.co.il##.banner
+globes.co.il,onlife.co.il##.banner
 haaretz.co.il,themarker.com##.border-box.bottomStripBanners
 bhol-forums.co.il,bhol.co.il##.centered.padt10 > .clear
 globes.co.il,nrg.co.il##.sekindo
@@ -437,6 +449,7 @@ haaretz.co.il,themarker.com##div[id^="dclk_objects_"]
 !----------------------------Element hiding rules-----------------------------!
 !
 2all.co.il##.DivFlowBannerRight
+93fm.co.il##.arti-banners
 aiwa.co.il##.bigbnr
 api.vicomi.com##.vc-comment-inner.shadow.recommend_comment.recommend_comment_ad
 ashdodnet.com##.Banner
@@ -841,6 +854,7 @@ tapuz.co.il##.rightBar1
 tapuz.co.il##.rightSideBanner
 teamim.co.il###dnn_BottomPane
 teamim.co.il###dnn_pageheaderpane
+terof.net##.rectangle
 timeout.co.il##[class^="to_ad_"]
 themarker.com###floatingBannerDepPage
 themarker.com###floatingBannerHomePage
