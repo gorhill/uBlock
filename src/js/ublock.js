@@ -273,6 +273,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         break;
     case 'experimentalEnabled':
         break;
+    case 'prefetchingDisabled':
+        vAPI.browserSettings.set({
+            'prefetching': !value
+        });
+        break;
     default:
         break;
     }

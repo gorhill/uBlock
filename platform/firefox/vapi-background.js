@@ -97,6 +97,26 @@ window.addEventListener('unload', function() {
 
 /******************************************************************************/
 
+vAPI.browserSettings = {
+    set: function(details) {
+        for ( var setting in details ) {
+            if ( details.hasOwnProperty(setting) === false ) {
+                continue;
+            }
+            switch ( setting ) {
+            case 'prefetching':
+                // noop until I find what to use in Firefox
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+};
+
+/******************************************************************************/
+
 // API matches that of chrome.storage.local:
 //   https://developer.chrome.com/extensions/storage
 
@@ -404,6 +424,7 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 // Firefox:
+//   https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Tabbed_browser
 //
 // browser --> ownerDocument --> defaultView --> gBrowser --> browsers --+
 //    ^                                                                  |
