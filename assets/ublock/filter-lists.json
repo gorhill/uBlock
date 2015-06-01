@@ -195,7 +195,7 @@
     "mirror1.malwaredomains.com/files/justdomains": {
         "title": "Malware domains",
         "group": "malware",
-        "homeURL": "http://dns-bh.sagadc.org/justdomains"
+        "homeURL": "http://malwaredomains.lehigh.edu/files/justdomains"
         },
     "pgl.yoyo.org/as/serverlist": {
         "title": "Peter Lowe’s Ad server list",
