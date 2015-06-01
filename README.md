@@ -1,3 +1,5 @@
+Your opinion counts in refining uBlock. [Checkout the current poll about uBlock](https://chrismatic.typeform.com/to/GOoKBy). Thank you.
+
 <table width="100%">
       <tr>
       <td align="left" width="70">
