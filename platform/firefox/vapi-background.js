@@ -609,13 +609,15 @@ vAPI.tabs._remove = function(tab, tabBrowser) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabId) {
-    var tabs = tabWatcher.browserFromTabId(tabId);
-    if ( tabs.length === 0 ) {
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( !browser ) {
         return;
     }
-    for ( var tab of tabs ) {
-        this._remove(tab, getTabBrowser(getOwnerWindow(tab)));
+    var tab = tabWatcher.tabFromBrowser(browser);
+    if ( !tab ) {
+        return;
     }
+    this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
 };
 
 /******************************************************************************/
@@ -711,6 +713,25 @@ var tabWatcher = (function() {
 
     var indexFromTarget = function(target) {
         return indexFromBrowser(browserFromTarget(target));
+    };
+
+    var tabFromBrowser = function(browser) {
+        var i = indexFromBrowser(browser);
+        if ( i === -1 ) {
+            return null;
+        }
+        var win = getOwnerWindow(browser);
+        if ( !win ) {
+            return null;
+        }
+        var tabbrowser = getTabBrowser(win);
+        if ( !tabbrowser ) {
+            return null;
+        }
+        if ( !tabbrowser.tabs || i >= tabbrowser.tabs.length ) {
+            return null;
+        }
+        return tabbrowser.tabs[i];
     };
 
     var browserFromTarget = function(target) {
@@ -921,7 +942,8 @@ var tabWatcher = (function() {
         tabs: function() { return browserToTabIdMap.keys(); },
         tabIdFromTarget: tabIdFromTarget,
         browserFromTabId: browserFromTabId,
-        indexFromTarget: indexFromTarget
+        indexFromTarget: indexFromTarget,
+        tabFromBrowser: tabFromBrowser
     };
 })();
 
