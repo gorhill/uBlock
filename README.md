@@ -3,7 +3,7 @@
 
 ***
 
-**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings). My answer to [someone pointing out](https://github.com/chrisaljoudi/uBlock/issues/1424#issuecomment-107742160) at all the slew of bad reviews in the Chrome store:
+**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings). My answer to [someone pointing out](https://github.com/chrisaljoudi/uBlock/issues/1424#issuecomment-107742160) at all the slew of negative reviews in the Chrome store:
 
 > It's worth noting that there are a slew of negative reviews after this change
 
