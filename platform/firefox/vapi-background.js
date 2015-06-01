@@ -415,15 +415,22 @@ vAPI.tabs.registerListeners = function() {
 //   currentURI
 //   ownerDocument (XULDocument)
 //     defaultView (ChromeWindow)
-//     gBrowser (tabbrowser)
+//     gBrowser (tabbrowser OR browser)
 //       browsers (browser)
 //       selectedBrowser
 //       selectedTab
 //       tabs (tab.tabbrowser-tab)
 //
-// Fennec:
+// Fennec: (what I figured so far)
 //
-// ???
+//   tab --> browser     windows --> window --> BrowserApp --> tabs --+
+//    ^      window                                                   |
+//    |                                                               |
+//    +---------------------------------------------------------------+
+//
+// tab
+//   browser
+// [manual search to go back to tab from list of windows]
 
 vAPI.tabs.get = function(tabId, callback) {
     var win, browser;
@@ -690,6 +697,12 @@ var tabWatcher = (function() {
         var tabbrowser = getTabBrowser(win);
         if ( !tabbrowser ) {
             return -1;
+        }
+        // This can happen, for example, the `view-source:` window, there is
+        // no tabbrowser object, the browser object sits directly in the
+        // window.
+        if ( tabbrowser === browser ) {
+            return 0;
         }
         return vAPI.fennec ? 
             tabbrowser.tabs.indexOf(browser) :
@@ -2058,7 +2071,7 @@ vAPI.contextMenu.create = function(details, callback) {
         if ( gContextMenu.inFrame ) {
             details.tagName = 'iframe';
             // Probably won't work with e10s
-            details.frameUrl = gContextMenu.focusedWindow.location.href;
+            details.frameUrl = gContextMenu.focusedWindow && gContextMenu.focusedWindow.location.href || '';
         } else if ( gContextMenu.onImage ) {
             details.tagName = 'img';
             details.srcUrl = gContextMenu.mediaURL;
