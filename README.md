@@ -7,7 +7,7 @@
 
 > It's worth noting that there are a slew of negative reviews after this change
 
-I see this as a long term project. My decision will be proven right in the long term. People knee jerking without fully understanding what really went on is not a good reason for me to weaken good privacy habits. There will be a setting next version to re-enable it if you want, but prefetching will always be disabled by default, for all the reasons invoked. My track record is that of not compromising users' interests for the benefits of data miners etc., and disable prefetching consistent with this.
+I see this as a long term project. My decision will be proven right in the long term. People knee jerking without fully understanding what really went on is not a good reason for me to weaken good privacy habits. There will be a setting next version to re-enable it if you want, but prefetching will always be disabled by default, for all the reasons invoked. My track record is that of not compromising users' interests for the benefits of data miners etc., and disabling prefetching is consistent with this.
 
 **Couple of ongoing myths to dispel**:
 
