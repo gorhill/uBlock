@@ -101,7 +101,7 @@
         "off": true,
         "title": "hpHosts’s Ad and tracking servers",
         "group": "multipurpose",
-        "homeURL": "http://hosts-file.net/.%5Cad_servers.txt"
+        "homeURL": "http://hosts-file.net/ad_servers.txt"
         },
     "http://abp.mozilla-hispano.org/nauscopio/filtros.txt": {
         "off": true,
@@ -190,12 +190,12 @@
         "off": true,
         "title": "Malware domains (long-lived)",
         "group": "malware",
-        "homeURL": ""
+        "homeURL": "http://malwaredomains.lehigh.edu/files/immortal_domains.txt"
         },
     "mirror1.malwaredomains.com/files/justdomains": {
         "title": "Malware domains",
         "group": "malware",
-        "homeURL": ""
+        "homeURL": "http://dns-bh.sagadc.org/justdomains"
         },
     "pgl.yoyo.org/as/serverlist": {
         "title": "Peter Lowe’s Ad server list",
