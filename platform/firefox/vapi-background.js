@@ -528,7 +528,7 @@ vAPI.tabs.open = function(details) {
         details.url = vAPI.getURL(details.url);
     }
 
-    var win, tab, tabBrowser;
+    var tab;
 
     if ( details.select ) {
         var URI = Services.io.newURI(details.url, null, null);
@@ -558,8 +558,8 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    win = Services.wm.getMostRecentWindow('navigator:browser');
-    tabBrowser = getTabBrowser(win);
+    var win = Services.wm.getMostRecentWindow('navigator:browser');
+    var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {selected: details.active !== false});
@@ -590,9 +590,9 @@ vAPI.tabs.replace = function(tabId, url) {
         targetURL = vAPI.getURL(targetURL);
     }
 
-    var tab = tabWatcher.browserFromTabId(tabId);
-    if ( tab ) {
-        tabWatcher.browserFromTarget(tab).loadURI(targetURL);
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( browser ) {
+        browser.loadURI(targetURL);
     }
 };
 
