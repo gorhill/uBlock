@@ -29,6 +29,7 @@ var onLoaded = function() {
     var _toggle = DOMTokenList.prototype.toggle;
     var unchainPane2Timeout = false;
     var unchainPane2 = function() {
+        scopeIcons.style.removeProperty("display");
         pane2.style.removeProperty("display");
     };
     DOMTokenList.prototype.toggle = function(className, enabled) {
@@ -38,8 +39,9 @@ var onLoaded = function() {
                 unchainPane2Timeout = false;
             }
             _toggle.apply(this, arguments);
+            scopeIcons.style.setProperty("display", "none", "important");
             pane2.style.setProperty("display", "inline-block", "important");
-            unchainPane2Timeout = setTimeout(unchainPane2, 700);
+            unchainPane2Timeout = setTimeout(unchainPane2, 400);
             updateSize(enabled);
         }
         else {
@@ -49,6 +51,7 @@ var onLoaded = function() {
     var body = document.body,
         popover = safari.self,
         panes = document.getElementById("panes"),
+        scopeIcons = document.getElementById("scopeIcons"),
         pane1 = panes.children[0],
         pane2 = panes.children[1];
     
