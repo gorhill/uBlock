@@ -870,9 +870,10 @@
             broadcast: true,
             msg: message
         };
-
+        var page;
         for(var tabId in vAPI.tabs.stack) {
-            vAPI.tabs.stack[tabId].page.dispatchMessage('broadcast', message);
+            page = vAPI.tabs.stack[tabId].page;
+            page && page.dispatchMessage && page.dispatchMessage('broadcast', message);
         }
     };
 
