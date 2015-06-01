@@ -3,7 +3,11 @@
 
 ***
 
-**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings).
+**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings). My answer to [someone pointing out](https://github.com/chrisaljoudi/uBlock/issues/1424#issuecomment-107742160) at all the slew of bad reviews in the Chrome store:
+
+> It's worth noting that there are a slew of negative reviews after this change
+
+I see this as a long term project. My decision will be proven right in the long term. People knee jerking without fully understanding what really went on is not a good reason for me to weaken good privacy habits. There will be a setting next version to re-enable it if you want, but prefetching will always be disabled by default, for all the reasons invoked. My track record is that of not compromising users' interests for the benefits of data miners etc., and disable prefetching consistent with this.
 
 **Couple of ongoing myths to dispel**:
 
