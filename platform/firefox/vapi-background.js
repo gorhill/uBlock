@@ -2246,7 +2246,7 @@ vAPI.contextMenu.registerForWebInspector = function(eventName, toolbox, panel) {
                 selectedNodeFront = selectedNodeFront.parentNode();
             }
             if (selectedNodeFront) {
-                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(vAPI.tabs.getTabId(panel.browser), { type: 'element', value: selector}));
+                selectedNodeFront.getUniqueSelector().then(selector => µBlock.elementPickerExec(tabWatcher.tabIdFromTarget(panel.browser), { type: 'element', value: selector}));
 
                 // Turn off 3D view, if it's turned on.
                 if (tiltButton && tiltButton.checked) {
@@ -2269,7 +2269,7 @@ vAPI.contextMenu.registerForNetMonitor = function(eventName, toolbox, panel) {
         menuitem.addEventListener('command', function() {
             var selectedRequest = panel.panelWin.NetMonitorView.RequestsMenu.selectedAttachment;
             if (selectedRequest) {
-                µBlock.elementPickerExec(vAPI.tabs.getTabId(toolbox.target.tab), { type: 'url', value: selectedRequest.url });
+                µBlock.elementPickerExec(tabWatcher.tabIdFromTarget(toolbox.target.tab), { type: 'url', value: selectedRequest.url });
             }
         });
 
