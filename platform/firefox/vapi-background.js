@@ -74,9 +74,13 @@ var cleanupTasks = [];
 // Fixed by github.com/AlexVallat:
 //   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
 //   several instances of cleanupTasks.push, but some are mutually exclusive. When counting by searching for cleanup.push, take account of "-only" comments indicating when they apply
-var expectedNumberOfCleanups = vAPI.fennec ? 7 : 8;
+var expectedNumberOfCleanups = vAPI.fennec ? 6 : 7;
 
 window.addEventListener('unload', function() {
+    if ( typeof vAPI.app.onShutdown === 'function' ) {
+        vAPI.app.onShutdown();
+    }
+
     for ( var cleanup of cleanupTasks ) {
         cleanup();
     }
@@ -367,15 +371,6 @@ var getTabBrowser = function(win) {
 
 /******************************************************************************/
 
-var getBrowserForTab = function(tab) {
-    if ( !tab ) {
-        return null;
-    }
-    return vAPI.fennec && tab.browser || tab.linkedBrowser || null;
-};
-
-/******************************************************************************/
-
 var getOwnerWindow = function(target) {
     if ( target.ownerDocument ) {
         return target.ownerDocument.defaultView;
@@ -408,104 +403,67 @@ vAPI.tabs = {};
 /******************************************************************************/
 
 vAPI.tabs.registerListeners = function() {
-    // onClosed - handled in tabWatcher.onTabClose
-    // onPopup - handled in httpObserver.handlePopup
-
-    for ( var win of this.getWindows() ) {
-        windowWatcher.onReady.call(win);
-    }
-
-    Services.ww.registerNotification(windowWatcher);
-
-    cleanupTasks.push(function() {
-        Services.ww.unregisterNotification(windowWatcher);
-
-        vAPI.contextMenu.remove();
-
-        for ( var win of vAPI.tabs.getWindows() ) {
-            win.removeEventListener('DOMContentLoaded', windowWatcher.onReady);
-
-            var tabContainer;
-            var tabBrowser = getTabBrowser(win);
-            if ( !tabBrowser ) {
-                continue;
-            }
-
-            if ( tabBrowser.deck ) {
-                // Fennec
-                tabContainer = tabBrowser.deck;
-            } else if ( tabBrowser.tabContainer ) {
-                tabContainer = tabBrowser.tabContainer;
-            }
-
-            tabContainer.removeEventListener('TabOpen', tabWatcher.onOpen);
-            tabContainer.removeEventListener('TabShow', tabWatcher.onShow);
-            tabContainer.removeEventListener('TabClose', tabWatcher.onClose);
-            tabContainer.removeEventListener('TabSelect', tabWatcher.onSelect);
-
-            // Close extension tabs
-            for ( var tab of tabBrowser.tabs ) {
-                var browser = getBrowserForTab(tab);
-                if ( browser === null ) {
-                    continue;
-                }
-                var URI = browser.currentURI;
-                if ( URI.schemeIs('chrome') && URI.host === location.host ) {
-                    vAPI.tabs._remove(tab, getTabBrowser(win));
-                }
-            }
-        }
-    });
+    tabWatcher.start();
 };
 
 /******************************************************************************/
 
+// Firefox:
+//
+// browser --> ownerDocument --> defaultView --> gBrowser --> browsers --+
+//    ^                                                                  |
+//    |                                                                  |
+//    +-------------------------------------------------------------------
+//
+// browser (browser)
+//   contentTitle
+//   currentURI
+//   ownerDocument (XULDocument)
+//     defaultView (ChromeWindow)
+//     gBrowser (tabbrowser)
+//       browsers (browser)
+//       selectedBrowser
+//       selectedTab
+//       tabs (tab.tabbrowser-tab)
+//
+// Fennec:
+//
+// ???
+
 vAPI.tabs.get = function(tabId, callback) {
-    var tab, win;
+    var win, browser;
 
     if ( tabId === null ) {
         win = Services.wm.getMostRecentWindow('navigator:browser');
-        var tabBrowser = getTabBrowser(win);
-        if (tabBrowser) {
-            tab = tabBrowser.selectedTab;
-            tabId = tabWatcher.tabIdFromTab(tab);
-        }
+        browser = tabWatcher.browserFromTarget(getTabBrowser(win).selectedTab);
+        tabId = tabWatcher.tabIdFromTarget(browser);
     } else {
-        tab = tabWatcher.tabFromTabId(tabId);
-        if ( tab ) {
-            win = getOwnerWindow(tab);
+        browser = tabWatcher.browserFromTabId(tabId);
+        if ( browser ) {
+            win = getOwnerWindow(browser);
         }
     }
 
     // For internal use
     if ( typeof callback !== 'function' ) {
-        return tab;
+        return browser;
     }
 
-    if ( !tab ) {
+    if ( !browser ) {
         callback();
         return;
     }
 
     var windows = this.getWindows();
-    var browser = getBrowserForTab(tab);
     var tabBrowser = getTabBrowser(win);
-    var tabIndex, tabTitle;
-    if ( vAPI.fennec ) {
-        tabIndex = tabBrowser.tabs.indexOf(tab);
-        tabTitle = browser.contentTitle;
-    } else {
-        tabIndex = tabBrowser.browsers.indexOf(browser);
-        tabTitle = tab.label;
-    }
 
     callback({
         id: tabId,
-        index: tabIndex,
+        index: tabWatcher.indexFromTarget(browser),
         windowId: windows.indexOf(win),
-        active: tab === tabBrowser.selectedTab,
+        active: browser === tabBrowser.selectedBrowser,
         url: browser.currentURI.asciiSpec,
-        title: tabTitle
+        title: browser.contentTitle
     });
 };
 
@@ -526,9 +484,6 @@ vAPI.tabs.getAll = function(window) {
         }
 
         for ( tab of tabBrowser.tabs ) {
-            if ( !vAPI.fennec && tab.hasAttribute('pending') ) {
-                continue;
-            }
             tabs.push(tab);
         }
     }
@@ -577,7 +532,7 @@ vAPI.tabs.open = function(details) {
         var URI = Services.io.newURI(details.url, null, null);
 
         for ( tab of this.getAll() ) {
-            var browser = getBrowserForTab(tab);
+            var browser = tabWatcher.browserFromTarget(tab);
 
             // Or simply .equals if we care about the fragment
             if ( URI.equalsExceptRef(browser.currentURI) === false ) {
@@ -594,9 +549,9 @@ vAPI.tabs.open = function(details) {
     }
 
     if ( details.tabId ) {
-        tab = tabWatcher.tabFromTabId(details.tabId);
+        tab = tabWatcher.browserFromTabId(details.tabId);
         if ( tab ) {
-            getBrowserForTab(tab).loadURI(details.url);
+            tabWatcher.browserFromTarget(tab).loadURI(details.url);
             return;
         }
     }
@@ -633,9 +588,9 @@ vAPI.tabs.replace = function(tabId, url) {
         targetURL = vAPI.getURL(targetURL);
     }
 
-    var tab = tabWatcher.tabFromTabId(tabId);
+    var tab = tabWatcher.browserFromTabId(tabId);
     if ( tab ) {
-        getBrowserForTab(tab).loadURI(targetURL);
+        tabWatcher.browserFromTarget(tab).loadURI(targetURL);
     }
 };
 
@@ -652,7 +607,7 @@ vAPI.tabs._remove = function(tab, tabBrowser) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabId) {
-    var tabs = tabWatcher.tabFromTabId(tabId);
+    var tabs = tabWatcher.browserFromTabId(tabId);
     if ( tabs.length === 0 ) {
         return;
     }
@@ -670,7 +625,7 @@ vAPI.tabs.reload = function(tabId) {
         return;
     }
 
-    getBrowserForTab(tab).webNavigation.reload(
+    tabWatcher.browserFromTarget(tab).webNavigation.reload(
         Ci.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE
     );
 };
@@ -707,7 +662,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     }
 
     details.file = vAPI.getURL(details.file);
-    getBrowserForTab(tab).messageManager.sendAsyncMessage(
+    tabWatcher.browserFromTarget(tab).messageManager.sendAsyncMessage(
         location.host + ':broadcast',
         JSON.stringify({
             broadcast: true,
@@ -726,20 +681,126 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 /******************************************************************************/
 
-var windowWatcher = {
-    onReady: function(e) {
-        if ( e ) {
-            this.removeEventListener(e.type, windowWatcher.onReady);
+var tabWatcher = (function() {
+    // TODO: find out whether we need a janitor to take care of stale entries.
+    var browserToTabIdMap = new Map();
+    var tabIdToBrowserMap = new Map();
+    var tabIdGenerator = 1;
+
+    var indexFromBrowser = function(browser) {
+        var win = getOwnerWindow(browser);
+        if ( !win ) {
+            return -1;
+        }
+        var tabbrowser = getTabBrowser(win);
+        if ( !tabbrowser ) {
+            return -1;
+        }
+        return vAPI.fennec ? 
+            tabbrowser.tabs.indexOf(browser) :
+            tabbrowser.browsers.indexOf(browser);
+    };
+
+    var indexFromTarget = function(target) {
+        return indexFromBrowser(browserFromTarget(target));
+    };
+
+    var browserFromTarget = function(target) {
+        if ( !target ) {
+            return null;
+        }
+        if ( vAPI.fennec ) {
+            if ( target.browser ) {         // target is a tab
+                target = target.browser;
+            }
+        } else if ( target.linkedPanel ) {  // target is a tab
+            target = target.linkedBrowser;
+        }
+        if ( target.localName !== 'browser' ) {
+            return null;
+        }
+        return target;
+    };
+
+    var tabIdFromTarget = function(target) {
+        var browser = browserFromTarget(target);
+        if ( browser === null ) {
+            return vAPI.noTabId;
+        }
+        var tabId = browserToTabIdMap.get(browser);
+        if ( tabId === undefined ) {
+            tabId = 't' + tabIdGenerator++;
+            browserToTabIdMap.set(browser, tabId);
+            tabIdToBrowserMap.set(tabId, browser);
+        }
+        return tabId;
+    };
+
+    var browserFromTabId = function(tabId) {
+        var browser = tabIdToBrowserMap.get(tabId);
+        if ( browser === undefined ) {
+            return null;
+        }
+        // Verify that the browser is still live
+        if ( indexFromBrowser(browser) !== -1 ) {
+            return browser;
+        }
+        removeBrowserEntry(tabId, browser);
+        return null;
+    };
+
+    var removeBrowserEntry = function(tabId, browser) {
+        if ( tabId && tabId !== vAPI.noTabId ) {
+            vAPI.tabs.onClosed(tabId);
+            delete vAPI.toolbarButton.tabs[tabId];
+            tabIdToBrowserMap.delete(tabId);
+        }
+        if ( browser ) {
+            browserToTabIdMap.delete(browser);
+        }
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Web/Events/TabOpen
+    var onOpen = function({target}) {
+        var tabId = tabIdFromTarget(target);
+        var browser = browserFromTabId(tabId);
+        vAPI.tabs.onNavigation({
+            frameId: 0,
+            tabId: tabId,
+            url: browser.currentURI.asciiSpec,
+        });
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Web/Events/TabShow
+    var onShow = function({target}) {
+        tabIdFromTarget(target);
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Web/Events/TabClose
+    var onClose = function({target}) {
+        // target is tab in Firefox, browser in Fennec
+        var browser = browserFromTarget(target);
+        var tabId = browserToTabIdMap.get(browser);
+        removeBrowserEntry(tabId, browser);
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Web/Events/TabSelect
+    var onSelect = function({target}) {
+        vAPI.setIcon(tabIdFromTarget(target), getOwnerWindow(target));
+    };
+
+    var onWindowLoad = function(ev) {
+        if ( ev ) {
+            this.removeEventListener(ev.type, onWindowLoad);
         }
 
         var wintype = this.document.documentElement.getAttribute('windowtype');
-
         if ( wintype !== 'navigator:browser' ) {
             return;
         }
 
         var attachToTabBrowser = function(window, tabBrowser) {
-            if (!tabBrowser) {
+            if ( !tabBrowser ) {
                 return;
             }
 
@@ -757,11 +818,10 @@ var windowWatcher = {
             } else {
                 return;
             }
-
-            tabContainer.addEventListener('TabClose', tabWatcher.onTabClose);
-            tabContainer.addEventListener('TabSelect', tabWatcher.onTabSelect);
-            tabContainer.addEventListener('TabClose', tabWatcher.onClose);
-            tabContainer.addEventListener('TabSelect', tabWatcher.onSelect);
+            tabContainer.addEventListener('TabOpen', onOpen);
+            tabContainer.addEventListener('TabShow', onShow);
+            tabContainer.addEventListener('TabClose', onClose);
+            tabContainer.addEventListener('TabSelect', onSelect);
 
             // when new window is opened TabSelect doesn't run on the selected tab?
         }
@@ -776,111 +836,99 @@ var windowWatcher = {
         } else {
             attachToTabBrowser(win, tabBrowser);
         }
-    },
-
-    observe: function(win, topic) {
-        if ( topic === 'domwindowopened' ) {
-            win.addEventListener('DOMContentLoaded', this.onReady);
-        }
-    }
-};
-
-/******************************************************************************/
-
-var tabWatcher = (function() {
-    var knownTabs = new Set();
-    var stack = new WeakMap();
-    var stackId = 1;
-    // If needed, we can optimize further by having a matching tabid->tab map.
-
-    var tabIdFromTab = function(target) {
-        if ( !target ) {
-            return vAPI.noTabId;
-        }
-        if ( vAPI.fennec ) {
-            if ( target.browser ) {
-                // target is a tab
-                target = target.browser;
-            }
-        } else if ( target.linkedPanel ) {
-            // target is a tab
-            target = target.linkedBrowser;
-        }
-        if ( target.localName !== 'browser' ) {
-            return vAPI.noTabId;
-        }
-        var tabId = stack.get(target);
-        if ( !tabId ) {
-            tabId = '' + stackId++;
-            stack.set(target, tabId);
-        }
-        return tabId;
     };
 
-    var tabFromTabId = function(tabId) {
-        for ( var tab of knownTabs ) {
-            if ( tabIdFromTab(tab) === tabId ) {
-                return tab;
+    var onWindowUnload = function() {
+        vAPI.contextMenu.remove();
+        this.removeEventListener('DOMContentLoaded', onWindowLoad);
+
+        var tabBrowser = getTabBrowser(this);
+        if ( !tabBrowser ) {
+            return;
+        }
+
+        var tabContainer = null;
+        if ( tabBrowser.deck ) {
+            // Fennec
+            tabContainer = tabBrowser.deck;
+        } else if ( tabBrowser.tabContainer ) {
+            tabContainer = tabBrowser.tabContainer;
+        }
+        if ( tabContainer ) {
+            tabContainer.removeEventListener('TabOpen', onOpen);
+            tabContainer.removeEventListener('TabShow', onShow);
+            tabContainer.removeEventListener('TabClose', onClose);
+            tabContainer.removeEventListener('TabSelect', onSelect);
+        }
+
+        // Close extension tabs
+        var browser, URI, tabId;
+        for ( var tab of tabBrowser.tabs ) {
+            browser = tabWatcher.browserFromTarget(tab);
+            if ( browser === null ) {
+                continue;
+            }
+            URI = browser.currentURI;
+            if ( URI.schemeIs('chrome') && URI.host === location.host ) {
+                vAPI.tabs._remove(tab, getTabBrowser(this));
+            }
+            browser = browserFromTarget(tab);
+            tabId = browserToTabIdMap.get(browser);
+            if ( tabId !== undefined ) {
+                tabIdToBrowserMap.delete(tabId);
+            }
+            browserToTabIdMap.delete(browser);
+        }
+    };
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWindowWatcher
+    var windowWatcher = {
+        observe: function(win, topic) {
+            if ( topic === 'domwindowopened' ) {
+                win.addEventListener('DOMContentLoaded', onWindowLoad);
             }
         }
-        return null;
     };
 
     // Initialize map with existing active tabs
-    var tabBrowser;
-    for ( var win of vAPI.tabs.getWindows() ) {
-        tabBrowser = getTabBrowser(win);
-        if ( tabBrowser === null ) {
-            continue;
-        }
-        for ( var tab of tabBrowser.tabs ) {
-            if ( !vAPI.fennec && tab.hasAttribute('pending') ) {
+    var start = function() {
+        var tabBrowser, tab;
+        for ( var win of vAPI.tabs.getWindows() ) {
+            onWindowLoad.call(win);
+            tabBrowser = getTabBrowser(win);
+            if ( tabBrowser === null ) {
                 continue;
             }
-            knownTabs.add(tab, true);
-            tabIdFromTab(tab);
+            for ( tab of tabBrowser.tabs ) {
+                if ( vAPI.fennec || !tab.hasAttribute('pending') ) {
+                    tabIdFromTarget(tab);
+                }
+            }
         }
-    }
 
-    cleanupTasks.push(function() {
-        knownTabs.clear();
-    });
-
-    // https://developer.mozilla.org/en-US/docs/Web/Events/TabOpen
-    var onOpen = function({target}) {
-        knownTabs.add(target, true);
-        tabIdFromTab(tab);
+        Services.ww.registerNotification(windowWatcher);
     };
 
-    // https://developer.mozilla.org/en-US/docs/Web/Events/TabShow
-    var onShow = function({target}) {
-        knownTabs.add(target, true);
-        tabIdFromTab(tab);
+    var stop = function() {
+        Services.ww.unregisterNotification(windowWatcher);
+
+        for ( var win of vAPI.tabs.getWindows() ) {
+            onWindowUnload.call(win);
+        }
+
+        browserToTabIdMap.clear();
+        tabIdToBrowserMap.clear();
     };
 
-    // https://developer.mozilla.org/en-US/docs/Web/Events/TabClose
-    var onClose = function({target}) {
-        // target is tab in Firefox, browser in Fennec
-        var tabId = tabIdFromTab(target);
-        vAPI.tabs.onClosed(tabId);
-        delete vAPI.toolbarButton.tabs[tabId];
-        knownTabs.delete(target);
-    };
-
-    // https://developer.mozilla.org/en-US/docs/Web/Events/TabSelect
-    var onSelect = function({target}) {
-        knownTabs.add(target, true);
-        vAPI.setIcon(tabIdFromTab(target), getOwnerWindow(target));
-    };
+    cleanupTasks.push(stop);
 
     return {
-        onOpen: onOpen,
-        onShow: onShow,
-        onClose: onClose,
-        onSelect: onSelect,
-        tabs: knownTabs,
-        tabIdFromTab: tabIdFromTab,
-        tabFromTabId: tabFromTabId
+        start: start,
+        browserFromTarget: browserFromTarget,
+        tabs: function() { return browserToTabIdMap.keys(); },
+        tabIdFromTarget: tabIdFromTarget,
+        browserFromTabId: browserFromTabId,
+        indexFromTarget: indexFromTarget
     };
 })();
 
@@ -891,7 +939,7 @@ vAPI.setIcon = function(tabId, iconStatus, badge) {
     var win = badge === undefined
         ? iconStatus
         : Services.wm.getMostRecentWindow('navigator:browser');
-    var curTabId = tabWatcher.tabIdFromTab(getTabBrowser(win).selectedTab);
+    var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
     var tb = vAPI.toolbarButton;
 
     // from 'TabSelect' event
@@ -955,7 +1003,7 @@ vAPI.messaging.onMessage = function({target, data}) {
 
     var sender = {
         tab: {
-            id: tabWatcher.tabIdFromTab(target)
+            id: tabWatcher.tabIdFromTarget(target)
         }
     };
 
@@ -1011,6 +1059,8 @@ vAPI.messaging.setup = function(defaultHandler) {
             location.host + ':background',
             vAPI.messaging.onMessage
         );
+
+        vAPI.messaging.defaultHandler = null;
     });
 };
 
@@ -1467,20 +1517,20 @@ vAPI.net.registerListeners = function() {
         // a request would end up being categorized as a behind-the-scene
         // requests.
         var details = e.data;
-        var tabId = tabWatcher.tabIdFromTab(e.target);
+        var tabId = tabWatcher.tabIdFromTarget(e.target);
         var sourceTabId = null;
 
         // Popup candidate
         if ( details.openerURL ) {
-            for ( var tab of tabWatcher.tabs ) {
-                var URI = getBrowserForTab(tab).currentURI;
+            for ( var tab of tabWatcher.tabs() ) {
+                var URI = tab.currentURI;
 
                 // Probably isn't the best method to identify the source tab
                 if ( URI.spec !== details.openerURL ) {
                     continue;
                 }
 
-                sourceTabId = tabWatcher.tabIdFromTab(tab);
+                sourceTabId = tabWatcher.tabIdFromTarget(tab);
 
                 if ( sourceTabId === tabId ) {
                     sourceTabId = null;
@@ -1522,7 +1572,7 @@ vAPI.net.registerListeners = function() {
             return;
         }
 
-        var tabId = tabWatcher.tabIdFromTab(browser);
+        var tabId = tabWatcher.tabIdFromTarget(browser);
 
         // Ignore notifications related to our popup
         if ( details.url.lastIndexOf(vAPI.getURL('popup.html'), 0) === 0 ) {
@@ -1615,7 +1665,7 @@ vAPI.toolbarButton.init = function() {
 
         tb.onClick = function() {
             var win = Services.wm.getMostRecentWindow('navigator:browser');
-            var curTabId = tabWatcher.tabIdFromTab(getTabBrowser(win).selectedTab);
+            var curTabId = tabWatcher.tabIdFromTarget(getTabBrowser(win).selectedTab);
             vAPI.tabs.open({
                 url: 'popup.html?tabId=' + curTabId,
                 index: -1,
@@ -2266,7 +2316,7 @@ vAPI.contextMenu.create = function(details, callback) {
         }
 
         callback(details, {
-            id: tabWatcher.tabIdFromTab(gContextMenu.browser),
+            id: tabWatcher.tabIdFromTarget(gContextMenu.browser),
             url: gContextMenu.browser.currentURI.asciiSpec
         });
     };
@@ -2317,7 +2367,7 @@ var optionsObserver = {
         Services.obs.addObserver(this, 'addon-options-displayed', false);
         cleanupTasks.push(this.unregister.bind(this));
 
-        var browser = getBrowserForTab(vAPI.tabs.get(null));
+        var browser = tabWatcher.browserFromTarget(vAPI.tabs.get(null));
         if ( browser && browser.currentURI && browser.currentURI.spec === 'about:addons' ) {
             this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
         }
@@ -2365,12 +2415,12 @@ vAPI.lastError = function() {
 
 vAPI.onLoadAllCompleted = function() {
     var µb = µBlock;
-    for ( var tab of tabWatcher.tabs ) {
-        var tabId = tabWatcher.tabIdFromTab(tab);
-        var browser = getBrowserForTab(tab);
-        µb.tabContextManager.commit(tabId, browser.currentURI.asciiSpec);
+    var tabId;
+    for ( var tab of tabWatcher.tabs() ) {
+        tabId = tabWatcher.tabIdFromTarget(tab);
+        µb.tabContextManager.commit(tabId, tab.currentURI.asciiSpec);
         µb.bindTabToPageStats(tabId);
-        browser.messageManager.sendAsyncMessage(
+        tab.messageManager.sendAsyncMessage(
             location.host + '-load-completed'
         );
     }

@@ -908,7 +908,7 @@ var startPicker = function(details) {
     highlightElements([], true);
 
     // If a target was provided, use it
-    if (details.target) {
+    if (details.target && details.target.value) {
         if (details.target.type === 'element') {
             filtersFromElement(document.querySelector(details.target.value));
         } else if (details.target.type === 'url') {
