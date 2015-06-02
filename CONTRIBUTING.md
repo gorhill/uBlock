@@ -21,6 +21,8 @@
     - It helps to also test with Adblock Plus, with **same** filter lists.
         - If issue also occurs with ABP, it's most likely a filter list issue.
 1. Verify that the issue is not caused by another extension, such as HTTPS Everywhere.
+1. Verify that the issue is not caused by browser settings.
+    - It helps to run your browser with an alternative profile to test for issues caused by user configuration, if supported.
 1. Any issue opened with no effort to provide the required details will be closed without comment.
 
 ---
