@@ -171,6 +171,10 @@
     "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Deaktiver forhåndshenting (for å hindre tilkobling til blokkerte nettverksforespørsler)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"

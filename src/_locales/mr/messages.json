@@ -171,6 +171,10 @@
     "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"प्रायोगिक वैशिष्ट्ये सक्षम करा",
     "description":"English: Enable experimental features"

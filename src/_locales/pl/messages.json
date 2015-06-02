@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"µBlock₀",
+    "message":"uBlock₀",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -52,7 +52,7 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} lub {{percent}}%",
+    "message":"{{count}} ({{percent}}%)",
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
@@ -171,6 +171,10 @@
     "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>funkcje zaawansowane<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Wyłącz wstępne pobieranie (by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informacje<\/a>)",
     "description":"English: Enable experimental features"
@@ -192,7 +196,7 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} użytych z {{total}}",
+    "message":"użytych {{used}} z {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
@@ -384,7 +388,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Za kulisami",
+    "message":"Ukryte żądania",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{

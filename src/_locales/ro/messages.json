@@ -171,6 +171,10 @@
     "message":"Sunt un utilizator avansat (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lectură obligatorie<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Dezactivează preluarea în avans (pentru a preveni orice conexiune ce s-ar încadra în cereri de rețea blocate)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Activează funcțiile experimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Despre<\/a>)",
     "description":"English: Enable experimental features"
@@ -400,11 +404,11 @@
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Tip:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Filtrare dinamică a URL-urilor",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

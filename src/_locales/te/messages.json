@@ -171,6 +171,10 @@
     "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"ప్రయోగాత్మక సామర్థ్యాల వాడుకను అనుమతించుము(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>మరిన్ని వివరాలు<\/a>)",
     "description":"English: Enable experimental features"

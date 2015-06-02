@@ -171,6 +171,10 @@
     "message":"고급 사용자 모드 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>필수로 읽어보세요.<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"프리페칭 비활성화 (차단된 네트워크 요청에 대해 모든 접속요청 방지)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"

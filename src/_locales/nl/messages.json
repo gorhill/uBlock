@@ -171,6 +171,10 @@
     "message":"Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lees dit eerst<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Experimentele functies inschakelen (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Over<\/a>)",
     "description":"English: Enable experimental features"

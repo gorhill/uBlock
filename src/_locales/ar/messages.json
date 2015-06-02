@@ -48,7 +48,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"على الصفحه",
+    "message":"على هذه الصفحه",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"منذ بداية التنصيب",
+    "message":"منذ التنصيب",
     "description":"English: since install"
   },
   "popupOr":{
@@ -169,6 +169,10 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"إظهار الإعدادات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يجب القراءة<\/a>)",
+    "description":"English: "
+  },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"تعطيل الجلب المسبق على الشبكة (لمنع أي اتصال لطلبات الشبكة المحجوبة)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -484,7 +488,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"اعرض لوحة التحكم",
+    "message":"عرض لوحة التحكم",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{

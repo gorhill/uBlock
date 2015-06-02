@@ -171,6 +171,10 @@
     "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vēlams izlasīt<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Atslēgt pirmsielādi (lai novērstu bloķētus tīkla pieprasījumus)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Iespējot eksperimentālas iespējas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sīkāk šeit<\/a>)",
     "description":"English: Enable experimental features"

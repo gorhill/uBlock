@@ -171,6 +171,10 @@
     "message":"Tôi là một người dùng có kinh nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Yêu cầu đọc qua<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Kích hoạt các tính năng thử nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Thông tin<\/a>)",
     "description":"English: Enable experimental features"

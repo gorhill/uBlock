@@ -171,6 +171,10 @@
     "message":"我是進階的使用者（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必讀資訊<\/a>）",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"啟用實驗性質的功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>關於<\/a>）",
     "description":"English: Enable experimental features"
@@ -344,7 +348,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"清單中的主機名稱將被 uBlock 忽略。每行一個規則，無效的主機名稱將被自動忽略。",
+    "message":"列表裡的主機名稱將被 μBlock 停用。每行一個規則。無效的主機名稱將被忽略掉。",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{

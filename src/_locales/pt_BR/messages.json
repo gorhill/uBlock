@@ -171,6 +171,10 @@
     "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Ativar recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
