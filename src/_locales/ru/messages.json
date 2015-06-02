@@ -175,6 +175,10 @@
     "message":"Отключить предзагрузку (для предотвращения подключений для заблокированных запросов)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Включить экспериментальные возможности  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Подробнее<\/a>)",
     "description":"English: Enable experimental features"

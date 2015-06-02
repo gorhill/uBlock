@@ -175,6 +175,10 @@
     "message":"Desativar pre-fetching (para prevenir conecções para pedidos de rede bloqueados)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Ativar funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"

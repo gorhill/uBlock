@@ -175,6 +175,10 @@
     "message":"Stäng av hämtning i förhand (för att motverka anslutningar av blockerade förfrågningar)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktivera experimentella funktioner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Om<\/a>)",
     "description":"English: Enable experimental features"
@@ -384,7 +388,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"Allt",
+    "message":"Alla",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{

@@ -175,6 +175,10 @@
     "message":"Wyłącz wstępne pobieranie (by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Włącz funkcje eksperymentalne (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informacje<\/a>)",
     "description":"English: Enable experimental features"

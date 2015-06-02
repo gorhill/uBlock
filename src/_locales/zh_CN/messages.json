@@ -175,6 +175,10 @@
     "message":"禁止预读（以避免任何对已阻止网络请求的连接）",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"启用实验功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>关于<\/a>）",
     "description":"English: Enable experimental features"

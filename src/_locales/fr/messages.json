@@ -175,6 +175,10 @@
     "message":"Désactiver la prédiction des actions sur le réseau (afin d'empêcher toute connexion pour les requêtes réseau bloquées)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Activer les fonctionnalités expérimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>En savoir plus<\/a>)",
     "description":"English: Enable experimental features"

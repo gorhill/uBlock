@@ -175,6 +175,10 @@
     "message":"Çaktivizoj hapjen e parakohshme të faqeve (parandalon lidhjen për kërkesat e bllokuara nga rrjeti)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktivizoj veçoritë eksperimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"

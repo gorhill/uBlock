@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"అంశాలను ముందుగానే తీసుకురావడాన్ని నిషేధించు (ఎవైనా అవాంఛనీయ అనుసంధానాలను నివారించడానికి)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

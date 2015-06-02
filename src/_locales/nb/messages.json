@@ -175,6 +175,10 @@
     "message":"Deaktiver forhåndshenting (for å hindre tilkobling til blokkerte nettverksforespørsler)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"

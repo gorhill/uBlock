@@ -175,6 +175,10 @@
     "message":"關閉預讀功能（用以避免來自已阻擋的網路連線請求的任何連線）",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"啟用實驗性質的功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>關於<\/a>）",
     "description":"English: Enable experimental features"

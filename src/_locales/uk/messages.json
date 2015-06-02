@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Вимкнути передзавантаження (щоб унеможливити будь-які з’єднання для заблокованих мережевих запитів)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

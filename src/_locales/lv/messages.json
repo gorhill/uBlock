@@ -175,6 +175,10 @@
     "message":"Atslēgt pirmsielādi (lai novērstu bloķētus tīkla pieprasījumus)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Iespējot eksperimentālas iespējas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sīkāk šeit<\/a>)",
     "description":"English: Enable experimental features"
