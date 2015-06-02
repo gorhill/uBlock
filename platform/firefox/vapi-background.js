@@ -108,6 +108,10 @@ vAPI.browserSettings = {
                 // noop until I find what to use in Firefox
                 break;
 
+            case 'hyperlinkAuditing':
+                // noop until I find what to use in Firefox
+                break;
+
             default:
                 break;
             }

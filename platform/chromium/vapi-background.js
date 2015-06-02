@@ -83,6 +83,13 @@ vAPI.browserSettings = {
                 });
                 break;
 
+            case 'hyperlinkAuditing':
+                chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                    value: !!details[setting],
+                    scope: 'regular'
+                });
+                break;
+
             default:
                 break;
             }

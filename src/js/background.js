@@ -62,6 +62,7 @@ return {
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
+        hyperlinkAuditingDisabled: true,
         parseAllABPHideFilters: true,
         prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
