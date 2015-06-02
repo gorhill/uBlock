@@ -520,11 +520,11 @@
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Προσωρινά",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Μόνιμα",
     "description":"English: Permanently"
   },
   "dummy":{

@@ -172,7 +172,7 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Desativar a pre-busca (para evitar qualquer conexão de solicitações de rede bloqueadas)",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -500,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ impediu a seguinte página de carregar:",
+    "message":"uBlock₀ impediu a seguinte página de ser carregada:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
