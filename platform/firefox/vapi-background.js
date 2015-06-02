@@ -98,6 +98,16 @@ window.addEventListener('unload', function() {
 /******************************************************************************/
 
 vAPI.browserSettings = {
+
+    setBool: function(branch, setting, value) {
+        try {
+            Services.prefs
+                    .getBranch(branch + '.')
+                    .setBoolPref(setting, value);
+        } catch (ex) {
+        }
+    },
+
     set: function(details) {
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
@@ -105,11 +115,11 @@ vAPI.browserSettings = {
             }
             switch ( setting ) {
             case 'prefetching':
-                // noop until I find what to use in Firefox
+                this.setBool('network', 'prefetch-next', !!details[setting]);
                 break;
 
             case 'hyperlinkAuditing':
-                // noop until I find what to use in Firefox
+                this.setBool('browser', 'send_pings', !!details[setting]);
                 break;
 
             default:

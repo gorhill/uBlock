@@ -64,11 +64,6 @@ vAPI.storage = chrome.storage.local;
 // https://github.com/gorhill/uMatrix/issues/234
 // https://developer.chrome.com/extensions/privacy#property-network
 
-chrome.privacy.network.networkPredictionEnabled.set({
-    value: false,
-    scope: 'regular'
-});
-
 vAPI.browserSettings = {
     set: function(details) {
         for ( var setting in details ) {
