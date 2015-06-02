@@ -144,6 +144,8 @@ var onUserSettingsReady = function(fetched) {
     userSettings.experimentalEnabled = false;
 
     µb.contextMenu.toggle(userSettings.contextMenuEnabled);
+    vAPI.browserSettings.set({ 'prefetching': !userSettings.prefetchingDisabled });
+
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);
     µb.permanentURLFiltering.fromString(fetched.urlFilteringString);

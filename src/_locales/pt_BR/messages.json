@@ -171,6 +171,10 @@
     "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Desativar a pre-busca (para evitar qualquer conexão de solicitações de rede bloqueadas)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Ativar recursos experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
@@ -496,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ impediu a seguinte página de carregar:",
+    "message":"uBlock₀ impediu a seguinte página de ser carregada:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

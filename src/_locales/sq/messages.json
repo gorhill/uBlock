@@ -171,6 +171,10 @@
     "message":"Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Çaktivizoj hapjen e parakohshme të faqeve (parandalon lidhjen për kërkesat e bllokuara nga rrjeti)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktivizoj veçoritë eksperimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"
@@ -380,7 +384,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"All",
+    "message":"Të gjitha",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -396,15 +400,15 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Konteksti:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Lloji:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Filtrimi dinamik i adresave",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

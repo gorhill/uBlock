@@ -171,6 +171,10 @@
     "message":"Аз съм опитен потребител (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Допълнително четиво<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Разрешаване на експериментални функции (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'> за<\/a>)",
     "description":"English: Enable experimental features"

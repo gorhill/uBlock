@@ -42,13 +42,6 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uMatrix/issues/234
-// https://developer.chrome.com/extensions/privacy#property-network
-
-chrome.privacy.network.networkPredictionEnabled.set({ value: false });
-
-/******************************************************************************/
-
 vAPI.app = {
     name: manifest.name,
     version: manifest.version
@@ -65,6 +58,37 @@ vAPI.app.restart = function() {
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = chrome.storage.local;
+
+/******************************************************************************/
+
+// https://github.com/gorhill/uMatrix/issues/234
+// https://developer.chrome.com/extensions/privacy#property-network
+
+chrome.privacy.network.networkPredictionEnabled.set({
+    value: false,
+    scope: 'regular'
+});
+
+vAPI.browserSettings = {
+    set: function(details) {
+        for ( var setting in details ) {
+            if ( details.hasOwnProperty(setting) === false ) {
+                continue;
+            }
+            switch ( setting ) {
+            case 'prefetching':
+                chrome.privacy.network.networkPredictionEnabled.set({
+                    value: !!details[setting],
+                    scope: 'regular'
+                });
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+};
 
 /******************************************************************************/
 

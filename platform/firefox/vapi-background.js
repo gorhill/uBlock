@@ -102,6 +102,26 @@ window.addEventListener('unload', function() {
 
 /******************************************************************************/
 
+vAPI.browserSettings = {
+    set: function(details) {
+        for ( var setting in details ) {
+            if ( details.hasOwnProperty(setting) === false ) {
+                continue;
+            }
+            switch ( setting ) {
+            case 'prefetching':
+                // noop until I find what to use in Firefox
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+};
+
+/******************************************************************************/
+
 // API matches that of chrome.storage.local:
 //   https://developer.chrome.com/extensions/storage
 
@@ -409,6 +429,7 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 // Firefox:
+//   https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Tabbed_browser
 //
 // browser --> ownerDocument --> defaultView --> gBrowser --> browsers --+
 //    ^                                                                  |
@@ -420,15 +441,22 @@ vAPI.tabs.registerListeners = function() {
 //   currentURI
 //   ownerDocument (XULDocument)
 //     defaultView (ChromeWindow)
-//     gBrowser (tabbrowser)
+//     gBrowser (tabbrowser OR browser)
 //       browsers (browser)
 //       selectedBrowser
 //       selectedTab
 //       tabs (tab.tabbrowser-tab)
 //
-// Fennec:
+// Fennec: (what I figured so far)
 //
-// ???
+//   tab --> browser     windows --> window --> BrowserApp --> tabs --+
+//    ^      window                                                   |
+//    |                                                               |
+//    +---------------------------------------------------------------+
+//
+// tab
+//   browser
+// [manual search to go back to tab from list of windows]
 
 vAPI.tabs.get = function(tabId, callback) {
     var win, browser;
@@ -526,7 +554,7 @@ vAPI.tabs.open = function(details) {
         details.url = vAPI.getURL(details.url);
     }
 
-    var win, tab, tabBrowser;
+    var tab;
 
     if ( details.select ) {
         var URI = Services.io.newURI(details.url, null, null);
@@ -556,8 +584,8 @@ vAPI.tabs.open = function(details) {
         }
     }
 
-    win = Services.wm.getMostRecentWindow('navigator:browser');
-    tabBrowser = getTabBrowser(win);
+    var win = Services.wm.getMostRecentWindow('navigator:browser');
+    var tabBrowser = getTabBrowser(win);
 
     if ( vAPI.fennec ) {
         tabBrowser.addTab(details.url, {selected: details.active !== false});
@@ -588,9 +616,9 @@ vAPI.tabs.replace = function(tabId, url) {
         targetURL = vAPI.getURL(targetURL);
     }
 
-    var tab = tabWatcher.browserFromTabId(tabId);
-    if ( tab ) {
-        tabWatcher.browserFromTarget(tab).loadURI(targetURL);
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( browser ) {
+        browser.loadURI(targetURL);
     }
 };
 
@@ -607,13 +635,15 @@ vAPI.tabs._remove = function(tab, tabBrowser) {
 /******************************************************************************/
 
 vAPI.tabs.remove = function(tabId) {
-    var tabs = tabWatcher.browserFromTabId(tabId);
-    if ( tabs.length === 0 ) {
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( !browser ) {
         return;
     }
-    for ( var tab of tabs ) {
-        this._remove(tab, getTabBrowser(getOwnerWindow(tab)));
+    var tab = tabWatcher.tabFromBrowser(browser);
+    if ( !tab ) {
+        return;
     }
+    this._remove(tab, getTabBrowser(getOwnerWindow(browser)));
 };
 
 /******************************************************************************/
@@ -696,6 +726,12 @@ var tabWatcher = (function() {
         if ( !tabbrowser ) {
             return -1;
         }
+        // This can happen, for example, the `view-source:` window, there is
+        // no tabbrowser object, the browser object sits directly in the
+        // window.
+        if ( tabbrowser === browser ) {
+            return 0;
+        }
         return vAPI.fennec ? 
             tabbrowser.tabs.indexOf(browser) :
             tabbrowser.browsers.indexOf(browser);
@@ -703,6 +739,25 @@ var tabWatcher = (function() {
 
     var indexFromTarget = function(target) {
         return indexFromBrowser(browserFromTarget(target));
+    };
+
+    var tabFromBrowser = function(browser) {
+        var i = indexFromBrowser(browser);
+        if ( i === -1 ) {
+            return null;
+        }
+        var win = getOwnerWindow(browser);
+        if ( !win ) {
+            return null;
+        }
+        var tabbrowser = getTabBrowser(win);
+        if ( !tabbrowser ) {
+            return null;
+        }
+        if ( !tabbrowser.tabs || i >= tabbrowser.tabs.length ) {
+            return null;
+        }
+        return tabbrowser.tabs[i];
     };
 
     var browserFromTarget = function(target) {
@@ -928,7 +983,8 @@ var tabWatcher = (function() {
         tabs: function() { return browserToTabIdMap.keys(); },
         tabIdFromTarget: tabIdFromTarget,
         browserFromTabId: browserFromTabId,
-        indexFromTarget: indexFromTarget
+        indexFromTarget: indexFromTarget,
+        tabFromBrowser: tabFromBrowser
     };
 })();
 
@@ -1525,8 +1581,12 @@ vAPI.net.registerListeners = function() {
             for ( var tab of tabWatcher.tabs() ) {
                 var URI = tab.currentURI;
 
-                // Probably isn't the best method to identify the source tab
-                if ( URI.spec !== details.openerURL ) {
+                // Probably isn't the best method to identify the source tab.
+                // Apparently URI can be undefined under some circumstances: I
+                // believe this may have to do with those very temporary
+                // browser objects created when opening a new tab, i.e. related
+                // to https://github.com/gorhill/uBlock/issues/212
+                if ( URI && URI.spec !== details.openerURL ) {
                     continue;
                 }
 
@@ -2300,7 +2360,7 @@ vAPI.contextMenu.create = function(details, callback) {
         if ( gContextMenu.inFrame ) {
             details.tagName = 'iframe';
             // Probably won't work with e10s
-            details.frameUrl = gContextMenu.focusedWindow.location.href;
+            details.frameUrl = gContextMenu.focusedWindow && gContextMenu.focusedWindow.location.href || '';
         } else if ( gContextMenu.onImage ) {
             details.tagName = 'img';
             details.srcUrl = gContextMenu.mediaURL;

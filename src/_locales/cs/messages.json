@@ -171,6 +171,10 @@
     "message":"Jsem pokročilý uživatel (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nutno přečíst<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Zakázat přednačítání (zakáže jakékoliv spojení pro zablokované síťové požadavky)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
     "description":"English: Enable experimental features"

@@ -171,6 +171,10 @@
     "message":"我是高级用户（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>必读<\/a>）",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"禁止预读（以避免任何对已阻止网络请求的连接）",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"启用实验功能（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>关于<\/a>）",
     "description":"English: Enable experimental features"

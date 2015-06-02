@@ -171,6 +171,10 @@
     "message":"Είμαι προχωρημένος χρήστης (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Aπαραίτητη ανάγνωση<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Ενεργοποιήση πειραματικών χαρακτηριστικών (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Πληροφορίες<\/a>)",
     "description":"English: Enable experimental features"
@@ -456,7 +460,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -496,7 +500,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"Το uBlock έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
+    "message":"Το uBlock₀ έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -516,11 +520,11 @@
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{
-    "message":"Temporarily",
+    "message":"Προσωρινά",
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"Permanently",
+    "message":"Μόνιμα",
     "description":"English: Permanently"
   },
   "dummy":{
