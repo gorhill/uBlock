@@ -186,10 +186,10 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('colorBlindFriendly', this.checked);
         });
 
-    uDom('#prefetching-disabled')
-        .prop('checked', details.prefetchingDisabled === true)
+    uDom('#advanced-user-enabled')
+        .prop('checked', details.advancedUserEnabled === true)
         .on('change', function(){
-            changeUserSettings('prefetchingDisabled', this.checked);
+            changeUserSettings('advancedUserEnabled', this.checked);
         });
 
     uDom('#prefetching-disabled')
