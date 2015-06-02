@@ -144,8 +144,10 @@ var onUserSettingsReady = function(fetched) {
     userSettings.experimentalEnabled = false;
 
     µb.contextMenu.toggle(userSettings.contextMenuEnabled);
-    vAPI.browserSettings.set({ 'prefetching': !userSettings.prefetchingDisabled });
-    vAPI.browserSettings.set({ 'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled });
+    vAPI.browserSettings.set({
+        'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
+        'prefetching': !userSettings.prefetchingDisabled
+    });
 
     µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
     µb.sessionFirewall.assign(µb.permanentFirewall);
