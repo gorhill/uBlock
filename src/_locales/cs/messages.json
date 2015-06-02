@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Vypnout auditování hypertextových odkazů",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

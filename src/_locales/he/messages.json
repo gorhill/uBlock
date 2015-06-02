@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"חסום ניסיונות ל Hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

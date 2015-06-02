@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Poista käytöstä hyperlinkkien tarkistus",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

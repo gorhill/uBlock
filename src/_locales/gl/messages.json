@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Desactivar a auditoría de hiperligazóns",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -412,7 +412,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Filtrado dinámico de enderezo",
+    "message":"Filtrado dinámico do enderezo",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

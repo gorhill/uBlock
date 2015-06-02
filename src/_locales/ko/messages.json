@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"하이퍼링크 검사 비활성화",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

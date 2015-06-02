@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar pre-fetching (para prevenir conecções para pedidos de rede bloqueados)",
+    "message":"Desativar 'pre-fetching' (para impedir ligações de pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Desativar auditoria de hiperligações",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

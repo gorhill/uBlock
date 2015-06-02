@@ -116,7 +116,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"النطاقات متصلة",
+    "message":"النطاقات الملموسة",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"تعطيل مراجعة الروابط التشعبية",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -496,7 +496,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"اعرض سجل طلبات الإتصال بالشبكة",
+    "message":"عرض سجل الإتصال بالشبكة",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

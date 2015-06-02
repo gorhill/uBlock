@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Disabilita la revisione degli hyperlink",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

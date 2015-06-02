@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Zakázať prednačítavanie (zakáže akékoľvek pripojenie pre zablokované sieťové požiadavky)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Zakázať auditovanie hypertextových odkazov",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

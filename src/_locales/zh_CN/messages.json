@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"禁止预读（以避免任何对已阻止网络请求的连接）",
+    "message":"禁用预读（以避免任何对已阻止网络请求的连接）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"禁用超链接审计（hyperlink auditing）",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
