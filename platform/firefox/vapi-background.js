@@ -120,6 +120,7 @@ vAPI.browserSettings = {
 
             case 'hyperlinkAuditing':
                 this.setBool('browser', 'send_pings', !!details[setting]);
+                this.setBool('beacon', 'enabled', !!details[setting]);
                 break;
 
             default:
