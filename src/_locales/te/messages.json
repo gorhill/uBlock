@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"చిరునామాల తానిఖిని నిషేధించు",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
