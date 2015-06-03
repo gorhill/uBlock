@@ -469,17 +469,13 @@ vAPI.tabs.registerListeners = function() {
 // [manual search to go back to tab from list of windows]
 
 vAPI.tabs.get = function(tabId, callback) {
-    var win, browser;
+    var browser;
 
     if ( tabId === null ) {
-        win = Services.wm.getMostRecentWindow('navigator:browser');
-        browser = tabWatcher.browserFromTarget(getTabBrowser(win).selectedTab);
+        browser = tabWatcher.currentBrowser();
         tabId = tabWatcher.tabIdFromTarget(browser);
     } else {
         browser = tabWatcher.browserFromTabId(tabId);
-        if ( browser ) {
-            win = getOwnerWindow(browser);
-        }
     }
 
     // For internal use
@@ -492,8 +488,9 @@ vAPI.tabs.get = function(tabId, callback) {
         return;
     }
 
-    var windows = this.getWindows();
+    var win = getOwnerWindow(browser);
     var tabBrowser = getTabBrowser(win);
+    var windows = this.getWindows();
 
     callback({
         id: tabId,
@@ -659,22 +656,20 @@ vAPI.tabs.remove = function(tabId) {
 /******************************************************************************/
 
 vAPI.tabs.reload = function(tabId) {
-    var tab = this.get(tabId);
-
-    if ( !tab ) {
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( !browser ) {
         return;
     }
 
-    tabWatcher.browserFromTarget(tab).webNavigation.reload(
-        Ci.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE
-    );
+    browser.webNavigation.reload(Ci.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE);
 };
 
 /******************************************************************************/
 
 vAPI.tabs.select = function(tab) {
-    tab = typeof tab === 'object' ? tab : this.get(tab);
-
+    if ( typeof tab !== 'object' ) {
+        tab = tabWatcher.tabFromBrowser(tabWatcher.browserFromTabId(tab));
+    }
     if ( !tab ) {
         return;
     }
@@ -691,9 +686,8 @@ vAPI.tabs.select = function(tab) {
 /******************************************************************************/
 
 vAPI.tabs.injectScript = function(tabId, details, callback) {
-    var tab = this.get(tabId);
-
-    if ( !tab ) {
+    var browser = tabWatcher.browserFromTabId(tabId);
+    if ( !browser ) {
         return;
     }
 
@@ -702,7 +696,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
     }
 
     details.file = vAPI.getURL(details.file);
-    tabWatcher.browserFromTarget(tab).messageManager.sendAsyncMessage(
+    browser.messageManager.sendAsyncMessage(
         location.host + ':broadcast',
         JSON.stringify({
             broadcast: true,
@@ -815,6 +809,11 @@ var tabWatcher = (function() {
         }
         removeBrowserEntry(tabId, browser);
         return null;
+    };
+
+    var currentBrowser = function() {
+        var win = Services.wm.getMostRecentWindow('navigator:browser');
+        return browserFromTarget(getTabBrowser(win).selectedTab);
     };
 
     var removeBrowserEntry = function(tabId, browser) {
@@ -976,13 +975,14 @@ var tabWatcher = (function() {
     cleanupTasks.push(stop);
 
     return {
-        start: start,
-        browserFromTarget: browserFromTarget,
         browsers: function() { return browserToTabIdMap.keys(); },
-        tabIdFromTarget: tabIdFromTarget,
         browserFromTabId: browserFromTabId,
+        browserFromTarget: browserFromTarget,
+        currentBrowser: currentBrowser,
         indexFromTarget: indexFromTarget,
-        tabFromBrowser: tabFromBrowser
+        start: start,
+        tabFromBrowser: tabFromBrowser,
+        tabIdFromTarget: tabIdFromTarget
     };
 })();
 
@@ -2184,7 +2184,7 @@ var optionsObserver = {
         Services.obs.addObserver(this, 'addon-options-displayed', false);
         cleanupTasks.push(this.unregister.bind(this));
 
-        var browser = tabWatcher.browserFromTarget(vAPI.tabs.get(null));
+        var browser = tabWatcher.currentBrowser();
         if ( browser && browser.currentURI && browser.currentURI.spec === 'about:addons' ) {
             this.observe(browser.contentDocument, 'addon-enabled', this.addonId);
         }
