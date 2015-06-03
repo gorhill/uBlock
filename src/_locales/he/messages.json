@@ -175,6 +175,10 @@
     "message":"כבה אחזור מוקדם של משאבים (על מנת למנוע מחיבורים של בקשות רשת חסומות להישלח)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"חסום ניסיונות ל Hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"אפשר תכונות ניסיוניות (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>אודות<\/a>)",
     "description":"English: Enable experimental features"

@@ -273,10 +273,11 @@ var matchWhitelistDirective = function(url, hostname, directive) {
         break;
     case 'experimentalEnabled':
         break;
+    case 'hyperlinkAuditingDisabled':
+        vAPI.browserSettings.set({ 'hyperlinkAuditing': !value });
+        break;
     case 'prefetchingDisabled':
-        vAPI.browserSettings.set({
-            'prefetching': !value
-        });
+        vAPI.browserSettings.set({ 'prefetching': !value });
         break;
     default:
         break;

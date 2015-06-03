@@ -64,11 +64,6 @@ vAPI.storage = chrome.storage.local;
 // https://github.com/gorhill/uMatrix/issues/234
 // https://developer.chrome.com/extensions/privacy#property-network
 
-chrome.privacy.network.networkPredictionEnabled.set({
-    value: false,
-    scope: 'regular'
-});
-
 vAPI.browserSettings = {
     set: function(details) {
         for ( var setting in details ) {
@@ -78,6 +73,13 @@ vAPI.browserSettings = {
             switch ( setting ) {
             case 'prefetching':
                 chrome.privacy.network.networkPredictionEnabled.set({
+                    value: !!details[setting],
+                    scope: 'regular'
+                });
+                break;
+
+            case 'hyperlinkAuditing':
+                chrome.privacy.websites.hyperlinkAuditingEnabled.set({
                     value: !!details[setting],
                     scope: 'regular'
                 });

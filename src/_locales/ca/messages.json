@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Inhabilita la cerca prèvia (per evitar qualsevol connexió de xarxa per a sol·licituds blocades)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

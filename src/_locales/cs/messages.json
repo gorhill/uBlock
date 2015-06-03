@@ -175,6 +175,10 @@
     "message":"Zakázat přednačítání (zakáže jakékoliv spojení pro zablokované síťové požadavky)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Vypnout auditování hypertextových odkazů",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Povolit experimentální funkce (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>co to je?<\/a>)",
     "description":"English: Enable experimental features"

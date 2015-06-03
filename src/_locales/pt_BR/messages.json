@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar a pre-busca (para evitar qualquer conexão de solicitações de rede bloqueadas)",
+    "message":"Desativar pré-chamadas (para evitar qualquer conexão de solicitações de rede bloqueadas)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Desativar hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

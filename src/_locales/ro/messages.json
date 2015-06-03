@@ -175,6 +175,10 @@
     "message":"Dezactivează preluarea în avans (pentru a preveni orice conexiune ce s-ar încadra în cereri de rețea blocate)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Activează funcțiile experimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Despre<\/a>)",
     "description":"English: Enable experimental features"

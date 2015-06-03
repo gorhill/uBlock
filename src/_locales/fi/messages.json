@@ -84,7 +84,7 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Aktivoi kosmeettinen suodatus tälle sivulle",
+    "message":"Aktivoi ehostettu suodatus tälle sivulle",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Poista käytöstä esihaku (estää yhteydet estettyihin verkkopyyntöihin)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Poista käytöstä hyperlinkkien tarkistus",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -516,7 +520,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Poista tiukka estäminen",
+    "message":"Poista tiukka estäminen {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

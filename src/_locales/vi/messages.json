@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Nhật ký yêu cầu mạng",
+    "message":"uBlock₀ — Nhật ký các yêu cầu",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Đi đến nhật kí yêu cầu",
+    "message":"Mở nhật kí yêu cầu",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -124,11 +124,11 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Tạo",
+    "message":"Tạo bộ lọc",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Chọn",
+    "message":"Chọn phần tử",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Vô hiệu tải trước (để chặn bất kỳ kết nối với những yêu cầu mạng đã chặn)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Vô hiệu giám sát siêu liên kết",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -340,7 +344,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Danh sách quy tắc lọc động.",
+    "message":"Danh sách quy tắc lọc chủ động.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -400,15 +404,15 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Ngữ cảnh:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Loại:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Lọc URL chủ động",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{
@@ -492,7 +496,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Hiện nhật ký yêu cầu mạng",
+    "message":"Hiện nhật ký",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Отключить предзагрузку (для предотвращения подключений для заблокированных запросов)",
+    "message":"Отключить предзагрузку для предотвращения подключений для заблокированных запросов",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Отключить проверку гиперссылок",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

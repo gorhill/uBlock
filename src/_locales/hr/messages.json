@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Onemogući pretpreuzimanje (za sprečavanje bilo koje veze blokiranih mrežnih zahtjeva)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Onemogući provjeravanje hiperlinkova",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

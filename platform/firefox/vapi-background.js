@@ -103,6 +103,16 @@ window.addEventListener('unload', function() {
 /******************************************************************************/
 
 vAPI.browserSettings = {
+
+    setBool: function(branch, setting, value) {
+        try {
+            Services.prefs
+                    .getBranch(branch + '.')
+                    .setBoolPref(setting, value);
+        } catch (ex) {
+        }
+    },
+
     set: function(details) {
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
@@ -110,7 +120,12 @@ vAPI.browserSettings = {
             }
             switch ( setting ) {
             case 'prefetching':
-                // noop until I find what to use in Firefox
+                this.setBool('network', 'prefetch-next', !!details[setting]);
+                break;
+
+            case 'hyperlinkAuditing':
+                this.setBool('browser', 'send_pings', !!details[setting]);
+                this.setBool('beacon', 'enabled', !!details[setting]);
                 break;
 
             default:
@@ -732,9 +747,12 @@ var tabWatcher = (function() {
         if ( tabbrowser === browser ) {
             return 0;
         }
-        return vAPI.fennec ? 
-            tabbrowser.tabs.indexOf(browser) :
-            tabbrowser.browsers.indexOf(browser);
+        // Fennec
+        // https://developer.mozilla.org/en-US/Add-ons/Firefox_for_Android/API/BrowserApp
+        if ( vAPI.fennec ) {
+            return tabbrowser.tabs.indexOf(tabbrowser.getTabForBrowser(browser));
+        }
+        return tabbrowser.browsers.indexOf(browser);
     };
 
     var indexFromTarget = function(target) {
@@ -980,7 +998,7 @@ var tabWatcher = (function() {
     return {
         start: start,
         browserFromTarget: browserFromTarget,
-        tabs: function() { return browserToTabIdMap.keys(); },
+        browsers: function() { return browserToTabIdMap.keys(); },
         tabIdFromTarget: tabIdFromTarget,
         browserFromTabId: browserFromTabId,
         indexFromTarget: indexFromTarget,
@@ -1578,8 +1596,8 @@ vAPI.net.registerListeners = function() {
 
         // Popup candidate
         if ( details.openerURL ) {
-            for ( var tab of tabWatcher.tabs() ) {
-                var URI = tab.currentURI;
+            for ( var browser of tabWatcher.browsers() ) {
+                var URI = browser.currentURI;
 
                 // Probably isn't the best method to identify the source tab.
                 // Apparently URI can be undefined under some circumstances: I
@@ -1590,7 +1608,7 @@ vAPI.net.registerListeners = function() {
                     continue;
                 }
 
-                sourceTabId = tabWatcher.tabIdFromTarget(tab);
+                sourceTabId = tabWatcher.tabIdFromTarget(browser);
 
                 if ( sourceTabId === tabId ) {
                     sourceTabId = null;
@@ -2476,11 +2494,11 @@ vAPI.lastError = function() {
 vAPI.onLoadAllCompleted = function() {
     var µb = µBlock;
     var tabId;
-    for ( var tab of tabWatcher.tabs() ) {
-        tabId = tabWatcher.tabIdFromTarget(tab);
-        µb.tabContextManager.commit(tabId, tab.currentURI.asciiSpec);
+    for ( var browser of tabWatcher.browsers() ) {
+        tabId = tabWatcher.tabIdFromTarget(browser);
+        µb.tabContextManager.commit(tabId, browser.currentURI.asciiSpec);
         µb.bindTabToPageStats(tabId);
-        tab.messageManager.sendAsyncMessage(
+        browser.messageManager.sendAsyncMessage(
             location.host + '-load-completed'
         );
     }

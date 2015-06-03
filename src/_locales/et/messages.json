@@ -175,6 +175,10 @@
     "message":"Keela eellaadimine (et vältida ühendusi blokeeritud võrgutaotlustele)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Keela hüperlingi auditeerimine",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Luba katselised funktsioonid (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>teave<\/a>)",
     "description":"English: Enable experimental features"

@@ -186,16 +186,22 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('colorBlindFriendly', this.checked);
         });
 
+    uDom('#advanced-user-enabled')
+        .prop('checked', details.advancedUserEnabled === true)
+        .on('change', function(){
+            changeUserSettings('advancedUserEnabled', this.checked);
+        });
+
     uDom('#prefetching-disabled')
         .prop('checked', details.prefetchingDisabled === true)
         .on('change', function(){
             changeUserSettings('prefetchingDisabled', this.checked);
         });
 
-    uDom('#advanced-user-enabled')
-        .prop('checked', details.advancedUserEnabled === true)
+    uDom('#hyperlink-auditing-disabled')
+        .prop('checked', details.hyperlinkAuditingDisabled === true)
         .on('change', function(){
-            changeUserSettings('advancedUserEnabled', this.checked);
+            changeUserSettings('hyperlinkAuditingDisabled', this.checked);
         });
 
     uDom('#experimental-enabled')

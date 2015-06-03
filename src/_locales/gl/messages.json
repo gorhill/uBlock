@@ -175,6 +175,10 @@
     "message":"Desactivar a precarga de sitios (prevén calquera conexión para peticións de red bloqueadas)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Desactivar a auditoría de hiperligazóns",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Activar funcións experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"
@@ -408,7 +412,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Filtrado dinámico de enderezo",
+    "message":"Filtrado dinámico do enderezo",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "aboutChangelog":{

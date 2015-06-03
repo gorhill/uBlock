@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Pre-fetching uitschakelen (om elke verbinding voor geblokkeerde netwerkverzoeken te voorkomen)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Auditing van koppelingen uitschakelen",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

@@ -175,6 +175,10 @@
     "message":"Nonaktifkan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Nonaktifkan pengauditan pranala",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktifkan fitur eksperimental (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Tentang<\/a>)",
     "description":"English: Enable experimental features"

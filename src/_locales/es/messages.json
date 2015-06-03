@@ -175,6 +175,10 @@
     "message":"Deshabilitar pre-carga de sitios (previene cualquier conexión para peticiones de red bloqueadas)",
     "description":"English: "
   },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Deshabilitar auditoría de hipervínculos",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Habilitar funciones experimentales (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Acerca de<\/a>)",
     "description":"English: Enable experimental features"

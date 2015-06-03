@@ -172,7 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"プリフェッチを無効  (to prevent any connection for blocked network requests)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disable hyperlink auditing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -404,7 +408,7 @@
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"タイプ: ",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
