@@ -513,6 +513,7 @@ vAPI.tabs.onPopup = function(details) {
         result,
         'popup',
         targetURL,
+        openerHostname,
         openerHostname
     );
 

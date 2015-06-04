@@ -181,6 +181,7 @@ var createCellAt = function(tr, index) {
     }
     if ( td ) {
         td.removeAttribute('colspan');
+        td.removeAttribute('title');
         td.textContent = '';
     } else {
         td = document.createElement('td');
@@ -299,7 +300,11 @@ var renderNetLogEntry = function(tr, entry) {
     }
 
     tr.cells[4].textContent = (prettyRequestTypes[type] || type);
-    tr.cells[5].appendChild(nodeFromURL(url, filter));
+    td = tr.cells[5];
+    td.appendChild(nodeFromURL(url, filter));
+    if ( entry.d4 ) {
+        td.setAttribute('title', entry.d4);
+    }
 };
 
 /******************************************************************************/
