@@ -791,7 +791,7 @@ var tabWatcher = (function() {
         }
         var tabId = browserToTabIdMap.get(browser);
         if ( tabId === undefined ) {
-            tabId = 't' + tabIdGenerator++;
+            tabId = '' + tabIdGenerator++;
             browserToTabIdMap.set(browser, tabId);
             tabIdToBrowserMap.set(tabId, browser);
         }
@@ -1212,9 +1212,13 @@ var httpObserver = {
         5: 'object',
         6: 'main_frame',
         7: 'sub_frame',
+        10: 'ping',
         11: 'xmlhttprequest',
         12: 'object',
         14: 'font',
+        15: 'media',
+        16: 'websocket',
+        19: 'beacon',
         21: 'image'
     },
 
