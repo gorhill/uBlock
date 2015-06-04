@@ -116,20 +116,25 @@ vAPI.browserSettings = {
     },
 
     clear: function(branch, setting) {
-        var value = this.originalValues[branch + '.' + setting];
-        if (
-            value === undefined &&
-            this.originalValues.hasOwnProperty(branch + '.' + setting)
-        ) {
+        var key = branch + '.' + setting;
+        // Value was not overriden -- nothing to restore
+        if ( this.originalValues.hasOwnProperty(key) === false ) {
+            return;
+        }
+        var value = this.originalValues[key];
+        // Original value was a default one
+        if ( value === undefined ) {
             try {
                 Services.prefs.getBranch(branch + '.').clearUserPref(setting);
             } catch (ex) {
             }
             return;
         }
+        // Current value is same as original
         if ( this.getBool(branch, setting) === value ) {
             return;
         }
+        // Reset to original value
         try {
             Services.prefs.getBranch(branch + '.').setBoolPref(setting, value);
         } catch (ex) {
