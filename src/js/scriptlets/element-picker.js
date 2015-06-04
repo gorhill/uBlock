@@ -318,12 +318,15 @@ var netFilterFromElement = function(elem, out) {
         return;
     }
     var tagName = elem.tagName.toLowerCase();
-    if ( netFilterSources.hasOwnProperty(tagName) === false ) {
+    if ( netFilter1stSources.hasOwnProperty(tagName) === false ) {
         return;
     }
-    var src = elem[netFilterSources[tagName]];
-    if ( src.length === 0 ) {
-        return;
+    var src = elem[netFilter1stSources[tagName]];
+    if ( typeof src !== 'string' || src.length === 0 ) {
+        src = elem[netFilter2ndSources[tagName]];
+        if ( typeof src !== 'string' || src.length === 0 ) {
+            return;
+        }
     }
     // Remove fragment
     var pos = src.indexOf('#');
@@ -346,11 +349,15 @@ var netFilterFromElement = function(elem, out) {
     netFilterFromUnion(src, out);
 };
 
-var netFilterSources = {
+var netFilter1stSources = {
      'embed': 'src',
     'iframe': 'src',
        'img': 'src',
     'object': 'data'
+};
+
+var netFilter2ndSources = {
+       'img': 'srcset'
 };
 
 /******************************************************************************/
@@ -529,13 +536,17 @@ var elementsFromFilter = function(filter) {
         return out;
     }
 
-    var props = netFilterSources;
-    var elems = document.querySelectorAll(Object.keys(props).join());
+    var src1stProps = netFilter1stSources;
+    var src2ndProps = netFilter2ndSources;
+    var elems = document.querySelectorAll(Object.keys(src1stProps).join());
     var i = elems.length;
     var elem, src;
     while ( i-- ) {
         elem = elems[i];
-        src = elem[props[elem.tagName.toLowerCase()]];
+        src = elem[src1stProps[elem.localName]];
+        if ( typeof src !== 'string' || src.length === 0 ) {
+            src = elem[src2ndProps[elem.localName]];
+        }
         if ( src && reFilter.test(src) ) {
             out.push(elem);
         }
