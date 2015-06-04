@@ -68,8 +68,8 @@ var cleanupTasks = [];
 
 // Fixed by github.com/AlexVallat:
 //   https://github.com/AlexVallat/uBlock/commit/7b781248f00cbe3d61b1cc367c440db80fa06049
-//   7 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
-var expectedNumberOfCleanups = 6;
+//   8 instances of cleanupTasks.push, but one is unique to fennec, and one to desktop.
+var expectedNumberOfCleanups = 7;
 
 window.addEventListener('unload', function() {
     if ( typeof vAPI.app.onShutdown === 'function' ) {
@@ -97,38 +97,113 @@ window.addEventListener('unload', function() {
 
 /******************************************************************************/
 
+// For now, only booleans.
+
 vAPI.browserSettings = {
+    originalValues: {},
+
+    rememberOriginalValue: function(branch, setting) {
+        var key = branch + '.' + setting;
+        if ( this.originalValues.hasOwnProperty(key) ) {
+            return;
+        }
+        var hasUserValue = false;
+        try {
+            hasUserValue = Services.prefs.getBranch(branch + '.').prefHasUserValue(setting);
+        } catch (ex) {
+        }
+        this.originalValues[key] = hasUserValue ? this.getBool(branch, setting) : undefined;
+    },
+
+    clear: function(branch, setting) {
+        var value = this.originalValues[branch + '.' + setting];
+        if (
+            value === undefined &&
+            this.originalValues.hasOwnProperty(branch + '.' + setting)
+        ) {
+            try {
+                Services.prefs.getBranch(branch + '.').clearUserPref(setting);
+            } catch (ex) {
+            }
+            return;
+        }
+        if ( this.getBool(branch, setting) === value ) {
+            return;
+        }
+        try {
+            Services.prefs.getBranch(branch + '.').setBoolPref(setting, value);
+        } catch (ex) {
+        }
+    },
+
+    getBool: function(branch, setting) {
+        try {
+            return Services.prefs.getBranch(branch + '.').getBoolPref(setting);
+        } catch (ex) {
+        }
+        return undefined;
+    },
 
     setBool: function(branch, setting, value) {
         try {
-            Services.prefs
-                    .getBranch(branch + '.')
-                    .setBoolPref(setting, value);
+            Services.prefs.getBranch(branch + '.').setBoolPref(setting, value);
         } catch (ex) {
         }
     },
 
     set: function(details) {
+        var value;
         for ( var setting in details ) {
             if ( details.hasOwnProperty(setting) === false ) {
                 continue;
             }
             switch ( setting ) {
             case 'prefetching':
-                this.setBool('network', 'prefetch-next', !!details[setting]);
+                this.rememberOriginalValue('network', 'prefetch-next');
+                value = !!details[setting];
+                // https://github.com/gorhill/uBlock/issues/292
+                // "true" means "do not disable", i.e. leave entry alone
+                if ( value === true ) {
+                    this.clear('network', 'prefetch-next');
+                } else {
+                    this.setBool('network', 'prefetch-next', false);
+                }
                 break;
 
             case 'hyperlinkAuditing':
-                this.setBool('browser', 'send_pings', !!details[setting]);
-                this.setBool('beacon', 'enabled', !!details[setting]);
+                this.rememberOriginalValue('browser', 'send_pings');
+                this.rememberOriginalValue('beacon', 'enabled');
+                value = !!details[setting];
+                // https://github.com/gorhill/uBlock/issues/292
+                // "true" means "do not disable", i.e. leave entry alone
+                if ( value === true ) {
+                    this.clear('browser', 'send_pings');
+                    this.clear('beacon', 'enabled');
+                } else {
+                    this.setBool('browser', 'send_pings', false);
+                    this.setBool('beacon', 'enabled', false);
+                }
                 break;
 
             default:
                 break;
             }
         }
+    },
+
+    restoreAll: function() {
+        var pos;
+        for ( var key in this.originalValues ) {
+            if ( this.originalValues.hasOwnProperty(key) === false ) {
+                continue;
+            }
+            pos = key.indexOf('.');
+            this.clear(key.slice(0, pos), key.slice(pos + 1));
+        }
     }
 };
+
+cleanupTasks.push(vAPI.browserSettings.restoreAll.bind(vAPI.browserSettings));
 
 /******************************************************************************/
 
