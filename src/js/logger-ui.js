@@ -198,6 +198,7 @@ var createRow = function(layout) {
     if ( tr ) {
         tr.className = '';
         tr.removeAttribute('data-context');
+        tr.removeAttribute('data-frame');
     } else {
         tr = document.createElement('tr');
     }
@@ -267,9 +268,12 @@ var renderNetLogEntry = function(tr, entry) {
         createGap(entry.tab, url);
     }
 
-    // Root hostname
+    // Contexts
     if ( entry.d3 ) {
         tr.setAttribute('data-context', entry.d3);
+    }
+    if ( entry.d4 ) {
+        tr.setAttribute('data-frame', entry.d4);
     }
 
     // Cosmetic filter?

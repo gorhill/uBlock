@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message":"Deaktiver pre-fetching (for at sikre at alle sortlistede netværksanmodninger bliver blokeret)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Deaktiver hyperlink overvågning",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — Nadzorna plošča",
+    "message":"uBlock — Nadzorna plošča",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"Flitri tretjih oseb",
+    "message":"Filtri tretjih oseb",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -40,11 +40,11 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Klik: onemogoči\/omogoči µBlock za to stran.\n\nCtrl+klik: onemogoči µBlock samo na tej strani.",
+    "message":"Klik: onemogoči\/omogoči uBlock za to stran.\n\nCtrl+klik: onemogoči uBlock samo na tej strani.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"zahteva preprečena",
+    "message":"blokirane zahteve",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"Click to open the dashboard",
+    "message":"Klikni za odpiranje nadzorne plošče",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Go to request log",
+    "message":"Pojdi na dnevnik zahtevkov",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -100,23 +100,23 @@
     "description":""
   },
   "popupInlineScriptRulePrompt":{
-    "message":"inline scripts",
+    "message":"vrinjene skripte",
     "description":""
   },
   "popup1pScriptRulePrompt":{
-    "message":"1st-party scripts",
+    "message":"lastne skripte",
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"3rd-party scripts",
+    "message":"tretje-osebne skripte",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"3rd-party frames",
+    "message":"tretje-osebni okvirji",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"domains connected",
+    "message":"povezanih domen",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -168,7 +168,7 @@
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"I am an advanced user (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Required reading<\/a>)",
+    "message":"Sem napreden uporabnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Potrebno branje<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
@@ -180,19 +180,19 @@
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Enable experimental features (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>About<\/a>)",
+    "message":"Omogoči poskusne funkcije (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>O tem<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"Storage used: {{value}} bytes",
+    "message":"Uporabljenega prostora: {{value}} bajtov",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
-    "message":"Last restore:",
+    "message":"Zadnja obnovitev:",
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"Last backup:",
+    "message":"Zadnja varnostna kopija:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -200,19 +200,19 @@
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
-    "message":"{{used}} used out of {{total}}",
+    "message":"uporabljenih {{used}} od {{total}}",
     "description":"English: {{used}} used out of {{total}}"
   },
   "3pAutoUpdatePrompt1":{
-    "message":"Auto-update filter lists.",
+    "message":"Samodejno posodabljanje seznama filtrov.",
     "description":"English: Auto-update filter lists."
   },
   "3pUpdateNow":{
-    "message":"Update now",
+    "message":"Posodobi zdaj",
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Purge all caches",
+    "message":"Počisti celoten predpomnilnik",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -224,7 +224,7 @@
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
-    "message":"Lists of blocked hosts",
+    "message":"Seznam blokiranih gostiteljev",
     "description":"English: Lists of blocked hosts"
   },
   "3pApplyChanges":{
@@ -240,7 +240,7 @@
     "description":"English: Privacy"
   },
   "3pGroupMalware":{
-    "message":"Malware domains",
+    "message":"Zlonamerne domene",
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
@@ -248,7 +248,7 @@
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
-    "message":"Multipurpose",
+    "message":"Večnamenski",
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
@@ -256,7 +256,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Custom",
+    "message":"Po meri",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -280,7 +280,7 @@
     "description":"English: outdated"
   },
   "3pLastUpdate":{
-    "message":"Last update: {{ago}}",
+    "message":"Zadnja posodobitev: {{ago}}",
     "description":"English: Last update: {{ago}}, where 'ago' will be replaced with something like '2 days ago'"
   },
   "1pFormatHint":{
@@ -344,7 +344,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"List of your dynamic filtering rules.",
+    "message":"Seznam vaših dinamičnih pravil filtriranja.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -376,7 +376,7 @@
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
-    "message":"Domain",
+    "message":"Domena",
     "description":"English: Domain"
   },
   "logRequestsHeaderURL":{
@@ -492,7 +492,7 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"Show Dashboard",
+    "message":"Prikaži nadzorno ploščo",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{

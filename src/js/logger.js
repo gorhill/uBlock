@@ -58,6 +58,7 @@ LogEntry.prototype.init = function(args) {
     this.d1 = args[3];
     this.d2 = args[4];
     this.d3 = args[5];
+    this.d4 = args[6];
     return this;
 };
 
@@ -66,7 +67,7 @@ LogEntry.prototype.init = function(args) {
 LogEntry.prototype.dispose = function() {
     this.tstamp = 0;
     this.tab = this.cat = '';
-    this.d0 = this.d1 = this.d2 = this.d3 = undefined;
+    this.d0 = this.d1 = this.d2 = this.d3 = this.d4 = undefined;
     if ( logEntryJunkyard.length < logEntryJunkyardMax ) {
         logEntryJunkyard.push(this);
     }

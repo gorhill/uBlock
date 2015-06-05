@@ -223,7 +223,6 @@ const contentObserver = {
                 } else {
                     // Sandbox appears void.
                     // I've seen this happens, need to investigate why.
-                    
                 }
             };
         }
@@ -325,6 +324,7 @@ const contentObserver = {
             lss(this.contentBaseURI + 'vapi-client.js', sandbox);
             lss(this.contentBaseURI + 'contentscript-start.js', sandbox);
         } catch (ex) {
+            //console.exception(ex.msg, ex.stack);
             return;
         }
 

@@ -33,7 +33,7 @@
 
 var vAPI = self.vAPI = self.vAPI || {};
 vAPI.firefox = true;
-vAPI.sessionId = String.fromCharCode(Date.now() % 25 + 97) +
+vAPI.sessionId = String.fromCharCode(Date.now() % 26 + 97) +
     Math.random().toString(36).slice(2);
 
 /******************************************************************************/
@@ -127,7 +127,13 @@ vAPI.messaging = {
                     return;
                 }
 
-                self.injectScript(details.file);
+                // TODO: investigate why this happens, and if this happens
+                // legitimately (content scripts not injected I suspect, so
+                // that would make this legitimate).
+                // Case: open popup UI from icon in uBlock's logger
+                if ( typeof self.injectScript === 'function' )  {
+                    self.injectScript(details.file);
+                }
             }
         };
     },

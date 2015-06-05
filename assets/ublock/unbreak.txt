@@ -32,6 +32,15 @@
 # To counter `liverail.com` in Peter Lowe's, MVPS, and hpHosts
 @@||cdn-static.liverail.com^$object-subrequest
 
+# https://github.com/chrisaljoudi/uBlock/issues/580
+# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||cdn-static.liverail.com$domain=9to5mac.com
+
+# https://github.com/gorhill/uBlock/issues/294
+# To counter `liverail.com` in hpHosts, Peter Lowe
+# To counter `vox-static.liverail.com` in Dan Pollock, hpHosts, MVPS
+@@||vox-static.liverail.com/swf/$object-subrequest,domain=cdnapi.kaltura.com
+
 # cnet.com needs this for video players
 # https://github.com/chrisaljoudi/uBlock/issues/227
 # To counter `2mdn.net` in Peter Lowe's
@@ -118,10 +127,6 @@ ovh.strim.io#@##tweets
 # Chrome store feedback
 # To counter `top.mail.ru` in Peter Lowe's
 @@||top.mail.ru^$~third-party
-
-# https://github.com/chrisaljoudi/uBlock/issues/580
-# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||cdn-static.liverail.com$domain=9to5mac.com
 
 # https://github.com/chrisaljoudi/uBlock/issues/602
 # To counter `/ads.css` in EasyList

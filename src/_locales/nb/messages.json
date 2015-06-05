@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Deaktiver forhåndshenting (for å hindre tilkobling til blokkerte nettverksforespørsler)",
+    "message":"Deaktiver forhåndshenting (for å hindre enhver tilkobling for blokkerte nettverksforespørsler)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Deaktiver hyperlenkesporing",
+    "message":"Deaktiver lenkesporing",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Відключити перевірку посилань",
+    "message":"Вимкнути перевірку гіперпосилань",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{

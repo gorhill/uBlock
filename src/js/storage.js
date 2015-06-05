@@ -120,17 +120,26 @@
         }
 
         var result = JSON.parse(JSON.stringify(µb.remoteBlacklists));
-        var builtinPath;
-        var defaultState;
+        var entry, builtinPath, defaultState;
 
         for ( var path in result ) {
             if ( result.hasOwnProperty(path) === false ) {
                 continue;
             }
+            entry = result[path];
+            // https://github.com/gorhill/uBlock/issues/277
+            // uBlock's filter lists are always enabled by default, so we
+            // have to include in backup only those which are turned off.
+            if ( path.lastIndexOf('assets/ublock/', 0) === 0 ) {
+                if ( entry.off !== true ) {
+                    delete result[path];
+                }
+                continue;
+            }
             builtinPath = path.replace(/^assets\/thirdparties\//, '');
             defaultState = builtin.hasOwnProperty(builtinPath) === false ||
                            builtin[builtinPath].off === true;
-            if ( result[path].off === true && result[path].off === defaultState ) {
+            if ( entry.off === true && entry.off === defaultState ) {
                 delete result[path];
             }
         }
