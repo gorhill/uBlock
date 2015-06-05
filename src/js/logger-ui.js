@@ -181,7 +181,6 @@ var createCellAt = function(tr, index) {
     }
     if ( td ) {
         td.removeAttribute('colspan');
-        td.removeAttribute('title');
         td.textContent = '';
     } else {
         td = document.createElement('td');
@@ -199,6 +198,7 @@ var createRow = function(layout) {
     if ( tr ) {
         tr.className = '';
         tr.removeAttribute('data-context');
+        tr.removeAttribute('data-frame');
     } else {
         tr = document.createElement('tr');
     }
@@ -268,9 +268,12 @@ var renderNetLogEntry = function(tr, entry) {
         createGap(entry.tab, url);
     }
 
-    // Root hostname
+    // Contexts
     if ( entry.d3 ) {
         tr.setAttribute('data-context', entry.d3);
+    }
+    if ( entry.d4 ) {
+        tr.setAttribute('data-frame', entry.d4);
     }
 
     // Cosmetic filter?
@@ -300,11 +303,7 @@ var renderNetLogEntry = function(tr, entry) {
     }
 
     tr.cells[4].textContent = (prettyRequestTypes[type] || type);
-    td = tr.cells[5];
-    td.appendChild(nodeFromURL(url, filter));
-    if ( entry.d4 ) {
-        td.setAttribute('title', entry.d4);
-    }
+    tr.cells[5].appendChild(nodeFromURL(url, filter));
 };
 
 /******************************************************************************/
