@@ -99,7 +99,7 @@
         },
     "hosts-file.net/ad-servers": {
         "off": true,
-        "title": "hpHosts’s Ad and tracking servers",
+        "title": "hpHosts’ Ad and tracking servers",
         "group": "multipurpose",
         "homeURL": "http://hosts-file.net/ad_servers.txt"
         },
