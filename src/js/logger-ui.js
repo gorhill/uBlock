@@ -658,18 +658,14 @@ var filteringDialog = (function() {
 
     var parseStaticInputs = function() {
         var filter = '';
-        var value;
-        value = selectValue('select.static.action');
-        if ( value !== '' ) {
+        var options = [];
+        var block = selectValue('select.static.action') === '';
+        if ( !block ) {
             filter = '@@';
         }
-        value = selectValue('select.static.url');
+        var value = selectValue('select.static.url');
         if ( value !== '' ) {
             filter += '||' + value;
-        }
-        var options = [];
-        if ( selectValue('select.static.importance') !== '' ) {
-            options.push('important');
         }
         value = selectValue('select.static.type');
         if ( value !== '' ) {
@@ -682,6 +678,9 @@ var filteringDialog = (function() {
             } else {
                 options.push('domain=' + value);
             }
+        }
+        if ( block && selectValue('select.static.importance') !== '' ) {
+            options.push('important');
         }
         if ( options.length ) {
             filter += '$' + options.join(',');
