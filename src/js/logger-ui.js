@@ -197,8 +197,8 @@ var createRow = function(layout) {
     var tr = trJunkyard.pop();
     if ( tr ) {
         tr.className = '';
-        tr.removeAttribute('data-context');
-        tr.removeAttribute('data-frame');
+        tr.removeAttribute('data-hn-page');
+        tr.removeAttribute('data-hn-frame');
     } else {
         tr = document.createElement('tr');
     }
@@ -270,10 +270,10 @@ var renderNetLogEntry = function(tr, entry) {
 
     // Contexts
     if ( entry.d3 ) {
-        tr.setAttribute('data-context', entry.d3);
+        tr.setAttribute('data-hn-page', entry.d3);
     }
     if ( entry.d4 ) {
-        tr.setAttribute('data-frame', entry.d4);
+        tr.setAttribute('data-hn-frame', entry.d4);
     }
 
     // Cosmetic filter?
@@ -590,12 +590,19 @@ var onMaxEntriesChanged = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var urlFilteringDialog = (function() {
+var filteringDialog = (function() {
+    var targetRow = null;
     var dialog = null;
-    var selectContext = null;
-    var selectType = null;
+    var createdStaticFilters = {};
+
+    var targetType;
     var targetURLs = [];
-    var tabId = '';
+    var targetFrameHostname;
+    var targetPageHostname;
+    var targetTabId;
+    var targetDomain;
+    var targetPageDomain;
+    var targetFrameDomain;
 
     var removeAllChildren = function(node) {
         while ( node.firstChild ) {
@@ -603,9 +610,21 @@ var urlFilteringDialog = (function() {
         }
     };
 
-    var uglyTypeFromSelector = function() {
-        var prettyType = selectType.value;
+    var uglyTypeFromSelector = function(pane) {
+        var prettyType = selectValue('select.type.' + pane);
         return uglyRequestTypes[prettyType] || prettyType;
+    };
+
+    var selectNode = function(selector) {
+        return dialog.querySelector(selector);
+    };
+
+    var selectValue = function(selector) {
+        return selectNode(selector).value || '';
+    };
+
+    var staticFilterNode = function() {
+        return dialog.querySelector('div.containers > div.static textarea');
     };
 
     var onColorsReady = function(response) {
@@ -617,7 +636,7 @@ var urlFilteringDialog = (function() {
                 continue;
             }
             colorEntry = colorEntries[url];
-            node = urlFilteringMenu.querySelector('.entry .action[data-url="' + url + '"]');
+            node = dialog.querySelector('.dynamic .entry .action[data-url="' + url + '"]');
             if ( node === null ) {
                 continue;
             }
@@ -631,10 +650,52 @@ var urlFilteringDialog = (function() {
     var colorize = function() {
         messager.send({
             what: 'getURLFilteringData',
-            context: selectContext.value,
+            context: selectValue('select.dynamic.origin'),
             urls: targetURLs,
-            type: uglyTypeFromSelector()
+            type: uglyTypeFromSelector('dynamic')
         }, onColorsReady);
+    };
+
+    var parseStaticInputs = function() {
+        var filter = '';
+        var value;
+        value = selectValue('select.static.action');
+        if ( value !== '' ) {
+            filter = '@@';
+        }
+        value = selectValue('select.static.url');
+        if ( value !== '' ) {
+            filter += '||' + value;
+        }
+        var options = [];
+        if ( selectValue('select.static.importance') !== '' ) {
+            options.push('important');
+        }
+        value = selectValue('select.static.type');
+        if ( value !== '' ) {
+            options.push(uglyTypeFromSelector('static'));
+        }
+        value = selectValue('select.static.origin');
+        if ( value !== '' ) {
+            if ( value === targetDomain ) {
+                options.push('first-party');
+            } else {
+                options.push('domain=' + value);
+            }
+        }
+        if ( options.length ) {
+            filter += '$' + options.join(',');
+        }
+        staticFilterNode().value = filter;
+        updateWidgets();
+    };
+
+    var updateWidgets = function() {
+        var value = staticFilterNode().value;
+        dialog.querySelector('#createStaticFilter').classList.toggle(
+            'disabled',
+            createdStaticFilters.hasOwnProperty(value) || value === ''
+        );
     };
 
     var onClick = function(ev) {
@@ -649,14 +710,47 @@ var urlFilteringDialog = (function() {
         ev.stopPropagation();
 
         var tcl = target.classList;
+        var value;
+
+        // Select a mode
+        if ( tcl.contains('header') ) {
+            if ( tcl.contains('selected') ) {
+                return;
+            }
+            uDom('.header').removeClass('selected');
+            uDom('.container').removeClass('selected');
+            value = target.getAttribute('data-container');
+            uDom('.header.' + value).addClass('selected');
+            uDom('.container.' + value).addClass('selected');
+            return;
+        }
+
+        // Create static filter
+        if ( target.id === 'createStaticFilter' ) {
+            value = staticFilterNode().value;
+            // Avoid duplicates
+            if ( createdStaticFilters.hasOwnProperty(value) ) {
+                return;
+            }
+            createdStaticFilters[value] = true;
+            if ( value !== '' ) {
+                var d = new Date();
+                messager.send({
+                    what: 'createUserFilter',
+                    filters: '! ' + d.toLocaleString() + ' ' + targetPageDomain + '\n' + value
+                });
+            }
+            updateWidgets();
+            return;
+        }
 
         // Save url filtering rule(s)
-        if ( tcl.contains('save') ) {
+        if ( target.id === 'saveRules' ) {
             messager.send({
                 what: 'saveURLFilteringRules',
-                context: selectContext.value,
+                context: selectValue('select.dynamic.origin'),
                 urls: targetURLs,
-                type: uglyTypeFromSelector()
+                type: uglyTypeFromSelector('dynamic')
             }, colorize);
             return;
         }
@@ -667,9 +761,9 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('action') ) {
             messager.send({
                 what: 'setURLFilteringRule',
-                context: selectContext.value,
+                context: selectValue('select.dynamic.origin'),
                 url: target.getAttribute('data-url'),
-                type: uglyTypeFromSelector(),
+                type: uglyTypeFromSelector('dynamic'),
                 action: 0,
                 persist: persist
             }, colorize);
@@ -680,9 +774,9 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('allow') ) {
             messager.send({
                 what: 'setURLFilteringRule',
-                context: selectContext.value,
+                context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector(),
+                type: uglyTypeFromSelector('dynamic'),
                 action: 2,
                 persist: persist
             }, colorize);
@@ -693,9 +787,9 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('noop') ) {
             messager.send({
                 what: 'setURLFilteringRule',
-                context: selectContext.value,
+                context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector(),
+                type: uglyTypeFromSelector('dynamic'),
                 action: 3,
                 persist: persist
             }, colorize);
@@ -706,9 +800,9 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('block') ) {
             messager.send({
                 what: 'setURLFilteringRule',
-                context: selectContext.value,
+                context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
-                type: uglyTypeFromSelector(),
+                type: uglyTypeFromSelector('dynamic'),
                 action: 1,
                 persist: persist
             }, colorize);
@@ -719,7 +813,7 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('reload') ) {
             messager.send({
                 what: 'reloadTab',
-                tabId: tabId
+                tabId: targetTabId
             });
             return;
         }
@@ -728,7 +822,7 @@ var urlFilteringDialog = (function() {
         if ( tcl.contains('picker') ) {
             messager.send({
                 what: 'launchElementPicker',
-                tabId: tabId,
+                tabId: targetTabId,
                 targetURL: 'img\t' + targetURLs[0],
                 select: true
             });
@@ -736,7 +830,34 @@ var urlFilteringDialog = (function() {
         }
     };
 
+    var onSelectChange = function(ev) {
+        var target = ev.target;
+        var tcl = target.classList;
+
+        if ( tcl.contains('dynamic') ) {
+            colorize();
+            return;
+        }
+
+        if ( tcl.contains('static') ) {
+            parseStaticInputs();
+            return;
+        }
+    };
+
+    var onInputChange = function() {
+        updateWidgets();
+    };
+
     var createPreview = function(type, url) {
+        // First, whether picker can be used
+        dialog.querySelector('.picker').classList.toggle(
+            'hide',
+            targetTabId === noTabId ||
+            targetType !== 'image' ||
+            /(?:^| )[dlsu]b(?: |$)/.test(targetRow.className)
+        );
+
         var preview = null;
 
         if ( type === 'image' ) {
@@ -744,9 +865,7 @@ var urlFilteringDialog = (function() {
             preview.setAttribute('src', url);
         }
 
-        // More...
-
-        var container = dialog.querySelector('table.toolbar td.preview');
+        var container = dialog.querySelector('div.preview');
         container.classList.toggle('hide', preview === null);
         if ( preview === null ) {
             return;
@@ -754,94 +873,53 @@ var urlFilteringDialog = (function() {
         container.appendChild(preview);
     };
 
-    var toggleOn = function(ev) {
-        if ( dialog !== null ) {
-            return toggleOff();
+    // Build list of candidate URLs
+    var createTargetURLs = function(url) {
+        var urls = [];
+        var matches = reRFC3986.exec(url);
+        if ( matches === null || !matches[1] || !matches[2] ) {
+            return urls;
         }
-        dialog = urlFilteringMenu.querySelector('.dialog');
-        selectContext = dialog.querySelector('.context');
-        selectType = dialog.querySelector('.type');
-
-        var td = ev.target;
-        var tr = td.parentElement;
-        var cells = tr.cells;
-
-        var context = tr.getAttribute('data-context');
-        if ( !context ) {
-            return toggleOff();
-        }
-
-        var type = cells[4].textContent.trim();
-        if ( !type ) {
-            return toggleOff();
-        }
-
-        tabId = tabIdFromClassName(tr.className);
-
-        var pos, option;
-
-        // Fill context selector
-        removeAllChildren(selectContext);
-        for (;;) {
-            option = document.createElement('option');
-            option.textContent = context;
-            option.setAttribute('value', context);
-            pos = context.indexOf('.');
-            selectContext.appendChild(option);
+        // Shortest URL for a valid URL filtering rule
+        var rootURL = matches[1] + matches[2];
+        urls.unshift(rootURL);
+        var path = matches[3] || '';
+        var pos = path.charAt(0) === '/' ? 1 : 0;
+        while ( pos < path.length ) {
+            pos = path.indexOf('/', pos + 1);
             if ( pos === -1 ) {
-                break;
+                pos = path.length;
             }
-            context = context.slice(pos + 1);
+            urls.unshift(rootURL + path.slice(0, pos));
         }
-        option = document.createElement('option');
+        var query = matches[4] || '';
+        if ( query !== '') {
+            urls.unshift(rootURL + path + query);
+        }
+        return urls;
+    };
+
+    // Fill dynamic URL filtering pane
+    var fillDynamicPane = function() {
+        var select;
+        // Fill context selector
+        select = selectNode('select.dynamic.origin');
+        removeAllChildren(select);
+        fillOriginSelect(select, targetPageHostname, targetPageDomain);
+        var option = document.createElement('option');
         option.textContent = '*';
         option.setAttribute('value', '*');
-        selectContext.appendChild(option);
+        select.appendChild(option);
 
         // Fill type selector
-        selectType.options[0].textContent = type;
-        selectType.options[0].setAttribute('value', type);
-        selectType.selectedIndex = 0;
+        select = selectNode('select.dynamic.type');
+        select.options[0].textContent = targetType;
+        select.options[0].setAttribute('value', targetType);
+        select.selectedIndex = 0;
 
-        // Extract data needed to build URL filtering menu
-        var candidateURL = cells[5].textContent;
-        var matches = reRFC3986.exec(candidateURL);
-        if ( matches === null || !matches[1] || !matches[2] ) {
-            return toggleOff();
-        }
-
-        uDom(dialog).descendants('.picker').toggleClass(
-            'hide',
-            tr.classList.contains('tab_bts') ||
-            type !== 'image' ||
-            /(?:^| )[dlsu]b(?: |$)/.test(tr.className)
-        );
-
-        // Shortest URL which for a valid URL filtering rule
-        var candidateRootURL = matches[1] + matches[2];
-        targetURLs.unshift(candidateRootURL);
-        var candidatePath = matches[3] || '';
-        pos = candidatePath.charAt(0) === '/' ? 1 : 0;
-        while ( pos < candidatePath.length ) {
-            pos = candidatePath.indexOf('/', pos + 1);
-            if ( pos === -1 ) {
-                pos = candidatePath.length;
-            }
-            targetURLs.unshift(candidateRootURL + candidatePath.slice(0, pos));
-        }
-        var candidateQuery = matches[4] || '';
-        if ( candidateQuery !== '') {
-            targetURLs.unshift(candidateRootURL + candidatePath + candidateQuery);
-        }
-
-        // Create preview whenever possible
-        createPreview(type, targetURLs[0]);
-
-        // Fill menu
+        // Fill entries
         var menuEntryTemplate = dialog.querySelector('table.toolbar tr.entry');
-        var tbody = dialog.querySelector('div.entries tbody');
-
-        // Adding URL filtering rules
+        var tbody = dialog.querySelector('div.dynamic table.entries tbody');
         var url, menuEntry;
         for ( var i = 0; i < targetURLs.length; i++ ) {
             url = targetURLs[i];
@@ -852,30 +930,169 @@ var urlFilteringDialog = (function() {
         }
 
         colorize();
+    };
 
+    var fillOriginSelect = function(select, hostname, domain) {
+        var option, pos;
+        var value = hostname;
+        for (;;) {
+            option = document.createElement('option');
+            option.setAttribute('value', value);
+            option.textContent = value;
+            select.appendChild(option);
+            if ( value === domain ) {
+                break;
+            }
+            pos = value.indexOf('.');
+            if ( pos === -1 ) {
+                break;
+            }
+            value = value.slice(pos + 1);
+        }
+    };
+
+    // Fill static filtering pane
+    var fillStaticPane = function() {
+        var template = vAPI.i18n('loggerStaticFilteringSentence');
+        var rePlaceholder = /\{\{[^}]+?\}\}/g;
+        var nodes = [];
+        var match, pos = 0;
+        var select, option, i, value;
+        for (;;) {
+            match = rePlaceholder.exec(template);
+            if ( match === null ) {
+                break;
+            }
+            if ( pos !== match.index ) {
+                nodes.push(document.createTextNode(template.slice(pos, match.index)));
+            }
+            pos = rePlaceholder.lastIndex;
+            switch ( match[0] ) {
+            case '{{br}}':
+                nodes.push(document.createElement('br'));
+                break;
+
+            case '{{action}}':
+                select = document.createElement('select');
+                select.className = 'static action';
+                option = document.createElement('option');
+                option.setAttribute('value', '');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartBlock');
+                select.appendChild(option);
+                option = document.createElement('option');
+                option.setAttribute('value', '@@');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartAllow');
+                select.appendChild(option);
+                nodes.push(select);
+                break;
+
+            case '{{type}}':
+                select = document.createElement('select');
+                select.className = 'static type';
+                option = document.createElement('option');
+                option.setAttribute('value', targetType);
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartType').replace('{{type}}', targetType);
+                select.appendChild(option);
+                option = document.createElement('option');
+                option.setAttribute('value', '');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartAnyType');
+                select.appendChild(option);
+                nodes.push(select);
+                break;
+
+            case '{{url}}':
+                select = document.createElement('select');
+                select.className = 'static url';
+                for ( i = 0; i < targetURLs.length; i++ ) {
+                    value = targetURLs[i].replace(/^[a-z]+:\/\//, '');
+                    option = document.createElement('option');
+                    option.setAttribute('value', value);
+                    option.textContent = value;
+                    select.appendChild(option);
+                }
+                nodes.push(select);
+                break;
+
+            case '{{origin}}':
+                select = document.createElement('select');
+                select.className = 'static origin';
+                fillOriginSelect(select, targetFrameHostname, targetFrameDomain);
+                option = document.createElement('option');
+                option.setAttribute('value', '');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartAnyOrigin');
+                select.appendChild(option);
+                nodes.push(select);
+                break;
+
+            case '{{importance}}':
+                select = document.createElement('select');
+                select.className = 'static importance';
+                option = document.createElement('option');
+                option.setAttribute('value', '');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartNotImportant');
+                select.appendChild(option);
+                option = document.createElement('option');
+                option.setAttribute('value', 'important');
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartImportant');
+                select.appendChild(option);
+                nodes.push(select);
+                break;
+
+            default:
+                break;
+            }
+        }
+        if ( pos < template.length ) {
+            nodes.push(document.createTextNode(template.slice(pos)));
+        }
+        var parent = dialog.querySelector('div.containers > div.static > p:first-of-type');
+        removeAllChildren(parent);
+        for ( i = 0; i < nodes.length; i++ ) {
+            parent.appendChild(nodes[i]);
+        }
+        parseStaticInputs();
+    };
+
+    var fillDialog = function(domains) {
+        targetDomain = domains[0];
+        targetPageDomain = domains[1];
+        targetFrameDomain = domains[2];
+
+        createPreview(targetType, targetURLs[0]);
+        fillDynamicPane();
+        fillStaticPane();
         document.body.appendChild(urlFilteringMenu);
         urlFilteringMenu.addEventListener('click', onClick, true);
-        selectContext.addEventListener('change', colorize);
-        selectType.addEventListener('change', colorize);
+        urlFilteringMenu.addEventListener('change', onSelectChange, true);
+        urlFilteringMenu.addEventListener('input', onInputChange, true);
+    };
+
+    var toggleOn = function(ev) {
+        dialog = urlFilteringMenu.querySelector('.dialog');
+        targetRow = ev.target.parentElement;
+        targetTabId = tabIdFromClassName(targetRow.className);
+        targetType = targetRow.cells[4].textContent.trim() || '';
+        targetURLs = createTargetURLs(targetRow.cells[5].textContent);
+        targetPageHostname = targetRow.getAttribute('data-hn-page') || '';
+        targetFrameHostname = targetRow.getAttribute('data-hn-frame') || '';
+
+        // We need the root domain names for best user experience.
+        messager.send({
+            what: 'getDomainNames',
+            targets: [targetURLs[0], targetPageHostname, targetFrameHostname]
+        }, fillDialog);
     };
 
     var toggleOff = function() {
-        if ( selectContext !== null ) {
-            selectContext.removeEventListener('change', colorize);
-            selectContext = null;
-        }
-        if ( selectType !== null ) {
-            selectType.removeEventListener('change', colorize);
-            selectType = null;
-        }
-        if ( dialog !== null ) {
-            uDom(dialog).descendants('table.toolbar td.preview > *').remove();
-            uDom(dialog).descendants('div.entries tr').remove();
-            dialog = null;
-        }
-        urlFilteringMenu.removeEventListener('click', onClick, true);
-        document.body.removeChild(urlFilteringMenu);
+        removeAllChildren(dialog.querySelector('div.preview'));
+        removeAllChildren(dialog.querySelector('div.dynamic table.entries tbody'));
+        dialog = null;
+        targetRow = null;
         targetURLs = [];
+        urlFilteringMenu.removeEventListener('click', onClick, true);
+        urlFilteringMenu.removeEventListener('change', onSelectChange, true);
+        urlFilteringMenu.removeEventListener('input', onInputChange, true);
+        document.body.removeChild(urlFilteringMenu);
     };
 
     return {
@@ -1186,7 +1403,7 @@ uDom.onLoad(function() {
     uDom('#clear').on('click', clearBuffer);
     uDom('#maxEntries').on('change', onMaxEntriesChanged);
     uDom('#content table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', urlFilteringDialog.toggleOn);
+    uDom('#content').on('click', 'tr.cat_net > td:nth-of-type(4)', filteringDialog.toggleOn);
 });
 
 /******************************************************************************/

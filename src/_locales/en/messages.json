@@ -415,6 +415,42 @@
     "message":"Dynamic URL filtering",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"Static filtering",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates from {{origin}},{{br}}{{importance}} there is an exception filter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Block",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Allow",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"type “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"any type",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"anywhere",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"except when",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"even if",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"Change log",
     "description":"English: Change log"
