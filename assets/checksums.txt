@@ -2,7 +2,7 @@
 b8fd6f6a836d34e0629dca07424d7bd8 assets/ublock/privacy.txt
 841bde1d6f0e702554d2d858da55603f assets/ublock/filters.txt
 c9c5cc56bec563bc1885847f925b9be2 assets/ublock/mirror-candidates.txt
-e4a90ffd6e07f465fcbc00bd61b70689 assets/ublock/filter-lists.json
+0e2bb75187ff4f8f275a201bc188137e assets/ublock/filter-lists.json
 94c0a3eab74c42783855f07b22a429cf assets/thirdparties/home.fredfiber.no/langsholt/adblock.txt
 fc30b0ab9c531f8f95a288d165f01634 assets/thirdparties/www.zoso.ro/pages/rolist.txt
 72373316d0e7ad22604d307c2d93e7cc assets/thirdparties/adblock.gardar.net/is.abp.txt
