@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates from {{origin}},{{br}}{{importance}} there is an exception filter.",
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates from {{origin}},{{br}}{{importance}} there is a matching exception filter.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
