@@ -207,7 +207,7 @@ vAPI.browserSettings = {
             if ( this.originalValues.hasOwnProperty(key) === false ) {
                 continue;
     }
-            pos = key.indexOf('.');
+            pos = key.lastIndexOf('.');
             this.clear(key.slice(0, pos), key.slice(pos + 1));
         }
     }
