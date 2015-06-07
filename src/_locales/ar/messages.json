@@ -415,6 +415,46 @@
     "message":"تصفية ديناميكية للروابط",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"فلتر ثابتة",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"حجب",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"سماح",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"نوع “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"أي نوع",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"from “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"في كل مكان",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"باستثناء إذا",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"حتى لو",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"سجل التغيير",
     "description":"English: Change log"

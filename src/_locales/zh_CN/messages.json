@@ -4,7 +4,7 @@
     "description":"extension name."
   },
   "extShortDesc":{
-    "message":"一款高效的请求过滤工具。占用极低的内存和CPU。",
+    "message":"一款高效的网络请求屏蔽工具，占用极低的内存和 CPU。",
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"禁用预读（以避免任何对已阻止网络请求的连接）",
+    "message":"禁止预读取（拦截对已屏蔽网络请求的任何连接）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"禁用超链接审计（hyperlink auditing）",
+    "message":"禁用超链接审计",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -415,6 +415,46 @@
     "message":"动态 URL 过滤",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"静态规则",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} URL 匹配{{br}}{{url}}{{br}}且来源于 {{origin}} 的 {{type}} 的网络请求，{{br}}{{importance}}有一个匹配的例外规则。",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"拦截",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"允许",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"“{{type}}”类型",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"任何类型",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"来源于 \"{{origin}}\"",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"所有范围",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"除了当",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"即使",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"更新日志",
     "description":"English: Change log"
@@ -496,7 +536,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"显示网络请求日志",
+    "message":"显示网络日志记录器",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

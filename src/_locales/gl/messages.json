@@ -415,6 +415,46 @@
     "message":"Filtrado dinámico do enderezo",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtrado estático",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Bloquear",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Permitir",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tipo “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"calquera tipo",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"from “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"en todos sitios",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"agás cando",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"aínda si",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"Rexistro de cambios",
     "description":"English: Change log"

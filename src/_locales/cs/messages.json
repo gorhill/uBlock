@@ -415,6 +415,46 @@
     "message":"Dynamické filtrování URL adres",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"Statické filtrování",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} síťové požadavky {{type}} {{br}}jejichž URL adresa se shoduje s {{url}} {{br}}a pochází {{origin}},{{br}}{{importance}} shodný výjimkový filtr.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Blokovat",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Povolit",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"typu “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"jakéhokoliv typu",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"z “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"odkudkoliv",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"pokud neexistuje",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"i když existuje",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"Change log",
     "description":"English: Change log"

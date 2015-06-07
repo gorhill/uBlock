@@ -1294,7 +1294,10 @@ FilterParser.prototype.parseOptType = function(raw, not) {
 
 /******************************************************************************/
 
-FilterParser.prototype.parseOptParty = function(not) {
+FilterParser.prototype.parseOptParty = function(firstParty, not) {
+    if ( firstParty ) {
+        not = !not;
+    }
     if ( not ) {
         this.firstParty = true;
     } else {
@@ -1330,7 +1333,7 @@ FilterParser.prototype.parseOptions = function(s) {
             opt = opt.slice(1);
         }
         if ( opt === 'third-party' ) {
-            this.parseOptParty(not);
+            this.parseOptParty(false, not);
             continue;
         }
         if ( opt === 'elemhide' ) {
@@ -1356,6 +1359,10 @@ FilterParser.prototype.parseOptions = function(s) {
         }
         if ( opt === 'important' ) {
             this.important = Important;
+            continue;
+        }
+        if ( opt === 'first-party' ) {
+            this.parseOptParty(true, not);
             continue;
         }
         this.unsupported = true;

@@ -127,6 +127,10 @@ vAPI.browserSettings = {
             return;
         }
         var value = this.originalValues[key];
+        // https://github.com/gorhill/uBlock/issues/292#issuecomment-109621979
+        // Forget the value immediately, it may change outside of
+        // uBlock control.
+        delete this.originalValues[key];
         // Original value was a default one
         if ( value === undefined ) {
             try {

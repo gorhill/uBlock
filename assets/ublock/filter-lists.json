@@ -123,7 +123,6 @@
         "homeURL": ""
         },
     "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": {
-        "off": true,
         "title": "Malware filter list by Disconnect",
         "group": "malware",
         "homeURL": ""

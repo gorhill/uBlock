@@ -32,9 +32,29 @@
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
+var µb = µBlock;
 
+/******************************************************************************/
+
+var getDomainNames = function(targets) {
+    var out = [];
+    var µburi = µb.URI;
+    var target, domain;
+    for ( var i = 0; i < targets.length; i++ ) {
+        target = targets[i];
+        if ( target.indexOf('/') !== -1 ) {
+            domain = µburi.domainFromURI(target) || '';
+        } else {
+            domain = µburi.domainFromHostname(target) || target;
+        }
+        out.push(domain);
+    }
+    return out;
+};
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getAssetContent':
@@ -71,12 +91,20 @@ var onMessage = function(request, sender, callback) {
         }
         break;
 
+    case 'createUserFilter':
+        µb.appendUserFilters(request.filters);
+        break;
+
     case 'forceUpdateAssets':
         µb.assetUpdater.force();
         break;
 
     case 'getAppData':
         response = {name: vAPI.app.name, version: vAPI.app.version};
+        break;
+
+    case 'getDomainNames':
+        response = getDomainNames(request.targets);
         break;
 
     case 'getUserSettings':
@@ -600,10 +628,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'createUserFilter':
-        µb.appendUserFilters(request.filters);
-        break;
-
     case 'elementPickerEprom':
         µb.epickerEprom = request;
         break;
