@@ -76,11 +76,11 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Toggle the blocking of all popups for this site",
+    "message":"Vklop\/Izklop blokiranja vseh pojavnih oken za to stran",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
-    "message":"Toggle strict blocking for this site",
+    "message":"Vklop\/Izklop strogega blokiranja za to stran",
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
@@ -96,7 +96,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"3rd-party",
+    "message":"tretjo-osebne",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -108,11 +108,11 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"tretje-osebne skripte",
+    "message":"tretjo-osebne skripte",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"tretje-osebni okvirji",
+    "message":"tretjo-osebni okvirji",
     "description":""
   },
   "popupHitDomainCountPrompt":{
@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Disable hyperlink auditing\/beacon",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -196,7 +196,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message":"Omrežni \"{{netFilterCount}}\" in kozmetični filtri \"{{cosmeticFilterCount}}\" od:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -414,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Dynamic URL filtering",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Static filtering",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Block",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Allow",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"type “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"any type",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"from “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"from anywhere",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"except when",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"even if",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Change log",

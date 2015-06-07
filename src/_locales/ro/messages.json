@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Dezactivează auditarea legăturilor",
+    "message":"Dezactivează auditarea\/semnalizatorul legăturilor",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -414,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Filtrare dinamică a URL-urilor",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtrare statică",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} cererile de rețea de {{type}} {{br}}când adresa URL corespunde cu {{url}} {{br}}și care își au originea {{origin}},{{br}}{{importance}} există un filtru corespondent de excepție.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Blochează",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Permite",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tip “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"orice tip",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"de la “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"de oriunde",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"exceptând când",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"chiar dacă",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Jurnalul de modificări",

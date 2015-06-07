@@ -2,7 +2,7 @@ Skutecznie blokuje reklamy, używa mało pamięci RAM i zasobów procesora, a pr
 
 Ilustrowane porównanie z dodatkiem Adblock Plus: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Sposób użycia: wyświetlany w małym wyskakującym oknie przycisk służy do włączenia/wyłączenia rozszerzenia na bieżącej witrynie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
+Sposób użycia: Duży przycisk zasilania w popupie służy do trwałego włączenia/wyłączenia uBlocka na bieżącej stronie internetowej. Działanie przycisku ma zastosowanie tylko na bieżącej witrynie – nie działa globalnie.
 
 ***
 
@@ -13,13 +13,13 @@ Po zainstalowaniu są  wczytywane i stosowane następujące listy filtrów:
 - EasyList
 - Lista serwerów reklam Petera Lowe'a
 - EasyPrivacy
-- Domeny ze złośliwym oprogramowaniem
+- Malware domen
 
 Można wybrać więcej list filtrów:
 
 - Rozszerzona lista śledzenia dla fanboyów
-- Plik hostów Dana Pollocka
-- Serwery reklam i śledzenia hpHosts
+- Plik hosts Dan Pollock
+- Lista serwerów śledzących i reklamowych hpHosts
 - MVPS HOSTS
 - Spam404
 - I wiele innych
@@ -30,20 +30,20 @@ Należy pamiętać, że wybranie niektórych dodatkowych list może prowadzić d
 
 ***
 
-Bez zaprogramowanej listy filtrów, to rozszerzenie jest bezwartościowe. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
+Bez ustawionej listy filtrów, to rozszerzenie jest bezużyteczne. Pomyśl zatem o osobach, które ciężko pracują, tworząc i utrzymując udostępniane za darmo używane przez ciebie listy filtrów.
 
 ***
 
-Darmowe rozszerzenie.
+Darmowy dodatek.
 Kod źródłowy udostępniany na otwartej licencji (GPLv3)
 Dla użytkowników przez użytkowników.
 
-Współtwórcy rozszerzenia: https://github.com/gorhill/uBlock/graphs/contributors
+Autorzy @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Autorzy tłumaczeń: https://crowdin.com/project/ublock/translators
 
 ***
 
-Oceniając rozszerzenie pamiętaj, że jest to jego wczesna wersja.
+Jest to dość wczesna wersja, pamiętaj o tym podczas oceniania.
 
 Dziennik zmian:
 https://github.com/gorhill/uBlock/releases

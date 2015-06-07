@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing",
+    "message":"Inhabilita l'auditoria de l'enllaç",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -414,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Filtre dinàmic d'URL",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtre estàtic",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} peticions de la xarxa {{type}} {{br}}amb l'URL coincidint {{url}} {{br}}originada des de {{origin}},{{br}}{{importance}} si és una concordança d'un filtre d'excepció.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Bloca",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Permet",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tipus “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"de qualsevol tipus",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"des de “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"des de qualsevol web",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"excepte",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"fins i tot",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Registre de canvis",

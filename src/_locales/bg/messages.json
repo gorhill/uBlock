@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Изключване на проверката за препратки",
+    "message":"Изключване на проверката за препратки\/предупреждения",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -414,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Динамично филтриране на адреси",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Статично филтриране",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} на мрежовите заявки за {{type}} на URL адреси, съвпадащи с {{br}}{{url}}{{br}},и които произлизат от {{origin}},{{br}}{{importance}} има съвпадения с филтрирани изключения.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Блокиране",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Разрешаване",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"тип \"{{type}}\"",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"всеки тип",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"from “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"навсякъде",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"с изключение, когато",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"дори ако",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Списък с промени",
