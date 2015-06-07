@@ -383,9 +383,25 @@ var getTabForBrowser = function(browser) {
         return null;
     }
     var win = browser.ownerGlobal;
-    return vAPI.fennec && win.BrowserApp && win.BrowserApp.getTabForBrowser(browser) || 
-           win.gBrowser && (win.gBrowser.getTabForBrowser && win.gBrowser.getTabForBrowser(browser) || 
-                            win.gBrowser._getTabForBrowser && win.gBrowser._getTabForBrowser(browser));
+    if (vAPI.fennec) {
+        return win.BrowserApp && win.BrowserApp.getTabForBrowser(browser);
+    } else {
+        var gBrowser = win.gBrowser;
+        if (gBrowser) {
+            if (typeof gBrowser.getTabForBrowser === 'function') {
+                return gBrowser.getTabForBrowser(browser);
+            } else if (gBrowser.browsers && gBrowser.tabs) {
+                // Fallback to manual searching if the browser doesn't support getTabForBrowser
+                for (var i = 0; i < gBrowser.browsers.length; i++) {
+                    if (gBrowser.browsers[i] === browser) {
+                        return gBrowser.tabs[i];
+                    }
+                }
+            }
+        }
+    }
+
+    return null;
 };
 
 
@@ -477,7 +493,7 @@ vAPI.tabs.getTabId = function(target) {
         return vAPI.noTabId;
     }
 
-    var tab;
+    var tab = null;
     var browser;
 
     if ( vAPI.fennec ) {
@@ -505,13 +521,7 @@ vAPI.tabs.getTabId = function(target) {
         tabId = '' + this.stackId++;
         this.stack.set(browser, tabId);
 
-        if (!tab) {
-            tab = getTabForBrowser(browser);
-        }
-
-        if (tab) {
-            this.tabLookup.set(tabId, tab);
-        }
+        this.tabLookup.set(tabId, tab || browser); // If the tab is not know, record the browser instead and find the tab later
     }
     return tabId;
 };
@@ -519,7 +529,24 @@ vAPI.tabs.getTabId = function(target) {
 /******************************************************************************/
 
 vAPI.tabs.tabFromTabId = function(tabId) {
-    return this.tabLookup.get(tabId);
+    var target = this.tabLookup.get(tabId);
+
+    if (!target) {
+        return null;
+    }
+
+    // Check if this is actually a tab
+    if (vAPI.fennec && target.browser ||
+        target.linkedPanel) {
+        return target;
+    }
+    // This isn't a tab. No tab for this browser is yet known.
+    var tab = getTabForBrowser(target);
+    if (tab) {
+        // Found the tab now, so record it
+        this.tabLookup.set(tabId, tab);
+    }
+    return tab;
 };
 
 /******************************************************************************/
