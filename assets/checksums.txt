@@ -45,7 +45,7 @@ faf479000090920441f1f01a664e0aca assets/thirdparties/www.fanboy.co.nz/fanboy-vie
 5de29853cdd54c919c283c9fdb0f3998 assets/thirdparties/www.fanboy.co.nz/fanboy-swedish.txt
 042419405031f0fcfac3735bf4f05e21 assets/thirdparties/www.malwaredomainlist.com/hostslist/README.md
 ceb0394086d4e23b440cf3e186eea60c assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt
-c95fd7804f199ddc7aa5cd56a61a32ec assets/thirdparties/gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt
+500689ec450cebc7e2c332bedcf9be83 assets/thirdparties/notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt
 72ae2048c0201c940978d27cda361891 assets/thirdparties/stanev.org/abp/adblock_bg.txt
 9854bb8d1fc48832efc96fea754cbedc assets/thirdparties/hosts-file.net/ad-servers
 5663bfec7aea394ba4e1533950cb69b8 assets/thirdparties/pgl.yoyo.org/as/serverlist

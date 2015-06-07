@@ -85,7 +85,7 @@
         "group": "regions",
         "homeURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt"
         },
-    "gitorious.org/adblock-latvian/adblock-latvian/raw/master_lists/latvian-list.txt": {
+    "notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": {
         "off": true,
         "title": "LVA: Latvian List",
         "group": "regions",

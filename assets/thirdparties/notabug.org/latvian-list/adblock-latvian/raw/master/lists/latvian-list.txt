@@ -1,10 +1,10 @@
 [Adblock Plus 1.2]
-! Checksum: gs9iImLDGe/hQ4ATJgrdDg
+! Checksum: 5Ct5rxAeOhSK30HvcikkTA
 ! Title: Latvian List
-! Last modified: 2015-03-04 10:16 UTC
-! Expires: 2 days (update frequency)
-! Redirect: https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt
 ! Homepage: http://latvian-list.site11.com/
+! Expires: 2 days
+! Version: 201505201403
+! Last modified: 2015-05-20 14:03 UTC
 ! Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
 !
 ! Lūdzu paziņojiet par nebloķētām reklāmām vai problēmām
@@ -62,6 +62,7 @@
 ||kasjauns.lv/objs/shops/
 ||kurpirkt.lv/ba/
 ||leta.lv/img/*/info_banneris_
+||leta.lv^*/preview_banner
 ||lu.lv/uploads/tx_macinabanners/
 ||lv.lv/bildes/reklaama.png
 ||manstv.lv/js/bannerhandlerv2.js
@@ -184,10 +185,6 @@
 ! ------------------ 3rd party whitelists ------------------
 !
 @@||emediate.se/eas?*ty=video$object-subrequest,domain=apollo.lv
-@@||fwmrm.net/ad/l/1?rnd=$object-subrequest,domain=tvplay.lv
-@@||fwmrm.net/p/MTG_Live/Video2AdRenderer.swf$object-subrequest,domain=tvplay.lv
-@@||v.fwmrm.net/ad/p/1?$object-subrequest,domain=tvplay.lv
-@@||v.fwmrm.net/|$object-subrequest,domain=tvplay.lv
 @@||viastream.viasat.tv^*?affiliate=
 !
 ! ------------- Generic element hiding filters -------------
@@ -201,6 +198,7 @@
 1s.lv##.reklama2
 apollo.tvnet.lv###e-shop-banner-block
 apollo.tvnet.lv##.banner-block
+apollo.tvnet.lv##.banner-block-new
 apollo.tvnet.lv##.banner-block-small
 apollo.tvnet.lv##.custom-ad-widget
 apollo.tvnet.lv##.e-shop-banner-block
@@ -272,6 +270,7 @@ kurpirkt.lv###leja_scroll
 kurpirkt.lv##.campaignblock1
 kurpirkt.lv##.campaignblock2
 kurpirkt.lv##.producttd[style="border:solid 1px #448c26;background:#fafafa;"]
+la.lv##.side-banner
 lattelecom.lv##[id^="fixme_"]
 mac.tunt.lv##div[style="border-top: 1px solid #eaeaea; width: 90%;"] + center
 mac.tunt.lv##div[style="padding-left: 10px;"] + br + table[width="100%"]
@@ -303,12 +302,14 @@ salidzini.lv##div[style^="padding: 4px; margin: 4px; border: 2px solid red; back
 salidzini.lv##td[style="background-color: #FFDAB5; border: 1px solid #FF8040;"]
 salidzini.lv##td[style="background-color: #FFDCB9; border: 1px solid #FF8040; background-color: #FFFAD9; border: 1px solid #DFC400;"]
 salidzini.lv##td[style="background-color: #FFF4EA; border: 1px solid #FFC6AA;"]
+salidzini.lv##td[style="background-color: #fff7ee; border: 1px solid #ffd5bf;"]
 salidzini.lv##td[style="border: 1px solid #D4D4D4;"]
 salidzini.lv##td[style="padding: 0px 2px;"]
 salidzini.lv##td[style="width: 340px; background-color: #FFFFFF; border: 1px solid #CCCCCC;"]
 salidzini.lv##td[width="165"][valign="top"][height="100%"][align="center"][style="padding: 2px 1px;"]
 sexparty.lv##td[width="230"]
 simpsoni.lv###head_banner
+skats.lv##.articlebanner
 spoki.lv###labakie
 spoki.lv###mod_eshops_b
 spoki.lv###okarte-banner
@@ -330,7 +331,9 @@ tvnet.lv###shops_offer
 tvnet.lv##.autoplius-ad
 tvnet.lv##.banner_container
 tvnet.lv##.c24-box
+tvnet.lv##.comment-baner-outer
 tvnet.lv##.customers
+tvnet.lv##.divTable_la
 tvnet.lv##.fp_horiz_ads_150x150
 tvnet.lv##.list.customer
 tvnet.lv##.right_custom_ad_2_pics
