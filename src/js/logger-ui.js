@@ -933,11 +933,12 @@ var filteringDialog = (function() {
 
     var fillOriginSelect = function(select, hostname, domain) {
         var option, pos;
+        var template = vAPI.i18n('loggerStaticFilteringSentencePartOrigin');
         var value = hostname;
         for (;;) {
             option = document.createElement('option');
             option.setAttribute('value', value);
-            option.textContent = value;
+            option.textContent = template.replace('{{origin}}', value);
             select.appendChild(option);
             if ( value === domain ) {
                 break;
