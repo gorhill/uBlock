@@ -121,59 +121,56 @@
         "off": true,
         "title": "ESP: Filtros Nauscopicos",
         "group": "regions",
-        "homeURL": "",
         "oldLocation": "abp.mozilla-hispano.org/nauscopio/filtros.txt"
         },
     "http://adblock.ee/list.php": {
         "off": true,
         "title": "EST: Eesti saitidele kohandatud filter",
         "group": "regions",
-        "homeURL": "",
         "supportURL": "http://adblock.ee/"
         },
     "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": {
         "off": true,
         "title": "Malvertising filter list by Disconnect",
-        "group": "malware",
-        "homeURL": ""
+        "group": "malware"
         },
     "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": {
         "title": "Malware filter list by Disconnect",
-        "group": "malware",
-        "homeURL": ""
+        "group": "malware"
         },
     "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": {
         "off": true,
         "title": "Basic tracking list by Disconnect",
-        "group": "privacy",
-        "homeURL": ""
+        "group": "privacy"
         },
     "http://www.certyficate.it/adblock/adblock.txt": {
         "off": true,
         "title": "POL: Adblock polskie reguly",
         "group": "regions",
-        "homeURL": "",
         "oldLocation": "raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt"
         },
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": {
         "off": true,
         "title": "Adblock Warning Removal List",
         "group": "ads",
-        "homeURL": "",
         "supportURL": "https://forums.lanik.us/"
         },
     "https://iadb.azurewebsites.net/Finland_adb.txt": {
         "off": true,
         "title": "FIN: Finnish Addition to Easylist",
         "group": "regions",
-        "homeURL": "",
         "oldLocation": "raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt"
+        },
+    "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": {
+        "off": true,
+        "title": "KOR: adblock-korea-contrib",
+        "group": "regions",
+        "supportURL": "https://github.com/gfmaster/adblock-korea-contrib"
         },
     "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": {
         "off": true,
         "title": "IDN: ABPindo",
         "group": "regions",
-        "homeURL": "",
         "oldLocation": "indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt",
         "supportURL": "https://github.com/heradhis/indonesianadblockrules"
         },
@@ -181,7 +178,6 @@
         "off": true,
         "title": "JPN: ABP Japanese filters (日本用フィルタ)",
         "group": "regions",
-        "homeURL": "",
         "oldLocation": "raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abp_jp.txt",
         "supportURL": "https://github.com/k2jp/abp-japanese-filters"
         },
@@ -189,7 +185,6 @@
         "off": true,
         "title": "EU: Prebake - Filter Obtrusive Cookie Notices",
         "group": "regions",
-        "homeURL": "",
         "supportURL": "https://github.com/liamja/Prebake"
         },
     "liste-ar-adblock.googlecode.com/hg/Liste_AR.txt": {
@@ -344,7 +339,6 @@
     "www.zoso.ro/pages/rolist.txt": {
         "off": true,
         "title": "ROU: RO-LIST (modified)",
-        "group": "regions",
-        "homeURL": ""
+        "group": "regions"
         }
 }
