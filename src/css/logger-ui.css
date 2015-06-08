@@ -389,9 +389,14 @@ body[dir="rtl"] #popupContainer > div {
 #urlFilteringMenu .dialog > div.headers > span.tools {
     display: inline-block;
     position: absolute;
-    right: 0;
     top: 50%;
     transform: translate(0, -50%);
+    }
+body[dir="ltr"] #urlFilteringMenu .dialog > div.headers > span.tools {
+    right: 0;
+    }
+body[dir="rtl"] #urlFilteringMenu .dialog > div.headers > span.tools {
+    left: 0;
     }
 #urlFilteringMenu .dialog > div.headers > span.tools > span {
     cursor: pointer;
@@ -528,6 +533,7 @@ body.colorBlind  #urlFilteringMenu .dialog > div.containers > div.dynamic tr.ent
     }
 #urlFilteringMenu .dialog > div.containers > div.static textarea {
     box-sizing: border-box;
+    direction: ltr;
     height: 6em;
     resize: none;
     width: 100%;
