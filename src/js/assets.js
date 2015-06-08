@@ -54,7 +54,7 @@ var oneDay = 24 * oneHour;
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() {};
-var reIsExternalPath = /^[a-z]+:\/\//;
+var reIsExternalPath = /^(file|ftps?|https?):\/\//;
 var reIsUserPath = /^assets\/user\//;
 var reIsCachePath = /^cache:\/\//;
 var lastRepoMetaTimestamp = 0;
