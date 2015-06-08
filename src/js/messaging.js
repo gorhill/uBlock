@@ -32,9 +32,29 @@
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
-    var µb = µBlock;
+var µb = µBlock;
 
+/******************************************************************************/
+
+var getDomainNames = function(targets) {
+    var out = [];
+    var µburi = µb.URI;
+    var target, domain;
+    for ( var i = 0; i < targets.length; i++ ) {
+        target = targets[i];
+        if ( target.indexOf('/') !== -1 ) {
+            domain = µburi.domainFromURI(target) || '';
+        } else {
+            domain = µburi.domainFromHostname(target) || target;
+        }
+        out.push(domain);
+    }
+    return out;
+};
+
+/******************************************************************************/
+
+var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getAssetContent':
@@ -71,12 +91,20 @@ var onMessage = function(request, sender, callback) {
         }
         break;
 
+    case 'createUserFilter':
+        µb.appendUserFilters(request.filters);
+        break;
+
     case 'forceUpdateAssets':
         µb.assetUpdater.force();
         break;
 
     case 'getAppData':
         response = {name: vAPI.app.name, version: vAPI.app.version};
+        break;
+
+    case 'getDomainNames':
+        response = getDomainNames(request.targets);
         break;
 
     case 'getUserSettings':
@@ -601,10 +629,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'createUserFilter':
-        µb.appendUserFilters(request.filters);
-        break;
-
     case 'elementPickerEprom':
         µb.epickerEprom = request;
         break;
@@ -639,15 +663,18 @@ var µb = µBlock;
 
 var prepEntries = function(entries) {
     var µburi = µb.URI;
-    var entry;
+    var entry, hn;
     for ( var k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) {
             continue;
         }
         entry = entries[k];
-        if ( typeof entry.homeURL === 'string' ) {
-            entry.homeHostname = µburi.hostnameFromURI(entry.homeURL);
-            entry.homeDomain = µburi.domainFromHostname(entry.homeHostname);
+        if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
+            entry.supportName = µburi.hostnameFromURI(entry.supportURL);
+        } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {
+            hn = µburi.hostnameFromURI(entry.homeURL);
+            entry.supportURL = 'http://' + hn + '/';
+            entry.supportName = µburi.domainFromHostname(hn);
         }
     }
 };

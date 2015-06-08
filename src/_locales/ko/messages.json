@@ -171,6 +171,14 @@
     "message":"고급 사용자 모드 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>필수로 읽어보세요.<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"프리-페칭 비활성화 (차단된 네트워크 요청에 대해 모든 접속요청 방지)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"하이퍼링크 검사\/비콘 비활성화",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"실험 기능 활성화 (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>자세히<\/a>)",
     "description":"English: Enable experimental features"
@@ -406,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"동적 URL 필터링",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"고정 필터링",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"네트워크 요청이 {{type}} 일 경우,{{br}}URL 주소가 {{url}} 와 일치하고{{br}}{{origin}} 에서 비롯 되었을 경우 {{action}} 한다.{{br}}그리고 다음 예외 필터와 일치할 경우 {{importance}} 한다.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"차단",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"허용",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"\"{{type}}\" 종류",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"모든 종류",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"\"{{origin}}\"",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"전체",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"예외 처리",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"비 예외 처리",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"변경사항",

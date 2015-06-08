@@ -50,7 +50,6 @@ a {
 #version {
     font-size: 10px;
     font-weight: normal;
-    margin-left: 1em;
     }
 body[dir="ltr"] #panes {
     direction: rtl;
@@ -104,7 +103,7 @@ body.portrait[dir="ltr"] #panes > div:nth-of-type(2) {
     display: none;
     }
 #panes > div:nth-of-type(1) {
-    min-width: 150px;
+    min-width: 160px;
     padding: 0;
     }
 p {

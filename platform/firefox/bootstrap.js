@@ -27,7 +27,7 @@
 /******************************************************************************/
 
 // Accessing the context of the background page:
-// var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock]').contentWindow;
+// var win = Services.appShell.hiddenDOMWindow.document.querySelector('iframe[src*=ublock0]').contentWindow;
 
 let bgProcess;
 let version;
@@ -68,6 +68,13 @@ function startup(data, reason) {
         if ( hiddenDoc.readyState === 'loading' ) {
             hiddenDoc.addEventListener('DOMContentLoaded', onReady);
             return;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/262
+        // To remove whatever suffix AMO adds to the version number.
+        var matches = version.match(/(?:\d+\.)+\d+/);
+        if ( matches !== null ) {
+            version = matches[0];
         }
 
         bgProcess = hiddenDoc.documentElement.appendChild(

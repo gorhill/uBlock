@@ -107,11 +107,14 @@ var uBlockCollapser = (function() {
     var newRequests = [];
     var pendingRequests = {};
     var pendingRequestCount = 0;
-    var srcProps = {
+    var src1stProps = {
         'embed': 'src',
         'iframe': 'src',
         'img': 'src',
         'object': 'data'
+    };
+    var src2ndProps = {
+        'img': 'srcset'
     };
 
     var PendingRequest = function(target, tagName, attr) {
@@ -215,15 +218,22 @@ var uBlockCollapser = (function() {
 
     var add = function(target) {
         var tagName = target.localName;
-        var prop = srcProps[tagName];
+        var prop = src1stProps[tagName];
         if ( prop === undefined ) {
             return;
         }
         // https://github.com/chrisaljoudi/uBlock/issues/174
         // Do not remove fragment from src URL
         var src = target[prop];
-        if ( typeof src !== 'string' || src === '' ) {
-            return;
+        if ( typeof src !== 'string' || src.length === 0 ) {
+            prop = src2ndProps[tagName];
+            if ( prop === undefined ) {
+                return;
+            }
+            src = target[prop];
+            if ( typeof src !== 'string' || src.length === 0 ) {
+                return;
+            }
         }
         if ( src.lastIndexOf('http', 0) !== 0 ) {
             return;

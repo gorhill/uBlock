@@ -171,6 +171,14 @@
     "message":"Es esmu pieredzējis lietotājs (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Vēlams izlasīt<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Atslēgt pirmsielādi (lai novērstu bloķētus tīkla pieprasījumus)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Atslēgt tīmekļa saišu izsekošanu",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Iespējot eksperimentālas iespējas (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sīkāk šeit<\/a>)",
     "description":"English: Enable experimental features"
@@ -406,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Dinamiskā URL filtrēšana",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Statiskā filtrēšana",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} tīkla pieprasījumiem {{type}} {{br}}kuru URL adrese satur {{url}} {{br}}un kas nāk no {{origin}},{{br}}{{importance}} ir atbilstošs izņēmumu filtrs.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Bloķēt",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Atļaut",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tips “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"jebkurš tips",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"no “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"no jebkuras vietas",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"izņemot gadījumus, kad",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"pat ja",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Izmaiņu žurnāls",

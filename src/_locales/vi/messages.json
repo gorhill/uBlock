@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Nhật ký yêu cầu mạng",
+    "message":"uBlock₀ — Nhật ký các yêu cầu",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Đi đến nhật kí yêu cầu",
+    "message":"Mở nhật kí yêu cầu",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -124,11 +124,11 @@
     "description":"appears in popup"
   },
   "pickerCreate":{
-    "message":"Tạo",
+    "message":"Tạo bộ lọc",
     "description":"English: Create"
   },
   "pickerPick":{
-    "message":"Chọn",
+    "message":"Chọn phần tử",
     "description":"English: Pick"
   },
   "pickerQuit":{
@@ -169,6 +169,14 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Tôi là một người dùng có kinh nghiệm (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Yêu cầu đọc qua<\/a>)",
+    "description":"English: "
+  },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Vô hiệu tải trước (để chặn bất kỳ kết nối với những yêu cầu mạng đã chặn)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Vô hiệu giám sát siêu liên kết",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -336,7 +344,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"Danh sách quy tắc lọc động.",
+    "message":"Danh sách quy tắc lọc chủ động.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -396,16 +404,56 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Ngữ cảnh:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Loại:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Lọc URL chủ động",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Bộ lọc tĩnh",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} yêu cầu mạng của {{type}} {{br}}có địa chỉ URL phù hợp {{url}} {{br}}và từ nguồn {{origin}},{{br}}{{importance}} có một bộ lọc loại trừ phù hợp.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Chặn",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Cho phép",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"loại “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"mọi loại",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"từ “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"từ mọi nơi",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"loại trừ khi",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"loại trừ nếu",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Thay đổi",
@@ -488,7 +536,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Hiện nhật ký yêu cầu mạng",
+    "message":"Hiện nhật ký",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{

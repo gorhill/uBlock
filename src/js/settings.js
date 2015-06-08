@@ -192,6 +192,18 @@ var onUserSettingsReceived = function(details) {
             changeUserSettings('advancedUserEnabled', this.checked);
         });
 
+    uDom('#prefetching-disabled')
+        .prop('checked', details.prefetchingDisabled === true)
+        .on('change', function(){
+            changeUserSettings('prefetchingDisabled', this.checked);
+        });
+
+    uDom('#hyperlink-auditing-disabled')
+        .prop('checked', details.hyperlinkAuditingDisabled === true)
+        .on('change', function(){
+            changeUserSettings('hyperlinkAuditingDisabled', this.checked);
+        });
+
     uDom('#experimental-enabled')
         .prop('checked', details.experimentalEnabled === true)
         .on('change', function(){

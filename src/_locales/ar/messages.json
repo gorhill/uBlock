@@ -48,7 +48,7 @@
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
-    "message":"على الصفحه",
+    "message":"على هذه الصفحه",
     "description":"English: on this page"
   },
   "popupBlockedStats":{
@@ -56,7 +56,7 @@
     "description":"Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt":{
-    "message":"منذ بداية التنصيب",
+    "message":"منذ التنصيب",
     "description":"English: since install"
   },
   "popupOr":{
@@ -116,7 +116,7 @@
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"النطاقات متصلة",
+    "message":"النطاقات الملموسة",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -171,12 +171,20 @@
     "message":"إظهار الإعدادات المتقدمة (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>يجب القراءة<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"تعطيل الجلب المسبق على الشبكة (لمنع أي اتصال لطلبات الشبكة المحجوبة)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"تعطيل مراجعة الروابط التشعبية",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"تفعيل الخصائص التجريبية (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>حول<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
-    "message":"الذاكرة المستخدمة: {{value}} بايت",
+    "message":"المساحة المستخدمة: {{value}} بايت",
     "description":"English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt":{
@@ -184,7 +192,7 @@
     "description":"English: Last restore:"
   },
   "settingsLastBackupPrompt":{
-    "message":"آخر تخزين:",
+    "message":"آخر نسخ إحتياطي:",
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
@@ -336,7 +344,7 @@
     "description":"default file name to use"
   },
   "rulesHint":{
-    "message":"قائمة بقواعد الفلترة الديناميكية الخاصة بك.",
+    "message":"قائمة قواعد الفلترات الديناميكية الخاصة بك.",
     "description":"English: List of your dynamic filtering rules."
   },
   "rulesFormatHint":{
@@ -404,8 +412,48 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"تصفية ديناميكية للروابط",
+    "message":"فلترات الروابط الديناميكية",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"فلترة ثابتة",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} طلبات شبكة {{type}} {{br}}اللتي تحتوي عنوان الرابط {{url}} {{br}}من المصدر {{origin}},{{br}}{{importance}} هناك فلتر استثناء مطابق.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"حجب",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"سماح",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"نوع “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"أي نوع",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"من “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"في أي مكان",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"باستثناء إذا",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"حتى لو",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"سجل التغيير",
@@ -440,7 +488,7 @@
     "description":"English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm":{
-    "message":"كل إعداداتك سوف يتم كتابتها  بإستعمال البيانات التي تم نسخها إحتياطيا على {{time}}، و سيعيد ميكروبلوك التشغيل.\n\nأعد كتابة كل الإعدادات الموجود بإستخدام البيانات التي تم نسخها إحتياطيا؟",
+    "message":"كل إعداداتك سوف يتم كتابتها بإستعمال البيانات التي تم نسخها إحتياطيا على {{time}}، و سيعيد uBlock₀ التشغيل.\n\nأعد كتابة كل الإعدادات الموجود بإستخدام البيانات التي تم نسخها إحتياطيا؟",
     "description":"Message asking user to confirm restore"
   },
   "aboutRestoreDataError":{
@@ -456,7 +504,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"µBlock : أضف الرابط التالي لقائمة الفلترة الخاصة بك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
+    "message":"uBlock₀ : إضافة الرابط التالي للقوائم الفلترات الخاصة لك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -484,15 +532,15 @@
     "description":"English: {{value}} days ago"
   },
   "showDashboardButton":{
-    "message":"اعرض لوحة التحكم",
+    "message":"عرض لوحة التحكم",
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"اعرض سجل طلبات الإتصال بالشبكة",
+    "message":"عرض سجل الإتصال بالشبكة",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
-    "message":"مغلق",
+    "message":"تعطيل",
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
@@ -520,7 +568,7 @@
     "description":"English: Temporarily"
   },
   "docblockedDisablePermanent":{
-    "message":"دائم",
+    "message":"بشكل دائم",
     "description":"English: Permanently"
   },
   "dummy":{

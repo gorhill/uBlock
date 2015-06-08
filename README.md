@@ -3,6 +3,12 @@
 
 ***
 
+**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings). My answer to [someone pointing out](https://github.com/chrisaljoudi/uBlock/issues/1424#issuecomment-107742160) at all the slew of negative reviews in the Chrome store:
+
+> It's worth noting that there are a slew of negative reviews after this change
+
+I see this as a long term project. My decision will be proven right in the long run. People knee jerking without fully understanding what really went on is not a good reason for me to weaken good privacy habits. There will be a setting next version to re-enable it if you want, but prefetching will always be disabled by default, for all the reasons invoked. My track record is that of not compromising users' interests for the benefits of data miners etc., and disabling prefetching is consistent with this.
+
 **Couple of ongoing myths to dispel**:
 
 I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6), [example](https://np.reddit.com/r/leagueoflegends/comments/37e8ed/want_to_support_your_favorite_content_producers/)):
@@ -120,6 +126,7 @@ Being lean and efficient doesn't mean blocking less<br>
 - [Index](http://raymondhill.net/ublock/tests.html)
 - [Web page components](http://raymondhill.net/ublock/tiles1.html)
 - [Popups](http://raymondhill.net/ublock/popup.html)
+- [ABP Test Pages](https://testpages.adblockplus.org/)
 
 ## Installation
 

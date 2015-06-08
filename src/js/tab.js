@@ -201,6 +201,13 @@ housekeep itself.
                 break;
             }
         }
+        // https://github.com/gorhill/uBlock/issues/300
+        // If no committed entry was found, fall back on the bottom-most one
+        // as being the committed one by default.
+        if ( i === -1 && this.stack.length !== 0 ) {
+            this.stack[0].committed = true;
+            i = 0;
+        }
         i += 1;
         if ( i < this.stack.length ) {
             this.stack.length = i;
@@ -513,6 +520,7 @@ vAPI.tabs.onPopup = function(details) {
         result,
         'popup',
         targetURL,
+        openerHostname,
         openerHostname
     );
 

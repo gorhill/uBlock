@@ -32,7 +32,7 @@
     "description":"appears as tab name in dashboard"
   },
   "statsPageName":{
-    "message":"uBlock₀ — Registro de solicitações de rede",
+    "message":"uBlock₀ — Registro de pedidos de rede",
     "description":"Title for the network request log window"
   },
   "aboutPageName":{
@@ -44,7 +44,7 @@
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
-    "message":"solicitações bloqueadas",
+    "message":"pedidos bloqueados",
     "description":"English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt":{
@@ -72,7 +72,7 @@
     "description":"English: Enter element picker mode"
   },
   "popupTipLog":{
-    "message":"Ir para o registro de solicitações",
+    "message":"Ir para o registro de pedidos",
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
@@ -156,7 +156,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Mostrar o número de solicitações bloqueadas no ícone",
+    "message":"Mostrar o número de pedidos bloqueados no ícone",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -169,6 +169,14 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Eu sou um usuário avançado  (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Leitura necessária<\/a>)",
+    "description":"English: "
+  },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Desativar pré-chamadas (para evitar qualquer conexão de pedidos de rede bloqueados)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Desativar hyperlink auditing\/beacon",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -204,7 +212,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Limpar todos os caches",
+    "message":"Limpar todos caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -212,7 +220,7 @@
     "description":"English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo":{
-    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em solicitações de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
+    "message":"<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.<\/p>",
     "description":"English: see English messages.json"
   },
   "3pListsOfBlockedHostsHeader":{
@@ -248,7 +256,7 @@
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
-    "message":"Personalizada",
+    "message":"Lista personalizada",
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
@@ -384,7 +392,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Nos bastidores",
+    "message":"Por trás das cenas",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "logFilterPrompt":{
@@ -406,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Filtragem de URL dinâmica",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtragem estática",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} pedidos de rede de {{type}} {{br}}que corresponde ao endereço de URL {{url}} {{br}}e que tem origem de {{origin}},{{br}}{{importance}} existir um filtro de exceção correspondente.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Bloquear",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Permitir",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tipo “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"qualquer tipo",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"de “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"de qualquer lugar",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"exceto quando",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"mesmo se",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Registro de alterações",
@@ -456,7 +504,7 @@
     "description":"English: Network error: unable to connect to {{url}}"
   },
   "subscriberConfirm":{
-    "message":"uBlock₀: Adicionar a seguinte URL à sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message":"uBlock₀: Adicionar a seguinte URL na sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description":"English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo":{
@@ -496,7 +544,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ impediu a seguinte página de carregar:",
+    "message":"uBlock₀ impediu a seguinte página de ser carregada:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
@@ -512,7 +560,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Desativar bloqueio estrito para\n{{hostname}}",
+    "message":"Desativar bloqueio estrito para {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

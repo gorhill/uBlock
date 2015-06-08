@@ -171,6 +171,14 @@
     "message":"నేనొక నిపుణత కలిగిన వినియోగదారున్ని(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>అయితే ఇదే తప్పనిసరిగా చదవాలి<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"అంశాలను ముందుగానే తీసుకురావడాన్ని నిషేధించు (ఎవైనా అవాంఛనీయ అనుసంధానాలను నివారించడానికి)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"చిరునామాల తానిఖిని నిషేధించు",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"ప్రయోగాత్మక సామర్థ్యాల వాడుకను అనుమతించుము(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>మరిన్ని వివరాలు<\/a>)",
     "description":"English: Enable experimental features"
@@ -396,16 +404,56 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"సందర్భం:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"రకం:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"క్రియాశీలక URL వడపోత",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"నిష్క్రియాత్మక వడపోత",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{origin}} నుండి మొదలయ్యి, {{br}}{{url}} తో సరిపోలిన url గల {{br}}{{type}} నెట్వర్క్ అభ్యర్ధనలను {{action}}, {{br}}అదీ  వడపోతల జాబితాలో {{importance}}.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"తిరస్కరించు",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"అనుమతించు",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"“{{type}}” రకమైన",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"ఏటువంటిదైనా",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"“{{origin}}” నుండి",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"ఎక్కడినుండైనా",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"మినహాయింపు వుంటే",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"మినహాయింపు వున్నా",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"మార్పుల సంచిక",

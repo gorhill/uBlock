@@ -32,6 +32,15 @@
 # To counter `liverail.com` in Peter Lowe's, MVPS, and hpHosts
 @@||cdn-static.liverail.com^$object-subrequest
 
+# https://github.com/chrisaljoudi/uBlock/issues/580
+# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
+@@||cdn-static.liverail.com$domain=9to5mac.com
+
+# https://github.com/gorhill/uBlock/issues/294
+# To counter `liverail.com` in hpHosts, Peter Lowe
+# To counter `vox-static.liverail.com` in Dan Pollock, hpHosts, MVPS
+@@||vox-static.liverail.com/swf/$object-subrequest,domain=cdnapi.kaltura.com
+
 # cnet.com needs this for video players
 # https://github.com/chrisaljoudi/uBlock/issues/227
 # To counter `2mdn.net` in Peter Lowe's
@@ -119,10 +128,6 @@ ovh.strim.io#@##tweets
 # To counter `top.mail.ru` in Peter Lowe's
 @@||top.mail.ru^$~third-party
 
-# https://github.com/chrisaljoudi/uBlock/issues/580
-# To counter `liverail.com` in Dan Pollock's, hpHosts, MVPS, Peter Lowe's
-@@||cdn-static.liverail.com$domain=9to5mac.com
-
 # https://github.com/chrisaljoudi/uBlock/issues/602
 # To counter `/ads.css` in EasyList
 @@||css.washingtonpost.com/*/ads.css$stylesheet,~third-party
@@ -196,7 +201,6 @@ ovh.strim.io#@##tweets
 # http://www.reddit.com/r/ublock/comments/32k908/cnncom_videos_wont_load_w_%C2%B5block_enabled/
 @@||i.cdn.turner.com/xslo/cvp/ads/freewheel/bundles/2/*$domain=cnn.com
 
-# Ebay UK sabotaging itself. From Chrome store:
-# "UK's eBay site won't load if uBlock is ON"
-# It loads, but the body element has the `pushdown-ad` class name.
-ebay.co.uk#@#.pushdown-ad
+# https://github.com/chrisaljoudi/uBlock/issues/1421
+# To counter hpHost, MVPS, Peter Lowe: `woopra.com`
+@@||woopra.com^$~third-party

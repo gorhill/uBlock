@@ -171,6 +171,14 @@
     "message":"Sono un utente avanzato (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lettura obbligatoria<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Disattiva pre-fetching (per evitare qualsiasi connessione per le richieste di rete bloccate)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Disabilita la revisione degli hyperlink",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Attiva funzionalità sperimentali (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Informazioni<\/a>)",
     "description":"English: Enable experimental features"
@@ -406,6 +414,46 @@
   "loggerURLFilteringHeader":{
     "message":"Filtraggio dinamico dell'URL",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtraggio statico",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} la richiesta di rete di {{type}} {{br}}che indirizzo URL corrisponde {{url}} {{br}}e che ha origine {{origin}},{{br}}{{importance}} c'è una corrispondenza nel filtro delle eccezioni.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Blocca",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Permetti",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tipo “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"qualsiasi tipo",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"da “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"da ovunque",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"tranne quando",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"anche se",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Change log",

@@ -120,17 +120,26 @@
         }
 
         var result = JSON.parse(JSON.stringify(µb.remoteBlacklists));
-        var builtinPath;
-        var defaultState;
+        var entry, builtinPath, defaultState;
 
         for ( var path in result ) {
             if ( result.hasOwnProperty(path) === false ) {
                 continue;
             }
+            entry = result[path];
+            // https://github.com/gorhill/uBlock/issues/277
+            // uBlock's filter lists are always enabled by default, so we
+            // have to include in backup only those which are turned off.
+            if ( path.lastIndexOf('assets/ublock/', 0) === 0 ) {
+                if ( entry.off !== true ) {
+                    delete result[path];
+                }
+                continue;
+            }
             builtinPath = path.replace(/^assets\/thirdparties\//, '');
             defaultState = builtin.hasOwnProperty(builtinPath) === false ||
                            builtin[builtinPath].off === true;
-            if ( result[path].off === true && result[path].off === defaultState ) {
+            if ( entry.off === true && entry.off === defaultState ) {
                 delete result[path];
             }
         }
@@ -434,19 +443,23 @@
     var µb = this;
 
     var onRawListLoaded = function(details) {
-        if ( details.content !== '' ) {
-            var listMeta = µb.remoteBlacklists[path];
-            if ( listMeta && listMeta.title === '' ) {
-                var matches = details.content.slice(0, 1024).match(/(?:^|\n)!\s*Title:([^\n]+)/i);
-                if ( matches !== null ) {
-                    listMeta.title = matches[1].trim();
-                }
-            }
-
-            //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
-            details.content = µb.compileFilters(details.content);
-            µb.assets.put(compiledPath, details.content);
+        if ( details.content === '' ) {
+            callback(details);
+            return;
         }
+        var listMeta = µb.remoteBlacklists[path];
+        // https://github.com/gorhill/uBlock/issues/313
+        // Always try to fetch the name if this is an external filter list.
+        if ( listMeta && listMeta.title === '' || /^https?:/.test(path) ) {
+            var matches = details.content.slice(0, 1024).match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+            if ( matches !== null ) {
+                listMeta.title = matches[1].trim();
+            }
+        }
+
+        //console.debug('µBlock.getCompiledFilterList/onRawListLoaded: compiling "%s"', path);
+        details.content = µb.compileFilters(details.content);
+        µb.assets.put(compiledPath, details.content);
         callback(details);
     };
 

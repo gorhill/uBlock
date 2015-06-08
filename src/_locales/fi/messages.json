@@ -84,7 +84,7 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Aktivoi kosmeettinen suodatus tälle sivulle",
+    "message":"Aktivoi ehostettu suodatus tälle sivulle",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -169,6 +169,14 @@
   },
   "settingsAdvancedUserPrompt":{
     "message":"Olen edistynyt käyttäjä (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lue tämä<\/a>)",
+    "description":"English: "
+  },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Poista käytöstä esihaku (estää yhteydet estettyihin verkkopyyntöihin)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Poista käytöstä hyperlinkkien tarkistus",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -407,6 +415,46 @@
     "message":"Dynaaminen URL-suodatus",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"Staattinen suodatus",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Estä",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Salli",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"tyyppi {{type}}",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"kaikki tyypit",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"{{origin}} -sta",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"kaikkialta",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"paitsi jos",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"vaikka",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"Muutosloki",
     "description":"English: Change log"
@@ -512,7 +560,7 @@
     "description":"English: Close this window"
   },
   "docblockedProceed":{
-    "message":"Poista tiukka estäminen",
+    "message":"Poista tiukka estäminen {{hostname}}",
     "description":"English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary":{

@@ -286,6 +286,7 @@ body[dir="rtl"] #popupContainer > div {
     top: 0;
     z-index: 400;
     }
+
 #urlFilteringMenu .dialog {
     background-color: white;
     border: 2px solid white;
@@ -296,24 +297,23 @@ body[dir="rtl"] #popupContainer > div {
     transform-style: preserve-3d;
     width: 80%;
     }
-#urlFilteringMenu .dialog table {
-    border: 0;
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-    }
-#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(1) {
-    width: 3.8em;
-    }
-#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(2) {
+
+#urlFilteringMenu .dialog p {
+    line-height: 2em;
     }
 
-#urlFilteringMenu .dialog td {
-    border: 0;
-    padding: 0;
-    vertical-align: middle;
-    }
-#urlFilteringMenu .dialog > table.toolbar td.preview {
+#urlFilteringMenu .dialog select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    max-width: 75%;
+    outline: none;
+    padding: 0.2em;
+}
+
+#urlFilteringMenu .dialog > div.preview {
     /* http://lea.verou.me/css3patterns/ */
     background-color: #aaa;
     background-image:
@@ -337,20 +337,83 @@ body[dir="rtl"] #popupContainer > div {
     background-size: 18px 18px;
     text-align: center;
     }
-#urlFilteringMenu .dialog > table.toolbar td.preview > * {
+#urlFilteringMenu .dialog > div.preview > * {
     max-width: 100%;
     max-height: 40vh;
     }
-#urlFilteringMenu .dialog > table.toolbar select {
-    font: 14px;
-    height: 2em;
+
+#urlFilteringMenu .dialog table {
+    border: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
     }
-#urlFilteringMenu .dialog > table.toolbar .fa {
+#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(1) {
+    width: 3.8em;
+    }
+#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(2) {
+    }
+
+#urlFilteringMenu .dialog td {
+    border: 0;
+    padding: 0;
+    vertical-align: middle;
+    }
+#urlFilteringMenu .dialog > div.headers {
+    border-bottom: 1px solid #888;
+    position: relative;
+    }
+#urlFilteringMenu .dialog > div.headers > span.header {
+    background-color: #eee;
+    border: 1px solid #aaa;
+    border-bottom: 1px solid #888;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    color: #888;
+    cursor: pointer;
+    display: inline-block;
+    font-size: small;
+    line-height: 2em;
+    margin-left: 0.5em;
+    padding: 0 1em;
+    position: relative;
+    text-align: center;
+    top: 1px;
+    }
+#urlFilteringMenu .dialog > div.headers > span.header.selected {
+    background-color: white;
+    border-color: #888;
+    border-bottom: 1px solid white;
+    color: black;
+    }
+#urlFilteringMenu .dialog > div.headers > span.tools {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    }
+#urlFilteringMenu .dialog > div.headers > span.tools > span {
     cursor: pointer;
     font-size: 1.2em;
     text-align: center;
     }
-#urlFilteringMenu .dialog > table.toolbar .fa.save {
+#urlFilteringMenu .dialog > div.containers {
+    height: 40vh;
+    overflow: hidden;
+    overflow-y: auto;
+    }
+#urlFilteringMenu .dialog > div.containers > div {
+    display: none;
+    }
+#urlFilteringMenu .dialog > div.containers > div.selected {
+    display: block;
+    }
+#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar select {
+    font: 14px;
+    height: 2em;
+    }
+#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
@@ -360,49 +423,37 @@ body[dir="rtl"] #popupContainer > div {
     padding: 0.25em 0.5em;
     visibility: hidden;
     }
-body.dirty #urlFilteringMenu .dialog > table.toolbar .fa.save {
+body.dirty #urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
     visibility: visible;
     }
-#urlFilteringMenu .dialog > table.toolbar .fa.save:hover {
+#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules:hover {
     color: black;
     }
-#urlFilteringMenu .dialog > table.toolbar tr.entry {
+#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar tr.entry {
     display: none;
     }
-#urlFilteringMenu .dialog > div.entries {
-    max-height: 30vh;
-    overflow: hidden;
-    overflow-y: auto;
-    }
-#urlFilteringMenu .dialog > div.header {
-    background-color: #666;
-    color: white;
-    font-size: smaller;
-    padding: 2px;
-    text-align: center;
-    }
-#urlFilteringMenu .dialog > div.entries tr.entry {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry {
     background-color: #e6e6e6;
     border: 0;
     border-bottom: 1px solid white;
     font-size: 13px;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry:hover {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry:hover {
     background-color: #f0f0f0;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td:first-of-type {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td:first-of-type {
     border: 0;
     border-right: 1px solid white;
     text-align: center;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action {
     background-color: transparent;
     border: 0;
     cursor: pointer;
     height: 2em;
     width: 100%;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span {
     background-color: transparent;
     border: 0;
     display: inline-block;
@@ -411,66 +462,78 @@ body.dirty #urlFilteringMenu .dialog > table.toolbar .fa.save {
     visibility: hidden;
     width: 33.33%;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.allow {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
     background-color: rgba(0, 160, 0, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.allow {
+body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
     background-color: rgba(255, 194, 57, 0.4);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.noop {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
     background-color: rgba(108, 108, 108, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.noop {
+body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
     background-color: rgba(96, 96, 96, 0.4);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.block {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
     background-color: rgba(192, 0, 0, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.block {
+body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
     background-color: rgba(0, 19, 110, 0.4);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.own.allow {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
     background-color: rgba(0, 160, 0, 1);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.own.allow {
+body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
     background-color: rgba(255, 194, 57, 1);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.own.noop {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
     background-color: rgba(108, 108, 108, 1);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.own.block {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
     background-color: rgba(192, 0, 0, 1);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action.own.block {
+body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
     background-color: rgba(0, 19, 110, 1);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action:not(.own):hover > span {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span {
     opacity: 0.2;
     visibility: visible;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action:not(.own):hover > span:hover {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span:hover {
     opacity: 0.75;
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span.allow {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
     background-color: rgb(0, 160, 0);
     }
-body.colorBlind  #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span.allow {
+body.colorBlind  #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
     background-color: rgb(255, 194, 57);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span.noop {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.noop {
     background-color: rgb(108, 108, 108);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span.block {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
     background-color: rgb(192, 0, 0);
     }
-body.colorBlind  #urlFilteringMenu .dialog > div.entries tr.entry > td > div.action > span.block {
+body.colorBlind  #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
     background-color: rgb(0, 19, 110);
     }
-#urlFilteringMenu .dialog > div.entries tr.entry > td.url {
+#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td.url {
     overflow: hidden;
     padding-left: 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    }
+#urlFilteringMenu .dialog > div.containers > div.static > p {
+    margin: 0.75em 0;
+    }
+#urlFilteringMenu .dialog > div.containers > div.static textarea {
+    box-sizing: border-box;
+    height: 6em;
+    resize: none;
+    width: 100%;
+    }
+#urlFilteringMenu .dialog > div.containers > div.static > p:nth-of-type(2) {
+    text-align: center;
     }
 .hide {
     display: none;

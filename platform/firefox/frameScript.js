@@ -50,11 +50,11 @@ let injectContentScripts = function(win) {
 };
 
 let onLoadCompleted = function() {
-    removeMessageListener('ublock-load-completed', onLoadCompleted);
+    removeMessageListener('ublock0-load-completed', onLoadCompleted);
     injectContentScripts(content);
 };
 
-addMessageListener('ublock-load-completed', onLoadCompleted);
+addMessageListener('ublock0-load-completed', onLoadCompleted);
 
 if ( docShell ) {
     let Ci = Components.interfaces;

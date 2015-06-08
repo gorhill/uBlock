@@ -39,7 +39,6 @@ var oneHour = 60 * oneMinute;
 
 var defaultExternalLists = [
     '! Examples:',
-    '! https://easylist-downloads.adblockplus.org/antiadblockfilters.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_sidebar.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_newsfeed.txt',
@@ -62,7 +61,9 @@ return {
         experimentalEnabled: false,
         externalLists: defaultExternalLists,
         firewallPaneMinimized: true,
+        hyperlinkAuditingDisabled: true,
         parseAllABPHideFilters: true,
+        prefetchingDisabled: true,
         requestLogMaxEntries: 1000,
         showIconBadge: true
     },

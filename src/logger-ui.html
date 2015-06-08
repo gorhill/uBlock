@@ -43,29 +43,40 @@
     <div id="hiddenTemplate"><span style="display:none;"></span></div>
     <div id="urlFilteringMenu">
         <div class="dialog">
-            <table class="toolbar">
-                <colgroup><col><col></colgroup>
-                <tbody>
-                <tr>
-                    <td colspan="2" class="hide preview"></td>
-                <tr>
-                    <td><span class="fa save">&#xf023;</span>
-                    <td><label><span data-i18n="loggerURLFilteringContextLabel"></span> <select class="context"></select></label>&emsp;
-                        <label><span data-i18n="loggerURLFilteringTypeLabel"></span> <select class="type"><option><option value="*">*</select></label>&emsp;
-                        <span class="fa reload">&#xf021;</span>&emsp;<span class="fa picker">&#xf1fb;</span>
-                <tr class="entry">
-                    <td><div class="action"><span class="allow">&nbsp;</span><span class="noop">&nbsp;</span><span class="block">&nbsp;</span></div>
-                    <td class="url">
-                </tbody>
-            </table>
-            <div class="header" data-i18n="loggerURLFilteringHeader"></div>
-            <div class="entries">
-                <table>
-                    <colgroup><col><col></colgroup>
-                    <tbody></tbody>
-                </table>
+            <div class="hide preview"></div>
+            <div class="headers">
+                <span class="header dynamic selected" data-container="dynamic" data-i18n="loggerURLFilteringHeader"></span>
+                <span class="header static" data-container="static" data-i18n="loggerStaticFilteringHeader"></span>
+                <span class="tools"><span class="fa reload">&#xf021;</span>&emsp;<span class="fa picker">&#xf1fb;</span></span>
             </div>
-            <!-- <div class="header">Static URL filtering (TBD)</div> -->
+            <div class="containers">
+                <div class="container dynamic selected">
+                    <table class="toolbar">
+                        <colgroup><col><col></colgroup>
+                        <tbody>
+                        <tr>
+                            <td><span id="saveRules" class="fa">&#xf023;</span>
+                            <td><p>
+                                <label><span data-i18n="loggerURLFilteringContextLabel"></span> <select class="dynamic origin"></select></label>&emsp;
+                                <label><span data-i18n="loggerURLFilteringTypeLabel"></span> <select class="dynamic type"><option><option value="*">*</select></label>
+                                </p>
+                        <tr class="entry">
+                            <td><div class="action"><span class="allow">&nbsp;</span><span class="noop">&nbsp;</span><span class="block">&nbsp;</span></div>
+                            <td class="url">
+                        </tbody>
+                    </table>
+                    <table class="entries">
+                        <colgroup><col><col></colgroup>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="container static">
+                    <p></p>
+                    <p><textarea class="staticFilter" value=""></textarea>
+                       <button id="createStaticFilter" class="important" type="button" data-i18n="pickerCreate"></button>
+                       </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

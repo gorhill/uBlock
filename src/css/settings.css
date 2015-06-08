@@ -7,8 +7,22 @@ ul#userSettings {
 li {
     margin-top: 0.25em;
     }
-ul#userSettings {
+ul#userSettings,
+ul#userSettings ul {
     list-style-type: none;
+    }
+ul#userSettings a.info {
+    color: #ccc;
+    }
+ul#userSettings a.info:hover {
+    color: #444;
+    }
+ul#userSettings .subgroup {
+    margin-top: 1em;
+    }
+ul#userSettings .subgroup > span {
+    font-size: larger;
+    font-weight: bold;
     }
 #localData > ul > li {
     margin-top: 1em;

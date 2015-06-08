@@ -171,6 +171,14 @@
     "message":"Jeg er en avansert bruker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Nødvendig lesning<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Deaktiver forhåndshenting (for å hindre enhver tilkobling for blokkerte nettverksforespørsler)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Deaktiver lenkesporing\/sporingsbilde",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktiver eksperimentelle funksjoner (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"
@@ -407,6 +415,46 @@
     "message":"Dynamisk adressefiltrering",
     "description":"Small header to identify the dynamic URL filtering section"
   },
+  "loggerStaticFilteringHeader":{
+    "message":"Statisk filtrering",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} nettverksforespørsler av {{type}} {{br}}som matcher nettadressen {{url}} {{br}}og som stammer {{origin}},{{br}}{{importance}} det er et matchende unntaksfilter.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Blokker",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Tillat",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"type “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"enhver type",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"fra “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"fra hvor som helst",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"unntatt når",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"selv om",
+    "description":"Used in the static filtering wizard"
+  },
   "aboutChangelog":{
     "message":"Endringslogg",
     "description":"English: Change log"
@@ -524,7 +572,7 @@
     "description":"English: Permanently"
   },
   "dummy":{
-    "message":"Denne oppføringen må være den siste",
+    "message":"This entry must be the last one",
     "description":"so we dont need to deal with comma for last entry"
   }
 }

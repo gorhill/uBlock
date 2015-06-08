@@ -171,6 +171,14 @@
     "message":"Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
     "description":"English: "
   },
+  "settingsPrefetchingDisabledPrompt":{
+    "message":"Çaktivizoj hapjen e parakohshme të faqeve (parandalon lidhjen për kërkesat e bllokuara nga rrjeti)",
+    "description":"English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt":{
+    "message":"Çaktivizoj shqyrtimin e tejlidhjeve",
+    "description":"English: "
+  },
   "settingsExperimentalPrompt":{
     "message":"Aktivizoj veçoritë eksperimentale (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Info<\/a>)",
     "description":"English: Enable experimental features"
@@ -380,7 +388,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"All",
+    "message":"Të gjitha",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -396,16 +404,56 @@
     "description":"Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel":{
-    "message":"Context:",
+    "message":"Konteksti:",
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Lloji:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Filtrimi dinamik i adresave",
     "description":"Small header to identify the dynamic URL filtering section"
+  },
+  "loggerStaticFilteringHeader":{
+    "message":"Filtrimi statik",
+    "description":"Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence":{
+    "message":"{{action}} kërkesat nga rrjeti të {{type}} {{br}}adresa e të cilave korrespondon me {{url}} {{br}}dhe kanë si origjinë {{origin}},{{br}}{{importance}} ka një filtër përjashtues të ngjashëm.",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock":{
+    "message":"Bllokoj",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow":{
+    "message":"Lejoj",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType":{
+    "message":"llojit “{{type}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType":{
+    "message":"çdo lloji",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin":{
+    "message":"nga “{{origin}}”",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin":{
+    "message":"ngado",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant":{
+    "message":"përveç kur",
+    "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant":{
+    "message":"edhe kur",
+    "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
     "message":"Ditari i ndryshimeve",

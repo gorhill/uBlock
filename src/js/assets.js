@@ -54,7 +54,7 @@ var oneDay = 24 * oneHour;
 
 var projectRepositoryRoot = µBlock.projectServerRoot;
 var nullFunc = function() {};
-var reIsExternalPath = /^[a-z]+:\/\//;
+var reIsExternalPath = /^(file|ftps?|https?):\/\//;
 var reIsUserPath = /^assets\/user\//;
 var reIsCachePath = /^cache:\/\//;
 var lastRepoMetaTimestamp = 0;
@@ -1076,6 +1076,7 @@ exports.metadata = function(callback) {
             entryOut.localChecksum = entryRepo.localChecksum;
             entryOut.repoChecksum = entryRepo.repoChecksum;
             entryOut.homeURL = homeURLs[path] || '';
+            entryOut.supportURL = entryRepo.supportURL || '';
             entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
         }
         checkCacheObsolescence();
