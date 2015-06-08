@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"네트워크 요청이 {{type}} 일 경우 {{action}} {{br}}URL 주소가 {{url}} 와 일치하고{{br}} {{origin}} 에서 비롯 되었을 경우,{{br}}그리고 다음 예외 필터와 일치할 경우 {{importance}} 한다.",
+    "message":"네트워크 요청이 {{type}} 일 경우,{{br}}URL 주소가 {{url}} 와 일치하고{{br}}{{origin}} 에서 비롯 되었을 경우 {{action}} 한다.{{br}}그리고 다음 예외 필터와 일치할 경우 {{importance}} 한다.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -440,7 +440,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"\"{{origin}}\" 로부터",
+    "message":"\"{{origin}}\"",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{

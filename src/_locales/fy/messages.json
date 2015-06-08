@@ -416,19 +416,19 @@
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Static filtering",
+    "message":"Statysk filterje",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} netwurkfersiken fan {{type}} {{br}}wêrfan de URL lyk is oan {{url}} {{br}}en dy komme fan {{origin}},{{br}}{{importance}} der is in oerienkomstich útsûnderingsfilter.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Block",
+    "message":"Blokkearje",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Allow",
+    "message":"Tastien",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
@@ -436,23 +436,23 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"any type",
+    "message":"elts type",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"from “{{origin}}”",
+    "message":"fan “{{origin}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"fan oeral wei",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"útsein as",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"sels as",
     "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{

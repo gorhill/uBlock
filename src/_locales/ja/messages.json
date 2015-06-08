@@ -172,11 +172,11 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"プリフェッチを無効  (to prevent any connection for blocked network requests)",
+    "message":"先読みを無効にする（塞がれたネットワークへの接続を防止するため）",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Disable hyperlink auditing\/beacon",
+    "message":"ハイパーリンクの監査／指針を無効にする",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -412,11 +412,11 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"ダイナミックURLフィルタリング",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Static filtering",
+    "message":"静的フィルタリング",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
@@ -424,11 +424,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Block",
+    "message":"ブロック",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Allow",
+    "message":"許可",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{

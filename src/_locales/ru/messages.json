@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}}, {{br}} и которые происходят {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
+    "message":"{{action}} сетевые запросы {{type}}, {{br}}URL которых совпадает с {{url}} {{br}} и которые происходят {{origin}},{{br}}{{importance}} имеется подходящий фильтр-исключение.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{

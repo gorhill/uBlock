@@ -416,43 +416,43 @@
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Static filtering",
+    "message":"Статична фільтрація",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} мережеві запити {{type}}, {{br}}посилання яких збігаються з {{url}} {{br}}та які {{origin}},{{br}}{{importance}} є відповідний фільтр-виняток.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Block",
+    "message":"Блокувати",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Allow",
+    "message":"Дозволити",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"type “{{type}}”",
+    "message":"типу „{{type}}“",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"any type",
+    "message":"будь-якого типу",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"from “{{origin}}”",
+    "message":"походять із „{{origin}}“",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"from anywhere",
+    "message":"мають будь-яке походження",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"except when",
+    "message":"крім випадків, коли",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
-    "message":"even if",
+    "message":"навіть якщо",
     "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
