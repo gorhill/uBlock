@@ -412,7 +412,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Динамично филтриране на адреси",
+    "message":"Динамично филтриране",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} на мрежовите заявки за {{type}} на URL адреси, съвпадащи с {{br}}{{url}}{{br}},и които произлизат от {{origin}},{{br}}{{importance}} има съвпадения с филтрирани изключения.",
+    "message":"{{action}} на мрежови заявки за {{type}} от адреси, съвпадащ с {{br}}{{url}},{{br}}и произлизащ от {{origin}},{{importance}} има филтър със съвпадащи изключения.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -440,11 +440,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"from “{{origin}}”",
+    "message":"от \"{{origin}}\"",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"навсякъде",
+    "message":"където и да е",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{

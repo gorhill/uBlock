@@ -176,7 +176,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Wyłącz śledzenie kliknięć odnośników",
+    "message":"Wyłącz śledzenie kliknięć odnośników\/beaconów",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message":"{{action}} żądania sieciowe {{type}}, których adres URL jest zgodny z: {{url}} {{br}}i pochodzi {{origin}}, {{importance}} filtr znajduje się na liście wyjątków.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -428,15 +428,15 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Zezwól",
+    "message":"Zezwalaj na",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
-    "message":"typ „{{type}}”",
+    "message":"typu „{{type}}”",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType":{
-    "message":"każdy typ",
+    "message":"każdego typu",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
@@ -448,7 +448,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"tylko gdy",
+    "message":"z wyjątkiem, gdy",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{

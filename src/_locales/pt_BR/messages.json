@@ -212,7 +212,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Limpar todos os caches",
+    "message":"Limpar todos caches",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -416,7 +416,7 @@
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Filtragem Estática",
+    "message":"Filtragem estática",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{

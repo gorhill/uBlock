@@ -13,12 +13,12 @@ Po zainstalowaniu są  wczytywane i stosowane następujące listy filtrów:
 - EasyList
 - Lista serwerów reklam Petera Lowe'a
 - EasyPrivacy
-- Malware domen
+- Domeny malware
 
 Można wybrać więcej list filtrów:
 
 - Rozszerzona lista śledzenia dla fanboyów
-- Plik hosts Dan Pollock
+- Plik hosts Dana Pollocka
 - Lista serwerów śledzących i reklamowych hpHosts
 - MVPS HOSTS
 - Spam404

@@ -84,7 +84,7 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Toggle cosmetic filtering for this site",
+    "message":"Vklop\/Izklop kozmetičnih filtrov za to stran",
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupAnyRulePrompt":{
@@ -96,7 +96,7 @@
     "description":""
   },
   "popup3pAnyRulePrompt":{
-    "message":"tretjo-osebne",
+    "message":"tretje-osebne",
     "description":""
   },
   "popupInlineScriptRulePrompt":{
@@ -108,15 +108,15 @@
     "description":""
   },
   "popup3pScriptRulePrompt":{
-    "message":"tretjo-osebne skripte",
+    "message":"tretje-osebne skripte",
     "description":""
   },
   "popup3pFrameRulePrompt":{
-    "message":"tretjo-osebni okvirji",
+    "message":"tretje-osebni okvirji",
     "description":""
   },
   "popupHitDomainCountPrompt":{
-    "message":"povezanih domen",
+    "message":"povezane domene",
     "description":"appears in popup"
   },
   "popupHitDomainCount":{
@@ -156,7 +156,7 @@
     "description":"English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt":{
-    "message":"Show the number of blocked requests on the icon",
+    "message":"Prikaži število blokiranih zahtevkov na ikoni",
     "description":"English: Show the number of blocked requests on the icon"
   },
   "settingsContextMenuPrompt":{
@@ -196,7 +196,7 @@
     "description":"English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt":{
-    "message":"Omrežni \"{{netFilterCount}}\" in kozmetični filtri \"{{cosmeticFilterCount}}\" od:",
+    "message":"{{netFilterCount}} omrežnih in {{cosmeticFilterCount}} kozmetičnih filtrov od:",
     "description":"English: {{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:"
   },
   "3pListsOfBlockedHostsPerListStats":{
@@ -212,7 +212,7 @@
     "description":"English: Update now"
   },
   "3pPurgeAll":{
-    "message":"Počisti celoten predpomnilnik",
+    "message":"Sprosti celoten predpomnilnik",
     "description":"English: Purge all caches"
   },
   "3pParseAllABPHideFiltersPrompt1":{
@@ -244,7 +244,7 @@
     "description":"English: Malware domains"
   },
   "3pGroupSocial":{
-    "message":"Social",
+    "message":"Socialno",
     "description":"English: Social"
   },
   "3pGroupMultipurpose":{
@@ -252,7 +252,7 @@
     "description":"English: Multipurpose"
   },
   "3pGroupRegions":{
-    "message":"Regions, languages",
+    "message":"Regije, jeziki",
     "description":"English: Regions, languages"
   },
   "3pGroupCustom":{
@@ -260,7 +260,7 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
+    "message":"En URL v vsaki vrstici. Vrstice s predpono &lsquo;!&rsquo; in neveljavni URL-ji bodo prezrti.",
     "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListsApply":{
@@ -268,7 +268,7 @@
     "description":"English: Parse"
   },
   "3pExternalListPurge":{
-    "message":"purge cache",
+    "message":"sprosti predpomnilnik",
     "description":"English: purge cache"
   },
   "3pExternalListNew":{
@@ -276,7 +276,7 @@
     "description":"English: new version available"
   },
   "3pExternalListObsolete":{
-    "message":"outdated",
+    "message":"zastarelo",
     "description":"English: outdated"
   },
   "3pLastUpdate":{
@@ -296,7 +296,7 @@
     "description":"English: Export"
   },
   "1pExportFilename":{
-    "message":"my-ublock-static-filters_{{datetime}}.txt",
+    "message":"moji-ublock-staticni-filtri_{{datetime}}.txt",
     "description":"English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges":{
@@ -340,7 +340,7 @@
     "description":""
   },
   "rulesDefaultFileName":{
-    "message":"my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message":"moji-ublock-dinamicna-pravila_{{datetime}}.txt",
     "description":"default file name to use"
   },
   "rulesHint":{
@@ -372,7 +372,7 @@
     "description":"English: Apply changes"
   },
   "logRequestsHeaderType":{
-    "message":"Type",
+    "message":"Vrsta",
     "description":"English: Type"
   },
   "logRequestsHeaderDomain":{
@@ -388,7 +388,7 @@
     "description":"English: Filter"
   },
   "logAll":{
-    "message":"All",
+    "message":"Vse",
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
@@ -408,15 +408,15 @@
     "description":"Label for the context selector"
   },
   "loggerURLFilteringTypeLabel":{
-    "message":"Type:",
+    "message":"Vrsta:",
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamic URL filtering",
+    "message":"Dinamično URL filtriranje",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"Static filtering",
+    "message":"Statično filtriranje",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
@@ -424,11 +424,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"Block",
+    "message":"Blokiraj",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"Allow",
+    "message":"Dovoli",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
@@ -456,7 +456,7 @@
     "description":"Used in the static filtering wizard"
   },
   "aboutChangelog":{
-    "message":"Change log",
+    "message":"Seznam sprememb",
     "description":"English: Change log"
   },
   "aboutWiki":{
@@ -464,7 +464,7 @@
     "description":"English: project' wiki on Github"
   },
   "aboutCode":{
-    "message":"Source code (GPLv3)",
+    "message":"Izvorna koda (GPLv3)",
     "description":"English: Source code (GPLv3)"
   },
   "aboutContributors":{
