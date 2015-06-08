@@ -90,7 +90,6 @@ var renderFilterLists = function() {
     };
 
     var liFromListEntry = function(listKey) {
-        var elem, text;
         var entry = listDetails.available[listKey];
         var li = listEntryTemplate.clone();
 
@@ -98,21 +97,21 @@ var renderFilterLists = function() {
             li.descendants('input').attr('checked', '');
         }
 
-        elem = li.descendants('a:nth-of-type(1)');
+        var elem = li.descendants('a:nth-of-type(1)');
         elem.attr('href', 'asset-viewer.html?url=' + encodeURI(listKey));
         elem.attr('type', 'text/html');
         elem.attr('data-listkey', listKey);
         elem.text(listNameFromListKey(listKey) + '\u200E');
 
-        elem = li.descendants('a:nth-of-type(2)');
-        if ( entry.homeDomain ) {
-            elem.attr('href', 'http://' + encodeURI(entry.homeHostname));
-            elem.text('(' + entry.homeDomain + ')');
+        if ( entry.supportName ) {
+            elem = li.descendants('a:nth-of-type(2)');
+            elem.attr('href', entry.supportURL);
+            elem.text('(' + entry.supportName + ')');
             elem.css('display', '');
         }
 
         elem = li.descendants('span:nth-of-type(1)');
-        text = listStatsTemplate
+        var text = listStatsTemplate
             .replace('{{used}}', renderNumber(!entry.off && !isNaN(+entry.entryUsedCount) ? entry.entryUsedCount : 0))
             .replace('{{total}}', !isNaN(+entry.entryCount) ? renderNumber(entry.entryCount) : '?');
         elem.text(text);

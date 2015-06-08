@@ -1076,6 +1076,7 @@ exports.metadata = function(callback) {
             entryOut.localChecksum = entryRepo.localChecksum;
             entryOut.repoChecksum = entryRepo.repoChecksum;
             entryOut.homeURL = homeURLs[path] || '';
+            entryOut.supportURL = entryRepo.supportURL || '';
             entryOut.repoObsolete = entryOut.localChecksum !== entryOut.repoChecksum;
         }
         checkCacheObsolescence();

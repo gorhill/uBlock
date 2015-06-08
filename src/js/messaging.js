@@ -663,15 +663,18 @@ var µb = µBlock;
 
 var prepEntries = function(entries) {
     var µburi = µb.URI;
-    var entry;
+    var entry, hn;
     for ( var k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) {
             continue;
         }
         entry = entries[k];
-        if ( typeof entry.homeURL === 'string' ) {
-            entry.homeHostname = µburi.hostnameFromURI(entry.homeURL);
-            entry.homeDomain = µburi.domainFromHostname(entry.homeHostname);
+        if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
+            entry.supportName = µburi.hostnameFromURI(entry.supportURL);
+        } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {
+            hn = µburi.hostnameFromURI(entry.homeURL);
+            entry.supportURL = 'http://' + hn + '/';
+            entry.supportName = µburi.domainFromHostname(hn);
         }
     }
 };
