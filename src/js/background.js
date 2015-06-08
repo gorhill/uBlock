@@ -39,7 +39,6 @@ var oneHour = 60 * oneMinute;
 
 var defaultExternalLists = [
     '! Examples:',
-    '! https://easylist-downloads.adblockplus.org/antiadblockfilters.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_sidebar.txt',
     '! https://easylist-downloads.adblockplus.org/fb_annoyances_newsfeed.txt',
