@@ -393,10 +393,10 @@ body[dir="rtl"] #popupContainer > div {
     transform: translate(0, -50%);
     }
 body[dir="ltr"] #urlFilteringMenu .dialog > div.headers > span.tools {
-    right: 0;
+    right: 0.1em;
     }
 body[dir="rtl"] #urlFilteringMenu .dialog > div.headers > span.tools {
-    left: 0;
+    left: 0.1em;
     }
 #urlFilteringMenu .dialog > div.headers > span.tools > span {
     cursor: pointer;
