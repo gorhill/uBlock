@@ -114,7 +114,7 @@ NetFilteringResultCache.factory = function() {
 NetFilteringResultCache.prototype.init = function() {
     this.urls = {};
     this.count = 0;
-    this.shelfLife = 60 * 1000;
+    this.shelfLife = 15 * 1000;
     this.timer = null;
     this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
 };
@@ -309,11 +309,22 @@ PageStore.prototype.init = function(tabId) {
 
     // Support `elemhide` filter option. Called at this point so the required
     // context is all setup at this point.
-    var context = this.createContextFromPage();
-    this.skipCosmeticFiltering = µb.staticNetFilteringEngine
-                                   .matchStringExactType(context, tabContext.normalURL, 'cosmetic-filtering')
-                                   .charAt(1) === 'b';
-
+    this.skipCosmeticFiltering = µb.staticNetFilteringEngine.matchStringExactType(
+        this.createContextFromPage(),
+        tabContext.normalURL,
+        'cosmetic-filtering'
+    );
+    if ( this.skipCosmeticFiltering && µb.logger.isEnabled() ) {
+        µb.logger.writeOne(
+            tabId,
+            'net',
+            µb.staticNetFilteringEngine.toResultString(true),
+            'elemhide',
+            tabContext.rawURL,
+            this.tabHostname,
+            this.tabHostname
+        );
+    }
     return this;
 };
 
@@ -515,7 +526,9 @@ PageStore.prototype.filterRequest = function(context) {
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        result = µb.staticNetFilteringEngine.matchString(context) || result;
+        if ( µb.staticNetFilteringEngine.matchString(context) ) {
+            result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+        }
     }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
@@ -555,7 +568,9 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        result = µb.staticNetFilteringEngine.matchString(context) || result;
+        if ( µb.staticNetFilteringEngine.matchString(context) ) {
+            result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
+        }
     }
 
     return result;

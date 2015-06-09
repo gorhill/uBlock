@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock - a browser extension to block requests.
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -492,6 +492,7 @@ vAPI.tabs.onPopup = function(details) {
     };
 
     var result = '';
+    var loggerEnabled = µb.logger.isEnabled();
 
     // Check user switch first
     if ( µb.hnSwitches.evaluateZ('no-popups', openerHostname) ) {
@@ -506,7 +507,9 @@ vAPI.tabs.onPopup = function(details) {
         µb.getNetFilteringSwitch(openerURL) &&
         µb.getNetFilteringSwitch(targetURL)
     ) {
-        result = µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup');
+        if ( µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') ) {
+            result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
+        }
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/91
@@ -514,15 +517,17 @@ vAPI.tabs.onPopup = function(details) {
     if ( pageStore ) {
         pageStore.logRequest(context, result);
     }
-    µb.logger.writeOne(
-        details.openerTabId,
-        'net',
-        result,
-        'popup',
-        targetURL,
-        openerHostname,
-        openerHostname
-    );
+    if ( loggerEnabled ) {
+        µb.logger.writeOne(
+            details.openerTabId,
+            'net',
+            result,
+            'popup',
+            targetURL,
+            openerHostname,
+            openerHostname
+        );
+    }
 
     // Not blocked
     if ( µb.isAllowResult(result) ) {

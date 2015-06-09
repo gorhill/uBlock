@@ -103,61 +103,24 @@ var tabIdFromClassName = function(className) {
 
 /******************************************************************************/
 
-var retextFromStaticFilteringResult = function(result) {
-    var retext = result.slice(3);
-    var pos = retext.indexOf('$');
-    if ( pos > 0 ) {
-        retext = retext.slice(0, pos);
-    }
-    if ( retext === '*' ) {
-        return '^.*$';
-    }
-    if ( retext.charAt(0) === '/' && retext.slice(-1) === '/' ) {
-        return retext.slice(1, -1);
-    }
-    return retext
-        .replace(/\./g, '\\.')
-        .replace(/\?/g, '\\?')
-        .replace('||', '')
-        .replace(/\^/g, '.')
-        .replace(/^\|/g, '^')
-        .replace(/\|$/g, '$')
-        .replace(/\*/g, '.*')
-        ;
-};
-
-/******************************************************************************/
-
-var retextFromURLFilteringResult = function(result) {
+var regexFromURLFilteringResult = function(result) {
     var beg = result.indexOf(' ');
     var end = result.indexOf(' ', beg + 1);
     var url = result.slice(beg + 1, end);
     if ( url === '*' ) {
-        return '^.*$';
+        return new RegExp('^.*$', 'gi');
     }
-    return '^' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp('^' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
 };
 
 /******************************************************************************/
 
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
-var nodeFromURL = function(url, filter) {
-    var filterType = filter.charAt(0);
-    if ( filterType !== 's' && filterType !== 'l' ) {
+var nodeFromURL = function(url, re) {
+    if ( re instanceof RegExp === false ) {
         return document.createTextNode(url);
     }
-    // make a regex out of the filter
-    var retext = '';
-    if ( filterType === 's' ) {
-        retext = retextFromStaticFilteringResult(filter);
-    } else if ( filterType === 'l' ) {
-        retext = retextFromURLFilteringResult(filter);
-    }
-    if ( retext === '' ) {
-        return document.createTextNode(url);
-    }
-    var re = new RegExp(retext, 'gi');
     var matches = re.exec(url);
     if ( matches === null || matches[0].length === 0 ) {
         return document.createTextNode(url);
@@ -170,6 +133,187 @@ var nodeFromURL = function(url, filter) {
 };
 
 var renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
+
+/******************************************************************************/
+
+// Pretty much same logic as found in:
+//   µBlock.staticNetFilteringEngine.filterStringFromCompiled
+//   µBlock.staticNetFilteringEngine.filterRegexFromCompiled
+
+var filterDecompiler = (function() {
+    var typeValToTypeName = {
+         1: 'stylesheet',
+         2: 'image',
+         3: 'object',
+         4: 'script',
+         5: 'xmlhttprequest',
+         6: 'sub_frame',
+         7: 'font',
+         8: 'other',
+        13: 'elemhide',
+        14: 'inline-script',
+        15: 'popup'
+    };
+
+    var toString = function(compiled) {
+        var opts = [];
+        var vfields = compiled.split('\v');
+        var filter = '';
+        var bits = parseInt(vfields[1], 16) | 0;
+
+        if ( bits & 0x01 ) {
+            filter += '@@';
+        }
+
+        var fid = vfields[2] === '.' ? '.' : vfields[3];
+        var tfields = fid !== '.' ? vfields[4].split('\t') : [];
+        var tfield0 = tfields[0];
+
+        switch ( fid ) {
+        case '.':
+            filter += '||' + vfields[3] + '^';
+            break;
+        case 'a':
+        case 'ah':
+        case '0a':
+        case '0ah':
+        case '1a':
+        case '1ah':
+        case '_':
+        case '_h':
+            filter += tfield0;
+            // If the filter resemble a regex, add a trailing `*` as is
+            // customary to prevent ambiguity in logger.
+            if ( tfield0.charAt(0) === '/' && tfield0.slice(-1) === '/' ) {
+                filter += '*';
+            }
+            break;
+        case '|a':
+        case '|ah':
+            filter += '|' + tfield0;
+            break;
+        case 'a|':
+        case 'a|h':
+            filter += tfield0 + '|';
+            break;
+        case '||a':
+        case '||ah':
+        case '||_':
+        case '||_h':
+            filter += '||' + tfield0;
+            break;
+        case '//':
+        case '//h':
+            filter += '/' + tfield0 + '/';
+            break;
+        default:
+            break;
+        }
+
+        // Domain option?
+        switch ( fid ) {
+        case '0ah':
+        case '1ah':
+        case '|ah':
+        case 'a|h':
+        case '||ah':
+        case '||_h':
+        case '//h':
+            opts.push('domain=' + tfields[1]);
+            break;
+        case 'ah':
+        case '_h':
+            opts.push('domain=' + tfields[2]);
+            break;
+        default:
+            break;
+        }
+
+        // Filter options
+        if ( bits & 0x02 ) {
+            opts.push('important');
+        }
+        if ( bits & 0x08 ) {
+            opts.push('third-party');
+        } else if ( bits & 0x04 ) {
+            opts.push('first-party');
+        }
+        var typeVal = bits >>> 4 & 0x0F;
+        if ( typeVal ) {
+            opts.push(typeValToTypeName[typeVal]);
+            // Because of the way `elemhide` is implemented
+            if ( typeVal === 13 ) {
+                filter = '@@' + filter;
+            }
+        }
+        if ( opts.length !== 0 ) {
+            filter += '$' + opts.join(',');
+        }
+
+        return filter;
+    };
+
+    var reEscape = /[.+?^${}()|[\]\\]/g;
+    var reWildcards = /\*+/g;
+
+    var toRegex = function(compiled) {
+        var vfields = compiled.split('\v');
+        var fid = vfields[2] === '.' ? '.' : vfields[3];
+        var tfields = fid !== '.' ? vfields[4].split('\t') : [];
+        var reStr;
+
+        switch ( fid ) {
+        case '.':
+            reStr = vfields[3]
+                        .replace(reEscape, '\\$&');
+            break;
+        case 'a':
+        case 'ah':
+        case '0a':
+        case '0ah':
+        case '1a':
+        case '1ah':
+        case '_':
+        case '_h':
+        case '||a':
+        case '||ah':
+        case '||_':
+        case '||_h':
+            reStr = tfields[0]
+                        .replace(reEscape, '\\$&')
+                        .replace(reWildcards, '.*');
+            break;
+        case '|a':
+        case '|ah':
+            reStr = '^' + tfields[0].
+                        replace(reEscape, '\\$&')
+                        .replace(reWildcards, '.*');
+            break;
+        case 'a|':
+        case 'a|h':
+            reStr = tfields[0]
+                        .replace(reEscape, '\\$&')
+                        .replace(reWildcards, '.*') + '$';
+            break;
+        case '//':
+        case '//h':
+            reStr = tfields[0];
+            break;
+        default:
+            break;
+        }
+
+        if ( reStr === undefined) {
+            return null;
+        }
+        return new RegExp(reStr, 'gi');
+    };
+
+    return {
+        toString: toString,
+        toRegex: toRegex
+    };
+})();
 
 /******************************************************************************/
 
@@ -276,26 +420,31 @@ var renderNetLogEntry = function(tr, entry) {
         tr.setAttribute('data-hn-frame', entry.d4);
     }
 
-    // Cosmetic filter?
     var filterCat = filter.slice(0, 3);
     if ( filterCat.charAt(2) === ':' ) {
         tr.classList.add(filterCat.slice(0, 2));
     }
 
-    var filterText = filter.slice(3);
-    if ( filter.lastIndexOf('sa', 0) === 0 ) {
-        filterText = '@@' + filterText;
+    var filteringType = filterCat.charAt(0);
+    td = tr.cells[2];
+    if ( filter !== '' ) {
+        filter = filter.slice(3);
+        if ( filteringType === 's' ) {
+            td.textContent = filterDecompiler.toString(filter);
+        } else {
+            td.textContent = filter;
+        }
     }
-    tr.cells[2].textContent = filterText;
 
     td = tr.cells[3];
-    if ( filter.charAt(1) === 'b' ) {
+    var filteringOp = filterCat.charAt(1);
+    if ( filteringOp === 'b' ) {
         tr.classList.add('blocked');
         td.textContent = '--';
-    } else if ( filter.charAt(1) === 'a' ) {
+    } else if ( filteringOp === 'a' ) {
         tr.classList.add('allowed');
         td.textContent = '++';
-    } else if ( filter.charAt(1) === 'n' ) {
+    } else if ( filteringOp === 'n' ) {
         tr.classList.add('nooped');
         td.textContent = '**';
     } else {
@@ -303,7 +452,14 @@ var renderNetLogEntry = function(tr, entry) {
     }
 
     tr.cells[4].textContent = (prettyRequestTypes[type] || type);
-    tr.cells[5].appendChild(nodeFromURL(url, filter));
+
+    var re = null;
+    if ( filteringType === 's' ) {
+        re = filterDecompiler.toRegex(filter);
+    } else if ( filteringType === 'l' ) {
+        re = regexFromURLFilteringResult(filter);
+    }
+    tr.cells[5].appendChild(nodeFromURL(url, re));
 };
 
 /******************************************************************************/

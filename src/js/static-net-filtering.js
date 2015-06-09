@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to block requests.
-    Copyright (C) 2014 Raymond Hill
+    uBlock - a browser extension to block requests.
+    Copyright (C) 2014-2015 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,6 +69,20 @@ var typeNameToTypeValue = {
              'popup': 15 << 4
 };
 var typeOtherValue = typeNameToTypeValue.other;
+
+var typeValueToTypeName = {
+     1: 'stylesheet',
+     2: 'image',
+     3: 'object',
+     4: 'script',
+     5: 'xmlhttprequest',
+     6: 'sub_frame',
+     7: 'font',
+     8: 'other',
+    13: 'cosmetic-filtering',
+    14: 'inline-script',
+    15: 'popup'
+};
 
 // All network request types to bitmap
 //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
@@ -175,7 +189,7 @@ var alwaysTruePseudoRegex = {
     }
 };
 
-var strToRegex = function(s, anchor) {
+var strToRegex = function(s, anchor, flags) {
     // https://github.com/chrisaljoudi/uBlock/issues/1038
     // Special case: always match.
     if ( s === '*' ) {
@@ -193,7 +207,7 @@ var strToRegex = function(s, anchor) {
     }
 
     //console.debug('µBlock.staticNetFilteringEngine: created RegExp("%s")', reStr);
-    return new RegExp(reStr);
+    return new RegExp(reStr, flags);
 };
 
 /*******************************************************************************
@@ -235,15 +249,13 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlain.fid = FilterPlain.prototype.fid = 'a';
+FilterPlain.fid =
+FilterPlain.prototype.fid =
+FilterPlain.prototype.rtfid = 'a';
 
-FilterPlain.prototype.toString = function() {
-    return this.s;
-};
-
-FilterPlain.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.tokenBeg;
+FilterPlain.prototype.toSelfie =
+FilterPlain.prototype.rtCompile = function() {
+    return this.s + '\t' + this.tokenBeg;
 };
 
 FilterPlain.compile = function(details) {
@@ -268,22 +280,17 @@ FilterPlainHostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - this.tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainHostname.fid = FilterPlainHostname.prototype.fid = 'ah';
+FilterPlainHostname.fid =
+FilterPlainHostname.prototype.fid =
+FilterPlainHostname.prototype.rtfid = 'ah';
 
-FilterPlainHostname.prototype.toString = function() {
-    return this.s + '$domain=' + this.hostname;
-};
-
-FilterPlainHostname.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.tokenBeg + '\t' +
-           this.hostname;
+FilterPlainHostname.prototype.toSelfie =
+FilterPlainHostname.prototype.rtCompile = function() {
+    return this.s + '\t' + this.tokenBeg + '\t' + this.hostname;
 };
 
 FilterPlainHostname.compile = function(details, hostname) {
-    return details.f + '\t' +
-           details.tokenBeg + '\t' +
-           hostname;
+    return details.f + '\t' + details.tokenBeg + '\t' + hostname;
 };
 
 FilterPlainHostname.fromSelfie = function(s) {
@@ -301,13 +308,12 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainPrefix0.fid = FilterPlainPrefix0.prototype.fid = '0a';
+FilterPlainPrefix0.fid =
+FilterPlainPrefix0.prototype.fid =
+FilterPlainPrefix0.prototype.rtfid = '0a';
 
-FilterPlainPrefix0.prototype.toString = function() {
-    return this.s;
-};
-
-FilterPlainPrefix0.prototype.toSelfie = function() {
+FilterPlainPrefix0.prototype.toSelfie =
+FilterPlainPrefix0.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -331,15 +337,13 @@ FilterPlainPrefix0Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg, this.s.length) === this.s;
 };
 
-FilterPlainPrefix0Hostname.fid = FilterPlainPrefix0Hostname.prototype.fid = '0ah';
+FilterPlainPrefix0Hostname.fid =
+FilterPlainPrefix0Hostname.prototype.fid =
+FilterPlainPrefix0Hostname.prototype.rtfid = '0ah';
 
-FilterPlainPrefix0Hostname.prototype.toString = function() {
-    return this.s + '$domain=' + this.hostname;
-};
-
-FilterPlainPrefix0Hostname.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.hostname;
+FilterPlainPrefix0Hostname.prototype.toSelfie =
+FilterPlainPrefix0Hostname.prototype.rtCompile = function() {
+    return this.s + '\t' + this.hostname;
 };
 
 FilterPlainPrefix0Hostname.compile = function(details, hostname) {
@@ -361,13 +365,12 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
     return url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
-FilterPlainPrefix1.fid = FilterPlainPrefix1.prototype.fid = '1a';
+FilterPlainPrefix1.fid =
+FilterPlainPrefix1.prototype.fid =
+FilterPlainPrefix1.prototype.rtfid = '1a';
 
-FilterPlainPrefix1.prototype.toString = function() {
-    return this.s;
-};
-
-FilterPlainPrefix1.prototype.toSelfie = function() {
+FilterPlainPrefix1.prototype.toSelfie =
+FilterPlainPrefix1.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -391,15 +394,13 @@ FilterPlainPrefix1Hostname.prototype.match = function(url, tokenBeg) {
            url.substr(tokenBeg - 1, this.s.length) === this.s;
 };
 
-FilterPlainPrefix1Hostname.fid = FilterPlainPrefix1Hostname.prototype.fid = '1ah';
+FilterPlainPrefix1Hostname.fid =
+FilterPlainPrefix1Hostname.prototype.fid =
+FilterPlainPrefix1Hostname.prototype.rtfid = '1ah';
 
-FilterPlainPrefix1Hostname.prototype.toString = function() {
-    return this.s + '$domain=' + this.hostname;
-};
-
-FilterPlainPrefix1Hostname.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.hostname;
+FilterPlainPrefix1Hostname.prototype.toSelfie =
+FilterPlainPrefix1Hostname.prototype.rtCompile = function() {
+    return this.s + '\t' + this.hostname;
 };
 
 FilterPlainPrefix1Hostname.compile = function(details, hostname) {
@@ -421,13 +422,12 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
     return url.slice(0, this.s.length) === this.s;
 };
 
-FilterPlainLeftAnchored.fid = FilterPlainLeftAnchored.prototype.fid = '|a';
+FilterPlainLeftAnchored.fid =
+FilterPlainLeftAnchored.prototype.fid =
+FilterPlainLeftAnchored.prototype.rtfid = '|a';
 
-FilterPlainLeftAnchored.prototype.toString = function() {
-    return '|' + this.s;
-};
-
-FilterPlainLeftAnchored.prototype.toSelfie = function() {
+FilterPlainLeftAnchored.prototype.toSelfie =
+FilterPlainLeftAnchored.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -451,15 +451,13 @@ FilterPlainLeftAnchoredHostname.prototype.match = function(url) {
            url.slice(0, this.s.length) === this.s;
 };
 
-FilterPlainLeftAnchoredHostname.fid = FilterPlainLeftAnchoredHostname.prototype.fid = '|ah';
+FilterPlainLeftAnchoredHostname.fid =
+FilterPlainLeftAnchoredHostname.prototype.fid =
+FilterPlainLeftAnchoredHostname.prototype.rtfid = '|ah';
 
-FilterPlainLeftAnchoredHostname.prototype.toString = function() {
-    return '|' + this.s + '$domain=' + this.hostname;
-};
-
-FilterPlainLeftAnchoredHostname.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.hostname;
+FilterPlainLeftAnchoredHostname.prototype.toSelfie =
+FilterPlainLeftAnchoredHostname.prototype.rtCompile = function() {
+    return this.s + '\t' + this.hostname;
 };
 
 FilterPlainLeftAnchoredHostname.compile = function(details, hostname) {
@@ -481,13 +479,12 @@ FilterPlainRightAnchored.prototype.match = function(url) {
     return url.slice(-this.s.length) === this.s;
 };
 
-FilterPlainRightAnchored.fid = FilterPlainRightAnchored.prototype.fid = 'a|';
+FilterPlainRightAnchored.fid =
+FilterPlainRightAnchored.prototype.fid =
+FilterPlainRightAnchored.prototype.rtfid = 'a|';
 
-FilterPlainRightAnchored.prototype.toString = function() {
-    return this.s + '|';
-};
-
-FilterPlainRightAnchored.prototype.toSelfie = function() {
+FilterPlainRightAnchored.prototype.toSelfie =
+FilterPlainRightAnchored.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -511,15 +508,13 @@ FilterPlainRightAnchoredHostname.prototype.match = function(url) {
            url.slice(-this.s.length) === this.s;
 };
 
-FilterPlainRightAnchoredHostname.fid = FilterPlainRightAnchoredHostname.prototype.fid = 'a|h';
+FilterPlainRightAnchoredHostname.fid =
+FilterPlainRightAnchoredHostname.prototype.fid =
+FilterPlainRightAnchoredHostname.prototype.rtfid = 'a|h';
 
-FilterPlainRightAnchoredHostname.prototype.toString = function() {
-    return this.s + '|$domain=' + this.hostname;
-};
-
-FilterPlainRightAnchoredHostname.prototype.toSelfie = function() {
-    return this.s + '\t' +
-           this.hostname;
+FilterPlainRightAnchoredHostname.prototype.toSelfie =
+FilterPlainRightAnchoredHostname.prototype.rtCompile = function() {
+    return this.s + '\t' + this.hostname;
 };
 
 FilterPlainRightAnchoredHostname.compile = function(details, hostname) {
@@ -550,13 +545,12 @@ FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
            reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
 };
 
-FilterPlainHnAnchored.fid = FilterPlainHnAnchored.prototype.fid = '||a';
+FilterPlainHnAnchored.fid =
+FilterPlainHnAnchored.prototype.fid =
+FilterPlainHnAnchored.prototype.rtfid = '||a';
 
-FilterPlainHnAnchored.prototype.toString = function() {
-    return '||' + this.s;
-};
-
-FilterPlainHnAnchored.prototype.toSelfie = function() {
+FilterPlainHnAnchored.prototype.toSelfie =
+FilterPlainHnAnchored.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -592,13 +586,12 @@ FilterPlainHnAnchoredHostname.prototype.match = function(url, tokenBeg) {
            reURLPostHostnameAnchors.test(url.slice(pos + 3, tokenBeg)) === false;
 };
 
-FilterPlainHnAnchoredHostname.fid = FilterPlainHnAnchoredHostname.prototype.fid = '||ah';
+FilterPlainHnAnchoredHostname.fid =
+FilterPlainHnAnchoredHostname.prototype.fid =
+FilterPlainHnAnchoredHostname.prototype.rtfid = '||ah';
 
-FilterPlainHnAnchoredHostname.prototype.toString = function() {
-    return '||' + this.s;
-};
-
-FilterPlainHnAnchoredHostname.prototype.toSelfie = function() {
+FilterPlainHnAnchoredHostname.prototype.toSelfie =
+FilterPlainHnAnchoredHostname.prototype.rtCompile = function() {
     return this.s + '\t' + this.hostname;
 };
 
@@ -628,19 +621,12 @@ FilterGeneric.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterGeneric.fid = FilterGeneric.prototype.fid = '_';
+FilterGeneric.fid =
+FilterGeneric.prototype.fid =
+FilterGeneric.prototype.rtfid = '_';
 
-FilterGeneric.prototype.toString = function() {
-    if ( this.anchor === 0 ) {
-        return this.s;
-    }
-    if ( this.anchor < 0 ) {
-        return '|' + this.s;
-    }
-    return this.s + '|';
-};
-
-FilterGeneric.prototype.toSelfie = function() {
+FilterGeneric.prototype.toSelfie =
+FilterGeneric.prototype.rtCompile = function() {
     return this.s + '\t' + this.anchor;
 };
 
@@ -671,13 +657,12 @@ FilterGenericHostname.prototype.match = function(url) {
     return FilterGeneric.prototype.match.call(this, url);
 };
 
-FilterGenericHostname.fid = FilterGenericHostname.prototype.fid = '_h';
+FilterGenericHostname.fid =
+FilterGenericHostname.prototype.fid =
+FilterGenericHostname.prototype.rtfid = '_h';
 
-FilterGenericHostname.prototype.toString = function() {
-    return FilterGeneric.prototype.toString.call(this) + '$domain=' + this.hostname;
-};
-
-FilterGenericHostname.prototype.toSelfie = function() {
+FilterGenericHostname.prototype.toSelfie =
+FilterGenericHostname.prototype.rtCompile = function() {
     return FilterGeneric.prototype.toSelfie.call(this) + '\t' + this.hostname;
 };
 
@@ -717,13 +702,12 @@ FilterGenericHnAnchored.prototype.match = function(url) {
            reURLPostHostnameAnchors.test(url.slice(pos + 3, match.index)) === false;
 };
 
-FilterGenericHnAnchored.fid = FilterGenericHnAnchored.prototype.fid = '||_';
+FilterGenericHnAnchored.fid =
+FilterGenericHnAnchored.prototype.fid =
+FilterGenericHnAnchored.prototype.rtfid = '||_';
 
-FilterGenericHnAnchored.prototype.toString = function() {
-    return '||' + this.s;
-};
-
-FilterGenericHnAnchored.prototype.toSelfie = function() {
+FilterGenericHnAnchored.prototype.toSelfie =
+FilterGenericHnAnchored.prototype.rtCompile = function() {
     return this.s;
 };
 
@@ -751,13 +735,12 @@ FilterGenericHnAnchoredHostname.prototype.match = function(url) {
     return FilterGenericHnAnchored.prototype.match.call(this, url);
 };
 
-FilterGenericHnAnchoredHostname.fid = FilterGenericHnAnchoredHostname.prototype.fid = '||_h';
+FilterGenericHnAnchoredHostname.fid =
+FilterGenericHnAnchoredHostname.prototype.fid =
+FilterGenericHnAnchoredHostname.prototype.rtfid = '||_h';
 
-FilterGenericHnAnchoredHostname.prototype.toString = function() {
-    return '||' + this.s + '$domain=' + this.hostname;
-};
-
-FilterGenericHnAnchoredHostname.prototype.toSelfie = function() {
+FilterGenericHnAnchoredHostname.prototype.toSelfie =
+FilterGenericHnAnchoredHostname.prototype.rtCompile = function() {
     return this.s + '\t' + this.hostname;
 };
 
@@ -782,13 +765,12 @@ FilterRegex.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterRegex.fid = FilterRegex.prototype.fid = '//';
+FilterRegex.fid =
+FilterRegex.prototype.fid =
+FilterRegex.prototype.rtfid = '//';
 
-FilterRegex.prototype.toString = function() {
-    return '/' + this.re.source + '/';
-};
-
-FilterRegex.prototype.toSelfie = function() {
+FilterRegex.prototype.toSelfie =
+FilterRegex.prototype.rtCompile = function() {
     return this.re.source;
 };
 
@@ -813,13 +795,12 @@ FilterRegexHostname.prototype.match = function(url) {
            this.re.test(url);
 };
 
-FilterRegexHostname.fid = FilterRegexHostname.prototype.fid = '//h';
+FilterRegexHostname.fid =
+FilterRegexHostname.prototype.fid =
+FilterRegexHostname.prototype.rtfid = '//h';
 
-FilterRegexHostname.prototype.toString = function() {
-    return '/' + this.re.source + '/$domain=' + this.hostname;
-};
-
-FilterRegexHostname.prototype.toSelfie = function() {
+FilterRegexHostname.prototype.toSelfie =
+FilterRegexHostname.prototype.rtCompile = function() {
     return this.re.source + '\t' + this.hostname;
 };
 
@@ -1004,13 +985,15 @@ FilterHostnameDict.prototype.match = function() {
         }
         hostname = hostname.slice(pos + 1);
     }
-    this.h = '||' + hostname + '^';
+    this.h = hostname;
     return this;
 };
 
-FilterHostnameDict.fid = FilterHostnameDict.prototype.fid = '{h}';
+FilterHostnameDict.fid =
+FilterHostnameDict.prototype.fid = '{h}';
+FilterHostnameDict.rtfid = '.';
 
-FilterHostnameDict.prototype.toString = function() {
+FilterHostnameDict.prototype.rtCompile = function() {
     return this.h;
 };
 
@@ -1075,6 +1058,12 @@ var FilterBucket = function(a, b) {
             this.filters[1] = b;
         }
     }
+
+    Object.defineProperty(this, 'rtfid', {
+        get: function() {
+            return this.f.rtfid;
+        }
+    });
 };
 
 FilterBucket.prototype.add = function(a) {
@@ -1106,7 +1095,7 @@ FilterBucket.prototype.match = function(url, tokenBeg) {
     var filters = this.filters;
     var n = filters.length;
     for ( var i = 0; i < n; i++ ) {
-        if ( filters[i].match(url, tokenBeg) !== false ) {
+        if ( filters[i].match(url, tokenBeg) ) {
             this.f = filters[i];
             if ( i >= this.vip ) {
                 this.promote(i);
@@ -1119,15 +1108,13 @@ FilterBucket.prototype.match = function(url, tokenBeg) {
 
 FilterBucket.prototype.fid = '[]';
 
-FilterBucket.prototype.toString = function() {
-    if ( this.f !== null ) {
-        return this.f.toString();
-    }
-    return '';
-};
-
 FilterBucket.prototype.toSelfie = function() {
     return this.filters.length.toString();
+};
+
+// Not supposed to be called without a valid filter hit.
+FilterBucket.prototype.rtCompile = function() {
+    return this.f.rtCompile();
 };
 
 FilterBucket.fromSelfie = function() {
@@ -1601,6 +1588,11 @@ FilterContainer.prototype.reset = function() {
     this.categories = Object.create(null);
     this.filterParser.reset();
     this.filterCounts = {};
+
+    // Runtime registers
+    this.keyRegister = undefined;
+    this.tokenRegister = undefined;
+    this.fRegister = null;
 };
 
 /******************************************************************************/
@@ -2019,6 +2011,140 @@ FilterContainer.prototype.fromCompiledContent = function(text, lineBeg) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.filterStringFromCompiled = function(compiled) {
+    var opts = [];
+    var vfields = compiled.split('\v');
+    var filter = '';
+    var bits = parseInt(vfields[1], 16) | 0;
+
+    if ( bits & 0x01 ) {
+        filter += '@@';
+    }
+
+    var rfid = vfields[2] === '.' ? '.' : vfields[3];
+    var tfields = rfid !== '.' ? vfields[4].split('\t') : [];
+
+    switch ( rfid ) {
+    case '.':
+        filter += '||' + vfields[3] + '^';
+        break;
+    case 'a':
+    case 'ah':
+    case '0a':
+    case '0ah':
+    case '1a':
+    case '1ah':
+    case '_':
+    case '_h':
+        filter += tfields[0];
+        break;
+    case '|a':
+    case '|ah':
+        filter += '|' + tfields[0];
+        break;
+    case 'a|':
+    case 'a|h':
+        filter += tfields[0] + '|';
+        break;
+    case '||a':
+    case '||ah':
+    case '||_':
+    case '||_h':
+        filter += '||' + tfields[0];
+        break;
+    case '//':
+    case '//h':
+        filter += '/' + tfields[0] + '/';
+        break;
+    default:
+        break;
+    }
+
+    // Domain option?
+    switch ( rfid ) {
+    case '0ah':
+    case '1ah':
+    case '|ah':
+    case 'a|h':
+    case '||ah':
+    case '||_h':
+    case '//h':
+        opts.push('domain=' + tfields[1]);
+        break;
+    case 'ah':
+    case '_h':
+        opts.push('domain=' + tfields[2]);
+        break;
+    default:
+        break;
+    }
+
+    // Filter options
+    if ( bits & 0x02 ) {
+        opts.push('important');
+    }
+    if ( bits & 0x08 ) {
+        opts.push('third-party');
+    } else if ( bits & 0x04 ) {
+        opts.push('first-party');
+    }
+    if ( bits & 0xF0 ) {
+        opts.push(typeValueToTypeName[bits >>> 4]);
+    }
+    if ( opts.length !== 0 ) {
+        filter += '$' + opts.join(',');
+    }
+
+    return filter;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.filterRegexFromCompiled = function(compiled, flags) {
+    var vfields = compiled.split('\v');
+    var rfid = vfields[2] === '.' ? '.' : vfields[3];
+    var tfields = rfid !== '.' ? vfields[4].split('\t') : [];
+    var re = null;
+
+    switch ( rfid ) {
+    case '.':
+        re = strToRegex(vfields[3], 0, flags);
+        break;
+    case 'a':
+    case 'ah':
+    case '0a':
+    case '0ah':
+    case '1a':
+    case '1ah':
+    case '_':
+    case '_h':
+    case '||a':
+    case '||ah':
+    case '||_':
+    case '||_h':
+        re = strToRegex(tfields[0], 0, flags);
+        break;
+    case '|a':
+    case '|ah':
+        re = strToRegex(tfields[0], -1, flags);
+        break;
+    case 'a|':
+    case 'a|h':
+        re = strToRegex(tfields[0], 1, flags);
+        break;
+    case '//':
+    case '//h':
+        re = new RegExp(tfields[0]);
+        break;
+    default:
+        break;
+    }
+
+    return re;
+};
+
+/******************************************************************************/
+
 // Since the addition of the `important` evaluation, this means it is now
 // likely that the url will have to be scanned more than once. So this is
 // to ensure we do it once only, and reuse results.
@@ -2058,8 +2184,10 @@ FilterContainer.prototype.tokenize = function(url) {
 FilterContainer.prototype.matchTokens = function(bucket, url) {
     // Hostname-only filters
     var f = bucket['.'];
-    if ( f !== undefined && f.match() !== false ) {
-        return f;
+    if ( f !== undefined && f.match() ) {
+        this.tokenRegister = '.';
+        this.fRegister = f;
+        return true;
     }
 
     var tokens = this.tokens;
@@ -2072,15 +2200,19 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
             break;
         }
         f = bucket[token];
-        if ( f !== undefined && f.match(url, tokenEntry.beg) !== false ) {
-            return f;
+        if ( f !== undefined && f.match(url, tokenEntry.beg) ) {
+            this.tokenRegister = token;
+            this.fRegister = f;
+            return true;
         }
     }
 
     // Regex-based filters
     f = bucket['*'];
-    if ( f !== undefined && f.match(url) !== false ) {
-        return f;
+    if ( f !== undefined && f.match(url) ) {
+        this.tokenRegister = '*';
+        this.fRegister = f;
+        return true;
     }
 
     return false;
@@ -2106,60 +2238,66 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // Be prepared to support unknown types
     var type = typeNameToTypeValue[requestType] || 0;
     if ( type === 0 ) {
-        return '';
+        return false;
     }
 
     var categories = this.categories;
-    var bf = false, bucket;
+    var bucket;
 
     // Tokenize only once
     this.tokenize(url);
 
+    this.fRegister = null;
+
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
     if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyParty | Important | type;
+            return true;
         }
     }
     if ( bucket = categories[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAction | Important | type | party;
+            return true;
         }
     }
 
     // Test against block filters
     if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | type)] ) {
-        bf = this.matchTokens(bucket, url);
-    }
-    if ( bf === false ) {
-        if ( bucket = categories[this.makeCategoryKey(BlockAction | type | party)] ) {
-            bf = this.matchTokens(bucket, url);
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyParty | type;
         }
     }
+    if ( this.fRegister === null ) {
+        if ( bucket = categories[this.makeCategoryKey(BlockAction | type | party)] ) {
+            if ( this.matchTokens(bucket, url) ) {
+                this.keyRegister = BlockAction | type | party;
+            }
+        }
+    }
+
     // If there is no block filter, no need to test against allow filters
-    if ( bf === false ) {
-        return '';
+    if ( this.fRegister === null ) {
+        return false;
     }
 
     // Test against allow filters
-    var af;
     if ( bucket = categories[this.makeCategoryKey(AllowAnyParty | type)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAnyParty | type;
+            return false;
         }
     }
     if ( bucket = categories[this.makeCategoryKey(AllowAction | type | party)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAction | type | party;
+            return false;
         }
     }
 
-    return 'sb:' + bf.toString();
+    return true;
 };
 
 /******************************************************************************/
@@ -2212,7 +2350,7 @@ FilterContainer.prototype.matchString = function(context) {
     // Tokenize only once
     this.tokenize(url);
 
-    var bf = false;
+    this.fRegister = null;
 
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters.
@@ -2220,86 +2358,113 @@ FilterContainer.prototype.matchString = function(context) {
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
     if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString() + '$important';
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyTypeAnyParty | Important;
+            return true;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyType | Important | party)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString() + '$important';
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyType | Important | party;
+            return true;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString() + '$important';
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyParty | Important | type;
+            return true;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
-        bf = this.matchTokens(bucket, url);
-        if ( bf !== false ) {
-            return 'sb:' + bf.toString() + '$important';
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAction | Important | type | party;
+            return true;
         }
     }
 
     // Test against block filters
-    if ( bf === false ) {
-        if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyTypeAnyParty)] ) {
-            bf = this.matchTokens(bucket, url);
+    if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyTypeAnyParty)] ) {
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = BlockAnyTypeAnyParty;
         }
     }
-    if ( bf === false ) {
+    if ( this.fRegister === null ) {
         if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyType | party)] ) {
-            bf = this.matchTokens(bucket, url);
+            if ( this.matchTokens(bucket, url) ) {
+                this.keyRegister = BlockAnyType | party;
+            }
         }
-    }
-    if ( bf === false ) {
-        if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyParty | type)] ) {
-            bf = this.matchTokens(bucket, url);
-        }
-    }
-    if ( bf === false ) {
-        if ( bucket = filterClasses[this.makeCategoryKey(BlockAction | type | party)] ) {
-            bf = this.matchTokens(bucket, url);
+        if ( this.fRegister === null ) {
+            if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyParty | type)] ) {
+                if ( this.matchTokens(bucket, url) ) {
+                    this.keyRegister = BlockAnyParty | type;
+                }
+            }
+            if ( this.fRegister === null ) {
+                if ( bucket = filterClasses[this.makeCategoryKey(BlockAction | type | party)] ) {
+                    if ( this.matchTokens(bucket, url) ) {
+                        this.keyRegister = BlockAction | type | party;
+                    }
+                }
+            }
         }
     }
 
     // If there is no block filter, no need to test against allow filters
-    if ( bf === false ) {
-        return '';
+    if ( this.fRegister === null ) {
+        return false;
     }
 
     // Test against allow filters
-    var af;
-
     if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyTypeAnyParty)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAnyTypeAnyParty;
+            return false;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyType | party)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAnyType | party;
+            return false;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyParty | type)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAnyParty | type;
+            return false;
         }
     }
     if ( bucket = filterClasses[this.makeCategoryKey(AllowAction | type | party)] ) {
-        af = this.matchTokens(bucket, url);
-        if ( af !== false ) {
-            return 'sa:' + af.toString();
+        if ( this.matchTokens(bucket, url) ) {
+            this.keyRegister = AllowAction | type | party;
+            return false;
         }
     }
 
-    return 'sb:' + bf.toString();
+    return true;
+};
+
+/******************************************************************************/
+
+// The `verbose` argment tells whether to return a short or long version of
+// the filter string. Typically, if the logger is not enabled, there is no
+// point in returning the long version: this saves overhead.
+
+FilterContainer.prototype.toResultString = function(verbose) {
+    if ( this.fRegister === null ) {
+        return '';
+    }
+    var s = this.keyRegister & 0x01  ? 'sa:' : 'sb:';
+    if ( !verbose ) {
+        return s;
+    }
+    s += 'n\v' + this.makeCategoryKey(this.keyRegister) + '\v' + this.tokenRegister + '\v';
+    if ( this.tokenRegister === '.' ) {
+        s += this.fRegister.rtCompile();
+    } else {
+        s += this.fRegister.rtfid + '\v' + this.fRegister.rtCompile();
+    }
+    return s;
 };
 
 /******************************************************************************/

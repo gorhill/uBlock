@@ -104,7 +104,7 @@ var proceedPermanent = function() {
 /******************************************************************************/
 
 uDom('.what').text(details.url);
-uDom('#why').text(details.why.slice(3));
+uDom('#why').text(details.why);
 
 if ( window.history.length > 1 ) {
     uDom('#back').on('click', function() { window.history.back(); });
