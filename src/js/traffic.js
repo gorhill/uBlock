@@ -185,7 +185,7 @@ var onBeforeRootFrameRequest = function(details) {
 
     // Filtering
     if ( result === '' ) {
-        if ( µb.staticNetFilteringEngine.matchString(context) ) {
+        if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             // We always need the long-form result here.
             result = µb.staticNetFilteringEngine.toResultString(true);
             // https://github.com/chrisaljoudi/uBlock/issues/1128

@@ -526,7 +526,7 @@ PageStore.prototype.filterRequest = function(context) {
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        if ( µb.staticNetFilteringEngine.matchString(context) ) {
+        if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
         }
     }
@@ -568,7 +568,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
 
     // Static filtering never override dynamic filtering
     if ( result === '' || result.charAt(1) === 'n' ) {
-        if ( µb.staticNetFilteringEngine.matchString(context) ) {
+        if ( µb.staticNetFilteringEngine.matchString(context) !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(µb.logger.isEnabled());
         }
     }

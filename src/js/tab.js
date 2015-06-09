@@ -507,7 +507,7 @@ vAPI.tabs.onPopup = function(details) {
         µb.getNetFilteringSwitch(openerURL) &&
         µb.getNetFilteringSwitch(targetURL)
     ) {
-        if ( µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') ) {
+        if ( µb.staticNetFilteringEngine.matchStringExactType(context, targetURL, 'popup') !== undefined ) {
             result = µb.staticNetFilteringEngine.toResultString(loggerEnabled);
         }
     }

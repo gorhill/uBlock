@@ -2238,7 +2238,7 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     // Be prepared to support unknown types
     var type = typeNameToTypeValue[requestType] || 0;
     if ( type === 0 ) {
-        return false;
+        return undefined;
     }
 
     var categories = this.categories;
@@ -2280,7 +2280,7 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
     // If there is no block filter, no need to test against allow filters
     if ( this.fRegister === null ) {
-        return false;
+        return undefined;
     }
 
     // Test against allow filters
@@ -2412,7 +2412,7 @@ FilterContainer.prototype.matchString = function(context) {
 
     // If there is no block filter, no need to test against allow filters
     if ( this.fRegister === null ) {
-        return false;
+        return undefined;
     }
 
     // Test against allow filters
