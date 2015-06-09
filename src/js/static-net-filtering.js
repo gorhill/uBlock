@@ -158,6 +158,8 @@ histogram = function(label, categories) {
 */
 /******************************************************************************/
 
+// Local helpers
+
 // Could be replaced with encodeURIComponent/decodeURIComponent,
 // which seems faster on Firefox.
 var encode = JSON.stringify;
@@ -208,6 +210,10 @@ var strToRegex = function(s, anchor, flags) {
 
     //console.debug('µBlock.staticNetFilteringEngine: created RegExp("%s")', reStr);
     return new RegExp(reStr, flags);
+};
+
+var toHex = function(category) {
+    return category.toString(16);
 };
 
 /*******************************************************************************
@@ -1739,12 +1745,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.makeCategoryKey = function(category) {
-    return category.toString(16);
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.compile = function(raw, out) {
     // ORDER OF TESTS IS IMPORTANT!
 
@@ -1808,7 +1808,7 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
     if ( type === 0 ) {
         out.push(
             'n\v' +
-            this.makeCategoryKey(keyShard) + '\v' +
+            toHex(keyShard) + '\v' +
             '.\v' +
             parsed.f
         );
@@ -1820,7 +1820,7 @@ FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, out) {
         if ( type & 1 ) {
             out.push(
                 'n\v' +
-                this.makeCategoryKey(keyShard | (bitOffset << 4)) + '\v' +
+                toHex(keyShard | (bitOffset << 4)) + '\v' +
                 '.\v' +
                 parsed.f
             );
@@ -1920,7 +1920,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
     if ( type === 0 ) {
         out.push(
             'n\v' +
-            this.makeCategoryKey(bits) + '\v' +
+            toHex(bits) + '\v' +
             parsed.token + '\v' +
             filterClass.fid + '\v' +
             filterClass.compile(parsed, hostname)
@@ -1932,7 +1932,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(filterClass, parsed, 
         if ( type & 1 ) {
             out.push(
                 'n\v' +
-                this.makeCategoryKey(bits | (bitOffset << 4)) + '\v' +
+                toHex(bits | (bitOffset << 4)) + '\v' +
                 parsed.token + '\v' +
                 filterClass.fid + '\v' +
                 filterClass.compile(parsed, hostname)
@@ -2241,39 +2241,43 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
         return undefined;
     }
 
-    var categories = this.categories;
-    var bucket;
-
     // Tokenize only once
     this.tokenize(url);
 
     this.fRegister = null;
 
+    var categories = this.categories;
+    var key, bucket;
+
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters
-    if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
+    key = toHex(BlockAnyParty | Important | type);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyParty | Important | type;
+            this.keyRegister = key;
             return true;
         }
     }
-    if ( bucket = categories[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
+    key = toHex(BlockAction | Important | type | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAction | Important | type | party;
+            this.keyRegister = key;
             return true;
         }
     }
 
     // Test against block filters
-    if ( bucket = categories[this.makeCategoryKey(BlockAnyParty | type)] ) {
+    key = toHex(BlockAnyParty | type);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyParty | type;
+            this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
-        if ( bucket = categories[this.makeCategoryKey(BlockAction | type | party)] ) {
+        key = toHex(BlockAction | type | party);
+        if ( bucket = categories[key] ) {
             if ( this.matchTokens(bucket, url) ) {
-                this.keyRegister = BlockAction | type | party;
+                this.keyRegister = key;
             }
         }
     }
@@ -2284,15 +2288,17 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
     }
 
     // Test against allow filters
-    if ( bucket = categories[this.makeCategoryKey(AllowAnyParty | type)] ) {
+    key = toHex(AllowAnyParty | type);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAnyParty | type;
+            this.keyRegister = key;
             return false;
         }
     }
-    if ( bucket = categories[this.makeCategoryKey(AllowAction | type | party)] ) {
+    key = toHex(AllowAction | type | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAction | type | party;
+            this.keyRegister = key;
             return false;
         }
     }
@@ -2343,67 +2349,75 @@ FilterContainer.prototype.matchString = function(context) {
     pageHostnameRegister = context.pageHostname || '';
     requestHostnameRegister = context.requestHostname;
 
-    var party = isFirstParty(context.pageDomain, context.requestHostname) ? FirstParty : ThirdParty;
-    var filterClasses = this.categories;
-    var bucket;
-
     // Tokenize only once
     this.tokenize(url);
 
     this.fRegister = null;
+
+    var party = isFirstParty(context.pageDomain, context.requestHostname) ? FirstParty : ThirdParty;
+    var categories = this.categories;
+    var key, bucket;
 
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters.
     // The purpose of the `important` option is to reverse the order of
     // evaluation. Normally, it is "evaluate block then evaluate allow", with
     // the `important` property it is "evaluate allow then evaluate block".
-    if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyTypeAnyParty | Important)] ) {
+    key = toHex(BlockAnyTypeAnyParty | Important);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyTypeAnyParty | Important;
+            this.keyRegister = key;
             return true;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyType | Important | party)] ) {
+    key = toHex(BlockAnyType | Important | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyType | Important | party;
+            this.keyRegister = key;
             return true;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyParty | Important | type)] ) {
+    key = toHex(BlockAnyParty | Important | type);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyParty | Important | type;
+            this.keyRegister = key;
             return true;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(BlockAction | Important | type | party)] ) {
+    key = toHex(BlockAction | Important | type | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAction | Important | type | party;
+            this.keyRegister = key;
             return true;
         }
     }
 
     // Test against block filters
-    if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyTypeAnyParty)] ) {
+    key = toHex(BlockAnyTypeAnyParty);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = BlockAnyTypeAnyParty;
+            this.keyRegister = key;
         }
     }
     if ( this.fRegister === null ) {
-        if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyType | party)] ) {
+        key = toHex(BlockAnyType | party);
+        if ( bucket = categories[key] ) {
             if ( this.matchTokens(bucket, url) ) {
-                this.keyRegister = BlockAnyType | party;
+                this.keyRegister = key;
             }
         }
         if ( this.fRegister === null ) {
-            if ( bucket = filterClasses[this.makeCategoryKey(BlockAnyParty | type)] ) {
+            key = toHex(BlockAnyParty | type);
+            if ( bucket = categories[key] ) {
                 if ( this.matchTokens(bucket, url) ) {
-                    this.keyRegister = BlockAnyParty | type;
+                    this.keyRegister = key;
                 }
             }
             if ( this.fRegister === null ) {
-                if ( bucket = filterClasses[this.makeCategoryKey(BlockAction | type | party)] ) {
+                key = toHex(BlockAction | type | party);
+                if ( bucket = categories[key] ) {
                     if ( this.matchTokens(bucket, url) ) {
-                        this.keyRegister = BlockAction | type | party;
+                        this.keyRegister = key;
                     }
                 }
             }
@@ -2416,27 +2430,31 @@ FilterContainer.prototype.matchString = function(context) {
     }
 
     // Test against allow filters
-    if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyTypeAnyParty)] ) {
+    key = toHex(AllowAnyTypeAnyParty);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAnyTypeAnyParty;
+            this.keyRegister = key;
             return false;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyType | party)] ) {
+    key = toHex(AllowAnyType | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAnyType | party;
+            this.keyRegister = key;
             return false;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(AllowAnyParty | type)] ) {
+    key = toHex(AllowAnyParty | type);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAnyParty | type;
+            this.keyRegister = key;
             return false;
         }
     }
-    if ( bucket = filterClasses[this.makeCategoryKey(AllowAction | type | party)] ) {
+    key = toHex(AllowAction | type | party);
+    if ( bucket = categories[key] ) {
         if ( this.matchTokens(bucket, url) ) {
-            this.keyRegister = AllowAction | type | party;
+            this.keyRegister = key;
             return false;
         }
     }
@@ -2458,7 +2476,7 @@ FilterContainer.prototype.toResultString = function(verbose) {
     if ( !verbose ) {
         return s;
     }
-    s += 'n\v' + this.makeCategoryKey(this.keyRegister) + '\v' + this.tokenRegister + '\v';
+    s += 'n\v' + this.keyRegister + '\v' + this.tokenRegister + '\v';
     if ( this.tokenRegister === '.' ) {
         s += this.fRegister.rtCompile();
     } else {

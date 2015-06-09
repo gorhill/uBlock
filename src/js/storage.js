@@ -577,7 +577,6 @@
             continue;
         }
 
-        //staticNetFilteringEngine.add(line);
         staticNetFilteringEngine.compile(line, compiledFilters);
     }
 
