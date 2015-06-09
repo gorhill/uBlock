@@ -212,8 +212,8 @@ var strToRegex = function(s, anchor, flags) {
     return new RegExp(reStr, flags);
 };
 
-var toHex = function(category) {
-    return category.toString(16);
+var toHex = function(n) {
+    return n.toString(16);
 };
 
 /*******************************************************************************
