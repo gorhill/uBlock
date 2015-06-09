@@ -420,7 +420,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} на мрежови заявки за {{type}} от адреси, съвпадащ с {{br}}{{url}},{{br}}и произлизащ от {{origin}},{{importance}} има филтър със съвпадащи изключения.",
+    "message":"{{action}} на мрежови заявки от {{type}} за адрес, съвпадащ с {{br}}{{url}}{{br}}и произлизащ от {{origin}},{{importance}} има филтър със съвпадащи изключения.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -440,7 +440,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"от \"{{origin}}\"",
+    "message":"\"{{origin}}\"",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{

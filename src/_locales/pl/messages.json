@@ -164,19 +164,19 @@
     "description":"English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt":{
-    "message":"Schemat kolorów przyjazny daltonistom",
+    "message":"Zastosuj schemat kolorów przyjazny osobom niedowidzcym",
     "description":"English: Color-blind friendly"
   },
   "settingsAdvancedUserPrompt":{
-    "message":"Jestem zaawansowanym użytkownikiem (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>funkcje zaawansowane<\/a>)",
+    "message":"Włącz funkcje zaawansowane (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Informacje<\/a>)",
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Wyłącz wstępne pobieranie (by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi)",
+    "message":"Wyłącz wstępne pobieranie, by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Wyłącz śledzenie kliknięć odnośników\/beaconów",
+    "message":"Nie śledź kliknięć odnośników\/beaconów",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -412,7 +412,7 @@
     "description":"Label for the type selector"
   },
   "loggerURLFilteringHeader":{
-    "message":"Dynamiczne filtrowanie adresów URL",
+    "message":"Dynamiczne filtrowanie URL",
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
@@ -536,7 +536,7 @@
     "description":"Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton":{
-    "message":"Dziennik żądań sieciowych",
+    "message":"Dziennik żądań",
     "description":"Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff":{
@@ -544,11 +544,11 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock₀ zablokował wczytywanie tej strony:",
+    "message":"uBlock₀ zablokował wczytywanie strony:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{
-    "message":"ponieważ znajduje się w filtrze",
+    "message":"ponieważ jest blokowana przez filtr",
     "description":"English: Because of the following filter"
   },
   "docblockedBack":{
