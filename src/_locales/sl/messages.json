@@ -87,6 +87,10 @@
     "message":"Vklop\/Izklop kozmetičnih filtrov za to stran",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Toggle the blocking of remote fonts for this site",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"vse",
     "description":""

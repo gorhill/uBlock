@@ -84,8 +84,12 @@
     "description":"English: Toggle strict blocking for this site"
   },
   "popupTipNoCosmeticFiltering":{
-    "message":"Lülita ilufiltrid sellel saidil välja\/sisse",
+    "message":"Keela ilufiltrid sellel saidil",
     "description":"English: Toggle cosmetic filtering for this site"
+  },
+  "popupTipNoRemoteFonts":{
+    "message":"Luba väliste fontide blokeerimine sellel saidil",
+    "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
     "message":"kõik",

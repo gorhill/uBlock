@@ -87,6 +87,10 @@
     "message":"Alternar a filtragem cosmética para este sítio web",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Alternar o bloqueio de fontes remotas para este sítio",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"tudo",
     "description":""

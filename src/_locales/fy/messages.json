@@ -87,6 +87,10 @@
     "message":"Kosmetyske filters foar dizze website yn-\/útskeakelje",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Blokkearjen fan eksterne lettertypen foar dizze site yn-\/útskeakelje",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"alles",
     "description":""

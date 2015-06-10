@@ -87,6 +87,10 @@
     "message":"Activer\/Désactiver le filtrage esthétique pour ce site",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Basculer le blocage de polices distantes pour ce site",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"Tout",
     "description":""

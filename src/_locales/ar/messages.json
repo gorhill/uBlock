@@ -8,7 +8,7 @@
     "description":"this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName":{
-    "message":"uBlock₀ — قوائم إعداد المعلومات",
+    "message":"uBlock₀ — لوحة التحكم",
     "description":"English: uBlock₀ — Dashboard"
   },
   "settingsPageName":{
@@ -64,7 +64,7 @@
     "description":"English: or"
   },
   "popupTipDashboard":{
-    "message":"اضغط لفتح اللوحه",
+    "message":"إضغط لفتح لوحة التحكم",
     "description":"English: Click to open the dashboard"
   },
   "popupTipPicker":{
@@ -86,6 +86,10 @@
   "popupTipNoCosmeticFiltering":{
     "message":"تفعيل أو تعطيل التصفية الجمالية لهذا الموقع",
     "description":"English: Toggle cosmetic filtering for this site"
+  },
+  "popupTipNoRemoteFonts":{
+    "message":"تبديل حجب الخطوط البعيدة لهذا الموقع",
+    "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
     "message":"كل",
@@ -352,7 +356,7 @@
     "description":"English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"القائمة الخاصه فيك التي سوف يتم منعها من قبل الاداة. رابط واحد كل سطر, الروابط الغير صحيحه سوف يتم تجاهلها.",
+    "message":"القائمة الخاصه التي سوف يتم تجاهلها من قبل uBlock₀. رابط واحد كل سطر.\nالروابط الغير صحيحه سوف يتم تجاهلها.",
     "description":"English: Your list of host names for which uBlock₀ will be disabled. One host name per line. Invalid host names will be silently ignored."
   },
   "whitelistImport":{
@@ -496,7 +500,7 @@
     "description":"Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm":{
-    "message":"كل إعداداتك سيتم إلغائها، و سيتم إعادة تشغيل \"µBlock\".\n\n\nإعادة ضبط \"µBlock\" على الإعدادات الأصلية؟",
+    "message":"كل إعداداتك سيتم إلغائها، و سيتم إعادة تشغيل \"uBlock₀\".\n\n\nإعادة ضبط \"uBlock₀\" على الإعدادات الأصلية؟",
     "description":"Message asking user to confirm reset"
   },
   "errorCantConnectTo":{

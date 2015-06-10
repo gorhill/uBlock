@@ -87,6 +87,10 @@
     "message":"Växla kosmetiska filter för denna sida",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Växla blockering för hämtning av typsnitt på sidan",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"alla",
     "description":""

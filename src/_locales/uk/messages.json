@@ -87,6 +87,10 @@
     "message":"Переключити косметичний фільтр для цього сайту",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Переключити блокування віддалених шрифтів для цього сайту",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"всі",
     "description":""

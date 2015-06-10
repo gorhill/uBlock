@@ -87,6 +87,10 @@
     "message":"Lejoj filtrat kozmetikë te kjo faqja",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Bllokoj sistemet e shkronjave në distancë",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"të gjitha",
     "description":""

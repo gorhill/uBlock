@@ -87,6 +87,10 @@
     "message":"Alihkan penyaringan tampilan untuk situs ini",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Jungkit pemblokiran fon pihak ketiga untuk situs ini",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"semua",
     "description":""

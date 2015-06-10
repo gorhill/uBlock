@@ -87,6 +87,10 @@
     "message":"切換是否在此網站過濾網頁元素",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"切換封鎖此網站的遠端字體",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"全部",
     "description":""

@@ -87,6 +87,10 @@
     "message":"Bật\/tắt bộ lọc phần tử trên trang này",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Bật tắt chặn kiểu chữ từ xa trên trang này",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"tất cả",
     "description":""

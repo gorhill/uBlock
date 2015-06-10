@@ -87,6 +87,10 @@
     "message":"ఈ వెబ్ సైట్ లో కాస్మెటిక్ వడపోత స్థితిని మార్చండి",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Toggle the blocking of remote fonts for this site",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"అన్ని",
     "description":""

@@ -87,6 +87,10 @@
     "message":"Přepnout kosmetické filtrování pro tento web",
     "description":"English: Toggle cosmetic filtering for this site"
   },
+  "popupTipNoRemoteFonts":{
+    "message":"Toggle the blocking of remote fonts for this site",
+    "description":"English: Toggle the blocking of remote fonts for this site"
+  },
   "popupAnyRulePrompt":{
     "message":"vše",
     "description":""
