@@ -3,25 +3,13 @@
 
 ***
 
-**Regarding the new required Chromium permission as of 0.9.8.2**: [About the required permissions: change your privacy related settings](https://github.com/gorhill/uBlock/wiki/About-the-required-permissions#change-your-privacy-related-settings). My answer to [someone pointing out](https://github.com/chrisaljoudi/uBlock/issues/1424#issuecomment-107742160) at all the slew of negative reviews in the Chrome store:
+There is an idea floating around that uBlock Origin is a _lesser_ branch relative to uBlock<sup>[1]</sup>.
 
-> It's worth noting that there are a slew of negative reviews after this change
+The current reality is that there are *two branches*, not an official one and a lesser one. I keep developing my branch the same way and in the same spirit I have since the beginning of uBlock in June 23, 2014.
 
-I see this as a long term project. My decision will be proven right in the long run. People knee jerking without fully understanding what really went on is not a good reason for me to weaken good privacy habits. There will be a setting next version to re-enable it if you want, but prefetching will always be disabled by default, for all the reasons invoked. My track record is that of not compromising users' interests for the benefits of data miners etc., and disabling prefetching is consistent with this.
+For a neutral explanation of the differences in features between uBlock Origin and uBlock, refer to the [Wikipedia article](http://en.wikipedia.org/wiki/UBlock).
 
-**Couple of ongoing myths to dispel**:
-
-I've seen in many places lately the following assertion ([example](https://np.reddit.com/r/AskReddit/comments/35s2je/whats_a_product_that_everybody_uses_but_nobody/cr7h8l6), [example](https://np.reddit.com/r/leagueoflegends/comments/37e8ed/want_to_support_your_favorite_content_producers/)):
-
-> ublock blocks ads just like adblock plus, but triggers the ads API to think it got viewed
-
-**Completely false.** uBlock Origin (and uBlock) does not "trigger" any "ads API" (whatever that is). It prevents network requests from being made according to filter lists so that your browser does not connect to remote servers, period.
-
-Also, as opposed to what [_uBlock FAQ_ suggests](https://www.ublock.org/faq/):
-
-> [...] **In contrast**, the uBlock project will be moving forward with awesome new features, refinements, and enhancements [...]
-
-uBlock Origin is also actively maintained and is also moving forward with new features, refinements, and enhancements and stability work. For a neutral assessment of the differences between uBlock Origin and uBlock, it is best to rely on [Wikipedia's article on uBlock](http://en.wikipedia.org/wiki/UBlock).
+<sub>[1] [An example](https://www.ublock.org/faq/). [Another one](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/716364/).</sub>
 
 *** 
 
