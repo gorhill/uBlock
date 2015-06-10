@@ -82,6 +82,12 @@ DOMListFactory.onLoad = function(callback) {
 
 /******************************************************************************/
 
+DOMListFactory.nodeFromId = function(id) {
+    return document.getElementById(id);
+};
+
+/******************************************************************************/
+
 var addNodeToList = function(list, node) {
     if ( node ) {
         list.nodes.push(node);
