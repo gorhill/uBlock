@@ -7,7 +7,7 @@ There is an idea floating around that uBlock Origin is a _lesser_ branch relativ
 
 The current reality is that there are *two branches*, not an official one and a lesser one. I keep developing my branch the same way and in the same spirit I have since [the beginning of uBlock in June 23, 2014](http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/).
 
-For a neutral explanation of the differences in features between uBlock Origin and uBlock, refer to the [Wikipedia article](http://en.wikipedia.org/wiki/UBlock).
+You are more likely than anywhere else to find a neutral explanation on [Wikipedia article](http://en.wikipedia.org/wiki/UBlock) for the differences in features between uBlock Origin and uBlock.
 
 <sub>[1] [An example](https://www.ublock.org/faq/). [Another one](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/716364/).</sub>
 
