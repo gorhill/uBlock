@@ -103,8 +103,14 @@ var renderFilterLists = function() {
         elem.attr('data-listkey', listKey);
         elem.text(listNameFromListKey(listKey) + '\u200E');
 
-        if ( entry.supportName ) {
+        if ( entry.instructionURL ) {
             elem = li.descendants('a:nth-of-type(2)');
+            elem.attr('href', entry.instructionURL);
+            elem.css('display', '');
+        }
+
+        if ( entry.supportName ) {
+            elem = li.descendants('a:nth-of-type(3)');
             elem.attr('href', entry.supportURL);
             elem.text('(' + entry.supportName + ')');
             elem.css('display', '');

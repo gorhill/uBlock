@@ -239,7 +239,8 @@
         "title": "Anti-Adblock Killer | Reek",
         "group": "ads",
         "homeURL": "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt",
-        "supportURL": "https://github.com/reek/anti-adblock-killer"
+        "supportURL": "https://github.com/reek/anti-adblock-killer",
+        "instructionURL": "https://github.com/reek/anti-adblock-killer#instruction"
         },
     "raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": {
         "off": true,
