@@ -132,7 +132,7 @@ Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisalj
 
 Alternatively, you can install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) from [Firefox Add-ons homepage](https://addons.mozilla.org/firefox/addon/ublock/). Slightly different feature set, same performance, proper support for legacy Firefox-based browsers.
 
-For Firefox legacy versions -- versions prior below Firefox 29 -- it is best to install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) as it has official support for legacy Firefox versions.
+For Firefox legacy versions -- prior to Firefox 29 -- it is best to install [chrisaljoudi/uBlock](https://github.com/chrisaljoudi/uBlock) as it has official support for legacy Firefox versions.
 
 #### Safari
 
