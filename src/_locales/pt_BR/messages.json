@@ -88,7 +88,7 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Alternar o bloqueio de fontes tipográficas remotas para este site",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
