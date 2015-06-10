@@ -39,7 +39,8 @@ var HnSwitches = function() {
 var switchBitOffsets = {
        'no-strict-blocking': 0,
                 'no-popups': 2,
-    'no-cosmetic-filtering': 4
+    'no-cosmetic-filtering': 4,
+          'no-remote-fonts': 6
 };
 
 var fromLegacySwitchNames = {
@@ -104,7 +105,9 @@ HnSwitches.toBroaderHostname = toBroaderHostname;
 
 HnSwitches.prototype.reset = function() {
     this.switches = {};
+    this.n = '';
     this.z = '';
+    this.r = 0;
 };
 
 /******************************************************************************/
@@ -221,8 +224,10 @@ HnSwitches.prototype.evaluate = function(switchName, hostname) {
 HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
     var bitOffset = switchBitOffsets[switchName];
     if ( bitOffset === undefined ) {
+        this.r = 0;
         return false;
     }
+    this.n = switchName;
     var bits;
     var s = hostname;
     for (;;) {
@@ -231,6 +236,7 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
             bits = bits >> bitOffset & 3;
             if ( bits !== 0 ) {
                 this.z = s;
+                this.r = bits;
                 return bits === 1;
             }
         }
@@ -239,7 +245,16 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
             break;
         }
     }
+    this.r = 0;
     return false;
+};
+
+/******************************************************************************/
+
+HnSwitches.prototype.toResultString = function() {
+    return this.r !== 1 ?
+        '' :
+        'ub:' + this.n + ': ' + this.z + ' true';
 };
 
 /******************************************************************************/

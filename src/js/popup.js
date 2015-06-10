@@ -153,7 +153,8 @@ var hashFromPopupData = function(reset) {
     }
     hasher.sort();
     hasher.push(uDom('body').hasClass('off'));
-    hasher.push(uDom('#no-cosmetic-filtering').hasClass('on'));
+    hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
+    hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
 
     var hash = hasher.join('');
     if ( reset ) {
@@ -301,7 +302,7 @@ var updateAllFirewallCells = function() {
 
     positionRulesetTools();
 
-    uDom('#firewallContainer').toggleClass(
+    uDom.nodeFromId('firewallContainer').classList.toggle(
         'dirty',
         popupData.matrixIsDirty === true
     );
@@ -385,7 +386,7 @@ var renderPrivacyExposure = function() {
 
     var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
                                .replace('{{total}}', allDomainCount.toLocaleString());
-    uDom('#popupHitDomainCount').text(summary);
+    uDom.nodeFromId('popupHitDomainCount').textContent = summary;
 };
 
 /******************************************************************************/
@@ -397,8 +398,8 @@ var renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    uDom('#appname').text(popupData.appName);
-    uDom('#version').text(popupData.appVersion);
+    uDom.nodeFromId('appname').textContent = popupData.appName;
+    uDom.nodeFromId('version').textContent = popupData.appVersion;
     uDom('body')
         .toggleClass('advancedUser', popupData.advancedUserEnabled)
         .toggleClass(
@@ -409,7 +410,7 @@ var renderPopup = function() {
         );
 
     // If you think the `=== true` is pointless, you are mistaken
-    uDom('#gotoPick').toggleClass('enabled', popupData.canElementPicker === true);
+    uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
 
     var text;
     var blocked = popupData.pageBlockedRequestCount;
@@ -420,7 +421,7 @@ var renderPopup = function() {
         text = statsStr.replace('{{count}}', formatNumber(blocked))
                        .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom('#page-blocked').text(text);
+    uDom.nodeFromId('page-blocked').textContent = text;
 
     blocked = popupData.globalBlockedRequestCount;
     total = popupData.globalAllowedRequestCount + blocked;
@@ -430,15 +431,21 @@ var renderPopup = function() {
         text = statsStr.replace('{{count}}', formatNumber(blocked))
                        .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom('#total-blocked').text(text);
+    uDom.nodeFromId('total-blocked').textContent = text;
 
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
     // Extra tools
-    uDom('#no-popups').toggleClass('on', popupData.noPopups === true);
-    uDom('#no-strict-blocking').toggleClass('on', popupData.noStrictBlocking === true);
-    uDom('#no-cosmetic-filtering').toggleClass('on', popupData.noCosmeticFiltering === true);
+    uDom.nodeFromId('no-popups').classList.toggle('on', popupData.noPopups === true);
+    uDom.nodeFromId('no-strict-blocking').classList.toggle('on', popupData.noStrictBlocking === true);
+    uDom.nodeFromId('no-cosmetic-filtering').classList.toggle('on', popupData.noCosmeticFiltering === true);
+    uDom.nodeFromId('no-remote-fonts').classList.toggle('on', popupData.noRemoteFonts === true);
+
+    // Report remote font count on badge
+    total = popupData.remoteFontCount;
+    uDom.nodeFromSelector('#no-remote-fonts > span.badge')
+        .textContent = total ? total.toLocaleString() : '';
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
@@ -453,7 +460,7 @@ var renderPopup = function() {
         vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
     }
 
-    uDom('#panes').toggleClass('dfEnabled', dfPaneVisible);
+    uDom.nodeFromId('panes').classList.toggle('dfEnabled', dfPaneVisible);
     uDom('#firewallContainer')
         .toggleClass('minimized', popupData.firewallPaneMinimized)
         .toggleClass('colorBlind', popupData.colorBlindFriendly);
@@ -469,9 +476,8 @@ var renderPopup = function() {
 var renderPopupLazy = function() {
     var onDataReady = function(data) {
         var v = data.hiddenElementCount || '';
-        uDom('#no-cosmetic-filtering > span.badge').text(
-            typeof v === 'number' ? v.toLocaleString() : v
-        );
+        uDom.nodeFromSelector('#no-cosmetic-filtering > span.badge')
+            .textContent = typeof v === 'number' ? v.toLocaleString() : v;
     };
 
     messager.send({
@@ -554,7 +560,7 @@ var toggleFirewallPane = function() {
     vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
 
     // Dynamic filtering pane may not have been built yet
-    uDom('#panes').toggleClass('dfEnabled', popupData.dfEnabled);
+    uDom.nodeFromId('panes').classList.toggle('dfEnabled', popupData.dfEnabled);
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
@@ -656,9 +662,9 @@ var reloadTab = function() {
 /******************************************************************************/
 
 var toggleMinimize = function() {
-    var elem = uDom('#firewallContainer');
-    elem.toggleClass('minimized');
-    popupData.firewallPaneMinimized = elem.hasClass('minimized');
+    popupData.firewallPaneMinimized = uDom.nodeFromId('firewallContainer')
+                                          .classList
+                                          .toggle('minimized');
     messager.send({
         what: 'userSettings',
         name: 'firewallPaneMinimized',
@@ -675,7 +681,7 @@ var saveFirewallRules = function() {
         srcHostname: popupData.pageHostname,
         desHostnames: popupData.hostnameDict
     });
-    uDom('#firewallContainer').removeClass('dirty');
+    uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
 
 /******************************************************************************/
@@ -692,7 +698,7 @@ var revertFirewallRules = function() {
         desHostnames: popupData.hostnameDict,
         tabId: popupData.tabId
     }, onFirewallRuleChanged);
-    uDom('#firewallContainer').removeClass('dirty');
+    uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
 
 /******************************************************************************/
@@ -810,7 +816,7 @@ var onShowTooltip = function() {
 };
 
 var onHideTooltip = function() {
-    uDom('#tooltip').removeClass('show');
+    uDom.nodeFromId('tooltip').classList.remove('show');
 };
 
 /******************************************************************************/

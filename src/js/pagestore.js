@@ -305,6 +305,7 @@ PageStore.prototype.init = function(tabId) {
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
     this.hiddenElementCount = ''; // Empty string means "unknown"
+    this.remoteFontCount = 0;
     this.netFilteringCache = NetFilteringResultCache.factory();
 
     // Support `elemhide` filter option. Called at this point so the required
@@ -495,9 +496,10 @@ PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
 /******************************************************************************/
 
 PageStore.prototype.filterRequest = function(context) {
+    var requestType = context.requestType;
 
     if ( this.getNetFilteringSwitch() === false ) {
-        if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
+        if ( collapsibleRequestTypes.indexOf(requestType) !== -1 ) {
             this.netFilteringCache.add(context, '');
         }
         return '';
@@ -509,8 +511,19 @@ PageStore.prototype.filterRequest = function(context) {
         return entry.result;
     }
 
-    µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, context.requestType);
-    var result = µb.sessionURLFiltering.toFilterString();
+    var result = '';
+
+    if ( requestType === 'font' ) {
+        if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
+            result = µb.hnSwitches.toResultString();
+        }
+        this.remoteFontCount += 1;
+    }
+
+    if ( result === '' ) {
+        µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
+        result = µb.sessionURLFiltering.toFilterString();
+    }
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -518,7 +531,7 @@ PageStore.prototype.filterRequest = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( result === '' && µb.userSettings.advancedUserEnabled ) {
-        µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, context.requestType);
+        µb.sessionFirewall.evaluateCellZY( context.rootHostname, context.requestHostname, requestType);
         if ( µb.sessionFirewall.mustBlockOrAllow() ) {
             result = µb.sessionFirewall.toFilterString();
         }
@@ -532,11 +545,11 @@ PageStore.prototype.filterRequest = function(context) {
     }
 
     //console.debug('cache MISS: PageStore.filterRequest("%s")', context.requestURL);
-    if ( collapsibleRequestTypes.indexOf(context.requestType) !== -1 ) {
+    if ( collapsibleRequestTypes.indexOf(requestType) !== -1 ) {
         this.netFilteringCache.add(context, result);
     }
 
-    // console.debug('[%s, %s] = "%s"', context.requestHostname, context.requestType, result);
+    // console.debug('[%s, %s] = "%s"', context.requestHostname, requestType, result);
 
     return result;
 };
@@ -551,8 +564,20 @@ PageStore.prototype.filterRequestNoCache = function(context) {
         return '';
     }
 
-    µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, context.requestType);
-    var result = µb.sessionURLFiltering.toFilterString();
+    var requestType = context.requestType;
+    var result = '';
+
+    if ( requestType === 'font' ) {
+        if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
+            result = µb.hnSwitches.toResultString();
+        }
+        this.remoteFontCount += 1;
+    }
+
+    if ( result === '' ) {
+        µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
+        result = µb.sessionURLFiltering.toFilterString();
+    }
 
     // Given that:
     // - Dynamic filtering override static filtering
@@ -560,7 +585,7 @@ PageStore.prototype.filterRequestNoCache = function(context) {
     // We evaluate dynamic filtering first, and hopefully we can skip
     // evaluation of static filtering.
     if ( result === '' && µb.userSettings.advancedUserEnabled ) {
-        µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+        µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, requestType);
         if ( µb.sessionFirewall.mustBlockOrAllow() ) {
             result = µb.sessionFirewall.toFilterString();
         }
