@@ -3,9 +3,9 @@
 
 ***
 
-There is an idea floating around that uBlock Origin is a _lesser_ branch relative to uBlock<sup>[1]</sup>.
+There is an idea floating around that uBlock Origin is a _lesser_ branch relative to [uBlock](https://github.com/chrisaljoudi/uBlock)<sup>[1]</sup>.
 
-The current reality is that there are *two branches*, not an official one and a lesser one. I keep developing my branch the same way and in the same spirit I have since the beginning of uBlock in June 23, 2014.
+The current reality is that there are *two branches*, not an official one and a lesser one. I keep developing my branch the same way and in the same spirit I have since [the beginning of uBlock in June 23, 2014](http://www.wilderssecurity.com/threads/ublock-a-lean-and-fast-blocker.365273/).
 
 For a neutral explanation of the differences in features between uBlock Origin and uBlock, refer to the [Wikipedia article](http://en.wikipedia.org/wiki/UBlock).
 
