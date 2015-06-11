@@ -747,6 +747,8 @@ vAPI.net.registerListeners = function() {
         // know about uBlock, but we have to deal with reality here. Also,
         // due to Chromium bug, `other` always become `object` in case it
         // could not be normalized into something else.
+        // Test case for "unfriendly" font URLs:
+        //   https://www.google.com/fonts
         if ( details.type === 'object' ) {
             if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('font/', 0) === 0 ) {
                 details.type = 'font';
