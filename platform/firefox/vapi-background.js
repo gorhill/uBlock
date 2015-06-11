@@ -1891,11 +1891,11 @@ vAPI.toolbarButton.init = function() {
 
             for ( var win of vAPI.tabs.getWindows() ) {
                 var button = win.document.getElementById(wId);
-                if ( buttonInPanel ) {
-                    button.classList.remove('badged-button');
+                if ( button === null ) {
                     continue;
                 }
-                if ( button === null ) {
+                if ( buttonInPanel ) {
+                    button.classList.remove('badged-button');
                     continue;
                 }
                 button.classList.add('badged-button');
