@@ -424,7 +424,7 @@
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
-    "message":"{{action}} pedidos de rede de {{type}} {{br}}cujo endereço URL corresponde a {{url}} {{br}}e que origina {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
+    "message":"{{action}} pedidos de rede de {{type}} {{br}}cujo endereço URL corresponde a {{url}} {{br}}e que origina {{origin}},{{br}}{{importance}} há um filtro de excepção correspondente.",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
@@ -452,7 +452,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
-    "message":"exceto quando",
+    "message":"excepto quando",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Filtro estático {{filter}} encontrado em:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{

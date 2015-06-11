@@ -76,7 +76,7 @@
     "description":"English: Go to request log"
   },
   "popupTipNoPopups":{
-    "message":"Växla popup-fönster för den här sidan",
+    "message":"Växla blockering av popup-fönster för denna sida",
     "description":"English: Toggle the blocking of all popups for this site"
   },
   "popupTipNoStrictBlocking":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Det statiska filtret {{filter}} hittades i:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{

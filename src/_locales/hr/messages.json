@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Statični filter {{filter}} pronađen u:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{

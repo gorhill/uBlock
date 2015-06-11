@@ -444,7 +444,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"“{{origin}}” adresinden gelen",
+    "message":"“{{origin}}” adresi",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Statik süzgecin {{filter}} bulunduğu listeler:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
