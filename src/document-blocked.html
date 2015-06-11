@@ -18,6 +18,9 @@ body > div > p {
 body > div > p:first-child {
     margin: 1.5em 0 0 0;
     }
+a {
+    text-decoration: none;
+    }
 .code {
     background-color: rgba(0, 0, 0, 0.1);
     display: inline-block;
@@ -43,6 +46,16 @@ button {
     color: #f2a500;
     font-size: 180px;
     }
+#whyex {
+    font-size: smaller;
+    opacity: 0.6;
+    }
+#whyex:hover {
+    opacity: 1;
+    }
+#whyex a {
+    white-space: nowrap;
+}
 .proceedChoice {
     display: inline-block;
     text-align: left;
@@ -61,7 +74,8 @@ select {
 
 <div>
     <p data-i18n="docblockedPrompt2"></p>
-    <p id="why" class="code"></p>
+    <p id="why" class="code"></p><!--
+ --><span id="whyex" style="display: none;"><br>&#x2022; <span></span> &#x2022;</span>
     </div>
 
 <div>

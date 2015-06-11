@@ -42,6 +42,43 @@ var details = {};
 
 /******************************************************************************/
 
+(function() {
+    var onReponseReady = function(response) {
+        var lists = response.matches;
+        if ( Array.isArray(lists) === false || lists.length === 0 ) {
+            return;
+        }
+        var parent = uDom.nodeFromSelector('#whyex > span');
+        var separator = '';
+        var entry, url, node;
+        for ( var i = 0; i < lists.length; i++ ) {
+            entry = lists[i];
+            if ( separator !== '' ) {
+                parent.appendChild(document.createTextNode(separator));
+            }
+            url = entry.supportURL;
+            if ( typeof url === 'string' && url !== '' ) {
+                node = document.createElement('a');
+                node.textContent = entry.title;
+                node.setAttribute('href', url);
+                node.setAttribute('target', '_blank');
+            } else {
+                node = document.createTextNode(entry.title);
+            }
+            parent.appendChild(node);
+            separator = ' \u2022 ';
+        }
+        uDom.nodeFromId('whyex').style.removeProperty('display');
+    };
+
+    messager.send({
+        what: 'reverseLookupFilter',
+        filter: details.fc
+    }, onReponseReady);
+})();
+
+/******************************************************************************/
+
 var getTargetHostname = function() {
     var hostname = details.hn;
     var elem = document.querySelector('#proceed select');
@@ -103,8 +140,8 @@ var proceedPermanent = function() {
 
 /******************************************************************************/
 
-uDom('.what').text(details.url);
-uDom('#why').text(details.why);
+uDom.nodeFromSelector('.what').textContent = details.url;
+uDom.nodeFromId('why').textContent = details.fs;
 
 if ( window.history.length > 1 ) {
     uDom('#back').on('click', function() { window.history.back(); });

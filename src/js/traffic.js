@@ -219,12 +219,15 @@ var onBeforeRootFrameRequest = function(details) {
         return;
     }
 
+    var compiled = result.slice(3);
+
     // Blocked
     var query = btoa(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
         dn: requestDomain,
-        why: µb.staticNetFilteringEngine.filterStringFromCompiled(result.slice(3))
+        fc: compiled,
+        fs: µb.staticNetFilteringEngine.filterStringFromCompiled(compiled)
     }));
 
     vAPI.tabs.replace(tabId, vAPI.getURL('document-blocked.html?details=') + query);
