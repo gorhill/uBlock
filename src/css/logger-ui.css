@@ -189,6 +189,9 @@ body:not(.popupOn) #content tr.canMtx td:nth-of-type(2) {
 body:not(.popupOn) #content tr.canMtx td:nth-of-type(2):hover {
     background: #ccc;
     }
+#content tr.cat_net[data-filter] td:nth-of-type(3) {
+    cursor: zoom-in;
+    }
 #content tr.cat_net td:nth-of-type(4),
 #content tr.cat_cosmetic td:nth-of-type(4) {
     font: 12px monospace;
@@ -275,7 +278,7 @@ body[dir="rtl"] #popupContainer > div {
     display: none;
     }
 
-#urlFilteringMenu {
+.modalDialog {
     background-color: rgba(0, 0, 0, 0.5);
     border: 0;
     bottom: 0;
@@ -287,9 +290,10 @@ body[dir="rtl"] #popupContainer > div {
     z-index: 400;
     }
 
-#urlFilteringMenu .dialog {
+.modalDialog .dialog {
     background-color: white;
     border: 2px solid white;
+    box-sizing: border-box;
     left: 10%;
     position: absolute;
     top: 50%;
@@ -298,11 +302,11 @@ body[dir="rtl"] #popupContainer > div {
     width: 80%;
     }
 
-#urlFilteringMenu .dialog p {
+#netFilteringDialog .dialog p {
     line-height: 2em;
     }
 
-#urlFilteringMenu .dialog select {
+#netFilteringDialog .dialog select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -313,7 +317,7 @@ body[dir="rtl"] #popupContainer > div {
     padding: 0.2em;
 }
 
-#urlFilteringMenu .dialog > div.preview {
+#netFilteringDialog .dialog > div.preview {
     /* http://lea.verou.me/css3patterns/ */
     background-color: #aaa;
     background-image:
@@ -337,33 +341,33 @@ body[dir="rtl"] #popupContainer > div {
     background-size: 18px 18px;
     text-align: center;
     }
-#urlFilteringMenu .dialog > div.preview > * {
+#netFilteringDialog .dialog > div.preview > * {
     max-width: 100%;
     max-height: 40vh;
     }
 
-#urlFilteringMenu .dialog table {
+#netFilteringDialog .dialog table {
     border: 0;
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
     }
-#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(1) {
+#netFilteringDialog .dialog table > colgroup > col:nth-of-type(1) {
     width: 3.8em;
     }
-#urlFilteringMenu .dialog table > colgroup > col:nth-of-type(2) {
+#netFilteringDialog .dialog table > colgroup > col:nth-of-type(2) {
     }
 
-#urlFilteringMenu .dialog td {
+#netFilteringDialog .dialog td {
     border: 0;
     padding: 0;
     vertical-align: middle;
     }
-#urlFilteringMenu .dialog > div.headers {
+#netFilteringDialog .dialog > div.headers {
     border-bottom: 1px solid #888;
     position: relative;
     }
-#urlFilteringMenu .dialog > div.headers > span.header {
+#netFilteringDialog .dialog > div.headers > span.header {
     background-color: #eee;
     border: 1px solid #aaa;
     border-bottom: 1px solid #888;
@@ -380,45 +384,45 @@ body[dir="rtl"] #popupContainer > div {
     text-align: center;
     top: 1px;
     }
-#urlFilteringMenu .dialog > div.headers > span.header.selected {
+#netFilteringDialog .dialog > div.headers > span.header.selected {
     background-color: white;
     border-color: #888;
     border-bottom: 1px solid white;
     color: black;
     }
-#urlFilteringMenu .dialog > div.headers > span.tools {
+#netFilteringDialog .dialog > div.headers > span.tools {
     display: inline-block;
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
     }
-body[dir="ltr"] #urlFilteringMenu .dialog > div.headers > span.tools {
+body[dir="ltr"] #netFilteringDialog .dialog > div.headers > span.tools {
     right: 0.1em;
     }
-body[dir="rtl"] #urlFilteringMenu .dialog > div.headers > span.tools {
+body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
     left: 0.1em;
     }
-#urlFilteringMenu .dialog > div.headers > span.tools > span {
+#netFilteringDialog .dialog > div.headers > span.tools > span {
     cursor: pointer;
     font-size: 1.2em;
     text-align: center;
     }
-#urlFilteringMenu .dialog > div.containers {
+#netFilteringDialog .dialog > div.containers {
     height: 40vh;
     overflow: hidden;
     overflow-y: auto;
     }
-#urlFilteringMenu .dialog > div.containers > div {
+#netFilteringDialog .dialog > div.containers > div {
     display: none;
     }
-#urlFilteringMenu .dialog > div.containers > div.selected {
+#netFilteringDialog .dialog > div.containers > div.selected {
     display: block;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar select {
+#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar select {
     font: 14px;
     height: 2em;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
+#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
@@ -428,37 +432,37 @@ body[dir="rtl"] #urlFilteringMenu .dialog > div.headers > span.tools {
     padding: 0.25em 0.5em;
     visibility: hidden;
     }
-body.dirty #urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
+body.dirty #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
     visibility: visible;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar #saveRules:hover {
+#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules:hover {
     color: black;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic > table.toolbar tr.entry {
+#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar tr.entry {
     display: none;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry {
     background-color: #e6e6e6;
     border: 0;
     border-bottom: 1px solid white;
     font-size: 13px;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry:hover {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry:hover {
     background-color: #f0f0f0;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td:first-of-type {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td:first-of-type {
     border: 0;
     border-right: 1px solid white;
     text-align: center;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action {
     background-color: transparent;
     border: 0;
     cursor: pointer;
     height: 2em;
     width: 100%;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span {
     background-color: transparent;
     border: 0;
     display: inline-block;
@@ -467,80 +471,98 @@ body.dirty #urlFilteringMenu .dialog > div.containers > div.dynamic > table.tool
     visibility: hidden;
     width: 33.33%;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
     background-color: rgba(0, 160, 0, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
     background-color: rgba(255, 194, 57, 0.4);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
     background-color: rgba(108, 108, 108, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
     background-color: rgba(96, 96, 96, 0.4);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
     background-color: rgba(192, 0, 0, 0.3);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
     background-color: rgba(0, 19, 110, 0.4);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
     background-color: rgba(0, 160, 0, 1);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
     background-color: rgba(255, 194, 57, 1);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
     background-color: rgba(108, 108, 108, 1);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
     background-color: rgba(192, 0, 0, 1);
     }
-body.colorBlind #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
+body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
     background-color: rgba(0, 19, 110, 1);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span {
     opacity: 0.2;
     visibility: visible;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span:hover {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span:hover {
     opacity: 0.75;
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
     background-color: rgb(0, 160, 0);
     }
-body.colorBlind  #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
+body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
     background-color: rgb(255, 194, 57);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.noop {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.noop {
     background-color: rgb(108, 108, 108);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
     background-color: rgb(192, 0, 0);
     }
-body.colorBlind  #urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
+body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
     background-color: rgb(0, 19, 110);
     }
-#urlFilteringMenu .dialog > div.containers > div.dynamic tr.entry > td.url {
+#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td.url {
     overflow: hidden;
     padding-left: 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
     }
-#urlFilteringMenu .dialog > div.containers > div.static > p {
+#netFilteringDialog .dialog > div.containers > div.static > p {
     margin: 0.75em 0;
     }
-#urlFilteringMenu .dialog > div.containers > div.static textarea {
+#netFilteringDialog .dialog > div.containers > div.static textarea {
     box-sizing: border-box;
     direction: ltr;
     height: 6em;
     resize: none;
     width: 100%;
     }
-#urlFilteringMenu .dialog > div.containers > div.static > p:nth-of-type(2) {
+#netFilteringDialog .dialog > div.containers > div.static > p:nth-of-type(2) {
     text-align: center;
     }
+
+#filterFinderDialog .dialog {
+    padding: 1em;
+    }
+#filterFinderDialog .dialog code {
+    background: #eee;
+    padding: 3px;
+    }
+#filterFinderDialog .dialog ul {
+    font-size: larger;
+    }
+#filterFinderDialog .dialog > *:first-child {
+    margin-top: 0;
+    }
+#filterFinderDialog .dialog > *:last-child {
+    margin-bottom: 0;
+    }
+
 .hide {
     display: none;
     }

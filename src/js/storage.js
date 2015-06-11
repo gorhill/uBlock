@@ -400,6 +400,7 @@
         µb.cosmeticFilteringEngine.reset();
         µb.staticNetFilteringEngine.reset();
         µb.destroySelfie();
+        µb.staticFilteringReverseLookup.resetLists();
 
         // We need to build a complete list of assets to pull first: this is
         // because it *may* happens that some load operations are synchronous:

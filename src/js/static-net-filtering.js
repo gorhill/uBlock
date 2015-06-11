@@ -160,11 +160,6 @@ histogram = function(label, categories) {
 
 // Local helpers
 
-// Could be replaced with encodeURIComponent/decodeURIComponent,
-// which seems faster on Firefox.
-var encode = JSON.stringify;
-var decode = JSON.parse;
-
 var cachedParseInt = parseInt;
 
 var atoi = function(s) {
@@ -1651,12 +1646,10 @@ FilterContainer.prototype.toSelfie = function() {
     var categoryToSelfie = function(dict) {
         var selfie = [];
         var bucket, ff, n, i, f;
-        for ( var k in dict ) {
+        for ( var token in dict ) {
             // No need for hasOwnProperty() here: there is no prototype chain.
-            // We need to encode the key because there could be a `\n` or '\t'
-            // character in it, which would trip the code at parse time.
-            selfie.push('k2\t' + encode(k));
-            bucket = dict[k];
+            selfie.push('k2\t' + token);
+            bucket = dict[token];
             selfie.push(bucket.fid + '\t' + bucket.toSelfie());
             if ( bucket.fid !== '[]' ) {
                 continue;
@@ -1673,12 +1666,10 @@ FilterContainer.prototype.toSelfie = function() {
 
     var categoriesToSelfie = function(dict) {
         var selfie = [];
-        for ( var k in dict ) {
+        for ( var key in dict ) {
             // No need for hasOwnProperty() here: there is no prototype chain.
-            // We need to encode the key because there could be a `\n` or '\t'
-            // character in it, which would trip the code at parse time.
-            selfie.push('k1\t' + encode(k));
-            selfie.push(categoryToSelfie(dict[k]));
+            selfie.push('k1\t' + key);
+            selfie.push(categoryToSelfie(dict[key]));
         }
         return selfie.join('\n');
     };
@@ -1722,13 +1713,13 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
         pos = line.indexOf('\t');
         what = line.slice(0, pos);
         if ( what === 'k1' ) {
-            catKey = decode(line.slice(pos + 1));
+            catKey = line.slice(pos + 1);
             subdict = dict[catKey] = Object.create(null);
             bucket = null;
             continue;
         }
         if ( what === 'k2' ) {
-            tokenKey = decode(line.slice(pos + 1));
+            tokenKey = line.slice(pos + 1);
             bucket = null;
             continue;
         }
@@ -2015,18 +2006,18 @@ FilterContainer.prototype.filterStringFromCompiled = function(compiled) {
     var opts = [];
     var vfields = compiled.split('\v');
     var filter = '';
-    var bits = parseInt(vfields[1], 16) | 0;
+    var bits = parseInt(vfields[0], 16) | 0;
 
     if ( bits & 0x01 ) {
         filter += '@@';
     }
 
-    var rfid = vfields[2] === '.' ? '.' : vfields[3];
-    var tfields = rfid !== '.' ? vfields[4].split('\t') : [];
+    var rfid = vfields[1] === '.' ? '.' : vfields[2];
+    var tfields = rfid !== '.' ? vfields[3].split('\t') : [];
 
     switch ( rfid ) {
     case '.':
-        filter += '||' + vfields[3] + '^';
+        filter += '||' + vfields[2] + '^';
         break;
     case 'a':
     case 'ah':
@@ -2102,13 +2093,13 @@ FilterContainer.prototype.filterStringFromCompiled = function(compiled) {
 
 FilterContainer.prototype.filterRegexFromCompiled = function(compiled, flags) {
     var vfields = compiled.split('\v');
-    var rfid = vfields[2] === '.' ? '.' : vfields[3];
-    var tfields = rfid !== '.' ? vfields[4].split('\t') : [];
+    var rfid = vfields[1] === '.' ? '.' : vfields[2];
+    var tfields = rfid !== '.' ? vfields[3].split('\t') : [];
     var re = null;
 
     switch ( rfid ) {
     case '.':
-        re = strToRegex(vfields[3], 0, flags);
+        re = strToRegex(vfields[2], 0, flags);
         break;
     case 'a':
     case 'ah':
@@ -2476,7 +2467,7 @@ FilterContainer.prototype.toResultString = function(verbose) {
     if ( !verbose ) {
         return s;
     }
-    s += 'n\v' + this.keyRegister + '\v' + this.tokenRegister + '\v';
+    s += this.keyRegister + '\v' + this.tokenRegister + '\v';
     if ( this.tokenRegister === '.' ) {
         s += this.fRegister.rtCompile();
     } else {

@@ -66,6 +66,10 @@ var onMessage = function(request, sender, callback) {
         µb.reloadAllFilters(callback);
         return;
 
+    case 'reverseLookupFilter':
+        µb.staticFilteringReverseLookup.lookup(request.filter, callback);
+        return;
+
     default:
         break;
     }
