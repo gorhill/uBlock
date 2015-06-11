@@ -88,7 +88,7 @@
     "description":"English: Toggle cosmetic filtering for this site"
   },
   "popupTipNoRemoteFonts":{
-    "message":"Toggle the blocking of remote fonts for this site",
+    "message":"Włącz\/wyłącz blokowanie zdalnych czcionek na tej stronie",
     "description":"English: Toggle the blocking of remote fonts for this site"
   },
   "popupAnyRulePrompt":{
@@ -458,6 +458,10 @@
   "loggerStaticFilteringSentencePartImportant":{
     "message":"nawet, jeśli",
     "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1":{
+    "message":"Static filter {{filter}} found in:",
+    "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
     "message":"Dziennik zmian",

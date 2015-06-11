@@ -428,11 +428,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock":{
-    "message":"engelle",
+    "message":"Engelle",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow":{
-    "message":"izin ver",
+    "message":"İzin ver",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType":{
@@ -458,6 +458,10 @@
   "loggerStaticFilteringSentencePartImportant":{
     "message":"olsa da",
     "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1":{
+    "message":"Static filter {{filter}} found in:",
+    "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
     "message":"Değişiklikler",

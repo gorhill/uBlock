@@ -40,7 +40,7 @@
     "description":"appears as tab name in dashboard"
   },
   "popupPowerSwitchInfo":{
-    "message":"Clique: desativar\/ativar o uBlock₀ para este sítio web.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
+    "message":"Clique: desactivar\/activar o uBlock₀ para este sítio web.\n\nCtrl+clique: desactivar o uBlock₀ apenas nesta página.",
     "description":"English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupBlockedRequestPrompt":{
@@ -176,15 +176,15 @@
     "description":"English: "
   },
   "settingsPrefetchingDisabledPrompt":{
-    "message":"Desativar 'pre-fetching' (para impedir ligações de pedidos de rede bloqueados)",
+    "message":"Desactivar 'pre-fetching' (para impedir ligações para pedidos de rede bloqueados)",
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Desativar auditoria de hiperligações\/'beacon'",
+    "message":"Desactivar auditoria de hiperligações\/'beacon'",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
-    "message":"Ativar funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
+    "message":"Activar funções experimentais (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Experimental-features'>Sobre<\/a>)",
     "description":"English: Enable experimental features"
   },
   "settingsStorageUsed":{
@@ -458,6 +458,10 @@
   "loggerStaticFilteringSentencePartImportant":{
     "message":"mesmo se",
     "description":"Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1":{
+    "message":"Static filter {{filter}} found in:",
+    "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
     "message":"Registo de alterações",
