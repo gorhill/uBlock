@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    µBlock - a browser extension to black/white list requests.
+    uBlock - a browser extension to block requests.
     Copyright (C) 2014  Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
