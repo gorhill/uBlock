@@ -743,11 +743,9 @@ vAPI.net.registerListeners = function() {
         // fail at transposing `other` into `font` for URLs which are outside
         // what is expected. At least when headers are received we can check
         // for content type `font/*`. Blocking at onHeadersReceived time is
-        // less worst than not blocking at all. Also, ideally vAPI shouldn't
-        // know about uBlock, but we have to deal with reality here. Also,
-        // due to Chromium bug, `other` always become `object` in case it
-        // could not be normalized into something else.
-        // Test case for "unfriendly" font URLs:
+        // less worse than not blocking at all. Also, due to Chromium bug,
+        // `other` always becomes `object` when it can't be normalized into
+        // something else. Test case for "unfriendly" font URLs:
         //   https://www.google.com/fonts
         if ( details.type === 'object' ) {
             if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('font/', 0) === 0 ) {
