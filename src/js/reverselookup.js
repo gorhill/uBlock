@@ -75,7 +75,6 @@ var initWorker = function(callback) {
 
     var entries = Object.create(null);
     var countdown = 0;
-    var path, entry;
 
     var onListLoaded = function(details) {
         var entry = entries[details.path];
@@ -95,6 +94,7 @@ var initWorker = function(callback) {
     };
 
     var µb = µBlock;
+    var path, entry, title;
 
     for ( path in µb.remoteBlacklists ) {
         if ( µb.remoteBlacklists.hasOwnProperty(path) === false ) {
@@ -104,8 +104,12 @@ var initWorker = function(callback) {
         if ( entry.off === true ) {
             continue;
         }
+        title = entry.title;
+        if ( path === µb.userFiltersPath ) {
+            title = vAPI.i18n('1pPageName');
+        }
         entries[path] = {
-            title: entry.title,
+            title: title,
             supportURL: entry.supportURL || ''
         };
         countdown += 1;
