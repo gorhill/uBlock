@@ -164,7 +164,7 @@ body.off #switch .fa {
 #extraTools > span {
     cursor: pointer;
     font-size: 18px;
-    margin: 0 0.5em;
+    margin: 0 0.4em;
     position: relative;
     }
 #extraTools > span > span.badge {
@@ -174,10 +174,10 @@ body.off #switch .fa {
     position: absolute;
     }
 body[dir="ltr"] #extraTools > span > span.badge {
-    left: 100%;
+    left: 90%;
     }
 body[dir="rtl"] #extraTools > span > span.badge {
-    right: 100%;
+    right: 90%;
     }
 #extraTools > span.on > span:last-of-type {
     color: #e00;
