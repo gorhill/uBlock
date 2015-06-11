@@ -30,7 +30,7 @@ d15c3f134918492b5d961672ed4b794f assets/thirdparties/easylist-downloads.adblockp
 6d4c6137dd79fa375ad378de0c410ddd assets/thirdparties/dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt
 1beb3b4b6458f6d3988b91cd981a97f0 assets/thirdparties/mirror1.malwaredomains.com/files/immortal_domains.txt
 7f0443f3dcc9abfd47cfbc95ce824ddb assets/thirdparties/mirror1.malwaredomains.com/files/README.md
-f65f1879d193f3fe35e86eca27ca8dd0 assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
+0102e4be1dc3abee7dd25aa8797fe59a assets/thirdparties/mirror1.malwaredomains.com/files/justdomains
 597f052c40b71ecd029eedd5752633aa assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat
 a43898cce4b45b8af90b6ac36a3bb75d assets/thirdparties/margevicius.lt/easylistlithuania.txt
 f2b5081a6a0ce24e9a589d2b854198b4 assets/thirdparties/someonewhocares.org/hosts/hosts
