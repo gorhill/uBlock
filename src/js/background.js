@@ -91,7 +91,7 @@ return {
 
     // read-only
     systemSettings: {
-        compiledMagic: 'eopszukpnrct',
+        compiledMagic: 'msgmqxreevdy',
         selfieMagic: 'spqmeuaftfra'
     },
 
