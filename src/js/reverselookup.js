@@ -94,7 +94,7 @@ var initWorker = function(callback) {
     };
 
     var µb = µBlock;
-    var path, entry, title;
+    var path, entry;
 
     for ( path in µb.remoteBlacklists ) {
         if ( µb.remoteBlacklists.hasOwnProperty(path) === false ) {
@@ -104,12 +104,8 @@ var initWorker = function(callback) {
         if ( entry.off === true ) {
             continue;
         }
-        title = entry.title;
-        if ( path === µb.userFiltersPath ) {
-            title = vAPI.i18n('1pPageName');
-        }
         entries[path] = {
-            title: title,
+            title: path !== µb.userFiltersPath ? entry.title : vAPI.i18n('1pPageName'),
             supportURL: entry.supportURL || ''
         };
         countdown += 1;
