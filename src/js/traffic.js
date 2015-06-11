@@ -325,6 +325,11 @@ var onHeadersReceived = function(details) {
         return onRootFrameHeadersReceived(details);
     }
 
+    // Just in case...
+    if ( details.type !== 'sub_frame' ) {
+        return;
+    }
+
     // If we reach this point, we are dealing with a sub_frame
 
     // Lookup the page store associated with this tab id.
