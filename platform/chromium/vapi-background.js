@@ -697,6 +697,16 @@ vAPI.net.registerListeners = function() {
         details.type = 'object';
     };
 
+    var headerValue = function(headers, name) {
+        var i = headers.length;
+        while ( i-- ) {
+            if ( headers[i].name.toLowerCase() === name ) {
+                return headers[i].value.trim();
+            }
+        }
+        return '';
+    };
+
     var onBeforeRequestClient = this.onBeforeRequest.callback;
     var onBeforeRequest = function(details) {
         normalizeRequestDetails(details);
@@ -718,15 +728,47 @@ vAPI.net.registerListeners = function() {
     );
 
     var onHeadersReceivedClient = this.onHeadersReceived.callback;
+    var onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0);
+    var onHeadersReceivedTypes = onHeadersReceivedClientTypes.slice(0);
+    if (
+        onHeadersReceivedTypes.length !== 0 &&
+        onHeadersReceivedTypes.indexOf('other') === -1
+    ) {
+        onHeadersReceivedTypes.push('other');
+    }
     var onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
+        // Hack to work around Chromium API limitations, where requests of
+        // type `font` are returned as `other`. For example, our normalization
+        // fail at transposing `other` into `font` for URLs which are outside
+        // what is expected. At least when headers are received we can check
+        // for content type `font/*`. Blocking at onHeadersReceived time is
+        // less worst than not blocking at all. Also, ideally vAPI shouldn't
+        // know about uBlock, but we have to deal with reality here. Also,
+        // due to Chromium bug, `other` always become `object` in case it
+        // could not be normalized into something else.
+        if ( details.type === 'object' ) {
+            if ( headerValue(details.responseHeaders, 'content-type').lastIndexOf('font/', 0) === 0 ) {
+                details.type = 'font';
+                var r = onBeforeRequestClient(details);
+                if ( typeof r === 'object' && r.cancel === true ) {
+                    return { cancel: true };
+                }
+            }
+            if (
+                onHeadersReceivedClientTypes.length !== 0 &&
+                onHeadersReceivedClientTypes.indexOf(details.type) === -1
+            ) {
+                return;
+            }
+        }
         return onHeadersReceivedClient(details);
     };
     chrome.webRequest.onHeadersReceived.addListener(
         onHeadersReceived,
         {
             'urls': this.onHeadersReceived.urls || ['<all_urls>'],
-            'types': this.onHeadersReceived.types || []
+            'types': onHeadersReceivedTypes
         },
         this.onHeadersReceived.extra
     );
