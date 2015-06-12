@@ -279,9 +279,15 @@ body[dir="rtl"] #popupContainer > div {
     }
 
 .modalDialog {
+    align-items: center;
+    -webkit-align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     border: 0;
     bottom: 0;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    -webkit-justify-content: center;
     left: 0;
     margin: 0;
     position: fixed;
@@ -294,11 +300,6 @@ body[dir="rtl"] #popupContainer > div {
     background-color: white;
     border: 2px solid white;
     box-sizing: border-box;
-    left: 10%;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    transform-style: preserve-3d;
     width: 80%;
     }
 
