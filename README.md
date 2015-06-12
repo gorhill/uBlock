@@ -9,7 +9,9 @@ The current reality is that there are *two branches*, not an official one and a 
 
 You are more likely than anywhere else to find a neutral explanation in this [Wikipedia article](http://en.wikipedia.org/wiki/UBlock) for the differences in features between uBlock Origin and uBlock.
 
-<sub>[1] [An example](https://www.ublock.org/faq/). [Another one](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/716364/).</sub>
+Somewhere toward the end of May, I decided I will not contribute code anymore to this [uBlock branch](https://github.com/chrisaljoudi/uBlock).<sup>[2]</sup>
+
+<sub>[1] [An example](https://www.ublock.org/faq/). [Another one](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/reviews/716364/).<br></sub><sub>[2] Reasons: [this](https://en.wikipedia.org/w/index.php?title=UBlock&type=revision&diff=662527440&oldid=662107368) vs. [this](https://github.com/chrisaljoudi/uBlock/commits/master?author=gorhill), and [this](https://www.reddit.com/r/ublock/comments/38lf1y/any_difference_between_ublock_and_ublock_origin/crwhmwt).</sub>
 
 *** 
 
