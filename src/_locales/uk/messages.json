@@ -180,7 +180,7 @@
     "description":"English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt":{
-    "message":"Вимкнути перевірку гіперпосилань",
+    "message":"Вимкнути перевірку та попередження щодо гіперпосилань",
     "description":"English: "
   },
   "settingsExperimentalPrompt":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Статичний фільтр {{filter}} знайдено в:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{

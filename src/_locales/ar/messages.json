@@ -552,7 +552,7 @@
     "description":"Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1":{
-    "message":"uBlock منع الصفحة التالية من التحميل:",
+    "message":"uBlock₀ منع الصفحة التالية من التحميل:",
     "description":"English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2":{

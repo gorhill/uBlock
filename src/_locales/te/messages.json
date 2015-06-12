@@ -420,7 +420,7 @@
     "description":"Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader":{
-    "message":"నిష్క్రియాత్మక వడపోత",
+    "message":"నిశ్చలాత్మక వడపోత",
     "description":"Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"నిశ్చలాత్మక వడపోత అయిన {{filter}} క్రింది వాటిలో కలదు:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
