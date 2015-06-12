@@ -204,3 +204,7 @@ ovh.strim.io#@##tweets
 # https://github.com/chrisaljoudi/uBlock/issues/1421
 # To counter hpHost, MVPS, Peter Lowe: `woopra.com`
 @@||woopra.com^$~third-party
+
+# http://www.wilderssecurity.com/threads/ublock-origin-and-newegg.377014/
+# Until the fix is in EasyPrivacy
+@@||monetate.net/*$script,domain=www.newegg.com
