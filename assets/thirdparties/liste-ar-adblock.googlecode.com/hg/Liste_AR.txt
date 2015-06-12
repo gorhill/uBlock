@@ -8,7 +8,7 @@
 !
 ! شكرا للإبلاغ عن أي إعلان أو لافتة إشهارية غير محجوبة
 ! Merci de signaler toute publicité non bloquée ou tout blocage inadéquat
-! dans le forum : http://forums.lanik.us/viewforum.php?f=98
+! dans le forum : https://forums.lanik.us/viewforum.php?f=98
 ! ou par e-mail : liste.ar.adblock at gmail point com
 !
 !----------------------- Filtres génériques -----------------!
@@ -22,6 +22,7 @@
 .net/e3lan.
 .net/e3lan/
 /ads-bubble.
+/adv_forum-
 /advStatLib.js
 /advStatSettings.js
 /blog/ads_
@@ -29,6 +30,7 @@
 /images/e3lan.
 /images/e3lan/*
 /images/e3lan3.
+/pop_packcpm.$popup
 /vb/e3lan/*
 /vb/e3lanat/*
 |http://e3lanat.
@@ -36,6 +38,7 @@
 !----------------------- Éléments génériques -----------------!
 ###advBarMars
 ##.ad-336-280
+##.advBackground
 ##.ban-728
 ##.cubes-ads
 ##.custom-advert-banner
@@ -72,6 +75,7 @@
 ||ar-ads.com^$third-party
 ||ar-ads.net^$third-party
 ||arab-ads.com^$third-party
+||arabysouq.com^$popup,third-party
 ||awsclic.com^$third-party
 ||bntags.com^$third-party
 ||booraq.org^$third-party
@@ -192,6 +196,7 @@
 ||cnbcarabia.com/top_banner.php
 ||cs-proton.tv/images/banner-*.
 ||ctn-abbas.com/*_ads.
+||d3b3e6340.website^
 ||d3oyytf0n6db9a.cloudfront.net^
 ||daralakhbar.com/widgetgen/$third-party
 ||darendeal.com/widgets/recommendation_box?
@@ -224,6 +229,7 @@
 ||geek4arab.net/banner/
 ||giclub.tv/index.php?action=$image
 ||giphy.com/yoJC2BNz47Bh7Ya7Dy.gif
+||goo.gl/2dWPk1
 ||gulfbase.com/APopUp.
 ||gulfbase.com/Assets/css/AeroWindow
 ||gulfup.com/2012-06-04/133881477241.gif
@@ -236,6 +242,7 @@
 ||gulfup.com/U3If1.gif
 ||gulfup.com/X53Kbh.gif
 ||hanya.ma/caro
+||hao123.com/partnertopbar/
 ||hao123.com^*/ar-banner.
 ||homekw.com/temp/jahrawi_150_167.gif
 ||host-image.net/images/56070naja7host.png
@@ -444,6 +451,7 @@
 ||agadir24.info/pub.gif
 ||ahdath.info/wp-content/*/Pub%20banniere%20.jpg
 ||ahram.org.eg/Media/Banners/SEO-logo.swf
+||akhbarelyom.com/UP/farid/
 ||akhersaa-dz.com/files/banners/
 ||aksalser.com/e/$object
 ||al-fadjr.com/ar/img/summary_medium/SURFpetite_974111832.jpg
@@ -1078,6 +1086,7 @@ gulfbase.com##.AeroWindow
 nono6.com##.BannarDown
 nono6.com##.BannarTop
 ounousa.com##.HomeNewAndBanner
+yallakora.com##.Leaderboard
 m5zn.com##.LongGAds
 filgoal.com##.MRContainer
 masrawy.com##.NewClassifieds
@@ -1097,6 +1106,7 @@ arab-eng.org##.adsensarab2
 linkat-online.com##.adss_left
 ashwagi.com,fll2.com,mobdi3ine.net,op-arab.com,shofha.com,swarih.com,y4yy.com,yallabina.com##.adv
 kalemaro.com##.adv2
+akhbarelyom.com##.adv3960
 n4hr.com##.advactar
 mp3quran.net##.advertising
 al-jazirah.com##.advr
@@ -1371,3 +1381,7 @@ dramacafe.tv,online.dramacafe.in,xaddad.com#@#.afs_ads
 !----------------------- Exceptions d'éléments -----------------------!
 !
 risalaradio.com#@#.ad-cell
+!
+!---------------------------- Anti-Adblock ---------------------------!
+!
+@@||showsport-tv.com/advert.js

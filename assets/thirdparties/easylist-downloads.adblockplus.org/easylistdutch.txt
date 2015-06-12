@@ -1,9 +1,9 @@
 [Adblock Plus 2.0]
-! Checksum: iZz6UceNjOPEYXoVIVRS2A
-! Version: 201505081523
+! Checksum: ZkYD9ea3QZp009rieMjB6g
+! Version: 201506121053
 ! Title: EasyList Dutch
 ! Description: Dutch supplement for the Easylist filters
-! Last modified: 08 May 2015 15:23 UTC
+! Last modified: 12 Jun 2015 10:53 UTC
 ! Expires: 4 days (update frequency)
 ! Homepage: https://easylist.adblockplus.org/
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
@@ -368,6 +368,7 @@ _advertentieleaderboardhome.
 ||dutchcharts.nl/images/sky_
 ||dutchcharts.nl/images/the-voice-kids-banner.swf
 ||dutchcowboys.nl/images/*-takeover.png
+||duurzaam-actueel.nl^*banner
 ||dvdboxshop.nl/images/leesklantbeoordelingen.jpg
 ||dvn.nl/images/site/banners/
 ||easylist.nl/125x125.swf
@@ -759,6 +760,8 @@ _advertentieleaderboardhome.
 @@||ad.nl/static/nmc/prm/frameset/overlay/imago/v2/728x90.jpg?
 @@||adhese.standaard.be/jsonp/callback/sl_test_dso_ipad_optimized_avondeditie_-interstitial/?$script
 @@||adverteer-gratis.nl/ads/$domain=adverteer-gratis.nl
+@@||aludex.com/themes/ad/css/
+@@||aludex.com/themes/ad/img/
 @@||bibliotheek.be/detail/*-advertise/$subdocument,~third-party,xmlhttprequest
 @@||cinema.nl/ads/mediaplayer.jsp?$subdocument
 @@||doopsgezind.nl/templates/ads/$domain=doopsgezind.nl
@@ -963,6 +966,7 @@ pu.nl###skin_container
 vdab.be###sky
 voetbalzone.nl###skyCrapp
 fok.nl,koopplein.nl,mokkels.nl,vakantiebellen.com###skyscraper
+duurzaam-actueel.nl###slideshowwidget-2
 blikopnieuws.nl###spaar
 waarbenjij.nu###spanEbookersContainer
 uu.nl###sponsor_rotating_block
@@ -1191,6 +1195,7 @@ rijnmond.nl##a[onclick^="HitCountAjax('/Banners/"]
 dutchattraction.nl##a[onclick^="countAdClick("]
 opwindend.net##a[rel="nofollow"][target="_blank"]
 leukstespel.nl##a[target="_blank"] > img
+duurzaam-actueel.nl##a[target="_blank"][href^="http"] > img:not([alt^="duurzaam-actueel"])
 hln.be##a[title="Powered by Autozone.be"]
 moviemeter.nl##div[class^="banner"]
 startpagina.nl##div[class^="banner-"]

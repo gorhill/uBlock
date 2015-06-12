@@ -1,8 +1,8 @@
 [Adblock Plus 2.0]
-! Version: 201505071650
+! Version: 201505110913
 ! Title: ABP X Files
 ! X Files migliora la tua navigazione quotidiana!
-! Last modified: 07-05-2015
+! Last modified: 11-05-2015
 ! Expires: 3 days
 ! Homepage: http://noads.it
 ! Home: http://noads.it
@@ -440,7 +440,6 @@ http://ads.niceadv.com
 http://ads.planetamd64.com
 http://ads.redmoonstudios.de
 http://ads.webhosting.info
-http://ads1.itadnetwork.co.uk
 http://adsence.sogou.com
 http://adserv.free6.com
 http://adserver*.20below.eu
@@ -3546,6 +3545,11 @@ askvg.com##.adsbygoogle
 blog.firmwareumbrella.com##.adsbygoogle
 blog.firmwareumbrella.com##[id^="aswift_"]
 exchangetips.us##.ezAdsense
+searchdisasterrecovery.techtarget.com##.sign-up-wrapper.inline-reg.page1
+searchdisasterrecovery.techtarget.com##.ad.ad-hp
+searchdisasterrecovery.techtarget.com###inlineRegistration
+searchdisasterrecovery.techtarget.com##.ad-wrapper
+chimerarevo.com##.adv-top-container
 ! [Gruppo di filtri suggeriti dagli utenti]
 theverge.com##.m-ad.m-ad__medrec.vert.vert300
 ||adv.digisesso.com^$popup
@@ -3554,12 +3558,19 @@ theverge.com##.m-ad.m-ad__medrec.vert.vert300
 |http://*.exoclick.com/xhamster-945x100.php
 |http://enoratraffic.com/*/900_xhamster.php
 it.xhamster.com###adTop
+/ads1.
+||rad.msn.com^
+###adcontainer
 liliputing.com##[id^="backfill_"]
 liliputing.com##.bsap_adhere
 tuttoandroid.net##.adsbygoogle
 macitynet.it###leader-wrapper
 macitynet.it##[id^="div-gpt-ad"]
 macitynet.it##[class^="banner-"]
+google.it##.ads-ad
+google.it###rhs_block
+google.it###\5f Ltg
+google.it###\5f Ktg
 macitynet.it##.adsbygoogle
 macitynet.it##.wrap.banner
 m.leggo.it###adv_BannerTop

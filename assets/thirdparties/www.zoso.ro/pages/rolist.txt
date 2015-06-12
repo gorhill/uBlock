@@ -87,6 +87,7 @@ info##DIV[class="banda-sticky-mini"]
 ||titrari.ro/*.swf
 ||turcescu.ro/wp-content/uploads/myfragrancero72890.jpg?v=2
 ||web3.protv.ro/assets/protv/widgets/newsletter.swf?
+||trafictube.ro/wp-content/themes/trafictubenew/js/custom1.js
 
 !div rules
 220.ro##DIV#nql_optiuni

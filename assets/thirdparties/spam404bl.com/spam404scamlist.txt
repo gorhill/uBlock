@@ -2,8 +2,8 @@
 ! Homepage: http://www.spam404.com/
 ! Title: Spam404
 ! Expires: 2 days
-! Version: 5066
-! Last modified: 06 May 2015
+! Version: 5089
+! Last modified: 30 May 2015
 ! Description: This filter protects you from online scams. This filter is regularly updated with data collected by Spam404.com.
 !
 ! You can report unblocked content and direct general queries to us
@@ -15,6 +15,8 @@
 !-_-_-_-_-_-_-_-External Link Survey Scams-_-_-_-_-_-_-_-!
 ##[href^="http://cleanfiles.net/"]
 ##[href^="https://cleanfiles.net/"]
+##[href^="http://cf-getfile.com/"]
+##[href^="https://cf-getfile.com/"]
 ##[href^="http://clnks.co/"]
 ##[href^="http://downloadity.net/"]
 ##[href^="http://dream-file.com/"]
@@ -162,6 +164,11 @@
 ##[href^="http://grptrker.com/"]
 ##[href^="http://mayukefile.com/"]
 ##[href^="http://filesyncing.net/"]
+##[href^="http://stream.mobig.gr/"]
+##[href^="http://grippedfiles.com/"]
+##[href^="https://grippedfiles.com/"]
+##[href^="http://epctrking.com/"]
+##[href^="https://epctrking.com/"]
 !
 !
 !
@@ -5061,6 +5068,22 @@ hepimovie.net###login
 ||zebracheats.com^
 ||socialwarshack.org^
 ||ps4jailbreaker.com^
+||raisegame.com^
+||netballgame.com^
+||haltgame.com^
+||gamesunite.net^
+||movigart.com^
+||animationfullmovie.com^
+||moviescollections.net^
+||sht7.com^
+||grippedfiles.com^
+||epctrking.com^
+||celebrity-numbers.com^
+||csgojackpot.su^
+||snaggy.su^
+||sxeanticheat.su^
+||snaggy-screen.su^
+||dota2tool.su^
 !
 !
 !
