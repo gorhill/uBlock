@@ -444,11 +444,11 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin":{
-    "message":"\"{{origin}}\"",
+    "message":"von \"{{origin}}\"",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin":{
-    "message":"überall",
+    "message":"von überall",
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant":{
@@ -460,7 +460,7 @@
     "description":"Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1":{
-    "message":"Static filter {{filter}} found in:",
+    "message":"Statischer Filter {{filter}} gefunden in:",
     "description":"Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog":{
