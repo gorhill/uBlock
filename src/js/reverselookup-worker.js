@@ -80,7 +80,7 @@ var fromNetFilter = function(details) {
 // Mainly, given a CSS selector and a hostname as context, we will derive
 // various versions of compiled filters and see if there are matches. This way
 // the whole CPU cost is incurred by the reverse lookup code -- in a worker
-// thread, and the cosmetic filtering engine incurred zero cost.
+// thread, and the cosmetic filtering engine incurs no cost at all.
 //
 // For this though, the reverse lookup code here needs some knowledge of
 // the inners of the cosmetic filtering engine.
@@ -103,12 +103,13 @@ var fromCosmeticFilter = function(details) {
     var matches = rePlainSelector.exec(filter);
     if ( matches ) {
         if ( matches[0] === filter ) {          // simple CSS selector
-            reStr = rescape('c\vlg\v') + '\\w+' + rescape('\v' + filter);
+            reStr = rescape('c\vlg\v');
         } else {                                // complex CSS selector
-            reStr = rescape('c\vlg+\v') + '\\w+' + rescape('\v' + filter);
+            reStr = rescape('c\vlg+\v');
         }
+        reStr += '\\w+' + rescape('\v' + filter);
     } else if ( reHighLow.test(filter) ) {      // [alt] or [title]
-        reStr = rescape('c\vhlg0\v' + filter) + '(?:\\n|$)';
+        reStr = rescape('c\vhlg0\v' + filter);
     } else if ( reHighMedium.test(filter) ) {   // [href^="..."]
         reStr = rescape('c\vhmg0\v') + '\\w+' + rescape('\v' + filter);
     } else {                                    // all else
@@ -116,6 +117,8 @@ var fromCosmeticFilter = function(details) {
     }
     candidates[details.rawFilter] = new RegExp(reStr + '(?:\\n|$)');
 
+    // Second step: find hostname-based versions.
+    // Reference: FilterContainer.compileHostnameSelector().
     var pos;
     var domain = details.domain;
     var hostname = details.hostname;
@@ -144,7 +147,8 @@ var fromCosmeticFilter = function(details) {
         }
     }
 
-    // Entity-based
+    // Last step: find entity-based versions.
+    // Reference: FilterContainer.compileEntitySelector().
     pos = domain.indexOf('.');
     if ( pos !== -1 ) {
         var entity = domain.slice(0, pos);
